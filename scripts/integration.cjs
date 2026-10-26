@@ -43,6 +43,7 @@ const targets = {
   'mime-db': { pkg: 'vmime-db', versions: /^1\.54\./ },
   'mime-types': { pkg: 'vmime-types', versions: /^3\./ },
   send: { pkg: 'vsend', versions: /^1\.2\.1$/ },
+  'serve-static': { pkg: 'vserve-static', versions: /^2\.2\.1$/ },
 };
 
 // Calls and property reads are both counted: consumers read tables such as
@@ -166,6 +167,11 @@ app.get('/send-missing', (_req, res, next) => res.sendFile('missing.txt', { root
 app.use('/static', express.static(directory, { maxAge: '2 hours', extensions: ['html'], setHeaders: res => res.setHeader('X-Static', 'yes') }));
 app.use('/strict', express.static(directory, { fallthrough: false, redirect: false }));
 app.use('/hidden', express.static(directory, { fallthrough: false, dotfiles: 'deny' }));
+app.use('/mounted', express.static(directory, { index: 'page.html' }));
+app.use('/static-framing', (_req, res, next) => {
+  res.setHeader('Transfer-Encoding', 'chunked'); res.setHeader('Trailer', 'Digest');
+  res.setHeader('Content-Encoding', 'gzip'); res.setHeader('Content-Range', 'bytes 0-1/2'); next();
+}, express.static(directory, { fallthrough: false }));
 app.post('/body', express.json({ limit: '64b' }), (req, res) => res.json(req.body));
 app.get('/cached', (_req, res) => res.send('stable body'));
 app.get('/error', (_req, _res, next) => next(createError(401, 'private', { headers: { 'WWW-Authenticate': 'Basic' } })));
@@ -294,6 +300,20 @@ async function run() {
     assert.equal((await request(appServer, '/send-file', { headers: { range: 'bytes=2-5', 'if-range': sentFile.headers.etag } })).status, 200);
     const laterDate = new Date(Date.parse(data.headers['last-modified']) + 86400000).toUTCString();
     assert.equal((await request(appServer, '/static/data.txt', { headers: { range: 'bytes=2-5', 'if-range': laterDate } })).status, 200);
+    // Full mount paths and queries survive Express's rewriting of req.url.
+    const mount = await request(appServer, '/mounted?x=1');
+    assert.equal(mount.status, 301); assert.equal(mount.headers.location, '/mounted/?x=1');
+    assert.equal((await request(appServer, '/mounted/?x=1')).body, '<p>page</p>');
+    const mountHead = await request(appServer, '/mounted?x=1', { method: 'HEAD' });
+    assert.equal(mountHead.status, 301); assert.equal(mountHead.body, '');
+    assert.equal(mountHead.headers['content-length'], mount.headers['content-length']);
+    for (const method of ['GET', 'HEAD', 'POST']) {
+      const generated = await request(appServer, '/static-framing/nested%20dir?x=1', { method });
+      assert.equal(generated.status, method === 'POST' ? 405 : 301);
+      for (const name of ['transfer-encoding', 'trailer', 'content-encoding', 'content-range']) assert.equal(generated.headers[name], undefined);
+      if (method === 'POST') assert.equal(generated.headers.allow, 'GET, HEAD');
+      if (method !== 'GET') assert.equal(generated.body, '');
+    }
     assert.equal((await request(appServer, '/body', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{"a":1}' })).body, '{"a":1}');
     // The framework's own body-parser runs first, so the application's limit is never consulted.
     assert.equal((await request(appServer, '/body', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text: 'x'.repeat(100) }) })).status, 200);

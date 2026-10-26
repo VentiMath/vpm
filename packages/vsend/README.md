@@ -123,7 +123,7 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 ```
 
-The gate passed 54 HTTP checks on Node and Bun through Functions Framework
+The gate passed 60 HTTP checks on Node and Bun through Functions Framework
 5.0.2, firebase-functions 7.4.0, Express 5.2.1, and serve-static 2.2.1. It aliases
 all VPM counterparts inside its own process and verifies each is reached,
 including transitive calls. Checks include `res.sendFile`, `res.download`,
