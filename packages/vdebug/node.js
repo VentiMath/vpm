@@ -30,7 +30,7 @@ exports.destroy = util.deprecate(
 
 exports.colors = [6, 2, 3, 4, 5, 1];
 
-// Use runtime terminal capabilities instead of probing an undeclared package.
+// Use runtime terminal capabilities instead of probing the optional supports-color peer.
 if (typeof process.stderr.hasColors === 'function' && process.stderr.hasColors(256)) {
 		exports.colors = [
 			20,

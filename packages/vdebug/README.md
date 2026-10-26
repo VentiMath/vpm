@@ -79,7 +79,7 @@ storage, and browser globals; these tests are not a cross-browser visual test.
 - Logger namespace changes refresh cached enablement.
 - Invalid namespace/configuration types, non-string extension arguments, and
   enabled overrides other than boolean/null receive explicit `TypeError`s.
-- Native terminal detection replaces the undeclared optional dependency probe.
+- Native terminal detection replaces the optional `supports-color` peer probe.
 - Type declarations require no separate Node.js or debug types package.
 
 Private `debug/src/*` import paths are not supported. Public logging, wildcard,

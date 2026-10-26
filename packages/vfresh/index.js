@@ -17,8 +17,7 @@ module.exports = function fresh(request, response) {
   if (hasNoneMatch) {
     const list = listValue(noneMatch);
     if (list === undefined) return false;
-    if (list === '*') return true;
-    if ((ows(list.charCodeAt(0)) || list[0] === '*') && list.replace(/^[ \t]+|[ \t]+$/g, '') === '*') return true;
+    if (wildcard(list)) return true;
     const etag = response.etag;
     if (typeof etag !== 'string' || etag.charCodeAt(etag.length - 1) !== 34 || !entityTag.test(etag)) return false;
     if (list === etag) return true;
@@ -47,6 +46,15 @@ module.exports = function fresh(request, response) {
 };
 
 function ows(code) { return code === 32 || code === 9; }
+
+// A linear scan: trimming with a regex backtracked quadratically on long space runs.
+function wildcard(list) {
+  let start = 0;
+  let end = list.length;
+  while (start < end && ows(list.charCodeAt(start))) start++;
+  while (end > start && ows(list.charCodeAt(end - 1))) end--;
+  return end - start === 1 && list.charCodeAt(start) === 42;
+}
 
 function listValue(value) {
   if (typeof value === 'string') return value;

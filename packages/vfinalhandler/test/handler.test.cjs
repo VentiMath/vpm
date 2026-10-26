@@ -136,21 +136,23 @@ test('first completion wins while pending and after the response finishes', asyn
   for (const pending of [false, true]) {
     const req = new Request(pending); const res = new Response(); const logged = [];
     const done = finalhandler(req, res, { onerror: error => logged.push(error) });
-    const first = { status: 401 };
-    done(first); done({ status: 500 }); done();
+    const first = { status: 401 }; const second = { status: 500 }; const third = { status: 403 };
+    done(first); done(second); done();
     if (pending) req.finish();
-    done({ status: 403 });
+    done(third);
     await tick();
     assert.equal(res.statusCode, 401); assert.equal(res.ends, 1);
-    assert.deepEqual(logged, [first]); assert.equal(req.socket.destroys, 0);
+    // Later errors are still reported, since Express and connect cannot log them otherwise.
+    assert.deepEqual(logged, [first, second, third]); assert.equal(req.socket.destroys, 0);
   }
 });
 
-test('first 404 wins over a later error during draining', async () => {
-  const req = new Request(true); const res = new Response(); let logs = 0;
-  const done = finalhandler(req, res, { onerror: () => logs++ });
-  done(); done(new Error('late')); req.finish(); await tick();
-  assert.equal(res.statusCode, 404); assert.equal(res.ends, 1); assert.equal(logs, 0);
+test('first 404 wins over a later error during draining, which is still reported', async () => {
+  const req = new Request(true); const res = new Response(); const logged = [];
+  const done = finalhandler(req, res, { onerror: error => logged.push(error) });
+  const late = new Error('late');
+  done(); done(late); req.finish(); await tick();
+  assert.equal(res.statusCode, 404); assert.equal(res.ends, 1); assert.deepEqual(logged, [late]);
 });
 
 test('ignored 404 on a started response still permits a later error', async () => {
