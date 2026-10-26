@@ -28,6 +28,10 @@
       "name": "vescape-html",
       "version": "0.1.0",
     },
+    "packages/vetag": {
+      "name": "vetag",
+      "version": "0.1.0",
+    },
     "packages/vfinalhandler": {
       "name": "vfinalhandler",
       "version": "0.1.0",
@@ -37,6 +41,17 @@
         "vescape-html": "workspace:*",
         "von-finished": "workspace:*",
         "vparseurl": "workspace:*",
+        "vstatuses": "workspace:*",
+      },
+    },
+    "packages/vfresh": {
+      "name": "vfresh",
+      "version": "0.1.0",
+    },
+    "packages/vhttp-errors": {
+      "name": "vhttp-errors",
+      "version": "0.1.0",
+      "dependencies": {
         "vstatuses": "workspace:*",
       },
     },
@@ -53,6 +68,10 @@
     },
     "packages/vparseurl": {
       "name": "vparseurl",
+      "version": "0.1.0",
+    },
+    "packages/vrange-parser": {
+      "name": "vrange-parser",
       "version": "0.1.0",
     },
     "packages/vstatuses": {
@@ -75,13 +94,21 @@
 
     "vescape-html": ["vescape-html@workspace:packages/vescape-html"],
 
+    "vetag": ["vetag@workspace:packages/vetag"],
+
     "vfinalhandler": ["vfinalhandler@workspace:packages/vfinalhandler"],
+
+    "vfresh": ["vfresh@workspace:packages/vfresh"],
+
+    "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
 
     "vms": ["vms@workspace:packages/vms"],
 
     "von-finished": ["von-finished@workspace:packages/von-finished"],
 
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
+
+    "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
 
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
   }

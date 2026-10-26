@@ -18,20 +18,30 @@ that these replacements have already improved application performance.
 | [vms](packages/vms) | ms 2.1.3 | Symmetric negative rounding, consistent plurals, and errors that do not serialize invalid inputs. |
 | [vdebug](packages/vdebug) | debug 4.4.3 | Compiled namespace filters, monotonic elapsed timing, coherent filter snapshots, and native terminal color detection. |
 | [vfinalhandler](packages/vfinalhandler) | finalhandler 2.1.1 | Once-only responses, checks after request draining, consistent HTTP framing, integer statuses, and copied error-header arrays. |
+| [vhttp-errors](packages/vhttp-errors) | http-errors 2.0.1 | Five runtime dependencies reduced to one, integer statuses, own-property copying, subclass preservation, and one factory stack capture. |
+| [vetag](packages/vetag) | etag 1.8.1 | Compatible native one-shot hashing, byte-array views, exact bigint metadata, and validated stat inputs. |
+| [vfresh](packages/vfresh) | fresh 2.0.0 | Quoted-comma ETags, strict tag syntax, header arrays, and case-insensitive no-cache handling outside quoted extensions. |
+| [vrange-parser](packages/vrange-parser) | range-parser 1.2.1 | Complete numeric syntax, safe bounds, oversized suffixes, and stable combined-range ordering. |
 
 Every package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
 and documented origins and licenses. Consumers do not need a separate types
 package. Test fixtures and benchmarks stay out of installable archives.
 
-Runtime dependency counts have **not** fallen for these replacements: both
-versions of each utility have zero external runtime dependencies, except
+Most replacements preserve their runtime dependency counts. Both versions of
+each utility have zero external runtime dependencies, except
 `on-finished` / `von-finished` and `debug` / `vdebug`, which each declare one,
-and `finalhandler` / `vfinalhandler`, which each declare six.
+`finalhandler` / `vfinalhandler`, which each declare six, and `http-errors` /
+`vhttp-errors`, which declare **five and one**, respectively.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load undeclared optional `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
 not external packages.
+
+`vhttp-errors` keeps only `vstatuses`; native operations and local constructor
+naming replace `inherits`, `setprototypeof`, and `toidentifier`. Invalid non-error
+statuses normalize to 500, removing the associated deprecation behavior and
+`depd`. Other packages in an application may still depend on those upstream helpers.
 
 `vfinalhandler` connects all eight preceding VPM packages: six direct dependencies,
 plus `vee-first` through `von-finished` and `vms` through `vdebug`. Its entire
@@ -262,6 +272,72 @@ memory reduction is claimed.
 [benchmark](packages/vdebug/bench/compare.cjs), and
 [full measurements and runtime notes](packages/vdebug/README.md#validation-and-performance).
 Combined Express 4/5 checks exercised all three replacements under Node and Bun.
+
+## vhttp-errors
+
+**Dependencies and behavior:** reduces five direct runtime dependencies to one,
+`vstatuses`. Validates integer 4xx/5xx statuses, synchronizes status fields, and
+copies only own enumerable string properties. Prototype-changing keys are ignored.
+Named-constructor subclasses retain their prototypes; a private lookup prevents
+export reassignment from redirecting factory calls. Factory construction avoids
+a second stack capture.
+
+**Compatibility:** preserves standard constructors, numeric aliases, Error
+identity when annotating, descriptors, custom properties, and valid custom error
+codes. Invalid statuses become 500 without deprecation warnings. Inherited
+properties are no longer copied, and `isHttpError()` validates status integrity.
+
+**Evidence and performance:** eleven tests cover every standard constructor and
+the changed behavior. Factory benchmarks took 22–45% less time; **direct named
+constructors took 14–40% more time**. Full Express 4/5 integrations exercise JSON
+errors, upload limits, and final responses on Node and Bun.
+[Tests, measurements, and installation](packages/vhttp-errors/README.md).
+
+## vetag
+
+**Compatibility and inputs:** retains exact upstream body tags and metadata tag
+format. Uses native one-shot hashing with a streaming-hash fallback, handles
+Uint8Array views without modifying them, and accepts bigint/minimal stat objects.
+Invalid sizes and dates fail explicitly instead of producing misleading tags.
+No external runtime dependencies were added.
+
+**Evidence and performance:** seven tests include 500 generated strings and byte
+encodings, actual file metadata, sliced arrays, and the hashing fallback.
+Short-text tags took 38–49% less time; larger Unicode inputs were close on Node
+and about 9% faster on Bun. File metadata checks exclude disk I/O.
+[Full results and compatibility notes](packages/vetag/README.md).
+
+## vfresh
+
+**Conditional response correctness:** parses commas inside quoted ETags, handles
+optional whitespace and repeated fields, validates tag syntax, and respects
+case-insensitive no-cache directives without matching inside unrelated quoted
+values. Malformed tag lists return stale, including when an earlier member
+matched. Retains fresh 2.0.0's tag-over-date precedence and existing date parsing.
+
+**Evidence and performance:** eight tests include 448 upstream comparisons and
+2,000 generated valid tag lists. Express integrations verify real 304 and forced
+reload responses. Single tags and dates were close in benchmarks; matching long
+lists improved on Node, but **long lists were 21–33% slower on Bun**. Node's
+no-cache check increased from 27 to 44 ns per call.
+[Protocol references, tests, and full measurements](packages/vfresh/README.md).
+
+## vrange-parser
+
+**Parsing and ordering:** rejects partial numeric parses and malformed members,
+clamps huge decimal values before arithmetic, normalizes range units, and treats
+an oversized suffix as the entire nonempty representation. Combining includes
+contained members when choosing the group's original input position.
+
+**Compatibility:** retains ranges with a `type` property, `-1` for no selected
+bytes, and `-2` for malformed syntax. Sizes must be safe non-negative integers.
+Malformed members invalidate the entire header; reversed/out-of-bounds intervals
+remain unsatisfiable. Empty representations still return `-1`.
+
+**Evidence and performance:** eight tests include a 2,000-case byte-set model.
+Real Express responses cover 206, 416, oversized suffixes, and malformed-range
+fallback. Benchmarks were 5–16% faster on Node and **15–34% slower on Bun**.
+[Full API, tests, and measurements](packages/vrange-parser/README.md).
 
 ## Reading and extending this record
 
