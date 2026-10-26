@@ -26,6 +26,7 @@ that these replacements have already improved application performance.
 | [vmime-types](packages/vmime-types) | mime-types 3.0.2 | Correct charset parameter recognition, immutable mappings, and prepared default Content-Type strings. |
 | [vsend](packages/vsend) | send 1.2.1 | Strong conditional checks, GET-only ranges, validated option snapshots, and guarded file-stream cleanup. |
 | [vserve-static](packages/vserve-static) | serve-static 2.2.1 | Redirects preserve shared URL caches, configuration is validated and snapshotted at startup, and generated responses clear incompatible headers. |
+| [vcontent-type](packages/vcontent-type) | content-type 2.1.0 | Independent null-prototype parameter maps, validated offsets and input types, and span-based quoted-string processing. |
 
 Every package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
@@ -70,8 +71,8 @@ removes 1.x and consolidates three installed copies into one `content-type`
 2.1.0 shared by Express, body-parser, type-is, and negotiator. No parser override
 is needed. An override alone would be incorrect: the old body-parser passes
 the request object to `parse()`, while 2.x accepts a header string, causing
-the old caller to silently lose charset information. This makes 2.x the next
-VPM replacement baseline. The newer
+the old caller to silently lose charset information. This makes 2.x the
+`vcontent-type` compatibility baseline. The newer
 [content-type 3.x](https://github.com/jshttp/content-type/releases/tag/v3.0.0)
 requires Node 22 and is ESM-only; current consumers request 2.x, and VPM retains
 its Node 20 and CommonJS contracts.
@@ -526,6 +527,37 @@ redirects **7–11% slower**, and missing files **5–12% slower** in one local 
 405 was close on Node and about 10% faster on Bun. A comparison using the same
 VPM dependencies on both sides was mixed; no general speedup is established.
 [Full API, compatibility notes, measurements, and installation](packages/vserve-static/README.md).
+
+## vcontent-type
+
+**Isolation and input contract:** parsed parameters have a direct null prototype
+and are independent mutable dictionaries. Upstream 2.1.0 and 3.1.1 share an
+intermediate prototype; modifying it can suppress parameters in later parses.
+Tests reproduce that interference. Offsets must be bounded integers, parse flags
+must be booleans, and headers, media types, and parameter values must be strings.
+Formatting cannot return a coerced object or silently convert a number. Its own
+errors do not echo invalid values. Exported methods are immutable.
+
+**Compatibility:** preserves 2.1.0's lenient extraction, first-parameter wins,
+case rules, quoted escapes, insertion-order formatting, and absolute offsets for
+Accept lists. Results stay mutable for Express's charset updates. Parsing remains
+an extractor, not a syntax validator. Ordinary inputs are checked against 3.1.1
+too; no 1.x request-object parsing is provided. Both upstream and VPM have zero
+runtime dependencies.
+
+**Evidence:** fifteen tests include 20,000 generated headers, 3,000 round trips,
+every byte in formatted parameter values, malformed input, all offsets in an
+edge-case corpus, and shared-state interference. All 65 integration checks run
+with `vcontent-type` substituted for Express, body-parser, type-is, and negotiator,
+including UTF-16 decoding and quoted-comma Accept negotiation.
+
+**Performance:** span processing and native searches substantially improve long
+unescaped quoted values. Quoted-value formatting took **40–42% less time** than
+2.1.0 in one local Node/Bun run. Short Node parsing cases were **10–63% slower**,
+and the escaped-value case on Bun was **12% slower**. Against newer 3.1.1, short
+Node parsing was **33–106% slower**, and Bun's escaped-value/Accept cases were
+**28–31% slower**. There is no general application throughput gain established.
+[API, compatibility decisions, both benchmark baselines, and provenance](packages/vcontent-type/README.md).
 
 ## Reading and extending this record
 
