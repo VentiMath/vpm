@@ -72,7 +72,9 @@ clients that do not finish sending their bodies.
 - **Consistent framing:** removes `Transfer-Encoding` and `Trailer` before setting
   `Content-Length`. Upstream can send both transfer encoding and content length,
   which Node and Bun HTTP clients reject. Error headers cannot reintroduce those
-  fields or obsolete `Content-Encoding`, `Content-Language`, and `Content-Range`.
+  fields or obsolete `Content-Encoding` and `Content-Language`. A previous
+  Content-Range is removed, but an explicit 416 error's Content-Range is
+  preserved: send/serve-static use it to report the full representation length.
   Content type/length, CSP, and `nosniff` are controlled by the generated page.
 - **Valid numeric statuses:** rejects NaN and fractional codes. Unknown integer
   4xx/5xx codes remain usable, with `Unknown Error` as their phrase instead of an
@@ -89,7 +91,7 @@ silenced. The library retains legacy URL parsing semantics through `vparseurl`.
 
 ## Validation
 
-The package has 29 tests, including 480 normal-response combinations compared
+The package has 30 tests, including 480 normal-response combinations compared
 with unchanged `finalhandler` 2.1.1 source, every standard error status, lifecycle
 races, header snapshots, and real HTTP/1 and HTTP/2 connections. The differential
 fixture uses the same VPM primitives to isolate handler behavior. Its source is
@@ -105,7 +107,8 @@ package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2
 firebase-functions 7.4.0, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
 real HTTP checks on Node and Bun in CI. Through it, Express's default 404 and error
 handling, mounted paths, error logging after an accepted response, and
-conflicting framing headers run against this package.
+conflicting framing headers run against this package. A range error from
+`vsend` also verifies that its 416 response keeps `Content-Range: bytes */20`.
 
 ## Performance
 

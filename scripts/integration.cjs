@@ -42,10 +42,8 @@ const targets = {
   'range-parser': { pkg: 'vrange-parser', versions: /^1\.2\./ },
   'mime-db': { pkg: 'vmime-db', versions: /^1\.54\./ },
   'mime-types': { pkg: 'vmime-types', versions: /^3\./ },
+  send: { pkg: 'vsend', versions: /^1\.2\.1$/ },
 };
-// VPM packages reach these only through other VPM packages, so the aliased
-// upstream entry is never called directly.
-const indirect = new Set(['ee-first', 'mime-db']);
 
 // Calls and property reads are both counted: consumers read tables such as
 // statuses.message and mime.types as often as they call functions.
@@ -57,8 +55,23 @@ function counting(name, value) {
     get(target, key, receiver) { if (typeof key === 'string') calls[name]++; return Reflect.get(target, key, receiver); },
   });
 }
-const replacements = Object.fromEntries(Object.entries(targets).map(([name, { pkg }]) =>
-  [name, counting(name, require(path.join(__dirname, '../packages', pkg)))]));
+// Instrument VPM exports before loading their parents, so transitive calls
+// (including range-parser through vsend) are measured, not exempted.
+const replacements = {};
+const upstreamNames = Object.fromEntries(Object.entries(targets).map(([name, { pkg }]) => [pkg, name]));
+function replacement(name) {
+  if (Object.hasOwn(replacements, name)) return replacements[name];
+  const directory = path.join(__dirname, '../packages', targets[name].pkg);
+  for (const pkg of Object.keys(require(path.join(directory, 'package.json')).dependencies || {})) {
+    if (Object.hasOwn(upstreamNames, pkg)) replacement(upstreamNames[pkg]);
+  }
+  const entry = require.resolve(directory);
+  const value = counting(name, require(entry));
+  require.cache[entry].exports = value;
+  replacements[name] = value;
+  return value;
+}
+for (const name of Object.keys(targets)) replacement(name);
 
 // Walk every dependency edge from the fixture roots and alias matching copies.
 const aliased = new Map();
@@ -118,6 +131,8 @@ const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-integration-'));
 const content = '0123456789abcdefghij';
 fs.writeFileSync(path.join(directory, 'data.txt'), content);
 fs.writeFileSync(path.join(directory, 'page.html'), '<p>page</p>');
+fs.writeFileSync(path.join(directory, 'empty.txt'), '');
+fs.writeFileSync(path.join(directory, '.secret'), 'hidden');
 fs.mkdirSync(path.join(directory, 'nested dir'));
 fs.writeFileSync(path.join(directory, 'nested dir', 'index.html'), '<p>index</p>');
 
@@ -140,7 +155,17 @@ functions.http('api', api);
 
 // Express applications are also deployed as onRequest handlers.
 const app = express();
-app.use('/static', express.static(directory, { maxAge: '2 hours' }));
+const completed = []; const failures = [];
+function sent(name, next) {
+  return error => { if (error) { failures.push(error); next(error); } else completed.push(name); };
+}
+app.get('/send-file', (_req, res, next) => res.sendFile('data.txt', { root: directory, headers: { 'X-Custom': 'yes' } }, sent('file', next)));
+app.get('/send-empty', (_req, res, next) => res.sendFile(path.join(directory, 'empty.txt'), sent('empty', next)));
+app.get('/download', (_req, res, next) => res.download(path.join(directory, 'data.txt'), 'renamed.txt', sent('download', next)));
+app.get('/send-missing', (_req, res, next) => res.sendFile('missing.txt', { root: directory }, sent('missing', next)));
+app.use('/static', express.static(directory, { maxAge: '2 hours', extensions: ['html'], setHeaders: res => res.setHeader('X-Static', 'yes') }));
+app.use('/strict', express.static(directory, { fallthrough: false, redirect: false }));
+app.use('/hidden', express.static(directory, { fallthrough: false, dotfiles: 'deny' }));
 app.post('/body', express.json({ limit: '64b' }), (req, res) => res.json(req.body));
 app.get('/cached', (_req, res) => res.send('stable body'));
 app.get('/error', (_req, _res, next) => next(createError(401, 'private', { headers: { 'WWW-Authenticate': 'Basic' } })));
@@ -164,6 +189,7 @@ function request(server, route, { headers = {}, method = 'GET', body } = {}) {
       res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, body: Buffer.concat(chunks).toString('utf8') }));
     });
     req.on('error', reject);
+    req.setTimeout(5000, () => req.destroy(new Error('integration request timed out')));
     req.end(body);
   });
 }
@@ -211,6 +237,8 @@ async function run() {
     assert.equal((await request(apiServer, '/file', { headers: { range: 'bytes=-1000' } })).body, content);
     assert.equal((await request(apiServer, '/file', { headers: { range: 'bytes=100-200' } })).status, 416);
     assert.equal((await request(apiServer, '/file', { headers: { range: 'bytes=1junk-4' } })).status, 200);
+    assert.equal((await request(apiServer, '/file', { headers: { 'if-match': '*' } })).status, 200);
+    assert.equal((await request(apiServer, '/file', { headers: { 'if-none-match': '*' } })).status, 304);
     // firebase-functions answers errors thrown by an onRequest handler itself, with a
     // structured log and a plain 500; finalhandler only sees Express applications.
     for (const route of ['/deny', '/crash']) {
@@ -225,6 +253,7 @@ async function run() {
     // The Express application: static files via serve-static, body limits, error headers, late errors.
     const page = await request(appServer, '/static/page.html');
     assert.equal(page.status, 200); assert.equal(page.headers['content-type'], 'text/html; charset=utf-8');
+    assert.equal(page.headers['x-static'], 'yes');
     assert.equal(page.headers['cache-control'], 'public, max-age=7200');
     const data = await request(appServer, '/static/data.txt');
     assert.equal(data.body, content); assert.match(data.headers.etag, /^W\/"/);
@@ -236,6 +265,35 @@ async function run() {
     assert.equal(dir.status, 301); assert.equal(dir.headers.location, '/static/nested%20dir/');
     assert.equal((await request(appServer, '/static/nested%20dir/')).body, '<p>index</p>');
     assert.equal((await request(appServer, '/static/missing%a')).status, 400); assert.equal((await request(appServer, '/static/missing.txt')).status, 404);
+    // send's actual Express callers inherit options with Object.create(), and
+    // rely on its event order to deliver sendFile/download completion callbacks.
+    const sentFile = await request(appServer, '/send-file');
+    assert.equal(sentFile.body, content); assert.equal(sentFile.headers['x-custom'], 'yes');
+    const sentHead = await request(appServer, '/send-file', { method: 'HEAD' });
+    assert.equal(sentHead.body, ''); assert.equal(sentHead.headers['content-length'], '20');
+    assert.equal((await request(appServer, '/send-file', { headers: { 'if-none-match': sentFile.headers.etag } })).status, 304);
+    assert.equal((await request(appServer, '/send-file', { headers: { range: 'bytes=2-5' } })).body, '2345');
+    const unsatisfied = await request(appServer, '/send-file', { headers: { range: 'bytes=100-' } });
+    assert.equal(unsatisfied.status, 416); assert.equal(unsatisfied.headers['content-range'], 'bytes */20');
+    assert.equal((await request(appServer, '/send-empty')).body, '');
+    const download = await request(appServer, '/download');
+    assert.equal(download.body, content); assert.match(download.headers['content-disposition'], /renamed.txt/);
+    assert.equal((await request(appServer, '/send-missing')).status, 404);
+    assert.equal((await request(appServer, '/static/page')).body, '<p>page</p>');
+    assert.equal((await request(appServer, '/static/.secret')).status, 404);
+    assert.equal((await request(appServer, '/hidden/.secret')).status, 403);
+    assert.equal((await request(appServer, '/strict/nested%20dir')).status, 404);
+    assert.equal((await request(appServer, '/strict/absent')).status, 404);
+    assert.equal((await request(appServer, '/static/%2e%2e/outside')).status, 404);
+    assert.equal((await request(appServer, '/strict/data.txt', { method: 'POST' })).status, 405);
+    const queryRedirect = await request(appServer, '/static/nested%20dir?x=1');
+    assert.equal(queryRedirect.status, 301); assert.equal(queryRedirect.headers.location, '/static/nested%20dir/?x=1');
+    const headRange = await request(appServer, '/send-file', { method: 'HEAD', headers: { range: 'bytes=2-5' } });
+    assert.equal(headRange.status, 200); assert.equal(headRange.headers['content-length'], '20');
+    assert.equal((await request(appServer, '/send-file', { headers: { 'if-match': sentFile.headers.etag } })).status, 412);
+    assert.equal((await request(appServer, '/send-file', { headers: { range: 'bytes=2-5', 'if-range': sentFile.headers.etag } })).status, 200);
+    const laterDate = new Date(Date.parse(data.headers['last-modified']) + 86400000).toUTCString();
+    assert.equal((await request(appServer, '/static/data.txt', { headers: { range: 'bytes=2-5', 'if-range': laterDate } })).status, 200);
     assert.equal((await request(appServer, '/body', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{"a":1}' })).body, '{"a":1}');
     // The framework's own body-parser runs first, so the application's limit is never consulted.
     assert.equal((await request(appServer, '/body', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ text: 'x'.repeat(100) }) })).status, 200);
@@ -247,6 +305,8 @@ async function run() {
     assert.equal(double.status, 404); assert.match(double.body, /Cannot GET \/double/); assert.doesNotMatch(double.body, /secret/);
     await new Promise(resolve => setTimeout(resolve, 20));
     assert.ok(stderr.some(line => line.includes('late error')), 'an error after the 404 must still be logged');
+    for (const name of ['file', 'empty', 'download']) assert.ok(completed.includes(name), `missing ${name} completion callback`);
+    assert.ok(failures.some(error => error.status === 404), 'missing sendFile error callback');
 
     // Duration strings (ms) through jsonwebtoken, as ventimath signs tokens.
     const token = jwt.sign({ sub: 'student' }, 'secret', { expiresIn: '2 hours' });
@@ -258,7 +318,7 @@ async function run() {
       assert.ok(stderr.some(line => line.startsWith(namespace)), `no debug output for ${namespace}`);
     }
     for (const [name, count] of Object.entries(calls)) {
-      if (!indirect.has(name)) assert.ok(count > 0, `${name} was aliased but never called`);
+      assert.ok(count > 0, `${name} was aliased but never reached`);
     }
   } finally {
     process.stderr.write = writeStderr;

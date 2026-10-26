@@ -24,6 +24,7 @@ that these replacements have already improved application performance.
 | [vrange-parser](packages/vrange-parser) | range-parser 1.2.1 | Complete numeric syntax, safe bounds, oversized suffixes, and stable combined-range ordering. |
 | [vmime-db](packages/vmime-db) | mime-db 1.54.0 | Immutable records and extension arrays, prototype-free dictionaries, precise types, and a verified data snapshot. |
 | [vmime-types](packages/vmime-types) | mime-types 3.0.2 | Correct charset parameter recognition, immutable mappings, and prepared default Content-Type strings. |
+| [vsend](packages/vsend) | send 1.2.1 | Strong conditional checks, GET-only ranges, validated option snapshots, and guarded file-stream cleanup. |
 
 Every package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
@@ -34,16 +35,18 @@ Most replacements preserve their runtime dependency counts. Both versions of
 each utility have zero external runtime dependencies, except
 `on-finished` / `von-finished`, `debug` / `vdebug`, and `mime-types` /
 `vmime-types`, which each declare one,
-`finalhandler` / `vfinalhandler`, which each declare six, and `http-errors` /
+`finalhandler` / `vfinalhandler`, which each declare six,
+`send` / `vsend`, which each declare eleven, and `http-errors` /
 `vhttp-errors`, which declare **five and one**, respectively.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
 not external packages.
 
-`vmime-types` replaces `mime-db` with `vmime-db`, completing VPM counterparts for
-the supporting utilities used by modern `send` 1.2.1 and `serve-static` 2.2.1.
-The replacements for `send` and `serve-static` themselves remain future work.
+`vsend` uses eleven direct VPM dependencies, with `vee-first` and `vmime-db`
+bringing its complete external dependency tree to thirteen VPM packages.
+The replacement for `serve-static` 2.2.1 remains future work; all of its supporting
+packages now have VPM counterparts.
 
 ## The target dependency graph
 
@@ -81,15 +84,17 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumers above to the versions ventimath resolves. The gate aliases
 every VPM package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework and runs 32 HTTP checks: JSON bodies and malformed
+the Functions Framework and runs 54 HTTP checks: JSON bodies and malformed
 bodies, CORS preflight, `res.set('Content-Type')` with syntax upstream
 tolerated, conditional requests with quoted-comma tags and forced reloads,
 redirect encoding and escaping, `sendFile` and `serve-static` with ranges,
-HEAD, directory redirects, cache ages from duration strings, thrown HTTP
-errors with headers, conflicting framing headers, an error after an accepted
+HEAD, download and empty-file callbacks, extension fallback, dotfile policy,
+strong preconditions, directory redirects, cache ages from duration strings,
+thrown HTTP errors with headers, conflicting framing headers, an error after an accepted
 404, `jsonwebtoken` expiry durations, and `DEBUG` output from each consumer
-namespace. It fails if any targeted package is installed at an untargeted
-version, is not aliased, or is never reached. Earlier per-package integration
+namespace. VPM exports are instrumented before their parents load, so transitive
+calls count too. It fails if a target has no aliased installed copy or is never
+reached; other versions are reported as uncovered. Earlier per-package integration
 scripts were replaced by this gate; the bugs that review found in
 `vfinalhandler` and `vmime-types` were only visible through real consumers.
 
@@ -112,7 +117,9 @@ otherwise reusable connection; an error on a partial response closes it.
 
 **Headers and statuses:** removes conflicting transfer encoding/trailer headers
 before setting content length. Error headers cannot restore those fields or stale
-content encoding/language/range headers. Header arrays are copied before draining.
+content encoding/language headers. A stale Content-Range is cleared, while
+explicit 416 error range metadata is retained for send/serve-static. Header arrays
+are copied before draining.
 Statuses must be integers from 400 to 599, and unknown codes receive a defined
 phrase. Empty or unavailable pathnames get a readable fallback.
 
@@ -123,7 +130,7 @@ to `onerror`, so Express and connect keep logging them. Invalid error callbacks
 fail at construction. All six
 dependencies have VPM counterparts; their documented differences also apply.
 
-**Evidence:** [29 tests](packages/vfinalhandler/test), including 480 differential
+**Evidence:** [30 tests](packages/vfinalhandler/test), including 480 differential
 normal-response combinations and real HTTP/1 and HTTP/2 connections on Node and
 Bun. Tests reproduce the upstream conflicting-framing failure and verify the
 corrected response, upload draining, abort cleanup, and connection reuse. The
@@ -437,11 +444,44 @@ parameterized headers were **63–105% slower**, and full-path lookup was **13%
 slower on Node**. These are microbenchmarks, not application throughput results.
 [Full API, validation, benchmarks, and installation](packages/vmime-types/README.md).
 
+## vsend
+
+**HTTP behavior:** strong `If-Match` comparison handles quoted commas and
+precondition precedence. `If-Range` requires an exact strong ETag or equal
+modification date. Ranges apply only to GET and otherwise-200 responses, so HEAD
+reports full length. Conditional non-GET requests can return 412 instead of 304.
+Weak default stat tags remain weak and cannot satisfy strong comparisons.
+
+**Delivery and options:** watches completion before filesystem work, handles
+read errors before application stream hooks, stops after hooks finish a
+response, and detects premature closure and short reads. Generated responses
+remove conflicting framing headers. Supported options are validated and copied,
+including inherited values required by Express; unrelated filesystem options
+are not forwarded. Index candidates obey the dotfile policy, and non-regular
+filesystem objects are rejected before opening.
+
+**Compatibility and limits:** empty GETs do not open a file stream; a sender can
+be piped once. Root validation remains lexical, symlinks are followed, and
+stat/open are separate operations. Dates retain existing parsing and metadata
+resolution limits. This is not an atomic file snapshot or a filesystem jail.
+
+**Evidence and performance:** twenty-five tests cover differential HTTP cases,
+failure paths, disconnections, and HTTP/2. The shared integration gate passed
+54 HTTP checks through the pinned Functions Framework/Express stack on Node and
+Bun, including downloads and sendFile callbacks. Its 416 check also exposed and
+fixed dropped range metadata in `vfinalhandler`. Sequential localhost HTTP
+measurements showed ordinary GETs **4–10% slower**, HEAD **10–12% slower**, and
+304 responses **9–20% slower**;
+the range case was within 3% of upstream. This release establishes correctness
+changes and VPM composition, with no broad performance gain demonstrated.
+[API, compatibility decisions, measurements, and installation](packages/vsend/README.md).
+
 ## Reading and extending this record
 
-Benchmark tables identify the runtime, date, inputs, and sampling method. They
-measure individual calls, not HTTP throughput, tail latency, or application
-memory. Known regressions belong beside gains. A correctness fix or easier
+Benchmark tables identify the runtime, date, inputs, and sampling method. Most
+measure individual utility calls; `vsend` measures sequential localhost HTTP
+requests. Neither establishes production throughput, tail latency, or application
+memory use. Known regressions belong beside gains. A correctness fix or easier
 auditing does not by itself establish that an exploitable vulnerability was fixed.
 
 Packages are currently available from this repository as standard package
