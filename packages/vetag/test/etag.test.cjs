@@ -34,8 +34,14 @@ test('hashes precisely the visible Uint8Array slice without changing its content
 
 test('preserves actual file-stat tags and supports bigint Stats', () => {
   const ordinary = fs.statSync(__filename); const big = fs.statSync(__filename, { bigint: true });
-  assert.equal(etag(ordinary), upstream(ordinary)); assert.equal(etag(big), upstream(ordinary));
-  assert.equal(etag(big, { weak: false }), upstream(ordinary, { weak: false }));
+  assert.equal(etag(ordinary), upstream(ordinary));
+  assert.equal(etag(ordinary, { weak: false }), upstream(ordinary, { weak: false }));
+  // Node rounds plain-stat mtimes but truncates bigint-stat nanoseconds, so the two
+  // Dates can differ by a millisecond; compare bigint stats against their own fields.
+  const expected = `"${big.size.toString(16)}-${big.mtime.getTime().toString(16)}"`;
+  assert.equal(etag(big), 'W/' + expected);
+  assert.equal(etag(big, { weak: false }), expected);
+  assert.throws(() => upstream(big), TypeError);
 });
 
 test('supports minimal stat objects with exact bigint sizes and valid cross-realm dates', () => {

@@ -12,7 +12,7 @@ test('matches ordinary closed, open-ended, suffix, and unsatisfiable ranges', ()
       'bytes=0-3,6-9', 'bytes=6-9,0-3', 'bytes=0-4,4-9', 'bytes=5-9,0-4', 'bytes=9999-']) {
       for (const combine of [false, true]) assert.deepEqual(parse(size, value, { combine }), upstream(size, value, { combine }));
     }
-    if (size > 0) assert.deepEqual(parse(size, 'bytes=-1'), upstream(size, 'bytes=-1'));
+    assert.deepEqual(parse(size, 'bytes=-1'), upstream(size, 'bytes=-1'));
   }
 });
 

@@ -27,12 +27,13 @@ invalidate existing compatible validators. `options.weak` overrides the default:
 false for bodies and true for file metadata.
 
 - One-shot native hashing avoids a separate hash object on supporting runtimes.
-  Empty bodies bypass hashing and byte-length calculation.
 - `Uint8Array` inputs hash only their visible bytes, honoring view offsets and
   lengths without modifying the input.
 - Actual `fs.Stats`, bigint Stats, and minimal `{ size, mtime }` objects work.
   Bigint sizes remain exact. Metadata tags retain the existing size/mtime format
-  and millisecond resolution.
+  and millisecond resolution. Node derives a bigint Stats `mtime` by truncating
+  nanoseconds while a plain Stats `mtime` is rounded, so switching a file to
+  bigint stats can change its tag by one millisecond.
 - Sizes must be non-negative safe integers or non-negative bigints. Invalid
   sizes and invalid/non-Date modification times throw `TypeError`, preventing
   misleading tags containing NaN or rounded unsafe numeric sizes.

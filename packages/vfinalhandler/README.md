@@ -59,10 +59,11 @@ clients that do not finish sending their bodies.
 
 ## Improvements and intentional differences
 
-- **One completion:** the first accepted call wins, preventing duplicate writes
-  and duplicate error callbacks. A 404 ignored because headers have already been
-  sent does not consume the handler; a later error can still close that partial
-  response. Later errors after an accepted call need separate application logging.
+- **One completion:** the first accepted call wins, preventing duplicate writes.
+  A 404 ignored because headers have already been sent does not consume the
+  handler; a later error can still close that partial response. Errors passed
+  after an accepted call are not written, but they are still reported through
+  `onerror`, since frameworks such as Express log errors only through it.
 - **Recheck after draining:** if another writer sends headers while the body is
   draining, a pending error closes the partial response and a pending 404 is
   ignored. Completed/destroyed responses and aborted requests receive no new

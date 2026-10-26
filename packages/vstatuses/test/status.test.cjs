@@ -30,7 +30,7 @@ test('rejects unknown codes and messages', () => {
   for (let code = 0; code < 1000; code++) {
     if (upstream.message[code] === undefined) {
       assert.throws(() => status(code), /invalid status code/);
-      assert.throws(() => status(String(code)), /invalid status/);
+      assert.throws(() => status(String(code)), code < 100 ? /invalid status message/ : /invalid status code/);
     }
   }
   for (const value of [NaN, Infinity, -Infinity, 200.5, '', 'not a reason', ' Not Found']) {

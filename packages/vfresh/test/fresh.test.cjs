@@ -81,3 +81,14 @@ test('matches an independent model for 2000 generated valid tag lists', () => {
     assert.equal(fresh({ 'if-none-match': tokens.join(',\t') }, { etag: target }), tokens.some(tag => opaque(tag) === opaque(target)));
   }
 });
+
+test('wildcard and tag-list scans stay linear on long space runs', () => {
+  for (const value of ['*', ' *', '*\t', ' \t* \t']) assert.equal(fresh({ 'if-none-match': value }, {}), true, JSON.stringify(value));
+  for (const value of ['**', '* *', '"*"', '*,', '*x']) assert.equal(fresh({ 'if-none-match': value }, { etag: '"a"' }), false, JSON.stringify(value));
+  const spaces = ' '.repeat(65536);
+  const started = process.hrtime.bigint();
+  assert.equal(fresh({ 'if-none-match': '*' + spaces + 'x' }, { etag: '"a"' }), false);
+  assert.equal(fresh({ 'if-none-match': spaces + '*' + spaces }, { etag: '"a"' }), true);
+  assert.equal(fresh({ 'if-none-match': '"a"' + spaces + 'x' }, { etag: '"a"' }), false);
+  assert.ok(Number(process.hrtime.bigint() - started) / 1e6 < 100, 'long space runs must not backtrack');
+});

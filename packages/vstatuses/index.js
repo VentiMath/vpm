@@ -17,7 +17,7 @@ function flags(numbers) {
 }
 
 function status(value) {
-  if (typeof value === 'number' || (typeof value === 'string' && /^[1-5][0-9]{2}$/.test(value))) {
+  if (typeof value === 'number' || (typeof value === 'string' && /^[0-9]{3}$/.test(value))) {
     const result = message[value];
     if (result !== undefined) return result;
     throw new Error('invalid status code: ' + value);

@@ -27,7 +27,12 @@ function finalhandler(req, res, options) {
   let handled = false;
 
   return function done(error) {
-    if (handled) return;
+    if (handled) {
+      // The first accepted call owns the response, but Express and connect can
+      // only report later errors through this callback, so keep reporting them.
+      if (error && onerror) setImmediate(onerror, error, req, res);
+      return;
+    }
     // An ignored 404 must not prevent a later error from closing a partial response.
     if (!error && res.headersSent) {
       debug('cannot 404 after headers sent');

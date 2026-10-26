@@ -10,7 +10,7 @@ that these replacements have already improved application performance.
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
 | [vee-first](packages/vee-first) | ee-first 1.1.1 | Once-only event dispatch, registration rollback, and cleanup under reentrant event hooks. |
-| [von-finished](packages/von-finished) | on-finished 2.4.1 | Private callback queues, individual registration-time async contexts, and more reliable socket-listener cleanup. |
+| [von-finished](packages/von-finished) | on-finished 2.4.1 | Private callback queues, async resources released after dispatch, and more reliable socket-listener cleanup. |
 | [vparseurl](packages/vparseurl) | parseurl 1.3.3 | Private caches, frozen-request support, cache keys isolated from mutable results, and explicit invalidation. |
 | [vencodeurl](packages/vencodeurl) | encodeurl 2.0.0 | Repairs consecutive unpaired surrogates, incomplete percent escapes, and accidental double encoding. |
 | [vescape-html](packages/vescape-html) | escape-html 1.0.3 | Skips long unchanged spans while preserving the exact escaping and coercion contract. |
@@ -37,7 +37,7 @@ each utility have zero external runtime dependencies, except
 `finalhandler` / `vfinalhandler`, which each declare six, and `http-errors` /
 `vhttp-errors`, which declare **five and one**, respectively.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
-with `vms`. Upstream `debug` also tries to load undeclared optional `supports-color`;
+with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
 not external packages.
 
@@ -72,8 +72,9 @@ phrase. Empty or unavailable pathnames get a readable fallback.
 
 **Compatibility:** retains the callback API, production message hiding, HTML
 formatting, HEAD behavior, HTTP/2 handling, and asynchronous error reporting.
-Repeated accepted calls are now ignored, including later errors; applications
-must log those separately. Invalid error callbacks fail at construction. All six
+Repeated accepted calls do not write again, but later errors are still passed
+to `onerror`, so Express and connect keep logging them. Invalid error callbacks
+fail at construction. All six
 dependencies have VPM counterparts; their documented differences also apply.
 
 **Evidence:** [29 tests](packages/vfinalhandler/test), including 480 differential
@@ -111,8 +112,8 @@ No throughput or memory improvement has been measured.
 
 **Reliability and isolation:** uses `vee-first` for event selection and cleanup.
 Callback queues live in a `WeakMap` instead of a message's `__onFinished` field.
-Each queued callback has its own `AsyncResource`, preserving the context in which
-that callback was registered; resources are released after dispatch. Finishing
+As in `on-finished` 2.4, each queued callback runs in its own registration-time
+`AsyncResource`; those resources are now released after dispatch. Finishing
 before socket assignment removes the waiting socket listener. The first callback
 is queued before subscription hooks can complete the message, and failed
 registration rolls back subscriptions. Obsolete Node.js 0.8 socket patches and
@@ -262,7 +263,7 @@ Changing a logger's namespace refreshes its cached enablement. Elapsed differenc
 use a monotonic clock while `curr` and `prev` retain wall-clock timestamps.
 
 **Dependencies and types:** uses `vms`, with no separate types package required.
-Node's terminal capabilities replace the undeclared optional `supports-color`
+Node's terminal capabilities replace the optional-peer `supports-color`
 lookup, so incidental installed packages cannot change the chosen palette.
 
 **Compatibility:** retains namespace patterns, exclusion precedence, formatting
