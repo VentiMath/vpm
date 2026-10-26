@@ -55,6 +55,17 @@
         "vstatuses": "workspace:*",
       },
     },
+    "packages/vmime-db": {
+      "name": "vmime-db",
+      "version": "0.1.0",
+    },
+    "packages/vmime-types": {
+      "name": "vmime-types",
+      "version": "0.1.0",
+      "dependencies": {
+        "vmime-db": "workspace:*",
+      },
+    },
     "packages/vms": {
       "name": "vms",
       "version": "0.1.0",
@@ -101,6 +112,10 @@
     "vfresh": ["vfresh@workspace:packages/vfresh"],
 
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
+
+    "vmime-db": ["vmime-db@workspace:packages/vmime-db"],
+
+    "vmime-types": ["vmime-types@workspace:packages/vmime-types"],
 
     "vms": ["vms@workspace:packages/vms"],
 

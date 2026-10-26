@@ -22,6 +22,8 @@ that these replacements have already improved application performance.
 | [vetag](packages/vetag) | etag 1.8.1 | Compatible native one-shot hashing, byte-array views, exact bigint metadata, and validated stat inputs. |
 | [vfresh](packages/vfresh) | fresh 2.0.0 | Quoted-comma ETags, strict tag syntax, header arrays, and case-insensitive no-cache handling outside quoted extensions. |
 | [vrange-parser](packages/vrange-parser) | range-parser 1.2.1 | Complete numeric syntax, safe bounds, oversized suffixes, and stable combined-range ordering. |
+| [vmime-db](packages/vmime-db) | mime-db 1.54.0 | Immutable records and extension arrays, prototype-free dictionaries, precise types, and a verified data snapshot. |
+| [vmime-types](packages/vmime-types) | mime-types 3.0.2 | Correct charset parameter recognition, complete media-type validation, immutable mappings, and prepared default Content-Type strings. |
 
 Every package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
@@ -30,13 +32,20 @@ package. Test fixtures and benchmarks stay out of installable archives.
 
 Most replacements preserve their runtime dependency counts. Both versions of
 each utility have zero external runtime dependencies, except
-`on-finished` / `von-finished` and `debug` / `vdebug`, which each declare one,
+`on-finished` / `von-finished`, `debug` / `vdebug`, and `mime-types` /
+`vmime-types`, which each declare one,
 `finalhandler` / `vfinalhandler`, which each declare six, and `http-errors` /
 `vhttp-errors`, which declare **five and one**, respectively.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load undeclared optional `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
 not external packages.
+
+`vmime-types` replaces `mime-db` with `vmime-db`, completing VPM counterparts for
+the supporting utilities used by modern `send` 1.2.1 and `serve-static` 2.2.1.
+The replacements for
+`send` and `serve-static` themselves remain future work. Older Express 4 uses a
+different static stack, including `mime` 1.x, and has not been migrated.
 
 `vhttp-errors` keeps only `vstatuses`; native operations and local constructor
 naming replace `inherits`, `setprototypeof`, and `toidentifier`. Invalid non-error
@@ -338,6 +347,47 @@ remain unsatisfiable. Empty representations still return `-1`.
 Real Express responses cover 206, 416, oversized suffixes, and malformed-range
 fallback. Benchmarks were 5–16% faster on Node and **15–34% slower on Bun**.
 [Full API, tests, and measurements](packages/vrange-parser/README.md).
+
+## vmime-db
+
+**Data integrity and provenance:** keeps all 2,522 upstream records byte for byte,
+with a pinned source commit and checked SHA-256 digest. The runtime database,
+records, and extension arrays are frozen. Null prototypes prevent inherited
+names from appearing as data. Types explicitly allow missing keys and fields.
+
+**Compatibility:** values and extension ordering match 1.54.0. Shared mutations,
+record prototype methods, and the direct `db.json` package subpath are no longer
+supported. Customization uses separate copies. The package adds no runtime
+dependencies and makes no claim that its unchanged MIME assignments are better.
+
+**Evidence and costs:** five tests verify complete data equality, provenance,
+schema, immutability, and customization isolation. First-extension reads were
+slower (13 → 15 ns on Node; 8 → 14 ns on Bun). Initial loading includes freezing
+work; startup measurements and a manual data-update procedure are documented.
+[Provenance, API, and measurements](packages/vmime-db/README.md).
+
+## vmime-types
+
+**Header correctness:** recognizes charset parameter names case-insensitively
+and parses quoted values and escapes. Uppercase `CHARSET=ascii` no longer causes
+a duplicate default; `note="charset"` no longer suppresses a missing default.
+Malformed media types, incomplete parameters, control characters, and duplicate
+charsets return `false`. Shared mappings and exported methods are immutable.
+
+**Compatibility and implementation:** preserves all 1,239 extension choices and
+the default charset/extension data from 3.0.2 with database 1.54.0. Scoring runs
+once per candidate, with upstream tie-breaking intact. Default Content-Type
+strings are prepared once. Strict parameter parsing and immutable exports are
+intentional differences; older MIME package mappings are not the baseline.
+
+**Evidence and performance:** nine tests cover every type and extension, 4,000
+generated paths, quoted parameters, invalid syntax, and mutation attempts.
+Twenty-three real HTTP checks passed in Express 5.2.1 on Node and Bun, including
+send/serve-static, negotiation, downloads, and JSON parsing. Content-Type from an
+extension measured about **4.4× faster on Node and 12.3× faster on Bun**;
+parameterized headers were **63–105% slower**, and full-path lookup was **13%
+slower on Node**. These are microbenchmarks, not application throughput results.
+[Full API, validation, benchmarks, and installation](packages/vmime-types/README.md).
 
 ## Reading and extending this record
 

@@ -1,0 +1,33 @@
+{
+  "name": "vmime-db",
+  "version": "0.1.0",
+  "description": "Immutable, typed MIME data with a pinned and verifiable source",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "db.json",
+    "provenance.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vmime-db"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vmime-db"
+}

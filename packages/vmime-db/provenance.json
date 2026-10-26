@@ -1,0 +1,8 @@
+{
+  "package": "mime-db",
+  "version": "1.54.0",
+  "commit": "5207a32f76e77ed2f63421641449f8addeacb0a5",
+  "url": "https://raw.githubusercontent.com/jshttp/mime-db/5207a32f76e77ed2f63421641449f8addeacb0a5/db.json",
+  "sha256": "96b8a5746867c832ab56743c05e46e73c9facb04879677df0b356f20496cb6cd",
+  "entries": 2522
+}
