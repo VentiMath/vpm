@@ -1,0 +1,44 @@
+{
+  "name": "vsend",
+  "version": "0.1.0",
+  "description": "HTTP file delivery with VPM dependencies, strong preconditions, and guarded stream cleanup",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "vdebug": "workspace:*",
+    "vencodeurl": "workspace:*",
+    "vescape-html": "workspace:*",
+    "vetag": "workspace:*",
+    "vfresh": "workspace:*",
+    "vhttp-errors": "workspace:*",
+    "vmime-types": "workspace:*",
+    "vms": "workspace:*",
+    "von-finished": "workspace:*",
+    "vrange-parser": "workspace:*",
+    "vstatuses": "workspace:*"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vsend"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vsend"
+}

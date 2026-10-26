@@ -85,6 +85,23 @@
       "name": "vrange-parser",
       "version": "0.1.0",
     },
+    "packages/vsend": {
+      "name": "vsend",
+      "version": "0.1.0",
+      "dependencies": {
+        "vdebug": "workspace:*",
+        "vencodeurl": "workspace:*",
+        "vescape-html": "workspace:*",
+        "vetag": "workspace:*",
+        "vfresh": "workspace:*",
+        "vhttp-errors": "workspace:*",
+        "vmime-types": "workspace:*",
+        "vms": "workspace:*",
+        "von-finished": "workspace:*",
+        "vrange-parser": "workspace:*",
+        "vstatuses": "workspace:*",
+      },
+    },
     "packages/vstatuses": {
       "name": "vstatuses",
       "version": "0.1.0",
@@ -124,6 +141,8 @@
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
 
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
+
+    "vsend": ["vsend@workspace:packages/vsend"],
 
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
   }

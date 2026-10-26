@@ -122,6 +122,17 @@ test('replaces representation and framing headers while retaining unrelated head
   assert.equal(res.headers['x-content-type-options'], 'nosniff');
 });
 
+test('preserves explicit 416 range metadata while discarding a stale partial range', () => {
+  for (const status of [400, 416, 500]) {
+    const { response } = run(finalhandler, { error: { status, headers: { 'cOnTeNt-RaNgE': 'bytes */20' } } });
+    assert.equal(response.headers['content-range'], status === 416 ? 'bytes */20' : undefined);
+  }
+  const req = new Request(); const res = new Response();
+  res.setHeader('Content-Range', 'bytes 0-3/20');
+  finalhandler(req, res)({ status: 416 });
+  assert.equal(res.headers['content-range'], undefined);
+});
+
 test('snapshots error headers including array values before request draining', () => {
   const req = new Request(true); const res = new Response();
   const headers = { 'Retry-After': '5', 'Set-Cookie': ['a=1'] };

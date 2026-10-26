@@ -82,15 +82,18 @@ function finalhandler(req, res, options) {
       res.statusCode = status;
       if (req.httpVersionMajor < 2) res.statusMessage = statusMessage(status);
 
+      // Discard a previous partial response's range, but preserve an explicit
+      // 416 error's range metadata (for example, "bytes */20" from send).
+      res.removeHeader('Content-Range');
       if (headers) {
         for (const [name, value] of headers) {
-          if (!replacedHeaders.has(name.toLowerCase())) res.setHeader(name, value);
+          const lower = name.toLowerCase();
+          if (!replacedHeaders.has(lower) || status === 416 && lower === 'content-range') res.setHeader(name, value);
         }
       }
       // The new HTML body replaces both existing and error-supplied framing.
       res.removeHeader('Content-Encoding');
       res.removeHeader('Content-Language');
-      res.removeHeader('Content-Range');
       res.removeHeader('Transfer-Encoding');
       res.removeHeader('Trailer');
       res.setHeader('Content-Security-Policy', "default-src 'none'");
