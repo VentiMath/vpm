@@ -1,0 +1,43 @@
+{
+  "name": "vdebug",
+  "version": "0.1.0",
+  "description": "Namespace logging with compiled filters, monotonic timing, and explicit dependencies",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "browser": "./browser.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json",
+    "./browser": {
+      "types": "./index.d.ts",
+      "default": "./browser.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "common.js",
+    "node.js",
+    "browser.js"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vdebug"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vdebug",
+  "browser": "./browser.js",
+  "dependencies": {
+    "vms": "workspace:*"
+  }
+}

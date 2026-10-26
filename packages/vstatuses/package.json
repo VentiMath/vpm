@@ -1,0 +1,32 @@
+{
+  "name": "vstatuses",
+  "version": "0.1.0",
+  "description": "HTTP status lookups with strict numeric strings and immutable tables",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "codes.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vstatuses"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vstatuses"
+}

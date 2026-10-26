@@ -14,6 +14,9 @@ that these replacements have already improved application performance.
 | [vparseurl](packages/vparseurl) | parseurl 1.3.3 | Private caches, frozen-request support, cache keys isolated from mutable results, and explicit invalidation. |
 | [vencodeurl](packages/vencodeurl) | encodeurl 2.0.0 | Repairs consecutive unpaired surrogates, incomplete percent escapes, and accidental double encoding. |
 | [vescape-html](packages/vescape-html) | escape-html 1.0.3 | Skips long unchanged spans while preserving the exact escaping and coercion contract. |
+| [vstatuses](packages/vstatuses) | statuses 2.0.2 | Strict numeric strings, immutable status data, and prototype-free dictionaries. |
+| [vms](packages/vms) | ms 2.1.3 | Symmetric negative rounding, consistent plurals, and errors that do not serialize invalid inputs. |
+| [vdebug](packages/vdebug) | debug 4.4.3 | Compiled namespace filters, monotonic elapsed timing, coherent filter snapshots, and native terminal color detection. |
 
 Every package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
@@ -22,8 +25,11 @@ package. Test fixtures and benchmarks stay out of installable archives.
 
 Runtime dependency counts have **not** fallen for these replacements: both
 versions of each utility have zero external runtime dependencies, except
-`on-finished` / `von-finished`, which each have one. `von-finished` replaces
-`ee-first` with `vee-first`; built-in Node.js modules are not external packages.
+`on-finished` / `von-finished` and `debug` / `vdebug`, which each declare one.
+`von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
+with `vms`. Upstream `debug` also tries to load undeclared optional `supports-color`;
+`vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
+not external packages.
 
 ## vee-first
 
@@ -143,6 +149,80 @@ cover all UTF-16 code units, generated strings, scanner boundaries, reentrant
 coercion, and long sparse and dense inputs. See the
 [benchmark](packages/vescape-html/bench/compare.cjs) and
 [full measurements](packages/vescape-html/README.md#performance).
+
+## vstatuses
+
+**Integrity and validation:** numeric strings must be exact three-digit codes.
+Upstream's `status('200garbage')` returns `'OK'`; VPM rejects it. Status tables,
+the code list, and their exported references are immutable, preventing one
+consumer from changing another's results. Prototype-free dictionaries return
+`undefined` for inherited names rather than exposing object properties. Types
+describe readonly tables and the distinct numeric/string return contracts.
+
+**Compatibility:** all status codes, reason phrases, and category flags remain
+unchanged from 2.0.2. Numeric prefixes, padding, fractional strings, and whitespace
+around codes are intentionally rejected. Code that changes upstream's shared
+tables must keep its custom data separately.
+
+**Performance tradeoff:** freezing tables adds lookup cost. Direct message lookup
+was slower on both Node and Bun; numeric function calls were slower on Node and
+faster on Bun in the recorded run. This is primarily an integrity improvement,
+with no measured application speedup.
+
+**Evidence:** [complete data and mutation tests](packages/vstatuses/test/status.test.cjs),
+[benchmark](packages/vstatuses/bench/compare.cjs), and
+[full measurements](packages/vstatuses/README.md#performance).
+
+## vms
+
+**Correctness:** `ms(-1500, { long: true })` changes from `'-1 seconds'` to
+`'-2 seconds'`. Negative half-unit rounding mirrors positive rounding, and plurals
+follow the rounded magnitude. Invalid-type errors no longer call `JSON.stringify`
+on arbitrary values, avoiding `toJSON()` side effects and serialization failures.
+Declarations distinguish parsing's possible `undefined` from formatting's string.
+
+**Compatibility:** retains unit aliases, the 100-character parse limit, ordinary
+positive formatting, and upstream year/week definitions. Negative half-unit
+rounding intentionally differs. Invalid types and non-finite numbers now produce
+a stable `TypeError` instead of upstream's variable serialization-based errors.
+
+**Performance:** the final parser selects a scale from the validated unit's
+initial letter. Recorded parsing cases were about 15–20% faster on Node, with
+smaller gains on Bun; formatting was similar or faster. These are individual-call
+measurements, with no startup, memory, or application-level improvement measured.
+
+**Evidence:** [alias, rounding, and differential tests](packages/vms/test/ms.test.cjs),
+[benchmark](packages/vms/bench/compare.cjs), and
+[full measurements](packages/vms/README.md#performance).
+
+## vdebug
+
+**Matching and consistency:** compiles wildcard filters into literal chunks when
+configuration changes. Readonly `names`, `skips`, and `namespaces` snapshots keep
+cached logger decisions consistent; `enable()` updates the configuration.
+Changing a logger's namespace refreshes its cached enablement. Elapsed differences
+use a monotonic clock while `curr` and `prev` retain wall-clock timestamps.
+
+**Dependencies and types:** uses `vms`, with no separate types package required.
+Node's terminal capabilities replace the undeclared optional `supports-color`
+lookup, so incidental installed packages cannot change the chosen palette.
+
+**Compatibility:** retains namespace patterns, exclusion precedence, formatting
+hooks, sinks, extensions, Node inspection options, and browser storage/console
+behavior. Direct filter mutation is unsupported. Invalid types fail explicitly;
+enabled overrides accept boolean/null. Elapsed time is monotonic, color detection
+can differ, and private upstream `src/*` imports are not exported.
+
+**Performance tradeoff:** matching was faster in the recorded cases, including
+large gains for repeated-prefix failures. Configuration was slower because it
+compiles filters. Cached disabled calls were close on Node and slower in the Bun
+sample; enabled calls without I/O were similar. No application throughput or
+memory reduction is claimed.
+
+**Evidence:** [matcher, lifecycle, Node, and browser tests](packages/vdebug/test/debug.test.cjs),
+[benchmark](packages/vdebug/bench/compare.cjs), and
+[full measurements and runtime notes](packages/vdebug/README.md#validation-and-performance).
+Combined Express 4/5 checks exercised all three replacements under Node and Bun.
 
 ## Reading and extending this record
 

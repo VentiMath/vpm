@@ -9,6 +9,13 @@
         "typescript": "5.8.3",
       },
     },
+    "packages/vdebug": {
+      "name": "vdebug",
+      "version": "0.1.0",
+      "dependencies": {
+        "vms": "workspace:*",
+      },
+    },
     "packages/vee-first": {
       "name": "vee-first",
       "version": "0.1.0",
@@ -19,6 +26,10 @@
     },
     "packages/vescape-html": {
       "name": "vescape-html",
+      "version": "0.1.0",
+    },
+    "packages/vms": {
+      "name": "vms",
       "version": "0.1.0",
     },
     "packages/von-finished": {
@@ -32,6 +43,10 @@
       "name": "vparseurl",
       "version": "0.1.0",
     },
+    "packages/vstatuses": {
+      "name": "vstatuses",
+      "version": "0.1.0",
+    },
   },
   "packages": {
     "@types/node": ["@types/node@22.14.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-u0HuPQwe/dHrItgHHpmw3N2fYCR6x4ivMNbPHRkBVP4CvN+kiRrKHWk3i8tXiO/joPwXLMYvF9TTF0eqgHIuOw=="],
@@ -40,14 +55,20 @@
 
     "undici-types": ["undici-types@6.21.0", "", {}, "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="],
 
+    "vdebug": ["vdebug@workspace:packages/vdebug"],
+
     "vee-first": ["vee-first@workspace:packages/vee-first"],
 
     "vencodeurl": ["vencodeurl@workspace:packages/vencodeurl"],
 
     "vescape-html": ["vescape-html@workspace:packages/vescape-html"],
 
+    "vms": ["vms@workspace:packages/vms"],
+
     "von-finished": ["von-finished@workspace:packages/von-finished"],
 
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
+
+    "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
   }
 }
