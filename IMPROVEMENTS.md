@@ -52,14 +52,29 @@ total external VPM dependencies. Its dependencies are all existing VPM packages.
 
 ## The target dependency graph
 
-VPM replaces the packages that [ventimath](https://github.com/johnclyde-org/ventimath-private)
-actually installs, in the versions its lockfiles resolve, rather than packages in
-general. Its production HTTP path is Cloud Functions gen 2: the Functions
-Framework 5.0.2 serves `firebase-functions` 7.4.0 `onRequest` handlers through
-Express 5.2.1, `body-parser` 2.2.2, `router` 2.2.0, `send` 1.2.1, and
-`serve-static` 2.2.1. Every package above is a counterpart to the exact version
-on that path. `jsonwebtoken` 9.0.3 reaches `ms`, and the proxy agents under
-`firebase-admin` reach `debug`.
+VPM's targets come from [ventimath](https://github.com/johnclyde-org/ventimath-private)'s
+Cloud Functions gen 2 HTTP path. The reproducible consumer fixture also tests
+parent upgrades before choosing which dependencies to replace. Its current
+upgrade target is Functions Framework 5.0.2 serving `firebase-functions` 7.4.0
+`onRequest` handlers through Express 5.3.0, `body-parser` 2.4.0, `router` 2.2.0,
+`send` 1.2.1, and `serve-static` 2.2.1. Updating this fixture does not update or
+deploy the application. Every package above targets the corresponding upstream
+version in this graph. `jsonwebtoken` 9.0.3 reaches `ms`, and the proxy agents
+under `firebase-admin` reach `debug`.
+
+The fixture previously pinned Express 5.2.1 and `body-parser` 2.2.2, both of
+which requested `content-type ^1.0.5`. Upgrading those parents to
+[Express 5.3.0](https://github.com/expressjs/express/releases/tag/v5.3.0) and
+[body-parser 2.4.0](https://github.com/expressjs/body-parser/releases/tag/v2.4.0)
+removes 1.x and consolidates three installed copies into one `content-type`
+2.1.0 shared by Express, body-parser, type-is, and negotiator. No parser override
+is needed. An override alone would be incorrect: the old body-parser passes
+the request object to `parse()`, while 2.x accepts a header string, causing
+the old caller to silently lose charset information. This makes 2.x the next
+VPM replacement baseline. The newer
+[content-type 3.x](https://github.com/jshttp/content-type/releases/tag/v3.0.0)
+requires Node 22 and is ESM-only; current consumers request 2.x, and VPM retains
+its Node 20 and CommonJS contracts.
 
 Three facts about that path shape the gate below. The framework disables
 Express ETags on its own application, so conditional requests to plain handlers
@@ -70,7 +85,7 @@ thrown by a handler itself, with a structured log and a plain 500, so
 `body-parser` runs first, so an application's body limits are never consulted.
 
 Express 4 is gone from that graph: `firebase-functions` 7.3.2 moved its only
-Express use, the local development binary, to Express 5, so ventimath's upgrade
+Express use, the local development binary, to Express 5, so the fixture's upgrade
 to 7.4.0 removed the nested branch (`finalhandler` 1.3.2, `send` 0.19.2,
 `serve-static` 1.16.3, `fresh` 0.5.2, `debug` 2.6.9, `ms` 2.0.0, `mime-types`
 2.1.35). Still not covered: `form-data` 2.5.5, reached only through
@@ -83,11 +98,13 @@ and `type-is` 1.6. The gate reports such copies instead of aliasing them.
 
 [`scripts/integration.cjs`](scripts/integration.cjs) is a required CI job on
 Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
-pins the consumers above to the versions ventimath resolves. The gate aliases
+pins the consumer upgrade target above. The gate aliases
 every VPM package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework and runs 60 HTTP checks: JSON bodies and malformed
-bodies, CORS preflight, `res.set('Content-Type')` with syntax upstream
+the Functions Framework and runs 65 HTTP checks: JSON bodies and malformed
+bodies, UTF-16 decoding and unsupported charset rejection, weighted Accept
+negotiation with quoted commas, preservation of Content-Type parameters when
+Express changes the charset, CORS preflight, `res.set('Content-Type')` with syntax upstream
 tolerated, conditional requests with quoted-comma tags and forced reloads,
 redirect encoding and escaping, `sendFile` and `serve-static` with ranges,
 HEAD, mounted-root redirects, static redirect/405 framing, download and empty-file
@@ -97,7 +114,10 @@ thrown HTTP errors with headers, conflicting framing headers, an error after an 
 404, `jsonwebtoken` expiry durations, and `DEBUG` output from each consumer
 namespace. VPM exports are instrumented before their parents load, so transitive
 calls count too. It fails if a target has no aliased installed copy or is never
-reached; other versions are reported as uncovered. Earlier per-package integration
+reached; other versions are reported as uncovered. Dependency traversal includes
+packages that hide their manifests through `exports`. The gate also requires
+one shared `content-type` 2.x copy and verifies that all four callers are included.
+Earlier per-package integration
 scripts were replaced by this gate; the bugs that review found in
 `vfinalhandler` and `vmime-types` were only visible through real consumers.
 
@@ -441,7 +461,7 @@ intentional difference; older MIME package mappings are not the baseline.
 **Evidence and performance:** nine tests cover every type and extension, 4,000
 generated paths, quoted parameters, invalid syntax, and mutation attempts.
 The integration gate serves static files, `sendFile`, typed responses, and JSON
-through it in Express 5.2.1 on Node and Bun. Content-Type from an
+through it in Express 5.3.0 on Node and Bun. Content-Type from an
 extension measured about **4.4× faster on Node and 12.3× faster on Bun**;
 parameterized headers were **63–105% slower**, and full-path lookup was **13%
 slower on Node**. These are microbenchmarks, not application throughput results.
@@ -470,7 +490,7 @@ resolution limits. This is not an atomic file snapshot or a filesystem jail.
 
 **Evidence and performance:** twenty-five tests cover differential HTTP cases,
 failure paths, disconnections, and HTTP/2. The shared integration gate passed
-60 HTTP checks through the pinned Functions Framework/Express stack on Node and
+65 HTTP checks through the pinned Functions Framework/Express stack on Node and
 Bun, including downloads and sendFile callbacks. Its 416 check also exposed and
 fixed dropped range metadata in `vfinalhandler`. Sequential localhost HTTP
 measurements showed ordinary GETs **4–10% slower**, HEAD **10–12% slower**, and
@@ -496,7 +516,7 @@ reach `next(error)`.
 
 **Compatibility and evidence:** seventeen tests include a differential matrix,
 cache mutation reproduction, configuration changes, framing, error propagation,
-multiple roots, and HTTP/2. The shared integration gate now runs 60 HTTP checks
+multiple roots, and HTTP/2. The shared integration gate now runs 65 HTTP checks
 through the Express 5 Cloud Functions stack with `vserve-static` installed by
 process-local alias. Existing middleware no longer observes later configuration
 mutations, and invalid options fail earlier. The `vsend` limitations still apply.

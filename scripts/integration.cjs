@@ -1,6 +1,6 @@
 'use strict';
 // The integration gate. Aliases every VPM package into ventimath's pinned HTTP
-// consumers (scripts/consumers) inside this process only, then drives those
+// consumer upgrade target (scripts/consumers) inside this process only, then drives those
 // consumers the way ventimath's Cloud Functions use them: an onRequest handler
 // and an Express application served by the Functions Framework. Installed copies
 // whose versions VPM does not target are reported, not aliased.
@@ -74,9 +74,24 @@ function replacement(name) {
 }
 for (const name of Object.keys(targets)) replacement(name);
 
+// Some packages hide package.json or expose only ESM entry points. Locate their
+// metadata through Node's package search paths without executing their code.
+function resolveManifest(from, name) {
+  try { return from.resolve(name + '/package.json'); } catch (error) {
+    if (error.code !== 'ERR_PACKAGE_PATH_NOT_EXPORTED') throw error;
+    for (const directory of from.resolve.paths(name) || []) {
+      const manifest = path.join(directory, name, 'package.json');
+      if (fs.existsSync(manifest) && require(manifest).name === name) return fs.realpathSync(manifest);
+    }
+    throw error;
+  }
+}
+
 // Walk every dependency edge from the fixture roots and alias matching copies.
 const aliased = new Map();
 const uncovered = new Map();
+const contentTypes = new Map();
+const contentTypeCallers = new Set();
 const seen = new Set();
 const queue = Object.keys(fixture.dependencies).map(name => require.resolve(path.join(modules, name, 'package.json')));
 while (queue.length) {
@@ -84,11 +99,16 @@ while (queue.length) {
   if (seen.has(manifest)) continue;
   seen.add(manifest);
   const data = require(manifest);
+  if (data.name === 'content-type') contentTypes.set(manifest, data.version);
   const from = createRequire(manifest);
   for (const name of Object.keys(Object.assign({}, data.dependencies, data.optionalDependencies))) {
     let child;
-    try { child = from.resolve(name + '/package.json'); } catch { continue; }
+    try { child = resolveManifest(from, name); } catch (error) {
+      if (Object.hasOwn(data.optionalDependencies || {}, name) && error.code === 'MODULE_NOT_FOUND') continue;
+      throw error;
+    }
     queue.push(child);
+    if (name === 'content-type') contentTypeCallers.add(data.name);
     if (!Object.hasOwn(targets, name)) continue;
     const version = require(child).version;
     const label = name + '@' + version;
@@ -106,6 +126,14 @@ while (queue.length) {
     }
     aliased.set(label, path.relative(modules, path.dirname(entry)));
   }
+}
+// Upgrade callers instead of overriding a parser across incompatible APIs.
+// In particular, old body-parser passes a request object; content-type 2 takes
+// a header string. Every current caller must share the supported 2.x copy.
+assert.equal(contentTypes.size, 1, 'the consumer graph must share one content-type copy');
+assert.match([...contentTypes.values()][0], /^2\./, 'content-type must stay on the compatible 2.x baseline');
+for (const name of ['express', 'body-parser', 'type-is', 'negotiator']) {
+  assert.ok(contentTypeCallers.has(name), `content-type dependency traversal missed ${name}`);
 }
 for (const name of Object.keys(targets)) {
   assert.ok([...aliased.keys()].some(label => label.startsWith(name + '@')), `no installed copy of ${name} was aliased`);
@@ -146,6 +174,8 @@ const api = onRequest({ cors: true }, async (request, response) => {
     return response.send(Buffer.from('%PDF-1.4'));
   }
   if (request.path === '/typed') return response.type('json').send('{"ok":true}');
+  if (request.path === '/parameterized') return response.set('Content-Type', 'text/plain; note="a;b"; charset=iso-8859-1').send('café');
+  if (request.path === '/accept') return response.json({ type: request.accepts(['application/json; profile="a,b"', 'text/html']) });
   if (request.path === '/redirect') return response.redirect('/landing?next=<a b>&x=%zz');
   if (request.path === '/file') return response.sendFile(path.join(directory, 'data.txt'), { maxAge: '1 day' });
   if (request.path === '/deny') throw createError(403, 'forbidden by policy', { headers: { 'X-Policy': 'deny' } });
@@ -208,6 +238,11 @@ async function run() {
     const echo = await request(apiServer, '/echo', { method: 'POST', headers: { 'content-type': 'application/json; CHARSET=utf-8' }, body: '{"a":1}' });
     assert.equal(echo.status, 200); assert.equal(echo.body, '{"a":1}');
     assert.equal(echo.headers['content-type'], 'application/json; charset=utf-8');
+    // A parser-only override of the old body-parser silently loses charset.
+    const utf16 = await request(apiServer, '/echo', { method: 'POST', headers: { 'content-type': 'application/json; CHARSET="UTF-16LE"' }, body: Buffer.from('{"word":"café"}', 'utf16le') });
+    assert.equal(utf16.status, 200); assert.equal(utf16.body, '{"word":"café"}');
+    const unsupportedCharset = await request(apiServer, '/echo', { method: 'POST', headers: { 'content-type': 'application/json; charset=iso-8859-1' }, body: '{"a":1}' });
+    assert.equal(unsupportedCharset.status, 415);
     const malformed = await request(apiServer, '/echo', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{' });
     assert.equal(malformed.status, 400);
     // CORS preflight through firebase-functions.
@@ -218,6 +253,15 @@ async function run() {
     assert.equal(pdf.headers['content-type'], 'application/pdf; name=report (1).pdf');
     const typed = await request(apiServer, '/typed');
     assert.equal(typed.headers['content-type'], 'application/json; charset=utf-8'); assert.equal(typed.body, '{"ok":true}');
+    const parameterized = await request(apiServer, '/parameterized');
+    assert.equal(parameterized.status, 200); assert.equal(parameterized.body, 'café');
+    assert.equal(parameterized.headers['content-type'], 'text/plain; note="a;b"; charset=utf-8');
+    // negotiator uses content-type's comma/start options to walk Accept lists;
+    // a comma inside a quoted parameter must not split a media type.
+    const acceptsJson = await request(apiServer, '/accept', { headers: { accept: 'text/html;q=0.5, application/json; profile="a,b";q=0.9' } });
+    assert.equal(acceptsJson.status, 200); assert.deepEqual(JSON.parse(acceptsJson.body), { type: 'application/json; profile="a,b"' });
+    const acceptsHtml = await request(apiServer, '/accept', { headers: { accept: 'application/json; profile="a,b";q=0, text/html;q=0.5' } });
+    assert.equal(acceptsHtml.status, 200); assert.deepEqual(JSON.parse(acceptsHtml.body), { type: 'text/html' });
     // The Functions Framework disables ETags on its own app, so conditional
     // requests to plain handlers never reach etag or fresh; Express applications
     // deployed as handlers and files served by send still use them.
@@ -230,7 +274,7 @@ async function run() {
     // Redirect formatting (encodeurl, escape-html).
     const redirect = await request(apiServer, '/redirect', { headers: { accept: 'text/html' } });
     assert.equal(redirect.status, 302); assert.equal(redirect.headers.location, '/landing?next=%3Ca%20b%3E&x=%25zz');
-    assert.equal(redirect.body, "<p>Found. Redirecting to /landing?next=%3Ca%20b%3E&amp;x=%25zz</p>");
+    assert.equal(redirect.body, '<!DOCTYPE html><head><title>Found</title></head><body><p>Found. Redirecting to /landing?next=%3Ca%20b%3E&amp;x=%25zz</p></body>');
     // sendFile through send (mime-types, etag, fresh, range-parser, ms for maxAge).
     const file = await request(apiServer, '/file');
     assert.equal(file.body, content); assert.equal(file.headers['content-type'], 'text/plain; charset=utf-8');
@@ -283,7 +327,7 @@ async function run() {
     assert.equal(unsatisfied.status, 416); assert.equal(unsatisfied.headers['content-range'], 'bytes */20');
     assert.equal((await request(appServer, '/send-empty')).body, '');
     const download = await request(appServer, '/download');
-    assert.equal(download.body, content); assert.match(download.headers['content-disposition'], /renamed.txt/);
+    assert.equal(download.body, content); assert.equal(download.headers['content-disposition'], 'attachment; filename=renamed.txt');
     assert.equal((await request(appServer, '/send-missing')).status, 404);
     assert.equal((await request(appServer, '/static/page')).body, '<p>page</p>');
     assert.equal((await request(appServer, '/static/.secret')).status, 404);
@@ -349,6 +393,7 @@ async function run() {
   const runtime = process.versions.bun ? 'Bun ' + process.versions.bun : 'Node ' + process.version;
   const installed = name => require(path.join(modules, name, 'package.json')).version;
   console.log(`${runtime}: ${checks} HTTP checks passed through functions-framework ${installed('@google-cloud/functions-framework')}, firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
+  console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
   console.log('Aliased: ' + [...aliased.keys()].map(label => `${label} ×${calls[label.replace(/@[^@]+$/, '')]}`).join(', '));
   console.log('Not covered by VPM: ' + ([...uncovered].map(([label, via]) => `${label} (via ${[...via].join(', ')})`).join('; ') || 'none'));
 }
