@@ -10,6 +10,9 @@ well-defined behavior, accurate types, disciplined dependencies, and traceable
 releases. Applications should be able to choose from a broad catalog while
 installing only what they need.
 
+See **[VPM improvements](IMPROVEMENTS.md)** for the package-by-package comparison:
+verified fixes, API improvements, benchmark results, and compatibility tradeoffs.
+
 ## Recognizable packages, carefully maintained
 
 VPM packages begin as recognizable counterparts to existing packages, generally

@@ -17,6 +17,10 @@
       "name": "vencodeurl",
       "version": "0.1.0",
     },
+    "packages/vescape-html": {
+      "name": "vescape-html",
+      "version": "0.1.0",
+    },
     "packages/von-finished": {
       "name": "von-finished",
       "version": "0.1.0",
@@ -39,6 +43,8 @@
     "vee-first": ["vee-first@workspace:packages/vee-first"],
 
     "vencodeurl": ["vencodeurl@workspace:packages/vencodeurl"],
+
+    "vescape-html": ["vescape-html@workspace:packages/vescape-html"],
 
     "von-finished": ["von-finished@workspace:packages/von-finished"],
 
