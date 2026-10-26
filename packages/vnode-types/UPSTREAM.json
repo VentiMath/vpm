@@ -110,6 +110,12 @@
     "web-globals/fetch.d.ts",
     "worker_threads.d.ts"
   ],
+  "omitted": [
+    "ts5.6/buffer.buffer.d.ts",
+    "ts5.6/globals.typedarray.d.ts",
+    "ts5.6/index.d.ts"
+  ],
+  "omissionReason": "Legacy compiler compatibility declarations are excluded; VPM targets TypeScript 7.",
   "added": [
     "compat/node/index.d.ts"
   ],

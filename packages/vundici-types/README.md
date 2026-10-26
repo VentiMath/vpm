@@ -33,8 +33,8 @@ that use those APIs.
 
 Install this package together with `vnode-types`; see the
 [archive installation instructions](../vnode-types/README.md#installation).
-TypeScript **5.6 or later** is required. The tested compilers are 5.6.3, 5.8.3,
-and 7.0.2, in Node-only and mixed DOM/Node projects, with `skipLibCheck: false`.
+TypeScript **7.0.2 or later** is required. Checks use 7.0.2 in Node-only and
+mixed DOM/Node projects, with `skipLibCheck: false`.
 
 ```ts
 import type { RequestInit } from 'vundici-types/web';
@@ -69,9 +69,10 @@ node scripts/check-type-archives.cjs
 ```
 
 The type gate reproduces the old errors, checks valid client/mock usage and
-invalid inputs, then runs all three compilers. Archive checks install the actual
-tarballs in an isolated project. Original sources and compilers are confined to
-the separately locked `scripts/type-consumers` test fixture.
+invalid inputs through the TypeScript 7 CLI. Archive checks install the actual
+tarballs in an isolated project. Original upstream declarations and runtime are
+confined to the separately locked `scripts/type-consumers` test fixture; it
+installs no compiler. All checks use the workspace's TypeScript 7 installation.
 
 `UPSTREAM.json` records the upstream npm archive, integrity, original file hashes,
 contributors, and changed files. `node scripts/sync-types.cjs` regenerates the

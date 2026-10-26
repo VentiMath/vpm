@@ -33,7 +33,12 @@ try {
     for (const name of round % 2 ? ['vpm', 'upstream'] : ['upstream', 'vpm']) samples[name].push(run(name));
   }
   const median = values => values.toSorted((a, b) => a - b)[Math.floor(values.length / 2)];
-  const metrics = ['Files', 'Lines of Definitions', 'Memory used', 'Check time', 'Total time'];
+  const metrics = ['Files', 'Lines', 'Memory used', 'Check time', 'Total time'];
+  for (const runs of Object.values(samples)) {
+    for (const run of runs) {
+      for (const metric of metrics) assert.ok(Number.isFinite(run[metric]), 'missing compiler metric: ' + metric);
+    }
+  }
   const results = Object.fromEntries(Object.entries(samples).map(([name, runs]) => [name,
     Object.fromEntries(metrics.map(metric => [metric, median(runs.map(run => run[metric]))])),
   ]));

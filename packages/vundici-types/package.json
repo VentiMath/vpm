@@ -12,7 +12,7 @@
   "files": ["**/*.d.ts", "LICENSE", "NOTICE", "README.md", "UPSTREAM.json"],
   "license": "MIT",
   "peerDependencies": { "vnode-types": "^0.1.0" },
-  "vpm": { "kind": "types", "upstream": "undici-types@6.21.0", "typescript": ">=5.6" },
+  "vpm": { "kind": "types", "upstream": "undici-types@6.21.0", "typescript": ">=7.0.2" },
   "repository": { "type": "git", "url": "git+https://github.com/ventimath/vpm.git", "directory": "packages/vundici-types" },
   "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vundici-types"
 }

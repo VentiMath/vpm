@@ -67,13 +67,13 @@ void [init, form, canvas];
     }));
     run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--cache', path.join(directory, 'npm-cache')]);
   }
-  function compile(name, dom, compatibility) {
+  function compile(dom, compatibility) {
     fs.writeFileSync(path.join(directory, 'tsconfig.json'), JSON.stringify({ compilerOptions: {
       strict: true, noEmit: true, target: 'ES2022', module: 'NodeNext', moduleResolution: 'NodeNext',
       lib: ['ES2022', ...(dom ? ['DOM', 'DOM.Iterable'] : [])], types: [compatibility ? 'node' : 'vnode-types'], skipLibCheck: false,
       ...(compatibility ? { typeRoots: ['./node_modules/vnode-types/compat', './node_modules/@types'] } : {}),
-    }, files: dom ? ['browser.mts'] : ['consumer.cts', 'consumer.mts', ...(compatibility ? ['legacy-reference.cts'] : [])] }));
-    const tsc = compiler(name);
+    }, files: [...(dom ? ['browser.mts'] : ['consumer.cts', 'consumer.mts']), ...(compatibility ? ['legacy-reference.cts'] : [])] }));
+    const tsc = compiler();
     const output = run(process.execPath, [tsc.path, '-p', path.join(directory, 'tsconfig.json'), '--listFiles', '--pretty', 'false']);
     assert.doesNotMatch(output, /\/packages\/v(?:node|undici)-types\//, 'must resolve installed archives, not workspace sources');
     assert.doesNotMatch(output, /\/node_modules\/undici-types\//);
@@ -81,13 +81,12 @@ void [init, form, canvas];
     console.log(`Archives: TypeScript ${tsc.version}, ${dom ? 'DOM + Node' : 'CJS + ESM Node'}, ${compatibility ? 'legacy node references' : 'VPM names'} passed.`);
   }
   install();
-  for (const name of ['typescript-min', 'typescript', 'typescript-current']) {
-    compile(name, false, false);
-    compile(name, true, false);
-  }
+  compile(false, false);
+  compile(true, false);
   // Third-party declarations often explicitly reference "node". A small type
   // root redirects that reference to the existing VPM tree, without a second copy.
-  for (const name of ['typescript-min', 'typescript', 'typescript-current']) compile(name, false, true);
+  compile(false, true);
+  compile(true, true);
 } finally {
   fs.rmSync(directory, { recursive: true, force: true });
 }

@@ -3,20 +3,11 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { spawnSync } = require('node:child_process');
-const ts = require('typescript');
-const { root, modules, configuration, runtimeTypeTests, compiler } = require('./platform-types.cjs');
+const { root, modules, configuration, runtimeTypeTests, compiler, compile: compileConfig, clean } = require('./platform-types.cjs');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-platform-types-'));
 const write = (name, text) => { const file = path.join(temporary, name); fs.writeFileSync(file, text); return file; };
 function compile(files, options) {
-  const config = ts.parseJsonConfigFileContent(configuration(files, options), ts.sys, root);
-  const program = ts.createProgram(config.fileNames, config.options);
-  return { program, diagnostics: ts.getPreEmitDiagnostics(program) };
-}
-function clean(result) {
-  assert.equal(result.diagnostics.length, 0, ts.formatDiagnosticsWithColorAndContext(result.diagnostics, {
-    getCanonicalFileName: f => f, getCurrentDirectory: () => root, getNewLine: () => '\n',
-  }));
+  return compileConfig(configuration(files, options));
 }
 async function run() {
   const common = write('common.cts', `
@@ -66,36 +57,33 @@ void [requestBytes, responseBytes];
 `);
   clean(compile([common], { baseline: true }));
   clean(compile([common, fixes]));
-  const failures = compile([fixes], { baseline: true }).diagnostics;
+  const regression = compile([fixes], { baseline: true });
+  assert.notEqual(regression.status, 0, 'upstream must reject the regression fixture');
+  const failures = regression.diagnostics;
   assert.equal(failures.length, 6, 'the upstream fixture must reproduce all six regression assertions');
-  assert.deepEqual(failures.map(d => d.code).sort(), [2339, 2339, 2353, 2554, 2578, 2578]);
+  assert.deepEqual(failures.sort(), [2339, 2339, 2353, 2554, 2578, 2578], regression.output);
 
   // Compare the same consumers on the same compiler and standard library.
   const runtimeFiles = runtimeTypeTests();
   const before = compile(runtimeFiles, { baseline: true });
   const after = compile(runtimeFiles);
   clean(before); clean(after);
-  const upstreamFiles = before.program.getSourceFiles().filter(f => /\/undici-types\//.test(f.fileName));
-  const vpmFiles = after.program.getSourceFiles().filter(f => /\/vundici-types\//.test(f.fileName));
+  const upstreamFiles = before.files.filter(f => /\/undici-types\//.test(f));
+  const vpmFiles = after.files.filter(f => /\/vundici-types\//.test(f));
+  assert.ok(upstreamFiles.length > 0 && vpmFiles.length > 0, 'both declaration graphs must be present in compiler output');
   assert.ok(vpmFiles.length < upstreamFiles.length);
-  for (const file of after.program.getSourceFiles()) {
-    assert.doesNotMatch(file.fileName, /\/undici-types\/|\/node_modules\/(?:\.bun\/[^/]+\/node_modules\/)?@types\/node\//);
+  for (const file of after.files) {
+    assert.doesNotMatch(file, /\/undici-types\/|\/node_modules\/(?:\.bun\/[^/]+\/node_modules\/)?@types\/node\//);
   }
-  assert.ok(!vpmFiles.some(f => /^(mock-|pool|agent|index)/.test(path.basename(f.fileName))));
+  assert.ok(!vpmFiles.some(f => /^(mock-|pool|agent|index)/.test(path.basename(f))));
   console.log(`Node consumer closure: ${upstreamFiles.length} upstream Undici files → ${vpmFiles.length} VPM files; no upstream Node/Undici declarations loaded.`);
 
-  // Exercise the minimum, workspace, and current compilers in fresh processes.
-  // Strictly check declarations in both Node-only and DOM projects, in CJS/ESM.
-  for (const name of ['typescript-min', 'typescript', 'typescript-current']) {
-    const tsc = compiler(name);
-    for (const browser of [false, true]) {
-      const files = browser ? [common, fixes, dom] : [common, fixes, ...runtimeFiles,
-        path.join(root, 'packages/vnode-types/test/types.ts'), path.join(root, 'packages/vundici-types/test/types.ts')];
-      const config = write('tsconfig.json', JSON.stringify(configuration(files, { dom: browser })));
-      const result = spawnSync(process.execPath, [tsc.path, '-p', config, '--pretty', 'false'], { encoding: 'utf8', cwd: root });
-      assert.equal(result.status, 0, `${tsc.version} ${browser ? 'DOM' : 'Node'}\n${result.stdout}\n${result.stderr}`);
-      console.log(`TypeScript ${tsc.version}: ${browser ? 'DOM + Node' : 'Node-only'} contracts passed.`);
-    }
+  // Strictly check Node-only and DOM projects, in CJS/ESM, on the workspace compiler.
+  for (const browser of [false, true]) {
+    const files = browser ? [common, fixes, dom] : [common, fixes, ...runtimeFiles,
+      path.join(root, 'packages/vnode-types/test/types.ts'), path.join(root, 'packages/vundici-types/test/types.ts')];
+    clean(compile(files, { dom: browser }));
+    console.log(`TypeScript ${compiler().version}: ${browser ? 'DOM + Node' : 'Node-only'} contracts passed.`);
   }
 
   // Check the exact upstream runtime as well as the native-runtime unit tests.

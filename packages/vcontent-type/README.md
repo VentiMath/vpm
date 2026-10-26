@@ -185,6 +185,6 @@ The unchanged 2.1.0 npm `dist/index.js` is retained as the `.cjs` test fixture.
 Span processing also draws on
 [3.1.1, commit d005d8b](https://github.com/jshttp/content-type/tree/d005d8bfd9846bb9eb73a9aad0944536e1a5cf39).
 Its unchanged `src/index.ts` is retained with a CommonJS fixture generated using
-TypeScript 5.8.3 (`transpileModule`, ES2022 target, CommonJS module output).
+TypeScript 7.0.2 (CLI, ES2022 target, NodeNext module mode in this CommonJS package).
 Upstream license notices are preserved. Neither comparison fixture is a runtime
 dependency, and these tests do not claim to run the complete upstream test suite.
