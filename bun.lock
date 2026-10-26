@@ -102,6 +102,16 @@
         "vstatuses": "workspace:*",
       },
     },
+    "packages/vserve-static": {
+      "name": "vserve-static",
+      "version": "0.1.0",
+      "dependencies": {
+        "vencodeurl": "workspace:*",
+        "vescape-html": "workspace:*",
+        "vparseurl": "workspace:*",
+        "vsend": "workspace:*",
+      },
+    },
     "packages/vstatuses": {
       "name": "vstatuses",
       "version": "0.1.0",
@@ -143,6 +153,8 @@
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
 
     "vsend": ["vsend@workspace:packages/vsend"],
+
+    "vserve-static": ["vserve-static@workspace:packages/vserve-static"],
 
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
   }

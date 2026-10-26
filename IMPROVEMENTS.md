@@ -25,6 +25,7 @@ that these replacements have already improved application performance.
 | [vmime-db](packages/vmime-db) | mime-db 1.54.0 | Immutable records and extension arrays, prototype-free dictionaries, precise types, and a verified data snapshot. |
 | [vmime-types](packages/vmime-types) | mime-types 3.0.2 | Correct charset parameter recognition, immutable mappings, and prepared default Content-Type strings. |
 | [vsend](packages/vsend) | send 1.2.1 | Strong conditional checks, GET-only ranges, validated option snapshots, and guarded file-stream cleanup. |
+| [vserve-static](packages/vserve-static) | serve-static 2.2.1 | Redirects preserve shared URL caches, configuration is validated and snapshotted at startup, and generated responses clear incompatible headers. |
 
 Every package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
@@ -35,6 +36,7 @@ Most replacements preserve their runtime dependency counts. Both versions of
 each utility have zero external runtime dependencies, except
 `on-finished` / `von-finished`, `debug` / `vdebug`, and `mime-types` /
 `vmime-types`, which each declare one,
+`serve-static` / `vserve-static`, which each declare four,
 `finalhandler` / `vfinalhandler`, which each declare six,
 `send` / `vsend`, which each declare eleven, and `http-errors` /
 `vhttp-errors`, which declare **five and one**, respectively.
@@ -45,8 +47,8 @@ not external packages.
 
 `vsend` uses eleven direct VPM dependencies, with `vee-first` and `vmime-db`
 bringing its complete external dependency tree to thirteen VPM packages.
-The replacement for `serve-static` 2.2.1 remains future work; all of its supporting
-packages now have VPM counterparts.
+`vserve-static` completes the modern static-file path with four direct and fifteen
+total external VPM dependencies. Its dependencies are all existing VPM packages.
 
 ## The target dependency graph
 
@@ -84,11 +86,12 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumers above to the versions ventimath resolves. The gate aliases
 every VPM package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework and runs 54 HTTP checks: JSON bodies and malformed
+the Functions Framework and runs 60 HTTP checks: JSON bodies and malformed
 bodies, CORS preflight, `res.set('Content-Type')` with syntax upstream
 tolerated, conditional requests with quoted-comma tags and forced reloads,
 redirect encoding and escaping, `sendFile` and `serve-static` with ranges,
-HEAD, download and empty-file callbacks, extension fallback, dotfile policy,
+HEAD, mounted-root redirects, static redirect/405 framing, download and empty-file
+callbacks, extension fallback, dotfile policy,
 strong preconditions, directory redirects, cache ages from duration strings,
 thrown HTTP errors with headers, conflicting framing headers, an error after an accepted
 404, `jsonwebtoken` expiry durations, and `DEBUG` output from each consumer
@@ -467,7 +470,7 @@ resolution limits. This is not an atomic file snapshot or a filesystem jail.
 
 **Evidence and performance:** twenty-five tests cover differential HTTP cases,
 failure paths, disconnections, and HTTP/2. The shared integration gate passed
-54 HTTP checks through the pinned Functions Framework/Express stack on Node and
+60 HTTP checks through the pinned Functions Framework/Express stack on Node and
 Bun, including downloads and sendFile callbacks. Its 416 check also exposed and
 fixed dropped range metadata in `vfinalhandler`. Sequential localhost HTTP
 measurements showed ordinary GETs **4–10% slower**, HEAD **10–12% slower**, and
@@ -476,10 +479,38 @@ the range case was within 3% of upstream. This release establishes correctness
 changes and VPM composition, with no broad performance gain demonstrated.
 [API, compatibility decisions, measurements, and installation](packages/vsend/README.md).
 
+## vserve-static
+
+**Configuration and redirect isolation:** snapshots supported options and arrays
+at middleware construction, validates configuration before requests, and retains
+inherited option support. Directory redirects format a copy of the parsed URL,
+preserving its shared cache and allowing frozen cached results. Mounted paths and
+queries retain their original redirect behavior.
+
+**Response correctness:** redirects and 405 responses clear incompatible framing
+and stale representation headers. HEAD redirects explicitly omit body bytes.
+Completed or disconnected responses are left alone; partial responses are not
+overwritten by a 405. Missing or unparseable URLs follow the selected
+400/fallthrough policy. Errors after file selection and server errors still
+reach `next(error)`.
+
+**Compatibility and evidence:** seventeen tests include a differential matrix,
+cache mutation reproduction, configuration changes, framing, error propagation,
+multiple roots, and HTTP/2. The shared integration gate now runs 60 HTTP checks
+through the Express 5 Cloud Functions stack with `vserve-static` installed by
+process-local alias. Existing middleware no longer observes later configuration
+mutations, and invalid options fail earlier. The `vsend` limitations still apply.
+
+**Performance:** complete-stack GETs were **6–10% slower**, HEAD **4–15% slower**,
+redirects **7–11% slower**, and missing files **5–12% slower** in one local run.
+405 was close on Node and about 10% faster on Bun. A comparison using the same
+VPM dependencies on both sides was mixed; no general speedup is established.
+[Full API, compatibility notes, measurements, and installation](packages/vserve-static/README.md).
+
 ## Reading and extending this record
 
 Benchmark tables identify the runtime, date, inputs, and sampling method. Most
-measure individual utility calls; `vsend` measures sequential localhost HTTP
+measure individual utility calls; `vsend` and `vserve-static` measure sequential localhost HTTP
 requests. Neither establishes production throughput, tail latency, or application
 memory use. Known regressions belong beside gains. A correctness fix or easier
 auditing does not by itself establish that an exploitable vulnerability was fixed.
