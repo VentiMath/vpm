@@ -86,12 +86,11 @@ with the exact pinned data snapshot, loaded separately for isolation.
 
 The repository's [integration gate](../../scripts/integration.cjs) aliases this
 package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
-firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+firebase-functions 7.4.0, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
 real HTTP checks on Node and Bun in CI. It covers static content types, GET/HEAD,
 byte ranges, `sendFile`, `res.type()`, `res.set('Content-Type')` with syntax
-upstream tolerated, and JSON parsing. The `mime-types` 2.1.35 copies under
-`form-data` and the Express 4 branch nested in firebase-functions are reported as
-not covered.
+upstream tolerated, and JSON parsing. The `mime-types` 2.1.35 copy under
+`form-data`, which is never loaded at runtime, is reported as not covered.
 
 ## Performance
 

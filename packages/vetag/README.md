@@ -47,7 +47,7 @@ application-wide security improvement is claimed.
 Seven tests cover ordinary bodies, 500 generated UTF-16 strings and their byte
 encodings, sliced arrays, real/bigint file metadata, cross-realm Dates, invalid
 inputs, and the hashing fallback. Tag values are compared with unchanged upstream
-source. The repository's [integration gate](../../scripts/integration.cjs) aliases this package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2, firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs real HTTP checks on Node and Bun in CI. It verifies response and static-file validators.
+source. The repository's [integration gate](../../scripts/integration.cjs) aliases this package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2, firebase-functions 7.4.0, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs real HTTP checks on Node and Bun in CI. It verifies response and static-file validators.
 
 From the repository root:
 

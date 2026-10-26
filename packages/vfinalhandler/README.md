@@ -102,7 +102,7 @@ and ES module imports. Declarations do not require separate Node.js types.
 
 The repository's [integration gate](../../scripts/integration.cjs) aliases this
 package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
-firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+firebase-functions 7.4.0, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
 real HTTP checks on Node and Bun in CI. Through it, Express's default 404 and error
 handling, mounted paths, error logging after an accepted response, and
 conflicting framing headers run against this package.
