@@ -50,7 +50,7 @@ The replacements for `send` and `serve-static` themselves remain future work.
 VPM replaces the packages that [ventimath](https://github.com/johnclyde-org/ventimath-private)
 actually installs, in the versions its lockfiles resolve, rather than packages in
 general. Its production HTTP path is Cloud Functions gen 2: the Functions
-Framework 5.0.2 serves `firebase-functions` 7.0.2 `onRequest` handlers through
+Framework 5.0.2 serves `firebase-functions` 7.4.0 `onRequest` handlers through
 Express 5.2.1, `body-parser` 2.2.2, `router` 2.2.0, `send` 1.2.1, and
 `serve-static` 2.2.1. Every package above is a counterpart to the exact version
 on that path. `jsonwebtoken` 9.0.3 reaches `ms`, and the proxy agents under
@@ -64,11 +64,15 @@ thrown by a handler itself, with a structured log and a plain 500, so
 `finalhandler` only serves Express applications. The framework's own
 `body-parser` runs first, so an application's body limits are never consulted.
 
-Not covered yet: `firebase-functions` nests an Express 4 branch (`express` 4.22,
-`finalhandler` 1.3.2, `send` 0.19.2, `serve-static` 1.16.3, `fresh` 0.5.2,
-`debug` 2.6.9, `ms` 2.0.0, `mime-types` 2.1.35 with `mime-db` 1.52.0) that only
-its local development binary loads, and `form-data` 2.5.5 under `firebase-admin`
-reads `mime-types` 2.1.35. The gate reports those copies instead of aliasing them.
+Express 4 is gone from that graph: `firebase-functions` 7.3.2 moved its only
+Express use, the local development binary, to Express 5, so ventimath's upgrade
+to 7.4.0 removed the nested branch (`finalhandler` 1.3.2, `send` 0.19.2,
+`serve-static` 1.16.3, `fresh` 0.5.2, `debug` 2.6.9, `ms` 2.0.0, `mime-types`
+2.1.35). Still not covered: `form-data` 2.5.5, reached only through
+`@types/request` under `firebase-admin`'s `retry-request`, reads `mime-types`
+2.1.35 with `mime-db` 1.52.0 and is never loaded at runtime, and the development
+dependency `node-mocks-http` 1.17 still pins `fresh` 0.5.2, `range-parser` 1.2
+and `type-is` 1.6. The gate reports such copies instead of aliasing them.
 
 ### The integration gate
 

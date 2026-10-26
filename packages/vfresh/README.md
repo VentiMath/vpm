@@ -55,11 +55,11 @@ date precedence, and cache-control quoting/casing.
 
 The repository's [integration gate](../../scripts/integration.cjs) aliases this
 package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
-firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+firebase-functions 7.4.0, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
 real HTTP checks on Node and Bun in CI. It exercises 304 responses, forced reloads,
-quoted-comma tags, and tag/date precedence. The target is fresh 2.0.0 semantics;
-the Express 4 branch nested under firebase-functions still uses fresh 0.5.2 and is
-reported as not covered.
+quoted-comma tags, and tag/date precedence. The target is fresh 2.0.0 semantics; the
+development dependency `node-mocks-http` still pins fresh 0.5.2 and is not
+aliased.
 
 From the repository root:
 

@@ -73,7 +73,7 @@ unchanged upstream implementation. The upstream fixture is excluded from archive
 
 The repository's [integration gate](../../scripts/integration.cjs) aliases this
 package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
-firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+firebase-functions 7.4.0, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
 real HTTP checks on Node and Bun in CI. It covers HTML redirect bodies, final error and
 404 pages, and `serve-static` directory redirects through this package.
 
