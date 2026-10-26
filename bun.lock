@@ -59,6 +59,10 @@
         "vstatuses": "workspace:*",
       },
     },
+    "packages/vmedia-typer": {
+      "name": "vmedia-typer",
+      "version": "0.1.0",
+    },
     "packages/vmime-db": {
       "name": "vmime-db",
       "version": "0.1.0",
@@ -126,6 +130,15 @@
     "packages/vstatuses": {
       "name": "vstatuses",
       "version": "0.1.0",
+    },
+    "packages/vtype-is": {
+      "name": "vtype-is",
+      "version": "0.1.0",
+      "dependencies": {
+        "vcontent-type": "workspace:*",
+        "vmedia-typer": "workspace:*",
+        "vmime-types": "workspace:*",
+      },
     },
     "packages/vundici-types": {
       "name": "vundici-types",
@@ -196,6 +209,8 @@
 
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
 
+    "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
+
     "vmime-db": ["vmime-db@workspace:packages/vmime-db"],
 
     "vmime-types": ["vmime-types@workspace:packages/vmime-types"],
@@ -215,6 +230,8 @@
     "vserve-static": ["vserve-static@workspace:packages/vserve-static"],
 
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
+
+    "vtype-is": ["vtype-is@workspace:packages/vtype-is"],
 
     "vundici-types": ["vundici-types@workspace:packages/vundici-types"],
   }

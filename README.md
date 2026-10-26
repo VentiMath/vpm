@@ -81,6 +81,7 @@ runtime package aliased in:
 npm --prefix scripts/consumers ci --ignore-scripts
 node scripts/integration.cjs
 bun scripts/integration.cjs
+node scripts/check-media-archives.cjs
 ```
 
 It runs in CI on every push. See [the target dependency graph](IMPROVEMENTS.md#the-target-dependency-graph)

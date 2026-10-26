@@ -28,6 +28,8 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
   'content-type': { pkg: 'vcontent-type', versions: /^2\.1\./ },
+  'media-typer': { pkg: 'vmedia-typer', versions: /^1\.1\./ },
+  'type-is': { pkg: 'vtype-is', versions: /^2\.1\./ },
   'ee-first': { pkg: 'vee-first', versions: /^1\.1\./ },
   'on-finished': { pkg: 'von-finished', versions: /^2\.4\./ },
   parseurl: { pkg: 'vparseurl', versions: /^1\.3\./ },
@@ -170,6 +172,10 @@ fs.writeFileSync(path.join(directory, 'nested dir', 'index.html'), '<p>index</p>
 // read the JSON body the Functions Framework already parsed.
 const api = onRequest({ cors: true }, async (request, response) => {
   if (request.path === '/echo' && request.method === 'POST') return response.json(request.body);
+  if (request.path === '/is') return response.json({
+    type: request.is(), exact: request.is('APPLICATION/JSON'), suffix: request.is('+JSON'),
+    shortcut: request.is(['urlencoded', 'multipart']),
+  });
   if (request.path === '/pdf') {
     response.set('Content-Type', 'application/pdf; name=report (1).pdf');
     return response.send(Buffer.from('%PDF-1.4'));
@@ -210,6 +216,13 @@ app.get('/double', (_req, _res, next) => { next(); setImmediate(() => next(new E
 app.get('/framing', (_req, res, next) => { res.setHeader('Transfer-Encoding', 'chunked'); next(createError(429, 'slow down', { headers: { 'Retry-After': '5' } })); });
 functions.http('app', onRequest(app));
 
+// A direct Express app also tests custom parser patterns before the framework's
+// catch-all raw parser can consume their bodies.
+const parserApp = express();
+parserApp.use(express.json({ type: ['APPLICATION/JSON', 'application/*+JSON'] }));
+parserApp.use(express.text({ type: 'TEXT/*' }));
+parserApp.use(express.urlencoded({ extended: false, type: 'URLENCODED' }));
+parserApp.use((req, res) => res.json({ body: req.body === undefined ? null : req.body }));
 
 async function listen(server) {
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
@@ -234,7 +247,38 @@ function request(server, route, { headers = {}, method = 'GET', body } = {}) {
 async function run() {
   const apiServer = await listen(getTestServer('api'));
   const appServer = await listen(getTestServer('app'));
+  const parserServer = await listen(http.createServer(parserApp));
   try {
+    // Express req.is preserves null / false / matching-string results.
+    for (const [options, expected] of [
+      [{}, { type: null, exact: null, suffix: null, shortcut: null }],
+      [{ method: 'POST', body: 'x' }, { type: false, exact: false, suffix: false, shortcut: false }],
+      [{ method: 'POST', headers: { 'content-type': 'APPLICATION/JSON' }, body: '{}' },
+        { type: 'application/json', exact: 'APPLICATION/JSON', suffix: false, shortcut: false }],
+      [{ method: 'POST', headers: { 'content-type': 'application/problem+json' }, body: '{}' },
+        { type: 'application/problem+json', exact: false, suffix: 'application/problem+json', shortcut: false }],
+      [{ method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: 'a=1' },
+        { type: 'application/x-www-form-urlencoded', exact: false, suffix: false, shortcut: 'urlencoded' }],
+      [{ method: 'POST', headers: { 'content-type': 'multipart/form-data; boundary=x' }, body: 'x' },
+        { type: 'multipart/form-data', exact: false, suffix: false, shortcut: 'multipart' }],
+      [{ method: 'POST', headers: { 'content-type': 'text/@bad' }, body: 'x' },
+        { type: false, exact: false, suffix: false, shortcut: false }],
+    ]) {
+      const result = await request(apiServer, '/is', options);
+      assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), expected);
+    }
+    for (const [type, body, parsed] of [
+      ['application/json', '{"a":1}', { a: 1 }],
+      ['APPLICATION/PROBLEM+JSON; charset=utf-8', '{"a":2}', { a: 2 }],
+      ['application/vnd.foo+bar+json', '{"a":3}', { a: 3 }],
+      ['text/plain', 'hello', 'hello'],
+      ['application/x-www-form-urlencoded', 'a=1&b=two', { a: '1', b: 'two' }],
+      ['application/octet-stream', 'ignored', null],
+      ['text/@bad', 'ignored', null],
+    ]) {
+      const result = await request(parserServer, '/', { method: 'POST', headers: { 'content-type': type }, body });
+      assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), { body: parsed });
+    }
     // JSON bodies parsed by the Functions Framework (body-parser, raw-body, type-is, http-errors).
     const echo = await request(apiServer, '/echo', { method: 'POST', headers: { 'content-type': 'application/json; CHARSET=utf-8' }, body: '{"a":1}' });
     assert.equal(echo.status, 200); assert.equal(echo.body, '{"a":1}');
@@ -388,7 +432,7 @@ async function run() {
   } finally {
     process.stderr.write = writeStderr;
     console.error = consoleError;
-    for (const server of [apiServer, appServer]) { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }
+    for (const server of [apiServer, appServer, parserServer]) { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }
     fs.rmSync(directory, { recursive: true, force: true });
   }
   const runtime = process.versions.bun ? 'Bun ' + process.versions.bun : 'Node ' + process.version;

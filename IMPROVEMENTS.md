@@ -27,6 +27,8 @@ that these replacements have already improved application performance.
 | [vsend](packages/vsend) | send 1.2.1 | Strong conditional checks, GET-only ranges, validated option snapshots, and guarded file-stream cleanup. |
 | [vserve-static](packages/vserve-static) | serve-static 2.2.1 | Redirects preserve shared URL caches, configuration is validated and snapshotted at startup, and generated responses clear incompatible headers. |
 | [vcontent-type](packages/vcontent-type) | content-type 2.1.0 | Independent null-prototype parameter maps, validated offsets and input types, and span-based quoted-string processing. |
+| [vmedia-typer](packages/vmedia-typer) | media-typer 1.1.1 | ASCII validation before lowercasing, consistent suffix round trips, and complete subtype length enforcement. |
+| [vtype-is](packages/vtype-is) | type-is 2.1.0 | Case-insensitive matching, validated patterns and body indicators, own-header reads, and an entirely VPM dependency tree. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
@@ -40,6 +42,7 @@ Most runtime replacements preserve their dependency counts. Both versions of
 each utility have zero external runtime dependencies, except
 `on-finished` / `von-finished`, `debug` / `vdebug`, and `mime-types` /
 `vmime-types`, which each declare one,
+`type-is` / `vtype-is`, which each declare three,
 `serve-static` / `vserve-static`, which each declare four,
 `finalhandler` / `vfinalhandler`, which each declare six,
 `send` / `vsend`, which each declare eleven, and `http-errors` /
@@ -53,6 +56,8 @@ not external packages.
 bringing its complete external dependency tree to thirteen VPM packages.
 `vserve-static` completes the modern static-file path with four direct and fifteen
 total external VPM dependencies. Its dependencies are all existing VPM packages.
+`vtype-is` uses `vcontent-type`, `vmedia-typer`, and `vmime-types` directly,
+with `vmime-db` bringing its complete external tree to four VPM packages.
 
 ## The target dependency graph
 
@@ -106,7 +111,9 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework and runs 65 HTTP checks: JSON bodies and malformed
+the Functions Framework, also serves a direct Express parser app, and runs 79
+HTTP checks: request media-type matching, uppercase and structured-suffix parser
+patterns, JSON bodies and malformed
 bodies, UTF-16 decoding and unsupported charset rejection, weighted Accept
 negotiation with quoted commas, preservation of Content-Type parameters when
 Express changes the charset, CORS preflight, `res.set('Content-Type')` with syntax upstream
@@ -495,7 +502,7 @@ resolution limits. This is not an atomic file snapshot or a filesystem jail.
 
 **Evidence and performance:** twenty-five tests cover differential HTTP cases,
 failure paths, disconnections, and HTTP/2. The shared integration gate passed
-65 HTTP checks through the pinned Functions Framework/Express stack on Node and
+79 HTTP checks through the pinned Functions Framework/Express stack on Node and
 Bun, including downloads and sendFile callbacks. Its 416 check also exposed and
 fixed dropped range metadata in `vfinalhandler`. Sequential localhost HTTP
 measurements showed ordinary GETs **4–10% slower**, HEAD **10–12% slower**, and
@@ -521,7 +528,7 @@ reach `next(error)`.
 
 **Compatibility and evidence:** seventeen tests include a differential matrix,
 cache mutation reproduction, configuration changes, framing, error propagation,
-multiple roots, and HTTP/2. The shared integration gate now runs 65 HTTP checks
+multiple roots, and HTTP/2. The shared integration gate now runs 79 HTTP checks
 through the Express 5 Cloud Functions stack with `vserve-static` installed by
 process-local alias. Existing middleware no longer observes later configuration
 mutations, and invalid options fail earlier. The `vsend` limitations still apply.
@@ -563,6 +570,60 @@ Node parsing was **33–106% slower**, and Bun's escaped-value/Accept cases were
 **28–31% slower**. There is no general application throughput gain established.
 [API, compatibility decisions, both benchmark baselines, and provenance](packages/vcontent-type/README.md).
 
+## vmedia-typer
+
+**Consistent validation and formatting:** validates the original ASCII media
+name before case conversion, rejecting Unicode `K` that 1.1.1 converts to `k`.
+Formatting accepts all parsed subtype/suffix combinations, including earlier
+plus signs, punctuation suffixes and an empty trailing suffix. It enforces the
+127-character limit on the complete subtype rather than independently accepting
+a 127-character subtype plus a suffix. Strict end assertions reject final line
+terminators; fields require explicit strings. Exports are frozen and returned
+records remain independent and mutable.
+
+**Compatibility:** preserves the bare-name 1.x grammar, outer ASCII spaces,
+case normalization and final-plus splitting. An explicitly empty format suffix
+now preserves `+`, and invalid format field types no longer undergo coercion.
+This targets the installed media-typer 1.1.1 API, not the ESM-only 2.x release.
+There are no runtime dependencies.
+
+**Evidence:** ten tests include every byte in each name position, 10,000
+generated round trips and regressions for the observed differences. On one
+Node 24.22.1 / Bun 1.4.0 run, validation cases took **11–18% less time on Node**
+and **22–59% less on Bun**. Parsing took up to **7% longer on Node** and
+**24–55% longer on Bun**. The consuming vtype-is uses validation, not parsing.
+See the [package measurements](packages/vmedia-typer#validation-and-performance)
+for all cases and the reproducible harness.
+
+## vtype-is
+
+**Matching and body indicators:** compares media names case-insensitively and
+validates both expected and actual names. Invalid `text/@bad` no longer matches
+`*/*`, and the original header media span is checked before Unicode case
+conversion. Content-Length must be a decimal string; empty strings, negative
+values, hex, exponent notation, arrays and null no longer indicate a body.
+Only own lowercase Node-style header fields are read. A defined Transfer-Encoding
+remains a presence check; HTTP framing belongs to the server.
+
+**Compatibility and dependencies:** retains the callable request API, `.is()`,
+`.hasBody()`, `.normalize()` and `.match()` used by Express and body-parser.
+First-match strings, wildcard/suffix returns, empty-list behavior, variadic
+patterns and `"0"` body indicators remain compatible. Malformed values and
+inherited synthetic headers have documented stricter behavior. The baseline
+is type-is 2.1.0, not the newer ESM class API in 3.x. Its three direct and four
+total external dependencies are all VPM packages; counts are unchanged.
+
+**Evidence:** thirteen tests include an upstream differential matrix and 20,000
+generated matches. All 79 HTTP integration checks pass on Node and Bun with
+these replacements installed alongside the rest of VPM. A required archive
+gate installs the five-package tree using npm and Bun, exercises CJS and ESM
+on both runtimes, and checks TypeScript 7 consumers with no platform types.
+On the same local run, extension/suffix/unmatched cases took **18–23% less time
+on Node** and **45–50% less on Bun**. Node exact/invalid matching took
+**13–15% longer**; standalone matching and body detection were slower on both
+runtimes. The [full table](packages/vtype-is#validation-and-performance)
+documents those costs. No application throughput improvement is claimed.
+
 ## vundici-types and vnode-types
 
 **Declaration correctness:** `vundici-types` adds the missing `RequestInit.cache`
@@ -596,7 +657,7 @@ runtime. DOM projects continue to use TypeScript's standard browser globals.
 requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
 dependency cycle, with no JavaScript runtime code. The workspace no longer uses
 upstream Node/Undici declarations for its own type checks. Upstream packages
-remain in a separately locked comparison fixture. All 18 runtime packages'
+remain in a separately locked comparison fixture. All 20 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
