@@ -1,0 +1,29 @@
+{
+  "name": "vfinalhandler",
+  "version": "0.1.0",
+  "description": "Final HTTP error and 404 responses with guarded completion and consistent framing",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": { "types": "./index.d.ts", "default": "./index.js" },
+    "./package.json": "./package.json"
+  },
+  "files": ["index.js", "index.d.ts", "LICENSE", "README.md"],
+  "dependencies": {
+    "vdebug": "workspace:*",
+    "vencodeurl": "workspace:*",
+    "vescape-html": "workspace:*",
+    "von-finished": "workspace:*",
+    "vparseurl": "workspace:*",
+    "vstatuses": "workspace:*"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vfinalhandler"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vfinalhandler"
+}

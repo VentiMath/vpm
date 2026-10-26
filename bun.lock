@@ -28,6 +28,18 @@
       "name": "vescape-html",
       "version": "0.1.0",
     },
+    "packages/vfinalhandler": {
+      "name": "vfinalhandler",
+      "version": "0.1.0",
+      "dependencies": {
+        "vdebug": "workspace:*",
+        "vencodeurl": "workspace:*",
+        "vescape-html": "workspace:*",
+        "von-finished": "workspace:*",
+        "vparseurl": "workspace:*",
+        "vstatuses": "workspace:*",
+      },
+    },
     "packages/vms": {
       "name": "vms",
       "version": "0.1.0",
@@ -62,6 +74,8 @@
     "vencodeurl": ["vencodeurl@workspace:packages/vencodeurl"],
 
     "vescape-html": ["vescape-html@workspace:packages/vescape-html"],
+
+    "vfinalhandler": ["vfinalhandler@workspace:packages/vfinalhandler"],
 
     "vms": ["vms@workspace:packages/vms"],
 

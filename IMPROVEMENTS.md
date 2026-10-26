@@ -17,6 +17,7 @@ that these replacements have already improved application performance.
 | [vstatuses](packages/vstatuses) | statuses 2.0.2 | Strict numeric strings, immutable status data, and prototype-free dictionaries. |
 | [vms](packages/vms) | ms 2.1.3 | Symmetric negative rounding, consistent plurals, and errors that do not serialize invalid inputs. |
 | [vdebug](packages/vdebug) | debug 4.4.3 | Compiled namespace filters, monotonic elapsed timing, coherent filter snapshots, and native terminal color detection. |
+| [vfinalhandler](packages/vfinalhandler) | finalhandler 2.1.1 | Once-only responses, checks after request draining, consistent HTTP framing, integer statuses, and copied error-header arrays. |
 
 Every package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
@@ -25,11 +26,49 @@ package. Test fixtures and benchmarks stay out of installable archives.
 
 Runtime dependency counts have **not** fallen for these replacements: both
 versions of each utility have zero external runtime dependencies, except
-`on-finished` / `von-finished` and `debug` / `vdebug`, which each declare one.
+`on-finished` / `von-finished` and `debug` / `vdebug`, which each declare one,
+and `finalhandler` / `vfinalhandler`, which each declare six.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load undeclared optional `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
 not external packages.
+
+`vfinalhandler` connects all eight preceding VPM packages: six direct dependencies,
+plus `vee-first` through `von-finished` and `vms` through `vdebug`. Its entire
+external runtime dependency tree now consists of VPM counterparts.
+
+## vfinalhandler
+
+**Response correctness:** one accepted completion prevents duplicate writes and
+error callbacks. Response state is checked again after request draining, avoiding
+header writes after another writer has started or completed the response. Aborted
+requests are not answered. A late error on a completed response preserves its
+otherwise reusable connection; an error on a partial response closes it.
+
+**Headers and statuses:** removes conflicting transfer encoding/trailer headers
+before setting content length. Error headers cannot restore those fields or stale
+content encoding/language/range headers. Header arrays are copied before draining.
+Statuses must be integers from 400 to 599, and unknown codes receive a defined
+phrase. Empty or unavailable pathnames get a readable fallback.
+
+**Compatibility:** retains the callback API, production message hiding, HTML
+formatting, HEAD behavior, HTTP/2 handling, and asynchronous error reporting.
+Repeated accepted calls are now ignored, including later errors; applications
+must log those separately. Invalid error callbacks fail at construction. All six
+dependencies have VPM counterparts; their documented differences also apply.
+
+**Evidence:** [29 tests](packages/vfinalhandler/test), including 480 differential
+normal-response combinations and real HTTP/1 and HTTP/2 connections on Node and
+Bun. Tests reproduce the upstream conflicting-framing failure and verify the
+corrected response, upload draining, abort cleanup, and connection reuse. Optional
+integration checks passed with Express 4.22.1 and 5.2.1 on both runtimes.
+
+**Performance tradeoff:** full-stack microbenchmarks measured about 2–2.4 times
+faster long-path 404 generation, but **19–33% slower short 404s** and **13–17%
+slower production/HEAD errors**. Development-stack generation was 3–5% slower.
+These measurements exclude socket I/O and request draining; they do not establish
+application speed or security gains.
+[Benchmarks, installation, and full compatibility notes](packages/vfinalhandler/README.md).
 
 ## vee-first
 
