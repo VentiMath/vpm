@@ -50,6 +50,7 @@
     "patch.d.ts",
     "websocket.d.ts"
   ],
+  "omitted": [],
   "added": [
     "web.d.ts"
   ],

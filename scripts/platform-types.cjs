@@ -1,6 +1,9 @@
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
+const os = require('node:os');
+const assert = require('node:assert/strict');
+const { spawnSync } = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const modules = path.join(__dirname, 'type-consumers/node_modules');
 function configuration(files, { baseline = false, dom = false } = {}) {
@@ -22,9 +25,37 @@ function runtimeTypeTests() {
       ? [] : [path.join(directory, 'test/types.ts')];
   });
 }
-function compiler(name = 'typescript') {
-  const directory = name === 'typescript' ? path.join(root, 'node_modules', name) : path.join(modules, name);
+function compiler() {
+  const directory = path.join(root, 'node_modules/typescript');
   const metadata = require(path.join(directory, 'package.json'));
+  assert.match(metadata.version, /^7\./, 'VPM checks require the TypeScript 7 compiler');
   return { path: path.join(directory, metadata.bin.tsc), version: metadata.version };
 }
-module.exports = { root, modules, configuration, runtimeTypeTests, compiler };
+// Use the supported CLI instead of depending on an unstable compiler API.
+// All input file/type-root paths in these configurations are absolute.
+function compile(config) {
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-tsc-'));
+  try {
+    const file = path.join(temporary, 'tsconfig.json');
+    fs.writeFileSync(file, JSON.stringify(config));
+    const result = spawnSync(process.execPath, [compiler().path, '-p', file, '--listFiles', '--pretty', 'false'], {
+      cwd: root, encoding: 'utf8', maxBuffer: 8 * 1024 * 1024,
+    });
+    assert.ifError(result.error);
+    assert.notEqual(result.status, null, `compiler terminated: ${result.signal}`);
+    const output = result.stdout + result.stderr;
+    return {
+      status: result.status, output,
+      diagnostics: [...output.matchAll(/\berror TS(\d+):/g)].map(match => Number(match[1])),
+      files: result.stdout.split(/\r?\n/).filter(line => path.isAbsolute(line) && /\.[cm]?tsx?$/.test(line)),
+    };
+  } finally {
+    fs.rmSync(temporary, { recursive: true, force: true });
+  }
+}
+function clean(result) {
+  assert.equal(result.status, 0, result.output);
+  assert.equal(result.diagnostics.length, 0, result.output);
+  assert.ok(result.files.length > 0, 'compiler must report its loaded files');
+}
+module.exports = { root, modules, configuration, runtimeTypeTests, compiler, compile, clean };

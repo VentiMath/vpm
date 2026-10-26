@@ -573,8 +573,10 @@ gate reproduces these gaps in undici-types 6.21.0 and verifies the corrected
 signatures against Undici 6.21.3 and native Node/Bun behavior. These findings do
 not imply the latest Undici major has the same gaps.
 
-**Complete coverage and focused loading:** all 38 upstream Undici declaration
-files and 71 Node declaration files are retained, with source hashes and licenses.
+**Complete API coverage and focused loading:** all 38 upstream Undici declaration
+files and 68 modern Node declaration files are retained, with source hashes and
+licenses. Three legacy compiler compatibility files are omitted and recorded in
+the provenance data; the modern Node API remains complete.
 The new `vundici-types/web` entry point supplies Fetch, FormData, WebSocket, and
 EventSource declarations to `vnode-types`. Required dispatcher/client types remain
 reachable; unrelated agent/pool/mock exports are not loaded by ordinary Node
@@ -583,7 +585,7 @@ consumers. The full Undici API remains available from the root entry point.
 **Compatibility:** `vnode-types` targets Node 22, based on @types/node 22.20.5;
 it is not a declaration set for every Node major. The workspace's update from
 22.14.1 also includes upstream maintenance improvements, not VPM inventions.
-Both packages require TypeScript 5.6 or later. Select `vnode-types` explicitly
+Both packages require TypeScript 7.0.2 or later. Select `vnode-types` explicitly
 in `compilerOptions.types`. A small compatibility type root handles third-party
 `reference types="node"` directives without installing duplicate Node declarations.
 The package README documents this configuration and its limits. FormData's
@@ -597,21 +599,23 @@ upstream Node/Undici declarations for its own type checks. Upstream packages
 remain in a separately locked comparison fixture. All 18 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
-**Evidence:** strict type gates run on TypeScript 5.6.3, 5.8.3, and 7.0.2,
+**Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
 including CJS/ESM consumers and projects with and without DOM declarations.
 Isolated archive installations check the real published-file selection and
 rewritten workspace dependency versions. A reproducibility check compares every
 declaration against pinned source archives plus explicit patches. No
-`skipLibCheck` workaround is used.
+`skipLibCheck` workaround is used. Legacy compiler dependencies, fixtures, and
+version-routing metadata have been removed. Upstream declaration/runtime
+comparisons use the same current compiler as VPM.
 
 **Measurements:** with the same 18 runtime-package type consumers, upstream
-Node 22.20.5, TypeScript 5.8.3, and ES2022-only strict configuration, the loaded
+Node 22.20.5, TypeScript 7.0.2, and ES2022-only strict configuration, the loaded
 Undici graph shrank from **37 to 13 files**. All loaded files fell from **198 to
 174**. Five alternating fresh-process samples on Node 24.22.1/macOS arm64 had
-median compiler-reported memory of **152,107 → 142,412 KiB** (about 6% lower),
-unchanged **0.48-second check time**, and total compiler time of **0.74 → 0.73
-seconds**. This does not establish a compilation speedup or any application
-runtime improvement. Installation size is not reduced. See the
+median compiler-reported memory of **69,277 → 67,686 KiB** (about 2% lower),
+check time of **0.049 → 0.048 seconds**, and total compiler time of **0.067 →
+0.065 seconds**, excluding process startup. Those millisecond differences do not
+establish a compilation speedup or any application runtime improvement. See the
 [method, raw measurements, and adoption guide](packages/vnode-types/README.md).
 
 ## Reading and extending this record

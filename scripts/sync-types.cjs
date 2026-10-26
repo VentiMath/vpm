@@ -36,9 +36,17 @@ for (const [original, name, version] of [['undici-types', 'vundici-types', '6.21
   assert.equal(upstream.version, version);
   const hashes = {};
   const changed = [];
+  const omitted = [];
   for (const file of declarations(source)) {
     const originalText = fs.readFileSync(path.join(source, file), 'utf8');
     hashes[file] = createHash('sha256').update(originalText).digest('hex');
+    if (name === 'vnode-types' && file.startsWith('ts5.6/')) {
+      omitted.push(file);
+      const target = path.join(destination, file);
+      if (check) assert.ok(!fs.existsSync(target), 'legacy compatibility file must be absent: ' + file);
+      else fs.rmSync(target, { force: true });
+      continue;
+    }
     let text = originalText;
     if (name === 'vundici-types') {
       text = text.replaceAll('/// <reference types="node" />', '/// <reference types="vnode-types" />');
@@ -65,9 +73,11 @@ for (const [original, name, version] of [['undici-types', 'vundici-types', '6.21
   assert.equal(metadata.version, version);
   save(path.join(destination, 'UPSTREAM.json'), JSON.stringify({
     name: original, version, resolved: metadata.resolved, integrity: metadata.integrity,
-    contributors: upstream.contributors, changed,
+    contributors: upstream.contributors, changed, omitted,
+    ...(omitted.length ? { omissionReason: 'Legacy compiler compatibility declarations are excluded; VPM targets TypeScript 7.' } : {}),
     added: name === 'vundici-types' ? ['web.d.ts'] : ['compat/node/index.d.ts'], sha256: hashes,
   }, null, 2) + '\n');
-  assert.deepEqual(declarations(destination), [...Object.keys(hashes), ...(name === 'vundici-types' ? ['web.d.ts'] : ['compat/node/index.d.ts'])].sort());
-  console.log(`${name}: ${Object.keys(hashes).length} upstream declaration files; ${changed.length} modified.`);
+  assert.deepEqual(declarations(destination), [...Object.keys(hashes).filter(file => !omitted.includes(file)),
+    ...(name === 'vundici-types' ? ['web.d.ts'] : ['compat/node/index.d.ts'])].sort());
+  console.log(`${name}: ${Object.keys(hashes).length - omitted.length} upstream declaration files retained; ${changed.length} modified; ${omitted.length} omitted.`);
 }
