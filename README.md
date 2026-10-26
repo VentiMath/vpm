@@ -1,54 +1,50 @@
 # Venti Package Manager
 
-Venti Package Manager (VPM) is building a carefully maintained JavaScript package
-ecosystem, starting with the small dependencies that support real applications.
-The goal is a broad collection of packages with understandable source, reliable
-behavior, useful types, and a deliberate dependency graph.
+Venti Package Manager (VPM) is building a comprehensive JavaScript package
+ecosystem with a consistent standard of quality across the entire dependency
+graph: application libraries, development tools, shared utilities, and the
+smallest underlying primitives.
 
-We start by inspecting the dependencies an application actually installs, tracing
-each package to its callers, and understanding the behavior those callers need.
-We then build recognizable VPM counterparts, usually with familiar APIs and names,
-and improve their implementations where the evidence supports a change.
+The vision is a large collection of pristine packages: understandable source,
+well-defined behavior, accurate types, disciplined dependencies, and traceable
+releases. Applications should be able to choose from a broad catalog while
+installing only what they need.
 
-## What belongs here
+## Recognizable packages, carefully maintained
 
-Every package should have:
+VPM packages begin as recognizable counterparts to existing packages, generally
+preserving familiar boundaries and APIs under VPM names. Each implementation is
+examined on its own merits. Improvements can include simpler source, stronger
+tests, clearer documentation, fewer dependencies, and an explicit baseline for
+supported runtimes.
 
-- A clear purpose and a documented reason to exist.
-- Readable source and accurate TypeScript declarations.
-- Focused tests for the behavior its consumers rely on.
-- Justified dependencies and an explicit runtime baseline.
-- Documented differences from the package it replaces.
-- Traceable origins, license notices, and release contents.
+API changes and larger redesigns are possible when they provide a concrete
+benefit. Each package documents its compatibility decisions and differences from
+its upstream counterpart.
 
-An extensive catalog should still let each application install only what it
-needs. Replacements may simplify older compatibility code or redesign an API when
-that produces a concrete improvement. Compatibility decisions belong in each
-package's documentation.
+## The package standard
 
-## Starting with the foundations
+- **Understandable:** a clear purpose, readable implementation, and useful docs.
+- **Verified:** tests cover the behavior consumers rely on, including edge cases.
+- **Typed:** TypeScript declarations accurately describe the public API.
+- **Deliberate:** every dependency has a reason, and runtime requirements are explicit.
+- **Traceable:** origins, licenses, changes, and versioned release contents are recorded.
 
-The first package is [`vee-first`](packages/vee-first): a dependency-free utility
-that waits for the first of several EventEmitter events, removes the competing
-listeners, and invokes a callback once. It is a modernized counterpart to
-[`ee-first`](https://github.com/jonathanong/ee-first), with TypeScript declarations
-and stronger handling of duplicate and reentrant events.
+Work proceeds from real dependency graphs. We trace packages to their callers,
+identify the behavior those callers need, and use that evidence to guide each
+replacement. Package-level details live alongside the source in [`packages/`](packages/).
 
-| Package | Purpose | Runtime dependencies |
-| --- | --- | --- |
-| [`vee-first`](packages/vee-first) | First event wins, with listener cleanup and cancellation | 0 |
-
-## Installation and Bun
+## Package management and Bun
 
 Packages use standard `package.json` metadata and exports so existing JavaScript
-tools can consume them. Bun is the workspace package manager. Each package can be
-packed and installed through the package and tarball mechanisms available today.
+tools can consume them. Bun manages this workspace, and packages can be packed
+and installed using standard package archives.
 
-Native VPM support in `bun install` is a long-term goal. The path is to demonstrate
-the value of the collection through package quality, compatibility, dependency
-simplicity, and real application use, then pursue integration with Bun. This
-repository currently contains the first package; a VPM registry, a standalone
-package-manager CLI, and native Bun integration are future work.
+The long-term goal is native VPM support in `bun install`, earned through
+demonstrable improvements in quality, compatibility, dependency simplicity, and
+real application use. The project is in early development; the package collection
+is growing, while a VPM registry, standalone package-manager CLI, and native Bun
+integration remain planned work.
 
 ## Development
 
@@ -59,11 +55,9 @@ bun run test:bun
 bun run typecheck
 ```
 
-Tests run against Node.js and Bun. `vee-first` has no runtime dependencies; the
-workspace uses TypeScript and Node.js type declarations for development checks.
-
-See the [package README](packages/vee-first/README.md) for usage, compatibility,
-and installation from a local package archive.
+Tests run against Node.js and Bun. The workspace uses TypeScript and Node.js type
+declarations for development checks. Each package documents its own installation,
+usage, runtime requirements, and compatibility.
 
 ## Repository history
 
