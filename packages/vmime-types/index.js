@@ -54,22 +54,34 @@ function parse(value) {
   return { type: match[1].toLowerCase(), hasCharset };
 }
 
+// Upstream reads only the leading type. Malformed input keeps that behavior so
+// frameworks that pass every Content-Type header through these functions, such as
+// Express 5's res.set(), do not emit "false" for a header upstream tolerated.
+const prefixType = /^\s*([^;\s]*)(?:;|\s|$)/;
+
 function defaultCharset(type) {
   return db[type]?.charset || (type.startsWith('text/') ? 'UTF-8' : false);
+}
+
+function mediaTypeOf(value) {
+  const parsed = parse(value);
+  if (parsed) return parsed.type;
+  const match = prefixType.exec(value);
+  return match ? match[1].toLowerCase() : false;
 }
 
 function charset(value) {
   if (typeof value !== 'string' || !value) return false;
   if (db[value]) return defaultCharset(value);
-  const parsed = parse(value);
-  return parsed ? defaultCharset(parsed.type) : false;
+  const type = mediaTypeOf(value);
+  return type ? defaultCharset(type) : false;
 }
 
 function extension(value) {
   if (typeof value !== 'string' || !value) return false;
   if (extensions[value]) return extensions[value][0];
-  const parsed = parse(value);
-  return parsed && extensions[parsed.type]?.[0] || false;
+  const type = mediaTypeOf(value);
+  return type && extensions[type]?.[0] || false;
 }
 
 function lookup(value) {
@@ -92,8 +104,9 @@ function contentType(value) {
   }
   if (headers[value]) return headers[value];
   const parsed = parse(value);
-  if (!parsed) return false;
-  const charset = parsed.hasCharset ? false : defaultCharset(parsed.type);
+  let charset;
+  if (parsed) charset = parsed.hasCharset ? false : defaultCharset(parsed.type);
+  else charset = value.includes('charset') ? false : defaultCharset(mediaTypeOf(value) || '');
   return charset ? value + '; charset=' + charset.toLowerCase() : value;
 }
 

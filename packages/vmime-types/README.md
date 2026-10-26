@@ -1,7 +1,7 @@
 # vmime-types
 
-MIME lookup and Content-Type helpers with immutable mappings, correct charset
-parameter recognition, and validated media-type syntax. A counterpart to
+MIME lookup and Content-Type helpers with immutable mappings and correct charset
+parameter recognition for valid media-type syntax. A counterpart to
 `mime-types` 3.0.2 for Node.js 20+ and Bun, with one runtime dependency:
 [`vmime-db`](../vmime-db).
 
@@ -26,7 +26,7 @@ included and require no separate types package.
 | Export | Behavior |
 | --- | --- |
 | `lookup(pathOrExtension)` | Looks up the final extension; accepts bare or dotted extensions and paths. Returns a type or `false`. |
-| `contentType(typeOrExtension)` | Resolves an extension or validates a type, appending its default charset if no charset parameter is present. Returns a header or `false`. |
+| `contentType(typeOrExtension)` | Resolves an extension or parses a type, appending its default charset if no charset parameter is present. Returns a header or `false`. |
 | `charset(type)` / `charsets.lookup(type)` | Returns the catalog default charset, or `UTF-8` for other valid `text/*` types, or `false`. It does not return an explicit parameter's value. |
 | `extension(type)` | Returns the first associated extension, or `false`. |
 | `types` | Readonly extension → preferred type dictionary. |
@@ -41,7 +41,7 @@ parameters retain their original spelling and spacing.
 trailing separators, and the final extension. It does not parse URLs, remove
 queries/fragments, or inspect file contents. Use `lookup()` for paths;
 `contentType()` treats a string containing `/` as a media type, matching upstream's
-input dispatch, but now rejects it if it is not valid media-type syntax.
+input dispatch.
 
 ## Improvements and deliberate differences
 
@@ -50,13 +50,14 @@ input dispatch, but now rejects it if it is not valid media-type syntax.
 - Quoted strings, escapes, and semicolons are parsed. `text/html; note="charset"`
   and `text/html; note="a; charset=ascii"` receive the missing default charset;
   neither note counts as a charset parameter.
-- `charset()`, `extension()`, and explicit-type `contentType()` validate the
-  entire input. Malformed parameters, unterminated quotes, CR/LF, invalid control
-  characters, extra trailing text, and duplicate charset parameters return
-  `false`. Upstream accepts many of these by reading only a prefix or passing the
-  original string through. Parameter names must directly precede `=`; whitespace
-  around `=` is rejected. Empty semicolon-separated members and space/tab OWS
-  are tolerated. Other duplicate parameter names remain unchanged.
+- `charset()`, `extension()`, and explicit-type `contentType()` parse the
+  entire input when it is valid media-type syntax. Malformed parameters,
+  unterminated quotes, whitespace around `=`, extra trailing text, and duplicate
+  charset parameters fall back to upstream's behavior: the leading type is read
+  and the original string is passed through. Express 5 passes every
+  `res.set('Content-Type', value)` through `contentType()`, so rejecting such
+  input would emit a `false` header. Empty semicolon-separated members and
+  space/tab OWS are valid. Other duplicate parameter names remain unchanged.
 - Tables, extension arrays, helper aliases, and exported methods are immutable.
   Consumers needing custom mappings must keep their own overrides. Dictionaries
   have null prototypes. The internal upstream `_extensionConflicts` diagnostic
@@ -67,9 +68,9 @@ input dispatch, but now rejects it if it is not valid media-type syntax.
   extensions have a direct lookup path.
 
 Parameter handling follows [HTTP media-type and parameter syntax in RFC
-9110](https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3.1). This validates
-structure, not the meaning of arbitrary parameters or whether a claimed type
-matches a file. Charset labels are preserved without registry validation.
+9110](https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3.1). This parses
+structure; it does not check the meaning of arbitrary parameters or whether a
+claimed type matches a file. Charset labels are preserved without registry validation.
 
 Every current mapping and default matches `mime-types` 3.0.2 with `mime-db`
 1.54.0, including `.js` → `text/javascript`, `.xml` → `application/xml`, and
@@ -128,7 +129,7 @@ creation and fixture preparation are excluded.
 | First require (milliseconds) | 7.403 / 7.457 | 10.149 / 6.686 |
 
 The common `send` operation, `contentType(extension)`, was about **4.4× faster
-on Node and 12.3× faster on Bun**. Full validation made parameterized headers
+on Node and 12.3× faster on Bun**. Full parsing made parameterized headers
 **63–105% slower**, and full-path lookup was **13% slower on Node**. Database
 freezing and prepared headers add initialization work and storage; startup was
 roughly unchanged on Node in this run. Results vary across runtimes and machines.

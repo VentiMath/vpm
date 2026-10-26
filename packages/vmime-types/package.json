@@ -1,7 +1,7 @@
 {
   "name": "vmime-types",
   "version": "0.1.0",
-  "description": "MIME lookups with immutable tables and validated Content-Type parameters",
+  "description": "MIME lookups with immutable tables and correct Content-Type charset parameters",
   "type": "commonjs",
   "main": "index.js",
   "types": "index.d.ts",
