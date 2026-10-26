@@ -70,7 +70,7 @@ To update this snapshot:
    upstream digest still applies.
 3. Review changes to `vmime-types` extension choices and Content-Type defaults.
    Run both runtimes' tests, type checks, benchmarks, archive checks, and the
-   optional Express integration before a versioned release.
+   integration gate (`scripts/integration.cjs`) before a versioned release.
 
 Data changes are release changes and must be documented, including remapped
 extensions. `vmime-types` packs an exact dependency version to prevent an

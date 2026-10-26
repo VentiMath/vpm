@@ -53,10 +53,13 @@ and check 2,000 generated valid tag lists against an independent matching model.
 They cover quoted commas, backslashes, weak tags, malformed tails, header arrays,
 date precedence, and cache-control quoting/casing.
 
-The combined Express 4.22.1/5.2.1 integration check exercises 304 responses,
-forced reloads, quoted-comma tags, and tag/date precedence on Node and Bun.
-The target is fresh 2.0.0 semantics, including tag precedence when replacing an
-older fresh version in an application.
+The repository's [integration gate](../../scripts/integration.cjs) aliases this
+package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
+firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+real HTTP checks on Node and Bun in CI. It exercises 304 responses, forced reloads,
+quoted-comma tags, and tag/date precedence. The target is fresh 2.0.0 semantics;
+the Express 4 branch nested under firebase-functions still uses fresh 0.5.2 and is
+reported as not covered.
 
 From the repository root:
 

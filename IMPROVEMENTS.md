@@ -43,9 +43,51 @@ not external packages.
 
 `vmime-types` replaces `mime-db` with `vmime-db`, completing VPM counterparts for
 the supporting utilities used by modern `send` 1.2.1 and `serve-static` 2.2.1.
-The replacements for
-`send` and `serve-static` themselves remain future work. Older Express 4 uses a
-different static stack, including `mime` 1.x, and has not been migrated.
+The replacements for `send` and `serve-static` themselves remain future work.
+
+## The target dependency graph
+
+VPM replaces the packages that [ventimath](https://github.com/johnclyde-org/ventimath-private)
+actually installs, in the versions its lockfiles resolve, rather than packages in
+general. Its production HTTP path is Cloud Functions gen 2: the Functions
+Framework 5.0.2 serves `firebase-functions` 7.0.2 `onRequest` handlers through
+Express 5.2.1, `body-parser` 2.2.2, `router` 2.2.0, `send` 1.2.1, and
+`serve-static` 2.2.1. Every package above is a counterpart to the exact version
+on that path. `jsonwebtoken` 9.0.3 reaches `ms`, and the proxy agents under
+`firebase-admin` reach `debug`.
+
+Three facts about that path shape the gate below. The framework disables
+Express ETags on its own application, so conditional requests to plain handlers
+never reach `etag` or `fresh`; Express applications deployed as handlers and
+files served by `send` still use them. `firebase-functions` answers errors
+thrown by a handler itself, with a structured log and a plain 500, so
+`finalhandler` only serves Express applications. The framework's own
+`body-parser` runs first, so an application's body limits are never consulted.
+
+Not covered yet: `firebase-functions` nests an Express 4 branch (`express` 4.22,
+`finalhandler` 1.3.2, `send` 0.19.2, `serve-static` 1.16.3, `fresh` 0.5.2,
+`debug` 2.6.9, `ms` 2.0.0, `mime-types` 2.1.35 with `mime-db` 1.52.0) that only
+its local development binary loads, and `form-data` 2.5.5 under `firebase-admin`
+reads `mime-types` 2.1.35. The gate reports those copies instead of aliasing them.
+
+### The integration gate
+
+[`scripts/integration.cjs`](scripts/integration.cjs) is a required CI job on
+Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
+pins the consumers above to the versions ventimath resolves. The gate aliases
+every VPM package into every installed copy of its upstream, inside its own
+process, then serves an `onRequest` handler and an Express application through
+the Functions Framework and runs 32 HTTP checks: JSON bodies and malformed
+bodies, CORS preflight, `res.set('Content-Type')` with syntax upstream
+tolerated, conditional requests with quoted-comma tags and forced reloads,
+redirect encoding and escaping, `sendFile` and `serve-static` with ranges,
+HEAD, directory redirects, cache ages from duration strings, thrown HTTP
+errors with headers, conflicting framing headers, an error after an accepted
+404, `jsonwebtoken` expiry durations, and `DEBUG` output from each consumer
+namespace. It fails if any targeted package is installed at an untargeted
+version, is not aliased, or is never reached. Earlier per-package integration
+scripts were replaced by this gate; the bugs that review found in
+`vfinalhandler` and `vmime-types` were only visible through real consumers.
 
 `vhttp-errors` keeps only `vstatuses`; native operations and local constructor
 naming replace `inherits`, `setprototypeof`, and `toidentifier`. Invalid non-error
@@ -80,8 +122,8 @@ dependencies have VPM counterparts; their documented differences also apply.
 **Evidence:** [29 tests](packages/vfinalhandler/test), including 480 differential
 normal-response combinations and real HTTP/1 and HTTP/2 connections on Node and
 Bun. Tests reproduce the upstream conflicting-framing failure and verify the
-corrected response, upload draining, abort cleanup, and connection reuse. Optional
-integration checks passed with Express 4.22.1 and 5.2.1 on both runtimes.
+corrected response, upload draining, abort cleanup, and connection reuse. The
+integration gate serves Express applications through it.
 
 **Performance tradeoff:** full-stack microbenchmarks measured about 2–2.4 times
 faster long-path 404 generation, but **19–33% slower short 404s** and **13–17%
@@ -281,7 +323,7 @@ memory reduction is claimed.
 **Evidence:** [matcher, lifecycle, Node, and browser tests](packages/vdebug/test/debug.test.cjs),
 [benchmark](packages/vdebug/bench/compare.cjs), and
 [full measurements and runtime notes](packages/vdebug/README.md#validation-and-performance).
-Combined Express 4/5 checks exercised all three replacements under Node and Bun.
+The integration gate exercises all three replacements under Node and Bun.
 
 ## vhttp-errors
 
@@ -299,8 +341,8 @@ properties are no longer copied, and `isHttpError()` validates status integrity.
 
 **Evidence and performance:** eleven tests cover every standard constructor and
 the changed behavior. Factory benchmarks took 22–45% less time; **direct named
-constructors took 14–40% more time**. Full Express 4/5 integrations exercise JSON
-errors, upload limits, and final responses on Node and Bun.
+constructors took 14–40% more time**. The integration gate exercises JSON body
+errors, thrown errors with headers, and final responses.
 [Tests, measurements, and installation](packages/vhttp-errors/README.md).
 
 ## vetag
@@ -326,8 +368,8 @@ values. Malformed tag lists return stale, including when an earlier member
 matched. Retains fresh 2.0.0's tag-over-date precedence and existing date parsing.
 
 **Evidence and performance:** eight tests include 448 upstream comparisons and
-2,000 generated valid tag lists. Express integrations verify real 304 and forced
-reload responses. Single tags and dates were close in benchmarks; matching long
+2,000 generated valid tag lists. The integration gate verifies real 304 and
+forced reload responses. Single tags and dates were close in benchmarks; matching long
 lists improved on Node, but **long lists were 21–33% slower on Bun**. Node's
 no-cache check increased from 27 to 44 ns per call.
 [Protocol references, tests, and full measurements](packages/vfresh/README.md).
@@ -384,8 +426,8 @@ intentional difference; older MIME package mappings are not the baseline.
 
 **Evidence and performance:** nine tests cover every type and extension, 4,000
 generated paths, quoted parameters, invalid syntax, and mutation attempts.
-Twenty-three real HTTP checks passed in Express 5.2.1 on Node and Bun, including
-send/serve-static, negotiation, downloads, and JSON parsing. Content-Type from an
+The integration gate serves static files, `sendFile`, typed responses, and JSON
+through it in Express 5.2.1 on Node and Bun. Content-Type from an
 extension measured about **4.4× faster on Node and 12.3× faster on Bun**;
 parameterized headers were **63–105% slower**, and full-path lookup was **13%
 slower on Node**. These are microbenchmarks, not application throughput results.

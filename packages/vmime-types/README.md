@@ -84,19 +84,14 @@ variants, 4,000 generated paths, quoted-parameter combinations, malformed inputs
 and mutation attempts. Comparisons use the unchanged upstream source and scoring
 with the exact pinned data snapshot, loaded separately for isolation.
 
-Optional integration against an existing Express 5 installation:
-
-```sh
-node scripts/mime-integration.cjs /path/to/node_modules
-bun scripts/mime-integration.cjs /path/to/node_modules
-```
-
-Express 5.2.1, send 1.2.1, and serve-static 2.2.1 passed 23 real HTTP checks on
-Node and Bun: static content types, GET/HEAD, byte ranges, downloads, response
-types, content negotiation, and JSON parsing. The script also checks `type-is`
-and `accepts`, replacing all three installed copies of `mime-types` only inside
-the process. It does not alter application dependencies. The older Express 4
-static stack still uses `mime` 1.x and is not replaced by this integration.
+The repository's [integration gate](../../scripts/integration.cjs) aliases this
+package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
+firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+real HTTP checks on Node and Bun in CI. It covers static content types, GET/HEAD,
+byte ranges, `sendFile`, `res.type()`, `res.set('Content-Type')` with syntax
+upstream tolerated, and JSON parsing. The `mime-types` 2.1.35 copies under
+`form-data` and the Express 4 branch nested in firebase-functions are reported as
+not covered.
 
 ## Performance
 

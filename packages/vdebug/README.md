@@ -92,9 +92,12 @@ Tests compare wildcard results with unchanged `debug` 4.4.3 across exhaustive
 short patterns and 2,000 generated Unicode/punctuation configurations. They also
 cover cache invalidation, immutable snapshots, overrides, custom formatters,
 clock changes, Node output, color capabilities, and browser storage/console paths.
-Express 4.22.1 and 5.2.1 integration checks exercised actual Express, router,
-`send`, and `finalhandler` logging under Node and Bun, including disabling logs
-after startup. Upstream fixtures are excluded from package archives.
+The repository's [integration gate](../../scripts/integration.cjs) aliases this
+package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
+firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+real HTTP checks on Node and Bun in CI. It enables `DEBUG` for Express, router, `send`,
+`body-parser`, and `finalhandler` and checks that each namespace's output arrives
+through this package. Upstream fixtures are excluded from package archives.
 
 From the repository root:
 

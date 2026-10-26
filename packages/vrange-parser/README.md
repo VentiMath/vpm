@@ -55,8 +55,9 @@ produce the full response; unsatisfiable `-1` ranges produce 416.
 Eight tests cover differential ordinary ranges, oversized suffixes, huge decimal
 values, malformed input, unit casing, bounds, and contained-range ordering.
 Two thousand generated range sets are compared against an independent byte-set
-model. Express 4.22.1 and 5.2.1 checks on Node and Bun exercise real 206, 416,
-malformed-range fallback, and oversized-suffix responses.
+model. The repository's [integration gate](../../scripts/integration.cjs) serves
+real 206, 416, malformed-range fallback, and oversized-suffix responses through
+this package in ventimath's pinned Express 5 stack on Node and Bun.
 
 From the repository root:
 

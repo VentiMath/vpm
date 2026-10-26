@@ -100,16 +100,12 @@ reuse, production message hiding, and the upstream framing failure. All tests
 pass on Node 24.22.1 and Bun 1.4.0. Type checks exercise HTTP/1 and HTTP/2, CommonJS,
 and ES module imports. Declarations do not require separate Node.js types.
 
-An optional integration script aliases only `finalhandler` inside its own process:
-
-```sh
-node packages/vfinalhandler/test/express-integration.cjs /path/to/node_modules
-bun packages/vfinalhandler/test/express-integration.cjs /path/to/node_modules
-```
-
-It passed nine HTTP checks against each of Express 4.22.1 and 5.2.1 on both Node
-and Bun, including default 404/error handling, mounted paths, error logging, and
-conflicting headers. No application dependency files are changed by that check.
+The repository's [integration gate](../../scripts/integration.cjs) aliases this
+package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
+firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+real HTTP checks on Node and Bun in CI. Through it, Express's default 404 and error
+handling, mounted paths, error logging after an accepted response, and
+conflicting framing headers run against this package.
 
 ## Performance
 

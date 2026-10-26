@@ -55,9 +55,7 @@ particular request can be retried safely.
 
 Tests compare every status, reason phrase, and category with upstream, exercise
 invalid codes and mutation attempts, and check generated valid inputs. The
-unchanged upstream source and data are test-only fixtures. Express 4.22.1 and
-5.2.1 integration checks covered response messages, redirects, errors, static
-files, ranges, and empty 304 responses under Node and Bun.
+unchanged upstream source and data are test-only fixtures. The repository's [integration gate](../../scripts/integration.cjs) aliases this package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2, firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs real HTTP checks on Node and Bun in CI.
 
 ## Performance
 
