@@ -71,11 +71,11 @@ long sparse and dense inputs, scanner boundaries, input coercion, and reentrant
 conversion. Results are compared with an independent character mapper and the
 unchanged upstream implementation. The upstream fixture is excluded from archives.
 
-Local integration checks on October 26, 2026, substituted this implementation into
-installed Express 4.22.1 and 5.2.1 stacks under Node 24.22.1 and Bun 1.4.0. They
-covered HTML redirects, final error and 404 pages, `serve-static` and `send`
-directory redirects, `send` errors, HEAD responses, content lengths, and static
-files. No application dependency configuration was changed.
+The repository's [integration gate](../../scripts/integration.cjs) aliases this
+package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
+firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+real HTTP checks on Node and Bun in CI. It covers HTML redirect bodies, final error and
+404 pages, and `serve-static` directory redirects through this package.
 
 ## Performance
 

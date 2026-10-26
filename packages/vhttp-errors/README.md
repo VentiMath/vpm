@@ -68,10 +68,11 @@ also cover invalid statuses, inherited/unsafe properties, subclasses, stack
 locations, and export mutation. The unchanged upstream fixture uses native
 runtime shims, with deprecation output disabled. Fixtures are excluded from packs.
 
-[`scripts/http-primitives-integration.cjs`](../../scripts/http-primitives-integration.cjs)
-passed 16 HTTP checks on each of Express 4.22.1 and 5.2.1 under Node and Bun,
-including JSON errors, upload limits, range errors, and `vfinalhandler` responses.
-It aliases packages only inside its process.
+The repository's [integration gate](../../scripts/integration.cjs) aliases this
+package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2,
+firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs
+real HTTP checks on Node and Bun in CI. It covers JSON body errors, range errors,
+thrown HTTP errors with headers, and `vfinalhandler` responses.
 
 From the repository root:
 

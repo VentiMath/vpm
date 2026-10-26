@@ -1,3 +1,4 @@
 node_modules/
 *.tgz
 .DS_Store
+scripts/consumers/node_modules/

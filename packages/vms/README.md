@@ -67,9 +67,8 @@ serialization of numeric durations. Declarations distinguish parsing's possible
 
 Tests cover every unit alias, case variants, fractions, length limits, invalid
 inputs, coercion hooks, rounding boundaries, and 3,000 generated comparisons.
-The unchanged upstream fixture is excluded from archives. Integration checks
-verified `send` and `serve-static` cache ages expressed as duration strings in
-Express 4.22.1 and 5.2.1 under Node and Bun.
+The unchanged upstream fixture is excluded from archives. The repository's [integration gate](../../scripts/integration.cjs) aliases this package into ventimath's pinned Cloud Functions stack (Functions Framework 5.0.2, firebase-functions 7.0.2, Express 5.2.1, send 1.2.1, serve-static 2.2.1) and runs real HTTP checks on Node and Bun in CI. It covers `send` and `serve-static` cache ages given as duration strings and
+`jsonwebtoken` expiry durations.
 
 ## Performance
 
