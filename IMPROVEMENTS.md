@@ -27,13 +27,16 @@ that these replacements have already improved application performance.
 | [vsend](packages/vsend) | send 1.2.1 | Strong conditional checks, GET-only ranges, validated option snapshots, and guarded file-stream cleanup. |
 | [vserve-static](packages/vserve-static) | serve-static 2.2.1 | Redirects preserve shared URL caches, configuration is validated and snapshotted at startup, and generated responses clear incompatible headers. |
 | [vcontent-type](packages/vcontent-type) | content-type 2.1.0 | Independent null-prototype parameter maps, validated offsets and input types, and span-based quoted-string processing. |
+| [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
+| [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
-Every package includes TypeScript declarations, CommonJS and ES module import
+Every runtime package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
 and documented origins and licenses. Consumers do not need a separate types
-package. Test fixtures and benchmarks stay out of installable archives.
+package. The two declaration-only packages have separate Node API and compiler
+baselines, described below. Test fixtures and benchmarks stay out of installable archives.
 
-Most replacements preserve their runtime dependency counts. Both versions of
+Most runtime replacements preserve their dependency counts. Both versions of
 each utility have zero external runtime dependencies, except
 `on-finished` / `von-finished`, `debug` / `vdebug`, and `mime-types` /
 `vmime-types`, which each declare one,
@@ -59,8 +62,9 @@ parent upgrades before choosing which dependencies to replace. Its current
 upgrade target is Functions Framework 5.0.2 serving `firebase-functions` 7.4.0
 `onRequest` handlers through Express 5.3.0, `body-parser` 2.4.0, `router` 2.2.0,
 `send` 1.2.1, and `serve-static` 2.2.1. Updating this fixture does not update or
-deploy the application. Every package above targets the corresponding upstream
-version in this graph. `jsonwebtoken` 9.0.3 reaches `ms`, and the proxy agents
+deploy the application. The runtime packages above target the corresponding upstream
+versions in this graph. The platform types instead come from VPM's development
+dependencies. `jsonwebtoken` 9.0.3 reaches `ms`, and the proxy agents
 under `firebase-admin` reach `debug`.
 
 The fixture previously pinned Express 5.2.1 and `body-parser` 2.2.2, both of
@@ -100,7 +104,7 @@ and `type-is` 1.6. The gate reports such copies instead of aliasing them.
 [`scripts/integration.cjs`](scripts/integration.cjs) is a required CI job on
 Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
-every VPM package into every installed copy of its upstream, inside its own
+every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
 the Functions Framework and runs 65 HTTP checks: JSON bodies and malformed
 bodies, UTF-16 decoding and unsupported charset rejection, weighted Accept
@@ -558,6 +562,57 @@ and the escaped-value case on Bun was **12% slower**. Against newer 3.1.1, short
 Node parsing was **33–106% slower**, and Bun's escaped-value/Accept cases were
 **28–31% slower**. There is no general application throughput gain established.
 [API, compatibility decisions, both benchmark baselines, and provenance](packages/vcontent-type/README.md).
+
+## vundici-types and vnode-types
+
+**Declaration correctness:** `vundici-types` adds the missing `RequestInit.cache`
+and Request/Response `.bytes()` declarations, permits the runtime's default
+status for `Response.redirect(url)`, and requires a Blob when FormData append/set
+receives a third argument. Two-argument coercible values remain supported. The
+gate reproduces these gaps in undici-types 6.21.0 and verifies the corrected
+signatures against Undici 6.21.3 and native Node/Bun behavior. These findings do
+not imply the latest Undici major has the same gaps.
+
+**Complete coverage and focused loading:** all 38 upstream Undici declaration
+files and 71 Node declaration files are retained, with source hashes and licenses.
+The new `vundici-types/web` entry point supplies Fetch, FormData, WebSocket, and
+EventSource declarations to `vnode-types`. Required dispatcher/client types remain
+reachable; unrelated agent/pool/mock exports are not loaded by ordinary Node
+consumers. The full Undici API remains available from the root entry point.
+
+**Compatibility:** `vnode-types` targets Node 22, based on @types/node 22.20.5;
+it is not a declaration set for every Node major. The workspace's update from
+22.14.1 also includes upstream maintenance improvements, not VPM inventions.
+Both packages require TypeScript 5.6 or later. Select `vnode-types` explicitly
+in `compilerOptions.types`. A small compatibility type root handles third-party
+`reference types="node"` directives without installing duplicate Node declarations.
+The package README documents this configuration and its limits. FormData's
+stricter filename overload may reject previously accepted code that throws at
+runtime. DOM projects continue to use TypeScript's standard browser globals.
+
+**Dependency accounting:** `vnode-types` depends on `vundici-types`; the latter
+requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
+dependency cycle, with no JavaScript runtime code. The workspace no longer uses
+upstream Node/Undici declarations for its own type checks. Upstream packages
+remain in a separately locked comparison fixture. All 18 runtime packages'
+public declarations also compile without any Node, Undici, or DOM ambient types.
+
+**Evidence:** strict type gates run on TypeScript 5.6.3, 5.8.3, and 7.0.2,
+including CJS/ESM consumers and projects with and without DOM declarations.
+Isolated archive installations check the real published-file selection and
+rewritten workspace dependency versions. A reproducibility check compares every
+declaration against pinned source archives plus explicit patches. No
+`skipLibCheck` workaround is used.
+
+**Measurements:** with the same 18 runtime-package type consumers, upstream
+Node 22.20.5, TypeScript 5.8.3, and ES2022-only strict configuration, the loaded
+Undici graph shrank from **37 to 13 files**. All loaded files fell from **198 to
+174**. Five alternating fresh-process samples on Node 24.22.1/macOS arm64 had
+median compiler-reported memory of **152,107 → 142,412 KiB** (about 6% lower),
+unchanged **0.48-second check time**, and total compiler time of **0.74 → 0.73
+seconds**. This does not establish a compilation speedup or any application
+runtime improvement. Installation size is not reduced. See the
+[method, raw measurements, and adoption guide](packages/vnode-types/README.md).
 
 ## Reading and extending this record
 

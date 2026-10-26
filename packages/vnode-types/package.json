@@ -1,0 +1,14 @@
+{
+  "name": "vnode-types",
+  "version": "0.1.0",
+  "description": "Complete Node 22 declarations backed by VPM's focused Undici web types",
+  "type": "commonjs",
+  "types": "index.d.ts",
+  "typesVersions": { "<=5.6": { "*": ["ts5.6/*"] } },
+  "files": ["**/*.d.ts", "LICENSE", "NOTICE", "README.md", "UPSTREAM.json"],
+  "license": "MIT",
+  "dependencies": { "vundici-types": "workspace:*" },
+  "vpm": { "kind": "types", "upstream": "@types/node@22.20.5", "typescript": ">=5.6", "node": "22" },
+  "repository": { "type": "git", "url": "git+https://github.com/ventimath/vpm.git", "directory": "packages/vnode-types" },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vnode-types"
+}

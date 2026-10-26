@@ -1,0 +1,5 @@
+Derived from @types/node 22.20.5, maintained by DefinitelyTyped contributors.
+The upstream MIT license, JSDoc licenses, contributor list, and per-file source
+hashes are retained in LICENSE, the declaration headers, and UPSTREAM.json.
+VPM changes are reproducible with scripts/sync-types.cjs and documented in README.md.
+Modifications Copyright (c) 2026 VentiMath contributors, MIT licensed.
