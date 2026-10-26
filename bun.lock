@@ -20,6 +20,10 @@
         "vee-first": "workspace:*",
       },
     },
+    "packages/vparseurl": {
+      "name": "vparseurl",
+      "version": "0.1.0",
+    },
   },
   "packages": {
     "@types/node": ["@types/node@22.14.1", "", { "dependencies": { "undici-types": "~6.21.0" } }, "sha512-u0HuPQwe/dHrItgHHpmw3N2fYCR6x4ivMNbPHRkBVP4CvN+kiRrKHWk3i8tXiO/joPwXLMYvF9TTF0eqgHIuOw=="],
@@ -31,5 +35,7 @@
     "vee-first": ["vee-first@workspace:packages/vee-first"],
 
     "von-finished": ["von-finished@workspace:packages/von-finished"],
+
+    "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
   }
 }
