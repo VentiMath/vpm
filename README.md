@@ -58,10 +58,23 @@ bun run test:bun
 bun run typecheck
 ```
 
-Tests run against Node.js and Bun. The workspace uses TypeScript and Node.js type
-declarations for development checks. The integration gate installs a pinned
+Tests run against Node.js and Bun. The workspace uses TypeScript with VPM's
+`vnode-types` and `vundici-types` for development checks. These declaration-only
+packages have separate compiler and Node API baselines; their documentation
+explains adoption and compatibility. Runtime packages retain self-contained
+public declarations. The platform type gate checks pinned upstream comparisons,
+TypeScript 5.6/5.8/7, Node-only and DOM projects, and installed package archives:
+
+```sh
+npm --prefix scripts/type-consumers ci --ignore-scripts
+node scripts/sync-types.cjs --check
+npm run test:types
+node scripts/check-type-archives.cjs
+```
+
+The HTTP integration gate installs a pinned
 upgrade target for ventimath's HTTP consumers and drives it with every VPM
-package aliased in:
+runtime package aliased in:
 
 ```sh
 npm --prefix scripts/consumers ci --ignore-scripts

@@ -5,10 +5,11 @@
   "scripts": {
     "test": "node --test packages/*/test/*.test.cjs",
     "test:bun": "bun test",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && node scripts/check-public-types.cjs",
+    "test:types": "node scripts/check-platform-types.cjs"
   },
   "devDependencies": {
-    "@types/node": "22.14.1",
+    "vnode-types": "workspace:*",
     "typescript": "5.8.3"
   }
 }

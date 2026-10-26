@@ -1,0 +1,5 @@
+Derived from undici-types 6.21.0, maintained by the Undici contributors.
+The upstream MIT license, source attribution comments, contributor list, and
+per-file source hashes are retained in LICENSE, the declarations, and UPSTREAM.json.
+VPM changes are reproducible with scripts/sync-types.cjs and documented in README.md.
+Modifications Copyright (c) 2026 VentiMath contributors, MIT licensed.
