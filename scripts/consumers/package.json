@@ -1,13 +1,13 @@
 {
   "name": "vpm-consumers",
   "private": true,
-  "description": "The HTTP consumers from ventimath's Cloud Functions dependency graph, pinned to the versions its lockfile resolves, for scripts/integration.cjs",
+  "description": "The pinned Express 5 upgrade target for ventimath's Cloud Functions HTTP consumers, validated by scripts/integration.cjs",
   "dependencies": {
     "@google-cloud/functions-framework": "5.0.2",
     "firebase-admin": "12.7.0",
     "firebase-functions": "7.4.0",
-    "express": "5.2.1",
-    "body-parser": "2.2.2",
+    "express": "5.3.0",
+    "body-parser": "2.4.0",
     "router": "2.2.0",
     "send": "1.2.1",
     "serve-static": "2.2.1",

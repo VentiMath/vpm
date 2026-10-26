@@ -93,8 +93,8 @@ is unchanged `serve-static` 2.2.1 source using the same VPM dependencies to isol
 wrapper behavior. It is not the complete upstream test suite.
 
 The repository's [integration gate](../../scripts/integration.cjs) aliases all
-VPM counterparts into the pinned Express 5.2.1, Functions Framework 5.0.2,
-firebase-functions 7.4.0, and serve-static 2.2.1 stack. Its 60 HTTP checks cover
+VPM counterparts into the pinned Express 5.3.0, Functions Framework 5.0.2,
+firebase-functions 7.4.0, and serve-static 2.2.1 stack. Its 65 HTTP checks cover
 static delivery, downloads, ranges, callbacks, fallthrough, mount roots,
 redirect queries, and conflicting headers, alongside the other VPM packages.
 It runs on Node 20, 22, 24 and Bun in CI. This package targets that Express 5 path.

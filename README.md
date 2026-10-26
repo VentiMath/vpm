@@ -59,8 +59,9 @@ bun run typecheck
 ```
 
 Tests run against Node.js and Bun. The workspace uses TypeScript and Node.js type
-declarations for development checks. The integration gate installs ventimath's
-pinned HTTP consumers and drives them with every VPM package aliased in:
+declarations for development checks. The integration gate installs a pinned
+upgrade target for ventimath's HTTP consumers and drives it with every VPM
+package aliased in:
 
 ```sh
 npm --prefix scripts/consumers ci --ignore-scripts
