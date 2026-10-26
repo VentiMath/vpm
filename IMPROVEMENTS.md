@@ -23,7 +23,7 @@ that these replacements have already improved application performance.
 | [vfresh](packages/vfresh) | fresh 2.0.0 | Quoted-comma ETags, strict tag syntax, header arrays, and case-insensitive no-cache handling outside quoted extensions. |
 | [vrange-parser](packages/vrange-parser) | range-parser 1.2.1 | Complete numeric syntax, safe bounds, oversized suffixes, and stable combined-range ordering. |
 | [vmime-db](packages/vmime-db) | mime-db 1.54.0 | Immutable records and extension arrays, prototype-free dictionaries, precise types, and a verified data snapshot. |
-| [vmime-types](packages/vmime-types) | mime-types 3.0.2 | Correct charset parameter recognition, complete media-type validation, immutable mappings, and prepared default Content-Type strings. |
+| [vmime-types](packages/vmime-types) | mime-types 3.0.2 | Correct charset parameter recognition, immutable mappings, and prepared default Content-Type strings. |
 
 Every package includes TypeScript declarations, CommonJS and ES module import
 support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
@@ -372,14 +372,15 @@ work; startup measurements and a manual data-update procedure are documented.
 **Header correctness:** recognizes charset parameter names case-insensitively
 and parses quoted values and escapes. Uppercase `CHARSET=ascii` no longer causes
 a duplicate default; `note="charset"` no longer suppresses a missing default.
-Malformed media types, incomplete parameters, control characters, and duplicate
-charsets return `false`. Shared mappings and exported methods are immutable.
+Malformed media types and parameters fall back to upstream's prefix handling,
+since Express 5 passes every `res.set('Content-Type')` value through
+`contentType()`. Shared mappings and exported methods are immutable.
 
 **Compatibility and implementation:** preserves all 1,239 extension choices and
 the default charset/extension data from 3.0.2 with database 1.54.0. Scoring runs
 once per candidate, with upstream tie-breaking intact. Default Content-Type
-strings are prepared once. Strict parameter parsing and immutable exports are
-intentional differences; older MIME package mappings are not the baseline.
+strings are prepared once. Immutable exports are an
+intentional difference; older MIME package mappings are not the baseline.
 
 **Evidence and performance:** nine tests cover every type and extension, 4,000
 generated paths, quoted parameters, invalid syntax, and mutation attempts.

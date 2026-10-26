@@ -82,14 +82,22 @@ test('parameter values and similar names cannot masquerade as a charset', () => 
   assert.equal(mime.contentType(explicit), explicit);
 });
 
-test('malformed types, parameter syntax, controls and duplicate charsets return false', () => {
+test('malformed types and parameters fall back to upstream prefix handling', () => {
+  // Express 5 passes every res.set('Content-Type') value through contentType(), so a
+  // header upstream tolerated must not become the string "false".
   for (const input of ['text/', '/html', 'text/html junk', 'text/html/extra', 'text/html\n', 'text/html\r\nX: x',
     'text/html; note', 'text/html; a=', 'text/html; a =b', 'text/html; a= b', 'text/html; a="unterminated',
     'text/html; a="escape\\"', 'text/html; a="line\nbreak"', 'text/html; a="nul\0"', 'text/html; a="☃"',
     'text/html; a="ok"junk', 'text/html; a=b,other', 'text/html; charset=utf-8; CHARSET=ascii',
+    'application/pdf; name=file (1).pdf', 'multipart/form-data; boundary=---abc/def', 'text/plain; charset=utf 8',
     'text/html; a="' + 'x'.repeat(20000)]) {
-    for (const method of ['charset', 'extension', 'contentType']) assert.equal(mime[method](input), false, method + ': ' + input.slice(0, 100));
+    for (const method of ['charset', 'extension', 'contentType']) {
+      assert.equal(mime[method](input), upstream[method](input), method + ': ' + input.slice(0, 100));
+    }
   }
+  assert.equal(mime.contentType('application/pdf; name=file (1).pdf'), 'application/pdf; name=file (1).pdf');
+  assert.equal(mime.contentType('text/plain; charset=utf 8'), 'text/plain; charset=utf 8');
+  assert.equal(mime.extension('text/html junk'), 'html');
 });
 
 test('generated quoted parameters preserve delimiters and only real charset parameters suppress defaults', () => {
@@ -99,7 +107,7 @@ test('generated quoted parameters preserve delimiters and only real charset para
     const input = 'text/plain; note=' + quote(left) + '; other=' + quote(right);
     assert.equal(mime.contentType(input), input + '; charset=utf-8');
     assert.equal(mime.contentType(input + '; ChArSeT="ascii"'), input + '; ChArSeT="ascii"');
-    assert.equal(mime.contentType(input + '; ChArSeT="ascii"; broken'), false);
+    assert.equal(mime.contentType(input + '; ChArSeT="ascii"; broken'), upstream.contentType(input + '; ChArSeT="ascii"; broken'));
   }
 });
 
