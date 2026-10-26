@@ -1,0 +1,21 @@
+{
+  "name": "vcontent-type",
+  "version": "0.1.0",
+  "description": "Content-Type parsing with isolated parameter maps, validated inputs, and span-based quoted values",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": { "types": "./index.d.ts", "default": "./index.js" },
+    "./package.json": "./package.json"
+  },
+  "files": ["index.js", "index.d.ts", "LICENSE", "README.md"],
+  "engines": { "node": ">=20" },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vcontent-type"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vcontent-type"
+}

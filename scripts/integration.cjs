@@ -27,6 +27,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'content-type': { pkg: 'vcontent-type', versions: /^2\.1\./ },
   'ee-first': { pkg: 'vee-first', versions: /^1\.1\./ },
   'on-finished': { pkg: 'von-finished', versions: /^2\.4\./ },
   parseurl: { pkg: 'vparseurl', versions: /^1\.3\./ },
