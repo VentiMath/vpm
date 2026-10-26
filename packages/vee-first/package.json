@@ -1,0 +1,26 @@
+{
+  "name": "vee-first",
+  "version": "0.1.0",
+  "description": "Wait for the first EventEmitter event and clean up competing listeners",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["index.js", "index.d.ts", "LICENSE", "README.md"],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vee-first"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vee-first"
+}
