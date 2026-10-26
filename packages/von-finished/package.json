@@ -1,0 +1,29 @@
+{
+  "name": "von-finished",
+  "version": "0.1.0",
+  "description": "Observe HTTP request and response completion with cleanup and async context",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["index.js", "index.d.ts", "LICENSE", "README.md"],
+  "dependencies": {
+    "vee-first": "workspace:*"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/von-finished"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/von-finished"
+}
