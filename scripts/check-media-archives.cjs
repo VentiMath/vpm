@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
     assert.ok(archive, name);
@@ -21,6 +21,14 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (name === 'viconv-lite') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries = run('tar', ['-tzf', packed]);
+      assert.doesNotMatch(entries, /(?:\/test\/|safer-buffer|node_modules|\/bench\/)/);
+      assert.match(entries, /package\/encodings\/tables\/gb18030-ranges.json/);
+      assert.match(entries, /package\/types\/encodings.d.ts/);
+      assert.match(entries, /package\/PROVENANCE.json/);
+    }
     if (['vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts'].includes(name)) {
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'index.d.ts', 'index.js', 'package.json'].sort());
@@ -28,6 +36,9 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const iconv = require('viconv-lite');
+assert.equal(iconv.decode(Buffer.from('9439da33', 'hex'), 'gb18030'), '💩');
+assert.equal(iconv.decode(iconv.encode('abc', 'utf32', Object.freeze({})), 'utf32'), 'abc');
 const bytes = require('vbytes');
 assert.equal(bytes.parse('100kb'), 102400);
 assert.throws(() => bytes.parse('100kbjunk'), TypeError);
@@ -47,6 +58,11 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import iconv, { encode, decode, getDecoder } from 'viconv-lite';
+assert.equal(iconv.encode, encode); assert.equal(iconv.decode, decode);
+const decoder = getDecoder('gb18030');
+assert.equal(decoder.write(Buffer.from('9439da', 'hex')), '');
+assert.equal(decoder.write(Buffer.from('33', 'hex')), '💩');
 import bytes, { parse as parseBytes, format as formatBytes } from 'vbytes';
 assert.equal(bytes.parse, parseBytes); assert.equal(bytes.format, formatBytes);
 assert.equal(parseBytes('-1.00000000000000000001kb'), -1025);
@@ -63,6 +79,16 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import iconv, { encode, decode, type Encoding } from 'viconv-lite';
+const charset: Encoding = 'utf8';
+const encoded: Uint8Array = encode('abc', charset);
+const decoded: string = decode(encoded, 'UTF-8');
+encode('abc', 'utf8').toString('hex');
+iconv.decodeStream('utf16be').collect((error, output) => { if (!error) output?.toUpperCase(); });
+iconv.encodeStream('utf8').pipe(iconv.decodeStream('utf8'));
+// @ts-expect-error decoding requires bytes
+decode('abc', 'utf8');
+void decoded;
 import bytes, { parse as parseBytes, format as formatBytes } from 'vbytes';
 const size: number = parseBytes('1kb');
 const absent: null = parseBytes(undefined);
@@ -121,6 +147,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vnegotiator\/index\.d\.ts/);
     assert.match(output, /node_modules\/vaccepts\/index\.d\.ts/);
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
+    assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     console.log(`${manager} archives: Node/Bun CJS and ESM, TypeScript ${tsc.version} CJS and ESM without platform types passed.`);
     fs.rmSync(path.join(directory, 'node_modules'), { recursive: true, force: true });
     fs.rmSync(path.join(directory, 'package-lock.json'), { force: true });

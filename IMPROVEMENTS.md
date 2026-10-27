@@ -32,6 +32,7 @@ that these replacements have already improved application performance.
 | [vnegotiator](packages/vnegotiator) | negotiator 1.1.0 | Validated quality values, parameter specificity, stable duplicate ordering, and one parse per offered value. |
 | [vaccepts](packages/vaccepts) | accepts 2.0.0 | Validated offers even without Accept, distinct empty-header behavior, coherent replacement headers, and VPM negotiation throughout. |
 | [vbytes](packages/vbytes) | bytes 3.1.2 | Complete-input parsing that fails explicitly on invalid limits, exact decimal scaling, validated format options, and literal group separators. |
+| [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
@@ -50,7 +51,8 @@ each utility have zero external runtime dependencies, except
 `serve-static` / `vserve-static`, which each declare four,
 `finalhandler` / `vfinalhandler`, which each declare six,
 `send` / `vsend`, which each declare eleven, and `http-errors` /
-`vhttp-errors`, which declare **five and one**, respectively.
+`vhttp-errors`, which declare **five and one**, respectively; and
+`iconv-lite` / `viconv-lite`, which declare **one and zero**.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
@@ -117,13 +119,14 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 108
+the Functions Framework, also serves a direct Express parser app, and runs 120
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
 responses and Vary/Content-Type headers; JSON bodies and malformed
 bodies, exact/over-limit bodies with explicit lengths and chunked framing,
 UTF-8 byte counts, gzip expansion, malformed limits and deliberate limit omission,
+legacy and Unicode charset decoding, separately delivered GB18030/Big5/UTF-7 chunks,
 UTF-16 decoding and unsupported charset rejection, weighted Accept
 negotiation with quoted commas, preservation of Content-Type parameters when
 Express changes the charset, CORS preflight, `res.set('Content-Type')` with syntax upstream
@@ -743,6 +746,76 @@ time on Node, 116% more on Bun); fixed-decimal formatting took 21% longer on
 Node. These are microbenchmarks, not an application throughput result. Source,
 commands, and the error contract are in [the package README](packages/vbytes).
 
+## viconv-lite
+
+**Encoding coverage and dependency:** preserves all 414 supported encoding names
+and aliases from iconv-lite 0.7.3, all 81 single-byte mapping tables, and all
+multibyte data. `safer-buffer` is replaced by native Node/Bun Buffer APIs, reducing
+the external dependency count from one to zero. This is a derivative with
+targeted changes; the upstream mapping tables are retained byte for byte. The
+published npm archive and its integrity were checked against all 27 fixture files.
+
+**Chunk correctness:** GB18030 decoding can lose a low surrogate, and Big5
+decoding can lose a combining character, when the final byte arrives separately.
+Output allocations now include pending input. Encoder allocations likewise
+include pending surrogate and sequence state. UTF-7 and IMAP UTF-7 remember
+whether shifted content preceded a terminator in another chunk, avoiding spurious
+`+`/`&` output. CESU-8 incomplete endings no longer prepend a literal `0`, and
+flushing resets their state. UTF-16BE buffers a split surrogate pair until complete.
+
+**Ownership and streams:** automatic UTF-16/32 detection owns the input bytes it
+retains and ignores empty chunks. Options are copied before encoders or streams
+can modify them, permitting frozen objects and preventing later caller changes
+from altering in-flight decoding. Stream collection completes once, removes its
+listeners, and reports premature closure. Codec `defaultEncoding` is kept
+separate from the native Transform option of the same name.
+
+**Compatibility:** ordinary encoding/decoding results and the extension hooks
+remain. Top-level encoding requires strings, decoding requires Buffer/Uint8Array,
+and encoding names require strings; deprecated coercions are rejected. BOM options
+are validated, only own enumerable options are copied, and recursive automatic
+encoding defaults are rejected. Custom alias cycles throw. Corrected malformed
+endings and chunk boundaries intentionally change output. Encoding hooks and
+codec caches remain mutable; cached aliases must be cleared after definition
+changes. Declarations work with TypeScript 7 without loading platform types and
+infer native Buffer when the caller already has Node declarations.
+
+**Evidence:** ordinary differential checks cover every supported alias. Exhaustive
+single-byte tests exercise every byte and all 65,536 UTF-16 code units across
+81 tables; multibyte tests cover a corpus containing every byte pair in seven
+encodings. There are 3,200 generated malformed/chunked comparisons, split/BOM
+matrices, stream lifecycle tests, and installed archive checks. The shared HTTP
+gate now runs 120 requests, with this package used by real `body-parser` and
+`raw-body`, including deliberately split GB18030, Big5 and UTF-7 bodies.
+
+**Measured performance:** sequential local Node 24.22.1 / Bun 1.4.0 measurements
+on 2026-10-26; median nanoseconds/call from seven alternating 50,000-call samples
+after warmup. UTF-8/UTF-16LE use short strings; UTF-16BE/UTF-32BE and legacy-codec
+cases use longer text. The [benchmark](packages/viconv-lite/bench/compare.cjs)
+defines all inputs and checks equal results before timing.
+
+| Case | Node upstream → VPM | Bun upstream → VPM |
+| --- | ---: | ---: |
+| UTF-8 encode | 172 → 161 | 216 → 208 |
+| UTF-8 decode | 314 → 307 | 182 → 174 |
+| UTF-16LE encode | 181 → 140 | 100 → 94 |
+| UTF-16LE decode | 313 → 283 | 129 → 119 |
+| UTF-16BE encode | 1,254 → 241 | 911 → 348 |
+| UTF-16BE decode | 2,160 → 2,419 | 1,859 → 1,862 |
+| UTF-32BE encode | 11,457 → 5,905 | 8,502 → 6,123 |
+| UTF-32BE decode | 4,723 → 4,707 | 3,772 → 3,763 |
+| Windows-1251 encode | 863 → 874 | 427 → 423 |
+| Windows-1251 decode | 1,039 → 1,072 | 707 → 710 |
+| GB18030 encode | 2,791 → 2,798 | 2,574 → 2,420 |
+| GB18030 decode | 2,951 → 2,953 | 2,340 → 2,299 |
+| Alias lookup | 132 → 130 | 143 → 140 |
+
+Native byte swapping makes UTF-16BE encoding take **81% less time on Node and
+62% less on Bun**. Reading UTF-32 input code units directly takes **48% / 28%
+less time**. Correct surrogate buffering costs **12% more time for UTF-16BE
+decoding on Node**. Small differences in other rows may be measurement noise;
+these microbenchmarks do not establish application throughput improvements.
+
 ## vundici-types and vnode-types
 
 **Declaration correctness:** `vundici-types` adds the missing `RequestInit.cache`
@@ -776,7 +849,7 @@ runtime. DOM projects continue to use TypeScript's standard browser globals.
 requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
 dependency cycle, with no JavaScript runtime code. The workspace no longer uses
 upstream Node/Undici declarations for its own type checks. Upstream packages
-remain in a separately locked comparison fixture. All 23 runtime packages'
+remain in a separately locked comparison fixture. All 24 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

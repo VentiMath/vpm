@@ -71,6 +71,10 @@
         "vstatuses": "workspace:*",
       },
     },
+    "packages/viconv-lite": {
+      "name": "viconv-lite",
+      "version": "0.1.0",
+    },
     "packages/vmedia-typer": {
       "name": "vmedia-typer",
       "version": "0.1.0",
@@ -231,6 +235,8 @@
     "vfresh": ["vfresh@workspace:packages/vfresh"],
 
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
+
+    "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
 
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
 
