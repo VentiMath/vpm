@@ -33,6 +33,7 @@ that these replacements have already improved application performance.
 | [vaccepts](packages/vaccepts) | accepts 2.0.0 | Validated offers even without Accept, distinct empty-header behavior, coherent replacement headers, and VPM negotiation throughout. |
 | [vbytes](packages/vbytes) | bytes 3.1.2 | Complete-input parsing that fails explicitly on invalid limits, exact decimal scaling, validated format options, and literal group separators. |
 | [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
+| [vraw-body](packages/vraw-body) | raw-body 3.0.2 | Premature-close settlement, strict byte counts, earlier length rejection, controlled chunk/decoder errors, and an entirely VPM dependency tree. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
@@ -52,7 +53,8 @@ each utility have zero external runtime dependencies, except
 `finalhandler` / `vfinalhandler`, which each declare six,
 `send` / `vsend`, which each declare eleven, and `http-errors` /
 `vhttp-errors`, which declare **five and one**, respectively; and
-`iconv-lite` / `viconv-lite`, which declare **one and zero**.
+`iconv-lite` / `viconv-lite`, which declare **one and zero**, and
+`raw-body` / `vraw-body`, which declare **four and three**.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
@@ -66,6 +68,8 @@ total external VPM dependencies. Its dependencies are all existing VPM packages.
 with `vmime-db` bringing its complete external tree to four VPM packages.
 `vaccepts` also has four total external dependencies: `vnegotiator`,
 `vcontent-type`, `vmime-types`, and `vmime-db`.
+`vraw-body` uses `vbytes`, `vhttp-errors` and `viconv-lite`, with `vstatuses`
+bringing its complete external dependency tree to four VPM packages.
 
 ## The target dependency graph
 
@@ -119,13 +123,14 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 120
+the Functions Framework, also serves a direct Express parser app, and runs 126
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
 responses and Vary/Content-Type headers; JSON bodies and malformed
 bodies, exact/over-limit bodies with explicit lengths and chunked framing,
-UTF-8 byte counts, gzip expansion, malformed limits and deliberate limit omission,
+UTF-8 byte counts, gzip expansion and corruption, malformed limits and deliberate limit omission,
+disconnected request settlement and raw-buffer verification callbacks,
 legacy and Unicode charset decoding, separately delivered GB18030/Big5/UTF-7 chunks,
 UTF-16 decoding and unsupported charset rejection, weighted Accept
 negotiation with quoted commas, preservation of Content-Type parameters when
@@ -779,6 +784,9 @@ endings and chunk boundaries intentionally change output. Encoding hooks and
 codec caches remain mutable; cached aliases must be cleared after definition
 changes. Declarations work with TypeScript 7 without loading platform types and
 infer native Buffer when the caller already has Node declarations.
+The vraw-body type checks subsequently exposed an `any` inference through
+`Buffer.prototype`; inference now uses `Buffer.alloc`'s return type, with
+regression assertions for both packages.
 
 **Evidence:** ordinary differential checks cover every supported alias. Exhaustive
 single-byte tests exercise every byte and all 65,536 UTF-16 code units across
@@ -816,6 +824,73 @@ less time**. Correct surrogate buffering costs **12% more time for UTF-16BE
 decoding on Node**. Small differences in other rows may be measurement noise;
 these microbenchmarks do not establish application throughput improvements.
 
+## vraw-body
+
+**Target and dependencies:** this replaces raw-body **3.0.2**, the version used
+by body-parser 2.4.0 in the pinned Express 5.3.0 consumer graph. Raw-body **4.0.0**
+was also checked on 2026-10-26: its Node 22+ ESM entry point and default TextDecoder
+change the integration contract, and body-parser declares a 3.x dependency.
+These comparisons do not imply the newer major has every issue in 3.0.2.
+VPM retains the callable CommonJS export, Promise/callback API, and viconv-lite's
+complete charset support. Direct dependencies fall from four to three, all VPM;
+the full tree is `vbytes`, `vhttp-errors`, `viconv-lite` and `vstatuses`.
+Native `stream.unpipe()` removes the separate `unpipe` compatibility helper.
+
+**Read completion and cleanup:** upstream's close handler removes listeners but
+never settles a read that closes before `end` without an error/abort event.
+The regression test reproduces that pending callback. VPM rejects with
+`request.aborted`, preserving expected/received byte counts. Already destroyed
+or ended streams also fail without waiting for events that have already happened.
+Every completion clears owned listeners and retained data. Source errors retain
+their identity, decoder failures use the same cleanup path, registration failures
+roll back, and reentrant completion does not leave listeners installed. Callback
+async context is retained and its resource is explicitly destroyed after dispatch.
+
+**Validation:** length accepts only nonnegative safe integer bytes or a string
+of ASCII decimal digits; invalid values cannot disable or truncate the check.
+Limits use vbytes' complete-input parser and must resolve to nonnegative safe
+integer bytes. Invalid options throw synchronously before consuming data. An
+excess over declared length is rejected as soon as it arrives. String/object
+chunks produce controlled errors instead of miscounting character lengths or
+throwing from a later Buffer operation. Modern Node readable streams emitting
+Buffer/Uint8Array chunks are required; legacy EventEmitter-only streams are dropped.
+Errors pause/unpipe the stream; draining, destroying and timeouts remain the caller's
+responsibility. There is no default size limit. Result Buffers retain independent
+storage, while concatenation reuses the byte count already tracked during reading.
+
+**Evidence:** 25 package tests cover differential successful reads and the
+intentional behavior changes, callback/Promise APIs, real file streams, byte/BOM
+boundaries, failure cleanup, option snapshots and async context. Node additionally
+checks async_hooks resource destruction, which Bun does not implement. The 126-check
+HTTP gate exercises vraw-body through body-parser and directly, including actual
+client disconnection, compressed-body failure, limit errors, raw-buffer verification,
+unsupported charsets and separately delivered multibyte sequences. Packed archives
+are installed with npm and Bun, then checked with Node/Bun CJS/ESM and TypeScript 7
+without ambient platform declarations. Callback types distinguish successful bodies
+from absent error results; dynamic encodings return a Buffer/string union.
+
+**Measured performance:** a sequential local run on 2026-10-26 used Node 24.22.1
+and Bun 1.4.0. The [benchmark](packages/vraw-body/bench/compare.cjs) measures complete
+PassThrough reads, including stream construction, callback/Promise settlement and
+body assembly. Values below are median nanoseconds/read from seven alternating
+5,000-read samples after 5,000 warmup reads per implementation. Results are checked
+against the pinned upstream implementation before timing.
+
+| Case | Node upstream → VPM | Bun upstream → VPM |
+| --- | ---: | ---: |
+| Buffer 1 KiB / Promise | 980 → 1,044 | 1,323 → 1,307 |
+| Buffer 1 KiB / callback | 1,071 → 1,072 | 1,077 → 987 |
+| Buffer 64 KiB / 64 chunks | 8,629 → 8,981 | 9,747 → 9,918 |
+| UTF-8 1 KiB | 1,585 → 1,615 | 1,529 → 1,466 |
+| UTF-8 / 16 chunks | 42,547 → 44,296 | 20,765 → 20,750 |
+| Shift-JIS 8 KiB | 30,614 → 31,154 | 24,852 → 24,239 |
+
+This is primarily a correctness and dependency improvement. Node's small Promise
+case took about **7% more time**; the other Node cases ranged from unchanged to
+about **4% more**. Bun's small callback case took about **8% less time**; other
+differences were small. These local measurements do not establish an application
+throughput or security improvement.
+
 ## vundici-types and vnode-types
 
 **Declaration correctness:** `vundici-types` adds the missing `RequestInit.cache`
@@ -849,7 +924,7 @@ runtime. DOM projects continue to use TypeScript's standard browser globals.
 requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
 dependency cycle, with no JavaScript runtime code. The workspace no longer uses
 upstream Node/Undici declarations for its own type checks. Upstream packages
-remain in a separately locked comparison fixture. All 24 runtime packages'
+remain in a separately locked comparison fixture. All 25 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

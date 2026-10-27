@@ -1,0 +1,26 @@
+{
+  "name": "vraw-body",
+  "version": "0.1.0",
+  "description": "Validated byte-stream bodies with complete read settlement and VPM decoders",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": { "types": "./index.d.ts", "default": "./index.js" },
+    "./package.json": "./package.json"
+  },
+  "files": ["index.js", "index.d.ts", "LICENSE", "README.md"],
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "vbytes": "workspace:*",
+    "vhttp-errors": "workspace:*",
+    "viconv-lite": "workspace:*"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vraw-body"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vraw-body"
+}

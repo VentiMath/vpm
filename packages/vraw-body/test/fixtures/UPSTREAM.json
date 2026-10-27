@@ -1,0 +1,33 @@
+{
+  "rawBodyCommit": "4cf8e0a2591802e01f05f93e39a6a5b3610a183c",
+  "files": [
+    {
+      "package": "raw-body@3.0.2",
+      "path": "index.js",
+      "fixture": "raw-body-3.0.2.cjs",
+      "sha256": "e1c1ff9152ec1f5cf1ef1c2b853d6723e93ba13e4e9f1f15f9c6b2026a39a1cb",
+      "tarballIntegrity": "sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA=="
+    },
+    {
+      "package": "raw-body@3.0.2",
+      "path": "LICENSE",
+      "fixture": "LICENSE-raw-body",
+      "sha256": "37876d7de8bdf5e5b9b58a697ebc34044624e493e6f49eff5c938e5226dcac6b",
+      "tarballIntegrity": "sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA=="
+    },
+    {
+      "package": "unpipe@1.0.0",
+      "path": "index.js",
+      "fixture": "unpipe-1.0.0.cjs",
+      "sha256": "69cd57b5cdd08c42410ebc0d92235e334f1fb985e6eb2dcfb1c692db674411bd",
+      "tarballIntegrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="
+    },
+    {
+      "package": "unpipe@1.0.0",
+      "path": "LICENSE",
+      "fixture": "LICENSE-unpipe",
+      "sha256": "1a526fbe8d8577f5a4b1c2821842b55b7c0e18862531c62ae4ce69c9b19b74b6",
+      "tarballIntegrity": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ=="
+    }
+  ]
+}

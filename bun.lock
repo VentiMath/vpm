@@ -123,6 +123,15 @@
       "name": "vrange-parser",
       "version": "0.1.0",
     },
+    "packages/vraw-body": {
+      "name": "vraw-body",
+      "version": "0.1.0",
+      "dependencies": {
+        "vbytes": "workspace:*",
+        "vhttp-errors": "workspace:*",
+        "viconv-lite": "workspace:*",
+      },
+    },
     "packages/vsend": {
       "name": "vsend",
       "version": "0.1.0",
@@ -255,6 +264,8 @@
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
 
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
+
+    "vraw-body": ["vraw-body@workspace:packages/vraw-body"],
 
     "vsend": ["vsend@workspace:packages/vsend"],
 

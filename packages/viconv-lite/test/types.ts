@@ -2,7 +2,11 @@ import iconv, { encode, decode, getDecoder, type Encoding, type ByteBuffer } fro
 import { Readable, PassThrough } from 'node:stream';
 const name: Encoding = 'utf8';
 const bytes: Buffer = encode('hi', name);
-const typed: ByteBuffer = bytes;
+const typed: ByteBuffer = encode('hi', name);
+// @ts-expect-error the native Buffer result must not degrade to any
+const wrongResult: string = encode('hi', name);
+// @ts-expect-error the alias must retain byte-buffer typing
+const wrongBytes: ByteBuffer = 'not bytes';
 const text: string = decode(new Uint8Array([0x61]), 'UTF-8');
 const decoder = getDecoder('utf8', { stripBOM() {} });
 const chunk: string = decoder.write(bytes);
@@ -17,4 +21,4 @@ decode('abc', 'utf8');
 encode(1, 'utf8');
 // @ts-expect-error BOM options are typed
 iconv.getEncoder('utf8', { addBOM: 'yes' });
-void [typed, text, chunk, tail];
+void [typed, text, chunk, tail, wrongResult, wrongBytes];
