@@ -858,7 +858,7 @@ Errors pause/unpipe the stream; draining, destroying and timeouts remain the cal
 responsibility. There is no default size limit. Result Buffers retain independent
 storage, while concatenation reuses the byte count already tracked during reading.
 
-**Evidence:** 25 package tests cover differential successful reads and the
+**Evidence:** 28 package tests cover differential successful reads and the
 intentional behavior changes, callback/Promise APIs, real file streams, byte/BOM
 boundaries, failure cleanup, option snapshots and async context. Node additionally
 checks async_hooks resource destruction, which Bun does not implement. The 126-check
@@ -869,27 +869,53 @@ are installed with npm and Bun, then checked with Node/Bun CJS/ESM and TypeScrip
 without ambient platform declarations. Callback types distinguish successful bodies
 from absent error results; dynamic encodings return a Buffer/string union.
 
-**Measured performance:** a sequential local run on 2026-10-26 used Node 24.22.1
-and Bun 1.4.0. The [benchmark](packages/vraw-body/bench/compare.cjs) measures complete
-PassThrough reads, including stream construction, callback/Promise settlement and
-body assembly. Values below are median nanoseconds/read from seven alternating
-5,000-read samples after 5,000 warmup reads per implementation. Results are checked
-against the pinned upstream implementation before timing.
+**Performance follow-up:** the reader now validates numeric limits directly
+instead of validating them in both vbytes and the reader. A single native
+Uint8Array check accepts Buffer and cross-realm byte arrays while rejecting
+objects that merely inherit Buffer.prototype. The smaller of expected length
+and size limit is computed once, reducing two per-chunk bound checks to one;
+the failure path preserves 413 precedence when a chunk exceeds both. String
+parsing, early rejection, independent output storage, listener cleanup and async
+resource handling are unchanged. Additional tests cover forged buffers, view
+boundaries, coercion hooks and 98 combinations of size bounds and return encoding.
 
-| Case | Node upstream → VPM | Bun upstream → VPM |
+**Measured performance:** the initial 2026-10-26 run showed a 7% Node penalty on
+small Buffer/Promise reads. That exact percentage varied in fresh runs. Profiling
+identified per-chunk validation and Buffer assembly as reader overhead, while
+large text reads were dominated by the decoders. The optimizations above remove
+redundant checks; Buffer assembly and decoding retain their existing behavior.
+
+The [benchmark](packages/vraw-body/bench/compare.cjs) measures complete PassThrough
+reads, including stream construction, callback/Promise settlement and body assembly.
+The 2026-10-27 follow-up used **three fresh processes per runtime**, sequentially,
+on Node 24.22.1 and Bun 1.4.0/macOS arm64. Each process collected nine rotating
+5,000-read samples after 5,000 warmup reads per implementation. All implementations'
+results are checked against upstream before timing. Values below are medians of
+the three process medians, in nanoseconds/read. Columns show **upstream → initial
+VPM (5873356) → optimized VPM**. The [recorded results](packages/vraw-body/bench/results-2026-10-27.json)
+include every process median and source hashes; the package README gives the
+command to reproduce the three-way comparison.
+
+| Case | Node upstream → initial → optimized | Bun upstream → initial → optimized |
 | --- | ---: | ---: |
-| Buffer 1 KiB / Promise | 980 → 1,044 | 1,323 → 1,307 |
-| Buffer 1 KiB / callback | 1,071 → 1,072 | 1,077 → 987 |
-| Buffer 64 KiB / 64 chunks | 8,629 → 8,981 | 9,747 → 9,918 |
-| UTF-8 1 KiB | 1,585 → 1,615 | 1,529 → 1,466 |
-| UTF-8 / 16 chunks | 42,547 → 44,296 | 20,765 → 20,750 |
-| Shift-JIS 8 KiB | 30,614 → 31,154 | 24,852 → 24,239 |
+| Buffer 1 KiB / Promise | 971 → 981 → 956 | 1,021 → 963 → 969 |
+| Buffer 1 KiB / callback | 1,041 → 1,049 → 1,042 | 1,132 → 1,016 → 994 |
+| Buffer 1 KiB / callback + bounds | 1,093 → 1,107 → 1,047 | 1,183 → 1,129 → 1,133 |
+| Buffer 64 KiB / one chunk | 4,229 → 4,101 → 4,103 | 4,373 → 4,480 → 4,439 |
+| Buffer 64 KiB / 64 chunks | 9,790 → 10,369 → 9,618 | 9,356 → 9,591 → 9,371 |
+| UTF-8 1 KiB | 1,605 → 1,618 → 1,573 | 1,296 → 1,413 → 1,388 |
+| UTF-8 1 KiB / callback + bounds | 1,561 → 1,519 → 1,514 | 1,325 → 1,251 → 1,214 |
+| UTF-8 / 16 chunks | 41,463 → 41,697 → 41,603 | 20,493 → 20,776 → 20,777 |
+| Shift-JIS 8 KiB | 30,185 → 30,368 → 30,460 | 24,540 → 24,683 → 24,610 |
 
-This is primarily a correctness and dependency improvement. Node's small Promise
-case took about **7% more time**; the other Node cases ranged from unchanged to
-about **4% more**. Bun's small callback case took about **8% less time**; other
-differences were small. These local measurements do not establish an application
-throughput or security improvement.
+Against initial VPM, Node's 64-chunk case takes **7% less time** (a 6.8–7.5%
+reduction in each fresh process); the bounded Buffer callback case takes **5% less**
+in the aggregate, and the small Promise case takes **3% less**. The optimized Node
+medians are now within 1% of upstream or faster across these cases. Small differences
+near 1% should not be treated as reliable gains. Bun remains mixed against upstream:
+its short UTF-8 Promise case is about **7% slower**, despite improving from initial
+VPM, while its small Buffer callback case is **12% faster**. These local measurements
+do not establish an application throughput or security improvement.
 
 ## vundici-types and vnode-types
 

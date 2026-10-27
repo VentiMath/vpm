@@ -31,7 +31,8 @@ function getRawBody(stream, options, callback) {
   if (encoding != null && encoding !== false && (typeof encoding !== 'string' || encoding.length === 0)) {
     throw new TypeError('encoding must be a nonempty string, boolean, or null');
   }
-  const limit = count(bytes.parse(opts.limit), 'limit');
+  const requestedLimit = opts.limit;
+  const limit = count(typeof requestedLimit === 'string' ? bytes.parse(requestedLimit) : requestedLimit, 'limit');
   const requestedLength = opts.length;
   if (typeof requestedLength === 'string' && !/^[0-9]+$/.test(requestedLength)) {
     throw new TypeError('length must contain only decimal digits');
@@ -69,6 +70,9 @@ function readStream(stream, encoding, length, limit, callback) {
   if (limit !== null && length !== null && length > limit) {
     return finish(createError(413, 'request entity too large', { expected: length, length, limit, type: 'entity.too.large' }));
   }
+  // A declared length is already known to fit the limit, so it is the tighter
+  // bound when present. Infinity represents a deliberately unbounded read.
+  const maximum = length === null ? (limit === null ? Infinity : limit) : length;
   const state = stream._readableState;
   if (stream.readableEncoding || (state && (state.encoding || state.decoder))) {
     return finish(createError(500, 'stream encoding should not be set', { type: 'stream.encoding.set' }));
@@ -132,16 +136,20 @@ function readStream(stream, encoding, length, limit, callback) {
 
   function onData(chunk) {
     if (complete) return;
-    if (!Buffer.isBuffer(chunk) && !isUint8Array(chunk)) {
+    // This native check includes Buffer and cross-realm Uint8Array, without a
+    // second brand check or accepting objects that merely inherit Buffer.prototype.
+    if (!isUint8Array(chunk)) {
       return finish(createError(500, 'stream must emit byte buffers', {
         type: typeof chunk === 'string' ? 'stream.encoding.set' : 'stream.chunk.invalid',
       }));
     }
     received += chunk.byteLength;
-    if (limit !== null && received > limit) {
-      return finish(createError(413, 'request entity too large', { limit, received, type: 'entity.too.large' }));
+    if (received > maximum) {
+      // Preserve limit-error precedence if this chunk crosses both bounds.
+      return finish(limit !== null && received > limit
+        ? createError(413, 'request entity too large', { limit, received, type: 'entity.too.large' })
+        : mismatch());
     }
-    if (length !== null && received > length) return finish(mismatch());
     try {
       if (decoder) text += decoder.write(chunk);
       else chunks.push(chunk);

@@ -1,0 +1,108 @@
+{
+  "date": "2026-10-27",
+  "platform": "Darwin arm64",
+  "unit": "nanoseconds per completed PassThrough read",
+  "implementations": [
+    "raw-body 3.0.2",
+    "vraw-body at 5873356e13f852f64da68fb795a716abf6cb5cf1",
+    "current vraw-body"
+  ],
+  "previousSourceSha256": "ed10acdb958db5266f4b6e5c026160d2b1005b4f78df07b0bb580291e14c3527",
+  "currentSourceSha256": "86941584faba8c0d125352ebb06ae396a01a79c8eab97d0268439f3fd72592ad",
+  "benchmarkSha256": "9b7e75c78848de490efe908446f8b5143980ba6bd1afaa3d6ff551b35e182f69",
+  "samplesPerProcess": 9,
+  "readsPerSample": 5000,
+  "warmupReads": 5000,
+  "runs": [
+    {
+      "runtime": "Node v24.22.1",
+      "trial": 1,
+      "medians": {
+        "Buffer 1 KiB / promise": [1209, 1037, 1034],
+        "Buffer 1 KiB / callback": [1075, 1066, 1056],
+        "Buffer 1 KiB / callback + bounds": [1175, 1161, 1126],
+        "Buffer 64 KiB / one chunk": [4229, 4101, 4103],
+        "Buffer 64 KiB / 64 chunks": [9867, 10369, 9595],
+        "UTF-8 1 KiB": [1463, 1618, 1529],
+        "UTF-8 1 KiB / callback + bounds": [1561, 1541, 1536],
+        "UTF-8 16 chunks": [41671, 41962, 41620],
+        "Shift-JIS 8 KiB": [30162, 30368, 30460]
+      }
+    },
+    {
+      "runtime": "Node v24.22.1",
+      "trial": 2,
+      "medians": {
+        "Buffer 1 KiB / promise": [971, 981, 956],
+        "Buffer 1 KiB / callback": [1041, 1029, 992],
+        "Buffer 1 KiB / callback + bounds": [1093, 1107, 1047],
+        "Buffer 64 KiB / one chunk": [4436, 4342, 4299],
+        "Buffer 64 KiB / 64 chunks": [9735, 10399, 9695],
+        "UTF-8 1 KiB": [1607, 1712, 1697],
+        "UTF-8 1 KiB / callback + bounds": [1577, 1519, 1514],
+        "UTF-8 16 chunks": [41463, 41697, 41603],
+        "Shift-JIS 8 KiB": [30542, 30384, 30274]
+      }
+    },
+    {
+      "runtime": "Node v24.22.1",
+      "trial": 3,
+      "medians": {
+        "Buffer 1 KiB / promise": [960, 980, 955],
+        "Buffer 1 KiB / callback": [1039, 1049, 1042],
+        "Buffer 1 KiB / callback + bounds": [1056, 1065, 1038],
+        "Buffer 64 KiB / one chunk": [4152, 4024, 4023],
+        "Buffer 64 KiB / 64 chunks": [9790, 10327, 9618],
+        "UTF-8 1 KiB": [1605, 1584, 1573],
+        "UTF-8 1 KiB / callback + bounds": [1462, 1499, 1485],
+        "UTF-8 16 chunks": [41158, 41587, 41451],
+        "Shift-JIS 8 KiB": [30185, 30187, 30589]
+      }
+    },
+    {
+      "runtime": "Bun 1.4.0",
+      "trial": 1,
+      "medians": {
+        "Buffer 1 KiB / promise": [1021, 963, 940],
+        "Buffer 1 KiB / callback": [1131, 1002, 994],
+        "Buffer 1 KiB / callback + bounds": [1163, 1127, 1163],
+        "Buffer 64 KiB / one chunk": [4423, 4480, 4467],
+        "Buffer 64 KiB / 64 chunks": [9394, 9398, 9371],
+        "UTF-8 1 KiB": [1304, 1413, 1388],
+        "UTF-8 1 KiB / callback + bounds": [1311, 1251, 1181],
+        "UTF-8 16 chunks": [20709, 20946, 20777],
+        "Shift-JIS 8 KiB": [23013, 23303, 23055]
+      }
+    },
+    {
+      "runtime": "Bun 1.4.0",
+      "trial": 2,
+      "medians": {
+        "Buffer 1 KiB / promise": [1003, 940, 969],
+        "Buffer 1 KiB / callback": [1132, 1019, 982],
+        "Buffer 1 KiB / callback + bounds": [1183, 1129, 1082],
+        "Buffer 64 KiB / one chunk": [4373, 4442, 4439],
+        "Buffer 64 KiB / 64 chunks": [9048, 9591, 9346],
+        "UTF-8 1 KiB": [1296, 1367, 1354],
+        "UTF-8 1 KiB / callback + bounds": [1325, 1231, 1214],
+        "UTF-8 16 chunks": [20474, 20602, 20567],
+        "Shift-JIS 8 KiB": [24649, 24683, 24698]
+      }
+    },
+    {
+      "runtime": "Bun 1.4.0",
+      "trial": 3,
+      "medians": {
+        "Buffer 1 KiB / promise": [1124, 1051, 1019],
+        "Buffer 1 KiB / callback": [1144, 1016, 1008],
+        "Buffer 1 KiB / callback + bounds": [1231, 1171, 1133],
+        "Buffer 64 KiB / one chunk": [4371, 4568, 4408],
+        "Buffer 64 KiB / 64 chunks": [9356, 9696, 9971],
+        "UTF-8 1 KiB": [1281, 1423, 1408],
+        "UTF-8 1 KiB / callback + bounds": [1516, 1300, 1435],
+        "UTF-8 16 chunks": [20493, 20776, 20835],
+        "Shift-JIS 8 KiB": [24540, 24745, 24610]
+      }
+    }
+  ]
+}
