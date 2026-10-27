@@ -1030,7 +1030,13 @@ an open request; aborted/destroyed requests settle immediately.
 
 Verifier and parser errors are wrapped without modifying the thrown object,
 including frozen errors, strings, null and undefined. The original value becomes
-`cause`, with valid custom statuses and error metadata retained. Strict JSON
+`cause`, with valid custom statuses and error metadata retained. On Bun and Node
+versions with native stack accessors, the original stack is resolved and cached
+on first read, avoiding eager formatting when a
+handler only needs status/type. Native Error/SyntaxError identity, writable stack
+overrides, frozen-wrapper reads and a captured fallback trace remain supported.
+Changes to the original stack before the first read are visible; subsequent
+changes do not alter the cached trace. Strict JSON
 scalar rejection uses a direct SyntaxError instead of allocating and reparsing
 a body-sized placeholder to manufacture an engine-specific error message.
 
@@ -1046,17 +1052,18 @@ validation of parsed data.
 
 **Dependencies and evidence:** nine direct dependencies remain nine, all VPM
 packages; the complete external tree contains fifteen packages. No new runtime
-primitive is needed. Eighteen focused tests cover normal upstream behavior,
+primitive is needed. Twenty-one focused tests cover normal upstream behavior,
 limits, option mutation, charsets, corrupt/truncated compression, frozen/primitive
-callback failures, real client disconnects, cleanup and exports. Middleware
+callback failures, lazy stack reads/overrides/fallbacks, real client disconnects,
+cleanup and exports. Middleware
 differential tests share VPM primitives; the benchmark below uses the full stock
-upstream dependency tree. The full suite passes **429 tests on Node** and **428
+upstream dependency tree. The full suite passes **432 tests on Node** and **431
 with one existing async-hooks skip on Bun**. The shared gate passes **141 HTTP
 checks on each runtime**, including this replacement in Express and Functions
 Framework. Archive installations with npm and Bun pass runtime CJS/ESM and
 strict TypeScript 7 checks without ambient Node, Undici or DOM types.
 
-**Measurements:** 2026-10-27, macOS arm64, Node 24.22.1 / Bun 1.4.0. The
+**Initial measurements (commit 20181c4):** 2026-10-27, macOS arm64, Node 24.22.1 / Bun 1.4.0. The
 [benchmark](packages/vbody-parser/bench/compare.cjs) sends sequential localhost
 HTTP requests over keep-alive connections, consumes parsed results and checks
 response parity on every request. Each value is the median of nine alternating
@@ -1087,9 +1094,49 @@ original exception. This comparison does not isolate the cost of any one change.
 An initial shorter run had noisier results, including Bun slowdowns that did not
 repeat in the longer run; its [Node](packages/vbody-parser/bench/node24-short.json)
 and [Bun](packages/vbody-parser/bench/bun14-short.json) samples are retained.
-No broad speedup, production throughput improvement or security outcome is
-established. The demonstrated benefits are configuration, error and stream
-lifecycle correctness and a fully VPM dependency tree.
+These initial figures predate the stack optimization below. No broad speedup,
+production throughput improvement or security outcome is established. The
+demonstrated benefits include configuration, error and stream lifecycle
+correctness and a fully VPM dependency tree.
+
+**Error-stack follow-up:** the previous wrapper allocated a native Error and
+immediately read/formatted the original stack before copying it. Retaining an
+independent native error and its `cause` is useful; eagerly formatting that trace
+is unnecessary for handlers that only return status/type. The updated wrapper
+resolves the original trace once, when `stack` is read. It retains its own captured
+trace as a fallback rather than substituting a plain object for a native Error.
+Older V8 versions eagerly materialize stack descriptors, making this approach
+more expensive. They retain a single eager copy. The focused Node 20.20.2
+comparison is essentially unchanged: **13.882 → 13.851 µs** without reading
+the trace and **13.765 → 13.688 µs** with a stack read.
+[Node 20 samples](packages/vbody-parser/bench/errors-node20.json) record that
+compatibility path; no Node 20 speedup is claimed.
+
+The [focused benchmark](packages/vbody-parser/bench/errors.cjs) uses an exact,
+hash-checked copy of the previous helper from 20181c4 and fresh native JSON parse
+failures. Nine alternating 10,000-operation samples follow 5,000 warmups per case.
+On Node 24.22.1, parse-and-wrap without reading the trace improves from **15.232
+to 6.828 µs (55.2%)**; Bun 1.4.0 improves from **3.939 to 2.975 µs (24.5%)**.
+When the complete trace is read, Node changes **13.690 → 14.405 µs (5.2% slower)**
+and Bun **4.041 → 4.400 µs (8.9% slower)**. Formatting work is deferred, not
+eliminated for logging. [Node samples](packages/vbody-parser/bench/errors-node24.json)
+and [Bun samples](packages/vbody-parser/bench/errors-bun14.json) record source
+hashes and every sample. These are isolated error-path measurements, not HTTP
+or logging I/O measurements.
+
+The complete HTTP benchmark was rerun on the final implementation with the same
+method and all nine cases. Malformed JSON now measures **96.60 → 89.83 µs on
+Node (7.0% less time)** and **78.38 → 77.34 µs on Bun (1.3% less)** relative to
+stock body-parser in the same run. The Bun difference is close to parity; earlier
+exploratory runs showed larger gains that did not persist. Successful cases range
+from **12.3% faster to 0.9% slower on Node**, and **3.3% faster to 3.5% slower on
+Bun**. HTTP timings vary across runs, so absolute timings from different runs
+should not be compared as an isolated effect of this change.
+[Final Node HTTP samples](packages/vbody-parser/bench/node24-lazy-stack.json) and
+[final Bun HTTP samples](packages/vbody-parser/bench/bun14-lazy-stack.json) include
+all results and source hashes. This supports removing the previously measured
+malformed-JSON regression, while retaining the error and lifecycle fixes; it does
+not establish a general application speedup.
 
 ## vundici-types and vnode-types
 
@@ -1124,7 +1171,11 @@ runtime. DOM projects continue to use TypeScript's standard browser globals.
 requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
 dependency cycle, with no JavaScript runtime code. The workspace no longer uses
 upstream Node/Undici declarations for its own type checks. Upstream packages
-remain in a separately locked comparison fixture. All 27 runtime packages'
+remain as test-only development dependencies in a separately locked
+[comparison fixture](scripts/type-consumers/README.md), outside the workspace
+and package archives. They reproduce the original gaps and check corrected
+declarations against an actual Undici runtime. Replacing that baseline with VPM
+would compare VPM against itself. All 27 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

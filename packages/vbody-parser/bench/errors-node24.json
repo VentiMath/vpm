@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-27T20:23:55.568Z",
+  "runtime": "Node v24.22.1",
+  "baseline": "VPM 20181c4d286b80eb0c58da2f650fb9e1f830b400 lib/utils.js",
+  "baselineSha256": "b483ca4698a5e3dc0de68eee46588ff5c11e837cff631ea99e7d94e8cb252aab",
+  "currentSha256": "3714d9e3863c3674576d26f485451bd43f8ef1967f2c74a6ec6e70fc3c7e3cbc",
+  "methodology": "Fresh native JSON.parse failure and HTTP wrapper each iteration. Median of 9 alternating 10,000-operation samples after 5,000 warmups per implementation/case. Compare unread stacks with reading the complete trace. No HTTP or logging I/O.",
+  "results": [
+    {
+      "name": "parse + wrap, stack unread",
+      "previousUs": 15.232,
+      "currentUs": 6.828,
+      "changePercent": -55.2,
+      "samplesUs": [
+        [
+          15.7851625,
+          18.165966700000002,
+          14.407866699999998,
+          15.351966700000002,
+          13.651420800000004,
+          15.232058299999995,
+          13.387924999999994,
+          15.548824999999988,
+          13.452824999999985
+        ],
+        [
+          7.005645900000002,
+          7.369170800000005,
+          7.757058299999994,
+          6.598804199999996,
+          6.520683300000019,
+          6.270800000000008,
+          6.828370800000016,
+          7.314816599999994,
+          6.118983299999991
+        ]
+      ]
+    },
+    {
+      "name": "parse + wrap + read stack",
+      "previousUs": 13.69,
+      "currentUs": 14.405,
+      "changePercent": 5.2,
+      "samplesUs": [
+        [
+          15.180187499999965,
+          13.690220799999999,
+          13.636104100000011,
+          14.090979199999992,
+          13.39864160000002,
+          14.100158400000009,
+          13.577116699999987,
+          14.226287499999945,
+          13.50235840000005
+        ],
+        [
+          14.32504170000002,
+          14.672237499999982,
+          14.899749999999994,
+          14.384012500000017,
+          14.40547499999998,
+          15.603004200000031,
+          14.130362500000047,
+          14.714066600000024,
+          14.35301669999999
+        ]
+      ]
+    }
+  ]
+}

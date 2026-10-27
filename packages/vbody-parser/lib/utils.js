@@ -4,6 +4,9 @@ const bytes = require('vbytes')
 const typeis = require('vtype-is')
 const iconv = require('viconv-lite')
 const createError = require('vhttp-errors')
+// Old V8 materializes the fallback stack during descriptor inspection. Keep
+// its eager copy path; otherwise deferring the original adds a second format.
+const lazyErrorStacks = Boolean(process.versions.bun) || typeof Object.getOwnPropertyDescriptor(new Error(), 'stack')?.get === 'function'
 
 function optionsObject (options) {
   if (options == null) return {}
@@ -67,13 +70,41 @@ function bodyError (status, thrown, properties = {}) {
       }
     }
     error.name = original.name
-    if (typeof original.stack === 'string') error.stack = original.stack
+    copyStack(error, original)
     // Common HTTP errors expose these through a prototype, not own fields.
     if (Number.isInteger(original.status) && original.status >= 400 && original.status <= 599) error.status = original.status
     else if (Number.isInteger(original.statusCode) && original.statusCode >= 400 && original.statusCode <= 599) error.status = original.statusCode
     if (typeof original.type === 'string' && original.type) properties = { ...properties, type: original.type }
   }
   return createError(status, error, properties)
+}
+
+function copyStack (error, original) {
+  if (!lazyErrorStacks) {
+    const stack = original.stack
+    if (typeof stack === 'string') error.stack = stack
+    return
+  }
+  // Reading Error.stack can format every frame. Most HTTP error handlers only
+  // need status/type, so defer that work without discarding the original trace.
+  // Retain our own captured trace as fallback for a non-string original stack.
+  const fallback = Object.getOwnPropertyDescriptor(error, 'stack')
+  let resolved = false
+  let stack
+  Object.defineProperty(error, 'stack', {
+    configurable: true,
+    get () {
+      if (!resolved) {
+        const originalStack = original.stack
+        stack = typeof originalStack === 'string' ? originalStack : fallback?.get ? fallback.get.call(error) : fallback?.value
+        resolved = true
+      }
+      return stack
+    },
+    set (value) {
+      Object.defineProperty(this, 'stack', { value, writable: true, configurable: true })
+    }
+  })
 }
 
 module.exports = { normalizeOptions, optionsObject, booleanOption, integerOption, bodyError, passthrough: value => value }

@@ -1,8 +1,8 @@
 {
   "name": "vpm-type-consumers",
   "private": true,
-  "description": "Pinned upstream declarations and runtime comparison fixtures for VPM type packages",
-  "dependencies": {
+  "description": "Test-only upstream comparison fixture; excluded from the VPM workspace and package archives",
+  "devDependencies": {
     "@types/node": "22.20.5",
     "undici-types": "6.21.0",
     "undici": "6.21.3"

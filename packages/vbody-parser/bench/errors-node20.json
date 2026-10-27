@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-27T20:23:38.197Z",
+  "runtime": "Node v20.20.2",
+  "baseline": "VPM 20181c4d286b80eb0c58da2f650fb9e1f830b400 lib/utils.js",
+  "baselineSha256": "b483ca4698a5e3dc0de68eee46588ff5c11e837cff631ea99e7d94e8cb252aab",
+  "currentSha256": "3714d9e3863c3674576d26f485451bd43f8ef1967f2c74a6ec6e70fc3c7e3cbc",
+  "methodology": "Fresh native JSON.parse failure and HTTP wrapper each iteration. Median of 9 alternating 10,000-operation samples after 5,000 warmups per implementation/case. Compare unread stacks with reading the complete trace. No HTTP or logging I/O.",
+  "results": [
+    {
+      "name": "parse + wrap, stack unread",
+      "previousUs": 13.882,
+      "currentUs": 13.851,
+      "changePercent": -0.2,
+      "samplesUs": [
+        [
+          14.034641699999998,
+          14.467933300000004,
+          14.00435,
+          13.8820291,
+          13.86071669999999,
+          13.80804579999999,
+          13.800974999999971,
+          13.747012499999983,
+          14.670133399999985
+        ],
+        [
+          13.878041700000004,
+          14.1591458,
+          13.972508300000005,
+          13.764195900000002,
+          13.81187090000001,
+          14.05458329999999,
+          13.715741600000003,
+          13.850533300000007,
+          13.755787499999997
+        ]
+      ]
+    },
+    {
+      "name": "parse + wrap + read stack",
+      "previousUs": 13.765,
+      "currentUs": 13.688,
+      "changePercent": -0.6,
+      "samplesUs": [
+        [
+          13.803983400000014,
+          13.7137291,
+          13.915124999999989,
+          15.0715416,
+          13.625666699999966,
+          13.765133400000014,
+          14.415958299999966,
+          13.720399999999971,
+          13.74569589999992
+        ],
+        [
+          13.728533300000027,
+          13.688283300000013,
+          14.01717920000001,
+          13.794016600000031,
+          13.647487499999988,
+          13.670029100000011,
+          13.747670799999923,
+          13.66675839999998,
+          13.574083400000017
+        ]
+      ]
+    }
+  ]
+}

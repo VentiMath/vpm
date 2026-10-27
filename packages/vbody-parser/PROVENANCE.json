@@ -21,6 +21,7 @@
     "Validate and snapshot configuration, without signed 32-bit coercion of form limits.",
     "Observe request abort/error/close while decompressing; register readers before piping and settle once.",
     "Wrap parser and verifier failures without modifying thrown errors.",
+    "Resolve and cache original error stacks on first access where efficient, preserving an eager copy on older V8, native Error wrappers, original traces and captured fallbacks.",
     "Reject strict JSON scalar bodies without constructing and reparsing a placeholder body.",
     "Include self-contained TypeScript declarations and explicit parser subpath exports."
   ]
