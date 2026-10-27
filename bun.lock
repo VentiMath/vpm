@@ -119,6 +119,10 @@
       "name": "vparseurl",
       "version": "0.1.0",
     },
+    "packages/vqs": {
+      "name": "vqs",
+      "version": "0.1.0",
+    },
     "packages/vrange-parser": {
       "name": "vrange-parser",
       "version": "0.1.0",
@@ -262,6 +266,8 @@
     "von-finished": ["von-finished@workspace:packages/von-finished"],
 
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
+
+    "vqs": ["vqs@workspace:packages/vqs"],
 
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
 

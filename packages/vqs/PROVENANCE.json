@@ -1,0 +1,21 @@
+{
+  "upstream": "qs",
+  "version": "6.17.0",
+  "source": "https://github.com/ljharb/qs/tree/bebfa1ab2ed4e5d6cd9317d42a65609296ebd2cb",
+  "license": "BSD-3-Clause",
+  "originalSha256": {
+    "lib/formats.js": "04200f6ac29e41163d3b09729bb0c2a01cc8e53e5fb0078c54c6b582c6deba81",
+    "lib/index.js": "8f4e02eef6ccc43f2b7448c18ae209281c8e9af9807cad491df67450e3817a95",
+    "lib/parse.js": "381dbe90eb3367c7b09169c1231b93aed19b4ac548b16ab94d5faef82a7559a7",
+    "lib/stringify.js": "62eea028e526c792fa22d3ac1778cceae84f46f908f70205be4ae94f84779f45",
+    "lib/utils.js": "0cc35581f38d05554e412a7645ac9fc083263622386ba7f04c999161206a1b70"
+  },
+  "changes": [
+    "Native Map and WeakMap instead of side-channel; native Object.defineProperty instead of es-define-property.",
+    "Native UTF-8 percent encoding with an ASCII fast path, existing format behavior, and lone-surrogate repair without exceptions.",
+    "Skip numeric-index parsing for plain fields; use loop-based merging and allocate tracking maps lazily.",
+    "Validate numeric bounds and avoid uint32 parameter-limit wraparound.",
+    "Append serialized fields without a variadic function call.",
+    "CommonJS/ESM named exports and bundled TypeScript declarations."
+  ]
+}

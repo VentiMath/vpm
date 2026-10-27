@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  qs: { pkg: 'vqs', versions: /^6\.17\.0$/ },
   'iconv-lite': { pkg: 'viconv-lite', versions: /^0\.7\./ },
   'raw-body': { pkg: 'vraw-body', versions: /^3\.0\./ },
   bytes: { pkg: 'vbytes', versions: /^3\.1\./ },
@@ -239,6 +240,9 @@ functions.http('app', onRequest(app));
 // A direct Express app also tests custom parser patterns before the framework's
 // catch-all raw parser can consume their bodies.
 const parserApp = express();
+parserApp.set('query parser', 'extended');
+parserApp.get('/nested-query', (req, res) => res.json(req.query));
+parserApp.post('/nested-form', express.urlencoded({ extended: true, depth: 3, parameterLimit: 8, charsetSentinel: true, interpretNumericEntities: true }), (req, res) => res.json(req.body));
 // Exercise byte limits before the framework's parser has consumed the stream.
 for (const limit of ['100kbjunk', '1e3', '', '8pb', Infinity]) {
   const expected = { name: limit === '8pb' || limit === Infinity ? 'RangeError' : 'TypeError' };
@@ -341,6 +345,32 @@ async function run() {
   const parserServer = await listen(http.createServer(parserApp));
   try {
     await abortedRequest();
+    for (const [query, expected] of [
+      ['person[name]=Ada&tags[]=math&tags[]=code', { person: { name: 'Ada' }, tags: ['math', 'code'] }],
+      ['a=1&a=2&bad=%E0%A4%A&text=hello+world', { a: ['1', '2'], bad: '%E0%A4%A', text: 'hello world' }],
+      ['__proto__[vqsPolluted]=yes&safe=ok', { safe: 'ok' }],
+    ]) {
+      const result = await request(parserServer, '/nested-query?' + query);
+      assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), expected);
+      assert.equal(Object.prototype.vqsPolluted, undefined);
+    }
+    for (const [body, expected] of [
+      ['person[name]=Ada&tags[]=math&tags[]=code', { person: { name: 'Ada' }, tags: ['math', 'code'] }],
+      ['a[2]=x&a[0]=y', { a: ['y', 'x'] }],
+      ['a[b]=x&a=y&a=z', { a: { b: 'x', 0: 'y', 1: 'z' } }],
+      ['a=1&a=2&empty=&bare', { a: ['1', '2'], empty: '', bare: '' }],
+      ['a=%F0%9F%92%A9&bad=%E0%A4%A', { a: '💩', bad: '%E0%A4%A' }],
+      ['utf8=%26%2310003%3B&a=%E9&b=%26%2310003%3B', { a: 'é', b: '✓' }],
+      ['__proto__[vqsPolluted]=yes&safe=ok', { safe: 'ok' }],
+    ]) {
+      const result = await request(parserServer, '/nested-form', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body });
+      assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), expected);
+      assert.equal(Object.prototype.vqsPolluted, undefined);
+    }
+    for (const [body, status] of [['a[b][c][d][e]=x', 400], [Array(9).fill('a=1').join('&'), 413]]) {
+      const result = await request(parserServer, '/nested-form', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body });
+      assert.equal(result.status, status);
+    }
     const defaults = { type: 'html', encoding: 'identity', charset: 'utf-8', language: 'en' };
     for (const [headers, changes] of [
       [{}, {}],
