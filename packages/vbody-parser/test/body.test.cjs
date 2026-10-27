@@ -173,6 +173,63 @@ test('frozen errors, custom statuses and primitive throws do not break error del
   assert.deepEqual(Object.keys(custom), ['status', 'code', 'type', 'detail']);
 });
 
+test('callback error stacks are resolved once and readable after freezing the wrapper', async () => {
+  let reads = 0;
+  const original = new SyntaxError('original callback');
+  Object.defineProperty(original, 'stack', { get() { reads++; return 'SyntaxError: original callback\n    at original-site'; } });
+  Object.freeze(original);
+  const req = incoming({ ...jsonHeader, 'content-length': '7' });
+  const error = await invoke(parser.json({ reviver() { throw original; } }), req, req => req.end('{"a":1}'));
+  assert.ok(reads <= 1, 'delivering an HTTP error must not repeatedly format the original stack');
+  assert.ok(error instanceof SyntaxError);
+  assert.ok(require('node:util').types.isNativeError(error));
+  assert.equal(error.cause, original); assert.equal(error.status, 400);
+  assert.equal(error.type, 'entity.parse.failed'); assert.equal(error.body, '{"a":1}');
+  Object.freeze(error);
+  assert.equal(error.stack, original.stack);
+  assert.equal(error.stack, 'SyntaxError: original callback\n    at original-site');
+  assert.equal(reads, 2, 'one wrapper read and one explicit original read');
+});
+
+test('error stack overrides do not reevaluate the original stack', () => {
+  const { bodyError } = require('../lib/utils');
+  let reads = 0;
+  const original = new Error('original');
+  Object.defineProperty(original, 'stack', { get() { reads++; return 'original trace'; } });
+  const error = bodyError(403, original);
+  const initialReads = reads;
+  assert.ok(initialReads <= 1);
+  error.stack = 'caller trace';
+  assert.equal(error.stack, 'caller trace'); assert.equal(reads, initialReads);
+  assert.equal(error.cause, original);
+  Object.freeze(error);
+  assert.throws(() => { error.stack = 'another trace'; }, TypeError);
+});
+
+test('non-string original stacks retain a captured wrapper trace', () => {
+  const { bodyError } = require('../lib/utils');
+  for (const stack of [undefined, null, 42, {}]) {
+    const original = Object.freeze(Object.assign(new Error('fallback message'), { stack }));
+    const error = bodyError(400, original);
+    assert.match(error.stack, /fallback message/);
+    assert.match(error.stack, /bodyError/);
+    assert.equal(original.stack, stack); assert.equal(error.cause, original);
+  }
+  for (const thrown of [null, undefined, 'primitive message']) {
+    const error = bodyError(400, thrown);
+    assert.equal(typeof error.stack, 'string'); assert.equal(error.cause, thrown);
+  }
+  const limit = Error.stackTraceLimit;
+  try {
+    Error.stackTraceLimit = undefined;
+    const original = new Error('disabled capture');
+    original.stack = undefined;
+    const error = bodyError(400, original);
+    assert.doesNotThrow(() => error.stack);
+    assert.equal(error.cause, original);
+  } finally { Error.stackTraceLimit = limit; }
+});
+
 test('compressed request abort, error and premature close settle and detach listeners', async () => {
   for (const event of ['aborted', 'error', 'close']) {
     const req = incoming({ ...jsonHeader, 'content-encoding': 'gzip', 'transfer-encoding': 'chunked' });

@@ -84,6 +84,16 @@ original thrown value retained as `cause`. Valid custom HTTP statuses and
 error types survive; frozen errors and primitive throws are supported.
 The middleware does not mutate the original error. Parse/verify failures also
 include the decoded text or verification Buffer as `body`.
+On Bun and Node versions with native stack accessors, the original stack is
+resolved and cached on first access to the wrapper's `stack`. This avoids
+unnecessary or repeated formatting while retaining the
+original trace, writable stack overrides, and a
+captured wrapper trace when the original stack is not a string. Error logging
+that reads `stack` still performs the necessary formatting. Changes to the
+original stack before its first read are visible; later changes do not alter the
+cached wrapper stack.
+Older Node/V8 versions that materialize stack descriptors eagerly retain a
+single eager copy, avoiding a second formatting cost on those runtimes.
 
 Compressed reads observe abort/error/premature-close events on the original
 request and stop the owned decoder. Readers attach before piping begins, and
@@ -133,6 +143,8 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 node packages/vbody-parser/bench/compare.cjs
 bun packages/vbody-parser/bench/compare.cjs
+node packages/vbody-parser/bench/errors.cjs
+bun packages/vbody-parser/bench/errors.cjs
 ```
 
 Focused tests cover all four parsers, option snapshots, form bounds, compressed

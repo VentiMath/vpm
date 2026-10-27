@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-27T20:23:57.203Z",
+  "runtime": "Bun 1.4.0",
+  "baseline": "VPM 20181c4d286b80eb0c58da2f650fb9e1f830b400 lib/utils.js",
+  "baselineSha256": "b483ca4698a5e3dc0de68eee46588ff5c11e837cff631ea99e7d94e8cb252aab",
+  "currentSha256": "3714d9e3863c3674576d26f485451bd43f8ef1967f2c74a6ec6e70fc3c7e3cbc",
+  "methodology": "Fresh native JSON.parse failure and HTTP wrapper each iteration. Median of 9 alternating 10,000-operation samples after 5,000 warmups per implementation/case. Compare unread stacks with reading the complete trace. No HTTP or logging I/O.",
+  "results": [
+    {
+      "name": "parse + wrap, stack unread",
+      "previousUs": 3.939,
+      "currentUs": 2.975,
+      "changePercent": -24.5,
+      "samplesUs": [
+        [
+          4.005533299999999,
+          3.9393375000000024,
+          3.9054500000000023,
+          3.903120799999999,
+          3.950274999999999,
+          4.070462499999996,
+          3.840870799999993,
+          4.0126333000000045,
+          3.836175000000003
+        ],
+        [
+          3.100725,
+          3.0202458999999977,
+          3.0006958999999997,
+          2.958749999999998,
+          2.953604200000001,
+          2.864045900000002,
+          2.957166700000005,
+          2.975262499999997,
+          2.981216599999993
+        ]
+      ]
+    },
+    {
+      "name": "parse + wrap + read stack",
+      "previousUs": 4.041,
+      "currentUs": 4.4,
+      "changePercent": 8.9,
+      "samplesUs": [
+        [
+          4.599287499999991,
+          4.194554100000005,
+          4.107862499999999,
+          4.117283399999996,
+          4.040945899999997,
+          3.9421833000000106,
+          3.923312499999997,
+          3.997216600000001,
+          3.914858400000003
+        ],
+        [
+          4.583283300000005,
+          4.678195900000003,
+          4.349766599999998,
+          4.698579199999994,
+          4.399766700000009,
+          4.615829200000007,
+          4.193566699999996,
+          4.221079099999997,
+          4.306770900000015
+        ]
+      ]
+    }
+  ]
+}

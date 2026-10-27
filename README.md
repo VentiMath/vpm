@@ -65,7 +65,10 @@ packages have separate compiler and Node API baselines; their documentation
 explains adoption and compatibility. Runtime packages retain self-contained
 public declarations. The platform type gate checks pinned upstream comparisons,
 TypeScript 7, Node-only and DOM projects, and installed package archives. All
-compiler checks use the supported CLI; no legacy compiler is installed:
+compiler checks use the supported CLI; no legacy compiler is installed.
+The separately locked [upstream type fixture](scripts/type-consumers/README.md)
+keeps original declarations and an Undici runtime solely for comparison tests;
+they are outside the workspace and excluded from VPM package archives:
 
 ```sh
 npm --prefix scripts/type-consumers ci --ignore-scripts
