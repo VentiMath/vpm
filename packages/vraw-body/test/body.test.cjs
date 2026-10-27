@@ -72,6 +72,29 @@ test('supports byte-array views and cross-realm Uint8Array chunks', async () => 
   assert.deepEqual(await body(Readable.from([input])), Buffer.from('abc'));
 });
 
+test('one-chunk copies preserve view bounds and remain independent', async () => {
+  for (const input of [Buffer.from('!abc!').subarray(1, 4), new Uint8Array([33, 97, 98, 99, 33]).subarray(1, 4)]) {
+    const result = await body(Readable.from([input]));
+    assert.equal(result.toString(), 'abc');
+    input.fill(0); assert.equal(result.toString(), 'abc');
+  }
+  assert.deepEqual(await body(Readable.from([Buffer.alloc(0), Buffer.from('ab'), Buffer.alloc(0), Buffer.from('c')])), Buffer.from('abc'));
+  assert.deepEqual(await body(Readable.from([Buffer.alloc(0)])), Buffer.alloc(0));
+  const customized = Buffer.from('abc');
+  customized.valueOf = () => 'different bytes';
+  customized[Symbol.toPrimitive] = () => 'different bytes';
+  assert.equal((await body(Readable.from([customized]))).toString(), 'abc');
+});
+
+test('rejects forged byte buffers through the normal error path', async () => {
+  for (const chunk of [Object.create(Buffer.prototype), Object.create(Uint8Array.prototype), { [Symbol.toStringTag]: 'Uint8Array', length: 1, 0: 97 }]) {
+    const stream = new PassThrough(); const result = body(stream);
+    assert.doesNotThrow(() => stream.emit('data', chunk));
+    await assert.rejects(result, { status: 500, type: 'stream.chunk.invalid' });
+    clean(stream); stream.destroy();
+  }
+});
+
 test('retains BOM stripping and corrected VPM decoder chunk boundaries', async () => {
   for (const [encoding, hex, expected] of [
     ['utf8', 'efbbbf61', 'a'], ['utf16', 'feff0061', 'a'], ['utf32', '0000feff00000061', 'a'],
@@ -153,6 +176,26 @@ test('excess declared length fails before end and before decoding the excess', a
   stream.write('x');
   await assert.rejects(result, { type: 'request.size.invalid', received: 1 });
   clean(stream); assert.equal(stream.writableEnded, false); stream.destroy();
+});
+
+test('combined bounds preserve zero limits, length failures, and 413 precedence', async () => {
+  for (const length of [null, 0, 1, 2, 3, 4, 8]) for (const limit of [null, 0, 1, 2, 3, 4, 8]) {
+    let expected;
+    if (length !== null && limit !== null && length > limit) {
+      expected = { type: 'entity.too.large', status: 413, expected: length, length, limit };
+    } else {
+      for (const received of [2, 4]) {
+        if (limit !== null && received > limit) { expected = { type: 'entity.too.large', status: 413, limit, received }; break; }
+        if (length !== null && received > length) { expected = { type: 'request.size.invalid', status: 400, expected: length, length, received }; break; }
+      }
+      if (!expected && length !== null && length !== 4) expected = { type: 'request.size.invalid', status: 400, expected: length, length, received: 4 };
+    }
+    for (const encoding of [false, true]) {
+      const result = outcome(body, [Buffer.from('ab'), Buffer.from('cd')], { length, limit, encoding });
+      if (expected) await assert.rejects(result, expected);
+      else assert.deepEqual(await result, encoding ? 'abcd' : Buffer.from('abcd'));
+    }
+  }
 });
 
 test('preserves unsupported encoding and already encoded stream errors', async () => {

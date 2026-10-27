@@ -85,6 +85,9 @@ entry point and uses TextDecoder by default. It is outside body-parser's declare
   `viconv-lite`. Including `vstatuses`, the complete external tree has four packages.
 - Buffer assembly reuses the recorded byte count without an extra counting pass,
   while preserving independent result storage.
+- The hot path uses one native Uint8Array check (including Buffer), validates
+  numeric limits once, and compares received bytes against a precomputed bound.
+  Strict string parsing, early length rejection, and limit-error precedence remain.
 
 Intentional differences include strict options/encoding types, removal of old
 EventEmitter-only streams and string chunks, earlier rejection of oversized
@@ -104,6 +107,19 @@ npm run typecheck
 node scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
+
+For a same-run comparison with the initial VPM implementation:
+
+```sh
+git show 5873356:packages/vraw-body/index.js > /tmp/vraw-body-before.cjs
+node packages/vraw-body/bench/compare.cjs --baseline /tmp/vraw-body-before.cjs
+bun packages/vraw-body/bench/compare.cjs --baseline /tmp/vraw-body-before.cjs
+```
+
+This compares upstream, the previous VPM source and the current implementation,
+rotating their execution order. The previous VPM source resolves the same VPM
+dependencies as the current source. The dated results in `bench/` record fresh
+process measurements, runtime versions and source hashes.
 
 Tests compare successful Buffer/string, callback/Promise and encoding behavior
 against an immutable upstream fixture, then exercise documented differences,
