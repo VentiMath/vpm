@@ -27,6 +27,8 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  negotiator: { pkg: 'vnegotiator', versions: /^1\.1\./ },
+  accepts: { pkg: 'vaccepts', versions: /^2\.0\./ },
   'content-type': { pkg: 'vcontent-type', versions: /^2\.1\./ },
   'media-typer': { pkg: 'vmedia-typer', versions: /^1\.1\./ },
   'type-is': { pkg: 'vtype-is', versions: /^2\.1\./ },
@@ -183,6 +185,14 @@ const api = onRequest({ cors: true }, async (request, response) => {
   if (request.path === '/typed') return response.type('json').send('{"ok":true}');
   if (request.path === '/parameterized') return response.set('Content-Type', 'text/plain; note="a;b"; charset=iso-8859-1').send('café');
   if (request.path === '/accept') return response.json({ type: request.accepts(['application/json; profile="a,b"', 'text/html']) });
+  if (request.path === '/negotiate') return response.json({
+    type: request.accepts('html', 'json'),
+    encoding: request.acceptsEncodings('gzip', 'br', 'identity'),
+    charset: request.acceptsCharsets('utf-8', 'iso-8859-1'),
+    language: request.acceptsLanguages('en', 'fr'),
+  });
+  if (request.path === '/accept-profile') return response.json({ type: request.accepts(['application/json;profile=ABC', 'text/html']) });
+  if (request.path === '/accept-specific') return response.json({ type: request.accepts(['text/html;level=1;profile=a', 'application/json']) });
   if (request.path === '/redirect') return response.redirect('/landing?next=<a b>&x=%zz');
   if (request.path === '/file') return response.sendFile(path.join(directory, 'data.txt'), { maxAge: '1 day' });
   if (request.path === '/deny') throw createError(403, 'forbidden by policy', { headers: { 'X-Policy': 'deny' } });
@@ -211,6 +221,10 @@ app.use('/static-framing', (_req, res, next) => {
 }, express.static(directory, { fallthrough: false }));
 app.post('/body', express.json({ limit: '64b' }), (req, res) => res.json(req.body));
 app.get('/cached', (_req, res) => res.send('stable body'));
+app.get('/format', (_req, res) => res.format({
+  html: () => res.send('<p>html</p>'),
+  json: () => res.json({ format: 'json' }),
+}));
 app.get('/error', (_req, _res, next) => next(createError(401, 'private', { headers: { 'WWW-Authenticate': 'Basic' } })));
 app.get('/double', (_req, _res, next) => { next(); setImmediate(() => next(new Error('late error'))); });
 app.get('/framing', (_req, res, next) => { res.setHeader('Transfer-Encoding', 'chunked'); next(createError(429, 'slow down', { headers: { 'Retry-After': '5' } })); });
@@ -249,6 +263,34 @@ async function run() {
   const appServer = await listen(getTestServer('app'));
   const parserServer = await listen(http.createServer(parserApp));
   try {
+    const defaults = { type: 'html', encoding: 'identity', charset: 'utf-8', language: 'en' };
+    for (const [headers, changes] of [
+      [{}, {}],
+      [{ accept: 'text/html;q=2, application/json;q=0.7' }, { type: 'json' }],
+      [{ accept: 'text/html;q=0.8junk, application/json;q=0.5' }, { type: 'json' }],
+      [{ accept: '' }, { type: false }],
+      [{ accept: '*/*;q=0' }, { type: false }],
+      [{ accept: 'text/html;q=0, */*;q=1' }, { type: 'json' }],
+      [{ accept: 'text/html, application/json, text/html' }, {}],
+      [{ accept: ['text/html;q=0.2', 'application/json'] }, { type: 'json' }],
+      [{ 'accept-encoding': 'gzip;q=0.5, br;q=0.9' }, { encoding: 'br' }],
+      [{ 'accept-encoding': '*;q=0' }, { encoding: false }],
+      [{ 'accept-charset': 'utf-8;Q=2, iso-8859-1;q=0.5' }, { charset: 'iso-8859-1' }],
+      [{ 'accept-language': 'en;q=0.8junk, fr;q=0.5' }, { language: 'fr' }],
+    ]) {
+      const result = await request(apiServer, '/negotiate', { headers });
+      assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), { ...defaults, ...changes });
+    }
+    const profile = await request(apiServer, '/accept-profile', { headers: { accept: 'application/json;profile=abc, text/html;q=0.5' } });
+    assert.equal(profile.status, 200); assert.deepEqual(JSON.parse(profile.body), { type: 'text/html' });
+    const specific = await request(apiServer, '/accept-specific', { headers: { accept: 'text/html;level=1;q=0.9, text/html;level=1;profile=a;q=0, application/json;q=0.5' } });
+    assert.equal(specific.status, 200); assert.deepEqual(JSON.parse(specific.body), { type: 'application/json' });
+    const formatted = await request(appServer, '/format', { headers: { accept: 'text/html;q=2, application/json;q=0.5' } });
+    assert.equal(formatted.status, 200); assert.equal(formatted.body, '{"format":"json"}');
+    assert.equal(formatted.headers['content-type'], 'application/json; charset=utf-8');
+    assert.match(formatted.headers.vary, /Accept/);
+    assert.equal((await request(appServer, '/format', { headers: { accept: 'text/html' } })).body, '<p>html</p>');
+    assert.equal((await request(appServer, '/format', { headers: { accept: '*/*;q=0' } })).status, 406);
     // Express req.is preserves null / false / matching-string results.
     for (const [options, expected] of [
       [{}, { type: null, exact: null, suffix: null, shortcut: null }],

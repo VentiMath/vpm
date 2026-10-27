@@ -29,6 +29,8 @@ that these replacements have already improved application performance.
 | [vcontent-type](packages/vcontent-type) | content-type 2.1.0 | Independent null-prototype parameter maps, validated offsets and input types, and span-based quoted-string processing. |
 | [vmedia-typer](packages/vmedia-typer) | media-typer 1.1.1 | ASCII validation before lowercasing, consistent suffix round trips, and complete subtype length enforcement. |
 | [vtype-is](packages/vtype-is) | type-is 2.1.0 | Case-insensitive matching, validated patterns and body indicators, own-header reads, and an entirely VPM dependency tree. |
+| [vnegotiator](packages/vnegotiator) | negotiator 1.1.0 | Validated quality values, parameter specificity, stable duplicate ordering, and one parse per offered value. |
+| [vaccepts](packages/vaccepts) | accepts 2.0.0 | Validated offers even without Accept, distinct empty-header behavior, coherent replacement headers, and VPM negotiation throughout. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
@@ -40,8 +42,9 @@ baselines, described below. Test fixtures and benchmarks stay out of installable
 
 Most runtime replacements preserve their dependency counts. Both versions of
 each utility have zero external runtime dependencies, except
-`on-finished` / `von-finished`, `debug` / `vdebug`, and `mime-types` /
+`on-finished` / `von-finished`, `debug` / `vdebug`, `negotiator` / `vnegotiator`, and `mime-types` /
 `vmime-types`, which each declare one,
+`accepts` / `vaccepts`, which each declare two,
 `type-is` / `vtype-is`, which each declare three,
 `serve-static` / `vserve-static`, which each declare four,
 `finalhandler` / `vfinalhandler`, which each declare six,
@@ -58,6 +61,8 @@ bringing its complete external dependency tree to thirteen VPM packages.
 total external VPM dependencies. Its dependencies are all existing VPM packages.
 `vtype-is` uses `vcontent-type`, `vmedia-typer`, and `vmime-types` directly,
 with `vmime-db` bringing its complete external tree to four VPM packages.
+`vaccepts` also has four total external dependencies: `vnegotiator`,
+`vcontent-type`, `vmime-types`, and `vmime-db`.
 
 ## The target dependency graph
 
@@ -111,9 +116,11 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 79
+the Functions Framework, also serves a direct Express parser app, and runs 96
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
-patterns, JSON bodies and malformed
+patterns, response negotiation across all four Accept headers, invalid quality
+weights, empty headers, parameter specificity, and `res.format()` including 406
+responses and Vary/Content-Type headers; JSON bodies and malformed
 bodies, UTF-16 decoding and unsupported charset rejection, weighted Accept
 negotiation with quoted commas, preservation of Content-Type parameters when
 Express changes the charset, CORS preflight, `res.set('Content-Type')` with syntax upstream
@@ -502,7 +509,7 @@ resolution limits. This is not an atomic file snapshot or a filesystem jail.
 
 **Evidence and performance:** twenty-five tests cover differential HTTP cases,
 failure paths, disconnections, and HTTP/2. The shared integration gate passed
-79 HTTP checks through the pinned Functions Framework/Express stack on Node and
+96 HTTP checks through the pinned Functions Framework/Express stack on Node and
 Bun, including downloads and sendFile callbacks. Its 416 check also exposed and
 fixed dropped range metadata in `vfinalhandler`. Sequential localhost HTTP
 measurements showed ordinary GETs **4–10% slower**, HEAD **10–12% slower**, and
@@ -528,7 +535,7 @@ reach `next(error)`.
 
 **Compatibility and evidence:** seventeen tests include a differential matrix,
 cache mutation reproduction, configuration changes, framing, error propagation,
-multiple roots, and HTTP/2. The shared integration gate now runs 79 HTTP checks
+multiple roots, and HTTP/2. The shared integration gate now runs 96 HTTP checks
 through the Express 5 Cloud Functions stack with `vserve-static` installed by
 process-local alias. Existing middleware no longer observes later configuration
 mutations, and invalid options fail earlier. The `vsend` limitations still apply.
@@ -614,15 +621,62 @@ is type-is 2.1.0, not the newer ESM class API in 3.x. Its three direct and four
 total external dependencies are all VPM packages; counts are unchanged.
 
 **Evidence:** thirteen tests include an upstream differential matrix and 20,000
-generated matches. All 79 HTTP integration checks pass on Node and Bun with
+generated matches. All 96 HTTP integration checks pass on Node and Bun with
 these replacements installed alongside the rest of VPM. A required archive
-gate installs the five-package tree using npm and Bun, exercises CJS and ESM
+gate installs the media-package dependency trees using npm and Bun, exercises CJS and ESM
 on both runtimes, and checks TypeScript 7 consumers with no platform types.
 On the same local run, extension/suffix/unmatched cases took **18–23% less time
 on Node** and **45–50% less on Bun**. Node exact/invalid matching took
 **13–15% longer**; standalone matching and body detection were slower on both
 runtimes. The [full table](packages/vtype-is#validation-and-performance)
 documents those costs. No application throughput improvement is claimed.
+
+## vnegotiator and vaccepts
+
+**Negotiation correctness:** vnegotiator validates decoded quality values as
+complete decimals from 0 through 1 with no more than three fractional digits.
+Malformed values such as `2`, `0.8junk`, empty values and `.5` become zero, so
+specific invalid weights cannot gain preference through a broader wildcard.
+More matching media parameters now mean greater specificity; exact zero
+exclusions are respected. Charset labels compare without case, while other
+parameter values compare exactly and parameter `*` is literal. Equally weighted
+and specific duplicate entries keep their earliest header position.
+
+**Wrapper behavior:** vaccepts preserves extension aliases and first-original
+return values. Empty Accept headers no longer pick the first offer as if the
+header were absent. Absent headers still validate offers, skipping unknown
+extensions and malformed names. Its read-only `headers` view stays coherent
+with the request used by its negotiator after header replacement. Both packages
+read own lowercase header fields, accept string-array fields, avoid coercion,
+and freeze their exports and method prototypes.
+
+**Compatibility:** these target the actual consumer versions, negotiator 1.1.0
+and accepts 2.0.0. They preserve callable/new-able constructors, Express-facing
+methods, aliases, list/selection returns, encoding identity rules and upstream's
+language fallback. The latter is not full RFC 4647 lookup. The generic parameter
+parser remains tolerant: quoted numeric weights and first duplicate parameters
+are retained. Strict decoded weights, exact parameter values, own-header rules,
+empty Accept, invalid offers and the read-only headers view are documented
+changes. Both complete dependency trees consist of existing VPM packages, with
+the same counts as upstream.
+
+**Evidence:** 25 tests include ordinary upstream differential matrices and
+25,000 generated comparisons. The shared 96-request HTTP gate tests all
+Express `req.accepts*()` methods and `res.format()`. Installed archives are
+tested with npm, Bun, Node CJS/ESM and TypeScript 7, including public declarations
+without platform types. Baseline source files, digests and licenses are retained
+as test-only fixtures.
+
+**Performance:** each offered value is parsed once rather than once per client
+range, and output mapping no longer searches the full priority array. On a
+sequential Node 24.22.1 / Bun 1.4.0 local run, a 16-range/16-offer media case took
+**71–72% less time**. Smaller cases have mixed results. Negotiator's parameter
+case took **118% longer on Node** and listing case **115% longer on Bun**.
+Vaccepts' absent-header validation added about **185–215 ns/call**, and its
+Node quoted-profile case took **127% longer**. See the complete
+[negotiator](packages/vnegotiator#validation-and-performance) and
+[accepts](packages/vaccepts#validation-and-performance) tables for all regressions
+alongside gains. These measurements do not establish application throughput gains.
 
 ## vundici-types and vnode-types
 
@@ -657,7 +711,7 @@ runtime. DOM projects continue to use TypeScript's standard browser globals.
 requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
 dependency cycle, with no JavaScript runtime code. The workspace no longer uses
 upstream Node/Undici declarations for its own type checks. Upstream packages
-remain in a separately locked comparison fixture. All 20 runtime packages'
+remain in a separately locked comparison fixture. All 22 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

@@ -1,0 +1,10 @@
+{
+  "name": "accepts",
+  "version": "2.0.0",
+  "commit": "e1c347ee7fa91a74f21484daefd805c0cdc4f949",
+  "integrity": "sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==",
+  "sha256": {
+    "LICENSE": "71f83c4c0621102a56d9853812777b85751bce7e9726f686f5b056c1f8a4b0e6",
+    "index.js": "541417f7331d7c2041a7ac3e58df6198d6ebc0df04c4cbb2148de719b1dc4edc"
+  }
+}

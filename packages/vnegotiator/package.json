@@ -1,0 +1,34 @@
+{
+  "name": "vnegotiator",
+  "version": "0.1.0",
+  "description": "HTTP content negotiation with validated preferences",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "vcontent-type": "workspace:*"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vnegotiator"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vnegotiator"
+}

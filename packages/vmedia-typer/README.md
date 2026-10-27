@@ -68,7 +68,7 @@ Ten tests cover ordinary upstream equivalence, every byte in each name position,
 10,000 generated round trips, length boundaries, non-ASCII input, line
 terminators, coercion traps, independent results and CJS/ESM exports. The shared
 integration gate exercises this package through vtype-is, Express 5 and
-body-parser, with 79 HTTP checks on Node and Bun. The archive gate checks npm
+body-parser, with 96 HTTP checks on Node and Bun. The archive gate checks npm
 and Bun installs and TypeScript 7 CJS/ESM consumers without Node or DOM types.
 
 Sequential local measurements on Node 24.22.1 and Bun 1.4.0, 2026-10-26.
