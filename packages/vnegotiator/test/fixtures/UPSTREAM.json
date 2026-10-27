@@ -1,0 +1,15 @@
+{
+  "name": "negotiator",
+  "version": "1.1.0",
+  "commit": "14b0a7b88e7e7bb1cae38681195951bff29ca2fd",
+  "integrity": "sha512-NMPBRMJgiQHjbd8phG3Vebdx4kZ1H121rbl5IkMqeOsahptB9BKo/d7oJ3zTXqTgagn2bWlNSXkh0QUGM31RYg==",
+  "sha256": {
+    "LICENSE": "553d4d20029a24e315b428a1a54a9e109eaa340f2e958a4f50a92362c2c4070b",
+    "index.js": "55a4073302ef1e581a74027daa054d53ab8a1b8a0c42551e0b50699a6c0de254",
+    "lib/accept.js": "160d139207a12ebb6e1051d8e6600efac13c84314b30992dc0be091d0c36ccfb",
+    "lib/charset.js": "3ddc456f69fa4d8c911ec3953d77f1b80686f1c18686e28f6ea724f1e51dae1b",
+    "lib/encoding.js": "d42e909e2bdef8d9e1386546b72428fb6e26a1743ca0d24f004ff15bbf82587b",
+    "lib/language.js": "f23a3876355965202d16ca9a655462ffeeb7b9ecd6a4dcf523ab67f82230b9ac",
+    "lib/mediaType.js": "b50ecadd7e030f0e024c875ac5a4a97ea62079856ed43309ba4fececf257e045"
+  }
+}

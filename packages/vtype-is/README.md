@@ -85,7 +85,7 @@ Thirteen tests cover a header/pattern differential matrix, 20,000 generated
 matches, exact/wildcard/suffix return contracts, casing, body indicators,
 inherited headers, malformed input, caller mutation and CJS/ESM exports.
 Type checks include real Node HTTP and HTTP/2 request shapes. The shared gate
-passes 79 HTTP checks with all VPM replacements together, including Express
+passes 96 HTTP checks with all VPM replacements together, including Express
 `req.is()`, framework JSON/form parsers and a direct Express app with uppercase
 and structured-suffix parser patterns. Archive tests install the complete VPM
 dependency tree through npm and Bun and check both runtimes and TypeScript 7.

@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vmedia-typer', 'vtype-is', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
     assert.ok(archive, name);
@@ -21,7 +21,7 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
-    if (name === 'vmedia-typer' || name === 'vtype-is') {
+    if (['vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts'].includes(name)) {
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'index.d.ts', 'index.js', 'package.json'].sort());
     }
@@ -35,6 +35,11 @@ assert.equal(media.test('text/K'), false);
 assert.equal(typeis({ headers: { 'content-length': '0', 'content-type': 'TEXT/HTML' } }, ['HTML']), 'HTML');
 assert.equal(typeis.is('application/problem+json', ['+JSON']), 'application/problem+json');
 assert.equal(typeis.hasBody({ headers: { 'content-length': '-1' } }), false);
+const Negotiator = require('vnegotiator');
+const Accepts = require('vaccepts');
+const request = { headers: { accept: 'text/html;q=2, application/json;q=0.5' } };
+assert.equal(new Negotiator(request).mediaType(['text/html', 'application/json']), 'application/json');
+assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
@@ -44,6 +49,11 @@ assert.equal(media.parse, parse); assert.equal(typeis.is, is);
 assert.equal(format(parse('text/x+')), 'text/x+'); assert.equal(test('text/html'), true);
 assert.equal(match('TEXT/*', 'text/html'), true); assert.equal(normalize('json'), 'application/json');
 assert.equal(hasBody({ headers: { 'content-length': '0' } }), true);
+import Negotiator, { Negotiator as NamedNegotiator } from 'vnegotiator';
+import Accepts from 'vaccepts';
+assert.equal(Negotiator, NamedNegotiator);
+assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
+assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import media, { parse, format, test, type MediaType } from 'vmedia-typer';
@@ -59,6 +69,17 @@ format({ type: 'text' });
 // @ts-expect-error patterns must be strings
 is(header, [1]);
 void [result, matched, normalized];
+import Negotiator, { Negotiator as NamedNegotiator } from 'vnegotiator';
+import Accepts from 'vaccepts';
+const request = { headers: { accept: 'text/html' } };
+const negotiator: Negotiator.Instance = new NamedNegotiator(request);
+const encoding: string | undefined = negotiator.encoding(['gzip'], { preferred: ['gzip'] });
+const accepts: Accepts.Instance = Accepts(request);
+const accepted: string | false = accepts.types(['html', 'json'] as const);
+const all: string[] = accepts.types();
+// @ts-expect-error values must be strings
+accepts.types([1]);
+void [encoding, accepted, all];
 `;
   for (const extension of ['cts', 'mts']) fs.writeFileSync(path.join(directory, 'consumer.' + extension), source);
   fs.writeFileSync(path.join(directory, 'tsconfig.json'), JSON.stringify({ files: ['consumer.cts', 'consumer.mts'], compilerOptions: {
@@ -81,6 +102,8 @@ void [result, matched, normalized];
     assert.doesNotMatch(output, /\/packages\/|\/vnode-types\/|\/v?undici-types\/|lib\.dom/);
     assert.match(output, /node_modules\/vmedia-typer\/index\.d\.ts/);
     assert.match(output, /node_modules\/vtype-is\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vnegotiator\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vaccepts\/index\.d\.ts/);
     console.log(`${manager} archives: Node/Bun CJS and ESM, TypeScript ${tsc.version} CJS and ESM without platform types passed.`);
     fs.rmSync(path.join(directory, 'node_modules'), { recursive: true, force: true });
     fs.rmSync(path.join(directory, 'package-lock.json'), { force: true });
