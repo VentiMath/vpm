@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'body-parser': { pkg: 'vbody-parser', versions: /^2\.4\.0$/ },
   qs: { pkg: 'vqs', versions: /^6\.17\.0$/ },
   'iconv-lite': { pkg: 'viconv-lite', versions: /^0\.7\./ },
   'raw-body': { pkg: 'vraw-body', versions: /^3\.0\./ },
@@ -243,6 +244,20 @@ const parserApp = express();
 parserApp.set('query parser', 'extended');
 parserApp.get('/nested-query', (req, res) => res.json(req.query));
 parserApp.post('/nested-form', express.urlencoded({ extended: true, depth: 3, parameterLimit: 8, charsetSentinel: true, interpretNumericEntities: true }), (req, res) => res.json(req.body));
+parserApp.post('/large-form-limit', express.urlencoded({ extended: true, parameterLimit: 2 ** 32 }), (req, res) => res.json(req.body));
+const frozenVerificationError = Object.freeze(Object.assign(new Error('rejected'), { status: 422 }));
+parserApp.post('/frozen-verify', express.json({ verify() { throw frozenVerificationError; } }), (_req, _res) => assert.fail('verification should fail'),
+  (error, _req, res, _next) => {
+    assert.equal(error.cause, frozenVerificationError);
+    assert.equal(error.type, 'entity.verify.failed');
+    res.status(error.status).json({ type: error.type });
+  });
+parserApp.post('/primitive-reviver', express.json({ reviver() { throw null; } }), (_req, _res) => assert.fail('reviver should fail'),
+  (error, _req, res, _next) => {
+    assert.equal(error.cause, null);
+    assert.equal(error.type, 'entity.parse.failed');
+    res.status(error.status).json({ type: error.type });
+  });
 // Exercise byte limits before the framework's parser has consumed the stream.
 for (const limit of ['100kbjunk', '1e3', '', '8pb', Infinity]) {
   const expected = { name: limit === '8pb' || limit === Infinity ? 'RangeError' : 'TypeError' };
@@ -345,6 +360,12 @@ async function run() {
   const parserServer = await listen(http.createServer(parserApp));
   try {
     await abortedRequest();
+    const largeLimit = await request(parserServer, '/large-form-limit', { method: 'POST', body: 'a=1&b=2', headers: { 'content-type': 'application/x-www-form-urlencoded' } });
+    assert.equal(largeLimit.status, 200); assert.deepEqual(JSON.parse(largeLimit.body), { a: '1', b: '2' });
+    for (const [route, status, type] of [['/frozen-verify', 422, 'entity.verify.failed'], ['/primitive-reviver', 400, 'entity.parse.failed']]) {
+      const result = await request(parserServer, route, { method: 'POST', body: '{"a":1}', headers: { 'content-type': 'application/json' } });
+      assert.equal(result.status, status); assert.deepEqual(JSON.parse(result.body), { type });
+    }
     for (const [query, expected] of [
       ['person[name]=Ada&tags[]=math&tags[]=code', { person: { name: 'Ada' }, tags: ['math', 'code'] }],
       ['a=1&a=2&bad=%E0%A4%A&text=hello+world', { a: ['1', '2'], bad: '%E0%A4%A', text: 'hello world' }],

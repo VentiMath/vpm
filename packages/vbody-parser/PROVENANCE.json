@@ -1,0 +1,27 @@
+{
+  "upstream": "body-parser",
+  "version": "2.4.0",
+  "gitHead": "b4744d739e1e2e5257f2ddac31eed191aa5152a4",
+  "source": "https://registry.npmjs.org/body-parser/-/body-parser-2.4.0.tgz",
+  "integrity": "sha512-Ifk1KcLrxaGt1occQagQNFNNOqRt1LFuehEnHHzB8Z6cRgIxRU1TBaiIsUiCdA+gy5PL7Y1IX31DNKkRmxtXjQ==",
+  "license": "MIT",
+  "sha256": {
+    "LICENSE": "23d466b1b134b415b66fa50c6526b4cf3e7b9258554da88d3abb371721e7ce68",
+    "index.js": "4d33d19d4ce36726988a1fa508f4d6f15254cc52fe95b777b30f49d97d825668",
+    "lib/read.js": "c77982d481a9fe5b13c0fdd68515a5931729961e7135124f70236d5a30bdd701",
+    "lib/types/json.js": "ae364afecbc19e0b13b8a177498d773f325f550b025314d1720fcee4d14e39b0",
+    "lib/types/raw.js": "4004d7e49853d2293e6f1dd1101a17cf61d7ffd072030810a140111750dd33bc",
+    "lib/types/text.js": "16366ad27c744dcea19fd6ee3a004265ade2f0085a12321f0170fc2c15acdf87",
+    "lib/types/urlencoded.js": "54439c1b2e6291300960d5b6040d07a2606d1804358fd564277167be48599573",
+    "lib/utils.js": "9b50ce0f96b1027a12c5a0528a3ba05c5a7eed1d442cb5062bd30e7f1361fc83",
+    "package.json": "9410a56eb52cfe53ec48f013c872d4d336bb1cad66ea166bf3d97d2807bf542a"
+  },
+  "changes": [
+    "Use VPM counterparts for all nine runtime dependencies.",
+    "Validate and snapshot configuration, without signed 32-bit coercion of form limits.",
+    "Observe request abort/error/close while decompressing; register readers before piping and settle once.",
+    "Wrap parser and verifier failures without modifying thrown errors.",
+    "Reject strict JSON scalar bodies without constructing and reparsing a placeholder body.",
+    "Include self-contained TypeScript declarations and explicit parser subpath exports."
+  ]
+}

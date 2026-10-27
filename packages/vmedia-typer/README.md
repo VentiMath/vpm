@@ -68,7 +68,7 @@ Ten tests cover ordinary upstream equivalence, every byte in each name position,
 10,000 generated round trips, length boundaries, non-ASCII input, line
 terminators, coercion traps, independent results and CJS/ESM exports. The shared
 integration gate exercises this package through vtype-is, Express 5 and
-body-parser, with 96 HTTP checks on Node and Bun. The archive gate checks npm
+body-parser, with HTTP checks on Node and Bun. The archive gate checks npm
 and Bun installs and TypeScript 7 CJS/ESM consumers without Node or DOM types.
 
 Sequential local measurements on Node 24.22.1 and Bun 1.4.0, 2026-10-26.
@@ -90,6 +90,8 @@ Validation took less time in these cases, with no unconditional lowercase copy.
 Parsing was up to 7% slower on Node and 24–55% slower on Bun. Type-is uses
 `test()`, not `parse()`. These are microbenchmarks, not application throughput
 measurements; there is no across-the-board speedup claim.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Installation and provenance
 

@@ -85,7 +85,7 @@ Thirteen tests cover a header/pattern differential matrix, 20,000 generated
 matches, exact/wildcard/suffix return contracts, casing, body indicators,
 inherited headers, malformed input, caller mutation and CJS/ESM exports.
 Type checks include real Node HTTP and HTTP/2 request shapes. The shared gate
-passes 96 HTTP checks with all VPM replacements together, including Express
+runs HTTP checks with all VPM replacements together, including Express
 `req.is()`, framework JSON/form parsers and a direct Express app with uppercase
 and structured-suffix parser patterns. Archive tests install the complete VPM
 dependency tree through npm and Bun and check both runtimes and TypeScript 7.
@@ -111,6 +111,8 @@ Several common matching cases improve, particularly on Bun. Added validation
 costs time: standalone `match()` takes 40–51% longer, and body detection takes
 24–134% longer in this run. Node exact and invalid matching also take 13–15%
 longer. These microbenchmarks do not establish an application speedup.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Installation and provenance
 

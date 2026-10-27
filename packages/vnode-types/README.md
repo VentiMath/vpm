@@ -100,7 +100,7 @@ transitive dependency. Loading both upstream and VPM Node globals is unsupported
 - In DOM projects, the standard DOM library supplies browser globals. VPM's
   Node-only Fetch improvements do not modify TypeScript's DOM definitions.
 
-VPM's 22 runtime packages retain self-contained public declarations: a separate
+VPM's runtime packages retain self-contained public declarations: a separate
 gate compiles them with `types: []`, ES2022 only, and no Node, Undici, or DOM types.
 The platform types are needed for development tests against real Node APIs.
 

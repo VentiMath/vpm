@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
     assert.ok(archive, name);
@@ -21,6 +21,12 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (name === 'vbody-parser') {
+      assert.equal(Object.keys(metadata.dependencies).length, 9);
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json',
+        'lib/read.js', 'lib/utils.js', ...['json', 'raw', 'text', 'urlencoded'].flatMap(type => ['lib/types/' + type + '.js', 'types/' + type + '.d.ts'])].sort());
+    }
     if (name === 'vqs') {
       assert.equal(metadata.dependencies, undefined);
       assert.equal(metadata.license, 'BSD-3-Clause');
@@ -49,7 +55,13 @@ assert.equal(qs.stringify({ a: '~* ' }, { format: qs.formats.WHATWG }), 'a=%7E*+
 assert.throws(() => qs.parse('a=1', { parameterLimit: NaN }), TypeError);
 const getRawBody = require('vraw-body');
 const { Readable } = require('node:stream');
+const bodyParser = require('vbody-parser');
+for (const type of ['json', 'raw', 'text', 'urlencoded']) assert.equal(bodyParser[type], require('vbody-parser/' + type));
 (async () => {
+  const request = Readable.from([Buffer.from('{"a":1}')]);
+  Object.assign(request, { headers: { 'content-type': 'application/json', 'content-length': '7' }, complete: false, socket: { readable: true } });
+  await new Promise((resolve, reject) => bodyParser.json()(request, {}, error => error ? reject(error) : resolve()));
+  assert.deepEqual(request.body, { a: 1 });
   assert.deepEqual(await getRawBody(Readable.from([Buffer.from('abc')]), { limit: '3b' }), Buffer.from('abc'));
   assert.equal(await getRawBody(Readable.from([Buffer.from('9439da', 'hex'), Buffer.from('33', 'hex')]), 'gb18030'), '💩');
 })().catch(error => { console.error(error); process.exitCode = 1; });
@@ -81,6 +93,17 @@ assert.deepEqual(parseQuery('__proto__[polluted]=yes&a[]=x'), { a: ['x'] });
 assert.equal(Object.prototype.polluted, undefined);
 import getRawBody from 'vraw-body';
 import { Readable } from 'node:stream';
+import bodyParser, { json, raw, text, urlencoded } from 'vbody-parser';
+import jsonParser from 'vbody-parser/json';
+import rawParser from 'vbody-parser/raw';
+import textParser from 'vbody-parser/text';
+import formParser from 'vbody-parser/urlencoded';
+assert.deepEqual([json, raw, text, urlencoded], [jsonParser, rawParser, textParser, formParser]);
+assert.equal(bodyParser.json, json);
+const formRequest = Readable.from([Buffer.from('a=1&b=2')]);
+Object.assign(formRequest, { headers: { 'content-type': 'application/x-www-form-urlencoded', 'content-length': '7' }, complete: false, socket: { readable: true } });
+await new Promise((resolve, reject) => formParser({ parameterLimit: 2 ** 32 })(formRequest, {}, error => error ? reject(error) : resolve()));
+assert.deepEqual(formRequest.body, { a: '1', b: '2' });
 assert.equal(await getRawBody(Readable.from([Buffer.from('abc')]), true), 'abc');
 await assert.rejects(getRawBody(Readable.from([Buffer.from('abc')]), { limit: 2 }), { status: 413 });
 import iconv, { encode, decode, getDecoder } from 'viconv-lite';
@@ -104,6 +127,24 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import bodyParser, { json as jsonBody, raw as rawBody, text as textBody, urlencoded as formBody } from 'vbody-parser';
+import jsonParser from 'vbody-parser/json';
+import rawParser from 'vbody-parser/raw';
+import textParser from 'vbody-parser/text';
+import formParser from 'vbody-parser/urlencoded';
+declare const bodyRequest: bodyParser.Request;
+const middleware: bodyParser.Middleware = jsonParser({ verify(_req, _res, buffer, charset) {
+  const data: Uint8Array = buffer;
+  const encoding: string | null = charset;
+  buffer.toString('hex'); void [data, encoding];
+} });
+middleware(bodyRequest, {}, error => { void error; });
+rawParser(); textParser(); formParser({ extended: true, parameterLimit: 2 ** 32 });
+jsonBody(); rawBody(); textBody(); formBody();
+// @ts-expect-error limits must be numbers
+formParser({ parameterLimit: '1000' });
+// @ts-expect-error verify receives bytes, not a string
+jsonBody({ verify(_req, _res, buffer: string) {} });
 import qs, { parse as parseQuery, stringify, formats } from 'vqs';
 const parsedQuery: qs.ParsedObject = parseQuery('a=1', { parameterLimit: 2 });
 const queryText: string = stringify({ a: ['x', 'y'] }, { format: formats.WHATWG });
@@ -191,6 +232,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
     assert.match(output, /node_modules\/vqs\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vbody-parser\/index\.d\.ts/);
     console.log(`${manager} archives: Node/Bun CJS and ESM, TypeScript ${tsc.version} CJS and ESM without platform types passed.`);
     fs.rmSync(path.join(directory, 'node_modules'), { recursive: true, force: true });
     fs.rmSync(path.join(directory, 'package-lock.json'), { force: true });

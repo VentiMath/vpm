@@ -56,6 +56,7 @@ bun install --frozen-lockfile
 bun run test
 bun run test:bun
 bun run typecheck
+bun run check:docs
 ```
 
 Tests run against Node.js and Bun. The workspace uses TypeScript 7.0.2 with VPM's
@@ -87,6 +88,14 @@ node scripts/check-media-archives.cjs
 It runs in CI on every push. See [the target dependency graph](IMPROVEMENTS.md#the-target-dependency-graph)
 for what it covers and what it reports as not covered. Each package documents its own installation,
 usage, runtime requirements, and compatibility.
+
+Review documentation whenever a package, API, dependency baseline, or measured
+result changes. Check the affected package READMEs and the central improvements
+record against the implementation, tests, archive contents and benchmark evidence
+in the same change. Keep the root README focused on the project, and keep current
+shared coverage counts in the central record. Preserve dates on historical
+measurements. The documentation CI check catches missing package coverage and
+broken local link paths; accuracy of explanations and claims requires review.
 
 ## Repository history
 
