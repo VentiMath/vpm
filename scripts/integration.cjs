@@ -14,6 +14,8 @@ const fs = require('node:fs');
 const http = require('node:http');
 const os = require('node:os');
 const path = require('node:path');
+const { PassThrough } = require('node:stream');
+const { gzipSync } = require('node:zlib');
 const { createRequire } = require('node:module');
 
 process.env.GCLOUD_PROJECT ||= 'vpm-integration';
@@ -27,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  bytes: { pkg: 'vbytes', versions: /^3\.1\./ },
   negotiator: { pkg: 'vnegotiator', versions: /^1\.1\./ },
   accepts: { pkg: 'vaccepts', versions: /^2\.0\./ },
   'content-type': { pkg: 'vcontent-type', versions: /^2\.1\./ },
@@ -155,6 +158,7 @@ let checks = 0;
 // Consumers load after aliasing so their require() calls receive VPM exports.
 const from = createRequire(path.join(modules, 'package.json'));
 const express = from('express');
+const getRawBody = from('raw-body');
 const createError = from('http-errors');
 const jwt = from('jsonwebtoken');
 const functions = from('@google-cloud/functions-framework');
@@ -233,6 +237,32 @@ functions.http('app', onRequest(app));
 // A direct Express app also tests custom parser patterns before the framework's
 // catch-all raw parser can consume their bodies.
 const parserApp = express();
+// Exercise byte limits before the framework's parser has consumed the stream.
+for (const limit of ['100kbjunk', '1e3', '', '8pb', Infinity]) {
+  const expected = { name: limit === '8pb' || limit === Infinity ? 'RangeError' : 'TypeError' };
+  assert.throws(() => express.json({ limit }), expected);
+  const stream = new PassThrough();
+  // raw-body normally interprets a null parse result as unlimited. Invalid
+  // supplied limits must throw before reading, including its callback API.
+  assert.throws(() => getRawBody(stream, { limit }, () => assert.fail('invalid limit invoked callback')), expected);
+  assert.throws(() => getRawBody(stream, { limit }), expected);
+  assert.equal(stream.readableFlowing, null);
+  assert.equal(stream.listenerCount('data'), 0);
+  stream.destroy();
+}
+parserApp.post('/limit-json', express.json({ limit: '7b' }), (req, res) => res.json(req.body));
+parserApp.post('/limit-raw', express.raw({ limit: '1kb' }), (req, res) => res.json({ length: req.body.length }));
+parserApp.post('/limit-text', express.text({ limit: '3b' }), (req, res) => res.json({ text: req.body }));
+parserApp.post('/direct-raw', async (req, res, next) => {
+  try { const body = await getRawBody(req, { limit: '4b' }); res.json({ length: body.length }); } catch (error) { next(error); }
+});
+parserApp.post('/unlimited-raw', async (req, res, next) => {
+  try { const body = await getRawBody(req); res.json({ length: body.length }); } catch (error) { next(error); }
+});
+parserApp.post('/invalid-limit', (req, res) => {
+  try { getRawBody(req, { limit: '100kbjunk' }, () => res.sendStatus(200)); }
+  catch (error) { assert.ok(error instanceof TypeError); req.resume(); res.sendStatus(400); }
+});
 parserApp.use(express.json({ type: ['APPLICATION/JSON', 'application/*+JSON'] }));
 parserApp.use(express.text({ type: 'TEXT/*' }));
 parserApp.use(express.urlencoded({ extended: false, type: 'URLENCODED' }));
@@ -320,6 +350,28 @@ async function run() {
     ]) {
       const result = await request(parserServer, '/', { method: 'POST', headers: { 'content-type': type }, body });
       assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), { body: parsed });
+    }
+    for (const [route, type, body, extra, expected] of [
+      ['/limit-json', 'application/json', '{"a":1}', {}, 200],
+      ['/limit-json', 'application/json', '{"a":10}', {}, 413],
+      ['/limit-raw', 'application/octet-stream', 'x'.repeat(1024), { 'content-length': '1024' }, 200],
+      ['/limit-raw', 'application/octet-stream', 'x'.repeat(1025), { 'content-length': '1025' }, 413],
+      ['/direct-raw', 'application/octet-stream', '1234', { 'transfer-encoding': 'chunked' }, 200],
+      ['/direct-raw', 'application/octet-stream', '12345', { 'transfer-encoding': 'chunked' }, 413],
+      ['/limit-text', 'text/plain', 'éa', {}, 200],
+      ['/limit-text', 'text/plain', 'éé', {}, 413],
+      ['/limit-raw', 'application/octet-stream', gzipSync('x'.repeat(1024)), { 'content-encoding': 'gzip' }, 200],
+      ['/limit-raw', 'application/octet-stream', gzipSync('x'.repeat(1025)), { 'content-encoding': 'gzip' }, 413],
+      ['/unlimited-raw', 'application/octet-stream', '12345', {}, 200],
+      ['/invalid-limit', 'application/octet-stream', 'x'.repeat(200), {}, 400],
+    ]) {
+      const result = await request(parserServer, route, { method: 'POST', headers: { 'content-type': type, ...extra }, body });
+      assert.equal(result.status, expected, route + ' ' + body.length);
+      if (route === '/limit-raw' && expected === 200) assert.deepEqual(JSON.parse(result.body), { length: 1024 });
+      if (route === '/direct-raw' && expected === 200) assert.deepEqual(JSON.parse(result.body), { length: 4 });
+      if (route === '/limit-json' && expected === 200) assert.deepEqual(JSON.parse(result.body), { a: 1 });
+      if (route === '/limit-text' && expected === 200) assert.deepEqual(JSON.parse(result.body), { text: 'éa' });
+      if (route === '/unlimited-raw') assert.deepEqual(JSON.parse(result.body), { length: 5 });
     }
     // JSON bodies parsed by the Functions Framework (body-parser, raw-body, type-is, http-errors).
     const echo = await request(apiServer, '/echo', { method: 'POST', headers: { 'content-type': 'application/json; CHARSET=utf-8' }, body: '{"a":1}' });

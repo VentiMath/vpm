@@ -31,6 +31,7 @@ that these replacements have already improved application performance.
 | [vtype-is](packages/vtype-is) | type-is 2.1.0 | Case-insensitive matching, validated patterns and body indicators, own-header reads, and an entirely VPM dependency tree. |
 | [vnegotiator](packages/vnegotiator) | negotiator 1.1.0 | Validated quality values, parameter specificity, stable duplicate ordering, and one parse per offered value. |
 | [vaccepts](packages/vaccepts) | accepts 2.0.0 | Validated offers even without Accept, distinct empty-header behavior, coherent replacement headers, and VPM negotiation throughout. |
+| [vbytes](packages/vbytes) | bytes 3.1.2 | Complete-input parsing that fails explicitly on invalid limits, exact decimal scaling, validated format options, and literal group separators. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
@@ -116,12 +117,14 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 96
+the Functions Framework, also serves a direct Express parser app, and runs 108
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
 responses and Vary/Content-Type headers; JSON bodies and malformed
-bodies, UTF-16 decoding and unsupported charset rejection, weighted Accept
+bodies, exact/over-limit bodies with explicit lengths and chunked framing,
+UTF-8 byte counts, gzip expansion, malformed limits and deliberate limit omission,
+UTF-16 decoding and unsupported charset rejection, weighted Accept
 negotiation with quoted commas, preservation of Content-Type parameters when
 Express changes the charset, CORS preflight, `res.set('Content-Type')` with syntax upstream
 tolerated, conditional requests with quoted-comma tags and forced reloads,
@@ -678,6 +681,68 @@ Node quoted-profile case took **127% longer**. See the complete
 [accepts](packages/vaccepts#validation-and-performance) tables for all regressions
 alongside gains. These measurements do not establish application throughput gains.
 
+## vbytes
+
+**Parsing and request limits:** replaces prefix parsing with complete decimal
+syntax and rejects unsupported units, trailing junk, exponents and hex. Upstream
+parses `100kbjunk` as 100 bytes and `1e3` as 1 byte. Invalid supplied values now
+throw; only null/undefined return null. This distinction is deliberate:
+`raw-body` 3.0.2 interprets null as unlimited, so returning null for a newly
+rejected value could disable a limit. Both callback and promise callers must
+allow for a synchronous validation exception. Ordinary `100kb`-style limits
+retain their power-of-1024 meaning.
+
+**Numeric correctness:** decimal strings scale exactly before rounding down to
+whole bytes, including beyond binary floating-point precision. For example,
+`0.99999999999999999999kb` produces 1023 instead of 1024. BigInt calculations
+use at most 50 fractional digits; input scanning remains linear. Parsed integers
+must fit within ±`Number.MAX_SAFE_INTEGER`. Numeric inputs retain their value,
+including fractions, but non-finite/out-of-range inputs throw. Bare decimal
+strings and explicit B suffixes now follow the same flooring rule as other
+units; upstream instead truncates bare decimal strings toward zero.
+
+**Formatting:** fixes trailing zeros after internal decimal zeros (`1.0100`),
+treats dollar signs in thousands separators literally, and rejects invalid units
+such as `constructor` instead of returning `NaNconstructor`. Option values are
+validated, only own properties are read, and each is read once. Null option
+values use defaults; `decimalPlaces: null` therefore uses 2 instead of upstream's
+coerced 0. Scientific notation is retained without grouping its exponent.
+Frozen exports and self-contained declarations are included. Both packages have
+zero runtime dependencies; this change does not shrink the dependency count.
+
+**Compatibility and evidence:** malformed sizes, unsupported format options,
+inherited options, unsafe counts, and decimal edge cases deliberately change.
+Consumers checking for a null invalid result must migrate to exception handling.
+Tests include 12,000 generated rational-oracle parses, 30,000 generated formatting
+comparisons, and a pinned, unmodified upstream fixture with source provenance.
+All 108 HTTP checks pass with `vbytes` substituted into real `body-parser` and
+`raw-body` calls: exact/over-limit JSON and binary requests, chunked framing,
+UTF-8 byte lengths, gzip expansion, invalid limits, and omitted limits. The
+archive gate installs packed packages through npm and Bun, runs both runtimes
+with CJS/ESM, and compiles TypeScript 7 without platform declarations.
+
+**Measured performance:** a sequential Node 24.22.1 / Bun 1.4.0 run on
+2026-10-26 used seven alternating samples of 50,000 calls after warmup. Values
+are median nanoseconds per call; the benchmark checks equal results first.
+
+| Case | Node upstream → VPM | Bun upstream → VPM |
+| --- | ---: | ---: |
+| Numeric parsing | 8 → 9 | 7 → 7 |
+| Bare integer strings | 64 → 84 | 39 → 65 |
+| Body-limit strings | 134 → 136 | 97 → 120 |
+| Decimal unit strings | 158 → 180 | 91 → 156 |
+| Decimal PB strings | 149 → 230 | 94 → 203 |
+| Default formatting | 288 → 137 | 266 → 100 |
+| Fixed-decimal formatting | 144 → 175 | 245 → 110 |
+| Explicit-unit formatting | 291 → 287 | 252 → 180 |
+| Grouped formatting | 625 → 296 | 514 → 208 |
+
+Default/grouped formatting took approximately **52–62% less time**. Parsing
+regressed in these samples, most visibly the exact fractional PB path (54% more
+time on Node, 116% more on Bun); fixed-decimal formatting took 21% longer on
+Node. These are microbenchmarks, not an application throughput result. Source,
+commands, and the error contract are in [the package README](packages/vbytes).
+
 ## vundici-types and vnode-types
 
 **Declaration correctness:** `vundici-types` adds the missing `RequestInit.cache`
@@ -711,7 +776,7 @@ runtime. DOM projects continue to use TypeScript's standard browser globals.
 requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
 dependency cycle, with no JavaScript runtime code. The workspace no longer uses
 upstream Node/Undici declarations for its own type checks. Upstream packages
-remain in a separately locked comparison fixture. All 22 runtime packages'
+remain in a separately locked comparison fixture. All 23 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

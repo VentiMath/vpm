@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
     assert.ok(archive, name);
@@ -21,13 +21,17 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
-    if (['vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts'].includes(name)) {
+    if (['vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts'].includes(name)) {
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'index.d.ts', 'index.js', 'package.json'].sort());
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const bytes = require('vbytes');
+assert.equal(bytes.parse('100kb'), 102400);
+assert.throws(() => bytes.parse('100kbjunk'), TypeError);
+assert.equal(bytes.format(1.01, { decimalPlaces: 4 }), '1.01B');
 const media = require('vmedia-typer');
 const typeis = require('vtype-is');
 assert.equal(media.format(media.parse('application/foo+bar+json')), 'application/foo+bar+json');
@@ -43,6 +47,9 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import bytes, { parse as parseBytes, format as formatBytes } from 'vbytes';
+assert.equal(bytes.parse, parseBytes); assert.equal(bytes.format, formatBytes);
+assert.equal(parseBytes('-1.00000000000000000001kb'), -1025);
 import media, { parse, format, test } from 'vmedia-typer';
 import typeis, { is, match, hasBody, normalize } from 'vtype-is';
 assert.equal(media.parse, parse); assert.equal(typeis.is, is);
@@ -56,6 +63,15 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import bytes, { parse as parseBytes, format as formatBytes } from 'vbytes';
+const size: number = parseBytes('1kb');
+const absent: null = parseBytes(undefined);
+const sizeText: string | null = bytes(size, { unit: 'KB' });
+const sizeOptions: bytes.Options = { decimalPlaces: 4 };
+formatBytes(size, sizeOptions);
+// @ts-expect-error byte sizes must be strings or numbers
+parseBytes({});
+void [absent, sizeText];
 import media, { parse, format, test, type MediaType } from 'vmedia-typer';
 import typeis, { is, match, hasBody, normalize } from 'vtype-is';
 const parsed: MediaType = parse('text/html');
@@ -104,6 +120,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vtype-is\/index\.d\.ts/);
     assert.match(output, /node_modules\/vnegotiator\/index\.d\.ts/);
     assert.match(output, /node_modules\/vaccepts\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     console.log(`${manager} archives: Node/Bun CJS and ESM, TypeScript ${tsc.version} CJS and ESM without platform types passed.`);
     fs.rmSync(path.join(directory, 'node_modules'), { recursive: true, force: true });
     fs.rmSync(path.join(directory, 'package-lock.json'), { force: true });
