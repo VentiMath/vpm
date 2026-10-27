@@ -1,0 +1,23 @@
+'use strict';
+// Explicit assignments also expose named exports to native ESM consumers.
+const iconv = require('./lib');
+module.exports = iconv;
+module.exports.encode = iconv.encode;
+module.exports.decode = iconv.decode;
+module.exports.encodingExists = iconv.encodingExists;
+module.exports.getEncoder = iconv.getEncoder;
+module.exports.getDecoder = iconv.getDecoder;
+module.exports.getCodec = iconv.getCodec;
+module.exports.encodeStream = iconv.encodeStream;
+module.exports.decodeStream = iconv.decodeStream;
+module.exports.toEncoding = iconv.encode;
+module.exports.fromEncoding = iconv.decode;
+module.exports.enableStreamingAPI = iconv.enableStreamingAPI;
+module.exports.IconvLiteEncoderStream = iconv.IconvLiteEncoderStream;
+module.exports.IconvLiteDecoderStream = iconv.IconvLiteDecoderStream;
+module.exports.supportsStreams = iconv.supportsStreams;
+module.exports._canonicalizeEncoding = iconv._canonicalizeEncoding;
+module.exports._codecDataCache = iconv._codecDataCache;
+module.exports.encodings = iconv.encodings;
+module.exports.defaultCharUnicode = iconv.defaultCharUnicode;
+module.exports.defaultCharSingleByte = iconv.defaultCharSingleByte;

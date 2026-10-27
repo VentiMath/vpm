@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'iconv-lite': { pkg: 'viconv-lite', versions: /^0\.7\./ },
   bytes: { pkg: 'vbytes', versions: /^3\.1\./ },
   negotiator: { pkg: 'vnegotiator', versions: /^1\.1\./ },
   accepts: { pkg: 'vaccepts', versions: /^2\.0\./ },
@@ -256,6 +257,12 @@ parserApp.post('/limit-text', express.text({ limit: '3b' }), (req, res) => res.j
 parserApp.post('/direct-raw', async (req, res, next) => {
   try { const body = await getRawBody(req, { limit: '4b' }); res.json({ length: body.length }); } catch (error) { next(error); }
 });
+parserApp.post('/encoded-raw', async (req, res, next) => {
+  let chunks = 0;
+  req.on('data', () => { chunks++; });
+  try { const text = await getRawBody(req, { encoding: req.query.charset, limit: '16kb' }); res.json({ text, chunks }); }
+  catch (error) { next(error); }
+});
 parserApp.post('/unlimited-raw', async (req, res, next) => {
   try { const body = await getRawBody(req); res.json({ length: body.length }); } catch (error) { next(error); }
 });
@@ -273,7 +280,7 @@ async function listen(server) {
   return server;
 }
 
-function request(server, route, { headers = {}, method = 'GET', body } = {}) {
+function request(server, route, { headers = {}, method = 'GET', body, chunks } = {}) {
   checks++;
   return new Promise((resolve, reject) => {
     const req = http.request({ host: '127.0.0.1', port: server.address().port, path: route, headers, method, agent: false }, res => {
@@ -284,7 +291,13 @@ function request(server, route, { headers = {}, method = 'GET', body } = {}) {
     });
     req.on('error', reject);
     req.setTimeout(5000, () => req.destroy(new Error('integration request timed out')));
-    req.end(body);
+    if (chunks) {
+      const send = index => {
+        if (index === chunks.length) { req.end(); return; }
+        req.write(chunks[index]); setTimeout(() => send(index + 1), 10);
+      };
+      send(0);
+    } else req.end(body);
   });
 }
 
@@ -372,6 +385,29 @@ async function run() {
       if (route === '/limit-json' && expected === 200) assert.deepEqual(JSON.parse(result.body), { a: 1 });
       if (route === '/limit-text' && expected === 200) assert.deepEqual(JSON.parse(result.body), { text: 'éa' });
       if (route === '/unlimited-raw') assert.deepEqual(JSON.parse(result.body), { length: 5 });
+    }
+    for (const [charset, hex, expected] of [
+      ['windows-1251', 'cff0e8e2e5f2', 'Привет'],
+      ['shift_jis', '93fa967b', '日本'],
+      ['gb18030', '9439da33', '💩'],
+      ['big5hkscs', '8862', 'Ê̄'],
+      ['utf-16be', 'feffd83ddca9', '💩'],
+      ['utf-32le', 'fffe0000a9f40100', '💩'],
+      ['cesu8', 'e2', '�'],
+      ['utf7', '2b4141412d', '\0'],
+      ['utf7imap', '264141412d', '\0'],
+    ]) {
+      const result = await request(parserServer, '/', { method: 'POST', headers: { 'content-type': 'text/plain; charset=' + charset }, body: Buffer.from(hex, 'hex') });
+      assert.equal(result.status, 200, charset); assert.deepEqual(JSON.parse(result.body), { body: expected }, charset);
+    }
+    for (const [charset, parts, expected] of [
+      ['gb18030', ['9439da', '33'], '💩'],
+      ['big5hkscs', ['88', '62'], 'Ê̄'],
+      ['utf7', ['2b414141', '2d'], '\0'],
+    ]) {
+      const result = await request(parserServer, '/encoded-raw?charset=' + charset, { method: 'POST', chunks: parts.map(hex => Buffer.from(hex, 'hex')) });
+      assert.equal(result.status, 200); const decoded = JSON.parse(result.body);
+      assert.equal(decoded.text, expected); assert.equal(decoded.chunks, parts.length, 'raw-body must receive the intended split');
     }
     // JSON bodies parsed by the Functions Framework (body-parser, raw-body, type-is, http-errors).
     const echo = await request(apiServer, '/echo', { method: 'POST', headers: { 'content-type': 'application/json; CHARSET=utf-8' }, body: '{"a":1}' });

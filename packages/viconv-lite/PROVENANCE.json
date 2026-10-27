@@ -1,0 +1,102 @@
+{
+  "upstream": "iconv-lite@0.7.3",
+  "commit": "43694e28291d3b0cb3a452c77be40c4fd3a4bd85",
+  "files": {
+    "lib/bom-handling.js": {
+      "sha256": "e4019126f7695139538bfdeb9f0c933948ddde1d91b2989fbef46bad65aed0d4",
+      "upstreamSha256": "e4019126f7695139538bfdeb9f0c933948ddde1d91b2989fbef46bad65aed0d4"
+    },
+    "lib/helpers/merge-exports.js": {
+      "sha256": "d35d1b580fd9c56028a5268c31a304bfa1bf21c6c3918586d6316c7726f1cb18",
+      "upstreamSha256": "040baa601833402217e617a104dd32beb27615645f6c16924596ae2d9a58e1dc"
+    },
+    "lib/index.js": {
+      "sha256": "7d5413318192aad9428d5d477be8bb31e73929615eaf57b7c05f634823ce2441",
+      "upstreamSha256": "59759a24727cd37306bc039512307c8b87992568fc7a2145fcbb8a4fd404fb3c"
+    },
+    "lib/options.js": {
+      "sha256": "dc310ff0a2ea6ab0385d2940c68ba3ea0c52d46769c637bcfa8a30ff90aa0ef9",
+      "upstreamSha256": null
+    },
+    "lib/streams.js": {
+      "sha256": "cbef50992149c8c2c5eae188df6d0a9da9bdf8df54cf95b3703d3a93cb727473",
+      "upstreamSha256": "8c30f663ec5d7ced629d9eaa4dc427538e89574013e0cc845bf90568dda30bcb"
+    },
+    "encodings/dbcs-codec.js": {
+      "sha256": "c048a369a58d91839f8829f74ddf1a87bb48da4289b88b314efbe68dffa67a55",
+      "upstreamSha256": "ee0cfbf10e4dc34906bf8a4aa0aaa991f8a50ac08966eaf65a31acfc5b33b8d1"
+    },
+    "encodings/dbcs-data.js": {
+      "sha256": "17f52a22ed26a2fe1cfab8164ad07152d60e6e38087e492e85ee4aec249f1f2c",
+      "upstreamSha256": "17f52a22ed26a2fe1cfab8164ad07152d60e6e38087e492e85ee4aec249f1f2c"
+    },
+    "encodings/index.js": {
+      "sha256": "a96a42738187fbb6eed876c843c8fd88c6d88729902159a983025d7341e50abd",
+      "upstreamSha256": "a96a42738187fbb6eed876c843c8fd88c6d88729902159a983025d7341e50abd"
+    },
+    "encodings/internal.js": {
+      "sha256": "1fe6027248d0eda949860aa8b6d05f66b2ab65beaffed79fc62530396eb3752e",
+      "upstreamSha256": "320313a132361c02f7f033b52eb579df8799a0e1429febf56d2c374f6c7a7ff1"
+    },
+    "encodings/sbcs-codec.js": {
+      "sha256": "59b9330cd3dff677a738f0635b17db9a33d144e3b80ace3212c112a69e4ec5d4",
+      "upstreamSha256": "d622479bee6d119d8df4d126f14acc2882213554ee46fbf27f2dc68970e315c7"
+    },
+    "encodings/sbcs-data-generated.js": {
+      "sha256": "2cf44b3f70c61c9cdd59fda7ec085bc3180809638f208c7239688ccb90a48866",
+      "upstreamSha256": "2cf44b3f70c61c9cdd59fda7ec085bc3180809638f208c7239688ccb90a48866"
+    },
+    "encodings/sbcs-data.js": {
+      "sha256": "1e01fec80d139b957684eba698bb64a0a03fb58d9fa93514d9e810034c76213a",
+      "upstreamSha256": "1e01fec80d139b957684eba698bb64a0a03fb58d9fa93514d9e810034c76213a"
+    },
+    "encodings/tables/big5-added.json": {
+      "sha256": "db94db5e5d3ab696ddb0025685cfa85da1864839a4a26aab2f8f86f6b8382288",
+      "upstreamSha256": "db94db5e5d3ab696ddb0025685cfa85da1864839a4a26aab2f8f86f6b8382288"
+    },
+    "encodings/tables/cp936.json": {
+      "sha256": "8225bb693efd380279ed7280b8f8419fd069c5f018d20d5946bf187ad92c0cf7",
+      "upstreamSha256": "8225bb693efd380279ed7280b8f8419fd069c5f018d20d5946bf187ad92c0cf7"
+    },
+    "encodings/tables/cp949.json": {
+      "sha256": "77a56ea83d0d94d1dc620042ad3c897f0e40814bb05c0085d3aeed0018e8a3e8",
+      "upstreamSha256": "77a56ea83d0d94d1dc620042ad3c897f0e40814bb05c0085d3aeed0018e8a3e8"
+    },
+    "encodings/tables/cp950.json": {
+      "sha256": "99e2114dc4b39092617967c763f9eaeb4d8e70551afc5884baa3fb92827f3420",
+      "upstreamSha256": "99e2114dc4b39092617967c763f9eaeb4d8e70551afc5884baa3fb92827f3420"
+    },
+    "encodings/tables/eucjp.json": {
+      "sha256": "7c4fe279000f7e99fc7cd59afb1da21725dcebdc1babd9e3b883253a77abb042",
+      "upstreamSha256": "7c4fe279000f7e99fc7cd59afb1da21725dcebdc1babd9e3b883253a77abb042"
+    },
+    "encodings/tables/gb18030-ranges.json": {
+      "sha256": "5a3cc11e38f05a0908442acbf1c921d0b73f2a304fb6a9e4484e26eb1ca07d76",
+      "upstreamSha256": "5a3cc11e38f05a0908442acbf1c921d0b73f2a304fb6a9e4484e26eb1ca07d76"
+    },
+    "encodings/tables/gbk-added.json": {
+      "sha256": "10cbb08708f3a431977271887b2663f734390a22cedf90875fac9fdbd4bb5317",
+      "upstreamSha256": "10cbb08708f3a431977271887b2663f734390a22cedf90875fac9fdbd4bb5317"
+    },
+    "encodings/tables/shiftjis.json": {
+      "sha256": "02b0b120f697c48133e8b547e8dc594bc5b9f1c1799b50c2c5ff917298548558",
+      "upstreamSha256": "02b0b120f697c48133e8b547e8dc594bc5b9f1c1799b50c2c5ff917298548558"
+    },
+    "encodings/utf16.js": {
+      "sha256": "c6ce809eacaa2d740be9021032050b2fadd2d270d477512122d01cd74913e9da",
+      "upstreamSha256": "f1307071fdc27db4bad98cb4845279880a5c5d6f28b44ddc2ec2e2f1790227ce"
+    },
+    "encodings/utf32.js": {
+      "sha256": "2aa121fefead952f0cb8bae51f995dcc436dfa735f024c7142ca9ec3002157af",
+      "upstreamSha256": "2a3afdfed10342966dd55a007ddf517a03e25f00a16ec38850897e672f2a90c1"
+    },
+    "encodings/utf7.js": {
+      "sha256": "08ac17a4da47ba9d1ec8e60af3f05652f3549ce884e3266bfb26747e087a171a",
+      "upstreamSha256": "0a1ac8158e64def6a57da3bb8f158d8c1bd57f8c68eb4a232d6f101f73397fe7"
+    },
+    "types/encodings.d.ts": {
+      "sha256": "aa6797708549bf626879218bee691ea09d2bb0e6a471df7176bd8834df595599",
+      "upstreamSha256": "aa6797708549bf626879218bee691ea09d2bb0e6a471df7176bd8834df595599"
+    }
+  }
+}
