@@ -12,7 +12,7 @@ declare namespace iconv {
     equals(other: Uint8Array): boolean;
   }
   /** Resolves to the native Buffer type when the caller has Node declarations. */
-  export type ByteBuffer = typeof globalThis extends { Buffer: { prototype: infer B } } ? B : Bytes;
+  export type ByteBuffer = typeof globalThis extends { Buffer: { alloc(size: number): infer B } } ? B : Bytes;
   export interface DecodeOptions {
     stripBOM?: boolean | (() => void);
     defaultEncoding?: 'utf16le' | 'utf16be' | 'utf-16le' | 'utf-16be' | 'utf32le' | 'utf32be' | 'utf-32le' | 'utf-32be';

@@ -30,6 +30,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
   'iconv-lite': { pkg: 'viconv-lite', versions: /^0\.7\./ },
+  'raw-body': { pkg: 'vraw-body', versions: /^3\.0\./ },
   bytes: { pkg: 'vbytes', versions: /^3\.1\./ },
   negotiator: { pkg: 'vnegotiator', versions: /^1\.1\./ },
   accepts: { pkg: 'vaccepts', versions: /^2\.0\./ },
@@ -254,6 +255,11 @@ for (const limit of ['100kbjunk', '1e3', '', '8pb', Infinity]) {
 parserApp.post('/limit-json', express.json({ limit: '7b' }), (req, res) => res.json(req.body));
 parserApp.post('/limit-raw', express.raw({ limit: '1kb' }), (req, res) => res.json({ length: req.body.length }));
 parserApp.post('/limit-text', express.text({ limit: '3b' }), (req, res) => res.json({ text: req.body }));
+parserApp.post('/verified-json', express.json({ verify(_req, _res, buffer, encoding) {
+  assert.ok(Buffer.isBuffer(buffer));
+  assert.equal(encoding, 'utf-8');
+  if (buffer.toString() !== '{"a":1}') throw new Error('verification failed');
+} }), (req, res) => res.json(req.body));
 parserApp.post('/direct-raw', async (req, res, next) => {
   try { const body = await getRawBody(req, { limit: '4b' }); res.json({ length: body.length }); } catch (error) { next(error); }
 });
@@ -278,6 +284,34 @@ parserApp.use((req, res) => res.json({ body: req.body === undefined ? null : req
 async function listen(server) {
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
   return server;
+}
+
+async function abortedRequest() {
+  checks++;
+  let client, resolveRead, rejectRead;
+  const completed = new Promise((resolve, reject) => { resolveRead = resolve; rejectRead = reject; });
+  const server = await listen(http.createServer(req => {
+    req.once('data', () => client.destroy());
+    getRawBody(req, { length: 8 }, error => {
+      try {
+        assert.equal(error.type, 'request.aborted');
+        assert.equal(error.status, 400); assert.equal(error.code, 'ECONNABORTED');
+        assert.equal(error.received, 2); assert.equal(error.expected, 8);
+        assert.equal(req.listenerCount('data'), 0);
+        resolveRead();
+      } catch (error) { rejectRead(error); }
+    });
+  }));
+  const timer = setTimeout(() => rejectRead(new Error('aborted body read did not settle')), 5000);
+  try {
+    client = http.request({ host: '127.0.0.1', port: server.address().port, method: 'POST', headers: { 'content-length': '8' }, agent: false });
+    client.on('error', error => { if (error.code !== 'ECONNRESET') rejectRead(error); });
+    client.write('ab');
+    await completed;
+  } finally {
+    clearTimeout(timer); client?.destroy();
+    server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
+  }
 }
 
 function request(server, route, { headers = {}, method = 'GET', body, chunks } = {}) {
@@ -306,6 +340,7 @@ async function run() {
   const appServer = await listen(getTestServer('app'));
   const parserServer = await listen(http.createServer(parserApp));
   try {
+    await abortedRequest();
     const defaults = { type: 'html', encoding: 'identity', charset: 'utf-8', language: 'en' };
     for (const [headers, changes] of [
       [{}, {}],
@@ -408,6 +443,17 @@ async function run() {
       const result = await request(parserServer, '/encoded-raw?charset=' + charset, { method: 'POST', chunks: parts.map(hex => Buffer.from(hex, 'hex')) });
       assert.equal(result.status, 200); const decoded = JSON.parse(result.body);
       assert.equal(decoded.text, expected); assert.equal(decoded.chunks, parts.length, 'raw-body must receive the intended split');
+    }
+    for (const [route, headers, body, status] of [
+      ['/encoded-raw?charset=unknown-charset', {}, 'abc', 415],
+      ['/', { 'content-type': 'text/plain; charset=unknown-charset' }, 'abc', 415],
+      ['/limit-raw', { 'content-type': 'application/octet-stream', 'content-encoding': 'gzip' }, Buffer.from('not gzip'), 400],
+      ['/verified-json', { 'content-type': 'application/json' }, '{"a":1}', 200],
+      ['/verified-json', { 'content-type': 'application/json' }, '{"a":2}', 403],
+    ]) {
+      const result = await request(parserServer, route, { method: 'POST', headers, body });
+      assert.equal(result.status, status, route);
+      if (status === 200) assert.deepEqual(JSON.parse(result.body), { a: 1 });
     }
     // JSON bodies parsed by the Functions Framework (body-parser, raw-body, type-is, http-errors).
     const echo = await request(apiServer, '/echo', { method: 'POST', headers: { 'content-type': 'application/json; CHARSET=utf-8' }, body: '{"a":1}' });

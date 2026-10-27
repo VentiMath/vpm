@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
     assert.ok(archive, name);
@@ -29,13 +29,19 @@ try {
       assert.match(entries, /package\/types\/encodings.d.ts/);
       assert.match(entries, /package\/PROVENANCE.json/);
     }
-    if (['vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts'].includes(name)) {
+    if (['vraw-body', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts'].includes(name)) {
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'index.d.ts', 'index.js', 'package.json'].sort());
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const getRawBody = require('vraw-body');
+const { Readable } = require('node:stream');
+(async () => {
+  assert.deepEqual(await getRawBody(Readable.from([Buffer.from('abc')]), { limit: '3b' }), Buffer.from('abc'));
+  assert.equal(await getRawBody(Readable.from([Buffer.from('9439da', 'hex'), Buffer.from('33', 'hex')]), 'gb18030'), '💩');
+})().catch(error => { console.error(error); process.exitCode = 1; });
 const iconv = require('viconv-lite');
 assert.equal(iconv.decode(Buffer.from('9439da33', 'hex'), 'gb18030'), '💩');
 assert.equal(iconv.decode(iconv.encode('abc', 'utf32', Object.freeze({})), 'utf32'), 'abc');
@@ -58,6 +64,10 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import getRawBody from 'vraw-body';
+import { Readable } from 'node:stream';
+assert.equal(await getRawBody(Readable.from([Buffer.from('abc')]), true), 'abc');
+await assert.rejects(getRawBody(Readable.from([Buffer.from('abc')]), { limit: 2 }), { status: 413 });
 import iconv, { encode, decode, getDecoder } from 'viconv-lite';
 assert.equal(iconv.encode, encode); assert.equal(iconv.decode, decode);
 const decoder = getDecoder('gb18030');
@@ -79,6 +89,14 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import getRawBody from 'vraw-body';
+declare const stream: getRawBody.ReadableStream;
+const raw: Promise<Uint8Array> = getRawBody(stream);
+const rawText: Promise<string> = getRawBody(stream, true);
+getRawBody(stream, (error, buffer) => { if (!error) buffer.toString('hex'); });
+// @ts-expect-error encoding must be a string or boolean
+getRawBody(stream, { encoding: 3 });
+void [raw, rawText];
 import iconv, { encode, decode, type Encoding } from 'viconv-lite';
 const charset: Encoding = 'utf8';
 const encoded: Uint8Array = encode('abc', charset);
@@ -148,6 +166,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vaccepts\/index\.d\.ts/);
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
     console.log(`${manager} archives: Node/Bun CJS and ESM, TypeScript ${tsc.version} CJS and ESM without platform types passed.`);
     fs.rmSync(path.join(directory, 'node_modules'), { recursive: true, force: true });
     fs.rmSync(path.join(directory, 'package-lock.json'), { force: true });
