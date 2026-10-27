@@ -1,0 +1,201 @@
+{
+  "source": "https://registry.npmjs.org/qs/-/qs-6.17.0.tgz",
+  "gitHead": "bebfa1ab2ed4e5d6cd9317d42a65609296ebd2cb",
+  "integrity": "sha512-5LK5BZ2XDHMvcUJaf0CQ5HL3aVgKbpklvByC7qLSxYkfE8COEEbJg5xCHWCTqzqi0Gs4Jn5Mv5v3R38W6edscA==",
+  "packages": [
+    {
+      "name": "qs",
+      "version": "6.17.0",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "name": "es-define-property",
+      "version": "1.0.1",
+      "license": "MIT"
+    },
+    {
+      "name": "side-channel",
+      "version": "1.1.1",
+      "license": "MIT"
+    },
+    {
+      "name": "es-errors",
+      "version": "1.3.0",
+      "license": "MIT"
+    },
+    {
+      "name": "object-inspect",
+      "version": "1.13.4",
+      "license": "MIT"
+    },
+    {
+      "name": "side-channel-list",
+      "version": "1.0.1",
+      "license": "MIT"
+    },
+    {
+      "name": "side-channel-map",
+      "version": "1.0.1",
+      "license": "MIT"
+    },
+    {
+      "name": "call-bound",
+      "version": "1.0.4",
+      "license": "MIT"
+    },
+    {
+      "name": "call-bind-apply-helpers",
+      "version": "1.0.2",
+      "license": "MIT"
+    },
+    {
+      "name": "function-bind",
+      "version": "1.1.2",
+      "license": "MIT"
+    },
+    {
+      "name": "get-intrinsic",
+      "version": "1.3.0",
+      "license": "MIT"
+    },
+    {
+      "name": "es-object-atoms",
+      "version": "1.1.2",
+      "license": "MIT"
+    },
+    {
+      "name": "get-proto",
+      "version": "1.0.1",
+      "license": "MIT"
+    },
+    {
+      "name": "dunder-proto",
+      "version": "1.0.1",
+      "license": "MIT"
+    },
+    {
+      "name": "gopd",
+      "version": "1.2.0",
+      "license": "MIT"
+    },
+    {
+      "name": "has-symbols",
+      "version": "1.1.0",
+      "license": "MIT"
+    },
+    {
+      "name": "hasown",
+      "version": "2.0.4",
+      "license": "MIT"
+    },
+    {
+      "name": "math-intrinsics",
+      "version": "1.1.0",
+      "license": "MIT"
+    },
+    {
+      "name": "side-channel-weakmap",
+      "version": "1.0.2",
+      "license": "MIT"
+    }
+  ],
+  "sha256": {
+    "call-bind-apply-helpers/LICENSE": "5e325595b4ea8cfec3802f545b1def5d7b73e4a5b8e9ba63e32a320f67732292",
+    "call-bind-apply-helpers/actualApply.js": "1cbe921bb00b03294815ff0ece4212f276870466961773ce238802bc71474540",
+    "call-bind-apply-helpers/applyBind.js": "3e65d83cecb93fa80dc5ad4d86d98f9e715e101ac3d8ec56d36ee669f1180bd0",
+    "call-bind-apply-helpers/functionApply.js": "6170e997fbe03c6f8ff48946ada7d54c7aadc01531509af81f0edfdb7be00e27",
+    "call-bind-apply-helpers/functionCall.js": "22d50c812748973250e9aa1994882a880c6e3bfc90d45e41f609cab97beee3fe",
+    "call-bind-apply-helpers/index.js": "6a7ff51e964c2f1e24e3f3a90f41895bec230f07c3001eb29f45741ff99d7a83",
+    "call-bind-apply-helpers/package.json": "59639b628c6846f674857c6a613fd47e2e4d2a24036cdf0f7a62ac634f4c8a5f",
+    "call-bind-apply-helpers/reflectApply.js": "e3ee45fb4c54bdb5f76ad4ef42780da004412ddb6d668993de4b9014efe246ff",
+    "call-bound/LICENSE": "5e325595b4ea8cfec3802f545b1def5d7b73e4a5b8e9ba63e32a320f67732292",
+    "call-bound/index.js": "aaf524d09b5a4f8f732a516aa1c81e6e8c5d65ae3d01bce392e8fc1ac55c14ff",
+    "call-bound/package.json": "dcc8abb3c4ad3774234272149020cb36d7b1a3d377a419454d1e7adb368dd9c3",
+    "dunder-proto/LICENSE": "2b770a704c15de238c3f622b01b0044ddd60b49ee30608ea6991ebf19db7a7a1",
+    "dunder-proto/get.js": "9671388b2fa2cbce2f4b8645cc1dedae2f182113a78c93dd142d987c2517dacf",
+    "dunder-proto/package.json": "24df71008e4225c858f389dd2728b76cf66b752256d42a38ed7930aacae7fe2b",
+    "dunder-proto/set.js": "627dfab99b492879fca53b5d648a7263fc16181bfee148e7d29f7fa0f47bd24d",
+    "es-define-property/LICENSE": "5e325595b4ea8cfec3802f545b1def5d7b73e4a5b8e9ba63e32a320f67732292",
+    "es-define-property/index.js": "92d23d0217808c68692a1881369c207db1a35fc09dd24b98dd5f1a07d6bb3ed0",
+    "es-define-property/package.json": "3a2cb30dae30a96705dcd9aa2d5fb190cf8200f27badccfa5a81a4374e5708b4",
+    "es-errors/LICENSE": "5e325595b4ea8cfec3802f545b1def5d7b73e4a5b8e9ba63e32a320f67732292",
+    "es-errors/eval.js": "d3161a97f162b483206e9849e41bb17fd54166810c76ebaa1df068133e54caae",
+    "es-errors/index.js": "28fee350e89561019cf27ea37a313b4b4995f521fd087198fa235a8f135962de",
+    "es-errors/package.json": "1a0a0bcccc76b915cb64073317312840cf6363e9144b96f406d0059774dd5278",
+    "es-errors/range.js": "e376220f3a0226bd5b09b6d5a1411bbac274db8d2d9f7eb723142b7e676374be",
+    "es-errors/ref.js": "31945f1740a0a2143fb8c38943afc6cce5de5ba6fab7af42d17b7874a19a0900",
+    "es-errors/syntax.js": "56574ecd3eb54c06efd319080cc8923992791e430c914520b85e92c2f5e373f5",
+    "es-errors/type.js": "c71b2f41c15edb3824f50dd24df900495c8caaba5b6e9a80851b82bb2309827b",
+    "es-errors/uri.js": "e1e5591bde037a2ffeda822fa03fac22ff7c93c7b269ed9adf1cbea0e21614b0",
+    "es-object-atoms/LICENSE": "5e325595b4ea8cfec3802f545b1def5d7b73e4a5b8e9ba63e32a320f67732292",
+    "es-object-atoms/RequireObjectCoercible.js": "52db42daa35deb84c5301c7dc5cd274593d72ad3ce77c64d2f9d71b46784b0c5",
+    "es-object-atoms/ToObject.js": "deab7682047e003d3bdaa5c17ac4466783a6d4503aeb97724315936967ed860b",
+    "es-object-atoms/index.js": "44ee7a57ed1c50c4c5fd2a6fcaee8772f4b7d0869326eed0aadcef87bc305212",
+    "es-object-atoms/isObject.js": "c253c90b894493019432019026378b8fc6e65ba2617da6792e2e6634212f56c2",
+    "es-object-atoms/package.json": "e4b7882975d10c68457945c883e1060d0b058af5b1216215c872263f42e12fc9",
+    "function-bind/LICENSE": "773e131a7684726005a7e4688a80b4620033bc08499bc1404dd1a1eb3bca725e",
+    "function-bind/implementation.js": "5c52eb40601e0716dafff9759cf28d8d4af3e2fc2e2c96384f43dbfd0f7370b5",
+    "function-bind/index.js": "12fa1b92429db25599f6fe118cbbb877f7f62b83cb9bfe2fc896b2d6a8110647",
+    "function-bind/package.json": "edb1c4faf4148e6e3d74ed8dbac1a1dc359a647ff4207aad4851396dc7a3559a",
+    "get-intrinsic/LICENSE": "39c5ec504cf6bd5cd782a7c695828e09189df79f5d94840e4f08feb97b9fd416",
+    "get-intrinsic/index.js": "c3bc7278af37cede0da2db32724fa0b89a07c44205c44c4f5db0e4d8d497d49c",
+    "get-intrinsic/package.json": "45b14763baacc59b0fd7b39e3ad983d5d2aaf7f5ed682f2fce9edb469826c999",
+    "get-proto/LICENSE": "be46ce1e3b0479af9ce82d22b465a6d7d2ff084fca0aaf3d54172da2b5eb5781",
+    "get-proto/Object.getPrototypeOf.js": "66d51243588d269eb28f5bc8236e111a9a36e010e9b5b9b496be2963882a9e28",
+    "get-proto/Reflect.getPrototypeOf.js": "bab0332997a67c0eb3d2ab24ee9ae5d106d275a8ef5bde2a711faa1c96899c59",
+    "get-proto/index.js": "ee310261ff252b6d90c1a9fc4b9eceb63ddb963e7eec5125631cf169daad38c1",
+    "get-proto/package.json": "73839e012ac7134a632c9d9fc6bdb700ac9ab5553cce39eb789ba2b65663e734",
+    "gopd/LICENSE": "d90bf0a089da4cf43d644ed240a0b3825dcdb705e64e38371d56995a4cc9e4c5",
+    "gopd/gOPD.js": "48a04dcb3fb5cccb6c8541a3a8227b8d9f881ea3ffef3177ac4bb0338556b839",
+    "gopd/index.js": "8f8092ee3aaa2932a71e9f264a9b273dc33f7c52f4cdb0815956fccf80230d8c",
+    "gopd/package.json": "33ace32dc861f6da9d1fd9d0a44c66e8c6ff3b13358d070683c1c2978ff5f19f",
+    "has-symbols/LICENSE": "206c1adcf206dc0031b11232f5b054ec5f1662407ab1ca415247921cab2068ab",
+    "has-symbols/index.js": "fd9bef8dd0d913bc8beac3156a0019d1a83a6e091498d1af1cbdbd536776e189",
+    "has-symbols/package.json": "5190268c0e3308d7446d1f7c036238f329f786938453e6017cb90980b3612e7a",
+    "has-symbols/shams.js": "41277ab2db4a31094dc6f4ca2c3cbbe5576da5e5bddac4bda6c1f0d9c0e0c417",
+    "hasown/LICENSE": "bf9b0d665be2a689851eea667ca9f42066ea1d903b38349c51e6a44b2577680a",
+    "hasown/index.js": "8f875520f41a3d711566013882af290c840969316cc72cd6b35f7e81d7dfc6d2",
+    "hasown/package.json": "40b750c55a8bacf2c5ac316f5299dd44d48acc101c189a00cd59d39376b5eb89",
+    "math-intrinsics/LICENSE": "2b770a704c15de238c3f622b01b0044ddd60b49ee30608ea6991ebf19db7a7a1",
+    "math-intrinsics/abs.js": "276961e4323370f3632410c6da81dda018b78c0cfb2a83ea72d48c80a3eaaeb1",
+    "math-intrinsics/constants/maxArrayLength.js": "0f267bd9824ebe59456bd6bc6ba41a541ddf0a92c6b3d18201daefd0cc40613e",
+    "math-intrinsics/constants/maxSafeInteger.js": "576a7c935f4154a6f2eaf69446560e36371afb55120774f05563f06ab261df85",
+    "math-intrinsics/constants/maxValue.js": "a920a974645eca8557c75d4fecf745c68a272621a57d5ed4ca6ffc73ded366e2",
+    "math-intrinsics/floor.js": "ea904c30b45d6fbbc1780f4db7d78c360bbecf98ecd789f0c817156102714c3f",
+    "math-intrinsics/isFinite.js": "7045afb6184ca183449f97d519cf9dea5e46583121c01266ed4eedae3825650b",
+    "math-intrinsics/isInteger.js": "22c5144c94c4da5be94fb4d3d735f5f65fe3b9fbe28b6d2cf4fe8541bc53e915",
+    "math-intrinsics/isNaN.js": "1aa84179527aef8df84457dd8d4e828d76d58fd9170e7a9893ee7e0e774534e8",
+    "math-intrinsics/isNegativeZero.js": "8b83fd56780ffb96eb5a31c073fd7ca24d03b1259b8aae90ef7eac311e1ded34",
+    "math-intrinsics/max.js": "92326f3eab1e40148bd68fb65a85d2c3f18fc32a03be27353b2054ba27ba7409",
+    "math-intrinsics/min.js": "b78c68ab96cb2764df12ff8038f5b05b05376b4c39608a7a25b3b0b168e7c2e2",
+    "math-intrinsics/mod.js": "0a5d968b563d027bad91e35bd3b244a749c2bf8357f33f93e0abf8c8d3d4a625",
+    "math-intrinsics/package.json": "39d74aa5a354153130706286dd60a2d8409ce0c8f66546eff2edcac0afff17e1",
+    "math-intrinsics/pow.js": "8dd625bd4c7b31b7656ab99babc9fea1617f36c35f5dbd339ebdc2d0f4bd97d2",
+    "math-intrinsics/round.js": "1d4794c5869d554732cdc82208f954df348e4035f3cbd09ab758c553a207dc1e",
+    "math-intrinsics/sign.js": "aef51335e4671ddd0f55a81e2e4395b1d96afee20102b50e33e2b485f7cd2598",
+    "object-inspect/LICENSE": "bd40cc437e28a3ad7bef2ad34e6b72e757b182e67bda1acadbab4ef0476f8232",
+    "object-inspect/index.js": "9aad508be54fbe29d82145d54352e7a19c01e19b70e1202b0123449fe9afcde6",
+    "object-inspect/package.json": "21c5c63f653705f44a60f5fe93752b231caf6ff07b01805740bd89b71b2d6d8a",
+    "object-inspect/util.inspect.js": "bb49299375c82d8d22983b76f6c25cd9ac923dc61cd25fffe9b3f71dad26dc40",
+    "qs/LICENSE.md": "e7dc37bf662d7f786efcb46c545615e70c1daf458a38385521c63cf6607cdfe1",
+    "qs/lib/formats.js": "04200f6ac29e41163d3b09729bb0c2a01cc8e53e5fb0078c54c6b582c6deba81",
+    "qs/lib/index.js": "8f4e02eef6ccc43f2b7448c18ae209281c8e9af9807cad491df67450e3817a95",
+    "qs/lib/parse.js": "381dbe90eb3367c7b09169c1231b93aed19b4ac548b16ab94d5faef82a7559a7",
+    "qs/lib/stringify.js": "62eea028e526c792fa22d3ac1778cceae84f46f908f70205be4ae94f84779f45",
+    "qs/lib/utils.js": "0cc35581f38d05554e412a7645ac9fc083263622386ba7f04c999161206a1b70",
+    "qs/package.json": "4c98a9ce67287530d2601f7b98ec06269cd2ddf0df5a9987791865ed0ea36ca0",
+    "side-channel/LICENSE": "cfc3f455254c0af0655cc3ff46a41ed644b67599f6043346169d285bf2b3cf3b",
+    "side-channel/index.js": "54f0fec2ecb069f39b17455cc77a86e5ad135138a6e6ab5f7b33dc44ed157e86",
+    "side-channel/package.json": "14da3b013c3762da85cfd8b173290285394dfa41870bc4a1e8243aaa38316f2a",
+    "side-channel-list/LICENSE": "5e325595b4ea8cfec3802f545b1def5d7b73e4a5b8e9ba63e32a320f67732292",
+    "side-channel-list/index.js": "5d7ba64286b290cc1ebc2a04fba4c3f1cb319b3e174cc9d5e3ae5a1d9bec170b",
+    "side-channel-list/package.json": "90f0c08c6c17f4a3fa3dd61873223957b89da4201f01dc0c8b95b0b9e6a2a59a",
+    "side-channel-map/LICENSE": "5e325595b4ea8cfec3802f545b1def5d7b73e4a5b8e9ba63e32a320f67732292",
+    "side-channel-map/index.js": "0d3a0ec34cd376a23fa4a2a159913f527f990b5541fbd513212615e910ae2ba7",
+    "side-channel-map/package.json": "914a8bd732b82523d95bb697eec3e6d95badc5eb13b196fb0772e59354a3ab25",
+    "side-channel-weakmap/LICENSE": "cfc3f455254c0af0655cc3ff46a41ed644b67599f6043346169d285bf2b3cf3b",
+    "side-channel-weakmap/index.js": "4421d4533c6e1585d01da3ad592c53dd427b0367f81474c59590b6153f119010",
+    "side-channel-weakmap/package.json": "8c11f0a1c6cfa549588d991a5cb1b04d62953277ed29f47463d415d5946388a8"
+  },
+  "description": "Unmodified published qs CommonJS sources and the runtime dependency closure resolved in the locked Express fixture. Used only for tests and benchmarks; never packed."
+}

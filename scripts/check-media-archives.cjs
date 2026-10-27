@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
     assert.ok(archive, name);
@@ -21,6 +21,13 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (name === 'vqs') {
+      assert.equal(metadata.dependencies, undefined);
+      assert.equal(metadata.license, 'BSD-3-Clause');
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json',
+        'lib/parse.js', 'lib/stringify.js', 'lib/utils.js', 'lib/formats.js', 'lib/limit.js'].sort());
+    }
     if (name === 'viconv-lite') {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]);
@@ -36,6 +43,10 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const qs = require('vqs');
+assert.deepEqual(qs.parse('a[b]=x&a[c][]=y'), { a: { b: 'x', c: ['y'] } });
+assert.equal(qs.stringify({ a: '~* ' }, { format: qs.formats.WHATWG }), 'a=%7E*+');
+assert.throws(() => qs.parse('a=1', { parameterLimit: NaN }), TypeError);
 const getRawBody = require('vraw-body');
 const { Readable } = require('node:stream');
 (async () => {
@@ -64,6 +75,10 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import qs, { parse as parseQuery, stringify, formats } from 'vqs';
+assert.equal(qs.parse, parseQuery); assert.equal(qs.stringify, stringify); assert.equal(qs.formats, formats);
+assert.deepEqual(parseQuery('__proto__[polluted]=yes&a[]=x'), { a: ['x'] });
+assert.equal(Object.prototype.polluted, undefined);
 import getRawBody from 'vraw-body';
 import { Readable } from 'node:stream';
 assert.equal(await getRawBody(Readable.from([Buffer.from('abc')]), true), 'abc');
@@ -89,6 +104,14 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import qs, { parse as parseQuery, stringify, formats } from 'vqs';
+const parsedQuery: qs.ParsedObject = parseQuery('a=1', { parameterLimit: 2 });
+const queryText: string = stringify({ a: ['x', 'y'] }, { format: formats.WHATWG });
+// @ts-expect-error a parsed field can be an array or object
+const scalarQuery: string = parsedQuery.a;
+// @ts-expect-error limits require numbers
+parseQuery('a=1', { depth: '2' });
+void [queryText, scalarQuery];
 import getRawBody from 'vraw-body';
 declare const stream: getRawBody.ReadableStream;
 const raw: Promise<Uint8Array> = getRawBody(stream);
@@ -167,6 +190,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vqs\/index\.d\.ts/);
     console.log(`${manager} archives: Node/Bun CJS and ESM, TypeScript ${tsc.version} CJS and ESM without platform types passed.`);
     fs.rmSync(path.join(directory, 'node_modules'), { recursive: true, force: true });
     fs.rmSync(path.join(directory, 'package-lock.json'), { force: true });

@@ -95,4 +95,6 @@ squash merges only. The history rules have no bypass actors, including admins.
 
 ## License
 
-MIT. Upstream copyright and license notices are preserved in each derived package.
+Repository-owned code is MIT unless a package states otherwise. Derived packages
+preserve their upstream licenses and copyright notices. Check each package's
+LICENSE and metadata.

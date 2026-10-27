@@ -34,6 +34,7 @@ that these replacements have already improved application performance.
 | [vbytes](packages/vbytes) | bytes 3.1.2 | Complete-input parsing that fails explicitly on invalid limits, exact decimal scaling, validated format options, and literal group separators. |
 | [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
 | [vraw-body](packages/vraw-body) | raw-body 3.0.2 | Premature-close settlement, strict byte counts, earlier length rejection, controlled chunk/decoder errors, and an entirely VPM dependency tree. |
+| [vqs](packages/vqs) | qs 6.17.0 | Zero runtime dependencies, native percent encoding, validated numeric limits, no parameter-limit wraparound, and wide-array serialization without variadic calls. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
@@ -54,7 +55,8 @@ each utility have zero external runtime dependencies, except
 `send` / `vsend`, which each declare eleven, and `http-errors` /
 `vhttp-errors`, which declare **five and one**, respectively; and
 `iconv-lite` / `viconv-lite`, which declare **one and zero**, and
-`raw-body` / `vraw-body`, which declare **four and three**.
+`raw-body` / `vraw-body`, which declare **four and three**; and
+`qs` / `vqs`, which declare **two and zero**.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
@@ -70,6 +72,9 @@ with `vmime-db` bringing its complete external tree to four VPM packages.
 `vcontent-type`, `vmime-types`, and `vmime-db`.
 `vraw-body` uses `vbytes`, `vhttp-errors` and `viconv-lite`, with `vstatuses`
 bringing its complete external dependency tree to four VPM packages.
+`vqs` eliminates qs's full tree of **18 distinct external runtime packages**,
+using native Map, WeakMap and Object.defineProperty. Other application packages
+may still need some of those upstream helpers.
 
 ## The target dependency graph
 
@@ -79,7 +84,8 @@ parent upgrades before choosing which dependencies to replace. Its current
 upgrade target is Functions Framework 5.0.2 serving `firebase-functions` 7.4.0
 `onRequest` handlers through Express 5.3.0, `body-parser` 2.4.0, `router` 2.2.0,
 `send` 1.2.1, and `serve-static` 2.2.1. Updating this fixture does not update or
-deploy the application. The runtime packages above target the corresponding upstream
+deploy the application. The fixture pins `qs` 6.17.0 within Express and body-parser's
+declared ranges, replacing its earlier 6.16.1 resolution. The runtime packages above target the corresponding upstream
 versions in this graph. The platform types instead come from VPM's development
 dependencies. `jsonwebtoken` 9.0.3 reaches `ms`, and the proxy agents
 under `firebase-admin` reach `debug`.
@@ -123,7 +129,7 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 126
+the Functions Framework, also serves a direct Express parser app, and runs 138
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
@@ -131,6 +137,8 @@ responses and Vary/Content-Type headers; JSON bodies and malformed
 bodies, exact/over-limit bodies with explicit lengths and chunked framing,
 UTF-8 byte counts, gzip expansion and corruption, malformed limits and deliberate limit omission,
 disconnected request settlement and raw-buffer verification callbacks,
+extended queries and nested form fields, duplicate fields, malformed percent
+escapes, prototype guards, Latin-1 sentinels, query depth and parameter limits,
 legacy and Unicode charset decoding, separately delivered GB18030/Big5/UTF-7 chunks,
 UTF-16 decoding and unsupported charset rejection, weighted Accept
 negotiation with quoted commas, preservation of Content-Type parameters when
@@ -917,6 +925,88 @@ its short UTF-8 Promise case is about **7% slower**, despite improving from init
 VPM, while its small Buffer callback case is **12% faster**. These local measurements
 do not establish an application throughput or security improvement.
 
+## vqs
+
+**Baseline and dependency reduction:** targets qs **6.17.0**, checked on
+2026-10-27 and pinned within Express 5.3.0 / body-parser 2.4.0's compatible
+ranges. Native Map, WeakMap and Object.defineProperty replace **two direct and
+18 distinct total external runtime dependencies**. The installable package has
+zero runtime dependencies and bundles its own declarations. The helper tree is
+retained only in an immutable, hash-checked test/benchmark fixture.
+
+**Correctness and explicit limits:** parse depth, arrayLimit and parameterLimit,
+and stringify depth, now reject NaN, negative/fractional/unsafe numbers and
+non-number values. Previously `parameterLimit: NaN` silently returned an empty
+object, while a fractional depth could permit more nesting than its stated value.
+Bounds at the uint32 split boundary no longer wrap to zero or a smaller count:
+`parse('a=1&b=2', { parameterLimit: 2 ** 32 })` returns both fields instead of `{}`.
+Serialization appends fields with a loop so wide arrays do not exceed the
+runtime's function argument-count limit; a 200,000-element array is tested.
+
+**Implementation:** native UTF-8 percent encoding preserves RFC3986, RFC1738 and
+WHATWG behavior, including U+FFFD for lone surrogates. An ASCII fast path skips
+encoding unchanged keys and values; malformed strings are repaired before the
+codec so they do not trigger a costly exception. Plain parse keys skip numeric
+index conversion, merge loops avoid per-field reduce callbacks, and tracking
+maps are allocated when needed. Query nesting, duplicate handling, conflict
+merging, custom encoders/decoders, filters, date handling, sparse arrays,
+Latin-1/entity behavior and prototype guards retain the 6.17.0 contract.
+
+**Compatibility:** invalid options now throw TypeError even for empty input.
+Use zero instead of negative arrayLimit, and omit a bound instead of supplying
+null or a non-number. Nonnegative safe integers and explicit Infinity remain
+supported; parse depth also accepts false as zero. Existing finite-limit overflow
+behavior is retained, including opt-in strictDepth and throwOnLimitExceeded.
+Limits count nesting/fields/array elements, not HTTP bytes. Unbounded or very deep
+inputs can still hit ordinary memory, string-size and recursion limits.
+
+The fixture upgrade from 6.16.1 also brings upstream's WHATWG format, recent
+prototype-copying and duplicate-limit fixes, filter-array copying and lone-surrogate
+corrections. Those are upstream improvements, not VPM inventions. Removing qs's
+helpers does not remove copies required by other dependencies, and no production
+throughput or security outcome is inferred.
+
+**Evidence:** 19 package tests include option matrices, 6,200 generated mixed-key
+parse comparisons, all 65,536 UTF-16 code units in all formats, astral characters,
+malformed escapes, custom hooks, shared/cyclic objects, ownership, prototype
+protection and bound checks. The full suite passes **411 tests on Node**, and
+**410 with one existing async-hooks skip on Bun**. The shared gate passes **138
+HTTP checks on each runtime**, including extended queries and nested forms through
+Express/body-parser, charset sentinels, depth rejection and parameter limits.
+Both package managers install archives successfully; CJS/ESM runtime checks and
+strict TypeScript 7 consumers pass without ambient Node, Undici or DOM types.
+
+**Measurements:** 2026-10-27, macOS arm64, Node 24.22.1 / Bun 1.4.0. Values below
+are **upstream → VPM nanoseconds per call**, median of nine alternating 10,000-call
+samples after 5,000 warmup calls per implementation and case. The
+[benchmark](packages/vqs/bench/compare.cjs) asserts output parity before timing;
+[recorded samples and source hashes](packages/vqs/bench/results-2026-10-27.json)
+identify the exact implementations. The baseline uses the published CommonJS
+source with its actual dependencies, without substituting VPM helpers.
+
+| Case | Node ns/call | Bun ns/call |
+| --- | ---: | ---: |
+| parse / short flat | 1,281 → 1,182 | 774 → 717 |
+| parse / 20 fields | 9,020 → 8,097 | 5,846 → 5,479 |
+| parse / nested arrays | 5,444 → 4,975 | 4,437 → 3,910 |
+| parse / Unicode | 4,696 → 4,784 | 12,004 → 11,837 |
+| parse / repeated conflicts | 3,869 → 3,658 | 3,426 → 3,163 |
+| parse / strict limits | 5,168 → 4,881 | 4,749 → 4,481 |
+| stringify / short flat | 1,252 → 626 | 819 → 421 |
+| stringify / 20 fields | 9,876 → 2,659 | 6,921 → 1,739 |
+| stringify / nested arrays | 5,315 → 2,860 | 5,353 → 2,190 |
+| stringify / Unicode | 12,353 → 3,779 | 12,044 → 5,505 |
+| stringify / WHATWG | 27,912 → 11,241 | 16,306 → 9,089 |
+| stringify / lone surrogates | 1,110 → 450 | 498 → 383 |
+| stringify / 100 objects | 274,918 → 140,643 | 242,705 → 122,211 |
+| stringify / comma array | 6,657 → 1,997 | 3,977 → 1,600 |
+
+Serialization takes **46–73% less time on Node** and **23–75% less on Bun** across
+these cases. Parsing takes about **6–10% less on Node's other five cases**, while
+its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1–12%
+less time**. Small differences can vary between runs; these isolated warmed calls
+do not measure application startup, HTTP throughput or tail latency.
+
 ## vundici-types and vnode-types
 
 **Declaration correctness:** `vundici-types` adds the missing `RequestInit.cache`
@@ -950,7 +1040,7 @@ runtime. DOM projects continue to use TypeScript's standard browser globals.
 requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
 dependency cycle, with no JavaScript runtime code. The workspace no longer uses
 upstream Node/Undici declarations for its own type checks. Upstream packages
-remain in a separately locked comparison fixture. All 25 runtime packages'
+remain in a separately locked comparison fixture. All 26 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
