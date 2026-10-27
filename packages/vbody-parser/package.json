@@ -1,0 +1,61 @@
+{
+  "name": "vbody-parser",
+  "version": "0.1.0",
+  "description": "Validated JSON, form, text, and raw HTTP bodies with reliable compressed-stream cleanup",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json",
+    "./json": {
+      "types": "./types/json.d.ts",
+      "default": "./lib/types/json.js"
+    },
+    "./raw": {
+      "types": "./types/raw.d.ts",
+      "default": "./lib/types/raw.js"
+    },
+    "./text": {
+      "types": "./types/text.d.ts",
+      "default": "./lib/types/text.js"
+    },
+    "./urlencoded": {
+      "types": "./types/urlencoded.d.ts",
+      "default": "./lib/types/urlencoded.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib/",
+    "types/",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "vbytes": "workspace:*",
+    "vcontent-type": "workspace:*",
+    "vdebug": "workspace:*",
+    "vhttp-errors": "workspace:*",
+    "viconv-lite": "workspace:*",
+    "von-finished": "workspace:*",
+    "vqs": "workspace:*",
+    "vraw-body": "workspace:*",
+    "vtype-is": "workspace:*"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vbody-parser"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vbody-parser"
+}

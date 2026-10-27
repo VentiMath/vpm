@@ -119,7 +119,7 @@ values and 65,536 UTF-16 code units across 81 single-byte tables, and a corpus
 containing every byte pair for seven multibyte encodings. They also cover 3,200
 generated malformed/chunked inputs, split surrogates, BOM callbacks, stream errors,
 early closure, frozen options, mutable input buffers, and installed CJS/ESM/types.
-The shared integration gate runs 120 HTTP checks, substituting this package into
+The shared integration gate runs HTTP checks, substituting this package into
 `body-parser` and `raw-body`, including separately delivered GB18030, Big5, and
 UTF-7 chunks.
 
@@ -128,6 +128,8 @@ Local Node 24.22.1 / Bun 1.4.0 microbenchmarks measured UTF-16BE encoding taking
 decoding took **12% longer on Node** after fixing surrogate buffering; most other
 cases were close. See the [complete table and methodology](../../IMPROVEMENTS.md#viconv-lite).
 These measurements do not establish application throughput gains.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Installation and origin
 

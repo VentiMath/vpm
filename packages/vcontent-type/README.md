@@ -106,10 +106,12 @@ format/parse round trips, all byte values in formatted parameters, shared-state
 interference, invalid API inputs, long values, and CommonJS/ESM imports.
 
 The shared integration gate aliases this package into the four consumers above
-and exercises 96 HTTP checks with all VPM replacements installed together. These
+and exercises HTTP checks with all VPM replacements installed together. These
 include UTF-16 JSON decoding, unsupported charset rejection, weighted Accept
 negotiation with quoted commas, and preserving parameters when Express changes
 a response charset. CI runs on Node 20, 22, 24 and Bun.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Performance
 

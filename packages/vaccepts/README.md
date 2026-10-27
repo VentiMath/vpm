@@ -84,8 +84,8 @@ node scripts/check-media-archives.cjs
 
 Eleven tests cover array/variadic calls, empty/missing headers, unknown extensions,
 alias mapping, exclusions, parameter semantics, replacement headers, malformed
-input, imports and 5,000 generated upstream comparisons. All 96 shared HTTP
-checks pass with the VPM dependency replacements installed together. They
+input, imports and 5,000 generated upstream comparisons. The shared HTTP
+checks run with the VPM dependency replacements installed together. They
 exercise Express `req.accepts`, `req.acceptsEncodings`, `req.acceptsCharsets`,
 `req.acceptsLanguages`, and `res.format`, including 406 and Vary/Content-Type.
 The archive gate checks npm/Bun installation, Node/Bun CJS/ESM imports and
@@ -113,6 +113,8 @@ Validation removes upstream's unchecked absent-header shortcut, adding about
 Node**; encoding and charset cases took **23–59% longer** across the runtimes.
 The underlying negotiator improves larger offer lists, but this wrapper's small
 cases do not establish an overall application speedup.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Installation and provenance
 

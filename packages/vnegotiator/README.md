@@ -107,7 +107,7 @@ Fourteen tests cover upstream differential cases, 20,000 generated preference
 lists across the four headers, exclusions, parameter specificity, quoted commas
 and escapes, duplicate ties, identity encoding, language fallback, header arrays,
 Unicode input, mutable requests, invalid inputs, imports and legacy aliases.
-The shared gate runs 96 HTTP checks through Express 5 and Functions Framework,
+The shared gate runs HTTP checks through Express 5 and Functions Framework,
 including all `req.accepts*()` methods and `res.format()` with 406 responses.
 Types are checked with real Node HTTP/HTTP2 requests and without platform types.
 The archive gate checks npm/Bun installs and CJS/ESM consumers on both runtimes.
@@ -135,6 +135,8 @@ media selection and language selection also improved. Small cases have real
 costs: quoted-parameter selection took **118% longer on Node**, accepted-media
 listing took **115% longer on Bun**, and encoding/charset cases were **19–49%
 slower**. These results do not support a universal speedup claim.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Installation and provenance
 

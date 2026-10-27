@@ -6,7 +6,8 @@
     "test": "node --test packages/*/test/*.test.cjs",
     "test:bun": "bun test",
     "typecheck": "tsc --noEmit && node scripts/check-public-types.cjs",
-    "test:types": "node scripts/check-platform-types.cjs"
+    "test:types": "node scripts/check-platform-types.cjs",
+    "check:docs": "node scripts/check-docs.cjs"
   },
   "devDependencies": {
     "vnode-types": "workspace:*",

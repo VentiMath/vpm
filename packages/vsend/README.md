@@ -123,7 +123,7 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 ```
 
-The gate passed 96 HTTP checks on Node and Bun through Functions Framework
+The gate exercises HTTP behavior on Node and Bun through Functions Framework
 5.0.2, firebase-functions 7.4.0, Express 5.3.0, and serve-static 2.2.1. It aliases
 all VPM counterparts inside its own process and verifies each is reached,
 including transitive calls. Checks include `res.sendFile`, `res.download`,
@@ -132,6 +132,8 @@ fallthrough, dotfiles, HEAD, ranges, and conditional responses. A 416 integratio
 case caught and corrected `vfinalhandler` dropping explicit Content-Range error
 metadata. No application manifest is changed. The gate runs in CI on Node 20,
 22, 24 and Bun; it does not validate an older Express 4 stack.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Performance
 

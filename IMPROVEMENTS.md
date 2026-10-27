@@ -35,6 +35,7 @@ that these replacements have already improved application performance.
 | [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
 | [vraw-body](packages/vraw-body) | raw-body 3.0.2 | Premature-close settlement, strict byte counts, earlier length rejection, controlled chunk/decoder errors, and an entirely VPM dependency tree. |
 | [vqs](packages/vqs) | qs 6.17.0 | Zero runtime dependencies, native percent encoding, validated numeric limits, no parameter-limit wraparound, and wide-array serialization without variadic calls. |
+| [vbody-parser](packages/vbody-parser) | body-parser 2.4.0 | Compressed-request abort handling, safe form bounds, validated option snapshots, nonmutating callback errors, and an entirely VPM dependency tree. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
@@ -52,6 +53,7 @@ each utility have zero external runtime dependencies, except
 `type-is` / `vtype-is`, which each declare three,
 `serve-static` / `vserve-static`, which each declare four,
 `finalhandler` / `vfinalhandler`, which each declare six,
+`body-parser` / `vbody-parser`, which each declare nine,
 `send` / `vsend`, which each declare eleven, and `http-errors` /
 `vhttp-errors`, which declare **five and one**, respectively; and
 `iconv-lite` / `viconv-lite`, which declare **one and zero**, and
@@ -75,6 +77,8 @@ bringing its complete external dependency tree to four VPM packages.
 `vqs` eliminates qs's full tree of **18 distinct external runtime packages**,
 using native Map, WeakMap and Object.defineProperty. Other application packages
 may still need some of those upstream helpers.
+`vbody-parser` uses nine direct and fifteen total external VPM dependencies,
+combining the existing body, codec, form, media-type, error and lifecycle packages.
 
 ## The target dependency graph
 
@@ -129,7 +133,7 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 138
+the Functions Framework, also serves a direct Express parser app, and runs 141
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
@@ -137,6 +141,7 @@ responses and Vary/Content-Type headers; JSON bodies and malformed
 bodies, exact/over-limit bodies with explicit lengths and chunked framing,
 UTF-8 byte counts, gzip expansion and corruption, malformed limits and deliberate limit omission,
 disconnected request settlement and raw-buffer verification callbacks,
+large form limits without 32-bit truncation, frozen verifier errors and primitive reviver failures,
 extended queries and nested form fields, duplicate fields, malformed percent
 escapes, prototype guards, Latin-1 sentinels, query depth and parameter limits,
 legacy and Unicode charset decoding, separately delivered GB18030/Big5/UTF-7 chunks,
@@ -527,8 +532,8 @@ stat/open are separate operations. Dates retain existing parsing and metadata
 resolution limits. This is not an atomic file snapshot or a filesystem jail.
 
 **Evidence and performance:** twenty-five tests cover differential HTTP cases,
-failure paths, disconnections, and HTTP/2. The shared integration gate passed
-96 HTTP checks through the pinned Functions Framework/Express stack on Node and
+failure paths, disconnections, and HTTP/2. The shared integration gate exercises
+HTTP behavior through the pinned Functions Framework/Express stack on Node and
 Bun, including downloads and sendFile callbacks. Its 416 check also exposed and
 fixed dropped range metadata in `vfinalhandler`. Sequential localhost HTTP
 measurements showed ordinary GETs **4–10% slower**, HEAD **10–12% slower**, and
@@ -554,7 +559,7 @@ reach `next(error)`.
 
 **Compatibility and evidence:** seventeen tests include a differential matrix,
 cache mutation reproduction, configuration changes, framing, error propagation,
-multiple roots, and HTTP/2. The shared integration gate now runs 96 HTTP checks
+multiple roots, and HTTP/2. The shared integration gate runs HTTP checks
 through the Express 5 Cloud Functions stack with `vserve-static` installed by
 process-local alias. Existing middleware no longer observes later configuration
 mutations, and invalid options fail earlier. The `vsend` limitations still apply.
@@ -640,7 +645,7 @@ is type-is 2.1.0, not the newer ESM class API in 3.x. Its three direct and four
 total external dependencies are all VPM packages; counts are unchanged.
 
 **Evidence:** thirteen tests include an upstream differential matrix and 20,000
-generated matches. All 96 HTTP integration checks pass on Node and Bun with
+generated matches. The shared HTTP integration checks run on Node and Bun with
 these replacements installed alongside the rest of VPM. A required archive
 gate installs the media-package dependency trees using npm and Bun, exercises CJS and ESM
 on both runtimes, and checks TypeScript 7 consumers with no platform types.
@@ -969,9 +974,10 @@ throughput or security outcome is inferred.
 **Evidence:** 19 package tests include option matrices, 6,200 generated mixed-key
 parse comparisons, all 65,536 UTF-16 code units in all formats, astral characters,
 malformed escapes, custom hooks, shared/cyclic objects, ownership, prototype
-protection and bound checks. The full suite passes **411 tests on Node**, and
-**410 with one existing async-hooks skip on Bun**. The shared gate passes **138
-HTTP checks on each runtime**, including extended queries and nested forms through
+protection and bound checks. At this package's introduction on 2026-10-27, the
+full suite passed **411 tests on Node** and **410 with one existing async-hooks
+skip on Bun**. The shared gate then passed **138 HTTP checks on each runtime**,
+including extended queries and nested forms through
 Express/body-parser, charset sentinels, depth rejection and parameter limits.
 Both package managers install archives successfully; CJS/ESM runtime checks and
 strict TypeScript 7 consumers pass without ambient Node, Undici or DOM types.
@@ -1007,6 +1013,84 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vbody-parser
+
+**Correctness and lifecycle:** replaces body-parser 2.4.0's signed 32-bit form
+parameter conversion with validated safe integers. `parameterLimit: 2 ** 32`
+retains both fields in `a=1&b=2`. Numeric bounds, booleans, media patterns,
+charsets and revivers are validated at factory construction, with copied type
+arrays and stable option snapshots. Unsupported charsets fail before piping.
+
+Compressed reads register the body reader before starting the pipe and observe
+abort/error/premature-close events on the original request. They stop the owned
+decoder and settle once when that request fails. This closes a gap where a
+decoder could wait for input after the source had disconnected. Cleanup removes
+the middleware's subscriptions and specific decoder pipe. Read failures drain
+an open request; aborted/destroyed requests settle immediately.
+
+Verifier and parser errors are wrapped without modifying the thrown object,
+including frozen errors, strings, null and undefined. The original value becomes
+`cause`, with valid custom statuses and error metadata retained. Strict JSON
+scalar rejection uses a direct SyntaxError instead of allocating and reparsing
+a body-sized placeholder to manufacture an engine-specific error message.
+
+**Compatibility:** retains the four JSON/raw/text/form factories and explicit
+parser subpaths, byte limits after inflation, charset decoding, synchronous
+verification, revivers, nested forms and gzip/deflate/Brotli support. Zstandard
+is available when the runtime supplies it, as upstream already supports.
+Malformed/coercible options now fail early; use booleans and safe integer bounds.
+Callback-error identity and exact messages/stacks are not preserved; the original
+is available through `cause`. Internal `lib/*` exports are excluded. The default
+byte limit remains 100 KiB. Applications still control request timeouts and
+validation of parsed data.
+
+**Dependencies and evidence:** nine direct dependencies remain nine, all VPM
+packages; the complete external tree contains fifteen packages. No new runtime
+primitive is needed. Eighteen focused tests cover normal upstream behavior,
+limits, option mutation, charsets, corrupt/truncated compression, frozen/primitive
+callback failures, real client disconnects, cleanup and exports. Middleware
+differential tests share VPM primitives; the benchmark below uses the full stock
+upstream dependency tree. The full suite passes **429 tests on Node** and **428
+with one existing async-hooks skip on Bun**. The shared gate passes **141 HTTP
+checks on each runtime**, including this replacement in Express and Functions
+Framework. Archive installations with npm and Bun pass runtime CJS/ESM and
+strict TypeScript 7 checks without ambient Node, Undici or DOM types.
+
+**Measurements:** 2026-10-27, macOS arm64, Node 24.22.1 / Bun 1.4.0. The
+[benchmark](packages/vbody-parser/bench/compare.cjs) sends sequential localhost
+HTTP requests over keep-alive connections, consumes parsed results and checks
+response parity on every request. Each value is the median of nine alternating
+samples of 1,000 requests, after 1,000 warmups per implementation and case.
+Values are **upstream → VPM microseconds per complete request/response**;
+they include HTTP, parsing, a small response and assertion overhead.
+[Node samples](packages/vbody-parser/bench/node24.json) and
+[Bun samples](packages/vbody-parser/bench/bun14.json) record the source and
+consumer-lock hashes. The upstream side is body-parser 2.4.0 with its complete
+locked dependency tree, without VPM substitutions.
+
+| Case | Node µs/request | Bun µs/request |
+| --- | ---: | ---: |
+| JSON / 1 KiB | 83.10 → 73.27 | 72.14 → 72.44 |
+| JSON / 64 KiB | 256.64 → 259.25 | 223.94 → 214.16 |
+| JSON / verify | 72.02 → 71.34 | 71.07 → 72.20 |
+| JSON / gzip 64 KiB | 283.38 → 274.32 | 347.17 → 353.28 |
+| form / flat | 74.61 → 75.91 | 74.38 → 72.45 |
+| form / nested | 75.00 → 72.87 | 75.81 → 75.30 |
+| text / UTF-8 13 KiB | 158.01 → 156.36 | 115.32 → 106.07 |
+| raw / 64 KiB | 100.83 → 94.06 | 106.50 → 101.54 |
+| JSON / malformed | 87.34 → 89.81 | 85.72 → 92.07 |
+
+Results are mixed: successful cases range from **11.8% faster to 1.7% slower on
+Node**, and **8.0% faster to 1.8% slower on Bun**. Malformed JSON is **2.8% slower
+on Node and 7.4% slower on Bun**, with an additional error wrapper preserving the
+original exception. This comparison does not isolate the cost of any one change.
+An initial shorter run had noisier results, including Bun slowdowns that did not
+repeat in the longer run; its [Node](packages/vbody-parser/bench/node24-short.json)
+and [Bun](packages/vbody-parser/bench/bun14-short.json) samples are retained.
+No broad speedup, production throughput improvement or security outcome is
+established. The demonstrated benefits are configuration, error and stream
+lifecycle correctness and a fully VPM dependency tree.
+
 ## vundici-types and vnode-types
 
 **Declaration correctness:** `vundici-types` adds the missing `RequestInit.cache`
@@ -1040,7 +1124,7 @@ runtime. DOM projects continue to use TypeScript's standard browser globals.
 requires `vnode-types` as a peer for Node APIs. This is an explicit declaration
 dependency cycle, with no JavaScript runtime code. The workspace no longer uses
 upstream Node/Undici declarations for its own type checks. Upstream packages
-remain in a separately locked comparison fixture. All 26 runtime packages'
+remain in a separately locked comparison fixture. All 27 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
@@ -1065,7 +1149,7 @@ establish a compilation speedup or any application runtime improvement. See the
 ## Reading and extending this record
 
 Benchmark tables identify the runtime, date, inputs, and sampling method. Most
-measure individual utility calls; `vsend` and `vserve-static` measure sequential localhost HTTP
+measure individual utility calls; `vsend`, `vserve-static` and `vbody-parser` measure sequential localhost HTTP
 requests. Neither establishes production throughput, tail latency, or application
 memory use. Known regressions belong beside gains. A correctness fix or easier
 auditing does not by itself establish that an exploitable vulnerability was fixed.
