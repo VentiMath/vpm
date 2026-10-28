@@ -37,12 +37,21 @@ Work proceeds from real dependency graphs. We trace packages to their callers,
 identify the behavior those callers need, and use that evidence to guide each
 replacement. Package-level details live alongside the source in [`packages/`](packages/).
 
-When building callers, consider specialized internal implementations that avoid
-unneeded validation, metadata, or allocation. Preserve each standalone package's
-documented contract, verify the caller's observable behavior, and measure the full
-calling path on Node and Bun. Share implementation where practical so fixes stay
-consistent. Specialization is justified by measured improvements, not by inlining
-for its own sake.
+## Current scope
+
+The collection covers the Express 5 HTTP stack: routing, request bodies, cookies,
+content negotiation, static files, response handling, and the utilities beneath
+those APIs. `vexpress` uses VPM packages throughout its runtime dependency tree;
+`vcors` adds cross-origin request handling. Two declaration-only packages provide
+Node and Undici types for development.
+
+Integration tests exercise these replacements inside pinned Google Functions
+Framework and Firebase Functions consumers. Those frameworks and the wider
+Firebase/Google SDK dependency trees still contain upstream packages. Application
+adoption and deployment are separate from these compatibility tests.
+
+The [package catalog and evidence](IMPROVEMENTS.md#package-comparison) records
+implemented replacements, compatibility differences, and measured tradeoffs.
 
 ## Package management and Bun
 
@@ -84,9 +93,8 @@ npm run test:types
 node scripts/check-type-archives.cjs
 ```
 
-The HTTP integration gate installs a pinned
-upgrade target for ventimath's HTTP consumers and drives it with every VPM
-runtime package aliased in:
+The HTTP integration gate installs pinned backend consumers and exercises them
+with supported upstream packages replaced by their VPM counterparts:
 
 ```sh
 npm --prefix scripts/consumers ci --ignore-scripts
@@ -104,19 +112,6 @@ Larger replacements also run pinned upstream compatibility suites. The
 application layer and example applications, with every intentional expectation
 change and runtime limitation recorded. Its separately locked dependencies stay
 outside the workspace and published package archives.
-
-Review documentation whenever a package, API, dependency baseline, or measured
-result changes. Check the affected package READMEs and the central improvements
-record against the implementation, tests, archive contents and benchmark evidence
-in the same change. Keep the root README focused on the project, and keep current
-shared coverage counts in the central record. Preserve dates on historical
-measurements. The documentation CI check catches missing package coverage and
-broken local link paths; accuracy of explanations and claims requires review.
-
-## Repository history
-
-All branches require linear history and reject force pushes. Pull requests use
-squash merges only. The history rules have no bypass actors, including admins.
 
 ## License
 

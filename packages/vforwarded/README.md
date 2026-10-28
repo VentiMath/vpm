@@ -67,11 +67,11 @@ errors, invalid values, frozen inputs, connection fallback, undefined socket
 addresses, and CJS/ESM identity.
 
 The shared integration gate uses `vforwarded` through `vproxy-addr`, replacing
-`proxy-addr` 2.0.8 in Express 5.3.0. Eleven added HTTP checks cover `req.ip`/`req.ips`
+`proxy-addr` 2.0.8 in Express 5.3.0. HTTP checks cover `req.ip`/`req.ips`
 with disabled,
 unrestricted, hop-count and subnet trust; IPv4-mapped IPv6 proxies; stopping at
 an untrusted hop; tab/empty entries; repeated header lines; and absent headers.
-The full gate runs 217 HTTP checks on Node 24 and Bun. Archive checks install
+The full gate runs HTTP checks on Node 24 and Bun. Archive checks install
 with npm and Bun, exercise Node/Bun CJS/ESM consumers, verify the six-file package
 contents, and compile TypeScript 7.0.2 consumers without platform ambient types.
 
@@ -83,6 +83,8 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

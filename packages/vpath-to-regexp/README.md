@@ -134,7 +134,7 @@ adversarial paths and CJS/ESM identities. Original TypeScript test sources are
 retained as text fixtures; the generated corpus needs no test-runner dependency.
 
 The shared integration gate substitutes this package into the real Express 5
-router. The shared gate now runs 217 checks per runtime. Its 20 new HTTP checks cover parameters, wildcards, optional groups,
+router. Its HTTP checks cover parameters, wildcards, optional groups,
 array routes, percent decoding and malformed escapes, mount boundaries, strict
 routing, case sensitivity and prototype-shaped names. Archive checks install
 with npm and Bun, exercise CJS/ESM on both runtimes, verify seven-file contents,
@@ -148,6 +148,8 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

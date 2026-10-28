@@ -71,7 +71,7 @@ inputs, native failures and partial progress, disappearing keys, proxy trap orde
 interleaved proxy symbols, revoked proxies, symbol snapshots before destination
 traps, overlapping typed-array views, CJS/ESM imports and 1,000 generated descriptor comparisons.
 
-The shared gate passes **160 HTTP checks** on Node 24.22.1 and Bun 1.4.0 with VPM
+The shared gate passes HTTP checks on Node 24.22.1 and Bun 1.4.0 with VPM
 aliased into real Express/Functions Framework callers. Express application
 construction also preserves a nonenumerable symbol getter without invoking it.
 Packed archives pass npm/Bun installation, Node/Bun CJS/ESM consumers and strict
@@ -85,6 +85,8 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

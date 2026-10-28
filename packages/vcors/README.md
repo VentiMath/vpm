@@ -126,7 +126,7 @@ are recorded in [PROVENANCE.json](PROVENANCE.json). The upstream tests use the
 built-in runner through a registration adapter; no assertions are changed.
 
 The shared consumer fixture pins cors 2.8.6 and replaces it with vcors before
-Firebase Functions loads. Its **242 HTTP checks per runtime** include CORS
+Firebase Functions loads. Its HTTP checks include CORS
 reflection, repeated global-regex decisions, callback denial, duplicate callbacks
 and preflight framing. This verifies adoption in isolated consumers; it does not
 deploy VPM into the application.
@@ -135,6 +135,8 @@ The six-file installable archive contains code, declarations, package metadata,
 README, license and provenance, with only `vvary` as a runtime dependency.
 Upstream comparisons, test helpers, tests and benchmarks are excluded. Both npm
 and Bun archive consumers exercise CJS/ESM runtime imports and TypeScript 7.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 
