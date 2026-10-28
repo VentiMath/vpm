@@ -71,7 +71,7 @@ The shared integration gate uses `vforwarded` through `vproxy-addr`, replacing
 with disabled,
 unrestricted, hop-count and subnet trust; IPv4-mapped IPv6 proxies; stopping at
 an untrusted hop; tab/empty entries; repeated header lines; and absent headers.
-The full gate runs 190 HTTP checks on Node 24 and Bun. Archive checks install
+The full gate runs 210 HTTP checks on Node 24 and Bun. Archive checks install
 with npm and Bun, exercise Node/Bun CJS/ESM consumers, verify the six-file package
 contents, and compile TypeScript 7.0.2 consumers without platform ambient types.
 

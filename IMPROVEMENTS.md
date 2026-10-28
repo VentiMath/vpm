@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vpath-to-regexp](packages/vpath-to-regexp) | path-to-regexp 8.4.2 | Span-based parsing, isolated compiled tokens, lossless parameter names, less decoding allocation, and validated route configuration. |
 | [vproxy-addr](packages/vproxy-addr) | proxy-addr 2.0.8 | Single-pass candidate parsing, private numeric trust rules, direct mapped-address matching, complete zero prefixes, and strict configuration snapshots. |
 | [vipaddr](packages/vipaddr) | ipaddr.js 1.9.1 / 2.5.0 | Single-pass parsing, bounded integer CIDR matching, isolated address state, direct mapped conversion, and preservation of IPv4-compatible IPv6 bits. |
 | [vforwarded](packages/vforwarded) | forwarded 0.2.0 | Correct tab whitespace, a single output array, snapshotted request fields, own-header lookup, and explicit invalid-input errors. |
@@ -143,8 +144,10 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 190
-HTTP checks: proxy address chains and Express `req.ip`/`req.ips` under disabled,
+the Functions Framework, also serves a direct Express parser app, and runs 210
+HTTP checks: route parameters, wildcards, optional groups, encoded and malformed URI
+segments, array routes, mount boundaries, strict/case-sensitive routes, and
+proxy address chains and Express `req.ip`/`req.ips` under disabled,
 unrestricted, hop-count and subnet trust, including tab-separated proxies, mapped/native IPv6 boundaries and malformed addresses, and
 stopping at untrusted hops; Express listen startup, followed by a late error, and EADDRINUSE
 callbacks with state-shaped metadata; application mixins with symbol getters;
@@ -1031,6 +1034,60 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vpath-to-regexp
+
+**Consumer and dependencies:** replaces `path-to-regexp` 8.4.2, used by router
+2.2.0 in Express 5. Both versions have zero runtime dependencies. The complete
+public API includes parse, compile, match, pathToRegexp, stringify, TokenData
+and PathError.
+
+**Correctness:** compiled URL generators and matchers snapshot token graphs;
+external mutations cannot change literal output or capture names. Option fields
+are read once, including the delimiter shared by regex generation and wildcard
+decoding. Parameter names stringify using route escapes, correcting upstream's
+loss of control characters through JSON escaping and incorrect name boundaries
+before astral identifier continuations or empty text tokens. Generation accepts
+own parameter and wildcard entries with single reads. Invalid schema/options,
+codec results, cycles and more than 128 levels of nesting fail explicitly.
+Compatibility changes, callback behavior and error contracts are documented in
+the package README.
+
+**Implementation:** span-based literal parsing avoids a whole-route character
+array. Private token plans replace a closure per template token. Default URL
+encoding bypasses the native encoder only for its exact ASCII safe character set; surrogate errors still come from the native encoder. Default decoding
+skips the native decoder for percent-free values, wildcard decoding reuses its
+split array, and complete static matches avoid capture arrays. Regex lowering
+and backtracking guards are retained from upstream 8.4.2; its 256-alternative
+limit is checked before flattening. No global cache or generated code is used.
+
+**Verification:** 363 package tests cover all 344 upstream data cases, error
+contracts, identical regex source/flags/capture ordering, all 65,536 UTF-16 code
+units in names and native-equivalent URL encoding, 4,000 generated route/input
+comparisons, input mutation, getter counts, custom codec contracts and adversarial paths. Twenty added HTTP checks
+bring the shared Express/Functions Framework gate to **210 checks per runtime**,
+including URI errors both before and inside the application. npm/Bun archive
+installs pass Node/Bun CJS/ESM and TypeScript 7 consumers, with seven-file contents
+and no platform ambient declarations. The full repository suite passes **1,111
+Node tests** and **1,110 Bun tests with one existing runtime-specific skip**.
+Public declarations pass for 37 runtime packages; documentation covers 39 packages.
+
+**Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0,
+with twelve alternating-order samples per case. Ordinary one-/two-parameter
+matching takes **57–65% less time on Node and 30–51% less on Bun**. Default
+wildcard matching takes **13–19% / 12–18% less**. Short-route parsing takes
+**49–84% / 11–68% less** across six shapes, with a larger gain for the long
+literal-heavy sample. URL-template construction takes **55–82% / 42–67% less**;
+two-parameter URL generation takes **30–32% / 38–42% less**.
+
+Tradeoffs remain: wildcard URL generation takes **9–14% more time on Node and
+14–32% more on Bun** (up to 42 / 63 ns extra). Stringification takes **4–18% /
+8–77% more** (up to 81 / 144 ns), including token validation and corrected name
+serialization. Percent-decoded matches take up to 11% / 10% more (22 / 13 ns).
+The 32-alternative construction case takes 2–8% / 2–7% more (1.6 / 1.3 µs).
+Raw/custom-decoding timings vary, with Node maxima of 58% / 24% more (69 / 73 ns).
+These are isolated operations, not HTTP throughput measurements.
+[API, compatibility, full tables and all six runs](packages/vpath-to-regexp/README.md).
+
 ## vproxy-addr
 
 **Caller and dependencies:** replaces `proxy-addr` 2.0.8 in Express 5.3.0's
@@ -1059,13 +1116,11 @@ are preserved. Dependency-level parsing/header changes are documented separately
 **Verification:** 105 package tests include all 162 prefix lengths, exact subnet
 boundaries and adjacent addresses, 7,140 generated BigInt comparisons, every
 short mapped prefix, 3,000 generated request/policy comparisons against both
-baseline callers, and 2,000 rule-order checks. Ten added real HTTP checks bring
-the shared Express/Functions Framework gate to 190 on Node 24 and Bun. npm/Bun
+baseline callers, and 2,000 rule-order checks. Ten proxy-trust HTTP checks contribute to
+the shared Express/Functions Framework gate, now at 210 on Node 24 and Bun. npm/Bun
 archives cover CJS/ESM imports, six-file contents, rewritten VPM dependency
-versions and TypeScript 7 consumers without ambient platform types. The full
-repository suite passes **748 tests on Node 24** and **747 with one existing
-runtime-specific skip on Bun**. Public declarations pass for 36 runtime packages;
-the documentation inventory covers 38 packages.
+versions and TypeScript 7 consumers without ambient platform types. Current
+shared suite and declaration coverage is recorded in the vpath-to-regexp section.
 
 **Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0 compare the
 original caller/dependencies, the original caller with VPM dependencies, and
@@ -1125,10 +1180,10 @@ substitutions against Node, all 162 valid subnet masks, 5,000 generated subnet
 operations checked with BigInt arithmetic, and 3,000 range classifications.
 Nine HTTP checks exercise the proxy-addr interface through Express, covering
 mapped/native/compatible IPv6, subnet boundaries and malformed proxy addresses.
-The shared gate runs 190 HTTP checks on each runtime. Archive checks cover the
+The shared gate runs 210 HTTP checks on each runtime. Archive checks cover the
 eight-file package, npm/Bun installs, Node/Bun CJS/ESM imports and TypeScript 7
 consumers without platform types. The latest shared coverage is recorded in the
-`vproxy-addr` section above.
+`vpath-to-regexp` section above.
 
 **Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and Bun
 1.4.0 use twelve order-balanced samples per case against both verified releases.
@@ -1165,9 +1220,9 @@ include 10,000 generated inputs, long chains, whitespace, getter/proxy behavior,
 and source-integrity checks. Eleven added HTTP checks exercise the actual
 proxy-addr/Express path under disabled, unrestricted, hop-count and subnet trust,
 including IPv4-mapped IPv6, tab-separated proxies, untrusted-hop boundaries and
-repeated header lines. The current shared gate runs 190 HTTP checks on Node 24 and
+repeated header lines. The current shared gate runs 210 HTTP checks on Node 24 and
 Bun. npm/Bun archive installations pass CJS/ESM runtime and TypeScript 7 consumers
-without platform ambient declarations. The documentation gate covers 38 packages.
+without platform ambient declarations. The documentation gate covers 39 packages.
 
 **Performance, 2026-10-28:** three fresh processes on Node 24.22.1 and Bun 1.4.0,
 with twelve alternating-order samples per case, show one-/two-address parsing
@@ -1717,7 +1772,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 36 runtime packages'
+would compare VPM against itself. All 37 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

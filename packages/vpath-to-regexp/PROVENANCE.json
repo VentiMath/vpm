@@ -1,0 +1,35 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "source": {
+    "package": "path-to-regexp",
+    "version": "8.4.2",
+    "gitHead": "cbf30259e6d34d6135f9e7dbaa3371e7188f9936",
+    "tarball": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-8.4.2.tgz",
+    "integrity": "sha512-qRcuIdP69NPm4qbACK+aDogI5CBDMi1jKe0ry5rSQJz8JVLsC7jV8XpiJjGRLLol3N+R5ihGYcrPLTno6pAdBA==",
+    "fixture": "test/fixtures/path-to-regexp-8.4.2.cjs",
+    "sha256": "f8e7946ca3a4dcc2ed1ea46e3bcffaef014e4abc359a7469a16817f1f79df62f"
+  },
+  "upstreamTests": [
+    {
+      "file": "test/fixtures/cases.spec.ts.txt",
+      "url": "https://raw.githubusercontent.com/pillarjs/path-to-regexp/cbf30259e6d34d6135f9e7dbaa3371e7188f9936/src/cases.spec.ts",
+      "sha256": "cd863d79e5d4ff19e5ee938c116ad39d7bd9947ea80f7d13378714c3df9c3d5c"
+    },
+    {
+      "file": "test/fixtures/index.spec.ts.txt",
+      "url": "https://raw.githubusercontent.com/pillarjs/path-to-regexp/cbf30259e6d34d6135f9e7dbaa3371e7188f9936/src/index.spec.ts",
+      "sha256": "5c08956215a7a3cf069fdf7250ad4987087ecfe5624294173440ae7a23be4e07"
+    },
+    {
+      "file": "test/fixtures/redos.spec.ts.txt",
+      "url": "https://raw.githubusercontent.com/pillarjs/path-to-regexp/cbf30259e6d34d6135f9e7dbaa3371e7188f9936/src/redos.spec.ts",
+      "sha256": "c648121bd744e95f4ab13d093f7192571b02dc0a2ab0099ea2af3c85d7b66dc3"
+    }
+  ],
+  "corpusAdapter": "test/fixtures/cases.cjs strips TypeScript syntax and adapts module imports/exports; test/upstream.test.cjs runs all original data cases and preserves Vitest optional-undefined equality semantics.",
+  "generatedCorpus": {
+    "file": "test/fixtures/cases.cjs",
+    "sha256": "b22886e106723a4b8e40135a963660f65becc2954e7ffcadd482a67d78b5d6f3"
+  }
+}

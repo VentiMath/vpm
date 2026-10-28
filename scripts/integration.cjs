@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'path-to-regexp': { pkg: 'vpath-to-regexp', versions: /^8\.4\.2$/ },
   'proxy-addr': { pkg: 'vproxy-addr', versions: /^2\.0\.8$/ },
   'ipaddr.js': { pkg: 'vipaddr', versions: /^1\.9\.1$/ },
   forwarded: { pkg: 'vforwarded', versions: /^0\.2\.0$/ },
@@ -220,6 +221,19 @@ functions.http('api', api);
 
 // Express applications are also deployed as onRequest handlers.
 const app = express();
+// Match real Express 5 routes through router's path-to-regexp interface.
+const routeApp = express();
+routeApp.get('/users/:id', (req, res) => res.json({ params: req.params }));
+routeApp.get('/files/*parts', (req, res) => res.json({ params: req.params }));
+routeApp.get('/optional{/:id}{.:ext}', (req, res) => res.json({ params: req.params }));
+routeApp.get(['/first/:id', '/second/:id'], (req, res) => res.json({ params: req.params }));
+routeApp.get('/:"__proto__"/prototype', (req, res) => res.json({ params: req.params }));
+routeApp.use('/mount/:id', (req, res) => res.json({ params: req.params, baseUrl: req.baseUrl, url: req.url }));
+routeApp.use((error, _req, res, _next) => res.status(error.status || 500).json({ error: error.name }));
+const strictRoutes = express.Router({ strict: true, caseSensitive: true });
+strictRoutes.get('/Case/:id', (req, res) => res.json({ params: req.params }));
+app.use('/route-check', routeApp);
+app.use('/strict-route', strictRoutes);
 // Exercise forwarded through its real proxy-addr caller and Express getters.
 for (const [name, trust] of [
   ['none', false], ['all', true], ['one', 1], ['subnets', ['loopback', '10.0.0.0/8']],
@@ -299,6 +313,7 @@ functions.http('app', onRequest(app));
 // A direct Express app also tests custom parser patterns before the framework's
 // catch-all raw parser can consume their bodies.
 const parserApp = express();
+parserApp.use('/route-check', routeApp);
 parserApp.set('query parser', 'extended');
 parserApp.get('/nested-query', (req, res) => res.json(req.query));
 parserApp.post('/nested-form', express.urlencoded({ extended: true, depth: 3, parameterLimit: 8, charsetSentinel: true, interpretNumericEntities: true }), (req, res) => res.json(req.body));
@@ -472,6 +487,28 @@ async function run() {
   try {
     await expressStartup();
     await abortedRequest();
+    for (const [path, expected] of [
+      ['/users/alice', { id: 'alice' }], ['/USERS/alice/', { id: 'alice' }],
+      ['/users/caf%C3%A9', { id: 'café' }], ['/users/a%2Fb', { id: 'a/b' }],
+      ['/files/a/b/c', { parts: ['a', 'b', 'c'] }], ['/files/a%2Fb/c', { parts: ['a/b', 'c'] }],
+      ['/optional', {}], ['/optional/42.json', { id: '42', ext: 'json' }],
+      ['/second/42', { id: '42' }], ['/safe/prototype', { ['__proto__']: 'safe' }],
+    ]) {
+      const result = await request(appServer, '/route-check' + path);
+      assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), { params: expected });
+    }
+    for (const path of ['/route-check/users/%', '/route-check/files/a/%E0%A4']) {
+      // Framework's wildcard decodes first; also exercise our child error handler directly.
+      assert.equal((await request(appServer, path)).status, 400);
+      const result = await request(parserServer, path);
+      assert.equal(result.status, 400); assert.deepEqual(JSON.parse(result.body), { error: 'URIError' });
+    }
+    const mounted = await request(appServer, '/route-check/mount/42/child?x=1');
+    assert.equal(mounted.status, 200);
+    assert.deepEqual(JSON.parse(mounted.body), { params: { id: '42' }, baseUrl: '/route-check/mount/42', url: '/child?x=1' });
+    for (const [path, status] of [['/strict-route/Case/42', 200], ['/strict-route/case/42', 404], ['/strict-route/Case/42/', 404], ['/route-check/users', 404], ['/route-check/mountish/42', 404]]) {
+      assert.equal((await request(appServer, path)).status, status);
+    }
     for (const [mode, header, expected] of [
       ['zero4', '198.51.100.7, 203.0.113.1', ['198.51.100.7', '203.0.113.1']],
       ['zero4', '198.51.100.7, ::ffff:203.0.113.1', ['198.51.100.7', '::ffff:203.0.113.1']],

@@ -1,0 +1,33 @@
+{
+  "name": "vpath-to-regexp",
+  "version": "0.1.0",
+  "description": "Route parsing, matching and generation with isolated compiled state and validated tokens",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "regex.cjs",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vpath-to-regexp"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vpath-to-regexp"
+}
