@@ -3,6 +3,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { fileURLToPath } = require('node:url');
 const { isUtf8 } = require('node:buffer');
+const isBun = Boolean(process.versions.bun);
+let utf8Decoder;
 const readFlags = fs.constants.O_RDONLY | (fs.constants.O_NONBLOCK || 0);
 const own = (object, key) => Object.hasOwn(object, key) ? object[key] : undefined;
 const absent = error => error.code === 'ENOENT' || error.code === 'ENOTDIR';
@@ -41,8 +43,17 @@ function configure(options) {
   return { directory, parents };
 }
 function decode(buffer, filePath) {
-  if (!isUtf8(buffer)) throw new PackageJsonError(filePath, 'Invalid UTF-8');
-  let source = buffer.toString('utf8');
+  let source;
+  // For larger Bun inputs, combine validation and decoding in one pass. Keep
+  // the existing Buffer path on Node and for small inputs on either runtime.
+  if (isBun && buffer.length >= 4096) {
+    utf8Decoder ||= new TextDecoder('utf-8', { fatal: true, ignoreBOM: true });
+    try { source = utf8Decoder.decode(buffer); }
+    catch { throw new PackageJsonError(filePath, 'Invalid UTF-8'); }
+  } else {
+    if (!isUtf8(buffer)) throw new PackageJsonError(filePath, 'Invalid UTF-8');
+    source = buffer.toString('utf8');
+  }
   if (source.charCodeAt(0) === 0xfeff) source = source.slice(1);
   let packageJson;
   try { packageJson = JSON.parse(source); }
@@ -94,6 +105,18 @@ async function readPackageUp(options) {
       fs.open(filePath, readFlags, (error, fd) => {
         if (error) { if (absent(error) || error.code === 'EISDIR') advance(); else reject(error); return; }
         function close(error, buffer) {
+          if (isBun && !error && buffer?.length >= 4096) {
+            // Overlap the close with substantial decoding/parsing work. Wait
+            // for cleanup before settlement; close errors still take priority.
+            const closing = new Promise(resolve => fs.close(fd, resolve));
+            let result, decodeError;
+            try { result = decode(buffer, filePath); } catch (error) { decodeError = error; }
+            closing.then(closeError => {
+              if (closeError || decodeError) reject(closeError || decodeError);
+              else resolve(result);
+            });
+            return;
+          }
           fs.close(fd, closeError => {
             if (error || closeError) { reject(error || closeError); return; }
             if (buffer === undefined) { advance(); return; }

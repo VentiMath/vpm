@@ -57,8 +57,8 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,454 tests**: all pass on Node 24, and Bun passes
-1,451 with three documented runtime-specific skips. All 43 runtime packages'
+The root suite contains **1,458 tests**: all pass on Node 24, and Bun passes
+1,455 with three documented runtime-specific skips. All 43 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
 catalog covers **45 packages**, including two declaration-only packages.
 
@@ -181,25 +181,39 @@ errors and rejects invalid UTF-8 or non-object manifests. Error messages identif
 the path and reason without exposing manifest contents. There is no parsed-result
 cache, and symlink-following boundaries are lexical rather than a sandbox.
 
-The 45 package tests include both unchanged upstream lookup tests and additional
+The 49 package tests include both unchanged upstream lookup tests and additional
 error, filesystem-race, boundary, Unicode and concurrency checks. Integration
 adds 122 upstream comparisons in raw mode plus three real framework loader cases.
 Archive consumers cover CommonJS, ESM and TypeScript 7. The
 [API guide](packages/vread-package-up/README.md) documents the compatibility
 boundary and the benchmark method.
 
-Three sequential benchmark processes per runtime on Node 24.22.1/Bun 1.4.0
-(macOS arm64, 2026-10-28) measure **92–93% less time on Node and 70–72% less on
-Bun for import plus the first async read**, excluding process launch and with a
-warm OS filesystem cache. Aggregate medians are 29.55 → 1.94 ms and 21.34 →
-6.12 ms. These are reader measurements, not full application startup.
+The Bun optimization uses a fatal UTF-8 decoder for manifests of at least 4 KiB
+and overlaps parsing with descriptor closure. It still waits for cleanup before
+settling and preserves read/close-error precedence. No result cache or blocking
+I/O is introduced. All original correctness checks remain.
 
-Warm async adjacent reads take 9–16% less time on Node but 36–59% more on Bun
-(aggregate Bun 61.12 → 84.54 µs). Node sync ancestor/absent/directory searches
-cost 6–13% more; async directory skipping costs 18–40% more on Node and 72–128%
-more on Bun. Strict decoding and descriptor checks remain in place. The
-[full benchmark report](packages/vread-package-up/README.md#benchmarks) records
-all cases, including other regressions and raw samples.
+Three sequential benchmark processes per runtime on Node 24.22.1/Bun 1.4.0
+(macOS arm64, 2026-10-28) compare upstream, the previous VPM implementation and
+the optimization in all six execution orders. Bun’s 66 KB async read takes
+**10–16% less time than the previous VPM implementation** (aggregate 149.34 →
+132.90 µs), but remains 14–30% slower than upstream. Small adjacent reads remain
+**30–49% slower than upstream**; this is a partial improvement. The descriptor
+check and explicit cleanup require separate async operations, while upstream’s
+path-based reader bundles opening, reading and closing in its native read.
+
+The larger sync Bun median improves (68.35 → 55.85 µs), but one run regresses,
+so no consistent gain is established. Bun’s short malformed async case costs
+1–12% more than the previous VPM build. Node’s larger sync case costs 2–4% more
+than the previous build while remaining about 75% faster than upstream.
+Directory skipping still costs 14–16% more than upstream on Node and 82–90%
+more on Bun. [The full report](packages/vread-package-up/README.md#benchmarks)
+records all cases and raw samples.
+
+Import plus first async read still takes about **93% less time on Node and
+66–70% less on Bun than upstream**, excluding process launch with a warm OS
+filesystem cache. Aggregate medians are 26.44 → 1.95 ms and 19.69 → 6.39 ms.
+These are reader measurements, not full application startup.
 
 ## vminimist
 

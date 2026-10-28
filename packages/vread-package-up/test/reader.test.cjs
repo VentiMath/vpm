@@ -161,3 +161,27 @@ for(const mode of ['sync','async'])test(mode+': Windows boundary casing and driv
   assert.deepEqual(attempts,['C:\\Work\\package.json','C:\\package.json']);
   await assert.rejects(async()=>read({cwd:'C:\\Work',stopAt:'D:\\'}),TypeError);
 });
+test('async success and parse errors wait for descriptor closure',async()=>{
+  for(const source of ['{}','{broken',' '.repeat(5000)+'{}',' '.repeat(5000)+'{broken']){
+    let release,settled=false;
+    const testReader=loadWith({open(_p,_f,cb){cb(null,7);},fstat(_fd,cb){cb(null,{isFile:()=>true});},readFile(_fd,cb){cb(null,Buffer.from(source));},close(_fd,cb){release=cb;}});
+    const pending=testReader.readPackageUp().then(result=>{settled=true;return {result};},error=>{settled=true;return {error};});
+    await new Promise(resolve=>setImmediate(resolve));assert.equal(settled,false);
+    release(null);const outcome=await pending;
+    if(source.endsWith('{}'))assert.deepEqual(outcome.result.packageJson,{});else assert.equal(outcome.error.code,'ERR_INVALID_PACKAGE_JSON');
+  }
+});
+test('close failure wins over a concurrently prepared parse error',async()=>{
+  let release;const failure=new Error('close');
+  const testReader=loadWith({open(_p,_f,cb){cb(null,7);},fstat(_fd,cb){cb(null,{isFile:()=>true});},readFile(_fd,cb){cb(null,Buffer.from(' '.repeat(5000)+'{broken'));},close(_fd,cb){release=cb;}});
+  const pending=testReader.readPackageUp();release(failure);await assert.rejects(pending,e=>e===failure);
+});
+for(const [mode,read]of [['sync',sync],['async',reader.readPackageUp]])test(mode+': strict decoding recovers after invalid sequences and strips exactly one BOM',async t=>{
+  const f=fixture(t);
+  for(const padding of ['', ' '.repeat(5000)])for(const invalid of [[0xc0,0xaf],[0xe2,0x82],[0xed,0xa0,0x80],[0xf4,0x90,0x80,0x80],[0x80]]){
+    f.write(f.root,Buffer.concat([Buffer.from(padding+'{"x":"'),Buffer.from(invalid),Buffer.from('"}')]));
+    await assert.rejects(async()=>read({cwd:f.root}),/Invalid UTF-8/);
+    f.write(f.root,'\ufeff'+padding+'{"x":"雪😀"}');assert.deepEqual((await read({cwd:f.root})).packageJson,{x:'雪😀'});
+  }
+  f.write(f.root,'\ufeff\ufeff'+' '.repeat(5000)+'{}');await assert.rejects(async()=>read({cwd:f.root}),/Invalid JSON/);
+});
