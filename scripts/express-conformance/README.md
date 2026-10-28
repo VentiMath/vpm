@@ -18,7 +18,8 @@ bun scripts/express-conformance/run.cjs --upstream --all-runtime-tests
 `--unadapted` runs vexpress with original assertions, intentionally exposing the
 23 documented expectation differences. `--all-runtime-tests` re-enables six tests
 that fail on Bun 1.4.0 with both implementations. `OUTPUT` writes the full Mocha
-JSON report. Tests require local HTTP ports; the runner removes its temporary
+JSON report. Mocha writes its report synchronously to a temporary file, avoiding
+pipe truncation during forced process exit on Bun/Linux. Tests require local HTTP ports; the runner removes its temporary
 checkout and uses bounded test/process timeouts. `--exit` ends the isolated test
 process after Mocha completes; it is not a resource-leak test.
 
