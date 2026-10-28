@@ -13,7 +13,8 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vrouter', 'vparseurl', 'vdepd', 'vpath-to-regexp', 'vproxy-addr', 'vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  const runtimePackages = fs.readdirSync(path.join(root, 'packages')).filter(name => require(path.join(root, 'packages', name, 'package.json')).vpm?.kind !== 'types');
+  for (const name of runtimePackages) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const version = require(path.join(root, 'packages', name, 'package.json')).version;
     const archive = name + '-' + version + '.tgz';
@@ -22,6 +23,12 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (name === 'vexpress') {
+      assert.deepEqual(Object.keys(metadata.dependencies).sort(), Object.values(require('../packages/vexpress/PROVENANCE.json').dependencies).sort());
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json',
+        ...['application', 'express', 'request', 'response', 'utils', 'view', 'handlers'].map(file => 'lib/' + file + '.js')].sort());
+    }
     if (['vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -80,6 +87,13 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const express = require('vexpress');
+const application = express();
+application.get('/:id', (req, res) => res.end(req.params.id));
+let applicationBody;
+application({ url: '/42', method: 'GET', headers: {} }, { setHeader() {}, end(value) { applicationBody = value; } }, error => { throw error || new Error('missed app route'); });
+assert.equal(applicationBody, '42');
+assert.equal(express.json, require('vbody-parser').json);
 const Router = require('vrouter');
 const router = Router(); let routed;
 router.get('/:id', (req, res) => { routed = req.params.id; res.end(); });
@@ -172,6 +186,13 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import express, { json as expressJson, Router as ExpressRouter } from 'vexpress';
+assert.equal(express.json, expressJson); assert.equal(express.Router, ExpressRouter);
+const application = express();
+application.get('/:id', (req, res) => res.end(req.params.id));
+let applicationBody;
+application({ url: '/42', method: 'GET', headers: {} }, { setHeader() {}, end(value) { applicationBody = value; } }, error => { throw error || new Error('missed app route'); });
+assert.equal(applicationBody, '42');
 import Router, { Route } from 'vrouter';
 assert.equal(Router.Route, Route);
 const router = new Router(); let routed;
@@ -257,6 +278,16 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import express, { json as expressJson, Router as ExpressRouter } from 'vexpress';
+const app = express();
+app.use(expressJson());
+app.get('/users/:id', (req, res) => res.status(201).json({ id: req.params.id, query: req.query }));
+app.use('/child', ExpressRouter().get('/', (req, res) => res.send('ok')));
+app.use((error: Error, req: express.Request, res: express.Response, next: express.NextFunction) => res.status(500).send(error.message));
+// @ts-expect-error status must be a number
+app.response.status('200');
+// @ts-expect-error invalid middleware
+app.get('/bad', 123);
 import Router, { Route as RouterRoute } from 'vrouter';
 import depd from 'vdepd';
 const router = new Router();

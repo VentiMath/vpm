@@ -99,6 +99,12 @@ It runs in CI on every push. See [the target dependency graph](IMPROVEMENTS.md#t
 for what it covers and what it reports as not covered. Each package documents its own installation,
 usage, runtime requirements, and compatibility.
 
+Larger replacements also run pinned upstream compatibility suites. The
+[Express conformance fixture](scripts/express-conformance/README.md) tests the
+application layer and example applications, with every intentional expectation
+change and runtime limitation recorded. Its separately locked dependencies stay
+outside the workspace and published package archives.
+
 Review documentation whenever a package, API, dependency baseline, or measured
 result changes. Check the affected package READMEs and the central improvements
 record against the implementation, tests, archive contents and benchmark evidence

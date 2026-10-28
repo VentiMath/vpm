@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  express: { pkg: 'vexpress', versions: /^5\.3\.0$/ },
   router: { pkg: 'vrouter', versions: /^2\.2\.0$/ },
   depd: { pkg: 'vdepd', versions: /^2\.0\.0$/ },
   'path-to-regexp': { pkg: 'vpath-to-regexp', versions: /^8\.4\.2$/ },
@@ -223,6 +224,14 @@ functions.http('api', api);
 
 // Express applications are also deployed as onRequest handlers.
 const app = express();
+app.get('/vexpress-bytes', (req, res) => {
+  const bytes = Uint8Array.from([9, 1, 2, 3, 8]);
+  res.send(new DataView(bytes.buffer, 1, 3));
+});
+app.get('/vexpress-send-framing', (req, res) => res.set({ 'Transfer-Encoding': 'chunked', 'Content-Length': '999' }).send('framed'));
+app.get('/vexpress-redirect-framing', (req, res) => res.set({ 'Transfer-Encoding': 'chunked', Trailer: 'X-Checksum' }).redirect('/next'));
+for (const status of [204, 205, 304]) app.get('/vexpress-empty-' + status, (req, res) => res.set({ 'Transfer-Encoding': 'chunked', Trailer: 'X-Checksum' }).status(status).send('discard'));
+app.get('/vexpress-own-headers', (req, res) => res.set(Object.assign(Object.create({ 'X-Inherited': 'bad' }), { 'X-Own': 'yes' })).send('own'));
 // Exercise deprecation warnings through actual Express and router callers.
 const deprecations = [];
 const recordDeprecation = error => deprecations.push(error);
@@ -518,6 +527,17 @@ async function run() {
   const appServer = await listen(getTestServer('app'));
   const parserServer = await listen(http.createServer(parserApp));
   try {
+    assert.equal((await request(appServer, '/vexpress-bytes')).body, '\x01\x02\x03');
+    const generatedSend = await request(appServer, '/vexpress-send-framing');
+    assert.equal(generatedSend.body, 'framed'); assert.equal(generatedSend.headers['content-length'], undefined);
+    const generatedRedirect = await request(appServer, '/vexpress-redirect-framing');
+    assert.equal(generatedRedirect.status, 302); assert.equal(generatedRedirect.headers['transfer-encoding'], undefined); assert.equal(generatedRedirect.headers.trailer, undefined);
+    for (const status of [204, 205, 304]) {
+      const generated = await request(appServer, '/vexpress-empty-' + status);
+      assert.equal(generated.status, status); assert.equal(generated.body, ''); assert.equal(generated.headers.trailer, undefined);
+    }
+    const ownHeaders = await request(appServer, '/vexpress-own-headers');
+    assert.equal(ownHeaders.headers['x-own'], 'yes'); assert.equal(ownHeaders.headers['x-inherited'], undefined);
     await expressStartup();
     await abortedRequest();
     const redirected = await request(appServer, '/deprecation-check/redirect');
