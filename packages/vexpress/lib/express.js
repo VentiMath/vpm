@@ -15,6 +15,7 @@
 var bodyParser = require('vbody-parser')
 var EventEmitter = require('node:events').EventEmitter;
 var mixin = require('vmerge-descriptors');
+var isProxy = require('node:util').types.isProxy;
 var proto = require('./application');
 var Router = require('vrouter');
 var req = require('./request');
@@ -38,8 +39,8 @@ function createApplication() {
     app.handle(req, res, next);
   };
 
-  mixin(app, EventEmitter.prototype, false);
-  mixin(app, proto, false);
+  mixinApplication(app, EventEmitter.prototype);
+  mixinApplication(app, proto);
 
   // expose the prototype that will get set on requests
   app.request = Object.create(req, {
@@ -52,6 +53,36 @@ function createApplication() {
   })
 
   app.init();
+  return app;
+}
+
+// This destination is a fresh ordinary function. A missing property can be
+// assigned with exactly the attributes of an ordinary writable data descriptor.
+// Check live descriptors on every creation so prototype customizations still
+// apply, without invoking getters or sharing an application method snapshot.
+function mixinApplication(app, source) {
+  // Proxy traps or a custom function prototype chain could intercept assignment
+  // (including a misleading `has` trap). Keep the general descriptor path there.
+  if (source === null || (typeof source !== 'object' && typeof source !== 'function') ||
+      isProxy(source) || Object.getPrototypeOf(Function.prototype) !== Object.prototype) {
+    return mixin(app, source, false);
+  }
+
+  var keys = Object.getOwnPropertyNames(source);
+  var symbols = Object.getOwnPropertySymbols(source);
+  for (var s = 0; s < symbols.length; s++) keys.push(symbols[s]);
+
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    var exists = key in app;
+    if (exists && Object.hasOwn(app, key)) continue;
+    var descriptor = Object.getOwnPropertyDescriptor(source, key);
+    if (!exists && descriptor.writable && descriptor.enumerable && descriptor.configurable) {
+      app[key] = descriptor.value;
+    } else {
+      Object.defineProperty(app, key, descriptor);
+    }
+  }
   return app;
 }
 

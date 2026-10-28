@@ -4,8 +4,10 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const { performance } = require('node:perf_hooks');
 const load = require('./load.cjs');
-const implementations = [load(), load(true), require('..')];
+const startup = process.env.STARTUP === '1';
+const implementations = [load(), startup ? load.previousStartup() : load(true), require('..')];
 const count = Number(process.env.COUNT || 10000);
+const registrations = Math.min(count, startup ? 5000 : 1000);
 const rounds = 12;
 const orders = [[0,1,2], [0,2,1], [1,0,2], [1,2,0], [2,0,1], [2,1,0]];
 const cases = [];
@@ -36,10 +38,10 @@ function invoke(app, headers = {}, method = 'GET') {
     return res;
   };
 }
-add('create application', ['/'], E => () => E(), Math.min(count, 1000));
-add('register one route', ['/hello', '/world'], E => path => E().get(path, finish), Math.min(count, 1000));
-add('register 20 middleware', ['/api'], E => path => E().use(path, Array(20).fill(pass)), Math.min(count, 1000));
-add('register route with 20 handlers', ['/hello'], E => path => E().get(path, Array(20).fill(pass), finish), Math.min(count, 1000));
+add('create application', ['/'], E => () => E(), registrations);
+add('register one route', ['/hello', '/world'], E => path => E().get(path, finish), registrations);
+add('register 20 middleware', ['/api'], E => path => E().use(path, Array(20).fill(pass)), registrations);
+add('register route with 20 handlers', ['/hello'], E => path => E().get(path, Array(20).fill(pass), finish), registrations);
 add('dispatch res.end', ['/hello'], E => { const a = E(); a.get('/hello', (req,res) => res.end('hello')); return invoke(a); });
 add('send short string with ETag', ['/hello'], E => { const a = E(); a.get('/hello', finish); return invoke(a); });
 add('send short string without ETag', ['/hello'], E => { const a = E().disable('etag'); a.get('/hello', finish); return invoke(a); });
@@ -70,13 +72,13 @@ for (const entry of cases) {
   const samples = [[], [], []];
   for (let round = 0; round < rounds; round++) for (const index of orders[round % 6]) samples[index].push(measure(entry.functions[index], entry.inputs, entry.iterations));
   const medians = samples.map(values => { const sorted = values.slice().sort((a,b) => a-b); return (sorted[5]+sorted[6])/2; });
-  rows.push({ case: entry.name, iterations: entry.iterations, upstreamNs: medians[0], vpmDependenciesNs: medians[1], vpmNs: medians[2], samples });
+  rows.push({ case: entry.name, iterations: entry.iterations, upstreamNs: medians[0], [startup ? 'previousNs' : 'vpmDependenciesNs']: medians[1], vpmNs: medians[2], samples });
 }
 const hashes = require('./evidence.cjs')();
 const result = { recordedAt: new Date().toISOString(), runtime: process.versions, platform: process.platform, arch: process.arch, count, rounds,
-  implementations: ['Express 5.3.0 + locked upstream dependencies', 'Express 5.3.0 + VPM dependencies', 'vexpress + VPM dependencies'],
+  implementations: ['Express 5.3.0 + locked upstream dependencies', startup ? 'vexpress b58bd90 factory + unchanged current VPM application/dependencies' : 'Express 5.3.0 + VPM dependencies', 'vexpress + VPM dependencies'],
   sampleOrder: 'all six permutations, twice', corpusWarmup: 'min(iterations, 2000)', caseWarmup: 'min(iterations, 5000)',
   units: 'nanoseconds/call including synthetic HTTP objects, completion assertion and retention writes; no network I/O', hashes, checksum, rows };
 if (process.env.OUTPUT) fs.writeFileSync(process.env.OUTPUT, JSON.stringify(result, null, 2) + '\n');
-console.table(rows.map(row => ({ case: row.case, upstream: Math.round(row.upstreamNs), dependencies: Math.round(row.vpmDependenciesNs), VPM: Math.round(row.vpmNs) })));
+console.table(rows.map(row => ({ case: row.case, upstream: Math.round(row.upstreamNs), [startup ? 'previous' : 'dependencies']: Math.round(startup ? row.previousNs : row.vpmDependenciesNs), VPM: Math.round(row.vpmNs) })));
 console.log('Consumed checksum:', checksum);

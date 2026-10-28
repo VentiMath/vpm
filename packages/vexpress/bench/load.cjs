@@ -23,3 +23,15 @@ module.exports = function load(vpm = false) {
   }
   return evaluate(path.join(directory, 'index.js'));
 };
+
+// Exact pre-specialization factory from b58bd901ded10e70abe33bf5e3e620ecb5aa2129.
+// Only express.js changed: both versions use the same current VPM dependencies,
+// application prototype, settings validation, request and response code.
+module.exports.previousStartup = function previousStartup() {
+  const file = path.resolve(__dirname, '../lib/express.js');
+  const mod = { exports: {} };
+  new Function('exports', 'require', 'module', '__filename', '__dirname',
+    fs.readFileSync(path.join(__dirname, 'fixtures/express-before.cjs'), 'utf8'))
+    .call(mod.exports, mod.exports, createRequire(file), mod, file, path.dirname(file));
+  return mod.exports;
+};

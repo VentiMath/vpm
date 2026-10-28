@@ -1076,7 +1076,7 @@ functions keep the Buffer contract and large bodies share one encoding. Response
 overrides and general parser behavior remain covered. Existing VPM dependency
 differences remain deliberate and are listed in the package documentation.
 
-**Verification:** 38 local regression tests on Node and Bun. The upstream unit
+**Verification:** 46 local regression tests on Node and Bun. The upstream unit
 and example-acceptance suites pass **1,261 tests on Node 24**, with 23 explicit
 assertion changes for existing VPM dependency behavior and no skipped tests.
 Bun passes **1,255 with six pending** cases that fail identically against unchanged
@@ -1085,7 +1085,7 @@ each adaptation and runtime limitation; comparison dependencies are test-only.
 The shared Functions Framework/Firebase gate passes **235 HTTP checks per runtime**
 with Express itself replaced. npm/Bun package archives contain thirteen vexpress
 files and pass CJS/ESM and TypeScript 7 consumer checks without ambient platform
-types. The root suite covers **1,249 tests** (Bun has three existing runtime skips),
+types. The root suite covers **1,257 tests** (Bun has three existing runtime skips),
 public declarations cover **40 runtime packages**, and documentation covers
 **42 packages**. No production deployment is implied by these fixture results.
 
@@ -1096,9 +1096,28 @@ retain separate results. Raw samples include source hashes and the comparison
 lockfile hash, and report remaining regressions and noise alongside improvements. Node 24
 JSON response components take **28–31% less time**, and Bun takes **38–40% less**,
 with ETags enabled. Loopback HTTP workloads improve roughly **4–8% on Node**
-and **0–8% on Bun**. Node application creation remains **3–6% slower**, and
+and **0–8% on Bun**. Initial Node application creation was **3–6% slower**, and
 Bun's header-only case varies from **16% faster to 10% slower**. These measurements
 are workload-specific; they do not establish production throughput.
+
+**Application construction follow-up (2026-10-28):** the startup number measures
+warm application creation after module loading. A caller-specific descriptor copy
+uses direct assignment only for ordinary data properties absent from the fresh
+function and its prototype chain. Accessors, symbols, special property attributes,
+live prototype edits and overrides retain their behavior; proxies/custom function
+prototype chains use the general copier. Settings and registration safeguards
+are unchanged. Eight additional regressions and the HTTP gate exercise these
+boundaries, including a real consumer using the general fallback.
+
+Three fresh processes per runtime, with an exact saved previous factory control,
+show construction taking **48–49% less time on Node 24** (25,207 → 12,881 ns)
+and **9–13% less on Bun** (8,428 → 7,380 ns). It is also **46–48% faster than
+upstream Express on Node** in these runs. One-route setup takes **38–39% less
+on Node**. The [follow-up report](packages/vexpress/README.md#application-construction-follow-up-2026-10-28)
+preserves all request controls: Node absolute-URL JSON takes 1–5% more than the
+previous factory; Bun has wider variation, including up to 18% more for direct
+`res.end`. These results establish a construction improvement, not a new
+request-throughput claim. Cold process/import startup was not measured.
 
 ## vrouter
 
