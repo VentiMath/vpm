@@ -126,7 +126,7 @@ are compared with original upstream and upstream using VPM dependencies, and
 2,000 generated addresses check rule-order independence and upstream agreement.
 
 The shared Express/Functions Framework gate replaces `proxy-addr` with
-`vproxy-addr` and runs **210 HTTP checks** on each runtime. Ten new checks cover
+`vproxy-addr` and runs **217 HTTP checks** on each runtime. Ten new checks cover
 zero-prefix families, mapped-prefix guards, IPv4 netmasks, scoped IPv6 and an
 untrusted middle hop. Archive checks install with npm and Bun, run Node/Bun
 CommonJS and ESM consumers, verify the six-file package and two dependencies,
