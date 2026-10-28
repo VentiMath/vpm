@@ -35,6 +35,7 @@ that these replacements have already improved application performance.
 | [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
 | [vraw-body](packages/vraw-body) | raw-body 3.0.2 | Premature-close settlement, strict byte counts, earlier length rejection, controlled chunk/decoder errors, and an entirely VPM dependency tree. |
 | [vqs](packages/vqs) | qs 6.17.0 | Zero runtime dependencies, native percent encoding, validated numeric limits, no parameter-limit wraparound, and wide-array serialization without variadic calls. |
+| [vcontent-disposition](packages/vcontent-disposition) | content-disposition 2.0.1 / 3.0.0 | Isolated parameter maps, strict input contracts, case-insensitive duplicate checks, and faster filename creation and long quoted parsing. |
 | [vbody-parser](packages/vbody-parser) | body-parser 2.4.0 | Compressed-request abort handling, safe form bounds, validated option snapshots, nonmutating callback errors, and an entirely VPM dependency tree. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
@@ -133,7 +134,7 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 141
+the Functions Framework, also serves a direct Express parser app, and runs 151
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
@@ -151,7 +152,8 @@ Express changes the charset, CORS preflight, `res.set('Content-Type')` with synt
 tolerated, conditional requests with quoted-comma tags and forced reloads,
 redirect encoding and escaping, `sendFile` and `serve-static` with ranges,
 HEAD, mounted-root redirects, static redirect/405 framing, download and empty-file
-callbacks, extension fallback, dotfile policy,
+callbacks, Unicode/quoted/percent/control-character download and attachment filenames,
+extension fallback, dotfile policy,
 strong preconditions, directory redirects, cache ages from duration strings,
 thrown HTTP errors with headers, conflicting framing headers, an error after an accepted
 404, `jsonwebtoken` expiry durations, and `DEBUG` output from each consumer
@@ -1013,6 +1015,67 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vcontent-disposition
+
+**Consumer and baseline:** Express 5.3.0 uses `content-disposition` 2.0.1 in
+`res.download()` and `res.attachment()`. The current 3.0.0 release is also retained
+as an exact source fixture and benchmark baseline. Both upstream and VPM have
+zero runtime dependencies. VPM keeps CommonJS and named ESM imports on Node 20+.
+
+**Correctness:** direct null-prototype parameter maps prevent the shared-ancestor
+interference reproduced in both upstream versions. Invalid primitive inputs,
+parameter values and options fail explicitly, without coercion or input contents
+in VPM-generated errors. Formatting rejects case-insensitive duplicate names,
+ignores inherited properties, and gives explicitly encoded values precedence over
+automatic encoding even when their names use different casing. Option/value
+getters are read once. Exports are immutable.
+
+Malformed Latin-1 escapes no longer override a valid ordinary fallback, and an
+already-extended parameter name cannot gain another `*` through automatic
+encoding. **These two fixes already exist in upstream 3.0.0** and are carried
+forward, not claimed as unique VPM improvements. Parsing otherwise retains
+upstream's lenient recovery; it is not a strict syntax validator or path sanitizer.
+Normal valid filename output and lone-surrogate `URIError` behavior are preserved.
+
+**Evidence:** 17 package tests include 15,000 generated parser cases against
+3.0.0, byte/Unicode encoding, malformed inputs, options/getters, long quoted
+values, prototype isolation, and CJS/ESM exports. The shared Node/Bun gate now
+runs **151 HTTP checks**, including real Express downloads and attachments with
+Unicode, quotes, percent sequences, and control characters, HEAD/ranges, and
+completion callbacks. Installed archives are checked with npm, Bun, Node, and
+strict TypeScript 7. On 2026-10-27 the full suite passed **449 tests on Node**,
+with **448 passing and one existing skip on Bun**. All **28 runtime packages**
+have self-contained declarations.
+
+**Performance:** nine warmed, alternating-order samples of 50,000 calls,
+sequentially on Node 24.22.1 and Bun 1.4.0 (2026-10-27). Nanoseconds per call,
+**upstream 2.0.1 → VPM**:
+
+| Case | Node | Bun |
+| --- | ---: | ---: |
+| create ASCII | 155 → 83 | 99 → 50 |
+| create quoted | 315 → 224 | 184 → 125 |
+| create Unicode | 614 → 411 | 385 → 270 |
+| parse short filename | 152 → 175 | 189 → 195 |
+| parse 4 KiB quoted | 20,345 → 381 | 23,787 → 482 |
+| parse multipart | 299 → 362 | 396 → 423 |
+| format fallback pair | 182 → 233 | 104 → 151 |
+| decode Latin-1 short | 135 → 101 | 171 → 141 |
+| decode Latin-1 sparse | 1,405 → 137 | 1,458 → 175 |
+
+Header creation and long quoted parsing improved; short parsing and general
+formatting have regressions shown above and in the complete tables. These are
+utility microbenchmarks, not end-to-end download throughput measurements.
+The package README includes every case and a separate 3.0.0 comparison.
+[Harness](packages/vcontent-disposition/bench/compare.cjs),
+[Node / 2.0.1 samples](packages/vcontent-disposition/bench/node24-v2.json),
+[Bun / 2.0.1 samples](packages/vcontent-disposition/bench/bun14-v2.json),
+[Node / 3.0.0 samples](packages/vcontent-disposition/bench/node24-v3.json),
+and [Bun / 3.0.0 samples](packages/vcontent-disposition/bench/bun14-v3.json)
+record runtime versions, source hashes, and all samples.
+
+[Full API, compatibility choices, measurements, and provenance](packages/vcontent-disposition/README.md).
+
 ## vbody-parser
 
 **Correctness and lifecycle:** replaces body-parser 2.4.0's signed 32-bit form
@@ -1057,8 +1120,9 @@ limits, option mutation, charsets, corrupt/truncated compression, frozen/primiti
 callback failures, lazy stack reads/overrides/fallbacks, real client disconnects,
 cleanup and exports. Middleware
 differential tests share VPM primitives; the benchmark below uses the full stock
-upstream dependency tree. The full suite passes **432 tests on Node** and **431
-with one existing async-hooks skip on Bun**. The shared gate passes **141 HTTP
+upstream dependency tree. At the vbody-parser follow-up on 2026-10-27, the full
+suite passed **432 tests on Node** and **431
+with one existing async-hooks skip on Bun**. The shared gate then passed **141 HTTP
 checks on each runtime**, including this replacement in Express and Functions
 Framework. Archive installations with npm and Bun pass runtime CJS/ESM and
 strict TypeScript 7 checks without ambient Node, Undici or DOM types.
@@ -1175,7 +1239,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 27 runtime packages'
+would compare VPM against itself. All 28 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

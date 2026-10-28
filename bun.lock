@@ -36,6 +36,10 @@
       "name": "vbytes",
       "version": "0.1.0",
     },
+    "packages/vcontent-disposition": {
+      "name": "vcontent-disposition",
+      "version": "0.1.0",
+    },
     "packages/vcontent-type": {
       "name": "vcontent-type",
       "version": "0.1.0",
@@ -247,6 +251,8 @@
     "vbody-parser": ["vbody-parser@workspace:packages/vbody-parser"],
 
     "vbytes": ["vbytes@workspace:packages/vbytes"],
+
+    "vcontent-disposition": ["vcontent-disposition@workspace:packages/vcontent-disposition"],
 
     "vcontent-type": ["vcontent-type@workspace:packages/vcontent-type"],
 
