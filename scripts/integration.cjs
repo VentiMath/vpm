@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'proxy-addr': { pkg: 'vproxy-addr', versions: /^2\.0\.8$/ },
   'ipaddr.js': { pkg: 'vipaddr', versions: /^1\.9\.1$/ },
   forwarded: { pkg: 'vforwarded', versions: /^0\.2\.0$/ },
   once: { pkg: 'vonce', versions: /^1\.4\.0$/ },
@@ -226,6 +227,11 @@ for (const [name, trust] of [
   ['ipv6', ['loopback', '2001:db8::/32']],
   ['compatible', ['loopback', '::192.0.2.0/120']],
   ['native', ['loopback', '2000::/3']],
+  ['zero4', ['loopback', '0.0.0.0/0']],
+  ['zero6', ['loopback', '::/0']],
+  ['shortmapped', ['loopback', '::ffff:10.0.0.0/8']],
+  ['netmask', ['loopback', '10.0.0.0/255.0.0.0']],
+  ['scoped', ['loopback', 'fe80::%en-0/10']],
 ]) {
   const child = express();
   child.set('trust proxy', trust);
@@ -467,6 +473,16 @@ async function run() {
     await expressStartup();
     await abortedRequest();
     for (const [mode, header, expected] of [
+      ['zero4', '198.51.100.7, 203.0.113.1', ['198.51.100.7', '203.0.113.1']],
+      ['zero4', '198.51.100.7, ::ffff:203.0.113.1', ['198.51.100.7', '::ffff:203.0.113.1']],
+      ['zero4', '198.51.100.7, 2001:db8::1', ['2001:db8::1']],
+      ['zero6', '198.51.100.7, 2001:db8::1', ['198.51.100.7', '2001:db8::1']],
+      ['zero6', '198.51.100.7, ::ffff:203.0.113.1', ['::ffff:203.0.113.1']],
+      ['shortmapped', '198.51.100.7, ::ffff:10.0.0.1', ['::ffff:10.0.0.1']],
+      ['shortmapped', '198.51.100.7, ::abcd', ['::abcd']],
+      ['netmask', '198.51.100.7, 10.1.2.3', ['198.51.100.7', '10.1.2.3']],
+      ['scoped', '198.51.100.7, fe80::1%other-0', ['198.51.100.7', 'fe80::1%other-0']],
+      ['subnets', 'spoofed, 192.0.2.1, 10.0.0.1', ['192.0.2.1', '10.0.0.1']],
       ['mapped', '198.51.100.7, 10.0.0.1', ['198.51.100.7', '10.0.0.1']],
       ['mapped', '198.51.100.7, ::ffff:10.0.0.1', ['198.51.100.7', '::ffff:10.0.0.1']],
       ['mapped', '198.51.100.7, ::a00:1', ['::a00:1']],

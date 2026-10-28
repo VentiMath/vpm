@@ -111,10 +111,11 @@ syntax and upstream bytes, ASCII substitutions checked against Node, every one
 of 162 valid subnet masks, 5,000 subnet operations checked with independent BigInt
 arithmetic, and 3,000 classifications compared with the 2.5.0 snapshot.
 
-The integration gate loads `vipaddr` through the real `proxy-addr` 2.0.8 caller in
-Express 5.3.0. Nine added HTTP checks cover IPv4/mapped subnet equivalence, native
+The integration gate loads `vipaddr` through `vproxy-addr`, replacing the
+`proxy-addr` 2.0.8 caller in Express 5.3.0. Nine added HTTP checks cover IPv4/mapped
+subnet equivalence, native
 IPv6 subnet boundaries, compatible-versus-mapped IPv6, family separation and
-malformed proxy addresses. The shared gate runs **180 HTTP checks** on Node 24
+malformed proxy addresses. The shared gate runs **190 HTTP checks** on Node 24
 and Bun. Archive checks install the package using npm and Bun, exercise both
 runtimes' CommonJS/ESM imports, verify the eight-file archive and compile TypeScript
 7.0.2 consumers without Node, Undici or DOM ambient declarations.

@@ -1,0 +1,33 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "source": {
+    "package": "proxy-addr",
+    "version": "2.0.8",
+    "gitHead": "a11ad82545698af5c33e59f3ed0b52eab79bf610",
+    "tarball": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.8.tgz",
+    "integrity": "sha512-5nnx0yGyVUcY6t9RnWcARWtwT9F1D8O9rt08htPvnd49W1IgZtmLkhu9WfMzQj1cFxjHIO6connUNVW5k7AVyQ==",
+    "fixture": "test/fixtures/proxy-addr-2.0.8.cjs",
+    "sha256": "aa7efd29bbd61cbcc1bdafde9e674db28ead077864f33bfad3cdd19bb5a3778c"
+  },
+  "upstreamTests": {
+    "url": "https://raw.githubusercontent.com/jshttp/proxy-addr/a11ad82545698af5c33e59f3ed0b52eab79bf610/test/test.js",
+    "sha256": "56662e5b71b1e31e03694a26e996918bc633e3a7116fe1aa136f0d76152ee43d",
+    "adaptedAs": "test/upstream.test.cjs",
+    "changes": "Use node:test, node:assert and native deepStrictEqual; no behavior assertions changed."
+  },
+  "comparisonDependencies": [
+    {
+      "package": "forwarded",
+      "version": "0.2.0",
+      "fixture": "../vforwarded/test/fixtures/forwarded-0.2.0.cjs",
+      "provenance": "../vforwarded/PROVENANCE.json"
+    },
+    {
+      "package": "ipaddr.js",
+      "version": "1.9.1",
+      "fixture": "../vipaddr/test/fixtures/ipaddr-1.9.1.cjs",
+      "provenance": "../vipaddr/PROVENANCE.json"
+    }
+  ]
+}
