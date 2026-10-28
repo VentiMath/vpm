@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  forwarded: { pkg: 'vforwarded', versions: /^0\.2\.0$/ },
   once: { pkg: 'vonce', versions: /^1\.4\.0$/ },
   'merge-descriptors': { pkg: 'vmerge-descriptors', versions: /^2\.0\.0$/ },
   'cookie-signature': { pkg: 'vcookie-signature', versions: /^1\.2\.2$/ },
@@ -217,6 +218,13 @@ functions.http('api', api);
 
 // Express applications are also deployed as onRequest handlers.
 const app = express();
+// Exercise forwarded through its real proxy-addr caller and Express getters.
+for (const [name, trust] of [['none', false], ['all', true], ['one', 1], ['subnets', ['loopback', '10.0.0.0/8']]]) {
+  const child = express();
+  child.set('trust proxy', trust);
+  child.get('/', (req, res) => res.json({ ip: req.ip, ips: req.ips, socket: req.socket.remoteAddress }));
+  app.use('/proxy-' + name, child);
+}
 const httpCookie = from('cookie');
 const cookieSignature = from('cookie-signature');
 app.get('/signed-cookie-check', (req, res) => {
@@ -451,6 +459,25 @@ async function run() {
   try {
     await expressStartup();
     await abortedRequest();
+    for (const [mode, header, expected] of [
+      ['all', undefined, []],
+      ['none', '198.51.100.7, 10.0.0.1', []],
+      ['all', '198.51.100.7, 10.0.0.1', ['198.51.100.7', '10.0.0.1']],
+      ['one', '198.51.100.7, 10.0.0.1', ['10.0.0.1']],
+      ['subnets', '198.51.100.7,\t10.0.0.1\t', ['198.51.100.7', '10.0.0.1']],
+      ['subnets', '2001:db8::7,\t::ffff:10.0.0.1', ['2001:db8::7', '::ffff:10.0.0.1']],
+      ['subnets', '198.51.100.7, 203.0.113.9, 10.0.0.1', ['203.0.113.9', '10.0.0.1']],
+      ['all', '198.51.100.7,, \t , 10.0.0.1', ['198.51.100.7', '10.0.0.1']],
+      ['all', 'unknown, 10.0.0.1', ['unknown', '10.0.0.1']],
+      ['all', ['198.51.100.7', '10.0.0.1'], ['198.51.100.7', '10.0.0.1']],
+      ['all', ', \t , ', []],
+    ]) {
+      const result = await request(appServer, '/proxy-' + mode, { headers: header === undefined ? {} : { 'x-forwarded-for': header } });
+      assert.equal(result.status, 200);
+      const body = JSON.parse(result.body);
+      assert.deepEqual(body.ips, expected);
+      assert.equal(body.ip, expected[0] || body.socket);
+    }
     const largeLimit = await request(parserServer, '/large-form-limit', { method: 'POST', body: 'a=1&b=2', headers: { 'content-type': 'application/x-www-form-urlencoded' } });
     assert.equal(largeLimit.status, 200); assert.deepEqual(JSON.parse(largeLimit.body), { a: '1', b: '2' });
     for (const [route, status, type] of [['/frozen-verify', 422, 'entity.verify.failed'], ['/primitive-reviver', 400, 'entity.parse.failed']]) {
