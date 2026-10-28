@@ -1,0 +1,82 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "source": {
+    "package": "router",
+    "version": "2.2.0",
+    "gitHead": "e6d6b609fc355e558174ccd5b1db646f739fe88c",
+    "tarball": "https://registry.npmjs.org/router/-/router-2.2.0.tgz",
+    "integrity": "sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ=="
+  },
+  "comparisonOnlyDependencies": {
+    "is-promise": {
+      "version": "4.0.0",
+      "tarball": "https://registry.npmjs.org/is-promise/-/is-promise-4.0.0.tgz",
+      "integrity": "sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ=="
+    },
+    "debug": "4.4.3",
+    "ms": "2.1.3",
+    "depd": "2.0.0",
+    "parseurl": "1.3.3",
+    "path-to-regexp": "8.4.2"
+  },
+  "fixtures": [
+    {
+      "file": "test/fixtures/is-promise-4.0.0.cjs",
+      "sha256": "c4718cc487af988730c7e668b206adafab5fe45b6dbc252fded9f8ccc8b8b913"
+    },
+    {
+      "file": "test/fixtures/is-promise-LICENSE",
+      "sha256": "44191656d296391e0ec97e32f5385f0d02b6f2992694082d22ea04ba0f66f9e4"
+    },
+    {
+      "file": "test/fixtures/router-2.2.0/LICENSE",
+      "sha256": "d0bca4e517157b7a6120c085f5fe43a35b90c095e3bbeb9e67f220c608506a16"
+    },
+    {
+      "file": "test/fixtures/router-2.2.0/index.js",
+      "sha256": "fcc39d49329e5701e3fbd195060834398434b8e136a59949a654f6f402f6e31b"
+    },
+    {
+      "file": "test/fixtures/router-2.2.0/lib/layer.js",
+      "sha256": "569771db2d3ade3d695ae9259063e8b685ed734e78c2e0ff7648e0a6bf436119"
+    },
+    {
+      "file": "test/fixtures/router-2.2.0/lib/route.js",
+      "sha256": "77e83b1ceca13bdbdaf42b79d90527489c46249db2ad4226e328352dfe68f83d"
+    },
+    {
+      "file": "test/fixtures/upstream/auto-head.js.txt",
+      "sha256": "48f94b56b502af1530e82c1c5b6cee9728edff9b0a4d197a371c981ee8b4e766"
+    },
+    {
+      "file": "test/fixtures/upstream/auto-options.js.txt",
+      "sha256": "8f9e2ddbed21ac2c438dae98f1b38a1ae70da98fbab6a33d2da89886e9d2b33a"
+    },
+    {
+      "file": "test/fixtures/upstream/fqdn-url.js.txt",
+      "sha256": "93a7d07b6bc39d407ebcae3e26739a573f5b4de0245d9e28c8329bb597664b06"
+    },
+    {
+      "file": "test/fixtures/upstream/param.js.txt",
+      "sha256": "0be5bf4e43a5149f9eca2655340775b3a598c42ee82aade0561b5b2c190d486d"
+    },
+    {
+      "file": "test/fixtures/upstream/req.params.js.txt",
+      "sha256": "d1ed2413b47b10caf2a1c6a52c6b8898474118bb25b5e93b01da0b51ca56f2ac"
+    },
+    {
+      "file": "test/fixtures/upstream/route.js.txt",
+      "sha256": "0cf38d21584f8ee116d177ed63fce817d533219b60d28ab887e5ea64112795ed"
+    },
+    {
+      "file": "test/fixtures/upstream/router.js.txt",
+      "sha256": "146f09fff35b1ef8df9e3180a14e35028e7ebcd2670ae48872a9484b09c049af"
+    },
+    {
+      "file": "test/fixtures/upstream/support/utils.js.txt",
+      "sha256": "4b3555d8d07885daac641197835e3d8b39c4813c83b540a8b89de1fd2dcc0354"
+    }
+  ],
+  "tests": "Upstream suites retained as contract references, not run verbatim. Local tests exercise routing parity and intentional differences; shared integration replaces router in Express 5.3.0 / Functions Framework 5.0.2 / firebase-functions 7.4.0."
+}

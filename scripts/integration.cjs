@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  router: { pkg: 'vrouter', versions: /^2\.2\.0$/ },
   depd: { pkg: 'vdepd', versions: /^2\.0\.0$/ },
   'path-to-regexp': { pkg: 'vpath-to-regexp', versions: /^8\.4\.2$/ },
   'proxy-addr': { pkg: 'vproxy-addr', versions: /^2\.0\.8$/ },
@@ -245,7 +246,23 @@ routeApp.get('/optional{/:id}{.:ext}', (req, res) => res.json({ params: req.para
 routeApp.get(['/first/:id', '/second/:id'], (req, res) => res.json({ params: req.params }));
 routeApp.get('/:"__proto__"/prototype', (req, res) => res.json({ params: req.params }));
 routeApp.use('/mount/:id', (req, res) => res.json({ params: req.params, baseUrl: req.baseUrl, url: req.url }));
+routeApp.param('constructor', (req, _res, next, value) => { req.params.constructor = value.toUpperCase(); next(); });
+routeApp.get('/callback/:constructor', (req, res) => res.json(req.params));
+const statefulRoute = /^\/stateful\/([^/]+)$/g;
+statefulRoute.lastIndex = 12;
+routeApp.get(statefulRoute, (req, res) => res.json(req.params));
+routeApp.get(/^\/literal\/\((?<letter>a)[)]$/, (req, res) => res.json(req.params));
+routeApp.get('/single-then', () => {
+  let reads = 0;
+  return { get then() {
+    if (++reads > 1) throw new Error('then read twice');
+    return (_resolve, reject) => reject(Object.assign(new Error('once'), { status: 409 }));
+  } };
+});
 routeApp.use((error, _req, res, _next) => res.status(error.status || 500).json({ error: error.name }));
+const mergedRouter = express.Router({ mergeParams: true });
+mergedRouter.get('/:id', (req, res) => res.json(req.params));
+app.use('/merged-router/:team', mergedRouter);
 const strictRoutes = express.Router({ strict: true, caseSensitive: true });
 strictRoutes.get('/Case/:id', (req, res) => res.json({ params: req.params }));
 app.use('/route-check', routeApp);
@@ -536,6 +553,24 @@ async function run() {
       const result = await request(parserServer, path);
       assert.equal(result.status, 400); assert.deepEqual(JSON.parse(result.body), { error: 'URIError' });
     }
+    for (let i = 0; i < 3; i++) {
+      const result = await request(appServer, '/route-check/stateful/value');
+      assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), { 0: 'value' });
+    }
+    assert.equal(statefulRoute.lastIndex, 12);
+    for (const [url, expected] of [
+      ['/route-check/callback/value', { constructor: 'VALUE' }],
+      ['/route-check/literal/(a)', { letter: 'a' }],
+      ['/merged-router/red/42', { team: 'red', id: '42' }],
+    ]) {
+      const result = await request(appServer, url);
+      assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), expected);
+    }
+    assert.equal((await request(appServer, '/route-check/single-then')).status, 409);
+    const automaticOptions = await request(appServer, '/route-check/users/42', { method: 'OPTIONS' });
+    assert.equal(automaticOptions.status, 200); assert.equal(automaticOptions.headers.allow, 'GET, HEAD');
+    const automaticHead = await request(appServer, '/route-check/users/42', { method: 'HEAD' });
+    assert.equal(automaticHead.status, 200); assert.equal(automaticHead.body, '');
     const mounted = await request(appServer, '/route-check/mount/42/child?x=1');
     assert.equal(mounted.status, 200);
     assert.deepEqual(JSON.parse(mounted.body), { params: { id: '42' }, baseUrl: '/route-check/mount/42', url: '/child?x=1' });

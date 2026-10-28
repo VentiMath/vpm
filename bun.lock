@@ -195,6 +195,16 @@
         "viconv-lite": "workspace:*",
       },
     },
+    "packages/vrouter": {
+      "name": "vrouter",
+      "version": "0.1.0",
+      "dependencies": {
+        "vdebug": "workspace:*",
+        "vdepd": "workspace:*",
+        "vparseurl": "workspace:*",
+        "vpath-to-regexp": "workspace:*",
+      },
+    },
     "packages/vsend": {
       "name": "vsend",
       "version": "0.1.0",
@@ -357,6 +367,8 @@
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
 
     "vraw-body": ["vraw-body@workspace:packages/vraw-body"],
+
+    "vrouter": ["vrouter@workspace:packages/vrouter"],
 
     "vsend": ["vsend@workspace:packages/vsend"],
 
