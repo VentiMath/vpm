@@ -106,6 +106,10 @@
       "name": "viconv-lite",
       "version": "0.1.0",
     },
+    "packages/vipaddr": {
+      "name": "vipaddr",
+      "version": "0.1.0",
+    },
     "packages/vmedia-typer": {
       "name": "vmedia-typer",
       "version": "0.1.0",
@@ -303,6 +307,8 @@
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
 
     "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
+
+    "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
 
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
 
