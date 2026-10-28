@@ -1,0 +1,24 @@
+{
+  "license": "ISC",
+  "checkedOn": "2026-10-27",
+  "sources": [
+    {
+      "package": "once",
+      "version": "1.4.0",
+      "gitHead": "0e614d9f5a7e6f0305c625f6b581f6d80b33b8a6",
+      "tarball": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+      "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+      "fixture": "test/fixtures/once-1.4.0.cjs",
+      "sha256": "3db73e347ecbdbafdf8d0db85145c877e133f5372e767360ef90c09f70ac5103"
+    },
+    {
+      "package": "wrappy",
+      "version": "1.0.2",
+      "gitHead": "71d91b6dc5bdeac37e218c2cf03f9ab55b60d214",
+      "tarball": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+      "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+      "fixture": "test/fixtures/wrappy-1.0.2.cjs",
+      "sha256": "153453c4d84a3c2f13589c37055a7daff61d48475dcce554f7eedad15fc7b3e5"
+    }
+  ]
+}

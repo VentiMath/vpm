@@ -1,0 +1,32 @@
+{
+  "name": "vonce",
+  "version": "0.1.0",
+  "description": "Once-only callbacks with protected state and safe metadata",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vonce"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vonce"
+}
