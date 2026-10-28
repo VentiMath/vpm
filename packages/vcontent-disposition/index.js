@@ -89,10 +89,7 @@ function parseParameters(header, index, mode) {
       const code = header.charCodeAt(index);
       if (code === 59) continue parameterLoop;
       if (code !== 61) { index++; continue; }
-      const rawKey = header.slice(keyStart, trimOWS(header, keyStart, index));
-      // Reuse standard key literals instead of inserting newly sliced strings.
-      const key = rawKey === 'filename' ? 'filename' : rawKey === 'name' ? 'name'
-        : rawKey === 'filename*' ? 'filename*' : rawKey.toLowerCase();
+      const key = parameterName(header, keyStart, trimOWS(header, keyStart, index));
       const keep = first || parameters[key] === undefined;
       first = false;
       index = skipOWS(header, index + 1, length);
@@ -118,9 +115,8 @@ function parseParameters(header, index, mode) {
         }
         if (index === length) break parameterLoop;
         if (keep) {
-          const value = header.slice(start, index);
-          parameters[key] = mode & 1 ? unescapeMultipart(value)
-            : escaped ? unescapeQuoted(header, start, index) : value;
+          parameters[key] = mode & 1 ? unescapeMultipart(header, start, index)
+            : escaped ? unescapeQuoted(header, start, index) : header.slice(start, index);
         }
         index = endValue(header, index + 1, length);
       } else {
@@ -139,6 +135,22 @@ function parseParameters(header, index, mode) {
     }
   }
   return parameters;
+}
+
+function parameterName(header, start, end) {
+  // Recognize every ASCII casing without slicing/lowercasing a standard key.
+  // Custom names retain the parser's full Unicode lowercasing and leniency.
+  const length = end - start;
+  if (length === 4 && (header.charCodeAt(start) | 32) === 110 && (header.charCodeAt(start + 1) | 32) === 97 &&
+      (header.charCodeAt(start + 2) | 32) === 109 && (header.charCodeAt(start + 3) | 32) === 101) return 'name';
+  if ((length === 8 || (length === 9 && header.charCodeAt(start + 8) === 42)) &&
+      (header.charCodeAt(start) | 32) === 102 && (header.charCodeAt(start + 1) | 32) === 105 &&
+      (header.charCodeAt(start + 2) | 32) === 108 && (header.charCodeAt(start + 3) | 32) === 101 &&
+      (header.charCodeAt(start + 4) | 32) === 110 && (header.charCodeAt(start + 5) | 32) === 97 &&
+      (header.charCodeAt(start + 6) | 32) === 109 && (header.charCodeAt(start + 7) | 32) === 101) {
+    return length === 8 ? 'filename' : 'filename*';
+  }
+  return header.slice(start, end).toLowerCase();
 }
 
 function format(disposition, options) {
@@ -272,22 +284,36 @@ function escapeMultipart(value) {
   }
   return start === 0 ? value : result + value.slice(start);
 }
-function unescapeMultipart(value) {
-  let start = 0;
+function unescapeMultipart(header, start, end) {
+  const offset = start;
+  const value = header.slice(start, end);
   let result = '';
-  for (let index = value.indexOf('%'); index !== -1; index = value.indexOf('%', index + 1)) {
-    const a = value.charCodeAt(index + 1);
-    const b = value.charCodeAt(index + 2);
-    let decoded;
-    if (a === 50 && b === 50) decoded = '"';
-    else if (a === 48 && (b === 65 || b === 97)) decoded = '\n';
-    else if (a === 48 && (b === 68 || b === 100)) decoded = '\r';
-    else continue;
-    result += value.slice(start, index) + decoded;
-    start = index + 3;
-    index += 2;
+  let index = value.indexOf('%');
+  if (index === -1) return value;
+  index += offset;
+  while (index !== -1) {
+    const runStart = index;
+    let run = '';
+    // Decode consecutive escapes directly from the original header. Searching
+    // and copying after every escape is expensive for dense runs.
+    do {
+      const a = header.charCodeAt(index + 1);
+      const b = header.charCodeAt(index + 2);
+      if (a === 50 && b === 50) run += '"';
+      else if (a === 48 && (b === 65 || b === 97)) run += '\n';
+      else if (a === 48 && (b === 68 || b === 100)) run += '\r';
+      else break;
+      index += 3;
+    } while (header.charCodeAt(index) === 37);
+    if (index !== runStart) {
+      result += header.slice(start, runStart) + run;
+      start = index;
+    }
+    // Search only within this value, so later fields cannot cause rescans.
+    index = value.indexOf('%', index + 1 - offset);
+    if (index !== -1) index += offset;
   }
-  return start === 0 ? value : result + value.slice(start);
+  return start === offset ? value : result + header.slice(start, end);
 }
 
 function readMultipartQuoted(header, index, parameters, key) {

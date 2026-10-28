@@ -7,8 +7,9 @@ const { performance } = require('node:perf_hooks');
 const plain = result => ({ type: result.type, parameters: { ...result.parameters } });
 
 (async () => {
+  const previousCommit = process.argv.includes('dense') ? '475b3ea' : '2097f39';
   const files = {
-    previous: '../test/fixtures/vcontent-disposition-2097f39.cjs',
+    previous: '../test/fixtures/vcontent-disposition-' + previousCommit + '.cjs',
     upstream2: '../test/fixtures/content-disposition-2.0.1.cjs',
     upstream3: '../test/fixtures/content-disposition-3.0.0.mjs',
     vpm: '../index.js',
@@ -34,6 +35,12 @@ const plain = result => ({ type: result.type, parameters: { ...result.parameters
     ['8 KiB sparse escapes', header('abc '.repeat(1024) + '%22' + 'def '.repeat(1024))],
     ['8 KiB plain', header('abc '.repeat(2048))],
     ['discarded duplicate', 'form-data; name="file"; filename=first; FILENAME="' + '%22%0D%0A'.repeat(100) + '"'],
+    ['alternating-case names', 'fOrM-dAtA; nAmE="file"; FiLeNaMe="a%22b%0D%0Ac.txt"'],
+    ['separated dense runs', header(('%22%0d%0A'.repeat(30) + 'literal-').repeat(3))],
+    ['dense with literal gaps', header('a%22b%0D'.repeat(100))],
+    ['unknown escape runs', header('%GG%20%'.repeat(100))],
+    ['dense then incomplete escape', header('%22%0A'.repeat(100) + '%0')],
+    ['unfinished dense value', 'form-data; name="file"; filename="' + '%22%0A'.repeat(100)],
   ];
   const labels = Object.keys(implementations);
   const count = Number(process.env.COUNT || 50000);
@@ -78,7 +85,7 @@ const plain = result => ({ type: result.type, parameters: { ...result.parameters
   }
   const hash = file => createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, file))).digest('hex');
   const result = { date: '2026-10-27', runtime: process.versions, platform: process.platform, arch: process.arch,
-    baselines: { previous: 'VPM 2097f39', upstream2: '2.0.1', upstream3: '3.0.0' },
+    baselines: { previous: 'VPM ' + previousCommit, upstream2: '2.0.1', upstream3: '3.0.0' },
     units: 'nanoseconds/call', count, rounds, corpusWarmup, order: 'rotate starting implementation each round',
     sourceSha256: Object.fromEntries(Object.entries(files).map(([label, file]) => [label, hash(file)])),
     harnessSha256: hash('multipart.cjs'), checksum, rows };
