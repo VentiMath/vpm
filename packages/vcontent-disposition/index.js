@@ -90,12 +90,20 @@ function parseParameters(header, index, mode) {
       if (code === 59) continue parameterLoop;
       if (code !== 61) { index++; continue; }
       const rawKey = header.slice(keyStart, trimOWS(header, keyStart, index));
-      const key = rawKey === 'filename' || rawKey === 'filename*' || rawKey === 'name' ? rawKey : rawKey.toLowerCase();
+      // Reuse standard key literals instead of inserting newly sliced strings.
+      const key = rawKey === 'filename' ? 'filename' : rawKey === 'name' ? 'name'
+        : rawKey === 'filename*' ? 'filename*' : rawKey.toLowerCase();
       const keep = first || parameters[key] === undefined;
       first = false;
       index = skipOWS(header, index + 1, length);
       if (header.charCodeAt(index) === 34) {
         const start = ++index;
+        // Decode short multipart fields while finding their closing quote.
+        // Bound the remaining scan; long values keep the native span searches.
+        if ((mode & 1) && keep && length - start < 32) {
+          index = endValue(header, readMultipartQuoted(header, start, parameters, key), length);
+          continue parameterLoop;
+        }
         const firstQuote = header.indexOf('"', start);
         if (firstQuote === -1) break parameterLoop;
         let escaped = false;
@@ -280,6 +288,30 @@ function unescapeMultipart(value) {
     index += 2;
   }
   return start === 0 ? value : result + value.slice(start);
+}
+
+function readMultipartQuoted(header, index, parameters, key) {
+  let value = '';
+  const length = header.length;
+  while (index < length) {
+    const code = header.charCodeAt(index++);
+    if (code === 34) {
+      // An unterminated field must never be stored, even after valid escapes.
+      parameters[key] = value;
+      return index;
+    }
+    if (code === 37) {
+      const a = header.charCodeAt(index);
+      const b = header.charCodeAt(index + 1);
+      if (a === 50 && b === 50) { value += '"'; index += 2; continue; }
+      if (a === 48) {
+        if (b === 65 || b === 97) { value += '\n'; index += 2; continue; }
+        if (b === 68 || b === 100) { value += '\r'; index += 2; continue; }
+      }
+    }
+    value += String.fromCharCode(code);
+  }
+  return length;
 }
 
 exports.create = create;
