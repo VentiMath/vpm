@@ -33,7 +33,6 @@
   "dependencies": {
     "vdebug": "workspace:*",
     "vdepd": "workspace:*",
-    "vparseurl": "workspace:*",
     "vpath-to-regexp": "workspace:*"
   }
 }

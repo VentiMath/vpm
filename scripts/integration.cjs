@@ -571,6 +571,13 @@ async function run() {
     assert.equal(automaticOptions.status, 200); assert.equal(automaticOptions.headers.allow, 'GET, HEAD');
     const automaticHead = await request(appServer, '/route-check/users/42', { method: 'HEAD' });
     assert.equal(automaticHead.status, 200); assert.equal(automaticHead.body, '');
+    // Proxy-style absolute request targets still parse and mount correctly.
+    // The HTTP connection remains local; only the request-target contains a host.
+    for (const url of ['http://example.test/route-check/users/42?q=1', 'https://[::1]:8443/route-check/users/a%20b?q=1']) {
+      const result = await request(appServer, url);
+      assert.equal(result.status, 200);
+      assert.deepEqual(JSON.parse(result.body), { params: { id: url.includes('a%20b') ? 'a b' : '42' } });
+    }
     const mounted = await request(appServer, '/route-check/mount/42/child?x=1');
     assert.equal(mounted.status, 200);
     assert.deepEqual(JSON.parse(mounted.body), { params: { id: '42' }, baseUrl: '/route-check/mount/42', url: '/child?x=1' });

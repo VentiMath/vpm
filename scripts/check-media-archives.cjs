@@ -28,7 +28,7 @@ try {
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
     }
     if (name === 'vrouter') {
-      assert.deepEqual(metadata.dependencies, { vdebug: '0.1.0', vdepd: '0.1.0', vparseurl: '0.1.0', 'vpath-to-regexp': '0.1.0' });
+      assert.deepEqual(metadata.dependencies, { vdebug: '0.1.0', vdepd: '0.1.0', 'vpath-to-regexp': '0.1.0' });
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', 'lib/layer.js', 'lib/route.js', 'lib/handlers.js', 'lib/regexp.js'].sort());
     }

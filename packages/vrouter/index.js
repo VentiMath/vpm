@@ -14,7 +14,7 @@
 
 const Layer = require('./lib/layer')
 const { METHODS } = require('node:http')
-const parseUrl = require('vparseurl')
+const { parse: parseUrl } = require('node:url')
 const Route = require('./lib/route')
 const debug = require('vdebug')('router')
 const deprecate = require('vdepd')('router')
@@ -497,18 +497,21 @@ function generateOptionsResponder (res, methods) {
 /**
  * Get pathname of request.
  *
- * @param {IncomingMessage} req
+ * @param {string} url
  * @private
  */
 
 function getPathname (url) {
+  if (typeof url !== 'string') return undefined
   try {
-    if (typeof url === 'string' && url.charCodeAt(0) === 47 && !needsFullParse.test(url)) {
+    if (url.charCodeAt(0) === 47 && !needsFullParse.test(url)) {
       const query = url.indexOf('?')
       return query === -1 ? url : url.slice(0, query)
     }
-    // Snapshot the input: even accessor-backed request URLs are read once.
-    return parseUrl({ url }).pathname
+    // This input already crossed vparseurl's full-parse boundary. Use the same
+    // native parser without caching a disposable request wrapper. The caller
+    // retains the pathname against the exact URL string for this invocation.
+    return parseUrl(url).pathname
   } catch (err) {
     return undefined
   }
