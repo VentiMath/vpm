@@ -1037,19 +1037,49 @@ forward, not claimed as unique VPM improvements. Parsing otherwise retains
 upstream's lenient recovery; it is not a strict syntax validator or path sanitizer.
 Normal valid filename output and lone-surrogate `URIError` behavior are preserved.
 
-**Evidence:** 20 package tests include 15,000 generated parser cases against
+**Evidence:** 21 package tests include 15,000 generated parser cases against
 3.0.0, 5,000 formatter comparisons with the previous VPM implementation,
 1,134 standard/custom-name parsing cases, byte/Unicode encoding, malformed
-inputs, single-read getters across parameter-map sizes, long quoted values,
+inputs, 2,496 multipart scan-boundary/recovery comparisons, single-read getters
+across parameter-map sizes, long quoted values,
 prototype isolation, and CJS/ESM exports. The shared Node/Bun gate now
 runs **151 HTTP checks**, including real Express downloads and attachments with
 Unicode, quotes, percent sequences, and control characters, HEAD/ranges, and
 completion callbacks. Installed archives are checked with npm, Bun, Node, and
 strict TypeScript 7. At the performance follow-up on 2026-10-27 the full suite
-passed **452 tests on Node 24**, with **451 passing and one existing skip on Bun**.
+passed **453 tests on Node 24**, with **452 passing and one existing skip on Bun**.
 All **28 runtime packages** have self-contained declarations.
 
-**Performance follow-up:** removes the temporary array/set for two-parameter
+**Multipart parsing follow-up:** reuses standard lowercase parameter-name
+literals and decodes very short quoted fields while finding the closing quote.
+The direct scan is limited to fewer than 32 remaining code units; longer fields
+and discarded duplicates retain span searches. Validation, lenient recovery,
+duplicate and extended-value rules, and fresh null-prototype maps remain intact.
+
+Three fresh processes per runtime compare current VPM with the exact
+`2097f39` source and both upstream baselines. Nine samples rotate execution order;
+the table reports median process medians in nanoseconds.
+
+| Multipart case | Node previous → now | Bun previous → now |
+| --- | ---: | ---: |
+| plain fields | 310 → 304 | 480 → 192 |
+| short escapes | 424 → 322 | 628 → 197 |
+| 31-character suffix | 419 → 414 | 660 → 281 |
+| 32-character suffix | 422 → 370 | 699 → 287 |
+| 127-character suffix | 426 → 376 | 698 → 296 |
+| 128-character suffix | 425 → 374 | 581 → 294 |
+| 8 KiB sparse escapes | 814 → 764 | 977 → 731 |
+| 8 KiB plain | 746 → 696 | 868 → 631 |
+
+The original short escaped multipart benchmark now takes 6–7% less
+time than upstream 2.0.1 and 7–8% less than 3.0.0 on Node 24.
+This removes the previously recorded 21–22% overhead for that case without
+weakening validation or sharing result maps. Mixed-case names, long dense
+escapes, and unfinished values retain costs; the full table discloses them.
+
+[Current multipart results, all six runs, two whole-API runs, and commands](packages/vcontent-disposition/README.md#multipart-parsing-follow-up).
+
+**First performance follow-up (`2097f39`, historical measurements):** removes the temporary array/set for two-parameter
 formatting, returns directly for a single parameter, uses exact matching for standard type/name literals,
 skips no-op string replacements, and copies multipart escapes directly. Custom
 names retain full validation; all duplicate, own-property and snapshot rules
@@ -1058,7 +1088,7 @@ while separating type-only parsing and avoiding an empty-map duplicate lookup.
 
 Three fresh processes per runtime, each with nine alternating samples of
 50,000 calls, compare the exact previous VPM source with the optimized source.
-Median process medians in nanoseconds, **previous VPM → current VPM**:
+Median process medians in nanoseconds, **VPM `bf6666b` → VPM `2097f39`**:
 
 | Case | Node 24 | Bun 1.4 |
 | --- | ---: | ---: |
@@ -1073,9 +1103,9 @@ Median process medians in nanoseconds, **previous VPM → current VPM**:
 | format custom pair | 228 → 194 | 147 → 118 |
 | format many fields | 648 → 495 | 405 → 370 |
 
-Standard single-/two-parameter formatting now beats upstream in the separate
-2.0.1 and 3.0.0 comparisons. Short unquoted Node parsing is near parity with
-both versions; Node multipart parsing still takes 21% and 22% more time,
+Standard single-/two-parameter formatting beat upstream in the separate
+2.0.1 and 3.0.0 comparisons. Short unquoted Node parsing was near parity with
+both versions; Node multipart parsing still took 21% and 22% more time,
 respectively.
 Mixed-case/custom parsing, escaped quoted values and larger Bun formatting maps
 do not all improve uniformly; the full table reports those costs. Long unescaped

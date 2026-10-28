@@ -11,7 +11,7 @@ const plain = result => ({ type: result.type, parameters: { ...result.parameters
 
 test('fixtures are exact published sources with recorded hashes', () => {
   const provenance = require('../PROVENANCE.json');
-  for (const source of [...provenance.sources, provenance.previousImplementation]) {
+  for (const source of [...provenance.sources, provenance.previousImplementation, provenance.multipartBaseline]) {
     assert.equal(createHash('sha256').update(fs.readFileSync(path.join(__dirname, '..', source.fixture))).digest('hex'), source.sha256);
   }
 });
@@ -194,6 +194,33 @@ test('CJS and native ESM expose the same five functions', async () => {
   for (const name of ['create', 'parse', 'format', 'encodeExtended', 'decodeExtended']) assert.equal(esm[name], v[name]);
   assert.equal(esm.default, v);
   assert.equal(Object.isFrozen(v), true);
+});
+
+test('multipart short and span scans agree at boundaries, escapes and incomplete fields', async () => {
+  const current = await latest;
+  const values = ['', 'report.pdf', 'a%22b%0D%0Ac.txt', '%0d%0a%22', '%', '%0', '%2',
+    '%GG%20%2522', '%22%0D%', '\\"ignored', 'é雪\ud800', 'a;b=c', '%22'.repeat(60)];
+  for (const value of values) {
+    for (const size of [0, 1, 28, 29, 30, 31, 32, 33, 120, 125, 126, 127, 128, 129, 256, 4096]) {
+      const padded = value + 'x'.repeat(Math.max(0, size - value.length));
+      for (const suffix of ['"', '"junk; next=ok', '', '"; FILENAME=duplicate']) {
+        for (const options of [{ multipart: true }, { multipart: true, extended: false }, { multipart: false }]) {
+          const header = 'form-data; name="file"; filename="' + padded + suffix;
+          const result = v.parse(header, options);
+          assert.deepEqual(plain(result), plain(current.parse(header, options)), header);
+          assert.equal(Object.getPrototypeOf(result.parameters), null);
+        }
+      }
+    }
+  }
+  for (const multipart of [false, true]) {
+    const options = { multipart };
+    const first = v.parse('form-data; name=""; NAME="ignored"; filename="a%22b"', options);
+    assert.equal(first.parameters.name, '');
+    first.parameters.filename = 'changed';
+    const second = v.parse('form-data; name=""; NAME="ignored"; filename="a%22b"', options);
+    assert.equal(second.parameters.filename, multipart ? 'a"b' : 'a%22b');
+  }
 });
 
 test('short-path names, malformed prefixes and empty duplicates preserve extraction', async () => {

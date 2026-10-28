@@ -26,5 +26,11 @@
     "source": "packages/vcontent-disposition/index.js",
     "fixture": "test/fixtures/vcontent-disposition-bf6666b.cjs",
     "sha256": "89a94e5afa2cd3707b1882fe7ba3c2afef2daf78693eb49e00a491ce0f513b7a"
+  },
+  "multipartBaseline": {
+    "commit": "2097f398cc1becb75ee3239355b9e4563d47120b",
+    "source": "packages/vcontent-disposition/index.js",
+    "fixture": "test/fixtures/vcontent-disposition-2097f39.cjs",
+    "sha256": "823501312739690f133c534dbd9d5847f0595e6a3f8fbc13f0e28263d249cefc"
   }
 }

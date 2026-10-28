@@ -48,6 +48,9 @@ format({ type: 'inline', parameters: { filename: 'report (1).pdf' } });
   character-by-character string building for ordinary values and discarded
   duplicates. Formatting skips replacements when nothing needs escaping and
   copies multipart escape spans directly. Performance varies by operation and runtime; see the measurements.
+- Parsing reuses literal keys for standard lowercase parameter names. Very short
+  multipart fields decode while locating the closing quote; larger fields retain
+  native span searches. Result maps remain independent and have null prototypes.
 
 The five named functions follow the 2.x/3.x API. The old callable 0.x/1.x export
 is not implemented. Unknown option keys are ignored. Options may be an object,
@@ -141,14 +144,16 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
 
-Twenty tests cover both upstream baselines, 15,000 generated parser cases against
+Twenty-one tests cover both upstream baselines, 15,000 generated parser cases against
 3.0.0, all 256 byte values in encoding/Latin-1 decoding, malformed escapes,
 quoted/multipart recovery, duplicate names, prototype isolation, input validation,
 getter reads, long values, lone surrogates, and CJS/ESM exports. Fixture hashes
 are verified. The performance follow-up adds 1,134 standard/custom-name parsing
 cases, 5,000 generated formatting comparisons with the previous VPM commit, and
 accessor/duplicate tests for one, two, and many parameters. These are VPM tests,
-not a claim to run the full upstream suite.
+not a claim to run the full upstream suite. The multipart follow-up adds 2,496
+comparisons around scan boundaries, malformed and incomplete escapes, unfinished
+fields, duplicate names, Unicode, and ordinary versus multipart parsing.
 
 The shared integration gate aliases this package into real Express alongside all
 other VPM replacements. It checks download and attachment output for Unicode,
@@ -167,6 +172,8 @@ node packages/vcontent-disposition/bench/compare.cjs latest
 bun packages/vcontent-disposition/bench/compare.cjs latest
 node packages/vcontent-disposition/bench/compare.cjs previous
 bun packages/vcontent-disposition/bench/compare.cjs previous
+node packages/vcontent-disposition/bench/multipart.cjs
+bun packages/vcontent-disposition/bench/multipart.cjs
 ```
 
 The harness checks output equality before timing, warms both implementations,
@@ -179,7 +186,70 @@ timing. This avoids measuring the first transition from a type-only parser to
 parameter parsing during runtime optimization. Custom names, mixed casing and
 larger parameter maps are included alongside the standard download fields.
 
+### Multipart parsing follow-up
+
+The remaining short multipart cost came from fresh sliced strings used as map
+keys and a separate quote search, value copy, and percent-escape scan. The parser
+now reuses literal `name`, `filename`, and `filename*` keys after exact matching.
+When fewer than 32 code units remain in the header, it can decode a quoted
+multipart field while locating its closing quote. Longer fields keep the span
+scanner, and discarded duplicates skip decoding. The small bound avoids
+character-by-character construction of medium and long values.
+
+Validation, option getter reads, first-value behavior, extended-value precedence,
+and malformed-input recovery are unchanged. An unfinished quoted field is still
+discarded. Every result retains a fresh null-prototype map; no shared prototype
+or parsed-result cache was introduced.
+
+Recorded on **2026-10-27**, Node **24.22.1** and Bun **1.4.0**, macOS arm64.
+Three fresh processes per runtime compare the exact `2097f39` implementation,
+upstream 2.0.1, upstream 3.0.0, and current VPM in the same process. Each case
+uses nine samples with rotating implementation order; results are consumed and
+outputs checked before timing. Samples use 50,000 calls for short headers and
+5,000 for headers over 500 code units. All cases warm for 5,000 calls before
+timing any case, then each case warms for up to 20,000 calls per implementation.
+
+The table gives the median of three process medians in nanoseconds per call;
+ratios are medians of the three paired ratios against upstream 3.0.0.
+
+| Multipart case | Node previous → now | Node / upstream 3 | Bun previous → now | Bun / upstream 3 |
+| --- | ---: | ---: | ---: | ---: |
+| plain fields | 310 → 304 | 0.91 | 480 → 192 | 0.49 |
+| short escapes | 424 → 322 | 0.92 | 628 → 197 | 0.49 |
+| lowercase escapes | 424 → 323 | 0.92 | 552 → 199 | 0.50 |
+| unknown escapes | 354 → 356 | 0.93 | 588 → 228 | 0.51 |
+| mixed-case names | 446 → 408 | 1.16 | 800 → 423 | 1.01 |
+| unterminated field | 270 → 310 | 1.04 | 360 → 199 | 0.54 |
+| 31-character suffix | 419 → 414 | 0.94 | 660 → 281 | 0.54 |
+| 32-character suffix | 422 → 370 | 0.84 | 699 → 287 | 0.53 |
+| 127-character suffix | 426 → 376 | 0.39 | 698 → 296 | 0.24 |
+| 128-character suffix | 425 → 374 | 0.38 | 581 → 294 | 0.24 |
+| dense escapes | 6,658 → 6,642 | 2.29 | 7,433 → 5,866 | 2.04 |
+| 8 KiB sparse escapes | 814 → 764 | 0.02 | 977 → 731 | 0.02 |
+| 8 KiB plain | 746 → 696 | 0.02 | 868 → 631 | 0.01 |
+| discarded duplicate | 617 → 385 | 0.12 | 690 → 300 | 0.11 |
+
+The original short escaped multipart case takes **24–25% less time
+on Node than the prior VPM implementation**, and **6–7% / 7–8% less
+than upstream 2.0.1 / 3.0.0** in these three runs. Bun takes
+**67–69% less than prior VPM**. The separate whole-API comparison
+also includes the same multipart case and retains the earlier formatting gains.
+
+This is not a claim that every multipart header is faster. Mixed-case names and
+long, densely escaped values remain slower than upstream; unfinished short
+quoted fields can cost more than prior VPM because the scanner decodes before
+finding that the closing quote is absent. Long plain/sparsely escaped values
+retain their span-scanning gains. No application-throughput gain is claimed.
+
+Raw results include every sample and hashes for all four implementations and the harness: Node [run 1](bench/multipart-node24-1.json), [run 2](bench/multipart-node24-2.json), [run 3](bench/multipart-node24-3.json); Bun [run 1](bench/multipart-bun14-1.json), [run 2](bench/multipart-bun14-2.json), [run 3](bench/multipart-bun14-3.json).
+
+The exact [prior VPM source](test/fixtures/vcontent-disposition-2097f39.cjs) is retained and hash-checked by the tests. Separate whole-API runs: [Node](bench/multipart-overall-node24.json), [Bun](bench/multipart-overall-bun14.json).
+
 ### Performance follow-up
+
+These historical measurements describe commit `2097f39`. The multipart follow-up
+above supersedes its parser measurements; the formatting implementation remains
+the same.
 
 The first implementation allocated a values array and a set for every multi-field
 format, repeatedly used the general validation/case-folding paths for standard
@@ -253,7 +323,7 @@ Separate current-upstream comparisons retain every sample and source hash: [Node
 
 These historical tables describe commit `bf6666b`, with per-case warm-up only.
 They are retained with their original source hashes; the follow-up above is the
-current implementation.
+first performance follow-up; the multipart section above describes the current parser.
 
 One sequential run on **2026-10-27**, Node **24.22.1** and Bun **1.4.0**
 on macOS arm64. Medians in **nanoseconds per call**, upstream **2.0.1 → VPM**:
