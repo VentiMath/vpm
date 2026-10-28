@@ -274,11 +274,16 @@ test('normal custom stack hook and its descriptor survive warning capture', () =
   try {
     Error.prepareStackTrace = hook;
     const descriptor = Object.getOwnPropertyDescriptor(Error, 'prepareStackTrace');
+    // Older V8 and Bun may invoke the formatter while creating/replacing an
+    // Error's stack. Compare that native cost, rather than assuming laziness.
+    const probe = new Error();
+    Object.defineProperty(probe, 'stack', { value: 'replacement' });
+    const nativeCalls = calls;
+    calls = 0;
     const lib = library(depd);
     const received = events(() => lib.old());
     assert.match(received[0].stack, /deprecated/);
-    // Bun eagerly formats the new Error used for event delivery.
-    assert.equal(calls, process.versions.bun ? 1 : 0);
+    assert.equal(calls, nativeCalls);
     assert.deepEqual(Object.getOwnPropertyDescriptor(Error, 'prepareStackTrace'), descriptor);
     assert.equal(new Error().stack, 'custom stack');
   } finally {
