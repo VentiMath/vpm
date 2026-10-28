@@ -1,0 +1,39 @@
+{
+  "name": "vrouter",
+  "version": "0.1.0",
+  "description": "Express 5-compatible routing with isolated matchers and validated handler registration",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vrouter"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vrouter",
+  "dependencies": {
+    "vdebug": "workspace:*",
+    "vdepd": "workspace:*",
+    "vparseurl": "workspace:*",
+    "vpath-to-regexp": "workspace:*"
+  }
+}

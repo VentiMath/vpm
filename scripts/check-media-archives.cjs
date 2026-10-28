@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vdepd', 'vpath-to-regexp', 'vproxy-addr', 'vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vrouter', 'vparseurl', 'vdepd', 'vpath-to-regexp', 'vproxy-addr', 'vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const version = require(path.join(root, 'packages', name, 'package.json')).version;
     const archive = name + '-' + version + '.tgz';
@@ -26,6 +26,11 @@ try {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
+    }
+    if (name === 'vrouter') {
+      assert.deepEqual(metadata.dependencies, { vdebug: '0.1.0', vdepd: '0.1.0', vparseurl: '0.1.0', 'vpath-to-regexp': '0.1.0' });
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', 'lib/layer.js', 'lib/route.js', 'lib/handlers.js', 'lib/regexp.js'].sort());
     }
     if (name === 'vdepd') {
       assert.equal(metadata.dependencies, undefined);
@@ -75,6 +80,11 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const Router = require('vrouter');
+const router = Router(); let routed;
+router.get('/:id', (req, res) => { routed = req.params.id; res.end(); });
+router({ url: '/42', method: 'GET' }, { end() {} }, error => { throw error || new Error('missed route'); });
+assert.equal(routed, '42'); assert.equal(router.stack[0].route instanceof Router.Route, true);
 const depd = require('vdepd');
 process.env.NO_DEPRECATION = '*';
 const warn = depd('archive');
@@ -162,6 +172,12 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import Router, { Route } from 'vrouter';
+assert.equal(Router.Route, Route);
+const router = new Router(); let routed;
+router.get('/:id', (req, res) => { routed = req.params.id; res.end(); });
+router({ url: '/42', method: 'GET' }, { end() {} }, error => { throw error || new Error('missed route'); });
+assert.equal(routed, '42');
 import depd from 'vdepd';
 process.env.NO_DEPRECATION = '*';
 const warn = depd('archive');
@@ -241,7 +257,17 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import Router, { Route as RouterRoute } from 'vrouter';
 import depd from 'vdepd';
+const router = new Router();
+router.get('/:id', (req, res, next) => { const id: string | string[] | undefined = req.params.id; res.end(String(id)); next(); });
+router.use('/x', [(req, res, next) => next()]);
+new Router.Route('/').get((req, res) => res.end(req.url));
+new RouterRoute('/').get((req, res) => res.end(req.url));
+// @ts-expect-error invalid handler
+router.get('/x', false);
+// @ts-expect-error invalid options
+Router({ strict: 'no' });
 const warn = depd('archive'); warn('message');
 class DeprecatedClass { constructor(readonly value: number) {} }
 const WrappedClass = warn.function(DeprecatedClass);
@@ -463,6 +489,7 @@ globalThis.browserChecked = true;
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vrouter\/index\.d\.ts/);
     assert.match(output, /node_modules\/vdepd\/index\.d\.ts/);
     assert.match(output, /node_modules\/vpath-to-regexp\/index\.d\.ts/);
     assert.match(output, /node_modules\/vproxy-addr\/index\.d\.ts/);
