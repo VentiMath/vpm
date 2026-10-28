@@ -112,10 +112,10 @@ of 162 valid subnet masks, 5,000 subnet operations checked with independent BigI
 arithmetic, and 3,000 classifications compared with the 2.5.0 snapshot.
 
 The integration gate loads `vipaddr` through `vproxy-addr`, replacing the
-`proxy-addr` 2.0.8 caller in Express 5.3.0. Nine added HTTP checks cover IPv4/mapped
+`proxy-addr` 2.0.8 caller in Express 5.3.0. HTTP checks cover IPv4/mapped
 subnet equivalence, native
 IPv6 subnet boundaries, compatible-versus-mapped IPv6, family separation and
-malformed proxy addresses. The shared gate runs **217 HTTP checks** on Node 24
+malformed proxy addresses. The shared gate runs HTTP checks on Node 24
 and Bun. Archive checks install the package using npm and Bun, exercise both
 runtimes' CommonJS/ESM imports, verify the eight-file archive and compile TypeScript
 7.0.2 consumers without Node, Undici or DOM ambient declarations.
@@ -128,6 +128,8 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

@@ -80,7 +80,7 @@ identity/rejection, accessors, symbols, `__proto__`, invalid callbacks, isolated
 prototype installation/conflicts, proxy enumeration/trap order, revoked proxies,
 reserved intrinsic decorations, borrowed status getters, CJS/ESM imports and
 1,000 generated comparisons.
-The shared gate passes **160 HTTP checks** on Node 24.22.1 and Bun 1.4.0. Its real
+The shared gate passes HTTP checks on Node 24.22.1 and Bun 1.4.0. Its real
 Express `app.listen()` checks include successful startup, a late error after
 startup, and EADDRINUSE; state-shaped callback metadata cannot suppress the
 callback. Packed archives pass npm/Bun installation, Node/Bun CJS/ESM consumers,
@@ -94,6 +94,8 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

@@ -116,7 +116,7 @@ isolation, getter substitution, genuine/cross-realm Dates, secret-free errors,
 large headers, age overflow, and CJS/ESM imports.
 
 The shared integration gate aliases `cookie` 0.7.2 to `vcookie` and runs
-**159 HTTP checks** through Express 5.3.0, Functions Framework 5.0.2 and
+HTTP checks through Express 5.3.0, Functions Framework 5.0.2 and
 Firebase Functions 7.4.0 on Node 24.22.1 and Bun 1.4.0. Cookie checks include
 plain, Unicode, JSON, signed and custom-encoded values, all attributes,
 Express's millisecond-to-second age conversion, clearing cookies, duplicate
@@ -138,6 +138,8 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 bun run check:docs
 ```
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

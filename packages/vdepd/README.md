@@ -107,8 +107,8 @@ callers, browser behavior and provenance. Node 24 runs all 48. Bun runs 46, with
 two explicitly skipped V8-specific checks. Upstream test sources are retained
 for reference, not claimed as an executed upstream suite.
 
-The shared Express/Functions Framework gate runs 217 HTTP checks on each runtime,
-including seven new requests for redirect, request-handler, parameter-handler
+The shared Express/Functions Framework gate runs HTTP checks on each runtime,
+including requests for redirect, request-handler, parameter-handler
 and error-handler warnings, with repeat-warning suppression. Archive checks
 install with npm and Bun, exercise Node/Bun CJS/ESM and TypeScript 7 consumers,
 verify all eight shipped files, and test browser-condition resolution plus a
@@ -132,6 +132,8 @@ or `bun add /tmp/vdepd-0.1.0.tgz`. Registry publication and automatic substituti
 for upstream names are not provided. Engines remain Node >=20; local performance
 measurements target Node 24 and Bun. The existing CI matrix also verifies older
 supported Node runtimes.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

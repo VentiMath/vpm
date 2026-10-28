@@ -72,7 +72,7 @@ invalid existing headers, duplicate casing, getters, response methods and header
 arrays, no-op writes, 2,000-field merges, prototype-shaped names and CJS/ESM imports.
 
 The shared integration gate aliases VPM into real Express and CORS callers and
-runs **159 HTTP checks** on Node 24.22.1 and Bun 1.4.0. Added response cases cover
+runs HTTP checks on Node 24.22.1 and Bun 1.4.0. Added response cases cover
 arrays, tab-separated fields, case-insensitive duplicates, wildcards and invalid
 fields; existing negotiation and preflight checks exercise Vary behavior too.
 Packed npm/Bun archives pass Node/Bun CJS/ESM consumers and strict TypeScript
@@ -87,6 +87,8 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

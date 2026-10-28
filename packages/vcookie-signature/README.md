@@ -72,9 +72,8 @@ matches and mismatches both reach native `timingSafeEqual` with 43-byte buffers,
 including a 100,000-character value.
 
 The shared gate aliases Express's signing calls to VPM and verifies real HTTP
-cookies, including tampered and padded signatures. Both packages added in this
-change run in **159 HTTP checks** through Express 5.3.0, Functions Framework 5.0.2
-and Firebase Functions 7.4.0 on Node 24.22.1 and Bun 1.4.0. Signature expectations
+cookies, including tampered and padded signatures, through Express 5.3.0,
+Functions Framework 5.0.2 and Firebase Functions 7.4.0 on Node and Bun. Signature expectations
 also use an unaliased upstream fixture. Packed archives install under npm and
 Bun, pass Node/Bun CJS/ESM checks, and compile with strict TypeScript 7.0.2 without
 Node, Undici or DOM ambient types.
@@ -87,6 +86,8 @@ node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

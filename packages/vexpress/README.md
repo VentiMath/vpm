@@ -142,11 +142,13 @@ two overlong filesystem paths, three non-chunked transfer-coding cases, and one
 invalid header containing a newline. The [conformance harness](../../scripts/express-conformance/README.md)
 records every adaptation and provides unadapted/control commands.
 
-The shared integration gate runs **242 HTTP checks on each runtime**, replacing
+The shared integration gate runs HTTP checks, replacing
 Express itself in Functions Framework 5.0.2 and firebase-functions 7.4.0 as well
 as the dependency packages. npm/Bun archive consumers check CJS/ESM imports and
 TypeScript 7 without ambient platform types. These fixtures do not deploy VPM
 into the production application.
+
+Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 
 ## Benchmarks
 

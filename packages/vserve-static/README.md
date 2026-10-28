@@ -5,7 +5,7 @@ helpers. A counterpart to `serve-static` 2.2.1 for Node.js 20+ and Bun.
 
 Its four direct runtime dependencies are `vencodeurl`, `vescape-html`,
 `vparseurl`, and `vsend`. Including transitive dependencies, its external runtime
-tree contains fifteen VPM packages. No additional prerequisite package was needed.
+tree contains fifteen VPM packages.
 
 ## Use
 

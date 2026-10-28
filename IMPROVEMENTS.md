@@ -53,169 +53,102 @@ that these replacements have already improved application performance.
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
 | [vnode-types](packages/vnode-types) | @types/node 22.20.5 | Complete Node 22 declarations using VPM web types, a smaller loaded compiler graph, and compatibility for legacy Node type references. |
 
-Every runtime package includes TypeScript declarations, CommonJS and ES module import
-support, an explicit Node.js 20+ baseline, tests exercised on Node.js and Bun,
-and documented origins and licenses. Consumers do not need a separate types
-package. The two declaration-only packages have separate Node API and compiler
-baselines, described below. Test fixtures and benchmarks stay out of installable archives.
+## Current verification
 
-Most runtime replacements preserve their dependency counts. Both versions of
-each utility have zero external runtime dependencies, except
-`on-finished` / `von-finished`, `debug` / `vdebug`, `negotiator` / `vnegotiator`, and `mime-types` /
-`vmime-types`, which each declare one,
-`accepts` / `vaccepts` and `proxy-addr` / `vproxy-addr`, which each declare two,
-`type-is` / `vtype-is`, which each declare three,
-`serve-static` / `vserve-static`, which each declare four,
-`finalhandler` / `vfinalhandler`, which each declare six,
-`body-parser` / `vbody-parser`, which each declare nine,
-`send` / `vsend`, which each declare eleven, and `http-errors` /
-`vhttp-errors`, which declare **five and one**, respectively; and
-`iconv-lite` / `viconv-lite`, which declare **one and zero**, and
-`raw-body` / `vraw-body`, which declare **four and three**; and
-`qs` / `vqs`, which declare **two and zero**; and
-`once` / `vonce`, which declare **one and zero**; and
-`router` / `vrouter`, which declare **five and three**; and
-`express` / `vexpress`, which each declare **28**.
-`cors` declares **two** runtime dependencies; `vcors` declares **one**, `vvary`.
-It removes the `object-assign` shim and the per-request options copy.
-`von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
-with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
-`vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
-not external packages.
+The root suite contains **1,325 tests**: all pass on Node 24, and Bun passes
+1,322 with three documented runtime-specific skips. All 41 runtime packages'
+public declarations compile without ambient Node, Undici or DOM types. The
+catalog covers **43 packages**, including two declaration-only packages.
 
-`vrouter` uses three direct VPM dependencies (`vdebug`, `vdepd`,
-and `vpath-to-regexp`), with `vms` bringing its external tree to four packages.
-Its thenable inspection is inline; it does not depend on `is-promise`.
+Runtime packages support Node.js 20+ and Bun, include their own TypeScript
+declarations, and provide CommonJS and native ES module imports. CI runs the
+package and integration suites on Node 20, 22, 24 and Bun; current performance
+work targets Node 24 and Bun. Separate archive gates verify npm/Bun installation,
+exported files, module imports and TypeScript 7 consumers. Test fixtures and
+benchmarks are excluded from installable archives.
 
-`vexpress` completes the Express 5 application layer with 28 direct and 39 total
-external runtime dependencies, all VPM packages. Its upstream reference and
-template engines in the isolated compatibility harness are test-only fixtures.
+The [Express conformance suite](scripts/express-conformance/README.md) adds
+1,261 upstream tests on Node 24, with documented expectation changes for VPM
+behavior. Bun runs 1,255 with six upstream-reproduced runtime limitations.
+These are separate from the root test count.
 
-`vsend` uses eleven direct VPM dependencies, with `vee-first` and `vmime-db`
-bringing its complete external dependency tree to thirteen VPM packages.
-`vserve-static` completes the modern static-file path with four direct and fifteen
-total external VPM dependencies. Its dependencies are all existing VPM packages.
-`vtype-is` uses `vcontent-type`, `vmedia-typer`, and `vmime-types` directly,
-with `vmime-db` bringing its complete external tree to four VPM packages.
-`vaccepts` also has four total external dependencies: `vnegotiator`,
-`vcontent-type`, `vmime-types`, and `vmime-db`.
-`vraw-body` uses `vbytes`, `vhttp-errors` and `viconv-lite`, with `vstatuses`
-bringing its complete external dependency tree to four VPM packages.
-`vqs` eliminates qs's full tree of **18 distinct external runtime packages**,
-using native Map, WeakMap and Object.defineProperty. Other application packages
-may still need some of those upstream helpers.
-`vbody-parser` uses nine direct and fifteen total external VPM dependencies,
-combining the existing body, codec, form, media-type, error and lifecycle packages.
+## Dependency scope
+
+The Express application stack is implemented throughout: `vexpress` has 28 direct
+and 39 total external runtime dependencies, all VPM packages. `vcors` uses only
+`vvary`. Built-in Node modules are not external dependencies.
+
+| Replacement | Upstream direct dependencies | VPM direct dependencies |
+| --- | ---: | ---: |
+| `vhttp-errors` | 5 | 1 |
+| `viconv-lite` | 1 | 0 |
+| `vraw-body` | 4 | 3 |
+| `vqs` | 2 | 0 |
+| `vonce` | 1 | 0 |
+| `vrouter` | 5 | 3 |
+| `vcors` | 2 | 1 |
+
+Other runtime replacements retain their direct dependency counts. `vqs` removes
+an 18-package transitive tree from that branch; packages elsewhere may still need
+some of those helpers. `vdebug` uses built-in terminal detection instead of
+loading the optional `supports-color` peer. `vrouter` handles thenables internally.
+
+The complete external VPM trees contain 13 packages for `vsend`, 15 for
+`vserve-static` and `vbody-parser`, and four each for `vrouter`, `vtype-is`,
+`vaccepts` and `vraw-body`. Each package README describes its own dependencies.
 
 ## The target dependency graph
 
-VPM's targets come from [ventimath](https://github.com/johnclyde-org/ventimath-private)'s
-Cloud Functions gen 2 HTTP path. The reproducible consumer fixture also tests
-parent upgrades before choosing which dependencies to replace. Its current
-upgrade target is Functions Framework 5.0.2 serving `firebase-functions` 7.4.0
-`onRequest` handlers through Express 5.3.0, `body-parser` 2.4.0, `router` 2.2.0,
-`send` 1.2.1, `serve-static` 2.2.1, and `cors` 2.8.6. Updating this fixture does not update or
-deploy the application. The fixture pins `qs` 6.17.0 within Express and body-parser's
-declared ranges, replacing its earlier 6.16.1 resolution. The runtime packages above target the corresponding upstream
-versions in this graph. The platform types instead come from VPM's development
-dependencies. `jsonwebtoken` 9.0.3 reaches `ms`, and the proxy agents
-under `firebase-admin` reach `debug`.
+Targets come from a Cloud Functions gen 2 backend. The reproducible
+[consumer fixture](scripts/consumers/package.json) pins Functions Framework 5.0.2,
+Firebase Functions 7.4.0, Express 5.3.0, body-parser 2.4.0, router 2.2.0,
+send 1.2.1, serve-static 2.2.1, cors 2.8.6 and qs 6.17.0. This is an isolated
+compatibility target; changing it does not upgrade or deploy an application.
 
-The fixture previously pinned Express 5.2.1 and `body-parser` 2.2.2, both of
-which requested `content-type ^1.0.5`. Upgrading those parents to
-[Express 5.3.0](https://github.com/expressjs/express/releases/tag/v5.3.0) and
-[body-parser 2.4.0](https://github.com/expressjs/body-parser/releases/tag/v2.4.0)
-removes 1.x and consolidates three installed copies into one `content-type`
-2.1.0 shared by Express, body-parser, type-is, and negotiator. No parser override
-is needed. An override alone would be incorrect: the old body-parser passes
-the request object to `parse()`, while 2.x accepts a header string, causing
-the old caller to silently lose charset information. This makes 2.x the
-`vcontent-type` compatibility baseline. The newer
-[content-type 3.x](https://github.com/jshttp/content-type/releases/tag/v3.0.0)
-requires Node 22 and is ESM-only; current consumers request 2.x, and VPM retains
-its Node 20 and CommonJS contracts.
+Parent versions determine replacement baselines. Express 5.3.0 and body-parser
+2.4.0 use content-type 2.1.0, shared with type-is and negotiator. Older callers
+passed a request object where 2.x requires a string, so overriding their parser
+alone would lose charset information. Firebase Functions 7.4.0 removes the
+previous Express 4 branch. Platform types have their own documented baselines.
 
-Three facts about that path shape the gate below. The framework disables
-Express ETags on its own application, so conditional requests to plain handlers
-never reach `etag` or `fresh`; Express applications deployed as handlers and
-files served by `send` still use them. `firebase-functions` answers errors
-thrown by a handler itself, with a structured log and a plain 500, so
-`finalhandler` only serves Express applications. The framework's own
-`body-parser` runs first, so an application's body limits are never consulted.
+The fixture also includes Firebase Admin and jsonwebtoken consumers: expiry
+durations reach `vms`, and proxy agents reach `vdebug`. The wider frameworks,
+authentication libraries and Google SDKs still contain upstream dependencies.
+A complete VPM Express tree does not mean the entire backend has been replaced.
 
-Express 4 is gone from that graph: `firebase-functions` 7.3.2 moved its only
-Express use, the local development binary, to Express 5, so the fixture's upgrade
-to 7.4.0 removed the nested branch (`finalhandler` 1.3.2, `send` 0.19.2,
-`serve-static` 1.16.3, `fresh` 0.5.2, `debug` 2.6.9, `ms` 2.0.0, `mime-types`
-2.1.35). Still not covered: `form-data` 2.5.5, reached only through
-`@types/request` under `firebase-admin`'s `retry-request`, reads `mime-types`
-2.1.35 with `mime-db` 1.52.0 and is never loaded at runtime, and the development
-dependency `node-mocks-http` 1.17 still pins `fresh` 0.5.2, `range-parser` 1.2
-and `type-is` 1.6. The gate reports such copies instead of aliasing them.
+Uncovered versions are reported rather than silently substituted. In this graph,
+`form-data` 2.5.5 arrives through `@types/request` under `retry-request` and brings
+mime-types 2.1.35 and mime-db 1.52.0. That branch is not exercised by the runtime
+gate. Separate development fixtures can also retain older HTTP utility versions.
 
 ### The integration gate
 
-[`scripts/integration.cjs`](scripts/integration.cjs) is a required CI job on
-Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
-pins the consumer upgrade target above. The gate aliases
-every VPM runtime package into every installed copy of its upstream, inside its own
-process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct parser app, and runs 242
-HTTP checks. Firebase Functions' CORS middleware is replaced by vcors, including
-origin/header reflection, repeated global-regex checks, denied dynamic policies,
-duplicate callbacks and preflight framing. Express 5.3.0 itself is now replaced by vexpress, including the
-framework's internal app. New checks cover binary-view response bytes, generated
-response framing, bodyless statuses and own header fields. Existing checks cover
-RegExp route state and captures, prototype-named param callbacks,
-merged parameters, single-read thenables, automatic HEAD/OPTIONS; Express redirect and router thenable deprecations with repeat-warning
-suppression; route parameters, wildcards, optional groups, encoded and malformed URI
-segments, array routes, mount boundaries, strict/case-sensitive routes, and
-proxy address chains and Express `req.ip`/`req.ips` under disabled,
-unrestricted, hop-count and subnet trust, including tab-separated proxies, mapped/native IPv6 boundaries and malformed addresses, and
-stopping at untrusted hops; Express listen startup, followed by a late error, and EADDRINUSE
-callbacks with state-shaped metadata; application mixins with symbol getters;
-request media-type matching, uppercase and structured-suffix parser
-patterns, response negotiation across all four Accept headers, invalid quality
-weights, empty headers, parameter specificity, and `res.format()` including 406
-responses and Vary/Content-Type headers; JSON bodies and malformed
-bodies, exact/over-limit bodies with explicit lengths and chunked framing,
-UTF-8 byte counts, gzip expansion and corruption, malformed limits and deliberate limit omission,
-disconnected request settlement and raw-buffer verification callbacks,
-large form limits without 32-bit truncation, frozen verifier errors and primitive reviver failures,
-extended queries and nested form fields, duplicate fields, malformed percent
-escapes, prototype guards, Latin-1 sentinels, query depth and parameter limits,
-legacy and Unicode charset decoding, separately delivered GB18030/Big5/UTF-7 chunks,
-UTF-16 decoding and unsupported charset rejection, weighted Accept
-negotiation with quoted commas, preservation of Content-Type parameters when
-Express changes the charset, CORS preflight, `res.set('Content-Type')` with syntax upstream
-tolerated, conditional requests with quoted-comma tags and forced reloads,
-redirect encoding and escaping, `sendFile` and `serve-static` with ranges,
-HEAD, mounted-root redirects, static redirect/405 framing, download and empty-file
-callbacks, Unicode/quoted/percent/control-character download and attachment filenames,
-plain/Unicode/JSON/signed cookies, expiration and clearing, custom encoding,
-duplicate request cookies and rejected header injection, signed-cookie verification
-and tampering, tab-separated Vary fields, wildcard collapse and invalid Vary rejection,
-extension fallback, dotfile policy,
-strong preconditions, directory redirects, cache ages from duration strings,
-thrown HTTP errors with headers, conflicting framing headers, an error after an accepted
-404, `jsonwebtoken` expiry durations, and `DEBUG` output from each consumer
-namespace. VPM exports are instrumented before their parents load, so transitive
-calls count too. It fails if a target has no aliased installed copy or is never
-reached; other versions are reported as uncovered. Dependency traversal includes
-packages that hide their manifests through `exports`. The gate also requires
-one shared `content-type` 2.x copy and verifies that all four callers are included.
-Earlier per-package integration
-scripts were replaced by this gate; the bugs that review found in
-`vfinalhandler` and `vmime-types` were only visible through real consumers.
+[`scripts/integration.cjs`](scripts/integration.cjs) runs **242 HTTP checks per
+runtime**. It substitutes matching package versions inside its own process, serves
+Firebase `onRequest` handlers and Express applications through Functions
+Framework, and exercises a direct parser application. Its coverage includes:
 
-`vhttp-errors` keeps only `vstatuses`; native operations and local constructor
-naming replace `inherits`, `setprototypeof`, and `toidentifier`. Invalid non-error
-statuses normalize to 500, removing the associated deprecation behavior and
-`depd`. Other packages in an application may still depend on those upstream helpers.
+- Routing, parameters, wildcards, mounted applications, async errors, HEAD/OPTIONS,
+  proxy trust, IPv4/IPv6 addresses and deprecation warnings.
+- JSON, forms, raw/text bodies, compression, charset conversion, request limits,
+  disconnected streams, malformed inputs and query parsing.
+- Response negotiation, status/framing rules, headers, cookies and signatures,
+  downloads, static files, ranges, validators and redirects.
+- CORS reflection, allow/deny decisions, repeatable RegExp policies, duplicate
+  callbacks, cache variation and preflight framing.
+- Application startup callbacks, symbol descriptors, JWT expiry durations and
+  debug output from real consumers.
 
-`vfinalhandler` connects all eight preceding VPM packages: six direct dependencies,
-plus `vee-first` through `von-finished` and `vms` through `vdebug`. Its entire
-external runtime dependency tree now consists of VPM counterparts.
+The gate checks that every configured target is installed and exercised. VPM
+exports are instrumented before consumers load, so calls through VPM dependencies
+count too. It checks the single shared content-type 2.x copy and its four callers.
+Version mismatches remain visible in its report.
+
+Consumer configuration affects reachability. Functions Framework disables ETags
+on its own app, so validator tests also use application responses and static files.
+Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
+through Express applications. Framework body parsing runs before handlers, so
+parser-specific limits are also checked in a direct application.
 
 ## vcors
 
@@ -247,7 +180,7 @@ values retain the general validator, captured values and method receivers.
 regressions on Node and Bun. Tests cover descriptor/getter snapshots, regex state,
 large/deep/cyclic policies, callback errors and duplication, cache variation,
 invalid headers and real HTTP framing. The shared Functions Framework/Firebase
-gate passes 242 HTTP checks per runtime. npm/Bun six-file archives pass CJS/ESM
+gate covers these paths on both runtimes. npm/Bun six-file archives pass CJS/ESM
 runtime and TypeScript 7 consumer checks without ambient platform types.
 
 **Performance:** three fresh processes on Node 24 and Bun compare both upstream
@@ -824,7 +757,7 @@ inherited options, unsafe counts, and decimal edge cases deliberately change.
 Consumers checking for a null invalid result must migrate to exception handling.
 Tests include 12,000 generated rational-oracle parses, 30,000 generated formatting
 comparisons, and a pinned, unmodified upstream fixture with source provenance.
-All 108 HTTP checks pass with `vbytes` substituted into real `body-parser` and
+The shared HTTP gate substitutes `vbytes` into real `body-parser` and
 `raw-body` calls: exact/over-limit JSON and binary requests, chunked framing,
 UTF-8 byte lengths, gzip expansion, invalid limits, and omitted limits. The
 archive gate installs packed packages through npm and Bun, runs both runtimes
@@ -894,7 +827,7 @@ single-byte tests exercise every byte and all 65,536 UTF-16 code units across
 81 tables; multibyte tests cover a corpus containing every byte pair in seven
 encodings. There are 3,200 generated malformed/chunked comparisons, split/BOM
 matrices, stream lifecycle tests, and installed archive checks. The shared HTTP
-gate now runs 120 requests, with this package used by real `body-parser` and
+gate exercises this package through real `body-parser` and
 `raw-body`, including deliberately split GB18030, Big5 and UTF-7 bodies.
 
 **Measured performance:** sequential local Node 24.22.1 / Bun 1.4.0 measurements
@@ -1131,12 +1064,9 @@ assertion changes for existing VPM dependency behavior and no skipped tests.
 Bun passes **1,255 with six pending** cases that fail identically against unchanged
 Express. The [isolated harness](scripts/express-conformance/README.md) explains
 each adaptation and runtime limitation; comparison dependencies are test-only.
-The shared Functions Framework/Firebase gate passes **242 HTTP checks per runtime**
-with Express itself replaced. npm/Bun package archives contain thirteen vexpress
+The shared Functions Framework/Firebase gate exercises Express itself as a replacement. npm/Bun package archives contain thirteen vexpress
 files and pass CJS/ESM and TypeScript 7 consumer checks without ambient platform
-types. The root suite covers **1,325 tests** (Bun has three existing runtime skips),
-public declarations cover **41 runtime packages**, and documentation covers
-**43 packages**. No production deployment is implied by these fixture results.
+types. Shared totals are recorded under [current verification](#current-verification).
 
 **Performance:** the [package report](packages/vexpress/README.md#benchmarks)
 compares upstream, upstream with VPM dependencies, and vexpress in three fresh
@@ -1194,16 +1124,12 @@ native `node:url.parse` directly, without a disposable request or redundant cach
 entry. This removes vparseurl from the router's dependency list. These choices
 preserve the standalone dependencies' public behavior.
 
-**Verification at the router follow-up (before vexpress):** 52 package tests on each runtime, including upstream parity,
+**Verification:** 52 package tests on each runtime, including upstream parity,
 all HTTP methods, async errors, parameter concurrency, deep dispatch, RegExp
 capture/state cases, 300 generated URL comparisons and 3,361 additional complex
 URL pathname comparisons. Explicit tests preserve invalid-input handling, getter
-read counts and independence from mutable shared parse results. The shared gate passes
-**228 HTTP checks per runtime**, including eleven new router requests through real
-Express/Functions Framework consumers. The full suite passes **1,211 Node tests**
-and **1,208 Bun tests with three runtime-specific skips**. Public declarations
-cover **39 runtime packages**; the central inventory and README gate cover
-**41 packages**. npm/Bun archive consumers check ten-file contents, three rewritten
+read counts and independence from mutable shared parse results. The shared gate includes router requests through real
+Express/Functions Framework consumers. npm/Bun archive consumers check ten-file contents, three rewritten
 VPM dependency versions, CJS/ESM runtime imports and TypeScript 7 without ambient
 platform types. Upstream router tests are retained for reference, not counted as
 executed verbatim.
@@ -1273,11 +1199,9 @@ skips. Thirty tests apply the same public contract to upstream and VPM. Tests
 also cover prototype/receiver writes, constructors, metadata, strict namespaces,
 private state, deep callers, throwing capture, hook restoration and browser
 behavior. Original upstream suites are retained as reference, not counted as run.
-The shared HTTP gate now runs **235 checks per runtime**, with seven new
-Express/router requests. npm/Bun archive installs verify eight-file contents,
+The shared HTTP gate exercises Express/router warning behavior. npm/Bun archive installs verify eight-file contents,
 CJS/ESM, browser conditions/bundling, and TypeScript 7 without ambient platform
-types. Current shared test, declaration and documentation coverage is recorded in the
-`vexpress` section.
+types. See [current verification](#current-verification) for shared coverage.
 
 **Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and
 Bun 1.4.0, with twelve alternating-order samples per case and matching source
@@ -1328,12 +1252,9 @@ limit is checked before flattening. No global cache or generated code is used.
 **Verification:** 363 package tests cover all 344 upstream data cases, error
 contracts, identical regex source/flags/capture ordering, all 65,536 UTF-16 code
 units in names and native-equivalent URL encoding, 4,000 generated route/input
-comparisons, input mutation, getter counts, custom codec contracts and adversarial paths. Twenty HTTP checks were added for this package,
-including URI errors both before and inside the application. The current shared
-gate runs **235 checks per runtime**. npm/Bun archive
+comparisons, input mutation, getter counts, custom codec contracts and adversarial paths. HTTP checks include URI errors both before and inside the application. npm/Bun archive
 installs pass Node/Bun CJS/ESM and TypeScript 7 consumers, with seven-file contents
-and no platform ambient declarations. Current shared test and declaration counts
-are recorded in the `vexpress` section.
+and no platform ambient declarations. See [current verification](#current-verification) for shared coverage.
 
 **Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0,
 with twelve alternating-order samples per case. Ordinary one-/two-parameter
@@ -1381,10 +1302,9 @@ are preserved. Dependency-level parsing/header changes are documented separately
 boundaries and adjacent addresses, 7,140 generated BigInt comparisons, every
 short mapped prefix, 3,000 generated request/policy comparisons against both
 baseline callers, and 2,000 rule-order checks. Ten proxy-trust HTTP checks contribute to
-the shared Express/Functions Framework gate, now at 235 on Node 24 and Bun. npm/Bun
+the shared Express/Functions Framework gate on Node and Bun. npm/Bun
 archives cover CJS/ESM imports, six-file contents, rewritten VPM dependency
-versions and TypeScript 7 consumers without ambient platform types. Current
-shared suite and declaration coverage is recorded in the vexpress section.
+versions and TypeScript 7 consumers without ambient platform types. See [current verification](#current-verification) for shared coverage.
 
 **Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0 compare the
 original caller/dependencies, the original caller with VPM dependencies, and
@@ -1444,10 +1364,9 @@ substitutions against Node, all 162 valid subnet masks, 5,000 generated subnet
 operations checked with BigInt arithmetic, and 3,000 range classifications.
 Nine HTTP checks exercise the proxy-addr interface through Express, covering
 mapped/native/compatible IPv6, subnet boundaries and malformed proxy addresses.
-The shared gate runs 228 HTTP checks on each runtime. Archive checks cover the
+Archive checks cover the
 eight-file package, npm/Bun installs, Node/Bun CJS/ESM imports and TypeScript 7
-consumers without platform types. The latest shared coverage is recorded in the
-`vexpress` section.
+consumers without platform types. See [current verification](#current-verification) for shared coverage.
 
 **Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and Bun
 1.4.0 use twelve order-balanced samples per case against both verified releases.
@@ -1484,9 +1403,8 @@ include 10,000 generated inputs, long chains, whitespace, getter/proxy behavior,
 and source-integrity checks. Eleven added HTTP checks exercise the actual
 proxy-addr/Express path under disabled, unrestricted, hop-count and subnet trust,
 including IPv4-mapped IPv6, tab-separated proxies, untrusted-hop boundaries and
-repeated header lines. The current shared gate runs 228 HTTP checks on Node 24 and
-Bun. npm/Bun archive installations pass CJS/ESM runtime and TypeScript 7 consumers
-without platform ambient declarations. The documentation gate covers 41 packages.
+repeated header lines. npm/Bun archive installations pass CJS/ESM runtime and TypeScript 7 consumers
+without platform ambient declarations.
 
 **Performance, 2026-10-28:** three fresh processes on Node 24.22.1 and Bun 1.4.0,
 with twelve alternating-order samples per case, show one-/two-address parsing
@@ -1522,12 +1440,10 @@ of upstream and remain intact. Native errors and proxy effects still apply; a
 failed merge may have already copied earlier properties.
 
 **Verification:** 35 focused tests, including 1,000 generated comparisons for each
-package, pass on Node 24.22.1 and Bun 1.4.0. The shared gate passes 160 HTTP checks
-on both runtimes, including real Express startup success/error paths and a symbol
+package, pass on Node 24.22.1 and Bun 1.4.0. The shared gate checks real Express startup success/error paths and a symbol
 getter copied into an application. Proxy-order, symbol-snapshot and overlapping
 typed-array regressions protect the optimized enumeration paths. Isolated npm/Bun archives pass Node/Bun CJS/ESM
-consumers and TypeScript 7.0.2 with no platform ambient declarations. All 35 package
-READMEs and the central comparison inventory are checked for coverage and links.
+consumers and TypeScript 7.0.2 with no platform ambient declarations.
 
 **Initial performance, 2026-10-27:** nine alternating-order samples compare unmodified
 upstream fixtures. `vonce` construction cases take 8.2–11.5× upstream on Node and
@@ -1660,11 +1576,10 @@ response-shaped objects; no HTTP throughput improvement is claimed.
 [Bun samples](packages/vvary/bench/bun14.json),
 [provenance](packages/vvary/PROVENANCE.json).
 
-**Shared verification for these additions:** 159 HTTP checks pass on Node 24 and
-Bun, with npm/Bun archive installations, Node/Bun CJS/ESM consumers and strict
-TypeScript 7 checks. The full suite passes **505 tests on Node 24**, with **504
-passing and one existing skip on Bun**. All **31 runtime packages** have
-self-contained declarations.
+**Shared verification:** real Express and CORS consumers exercise these packages
+in the integration gate. npm/Bun archives pass Node/Bun CJS/ESM consumer checks
+and strict TypeScript 7 checks. Shared totals are recorded under
+[current verification](#current-verification).
 
 ## vcookie
 
@@ -2036,8 +1951,8 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 41 runtime packages'
-public declarations also compile without any Node, Undici, or DOM ambient types.
+would compare VPM against itself. Runtime declarations are separately checked
+without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
 including CJS/ESM consumers and projects with and without DOM declarations.
@@ -2058,7 +1973,7 @@ check time of **0.049 → 0.048 seconds**, and total compiler time of **0.067 �
 establish a compilation speedup or any application runtime improvement. See the
 [method, raw measurements, and adoption guide](packages/vnode-types/README.md).
 
-## Reading and extending this record
+## Interpreting the evidence
 
 Benchmark tables identify the runtime, date, inputs, and sampling method. Most
 measure individual utility calls; `vsend`, `vserve-static` and `vbody-parser` measure sequential localhost HTTP
@@ -2070,8 +1985,3 @@ Packages are currently available from this repository as standard package
 archives. Registry publication, automatic replacement of installed dependencies,
 and native VPM support in `bun install` remain future work. Applications benefit
 only after adopting and validating the replacements they use.
-
-When adding or changing a package, update its row and detail section here in the
-same change. Record the exact upstream baseline, concrete differences, relevant
-tests or measurements, and compatibility costs. Keep aspirations in the project
-roadmap and demonstrated improvements in this document.
