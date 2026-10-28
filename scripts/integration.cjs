@@ -29,6 +29,8 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  once: { pkg: 'vonce', versions: /^1\.4\.0$/ },
+  'merge-descriptors': { pkg: 'vmerge-descriptors', versions: /^2\.0\.0$/ },
   'cookie-signature': { pkg: 'vcookie-signature', versions: /^1\.2\.2$/ },
   vary: { pkg: 'vvary', versions: /^1\.1\.2$/ },
   cookie: { pkg: 'vcookie', versions: /^0\.7\.2$/ },
@@ -340,6 +342,59 @@ async function listen(server) {
   return server;
 }
 
+// Exercise Express's actual descriptor mixin and listen callback, including
+// metadata that upstream once incorrectly treats as its internal call state.
+async function expressStartup() {
+  const symbol = Symbol('application getter');
+  let getterCalls = 0;
+  const getter = function () { getterCalls++; return this; };
+  let application;
+  Object.defineProperty(express.application, symbol, { get: getter, configurable: true });
+  try { application = express(); }
+  finally { delete express.application[symbol]; }
+  assert.equal(getterCalls, 0, 'mixing application descriptors must not invoke accessors');
+  assert.equal(Object.getOwnPropertyDescriptor(application, symbol).get, getter);
+  assert.equal(application[symbol], application);
+  assert.equal(getterCalls, 1);
+  application.get('/startup', (_req, res) => res.send('started'));
+  const servers = [];
+  async function start(app, port) {
+    let server, timer, calls = 0;
+    try {
+      const settled = new Promise((resolve, reject) => {
+        timer = setTimeout(() => reject(new Error('Express listen callback did not settle')), 5000);
+        const callback = Object.assign(function (error) {
+          calls++;
+          resolve({ error, receiver: this });
+        }, { called: true, value: 'untrusted callback metadata' });
+        server = app.listen(port, '127.0.0.1', callback);
+        servers.push(server);
+      });
+      const result = await settled;
+      assert.equal(result.receiver, server);
+      assert.equal(calls, 1);
+      return { ...result, server, calls: () => calls };
+    } finally { clearTimeout(timer); }
+  }
+  try {
+    const started = await start(application, 0);
+    assert.ok(started.error == null, 'successful listen has no error (undefined on Node, null on Bun)');
+    const response = await request(started.server, '/startup');
+    assert.equal(response.status, 200); assert.equal(response.body, 'started');
+    // Express wires the same once wrapper to listening and the first error.
+    started.server.emit('error', new Error('late startup error'));
+    assert.equal(started.calls(), 1);
+    const failed = await start(express(), started.server.address().port);
+    assert.equal(failed.error.code, 'EADDRINUSE');
+    assert.equal(failed.calls(), 1);
+  } finally {
+    for (const server of servers) {
+      server.closeAllConnections();
+      await new Promise(resolve => server.close(resolve));
+    }
+  }
+}
+
 async function abortedRequest() {
   checks++;
   let client, resolveRead, rejectRead;
@@ -394,6 +449,7 @@ async function run() {
   const appServer = await listen(getTestServer('app'));
   const parserServer = await listen(http.createServer(parserApp));
   try {
+    await expressStartup();
     await abortedRequest();
     const largeLimit = await request(parserServer, '/large-form-limit', { method: 'POST', body: 'a=1&b=2', headers: { 'content-type': 'application/x-www-form-urlencoded' } });
     assert.equal(largeLimit.status, 200); assert.deepEqual(JSON.parse(largeLimit.body), { a: '1', b: '2' });

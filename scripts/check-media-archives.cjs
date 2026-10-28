@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const version = require(path.join(root, 'packages', name, 'package.json')).version;
     const archive = name + '-' + version + '.tgz';
@@ -22,7 +22,7 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
-    if (['vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
+    if (['vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
@@ -55,6 +55,16 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const once = require('vonce');
+const merge = require('vmerge-descriptors');
+const wrapped = once(Object.assign(n => n + 1, { called: true, value: 99 }));
+Object.freeze(wrapped);
+assert.equal(wrapped(2), 3); assert.equal(wrapped(8), 3); assert.equal(wrapped.called, true);
+const symbol = Symbol();
+let reads = 0;
+const merged = merge({}, Object.defineProperty({}, symbol, { get() { reads++; return 4; } }));
+assert.equal(reads, 0); assert.equal(merged[symbol], 4); assert.equal(reads, 1);
+assert.equal(merge({ value: 1 }, { value: 2 }, false).value, 1);
 const signature = require('vcookie-signature');
 assert.equal(signature.unsign(signature.sign('雪', 'key'), 'key'), '雪');
 assert.equal(signature.unsign(signature.sign('雪', 'key'), 'wrong'), false);
@@ -109,6 +119,13 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import once, { strict, proto } from 'vonce';
+import merge from 'vmerge-descriptors';
+assert.equal(once.strict, strict); assert.equal(once.proto, proto);
+const wrapped = strict(n => n + 1);
+assert.equal(wrapped(1), 2); assert.throws(() => wrapped(1));
+const symbol = Symbol();
+assert.equal(merge({}, { [symbol]: 3 })[symbol], 3);
 import signature, { sign, unsign } from 'vcookie-signature';
 assert.equal(signature.sign, sign); assert.equal(signature.unsign, unsign);
 assert.equal(unsign(sign('', new Uint8Array([1, 2, 3])), new Uint8Array([1, 2, 3])), '');
@@ -162,6 +179,27 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import once, { strict } from 'vonce';
+import merge from 'vmerge-descriptors';
+const callback = Object.assign(function(this: { n: number }, x: number) { return this.n + x; }, { label: 'callback' });
+const wrapped = once(callback);
+const onceResult: number | undefined = wrapped.call({ n: 1 }, 2);
+const onceLabel: string = wrapped.label;
+const strictResult: number = strict(callback).call({ n: 1 }, 2);
+// @ts-expect-error read-only status
+wrapped.called = false;
+// @ts-expect-error wrong argument
+wrapped.call({ n: 1 }, '2');
+const symbol = Symbol();
+const merged = merge({ value: 1 }, { value: 'new', [symbol]: 3 });
+const mergedValue: string = merged.value;
+const symbolValue: number = merged[symbol];
+const keptValue: number = merge({ value: 1 }, { value: 'new' }, false).value;
+const callable = merge((n: number) => n + 1, { label: 'function' });
+const called: number = callable(2);
+// @ts-expect-error copying descriptors cannot make an object callable
+merge({}, () => 1)();
+void [onceResult, onceLabel, strictResult, mergedValue, symbolValue, keptValue, called];
 import signature, { sign, unsign, type Secret } from 'vcookie-signature';
 const secret: Secret = new Uint8Array([1, 2, 3]);
 const verified: string | false = unsign(sign('value', secret), secret);
@@ -301,6 +339,8 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vonce\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vmerge-descriptors\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie-signature\/index\.d\.ts/);
     assert.match(output, /node_modules\/vvary\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie\/index\.d\.ts/);

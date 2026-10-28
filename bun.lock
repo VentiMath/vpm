@@ -106,6 +106,10 @@
       "name": "vmedia-typer",
       "version": "0.1.0",
     },
+    "packages/vmerge-descriptors": {
+      "name": "vmerge-descriptors",
+      "version": "0.1.0",
+    },
     "packages/vmime-db": {
       "name": "vmime-db",
       "version": "0.1.0",
@@ -141,6 +145,10 @@
       "dependencies": {
         "vee-first": "workspace:*",
       },
+    },
+    "packages/vonce": {
+      "name": "vonce",
+      "version": "0.1.0",
     },
     "packages/vparseurl": {
       "name": "vparseurl",
@@ -292,6 +300,8 @@
 
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
 
+    "vmerge-descriptors": ["vmerge-descriptors@workspace:packages/vmerge-descriptors"],
+
     "vmime-db": ["vmime-db@workspace:packages/vmime-db"],
 
     "vmime-types": ["vmime-types@workspace:packages/vmime-types"],
@@ -303,6 +313,8 @@
     "vnode-types": ["vnode-types@workspace:packages/vnode-types"],
 
     "von-finished": ["von-finished@workspace:packages/von-finished"],
+
+    "vonce": ["vonce@workspace:packages/vonce"],
 
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
 

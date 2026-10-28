@@ -35,6 +35,8 @@ that these replacements have already improved application performance.
 | [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
 | [vraw-body](packages/vraw-body) | raw-body 3.0.2 | Premature-close settlement, strict byte counts, earlier length rejection, controlled chunk/decoder errors, and an entirely VPM dependency tree. |
 | [vqs](packages/vqs) | qs 6.17.0 | Zero runtime dependencies, native percent encoding, validated numeric limits, no parameter-limit wraparound, and wide-array serialization without variadic calls. |
+| [vonce](packages/vonce) | once 1.4.0 | Private call state, read-only status, descriptor-safe callback metadata, symbol support, and removal of wrappy. |
+| [vmerge-descriptors](packages/vmerge-descriptors) | merge-descriptors 2.0.0 | Symbol descriptors, explicit object/boolean contracts, and handling of source keys removed during copying. |
 | [vcookie-signature](packages/vcookie-signature) | cookie-signature 1.2.2 | Compatible HMAC signatures, fixed-size timing-safe verification buffers, early malformed-input rejection, and self-contained key types. |
 | [vvary](packages/vvary) | vary 1.1.2 | Correct tab handling, validated old/new fields, single-read arrays, fewer duplicate writes, and scalable list merging. |
 | [vcookie](packages/vcookie) | cookie 0.7.2 / 2.0.1 | Isolated cookie maps, single-read attributes, genuine Date serialization, safe integer ages, and modern APIs alongside Express compatibility. |
@@ -62,7 +64,8 @@ each utility have zero external runtime dependencies, except
 `vhttp-errors`, which declare **five and one**, respectively; and
 `iconv-lite` / `viconv-lite`, which declare **one and zero**, and
 `raw-body` / `vraw-body`, which declare **four and three**; and
-`qs` / `vqs`, which declare **two and zero**.
+`qs` / `vqs`, which declare **two and zero**; and
+`once` / `vonce`, which declare **one and zero**.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
@@ -137,8 +140,10 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 159
-HTTP checks: request media-type matching, uppercase and structured-suffix parser
+the Functions Framework, also serves a direct Express parser app, and runs 160
+HTTP checks: Express listen startup, followed by a late error, and EADDRINUSE
+callbacks with state-shaped metadata; application mixins with symbol getters;
+request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
 responses and Vary/Content-Type headers; JSON bodies and malformed
@@ -1021,6 +1026,49 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vonce and vmerge-descriptors
+
+`vonce` targets `once` 1.4.0, called by Express's `app.listen()`; it removes the
+`wrappy` 1.0.2 dependency. `vmerge-descriptors` targets 2.0.0, used to build Express
+application functions. Both replacements have zero runtime dependencies.
+
+**Callback correctness:** upstream's metadata copier can overwrite the wrapper's
+`called`, `value` and strict-error fields. VPM keeps state in closures and exposes
+read-only status, so decorations cannot suppress a callback or forge its cached
+result. It preserves first-call receivers, arguments, results, synchronous failure,
+reentrancy and Promise identity. Enumerable string and symbol metadata retains
+its descriptors without invoking accessors or treating `__proto__` as a setter.
+Frozen wrappers still execute. Prototype installation remains an explicit opt-in
+and refuses conflicting own methods. Mutable wrapper state, reset attempts,
+metadata getter timing and descriptor flattening intentionally change.
+
+**Descriptor completeness:** VPM copies own symbol keys, including nonenumerable
+ones, as well as strings. It requires object/function endpoints and boolean
+overwrite values and skips keys removed before their descriptor is read. Getter
+non-execution, descriptor flags and shallow references were already strengths
+of upstream and remain intact. Native errors and proxy effects still apply; a
+failed merge may have already copied earlier properties.
+
+**Verification:** 30 focused tests, including 1,000 generated comparisons for each
+package, pass on Node 24.22.1 and Bun 1.4.0. The shared gate passes 160 HTTP checks
+on both runtimes, including real Express startup success/error paths and a symbol
+getter copied into an application. Isolated npm/Bun archives pass Node/Bun CJS/ESM
+consumers and TypeScript 7.0.2 with no platform ambient declarations. All 35 package
+READMEs and the central comparison inventory are checked for coverage and links.
+
+**Performance, 2026-10-27:** nine alternating-order samples compare unmodified
+upstream fixtures. `vonce` construction cases take 8.2–11.5× upstream on Node and
+2.6–3.2× on Bun: about 0.48–0.89 µs and 0.21–0.39 µs extra, respectively. Cached
+calls are comparable. Read-only status and safe descriptor copying have a real
+creation cost, though Express creates this callback at startup. `vmerge-descriptors`
+is within about 6% on Bun's nonempty cases; ordinary Node copies take 10–26% more
+time, while the Express-like 50-method function mixin is essentially unchanged.
+Node's empty/skip-only cases take 2.9×/3.5× upstream (36/647 ns extra). These are
+correctness, API and dependency improvements; no blanket performance win is claimed.
+
+[vonce API and samples](packages/vonce/README.md),
+[vmerge-descriptors API and samples](packages/vmerge-descriptors/README.md).
+
 ## vcookie-signature
 
 **Consumer and baseline:** Express 5.3.0 uses `cookie-signature` 1.2.2 to sign
@@ -1490,7 +1538,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 31 runtime packages'
+would compare VPM against itself. All 33 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
