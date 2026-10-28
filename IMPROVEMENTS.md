@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vexpress](packages/vexpress) | express 5.3.0 | Entirely VPM dependency tree, exact binary-view responses, coherent framing, validated settings/registration, nonmutating options, once-only view completion, and specialized response paths. |
 | [vrouter](packages/vrouter) | router 2.2.0 | Isolated RegExp state, prototype-safe parameters, atomic handler registration, single-read thenables, and pathname-only dispatch. |
 | [vdepd](packages/vdepd) | depd 2.0.0 | Private warning state, transparent function/constructor wrappers, correct inherited property writes, and safer stack capture. |
 | [vpath-to-regexp](packages/vpath-to-regexp) | path-to-regexp 8.4.2 | Span-based parsing, isolated compiled tokens, lossless parameter names, less decoding allocation, and validated route configuration. |
@@ -72,7 +73,8 @@ each utility have zero external runtime dependencies, except
 `raw-body` / `vraw-body`, which declare **four and three**; and
 `qs` / `vqs`, which declare **two and zero**; and
 `once` / `vonce`, which declare **one and zero**; and
-`router` / `vrouter`, which declare **five and three**.
+`router` / `vrouter`, which declare **five and three**; and
+`express` / `vexpress`, which each declare **28**.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
@@ -81,6 +83,10 @@ not external packages.
 `vrouter` uses three direct VPM dependencies (`vdebug`, `vdepd`,
 and `vpath-to-regexp`), with `vms` bringing its external tree to four packages.
 Its thenable inspection is inline; it does not depend on `is-promise`.
+
+`vexpress` completes the Express 5 application layer with 28 direct and 39 total
+external runtime dependencies, all VPM packages. Its upstream reference and
+template engines in the isolated compatibility harness are test-only fixtures.
 
 `vsend` uses eleven direct VPM dependencies, with `vee-first` and `vmime-db`
 bringing its complete external dependency tree to thirteen VPM packages.
@@ -151,8 +157,11 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 228
-HTTP checks: RegExp route state and captures, prototype-named param callbacks,
+the Functions Framework, also serves a direct parser app, and runs 235
+HTTP checks. Express 5.3.0 itself is now replaced by vexpress, including the
+framework's internal app. New checks cover binary-view response bytes, generated
+response framing, bodyless statuses and own header fields. Existing checks cover
+RegExp route state and captures, prototype-named param callbacks,
 merged parameters, single-read thenables, automatic HEAD/OPTIONS; Express redirect and router thenable deprecations with repeat-warning
 suppression; route parameters, wildcards, optional groups, encoded and malformed URI
 segments, array routes, mount boundaries, strict/case-sensitive routes, and
@@ -1043,6 +1052,54 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vexpress
+
+**Baseline:** Express 5.3.0 at `cf6722bf89a86905281d9160b6482e08166b5ef0`.
+The recognizable Express 5 application API now runs entirely on VPM: 28 direct
+and 39 total external dependencies. The locked upstream comparison graph uses
+64 distinct external package names, with 68 installed copies. VPM removes 25
+of those package names while retaining the framework's application boundaries.
+
+**Application fixes:** binary views send their exact byte window, including
+DataView and multi-byte typed arrays. Generated responses use coherent length,
+transfer and trailer framing. Invalid ETag/query/proxy settings leave the previous
+configuration intact, and proxy hop counts must be nonnegative safe integers.
+Handler arrays are validated before registration, cyclic/deep arrays are handled
+iteratively, and middleware groups compile their mount path once. Public route
+overrides remain available. File/render options are copied, delayed file headers
+are snapshotted, inherited header/default properties are ignored, and the built-in
+View completes once even if an engine calls back twice or calls back then throws.
+
+**Caller specialization:** exact canonical UTF-8 Content-Type strings avoid
+repeated general parsing. Built-in ETags hash short strings directly; custom
+functions keep the Buffer contract and large bodies share one encoding. Response
+overrides and general parser behavior remain covered. Existing VPM dependency
+differences remain deliberate and are listed in the package documentation.
+
+**Verification:** 38 local regression tests on Node and Bun. The upstream unit
+and example-acceptance suites pass **1,261 tests on Node 24**, with 23 explicit
+assertion changes for existing VPM dependency behavior and no skipped tests.
+Bun passes **1,255 with six pending** cases that fail identically against unchanged
+Express. The [isolated harness](scripts/express-conformance/README.md) explains
+each adaptation and runtime limitation; comparison dependencies are test-only.
+The shared Functions Framework/Firebase gate passes **235 HTTP checks per runtime**
+with Express itself replaced. npm/Bun package archives contain thirteen vexpress
+files and pass CJS/ESM and TypeScript 7 consumer checks without ambient platform
+types. The root suite covers **1,249 tests** (Bun has three existing runtime skips),
+public declarations cover **40 runtime packages**, and documentation covers
+**42 packages**. No production deployment is implied by these fixture results.
+
+**Performance:** the [package report](packages/vexpress/README.md#benchmarks)
+compares upstream, upstream with VPM dependencies, and vexpress in three fresh
+processes per runtime. Component tests and eight-client loopback HTTP tests
+retain separate results. Raw samples include source hashes and the comparison
+lockfile hash, and report remaining regressions and noise alongside improvements. Node 24
+JSON response components take **28–31% less time**, and Bun takes **38–40% less**,
+with ETags enabled. Loopback HTTP workloads improve roughly **4–8% on Node**
+and **0–8% on Bun**. Node application creation remains **3–6% slower**, and
+Bun's header-only case varies from **16% faster to 10% slower**. These measurements
+are workload-specific; they do not establish production throughput.
+
 ## vrouter
 
 **Consumer and dependencies:** replaces router 2.2.0 in Express 5.3.0. Three
@@ -1069,7 +1126,7 @@ native `node:url.parse` directly, without a disposable request or redundant cach
 entry. This removes vparseurl from the router's dependency list. These choices
 preserve the standalone dependencies' public behavior.
 
-**Verification:** 52 package tests on each runtime, including upstream parity,
+**Verification at the router follow-up (before vexpress):** 52 package tests on each runtime, including upstream parity,
 all HTTP methods, async errors, parameter concurrency, deep dispatch, RegExp
 capture/state cases, 300 generated URL comparisons and 3,361 additional complex
 URL pathname comparisons. Explicit tests preserve invalid-input handling, getter
@@ -1148,11 +1205,11 @@ skips. Thirty tests apply the same public contract to upstream and VPM. Tests
 also cover prototype/receiver writes, constructors, metadata, strict namespaces,
 private state, deep callers, throwing capture, hook restoration and browser
 behavior. Original upstream suites are retained as reference, not counted as run.
-The shared HTTP gate now runs **228 checks per runtime**, with seven new
+The shared HTTP gate now runs **235 checks per runtime**, with seven new
 Express/router requests. npm/Bun archive installs verify eight-file contents,
 CJS/ESM, browser conditions/bundling, and TypeScript 7 without ambient platform
 types. Current shared test, declaration and documentation coverage is recorded in the
-`vrouter` section above.
+`vexpress` section.
 
 **Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and
 Bun 1.4.0, with twelve alternating-order samples per case and matching source
@@ -1205,10 +1262,10 @@ contracts, identical regex source/flags/capture ordering, all 65,536 UTF-16 code
 units in names and native-equivalent URL encoding, 4,000 generated route/input
 comparisons, input mutation, getter counts, custom codec contracts and adversarial paths. Twenty HTTP checks were added for this package,
 including URI errors both before and inside the application. The current shared
-gate runs **228 checks per runtime**. npm/Bun archive
+gate runs **235 checks per runtime**. npm/Bun archive
 installs pass Node/Bun CJS/ESM and TypeScript 7 consumers, with seven-file contents
 and no platform ambient declarations. Current shared test and declaration counts
-are recorded in the `vrouter` section above.
+are recorded in the `vexpress` section.
 
 **Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0,
 with twelve alternating-order samples per case. Ordinary one-/two-parameter
@@ -1256,10 +1313,10 @@ are preserved. Dependency-level parsing/header changes are documented separately
 boundaries and adjacent addresses, 7,140 generated BigInt comparisons, every
 short mapped prefix, 3,000 generated request/policy comparisons against both
 baseline callers, and 2,000 rule-order checks. Ten proxy-trust HTTP checks contribute to
-the shared Express/Functions Framework gate, now at 228 on Node 24 and Bun. npm/Bun
+the shared Express/Functions Framework gate, now at 235 on Node 24 and Bun. npm/Bun
 archives cover CJS/ESM imports, six-file contents, rewritten VPM dependency
 versions and TypeScript 7 consumers without ambient platform types. Current
-shared suite and declaration coverage is recorded in the vrouter section.
+shared suite and declaration coverage is recorded in the vexpress section.
 
 **Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0 compare the
 original caller/dependencies, the original caller with VPM dependencies, and
@@ -1322,7 +1379,7 @@ mapped/native/compatible IPv6, subnet boundaries and malformed proxy addresses.
 The shared gate runs 228 HTTP checks on each runtime. Archive checks cover the
 eight-file package, npm/Bun installs, Node/Bun CJS/ESM imports and TypeScript 7
 consumers without platform types. The latest shared coverage is recorded in the
-`vrouter` section above.
+`vexpress` section.
 
 **Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and Bun
 1.4.0 use twelve order-balanced samples per case against both verified releases.
@@ -1911,7 +1968,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 39 runtime packages'
+would compare VPM against itself. All 40 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

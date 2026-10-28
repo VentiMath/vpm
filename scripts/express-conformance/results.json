@@ -1,0 +1,120 @@
+{
+  "upstreamNode": {
+    "runtime": "Node 24.22.1",
+    "platform": "darwin arm64",
+    "stats": {
+      "suites": 566,
+      "tests": 1261,
+      "passes": 1261,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T20:23:37.739Z",
+      "end": "2026-10-28T20:23:40.606Z",
+      "duration": 2867
+    },
+    "failures": [],
+    "pending": []
+  },
+  "vexpressNodeUnadapted": {
+    "runtime": "Node 24.22.1",
+    "platform": "darwin arm64",
+    "stats": {
+      "suites": 566,
+      "tests": 1261,
+      "passes": 1238,
+      "pending": 0,
+      "failures": 23,
+      "start": "2026-10-28T20:18:33.817Z",
+      "end": "2026-10-28T20:18:36.631Z",
+      "duration": 2814
+    },
+    "failures": [
+      "express.json() should 400 when only whitespace",
+      "express.json() with strict option when undefined should 400 on primitives",
+      "express.json() with strict option when true should not parse primitives",
+      "express.json() with strict option when true should not parse primitives with leading whitespaces",
+      "express.json() with strict option when true should include correct message in stack trace",
+      "express.json() with verify option should assert value if function",
+      "express.raw() with verify option should assert value is function",
+      "express.static() basic operations should require root path",
+      "express.static() basic operations should require root path to be string",
+      "express.text() with verify option should assert value is function",
+      "express.urlencoded() with parameterLimit option with extended: false should reject 0",
+      "express.urlencoded() with parameterLimit option with extended: false should reject string",
+      "express.urlencoded() with parameterLimit option with extended: false should work if number is floating point",
+      "express.urlencoded() with parameterLimit option with extended: true should reject 0",
+      "express.urlencoded() with parameterLimit option with extended: true should reject string",
+      "express.urlencoded() with parameterLimit option with extended: true should work if number is floating point",
+      "express.urlencoded() with verify option should assert value if function",
+      "req .accepts(types) should return the first acceptable type with canonical mime types",
+      "req .acceptsLanguages should return language if accepted",
+      "res .cookie(name, string, options) expires should throw on invalid date",
+      "res .cookie(name, string, options) maxAge should throw an error with invalid maxAge",
+      "res .cookie(name, string, options) priority should throw with invalid priority",
+      "res.vary() with no arguments should throw error"
+    ],
+    "pending": []
+  },
+  "vexpressNode": {
+    "runtime": "Node 24.22.1",
+    "platform": "darwin arm64",
+    "stats": {
+      "suites": 566,
+      "tests": 1261,
+      "passes": 1261,
+      "pending": 0,
+      "failures": 0,
+      "start": "2026-10-28T20:33:07.158Z",
+      "end": "2026-10-28T20:33:08.836Z",
+      "duration": 1678
+    },
+    "failures": [],
+    "pending": []
+  },
+  "upstreamBunAllRuntimeTests": {
+    "runtime": "Bun 1.4.0",
+    "platform": "darwin arm64",
+    "stats": {
+      "suites": 566,
+      "tests": 1261,
+      "passes": 1255,
+      "pending": 0,
+      "failures": 6,
+      "start": "2026-10-28T20:25:58.048Z",
+      "end": "2026-10-28T20:26:02.003Z",
+      "duration": 3955
+    },
+    "failures": [
+      "express.static() fallthrough when true should fall-through when URL too long",
+      "express.static() fallthrough when false should 404 when URL too long",
+      "res when Transfer-Encoding header is present should not add Content-Length header if Transfer-Encoding header is equal to compress",
+      "res when Transfer-Encoding header is present should not add Content-Length header if Transfer-Encoding header is equal to deflate",
+      "res when Transfer-Encoding header is present should not add Content-Length header if Transfer-Encoding header is equal to gzip",
+      "req .fresh should ignore \"If-Modified-Since\" when \"If-None-Match\" is present"
+    ],
+    "pending": []
+  },
+  "vexpressBun": {
+    "runtime": "Bun 1.4.0",
+    "platform": "darwin arm64",
+    "stats": {
+      "suites": 566,
+      "tests": 1261,
+      "passes": 1255,
+      "pending": 6,
+      "failures": 0,
+      "start": "2026-10-28T20:33:09.249Z",
+      "end": "2026-10-28T20:33:13.088Z",
+      "duration": 3839
+    },
+    "failures": [],
+    "pending": [
+      "express.static() fallthrough when true should fall-through when URL too long",
+      "express.static() fallthrough when false should 404 when URL too long",
+      "res when Transfer-Encoding header is present should not add Content-Length header if Transfer-Encoding header is equal to compress",
+      "res when Transfer-Encoding header is present should not add Content-Length header if Transfer-Encoding header is equal to deflate",
+      "res when Transfer-Encoding header is present should not add Content-Length header if Transfer-Encoding header is equal to gzip",
+      "req .fresh should ignore \"If-Modified-Since\" when \"If-None-Match\" is present"
+    ]
+  }
+}

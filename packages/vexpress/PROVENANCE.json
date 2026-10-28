@@ -1,0 +1,48 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "source": {
+    "package": "express",
+    "version": "5.3.0",
+    "gitHead": "cf6722bf89a86905281d9160b6482e08166b5ef0",
+    "tarball": "https://registry.npmjs.org/express/-/express-5.3.0.tgz",
+    "integrity": "sha512-qCqy1xSoaugxOD4IVHb1ZWdkvCF2W3aE2okKouWj8VwJ+ztskSiXoBnCSJqfKT+cVPJhuJqe9YLbY425+Zh00g=="
+  },
+  "dependencies": {
+    "accepts": "vaccepts",
+    "body-parser": "vbody-parser",
+    "content-disposition": "vcontent-disposition",
+    "content-type": "vcontent-type",
+    "cookie": "vcookie",
+    "cookie-signature": "vcookie-signature",
+    "debug": "vdebug",
+    "depd": "vdepd",
+    "encodeurl": "vencodeurl",
+    "escape-html": "vescape-html",
+    "etag": "vetag",
+    "finalhandler": "vfinalhandler",
+    "fresh": "vfresh",
+    "http-errors": "vhttp-errors",
+    "merge-descriptors": "vmerge-descriptors",
+    "mime-types": "vmime-types",
+    "on-finished": "von-finished",
+    "once": "vonce",
+    "parseurl": "vparseurl",
+    "proxy-addr": "vproxy-addr",
+    "qs": "vqs",
+    "range-parser": "vrange-parser",
+    "router": "vrouter",
+    "send": "vsend",
+    "serve-static": "vserve-static",
+    "statuses": "vstatuses",
+    "type-is": "vtype-is",
+    "vary": "vvary"
+  },
+  "upstreamTestFixture": {
+    "file": "../../scripts/express-conformance/express-5.3.0.tar.gz",
+    "sha256": "797d24a961b88f457341e2788e799447dad803de6be7a308182f33abc690e141",
+    "origin": "https://github.com/expressjs/express/tree/cf6722bf89a86905281d9160b6482e08166b5ef0",
+    "contents": "Unmodified package.json, index.js, lib, test, examples and LICENSE from the exact upstream commit; archive created locally."
+  },
+  "tests": "Pinned upstream unit/example acceptance suite, 23 explicit assertions adapted for existing VPM dependency contracts. Node 24: 1261 pass, no skips. Bun 1.4.0: 1255 pass, six runtime limits reproduced with unchanged upstream and marked pending. See scripts/express-conformance/README.md. Local regression suite and shared HTTP consumer/archives gates are separate."
+}

@@ -1,0 +1,63 @@
+{
+  "name": "vexpress",
+  "version": "0.1.0",
+  "description": "Express 5-compatible applications built entirely on VPM runtime packages",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vexpress"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vexpress",
+  "dependencies": {
+    "vaccepts": "workspace:*",
+    "vbody-parser": "workspace:*",
+    "vcontent-disposition": "workspace:*",
+    "vcontent-type": "workspace:*",
+    "vcookie": "workspace:*",
+    "vcookie-signature": "workspace:*",
+    "vdebug": "workspace:*",
+    "vdepd": "workspace:*",
+    "vencodeurl": "workspace:*",
+    "vescape-html": "workspace:*",
+    "vetag": "workspace:*",
+    "vfinalhandler": "workspace:*",
+    "vfresh": "workspace:*",
+    "vhttp-errors": "workspace:*",
+    "vmerge-descriptors": "workspace:*",
+    "vmime-types": "workspace:*",
+    "von-finished": "workspace:*",
+    "vonce": "workspace:*",
+    "vparseurl": "workspace:*",
+    "vproxy-addr": "workspace:*",
+    "vqs": "workspace:*",
+    "vrange-parser": "workspace:*",
+    "vrouter": "workspace:*",
+    "vsend": "workspace:*",
+    "vserve-static": "workspace:*",
+    "vstatuses": "workspace:*",
+    "vtype-is": "workspace:*",
+    "vvary": "workspace:*"
+  }
+}
