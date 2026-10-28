@@ -1,0 +1,33 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-27",
+  "sources": [
+    {
+      "package": "cookie",
+      "version": "0.7.2",
+      "gitHead": "d19eaa1a2bb9ca43ac0951edd852ba4e88e410e0",
+      "tarball": "https://registry.npmjs.org/cookie/-/cookie-0.7.2.tgz",
+      "integrity": "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==",
+      "fixture": "test/fixtures/cookie-0.7.2.cjs",
+      "sha256": "a88f6d7257e3403b727b90a2f3f5c03591e14eaa0b217c501b7071074f080e42"
+    },
+    {
+      "package": "cookie",
+      "version": "1.1.1",
+      "gitHead": "1b89eec4e33256ac31962f4c0d6e711fff478803",
+      "tarball": "https://registry.npmjs.org/cookie/-/cookie-1.1.1.tgz",
+      "integrity": "sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==",
+      "fixture": "test/fixtures/cookie-1.1.1.cjs",
+      "sha256": "b67c70355a2b0dbd2e78b479b94107f34d5340e54f1479dc0974224a2a5d69dd"
+    },
+    {
+      "package": "cookie",
+      "version": "2.0.1",
+      "gitHead": "51c485421a95ee796de6d8dab53a5ade0a20db8a",
+      "tarball": "https://registry.npmjs.org/cookie/-/cookie-2.0.1.tgz",
+      "integrity": "sha512-yuToqVvRrj6pfDXREyQAAv8SkAEk/8GS3jQRTiUMm66TVtBYmqQeoEjL2Lmq8Rpo6271vH76InTChTitEAm65w==",
+      "fixture": "test/fixtures/cookie-2.0.1.mjs",
+      "sha256": "b728aa01f45e9115920e2a92e2f3d71c1b5acfbb8bc1d702b87397860c4ba925"
+    }
+  ]
+}

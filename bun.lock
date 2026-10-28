@@ -44,6 +44,10 @@
       "name": "vcontent-type",
       "version": "0.1.0",
     },
+    "packages/vcookie": {
+      "name": "vcookie",
+      "version": "0.1.0",
+    },
     "packages/vdebug": {
       "name": "vdebug",
       "version": "0.1.0",
@@ -255,6 +259,8 @@
     "vcontent-disposition": ["vcontent-disposition@workspace:packages/vcontent-disposition"],
 
     "vcontent-type": ["vcontent-type@workspace:packages/vcontent-type"],
+
+    "vcookie": ["vcookie@workspace:packages/vcookie"],
 
     "vdebug": ["vdebug@workspace:packages/vdebug"],
 

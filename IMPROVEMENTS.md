@@ -35,6 +35,7 @@ that these replacements have already improved application performance.
 | [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
 | [vraw-body](packages/vraw-body) | raw-body 3.0.2 | Premature-close settlement, strict byte counts, earlier length rejection, controlled chunk/decoder errors, and an entirely VPM dependency tree. |
 | [vqs](packages/vqs) | qs 6.17.0 | Zero runtime dependencies, native percent encoding, validated numeric limits, no parameter-limit wraparound, and wide-array serialization without variadic calls. |
+| [vcookie](packages/vcookie) | cookie 0.7.2 / 2.0.1 | Isolated cookie maps, single-read attributes, genuine Date serialization, safe integer ages, and modern APIs alongside Express compatibility. |
 | [vcontent-disposition](packages/vcontent-disposition) | content-disposition 2.0.1 / 3.0.0 | Isolated parameter maps, strict input contracts, case-insensitive duplicate checks, and faster filename creation and long quoted parsing. |
 | [vbody-parser](packages/vbody-parser) | body-parser 2.4.0 | Compressed-request abort handling, safe form bounds, validated option snapshots, nonmutating callback errors, and an entirely VPM dependency tree. |
 | [vundici-types](packages/vundici-types) | undici-types 6.21.0 | Four Fetch signature fixes, complete original API coverage, and a focused web-types entry point. |
@@ -134,7 +135,7 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 151
+the Functions Framework, also serves a direct Express parser app, and runs 153
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
@@ -153,6 +154,8 @@ tolerated, conditional requests with quoted-comma tags and forced reloads,
 redirect encoding and escaping, `sendFile` and `serve-static` with ranges,
 HEAD, mounted-root redirects, static redirect/405 framing, download and empty-file
 callbacks, Unicode/quoted/percent/control-character download and attachment filenames,
+plain/Unicode/JSON/signed cookies, expiration and clearing, custom encoding,
+duplicate request cookies and rejected header injection,
 extension fallback, dotfile policy,
 strong preconditions, directory redirects, cache ages from duration strings,
 thrown HTTP errors with headers, conflicting framing headers, an error after an accepted
@@ -1015,6 +1018,63 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vcookie
+
+**Consumer and baselines:** Express 5.3.0 calls `cookie` 0.7.2's `serialize` for
+`res.cookie()` and `res.clearCookie()`. `vcookie` preserves that wire format and
+also implements the four modern APIs from `cookie` 2.0.1: `parseCookie`,
+`stringifyCookie`, `parseSetCookie`, and `stringifySetCookie`. Both upstream and
+VPM have zero runtime dependencies. Cookie signing remains a separate package.
+
+**Verified improvements:** fresh null-prototype request maps retain names such
+as `__proto__` and avoid the mutable shared prototype used by current upstream.
+Serialization reads each field once, preventing getters from swapping validated
+values for unchecked output. Captured Date methods accept genuine cross-realm
+Dates without trusting overridden formatting methods or spoofed objects.
+Safe-integer checks prevent imprecise/infinite ages. Explicit strings, booleans
+and callbacks replace accidental coercion; built-in errors do not echo secrets.
+Tests reproduce the current-upstream getter/date behavior; these are configuration
+hardening improvements, not a claim of a demonstrated remote vulnerability.
+
+**Compatibility:** legacy and modern parsing retain their different quote,
+duplicate and custom-decoder-error contracts. Modern serialization retains
+2.0.1's broader characters and encoding; the legacy adapter preserves 0.7.2's
+stricter characters and `encodeURIComponent`. Strict validation rejects numeric
+strings, truthy nonboolean flags, nonstring encoder/decoder results, invalid
+options, spoofed Dates and unsafe ages. Modern ages must be integers; legacy
+finite fractions are floored. The package README lists the complete differences.
+
+**Evidence:** 22 focused tests include 1,500 generated headers, all byte values,
+Unicode, malformed inputs, prototype isolation, getter substitution, Date
+spoofing and CJS/ESM imports. The shared gate runs **153 HTTP checks** on Node 24
+and Bun, including real Express plain/Unicode/JSON/signed cookies, custom
+encoding, attributes, age conversion, clearing and invalid-cookie responses.
+Installed npm/Bun archives pass Node/Bun imports and strict TypeScript 7 without
+platform ambient types. All **29 runtime packages** have self-contained types.
+
+**Measurements:** macOS arm64, Node 24.22.1 / Bun 1.4.0, nine alternating-order
+samples per case on 2026-10-27. Median nanoseconds per call:
+
+| Case | Baseline | Node upstream → VPM | Bun upstream → VPM |
+| --- | --- | ---: | ---: |
+| Express-style serialize with path | 0.7.2 | 148 → 148 | 111 → 111 |
+| Serialize all attributes | 0.7.2 | 687 → 655 | 288 → 294 |
+| Parse five cookies, legacy | 0.7.2 | 482 → 536 | 328 → 376 |
+| Parse five cookies, modern | 2.0.1 | 473 → 535 | 350 → 353 |
+| Stringify Set-Cookie, plain | 2.0.1 | 81 → 89 | 74 → 59 |
+| Stringify Cookie, five values | 2.0.1 | 418 → 409 | 255 → 168 |
+
+Express's usual serialization is essentially tied. Legacy parsing costs more
+in every measured case: about 1–11% on Node and 11–22% on Bun. Modern Node
+parsing generally costs more too; modern Bun serialization shows the largest
+improvements. These results do not establish an application-level speedup.
+Near-parity values should be treated as noise, not claimed as wins.
+
+[Full API, tradeoffs and all benchmark cases](packages/vcookie/README.md),
+[Node samples](packages/vcookie/bench/node24.json),
+[Bun samples](packages/vcookie/bench/bun14.json), and
+[verified source provenance](packages/vcookie/PROVENANCE.json).
+
 ## vcontent-disposition
 
 **Consumer and baseline:** Express 5.3.0 uses `content-disposition` 2.0.1 in
@@ -1043,13 +1103,13 @@ Normal valid filename output and lone-surrogate `URIError` behavior are preserve
 inputs, 2,496 multipart scan-boundary/recovery comparisons, single-read getters
 across parameter-map sizes, all 528 standard-name casings, 6,012 additional
 dense/sparse/malformed-value comparisons, long quoted values,
-prototype isolation, and CJS/ESM exports. The shared Node/Bun gate now
-runs **151 HTTP checks**, including real Express downloads and attachments with
+prototype isolation, and CJS/ESM exports. At this package’s follow-up, the shared Node/Bun gate
+ran **151 HTTP checks**, including real Express downloads and attachments with
 Unicode, quotes, percent sequences, and control characters, HEAD/ranges, and
 completion callbacks. Installed archives are checked with npm, Bun, Node, and
 strict TypeScript 7. At the performance follow-up on 2026-10-27 the full suite
 passed **455 tests on Node 24**, with **454 passing and one existing skip on Bun**.
-All **28 runtime packages** have self-contained declarations.
+At that point all **28 runtime packages** had self-contained declarations.
 
 **Case folding and dense escape runs:** standard names are recognized in every
 ASCII casing directly in the header, while custom names retain full Unicode
@@ -1326,7 +1386,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 28 runtime packages'
+would compare VPM against itself. All 29 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  cookie: { pkg: 'vcookie', versions: /^0\.7\.2$/ },
   'content-disposition': { pkg: 'vcontent-disposition', versions: /^2\.0\.1$/ },
   'body-parser': { pkg: 'vbody-parser', versions: /^2\.4\.0$/ },
   qs: { pkg: 'vqs', versions: /^6\.17\.0$/ },
@@ -212,6 +213,18 @@ functions.http('api', api);
 
 // Express applications are also deployed as onRequest handlers.
 const app = express();
+const httpCookie = from('cookie');
+app.get('/cookies', (req, res) => {
+  req.secret = 'integration-only-cookie-secret';
+  res.cookie('plain', 'value').cookie('unicode', '雪')
+    .cookie('object', { ok: true }).cookie('signed', 'value', { signed: true })
+    .cookie('attrs', 'value', { domain: '.example.com', path: '/cookies', expires: new Date(0), httpOnly: true, secure: true, partitioned: true, priority: 'high', sameSite: 'lax' })
+    .cookie('custom', 'a/b', { encode: value => value })
+    .cookie('max-age', 'value', { maxAge: 1500 })
+    .clearCookie('gone')
+    .json(httpCookie.parse(req.headers.cookie || ''));
+});
+app.get('/cookie-invalid', (_req, res) => res.cookie('secret', 'private', { encode: () => 'x; injected=1' }).end());
 const completed = []; const failures = [];
 function sent(name, next) {
   return error => { if (error) { failures.push(error); next(error); } else completed.push(name); };
@@ -582,6 +595,25 @@ async function run() {
     assert.ok(stderr.some(line => line.includes('"severity":"ERROR"') && line.includes('unexpected failure')));
     const missing = await request(apiServer, '/missing');
     assert.equal(missing.status, 404); assert.equal(missing.body, '{"error":"not found"}');
+
+    // Real Express serialization, JSON/signed cookies, clearing and request parsing.
+    const cookieResponse = await request(appServer, '/cookies', { headers: { cookie: '__proto__=ordinary; sid=first; sid=second; unicode=%E9%9B%AA' } });
+    assert.equal(cookieResponse.status, 200);
+    assert.deepEqual(JSON.parse(cookieResponse.body), JSON.parse('{"__proto__":"ordinary","sid":"first","unicode":"雪"}'));
+    const cookieHeaders = cookieResponse.headers['set-cookie'];
+    const signature = from('cookie-signature').sign('value', 'integration-only-cookie-secret');
+    assert.deepEqual(cookieHeaders.slice(0, 6), [
+      'plain=value; Path=/', 'unicode=%E9%9B%AA; Path=/', 'object=j%3A%7B%22ok%22%3Atrue%7D; Path=/',
+      'signed=' + encodeURIComponent('s:' + signature) + '; Path=/',
+      'attrs=value; Domain=.example.com; Path=/cookies; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; Partitioned; Priority=High; SameSite=Lax',
+      'custom=a/b; Path=/',
+    ]);
+    assert.match(cookieHeaders[6], /^max-age=value; Max-Age=1; Path=\/; Expires=/);
+    const expiration = require('../packages/vcookie').parseSetCookie(cookieHeaders[6]).expires;
+    assert.ok(Math.abs(expiration.getTime() - Date.now()) < 5000);
+    assert.equal(cookieHeaders[7], 'gone=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
+    const invalidCookie = await request(appServer, '/cookie-invalid');
+    assert.equal(invalidCookie.status, 500); assert.equal(invalidCookie.headers['set-cookie'], undefined);
 
     // The Express application: static files via serve-static, body limits, error headers, late errors.
     const page = await request(appServer, '/static/page.html');
