@@ -123,9 +123,9 @@ encodings, out-of-range code points and recovery after a failed decode.
 
 The shared integration gate compares 122 raw-reader results against the pinned
 upstream installation. It also loads CommonJS, ESM and nested-package handlers
-through Functions Framework's actual loader and serves each handler over HTTP.
-An isolated copy of the loader redirects only its dynamic reader import to VPM;
-installed framework files and the upstream comparison reader stay unchanged.
+through `vfunctions-framework`'s actual loader and serves each handler over HTTP.
+The VPM framework imports this reader directly; the previous dynamic-import
+adapter is no longer needed. Installed upstream comparison files stay unchanged.
 [Current shared verification](../../IMPROVEMENTS.md#current-verification) and
 [integration coverage](../../IMPROVEMENTS.md#the-integration-gate) are tracked
 centrally. These fixtures do not deploy VPM into an application.

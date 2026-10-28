@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfunctions-framework](packages/vfunctions-framework) | @google-cloud/functions-framework 5.0.2 | Entirely VPM runtime tree, portable types, isolated request context, exact buffer-view logging, thenable handling, Bun event support, and corrected timeout lifecycle. |
 | [vread-package-up](packages/vread-package-up) | read-package-up 11.0.0 | Zero dependencies for raw manifest lookup, explicit boundaries, descriptor checks and cleanup, strict UTF-8, and errors without source contents. |
 | [vminimist](packages/vminimist) | minimist 1.2.8 | Coherent transitive aliases, boolean-alias fixes, own-property configuration, reserved positional arrays, validated snapshots, and non-variadic argument tails. |
 | [vcors](packages/vcors) | cors 2.8.5 / 2.8.6 | Compiled static policies, isolated RegExp state, once-only callbacks, dynamic denial cache variation, validated headers, coherent preflight framing, and one dependency instead of two. |
@@ -57,10 +58,10 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,458 tests**: all pass on Node 24, and Bun passes
-1,455 with three documented runtime-specific skips. All 43 runtime packages'
+The root suite contains **1,506 tests**: all pass on Node 24, and Bun passes
+1,503 with three documented runtime-specific skips. All 44 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
-catalog covers **45 packages**, including two declaration-only packages.
+catalog covers **46 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -72,12 +73,16 @@ benchmarks are excluded from installable archives.
 The [Express conformance suite](scripts/express-conformance/README.md) adds
 1,261 upstream tests on Node 24, with documented expectation changes for VPM
 behavior. Bun runs 1,255 with six upstream-reproduced runtime limitations.
-These are separate from the root test count.
+The [Functions Framework suite](scripts/framework-conformance/README.md) adds
+105 upstream tests on each runtime, with no assertion changes or skips.
+Both upstream suites are separate from the root test count.
 
 ## Dependency scope
 
 The Express application stack is implemented throughout: `vexpress` has 28 direct
-and 39 total external runtime dependencies, all VPM packages. `vcors` uses only
+and 39 total external runtime dependencies, all VPM packages.
+`vfunctions-framework` uses five direct and 42 total external VPM packages.
+`vcors` uses only
 `vvary`. Built-in Node modules are not external dependencies.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
@@ -90,6 +95,7 @@ and 39 total external runtime dependencies, all VPM packages. `vcors` uses only
 | `vrouter` | 5 | 3 |
 | `vcors` | 2 | 1 |
 | `vread-package-up` | 3 | 0 |
+| `vfunctions-framework` | 7 | 5 |
 
 Other runtime replacements retain their direct dependency counts. `vqs` removes
 an 18-package transitive tree from that branch; packages elsewhere may still need
@@ -132,7 +138,7 @@ gate. Separate development fixtures can also retain older HTTP utility versions.
 runtime**, plus **six Functions Framework startup-option scenarios** and **122
 raw-manifest comparisons**. It substitutes matching package versions inside its
 own process, serves Firebase `onRequest` handlers and Express applications through
-Functions Framework, and exercises a direct parser application. Its coverage includes:
+`vfunctions-framework`, and exercises a direct parser application. Its coverage includes:
 
 - Routing, parameters, wildcards, mounted applications, async errors, HEAD/OPTIONS,
   proxy trust, IPv4/IPv6 addresses and deprecation warnings.
@@ -151,16 +157,84 @@ Functions Framework, and exercises a direct parser application. Its coverage inc
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
 count too. It checks the single shared content-type 2.x copy and its four callers.
-Version mismatches remain visible in its report. The framework's dynamic ESM
-reader import needs a separate adapter: an isolated copy of its loader redirects
-only that import to VPM. Installed framework files and the upstream comparison
-reader are unchanged; CommonJS cache substitution does not redirect ESM imports.
+Version mismatches remain visible in its report. The VPM framework directly uses
+its own reader, removing the previous dynamic-import loader adapter. The upstream
+ESM reader remains intact for differential checks; installed fixture files are
+unchanged.
 
 Consumer configuration affects reachability. Functions Framework disables ETags
 on its own app, so validator tests also use application responses and static files.
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfunctions-framework
+
+Replaces Functions Framework 5.0.2 with an entirely VPM stack. Five direct
+dependencies replace seven; the pinned upstream installed graph has 126 external
+package instances, including types and the CloudEvents SDK, versus 42 external
+VPM packages. Public declarations describe CloudEvent envelopes and structural
+HTTP interfaces without installing either SDK or ambient Express types.
+
+**Verified changes:** synchronous async-context initialization isolates concurrent
+first requests; exact Buffer/Uint8Array views prevent logging surrounding bytes;
+JSON scalars and invalid label fields no longer crash context logging. Stream
+interception preserves encodings and is idempotent. HTTP wrappers catch thenables
+and cross-realm promises, and event callbacks bind to the captured request domain.
+The latter plus explicit synchronous error capture fixes all 24 failures
+reproduced against the published upstream package on Bun 1.4.0.
+
+Registration validates handlers, target lookup uses own properties, and event
+conversion tables exclude inherited entries. Non-POST event requests return 404
+before conversion. Idle-timeout cancellation follows response completion rather
+than request-body completion; listeners and socket timeouts are cleaned up.
+Timeout input is bounded to valid integer seconds. Global middleware avoids
+unnecessary wildcard route capture.
+
+**Coverage:** 48 new package tests, all 105 upstream tests on both runtimes, the
+shared 245-request Firebase/HTTP gate, CLI startup and installed npm/Bun archive
+checks. The separate upstream hosted/external conformance harness was not run.
+The [API guide](packages/vfunctions-framework/README.md) documents retained
+framework defaults, timeout semantics, structural type limits and compatibility.
+
+**Performance, 2026-10-28:** pooled medians of 21 fresh-process samples per
+implementation (three reports, seven alternating pairs each), Node 24.22.1 and
+Bun 1.4.0 on macOS arm64. Startup includes package loading, option parsing, real
+handler loading and server readiness; process launch and fixture creation are
+excluded. OS filesystem caches are warm.
+
+| Startup operation | Node upstream → VPM (ms) | Bun upstream → VPM (ms) |
+| --- | ---: | ---: |
+| CJS handler, listening | 73.03 → 53.24 | 62.03 → 51.19 |
+| CJS handler, first response | 80.74 → 61.19 | 70.59 → 63.67 |
+| ESM handler, listening | 71.66 → 50.56 | 54.25 → 46.35 |
+| ESM handler, first response | 80.11 → 58.87 | 61.76 → 53.74 |
+
+Listening takes **27–29% less time on Node** and **15–18% less on Bun** in the
+pooled medians. First response takes **24–27% less on Node** and **10–13% less on
+Bun**. Bun CJS startup varies substantially between reports; these are local
+measurements, not deployed cold-start guarantees.
+
+Each HTTP sample includes 200 warmups and 1,000 checked sequential keep-alive
+round trips. The client and server run in the same process.
+
+| HTTP workload | Node upstream → VPM (µs/request) | Bun upstream → VPM (µs/request) |
+| --- | ---: | ---: |
+| GET | 158.15 → 157.22 | 111.56 → 107.76 |
+| Deep path with query | 148.66 → 146.39 | 107.39 → 101.90 |
+| JSON body | 161.23 → 162.58 | 127.01 → 116.25 |
+| Form body | 167.52 → 160.25 | 123.84 → 126.62 |
+| Structured CloudEvent | 155.20 → 149.76 | No valid upstream comparison |
+
+HTTP differences are small and variable. Node JSON is about **1% slower** and
+Bun forms about **2% slower** in the pooled medians. Some per-report comparisons
+change direction, so no general request-throughput improvement is claimed. Bun
+event timing is omitted because the unchanged upstream handler fails; VPM event
+correctness is covered by the passing conformance suite.
+
+[The harness and six raw reports](packages/vfunctions-framework/bench) retain
+all samples, runtime information, the installed dependency snapshot, harness
+hashes and hashes of the complete VPM source tree and consumer lockfile.
 
 ## vread-package-up
 

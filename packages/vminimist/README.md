@@ -95,7 +95,8 @@ cover the corrections above, 5,000 generated upstream comparisons, 3,000-level
 dotted paths, 2,000-link alias chains, large argument tails, getter counts,
 module imports and source integrity.
 
-The shared integration gate replaces minimist inside Functions Framework 5.0.2.
+The shared integration gate runs `vfunctions-framework`, the VPM counterpart to
+Functions Framework 5.0.2, which uses this parser directly.
 Six startup-option scenarios exercise defaults, CLI/environment precedence,
 string preservation, paths, booleans, `--`, prototype-shaped names and invalid
 signature rejection through the framework's actual `parseOptions` function.

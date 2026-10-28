@@ -27,6 +27,8 @@ jobs:
       - run: node scripts/integration.cjs
       - run: npm --prefix scripts/express-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/express-conformance/run.cjs
+      - run: npm --prefix scripts/framework-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/framework-conformance/run.cjs
 
   bun-and-types:
     runs-on: ubuntu-latest
@@ -51,3 +53,5 @@ jobs:
       - run: bun scripts/integration.cjs
       - run: npm --prefix scripts/express-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/express-conformance/run.cjs
+      - run: npm --prefix scripts/framework-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/framework-conformance/run.cjs

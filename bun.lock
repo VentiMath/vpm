@@ -140,6 +140,20 @@
       "name": "vfresh",
       "version": "0.1.0",
     },
+    "packages/vfunctions-framework": {
+      "name": "vfunctions-framework",
+      "version": "0.1.0",
+      "bin": {
+        "vfunctions-framework": "lib/main.js",
+      },
+      "dependencies": {
+        "vbody-parser": "workspace:*",
+        "vexpress": "workspace:*",
+        "vminimist": "workspace:*",
+        "von-finished": "workspace:*",
+        "vread-package-up": "workspace:*",
+      },
+    },
     "packages/vhttp-errors": {
       "name": "vhttp-errors",
       "version": "0.1.0",
@@ -383,6 +397,8 @@
     "vforwarded": ["vforwarded@workspace:packages/vforwarded"],
 
     "vfresh": ["vfresh@workspace:packages/vfresh"],
+
+    "vfunctions-framework": ["vfunctions-framework@workspace:packages/vfunctions-framework"],
 
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
 
