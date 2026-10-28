@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vproxy-addr', 'vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vpath-to-regexp', 'vproxy-addr', 'vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const version = require(path.join(root, 'packages', name, 'package.json')).version;
     const archive = name + '-' + version + '.tgz';
@@ -26,6 +26,11 @@ try {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
+    }
+    if (name === 'vpath-to-regexp') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'regex.cjs', 'package.json'].sort());
     }
     if (name === 'vproxy-addr') {
       assert.deepEqual(metadata.dependencies, { vforwarded: '0.1.0', vipaddr: '0.1.0' });
@@ -65,6 +70,11 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const route = require('vpath-to-regexp');
+assert.equal(route.match('/users/:id')('/users/a%2Fb').params.id, 'a/b');
+assert.equal(route.compile('/files/*path')({path:['a','b']}), '/files/a/b');
+const routeData = route.parse('/:id'); const routeMatcher = route.match(routeData);
+routeData.tokens[1].name = 'changed'; assert.equal(routeMatcher('/x').params.id, 'x');
 const proxyaddr = require('vproxy-addr');
 assert.equal(proxyaddr({ headers: { 'x-forwarded-for': '198.51.100.1,\\t10.0.0.1' }, socket: { remoteAddress: '127.0.0.1' } }, ['loopback', '10.0.0.0/8']), '198.51.100.1');
 assert.equal(proxyaddr.compile('::/0')('::ffff:192.0.2.1'), false);
@@ -139,6 +149,11 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import route, { parse as parseRoute, match as matchRoute, compile as compileRoute, pathToRegexp, stringify as stringifyRoute, TokenData, PathError } from 'vpath-to-regexp';
+assert.equal(route.parse, parseRoute); assert.equal(route.match, matchRoute); assert.equal(route.compile, compileRoute);
+assert.equal(pathToRegexp('/x').regexp.test('/x'), true);
+assert.equal(stringifyRoute(new TokenData([{type:'param',name:'name with space'}])), ':"name with space"');
+assert.ok(new PathError('bad route', '/x') instanceof TypeError);
 import proxyaddr, { all as allProxyAddresses, compile as compileTrust } from 'vproxy-addr';
 assert.equal(proxyaddr.all, allProxyAddresses); assert.equal(proxyaddr.compile, compileTrust);
 assert.equal(compileTrust('::ffff:10.0.0.0/104')('10.0.0.1'), true);
@@ -209,6 +224,15 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import route, { match as matchRoute, compile as compileRoute, TokenData, type PathInput } from 'vpath-to-regexp';
+const routeData = new TokenData([{type:'param',name:'id'}] as const);
+const routeInputs: PathInput = ['/users/:id', [routeData]] as const;
+const routeMatch = matchRoute(routeInputs)('/users/x');
+if (routeMatch) { const id: string | readonly string[] | undefined = routeMatch.params.id; void id; }
+const routeUrl: string = compileRoute('/files/*path')({path:['a','b'] as const});
+// @ts-expect-error invalid decoder option
+route.match('/x', {decode:true});
+void routeUrl;
 import proxyaddr, { all as allProxyAddresses, compile as compileTrust } from 'vproxy-addr';
 const proxyRequest: proxyaddr.Request = { headers: {}, socket: {} };
 const trustProxy: proxyaddr.CompiledTrust = compileTrust(['loopback'] as const);
@@ -398,6 +422,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vpath-to-regexp\/index\.d\.ts/);
     assert.match(output, /node_modules\/vproxy-addr\/index\.d\.ts/);
     assert.match(output, /node_modules\/vipaddr\/index\.d\.ts/);
     assert.match(output, /node_modules\/vforwarded\/index\.d\.ts/);
