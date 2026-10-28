@@ -1,0 +1,45 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "sources": [
+    {
+      "package": "cors",
+      "version": "2.8.5",
+      "gitHead": "9158a8686d64bf567440d030873378c429ad60b0",
+      "tarball": "https://registry.npmjs.org/cors/-/cors-2.8.5.tgz",
+      "integrity": "sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==",
+      "fixture": "test/fixtures/cors-2.8.5.cjs",
+      "sha256": "8d35c93d6ea72eb675038fed47b7d3cb2407e70ea212d6130e7ba55ed8f67df3"
+    },
+    {
+      "package": "cors",
+      "version": "2.8.6",
+      "gitHead": "f00a8c1f0af727ffe5ed35f3b2d0b1a7eb4b65bb",
+      "tarball": "https://registry.npmjs.org/cors/-/cors-2.8.6.tgz",
+      "integrity": "sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw==",
+      "fixture": "test/fixtures/cors-2.8.6.cjs",
+      "sha256": "ea5c1ee247ad5204dad41a86326197d9d85a3bc46e8c9078cc4f1f323a828697"
+    }
+  ],
+  "upstreamTests": {
+    "url": "https://github.com/expressjs/cors/blob/v2.8.6/test/test.js",
+    "fixture": "test/fixtures/upstream-tests.cjs",
+    "sha256": "d07e079631b4fb09e36213519be679cb8311b23c073284e817762b1ec6363fee"
+  },
+  "testHelpers": [
+    {
+      "package": "after",
+      "version": "0.8.2",
+      "fixture": "test/fixtures/after-0.8.2.cjs",
+      "sha256": "3733df5d610298cf2b5bfe9f764723502be58a4870324147d452a59cd8265170",
+      "licenseFile": "test/fixtures/after-LICENSE"
+    },
+    {
+      "package": "object-assign",
+      "version": "4.1.1",
+      "fixture": "test/fixtures/object-assign-4.1.1.cjs",
+      "sha256": "e02cb9714ef6e561e971fe400644330212f07ca86120587199470d8b759a4b7c",
+      "licenseFile": "test/fixtures/object-assign-LICENSE"
+    }
+  ]
+}

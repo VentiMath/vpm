@@ -11,7 +11,7 @@
     "router": "2.2.0",
     "send": "1.2.1",
     "serve-static": "2.2.1",
-    "cors": "2.8.5",
+    "cors": "2.8.6",
     "jsonwebtoken": "9.0.3",
     "form-data": "2.5.5"
   },

@@ -39,6 +39,11 @@ try {
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', 'lib/layer.js', 'lib/route.js', 'lib/handlers.js', 'lib/regexp.js'].sort());
     }
+    if (name === 'vcors') {
+      assert.deepEqual(metadata.dependencies, { vvary: '0.1.0' });
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
+    }
     if (name === 'vdepd') {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -86,6 +91,14 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const cors = require('vcors');
+const corsHeaders = {};
+let corsEnds = 0;
+cors({origin:/example/g})({method:'OPTIONS',headers:{origin:'https://example.test'}}, {
+  statusCode:200, getHeader(name){return corsHeaders[name];}, setHeader(name,value){corsHeaders[name]=value;}, removeHeader(name){delete corsHeaders[name];}, end(){corsEnds++;}
+}, error=>{throw error || new Error('unexpected preflight next');});
+require('node:assert/strict').equal(corsHeaders['Access-Control-Allow-Origin'],'https://example.test');
+require('node:assert/strict').equal(corsEnds,1);
 const assert = require('node:assert/strict');
 const express = require('vexpress');
 const application = express();
@@ -185,6 +198,10 @@ assert.equal(new Negotiator(request).mediaType(['text/html', 'application/json']
 assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import cors from 'vcors';
+let corsNext = 0;
+cors({origin:false})({method:'GET',headers:{}},{},error=>{if(error)throw error;corsNext++;});
+if(corsNext!==1)throw new Error('CORS did not continue');
 import assert from 'node:assert/strict';
 import express, { json as expressJson, Router as ExpressRouter } from 'vexpress';
 assert.equal(express.json, expressJson); assert.equal(express.Router, ExpressRouter);
@@ -278,8 +295,15 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import cors, { type Options as CorsOptions } from 'vcors';
+const corsOptions: CorsOptions = {origin:['https://ventimath.com',/example/g] as const,allowedHeaders:['Authorization'] as const,credentials:true};
+cors(corsOptions);
+cors((req,callback)=>callback(null,{origin:req.headers.origin === 'https://ventimath.com'}));
+// @ts-expect-error credentials must be boolean
+cors({credentials:'true'});
 import express, { json as expressJson, Router as ExpressRouter } from 'vexpress';
 const app = express();
+app.use(cors(corsOptions));
 app.use(expressJson());
 app.get('/users/:id', (req, res) => res.status(201).json({ id: req.params.id, query: req.query }));
 app.use('/child', ExpressRouter().get('/', (req, res) => res.send('ok')));

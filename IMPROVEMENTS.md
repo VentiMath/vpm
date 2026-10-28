@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vcors](packages/vcors) | cors 2.8.5 / 2.8.6 | Compiled static policies, isolated RegExp state, once-only callbacks, dynamic denial cache variation, validated headers, coherent preflight framing, and one dependency instead of two. |
 | [vexpress](packages/vexpress) | express 5.3.0 | Entirely VPM dependency tree, exact binary-view responses, coherent framing, validated settings/registration, nonmutating options, once-only view completion, and specialized response paths. |
 | [vrouter](packages/vrouter) | router 2.2.0 | Isolated RegExp state, prototype-safe parameters, atomic handler registration, single-read thenables, and pathname-only dispatch. |
 | [vdepd](packages/vdepd) | depd 2.0.0 | Private warning state, transparent function/constructor wrappers, correct inherited property writes, and safer stack capture. |
@@ -75,6 +76,8 @@ each utility have zero external runtime dependencies, except
 `once` / `vonce`, which declare **one and zero**; and
 `router` / `vrouter`, which declare **five and three**; and
 `express` / `vexpress`, which each declare **28**.
+`cors` declares **two** runtime dependencies; `vcors` declares **one**, `vvary`.
+It removes the `object-assign` shim and the per-request options copy.
 `von-finished` replaces `ee-first` with `vee-first`, and `vdebug` replaces `ms`
 with `vms`. Upstream `debug` also tries to load its optional peer `supports-color`;
 `vdebug` uses built-in terminal detection instead. Built-in Node.js modules are
@@ -111,7 +114,7 @@ Cloud Functions gen 2 HTTP path. The reproducible consumer fixture also tests
 parent upgrades before choosing which dependencies to replace. Its current
 upgrade target is Functions Framework 5.0.2 serving `firebase-functions` 7.4.0
 `onRequest` handlers through Express 5.3.0, `body-parser` 2.4.0, `router` 2.2.0,
-`send` 1.2.1, and `serve-static` 2.2.1. Updating this fixture does not update or
+`send` 1.2.1, `serve-static` 2.2.1, and `cors` 2.8.6. Updating this fixture does not update or
 deploy the application. The fixture pins `qs` 6.17.0 within Express and body-parser's
 declared ranges, replacing its earlier 6.16.1 resolution. The runtime packages above target the corresponding upstream
 versions in this graph. The platform types instead come from VPM's development
@@ -157,8 +160,10 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct parser app, and runs 235
-HTTP checks. Express 5.3.0 itself is now replaced by vexpress, including the
+the Functions Framework, also serves a direct parser app, and runs 242
+HTTP checks. Firebase Functions' CORS middleware is replaced by vcors, including
+origin/header reflection, repeated global-regex checks, denied dynamic policies,
+duplicate callbacks and preflight framing. Express 5.3.0 itself is now replaced by vexpress, including the
 framework's internal app. New checks cover binary-view response bytes, generated
 response framing, bodyless statuses and own header fields. Existing checks cover
 RegExp route state and captures, prototype-named param callbacks,
@@ -211,6 +216,50 @@ statuses normalize to 500, removing the associated deprecation behavior and
 `vfinalhandler` connects all eight preceding VPM packages: six direct dependencies,
 plus `vee-first` through `von-finished` and `vms` through `vdebug`. Its entire
 external runtime dependency tree now consists of VPM counterparts.
+
+## vcors
+
+**Baselines:** cors 2.8.5 and 2.8.6. Firebase Functions uses this middleware for
+origin policies and OPTIONS handling. The comparison fixture now pins 2.8.6;
+vcors replaces it before Firebase loads. Runtime dependencies drop from two
+(`object-assign`, `vary`) to one (`vvary`); the per-request options copy is removed.
+
+**Correctness:** static options/arrays are validated and snapshotted once.
+Global and sticky RegExp policies have private state and stable decisions;
+cyclic arrays fail explicitly and deep arrays use iterative traversal. Callback
+providers settle once, including reentrant callbacks, while downstream exceptions
+retain their propagation. Dynamic allow/deny decisions vary by Origin. Reflected
+headers are validated before CORS writes, inherited fields are ignored, and
+middleware-generated empty preflights clear transfer/trailer/encoding conflicts.
+
+**Boundaries:** empty allowed-header strings disable reflection; static policy
+mutations require new middleware or an options delegate. Flags/statuses/max ages
+have explicit contracts. Wildcard-plus-credentials behavior is preserved rather
+than silently expanded to reflected origins. CORS does not authorize the handler
+or remove grant headers written by earlier middleware. See the
+[package API and differences](packages/vcors/README.md).
+
+**Caller specialization:** known Vary field names can be written directly when
+no header exists, and exact matches/wildcards need no merge. Other existing Vary
+values retain the general validator, captured values and method receivers.
+
+**Verification:** 39 upstream tests run with unchanged assertions, plus 29 local
+regressions on Node and Bun. Tests cover descriptor/getter snapshots, regex state,
+large/deep/cyclic policies, callback errors and duplication, cache variation,
+invalid headers and real HTTP framing. The shared Functions Framework/Firebase
+gate passes 242 HTTP checks per runtime. npm/Bun six-file archives pass CJS/ESM
+runtime and TypeScript 7 consumer checks without ambient platform types.
+
+**Performance:** three fresh processes on Node 24 and Bun compare both upstream
+versions with vcors, retaining raw samples and hashes. Against cors 2.8.6,
+origin-reflecting GETs take **30–33% less time on Node** and **59–61% less on Bun**;
+reflected-header preflights take **22% / 37–38% less**. A 250-origin allowlist
+takes **87% / 85–86% less**. The [full report](packages/vcors/README.md#benchmarks)
+also records setup costs: configured factory creation is 16 → 702 ns on Node
+and 18 → 536 ns on Bun; construction plus one GET is 55–56% / 1–14% slower.
+Callback denial does additional cache-header work (83 → 213 ns / 175 → 212 ns),
+and Bun's default factory is about 4 ns slower in the aggregate. These component
+measurements include synthetic HTTP objects; they are not HTTP throughput results.
 
 ## vfinalhandler
 
@@ -1082,12 +1131,12 @@ assertion changes for existing VPM dependency behavior and no skipped tests.
 Bun passes **1,255 with six pending** cases that fail identically against unchanged
 Express. The [isolated harness](scripts/express-conformance/README.md) explains
 each adaptation and runtime limitation; comparison dependencies are test-only.
-The shared Functions Framework/Firebase gate passes **235 HTTP checks per runtime**
+The shared Functions Framework/Firebase gate passes **242 HTTP checks per runtime**
 with Express itself replaced. npm/Bun package archives contain thirteen vexpress
 files and pass CJS/ESM and TypeScript 7 consumer checks without ambient platform
-types. The root suite covers **1,257 tests** (Bun has three existing runtime skips),
-public declarations cover **40 runtime packages**, and documentation covers
-**42 packages**. No production deployment is implied by these fixture results.
+types. The root suite covers **1,325 tests** (Bun has three existing runtime skips),
+public declarations cover **41 runtime packages**, and documentation covers
+**43 packages**. No production deployment is implied by these fixture results.
 
 **Performance:** the [package report](packages/vexpress/README.md#benchmarks)
 compares upstream, upstream with VPM dependencies, and vexpress in three fresh
@@ -1987,7 +2036,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 40 runtime packages'
+would compare VPM against itself. All 41 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
