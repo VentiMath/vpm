@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vproxy-addr](packages/vproxy-addr) | proxy-addr 2.0.8 | Single-pass candidate parsing, private numeric trust rules, direct mapped-address matching, complete zero prefixes, and strict configuration snapshots. |
 | [vipaddr](packages/vipaddr) | ipaddr.js 1.9.1 / 2.5.0 | Single-pass parsing, bounded integer CIDR matching, isolated address state, direct mapped conversion, and preservation of IPv4-compatible IPv6 bits. |
 | [vforwarded](packages/vforwarded) | forwarded 0.2.0 | Correct tab whitespace, a single output array, snapshotted request fields, own-header lookup, and explicit invalid-input errors. |
 | [vee-first](packages/vee-first) | ee-first 1.1.1 | Once-only event dispatch, registration rollback, and cleanup under reentrant event hooks. |
@@ -57,7 +58,7 @@ Most runtime replacements preserve their dependency counts. Both versions of
 each utility have zero external runtime dependencies, except
 `on-finished` / `von-finished`, `debug` / `vdebug`, `negotiator` / `vnegotiator`, and `mime-types` /
 `vmime-types`, which each declare one,
-`accepts` / `vaccepts`, which each declare two,
+`accepts` / `vaccepts` and `proxy-addr` / `vproxy-addr`, which each declare two,
 `type-is` / `vtype-is`, which each declare three,
 `serve-static` / `vserve-static`, which each declare four,
 `finalhandler` / `vfinalhandler`, which each declare six,
@@ -142,7 +143,7 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 180
+the Functions Framework, also serves a direct Express parser app, and runs 190
 HTTP checks: proxy address chains and Express `req.ip`/`req.ips` under disabled,
 unrestricted, hop-count and subnet trust, including tab-separated proxies, mapped/native IPv6 boundaries and malformed addresses, and
 stopping at untrusted hops; Express listen startup, followed by a late error, and EADDRINUSE
@@ -1030,13 +1031,68 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vproxy-addr
+
+**Caller and dependencies:** replaces `proxy-addr` 2.0.8 in Express 5.3.0's
+client-address and trust-proxy path. Its two direct dependencies, `vforwarded`
+and `vipaddr`, have no dependencies of their own. The complete tree is VPM.
+
+**Caller specialization:** uses vipaddr's validated public parsers once per
+candidate, without constructing address objects. Compilation converts IPv4
+rules to private numeric masks/network values and prepares IPv6 full/partial-word
+comparisons. Mapped policies and candidates become IPv4 numbers directly;
+family separation avoids repeated conversion and irrelevant rule checks. This
+removes repeated parsing, defensive state copying and prefix validation from the
+request path while retaining the standalone address package's contract.
+
+**Behavior:** all 88 upstream behavior tests, including 2.0.8's mapped-prefix
+security safeguards, pass unchanged. VPM adds valid `/0` prefixes and zero
+netmasks: IPv4/mapped and native IPv6 remain separate families. Short mapped
+prefixes below 96 grant no trust. Configuration arrays use single reads of their
+length/entries, reject inherited or nonstring entries, and produce an isolated
+private policy. Prefixes consume the full suffix. Accidental falsy policies to
+`all`, such as false or zero, throw instead of becoming unrestricted extraction;
+omitted/null trust retains extraction semantics. Callback order, truthiness,
+first-untrusted inclusion, unavailable socket addresses and original address text
+are preserved. Dependency-level parsing/header changes are documented separately.
+
+**Verification:** 105 package tests include all 162 prefix lengths, exact subnet
+boundaries and adjacent addresses, 7,140 generated BigInt comparisons, every
+short mapped prefix, 3,000 generated request/policy comparisons against both
+baseline callers, and 2,000 rule-order checks. Ten added real HTTP checks bring
+the shared Express/Functions Framework gate to 190 on Node 24 and Bun. npm/Bun
+archives cover CJS/ESM imports, six-file contents, rewritten VPM dependency
+versions and TypeScript 7 consumers without ambient platform types. The full
+repository suite passes **748 tests on Node 24** and **747 with one existing
+runtime-specific skip on Bun**. Public declarations pass for 36 runtime packages;
+the documentation inventory covers 38 packages.
+
+**Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0 compare the
+original caller/dependencies, the original caller with VPM dependencies, and
+`vproxy-addr` with those same VPM dependencies. Compared with the second baseline,
+single IPv4/IPv6/mapped-candidate trust checks take **46–53% less time on Node and
+49–59% less on Bun**. Three-trusted-proxy traversal takes **43–44% less on Node and
+36–41% less on Bun**; 100-hop traversal takes **47–48% / about 44% less**. The
+100-rule case takes **88% / 81–87% less**, eliminating the previous standalone
+`vipaddr` caller regression for that case. Compilation takes **42–53% / 10–51%
+less** across the six measured policies. Relative to original upstream with
+original dependencies, three-trusted-proxy traversal takes **81–82% / 83–85%
+less**, including the earlier dependency improvements.
+
+Empty policies, invalid candidates, callbacks, unavailable sockets and
+extraction-only paths show small or inconsistent changes against the VPM-dependency
+baseline. Node extraction is up to 7% slower (9 ns extra); Bun's empty policy is
+up to 12% slower (1.2 ns), unavailable socket up to 7% slower (3.4 ns), and
+callback up to 2% slower (1.5 ns). These are isolated operations, not HTTP
+throughput results. [Contract, full tables and all six runs](packages/vproxy-addr/README.md).
+
 ## vipaddr
 
 **Consumer and baselines:** `proxy-addr` 2.0.8, used by Express for client-address
 and proxy-trust evaluation, pins `ipaddr.js` 1.9.1. VPM also implements and compares
 against current `ipaddr.js` 2.5.0. All three address libraries have zero runtime
 dependencies. Together with `vforwarded`, this supplies the two dependencies
-needed for a future `vproxy-addr`.
+used by `vproxy-addr`.
 
 **Correctness:** numeric prefix lengths must be finite integers within the
 family's bounds. Both upstream releases can return true for an unrelated subnet
@@ -1067,13 +1123,12 @@ platform declarations.
 checks. Independent checks include 20,000 byte/address round trips, ASCII syntax
 substitutions against Node, all 162 valid subnet masks, 5,000 generated subnet
 operations checked with BigInt arithmetic, and 3,000 range classifications.
-Nine new real HTTP checks run through unchanged proxy-addr and Express, covering
+Nine HTTP checks exercise the proxy-addr interface through Express, covering
 mapped/native/compatible IPv6, subnet boundaries and malformed proxy addresses.
-The shared gate runs 180 HTTP checks on each runtime. Archive checks cover the
+The shared gate runs 190 HTTP checks on each runtime. Archive checks cover the
 eight-file package, npm/Bun installs, Node/Bun CJS/ESM imports and TypeScript 7
-consumers without platform types. The complete local suite has 643 Node passes;
-Bun has 642 passes and one existing skip. All 35 runtime declarations and the
-37-package documentation gate pass.
+consumers without platform types. The latest shared coverage is recorded in the
+`vproxy-addr` section above.
 
 **Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and Bun
 1.4.0 use twelve order-balanced samples per case against both verified releases.
@@ -1110,9 +1165,9 @@ include 10,000 generated inputs, long chains, whitespace, getter/proxy behavior,
 and source-integrity checks. Eleven added HTTP checks exercise the actual
 proxy-addr/Express path under disabled, unrestricted, hop-count and subnet trust,
 including IPv4-mapped IPv6, tab-separated proxies, untrusted-hop boundaries and
-repeated header lines. The current shared gate runs 180 HTTP checks on Node 24 and
+repeated header lines. The current shared gate runs 190 HTTP checks on Node 24 and
 Bun. npm/Bun archive installations pass CJS/ESM runtime and TypeScript 7 consumers
-without platform ambient declarations. The documentation gate covers 37 packages.
+without platform ambient declarations. The documentation gate covers 38 packages.
 
 **Performance, 2026-10-28:** three fresh processes on Node 24.22.1 and Bun 1.4.0,
 with twelve alternating-order samples per case, show one-/two-address parsing
@@ -1662,7 +1717,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 35 runtime packages'
+would compare VPM against itself. All 36 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

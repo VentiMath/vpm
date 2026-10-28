@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vproxy-addr', 'vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const version = require(path.join(root, 'packages', name, 'package.json')).version;
     const archive = name + '-' + version + '.tgz';
@@ -24,6 +24,11 @@ try {
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
     if (['vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
+    }
+    if (name === 'vproxy-addr') {
+      assert.deepEqual(metadata.dependencies, { vforwarded: '0.1.0', vipaddr: '0.1.0' });
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
     }
@@ -60,6 +65,10 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const proxyaddr = require('vproxy-addr');
+assert.equal(proxyaddr({ headers: { 'x-forwarded-for': '198.51.100.1,\\t10.0.0.1' }, socket: { remoteAddress: '127.0.0.1' } }, ['loopback', '10.0.0.0/8']), '198.51.100.1');
+assert.equal(proxyaddr.compile('::/0')('::ffff:192.0.2.1'), false);
+assert.equal(proxyaddr.compile('0.0.0.0/0')('192.0.2.1'), true);
 const ipaddr = require('vipaddr');
 assert.equal(ipaddr.process('::ffff:192.0.2.1').toString(), '192.0.2.1');
 assert.equal(ipaddr.process('::192.0.2.1').kind(), 'ipv6');
@@ -130,6 +139,10 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import proxyaddr, { all as allProxyAddresses, compile as compileTrust } from 'vproxy-addr';
+assert.equal(proxyaddr.all, allProxyAddresses); assert.equal(proxyaddr.compile, compileTrust);
+assert.equal(compileTrust('::ffff:10.0.0.0/104')('10.0.0.1'), true);
+assert.deepEqual(allProxyAddresses({ headers: {}, socket: {} }), [undefined]);
 import ipaddr, { IPv4, IPv6, parse as parseIP, fromByteArray } from 'vipaddr';
 assert.equal(ipaddr.IPv4, IPv4); assert.equal(ipaddr.IPv6, IPv6); assert.equal(ipaddr.parse, parseIP);
 assert.equal(fromByteArray(new Uint8Array([127, 0, 0, 1])).toString(), '127.0.0.1');
@@ -196,6 +209,16 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import proxyaddr, { all as allProxyAddresses, compile as compileTrust } from 'vproxy-addr';
+const proxyRequest: proxyaddr.Request = { headers: {}, socket: {} };
+const trustProxy: proxyaddr.CompiledTrust = compileTrust(['loopback'] as const);
+const proxyAddress: string | undefined = proxyaddr(proxyRequest, trustProxy);
+const proxyChain: proxyaddr.Addresses = allProxyAddresses(proxyRequest);
+// @ts-expect-error unknown peer must be allowed
+const definiteProxyAddress: string = proxyaddr(proxyRequest, trustProxy);
+// @ts-expect-error raw boolean policies belong to Express
+allProxyAddresses(proxyRequest, false);
+void [proxyAddress, proxyChain, definiteProxyAddress];
 import ipaddr, { IPv4, IPv6, type RangeList } from 'vipaddr';
 const ip4: IPv4 = new IPv4(new Uint8Array([127, 0, 0, 1]));
 const ip6: IPv6 = IPv6.parse('::1');
@@ -375,6 +398,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vproxy-addr\/index\.d\.ts/);
     assert.match(output, /node_modules\/vipaddr\/index\.d\.ts/);
     assert.match(output, /node_modules\/vforwarded\/index\.d\.ts/);
     assert.match(output, /node_modules\/vonce\/index\.d\.ts/);

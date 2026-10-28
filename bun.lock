@@ -162,6 +162,14 @@
       "name": "vparseurl",
       "version": "0.1.0",
     },
+    "packages/vproxy-addr": {
+      "name": "vproxy-addr",
+      "version": "0.1.0",
+      "dependencies": {
+        "vforwarded": "workspace:*",
+        "vipaddr": "workspace:*",
+      },
+    },
     "packages/vqs": {
       "name": "vqs",
       "version": "0.1.0",
@@ -329,6 +337,8 @@
     "vonce": ["vonce@workspace:packages/vonce"],
 
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
+
+    "vproxy-addr": ["vproxy-addr@workspace:packages/vproxy-addr"],
 
     "vqs": ["vqs@workspace:packages/vqs"],
 

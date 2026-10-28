@@ -1,0 +1,36 @@
+{
+  "name": "vproxy-addr",
+  "version": "0.1.0",
+  "description": "Proxy address selection with compiled numeric trust rules and validated VPM address parsing",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vproxy-addr"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vproxy-addr",
+  "dependencies": {
+    "vforwarded": "workspace:*",
+    "vipaddr": "workspace:*"
+  }
+}
