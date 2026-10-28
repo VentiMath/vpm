@@ -42,8 +42,9 @@ replacement. Package-level details live alongside the source in [`packages/`](pa
 The collection covers the Express 5 HTTP stack: routing, request bodies, cookies,
 content negotiation, static files, response handling, and the utilities beneath
 those APIs. `vexpress` uses VPM packages throughout its runtime dependency tree;
-`vcors` adds cross-origin request handling. Two declaration-only packages provide
-Node and Undici types for development.
+`vcors` adds cross-origin request handling. Backend startup utilities include
+command-line argument parsing. Two declaration-only packages provide Node and
+Undici types for development.
 
 Integration tests exercise these replacements inside pinned Google Functions
 Framework and Firebase Functions consumers. Those frameworks and the wider

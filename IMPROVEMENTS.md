@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vminimist](packages/vminimist) | minimist 1.2.8 | Coherent transitive aliases, boolean-alias fixes, own-property configuration, reserved positional arrays, validated snapshots, and non-variadic argument tails. |
 | [vcors](packages/vcors) | cors 2.8.5 / 2.8.6 | Compiled static policies, isolated RegExp state, once-only callbacks, dynamic denial cache variation, validated headers, coherent preflight framing, and one dependency instead of two. |
 | [vexpress](packages/vexpress) | express 5.3.0 | Entirely VPM dependency tree, exact binary-view responses, coherent framing, validated settings/registration, nonmutating options, once-only view completion, and specialized response paths. |
 | [vrouter](packages/vrouter) | router 2.2.0 | Isolated RegExp state, prototype-safe parameters, atomic handler registration, single-read thenables, and pathname-only dispatch. |
@@ -55,10 +56,10 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,325 tests**: all pass on Node 24, and Bun passes
-1,322 with three documented runtime-specific skips. All 41 runtime packages'
+The root suite contains **1,409 tests**: all pass on Node 24, and Bun passes
+1,406 with three documented runtime-specific skips. All 42 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
-catalog covers **43 packages**, including two declaration-only packages.
+catalog covers **44 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -124,8 +125,8 @@ gate. Separate development fixtures can also retain older HTTP utility versions.
 ### The integration gate
 
 [`scripts/integration.cjs`](scripts/integration.cjs) runs **242 HTTP checks per
-runtime**. It substitutes matching package versions inside its own process, serves
-Firebase `onRequest` handlers and Express applications through Functions
+runtime**, plus **six Functions Framework startup-option scenarios**. It substitutes
+matching package versions inside its own process, serves Firebase `onRequest` handlers and Express applications through Functions
 Framework, and exercises a direct parser application. Its coverage includes:
 
 - Routing, parameters, wildcards, mounted applications, async errors, HEAD/OPTIONS,
@@ -136,8 +137,8 @@ Framework, and exercises a direct parser application. Its coverage includes:
   downloads, static files, ranges, validators and redirects.
 - CORS reflection, allow/deny decisions, repeatable RegExp policies, duplicate
   callbacks, cache variation and preflight framing.
-- Application startup callbacks, symbol descriptors, JWT expiry durations and
-  debug output from real consumers.
+- Framework CLI/environment precedence, option types and errors, application
+  startup callbacks, symbol descriptors, JWT expiry durations and debug output.
 
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
@@ -149,6 +150,41 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vminimist
+
+**Consumer and baseline:** minimist 1.2.8 parses startup arguments in Functions
+Framework 5.0.2. Both implementations have zero runtime dependencies. VPM includes
+its own declarations and retains the familiar CommonJS/ESM default function API.
+
+**Corrections:** own-property dictionaries accept names such as `toString` without
+inherited configuration collisions. Overlapping aliases form complete groups,
+boolean aliases handle `=false` correctly, and dotted boolean classification uses
+the full name. Reserved `_`/`--` arrays and prototype-navigation paths cannot be
+written through options. Parsing snapshots arguments/configuration before
+callbacks and does not modify caller-owned defaults. Large positional tails avoid
+variadic argument limits; ordinary flat options skip dotted-path machinery.
+
+**Boundaries:** malformed inputs/configuration are rejected explicitly. Inherited
+options are ignored; structural path collisions throw. Opaque default objects
+retain their identity and must be copied before caller mutation. Numeric values
+still use JavaScript Number semantics; uppercase exponent E is additionally
+recognized. [The API guide](packages/vminimist/README.md) details these changes.
+
+**Verification:** 61 unchanged upstream tests plus 23 local regression tests run
+on Node and Bun. Coverage includes 5,000 generated comparisons, deep paths, long
+alias chains, large argument tails, getters and inherited setters. Six startup
+scenarios run through the actual Functions Framework option parser with minimist
+replaced. npm/Bun six-file archives pass CJS/ESM and TypeScript 7 consumer checks.
+
+**Performance, 2026-10-28:** three fresh Node 24/Bun processes with ten alternating
+samples per case. Functions Framework argument parsing takes **28–30% less time
+on Node** and **48–52% less on Bun**; simple long flags take **46–51% / 62–63% less**.
+Node dotted/alias cases have mixed results. Validating and snapshotting a
+1,000-argument `stopEarly` input takes **15–23% more on Node** (4.23 → 4.86 µs),
+while Bun takes **30–35% less**. [The full report](packages/vminimist/README.md#benchmarks)
+retains all cases, samples and hashes. These are parser-call measurements, not
+full startup or HTTP throughput results.
 
 ## vcors
 

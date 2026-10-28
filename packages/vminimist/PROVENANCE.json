@@ -1,0 +1,29 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "upstream": {
+    "package": "minimist",
+    "version": "1.2.8",
+    "gitHead": "6901ee286bc4c16da6830b48b46ce1574703cea1",
+    "tarball": "https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz",
+    "integrity": "sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA=="
+  },
+  "sha256": {
+    "test/fixtures/minimist-1.2.8.cjs": "9cf5e83d36697a92d8af11e000f513ac30a3464bbb024850f9ffdeb1edf59848",
+    "test/fixtures/upstream/all_bool.js": "f31578148a98d95d0877c68064800beba40b4b2d5eb3ff89b21ab136e5a67ad3",
+    "test/fixtures/upstream/bool.js": "9f2b918a3c01e5bbfc36144a43771fd76f1c832335601da09af163df1fb5f80e",
+    "test/fixtures/upstream/dash.js": "aa6b9628dbdad63cafdab97234845ac73a17f8c21d7e349aa1d7cbeaf2cf2a0f",
+    "test/fixtures/upstream/default_bool.js": "40d0d6bc29bf51341bca9552f0b7f961fb24ffd498a542ee083c62d3e50bbcb0",
+    "test/fixtures/upstream/dotted.js": "e6376a4431810c86bf9f6804f23f0bf916a261583f98d2f2cf107bd5fb573b6b",
+    "test/fixtures/upstream/kv_short.js": "c28239ce38d211ffee0cb5e01948506046b987ea6f9393498ed946a744403eba",
+    "test/fixtures/upstream/long.js": "c529a253f4561344fe001a1b206140c08351c14af75a28d4289e9c0fd8f52bf1",
+    "test/fixtures/upstream/num.js": "abdaeff736123a46d37ca48ca0e164f3819034a8542a1dd675766b1dfef6046f",
+    "test/fixtures/upstream/parse.js": "2913bbcb005feda47329f4ef39bb824f403b162b53d0130d089c969310018be1",
+    "test/fixtures/upstream/parse_modified.js": "585fc719e4518408ed8c35e4e09f56be1628e1594edb9c3c91fa549ac437584c",
+    "test/fixtures/upstream/proto.js": "e7d76717f8147efce380dcef05713ef2c7b4ea9eacd9c41f788b778c53d036f2",
+    "test/fixtures/upstream/short.js": "4c95f30cb99b076c7e295b5ace4060d94010919478494aa2765f81bbd1aaf05c",
+    "test/fixtures/upstream/stop_early.js": "8bcd4a8a41cc38af9a93b62782c2bfdfb776f93ed7a12ba77fbad364ba3dbaa0",
+    "test/fixtures/upstream/unknown.js": "2c8e34600ff6a1b07e55e0a9c25be77f973899c375ff2f41dc7ad9ce5f357302",
+    "test/fixtures/upstream/whitespace.js": "ad9cf3d4f9a41e7a92a765ae5588f8f701cb9fcc612f3f07c0b0caa86046446d"
+  }
+}
