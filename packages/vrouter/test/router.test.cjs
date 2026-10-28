@@ -300,3 +300,72 @@ test('pathname cache follows middleware URL rewrites', async () => {
   router.get('/changed', (req, res) => res.end(req.url));
   assert.equal((await run(router, '/before')).body, '/changed?query=1');
 });
+
+test('full-parse pathname results agree with vparseurl across generated complex URLs', async () => {
+  const parse = require('../../vparseurl');
+  const router = Router();
+  // No captures: compare the exact matched pathname without URI decoding
+  // obscuring a difference between encoded and unencoded paths.
+  router.get(/^[\s\S]*$/, (req, res) => res.end(router.stack[0].path));
+  const hosts = ['', 'http://example.test', 'https://user:pass@[::1]:8443',
+    'https://münich.example', 'http://bad:port', 'http://[invalid]', 'mailto:user@example.test'];
+  const characters = [' ', '\t', '\n', '\r', '\f', '\v', '\u00a0', '\ufeff', '#', '?',
+    '\\', '"', "'", '<', '>', '`', '{', '}', '|', '^', '%', '%20', '%2F', '雪', '\0'];
+  const urls = ['http://example.test', 'http://example.test?x=1', 'https://[::1]/',
+    'http://user%40name:p%3Ass@example.test/a', ' /a ', '\t/a\r',
+    '/before#ignored?query', '/a\\b?q= ', '/a"b?query= ', '/a{b?query= ', '/hello?next=http://host/a b'];
+  for (const host of hosts) for (const char of characters) {
+    urls.push(host + '/a' + char + 'b?query=a b', host + '/a?query=' + char + '#fragment');
+  }
+  let state = 6789;
+  for (let i = 0; i < 3000; i++) {
+    let value = hosts[i % hosts.length] + '/';
+    for (let j = 0; j < 8; j++) {
+      state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+      value += characters[state % characters.length] + 'x';
+    }
+    urls.push(value);
+  }
+  for (const url of urls) {
+    let expected;
+    try { expected = parse({ url }).pathname; } catch {}
+    const result = await run(router, url);
+    assert.equal(result.error, undefined, url);
+    if (expected == null) assert.equal(result.fellThrough, true, url);
+    else assert.equal(result.body, expected, url);
+  }
+});
+
+test('full-parse fallback preserves a single read of the pathname input', () => {
+  const router = Router(); let reads = 0; let result;
+  router.get('/hello', (req, res) => res.end('matched'));
+  const request = { method: 'GET', get url() {
+    if (++reads > 4) throw new Error('pathname input was reread');
+    return 'http://example.test/hello?q=a b';
+  } };
+  router(request, { end(value) { result = value; } }, () => assert.fail('fell through'));
+  assert.equal(result, 'matched'); assert.equal(reads, 4);
+});
+
+test('native URL objects and coercible nonstrings remain invalid request URLs', async () => {
+  const { Url, URL } = require('node:url');
+  const legacy = new Url(); legacy.pathname = '/hello';
+  const router = Router(); router.get('/hello', () => assert.fail('invalid URL matched'));
+  for (const url of [legacy, new URL('http://example.test/hello'), new String('/hello'),
+    { toString() { throw new Error('must not coerce'); } }, Symbol('url'), null, 42]) {
+    assert.equal((await run(router, '/', 'GET', { url })).fellThrough, true);
+  }
+});
+
+test('full-parse cache follows URL rewrites and ignores mutable shared parse results', async () => {
+  const parse = require('../../vparseurl');
+  const router = Router();
+  router.use((req, res, next) => {
+    parse(req).pathname = '/poisoned';
+    req.url = 'http://example.test/changed?q=a b';
+    next();
+  });
+  router.use((req, res, next) => { parse(req).pathname = '/poisoned-again'; next(); });
+  router.get('/changed', (req, res) => res.end(req.originalUrl));
+  assert.equal((await run(router, '/initial?q=a b')).body, '/initial?q=a b');
+});

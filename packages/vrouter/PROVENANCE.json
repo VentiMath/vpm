@@ -76,7 +76,36 @@
     {
       "file": "test/fixtures/upstream/support/utils.js.txt",
       "sha256": "4b3555d8d07885daac641197835e3d8b39c4813c83b540a8b89de1fd2dcc0354"
+    },
+    {
+      "file": "test/fixtures/vrouter-692d773/LICENSE",
+      "sha256": "d0bca4e517157b7a6120c085f5fe43a35b90c095e3bbeb9e67f220c608506a16"
+    },
+    {
+      "file": "test/fixtures/vrouter-692d773/index.js",
+      "sha256": "e2c5d513a38d79abebefa04fb15c125d609ddafd4a29a1cad224dde046ebf54a"
+    },
+    {
+      "file": "test/fixtures/vrouter-692d773/lib/handlers.js",
+      "sha256": "3850ce14e77619f9e2fe46b48a728dbc4608ac3330af5bb129108899fbefae1b"
+    },
+    {
+      "file": "test/fixtures/vrouter-692d773/lib/layer.js",
+      "sha256": "7255c35a6d284efdd5a0d7d4266bb07277553c5340c0ff75172f0da8d68d6281"
+    },
+    {
+      "file": "test/fixtures/vrouter-692d773/lib/regexp.js",
+      "sha256": "d207855ea67fd094e28e09fbe213dcfa941ff228d493793e05b8b3b6b687d506"
+    },
+    {
+      "file": "test/fixtures/vrouter-692d773/lib/route.js",
+      "sha256": "42a226c8dc5b4e87206c5ab04db95e18f8c6002f98d7505988356b90f531a72b"
     }
   ],
-  "tests": "Upstream suites retained as contract references, not run verbatim. Local tests exercise routing parity and intentional differences; shared integration replaces router in Express 5.3.0 / Functions Framework 5.0.2 / firebase-functions 7.4.0."
+  "tests": "Upstream suites retained as contract references, not run verbatim. Local tests exercise routing parity and intentional differences; shared integration replaces router in Express 5.3.0 / Functions Framework 5.0.2 / firebase-functions 7.4.0.",
+  "previousVpmBaseline": {
+    "commit": "692d77331751cfe63a23ebe6fc44d610fb6d56d5",
+    "directory": "test/fixtures/vrouter-692d773",
+    "note": "Unmodified previous entry and layer implementations, with unchanged workspace VPM dependencies, for the pathname follow-up benchmark."
+  }
 }

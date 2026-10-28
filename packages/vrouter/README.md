@@ -75,13 +75,15 @@ patterns safe from excessive backtracking.
   restoration copies three known fields directly.
 - **Pathnames:** ordinary URLs take a pathname-only path with a cache scoped to
   each router invocation. Changes to `req.url` invalidate it. Complex URL forms
-  still use vparseurl. The fast-path boundary matches vparseurl; ordinary routing
+  use the same native `node:url.parse` fallback directly, without creating a
+  disposable request object and a WeakMap cache entry that cannot be reused.
+  The fast-path boundary matches vparseurl; ordinary routing
   no longer creates full URL objects or populates parseurl's request cache.
 
-Four direct runtime dependencies are all VPM packages: `vdebug`, `vdepd`,
-`vparseurl`, and `vpath-to-regexp`. `vms` is the only additional transitive package.
-Upstream router declares five direct dependencies. Runtime-provided `node:http`
-is not an external package. Installable archives contain ten files and exclude
+Three direct runtime dependencies are all VPM packages: `vdebug`, `vdepd`,
+and `vpath-to-regexp`. `vms` is the only additional transitive package.
+Upstream router declares five direct dependencies. Runtime-provided `node:http` and
+`node:url` are not external packages. Installable archives contain ten files and exclude
 all comparison fixtures, tests and benchmarks.
 
 ## Validation and benchmarks
@@ -97,15 +99,21 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 node packages/vrouter/bench/compare.cjs
 bun packages/vrouter/bench/compare.cjs
+node packages/vrouter/bench/pathnames.cjs
+bun packages/vrouter/bench/pathnames.cjs
 ```
 
-48 local tests cover upstream parity, all runtime HTTP methods, error and promise
+52 local tests cover upstream parity, all runtime HTTP methods, error and promise
 routing, URL restoration, options, arrays, async parameter concurrency, 3,000
 synchronous handlers, deep/cyclic registration, prototype names, RegExp state and
 capture parsing. Pathname comparisons include 300 generated URLs and explicit
-whitespace, fragments, absolute URLs and invalid inputs. The shared HTTP gate
-runs 226 checks through Express 5.3.0, Functions Framework 5.0.2 and
-firebase-functions 7.4.0 with VPM aliases, including nine new router requests.
+whitespace, fragments, absolute URLs and invalid inputs. Another 3,361 complex
+URL cases compare exact pathnames with vparseurl, including malformed hosts,
+authentication, IPv6, international hostnames and control characters. Nonstring
+inputs, getter read counts, URL rewrites and mutable shared parse results have
+explicit regression tests. The shared HTTP gate
+runs 228 checks through Express 5.3.0, Functions Framework 5.0.2 and
+firebase-functions 7.4.0 with VPM aliases, including eleven router requests added for this package.
 Archive tests use npm and Bun installations, Node/Bun CJS/ESM imports, and
 TypeScript 7 CJS/ESM consumers without ambient platform types.
 
@@ -113,6 +121,9 @@ The original router source and upstream test files are retained as verified
 comparison/contract references. The upstream test suite is **not run verbatim**;
 these results refer to the local tests and consumer gate described above.
 
+### Initial baseline at `692d773`
+
+These historical measurements predate the complex-URL follow-up below.
 Measurements on 2026-10-28 used Node 24.22.1 and Bun 1.4.0, three fresh processes
 per runtime and twelve alternating samples per case. The table takes the median
 of the three per-process medians. It measures synchronous dispatch or registration,
@@ -144,13 +155,12 @@ in 256 slots, with final consumption outside timing. Debug logging is disabled.
 | dispatch long query through 20 middleware | 11,629 → 3,124 | 10,457 → 2,802 |
 | dispatch error recovery | 798 → 687 | 920 → 655 |
 
-Group registration takes roughly 70–83% less time across these measurements.
+In that baseline, group registration takes roughly 70–83% less time across these measurements.
 Most dispatch cases improve; gains are more consistent on Bun. Node static-route
 results vary from 12% faster to 15% slower between processes, and HEAD/error
 recovery also vary. Node absolute-URL dispatch takes 12–36% more time and a query
-requiring full parsing takes 25–34% more. These fallback paths retain full URL
-parsing and the VPM cache cost; the pathname specialization targets ordinary
-request URLs. The 4 KiB query passing through 20 middleware takes about 72–74%
+requiring full parsing takes 25–34% more. Those fallback paths still paid for a temporary request and redundant VPM
+cache entry; the follow-up below removes that cost while retaining native parsing. The 4 KiB query passing through 20 middleware takes about 72–74%
 less time. These are component measurements, not application throughput claims.
 
 The benchmark also runs unchanged router with VPM dependencies to isolate the
@@ -159,3 +169,53 @@ hashes are in [bench/results](bench/results). Reproduce with `COUNT` and `OUTPUT
 environment variables; defaults are 10,000 dispatch iterations and smaller
 registration batches. See [PROVENANCE.json](PROVENANCE.json) and [LICENSE](LICENSE)
 for source versions, fixture hashes, origins and MIT attribution.
+
+### Complex-URL follow-up, 2026-10-28
+
+The old fallback called `vparseurl({ url })`. Each call allocated a temporary
+request, added `_raw` metadata to the parsed URL, allocated a cache record and
+inserted a WeakMap entry. That entry had no reuse: the temporary request was
+immediately discarded, while the router already cached the pathname locally.
+The new fallback calls the same `node:url.parse` directly. It retains the exact
+fast-path boundary, string-only input contract and native parsing behavior. The
+ordinary-URL cache and all routing corrections above remain in place.
+
+[`bench/pathnames.cjs`](bench/pathnames.cjs) compares upstream, the exact saved
+`692d773` implementation, and the updated router within each process. Three fresh
+processes per runtime, twelve balanced samples and the same retention/consumption
+method cover the original 21 cases plus four additional complex-URL cases.
+Values below are medians of the three process medians; original results above
+remain historical and are not mixed into this comparison.
+
+| Operation | Node upstream (ns) | Node before → after (ns) | Bun upstream (ns) | Bun before → after (ns) |
+| --- | ---: | ---: | ---: | ---: |
+| dispatch absolute URL | 1,814 | 2,007 → 1,697 | 1,948 | 1,937 → 1,806 |
+| dispatch query requiring full parse | 1,290 | 1,560 → 1,229 | 1,594 | 1,532 → 1,420 |
+| dispatch absolute URL with parameter | 2,513 | 2,767 → 2,435 | 2,296 | 2,375 → 2,248 |
+| dispatch absolute international hostname | 2,404 | 2,652 → 2,318 | 2,520 | 2,437 → 2,393 |
+| dispatch escaped path through full parser | 1,477 | 1,671 → 1,387 | 2,008 | 1,844 → 1,753 |
+| dispatch complex URL through 20 middleware | 4,051 | 4,371 → 3,920 | 5,314 | 4,008 → 3,946 |
+| dispatch static route | 548 | 536 → 511 | 762 | 576 → 571 |
+| dispatch query string | 636 | 544 → 566 | 714 | 578 → 552 |
+| dispatch long query through 20 middleware | 11,972 | 3,121 → 3,176 | 11,149 | 3,080 → 3,078 |
+
+Node's original absolute-URL case takes **14–20% less time** than the previous
+router across the three processes; the full-parse query takes **16–21% less**.
+Against upstream in the same runs, those cases now range from **10% faster to 2%
+slower**, and **5–8% faster**, respectively. The additional complex cases take
+**8–18% less time** than the previous VPM implementation. Ordinary-path and
+registration differences are generally small; their algorithms are unchanged.
+The long-query cache benefit is retained (about **73–74% less than upstream**
+on Node and **72% less on Bun**).
+
+Bun's full-parse query improves by **7–10%**. Its absolute-URL median also improves,
+but one process is **14% slower than the previous version**, while the other two
+are about **7% faster**; the raw samples are noisy, so no across-the-board Bun
+speedup is claimed. All correctness tests and both HTTP consumer gates pass.
+These are component timings, not a prediction of end-to-end application latency.
+
+[Raw follow-up samples and matching source hashes](bench/pathname-results) include
+all controls and all three implementations. The exact previous entry and layer
+sources are retained under `test/fixtures/vrouter-692d773` and recorded in
+[PROVENANCE.json](PROVENANCE.json). No cache or parser changes were made to the
+standalone vparseurl package.
