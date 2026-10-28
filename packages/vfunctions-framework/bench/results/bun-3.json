@@ -1,0 +1,458 @@
+{
+  "date": "2026-10-28T23:30:41.642Z",
+  "runtime": "v26.3.0",
+  "bun": "1.4.0",
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M1 Pro",
+  "upstream": "@google-cloud/functions-framework@5.0.2",
+  "installedUpstreamGraph": {
+    "externalInstances": 126,
+    "packages": [
+      "@babel/code-frame@7.29.7",
+      "@babel/helper-validator-identifier@7.29.7",
+      "@google-cloud/functions-framework@5.0.2",
+      "@types/body-parser@1.19.6",
+      "@types/connect@3.4.38",
+      "@types/express-serve-static-core@5.1.3",
+      "@types/express@5.0.6",
+      "@types/http-errors@2.0.5",
+      "@types/node@26.6.5",
+      "@types/normalize-package-data@2.4.4",
+      "@types/qs@6.15.1",
+      "@types/range-parser@1.2.7",
+      "@types/send@1.2.1",
+      "@types/serve-static@2.2.0",
+      "accepts@2.0.0",
+      "ajv-formats@2.1.1",
+      "ajv@8.20.0",
+      "available-typed-arrays@1.0.7",
+      "bignumber.js@9.3.1",
+      "body-parser@2.4.0",
+      "bytes@3.1.2",
+      "call-bind-apply-helpers@1.0.2",
+      "call-bind@1.0.9",
+      "call-bound@1.0.4",
+      "cloudevents@10.0.0",
+      "content-disposition@2.0.1",
+      "content-type@2.1.0",
+      "cookie-signature@1.2.2",
+      "cookie@0.7.2",
+      "debug@4.4.3",
+      "define-data-property@1.1.4",
+      "depd@2.0.0",
+      "dunder-proto@1.0.1",
+      "ee-first@1.1.1",
+      "encodeurl@2.0.0",
+      "es-define-property@1.0.1",
+      "es-errors@1.3.0",
+      "es-object-atoms@1.1.2",
+      "escape-html@1.0.3",
+      "etag@1.8.1",
+      "express@5.3.0",
+      "fast-deep-equal@3.1.3",
+      "fast-uri@3.1.9",
+      "finalhandler@2.1.1",
+      "find-up-simple@1.0.1",
+      "for-each@0.3.5",
+      "forwarded@0.2.0",
+      "fresh@2.0.0",
+      "function-bind@1.1.2",
+      "generator-function@2.0.1",
+      "get-intrinsic@1.3.0",
+      "get-proto@1.0.1",
+      "gopd@1.2.0",
+      "has-property-descriptors@1.0.2",
+      "has-symbols@1.1.0",
+      "has-tostringtag@1.0.2",
+      "hasown@2.0.4",
+      "hosted-git-info@7.0.2",
+      "http-errors@2.0.1",
+      "iconv-lite@0.7.3",
+      "index-to-position@1.2.0",
+      "inherits@2.0.4",
+      "ipaddr.js@1.9.1",
+      "is-arguments@1.2.0",
+      "is-callable@1.2.7",
+      "is-generator-function@1.1.2",
+      "is-promise@4.0.0",
+      "is-regex@1.2.1",
+      "is-typed-array@1.1.15",
+      "js-tokens@4.0.0",
+      "json-bigint@1.0.0",
+      "json-schema-traverse@1.0.0",
+      "lru-cache@10.4.3",
+      "math-intrinsics@1.1.0",
+      "media-typer@1.1.1",
+      "merge-descriptors@2.0.0",
+      "mime-db@1.54.0",
+      "mime-types@3.0.2",
+      "minimist@1.2.8",
+      "ms@2.1.3",
+      "negotiator@1.1.0",
+      "normalize-package-data@6.0.2",
+      "object-inspect@1.13.4",
+      "on-finished@2.4.1",
+      "once@1.4.0",
+      "parse-json@8.3.0",
+      "parseurl@1.3.3",
+      "path-to-regexp@8.4.2",
+      "picocolors@1.1.1",
+      "possible-typed-array-names@1.1.0",
+      "process@0.11.10",
+      "proxy-addr@2.0.8",
+      "qs@6.17.0",
+      "range-parser@1.2.1",
+      "raw-body@3.0.2",
+      "read-package-up@11.0.0",
+      "read-pkg@9.0.1",
+      "require-from-string@2.0.2",
+      "router@2.2.0",
+      "safe-regex-test@1.1.0",
+      "safer-buffer@2.1.2",
+      "semver@7.8.5",
+      "send@1.2.1",
+      "serve-static@2.2.1",
+      "set-function-length@1.2.2",
+      "setprototypeof@1.2.0",
+      "side-channel-list@1.0.1",
+      "side-channel-map@1.0.1",
+      "side-channel-weakmap@1.0.2",
+      "side-channel@1.1.1",
+      "spdx-correct@3.2.0",
+      "spdx-exceptions@2.5.0",
+      "spdx-expression-parse@3.0.1",
+      "spdx-license-ids@3.0.24",
+      "statuses@2.0.2",
+      "toidentifier@1.0.1",
+      "type-fest@4.41.0",
+      "type-is@2.1.0",
+      "undici-types@8.9.0",
+      "unicorn-magic@0.1.0",
+      "unpipe@1.0.0",
+      "util@0.12.5",
+      "uuid@8.3.2",
+      "validate-npm-package-license@3.0.4",
+      "vary@1.1.2",
+      "which-typed-array@1.1.24",
+      "wrappy@1.0.2"
+    ]
+  },
+  "vpmExternalDependencies": 42,
+  "harnessSha256": {
+    "compare.cjs": "c62ce4cee56c4a59ceff5d8bcd82d3d2376f6e41833f337559210aee72901b02",
+    "worker.cjs": "8443bb2f4e785e3b5eaa54a12731c08a9cbd74dbc7b88d3eb21ef164089b6db6",
+    "dependencies.cjs": "fab82cecfc137750bb2e74d23ff661c141143e1351332955af83e71fe4088618"
+  },
+  "consumerLockSha256": "17d7a1c0f399918a757948f746574a27ba61f6bc00b23ef713ed999d74b28a15",
+  "sourceSha256": {
+    "vaccepts": "2fef8efe05317b73fe78ea8d623d57471d3b7d9159e09ec9437578c7464f4388",
+    "vbody-parser": "4e3403b941f4a2b0ca356272ee98e53d0e1e71c898689b91c5b22a5bf33a8947",
+    "vbytes": "151ae1c7b64eef4a20fc93ba7bb51541375f04cdd5f3c588dd140f671e72b324",
+    "vcontent-disposition": "4006b099806f452e1f31dc64d41d149c773934faab53ed812c9a8ad0552f9158",
+    "vcontent-type": "477e8527024f20b727a12291179170f83d0e95953d12a5ff1e50ebc603a55fc3",
+    "vcookie": "4c7f678de8d8f1c76a454b0d637f09befcc70d1e8ff1a887260b208fc07fe2c9",
+    "vcookie-signature": "899f1494886c4ad90553685b5213d40b0aa3e5e88b2dcba79a1ad0a77b3238ae",
+    "vdebug": "ecf80ef98b17be5e8cf9b8ec5217b917577480ac07f744b583e6eb262b6eddc5",
+    "vdepd": "ee3829f6c861cf487e1b87965a1f3166a93028addb0b95a2a4dc3b2d8ec2e92f",
+    "vee-first": "d927683d148f45a5915a59c89a634a357cfb20fae2e7c2db64005cf842e5a168",
+    "vencodeurl": "bd7f5ef7ae1d0d0fede7743f7181164d4b7c5b52bc8f33f7294f15b50af289b8",
+    "vescape-html": "db52125172d2a806a15b9edfffbf2a25be848d0e7bbc43b0bd455df67db052c8",
+    "vetag": "e93890a835089b15a2dd59775b0beef1139d3b1c48055a235d4b4d2c0f5089a2",
+    "vexpress": "8c81b15b6c53b0ea9e98f39b440e05c9dcbee7cc066098f1af6fbfb94db48cc4",
+    "vfinalhandler": "9330dda29325460f44f9769930c6e2d76702532bdf0c8e8044e4a71a4a22490b",
+    "vforwarded": "5e6c2c3d1117b78bf1db37c318accf0b14e92ef8a0c6cd58af1dc55a4cf7b9b9",
+    "vfresh": "8516fd06263fc6b4700c5ac2cf4a6972cffc46e56d1aa1a696d470a2906716d3",
+    "vfunctions-framework": "bc0eec387ac81e679a94cbd883f0f64f50b77ed06bd239c3d4d6dc3d930b6086",
+    "vhttp-errors": "113eaed052bd901473adcd5e6e94d2928561bc782c06590978a21a18840dd764",
+    "viconv-lite": "554a1ca744001aa7a5e8d15fd0e648559a1a52879494a0ecb44a6352ffc5be4a",
+    "vipaddr": "5c1de5022cd7958e9bcaa6a4adfd9779e79695412f987120aecf01270c4b3460",
+    "vmedia-typer": "90a542554e49f8153ef81562f0fec0c97d27bc6da1020b4ff53ab9397e058080",
+    "vmerge-descriptors": "d9d24a73634d746c88fac3a30aacf1114494c00317807acd1752febda966bd93",
+    "vmime-db": "2a70e3c13b94df296963324142ac8ce9cdede871f5db7fa346d8cd5fe84364c7",
+    "vmime-types": "128c1e742cd163b0df8ff89e0b65e51aa3932663a0f25d38e1e32c02a73146a0",
+    "vminimist": "6af52112c593e0e17cc18ac67350eff7ee08cdf65708bc45f12601a2c7ee4547",
+    "vms": "e96800cf07b0baceb3b8aaac5f20b22ac7bbf8d2625924f5a6b828e9808f4567",
+    "vnegotiator": "bb1e6d7b3a225bdd7790dce6f7a84a8fd5ae0b538df02136c63fe93a8280c2db",
+    "von-finished": "db152c3dba71c63796239edc12f8bce1220dc36d9ae5c7bc9ab0f917b0c35093",
+    "vonce": "556a0c5554347f50e0db879cae061315abeec277a8d84178deb386e47084b378",
+    "vparseurl": "cb1925deddf95146aa73e11c757a915485255144ff5352cce28a39b5e02e7cca",
+    "vpath-to-regexp": "91f93f22beb9ac188a580d5104c755deb621d2df08b21eeba9d859593977bd1d",
+    "vproxy-addr": "7c367e2524de337f7e39a0c9f5c3ab6b650d6e0893556dc1f21c3cba89c544ff",
+    "vqs": "175a6db9fb9b871616d252d4acccd8bdaca16855157369dc844f4b5fe2a957ae",
+    "vrange-parser": "42f70f38c86309c7359e511dc9191784b3b0b9b36512e639c74b5e7b8b24f043",
+    "vraw-body": "add23b93e96f53934353bb29c7c8cbd72c0125dc8c4e23c8fe248e255954f2b1",
+    "vread-package-up": "4c647d0ca80467d4940c6fc7d2055c14f6615c3e34157f202a8b89b5be9dc0a1",
+    "vrouter": "64c070f35af0ebe11ffefa658a7b92c59add261442455e232d91d76e85c84a83",
+    "vsend": "70800014a709ac460936b708c7f88a907addd35a96a88d130bfcba5e83a3fe71",
+    "vserve-static": "6b7bd1a49611e05c2331cf8d917d72f4357dfe53dcf038363ffeb0722ec09eb4",
+    "vstatuses": "64feba7e7320c636352707eba7181b3e18675495a8f0b5c1fff08e87d77d70a3",
+    "vtype-is": "d78b48a4ff9bf9d2b4ac57c3761397220f7445ef654168718f0717e900b6c175",
+    "vvary": "87e0275305188859d22df48d5d35279afaa8e1edc6ebe24ffddc561fb380a06f"
+  },
+  "methodology": "7 alternating fresh-process pairs. Startup excludes process launch and fixture creation; includes imports, option parsing, real module loading and server startup. HTTP: sequential keep-alive, 200 warmups then 1000 validated round trips per case. Microseconds/request include the client. No event comparison on Bun: published upstream fails there.",
+  "samples": {
+    "startup-cjs": {
+      "upstream": [
+        {
+          "listeningMs": 277.888667,
+          "firstResponseMs": 292.62187500000005
+        },
+        {
+          "listeningMs": 57.182458,
+          "firstResponseMs": 65.413458
+        },
+        {
+          "listeningMs": 62.034959,
+          "firstResponseMs": 69.686667
+        },
+        {
+          "listeningMs": 56.629334,
+          "firstResponseMs": 64.237584
+        },
+        {
+          "listeningMs": 69.10875,
+          "firstResponseMs": 76.63237500000001
+        },
+        {
+          "listeningMs": 57.57312499999999,
+          "firstResponseMs": 66.60175
+        },
+        {
+          "listeningMs": 62.181250000000006,
+          "firstResponseMs": 70.59400000000001
+        }
+      ],
+      "vpm": [
+        {
+          "listeningMs": 63.405625,
+          "firstResponseMs": 71.783333
+        },
+        {
+          "listeningMs": 48.774457999999996,
+          "firstResponseMs": 56.263125
+        },
+        {
+          "listeningMs": 56.2115,
+          "firstResponseMs": 63.671791999999996
+        },
+        {
+          "listeningMs": 51.069084000000004,
+          "firstResponseMs": 118.14341700000001
+        },
+        {
+          "listeningMs": 61.82495899999999,
+          "firstResponseMs": 71.168584
+        },
+        {
+          "listeningMs": 58.898458999999995,
+          "firstResponseMs": 67.116792
+        },
+        {
+          "listeningMs": 45.438041000000005,
+          "firstResponseMs": 52.696458
+        }
+      ]
+    },
+    "startup-esm": {
+      "upstream": [
+        {
+          "listeningMs": 59.647583000000004,
+          "firstResponseMs": 67.121792
+        },
+        {
+          "listeningMs": 56.09866699999999,
+          "firstResponseMs": 64.0725
+        },
+        {
+          "listeningMs": 54.248375,
+          "firstResponseMs": 61.759499999999996
+        },
+        {
+          "listeningMs": 52.59708300000001,
+          "firstResponseMs": 60.70504100000001
+        },
+        {
+          "listeningMs": 50.85908400000001,
+          "firstResponseMs": 58.2555
+        },
+        {
+          "listeningMs": 140.721,
+          "firstResponseMs": 150.374416
+        },
+        {
+          "listeningMs": 129.333208,
+          "firstResponseMs": 139.533167
+        }
+      ],
+      "vpm": [
+        {
+          "listeningMs": 46.347833,
+          "firstResponseMs": 54.85475
+        },
+        {
+          "listeningMs": 60.727,
+          "firstResponseMs": 68.467209
+        },
+        {
+          "listeningMs": 57.13104200000001,
+          "firstResponseMs": 65.829584
+        },
+        {
+          "listeningMs": 50.786458999999994,
+          "firstResponseMs": 58.58225
+        },
+        {
+          "listeningMs": 48.88074999999999,
+          "firstResponseMs": 55.837417
+        },
+        {
+          "listeningMs": 43.688416000000004,
+          "firstResponseMs": 52.243166
+        },
+        {
+          "listeningMs": 89.670875,
+          "firstResponseMs": 104.155875
+        }
+      ]
+    },
+    "http": {
+      "upstream": [
+        {
+          "http-get": 271.073583,
+          "http-deep-path": 197.8365829999999,
+          "http-json": 148.32462499999997,
+          "http-form": 139.17775000000006
+        },
+        {
+          "http-get": 112.679667,
+          "http-deep-path": 121.04337499999997,
+          "http-json": 136.31324999999998,
+          "http-form": 134.28745800000002
+        },
+        {
+          "http-get": 140.53004199999998,
+          "http-deep-path": 132.351542,
+          "http-json": 165.34108299999997,
+          "http-form": 162.38862499999993
+        },
+        {
+          "http-get": 111.561958,
+          "http-deep-path": 116.22195799999997,
+          "http-json": 205.17991700000005,
+          "http-form": 143.86729200000002
+        },
+        {
+          "http-get": 114.444167,
+          "http-deep-path": 109.439458,
+          "http-json": 140.18508300000002,
+          "http-form": 141.7634589999999
+        },
+        {
+          "http-get": 136.92725,
+          "http-deep-path": 116.191708,
+          "http-json": 154.64016700000002,
+          "http-form": 142.430875
+        },
+        {
+          "http-get": 141.88925,
+          "http-deep-path": 115.42099999999999,
+          "http-json": 165.51850000000002,
+          "http-form": 182.04704200000003
+        }
+      ],
+      "vpm": [
+        {
+          "http-get": 112.78520799999998,
+          "http-deep-path": 106.116375,
+          "http-json": 294.53783300000003,
+          "http-form": 152.74633300000005
+        },
+        {
+          "http-get": 111.619084,
+          "http-deep-path": 103.58979199999999,
+          "http-json": 121.36254200000002,
+          "http-form": 136.55674999999997
+        },
+        {
+          "http-get": 201.41574999999997,
+          "http-deep-path": 105.553291,
+          "http-json": 168.12991699999998,
+          "http-form": 141.65816600000005
+        },
+        {
+          "http-get": 118.88049999999998,
+          "http-deep-path": 103.08383300000003,
+          "http-json": 134.62237500000003,
+          "http-form": 128.08024999999998
+        },
+        {
+          "http-get": 119.80487500000001,
+          "http-deep-path": 124.40829199999996,
+          "http-json": 222.70137499999998,
+          "http-form": 151.28933300000006
+        },
+        {
+          "http-get": 118.175292,
+          "http-deep-path": 108.76708300000001,
+          "http-json": 145.295458,
+          "http-form": 157.27637499999992
+        },
+        {
+          "http-get": 112.775417,
+          "http-deep-path": 103.777875,
+          "http-json": 133.15258300000005,
+          "http-form": 129.85783300000003
+        }
+      ]
+    }
+  },
+  "medians": {
+    "startup-cjs": {
+      "listeningMs": {
+        "upstream": 62.034959,
+        "vpm": 56.2115,
+        "ratio": 0.9061261731469832
+      },
+      "firstResponseMs": {
+        "upstream": 69.686667,
+        "vpm": 67.116792,
+        "ratio": 0.9631224291441576
+      }
+    },
+    "startup-esm": {
+      "listeningMs": {
+        "upstream": 56.09866699999999,
+        "vpm": 50.786458999999994,
+        "ratio": 0.9053059852562986
+      },
+      "firstResponseMs": {
+        "upstream": 64.0725,
+        "vpm": 58.58225,
+        "ratio": 0.9143119122868625
+      }
+    },
+    "http": {
+      "http-get": {
+        "upstream": 136.92725,
+        "vpm": 118.175292,
+        "ratio": 0.8630516715993347
+      },
+      "http-deep-path": {
+        "upstream": 116.22195799999997,
+        "vpm": 105.553291,
+        "ratio": 0.9082043773518256
+      },
+      "http-json": {
+        "upstream": 154.64016700000002,
+        "vpm": 145.295458,
+        "ratio": 0.9395712693455639
+      },
+      "http-form": {
+        "upstream": 142.430875,
+        "vpm": 141.65816600000005,
+        "ratio": 0.9945748490276428
+      }
+    }
+  }
+}

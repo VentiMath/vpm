@@ -1,0 +1,49 @@
+{
+  "name": "vfunctions-framework",
+  "version": "0.1.0",
+  "description": "HTTP and CloudEvent functions on the VPM stack",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json",
+    "./testing": {
+      "types": "./testing.d.ts",
+      "default": "./testing.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "lib",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json",
+    "testing.js",
+    "testing.d.ts"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vfunctions-framework"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vfunctions-framework",
+  "dependencies": {
+    "vbody-parser": "workspace:*",
+    "vexpress": "workspace:*",
+    "vminimist": "workspace:*",
+    "von-finished": "workspace:*",
+    "vread-package-up": "workspace:*"
+  },
+  "bin": {
+    "vfunctions-framework": "lib/main.js"
+  }
+}

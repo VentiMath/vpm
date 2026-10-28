@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "@google-cloud/functions-framework",
+    "version": "5.0.2",
+    "repository": "https://github.com/GoogleCloudPlatform/functions-framework-nodejs",
+    "license": "Apache-2.0",
+    "tarball": "https://registry.npmjs.org/@google-cloud/functions-framework/-/functions-framework-5.0.2.tgz",
+    "integrity": "sha512-QDPRkPO1KWqbJ+z5RexKjZzHilIK5vM58YFkr/GZU5NIBcCb7Vd4dBKn9cLxEMaBxg6bXbmqEhF6O6977gLNkQ=="
+  },
+  "upstreamTestFixture": {
+    "url": "https://codeload.github.com/GoogleCloudPlatform/functions-framework-nodejs/tar.gz/refs/tags/v5.0.2",
+    "sha256": "3fc549395bd2d7e8e92aecf9692ac67cd912b6776ceebeb21bd63bce2cb7110e"
+  },
+  "changes": [
+    "Replace runtime dependencies with five VPM packages; provide portable public declarations without the CloudEvents SDK or @types/express.",
+    "Initialize request context synchronously to prevent concurrent first-request races.",
+    "Handle cross-realm promises and thenables; validate registered handlers and own-property export lookup.",
+    "Correct buffer-view logging boundaries, scalar JSON handling and write encodings.",
+    "Track timeout completion using response lifecycle; validate timer bounds.",
+    "Use native dynamic import and remove wildcard routing from global middleware.",
+    "Capture request domains for event completion and explicitly catch synchronous invocation errors on Bun.",
+    "Return 404 before body conversion for unsupported event methods; check own conversion-table members.",
+    "Make logging interception idempotent and report the actual ephemeral CLI port."
+  ]
+}

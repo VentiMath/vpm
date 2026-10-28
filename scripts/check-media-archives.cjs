@@ -23,6 +23,14 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (name === 'vfunctions-framework') {
+      assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vbody-parser', 'vexpress', 'vminimist', 'von-finished', 'vread-package-up']);
+      assert.equal(metadata.license, 'Apache-2.0');
+      assert.deepEqual(metadata.bin, { 'vfunctions-framework': 'lib/main.js' });
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      const lib = fs.readdirSync(path.join(root, 'packages/vfunctions-framework/lib'), { recursive: true }).filter(file => file.endsWith('.js')).map(file => 'lib/' + file);
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'testing.js', 'testing.d.ts', 'package.json', ...lib].sort());
+    }
     if (name === 'vexpress') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), Object.values(require('../packages/vexpress/PROVENANCE.json').dependencies).sort());
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -91,6 +99,22 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const vf = require('vfunctions-framework');
+const vfTesting = require('vfunctions-framework/testing');
+const vfHttp = require('node:http');
+vf.http('archiveHandler', (req, res) => res.end('archive-ok'));
+if (vfTesting.getFunction('archiveHandler') === undefined) throw new Error('registration missing');
+const vfServer = vfTesting.getTestServer('archiveHandler');
+vfServer.listen(0, '127.0.0.1', () => {
+  vfHttp.get({host:'127.0.0.1',port:vfServer.address().port,agent:false}, response => {
+    let text = ''; response.on('data', chunk => {text += chunk;});
+    response.on('end', () => {
+      vfServer.close();
+      if (response.statusCode !== 200 || text !== 'archive-ok') throw new Error('installed framework failed');
+    });
+  }).on('error', error => {vfServer.close(); throw error;});
+});
+
 const manifestReader = require('vread-package-up');
 const manifestResult = manifestReader.readPackageUpSync({cwd:__dirname,stopAt:__dirname});
 require('node:assert/strict').equal(manifestResult.path, require('node:path').join(__dirname,'package.json'));
@@ -203,6 +227,22 @@ assert.equal(new Negotiator(request).mediaType(['text/html', 'application/json']
 assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import * as vf from 'vfunctions-framework';
+import * as vfTesting from 'vfunctions-framework/testing';
+import vfHttp from 'node:http';
+vf.http('archiveHandler', (req, res) => res.end('archive-ok'));
+if (vfTesting.getFunction('archiveHandler') === undefined) throw new Error('registration missing');
+const vfServer = vfTesting.getTestServer('archiveHandler');
+vfServer.listen(0, '127.0.0.1', () => {
+  vfHttp.get({host:'127.0.0.1',port:vfServer.address().port,agent:false}, response => {
+    let text = ''; response.on('data', chunk => {text += chunk;});
+    response.on('end', () => {
+      vfServer.close();
+      if (response.statusCode !== 200 || text !== 'archive-ok') throw new Error('installed framework failed');
+    });
+  }).on('error', error => {vfServer.close(); throw error;});
+});
+
 import { readPackageUp } from 'vread-package-up';
 const manifestResult = await readPackageUp({cwd:new URL('.',import.meta.url),stopAt:new URL('.',import.meta.url)});
 if (!manifestResult || typeof manifestResult.packageJson !== 'object') throw new Error('manifest ESM consumer failed');
@@ -305,6 +345,13 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import { http as registerHttp, cloudEvent as registerCloudEvent } from 'vfunctions-framework';
+import { getFunction, getTestServer } from 'vfunctions-framework/testing';
+registerHttp('archive', (req, res) => res.send(req.rawBody?.toString()));
+registerCloudEvent<{value:number}>('event', event => event.data?.value);
+getFunction('archive');
+getTestServer('archive').listen(0).close();
+
 import {readPackageUp, readPackageUpSync, PackageJsonError, type PackageJson} from 'vread-package-up';
 const manifestResult = readPackageUpSync({cwd:'.',stopAt:'.',normalize:false});
 if (manifestResult) { const manifest: PackageJson = manifestResult.packageJson; const rawName: unknown = manifest.name; }
@@ -554,6 +601,12 @@ globalThis.browserChecked = true;
     run(manager, manager === 'npm'
       ? ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--cache', path.join(directory, 'npm-cache')]
       : ['install', '--ignore-scripts']);
+    assert.ok(fs.statSync(path.join(directory, 'node_modules/vfunctions-framework/lib/main.js')).mode & 0o111);
+    for (const runtime of [process.execPath, 'bun']) {
+      const cli = spawnSync(runtime, ['node_modules/vfunctions-framework/lib/main.js', '--help'], { cwd: directory, encoding: 'utf8' });
+      assert.equal(cli.status, 0, cli.stderr);
+      assert.match(cli.stderr, /vfunctions-framework --target/);
+    }
     for (const runtime of [process.execPath, 'bun']) for (const extension of ['cjs', 'mjs']) run(runtime, ['consumer.' + extension]);
     run(process.execPath, ['--conditions=browser', 'browser-consumer.mjs']);
     run('bun', ['build', 'browser-consumer.mjs', '--target=browser', '--format=iife', '--outfile=browser-bundle.js']);
@@ -563,6 +616,7 @@ globalThis.browserChecked = true;
     const tsc = compiler();
     const output = run(process.execPath, [tsc.path, '-p', 'tsconfig.json', '--listFiles', '--pretty', 'false']);
     assert.doesNotMatch(output, /\/packages\/|\/vnode-types\/|\/v?undici-types\/|lib\.dom/);
+    assert.match(output, /node_modules\/vfunctions-framework\/testing\.d\.ts/);
     assert.match(output, /node_modules\/vmedia-typer\/index\.d\.ts/);
     assert.match(output, /node_modules\/vtype-is\/index\.d\.ts/);
     assert.match(output, /node_modules\/vnegotiator\/index\.d\.ts/);

@@ -1,0 +1,10 @@
+{
+  "name": "vpm-framework-conformance",
+  "private": true,
+  "description": "Pinned test-only dependencies for the upstream Functions Framework conformance suite",
+  "dependencies": {
+    "mocha": "11.7.5",
+    "sinon": "20.0.0",
+    "supertest": "7.1.4"
+  }
+}

@@ -43,13 +43,14 @@ The collection covers the Express 5 HTTP stack: routing, request bodies, cookies
 content negotiation, static files, response handling, and the utilities beneath
 those APIs. `vexpress` uses VPM packages throughout its runtime dependency tree;
 `vcors` adds cross-origin request handling. Backend startup utilities include
-command-line argument parsing and package-manifest discovery. Two declaration-only
-packages provide Node and Undici types for development.
+command-line argument parsing and package-manifest discovery.
+`vfunctions-framework` runs HTTP, CloudEvent and legacy event handlers on this
+stack. Two declaration-only packages provide Node and Undici types for development.
 
-Integration tests exercise these replacements inside pinned Google Functions
-Framework and Firebase Functions consumers. Those frameworks and the wider
-Firebase/Google SDK dependency trees still contain upstream packages. Application
-adoption and deployment are separate from these compatibility tests.
+Integration tests serve pinned Firebase Functions consumers through the VPM
+framework and compare behavior against Google Functions Framework. Firebase
+Functions and the wider Firebase/Google SDK trees still contain upstream packages.
+Application adoption and deployment are separate from these compatibility tests.
 
 The [package catalog and evidence](IMPROVEMENTS.md#package-comparison) records
 implemented replacements, compatibility differences, and measured tradeoffs.
@@ -112,7 +113,9 @@ Larger replacements also run pinned upstream compatibility suites. The
 [Express conformance fixture](scripts/express-conformance/README.md) tests the
 application layer and example applications, with every intentional expectation
 change and runtime limitation recorded. Its separately locked dependencies stay
-outside the workspace and published package archives.
+outside the workspace and published package archives. The
+[Functions Framework suite](scripts/framework-conformance/README.md) similarly
+checks HTTP/event handling, module loading and logging on Node and Bun.
 
 ## License
 

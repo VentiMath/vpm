@@ -16,8 +16,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { PassThrough } = require('node:stream');
 const { gzipSync } = require('node:zlib');
-const { createRequire, Module } = require('node:module');
-const { pathToFileURL } = require('node:url');
+const { createRequire } = require('node:module');
 
 process.env.GCLOUD_PROJECT ||= 'vpm-integration';
 process.env.DEBUG = 'express:*,router:*,send,body-parser:*,finalhandler';
@@ -26,10 +25,10 @@ process.env.DEBUG_HIDE_DATE = '1';
 process.env.NODE_ENV ||= 'development';
 
 const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/node_modules'));
-const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  '@google-cloud/functions-framework': { pkg: 'vfunctions-framework', versions: /^5\.0\.2$/ },
   'read-package-up': { pkg: 'vread-package-up', versions: /^11\.0\.0$/, esm: true },
   minimist: { pkg: 'vminimist', versions: /^1\.2\.8$/ },
   cors: { pkg: 'vcors', versions: /^2\.8\.[56]$/ },
@@ -122,7 +121,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = Object.keys(fixture.dependencies).map(name => require.resolve(path.join(modules, name, 'package.json')));
+const queue = [path.resolve(modules, '../package.json')];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -148,7 +147,7 @@ while (queue.length) {
       continue;
     }
     const entry = from.resolve(name);
-    // Dynamic ESM imports are redirected at the framework loader boundary below.
+    // The VPM framework imports its own reader; keep this ESM baseline for comparisons.
     if (targets[name].esm) {
       aliased.set(label, path.relative(modules, path.dirname(entry)));
       continue;
@@ -188,27 +187,14 @@ const getRawBody = from('raw-body');
 const createError = from('http-errors');
 const jwt = from('jsonwebtoken');
 const functions = from('@google-cloud/functions-framework');
-const { getTestServer } = from('@google-cloud/functions-framework/testing');
-const { parseOptions } = require(path.join(path.dirname(from.resolve('@google-cloud/functions-framework')), 'options.js'));
+const { getTestServer } = require('../packages/vfunctions-framework/testing');
+const { parseOptions } = require('../packages/vfunctions-framework/lib/options');
 const { onRequest } = from('firebase-functions/v2/https');
 
 const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-integration-'));
-// The original framework imports read-package-up dynamically. Compile an isolated
-// copy with only that specifier redirected; preserve the installed ESM baseline
-// for differential checks and leave the rest of the loader unchanged.
-const readerBridge = path.join(directory, 'reader-bridge.cjs');
-fs.writeFileSync(readerBridge, `const reader = require(${JSON.stringify(path.resolve(__dirname, '../packages/vread-package-up'))});
-exports.readPackageUp = options => reader.readPackageUp(options);
-`);
-const frameworkLoaderPath = path.join(path.dirname(from.resolve('@google-cloud/functions-framework')), 'loader.js');
-const frameworkLoaderSource = fs.readFileSync(frameworkLoaderPath, 'utf8');
-const readerImport = "dynamicImport('read-package-up')";
-assert.equal(frameworkLoaderSource.split(readerImport).length, 2, 'framework reader import changed');
-const adaptedLoader = new Module(frameworkLoaderPath, module);
-adaptedLoader.filename = frameworkLoaderPath;
-adaptedLoader.paths = Module._nodeModulePaths(path.dirname(frameworkLoaderPath));
-adaptedLoader._compile(frameworkLoaderSource.replace(readerImport, `dynamicImport(${JSON.stringify(pathToFileURL(readerBridge).href)})`), frameworkLoaderPath);
-const { getUserFunction } = adaptedLoader.exports;
+// The VPM framework uses vread-package-up directly. The original ESM reader
+// remains available for the raw-reader differential checks below.
+const { getUserFunction } = require('../packages/vfunctions-framework/lib/loader');
 const readerLoaderFixtures = [];
 for (const [id, type] of [['cjs', 'commonjs'], ['esm', 'module'], ['nested', 'commonjs']]) {
   const project = path.join(directory, 'loader-' + id);
@@ -1113,7 +1099,7 @@ async function run() {
   }
   const runtime = process.versions.bun ? 'Bun ' + process.versions.bun : 'Node ' + process.version;
   const installed = name => require(path.join(modules, name, 'package.json')).version;
-  console.log(`${runtime}: ${checks} HTTP checks passed through functions-framework ${installed('@google-cloud/functions-framework')}, firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
+  console.log(`${runtime}: ${checks} HTTP checks passed through vfunctions-framework (replacing ${installed('@google-cloud/functions-framework')}), firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
   console.log('6 Functions Framework startup-option checks passed.');
   console.log(`${readerParityChecks} raw package-reader comparisons and 3 framework CJS/ESM loading cases passed.`);
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
