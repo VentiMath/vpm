@@ -44,5 +44,11 @@
     "origin": "https://github.com/expressjs/express/tree/cf6722bf89a86905281d9160b6482e08166b5ef0",
     "contents": "Unmodified package.json, index.js, lib, test, examples and LICENSE from the exact upstream commit; archive created locally."
   },
-  "tests": "Pinned upstream unit/example acceptance suite, 23 explicit assertions adapted for existing VPM dependency contracts. Node 24: 1261 pass, no skips. Bun 1.4.0: 1255 pass, six runtime limits reproduced with unchanged upstream and marked pending. See scripts/express-conformance/README.md. Local regression suite and shared HTTP consumer/archives gates are separate."
+  "tests": "Pinned upstream unit/example acceptance suite, 23 explicit assertions adapted for existing VPM dependency contracts. Node 24: 1261 pass, no skips. Bun 1.4.0: 1255 pass, six runtime limits reproduced with unchanged upstream and marked pending. See scripts/express-conformance/README.md. Local regression suite and shared HTTP consumer/archives gates are separate.",
+  "startupBaseline": {
+    "commit": "b58bd901ded10e70abe33bf5e3e620ecb5aa2129",
+    "file": "bench/fixtures/express-before.cjs",
+    "sha256": "240b9c60511bff4d2cb3772fbe8f18f28c6f53a950d64f6372d62719b71b92f5",
+    "contents": "Exact pre-specialization lib/express.js. Before/after controls share unchanged application, request, response and VPM dependencies. The fixture is benchmark-only and excluded from package archives."
+  }
 }

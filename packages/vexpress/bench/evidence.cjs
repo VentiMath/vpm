@@ -23,7 +23,7 @@ module.exports = function evidence() {
     for (const child of Object.keys(require(path.join(directory, 'package.json')).dependencies || {})) dependency(child);
   }
   dependency('vexpress');
-  for (const file of ['compare.cjs', 'http.cjs', 'load.cjs', 'evidence.cjs']) record(path.join(__dirname, file));
+  for (const file of ['compare.cjs', 'http.cjs', 'load.cjs', 'evidence.cjs', 'fixtures/express-before.cjs']) record(path.join(__dirname, file));
   for (const file of ['package-lock.json', 'express-5.3.0.tar.gz']) record(path.join(root, 'scripts/express-conformance', file));
   return hashes;
 };

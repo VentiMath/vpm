@@ -84,6 +84,13 @@ and query values remain permissive; types do not validate incoming data.
   the existing parser. Built-in ETags hash short UTF-8 strings directly; custom
   ETag functions still receive Buffers, and large bodies share one encoding.
   Response method overrides remain observable.
+- **Application construction:** a specialized descriptor copy assigns ordinary
+  data properties directly when the new function has no such property anywhere
+  in its prototype chain. Accessors, special attributes and inherited properties
+  still use descriptor definitions; proxy sources and custom function prototype
+  chains use `vmerge-descriptors`. Current descriptors are read on every creation,
+  preserving symbols, method overrides and changes between applications. Nothing
+  is cached from public prototypes, and settings/handler validation stays intact.
 
 The [dependency packages](../../IMPROVEMENTS.md#package-comparison) retain their
 documented differences. These include strict quality weights (`0.5`, not `.5`),
@@ -124,7 +131,9 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
 
-38 local regression tests cover the changes above. The pinned upstream suite
+46 local regression tests cover the changes above, including descriptor parity,
+live prototype edits, inherited setters, proxy fallbacks and isolated app state.
+The pinned upstream suite
 executes **1,261 tests on Node 24**, including its example-application acceptance
 tests. **1,238 pass unchanged**; 23 use explicit assertions for documented VPM
 dependency differences. No upstream tests are skipped on Node 24. Bun 1.4.0 runs
@@ -146,6 +155,8 @@ node packages/vexpress/bench/compare.cjs
 bun packages/vexpress/bench/compare.cjs
 node packages/vexpress/bench/http.cjs
 bun packages/vexpress/bench/http.cjs
+STARTUP=1 node packages/vexpress/bench/compare.cjs
+STARTUP=1 bun packages/vexpress/bench/compare.cjs
 ```
 
 Both harnesses compare pinned Express 5.3.0, unchanged Express with VPM
@@ -154,9 +165,11 @@ samples. Component measurements include synthetic request/response allocation
 and completion checking, excluding network I/O. The HTTP harness includes the
 local client and network with eight concurrent keep-alive connections; batch
 time per completed request is not individual request latency. Results are
-workload-specific and do not establish production throughput.
+workload-specific and do not establish production throughput. `STARTUP=1`
+replaces the middle control with the saved pre-optimization vexpress factory and
+uses 5,000 calls for construction/registration. It retains all request cases.
 
-### Results, 2026-10-28
+### Initial results, 2026-10-28
 
 Node 24.22.1 and Bun 1.4.0, macOS arm64. Each harness ran sequentially in
 three fresh processes per runtime. Values below are the median of the three
@@ -194,8 +207,9 @@ Node** and **56–58% less on Bun**. The control using unchanged Express with
 VPM dependencies is retained in every raw report, isolating the application's
 changes from the already improved dependencies.
 
-There are remaining costs: Node application creation takes **3–6% more time**,
-and single-route registration takes **0–3% more**. Bun's header-only case ranges
+Before the construction follow-up below, Node application creation took
+**3–6% more time**, and single-route registration took **0–3% more**.
+Bun's header-only case ranges
 from **16% faster to 10% slower**, with the aggregate median slower; it is noisy
 and does not support a universal improvement claim. Creation and registration
 are startup operations, while the response cases above measure request handling.
@@ -217,5 +231,47 @@ for parameters/query, and **5–7%** for JSON parsing and echo. Bun ranges from
 variation are included, so these gains are smaller than the component results
 and should not be projected onto arbitrary applications.
 
-[All twelve raw reports](bench/results) include samples, runtime metadata,
-checksums, current VPM source hashes and the comparison lockfile hash.
+[The twelve initial raw reports](bench/results) include samples, runtime metadata,
+checksums, VPM source hashes at measurement time and the comparison lockfile hash.
+
+### Application construction follow-up, 2026-10-28
+
+The initial startup regression measured warm `express()` calls after module
+loading, not Node process launch or cold imports. Copying EventEmitter and
+application properties dominated that work. The specialized copy above avoids
+general descriptor definitions for ordinary new data properties, while retaining
+live descriptor inspection and the general fallback. No configuration compilation
+or handler validation was removed.
+
+`STARTUP=1` compares upstream Express, the exact previous factory from `b58bd90`,
+and the optimized factory. Before/after share the same application, request,
+response and dependency implementations. The saved factory and provenance hash
+make the control reproducible. Three fresh processes per runtime use 12 balanced
+samples, 5,000 construction/registration calls and 10,000 request calls per sample.
+Runtime, platform, warmup, retention and parity checks match the initial harness.
+
+| Operation | Node before → after (ns) | Bun before → after (ns) |
+| --- | ---: | ---: |
+| create application | 25,207 → 12,881 | 8,428 → 7,380 |
+| create and register one route | 33,506 → 20,837 | 12,473 → 11,446 |
+| create and register 20 middleware | 37,662 → 24,869 | 15,785 → 15,205 |
+| create and register route with 20 handlers | 36,585 → 23,252 | 14,557 → 13,616 |
+
+Application construction takes **48–49% less time on Node** and **9–13% less on
+Bun** than the previous factory. Against upstream Express in these same runs,
+it takes **46–48% less on Node** (24,563 → 12,881 ns) and **7–11% less on Bun**
+(8,266 → 7,380 ns). Single-route setup takes **38–39% less on Node** and
+**5–10% less on Bun** than before.
+
+The request controls do not establish a further request-handling improvement.
+Node before/after changes range from 4% faster to 5% slower; absolute-URL JSON
+is consistently 1–5% slower and parameter/query JSON is 0.4–1.5% slower. Bun
+varies more: direct `res.end` ranges from 9% faster to 18% slower, 20-middleware
+JSON from 3% faster to 17% slower, and mounted-app JSON from 2% faster to 11%
+slower. These costs and variation are retained alongside the construction gain.
+Every Node request case remains faster than upstream in these runs; Bun's
+header-only case remains mixed. The initial loopback HTTP results above are
+historical and were not remeasured for this construction-only change.
+
+[Six follow-up reports](bench/results) named `startup-node-{1,2,3}.json` and
+`startup-bun-{1,2,3}.json` retain all 18 cases, raw samples, checksums and hashes.

@@ -423,13 +423,30 @@ async function listen(server) {
 // Exercise Express's actual descriptor mixin and listen callback, including
 // metadata that upstream once incorrectly treats as its internal call state.
 async function expressStartup() {
+  const { EventEmitter } = require('node:events');
+  const emitterPrototype = EventEmitter.prototype;
   const symbol = Symbol('application getter');
   let getterCalls = 0;
+  let descriptorReads = 0;
   const getter = function () { getterCalls++; return this; };
   let application;
   Object.defineProperty(express.application, symbol, { get: getter, configurable: true });
-  try { application = express(); }
-  finally { delete express.application[symbol]; }
+  try {
+    // Ordinary application construction specializes descriptor copies. A proxy
+    // source still exercises the general vmerge-descriptors dependency in the
+    // real consumer, including the subsequent listen success/error paths.
+    EventEmitter.prototype = new Proxy(emitterPrototype, {
+      getOwnPropertyDescriptor(target, key) {
+        descriptorReads++;
+        return Reflect.getOwnPropertyDescriptor(target, key);
+      }
+    });
+    application = express();
+  } finally {
+    EventEmitter.prototype = emitterPrototype;
+    delete express.application[symbol];
+  }
+  assert.ok(descriptorReads > 0, 'proxy descriptors must be inspected');
   assert.equal(getterCalls, 0, 'mixing application descriptors must not invoke accessors');
   assert.equal(Object.getOwnPropertyDescriptor(application, symbol).get, getter);
   assert.equal(application[symbol], application);
