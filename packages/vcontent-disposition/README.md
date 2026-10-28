@@ -144,7 +144,7 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
 
-Twenty-one tests cover both upstream baselines, 15,000 generated parser cases against
+Twenty-three tests cover both upstream baselines, 15,000 generated parser cases against
 3.0.0, all 256 byte values in encoding/Latin-1 decoding, malformed escapes,
 quoted/multipart recovery, duplicate names, prototype isolation, input validation,
 getter reads, long values, lone surrogates, and CJS/ESM exports. Fixture hashes
@@ -154,6 +154,10 @@ accessor/duplicate tests for one, two, and many parameters. These are VPM tests,
 not a claim to run the full upstream suite. The multipart follow-up adds 2,496
 comparisons around scan boundaries, malformed and incomplete escapes, unfinished
 fields, duplicate names, Unicode, and ordinary versus multipart parsing.
+Further coverage checks all 528 ASCII casings of the standard names (6,336
+option/duplicate/extended-value comparisons), Unicode/custom-name fallbacks,
+and 6,012 dense/sparse/malformed-value comparisons against both upstream 3 and
+the previous VPM implementation.
 
 The shared integration gate aliases this package into real Express alongside all
 other VPM replacements. It checks download and attachment output for Unicode,
@@ -174,6 +178,8 @@ node packages/vcontent-disposition/bench/compare.cjs previous
 bun packages/vcontent-disposition/bench/compare.cjs previous
 node packages/vcontent-disposition/bench/multipart.cjs
 bun packages/vcontent-disposition/bench/multipart.cjs
+node packages/vcontent-disposition/bench/multipart.cjs dense
+bun packages/vcontent-disposition/bench/multipart.cjs dense
 ```
 
 The harness checks output equality before timing, warms both implementations,
@@ -186,7 +192,49 @@ timing. This avoids measuring the first transition from a type-only parser to
 parameter parsing during runtime optimization. Custom names, mixed casing and
 larger parameter maps are included alongside the standard download fields.
 
+### Case folding and dense escape runs
+
+Standard parameter names are now recognized directly in the original header,
+in every ASCII casing, without allocating sliced/lowercase keys. Custom names
+retain full Unicode lowercasing and the parser's existing lenient behavior.
+Consecutive multipart escapes decode as a run using the original header, avoiding
+repeated searches, slices, and reads through a sliced value. Searches between
+runs remain bounded to the current value, and unknown escapes remain unchanged.
+Validation, duplicate/extended precedence, and isolated null-prototype maps remain.
+
+Recorded on **2026-10-27**, Node **24.22.1** and Bun **1.4.0**, macOS arm64.
+One fresh process per runtime compares the exact `475b3ea` source, upstream
+2.0.1/3.0.0, and current VPM over 20 cases. Each case has nine samples with
+rotating implementation order, consumed results, and output-equality checks.
+Samples use 50,000 calls for short headers and 5,000 for headers over 500 code
+units, after corpus and case warm-up. These are medians in nanoseconds per call;
+ratios below 1 indicate less time than upstream 3.0.0.
+
+| Case | Node previous → now | Node / upstream 3 | Bun previous → now | Bun / upstream 3 |
+| --- | ---: | ---: | ---: | ---: |
+| mixed-case names | 338 → 263 | 0.90 | 371 → 229 | 0.64 |
+| alternating-case names | 336 → 261 | 0.89 | 372 → 219 | 0.60 |
+| dense escapes | 9,039 → 3,060 | 1.25 | 9,647 → 2,472 | 1.04 |
+| separated dense runs | 8,186 → 3,927 | 1.46 | 8,554 → 2,248 | 0.99 |
+| dense with literal gaps | 7,383 → 7,878 | 2.60 | 7,271 → 5,284 | 1.83 |
+| 8 KiB sparse escapes | 656 → 632 | 0.02 | 605 → 626 | 0.01 |
+| 8 KiB plain | 577 → 569 | 0.01 | 518 → 524 | 0.01 |
+
+Mixed-case standard names take about 22% less time on Node and 38% less on Bun
+than previous VPM in this run. Consecutive dense escapes take about 66% / 74%
+less time. The broader corpus still shows Node dense-run costs above upstream,
+and the dense case with literal gaps takes about 7% more time than previous VPM
+on Node. Sparse/plain long-value gains remain. These results do not imply that
+every input improves or that application throughput improves. Express uses
+`create()` for downloads/attachments; this parser optimization does not establish
+a speedup for that path.
+
+[Node: all 20 cases and samples](bench/dense-node24.json), [Bun: all 20 cases and samples](bench/dense-bun14.json). Both records include runtime and source/harness hashes. The [exact prior implementation](test/fixtures/vcontent-disposition-475b3ea.cjs) is retained and hash-checked by the tests.
+
 ### Multipart parsing follow-up
+
+These historical results describe `475b3ea`; the case-folding/dense-run follow-up
+above contains the current measurements.
 
 The remaining short multipart cost came from fresh sliced strings used as map
 keys and a separate quote search, value copy, and percent-escape scan. The parser

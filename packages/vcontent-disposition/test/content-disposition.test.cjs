@@ -11,7 +11,7 @@ const plain = result => ({ type: result.type, parameters: { ...result.parameters
 
 test('fixtures are exact published sources with recorded hashes', () => {
   const provenance = require('../PROVENANCE.json');
-  for (const source of [...provenance.sources, provenance.previousImplementation, provenance.multipartBaseline]) {
+  for (const source of [...provenance.sources, provenance.previousImplementation, provenance.multipartBaseline, provenance.denseBaseline]) {
     assert.equal(createHash('sha256').update(fs.readFileSync(path.join(__dirname, '..', source.fixture))).digest('hex'), source.sha256);
   }
 });
@@ -236,6 +236,54 @@ test('short-path names, malformed prefixes and empty duplicates preserve extract
     }
   }
 });
+test('all 528 ASCII standard-name casings preserve duplicates and extended precedence', async () => {
+  const current = await latest;
+  let count = 0;
+  for (const name of ['name', 'filename', 'filename*']) {
+    const letters = name.endsWith('*') ? name.length - 1 : name.length;
+    for (let mask = 0; mask < 2 ** letters; mask++) {
+      const variant = [...name].map((char, i) => mask & (1 << i) ? char.toUpperCase() : char).join('');
+      count++;
+      for (const multipart of [false, true]) for (const extended of [false, true]) {
+        for (const tail of ['="a%22b%0D%0Ac"; ' + name + '=second', "=UTF-8''%E9%9B%AA; filename=fallback", '=; ' + name + '=second']) {
+          const header = 'Form-Data; ' + variant + tail;
+          const result = v.parse(header, { multipart, extended });
+          assert.deepEqual(plain(result), plain(current.parse(header, { multipart, extended })), header);
+          assert.equal(Object.getPrototypeOf(result.parameters), null);
+        }
+      }
+    }
+  }
+  assert.equal(count, 528);
+  for (const name of ['naMé', 'fİlename', 'fılename', 'filenameé', 'filename**', 'Key', 'ſample', 'NAME\0', 'file name', 'a!b', '']) {
+    const header = 'form-data; ' + name + '=value; ' + name.toUpperCase() + '=second';
+    assert.deepEqual(plain(v.parse(header)), plain(current.parse(header)), name);
+  }
+});
+
+test('dense escape runs preserve sparse spans, invalid sequences and quote boundaries', async () => {
+  const current = await latest;
+  const previous = require('./fixtures/vcontent-disposition-475b3ea.cjs');
+  const tokens = ['%22', '%0D', '%0A', '%0d', '%0a', '%', '%0', '%2', '%GG', '%20', '%2522', '%00', 'é雪\ud800', '\\', 'literal;='];
+  let seed = 0x96c107;
+  const random = n => { seed ^= seed << 13; seed ^= seed >>> 17; seed ^= seed << 5; return (seed >>> 0) % n; };
+  const values = ['%22%0D%0A'.repeat(10000), '%20%GG%'.repeat(1000),
+    'a'.repeat(8192) + '%22' + 'b'.repeat(8192), '%22'.repeat(100) + 'literal'.repeat(100) + '%0A'.repeat(100)];
+  for (let sample = 0; sample < 2000; sample++) {
+    let value = '';
+    const count = 1 + random(120);
+    for (let i = 0; i < count; i++) value += tokens[random(tokens.length)];
+    values.push(value);
+  }
+  for (const value of values) for (const suffix of ['"; next=ok', '', '"; filename=ignored']) {
+    const header = 'form-data; name="file"; filename="' + value + suffix;
+    const options = { multipart: true };
+    const result = v.parse(header, options);
+    assert.deepEqual(plain(result), plain(current.parse(header, options)));
+    assert.deepEqual(result, previous.parse(header, options));
+  }
+});
+
 test('one, two and many parameters retain single-read snapshots and duplicate rejection', () => {
   for (const count of [1, 2, 3, 8, 128]) {
     const reads = new Map();

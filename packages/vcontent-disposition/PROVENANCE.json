@@ -32,5 +32,11 @@
     "source": "packages/vcontent-disposition/index.js",
     "fixture": "test/fixtures/vcontent-disposition-2097f39.cjs",
     "sha256": "823501312739690f133c534dbd9d5847f0595e6a3f8fbc13f0e28263d249cefc"
+  },
+  "denseBaseline": {
+    "commit": "475b3ea07c63bfa1e79f33c8418679fd3d99d78e",
+    "source": "packages/vcontent-disposition/index.js",
+    "fixture": "test/fixtures/vcontent-disposition-475b3ea.cjs",
+    "sha256": "0450f26bde26e855fab0c79fa875291d68456518adc3442589e52b6c9940430d"
   }
 }

@@ -1037,20 +1037,37 @@ forward, not claimed as unique VPM improvements. Parsing otherwise retains
 upstream's lenient recovery; it is not a strict syntax validator or path sanitizer.
 Normal valid filename output and lone-surrogate `URIError` behavior are preserved.
 
-**Evidence:** 21 package tests include 15,000 generated parser cases against
+**Evidence:** 23 package tests include 15,000 generated parser cases against
 3.0.0, 5,000 formatter comparisons with the previous VPM implementation,
 1,134 standard/custom-name parsing cases, byte/Unicode encoding, malformed
 inputs, 2,496 multipart scan-boundary/recovery comparisons, single-read getters
-across parameter-map sizes, long quoted values,
+across parameter-map sizes, all 528 standard-name casings, 6,012 additional
+dense/sparse/malformed-value comparisons, long quoted values,
 prototype isolation, and CJS/ESM exports. The shared Node/Bun gate now
 runs **151 HTTP checks**, including real Express downloads and attachments with
 Unicode, quotes, percent sequences, and control characters, HEAD/ranges, and
 completion callbacks. Installed archives are checked with npm, Bun, Node, and
 strict TypeScript 7. At the performance follow-up on 2026-10-27 the full suite
-passed **453 tests on Node 24**, with **452 passing and one existing skip on Bun**.
+passed **455 tests on Node 24**, with **454 passing and one existing skip on Bun**.
 All **28 runtime packages** have self-contained declarations.
 
-**Multipart parsing follow-up:** reuses standard lowercase parameter-name
+**Case folding and dense escape runs:** standard names are recognized in every
+ASCII casing directly in the header, while custom names retain full Unicode
+lowercasing. Consecutive escapes decode as a run from the original header;
+searches between runs stay bounded to the current value. Validation, first-value
+and extended-value rules, and independent null-prototype maps remain intact.
+
+In nine-sample, paired comparisons on Node 24.22.1 / Bun 1.4.0 (2026-10-27),
+standard mixed-case parsing takes about **22% / 38% less time than `475b3ea`**,
+and consecutive dense escapes take about **66% / 74% less time**. The expanded
+20-case corpus retains sparse/plain long-value gains but exposes remaining dense
+overhead against upstream and a roughly 7% Node regression for escapes separated
+by single literal characters. No application-level speedup is established;
+Express uses `create()` for its downloads/attachments, rather than this parser.
+
+[Current results, full samples, provenance, and remaining costs](packages/vcontent-disposition/README.md#case-folding-and-dense-escape-runs).
+
+**Multipart parsing follow-up (`475b3ea`, historical measurements):** reuses standard lowercase parameter-name
 literals and decodes very short quoted fields while finding the closing quote.
 The direct scan is limited to fewer than 32 remaining code units; longer fields
 and discarded duplicates retain span searches. Validation, lenient recovery,
