@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vread-package-up](packages/vread-package-up) | read-package-up 11.0.0 | Zero dependencies for raw manifest lookup, explicit boundaries, descriptor checks and cleanup, strict UTF-8, and errors without source contents. |
 | [vminimist](packages/vminimist) | minimist 1.2.8 | Coherent transitive aliases, boolean-alias fixes, own-property configuration, reserved positional arrays, validated snapshots, and non-variadic argument tails. |
 | [vcors](packages/vcors) | cors 2.8.5 / 2.8.6 | Compiled static policies, isolated RegExp state, once-only callbacks, dynamic denial cache variation, validated headers, coherent preflight framing, and one dependency instead of two. |
 | [vexpress](packages/vexpress) | express 5.3.0 | Entirely VPM dependency tree, exact binary-view responses, coherent framing, validated settings/registration, nonmutating options, once-only view completion, and specialized response paths. |
@@ -56,10 +57,10 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,409 tests**: all pass on Node 24, and Bun passes
-1,406 with three documented runtime-specific skips. All 42 runtime packages'
+The root suite contains **1,454 tests**: all pass on Node 24, and Bun passes
+1,451 with three documented runtime-specific skips. All 43 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
-catalog covers **44 packages**, including two declaration-only packages.
+catalog covers **45 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -88,11 +89,14 @@ and 39 total external runtime dependencies, all VPM packages. `vcors` uses only
 | `vonce` | 1 | 0 |
 | `vrouter` | 5 | 3 |
 | `vcors` | 2 | 1 |
+| `vread-package-up` | 3 | 0 |
 
 Other runtime replacements retain their direct dependency counts. `vqs` removes
 an 18-package transitive tree from that branch; packages elsewhere may still need
 some of those helpers. `vdebug` uses built-in terminal detection instead of
 loading the optional `supports-color` peer. `vrouter` handles thenables internally.
+`vread-package-up` removes a 20-package installed transitive branch, including
+declaration-only packages, by supporting raw metadata without npm normalization.
 
 The complete external VPM trees contain 13 packages for `vsend`, 15 for
 `vserve-static` and `vbody-parser`, and four each for `vrouter`, `vtype-is`,
@@ -124,10 +128,11 @@ gate. Separate development fixtures can also retain older HTTP utility versions.
 
 ### The integration gate
 
-[`scripts/integration.cjs`](scripts/integration.cjs) runs **242 HTTP checks per
-runtime**, plus **six Functions Framework startup-option scenarios**. It substitutes
-matching package versions inside its own process, serves Firebase `onRequest` handlers and Express applications through Functions
-Framework, and exercises a direct parser application. Its coverage includes:
+[`scripts/integration.cjs`](scripts/integration.cjs) runs **245 HTTP checks per
+runtime**, plus **six Functions Framework startup-option scenarios** and **122
+raw-manifest comparisons**. It substitutes matching package versions inside its
+own process, serves Firebase `onRequest` handlers and Express applications through
+Functions Framework, and exercises a direct parser application. Its coverage includes:
 
 - Routing, parameters, wildcards, mounted applications, async errors, HEAD/OPTIONS,
   proxy trust, IPv4/IPv6 addresses and deprecation warnings.
@@ -137,19 +142,64 @@ Framework, and exercises a direct parser application. Its coverage includes:
   downloads, static files, ranges, validators and redirects.
 - CORS reflection, allow/deny decisions, repeatable RegExp policies, duplicate
   callbacks, cache variation and preflight framing.
+- CommonJS, ESM and nested-package handler loading through the framework, followed
+  by an HTTP request to each loaded handler. These three requests are included in
+  the HTTP count.
 - Framework CLI/environment precedence, option types and errors, application
   startup callbacks, symbol descriptors, JWT expiry durations and debug output.
 
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
 count too. It checks the single shared content-type 2.x copy and its four callers.
-Version mismatches remain visible in its report.
+Version mismatches remain visible in its report. The framework's dynamic ESM
+reader import needs a separate adapter: an isolated copy of its loader redirects
+only that import to VPM. Installed framework files and the upstream comparison
+reader are unchanged; CommonJS cache substitution does not redirect ESM imports.
 
 Consumer configuration affects reachability. Functions Framework disables ETags
 on its own app, so validator tests also use application responses and static files.
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vread-package-up
+
+Replaces `read-package-up` 11.0.0 for raw manifest reading with **zero external
+dependencies**. Functions Framework 5.0.2 requests `normalize: false` when
+choosing CommonJS or ESM. The pinned upstream branch declares three dependencies
+and installs 20 distinct transitive packages, including declaration-only
+packages; normalization and rich diagnostics are imported even in raw mode.
+
+This is an intentional API simplification: **raw metadata is the default and
+`normalize: true` is rejected**. npm metadata normalization and normalized-result
+types are not provided. Callers that rely on normalized fields need a separate
+normalization step. No automatic replacement of those callers is claimed.
+
+The implementation validates inclusive ancestor boundaries, checks opened file
+descriptors before reading, closes them on success/failure, propagates filesystem
+errors and rejects invalid UTF-8 or non-object manifests. Error messages identify
+the path and reason without exposing manifest contents. There is no parsed-result
+cache, and symlink-following boundaries are lexical rather than a sandbox.
+
+The 45 package tests include both unchanged upstream lookup tests and additional
+error, filesystem-race, boundary, Unicode and concurrency checks. Integration
+adds 122 upstream comparisons in raw mode plus three real framework loader cases.
+Archive consumers cover CommonJS, ESM and TypeScript 7. The
+[API guide](packages/vread-package-up/README.md) documents the compatibility
+boundary and the benchmark method.
+
+Three sequential benchmark processes per runtime on Node 24.22.1/Bun 1.4.0
+(macOS arm64, 2026-10-28) measure **92–93% less time on Node and 70–72% less on
+Bun for import plus the first async read**, excluding process launch and with a
+warm OS filesystem cache. Aggregate medians are 29.55 → 1.94 ms and 21.34 →
+6.12 ms. These are reader measurements, not full application startup.
+
+Warm async adjacent reads take 9–16% less time on Node but 36–59% more on Bun
+(aggregate Bun 61.12 → 84.54 µs). Node sync ancestor/absent/directory searches
+cost 6–13% more; async directory skipping costs 18–40% more on Node and 72–128%
+more on Bun. Strict decoding and descriptor checks remain in place. The
+[full benchmark report](packages/vread-package-up/README.md#benchmarks) records
+all cases, including other regressions and raw samples.
 
 ## vminimist
 
