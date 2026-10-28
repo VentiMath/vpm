@@ -13,15 +13,16 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
-    const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
-    assert.ok(archive, name);
+    const version = require(path.join(root, 'packages', name, 'package.json')).version;
+    const archive = name + '-' + version + '.tgz';
+    assert.ok(fs.existsSync(path.join(directory, archive)), name);
     const packed = path.join(directory, archive);
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
-    if (name === 'vcontent-disposition' || name === 'vcookie') {
+    if (['vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
@@ -54,6 +55,12 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const signature = require('vcookie-signature');
+assert.equal(signature.unsign(signature.sign('雪', 'key'), 'key'), '雪');
+assert.equal(signature.unsign(signature.sign('雪', 'key'), 'wrong'), false);
+const vary = require('vvary');
+assert.equal(vary.append('Accept,\\tOrigin', 'origin'), 'Accept,\\tOrigin');
+assert.throws(() => vary.append('Bad Header', 'Origin'), TypeError);
 const cookie = require('vcookie');
 assert.equal(cookie.parse(cookie.serialize('sid', '雪')).sid, '雪');
 assert.equal(cookie.parseCookie('__proto__=x').__proto__, 'x');
@@ -102,6 +109,11 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import signature, { sign, unsign } from 'vcookie-signature';
+assert.equal(signature.sign, sign); assert.equal(signature.unsign, unsign);
+assert.equal(unsign(sign('', new Uint8Array([1, 2, 3])), new Uint8Array([1, 2, 3])), '');
+import vary, { append } from 'vvary';
+assert.equal(vary.append, append); assert.equal(append('Accept', 'Origin'), 'Accept, Origin');
 import cookie, { parse as parseCookieLegacy, serialize, parseCookie, stringifyCookie, parseSetCookie, stringifySetCookie } from 'vcookie';
 assert.deepEqual([cookie.parse, cookie.serialize, cookie.parseCookie, cookie.stringifyCookie, cookie.parseSetCookie, cookie.stringifySetCookie], [parseCookieLegacy, serialize, parseCookie, stringifyCookie, parseSetCookie, stringifySetCookie]);
 assert.equal(parseCookie(stringifyCookie({ x: '雪' })).x, '雪');
@@ -150,6 +162,21 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import signature, { sign, unsign, type Secret } from 'vcookie-signature';
+const secret: Secret = new Uint8Array([1, 2, 3]);
+const verified: string | false = unsign(sign('value', secret), secret);
+signature.sign('value', new DataView(new ArrayBuffer(3)));
+// @ts-expect-error key is required
+sign('value');
+// @ts-expect-error verification can fail
+const invalidVerified: string = verified;
+import vary, { append } from 'vvary';
+const varied: string = append('Accept', ['Origin']);
+vary({ getHeader: () => undefined, setHeader(_name, _value) {} }, 'Origin');
+// @ts-expect-error nonstring fields
+append('', [1]);
+void [invalidVerified, varied];
+
 import cookie, { parseCookie, stringifyCookie, parseSetCookie, stringifySetCookie, serialize, type SetCookie } from 'vcookie';
 const setCookie: SetCookie = parseSetCookie('sid=value; Secure');
 const cookieText: string = stringifySetCookie(setCookie);
@@ -274,6 +301,8 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vcookie-signature\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vvary\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcontent-disposition\/index\.d\.ts/);
     assert.match(output, /node_modules\/vqs\/index\.d\.ts/);

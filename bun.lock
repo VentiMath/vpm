@@ -48,6 +48,10 @@
       "name": "vcookie",
       "version": "0.1.0",
     },
+    "packages/vcookie-signature": {
+      "name": "vcookie-signature",
+      "version": "0.1.0",
+    },
     "packages/vdebug": {
       "name": "vdebug",
       "version": "0.1.0",
@@ -206,6 +210,10 @@
         "vnode-types": "^0.1.0",
       },
     },
+    "packages/vvary": {
+      "name": "vvary",
+      "version": "0.1.0",
+    },
   },
   "packages": {
     "@typescript/typescript-aix-ppc64": ["@typescript/typescript-aix-ppc64@7.0.2", "", { "os": "aix", "cpu": "ppc64" }, "sha512-MTKKkWB7p/0E9xi1d1tHtZ5PiLkGEMIq88pK2CubZjOsLtYTLqhgIgi6zepFa+9GHZ6h05NMCkQxGKiPXMxXtQ=="],
@@ -262,6 +270,8 @@
 
     "vcookie": ["vcookie@workspace:packages/vcookie"],
 
+    "vcookie-signature": ["vcookie-signature@workspace:packages/vcookie-signature"],
+
     "vdebug": ["vdebug@workspace:packages/vdebug"],
 
     "vee-first": ["vee-first@workspace:packages/vee-first"],
@@ -311,5 +321,7 @@
     "vtype-is": ["vtype-is@workspace:packages/vtype-is"],
 
     "vundici-types": ["vundici-types@workspace:packages/vundici-types"],
+
+    "vvary": ["vvary@workspace:packages/vvary"],
   }
 }
