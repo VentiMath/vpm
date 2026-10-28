@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'content-disposition': { pkg: 'vcontent-disposition', versions: /^2\.0\.1$/ },
   'body-parser': { pkg: 'vbody-parser', versions: /^2\.4\.0$/ },
   qs: { pkg: 'vqs', versions: /^6\.17\.0$/ },
   'iconv-lite': { pkg: 'viconv-lite', versions: /^0\.7\./ },
@@ -218,6 +219,16 @@ function sent(name, next) {
 app.get('/send-file', (_req, res, next) => res.sendFile('data.txt', { root: directory, headers: { 'X-Custom': 'yes' } }, sent('file', next)));
 app.get('/send-empty', (_req, res, next) => res.sendFile(path.join(directory, 'empty.txt'), sent('empty', next)));
 app.get('/download', (_req, res, next) => res.download(path.join(directory, 'data.txt'), 'renamed.txt', sent('download', next)));
+const downloadNames = [
+  ['unicode', 'café-雪.txt', 'attachment; filename="caf?-?.txt"; filename*=UTF-8\'\'caf%C3%A9-%E9%9B%AA.txt'],
+  ['quotes', 'a"b.txt', 'attachment; filename="a\\"b.txt"'],
+  ['percent', '%20.txt', 'attachment; filename=%20.txt; filename*=UTF-8\'\'%2520.txt'],
+  ['control', 'a\r\nb.txt', 'attachment; filename="a??b.txt"; filename*=UTF-8\'\'a%0D%0Ab.txt'],
+];
+for (const [id, filename] of downloadNames) {
+  app.get('/download-' + id, (_req, res, next) => res.download(path.join(directory, 'data.txt'), filename, sent('download-' + id, next)));
+  app.get('/attachment-' + id, (_req, res) => res.attachment(filename).send(content));
+}
 app.get('/send-missing', (_req, res, next) => res.sendFile('missing.txt', { root: directory }, sent('missing', next)));
 app.use('/static', express.static(directory, { maxAge: '2 hours', extensions: ['html'], setHeaders: res => res.setHeader('X-Static', 'yes') }));
 app.use('/strict', express.static(directory, { fallthrough: false, redirect: false }));
@@ -600,6 +611,20 @@ async function run() {
     assert.equal((await request(appServer, '/send-empty')).body, '');
     const download = await request(appServer, '/download');
     assert.equal(download.body, content); assert.equal(download.headers['content-disposition'], 'attachment; filename=renamed.txt');
+    for (const [id, , expected] of downloadNames) {
+      for (const prefix of ['download-', 'attachment-']) {
+        const response = await request(appServer, '/' + prefix + id);
+        assert.equal(response.status, 200);
+        assert.equal(response.body, content);
+        assert.equal(response.headers['content-disposition'], expected);
+      }
+    }
+    const unicodeHead = await request(appServer, '/download-unicode', { method: 'HEAD' });
+    assert.equal(unicodeHead.status, 200); assert.equal(unicodeHead.body, '');
+    assert.equal(unicodeHead.headers['content-disposition'], downloadNames[0][2]);
+    const unicodeRange = await request(appServer, '/download-unicode', { headers: { range: 'bytes=2-5' } });
+    assert.equal(unicodeRange.status, 206); assert.equal(unicodeRange.body, '2345');
+    assert.equal(unicodeRange.headers['content-disposition'], downloadNames[0][2]);
     assert.equal((await request(appServer, '/send-missing')).status, 404);
     assert.equal((await request(appServer, '/static/page')).body, '<p>page</p>');
     assert.equal((await request(appServer, '/static/.secret')).status, 404);
@@ -641,7 +666,7 @@ async function run() {
     assert.equal(double.status, 404); assert.match(double.body, /Cannot GET \/double/); assert.doesNotMatch(double.body, /secret/);
     await new Promise(resolve => setTimeout(resolve, 20));
     assert.ok(stderr.some(line => line.includes('late error')), 'an error after the 404 must still be logged');
-    for (const name of ['file', 'empty', 'download']) assert.ok(completed.includes(name), `missing ${name} completion callback`);
+    for (const name of ['file', 'empty', 'download', ...downloadNames.map(([id]) => 'download-' + id)]) assert.ok(completed.includes(name), `missing ${name} completion callback`);
     assert.ok(failures.some(error => error.status === 404), 'missing sendFile error callback');
 
     // Duration strings (ms) through jsonwebtoken, as ventimath signs tokens.

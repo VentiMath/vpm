@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
     assert.ok(archive, name);
@@ -21,6 +21,11 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (name === 'vcontent-disposition') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
+    }
     if (name === 'vbody-parser') {
       assert.equal(Object.keys(metadata.dependencies).length, 9);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -49,6 +54,10 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const disposition = require('vcontent-disposition');
+assert.equal(disposition.parse(disposition.create('雪.txt')).parameters.filename, '雪.txt');
+assert.equal(Object.getPrototypeOf(disposition.parse('attachment').parameters), null);
+assert.throws(() => disposition.create(1), TypeError);
 const qs = require('vqs');
 assert.deepEqual(qs.parse('a[b]=x&a[c][]=y'), { a: { b: 'x', c: ['y'] } });
 assert.equal(qs.stringify({ a: '~* ' }, { format: qs.formats.WHATWG }), 'a=%7E*+');
@@ -87,6 +96,11 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import disposition, { create as createDisposition, parse as parseDisposition, format as formatDisposition, encodeExtended, decodeExtended } from 'vcontent-disposition';
+assert.equal(disposition.create, createDisposition); assert.equal(disposition.parse, parseDisposition);
+assert.equal(disposition.format, formatDisposition); assert.equal(disposition.encodeExtended, encodeExtended); assert.equal(disposition.decodeExtended, decodeExtended);
+assert.equal(decodeExtended(encodeExtended('雪.txt')), '雪.txt');
+assert.equal(parseDisposition(createDisposition('雪.txt')).parameters.filename, '雪.txt');
 import qs, { parse as parseQuery, stringify, formats } from 'vqs';
 assert.equal(qs.parse, parseQuery); assert.equal(qs.stringify, stringify); assert.equal(qs.formats, formats);
 assert.deepEqual(parseQuery('__proto__[polluted]=yes&a[]=x'), { a: ['x'] });
@@ -127,6 +141,15 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import disposition, { create as createDisposition, parse as parseDisposition, format as formatDisposition, type ContentDisposition } from 'vcontent-disposition';
+const parsedDisposition: ContentDisposition = parseDisposition(createDisposition('雪.txt'));
+const dispositionText: string = disposition.format(parsedDisposition);
+// @ts-expect-error disposition type is required
+formatDisposition({});
+// @ts-expect-error filenames must be strings
+createDisposition(1);
+void dispositionText;
+
 import bodyParser, { json as jsonBody, raw as rawBody, text as textBody, urlencoded as formBody } from 'vbody-parser';
 import jsonParser from 'vbody-parser/json';
 import rawParser from 'vbody-parser/raw';
@@ -231,6 +254,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vcontent-disposition\/index\.d\.ts/);
     assert.match(output, /node_modules\/vqs\/index\.d\.ts/);
     assert.match(output, /node_modules\/vbody-parser\/index\.d\.ts/);
     console.log(`${manager} archives: Node/Bun CJS and ESM, TypeScript ${tsc.version} CJS and ESM without platform types passed.`);
