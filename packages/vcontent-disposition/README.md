@@ -39,10 +39,15 @@ format({ type: 'inline', parameters: { filename: 'report (1).pdf' } });
 - Malformed Latin-1 percent escapes return `undefined`, and already-extended
   names cannot acquire another `*` through automatic encoding. **Upstream 3.0.0
   already fixes these two 2.0.1 behaviors**; they are carried forward here.
+- Single-parameter formatting returns directly; two-parameter formatting uses
+  local values instead of a scratch array and set. Standard type/name literals take exact-match validation paths;
+  other names still use the complete token grammar. Case-insensitive duplicate
+  checks, own-property filtering, and single-read snapshots remain in place.
 - Header creation avoids intermediate parameter objects. ASCII extended encoding
   has a fast path, Latin-1 decoding copies spans, and quoted parsing avoids
   character-by-character string building for ordinary values and discarded
-  duplicates. Performance varies by operation and runtime; see the measurements.
+  duplicates. Formatting skips replacements when nothing needs escaping and
+  copies multipart escape spans directly. Performance varies by operation and runtime; see the measurements.
 
 The five named functions follow the 2.x/3.x API. The old callable 0.x/1.x export
 is not implemented. Unknown option keys are ignored. Options may be an object,
@@ -136,11 +141,14 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
 
-Seventeen tests cover both baselines, 15,000 generated parser cases against
+Twenty tests cover both upstream baselines, 15,000 generated parser cases against
 3.0.0, all 256 byte values in encoding/Latin-1 decoding, malformed escapes,
 quoted/multipart recovery, duplicate names, prototype isolation, input validation,
 getter reads, long values, lone surrogates, and CJS/ESM exports. Fixture hashes
-are verified. These are VPM tests, not a claim to run the full upstream suite.
+are verified. The performance follow-up adds 1,134 standard/custom-name parsing
+cases, 5,000 generated formatting comparisons with the previous VPM commit, and
+accessor/duplicate tests for one, two, and many parameters. These are VPM tests,
+not a claim to run the full upstream suite.
 
 The shared integration gate aliases this package into real Express alongside all
 other VPM replacements. It checks download and attachment output for Unicode,
@@ -157,13 +165,95 @@ node packages/vcontent-disposition/bench/compare.cjs
 bun packages/vcontent-disposition/bench/compare.cjs
 node packages/vcontent-disposition/bench/compare.cjs latest
 bun packages/vcontent-disposition/bench/compare.cjs latest
+node packages/vcontent-disposition/bench/compare.cjs previous
+bun packages/vcontent-disposition/bench/compare.cjs previous
 ```
 
 The harness checks output equality before timing, warms both implementations,
-consumes the returned filenames/types, and alternates order over nine samples of
+consumes returned values, and alternates order over nine samples of
 50,000 calls. `OUTPUT=/path/to/results.json` records every sample, source hashes,
 and runtime details. `COUNT` changes the calls per sample. Results describe utility
-calls, not end-to-end download throughput.
+calls, not end-to-end download throughput. The current harness first exercises
+all input shapes for 5,000 calls each, then warms each case for 20,000 calls before
+timing. This avoids measuring the first transition from a type-only parser to
+parameter parsing during runtime optimization. Custom names, mixed casing and
+larger parameter maps are included alongside the standard download fields.
+
+### Performance follow-up
+
+The first implementation allocated a values array and a set for every multi-field
+format, repeatedly used the general validation/case-folding paths for standard
+field names, and ran string replacements even when no escaping was necessary.
+Those costs are conspicuous when the operation itself takes hundreds of
+nanoseconds. Parsing also pays for independent null-prototype maps, which remain
+part of the public contract.
+
+The follow-up removes the avoidable allocations for two fields, returns directly
+for a single field, validates
+standard literals by exact comparison, avoids no-op replacements, copies multipart
+escapes in spans, and keeps no-parameter parsing outside the parameter scanner.
+It skips the first duplicate lookup because the map is known to be empty,
+and reads each character once when locating the end of an escaped quoted value. It
+keeps every validation, duplicate rule, malformed-input recovery rule, and fresh
+result dictionary. No parsed results are cached or shared.
+
+Recorded on **2026-10-27**, Node **24.22.1** and Bun **1.4.0**, macOS arm64.
+The before/after comparison uses **three fresh processes per runtime**, with
+nine alternating-order samples of 50,000 calls in each process. The table shows
+the median of the three process medians, in nanoseconds per call. Ratio columns
+come from separate paired comparisons with upstream **2.0.1**; below 1 is faster.
+
+| Case | Node previous → now | Bun previous → now | Node / upstream | Bun / upstream |
+| --- | ---: | ---: | ---: | ---: |
+| create ASCII | 96 → 77 | 54 → 53 | 0.46 | 0.48 |
+| create quoted | 243 → 189 | 125 → 130 | 0.57 | 0.66 |
+| create Unicode | 437 → 314 | 271 → 250 | 0.49 | 0.62 |
+| create Unicode no fallback | 233 → 177 | 156 → 141 | 0.48 | 0.61 |
+| parse type only | 64 → 56 | 44 → 38 | 1.00 | 0.76 |
+| parse short filename | 175 → 164 | 191 → 123 | 1.00 | 0.63 |
+| parse short quoted | 189 → 178 | 208 → 141 | 0.86 | 0.53 |
+| parse extended | 580 → 567 | 487 → 367 | 0.97 | 0.81 |
+| parse 4 KiB quoted | 383 → 377 | 479 → 380 | 0.02 | 0.02 |
+| parse escaped quoted | 3,345 → 3,549 | 3,954 → 3,623 | 1.05 | 1.03 |
+| parse duplicate 4 KiB | 475 → 450 | 590 → 434 | 0.02 | 0.02 |
+| parse multipart | 378 → 378 | 412 → 293 | 1.21 | 0.79 |
+| format ASCII | 105 → 72 | 64 → 52 | 0.61 | 0.88 |
+| format quoted | 217 → 116 | 107 → 79 | 0.51 | 0.72 |
+| format Unicode | 281 → 205 | 190 → 137 | 0.72 | 0.83 |
+| format fallback pair | 238 → 131 | 152 → 76 | 0.64 | 0.69 |
+| format multipart pair | 413 → 182 | 296 → 101 | 0.48 | 0.34 |
+| encode ASCII | 33 → 33 | 23 → 24 | 0.27 | 0.30 |
+| encode Unicode | 212 → 178 | 162 → 149 | 0.84 | 1.05 |
+| decode Latin-1 short | 103 → 103 | 134 → 130 | 0.76 | 0.77 |
+| decode Latin-1 sparse | 141 → 142 | 168 → 170 | 0.10 | 0.11 |
+| decode UTF-8 | 276 → 276 | 148 → 150 | 1.00 | 0.96 |
+| parse mixed-case | 174 → 180 | 208 → 218 | 1.10 | 1.03 |
+| parse custom field | 165 → 161 | 210 → 207 | 1.05 | 1.06 |
+| format custom pair | 228 → 194 | 147 → 118 | 1.06 | 1.12 |
+| format many fields | 648 → 495 | 405 → 370 | 0.96 | 1.51 |
+
+The standard single-/two-parameter formatting regressions are removed in these
+runs. Short unquoted Node parsing is near parity with both upstream 2.0.1
+and 3.0.0. **Not every parser case is faster:** Node
+multipart parsing takes 21% more time versus 2.0.1 and
+22% more time versus 3.0.0. Escaped quoted parsing versus the prior VPM
+implementation takes 6% more time on Node and
+9% less time on Bun. Mixed-case/custom-field cases and larger Bun formatting
+maps also retain overhead. Correctness guarantees remain; validation has not
+been weakened and result maps are not shared. Long unescaped quoted-value parsing
+remains much faster than either upstream version. These are utility-call
+measurements, not an application throughput claim.
+
+The exact prior implementation is [retained as a fixture](test/fixtures/vcontent-disposition-bf6666b.cjs) and hash-checked by the tests.
+Recorded comparisons against that fixture: Node [run 1](bench/optimized-node24-previous-1.json), [run 2](bench/optimized-node24-previous-2.json), [run 3](bench/optimized-node24-previous-3.json); Bun [run 1](bench/optimized-bun14-previous-1.json), [run 2](bench/optimized-bun14-previous-2.json), [run 3](bench/optimized-bun14-previous-3.json).
+
+Separate current-upstream comparisons retain every sample and source hash: [Node / 2.0.1](bench/optimized-node24-v2.json), [Bun / 2.0.1](bench/optimized-bun14-v2.json), [Node / 3.0.0](bench/optimized-node24-v3.json), [Bun / 3.0.0](bench/optimized-bun14-v3.json).
+
+### Initial implementation measurements
+
+These historical tables describe commit `bf6666b`, with per-case warm-up only.
+They are retained with their original source hashes; the follow-up above is the
+current implementation.
 
 One sequential run on **2026-10-27**, Node **24.22.1** and Bun **1.4.0**
 on macOS arm64. Medians in **nanoseconds per call**, upstream **2.0.1 → VPM**:
@@ -193,7 +283,7 @@ on macOS arm64. Medians in **nanoseconds per call**, upstream **2.0.1 → VPM**:
 | decode Latin-1 sparse | 1,405 → 137 | 1,458 → 175 |
 | decode UTF-8 | 271 → 272 | 147 → 144 |
 
-Short unquoted filename parsing took 15% more time on Node. Formatting the fallback pair took 28% more on Node and 46% more on Bun. The tables retain these costs alongside the faster paths. Express calls `create`, which avoids the general formatter; the microbenchmarks do not establish a noticeable download-throughput improvement. Differences close to parity can vary between runs.
+In that initial implementation, short unquoted filename parsing took 15% more time on Node. Formatting the fallback pair took 28% more on Node and 46% more on Bun. The tables retain these costs alongside the faster paths. Express calls `create`, which avoids the general formatter; the microbenchmarks do not establish a noticeable download-throughput improvement. Differences close to parity can vary between runs.
 
 Against **3.0.0**, ratios are VPM time / upstream time; below 1 is faster:
 
@@ -236,7 +326,8 @@ files are excluded. There are no runtime dependencies.
 
 Derived from MIT-licensed `content-disposition` by Douglas Christopher Wilson.
 [Provenance](PROVENANCE.json) records the exact 2.0.1 and 3.0.0 npm archive
-integrities, upstream commits, and unchanged source-fixture hashes. Archive
+integrities, upstream commits, unchanged source-fixture hashes, and the exact
+previous VPM implementation retained for reproducible comparisons. Archive
 integrities were checked against downloaded bytes. Upstream license notices are
 preserved; fixtures are comparison material only. VPM's own implementation also
 uses the span-scanning approach in its `vcontent-type` package.

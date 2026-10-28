@@ -20,5 +20,11 @@
       "fixture": "test/fixtures/content-disposition-3.0.0.mjs",
       "sha256": "b00721f7aa028e836fd73375e326021a878f17119fbc0b2a307c86b1e9d2dbbe"
     }
-  ]
+  ],
+  "previousImplementation": {
+    "commit": "bf6666bf63df6072ce9ee6752694121d692007dd",
+    "source": "packages/vcontent-disposition/index.js",
+    "fixture": "test/fixtures/vcontent-disposition-bf6666b.cjs",
+    "sha256": "89a94e5afa2cd3707b1882fe7ba3c2afef2daf78693eb49e00a491ce0f513b7a"
+  }
 }

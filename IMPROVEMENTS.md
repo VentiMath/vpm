@@ -1037,15 +1037,55 @@ forward, not claimed as unique VPM improvements. Parsing otherwise retains
 upstream's lenient recovery; it is not a strict syntax validator or path sanitizer.
 Normal valid filename output and lone-surrogate `URIError` behavior are preserved.
 
-**Evidence:** 17 package tests include 15,000 generated parser cases against
-3.0.0, byte/Unicode encoding, malformed inputs, options/getters, long quoted
-values, prototype isolation, and CJS/ESM exports. The shared Node/Bun gate now
+**Evidence:** 20 package tests include 15,000 generated parser cases against
+3.0.0, 5,000 formatter comparisons with the previous VPM implementation,
+1,134 standard/custom-name parsing cases, byte/Unicode encoding, malformed
+inputs, single-read getters across parameter-map sizes, long quoted values,
+prototype isolation, and CJS/ESM exports. The shared Node/Bun gate now
 runs **151 HTTP checks**, including real Express downloads and attachments with
 Unicode, quotes, percent sequences, and control characters, HEAD/ranges, and
 completion callbacks. Installed archives are checked with npm, Bun, Node, and
-strict TypeScript 7. On 2026-10-27 the full suite passed **449 tests on Node**,
-with **448 passing and one existing skip on Bun**. All **28 runtime packages**
-have self-contained declarations.
+strict TypeScript 7. At the performance follow-up on 2026-10-27 the full suite
+passed **452 tests on Node 24**, with **451 passing and one existing skip on Bun**.
+All **28 runtime packages** have self-contained declarations.
+
+**Performance follow-up:** removes the temporary array/set for two-parameter
+formatting, returns directly for a single parameter, uses exact matching for standard type/name literals,
+skips no-op string replacements, and copies multipart escapes directly. Custom
+names retain full validation; all duplicate, own-property and snapshot rules
+remain. Parsing keeps fresh null-prototype maps and the existing recovery rules,
+while separating type-only parsing and avoiding an empty-map duplicate lookup.
+
+Three fresh processes per runtime, each with nine alternating samples of
+50,000 calls, compare the exact previous VPM source with the optimized source.
+Median process medians in nanoseconds, **previous VPM → current VPM**:
+
+| Case | Node 24 | Bun 1.4 |
+| --- | ---: | ---: |
+| parse type only | 64 → 56 | 44 → 38 |
+| parse short filename | 175 → 164 | 191 → 123 |
+| parse multipart | 378 → 378 | 412 → 293 |
+| format ASCII | 105 → 72 | 64 → 52 |
+| format quoted | 217 → 116 | 107 → 79 |
+| format Unicode | 281 → 205 | 190 → 137 |
+| format fallback pair | 238 → 131 | 152 → 76 |
+| format multipart pair | 413 → 182 | 296 → 101 |
+| format custom pair | 228 → 194 | 147 → 118 |
+| format many fields | 648 → 495 | 405 → 370 |
+
+Standard single-/two-parameter formatting now beats upstream in the separate
+2.0.1 and 3.0.0 comparisons. Short unquoted Node parsing is near parity with
+both versions; Node multipart parsing still takes 21% and 22% more time,
+respectively.
+Mixed-case/custom parsing, escaped quoted values and larger Bun formatting maps
+do not all improve uniformly; the full table reports those costs. Long unescaped
+quoted parsing retains its substantial gain, and all correctness checks remain.
+No application-throughput gain is claimed.
+
+[Complete follow-up tables, all ten recorded runs, and reproducible commands](packages/vcontent-disposition/README.md#performance-follow-up).
+
+**Initial implementation measurements:** the following historical results are
+from commit `bf6666b`; see the follow-up above for current behavior.
 
 **Performance:** nine warmed, alternating-order samples of 50,000 calls,
 sequentially on Node 24.22.1 and Bun 1.4.0 (2026-10-27). Nanoseconds per call,
