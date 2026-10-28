@@ -8,20 +8,20 @@ const after = require('..');
 const plain = value => ({ type: value.type, parameters: { ...value.parameters } });
 const consume = value => value.type.length + (value.parameters.filename?.length || 0) + (value.parameters.name?.length || 0);
 (async () => {
-  const version = process.argv.includes('latest') ? '3.0.0' : '2.0.1';
-  const baseline = '../test/fixtures/content-disposition-' + version + (version[0] === '3' ? '.mjs' : '.cjs');
+  const version = process.argv.includes('previous') ? 'VPM bf6666b' : process.argv.includes('latest') ? '3.0.0' : '2.0.1';
+  const baseline = version.startsWith('VPM') ? '../test/fixtures/vcontent-disposition-bf6666b.cjs' : '../test/fixtures/content-disposition-' + version + (version[0] === '3' ? '.mjs' : '.cjs');
   const before = version[0] === '3' ? await import(baseline) : require(baseline);
   const count = Number(process.env.COUNT || 50000);
   const rounds = 9;
   const cases = [];
-  function add(name, method, inputs, options) {
+  function add(name, method, inputs, options, consumeResult = consume) {
     for (const input of inputs) assert.deepEqual(method === 'parse' ? plain(after[method](input, options)) : after[method](input, options),
       method === 'parse' ? plain(before[method](input, options)) : before[method](input, options), name);
     cases.push({ name, inputs, functions: [before, after].map(pkg => {
       // Resolve the function once so ESM namespace access is not timed against
       // a CommonJS property lookup. Both public APIs support named imports.
       const fn = pkg[method];
-      return method === 'parse' ? input => consume(fn(input, options)) : input => fn(input, options);
+      return method === 'parse' ? input => consumeResult(fn(input, options)) : input => fn(input, options);
     }) });
   }
   add('create ASCII', 'create', ['report.pdf', 'photo.jpg', 'notes.txt']);
@@ -46,6 +46,10 @@ const consume = value => value.type.length + (value.parameters.filename?.length 
   add('decode Latin-1 short', 'decodeExtended', ["ISO-8859-1''caf%E9.pdf"]);
   add('decode Latin-1 sparse', 'decodeExtended', ["ISO-8859-1''caf%E9-" + 'report-'.repeat(32) + '%A3.pdf']);
   add('decode UTF-8', 'decodeExtended', ["UTF-8''caf%C3%A9-%F0%9F%93%9A.pdf"]);
+  add('parse mixed-case', 'parse', [' Attachment ; FILENAME = report.pdf', 'INLINE; Name="field"']);
+  add('parse custom field', 'parse', ['x-download; document-id=abc123'], undefined, value => value.type.length + value.parameters['document-id'].length);
+  add('format custom pair', 'format', [{ type: 'X-Download', parameters: { document: 'report.pdf', revision: 'r1' } }]);
+  add('format many fields', 'format', [{ type: 'attachment', parameters: { filename: 'report.pdf', name: 'file', version: '1', language: 'en', note: 'custom value' } }]);
   let checksum = 0;
   function measure(fn, inputs, iterations) {
     let sum = 0;
@@ -58,6 +62,9 @@ const consume = value => value.type.length + (value.parameters.filename?.length 
     checksum += sum;
     return elapsed * 1e6 / iterations;
   }
+  // Exercise every input shape before timing any case. Otherwise the first
+  // parameter benchmark can catch a runtime recompiling a type-only parser.
+  for (const entry of cases) for (const fn of entry.functions) measure(fn, entry.inputs, 5000);
   const rows = [];
   for (const entry of cases) {
     for (const fn of entry.functions) measure(fn, entry.inputs, Math.min(count, 20000));
@@ -68,7 +75,7 @@ const consume = value => value.type.length + (value.parameters.filename?.length 
   }
   const hash = file => createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, file))).digest('hex');
   const result = { date: '2026-10-27', runtime: process.versions, platform: process.platform, arch: process.arch, baseline: version,
-    count, rounds, units: 'nanoseconds/call', sourceSha256: hash('../index.js'), baselineSha256: hash(baseline), harnessSha256: hash('compare.cjs'), checksum, rows };
+    count, rounds, corpusWarmup: 5000, caseWarmup: Math.min(count, 20000), units: 'nanoseconds/call', sourceSha256: hash('../index.js'), baselineSha256: hash(baseline), harnessSha256: hash('compare.cjs'), checksum, rows };
   if (process.env.OUTPUT) fs.writeFileSync(process.env.OUTPUT, JSON.stringify(result, null, 2) + '\n');
   console.table(rows.map(row => ({ case: row.case, upstream: Math.round(row.upstreamNs), VPM: Math.round(row.vpmNs), ratio: row.ratio.toFixed(2) })));
   console.log('Consumed checksum:', checksum, 'Nine alternating-order samples; microbenchmarks do not establish HTTP throughput gains.');

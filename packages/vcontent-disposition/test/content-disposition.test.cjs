@@ -10,7 +10,8 @@ const latest = import('./fixtures/content-disposition-3.0.0.mjs');
 const plain = result => ({ type: result.type, parameters: { ...result.parameters } });
 
 test('fixtures are exact published sources with recorded hashes', () => {
-  for (const source of require('../PROVENANCE.json').sources) {
+  const provenance = require('../PROVENANCE.json');
+  for (const source of [...provenance.sources, provenance.previousImplementation]) {
     assert.equal(createHash('sha256').update(fs.readFileSync(path.join(__dirname, '..', source.fixture))).digest('hex'), source.sha256);
   }
 });
@@ -193,4 +194,60 @@ test('CJS and native ESM expose the same five functions', async () => {
   for (const name of ['create', 'parse', 'format', 'encodeExtended', 'decodeExtended']) assert.equal(esm[name], v[name]);
   assert.equal(esm.default, v);
   assert.equal(Object.isFrozen(v), true);
+});
+
+test('short-path names, malformed prefixes and empty duplicates preserve extraction', async () => {
+  const current = await latest;
+  for (const type of ['attachment', 'inline', 'form-data', 'Attachment', 'X-Custom', ' bad type ', '']) {
+    for (const key of ['filename', 'filename*', 'name', 'Filename', 'filename-extra', 'name*', '__proto__', 'constructor', '']) {
+      for (const value of ['', 'report.pdf', '"report (1).pdf"', '"a%22b%0D%0A"', "UTF-8''%E9%9B%AA", '"unfinished']) {
+        for (const options of [undefined, { multipart: true }, { extended: false }]) {
+          const header = type + '; ' + key + '=' + value + '; ' + key.toUpperCase() + '=second';
+          assert.deepEqual(plain(v.parse(header, options)), plain(current.parse(header, options)), header);
+        }
+      }
+    }
+  }
+});
+test('one, two and many parameters retain single-read snapshots and duplicate rejection', () => {
+  for (const count of [1, 2, 3, 8, 128]) {
+    const reads = new Map();
+    const parameters = Object.create({ inherited: 'ignored' });
+    for (let i = 0; i < count; i++) {
+      const key = i === 0 ? 'filename' : 'custom-' + i;
+      Object.defineProperty(parameters, key, { enumerable: true, get() {
+        reads.set(key, (reads.get(key) || 0) + 1);
+        return 'v' + i;
+      } });
+    }
+    Object.freeze(parameters);
+    const header = v.format(Object.freeze({ type: 'attachment', parameters }));
+    assert.equal(Object.keys(v.parse(header).parameters).length, count);
+    assert.equal(reads.size, count);
+    assert.ok([...reads.values()].every(value => value === 1));
+  }
+  for (const parameters of [
+    { filename: 'a', FILENAME: 'b' },
+    { filename: 'a', name: 'x', FILENAME: 'b' },
+    { a: 'first', b: 'x', c: 'x', A: 'second' },
+  ]) assert.throws(() => v.format({ type: 'attachment', parameters }), /duplicate/);
+  for (const key of ['filename ', 'name\n', 'filename*\r', 'name=bad']) {
+    assert.throws(() => v.format({ type: 'attachment', parameters: { [key]: 'a' } }), TypeError);
+  }
+});
+test('optimized formatting preserves the prior implementation across generated inputs', () => {
+  const previous = require('./fixtures/vcontent-disposition-bf6666b.cjs');
+  let seed = 0x92bca;
+  const random = n => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed % n; };
+  const names = ['filename', 'filename*', 'Filename', 'name', 'Name', 'x-custom', 'X-Custom', '__proto__', 'constructor'];
+  const values = ['', 'token', 'with space', 'café', '雪', '\r\n"\\', "UTF-8''%E9%9B%AA", '()*', '\ud800'];
+  const outcome = fn => { try { return { value: fn() }; } catch (error) { return { error: error.name }; } };
+  for (let sample = 0; sample < 5000; sample++) {
+    const parameters = Object.create(null);
+    const count = random(9);
+    for (let i = 0; i < count; i++) parameters[names[random(names.length)]] = values[random(values.length)];
+    const disposition = { type: ['attachment', 'inline', 'form-data', 'X-Custom'][random(4)], parameters };
+    const options = { multipart: random(2) === 1, extended: random(2) === 1 };
+    assert.deepEqual(outcome(() => v.format(disposition, options)), outcome(() => previous.format(disposition, options)));
+  }
 });

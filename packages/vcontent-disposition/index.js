@@ -12,6 +12,18 @@ const ESCAPED = /%[0-9a-f]{2}/i;
 const URI_SAFE = /^[A-Za-z0-9!~._-]*$/;
 const EXTRA_ESCAPES = { "'": '%27', '(': '%28', ')': '%29', '*': '%2A' };
 
+// Standard disposition fields are already validated by these exact matches.
+// Other types/names still use the complete token grammar and case folding.
+function checkType(type) {
+  if (type !== 'attachment' && type !== 'inline' && type !== 'form-data' &&
+      (typeof type !== 'string' || !TOKEN.test(type))) throw new TypeError('invalid disposition type');
+}
+function checkName(name) {
+  if (name === 'filename' || name === 'filename*' || name === 'name') return name;
+  if (!TOKEN.test(name)) throw new TypeError('invalid parameter name');
+  return name.toLowerCase();
+}
+
 function object(value, label) {
   if (value === null || typeof value !== 'object' || Array.isArray(value)) {
     throw new TypeError(label + ' must be an object');
@@ -39,7 +51,7 @@ function create(filename, options) {
     if (requestedType !== undefined) type = requestedType;
     if (requestedFallback !== undefined) fallback = requestedFallback;
   }
-  if (typeof type !== 'string' || !TOKEN.test(type)) throw new TypeError('invalid disposition type');
+  checkType(type);
   if (typeof fallback !== 'boolean' && typeof fallback !== 'string') throw new TypeError('fallback must be a boolean or string');
   if (typeof fallback === 'string' && !ASCII.test(fallback)) throw new TypeError('fallback must be printable US-ASCII');
   if (filename === undefined) return type;
@@ -57,12 +69,19 @@ function parse(header, options) {
   string(header);
   const mode = modes(options);
   const length = header.length;
-  let index = skipOWS(header, 0, length);
-  const typeStart = index;
-  index = endValue(header, index, length);
-  const type = header.slice(typeStart, trimOWS(header, typeStart, index)).toLowerCase();
-  // No mutable prototype is shared between results.
+  const start = skipOWS(header, 0, length);
+  const separator = header.indexOf(';', start);
+  const end = separator === -1 ? length : separator;
+  const rawType = header.slice(start, trimOWS(header, start, end));
+  const type = rawType === 'attachment' || rawType === 'inline' || rawType === 'form-data' ? rawType : rawType.toLowerCase();
+  // The no-parameter case does not enter the larger parameter scanner.
+  return { type, parameters: separator === -1 ? Object.create(null) : parseParameters(header, end, mode) };
+}
+
+function parseParameters(header, index, mode) {
+  const length = header.length;
   const parameters = Object.create(null);
+  let first = true;
   parameterLoop: while (index < length) {
     index = skipOWS(header, index + 1, length);
     const keyStart = index;
@@ -70,8 +89,10 @@ function parse(header, options) {
       const code = header.charCodeAt(index);
       if (code === 59) continue parameterLoop;
       if (code !== 61) { index++; continue; }
-      const key = header.slice(keyStart, trimOWS(header, keyStart, index)).toLowerCase();
-      const keep = parameters[key] === undefined;
+      const rawKey = header.slice(keyStart, trimOWS(header, keyStart, index));
+      const key = rawKey === 'filename' || rawKey === 'filename*' || rawKey === 'name' ? rawKey : rawKey.toLowerCase();
+      const keep = first || parameters[key] === undefined;
+      first = false;
       index = skipOWS(header, index + 1, length);
       if (header.charCodeAt(index) === 34) {
         const start = ++index;
@@ -81,9 +102,10 @@ function parse(header, options) {
         if ((mode & 1) || !header.slice(start, firstQuote).includes('\\')) index = firstQuote;
         else {
           escaped = true;
-          while (index < length && header.charCodeAt(index) !== 34) {
-            if (header.charCodeAt(index) === 92 && index + 1 < length) index += 2;
-            else index++;
+          while (index < length) {
+            const code = header.charCodeAt(index);
+            if (code === 34) break;
+            index += code === 92 && index + 1 < length ? 2 : 1;
           }
         }
         if (index === length) break parameterLoop;
@@ -108,60 +130,72 @@ function parse(header, options) {
       continue parameterLoop;
     }
   }
-  return { type, parameters };
+  return parameters;
 }
 
 function format(disposition, options) {
   object(disposition, 'disposition');
   const { type, parameters } = disposition;
   const mode = modes(options);
-  if (typeof type !== 'string' || !TOKEN.test(type)) throw new TypeError('invalid disposition type');
+  checkType(type);
   if (parameters == null) return type;
   object(parameters, 'parameters');
   const keys = Object.keys(parameters);
-  // Snapshot each own value once. Case-insensitive names govern both duplicate
-  // detection and precedence of an explicitly supplied extended parameter.
-  let values;
-  let names;
-  if (keys.length > 1) {
-    values = new Array(keys.length);
-    names = new Set();
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      if (!TOKEN.test(key)) throw new TypeError('invalid parameter name');
-      const normalized = key.toLowerCase();
-      if (names.has(normalized)) throw new TypeError('duplicate parameter name');
-      names.add(normalized);
-      const value = parameters[key];
-      string(value);
-      values[i] = value;
-    }
+  if (keys.length === 0) return type;
+  const first = keys[0];
+  const firstName = checkName(first);
+  const firstValue = parameters[first];
+  string(firstValue);
+  if (keys.length === 1) return type + formatParameter(first, firstValue, mode);
+  if (keys.length === 2) {
+    const second = keys[1];
+    const a = firstName;
+    const b = checkName(second);
+    if (a === b) throw new TypeError('duplicate parameter name');
+    const secondValue = parameters[second];
+    string(secondValue);
+    return type + formatParameter(first, firstValue, mode, b)
+      + formatParameter(second, secondValue, mode, a);
+  }
+  // Large parameter sets keep linear duplicate detection. Snapshot values once
+  // before formatting so accessors cannot change a value between checks/output.
+  const values = [firstValue];
+  const names = new Set([firstName]);
+  for (let i = 1; i < keys.length; i++) {
+    const key = keys[i];
+    const normalized = checkName(key);
+    if (names.has(normalized)) throw new TypeError('duplicate parameter name');
+    names.add(normalized);
+    const value = parameters[key];
+    string(value);
+    values.push(value);
   }
   let result = type;
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
-    const value = values ? values[i] : parameters[key];
-    if (!values) {
-      if (!TOKEN.test(key)) throw new TypeError('invalid parameter name');
-      string(value);
-    }
-    if (mode & 1) result += '; ' + key + '="' + value.replace(/[\n\r"]/g, encodeMultipart) + '"';
-    else if (TOKEN.test(value)) result += '; ' + key + '=' + value;
-    else if (TEXT.test(value)) result += '; ' + key + '=' + quote(value);
-    else {
-      if (mode & 2) throw new TypeError('invalid parameter value');
-      if (key.endsWith('*')) throw new TypeError('extended parameter must already be encoded');
-      if (names?.has(key.toLowerCase() + '*')) continue;
-      result += '; ' + key + '*=' + encodeExtended(value);
-    }
+    result += formatParameter(key, values[i], mode, names);
   }
   return result;
+}
+
+function formatParameter(key, value, mode, peers) {
+  if (mode & 1) return '; ' + key + '="' + escapeMultipart(value) + '"';
+  if (TOKEN.test(value)) return '; ' + key + '=' + value;
+  if (TEXT.test(value)) return '; ' + key + '=' + quote(value);
+  if (mode & 2) throw new TypeError('invalid parameter value');
+  if (key.endsWith('*')) throw new TypeError('extended parameter must already be encoded');
+  if (peers && (typeof peers === 'string' ? peers === key.toLowerCase() + '*' : peers.has(key.toLowerCase() + '*'))) return '';
+  return '; ' + key + '*=' + encodeUtf8(value);
 }
 
 function encodeExtended(value) {
   string(value);
   if (URI_SAFE.test(value)) return "UTF-8''" + value;
-  return "UTF-8''" + encodeURIComponent(value).replace(/['()*]/g, char => EXTRA_ESCAPES[char]);
+  return encodeUtf8(value);
+}
+function encodeUtf8(value) {
+  const encoded = encodeURIComponent(value);
+  return "UTF-8''" + (/['()*]/.test(encoded) ? encoded.replace(/['()*]/g, char => EXTRA_ESCAPES[char]) : encoded);
 }
 function decodeExtended(value) {
   string(value);
@@ -216,9 +250,20 @@ function unescapeQuoted(header, start, end) {
   }
   return result + header.slice(start, end);
 }
-function quote(value) { return '"' + value.replace(/[\\"]/g, '\\$&') + '"'; }
+function quote(value) { return '"' + (/[\\"]/.test(value) ? value.replace(/[\\"]/g, '\\$&') : value) + '"'; }
 function parameter(value) { return TOKEN.test(value) ? value : quote(value); }
-function encodeMultipart(char) { return char === '\n' ? '%0A' : char === '\r' ? '%0D' : '%22'; }
+function escapeMultipart(value) {
+  let start = 0;
+  let result = '';
+  for (let index = 0; index < value.length; index++) {
+    const code = value.charCodeAt(index);
+    if (code === 10 || code === 13 || code === 34) {
+      result += value.slice(start, index) + (code === 10 ? '%0A' : code === 13 ? '%0D' : '%22');
+      start = index + 1;
+    }
+  }
+  return start === 0 ? value : result + value.slice(start);
+}
 function unescapeMultipart(value) {
   let start = 0;
   let result = '';
