@@ -35,6 +35,8 @@ that these replacements have already improved application performance.
 | [viconv-lite](packages/viconv-lite) | iconv-lite 0.7.3 | Complete encoding tables, corrected multibyte/UTF-7 chunk boundaries, safer option and stream lifecycles, and removal of safer-buffer. |
 | [vraw-body](packages/vraw-body) | raw-body 3.0.2 | Premature-close settlement, strict byte counts, earlier length rejection, controlled chunk/decoder errors, and an entirely VPM dependency tree. |
 | [vqs](packages/vqs) | qs 6.17.0 | Zero runtime dependencies, native percent encoding, validated numeric limits, no parameter-limit wraparound, and wide-array serialization without variadic calls. |
+| [vcookie-signature](packages/vcookie-signature) | cookie-signature 1.2.2 | Compatible HMAC signatures, fixed-size timing-safe verification buffers, early malformed-input rejection, and self-contained key types. |
+| [vvary](packages/vvary) | vary 1.1.2 | Correct tab handling, validated old/new fields, single-read arrays, fewer duplicate writes, and scalable list merging. |
 | [vcookie](packages/vcookie) | cookie 0.7.2 / 2.0.1 | Isolated cookie maps, single-read attributes, genuine Date serialization, safe integer ages, and modern APIs alongside Express compatibility. |
 | [vcontent-disposition](packages/vcontent-disposition) | content-disposition 2.0.1 / 3.0.0 | Isolated parameter maps, strict input contracts, case-insensitive duplicate checks, and faster filename creation and long quoted parsing. |
 | [vbody-parser](packages/vbody-parser) | body-parser 2.4.0 | Compressed-request abort handling, safe form bounds, validated option snapshots, nonmutating callback errors, and an entirely VPM dependency tree. |
@@ -135,7 +137,7 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 153
+the Functions Framework, also serves a direct Express parser app, and runs 159
 HTTP checks: request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
 weights, empty headers, parameter specificity, and `res.format()` including 406
@@ -155,7 +157,8 @@ redirect encoding and escaping, `sendFile` and `serve-static` with ranges,
 HEAD, mounted-root redirects, static redirect/405 framing, download and empty-file
 callbacks, Unicode/quoted/percent/control-character download and attachment filenames,
 plain/Unicode/JSON/signed cookies, expiration and clearing, custom encoding,
-duplicate request cookies and rejected header injection,
+duplicate request cookies and rejected header injection, signed-cookie verification
+and tampering, tab-separated Vary fields, wildcard collapse and invalid Vary rejection,
 extension fallback, dotfile policy,
 strong preconditions, directory redirects, cache ages from duration strings,
 thrown HTTP errors with headers, conflicting framing headers, an error after an accepted
@@ -1018,13 +1021,113 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vcookie-signature
+
+**Consumer and baseline:** Express 5.3.0 uses `cookie-signature` 1.2.2 to sign
+cookies before `vcookie` serializes their attributes. `vcookie-signature` keeps
+its `sign(value, secret)` / `unsign(input, secret)` contract, HMAC-SHA256 algorithm,
+standard unpadded base64 format, and string-or-false verification result.
+Both versions have zero external runtime dependencies.
+
+**Verified changes:** verification compares only the 43-byte encoded signature
+using native `timingSafeEqual`, avoiding upstream's two comparison buffers that
+include the entire payload. Public format failures reject before payload hashing;
+invalid key configuration still throws. Exact encoded bytes preserve rejection
+of padding, base64 aliases, nonzero padding bits and Unicode truncation attempts.
+Signing slices the known padding character instead of using a regex. Genuine
+CryptoKeys pass through `KeyObject.from`; host restrictions/deprecations on
+non-extractable conversion still apply. Exports are frozen and structural key
+types compile without Node/DOM declarations. Upstream already compares safely;
+this is an allocation/efficiency improvement, not stronger cryptography.
+
+**Evidence:** 12 focused tests include an RFC 4231 known-answer vector, 1,000
+generated values, cross-verification with unmodified upstream, signature/payload
+tampering, malformed input, native keys and offsets, CJS/ESM, and instrumentation
+confirming 43-byte comparison buffers for both matches and mismatches. Real
+Express signed-cookie bytes are checked against an unaliased fixture, and HTTP
+verification rejects tampering and padding.
+
+**Measurements:** macOS arm64, Node 24.22.1 / Bun 1.4.0, 2026-10-27, nine
+alternating-order samples. Median nanoseconds per call:
+
+| Case | Node upstream → VPM | Bun upstream → VPM |
+| --- | ---: | ---: |
+| Sign short, string key | 1,532 → 1,479 | 827 → 779 |
+| Verify short, string key | 1,779 → 1,664 | 1,123 → 1,005 |
+| Verify Unicode | 1,994 → 1,762 | 1,143 → 1,106 |
+| Verify 4 KiB | 6,092 → 3,534 | 5,110 → 3,314 |
+| Verify 64 KiB stress case | 93,251 → 31,682 | 58,539 → 35,487 |
+
+Short verification takes about **6% / 11% less time**, and 4 KiB verification
+**42% / 35% less**. Node KeyObject signing is effectively tied. Large malformed
+inputs benefit from skipping payload work; 64 KiB cases are stress inputs, not
+representative browser cookies. No application throughput gain is established.
+
+[API, limitations and all cases](packages/vcookie-signature/README.md),
+[Node samples](packages/vcookie-signature/bench/node24.json),
+[Bun samples](packages/vcookie-signature/bench/bun14.json),
+[provenance](packages/vcookie-signature/PROVENANCE.json).
+
+## vvary
+
+**Consumers and baseline:** Express's `res.vary()` and content negotiation, plus
+CORS's origin/request-header handling, use `vary` 1.1.2. `vvary` preserves the
+callable response wrapper and `append(header, field)` helper, with no runtime
+dependencies in either version.
+
+**Verified improvements:** spaces and tabs are recognized consistently in both
+new and existing lists; upstream rejects or duplicates tab-separated names and
+misses tab-surrounded wildcards. Old and new names are validated before any
+response write, even with a wildcard. Field/header-array elements and response
+methods are captured once. Numbers, arbitrary coercible objects, sparse arrays
+and malformed existing headers are rejected. Empty list members are ignored
+around actual string-list names; an empty field string still throws. Existing
+casing/formatting is preserved, new fields deduplicate case-insensitively and
+wildcards collapse to `*`. No-op additions skip `setHeader`. Large merges use
+a Set, while small lists avoid its allocation.
+
+**Evidence:** 16 focused tests include 2,000 generated merges, all byte values,
+tabs/wildcards, malformed names, getter substitution, response/header arrays,
+no-op writes, large lists and CJS/ESM. Real Express and CORS callers pass through
+VPM in the shared gate, including added tab/wildcard/error responses.
+
+**Measurements:** same environment and nine-sample method as above. Median
+nanoseconds per call:
+
+| Case | Node upstream → VPM | Bun upstream → VPM |
+| --- | ---: | ---: |
+| Append first field | 106 → 28 | 115 → 33 |
+| Append second field | 136 → 78 | 136 → 74 |
+| Duplicate single field | 123 → 64 | 120 → 56 |
+| Append to three fields | 224 → 255 | 186 → 325 |
+| Merge 500 fields | 273,512 → 59,784 | 560,024 → 53,306 |
+| Response array header | 219 → 273 | 196 → 278 |
+
+Common single-field calls take roughly **43–73% less time on Node and 45–71%
+less on Bun**. Several ordinary multi-field cases remain slower with complete
+validation, up to **25% / 75%**, and the 50-field merge is about 10% slower on
+Node. Large-list wins are stress results. Response benchmarks use lightweight
+response-shaped objects; no HTTP throughput improvement is claimed.
+
+[Full behavior, tradeoffs and all cases](packages/vvary/README.md),
+[Node samples](packages/vvary/bench/node24.json),
+[Bun samples](packages/vvary/bench/bun14.json),
+[provenance](packages/vvary/PROVENANCE.json).
+
+**Shared verification for these additions:** 159 HTTP checks pass on Node 24 and
+Bun, with npm/Bun archive installations, Node/Bun CJS/ESM consumers and strict
+TypeScript 7 checks. The full suite passes **505 tests on Node 24**, with **504
+passing and one existing skip on Bun**. All **31 runtime packages** have
+self-contained declarations.
+
 ## vcookie
 
 **Consumer and baselines:** Express 5.3.0 calls `cookie` 0.7.2's `serialize` for
 `res.cookie()` and `res.clearCookie()`. `vcookie` preserves that wire format and
 also implements the four modern APIs from `cookie` 2.0.1: `parseCookie`,
 `stringifyCookie`, `parseSetCookie`, and `stringifySetCookie`. Both upstream and
-VPM have zero runtime dependencies. Cookie signing remains a separate package.
+VPM have zero runtime dependencies. Cookie signing uses the separate
+[`vcookie-signature`](packages/vcookie-signature) replacement in the shared gate.
 
 **Verified improvements:** fresh null-prototype request maps retain names such
 as `__proto__` and avoid the mutable shared prototype used by current upstream.
@@ -1046,11 +1149,12 @@ finite fractions are floored. The package README lists the complete differences.
 
 **Evidence:** 22 focused tests include 1,500 generated headers, all byte values,
 Unicode, malformed inputs, prototype isolation, getter substitution, Date
-spoofing and CJS/ESM imports. The shared gate runs **153 HTTP checks** on Node 24
+spoofing and CJS/ESM imports. At this package’s introduction the shared gate ran
+**153 HTTP checks** on Node 24
 and Bun, including real Express plain/Unicode/JSON/signed cookies, custom
 encoding, attributes, age conversion, clearing and invalid-cookie responses.
 Installed npm/Bun archives pass Node/Bun imports and strict TypeScript 7 without
-platform ambient types. All **29 runtime packages** have self-contained types.
+platform ambient types. At that point all **29 runtime packages** had self-contained types.
 
 **Measurements:** macOS arm64, Node 24.22.1 / Bun 1.4.0, nine alternating-order
 samples per case on 2026-10-27. Median nanoseconds per call:
@@ -1386,7 +1490,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 29 runtime packages'
+would compare VPM against itself. All 31 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

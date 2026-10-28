@@ -29,6 +29,8 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'cookie-signature': { pkg: 'vcookie-signature', versions: /^1\.2\.2$/ },
+  vary: { pkg: 'vvary', versions: /^1\.1\.2$/ },
   cookie: { pkg: 'vcookie', versions: /^0\.7\.2$/ },
   'content-disposition': { pkg: 'vcontent-disposition', versions: /^2\.0\.1$/ },
   'body-parser': { pkg: 'vbody-parser', versions: /^2\.4\.0$/ },
@@ -214,6 +216,15 @@ functions.http('api', api);
 // Express applications are also deployed as onRequest handlers.
 const app = express();
 const httpCookie = from('cookie');
+const cookieSignature = from('cookie-signature');
+app.get('/signed-cookie-check', (req, res) => {
+  const value = httpCookie.parse(req.headers.cookie || '').sid || '';
+  res.json({ value: cookieSignature.unsign(value, 'integration-only-cookie-secret') });
+});
+app.get('/vary-fields', (_req, res) => res.set('Vary', ['Accept-Encoding', 'Origin']).vary('accept-encoding,\tCookie').vary(['ORIGIN', 'X-Variant']).send('varied'));
+app.get('/vary-wildcard', (_req, res) => res.set('Vary', 'Accept, \t*').vary('Origin').send('varied'));
+app.get('/vary-invalid', (_req, res) => res.vary(['Origin', 'Bad Header']).send('invalid'));
+
 app.get('/cookies', (req, res) => {
   req.secret = 'integration-only-cookie-secret';
   res.cookie('plain', 'value').cookie('unicode', '雪')
@@ -601,7 +612,7 @@ async function run() {
     assert.equal(cookieResponse.status, 200);
     assert.deepEqual(JSON.parse(cookieResponse.body), JSON.parse('{"__proto__":"ordinary","sid":"first","unicode":"雪"}'));
     const cookieHeaders = cookieResponse.headers['set-cookie'];
-    const signature = from('cookie-signature').sign('value', 'integration-only-cookie-secret');
+    const signature = require('../packages/vcookie-signature/test/fixtures/cookie-signature-1.2.2.cjs').sign('value', 'integration-only-cookie-secret');
     assert.deepEqual(cookieHeaders.slice(0, 6), [
       'plain=value; Path=/', 'unicode=%E9%9B%AA; Path=/', 'object=j%3A%7B%22ok%22%3Atrue%7D; Path=/',
       'signed=' + encodeURIComponent('s:' + signature) + '; Path=/',
@@ -614,6 +625,19 @@ async function run() {
     assert.equal(cookieHeaders[7], 'gone=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
     const invalidCookie = await request(appServer, '/cookie-invalid');
     assert.equal(invalidCookie.status, 500); assert.equal(invalidCookie.headers['set-cookie'], undefined);
+
+    const signedValue = httpCookie.parse(cookieHeaders[3]).signed.slice(2);
+    const verified = await request(appServer, '/signed-cookie-check', { headers: { cookie: 'sid=' + encodeURIComponent(signedValue) } });
+    assert.deepEqual(JSON.parse(verified.body), { value: 'value' });
+    for (const value of [signedValue + '=', 'tampered' + signedValue.slice(5)]) {
+      const rejected = await request(appServer, '/signed-cookie-check', { headers: { cookie: 'sid=' + encodeURIComponent(value) } });
+      assert.deepEqual(JSON.parse(rejected.body), { value: false });
+    }
+    const varied = await request(appServer, '/vary-fields');
+    assert.equal(varied.status, 200); assert.equal(varied.headers.vary, 'Accept-Encoding, Origin, Cookie, X-Variant');
+    assert.equal((await request(appServer, '/vary-wildcard')).headers.vary, '*');
+    const invalidVary = await request(appServer, '/vary-invalid');
+    assert.equal(invalidVary.status, 500); assert.equal(invalidVary.headers.vary, undefined);
 
     // The Express application: static files via serve-static, body limits, error headers, late errors.
     const page = await request(appServer, '/static/page.html');

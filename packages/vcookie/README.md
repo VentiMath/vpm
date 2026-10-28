@@ -116,12 +116,13 @@ isolation, getter substitution, genuine/cross-realm Dates, secret-free errors,
 large headers, age overflow, and CJS/ESM imports.
 
 The shared integration gate aliases `cookie` 0.7.2 to `vcookie` and runs
-**153 HTTP checks** through Express 5.3.0, Functions Framework 5.0.2 and
+**159 HTTP checks** through Express 5.3.0, Functions Framework 5.0.2 and
 Firebase Functions 7.4.0 on Node 24.22.1 and Bun 1.4.0. Cookie checks include
 plain, Unicode, JSON, signed and custom-encoded values, all attributes,
 Express's millisecond-to-second age conversion, clearing cookies, duplicate
 request values, and invalid serialization producing no Set-Cookie field.
-Cookie signing still uses the existing `cookie-signature` package.
+Cookie signing now uses the separate [`vcookie-signature`](../vcookie-signature)
+replacement in the shared gate; it is not a dependency of `vcookie`.
 
 Packed-archive checks install with both npm and Bun and exercise Node/Bun CJS
 and ESM consumers plus strict TypeScript 7.0.2 without Node, Undici or DOM ambient

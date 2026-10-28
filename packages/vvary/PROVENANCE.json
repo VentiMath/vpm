@@ -1,0 +1,15 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-27",
+  "sources": [
+    {
+      "package": "vary",
+      "version": "1.1.2",
+      "gitHead": "4067e646233fbc8ec9e7a9cd78d6f063c6fdc17e",
+      "tarball": "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz",
+      "integrity": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==",
+      "fixture": "test/fixtures/vary-1.1.2.cjs",
+      "sha256": "8e40311960636d40473c57e335bbca115036766bf150df296b941256432ab410"
+    }
+  ]
+}

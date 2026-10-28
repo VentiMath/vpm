@@ -1,0 +1,15 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-27",
+  "sources": [
+    {
+      "package": "cookie-signature",
+      "version": "1.2.2",
+      "gitHead": "b7bd4cb9500bfa5e696143f51d61e5f24f7a625d",
+      "tarball": "https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.2.2.tgz",
+      "integrity": "sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg==",
+      "fixture": "test/fixtures/cookie-signature-1.2.2.cjs",
+      "sha256": "6e749929d9d289d7ee635eeff67cbdf6f11c2859bc867f576b164a1fe54e6cb4"
+    }
+  ]
+}
