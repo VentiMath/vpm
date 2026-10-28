@@ -16,7 +16,8 @@ const os = require('node:os');
 const path = require('node:path');
 const { PassThrough } = require('node:stream');
 const { gzipSync } = require('node:zlib');
-const { createRequire } = require('node:module');
+const { createRequire, Module } = require('node:module');
+const { pathToFileURL } = require('node:url');
 
 process.env.GCLOUD_PROJECT ||= 'vpm-integration';
 process.env.DEBUG = 'express:*,router:*,send,body-parser:*,finalhandler';
@@ -29,6 +30,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'read-package-up': { pkg: 'vread-package-up', versions: /^11\.0\.0$/, esm: true },
   minimist: { pkg: 'vminimist', versions: /^1\.2\.8$/ },
   cors: { pkg: 'vcors', versions: /^2\.8\.[56]$/ },
   express: { pkg: 'vexpress', versions: /^5\.3\.0$/ },
@@ -146,6 +148,11 @@ while (queue.length) {
       continue;
     }
     const entry = from.resolve(name);
+    // Dynamic ESM imports are redirected at the framework loader boundary below.
+    if (targets[name].esm) {
+      aliased.set(label, path.relative(modules, path.dirname(entry)));
+      continue;
+    }
     if (!require.cache[entry]?.vpmAlias) {
       require(entry);
       require.cache[entry].exports = replacements[name];
@@ -186,6 +193,36 @@ const { parseOptions } = require(path.join(path.dirname(from.resolve('@google-cl
 const { onRequest } = from('firebase-functions/v2/https');
 
 const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-integration-'));
+// The original framework imports read-package-up dynamically. Compile an isolated
+// copy with only that specifier redirected; preserve the installed ESM baseline
+// for differential checks and leave the rest of the loader unchanged.
+const readerBridge = path.join(directory, 'reader-bridge.cjs');
+fs.writeFileSync(readerBridge, `const reader = require(${JSON.stringify(path.resolve(__dirname, '../packages/vread-package-up'))});
+exports.readPackageUp = options => reader.readPackageUp(options);
+`);
+const frameworkLoaderPath = path.join(path.dirname(from.resolve('@google-cloud/functions-framework')), 'loader.js');
+const frameworkLoaderSource = fs.readFileSync(frameworkLoaderPath, 'utf8');
+const readerImport = "dynamicImport('read-package-up')";
+assert.equal(frameworkLoaderSource.split(readerImport).length, 2, 'framework reader import changed');
+const adaptedLoader = new Module(frameworkLoaderPath, module);
+adaptedLoader.filename = frameworkLoaderPath;
+adaptedLoader.paths = Module._nodeModulePaths(path.dirname(frameworkLoaderPath));
+adaptedLoader._compile(frameworkLoaderSource.replace(readerImport, `dynamicImport(${JSON.stringify(pathToFileURL(readerBridge).href)})`), frameworkLoaderPath);
+const { getUserFunction } = adaptedLoader.exports;
+const readerLoaderFixtures = [];
+for (const [id, type] of [['cjs', 'commonjs'], ['esm', 'module'], ['nested', 'commonjs']]) {
+  const project = path.join(directory, 'loader-' + id);
+  fs.mkdirSync(project);
+  if (id === 'nested') fs.writeFileSync(path.join(project, 'package.json'), '{"type":"module"}');
+  const location = id === 'nested' ? path.join(project, 'child') : project;
+  fs.mkdirSync(location, { recursive: true });
+  fs.writeFileSync(path.join(location, 'package.json'), JSON.stringify({type, main:'function.js', custom:'preserve'}));
+  fs.writeFileSync(path.join(location, 'function.js'), type === 'module'
+    ? `export function vpmLoaded(req, res) { res.end(${JSON.stringify(id)}); }`
+    : `exports.vpmLoaded = function(req, res) { res.end(${JSON.stringify(id)}); };`);
+  readerLoaderFixtures.push({id, location});
+}
+
 const content = '0123456789abcdefghij';
 fs.writeFileSync(path.join(directory, 'data.txt'), content);
 fs.writeFileSync(path.join(directory, 'page.html'), '<p>page</p>');
@@ -557,6 +594,21 @@ function request(server, route, { headers = {}, method = 'GET', body, chunks } =
 }
 
 async function run() {
+  const readerParityChecks = await require('../packages/vread-package-up/test/comparison.cjs').compare(directory, modules);
+  const loadedServers = [];
+  try {
+    for (const {id, location} of readerLoaderFixtures) {
+      const loaded = await getUserFunction(location, 'vpmLoaded', 'http');
+      assert.ok(loaded, id + ' module must load through the framework');
+      assert.equal(loaded.signatureType, 'http');
+      functions.http('manifest-' + id, loaded.userFunction);
+      const server = await listen(getTestServer('manifest-' + id));
+      loadedServers.push(server);
+      assert.equal((await request(server, '/')).body, id);
+    }
+  } finally {
+    for (const server of loadedServers) { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }
+  }
   const apiServer = await listen(getTestServer('api'));
   const appServer = await listen(getTestServer('app'));
   const parserServer = await listen(http.createServer(parserApp));
@@ -1063,6 +1115,7 @@ async function run() {
   const installed = name => require(path.join(modules, name, 'package.json')).version;
   console.log(`${runtime}: ${checks} HTTP checks passed through functions-framework ${installed('@google-cloud/functions-framework')}, firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
   console.log('6 Functions Framework startup-option checks passed.');
+  console.log(`${readerParityChecks} raw package-reader comparisons and 3 framework CJS/ESM loading cases passed.`);
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
   console.log('Aliased: ' + [...aliased.keys()].map(label => `${label} ×${calls[label.replace(/@[^@]+$/, '')]}`).join(', '));
   console.log('Not covered by VPM: ' + ([...uncovered].map(([label, via]) => `${label} (via ${[...via].join(', ')})`).join('; ') || 'none'));

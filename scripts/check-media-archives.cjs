@@ -29,7 +29,7 @@ try {
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json',
         ...['application', 'express', 'request', 'response', 'utils', 'view', 'handlers'].map(file => 'lib/' + file + '.js')].sort());
     }
-    if (['vminimist', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
+    if (['vread-package-up', 'vminimist', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
@@ -91,6 +91,9 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const manifestReader = require('vread-package-up');
+const manifestResult = manifestReader.readPackageUpSync({cwd:__dirname,stopAt:__dirname});
+require('node:assert/strict').equal(manifestResult.path, require('node:path').join(__dirname,'package.json'));
 const parseArguments = require('vminimist');
 require('node:assert/strict').deepEqual(parseArguments(['--v=false'], {alias:{verbose:'v'},boolean:'verbose'}), {_:[],verbose:false,v:false});
 const cors = require('vcors');
@@ -200,6 +203,9 @@ assert.equal(new Negotiator(request).mediaType(['text/html', 'application/json']
 assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import { readPackageUp } from 'vread-package-up';
+const manifestResult = await readPackageUp({cwd:new URL('.',import.meta.url),stopAt:new URL('.',import.meta.url)});
+if (!manifestResult || typeof manifestResult.packageJson !== 'object') throw new Error('manifest ESM consumer failed');
 import parseArguments from 'vminimist';
 if (parseArguments(['--port=08080'], {string:'port'}).port !== '08080') throw new Error('argument parser ESM import failed');
 import cors from 'vcors';
@@ -299,6 +305,14 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import {readPackageUp, readPackageUpSync, PackageJsonError, type PackageJson} from 'vread-package-up';
+const manifestResult = readPackageUpSync({cwd:'.',stopAt:'.',normalize:false});
+if (manifestResult) { const manifest: PackageJson = manifestResult.packageJson; const rawName: unknown = manifest.name; }
+void readPackageUp({cwd:'.'});
+// @ts-expect-error metadata normalization is unsupported
+readPackageUp({normalize:true});
+// @ts-expect-error package fields are unvalidated JSON values
+const manifestName: string = manifestResult!.packageJson.name;
 import parseArguments, { type Options as ArgumentOptions } from 'vminimist';
 const argumentOptions: ArgumentOptions = {string:['port'] as const,alias:{port:['p'] as const}};
 const argumentsResult = parseArguments(['--port=8080'] as const, argumentOptions);
