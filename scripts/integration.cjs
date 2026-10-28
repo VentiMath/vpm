@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  depd: { pkg: 'vdepd', versions: /^2\.0\.0$/ },
   'path-to-regexp': { pkg: 'vpath-to-regexp', versions: /^8\.4\.2$/ },
   'proxy-addr': { pkg: 'vproxy-addr', versions: /^2\.0\.8$/ },
   'ipaddr.js': { pkg: 'vipaddr', versions: /^1\.9\.1$/ },
@@ -221,6 +222,21 @@ functions.http('api', api);
 
 // Express applications are also deployed as onRequest handlers.
 const app = express();
+// Exercise deprecation warnings through actual Express and router callers.
+const deprecations = [];
+const recordDeprecation = error => deprecations.push(error);
+process.on('deprecation', recordDeprecation);
+const deprecatedApp = express.Router();
+deprecatedApp.get('/redirect', (_req, res) => res.redirect(123));
+deprecatedApp.get('/missing-url', (_req, res) => res.redirect());
+deprecatedApp.get('/status', (_req, res) => res.redirect('302', '/landing'));
+deprecatedApp.get('/handler', () => ({ then(_resolve, reject) { reject(new Error('thenable handler')); } }));
+deprecatedApp.param('value', () => ({ then(_resolve, reject) { reject(new Error('thenable parameter')); } }));
+deprecatedApp.get('/parameter/:value', (_req, res) => res.send('unexpected'));
+deprecatedApp.get('/error-handler', (_req, _res, next) => next(new Error('first')));
+deprecatedApp.use('/error-handler', (_error, _req, _res, _next) => ({ then(_resolve, reject) { reject(new Error('thenable error handler')); } }));
+deprecatedApp.use((error, _req, res, _next) => res.status(500).send(error.message));
+app.use('/deprecation-check', deprecatedApp);
 // Match real Express 5 routes through router's path-to-regexp interface.
 const routeApp = express();
 routeApp.get('/users/:id', (req, res) => res.json({ params: req.params }));
@@ -487,6 +503,23 @@ async function run() {
   try {
     await expressStartup();
     await abortedRequest();
+    const redirected = await request(appServer, '/deprecation-check/redirect');
+    assert.equal(redirected.status, 302); assert.equal(redirected.headers.location, '123');
+    const warningCount = deprecations.length;
+    assert.ok(warningCount > 0);
+    assert.equal((await request(appServer, '/deprecation-check/redirect')).status, 302);
+    assert.equal(deprecations.length, warningCount, 'repeat request should not repeat a call-site warning');
+    assert.equal((await request(appServer, '/deprecation-check/missing-url')).status, 302);
+    assert.equal((await request(appServer, '/deprecation-check/status')).status, 500);
+    for (const [route, body] of [['handler', 'thenable handler'], ['parameter/a', 'thenable parameter'], ['error-handler', 'thenable error handler']]) {
+      const response = await request(appServer, '/deprecation-check/' + route);
+      assert.equal(response.status, 500); assert.equal(response.body, body);
+    }
+    for (const [namespace, message] of [
+      ['express', 'Url must be a string'], ['express', 'Provide a url argument'], ['express', 'Status must be a number'],
+      ['router', 'handlers that are Promise-like are deprecated, use a native Promise instead'],
+      ['router', 'parameters that are Promise-like are deprecated, use a native Promise instead'],
+    ]) assert.ok(deprecations.some(error => error instanceof Error && error.name === 'DeprecationError' && error.namespace === namespace && error.message === message), message);
     for (const [path, expected] of [
       ['/users/alice', { id: 'alice' }], ['/USERS/alice/', { id: 'alice' }],
       ['/users/caf%C3%A9', { id: 'café' }], ['/users/a%2Fb', { id: 'a/b' }],
@@ -890,6 +923,7 @@ async function run() {
       assert.ok(count > 0, `${name} was aliased but never reached`);
     }
   } finally {
+    process.removeListener('deprecation', recordDeprecation);
     process.stderr.write = writeStderr;
     console.error = consoleError;
     for (const server of [apiServer, appServer, parserServer]) { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }

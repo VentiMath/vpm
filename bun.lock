@@ -59,6 +59,10 @@
         "vms": "workspace:*",
       },
     },
+    "packages/vdepd": {
+      "name": "vdepd",
+      "version": "0.1.0",
+    },
     "packages/vee-first": {
       "name": "vee-first",
       "version": "0.1.0",
@@ -301,6 +305,8 @@
     "vcookie-signature": ["vcookie-signature@workspace:packages/vcookie-signature"],
 
     "vdebug": ["vdebug@workspace:packages/vdebug"],
+
+    "vdepd": ["vdepd@workspace:packages/vdepd"],
 
     "vee-first": ["vee-first@workspace:packages/vee-first"],
 

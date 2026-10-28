@@ -1,0 +1,34 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "source": {
+    "package": "depd",
+    "version": "2.0.0",
+    "gitHead": "6d59c85d093092e65ec77033576417d743079fa0",
+    "tarball": "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz",
+    "integrity": "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw=="
+  },
+  "fixtures": [
+    {
+      "file": "test/fixtures/depd-2.0.0.cjs",
+      "upstreamPath": "index.js",
+      "sha256": "4d587a5662e20a7bb9bfe6555afe5987e1b80303a819b447394f37a93297ee91"
+    },
+    {
+      "file": "test/fixtures/depd-browser-2.0.0.cjs",
+      "upstreamPath": "lib/browser/index.js",
+      "sha256": "10b4d4a4e9d14e9e6a5ab7ced64405ef90e6bec94d479a8e223cbba88828ad79"
+    },
+    {
+      "file": "test/fixtures/upstream.test.js.txt",
+      "upstreamPath": "test/test.js",
+      "sha256": "982eb8c907d7abf12b8aac8c97b31513e450ba9f77aa2168d6cd81291f1704bf"
+    },
+    {
+      "file": "test/fixtures/upstream.browserify.js.txt",
+      "upstreamPath": "test/browserify.js",
+      "sha256": "01b315a97698e5bc1ad7bab39f48ef65c20203cd025e60d3637847ceb9ea6b64"
+    }
+  ],
+  "tests": "Upstream suites retained for contract reference, not run verbatim. Focused tests cover public behavior, parity, and intentional differences; no claim of full upstream-suite equivalence."
+}

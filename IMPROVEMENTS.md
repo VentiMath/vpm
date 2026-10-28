@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vdepd](packages/vdepd) | depd 2.0.0 | Private warning state, transparent function/constructor wrappers, correct inherited property writes, and safer stack capture. |
 | [vpath-to-regexp](packages/vpath-to-regexp) | path-to-regexp 8.4.2 | Span-based parsing, isolated compiled tokens, lossless parameter names, less decoding allocation, and validated route configuration. |
 | [vproxy-addr](packages/vproxy-addr) | proxy-addr 2.0.8 | Single-pass candidate parsing, private numeric trust rules, direct mapped-address matching, complete zero prefixes, and strict configuration snapshots. |
 | [vipaddr](packages/vipaddr) | ipaddr.js 1.9.1 / 2.5.0 | Single-pass parsing, bounded integer CIDR matching, isolated address state, direct mapped conversion, and preservation of IPv4-compatible IPv6 bits. |
@@ -144,8 +145,9 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 210
-HTTP checks: route parameters, wildcards, optional groups, encoded and malformed URI
+the Functions Framework, also serves a direct Express parser app, and runs 217
+HTTP checks: Express redirect and router thenable deprecations with repeat-warning
+suppression; route parameters, wildcards, optional groups, encoded and malformed URI
 segments, array routes, mount boundaries, strict/case-sensitive routes, and
 proxy address chains and Express `req.ip`/`req.ips` under disabled,
 unrestricted, hop-count and subnet trust, including tab-separated proxies, mapped/native IPv6 boundaries and malformed addresses, and
@@ -1034,6 +1036,67 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vdepd
+
+**Caller and dependencies:** replaces `depd` 2.0.0 in Express 5.3.0 redirect
+warnings and router 2.2.0 thenable warnings. Both versions have zero runtime
+dependencies. `is-promise` remains upstream in the router fixture; its small
+thenable check will be handled when building `vrouter`.
+
+**Correctness and implementation:** warning policy and deduplication are private,
+with frozen, detachable public methods. Proxy wrappers remove generated code and
+retain function arity/name, statics, normal construction, classes, native
+constructors and subclasses. Data-property setters create an own property on a
+child instead of changing the prototype's shared value. Property installation
+uses one definition instead of a preliminary conversion followed by wrapping.
+Native Node call-site capture leaves global Error hooks untouched. Short Node
+captures expand when the caller or trace requires more frames. Bun and the older Node
+fallback restore descriptors in `finally` and retain compact frame data.
+
+**Compatibility:** namespace/message warnings, per-deprecation-and-caller
+suppression, environment/process policy snapshots, listener precedence, stderr
+and the browser no-op entry are preserved. Intentional differences include
+strict string namespaces, no mutable underscore internals, standard Error
+constructor identity, corrected prototype writes, and engine-dependent stack
+labels without receiver-type inference. Installed accessors throw for blocked
+receiver writes even through `Reflect.set`. Trace depth is capped at 200. Bun
+still requires mutable data properties for Error hooks and eagerly formats new
+Errors;
+Node 24's native path also works with an immutable throwing formatter. These are
+wrapper and diagnostic improvements, not an application security claim.
+
+**Verification:** 48 package tests on Node 24; 46 on Bun with two V8-specific
+skips. Thirty tests apply the same public contract to upstream and VPM. Tests
+also cover prototype/receiver writes, constructors, metadata, strict namespaces,
+private state, deep callers, throwing capture, hook restoration and browser
+behavior. Original upstream suites are retained as reference, not counted as run.
+The shared HTTP gate now runs **217 checks per runtime**, with seven new
+Express/router requests. npm/Bun archive installs verify eight-file contents,
+CJS/ESM, browser conditions/bundling, and TypeScript 7 without ambient platform
+types. The full suite passes **1,159 Node tests** and **1,156 Bun tests with three
+runtime-specific skips**. Declarations cover **38 runtime packages**; the
+central inventory and README gate cover **40 packages**.
+
+**Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and
+Bun 1.4.0, with twelve alternating-order samples per case and matching source
+hashes. Function-wrapper creation takes **39–40% less time on both runtimes**;
+property-wrapper creation takes **48% less on Node and 17–20% less on Bun**.
+Suppressed direct warnings take **24–25% less on Node** and are approximately
+unchanged on Bun. Already-warned direct calls improve **18–19% on Bun**, but take
+**1–7% more on Node**, up to 0.54 µs extra. First plain stderr output including
+factory creation improves **12–13% / 5–7%**.
+
+The constructor-preserving Proxy makes suppressed wrapped calls **10–14% slower
+on Node** (up to 7.4 ns extra) and **6.3–7.4× on Bun** (up to 99.2 ns extra).
+First event delivery including factory creation takes **10–12% more on Node**
+(up to 2.83 µs); Bun factory creation takes **9–10% more** (up to 0.35 µs).
+Already-warned wrapped function calls vary up to 4% slower on Node (0.35 µs).
+Express/router use direct warnings rather than wrappers; normal nondeprecated
+calls do not enter this warning path. These are diagnostic microbenchmarks,
+with stderr captured in memory, not HTTP throughput measurements.
+
+[API, compatibility and full benchmark evidence](packages/vdepd/README.md).
+
 ## vpath-to-regexp
 
 **Consumer and dependencies:** replaces `path-to-regexp` 8.4.2, used by router
@@ -1063,13 +1126,12 @@ limit is checked before flattening. No global cache or generated code is used.
 **Verification:** 363 package tests cover all 344 upstream data cases, error
 contracts, identical regex source/flags/capture ordering, all 65,536 UTF-16 code
 units in names and native-equivalent URL encoding, 4,000 generated route/input
-comparisons, input mutation, getter counts, custom codec contracts and adversarial paths. Twenty added HTTP checks
-bring the shared Express/Functions Framework gate to **210 checks per runtime**,
-including URI errors both before and inside the application. npm/Bun archive
+comparisons, input mutation, getter counts, custom codec contracts and adversarial paths. Twenty HTTP checks were added for this package,
+including URI errors both before and inside the application. The current shared
+gate runs **217 checks per runtime**. npm/Bun archive
 installs pass Node/Bun CJS/ESM and TypeScript 7 consumers, with seven-file contents
-and no platform ambient declarations. The full repository suite passes **1,111
-Node tests** and **1,110 Bun tests with one existing runtime-specific skip**.
-Public declarations pass for 37 runtime packages; documentation covers 39 packages.
+and no platform ambient declarations. Current shared test and declaration counts
+are recorded in the `vdepd` section above.
 
 **Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0,
 with twelve alternating-order samples per case. Ordinary one-/two-parameter
@@ -1117,10 +1179,10 @@ are preserved. Dependency-level parsing/header changes are documented separately
 boundaries and adjacent addresses, 7,140 generated BigInt comparisons, every
 short mapped prefix, 3,000 generated request/policy comparisons against both
 baseline callers, and 2,000 rule-order checks. Ten proxy-trust HTTP checks contribute to
-the shared Express/Functions Framework gate, now at 210 on Node 24 and Bun. npm/Bun
+the shared Express/Functions Framework gate, now at 217 on Node 24 and Bun. npm/Bun
 archives cover CJS/ESM imports, six-file contents, rewritten VPM dependency
 versions and TypeScript 7 consumers without ambient platform types. Current
-shared suite and declaration coverage is recorded in the vpath-to-regexp section.
+shared suite and declaration coverage is recorded in the vdepd section.
 
 **Performance, 2026-10-28:** three processes each on Node 24.22.1 and Bun 1.4.0 compare the
 original caller/dependencies, the original caller with VPM dependencies, and
@@ -1180,10 +1242,10 @@ substitutions against Node, all 162 valid subnet masks, 5,000 generated subnet
 operations checked with BigInt arithmetic, and 3,000 range classifications.
 Nine HTTP checks exercise the proxy-addr interface through Express, covering
 mapped/native/compatible IPv6, subnet boundaries and malformed proxy addresses.
-The shared gate runs 210 HTTP checks on each runtime. Archive checks cover the
+The shared gate runs 217 HTTP checks on each runtime. Archive checks cover the
 eight-file package, npm/Bun installs, Node/Bun CJS/ESM imports and TypeScript 7
 consumers without platform types. The latest shared coverage is recorded in the
-`vpath-to-regexp` section above.
+`vdepd` section above.
 
 **Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and Bun
 1.4.0 use twelve order-balanced samples per case against both verified releases.
@@ -1220,9 +1282,9 @@ include 10,000 generated inputs, long chains, whitespace, getter/proxy behavior,
 and source-integrity checks. Eleven added HTTP checks exercise the actual
 proxy-addr/Express path under disabled, unrestricted, hop-count and subnet trust,
 including IPv4-mapped IPv6, tab-separated proxies, untrusted-hop boundaries and
-repeated header lines. The current shared gate runs 210 HTTP checks on Node 24 and
+repeated header lines. The current shared gate runs 217 HTTP checks on Node 24 and
 Bun. npm/Bun archive installations pass CJS/ESM runtime and TypeScript 7 consumers
-without platform ambient declarations. The documentation gate covers 39 packages.
+without platform ambient declarations. The documentation gate covers 40 packages.
 
 **Performance, 2026-10-28:** three fresh processes on Node 24.22.1 and Bun 1.4.0,
 with twelve alternating-order samples per case, show one-/two-address parsing
@@ -1772,7 +1834,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 37 runtime packages'
+would compare VPM against itself. All 38 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,

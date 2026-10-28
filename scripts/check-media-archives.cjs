@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vpath-to-regexp', 'vproxy-addr', 'vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vdepd', 'vpath-to-regexp', 'vproxy-addr', 'vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const version = require(path.join(root, 'packages', name, 'package.json')).version;
     const archive = name + '-' + version + '.tgz';
@@ -26,6 +26,11 @@ try {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
+    }
+    if (name === 'vdepd') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'browser.js', 'validate.cjs', 'package.json'].sort());
     }
     if (name === 'vpath-to-regexp') {
       assert.equal(metadata.dependencies, undefined);
@@ -70,6 +75,14 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const depd = require('vdepd');
+process.env.NO_DEPRECATION = '*';
+const warn = depd('archive');
+class Base { constructor(value) { this.value = value; } }
+assert.equal(new (warn.function(Base))(3).value, 3);
+const owner = { value: 1 }; warn.property(owner, 'value');
+const child = Object.create(owner); child.value = 2; assert.equal(owner.value, 1); assert.equal(child.value, 2);
+assert.ok(Object.isFrozen(warn));
 const route = require('vpath-to-regexp');
 assert.equal(route.match('/users/:id')('/users/a%2Fb').params.id, 'a/b');
 assert.equal(route.compile('/files/*path')({path:['a','b']}), '/files/a/b');
@@ -149,6 +162,10 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import depd from 'vdepd';
+process.env.NO_DEPRECATION = '*';
+const warn = depd('archive');
+assert.equal(warn.function(x => x + 1)(2), 3);
 import route, { parse as parseRoute, match as matchRoute, compile as compileRoute, pathToRegexp, stringify as stringifyRoute, TokenData, PathError } from 'vpath-to-regexp';
 assert.equal(route.parse, parseRoute); assert.equal(route.match, matchRoute); assert.equal(route.compile, compileRoute);
 assert.equal(pathToRegexp('/x').regexp.test('/x'), true);
@@ -224,6 +241,17 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import depd from 'vdepd';
+const warn = depd('archive'); warn('message');
+class DeprecatedClass { constructor(readonly value: number) {} }
+const WrappedClass = warn.function(DeprecatedClass);
+const constructed: DeprecatedClass = new WrappedClass(2);
+const deprecatedCallback = warn.function((value: number) => String(value));
+const deprecatedResult: string = deprecatedCallback(3);
+warn.property({ x: 1 }, 'x');
+// @ts-expect-error callable or constructable required
+warn.function(1);
+void [constructed, deprecatedResult];
 import route, { match as matchRoute, compile as compileRoute, TokenData, type PathInput } from 'vpath-to-regexp';
 const routeData = new TokenData([{type:'param',name:'id'}] as const);
 const routeInputs: PathInput = ['/users/:id', [routeData]] as const;
@@ -397,6 +425,14 @@ accepts.types([1]);
 void [encoding, accepted, all];
 `;
   for (const extension of ['cts', 'mts']) fs.writeFileSync(path.join(directory, 'consumer.' + extension), source);
+  fs.writeFileSync(path.join(directory, 'browser-consumer.mjs'), `
+import depd from 'vdepd';
+const warn = depd('browser'), fn = value => value, object = { x: 1 };
+if (warn.function(fn) !== fn) throw Error('browser wrapper must return original');
+warn.property(object, 'x');
+if (Object.getOwnPropertyDescriptor(object, 'x').value !== 1) throw Error('browser property was changed');
+globalThis.browserChecked = true;
+`);
   fs.writeFileSync(path.join(directory, 'tsconfig.json'), JSON.stringify({ files: ['consumer.cts', 'consumer.mts'], compilerOptions: {
     strict: true, noEmit: true, target: 'ES2022', lib: ['ES2022'], types: [], skipLibCheck: false,
     module: 'NodeNext', moduleResolution: 'NodeNext',
@@ -412,6 +448,11 @@ void [encoding, accepted, all];
       ? ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--cache', path.join(directory, 'npm-cache')]
       : ['install', '--ignore-scripts']);
     for (const runtime of [process.execPath, 'bun']) for (const extension of ['cjs', 'mjs']) run(runtime, ['consumer.' + extension]);
+    run(process.execPath, ['--conditions=browser', 'browser-consumer.mjs']);
+    run('bun', ['build', 'browser-consumer.mjs', '--target=browser', '--format=iife', '--outfile=browser-bundle.js']);
+    const browserContext = {};
+    require('node:vm').runInNewContext(fs.readFileSync(path.join(directory, 'browser-bundle.js'), 'utf8'), browserContext);
+    assert.equal(browserContext.browserChecked, true);
     const tsc = compiler();
     const output = run(process.execPath, [tsc.path, '-p', 'tsconfig.json', '--listFiles', '--pretty', 'false']);
     assert.doesNotMatch(output, /\/packages\/|\/vnode-types\/|\/v?undici-types\/|lib\.dom/);
@@ -422,6 +463,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vdepd\/index\.d\.ts/);
     assert.match(output, /node_modules\/vpath-to-regexp\/index\.d\.ts/);
     assert.match(output, /node_modules\/vproxy-addr\/index\.d\.ts/);
     assert.match(output, /node_modules\/vipaddr\/index\.d\.ts/);

@@ -1,0 +1,36 @@
+{
+  "name": "vdepd",
+  "version": "0.1.0",
+  "description": "Deprecation warnings with private state and transparent wrappers",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "browser": "./browser.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json",
+    "browser.js",
+    "validate.cjs"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vdepd"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vdepd",
+  "browser": "browser.js"
+}
