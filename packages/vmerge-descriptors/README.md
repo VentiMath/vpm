@@ -29,8 +29,12 @@ Arrays, null-prototype objects and callable destinations work with normal native
 property-definition behavior. With `overwrite: false`, existing **own** keys are
 preserved; inherited keys do not prevent copying.
 
-- **Symbols included.** `Reflect.ownKeys` enumerates string and symbol keys in one
-  pass, including nonenumerable properties. Upstream silently omits symbols.
+- **Symbols included.** Both string and symbol keys are captured before copying,
+  including nonenumerable properties. Upstream silently omits symbols. Ordinary
+  Node objects use separate name/symbol enumeration; proxies retain one
+  `Reflect.ownKeys` call and its original order. Bun uses `Reflect.ownKeys`
+  throughout. Built-in `node:util.types.isProxy` distinguishes the proxy path;
+  this adds no external package dependency.
 - **Explicit contracts.** Primitives and nonboolean overwrite values throw a
   TypeError before copying, instead of being boxed, ignored or interpreted by
   truthiness. This intentionally tightens upstream's accepted inputs.
@@ -60,11 +64,12 @@ can require an explicit application type.
 
 ## Verification
 
-14 focused tests cover exact descriptor preservation, accessor non-execution,
+17 focused tests cover exact descriptor preservation, accessor non-execution,
 enumerable and nonenumerable symbols, overwrite modes, inherited keys,
 null-prototype objects and `__proto__`, functions, arrays, self-merges, invalid
 inputs, native failures and partial progress, disappearing keys, proxy trap order,
-CJS/ESM imports and 1,000 generated descriptor comparisons.
+interleaved proxy symbols, revoked proxies, symbol snapshots before destination
+traps, overlapping typed-array views, CJS/ESM imports and 1,000 generated descriptor comparisons.
 
 The shared gate passes **160 HTTP checks** on Node 24.22.1 and Bun 1.4.0 with VPM
 aliased into real Express/Functions Framework callers. Express application
@@ -83,36 +88,61 @@ node scripts/check-media-archives.cjs
 
 ## Benchmarks
 
-Recorded 2026-10-27 on macOS arm64, Node 24.22.1 and Bun 1.4.0, against the
-unmodified 2.0.0 fixture. Nine alternating-order samples, corpus/case warmup,
-equal-output checks and consumed results. Medians below are nanoseconds per
-operation, lower is better. Most cases use 50,000 operations per sample;
-100-property merges and 50-method function mixins use 5,000. Sources contain only
-string keys so both implementations perform the same requested merge. Symbol
-support is tested separately, not presented as a speed comparison with an
-implementation that omits those properties.
+Updated 2026-10-28 on macOS arm64, Node 24.22.1 and Bun 1.4.0. Three fresh
+processes per runtime compare unmodified upstream 2.0.0, the exact
+[previous VPM source](bench/vmerge-descriptors-7744a9e.cjs) from commit `7744a9e`,
+and current VPM. Each case has twelve samples rotating through all six
+implementation orders, corpus/case warmup, equal-output checks and consumed
+results. Most cases use 50,000 operations per sample; 100-property merges and
+50-method mixins use 5,000, mixed-symbol/proxy cases 10,000. Symbol cases compare
+only VPM versions because upstream omits those keys.
 
-Bun stays within roughly **6% of upstream** on nonempty cases. Node takes
-**10–26% more time** on ordinary nonempty copies, while the Express-like function
-mixin is essentially equal. Empty merges and skipping 20 existing fields are
-**2.9× and 3.5× upstream on Node**, adding about 36 ns and 647 ns respectively.
-Complete key enumeration and validation have a cost; no general speedup or
-application throughput improvement is claimed.
+Node's previous `Reflect.ownKeys` path paid for general enumeration even when
+copying ordinary string-only objects. `Object.getOwnPropertyNames` can use a
+faster path there. The new path also captures symbols before copying and keeps
+proxy enumeration unchanged. Both built-ins run before descriptor reads or
+writes. Bun retains its native combined enumeration, which already performed well.
+The copy loop stays sequential; batching descriptors could change behavior for
+overlapping typed-array views or source mutations caused by destination proxies.
 
-| Case | Node upstream → VPM | Bun upstream → VPM |
+Across all three Node runs, string data copies, replacement and the Express-like
+function mixin take **7–19% less time** than previous VPM. Skipping 20 existing
+fields takes **63–65% less**, and empty merges **13–19% less**. Compared with
+upstream, string data copies are now about **1–9% slower**, the function mixin
+**1–2% slower**, and skipping existing fields **17–18% slower**. Empty merges still
+cost about 2.4–2.6× upstream, an extra few dozen nanoseconds.
+
+There are measured tradeoffs: Node's accessor/nonenumerable case takes **5–7% more
+time than previous VPM** (about 43 ns in run 1); all-symbol copies take **4–11% more**
+and mixed string/symbol copies **2–8% more**. Splitting enumeration costs extra on
+these shapes; validation and complete symbol support remain in place. The proxy
+path stays within about 4% of previous VPM. Bun's nonempty cases stay within about
+2%; empty cases vary by a few nanoseconds. These are individual-operation
+measurements, not application throughput claims.
+
+First-run medians in nanoseconds per operation:
+
+| Case | Node previous → current | Bun previous → current |
 | --- | ---: | ---: |
-| merge 0 data properties | 18 → 54 | 23 → 20 |
-| merge 3 data properties | 477 → 601 | 300 → 317 |
-| merge 20 data properties | 3112 → 3672 | 1594 → 1602 |
-| merge 100 data properties | 25411 → 29460 | 7354 → 7265 |
-| merge accessors and hidden fields | 705 → 774 | 227 → 228 |
-| skip 20 existing fields | 263 → 909 | 51 → 49 |
-| replace 20 existing fields | 2762 → 3323 | 1300 → 1307 |
-| mix 50 methods into a function | 13101 → 13113 | 4269 → 4244 |
+| merge 0 data properties | 50 → 40 | 15 → 17 |
+| merge 3 data properties | 567 → 483 | 216 → 213 |
+| merge 20 data properties | 3510 → 3027 | 1481 → 1477 |
+| merge 100 data properties | 26490 → 23483 | 7349 → 7380 |
+| merge accessors and hidden fields | 639 → 682 | 230 → 232 |
+| skip 20 existing fields | 718 → 265 | 42 → 40 |
+| replace 20 existing fields | 3130 → 2642 | 1241 → 1252 |
+| mix 50 methods into a function | 12619 → 10912 | 4132 → 4179 |
+| merge 20 symbol properties | 3908 → 4316 | 1457 → 1476 |
+| merge 20 strings and 20 symbols | 9393 → 10182 | 3094 → 3083 |
+| merge 20 properties from a proxy | 5654 → 5833 | 1628 → 1624 |
 
-[Harness](bench/compare.cjs), [Node samples](bench/node24.json), and
-[Bun samples](bench/bun14.json) contain all samples, runtime versions, source and
-fixture hashes, counts and checksums. Reproduce sequentially:
+[Harness](bench/compare.cjs), [Node run 1](bench/node24.json),
+[run 2](bench/node24-repeat2.json), [run 3](bench/node24-repeat3.json),
+[Bun run 1](bench/bun14.json), [run 2](bench/bun14-repeat2.json) and
+[run 3](bench/bun14-repeat3.json) retain all samples, upstream/previous/current
+medians, versions, hashes, counts and checksums. Original release measurements
+remain in [commit 7744a9e](https://github.com/VentiMath/vpm/blob/7744a9ee18a03ea3720a940b660990eb9727c913/packages/vmerge-descriptors/README.md).
+Reproduce sequentially, using fresh processes for repeats:
 
 ```sh
 OUTPUT=/tmp/vmerge-node.json node packages/vmerge-descriptors/bench/compare.cjs

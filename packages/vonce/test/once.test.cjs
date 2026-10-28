@@ -112,6 +112,42 @@ test('callback apply decorations do not interfere with native invocation', () =>
   assert.equal(wrapped.apply, 'metadata'); assert.equal(wrapped(2, 3), 5);
 });
 
+test('proxy callbacks retain one key enumeration and descriptor trap order', () => {
+  const symbol = Symbol('decoration');
+  for (const strict of [false, true]) {
+    const calls = [];
+    const target = Object.assign(() => 1, { label: 'metadata', [symbol]: 2 });
+    Object.defineProperty(target, 'hidden', { value: 3 });
+    Object.defineProperty(target, 'called', { get() { throw new Error('reserved getter'); }, enumerable: true });
+    const callback = new Proxy(target, {
+      ownKeys() { calls.push('keys'); return [symbol, 'hidden', 'label', 'called', 'name', 'length']; },
+      getOwnPropertyDescriptor(target, key) { calls.push(key); return Reflect.getOwnPropertyDescriptor(target, key); },
+      get(target, key, receiver) { calls.push('get ' + String(key)); return Reflect.get(target, key, receiver); },
+    });
+    const wrapped = strict ? once.strict(callback) : once(callback);
+    assert.deepEqual(calls, [...(strict ? ['get name'] : []), 'keys', symbol, 'hidden', 'label']);
+    assert.equal(wrapped[symbol], 2); assert.equal(wrapped.label, 'metadata');
+    assert.equal(Object.hasOwn(wrapped, 'hidden'), false); assert.equal(wrapped(), 1);
+    const { proxy, revoke } = Proxy.revocable(() => 1, {});
+    revoke(); assert.throws(() => strict ? once.strict(proxy) : once(proxy), TypeError);
+  }
+});
+
+test('enumerable intrinsic decorations stay reserved and status getters retain their closure', () => {
+  const callback = () => 1;
+  for (const key of ['name', 'length', 'prototype']) {
+    Object.defineProperty(callback, key, { enumerable: true, configurable: true, get() { throw new Error('reserved ' + key); } });
+  }
+  const wrapped = once(callback);
+  const called = Object.getOwnPropertyDescriptor(wrapped, 'called').get;
+  const value = Object.getOwnPropertyDescriptor(wrapped, 'value').get;
+  assert.equal(called.call(null), false); assert.equal(value.call(null), undefined);
+  Object.freeze(wrapped); assert.equal(wrapped(), 1);
+  assert.equal(called.call({}), true); assert.equal(value.call({}), 1);
+  assert.equal(Object.create(wrapped).called, true);
+  assert.equal(Object.create(wrapped).value, 1);
+});
+
 test('Promise identity and rejection caching are preserved', async () => {
   let calls = 0;
   const fn = once(async () => { calls++; return 42; });

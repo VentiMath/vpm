@@ -111,6 +111,43 @@ test('proxy trap order and descriptor errors follow native property operations',
   const error = new Error('trap'); assert.throws(() => merge({}, new Proxy({}, { ownKeys() { throw error; } })), e => e === error);
 });
 
+test('proxy enumeration retains interleaved symbols and single-trap behavior', () => {
+  const symbol = Symbol('first');
+  const calls = [];
+  const source = new Proxy({ a: 1, b: 2, [symbol]: 3 }, {
+    ownKeys() { calls.push('keys'); return [symbol, 'b', 'a']; },
+    getOwnPropertyDescriptor(target, key) { calls.push(key); return Reflect.getOwnPropertyDescriptor(target, key); },
+  });
+  const result = merge({}, source);
+  assert.deepEqual(calls, ['keys', symbol, 'b', 'a']);
+  assert.equal(result[symbol], 3);
+  const { proxy, revoke } = Proxy.revocable({}, {});
+  revoke(); assert.throws(() => merge({}, proxy), TypeError);
+});
+
+test('ordinary string and symbol keys are snapshotted before destination traps', () => {
+  const gone = Symbol('gone'), retained = Symbol('retained'), added = Symbol('added');
+  const source = { 1: 'integer', first: 1, [gone]: 2, [retained]: 3 };
+  const copied = [];
+  const destination = new Proxy({}, { defineProperty(target, key, descriptor) {
+    copied.push(key);
+    if (key === '1') { delete source[gone]; source[added] = 4; source.late = 5; }
+    return Reflect.defineProperty(target, key, descriptor);
+  } });
+  merge(destination, source);
+  assert.deepEqual(copied, ['1', 'first', retained]);
+  assert.deepEqual(Reflect.ownKeys(destination), ['1', 'first', retained]);
+  assert.equal(destination[retained], 3);
+});
+
+test('overlapping typed arrays keep sequential descriptor reads', () => {
+  const bytes = new Uint8Array([1, 2, 3, 4]);
+  const source = bytes.subarray(0, 3), destination = bytes.subarray(1);
+  // Defining destination[0] changes source[1] before its descriptor is read.
+  merge(destination, source);
+  assert.deepEqual([...bytes], [1, 1, 1, 1]);
+});
+
 test('generated descriptor combinations match upstream for string-only sources', () => {
   for (let i = 0; i < 1000; i++) {
     const source = {}, a = {}, b = {};
