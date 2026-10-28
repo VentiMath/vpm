@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  minimist: { pkg: 'vminimist', versions: /^1\.2\.8$/ },
   cors: { pkg: 'vcors', versions: /^2\.8\.[56]$/ },
   express: { pkg: 'vexpress', versions: /^5\.3\.0$/ },
   router: { pkg: 'vrouter', versions: /^2\.2\.0$/ },
@@ -181,6 +182,7 @@ const createError = from('http-errors');
 const jwt = from('jsonwebtoken');
 const functions = from('@google-cloud/functions-framework');
 const { getTestServer } = from('@google-cloud/functions-framework/testing');
+const { parseOptions } = require(path.join(path.dirname(from.resolve('@google-cloud/functions-framework')), 'options.js'));
 const { onRequest } = from('firebase-functions/v2/https');
 
 const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-integration-'));
@@ -559,6 +561,19 @@ async function run() {
   const appServer = await listen(getTestServer('app'));
   const parserServer = await listen(http.createServer(parserApp));
   try {
+    // Exercise the actual framework option parser after replacing minimist.
+    let parsed = parseOptions([], {});
+    assert.equal(parsed.port, '8080'); assert.equal(parsed.target, 'function');
+    parsed = parseOptions(['node', 'server.js', '--port=08080', '--target', 'api', '--source', 'functions', '--signature-type=http', '--timeout=5', '--log-execution-id'], { PORT: '9000' });
+    assert.equal(parsed.port, '08080'); assert.equal(parsed.target, 'api');
+    assert.equal(parsed.sourceLocation, path.resolve('functions')); assert.equal(parsed.timeoutMilliseconds, 5000); assert.equal(parsed.enableExecutionId, true);
+    parsed = parseOptions([], { PORT: '9000', FUNCTION_TARGET: 'envTarget', FUNCTION_SIGNATURE_TYPE: 'cloudevent', LOG_EXECUTION_ID: 'true' });
+    assert.equal(parsed.port, '9000'); assert.equal(parsed.target, 'envTarget'); assert.equal(parsed.signatureType, 'cloudevent'); assert.equal(parsed.enableExecutionId, true);
+    parsed = parseOptions(['--', '--port=9999', '--target=ignored'], {});
+    assert.equal(parsed.port, '8080'); assert.equal(parsed.target, 'function');
+    parsed = parseOptions(['--toString=ignored', '--constructor.prototype.polluted=true', '--port', '8081'], {});
+    assert.equal(parsed.port, '8081'); assert.equal(Object.prototype.polluted, undefined);
+    assert.throws(() => parseOptions(['--signature-type=invalid'], {}), /signature type/);
     assert.equal((await request(appServer, '/vexpress-bytes')).body, '\x01\x02\x03');
     const generatedSend = await request(appServer, '/vexpress-send-framing');
     assert.equal(generatedSend.body, 'framed'); assert.equal(generatedSend.headers['content-length'], undefined);
@@ -1047,6 +1062,7 @@ async function run() {
   const runtime = process.versions.bun ? 'Bun ' + process.versions.bun : 'Node ' + process.version;
   const installed = name => require(path.join(modules, name, 'package.json')).version;
   console.log(`${runtime}: ${checks} HTTP checks passed through functions-framework ${installed('@google-cloud/functions-framework')}, firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
+  console.log('6 Functions Framework startup-option checks passed.');
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
   console.log('Aliased: ' + [...aliased.keys()].map(label => `${label} ×${calls[label.replace(/@[^@]+$/, '')]}`).join(', '));
   console.log('Not covered by VPM: ' + ([...uncovered].map(([label, via]) => `${label} (via ${[...via].join(', ')})`).join('; ') || 'none'));

@@ -29,7 +29,7 @@ try {
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json',
         ...['application', 'express', 'request', 'response', 'utils', 'view', 'handlers'].map(file => 'lib/' + file + '.js')].sort());
     }
-    if (['vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
+    if (['vminimist', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
@@ -91,6 +91,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const parseArguments = require('vminimist');
+require('node:assert/strict').deepEqual(parseArguments(['--v=false'], {alias:{verbose:'v'},boolean:'verbose'}), {_:[],verbose:false,v:false});
 const cors = require('vcors');
 const corsHeaders = {};
 let corsEnds = 0;
@@ -198,6 +200,8 @@ assert.equal(new Negotiator(request).mediaType(['text/html', 'application/json']
 assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import parseArguments from 'vminimist';
+if (parseArguments(['--port=08080'], {string:'port'}).port !== '08080') throw new Error('argument parser ESM import failed');
 import cors from 'vcors';
 let corsNext = 0;
 cors({origin:false})({method:'GET',headers:{}},{},error=>{if(error)throw error;corsNext++;});
@@ -295,6 +299,14 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import parseArguments, { type Options as ArgumentOptions } from 'vminimist';
+const argumentOptions: ArgumentOptions = {string:['port'] as const,alias:{port:['p'] as const}};
+const argumentsResult = parseArguments(['--port=8080'] as const, argumentOptions);
+const argumentValue: unknown = argumentsResult.port;
+// @ts-expect-error malformed arguments are rejected
+parseArguments([{}]);
+// @ts-expect-error dynamic results require narrowing
+const argumentPort: string = argumentsResult.port;
 import cors, { type Options as CorsOptions } from 'vcors';
 const corsOptions: CorsOptions = {origin:['https://ventimath.com',/example/g] as const,allowedHeaders:['Authorization'] as const,credentials:true};
 cors(corsOptions);
