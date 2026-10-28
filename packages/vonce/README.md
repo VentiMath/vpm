@@ -49,7 +49,9 @@ when the wrapper is created.
   still works if the callback has an `apply` decoration. Decorations can shadow
   the returned function's inherited methods, so invoke such wrappers directly.
 - **No helper dependency.** Wrapping and decoration handling live together in
-  this package; there is no runtime `wrappy` import.
+  this package; there is no runtime `wrappy` import. The built-in
+  `node:util.types.isProxy` selects the safe enumeration path; it is supported by
+  both Node and Bun and adds no external package dependency.
 
 These are intentional changes to writable-state and metadata behavior, not
 complete behavioral identity with upstream. Code that resets `called`, assigns
@@ -72,10 +74,12 @@ final signature; declarations cannot establish which metadata is enumerable.
 
 ## Verification
 
-16 focused tests cover state collisions and tampering, frozen wrappers, receiver
+18 focused tests cover state collisions and tampering, frozen wrappers, receiver
 and argument forwarding, returns, reentrancy, exceptions, strict errors, Promise
 identity/rejection, accessors, symbols, `__proto__`, invalid callbacks, isolated
-prototype installation/conflicts, CJS/ESM imports and 1,000 generated comparisons.
+prototype installation/conflicts, proxy enumeration/trap order, revoked proxies,
+reserved intrinsic decorations, borrowed status getters, CJS/ESM imports and
+1,000 generated comparisons.
 The shared gate passes **160 HTTP checks** on Node 24.22.1 and Bun 1.4.0. Its real
 Express `app.listen()` checks include successful startup, a late error after
 startup, and EADDRINUSE; state-shaped callback metadata cannot suppress the
@@ -93,35 +97,59 @@ node scripts/check-media-archives.cjs
 
 ## Benchmarks
 
-Recorded 2026-10-27 on macOS arm64, Node 24.22.1 and Bun 1.4.0, against unmodified
-`once` 1.4.0 and `wrappy` 1.0.2 fixtures. The fixture loader evaluates upstream in
-the same JavaScript realm. Nine alternating-order samples, corpus/case warmup,
-equal-result checks and consumed outputs. Medians below are nanoseconds per
-operation, lower is better. Creation cases include allocation and metadata work;
-repeated-call cases create their wrappers before timing. Ordinary cases run
+Updated 2026-10-28 on macOS arm64, Node 24.22.1 and Bun 1.4.0. Three fresh
+processes per runtime compare unmodified `once` 1.4.0 + `wrappy` 1.0.2, the exact
+[previous VPM source](bench/vonce-7744a9e.cjs) from commit `7744a9e`, and current
+VPM. Each case has twelve samples, rotating through all six implementation orders,
+with corpus/case warmup, equal-result checks and consumed outputs. The upstream
+fixture loader uses the same JavaScript realm. Symbol metadata compares only VPM
+versions because upstream does not copy it.
+
+The previous implementation enumerated every callback property with
+`Reflect.ownKeys`, including built-in and nonenumerable names it would discard.
+Ordinary functions now use enumerable string keys plus a symbol snapshot. Callable
+proxies keep the original single enumeration and descriptor-read order. Private
+closure state and the two read-only status accessors are unchanged.
+
+Across the three runs, the five original construction cases take **10–30% less
+time on Node and 19–37% less on Bun** than previous VPM. Retaining wrappers in a
+1,024-element ring, so allocation cannot be eliminated, takes **25–35% less on
+Node and 34–37% less on Bun**. The 100-hidden-property case takes **about 93% / 92%
+less**, while two-symbol metadata saves **4–7% / 3–5%**. Cached-call code is
+unchanged: its small timing differences, and strict-error differences, are not
+claimed as speedups.
+
+Read-only accessors still cost more to construct than upstream's mutable data
+fields. In the first run, ordinary creation plus first call is **451 ns versus
+44 ns upstream on Node**, and **215 ns versus 121 ns on Bun**. Eliminating this
+remaining gap is not claimed. No call-state protection or descriptor behavior was
+removed, and these microbenchmarks do not establish application throughput.
+
+The table shows first-run medians in nanoseconds per operation. Normal cases use
 50,000 operations per sample, cached calls 1,000,000 and strict rejections 10,000.
+Construction cases include allocation and metadata; repeated-call cases create
+their wrappers before timing.
 
-The read-only accessors and descriptor-safe metadata add construction cost:
-**8.2–11.5× upstream on Node and 2.6–3.2× on Bun**, approximately **0.48–0.89 µs
-and 0.21–0.39 µs extra**, respectively. Cached calls remain comparable (single-digit
-nanoseconds in this harness). Strict rejection is within about 1% on Node and 5%
-on Bun. This is a correctness and dependency improvement, not a general speedup.
-Express creates its listen callback at server startup; these measurements do not
-establish an application throughput change.
-
-| Case | Node upstream → VPM | Bun upstream → VPM |
+| Case | Node previous → current | Bun previous → current |
 | --- | ---: | ---: |
-| create wrapper | 75 → 611 | 109 → 322 |
-| create and first call | 46 → 525 | 139 → 360 |
-| create, first and cached call | 50 → 541 | 129 → 376 |
-| create with three metadata fields | 102 → 993 | 176 → 564 |
-| create strict and first call | 61 → 665 | 125 → 375 |
-| cached call | 9 → 8 | 7 → 6 |
-| cached strict rejection | 4060 → 4089 | 308 → 324 |
+| create wrapper | 596 → 464 | 324 → 208 |
+| create and first call | 557 → 451 | 327 → 215 |
+| create, first and cached call | 600 → 475 | 329 → 211 |
+| create with three metadata fields | 1093 → 984 | 568 → 450 |
+| create strict and first call | 728 → 587 | 365 → 252 |
+| cached call | 8 → 8 | 9 → 9 |
+| cached strict rejection | 4414 → 4439 | 284 → 281 |
+| create and retain wrappers | 572 → 371 | 365 → 241 |
+| create with 100 hidden metadata fields | 7851 → 512 | 6404 → 535 |
+| create with two symbol metadata fields | 884 → 823 | 464 → 446 |
 
-[Harness](bench/compare.cjs), [Node samples](bench/node24.json), and
-[Bun samples](bench/bun14.json) include all samples, runtime versions, source,
-fixture and loader hashes, counts and checksums. Reproduce sequentially:
+[Harness](bench/compare.cjs), [Node run 1](bench/node24.json),
+[run 2](bench/node24-repeat2.json), [run 3](bench/node24-repeat3.json),
+[Bun run 1](bench/bun14.json), [run 2](bench/bun14-repeat2.json) and
+[run 3](bench/bun14-repeat3.json) retain all samples, upstream/previous/current
+medians, versions, hashes, counts and checksums. The original release's measurements
+remain in [commit 7744a9e](https://github.com/VentiMath/vpm/blob/7744a9ee18a03ea3720a940b660990eb9727c913/packages/vonce/README.md).
+Reproduce sequentially, using fresh processes for repeats:
 
 ```sh
 OUTPUT=/tmp/vonce-node.json node packages/vonce/bench/compare.cjs

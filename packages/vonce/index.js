@@ -1,6 +1,7 @@
 'use strict';
 
 // Derived from once (ISC); see LICENSE and PROVENANCE.json.
+const { isProxy } = require('node:util').types;
 module.exports = once;
 module.exports.strict = strict;
 module.exports.proto = proto;
@@ -33,7 +34,16 @@ function wrap(fn, strictMode) {
 
   // Copy enumerable decorations without invoking accessors or treating
   // __proto__ as a setter. State and function-intrinsic properties are reserved.
-  for (const key of Reflect.ownKeys(fn)) {
+  // Ordinary callbacks need only enumerable names, and Node can use its cached
+  // enumeration here. A proxy must keep one ownKeys trap and the original
+  // descriptor-read order. Capture symbols before copying any metadata.
+  const proxy = isProxy(fn);
+  const keys = proxy ? Reflect.ownKeys(fn) : Object.keys(fn);
+  if (!proxy) {
+    const symbols = Object.getOwnPropertySymbols(fn);
+    for (let i = 0; i < symbols.length; i++) keys.push(symbols[i]);
+  }
+  for (const key of keys) {
     if (key === 'called' || key === 'value' || key === 'onceError' || Object.hasOwn(wrapped, key)) continue;
     const descriptor = Object.getOwnPropertyDescriptor(fn, key);
     if (descriptor?.enumerable) Object.defineProperty(wrapped, key, descriptor);

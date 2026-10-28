@@ -1049,14 +1049,15 @@ non-execution, descriptor flags and shallow references were already strengths
 of upstream and remain intact. Native errors and proxy effects still apply; a
 failed merge may have already copied earlier properties.
 
-**Verification:** 30 focused tests, including 1,000 generated comparisons for each
+**Verification:** 35 focused tests, including 1,000 generated comparisons for each
 package, pass on Node 24.22.1 and Bun 1.4.0. The shared gate passes 160 HTTP checks
 on both runtimes, including real Express startup success/error paths and a symbol
-getter copied into an application. Isolated npm/Bun archives pass Node/Bun CJS/ESM
+getter copied into an application. Proxy-order, symbol-snapshot and overlapping
+typed-array regressions protect the optimized enumeration paths. Isolated npm/Bun archives pass Node/Bun CJS/ESM
 consumers and TypeScript 7.0.2 with no platform ambient declarations. All 35 package
 READMEs and the central comparison inventory are checked for coverage and links.
 
-**Performance, 2026-10-27:** nine alternating-order samples compare unmodified
+**Initial performance, 2026-10-27:** nine alternating-order samples compare unmodified
 upstream fixtures. `vonce` construction cases take 8.2–11.5× upstream on Node and
 2.6–3.2× on Bun: about 0.48–0.89 µs and 0.21–0.39 µs extra, respectively. Cached
 calls are comparable. Read-only status and safe descriptor copying have a real
@@ -1065,6 +1066,31 @@ is within about 6% on Bun's nonempty cases; ordinary Node copies take 10–26% m
 time, while the Express-like 50-method function mixin is essentially unchanged.
 Node's empty/skip-only cases take 2.9×/3.5× upstream (36/647 ns extra). These are
 correctness, API and dependency improvements; no blanket performance win is claimed.
+
+**Enumeration optimization, 2026-10-28:** three fresh processes per runtime now
+compare upstream, exact VPM sources from `7744a9e`, and the optimized source, with
+twelve samples in all six implementation orders. Ordinary callback metadata uses
+enumerable string keys plus a symbol snapshot. Ordinary Node descriptor merges
+use separate name/symbol enumeration; proxies keep one `Reflect.ownKeys` trap,
+and Bun retains native combined enumeration for descriptor merging. Built-in
+`node:util.types.isProxy` makes this distinction without an external dependency.
+Neither callback-state protection nor sequential descriptor semantics changed.
+
+The original five `vonce` construction cases take **10–30% less time on Node and
+19–37% less on Bun** than previous VPM. Retained wrappers improve **25–35% / 34–37%**;
+100 hidden metadata properties improve about **93% / 92%**. Cached-call code is
+unchanged. Read-only accessors still carry a real cost: first-run creation plus
+first call takes **451 ns versus 44 ns upstream on Node**, and **215 versus 121 ns
+on Bun**. This reduces, but does not eliminate, the construction gap.
+
+Node descriptor string copies/replacement/function mixins take **7–19% less time**,
+and skipping existing fields **63–65% less**, than previous VPM. String copies are
+now within about **1–9% of upstream** and the function mixin within **1–2%**. The
+accessor/hidden-property case regresses **5–7%** (43 ns in run 1); all-symbol and
+mixed-symbol cases regress **4–11% / 2–8%**. These costs remain documented rather
+than weakening symbol or descriptor handling. Bun's nonempty cases stay within
+about 2% of previous VPM. Both package READMEs link all three full runs and the
+previous source snapshots, alongside their compatibility contracts.
 
 [vonce API and samples](packages/vonce/README.md),
 [vmerge-descriptors API and samples](packages/vmerge-descriptors/README.md).
