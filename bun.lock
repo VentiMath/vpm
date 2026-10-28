@@ -52,6 +52,13 @@
       "name": "vcookie-signature",
       "version": "0.1.0",
     },
+    "packages/vcors": {
+      "name": "vcors",
+      "version": "0.1.0",
+      "dependencies": {
+        "vvary": "workspace:*",
+      },
+    },
     "packages/vdebug": {
       "name": "vdebug",
       "version": "0.1.0",
@@ -346,6 +353,8 @@
     "vcookie": ["vcookie@workspace:packages/vcookie"],
 
     "vcookie-signature": ["vcookie-signature@workspace:packages/vcookie-signature"],
+
+    "vcors": ["vcors@workspace:packages/vcors"],
 
     "vdebug": ["vdebug@workspace:packages/vdebug"],
 

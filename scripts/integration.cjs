@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  cors: { pkg: 'vcors', versions: /^2\.8\.[56]$/ },
   express: { pkg: 'vexpress', versions: /^5\.3\.0$/ },
   router: { pkg: 'vrouter', versions: /^2\.2\.0$/ },
   depd: { pkg: 'vdepd', versions: /^2\.0\.0$/ },
@@ -224,6 +225,20 @@ functions.http('api', api);
 
 // Express applications are also deployed as onRequest handlers.
 const app = express();
+const cors = from('cors');
+const corsRegex = /\.ventimath\.test$/g;
+app.use('/vcors-policy', cors({ origin: corsRegex, credentials: true, maxAge: 600 }));
+app.get('/vcors-policy', (req, res) => res.json({ cors: 'ok' }));
+app.use('/vcors-callback', cors({ origin(origin, callback) {
+  callback(null, origin === 'https://allowed.ventimath.test');
+  callback(new Error('ignored duplicate CORS callback'));
+} }));
+app.get('/vcors-callback', (req, res) => res.send('callback policy'));
+app.use('/vcors-framing', (req, res, next) => {
+  res.setHeader('Transfer-Encoding', 'chunked');
+  res.setHeader('Trailer', 'X-Checksum');
+  next();
+}, cors({ origin: true, allowedHeaders: ['Authorization'] }));
 app.get('/vexpress-bytes', (req, res) => {
   const bytes = Uint8Array.from([9, 1, 2, 3, 8]);
   res.send(new DataView(bytes.buffer, 1, 3));
@@ -819,6 +834,27 @@ async function run() {
     // CORS preflight through firebase-functions.
     const preflight = await request(apiServer, '/echo', { method: 'OPTIONS', headers: { origin: 'https://ventimath.com', 'access-control-request-method': 'POST' } });
     assert.equal(preflight.status, 204); assert.equal(preflight.headers['access-control-allow-origin'], 'https://ventimath.com');
+    const reflectedPreflight = await request(apiServer, '/echo', { method: 'OPTIONS', headers: { origin: 'https://ventimath.com', 'access-control-request-method': 'POST', 'access-control-request-headers': 'X-Test, Authorization' } });
+    assert.equal(reflectedPreflight.headers['access-control-allow-headers'], 'X-Test, Authorization');
+    assert.equal(reflectedPreflight.headers.vary, 'Origin, Access-Control-Request-Headers');
+    for (let i = 0; i < 2; i++) {
+      const allowedCors = await request(appServer, '/vcors-policy', { headers: { origin: 'https://allowed.ventimath.test' } });
+      assert.equal(allowedCors.headers['access-control-allow-origin'], 'https://allowed.ventimath.test');
+      assert.equal(allowedCors.headers['access-control-allow-credentials'], 'true');
+    }
+    const deniedCors = await request(appServer, '/vcors-policy', { headers: { origin: 'https://other.test' } });
+    assert.equal(deniedCors.headers['access-control-allow-origin'], undefined);
+    assert.equal(deniedCors.headers.vary, 'Origin');
+    for (const origin of ['https://allowed.ventimath.test', 'https://other.test']) {
+      const callbackCors = await request(appServer, '/vcors-callback', { headers: { origin } });
+      assert.equal(callbackCors.body, 'callback policy');
+      assert.equal(callbackCors.headers.vary, 'Origin');
+      assert.equal(callbackCors.headers['access-control-allow-origin'], origin.endsWith('.ventimath.test') ? origin : undefined);
+    }
+    const framedCors = await request(appServer, '/vcors-framing', { method: 'OPTIONS', headers: { origin: 'https://allowed.ventimath.test' } });
+    assert.equal(framedCors.status, 204); assert.equal(framedCors.body, '');
+    assert.equal(framedCors.headers['transfer-encoding'], undefined); assert.equal(framedCors.headers.trailer, undefined);
+    assert.equal(framedCors.headers['access-control-allow-headers'], 'Authorization');
     // Content-Type values pass through res.set() (mime-types), including syntax upstream tolerated.
     const pdf = await request(apiServer, '/pdf');
     assert.equal(pdf.headers['content-type'], 'application/pdf; name=report (1).pdf');
