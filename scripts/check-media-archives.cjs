@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const version = require(path.join(root, 'packages', name, 'package.json')).version;
     const archive = name + '-' + version + '.tgz';
@@ -22,7 +22,7 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
-    if (['vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
+    if (['vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
@@ -55,6 +55,8 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const forwarded = require('vforwarded');
+assert.deepEqual(forwarded({ headers: { 'x-forwarded-for': '198.51.100.7,\\t10.0.0.1' }, socket: { remoteAddress: '::1' } }), ['::1', '10.0.0.1', '198.51.100.7']);
 const once = require('vonce');
 const merge = require('vmerge-descriptors');
 const wrapped = once(Object.assign(n => n + 1, { called: true, value: 99 }));
@@ -119,6 +121,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import forwarded from 'vforwarded';
+assert.deepEqual(forwarded({ headers: {}, connection: {} }), [undefined]);
 import once, { strict, proto } from 'vonce';
 import merge from 'vmerge-descriptors';
 assert.equal(once.strict, strict); assert.equal(once.proto, proto);
@@ -179,6 +183,13 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import forwarded from 'vforwarded';
+const chain: forwarded.Addresses = forwarded({ headers: { 'x-forwarded-for': '::1' }, socket: {} });
+// @ts-expect-error unavailable socket address
+const peer: string = chain[0];
+// @ts-expect-error header must be a string
+forwarded({ headers: { 'x-forwarded-for': ['::1'] }, socket: {} });
+void [chain, peer];
 import once, { strict } from 'vonce';
 import merge from 'vmerge-descriptors';
 const callback = Object.assign(function(this: { n: number }, x: number) { return this.n + x; }, { label: 'callback' });
@@ -339,6 +350,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vforwarded\/index\.d\.ts/);
     assert.match(output, /node_modules\/vonce\/index\.d\.ts/);
     assert.match(output, /node_modules\/vmerge-descriptors\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie-signature\/index\.d\.ts/);

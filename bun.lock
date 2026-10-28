@@ -87,6 +87,10 @@
         "vstatuses": "workspace:*",
       },
     },
+    "packages/vforwarded": {
+      "name": "vforwarded",
+      "version": "0.1.0",
+    },
     "packages/vfresh": {
       "name": "vfresh",
       "version": "0.1.0",
@@ -291,6 +295,8 @@
     "vetag": ["vetag@workspace:packages/vetag"],
 
     "vfinalhandler": ["vfinalhandler@workspace:packages/vfinalhandler"],
+
+    "vforwarded": ["vforwarded@workspace:packages/vforwarded"],
 
     "vfresh": ["vfresh@workspace:packages/vfresh"],
 

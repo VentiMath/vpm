@@ -37,6 +37,13 @@ Work proceeds from real dependency graphs. We trace packages to their callers,
 identify the behavior those callers need, and use that evidence to guide each
 replacement. Package-level details live alongside the source in [`packages/`](packages/).
 
+When building callers, consider specialized internal implementations that avoid
+unneeded validation, metadata, or allocation. Preserve each standalone package's
+documented contract, verify the caller's observable behavior, and measure the full
+calling path on Node and Bun. Share implementation where practical so fixes stay
+consistent. Specialization is justified by measured improvements, not by inlining
+for its own sake.
+
 ## Package management and Bun
 
 Packages use standard `package.json` metadata and exports so existing JavaScript

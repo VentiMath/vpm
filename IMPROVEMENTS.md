@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vforwarded](packages/vforwarded) | forwarded 0.2.0 | Correct tab whitespace, a single output array, snapshotted request fields, own-header lookup, and explicit invalid-input errors. |
 | [vee-first](packages/vee-first) | ee-first 1.1.1 | Once-only event dispatch, registration rollback, and cleanup under reentrant event hooks. |
 | [von-finished](packages/von-finished) | on-finished 2.4.1 | Private callback queues, async resources released after dispatch, and more reliable socket-listener cleanup. |
 | [vparseurl](packages/vparseurl) | parseurl 1.3.3 | Private caches, frozen-request support, cache keys isolated from mutable results, and explicit invalidation. |
@@ -140,8 +141,10 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 160
-HTTP checks: Express listen startup, followed by a late error, and EADDRINUSE
+the Functions Framework, also serves a direct Express parser app, and runs 171
+HTTP checks: proxy address chains and Express `req.ip`/`req.ips` under disabled,
+unrestricted, hop-count and subnet trust, including tab-separated proxies and
+stopping at untrusted hops; Express listen startup, followed by a late error, and EADDRINUSE
 callbacks with state-shaped metadata; application mixins with symbol getters;
 request media-type matching, uppercase and structured-suffix parser
 patterns, response negotiation across all four Accept headers, invalid quality
@@ -1026,6 +1029,41 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vforwarded
+
+**Consumer and baseline:** `forwarded` 0.2.0 is a dependency of `proxy-addr` 2.0.8,
+used by Express 5.3.0 for `req.ip`, `req.ips`, and trust-proxy evaluation. Both
+upstream and VPM have zero runtime dependencies.
+
+**Behavior:** VPM trims HTTP spaces and tabs, skips empty entries, and preserves
+socket-first/reverse-header order. It snapshots request fields, avoids upstream’s
+double read of a present socket, ignores inherited header values, and rejects
+nonstring header/address values without coercion. Undefined socket addresses,
+opaque address text, mutable fresh arrays, frozen requests, and legacy connection
+fallback remain supported. IP validity and proxy trust remain the caller’s job.
+Tab handling, inherited headers, accessor read counts, and malformed-input errors
+are intentional compatibility changes, documented with the package API.
+
+**Implementation and verification:** native comma searches skip complete tokens;
+a single result array replaces a temporary list and concatenation. Sixteen tests
+include 10,000 generated inputs, long chains, whitespace, getter/proxy behavior,
+and source-integrity checks. Eleven added HTTP checks exercise the actual
+proxy-addr/Express path under disabled, unrestricted, hop-count and subnet trust,
+including IPv4-mapped IPv6, tab-separated proxies, untrusted-hop boundaries and
+repeated header lines. The shared gate now runs 171 HTTP checks on Node 24 and
+Bun. npm/Bun archive installations pass CJS/ESM runtime and TypeScript 7 consumers
+without platform ambient declarations. The documentation gate covers 36 packages.
+
+**Performance, 2026-10-28:** three fresh processes on Node 24.22.1 and Bun 1.4.0,
+with twelve alternating-order samples per case, show one-/two-address parsing
+using **40–62% less time on Node and 16–52% less on Bun**. Missing/empty headers
+use **72–77% / 28–55% less**. Native searches improve the 16 KiB opaque-token case
+by about **78% / 96%**. Bun’s 100-entry chain takes **6–11% more time** (125 ns in
+run 1); its three-entry case varies from 12% faster to 7% slower. Node’s long
+whitespace-only case is essentially tied. Corrected tab output is timed without
+an upstream speed ratio. These parser measurements do not establish application
+throughput. [Contract, full tables and all six runs](packages/vforwarded/README.md).
+
 ## vonce and vmerge-descriptors
 
 `vonce` targets `once` 1.4.0, called by Express's `app.listen()`; it removes the
@@ -1564,7 +1602,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 33 runtime packages'
+would compare VPM against itself. All 34 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
