@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const archive = fs.readdirSync(directory).find(file => file.startsWith(name + '-') && file.endsWith('.tgz'));
     assert.ok(archive, name);
@@ -21,7 +21,7 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
-    if (name === 'vcontent-disposition') {
+    if (name === 'vcontent-disposition' || name === 'vcookie') {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
@@ -54,6 +54,12 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const cookie = require('vcookie');
+assert.equal(cookie.parse(cookie.serialize('sid', '雪')).sid, '雪');
+assert.equal(cookie.parseCookie('__proto__=x').__proto__, 'x');
+assert.equal(Object.getPrototypeOf(cookie.parseCookie('')), null);
+assert.equal(cookie.parseSetCookie(cookie.stringifySetCookie({ name: 'x', value: 'y', secure: true })).secure, true);
+assert.throws(() => cookie.serialize('x', 'y', { secure: 'false' }), TypeError);
 const disposition = require('vcontent-disposition');
 assert.equal(disposition.parse(disposition.create('雪.txt')).parameters.filename, '雪.txt');
 assert.equal(Object.getPrototypeOf(disposition.parse('attachment').parameters), null);
@@ -96,6 +102,9 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import cookie, { parse as parseCookieLegacy, serialize, parseCookie, stringifyCookie, parseSetCookie, stringifySetCookie } from 'vcookie';
+assert.deepEqual([cookie.parse, cookie.serialize, cookie.parseCookie, cookie.stringifyCookie, cookie.parseSetCookie, cookie.stringifySetCookie], [parseCookieLegacy, serialize, parseCookie, stringifyCookie, parseSetCookie, stringifySetCookie]);
+assert.equal(parseCookie(stringifyCookie({ x: '雪' })).x, '雪');
 import disposition, { create as createDisposition, parse as parseDisposition, format as formatDisposition, encodeExtended, decodeExtended } from 'vcontent-disposition';
 assert.equal(disposition.create, createDisposition); assert.equal(disposition.parse, parseDisposition);
 assert.equal(disposition.format, formatDisposition); assert.equal(disposition.encodeExtended, encodeExtended); assert.equal(disposition.decodeExtended, decodeExtended);
@@ -141,6 +150,17 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import cookie, { parseCookie, stringifyCookie, parseSetCookie, stringifySetCookie, serialize, type SetCookie } from 'vcookie';
+const setCookie: SetCookie = parseSetCookie('sid=value; Secure');
+const cookieText: string = stringifySetCookie(setCookie);
+const cookieValue: string | undefined = parseCookie(stringifyCookie({ sid: '雪' })).sid;
+cookie.parse(serialize('sid', 'value'));
+// @ts-expect-error string value required
+serialize('sid', 1);
+// @ts-expect-error typed flags
+stringifySetCookie({ name: 'sid', secure: 'false' });
+void [cookieText, cookieValue];
+
 import disposition, { create as createDisposition, parse as parseDisposition, format as formatDisposition, type ContentDisposition } from 'vcontent-disposition';
 const parsedDisposition: ContentDisposition = parseDisposition(createDisposition('雪.txt'));
 const dispositionText: string = disposition.format(parsedDisposition);
@@ -254,6 +274,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vcookie\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcontent-disposition\/index\.d\.ts/);
     assert.match(output, /node_modules\/vqs\/index\.d\.ts/);
     assert.match(output, /node_modules\/vbody-parser\/index\.d\.ts/);
