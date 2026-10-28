@@ -84,6 +84,13 @@ Concurrent writes to the already-open file are not an atomic snapshot.
   Diagnostics identify the path and reason without including manifest contents,
   code frames or an original error containing source text.
 
+For manifests of at least 4 KiB on Bun, a fatal UTF-8 decoder combines validation
+and conversion into one pass. Async reads queue the descriptor close before
+parsing these larger buffers, then wait for cleanup before settling. Read/close
+errors retain their precedence over parse errors. Smaller reads and the Node
+filesystem/decoding path retain their existing behavior; all I/O remains async
+in the async reader, and no filesystem or result cache is introduced.
+
 TypeScript exports `Options`, `ReadResult`, `PackageJson`, `JsonValue` and
 `FileURL`. Package fields have JSON value types and need narrowing before use;
 reading a file does not establish that its `name` or `version` is a string.
@@ -102,13 +109,17 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
 
-There are **45 package tests**, including the two original upstream tests with
+There are **49 package tests**, including the two original upstream tests with
 unchanged assertions. Module loading, AVA registration and fixture setup are
 adapted to an isolated built-in test runner. Those two tests verify lookup;
 they do not establish metadata-normalization compatibility. Additional tests
 cover error propagation and descriptor cleanup, boundaries (including Windows
 path semantics), symlinks, FIFOs, path replacement, changing files, malformed
-manifests, invalid UTF-8, concurrent large reads, module imports and provenance.
+manifests, invalid UTF-8, concurrent large reads, module imports and provenance. Additional cleanup tests hold the close callback
+open to verify that success and parse failures remain pending until cleanup
+finishes, and that close errors take precedence. Strict-decoding tests cover
+overlong sequences, lone continuation bytes, truncated sequences, surrogate
+encodings, out-of-range code points and recovery after a failed decode.
 
 The shared integration gate compares 122 raw-reader results against the pinned
 upstream installation. It also loads CommonJS, ESM and nested-package handlers
@@ -153,66 +164,84 @@ performs its first async read. It excludes process launch and uses a warm OS
 filesystem cache; it does not measure full Functions Framework startup or
 application cold starts.
 
-### Results, 2026-10-28
+### Results after the Bun decoding optimization, 2026-10-28
 
 Node 24.22.1 and Bun 1.4.0 on macOS arm64. Three fresh harness processes per
-runtime, run sequentially, with eight alternating samples per case (four in each
-order). Each warm sample uses 500 calls, or 166 for malformed input. Corpus
-warmup uses 100 calls per case/implementation/mode, followed by case warmup of
-min(iterations, 100). Values below are medians of the three process medians.
+runtime, run sequentially. The harness compares upstream, the unchanged VPM
+implementation from `19a2461`, and the current implementation in all six execution
+orders; each appears twice in each position. Each warm sample uses 500 calls,
+or 166 for malformed input. Corpus warmup uses 100 calls per
+case/implementation/mode, followed by case warmup of min(iterations, 100).
+Values below are medians of the three process medians.
 
 | Operation | Node upstream → VPM (µs) | Bun upstream → VPM (µs) |
 | --- | ---: | ---: |
-| sync / adjacent manifest | 23.64 → 24.73 | 20.50 → 20.50 |
-| sync / four ancestors | 34.59 → 37.92 | 33.97 → 34.62 |
-| sync / twelve ancestors | 58.04 → 62.35 | 66.49 → 71.75 |
-| sync / absent within boundary | 14.54 → 16.23 | 16.25 → 15.13 |
-| sync / file URL | 22.74 → 23.09 | 21.29 → 25.22 |
-| sync / skip directory | 27.36 → 29.82 | 30.33 → 28.66 |
-| sync / 66 KB UTF-8 manifest | 287.94 → 82.34 | 52.32 → 70.99 |
-| sync / malformed diagnostic | 55.17 → 41.40 | 26.33 → 23.23 |
-| async / adjacent manifest | 82.71 → 75.20 | 61.12 → 84.54 |
-| async / four ancestors | 172.12 → 142.68 | 146.88 → 187.17 |
-| async / twelve ancestors | 322.80 → 276.75 | 320.89 → 323.64 |
-| async / absent within boundary | 99.49 → 76.63 | 96.86 → 98.52 |
-| async / file URL | 88.41 → 75.01 | 72.27 → 82.17 |
-| async / skip directory | 97.62 → 135.26 | 86.90 → 149.66 |
-| async / 66 KB UTF-8 manifest | 139.57 → 131.19 | 92.28 → 142.49 |
-| async / malformed diagnostic | 103.94 → 77.43 | 59.48 → 80.24 |
+| sync / adjacent manifest | 23.38 → 23.89 | 23.97 → 22.77 |
+| sync / four ancestors | 34.71 → 37.23 | 33.62 → 34.54 |
+| sync / twelve ancestors | 59.69 → 62.61 | 53.67 → 62.27 |
+| sync / absent within boundary | 14.38 → 16.62 | 12.82 → 13.18 |
+| sync / file URL | 23.24 → 23.31 | 21.36 → 21.95 |
+| sync / skip directory | 27.33 → 30.10 | 26.96 → 28.02 |
+| sync / 66 KB UTF-8 manifest | 278.75 → 69.76 | 52.58 → 55.85 |
+| sync / malformed diagnostic | 55.52 → 41.80 | 25.20 → 24.09 |
+| async / adjacent manifest | 98.84 → 82.93 | 75.40 → 111.10 |
+| async / four ancestors | 189.90 → 155.85 | 161.39 → 188.38 |
+| async / twelve ancestors | 385.84 → 314.23 | 354.28 → 397.30 |
+| async / absent within boundary | 115.21 → 98.47 | 114.11 → 113.31 |
+| async / file URL | 98.89 → 83.98 | 67.61 → 99.59 |
+| async / skip directory | 112.92 → 128.75 | 83.73 → 158.41 |
+| async / 66 KB UTF-8 manifest | 150.35 → 136.97 | 102.66 → 132.90 |
+| async / malformed diagnostic | 119.84 → 92.70 | 72.48 → 102.18 |
 
-Each fresh-process sample uses a separate child process per implementation;
-eight children per implementation in each of the three harness processes:
+The Bun change improves the larger-file async case in all three runs:
+
+| Bun / 66 KB UTF-8 manifest | Previous VPM → current VPM (µs) | Per-run time change |
+| --- | ---: | ---: |
+| sync | 68.35 → 55.85 | −18% to +5% |
+| async | 149.34 → 132.90 | **10–16% less** |
+
+The sync median improves, but one run regresses; a consistent sync gain is not
+established. Async larger-file reads remain **14–30% slower than upstream**.
+Small adjacent async reads improve by only 1–3% against the previous VPM build
+and remain **30–49% slower than upstream**. This is a partial optimization, not
+a resolution of the small-file regression.
+
+The initial cost comes from separate async open, descriptor-stat, read and close
+operations. Upstream stats a path and then uses path-based `readFile`, letting
+Bun perform opening, reading and closing inside one native operation. VPM’s
+descriptor check verifies the file actually being read even if a path is replaced
+between calls. The [Bun 1.4.0 filesystem wrapper](https://github.com/oven-sh/bun/blob/bun-v1.4.0/src/js/node/fs.ts)
+shows these separate native async calls. The optimization retains them and
+reduces CPU work for larger inputs instead: one-pass strict UTF-8 decoding and
+parsing while the close is pending. No blocking I/O or cached results are used.
+
+Other measured tradeoffs remain visible:
+
+- Node sync ancestor/absent/directory searches cost 3–19% more than upstream.
+  The large sync case takes about 75% less time than upstream but costs 2–4% more
+  than the previous VPM implementation in this run set.
+- Async directory skipping costs 14–16% more than upstream on Node and 82–90%
+  more on Bun. The reader still opens, checks and closes the nonregular candidate.
+- Bun’s short malformed async case costs 1–12% more than the previous VPM build
+  and 26–53% more than upstream. Its short-input path retains the original
+  validation and error policy; no malformed-input speedup is claimed.
+- Other before/after differences are available in the raw samples. Filesystem
+  timings vary, and improvements to unchanged paths should not be inferred from
+  their aggregate medians.
+
+Each fresh-process sample uses a separate child per implementation; six children
+per implementation in each of the three harness processes:
 
 | Operation | Node upstream → VPM (ms) | Bun upstream → VPM (ms) |
 | --- | ---: | ---: |
-| Import and first async read | 29.55 → 1.94 | 21.34 → 6.12 |
+| Import and first async read | 26.44 → 1.95 | 19.69 → 6.39 |
 
-Across the three runs, import plus first read takes **92–93% less time on Node**
-and **70–72% less on Bun**. This is relevant to the framework’s startup-time
-reader call, but is not a measurement of full framework startup. Warm async
-adjacent reads take **9–16% less on Node**, while costing **36–59% more on Bun**.
-The aggregate Bun difference is about 23 µs per adjacent read.
+Import plus first read still takes about **93% less time on Node** and
+**66–70% less on Bun** than upstream. There is no consistent startup improvement
+over the previous VPM build. Process launch is excluded and the OS filesystem
+cache is warm; these are reader measurements, not full framework cold starts.
 
-Warm-read performance is mixed:
-
-- Node sync ancestor searches, absent searches and directory skipping cost
-  **6–13% more** across these cases. Adjacent and URL reads are within a few
-  percent of upstream. Large UTF-8 sync reads take **70–72% less time**.
-- Bun sync URL reads cost **9–22% more** and large UTF-8 reads **12–42% more**.
-  Other successful sync cases vary in direction between runs.
-- Async directory skipping costs **18–40% more on Node** and **72–128% more on
-  Bun**. The async reader opens, checks and closes a nonregular candidate before
-  proceeding. Bun’s four-ancestor, URL and large-file reads also cost more;
-  twelve-ancestor and absent searches show no consistent change.
-- Malformed diagnostics take **23–26% less time synchronously on Node** and
-  **4–12% less on Bun**. Async diagnostics take **24–31% less on Node**, but
-  **31–40% more on Bun**. They intentionally omit upstream’s source code frame.
-
-Explicit descriptor checks and cleanup, strict decoding, and uncached results
-are retained. The main benefit for the current caller is removing import work
-and dependencies; this is not a universal filesystem-read speedup. Results depend
-on the OS cache, filesystem and runtime.
-
-[Six raw reports](bench/results) retain all samples, checksums, runtime metadata,
-the consumer lockfile hash and hashes of the source, provenance, fixture and
-harness.
+[Six current raw reports](bench/results/optimized) retain every sample, checksums,
+runtime metadata and hashes of the source, previous implementation, consumer
+lockfile, provenance, fixture and harness. The [initial reports](bench/results)
+remain available with their original source/harness hashes.
