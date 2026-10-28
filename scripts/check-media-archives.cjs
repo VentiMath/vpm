@@ -13,7 +13,7 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
-  for (const name of ['vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
+  for (const name of ['vipaddr', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcookie-signature', 'vvary', 'vcookie', 'vcontent-disposition', 'vbody-parser', 'vdebug', 'vms', 'von-finished', 'vee-first', 'vqs', 'vraw-body', 'vhttp-errors', 'vstatuses', 'viconv-lite', 'vbytes', 'vmedia-typer', 'vtype-is', 'vnegotiator', 'vaccepts', 'vcontent-type', 'vmime-types', 'vmime-db']) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
     const version = require(path.join(root, 'packages', name, 'package.json')).version;
     const archive = name + '-' + version + '.tgz';
@@ -26,6 +26,11 @@ try {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
+    }
+    if (name === 'vipaddr') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', 'lib/parse.js', 'lib/ranges.json'].sort());
     }
     if (name === 'vbody-parser') {
       assert.equal(Object.keys(metadata.dependencies).length, 9);
@@ -55,6 +60,10 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const assert = require('node:assert/strict');
+const ipaddr = require('vipaddr');
+assert.equal(ipaddr.process('::ffff:192.0.2.1').toString(), '192.0.2.1');
+assert.equal(ipaddr.process('::192.0.2.1').kind(), 'ipv6');
+assert.throws(() => ipaddr.parse('1.2.3.4').match(ipaddr.parse('1.2.3.4'), NaN), RangeError);
 const forwarded = require('vforwarded');
 assert.deepEqual(forwarded({ headers: { 'x-forwarded-for': '198.51.100.7,\\t10.0.0.1' }, socket: { remoteAddress: '::1' } }), ['::1', '10.0.0.1', '198.51.100.7']);
 const once = require('vonce');
@@ -121,6 +130,10 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import assert from 'node:assert/strict';
+import ipaddr, { IPv4, IPv6, parse as parseIP, fromByteArray } from 'vipaddr';
+assert.equal(ipaddr.IPv4, IPv4); assert.equal(ipaddr.IPv6, IPv6); assert.equal(ipaddr.parse, parseIP);
+assert.equal(fromByteArray(new Uint8Array([127, 0, 0, 1])).toString(), '127.0.0.1');
+assert.equal(IPv6.parse('::1').match(IPv6.parseCIDR('::/0')), true);
 import forwarded from 'vforwarded';
 assert.deepEqual(forwarded({ headers: {}, connection: {} }), [undefined]);
 import once, { strict, proto } from 'vonce';
@@ -183,6 +196,18 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import ipaddr, { IPv4, IPv6, type RangeList } from 'vipaddr';
+const ip4: IPv4 = new IPv4(new Uint8Array([127, 0, 0, 1]));
+const ip6: IPv6 = IPv6.parse('::1');
+const ranges: RangeList = { mixed: [IPv4.parseCIDR('127.0.0.0/8'), IPv6.parseCIDR('::1/128')] };
+const rangeName: string | false = ipaddr.subnetMatch(ip6, ranges, false as const);
+// @ts-expect-error families must match
+ip4.match(ip6, 32);
+// @ts-expect-error immutable address property
+ip4.octets = [];
+// @ts-expect-error required prefix
+ip6.match(ip6);
+void [rangeName];
 import forwarded from 'vforwarded';
 const chain: forwarded.Addresses = forwarded({ headers: { 'x-forwarded-for': '::1' }, socket: {} });
 // @ts-expect-error unavailable socket address
@@ -350,6 +375,7 @@ void [encoding, accepted, all];
     assert.match(output, /node_modules\/vbytes\/index\.d\.ts/);
     assert.match(output, /node_modules\/viconv-lite\/index\.d\.ts/);
     assert.match(output, /node_modules\/vraw-body\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vipaddr\/index\.d\.ts/);
     assert.match(output, /node_modules\/vforwarded\/index\.d\.ts/);
     assert.match(output, /node_modules\/vonce\/index\.d\.ts/);
     assert.match(output, /node_modules\/vmerge-descriptors\/index\.d\.ts/);

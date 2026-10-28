@@ -29,6 +29,7 @@ const fixture = require(path.join(__dirname, 'consumers/package.json'));
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'ipaddr.js': { pkg: 'vipaddr', versions: /^1\.9\.1$/ },
   forwarded: { pkg: 'vforwarded', versions: /^0\.2\.0$/ },
   once: { pkg: 'vonce', versions: /^1\.4\.0$/ },
   'merge-descriptors': { pkg: 'vmerge-descriptors', versions: /^2\.0\.0$/ },
@@ -219,7 +220,13 @@ functions.http('api', api);
 // Express applications are also deployed as onRequest handlers.
 const app = express();
 // Exercise forwarded through its real proxy-addr caller and Express getters.
-for (const [name, trust] of [['none', false], ['all', true], ['one', 1], ['subnets', ['loopback', '10.0.0.0/8']]]) {
+for (const [name, trust] of [
+  ['none', false], ['all', true], ['one', 1], ['subnets', ['loopback', '10.0.0.0/8']],
+  ['mapped', ['loopback', '::ffff:10.0.0.0/104']],
+  ['ipv6', ['loopback', '2001:db8::/32']],
+  ['compatible', ['loopback', '::192.0.2.0/120']],
+  ['native', ['loopback', '2000::/3']],
+]) {
   const child = express();
   child.set('trust proxy', trust);
   child.get('/', (req, res) => res.json({ ip: req.ip, ips: req.ips, socket: req.socket.remoteAddress }));
@@ -460,6 +467,15 @@ async function run() {
     await expressStartup();
     await abortedRequest();
     for (const [mode, header, expected] of [
+      ['mapped', '198.51.100.7, 10.0.0.1', ['198.51.100.7', '10.0.0.1']],
+      ['mapped', '198.51.100.7, ::ffff:10.0.0.1', ['198.51.100.7', '::ffff:10.0.0.1']],
+      ['mapped', '198.51.100.7, ::a00:1', ['::a00:1']],
+      ['ipv6', '198.51.100.7, 2001:db8::1', ['198.51.100.7', '2001:db8::1']],
+      ['ipv6', '198.51.100.7, 2001:db9::1', ['2001:db9::1']],
+      ['compatible', '198.51.100.7, ::192.0.2.1', ['198.51.100.7', '::192.0.2.1']],
+      ['compatible', '198.51.100.7, ::ffff:192.0.2.1', ['::ffff:192.0.2.1']],
+      ['native', '198.51.100.7, 10.0.0.1', ['10.0.0.1']],
+      ['subnets', '198.51.100.7, 10.0.0.1junk', ['10.0.0.1junk']],
       ['all', undefined, []],
       ['none', '198.51.100.7, 10.0.0.1', []],
       ['all', '198.51.100.7, 10.0.0.1', ['198.51.100.7', '10.0.0.1']],

@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vipaddr](packages/vipaddr) | ipaddr.js 1.9.1 / 2.5.0 | Single-pass parsing, bounded integer CIDR matching, isolated address state, direct mapped conversion, and preservation of IPv4-compatible IPv6 bits. |
 | [vforwarded](packages/vforwarded) | forwarded 0.2.0 | Correct tab whitespace, a single output array, snapshotted request fields, own-header lookup, and explicit invalid-input errors. |
 | [vee-first](packages/vee-first) | ee-first 1.1.1 | Once-only event dispatch, registration rollback, and cleanup under reentrant event hooks. |
 | [von-finished](packages/von-finished) | on-finished 2.4.1 | Private callback queues, async resources released after dispatch, and more reliable socket-listener cleanup. |
@@ -141,9 +142,9 @@ Node 20, 22, 24 and Bun. [`scripts/consumers`](scripts/consumers/package.json)
 pins the consumer upgrade target above. The gate aliases
 every VPM runtime package into every installed copy of its upstream, inside its own
 process, then serves an `onRequest` handler and an Express application through
-the Functions Framework, also serves a direct Express parser app, and runs 171
+the Functions Framework, also serves a direct Express parser app, and runs 180
 HTTP checks: proxy address chains and Express `req.ip`/`req.ips` under disabled,
-unrestricted, hop-count and subnet trust, including tab-separated proxies and
+unrestricted, hop-count and subnet trust, including tab-separated proxies, mapped/native IPv6 boundaries and malformed addresses, and
 stopping at untrusted hops; Express listen startup, followed by a late error, and EADDRINUSE
 callbacks with state-shaped metadata; application mixins with symbol getters;
 request media-type matching, uppercase and structured-suffix parser
@@ -1029,6 +1030,65 @@ its Unicode case is **1.9% slower** (4,696 → 4,784 ns). Bun parsing takes **1�
 less time**. Small differences can vary between runs; these isolated warmed calls
 do not measure application startup, HTTP throughput or tail latency.
 
+## vipaddr
+
+**Consumer and baselines:** `proxy-addr` 2.0.8, used by Express for client-address
+and proxy-trust evaluation, pins `ipaddr.js` 1.9.1. VPM also implements and compares
+against current `ipaddr.js` 2.5.0. All three address libraries have zero runtime
+dependencies. Together with `vforwarded`, this supplies the two dependencies
+needed for a future `vproxy-addr`.
+
+**Correctness:** numeric prefix lengths must be finite integers within the
+family's bounds. Both upstream releases can return true for an unrelated subnet
+with NaN/negative lengths, and infinite lengths can keep a match loop running.
+VPM rejects those inputs before matching. Constructors validate integer parts and
+bytes before bitwise conversion, snapshot their input, and store private address
+state; mutating exposed arrays cannot alter a later subnet decision. Custom
+range matching considers own keys, and built-in range tables are frozen.
+IPv4-compatible IPv6 text such as `::192.0.2.1` keeps its actual bits and family;
+2.5.0 instead inserts the IPv4-mapped marker. Only true mapped `/96` addresses
+are converted to IPv4.
+
+**Implementation and compatibility:** scanners replace repeated parsing and
+exception-based validation. Mapped-address checks and conversions work on numeric
+parts. IPv6 formatting finds the longest zero run directly, and subnet-mask
+helpers use numeric operations. VPM preserves validated legacy IPv4 number forms
+from 2.5.0, while strict decimal predicates remain available. Intentional changes
+include full validation in the low-level parsers/family predicates, strict dotted
+IPv6 tails, a documented ASCII zone grammar, copied read-only state properties,
+precise numeric prefix contracts, and base-class instances from static factories.
+JSON output retains the familiar address shape; own-property reflection changes.
+The 2.5.0 special-range snapshot is classification data, not a live registry or
+trust policy. Both global and instance `subnetMatch` are implemented, including
+custom fallback sentinels. Types cover the complete runtime API without ambient
+platform declarations.
+
+**Verification:** 87 tests combine all 67 adapted 2.5.0 tests with 20 focused
+checks. Independent checks include 20,000 byte/address round trips, ASCII syntax
+substitutions against Node, all 162 valid subnet masks, 5,000 generated subnet
+operations checked with BigInt arithmetic, and 3,000 range classifications.
+Nine new real HTTP checks run through unchanged proxy-addr and Express, covering
+mapped/native/compatible IPv6, subnet boundaries and malformed proxy addresses.
+The shared gate runs 180 HTTP checks on each runtime. Archive checks cover the
+eight-file package, npm/Bun installs, Node/Bun CJS/ESM imports and TypeScript 7
+consumers without platform types. The complete local suite has 643 Node passes;
+Bun has 642 passes and one existing skip. All 35 runtime declarations and the
+37-package documentation gate pass.
+
+**Performance, 2026-10-28:** three fresh processes each on Node 24.22.1 and Bun
+1.4.0 use twelve order-balanced samples per case against both verified releases.
+Versus the caller's pinned 1.9.1, IPv4 parsing takes **77–78% less time on Node and
+82–83% less on Bun**; IPv6 parsing takes about **92% / 90% less**. Unchanged
+proxy-addr trust functions take **59–89% / 80–92% less time** across IPv4, native
+IPv6 and mapped inputs. The 2.5.0 comparison also shows substantial gains.
+These are isolated operations and compiled trust calls, not measured HTTP
+throughput. Constructors retain a cost for validation and copying: **33–40%
+more time on Node and 53–100% more on Bun versus 1.9.1**. Parsed-address matching
+is also a little slower on Node (roughly 1–2 ns); Bun's IPv6 matching is slower
+than 1.9.1 but faster than 2.5.0. Byte-array conversion now validates and combines
+bytes directly, avoiding an intermediate array, and is faster than both releases
+on both runtimes. [Full tables, all six runs, API and compatibility](packages/vipaddr/README.md).
+
 ## vforwarded
 
 **Consumer and baseline:** `forwarded` 0.2.0 is a dependency of `proxy-addr` 2.0.8,
@@ -1050,9 +1110,9 @@ include 10,000 generated inputs, long chains, whitespace, getter/proxy behavior,
 and source-integrity checks. Eleven added HTTP checks exercise the actual
 proxy-addr/Express path under disabled, unrestricted, hop-count and subnet trust,
 including IPv4-mapped IPv6, tab-separated proxies, untrusted-hop boundaries and
-repeated header lines. The shared gate now runs 171 HTTP checks on Node 24 and
+repeated header lines. The current shared gate runs 180 HTTP checks on Node 24 and
 Bun. npm/Bun archive installations pass CJS/ESM runtime and TypeScript 7 consumers
-without platform ambient declarations. The documentation gate covers 36 packages.
+without platform ambient declarations. The documentation gate covers 37 packages.
 
 **Performance, 2026-10-28:** three fresh processes on Node 24.22.1 and Bun 1.4.0,
 with twelve alternating-order samples per case, show one-/two-address parsing
@@ -1602,7 +1662,7 @@ remain as test-only development dependencies in a separately locked
 [comparison fixture](scripts/type-consumers/README.md), outside the workspace
 and package archives. They reproduce the original gaps and check corrected
 declarations against an actual Undici runtime. Replacing that baseline with VPM
-would compare VPM against itself. All 34 runtime packages'
+would compare VPM against itself. All 35 runtime packages'
 public declarations also compile without any Node, Undici, or DOM ambient types.
 
 **Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
