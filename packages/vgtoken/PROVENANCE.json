@@ -1,0 +1,24 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "gtoken",
+    "version": "7.1.0",
+    "tarball": "https://registry.npmjs.org/gtoken/-/gtoken-7.1.0.tgz",
+    "integrity": "sha512-pCcEwRi+TKpMlxAQObHDQ56KawURgyAf6jtIY046fJ5tIv3zDe/LEIubckAO8fj6JnAxLdmWkUfNyulQ2iKdEw==",
+    "commit": "ef241a45ab6470a203a8d52f0c2fea46160d37da",
+    "sourceArchiveSha256": "e371ce800384755d19833356ead16cf55036cf3acb5bf19e117345c690f443e0"
+  },
+  "dependencies": {
+    "gaxios": "vgaxios",
+    "jws": "vjws"
+  },
+  "changes": [
+    "Share concurrent forced refreshes and prevent stale requests from overwriting changed configuration.",
+    "Cache the parsed RSA private key per instance.",
+    "Validate token data, expiry and assertion claims; freeze copied token data and additional claims.",
+    "Bound requests, disable credential-bearing redirects and sanitize transport errors.",
+    "Use current Google OAuth endpoints and POST revocation tokens in the form body.",
+    "Bound credential-file reads and reject malformed UTF-8 without exposing file contents."
+  ]
+}

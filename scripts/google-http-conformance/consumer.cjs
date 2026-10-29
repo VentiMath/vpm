@@ -5,12 +5,29 @@ const {Readable} = require('node:stream');
 module.exports = async function(from) {
   const {teenyRequest} = from('teeny-request');
   const {Gaxios} = from('gaxios');
+  const {JWT} = from('google-auth-library');
+  const {readFileSync} = require('node:fs');
+  const {join} = require('node:path');
+  const {verify, createPublicKey} = require('node:crypto');
+  const key = readFileSync(join(__dirname, '../../packages/vgtoken/test/key.pem'), 'utf8');
+  let assertions = 0;
   let attempts = 0;
   const server = http.createServer((request, response) => {
     let body = '';
     request.on('data', chunk => body += chunk);
     request.on('end', () => {
       response.setHeader('content-type', 'application/json');
+      if (request.url === '/token') {
+        const form = new URLSearchParams(body), assertion = form.get('assertion');
+        assert.equal(form.get('grant_type'), 'urn:ietf:params:oauth:grant-type:jwt-bearer');
+        const [header, payload, signature] = assertion.split('.');
+        assert(verify('RSA-SHA256', Buffer.from(header + '.' + payload), createPublicKey(key), Buffer.from(signature, 'base64url')));
+        const claims = JSON.parse(Buffer.from(payload, 'base64url'));
+        assert.equal(claims.iss, 'service@example.test');
+        assertions++;
+        response.end(JSON.stringify(claims.target_audience ? {id_token: 'consumer-id-token'} : {access_token: 'consumer-access-token', expires_in: 3600, token_type: 'Bearer'}));
+        return;
+      }
       if (request.url === '/retry' && ++attempts === 1) response.statusCode = 503;
       response.end(JSON.stringify({type: request.headers['content-type'], body, url: request.url}));
     });
@@ -32,6 +49,13 @@ module.exports = async function(from) {
     assert(multipart.data.body.includes('google-upload'));
     await client.request({url: uri + '/retry', retry: true, retryConfig: {retryDelay: 0, maxRetryDelay: 0}});
     assert.equal(attempts, 2);
+    const jwt = new JWT({email: 'service@example.test', key, scopes: ['scope']});
+    jwt.transporter = {request: options => client.request({...options, url: uri + '/token'})};
+    const tokens = await jwt.authorize();
+    assert.equal(tokens.access_token, 'consumer-access-token'); assert(tokens.expiry_date > Date.now());
+    assert.equal(jwt.key, key); assert.equal(jwt.email, 'service@example.test');
+    assert.equal(await jwt.fetchIdToken('https://audience.example.test'), 'consumer-id-token');
+    assert.equal(assertions, 2);
   } finally {
     client.destroy?.();
     server.closeAllConnections();

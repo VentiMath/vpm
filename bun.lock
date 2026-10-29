@@ -172,6 +172,14 @@
         "vnode-fetch": "workspace:*",
       },
     },
+    "packages/vgtoken": {
+      "name": "vgtoken",
+      "version": "0.1.0",
+      "dependencies": {
+        "vgaxios": "workspace:*",
+        "vjws": "workspace:*",
+      },
+    },
     "packages/vhttp-errors": {
       "name": "vhttp-errors",
       "version": "0.1.0",
@@ -475,6 +483,8 @@
     "vfunctions-framework": ["vfunctions-framework@workspace:packages/vfunctions-framework"],
 
     "vgaxios": ["vgaxios@workspace:packages/vgaxios"],
+
+    "vgtoken": ["vgtoken@workspace:packages/vgtoken"],
 
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
 
