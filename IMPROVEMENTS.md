@@ -18,11 +18,11 @@ October 29, 2026. Bring its dependencies forward before implementing
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
-| 1 | vgoogle-logging-utils | 0.0.2 | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
-| 2 | vnode-fetch | 2.7.0 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch) |
-| 3 | vgaxios | 6.7.1 | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
-| 4 | vgcp-metadata | 6.1.1 | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
-| 5 | vgoogle-auth-library | Not implemented; current consumer tests use 9.15.1 | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Complete | vgoogle-logging-utils | 2.1.1, plus adapted 0.0.2 coverage | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
+| 1 | vnode-fetch | 2.7.0 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch) |
+| 2 | vgaxios | 6.7.1 | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
+| 3 | vgcp-metadata | 6.1.1 | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
+| 4 | vgoogle-auth-library | Not implemented; current consumer tests use 9.15.1 | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 
 Google Auth 11 is the direct target; implementing versions 9 and 10 first is not
 a prerequisite. Its current manifest uses gaxios, gcp-metadata,
@@ -44,7 +44,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | --- | --- | --- |
 | [vgcp-metadata](packages/vgcp-metadata) | gcp-metadata 6.1.1 | Entirely VPM runtime tree; first-success endpoint races, finite deadlines, direct requests, credential-safe errors/logs, bounded bulk reads and endpoint-aware availability caching. |
 | [vjson-bigint](packages/vjson-bigint) | json-bigint 1.0.0 | Zero dependencies; exact numeric wrappers/native bigints, strict JSON syntax, bounded parsing, exact prototype-key policies, reentrant serialization and safe replacers. |
-| [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 0.0.2 | Standalone structured JSON, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
+| [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 2.1.1 / 0.0.2 | Current activation/stdout behavior, structured filtering and protected message fields, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
 | [vgtoken](packages/vgtoken) | gtoken 7.1.0 | Shared forced refreshes, cached RSA key imports, validated expiry, bounded exchanges, credential-safe errors and POST-body revocation on the VPM HTTP/signing stack. |
 | [vgaxios](packages/vgaxios) | gaxios 6.7.1 | Entirely VPM transport tree, isolated defaults/error state, correct request bodies, bounded retry decisions, cancellable backoff and separate proxy/destination TLS identity. |
 | [vnode-fetch](packages/vnode-fetch) | node-fetch 2.7.0 | Native URL handling, checked limits, cross-origin credential isolation, reliable stream cancellation and byte-preserving body collection. |
@@ -106,12 +106,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,106 tests**: all pass on Node 24, and Bun passes
-2,103 with three documented runtime-specific skips. All 59 runtime packages'
+The root suite contains **2,110 tests**: all pass on Node 24, and Bun passes
+2,107 with three documented runtime-specific skips. All 59 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **59 packages**, including two declaration-only packages.
+catalog covers **61 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -139,7 +139,7 @@ upstream cases on each runtime, also checked against upstream itself.
 The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
 extend assertions (one obsolete intrinsic-removal test skipped), 47 is-stream
 assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
-109 gaxios tests, 45 gtoken tests, ten logging suite entries, 18 json-bigint tests
+109 gaxios tests, 45 gtoken tests, 27 logging suite entries across two versions, 18 json-bigint tests
 and 66 metadata tests on both runtimes. Its documented adaptations are also checked
 against the published upstream implementations.
 
@@ -333,16 +333,22 @@ printing their exception contents; each event tap still gets its own chance to r
 Filter snapshots are copied, explicit changes invalidate cached decisions, and
 the debug adapter uses `enable()` instead of changing `NODE_DEBUG`.
 
-All 16 focused tests and ten original public suite entries pass on Node and Bun.
-One original entry is empty; focused coverage verifies the missing replacement
-behavior. The internal upstream Temporal helper is outside the exported API.
+All 20 focused tests, 17 unchanged upstream 2.1.1 entries and ten 0.0.2 entries
+pass on Node and Bun. The old suite has one updated VPM expectation for explicit
+backend activation. Each upstream suite has an empty entry; focused coverage
+verifies the missing backend-replacement behavior. The internal upstream Temporal
+helper is outside the exported API. Current upstream activation rules, the `true`
+wildcard alias and structured stdout output are supported; the initial VPM version
+used stderr for structured output and required the flag even with an explicit backend.
 
-Formatted Node-style output takes 67% less time on Node 24 and 24% less on Bun;
-disabled invocations take 85%/98% less. Structured custom-backend output is effectively
-unchanged on Node and 5% faster on Bun. Node retains small costs for cached lookup
-(+12 ns), isolated taps (+7 ns), and filtered backend calls (+3 ns). Bun's near-zero
-lookup/disabled-call timings are JIT-specific microbenchmarks. [Full evidence](packages/vgoogle-logging-utils/bench/results/README.md)
-includes three processes, controls and source hashes per runtime.
+Against 2.1.1, formatted Node-style output takes 66% less time on Node 24 and 19%
+less on Bun; disabled invocations take 85%/98% less. Default structured output
+improves 1%/5%, and custom structured output 3%/7%. Node retains small costs for
+isolated taps (+6 ns) and filtered backend calls (+4 ns). Cached lookup improves,
+but its Node identical-upstream control differs by 12%, limiting precise claims.
+Bun's tiny lookup/disabled-call timings are JIT-specific microbenchmarks.
+[Full evidence](packages/vgoogle-logging-utils/bench/results/README.md) includes
+three processes, controls and source hashes per runtime.
 
 ## vgtoken
 

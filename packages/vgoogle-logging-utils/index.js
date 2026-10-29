@@ -64,7 +64,7 @@ const placeholder = (() => {
 class DebugLogBackendBase {
   constructor() {
     const value = process.env[env.nodeEnables] ?? '*';
-    this.filters = filterSnapshot(value === 'all' ? ['*'] : value.split(','));
+    this.filters = filterSnapshot(value === 'all' || value === 'true' ? ['*'] : value.split(','));
     this.filtersSet = false;
     this.cached = new Map();
   }
@@ -92,7 +92,7 @@ class NodeBackend extends DebugLogBackendBase {
   }
   makeLogger(namespace) {
     if (!this.isEnabled(namespace)) return noop;
-    if (this.structured) return (_fields, json) => console.error('%s', json);
+    if (this.structured) return (_fields, json) => console.log('%s', json);
     const colours = !!(process.stderr.isTTY && (typeof process.stderr.getColorDepth !== 'function' || process.stderr.getColorDepth() > 2));
     const prefix = colours ? '\x1b[33m' + process.pid + '\x1b[0m [\x1b[32m' + namespace + '\x1b[0m|' : process.pid + ' [' + namespace + '|';
     const options = {colors: colours};
@@ -150,7 +150,7 @@ function setBackend(value) {
   backend = value;
 }
 function log(namespace, parent) {
-  if (!process.env[env.nodeEnables] || !namespace || backend === null) return placeholder;
+  if (backend === null || (backend === undefined && !process.env[env.nodeEnables]) || !namespace) return placeholder;
   if (typeof namespace !== 'string') throw new TypeError('Namespace must be a string');
   if (parent) {
     if (typeof parent.instance?.namespace !== 'string') throw new TypeError('Parent must be a logger');

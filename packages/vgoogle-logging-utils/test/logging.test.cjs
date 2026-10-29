@@ -5,7 +5,7 @@ const {format} = require('node:util');
 const lib = require('..');
 const originalFlag = process.env[lib.env.nodeEnables];
 let sequence = 0;
-const capture = fn => { const lines = [], original = console.error; console.error = (...args) => lines.push(format(...args)); try { fn(lines); } finally { console.error = original; } return lines; };
+const capture = fn => { const lines = [], original = {error: console.error, log: console.log}; for (const method of ['error', 'log']) console[method] = (...args) => lines.push(format(...args)); try { fn(lines); } finally { Object.assign(console, original); } return lines; };
 const enabled = () => { process.env[lib.env.nodeEnables] = '*'; return 'test-' + ++sequence; };
 afterEach(() => { if (originalFlag === undefined) delete process.env[lib.env.nodeEnables]; else process.env[lib.env.nodeEnables] = originalFlag; lib.setBackend(undefined); });
 test('public callable, severity methods, chaining and sublogger', () => {
@@ -106,4 +106,39 @@ test('configuration validates backends, namespaces and filter arrays', () => {
   assert.throws(() => lib.getStructuredBackend({}), TypeError);
   assert.throws(() => lib.log(42), TypeError);
   assert.throws(() => lib.getNodeBackend().setFilters([42]), TypeError);
+});
+test('true enables every namespace for plain and structured backends', () => {
+  process.env[lib.env.nodeEnables] = 'true';
+  for (const make of [lib.getNodeBackend, lib.getStructuredBackend]) {
+    const backend = make(); assert.deepEqual(backend.filters, ['*']);
+    assert.equal(capture(() => { backend.log('first', {}, 'visible'); backend.log('other:child', {}, 'visible'); }).length, 2);
+  }
+});
+test('an explicit backend enables logging without the environment flag, including subloggers', () => {
+  delete process.env[lib.env.nodeEnables]; const records = [];
+  lib.setBackend({setFilters() {}, log: (...args) => records.push(args)});
+  const logger = lib.log('manual-' + ++sequence); assert.notEqual(logger, lib.placeholder);
+  logger.info('manual'); logger.sublog('child').warn('child');
+  assert.deepEqual(records, [[logger.instance.namespace, {severity: 'INFO'}, 'manual'], [logger.instance.namespace + ':child', {severity: 'WARNING'}, 'child']]);
+  lib.setBackend(null); assert.equal(lib.log(logger.instance.namespace), lib.placeholder);
+  logger.info('disabled'); assert.equal(records.length, 2);
+  lib.setBackend(undefined); assert.equal(lib.log(logger.instance.namespace), lib.placeholder);
+});
+test('selected default backend persists after removing the environment flag', () => {
+  enabled(); lib.setBackend(undefined);
+  const logger = lib.log('automatic-' + ++sequence); delete process.env[lib.env.nodeEnables];
+  assert.equal(lib.log(logger.instance.namespace), logger);
+  assert.equal(capture(() => logger.sublog('child').info('still enabled')).length, 1);
+  lib.setBackend(undefined); assert.equal(lib.log(logger.instance.namespace), lib.placeholder);
+});
+test('structured default uses stdout and ordinary Node output uses stderr', () => {
+  enabled(); const original = {log: console.log, error: console.error}, records = [];
+  try {
+    for (const method of ['log', 'error']) console[method] = (...args) => records.push([method, format(...args)]);
+    lib.getStructuredBackend().log('stdout', {severity: 'ERROR'}, 'structured');
+    lib.getNodeBackend().log('stderr', {severity: 'INFO'}, 'plain');
+  } finally { Object.assign(console, original); }
+  assert.equal(records.length, 2); assert.equal(records[0][0], 'log'); assert.equal(records[1][0], 'error');
+  assert.deepEqual(JSON.parse(records[0][1]), {severity: 'ERROR', message: 'structured'});
+  assert.match(records[1][1], /\[stderr\|INFO\] plain$/);
 });

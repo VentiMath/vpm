@@ -1,6 +1,6 @@
 # Logging benchmark evidence
 
-Compared with google-logging-utils 0.0.2 on Node 24 and Bun. Each runtime has three
+Compared with google-logging-utils 2.1.1 on Node 24 and Bun. Each runtime has three
 fresh processes and one identical-upstream control, with 12 alternating paired
 rounds per case. All samples and source hashes are retained. The console sink is
 captured without terminal I/O; formatting is validated outside the timing loop.
@@ -21,20 +21,25 @@ Negative changes mean less time; percentages are medians of paired ratios.
 
 | Case | Node upstream → VPM (ns) | Change | Bun upstream → VPM (ns) | Change |
 | --- | ---: | ---: | ---: | ---: |
-| Disabled lookup | 249 → 254 | +2.4% | 24 → 1 | −94.4% |
-| Disabled invocation | 62 → 9 | −84.9% | 58 → 1 | −98.0% |
-| Cached lookup | 220 → 232 | +5.7% | 30 → 6 | −79.2% |
-| Custom backend dispatch | 93 → 75 | −19.1% | 78 → 38 | −60.5% |
-| Event tap | 82 → 89 | +8.7% | 76 → 32 | −60.7% |
-| Filtered Node output | 15 → 18 | +26.9% | 21 → 16 | −16.8% |
-| Formatted Node output | 348 → 115 | −66.8% | 381 → 292 | −24.2% |
-| Structured custom backend | 239 → 239 | −0.2% | 406 → 382 | −5.0% |
+| Disabled lookup | 257 → 255 | -0.5% | 24 → 2 | -92.3% |
+| Disabled invocation | 61 → 9 | -84.9% | 58 → 1 | -98.0% |
+| Cached lookup | 47 → 32 | -32.8% | 23 → 5 | -78.9% |
+| Manual backend lookup, no flag | 47 → 32 | -32.2% | 27 → 7 | -74.5% |
+| Custom backend dispatch | 92 → 74 | -19.3% | 88 → 29 | -66.6% |
+| Event tap | 82 → 88 | +7.0% | 80 → 33 | -54.6% |
+| Filtered Node output | 14 → 18 | +24.2% | 20 → 16 | -12.7% |
+| Formatted Node output | 341 → 114 | -66.0% | 376 → 303 | -19.2% |
+| Structured default stdout | 247 → 243 | -1.4% | 400 → 379 | -5.4% |
+| Structured custom backend | 244 → 238 | -2.7% | 420 → 390 | -7.1% |
 
-Node's remaining costs are small in absolute terms: roughly 12 ns for a cached
-lookup, 7 ns for an isolated event tap and 3 ns for a filtered backend call.
-The disabled-lookup difference crosses zero between processes. Node controls
-range from −0.9% to +0.7%; Bun controls range from −1.0% to +2.5%. Bun's extremely
-small disabled/lookup figures reflect JIT optimization of these repeated,
-side-effect-free workloads; they are not an application-level speedup claim.
-Its lookup and filtered-output results vary substantially between processes.
-Formatted-output improvements are consistent across all processes on both runtimes.
+Remaining Node costs are approximately 6 ns per event tap and 4 ns per filtered
+call. Filtered-call overhead varies from +1% to +28% across processes. Formatted
+output improves in every process on both runtimes. Structured output improves
+slightly despite retaining namespace filtering and protected message/severity fields.
+
+The identical-upstream Node cached-lookup control differs by +11.9% (about 4 ns),
+so its measured 33% improvement is directional rather than a precise estimate.
+Other Node controls range from −2.1% to +0.3%; Bun controls range from −2.8% to +2.0%.
+Bun's tiny lookup/disabled-call figures reflect JIT optimization of repeated calls;
+lookup and dispatch magnitudes vary between processes. These microbenchmarks do
+not establish an application-level speedup or measure actual console I/O.
