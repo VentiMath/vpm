@@ -17,6 +17,18 @@ module.exports = async function(from) {
     logging.setBackend(undefined);
     if (oldFlag === undefined) delete process.env[logging.env.nodeEnables]; else process.env[logging.env.nodeEnables] = oldFlag;
   }
+  const nativeJSON = globalThis.JSON, oldBigInt = process.env.CE_USE_BIG_INT;
+  try {
+    process.env.CE_USE_BIG_INT = 'true';
+    const {JSONParser} = from('cloudevents/dist/parsers.js');
+    const event = new JSONParser().parse('{"id":1234567890123456789,"message":"quoted \\"value\\""}');
+    assert.equal(event.id, 1234567890123456789n);
+    assert.equal(event.message, 'quoted "value"');
+    assert.equal(globalThis.JSON.stringify(event), '{"id":1234567890123456789,"message":"quoted \\"value\\""}');
+  } finally {
+    globalThis.JSON = nativeJSON;
+    if (oldBigInt === undefined) delete process.env.CE_USE_BIG_INT; else process.env.CE_USE_BIG_INT = oldBigInt;
+  }
   const {readFileSync} = require('node:fs');
   const {join} = require('node:path');
   const {verify, createPublicKey} = require('node:crypto');

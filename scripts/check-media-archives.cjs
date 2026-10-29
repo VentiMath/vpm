@@ -36,7 +36,7 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vextend','vis-stream','vgoogle-logging-utils'].includes(name)) {
+    if (['vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
@@ -146,6 +146,7 @@ try {
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 if(new (require('vnode-fetch').Headers)({test:'ok'}).get('test')!=='ok')throw new Error('fetch archive');
 if(typeof require('vgaxios').Gaxios.prototype.destroy!=='function')throw new Error('gaxios archive');
+if(require('vjson-bigint').parse('9007199254740993').valueOf()!=='9007199254740993')throw new Error('json archive');
 if(!new (require('vgtoken').GoogleToken)().hasExpired())throw new Error('gtoken archive');
 if(typeof require('vgoogle-logging-utils').getStructuredBackend().log!=='function')throw new Error('logging archive');
 if(!require('vuuid').validate(require('vuuid').v4()))throw new Error('UUID archive');
@@ -298,6 +299,8 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import fetchArchive, {Response as ArchiveResponse} from 'vnode-fetch';
+import jsonBig from 'vjson-bigint';
+if(jsonBig.stringify(jsonBig.parse('9007199254740993'))!=='9007199254740993')throw new Error('json ESM archive');
 import {placeholder as loggingPlaceholder} from 'vgoogle-logging-utils';
 if (loggingPlaceholder.on('log', () => {}) !== loggingPlaceholder) throw new Error('logging ESM archive');
 import {GoogleToken as ArchiveToken} from 'vgtoken';
@@ -439,6 +442,9 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import typedFetch, {Request as TypedFetchRequest} from 'vnode-fetch';
+import typedJSON = require('vjson-bigint');
+const exactJSONNumber: typedJSON.ExactNumber = new typedJSON.ExactNumber('9007199254740993');
+const jsonString: string | undefined = typedJSON.stringify({exactJSONNumber});
 import {log as typedLog} from 'vgoogle-logging-utils';
 const typedLogging = typedLog('types'); typedLogging.on('log', (fields, args) => { void [fields,args]; }).info('ok');
 import {GoogleToken as TypedToken, type TokenData as GTokenData} from 'vgtoken';

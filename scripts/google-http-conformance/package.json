@@ -10,6 +10,7 @@
     "chai-as-promised": "7.1.2",
     "chai-iterator": "1.1.1",
     "chai-string": "1.3.0",
+    "chai4": "npm:chai@4.5.0",
     "encoding": "0.1.13",
     "form-data": "2.5.5",
     "mocha": "11.7.5",

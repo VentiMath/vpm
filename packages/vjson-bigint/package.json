@@ -1,0 +1,32 @@
+{
+  "name": "vjson-bigint",
+  "version": "0.1.0",
+  "description": "Exact JSON numbers, native bigint support and strict syntax without arithmetic dependencies",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vjson-bigint"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vjson-bigint"
+}
