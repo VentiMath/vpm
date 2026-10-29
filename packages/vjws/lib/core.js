@@ -7,6 +7,26 @@ const ALGORITHMS = Object.freeze(['HS256', 'HS384', 'HS512', 'RS256', 'RS384', '
 const methods = Object.create(null);
 for (const algorithm of [...ALGORITHMS, 'none']) methods[algorithm] = jwa(algorithm);
 const invalidCompact = /[^A-Za-z0-9_.-]/;
+const wideCharacter = /[\u0100-\uffff]/;
+// Bun's Buffer.write can consume invalid ASCII as base64 values. It needs the
+// full round trip; Node's decoder permits the byte-count invariant below.
+const checkDecodedLength = !process.versions.bun;
+let decodingScratch;
+function decodedLengthMatches(payload) {
+  // Bounded scratch storage avoids allocating a payload Buffer on verification.
+  // Clear every written byte before returning; decoded payloads are not retained.
+  const scratch = decodingScratch ||= Buffer.alloc(65536);
+  for (let offset = 0; offset < payload.length; offset += 87380) {
+    const part = payload.slice(offset, offset + 87380); // complete 4-character groups
+    let count = 0;
+    try {
+      count = scratch.write(part, 'base64url');
+      if (count !== Math.floor(part.length * 3 / 4)) return false;
+      if (!checkDecodedLength && scratch.toString('base64url', 0, count) !== part) return false;
+    } finally { scratch.fill(0); }
+  }
+  return true;
+}
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 const signingHeaders = { values: new Map() }, parsedHeaders = { values: new Map() };
 function recalled(cache, key) {
@@ -95,6 +115,15 @@ function canonical(token, start, end) {
   const last = alphabet.indexOf(token[end - 1]);
   return remainder === 2 ? (last & 15) === 0 : (last & 3) === 0;
 }
+function largePayloadIsCanonical(token, first, second) {
+  // With canonical lengths/tail bits, ignoring even one ASCII character
+  // reduces the decoded byte count. Exclude alphabet aliases and characters
+  // that could truncate to Latin-1. Bun also compares the exact re-encoding.
+  const payload = token.slice(first + 1, second);
+  return !invalidCompact.test(token.slice(0, first)) && !invalidCompact.test(token.slice(second + 1)) &&
+    (!checkDecodedLength || (!payload.includes('+') && !payload.includes('/') && !wideCharacter.test(payload))) &&
+    decodedLengthMatches(payload);
+}
 function parse(value, fullHeader = true) {
   const token = typeof value === 'string' ? value : bytes(value)?.toString('utf8');
   if (typeof token !== 'string') return null;
@@ -103,33 +132,33 @@ function parse(value, fullHeader = true) {
   if (first < 1 || second < 0 || token.indexOf('.', second + 1) !== -1 ||
     !canonical(token, 0, first) || !canonical(token, first + 1, second) || !canonical(token, second + 1, token.length)) return null;
   if (second - first > 4096) {
-    // Native base64 codecs validate large payloads faster than a JS regex.
-    // Exact round trips reject every spelling the permissive decoder accepts.
-    const payload = token.slice(first + 1, second);
-    if (invalidCompact.test(token.slice(0, first)) || invalidCompact.test(token.slice(second + 1)) ||
-      Buffer.from(payload, 'base64url').toString('base64url') !== payload) return null;
+    if (!largePayloadIsCanonical(token, first, second)) return null;
   } else if (invalidCompact.test(token)) return null;
   const encoded = token.slice(0, first);
   let saved = recalled(parsedHeaders, encoded);
   if (!saved) {
     const headerBytes = Buffer.from(encoded, 'base64url');
-    if (!isUtf8(headerBytes)) return null;
     const json = headerBytes.toString('utf8');
+    // Invalid UTF-8 always decodes with a replacement character. The uncommon
+    // replacement case needs native validation because U+FFFD can also be valid.
+    if (json.includes('\ufffd') && !isUtf8(headerBytes)) return null;
     let header;
     try { header = JSON.parse(json); } catch { return null; }
     if (!validHeader(header)) return null;
     // Only private immutable metadata is reused. Decoding always returns fresh
     // objects; neither decoded values, payloads nor key material enter a cache.
-    saved = remember(parsedHeaders, encoded, { json, header: Object.freeze({ alg: header.alg, typ: header.typ }) });
+    saved = remember(parsedHeaders, encoded, { json, alg: header.alg });
     if (fullHeader) return { token, first, second, header };
   }
   let header;
-  if (fullHeader) header = JSON.parse(saved.json); else header = saved.header;
+  if (fullHeader) header = JSON.parse(saved.json); else header = saved;
   return { token, first, second, header };
 }
 function verifyParsed(parsed, algorithm, method, key) {
-  return parsed !== null && parsed.header.alg === algorithm &&
-    method.verify(parsed.token.slice(0, parsed.second), parsed.token.slice(parsed.second + 1), key);
+  if (parsed === null || parsed.header.alg !== algorithm) return false;
+  const input = parsed.token.slice(0, parsed.second);
+  const signature = parsed.token.slice(parsed.second + 1);
+  return method.verify(input, signature, key);
 }
 function verify(token, algorithm, key) {
   const method = algorithmMethod(algorithm);

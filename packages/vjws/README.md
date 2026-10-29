@@ -103,8 +103,9 @@ Readable. Manual `.sign()`/`.verify()` returns `undefined` until both inputs fin
 then returns the result; it never signs partial input or emits duplicate success.
 
 Native Readables and legacy `jws` Stream inputs are accepted. Source errors and
-premature closes propagate, and owned listeners/pipes are removed on completion
-or cancellation. Caller-owned sources are detached rather than destroyed.
+premature closes propagate, and owned listeners are removed on completion
+or cancellation. Source streams are collected directly; public writable inputs
+are native Writables created on demand. Caller-owned sources are detached rather than destroyed.
 Collected chunks are copied on receipt to prevent later caller mutation, then
 concatenated once. `maxBuffer` is an optional nonnegative byte limit **per collected
 input**; it does not limit direct values. The default is the runtime's maximum
@@ -117,8 +118,11 @@ payloads, empty inputs, explicit header/algorithm agreement, canonical parsing,
 critical-extension validation and standard stream lifecycle behavior. No global
 payload or key cache is introduced. Each of the two private header caches holds
 at most 16 bounded records: 15 repeated headers and one admission candidate,
-with keys limited to 4,096 characters. Large encoded payloads use exact native
-base64url round trips for validation.
+with keys limited to 4,096 characters. Large encoded payloads reuse a lazy 64 KiB
+scratch buffer, cleared after every validation block. Node uses canonical lengths/tail bits, alphabet-alias checks and
+exact decoded byte counts. Bun retains exact encoding round trips because its
+Buffer.write decoder treats some invalid ASCII differently. Differential tests
+cover every byte value and the decoding block boundaries.
 
 The [focused tests](test/jws.test.cjs) cover all 12 signed algorithms, malformed
 tokens, byte offsets, Unicode, input mutation, native keys, errors, cancellation
@@ -130,17 +134,18 @@ Real `jsonwebtoken` and Google `JWTAccess` consumers are exercised by the
 [integration gate](../../scripts/integration.cjs), including callback-based JWT
 signing. Installed archive checks cover npm, Bun, CJS, ESM and TypeScript.
 
-The [benchmark](bench/compare.cjs) compares upstream `jws`+`jwa`, upstream
-`jws`+`vjwa`, and `vjws`+`vjwa` to distinguish wrapper changes from crypto changes.
-See [results and methodology](bench/results/README.md) and the
+The [current benchmark](bench/followup.cjs) compares upstream `jws`+`jwa`,
+`vjws` before these optimizations and the current implementation. The
+[original comparison](bench/results/README.md) also isolates inherited `vjwa` costs.
+See [current results and methodology](bench/results/followup/README.md) and the
 [central comparison](../../IMPROVEMENTS.md). These are package measurements, not
 application throughput claims.
 
 ```sh
 node --test packages/vjws/test/*.test.cjs
 bun test ./packages/vjws/test
-OUTPUT=packages/vjws/bench/results/node-1.json node packages/vjws/bench/compare.cjs
-node packages/vjws/bench/summarize.cjs --verify-current
+OUTPUT=packages/vjws/bench/results/followup/node-1.json node packages/vjws/bench/followup.cjs
+node packages/vjws/bench/summarize-followup.cjs --verify-current
 ```
 
 MIT. The upstream license and pinned runtime/test provenance are retained.
