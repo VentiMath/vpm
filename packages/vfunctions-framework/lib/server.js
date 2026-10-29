@@ -15,7 +15,7 @@
 // limitations under the License.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getServer = getServer;
-const bodyParser = require("vbody-parser");
+const createBodyParser = require("./body_parser");
 const express = require("vexpress");
 const http = require("http");
 const onFinished = require("von-finished");
@@ -49,48 +49,8 @@ function getServer(userFunction, options) {
         }
         next();
     });
-    /**
-     * Retains a reference to the raw body buffer to allow access to the raw body
-     * for things like request signature validation.  This is used as the "verify"
-     * function in body-parser options.
-     * @param req - Express request object
-     * @param res - Express response object
-     * @param buf - Buffer to be saved
-     */
-    function rawBodySaver(req, res, buf) {
-        req.rawBody = buf;
-    }
-    // Set limit to a value larger than 32MB, which is maximum limit of higher
-    // level layers anyway.
-    const requestLimit = '1024mb';
-    const defaultBodySavingOptions = {
-        limit: requestLimit,
-        verify: rawBodySaver,
-    };
-    const cloudEventsBodySavingOptions = {
-        type: 'application/cloudevents+json',
-        limit: requestLimit,
-        verify: rawBodySaver,
-    };
-    const rawBodySavingOptions = {
-        limit: requestLimit,
-        verify: rawBodySaver,
-        type: '*/*',
-    };
-    // Use extended query string parsing for URL-encoded bodies.
-    const urlEncodedOptions = {
-        limit: requestLimit,
-        verify: rawBodySaver,
-        extended: true,
-    };
-    // Apply middleware
-    app.use(bodyParser.json(cloudEventsBodySavingOptions));
-    app.use(bodyParser.json(defaultBodySavingOptions));
-    app.use(bodyParser.text(defaultBodySavingOptions));
-    app.use(bodyParser.urlencoded(urlEncodedOptions));
-    // The parser will process ALL content types so MUST come last.
-    // Subsequent parsers will be skipped when one is matched.
-    app.use(bodyParser.raw(rawBodySavingOptions));
+    // Select one checked parser instead of traversing five parser layers.
+    app.use(createBodyParser());
     app.enable('trust proxy'); // To respect X-Forwarded-For header.
     // Disable Express 'x-powered-by' header:
     // http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header

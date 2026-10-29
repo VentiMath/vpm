@@ -58,8 +58,8 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,506 tests**: all pass on Node 24, and Bun passes
-1,503 with three documented runtime-specific skips. All 44 runtime packages'
+The root suite contains **1,515 tests**: all pass on Node 24, and Bun passes
+1,512 with three documented runtime-specific skips. All 44 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
 catalog covers **46 packages**, including two declaration-only packages.
 
@@ -191,13 +191,13 @@ than request-body completion; listeners and socket timeouts are cleaned up.
 Timeout input is bounded to valid integer seconds. Global middleware avoids
 unnecessary wildcard route capture.
 
-**Coverage:** 48 new package tests, all 105 upstream tests on both runtimes, the
+**Coverage:** 57 package tests, all 105 upstream tests on both runtimes, the
 shared 245-request Firebase/HTTP gate, CLI startup and installed npm/Bun archive
 checks. The separate upstream hosted/external conformance harness was not run.
 The [API guide](packages/vfunctions-framework/README.md) documents retained
 framework defaults, timeout semantics, structural type limits and compatibility.
 
-**Performance, 2026-10-28:** pooled medians of 21 fresh-process samples per
+**Initial performance, 2026-10-28:** pooled medians of 21 fresh-process samples per
 implementation (three reports, seven alternating pairs each), Node 24.22.1 and
 Bun 1.4.0 on macOS arm64. Startup includes package loading, option parsing, real
 handler loading and server readiness; process launch and fixture creation are
@@ -235,6 +235,60 @@ correctness is covered by the passing conformance suite.
 [The harness and six raw reports](packages/vfunctions-framework/bench) retain
 all samples, runtime information, the installed dependency snapshot, harness
 hashes and hashes of the complete VPM source tree and consumer lockfile.
+
+**HTTP optimization follow-up, 2026-10-28:** the initial Bun form result above
+is a pooling artifact: VPM was faster in each of the three original reports.
+Node JSON also changed direction between reports. Those measurements did not
+establish a stable 1–2% HTTP penalty.
+
+The implementation now dispatches directly to one checked body parser instead
+of traversing five parser middleware layers. The original header still passes
+through VPM's media-type, charset, encoding and size checks; raw-body capture,
+form bounds and malformed-input handling remain intact. HTTP handlers returning
+ordinary values, including `res.json(...)`, no longer allocate unnecessary
+promises. Actual promises and custom thenables retain rejection handling,
+once-read getters, deferred invocation and first-settlement behavior. Captured
+thenable state is kept outside the common event-invocation callback.
+
+The [follow-up harness](packages/vfunctions-framework/bench/optimize.cjs) compares
+upstream 5.0.2, the unchanged VPM runtime from `119f04c`, and the optimized runtime
+with the same installed dependencies. Three reports per runtime each use all six
+execution orders: **18 samples per variant and workload**. HTTP warmup/request
+counts and startup boundaries are unchanged. Comparisons take the median of
+within-round ratios, preserving pairing rather than dividing independently
+pooled medians. The [six follow-up reports](packages/vfunctions-framework/bench/results/optimized)
+retain every sample and source hash; the [previous-runtime fixture](packages/vfunctions-framework/bench/fixtures)
+contains the verified archive.
+
+Elapsed-time changes below use those paired ratios; **negative is faster**.
+"Previous" is the unchanged VPM runtime, not upstream.
+
+| HTTP workload | Node vs upstream | Node vs previous | Bun vs upstream | Bun vs previous |
+| --- | ---: | ---: | ---: | ---: |
+| GET | -2.4% | -1.3% | -4.8% | +2.2% |
+| Deep path with query | -3.6% | -1.2% | -0.2% | +6.0% |
+| JSON body | -1.6% | -0.9% | +1.6% | -5.0% |
+| Form body | -3.3% | +2.3% | -10.0% | -8.1% |
+| JSON, mixed-case type and charset | +2.4% | +0.9% | -1.7% | +4.5% |
+| Form, mixed-case type and charset | -0.9% | -6.0% | -7.4% | +1.6% |
+| Async JSON handler | -3.3% | +0.1% | -5.7% | +2.1% |
+| Structured CloudEvent | -3.6% | +4.0% | — | — |
+
+The original Node JSON and Bun form workloads are ahead of upstream in these
+medians, but the results do **not** establish a universal HTTP speedup. Node JSON
+is 0.8–2.7% faster than upstream across the three report medians. Bun form results
+range from 16.3% faster to 9.9% slower, making the pooled paired 10% reduction an
+unstable estimate. Bun shows substantial run-to-run drift throughout this set.
+Remaining upstream gaps include Node JSON with a charset parameter (+2.4%) and
+Bun plain JSON (+1.6%). Some comparisons with the previous VPM runtime also
+regress, including Node forms and CloudEvents and Bun deep paths; they remain
+visible above. These small local results do not justify removing correctness
+checks or claiming production throughput gains.
+
+Startup remains ahead of upstream in all paired medians: listening takes
+29–31% less time on Node and 10–17% less on Bun; first response takes about 28%
+less on Node and 7–16% less on Bun. Compared with previous VPM, the paired startup
+medians are 0.7–6.4% lower. Startup and HTTP raw samples remain available together.
 
 ## vread-package-up
 

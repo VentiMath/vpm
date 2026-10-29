@@ -9,6 +9,7 @@ const [variant, mode, sourceType = 'cjs'] = process.argv.slice(2);
 const root = path.resolve(__dirname, '../../..');
 const base = variant === 'upstream'
   ? path.join(root, 'scripts/consumers/node_modules/@google-cloud/functions-framework/build/src')
+  : variant === 'previous' ? process.env.VPM_PREVIOUS_FRAMEWORK_LIB
   : path.resolve(__dirname, '../lib');
 let tmp;
 if (mode === 'startup') {
@@ -54,6 +55,14 @@ async function run() {
     { name: 'http-form', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: 'name=alice&tags[]=a&tags[]=b',
       handler: (req, res) => res.json(req.body), expected: '{"name":"alice","tags":["a","b"]}' },
   ];
+  if (process.env.VPM_EXTENDED_WORKLOADS) cases.push(
+    { name: 'http-json-charset', headers: { 'content-type': 'Application/JSON; charset=UTF-8' }, body: '{"name":"alice","count":42}',
+      handler: (req, res) => res.json(req.body), expected: '{"name":"alice","count":42}' },
+    { name: 'http-form-charset', headers: { 'content-type': 'Application/X-Www-Form-Urlencoded; charset=UTF-8' }, body: 'name=alice&tags[]=a&tags[]=b',
+      handler: (req, res) => res.json(req.body), expected: '{"name":"alice","tags":["a","b"]}' },
+    { name: 'http-async-json', headers: { 'content-type': 'application/json' }, body: '{"name":"alice","count":42}',
+      handler: async (req, res) => { await Promise.resolve(); res.json(req.body); }, expected: '{"name":"alice","count":42}' },
+  );
   // The published upstream event path fails on Bun (process.domain is null).
   // Compare working event handling on Node, never time those failures as work.
   if (!process.versions.bun) cases.push({ name: 'cloud-event', signatureType: 'cloudevent',
