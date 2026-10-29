@@ -27,6 +27,10 @@ try {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), name === 'vnode-fetch' ? ['viconv-lite'] : ['vextend','vhttps-proxy-agent','vis-stream','vnode-fetch']);
       assert.doesNotMatch(run('tar', ['-tzf', packed]), /\/(?:test|bench|node_modules)\//);
     }
+    if (name === 'vgtoken') {
+      assert.deepEqual(metadata.dependencies, {vgaxios: '0.1.0', vjws: '0.1.0'});
+      assert.doesNotMatch(run('tar', ['-tzf', packed]), /\/(?:test|bench|node_modules)\//);
+    }
     if (name === 'vuuid') {
       assert.equal(metadata.dependencies,undefined);
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
@@ -142,6 +146,7 @@ try {
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 if(new (require('vnode-fetch').Headers)({test:'ok'}).get('test')!=='ok')throw new Error('fetch archive');
 if(typeof require('vgaxios').Gaxios.prototype.destroy!=='function')throw new Error('gaxios archive');
+if(!new (require('vgtoken').GoogleToken)().hasExpired())throw new Error('gtoken archive');
 if(!require('vuuid').validate(require('vuuid').v4()))throw new Error('UUID archive');
 if(require('vextend')(true,{}, {a:{b:1}}).a.b!==1)throw new Error('extend archive');
 if(require('vis-stream').readable({pipe(){},_read(){},_readableState:null}))throw new Error('stream archive');
@@ -292,6 +297,8 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import fetchArchive, {Response as ArchiveResponse} from 'vnode-fetch';
+import {GoogleToken as ArchiveToken} from 'vgtoken';
+if (!new ArchiveToken().hasExpired()) throw new Error('gtoken ESM archive');
 import {Gaxios as ArchiveGaxios} from 'vgaxios';
 if (typeof fetchArchive !== 'function' || await new ArchiveResponse('ok').text() !== 'ok') throw new Error('fetch ESM archive');
 const archiveClient = new ArchiveGaxios();
@@ -429,6 +436,10 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import typedFetch, {Request as TypedFetchRequest} from 'vnode-fetch';
+import {GoogleToken as TypedToken, type TokenData as GTokenData} from 'vgtoken';
+const typedToken = new TypedToken({email:'service@example.test', scope:['scope']});
+const getTypedToken: () => Promise<GTokenData> = () => typedToken.getToken();
+void getTypedToken;
 import {Gaxios as TypedGaxios} from 'vgaxios';
 const fetchPromise = typedFetch(new TypedFetchRequest('http://example.test'));
 const typedClient = new TypedGaxios({maxContentLength:1024});

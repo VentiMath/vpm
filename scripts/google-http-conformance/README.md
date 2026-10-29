@@ -72,3 +72,28 @@ The additional Mocha, Chai, Sinon, Nock, encoding and multipart packages are
 isolated test fixtures. They are not runtime dependencies or shipped VPM files.
 `consumer.cjs` separately exercises real teeny-request and gaxios calls through
 the version-scoped integration aliases, including multipart and retry behavior.
+
+## Service-account tokens
+
+`node scripts/google-http-conformance/gtoken.cjs` (or `bun`) executes all 45
+upstream gtoken 7.1.0 tests. `--upstream` runs the published package with its
+original behavior assertions. Both implementations pass on both runtimes.
+
+The fixture adapts legacy callable namespace imports for TypeScript 7 and selects
+the published node-fetch 2 transport explicitly for the upstream control. Bun's
+native fetch compatibility module bypasses Nock; native fetch is therefore blocked
+in this runner. All token requests are intercepted, with no live Google service
+calls. The source archive hash is verified before extraction.
+
+VPM expectations use the current OAuth token endpoint and POST-body revocation,
+supply a valid token response where upstream accepts an empty success body,
+expect one shared forced refresh instead of two parallel exchanges, and expect
+safe error messages without remote descriptions. The old browser-like test that
+deletes callback `fs.readFile` instead verifies that `fs/promises` still reads
+credentials. No tests are skipped. Fixture changes are applied only in temporary
+extractions; the upstream archive is immutable.
+
+The integration gate additionally runs google-auth-library 9.15.1's real
+`JWT.authorize()` and `fetchIdToken()` methods through version-scoped `vgtoken`,
+`vgaxios` and `vjws` aliases, verifies the emitted RSA assertions, and exchanges
+synthetic tokens with a loopback HTTP server.

@@ -52,7 +52,9 @@ retrieves public signing keys for these consumers, including Firebase Admin.
 `vhttps-proxy-agent` supplies HTTP CONNECT tunnels through HTTP/HTTPS proxies,
 using `vagent-base` for connection lifecycle and pooling. `vgaxios` supplies
 Google’s HTTP client API on `vnode-fetch` and the VPM proxy transport, supported
-by `vextend` and `vis-stream`. `vuuid` provides UUID generation and parsing.
+by `vextend` and `vis-stream`. `vgtoken` exchanges service-account assertions for
+access and ID tokens on this HTTP/signing stack. `vuuid` provides UUID generation
+and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
 Integration tests serve pinned Firebase Functions consumers through the VPM

@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgtoken](packages/vgtoken) | gtoken 7.1.0 | Shared forced refreshes, cached RSA key imports, validated expiry, bounded exchanges, credential-safe errors and POST-body revocation on the VPM HTTP/signing stack. |
 | [vgaxios](packages/vgaxios) | gaxios 6.7.1 | Entirely VPM transport tree, isolated defaults/error state, correct request bodies, bounded retry decisions, cancellable backoff and separate proxy/destination TLS identity. |
 | [vnode-fetch](packages/vnode-fetch) | node-fetch 2.7.0 | Native URL handling, checked limits, cross-origin credential isolation, reliable stream cancellation and byte-preserving body collection. |
 | [vuuid](packages/vuuid) | uuid 9.0.1 | Native name hashing, nonmutating random input, checked byte/clock/buffer bounds and exact UUID validation; zero dependencies. |
@@ -69,12 +70,12 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **2,017 tests**: all pass on Node 24, and Bun passes
-2,014 with three documented runtime-specific skips. All 55 runtime packages'
+The root suite contains **2,054 tests**: all pass on Node 24, and Bun passes
+2,051 with three documented runtime-specific skips. All 56 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **57 packages**, including two declaration-only packages.
+catalog covers **58 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -102,7 +103,7 @@ upstream cases on each runtime, also checked against upstream itself.
 The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
 extend assertions (one obsolete intrinsic-removal test skipped), 47 is-stream
 assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
-109 gaxios tests on both runtimes. Its documented adaptations are also checked
+109 gaxios tests and 45 gtoken tests on both runtimes. Its documented adaptations are also checked
 against the published upstream implementations.
 
 ## Dependency scope
@@ -115,6 +116,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgtoken` | 2 | 2 |
 | `vgaxios` | 5 | 4 |
 | `vnode-fetch` | 1 | 1 |
 | `vjwks-rsa` | 5 | 1 |
@@ -134,6 +136,8 @@ and 39 total external runtime dependencies, all VPM packages.
 `vnode-fetch` replaces the three-package legacy URL subtree with native URL
 support and retains `viconv-lite` for the optional legacy conversion API.
 `vgaxios` has eight total external runtime dependencies, all VPM packages.
+`vgtoken` adds service-account exchanges using `vgaxios` and `vjws`; its entire
+11-package external runtime tree is VPM.
 Other runtime replacements retain their direct dependency counts. `vqs` removes
 an 18-package transitive tree from that branch; packages elsewhere may still need
 some of those helpers. `vdebug` uses built-in terminal detection instead of
@@ -211,6 +215,10 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
 - Actual teeny-request multipart uploads and Google HTTP JSON requests, multipart
   uploads and retries exercise the new HTTP-client aliases. These five requests
   are separate from the 246 application checks.
+- Google auth’s actual `JWT.authorize()` and `fetchIdToken()` methods exchange
+  synthetic access/ID tokens through `vgtoken` and `vgaxios`, with native RSA
+  verification of each emitted assertion. These two local requests are also
+  separate from the application HTTP count.
 
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
@@ -225,6 +233,37 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgtoken
+
+`vgtoken` replaces gtoken 7.1.0 with two VPM dependencies, `vgaxios` and `vjws`.
+It preserves Google auth's promise/callback methods and token getters while
+coalescing concurrent forced refreshes, caching imported RSA keys, and preventing
+older requests from overwriting newer configuration or clearing a newer flight.
+
+Token data and claims are copied and frozen. Expiry must be a nonnegative safe
+integer; absent expiry remains uncached. The issuer, RSA key, assertion audience
+and issuance/expiry relationship are checked before sending. Credential files are
+bounded regular UTF-8 files. Errors retain safe codes and HTTP status while
+omitting transport configuration and remote descriptions. Exchanges have a
+30-second default deadline, a 1 MiB response limit, and no redirects. Per-waiter
+cancellation preserves shared requests until the last waiter leaves. Revocation
+uses a POST form body, cancels old refreshes, and preserves client configuration.
+See the [package README](packages/vgtoken/README.md) for intentional API differences
+and custom-transporter responsibilities.
+
+All 37 focused cases and all 45 adapted upstream cases pass on Node and Bun.
+The integration gate exercises google-auth-library 9.15.1's real authorization
+and ID-token clients with verified assertions and a local HTTP server.
+
+On Node 24, repeated signed refreshes take **52% less time** and cache hits **66%
+less** than upstream; on Bun the reductions are **31%** and **75%**. The eight-call
+forced-refresh workload takes 94%/91% less time because VPM shares one exchange.
+Local HTTP refreshes take 32%/6% less time. Creating a fresh client for every
+exchange remains **2.2% slower on Node**; Bun's +0.4% result crosses zero across
+processes. These are package/local-server measurements, not Google service or
+application latency claims. [Raw measurements and controls](packages/vgtoken/bench/results/README.md)
+retain all paired rounds and source hashes.
 
 ## vextend performance follow-up
 
