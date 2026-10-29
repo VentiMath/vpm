@@ -72,15 +72,16 @@ JSON and gzip HTTP requests, uploads and HTTP errors. Three fresh processes and
 an identical-upstream control are retained per runtime. Run
 `node packages/vgaxios/bench/compare.cjs` (or `bun`) and
 `node packages/vgaxios/bench/summarize.cjs --verify-current`.
-Multipart uploads take about 8% less paired time on Node and 50% less on Bun.
-Node’s other HTTP cases are broadly similar within control/process variation.
-Copying constructor defaults costs 173 → 783 ns on Node and 99 → 489 ns on Bun;
-adapter-only preparation is 13–15% slower on Node and about 9% faster on Bun.
+With the optimized vextend dependency, multipart uploads take about 13% less
+paired time on Node and 50% less on Bun. Most other Node HTTP cases vary between
+processes; JSON GET's paired median is 7% higher. Copying constructor defaults
+costs 182 → 720 ns on Node and 91 → 364 ns on Bun. Adapter-only preparation
+is 4–8% slower on Node and 16–20% faster on Bun than upstream.
 
-Bun’s installed upstream client uses its built-in `node-fetch` substitute.
-Against that baseline, VPM’s JSON/POST/error cases take 14–19% longer and gzip
-61% longer. Against the actual pinned Fetch 2 package, VPM’s Bun JSON/gzip
-requests take 14%/9% less time. The [complete report](bench/results/README.md)
+Bun's installed upstream client uses its built-in `node-fetch` substitute.
+Against that baseline, VPM's JSON/POST/error cases take 14–20% longer and gzip
+56% longer. Against the actual pinned Fetch 2 package, VPM's Bun JSON/gzip
+requests take 9%/12% less time. The [complete report](bench/results/README.md)
 keeps both comparisons visible. VPM does not silently switch to the native
 substitute and discard its checked transport behavior. These are local operation
 measurements, not production throughput claims.

@@ -41,3 +41,23 @@ test('differential generated acyclic own-data merges',()=>{
   for(let i=0;i<500;i++){const a=make(2),b=make(2);assert.deepEqual(extend(true,{},a,b),upstream(true,{},a,b));}
 });
 test('CommonJS and native ESM default exports agree',async()=>{assert.equal((await import('../index.js')).default,extend);});
+test('memo promotion preserves early aliases, later aliases and root cycles',()=>{
+  const source={};for(let i=0;i<32;i++)source['k'+i]={value:i};source.first=source.k0;source.last=source.k31;source.k31.root=source;
+  const result=extend(true,{},source);assert.equal(result.first,result.k0);assert.equal(result.last,result.k31);assert.equal(result.k31.root,result);assert.notEqual(result.k0,source.k0);
+});
+test('tail descent resumes every ancestor and preserves depth-first getters',()=>{
+  const order=[],source={a:{get x(){order.push('x');return {get y(){order.push('y');return 1;}};},get z(){order.push('z');return 2;}},get b(){order.push('b');return 3;}};
+  assert.deepEqual(extend(true,{},source),{a:{x:{y:1},z:2},b:3});assert.deepEqual(order,['x','y','z','b']);
+});
+test('source enumeration stays snapshotted across getter mutations',()=>{
+  const symbol=Symbol('key'),source={get first(){Object.defineProperty(this,'second',{enumerable:false});this.added=3;this[symbol]=4;return 1;},second:2};
+  assert.deepEqual(extend({},source),{first:1,second:2});
+});
+test('proxy target ownership traps retain descriptor-before-has ordering',()=>{
+  const log=[],object={own:0},target=new Proxy(object,{getOwnPropertyDescriptor(object,key){log.push('own:'+key);return Reflect.getOwnPropertyDescriptor(object,key);},has(object,key){log.push('has:'+key);return Reflect.has(object,key);},set(object,key,value){log.push('set:'+key);object[key]=value;return true;}});
+  extend(target,{own:1,new:2});assert.deepEqual(log,['own:own','set:own','own:new','has:new','set:new']);assert.deepEqual(object,{own:1,new:2});
+});
+test('reused nested proxy targets retain the slow assignment contract',()=>{
+  const log=[],child=new Proxy({value:0},{getOwnPropertyDescriptor(object,key){log.push('own:'+key);return Reflect.getOwnPropertyDescriptor(object,key);},has(){throw Error('own assignment must not query has');},set(object,key,value){log.push('set:'+key);object[key]=value;return true;}});
+  const result=extend(true,{child},{child:{value:1}});assert.equal(result.child,child);assert.deepEqual(log,['own:value','set:value']);assert.equal(child.value,1);
+});

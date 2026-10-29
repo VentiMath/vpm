@@ -12,5 +12,15 @@
   "sourceArchive": {
     "file": "../../scripts/google-http-conformance/extend-3.0.2.tar.gz",
     "sha256": "8043b954596da3689718754af1ec1a54727a28aafab37223aea862155c6bb910"
+  },
+  "changes": [
+    "Allocate deep-merge memo and traversal frames only when needed; use a bounded eight-identity list before promoting to a Map.",
+    "Keep finished parents off the traversal stack and avoid object classification for primitive values.",
+    "Avoid redundant ownership checks for new ordinary target fields while preserving proxy trap order."
+  ],
+  "benchmarkPrevious": {
+    "commit": "3e4348ad243d9dbde72b6b1cf04b84815727484f",
+    "path": "packages/vextend/index.js",
+    "snapshot": "bench/previous.cjs"
   }
 }

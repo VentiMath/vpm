@@ -12,7 +12,7 @@ that these replacements have already improved application performance.
 | [vgaxios](packages/vgaxios) | gaxios 6.7.1 | Entirely VPM transport tree, isolated defaults/error state, correct request bodies, bounded retry decisions, cancellable backoff and separate proxy/destination TLS identity. |
 | [vnode-fetch](packages/vnode-fetch) | node-fetch 2.7.0 | Native URL handling, checked limits, cross-origin credential isolation, reliable stream cancellation and byte-preserving body collection. |
 | [vuuid](packages/vuuid) | uuid 9.0.1 | Native name hashing, nonmutating random input, checked byte/clock/buffer bounds and exact UUID validation; zero dependencies. |
-| [vextend](packages/vextend) | extend 3.0.2 | Own enumerable strings and symbols, inherited-target isolation, cycle/shared-reference preservation and iterative deep merging. |
+| [vextend](packages/vextend) | extend 3.0.2 | Own enumerable strings and symbols, inherited-target isolation, cycle/shared-reference preservation and lazy iterative merging. |
 | [vis-stream](packages/vis-stream) | is-stream 2.0.1 | Rejects null internal stream state and avoids duplicate pipe probes in duplex/transform checks. |
 | [vhttps-proxy-agent](packages/vhttps-proxy-agent) | https-proxy-agent 7.0.6 | Bounded CONNECT parsing and deadlines, linear fragmented-header buffering, isolated TLS policies, cancellation cleanup, safe header snapshots and preserved tunnel bytes. |
 | [vagent-base](packages/vagent-base) | agent-base 7.1.4 | Zero dependencies, bounded async connects, cancellation cleanup, queue failure recovery, delegation-cycle rejection, private JSON errors and exact byte collection. |
@@ -69,8 +69,8 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **2,012 tests**: all pass on Node 24, and Bun passes
-2,009 with three documented runtime-specific skips. All 55 runtime packages'
+The root suite contains **2,017 tests**: all pass on Node 24, and Bun passes
+2,014 with three documented runtime-specific skips. All 55 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
@@ -226,6 +226,26 @@ Firebase handles errors thrown by plain handlers itself; finalhandler is exercis
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
 
+## vextend performance follow-up
+
+The merger now allocates cycle bookkeeping only when a nested record needs it.
+Up to eight identities use a bounded list; larger graphs promote to a Map.
+Finished parents need no traversal frame, and primitive values avoid object
+classification. Ordinary new target fields skip a redundant ownership check;
+proxy targets retain the original trap order. Symbols, inherited-target
+isolation, cycles, aliases, getter ordering and deeply nested inputs remain
+covered by 16 focused tests and 90 upstream assertions on Node and Bun.
+
+The [paired report](packages/vextend/bench/results/README.md) includes a verbatim
+previous-VPM snapshot for a direct before/after comparison. Node operation times
+fall 12% for shallow fields, 29% for flat deep merges, 22% for HTTP options and
+12% for 50 nested records. Bun's flat and larger deep cases fall 33% and 10%;
+its shallow and HTTP-option cases are inconclusive because of process/control
+variation. Relative to upstream, Node HTTP options still take 10% more paired
+time and shallow merging remains over twice as costly. The package retains
+correctness work that upstream does not perform. The vgaxios report below was
+also refreshed with this implementation; application-wide gains are not claimed.
+
 ## vnode-fetch and vgaxios
 
 The Google HTTP client path is implemented through VPM: `vgaxios` uses four
@@ -262,14 +282,14 @@ JSON/streamed-POST medians take 8%/14% less time; its gzip comparison is
 inconclusive because the identical-upstream control varies by 31%. Node HTTP
 cases take 1–7% longer with substantial process variation. Safe 32-chunk body
 collection costs 5.21 → 8.65 µs on Node and 6.04 → 8.39 µs on Bun. Copying
-client defaults adds about 0.61/0.39 µs on Node/Bun. Adapter preparation is
-13–15% slower on Node and about 9% faster on Bun. Multipart uploads take
-8%/50% less paired time on Node/Bun.
+client defaults adds about 0.54/0.27 µs on Node/Bun. Adapter preparation is
+4–8% slower on Node and 16–20% faster on Bun. Multipart uploads take
+13%/50% less paired time on Node/Bun.
 
 Bun substitutes a built-in implementation for upstream gaxios's bare node-fetch
 import. Against that installed baseline, VPM's Bun JSON/POST/error requests take
-14–19% longer and gzip 61% longer. The separate pinned Fetch 2 comparison shows
-14%/9% less time for JSON/gzip. Both baselines are retained; these packages are
+14–20% longer and gzip 56% longer. The separate pinned Fetch 2 comparison shows
+9%/12% less time for JSON/gzip. Both baselines are retained; these packages are
 not uniformly faster, and these measurements do not establish production gains.
 
 ## vhttps-proxy-agent

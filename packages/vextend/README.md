@@ -21,6 +21,10 @@ setters. `__proto__` becomes an ordinary own data property. Source getters are
 read once per visited property; keys removed before copying are skipped.
 Cycles and shared references are preserved within each source, using an iterative
 walk that also handles deeply nested inputs without recursive stack overflow.
+Flat deep merges allocate no memo or traversal frames. Small graphs retain at
+most eight identities before promoting to a Map; completed parents are omitted
+from the traversal stack. Ordinary new fields avoid a redundant ownership
+lookup, while proxy targets retain the original descriptor-before-has trap order.
 These are deliberate differences from upstream's inherited-property copying,
 symbol omission, repeated alias cloning and recursive cycle failure.
 
@@ -30,19 +34,29 @@ throws. This utility does not make arbitrary executable objects safe to inspect.
 
 ## Evidence
 
-11 focused tests include 500 generated differential merges and a 10,000-level
+16 focused tests include 500 generated differential merges and a 10,000-level
 input. The pinned upstream suite passes 90 assertions on Node and Bun, with one
 obsolete missing-`Array.isArray` case skipped; see the
 [conformance record](../../scripts/google-http-conformance/README.md).
 
-[Raw benchmarks](bench/results) contain three fresh processes and an
-identical-upstream control for Node 24.22.1 and Bun 1.4.0. Node's measured shallow
-three-field merge is 82 → 191 ns; deep HTTP options are 769 → 1,085 ns; fifty
-nested records are 22.3 → 32.2 µs. Cycle tracking, symbols and ownership checks
-cost time. Bun's deep-option paired median differs by +4.3%, and larger merges
-and shallow cases vary materially between processes. These results do not
-establish a Bun speed improvement. This package prioritizes defined merge
-semantics; caller-level benchmarks determine its application impact.
+[Paired benchmarks](bench/results/README.md) contain three fresh processes and
+identical-baseline controls on Node 24.22.1 and Bun 1.4.0. They compare both
+`extend` 3.0.2 and the previous VPM implementation, retained verbatim in
+`bench/previous.cjs` with its source commit in the provenance record.
+
+Compared with previous VPM, Node paired operation times are **12% lower for
+shallow fields, 29% lower for flat deep merges, 22% lower for HTTP options and
+12% lower for 50 nested records**. Bun's flat and larger deep merges take
+33% and 10% less time. Bun shallow and HTTP-option results vary substantially;
+the latter also has an unstable control, so no gain is claimed for either.
+
+Costs relative to upstream remain: Node shallow fields take 96 → 207 ns,
+HTTP options 855 → 953 ns, and 50 nested records 30.9 → 38.5 µs. Bun shallow
+fields are 60 → 72 ns; its 50-record case takes about 11% less paired time than
+upstream. Snapshotting symbols and ownership checks retain work that upstream
+does not perform. The refreshed [vgaxios caller report](../vgaxios/bench/results/README.md)
+measures request preparation and HTTP behavior with this merger; these results
+do not establish application-wide speedups.
 
 Run `node packages/vextend/bench/compare.cjs` (or `bun`), and
 `node packages/vextend/bench/summarize.cjs --verify-current` to verify the saved
