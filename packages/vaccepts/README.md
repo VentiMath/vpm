@@ -14,12 +14,10 @@ accepts(request).types(); // ['application/json', 'text/html']
 
 ## Improvements
 
-- Uses vnegotiator's validated weights, parameter specificity, exact parameter
-  comparisons and stable duplicate ordering. Malformed weights such as `q=2`
-  and `q=0.8junk` no longer select an unwanted representation.
-- Distinguishes an absent Accept header from an explicitly empty one. The empty
-  field returns `false` when offered types, rather than unconditionally picking
-  the first offered type.
+- Uses vnegotiator's upstream-compatible weights, parameter specificity, exact
+  parameter comparisons and stable duplicate ordering.
+- Treats an empty Accept field as absent, as accepts does, so clients that send
+  `Accept:` with no value still get the first valid offer.
 - Validates offers even when Accept is absent. Unknown extensions, malformed
   media types and non-string entries cannot bypass matching. The first valid
   offer wins without ranking or normalizing the remaining offers.
@@ -57,10 +55,10 @@ through vmime-types. Multiple extensions mapping to one MIME type retain the
 first original offer. Input arrays are not modified or cached.
 
 All [vnegotiator compatibility boundaries](../vnegotiator#compatibility-boundaries)
-apply, including decoded quality syntax (`0.5`, not `.5`), parameter value case,
-first duplicate parameter, language fallback, identity encoding and own-header
-handling. Empty Accept, invalid first offers, header replacement and the
-read-only `.headers` property are additional deliberate differences from accepts.
+apply, including parameter value case, first duplicate parameter, language
+fallback, identity encoding and own-header handling. Invalid first offers,
+header replacement and the read-only `.headers` property are additional
+deliberate differences from accepts.
 An application decides when a failed negotiation should produce HTTP 406.
 
 The baseline is **accepts 2.0.0**, requested by Express 5 in the pinned fixture.

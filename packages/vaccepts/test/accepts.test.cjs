@@ -20,9 +20,9 @@ test('ordinary Express-style array and variadic calls preserve upstream results'
   }
 });
 
-test('distinguishes an absent Accept header from an explicitly empty one', () => {
+test('treats an empty Accept header like an absent one, as upstream does', () => {
   assert.equal(Accepts({ headers: {} }).types(['json', 'html']), 'json');
-  assert.equal(Accepts({ headers: { accept: '' } }).types(['json', 'html']), false);
+  assert.equal(Accepts({ headers: { accept: '' } }).types(['json', 'html']), 'json');
   assert.equal(Upstream({ headers: { accept: '' } }).types(['json', 'html']), 'json');
   assert.equal(Accepts({ headers: { accept: [] } }).types('html'), false);
 });
@@ -45,16 +45,21 @@ test('extension aliases return the first original offer and preserve its spellin
   assert.equal(a.types(['application/json', 'text/html;level=1']), 'text/html;level=1');
 });
 
-test('all methods apply strict quality values and zero exclusions', () => {
+test('all methods apply upstream quality weights and zero exclusions', () => {
   for (const [method, field, values] of [
     ['types', 'accept', ['text/html', 'application/json']],
     ['encodings', 'accept-encoding', ['gzip', 'br']],
     ['charsets', 'accept-charset', ['utf-8', 'iso-8859-1']],
     ['languages', 'accept-language', ['en', 'fr']],
   ]) {
-    assert.equal(Accepts({ headers: { [field]: values[0] + ';q=2, ' + values[1] + ';q=0.8' } })[method](values), values[1]);
+    for (const header of [values[0] + ';q=2, ' + values[1] + ';q=0.8', values[0] + ';q=.5, ' + values[1] + ';q=0.4']) {
+      const request = { headers: { [field]: header } };
+      assert.equal(Accepts(request)[method](values), Upstream(request)[method](values));
+    }
     assert.equal(Accepts({ headers: { [field]: values[0] + ';q=0' } })[method]([values[0]]), false);
   }
+  // Java HttpURLConnection's default Accept header.
+  assert.equal(Accepts({ headers: { accept: 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2' } }).types('json'), 'json');
 });
 
 test('quoted parameters, parameter specificity and case sensitivity flow through the wrapper', () => {
@@ -83,7 +88,9 @@ test('header arrays and inherited fields follow the negotiator contract', () => 
   const a = Accepts({ headers: { accept: ['text/html;q=0.1', 'application/json'] } });
   assert.equal(a.types('html', 'json'), 'json');
   assert.equal(Accepts({ headers: Object.create({ accept: 'application/json' }) }).types('html', 'json'), 'html');
-  for (const value of [null, 1, {}]) assert.equal(Accepts({ headers: { accept: value } }).types('html'), false);
+  // A null field is absent, as in accepts; other non-string values permit nothing.
+  assert.equal(Accepts({ headers: { accept: null } }).types('html'), 'html');
+  for (const value of [1, {}]) assert.equal(Accepts({ headers: { accept: value } }).types('html'), false);
 });
 
 test('invalid requests are rejected and invalid offers are skipped without coercion', () => {

@@ -128,12 +128,21 @@ test('inherited request headers are ignored', () => {
   assert.equal(result.res.headers.vary,'Origin, Access-Control-Request-Headers');
 });
 test('malformed reflected headers fail before CORS response writes', () => {
-  for(const headers of [{origin:['https://one.test','https://two.test']},{origin:'bad\r\nX: value'}, {'access-control-request-headers':'Bad Name'}, {'access-control-request-headers':['X',false]}]) {
+  for(const headers of [{origin:['https://one.test','https://two.test']},{origin:'bad\r\nX: value'}, {'access-control-request-headers':'X\r\nY: z'}, {'access-control-request-headers':5}]) {
     const result=invoke(cors({origin:true}),'OPTIONS',headers);
     assert.ok(result.errors[0] instanceof TypeError);assert.equal(result.res.writes,0);assert.equal(result.res.ended,0);
   }
-  const res=response({vary:'Invalid Header'});const result=invoke(cors({origin:true}),'GET',{},res);
-  assert.ok(result.errors[0] instanceof TypeError);assert.equal(res.writes,0);
+});
+test('requested headers are reflected as cors 2.8.6 reflects them', () => {
+  for(const requested of ['x-a,x-b','X-A, ,X-B','Bad Name','x-a,,x-b']) {
+    const result=invoke(cors({origin:true}),'OPTIONS',{'access-control-request-headers':requested});
+    const expected=invoke(originals[1]({origin:true}),'OPTIONS',{'access-control-request-headers':requested});
+    assert.deepEqual(result.errors,[]);
+    assert.equal(result.res.headers['access-control-allow-headers'],expected.res.headers['access-control-allow-headers']);
+  }
+  // A malformed Vary from elsewhere is kept, as vary keeps it.
+  const res=response({vary:'Invalid Header'});const result=invoke(cors({origin:true}),'GET',{origin:'https://ventimath.com'},res);
+  assert.deepEqual(result.errors,[undefined]);assert.equal(res.headers.vary,'Invalid Header, Origin');
 });
 test('Vary handles tabs, arrays, duplicates and wildcard without redundant writes', () => {
   for(const existing of ['Accept,\tOrigin',['Accept','Origin'],'*']) {

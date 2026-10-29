@@ -33,6 +33,8 @@ jobs:
       - run: node scripts/express-conformance/run.cjs
       - run: npm --prefix scripts/framework-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/framework-conformance/run.cjs
+      - run: npm --prefix scripts/router-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/router-conformance/run.cjs
 
   bun-and-types:
     runs-on: ubuntu-latest
@@ -51,6 +53,8 @@ jobs:
       - run: npm --prefix scripts/type-consumers ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/sync-types.cjs --check
       - run: npm run test:types
+      - run: npm --prefix scripts/legacy-typescript ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/check-legacy-types.cjs
       - run: node scripts/check-type-archives.cjs
       - run: node scripts/check-media-archives.cjs
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
@@ -63,3 +67,5 @@ jobs:
       - run: bun scripts/express-conformance/run.cjs
       - run: npm --prefix scripts/framework-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/framework-conformance/run.cjs
+      - run: npm --prefix scripts/router-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/router-conformance/run.cjs

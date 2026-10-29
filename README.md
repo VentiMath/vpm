@@ -87,7 +87,9 @@ packages have separate compiler and Node API baselines; their documentation
 explains adoption and compatibility. Runtime packages retain self-contained
 public declarations. The platform type gate checks pinned upstream comparisons,
 TypeScript 7, Node-only and DOM projects, and installed package archives. All
-compiler checks use the supported CLI; no legacy compiler is installed.
+compiler checks use the supported CLI. VPM builds only with TypeScript 7; a
+separate [TypeScript 5 gate](scripts/legacy-typescript/README.md) compiles the
+public declarations with 5.8 and 5.9, which downstream applications still use.
 The separately locked [upstream type fixture](scripts/type-consumers/README.md)
 keeps original declarations and an Undici runtime solely for comparison tests;
 they are outside the workspace and excluded from VPM package archives:
@@ -119,8 +121,9 @@ application layer and example applications, with every intentional expectation
 change and runtime limitation recorded. Its separately locked dependencies stay
 outside the workspace and published package archives. The
 [Functions Framework suite](scripts/framework-conformance/README.md) similarly
-checks HTTP/event handling, module loading and logging on Node and Bun.
-The [JWT suite](scripts/jwt-conformance/README.md) and
+checks HTTP/event handling, module loading and logging on Node and Bun, and the
+[router suite](scripts/router-conformance/README.md) runs router 2.2.0's own
+tests against vrouter. The [JWT suite](scripts/jwt-conformance/README.md) and
 [JWKS suite](scripts/jwks-conformance/README.md) cover token verification and
 public-key retrieval, including independent middleware consumers.
 

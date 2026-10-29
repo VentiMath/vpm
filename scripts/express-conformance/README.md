@@ -16,7 +16,7 @@ bun scripts/express-conformance/run.cjs --upstream --all-runtime-tests
 
 `--upstream` runs the original implementation and original assertions.
 `--unadapted` runs vexpress with original assertions, intentionally exposing the
-23 documented expectation differences. `--all-runtime-tests` re-enables six tests
+19 documented expectation differences. `--all-runtime-tests` re-enables six tests
 that fail on Bun 1.4.0 with both implementations. `OUTPUT` writes the full Mocha
 JSON report. Mocha writes its report synchronously to a temporary file, avoiding
 pipe truncation during forced process exit on Bun/Linux. Tests require local HTTP ports; the runner removes its temporary
@@ -31,20 +31,18 @@ The runner redirects only the package entry and tests' private-utils import to
 vexpress. `NODE_PATH` makes isolated template-engine dependencies visible.
 The original source remains available inside the fixture and carries its MIT license.
 
-[adapt.cjs](adapt.cjs) changes assertions for 23 existing VPM differences:
-
-- Five strict JSON diagnostic expectations, four verify-option error messages,
-  two static-root diagnostics, four form-limit diagnostics, two fractional-limit
-  rejections, three cookie-option diagnostics and one Vary diagnostic.
-- Two negotiation expectations: malformed `*/html` and the invalid quality value
-  `.5` with no reverse language-prefix fallback. The former explicitly writes an
-  empty string when negotiation returns false; Node tolerates `end(false)` but
-  Bun does not.
+[adapt.cjs](adapt.cjs) changes assertions for 19 existing VPM differences:
+five strict JSON diagnostic expectations, four verify-option error messages,
+two static-root diagnostics, four form-limit diagnostics, three cookie-option
+diagnostics and one Vary diagnostic. All are error-message or strict-JSON
+diagnostics; no adapted assertion changes which requests succeed. Fractional
+`parameterLimit` values, `*/html` Accept ranges and `.5` quality values behave as
+upstream and run with their original assertions.
 
 Every source replacement checks its expected occurrence count. Tests are not
 allowed to fail and errors are not swallowed. On Node 24, both the unmodified
 upstream control and adapted vexpress run pass all 1,261 tests. The unadapted
-vexpress run passes 1,238 and fails the 23 expectations listed above.
+vexpress run passes 1,242 and fails the 19 expectations listed above.
 
 [runtime.cjs](runtime.cjs) marks six cases pending on Bun after reproducing the
 same failures against unchanged Express: two overlong filesystem paths, three

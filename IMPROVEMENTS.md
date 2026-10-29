@@ -62,9 +62,11 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,874 tests**: all pass on Node 24, and Bun passes
-1,871 with three documented runtime-specific skips. All 48 runtime packages'
-public declarations compile without ambient Node, Undici or DOM types. The
+The root suite contains **1,879 tests**: all pass on Node 24, and Bun passes
+1,876 with three documented runtime-specific skips. All 48 runtime packages'
+public declarations compile without ambient Node, Undici or DOM types, under
+TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
+applications use. The
 catalog covers **50 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
@@ -82,8 +84,10 @@ The [Functions Framework suite](scripts/framework-conformance/README.md) adds
 The [JWT suite](scripts/jwt-conformance/README.md) adds 512 cases on Node and
 509 on Bun, with three documented Bun limitations. The
 [JWKS suite](scripts/jwks-conformance/README.md) adds 88 cases on each runtime
-without skips, with one timeout-code correction. These upstream suites are
-separate from the root test count.
+without skips, with one timeout-code correction. The
+[router suite](scripts/router-conformance/README.md) adds router 2.2.0's 694
+unchanged tests on Node; Bun runs 693, with one upstream-reproduced `OPTIONS *`
+limitation. These upstream suites are separate from the root test count.
 
 ## Dependency scope
 
@@ -148,7 +152,7 @@ gate. Separate development fixtures can also retain older HTTP utility versions.
 
 ### The integration gate
 
-[`scripts/integration.cjs`](scripts/integration.cjs) runs **245 HTTP checks per
+[`scripts/integration.cjs`](scripts/integration.cjs) runs **246 HTTP checks per
 runtime**, plus **six Functions Framework startup-option scenarios** and **122
 raw-manifest comparisons**. It substitutes matching package versions inside its
 own process, serves Firebase `onRequest` handlers and Express applications through
@@ -737,8 +741,9 @@ choosing CommonJS or ESM. The pinned upstream branch declares three dependencies
 and installs 20 distinct transitive packages, including declaration-only
 packages; normalization and rich diagnostics are imported even in raw mode.
 
-This is an intentional API simplification: **raw metadata is the default and
-`normalize: true` is rejected**. npm metadata normalization and normalized-result
+This is an intentional API simplification: **raw metadata only, behind a
+required `normalize: false`**. Omitting it throws rather than handing a caller
+written for upstream's normalizing default different field values. npm metadata normalization and normalized-result
 types are not provided. Callers that rely on normalized fields need a separate
 normalization step. No automatic replacement of those callers is claimed.
 
@@ -748,7 +753,7 @@ errors and rejects invalid UTF-8 or non-object manifests. Error messages identif
 the path and reason without exposing manifest contents. There is no parsed-result
 cache, and symlink-following boundaries are lexical rather than a sandbox.
 
-The 49 package tests include both unchanged upstream lookup tests and additional
+The 51 package tests include both unchanged upstream lookup tests and additional
 error, filesystem-race, boundary, Unicode and concurrency checks. Integration
 adds 122 upstream comparisons in raw mode plus three real framework loader cases.
 Archive consumers cover CommonJS, ESM and TypeScript 7. The
@@ -829,7 +834,8 @@ Global and sticky RegExp policies have private state and stable decisions;
 cyclic arrays fail explicitly and deep arrays use iterative traversal. Callback
 providers settle once, including reentrant callbacks, while downstream exceptions
 retain their propagation. Dynamic allow/deny decisions vary by Origin. Reflected
-headers are validated before CORS writes, inherited fields are ignored, and
+request headers are echoed as cors echoes them, refusing only characters a header
+cannot carry, before CORS writes; inherited fields are ignored, and
 middleware-generated empty preflights clear transfer/trailer/encoding conflicts.
 
 **Boundaries:** empty allowed-header strings disable reflection; static policy
@@ -841,9 +847,9 @@ or remove grant headers written by earlier middleware. See the
 
 **Caller specialization:** known Vary field names can be written directly when
 no header exists, and exact matches/wildcards need no merge. Other existing Vary
-values retain the general validator, captured values and method receivers.
+values go through vvary's merge, with captured values and method receivers.
 
-**Verification:** 39 upstream tests run with unchanged assertions, plus 29 local
+**Verification:** 39 upstream tests run with unchanged assertions, plus 30 local
 regressions on Node and Bun. Tests cover descriptor/getter snapshots, regex state,
 large/deep/cyclic policies, callback errors and duplication, cache variation,
 invalid headers and real HTTP framing. The shared Functions Framework/Firebase
@@ -1345,18 +1351,18 @@ documents those costs. No application throughput improvement is claimed.
 
 ## vnegotiator and vaccepts
 
-**Negotiation correctness:** vnegotiator validates decoded quality values as
-complete decimals from 0 through 1 with no more than three fractional digits.
-Malformed values such as `2`, `0.8junk`, empty values and `.5` become zero, so
-specific invalid weights cannot gain preference through a broader wildcard.
-More matching media parameters now mean greater specificity; exact zero
+**Negotiation correctness:** vnegotiator reads quality values exactly as
+negotiator does (`parseFloat`, with an absent or empty `q` meaning 1), because
+real clients send weights such as Java `HttpURLConnection`'s default `q=.2`.
+Language, charset and encoding entries accept any nonempty value, and
+`*/subtype` media ranges are honored. More matching media parameters now mean greater specificity; exact zero
 exclusions are respected. Charset labels compare without case, while other
 parameter values compare exactly and parameter `*` is literal. Equally weighted
 and specific duplicate entries keep their earliest header position.
 
 **Wrapper behavior:** vaccepts preserves extension aliases and first-original
-return values. Empty Accept headers no longer pick the first offer as if the
-header were absent. Absent headers still validate offers, skipping unknown
+return values. Like accepts, an empty Accept header is treated as absent.
+Absent headers still validate offers, skipping unknown
 extensions and malformed names. Its read-only `headers` view stays coherent
 with the request used by its negotiator after header replacement. Both packages
 read own lowercase header fields, accept string-array fields, avoid coercion,
@@ -1367,9 +1373,8 @@ and accepts 2.0.0. They preserve callable/new-able constructors, Express-facing
 methods, aliases, list/selection returns, encoding identity rules and upstream's
 language fallback. The latter is not full RFC 4647 lookup. The generic parameter
 parser remains tolerant: quoted numeric weights and first duplicate parameters
-are retained. Strict decoded weights, exact parameter values, own-header rules,
-empty Accept, invalid offers and the read-only headers view are documented
-changes. Both complete dependency trees consist of existing VPM packages, with
+are retained. Exact parameter values, own-header rules, invalid offers and the
+read-only headers view are documented changes. Both complete dependency trees consist of existing VPM packages, with
 the same counts as upstream.
 
 **Evidence:** 25 tests include ordinary upstream differential matrices and
@@ -1726,8 +1731,9 @@ overrides and general parser behavior remain covered. Existing VPM dependency
 differences remain deliberate and are listed in the package documentation.
 
 **Verification:** 46 local regression tests on Node and Bun. The upstream unit
-and example-acceptance suites pass **1,261 tests on Node 24**, with 23 explicit
-assertion changes for existing VPM dependency behavior and no skipped tests.
+and example-acceptance suites pass **1,261 tests on Node 24**, with 19 explicit
+assertion changes for VPM dependency diagnostics (messages, not outcomes) and no
+skipped tests.
 Bun passes **1,255 with six pending** cases that fail identically against unchanged
 Express. The [isolated harness](scripts/express-conformance/README.md) explains
 each adaptation and runtime limitation; comparison dependencies are test-only.
@@ -1780,6 +1786,9 @@ caller's lastIndex. Capture scanning correctly skips escaped parentheses,
 character classes and lookarounds. Complete handler lists are validated before
 publishing layers; failures leave no partial registrations. Cyclic handler arrays
 fail explicitly, and deeply nested arrays are flattened without recursion.
+Registering with no handlers, including `router.use()` with no arguments, throws
+upstream's `argument handler is required`; the first iterative flattener looped
+forever on that call, which router's own suite exercises.
 
 **Caller optimization:** one middleware registration compiles its path once;
 route handler layers reuse a stateless root matcher. Layer arrays/results remain
@@ -1791,15 +1800,16 @@ native `node:url.parse` directly, without a disposable request or redundant cach
 entry. This removes vparseurl from the router's dependency list. These choices
 preserve the standalone dependencies' public behavior.
 
-**Verification:** 52 package tests on each runtime, including upstream parity,
+**Verification:** 53 package tests on each runtime, including upstream parity,
 all HTTP methods, async errors, parameter concurrency, deep dispatch, RegExp
 capture/state cases, 300 generated URL comparisons and 3,361 additional complex
 URL pathname comparisons. Explicit tests preserve invalid-input handling, getter
 read counts and independence from mutable shared parse results. The shared gate includes router requests through real
 Express/Functions Framework consumers. npm/Bun archive consumers check ten-file contents, three rewritten
 VPM dependency versions, CJS/ESM runtime imports and TypeScript 7 without ambient
-platform types. Upstream router tests are retained for reference, not counted as
-executed verbatim.
+platform types. The [router suite](scripts/router-conformance/README.md) runs
+router 2.2.0's 694 upstream tests unchanged in CI: all pass on Node, and Bun
+passes 693 with one `OPTIONS *` case that upstream router also fails there.
 
 **Initial performance at `692d773`, 2026-10-28:** three fresh processes per runtime, twelve ordered
 samples per case, with unchanged upstream, upstream plus VPM dependencies, and
@@ -2206,10 +2216,12 @@ dependencies in either version.
 
 **Verified improvements:** spaces and tabs are recognized consistently in both
 new and existing lists; upstream rejects or duplicates tab-separated names and
-misses tab-surrounded wildcards. Old and new names are validated before any
-response write, even with a wildcard. Field/header-array elements and response
-methods are captured once. Numbers, arbitrary coercible objects, sparse arrays
-and malformed existing headers are rejected. Empty list members are ignored
+misses tab-surrounded wildcards. New names are validated before any response
+write, even with a wildcard. An existing header is converted and kept as vary
+keeps it, so a malformed Vary set elsewhere cannot make later calls throw; only
+characters Node's setHeader rejects are refused. Field-array elements and
+response methods are captured once. Numeric, coercible-object and sparse-array
+fields are rejected. Empty list members are ignored
 around actual string-list names; an empty field string still throws. Existing
 casing/formatting is preserved, new fields deduplicate case-insensitively and
 wildcards collapse to `*`. No-op additions skip `setHeader`. Large merges use
@@ -2262,18 +2274,22 @@ as `__proto__` and avoid the mutable shared prototype used by current upstream.
 Serialization reads each field once, preventing getters from swapping validated
 values for unchecked output. Captured Date methods accept genuine cross-realm
 Dates without trusting overridden formatting methods or spoofed objects.
-Safe-integer checks prevent imprecise/infinite ages. Explicit strings, booleans
-and callbacks replace accidental coercion; built-in errors do not echo secrets.
+Safe-integer checks prevent imprecise/infinite ages. The modern API requires
+explicit strings, booleans and callbacks; built-in errors do not echo secrets.
 Tests reproduce the current-upstream getter/date behavior; these are configuration
 hardening improvements, not a claim of a demonstrated remote vulnerability.
 
 **Compatibility:** legacy and modern parsing retain their different quote,
 duplicate and custom-decoder-error contracts. Modern serialization retains
 2.0.1's broader characters and encoding; the legacy adapter preserves 0.7.2's
-stricter characters and `encodeURIComponent`. Strict validation rejects numeric
-strings, truthy nonboolean flags, nonstring encoder/decoder results, invalid
-options, spoofed Dates and unsafe ages. Modern ages must be integers; legacy
-finite fractions are floored. The package README lists the complete differences.
+stricter characters and `encodeURIComponent`, and its attribute coercion: a
+falsy attribute is omitted, flags are truthy checks and `maxAge` is coerced and
+floored, so `res.cookie(name, value, { domain: null, secure: 1 })` behaves as it
+does upstream instead of failing the response. A 328-case differential against
+0.7.2 `serialize` differs only for unsafe ages and array-valued domain/path. The
+modern serializer rejects numeric strings, truthy nonboolean flags and fractional
+ages. Both reject nonstring encoder/decoder results, spoofed Dates and unsafe
+ages. The package README lists the complete differences.
 
 **Evidence:** 22 focused tests include 1,500 generated headers, all byte values,
 Unicode, malformed inputs, prototype isolation, getter substitution, Date
@@ -2458,10 +2474,13 @@ record runtime versions, source hashes, and all samples.
 ## vbody-parser
 
 **Correctness and lifecycle:** replaces body-parser 2.4.0's signed 32-bit form
-parameter conversion with validated safe integers. `parameterLimit: 2 ** 32`
-retains both fields in `a=1&b=2`. Numeric bounds, booleans, media patterns,
-charsets and revivers are validated at factory construction, with copied type
-arrays and stable option snapshots. Unsupported charsets fail before piping.
+parameter conversion with a floored count. `parameterLimit: 2 ** 32` retains
+both fields in `a=1&b=2`. Options are coerced exactly as body-parser 2.4.0
+coerces them (numeric strings, truthy flags, falsy type/verify, Infinity
+limits), so every configuration that boots upstream boots here. The exceptions
+fail at construction: NaN, negative or malformed limits and undecodable default
+charsets, which upstream accepts and then enforces no limit, a truncated limit,
+or a 415 on every request. Type arrays are copied and option snapshots are stable.
 
 Compressed reads register the body reader before starting the pipe and observe
 abort/error/premature-close events on the original request. They stop the owned
@@ -2486,7 +2505,8 @@ a body-sized placeholder to manufacture an engine-specific error message.
 parser subpaths, byte limits after inflation, charset decoding, synchronous
 verification, revivers, nested forms and gzip/deflate/Brotli support. Zstandard
 is available when the runtime supplies it, as upstream already supports.
-Malformed/coercible options now fail early; use booleans and safe integer bounds.
+Only unusable limits and charsets fail early; a construction differential over
+1,632 option values matches upstream everywhere else.
 Callback-error identity and exact messages/stacks are not preserved; the original
 is available through `cause`. Internal `lib/*` exports are excluded. The default
 byte limit remains 100 KiB. Applications still control request timeouts and

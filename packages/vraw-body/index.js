@@ -32,7 +32,7 @@ function getRawBody(stream, options, callback) {
     throw new TypeError('encoding must be a nonempty string, boolean, or null');
   }
   const requestedLimit = opts.limit;
-  const limit = count(typeof requestedLimit === 'string' ? bytes.parse(requestedLimit) : requestedLimit, 'limit');
+  const limit = count(typeof requestedLimit === 'string' ? bytes.parse(requestedLimit) : numericLimit(requestedLimit), 'limit');
   const requestedLength = opts.length;
   if (typeof requestedLength === 'string' && !/^[0-9]+$/.test(requestedLength)) {
     throw new TypeError('length must contain only decimal digits');
@@ -50,6 +50,15 @@ function getRawBody(stream, options, callback) {
   return new Promise((resolve, reject) => {
     readStream(stream, encoding, length, limit, (error, body) => error ? reject(error) : resolve(body));
   });
+}
+
+// raw-body compares byte counts with any numeric limit. A limit no byte count
+// can exceed (Infinity, or beyond the safe range) is unlimited, and a positive
+// fraction behaves as its integer part. NaN and negative limits still throw.
+function numericLimit(value) {
+  if (typeof value !== 'number') return value;
+  if (value > Number.MAX_SAFE_INTEGER) return null;
+  return value > 0 && !Number.isInteger(value) ? Math.floor(value) : value;
 }
 
 function count(value, name) {

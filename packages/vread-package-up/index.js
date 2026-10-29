@@ -28,7 +28,9 @@ function configure(options) {
   if (typeof options !== 'object' || Array.isArray(options)) throw new TypeError('options must be an object');
   const cwd = own(options, 'cwd'), stopAt = own(options, 'stopAt');
   const normalize = own(options, 'normalize'), type = own(options, 'type');
-  if (normalize !== undefined && normalize !== false) throw new TypeError('metadata normalization is unsupported; use normalize: false');
+  // read-package-up normalizes by default. Require the opt-out so a caller
+  // expecting normalized metadata fails here instead of reading raw fields.
+  if (normalize !== false) throw new TypeError('metadata normalization is unsupported; pass normalize: false');
   if (type !== undefined && type !== 'file') throw new TypeError('type must be file');
   const base = process.cwd();
   const directory = cwd === undefined ? base : path.resolve(base, asPath(cwd, 'cwd'));

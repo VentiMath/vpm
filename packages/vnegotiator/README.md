@@ -1,7 +1,7 @@
 # vnegotiator
 
-HTTP content negotiation with validated quality values, deterministic ties and
-one parse per offered value. A callable/new-able counterpart to negotiator
+HTTP content negotiation with upstream-compatible quality values, deterministic
+ties and one parse per offered value. A callable/new-able counterpart to negotiator
 1.1.0, with its four header families and legacy method aliases. Node 20+,
 CommonJS, native ESM default/named imports and self-contained TypeScript types.
 
@@ -15,12 +15,13 @@ n.mediaTypes(['text/html', 'application/json']); // ['application/json', 'text/h
 
 ## Improvements
 
-- Quality values must decode to a complete decimal from 0 through 1, with at
-  most three fractional digits. `q=2`, `q=0.8junk`, `q=`, exponent notation,
-  signed numbers and `.5` no longer receive a positive weight. A syntactically
-  valid range with an invalid weight acts as `q=0`, so a broader wildcard cannot
-  silently re-enable it. This follows the numeric grammar in
-  [RFC 9110 §12.4.2](https://www.rfc-editor.org/rfc/rfc9110.html#section-12.4.2).
+- Quality values are read exactly as negotiator reads them: an absent or empty
+  `q` is 1, otherwise `parseFloat`. Real clients send weights outside
+  [RFC 9110's grammar](https://www.rfc-editor.org/rfc/rfc9110.html#section-12.4.2),
+  such as Java `HttpURLConnection`'s default `*; q=.2`; stricter parsing turned
+  those into 406 responses. A non-numeric weight is excluded, as upstream
+  excludes it. Language, charset and encoding entries accept any nonempty value
+  (for example `en_US`), and `*/subtype` media ranges are honored.
 - Media ranges with more matching parameters take precedence over less
   specific ones. An explicit zero on the more specific range remains an
   exclusion even if a less specific range has a higher weight.
@@ -73,7 +74,8 @@ only runtime dependency. This preserves upstream's public root API; internal
 `lib/` paths are not exported.
 
 Absent Accept, Accept-Charset and Accept-Language fields permit any offered
-value. Explicitly empty fields permit none. Absent/empty Accept-Encoding retains
+value. Explicitly empty fields permit none; vaccepts, like accepts, treats an
+empty Accept field as absent before reaching this package. Absent/empty Accept-Encoding retains
 upstream's conservative identity-only behavior; explicit identity and wildcard
 exclusions and upstream's implicit identity weight are preserved. This package
 does not choose compression implementations or send HTTP responses.
@@ -82,14 +84,13 @@ Language matching deliberately retains upstream's base/regional fallback and
 priorities. It is not a complete RFC 4647 language lookup implementation.
 Parameters use vcontent-type's tolerant parser: quoted numeric weights remain
 accepted, the first duplicate parameter wins, and other malformed parameter
-syntax retains that parser's behavior. Validation of decoded quality values
-does not claim strict validation of the entire header grammar. Parameter values
+syntax retains that parser's behavior. Parameter values
 other than `charset` use exact comparison; media types requiring some other
 case-insensitive parameter semantics may need caller normalization.
 
-The stricter numeric syntax (including rejecting `.5`), parameter comparisons,
-name validation, tie handling, frozen exports and own-header rules are intentional
-compatibility differences. `q=0.5` is the supported spelling for one half.
+Parameter comparisons, media name validation, tie handling, frozen exports and
+own-header rules are intentional compatibility differences. Quality parsing,
+language/charset/encoding entries and media wildcards match upstream.
 
 ## Validation and performance
 

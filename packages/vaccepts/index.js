@@ -6,6 +6,9 @@
  */
 const Negotiator = require('vnegotiator');
 const mime = require('vmime-types');
+// Offers are validated against a request with no Accept field: an empty field
+// means the same thing as an absent one here, as it does in accepts.
+const unconstrained = new Negotiator({ headers: {} });
 
 function Accepts(request) {
   if (!(this instanceof Accepts)) return new Accepts(request);
@@ -26,13 +29,14 @@ Accepts.prototype.type = Accepts.prototype.types = function () {
   const types = values(arguments);
   if (types.length === 0) return this.negotiator.mediaTypes();
   const headers = this.headers;
-  if (!Object.hasOwn(headers, 'accept') || headers.accept === undefined) {
+  // accepts treats an empty Accept field like an absent one.
+  if (!Object.hasOwn(headers, 'accept') || !headers.accept) {
     // Validate just the first usable offer. Absence must not bypass validation,
     // but it needs no preference ranking or normalization of the remaining offers.
     for (const value of types) {
       if (typeof value !== 'string') continue;
       const normalized = value.includes('/') ? value : mime.lookup(value);
-      if (normalized && this.negotiator.mediaType([normalized]) !== undefined) return value;
+      if (normalized && unconstrained.mediaType([normalized]) !== undefined) return value;
     }
     return false;
   }

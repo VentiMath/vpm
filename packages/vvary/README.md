@@ -40,29 +40,32 @@ Improvements and intentional differences:
 - **Correct optional whitespace.** Both spaces and horizontal tabs delimit names.
   Upstream rejects new lists such as `Accept,\tOrigin`, fails to recognize existing
   tab-prefixed duplicates and misses a tab-surrounded wildcard.
-- **Complete validation.** Both existing and new lists are checked before a
-  response write, even when `*` is present. Upstream only validates the new list.
-  Invalid existing names, controls and non-ASCII names throw instead of being
-  reflected into the result. Built-in errors do not repeat invalid field text.
-- **No implicit coercion.** Values and array entries must be strings. Numeric,
-  null, object and sparse-array entries are rejected. Arrays contain individual
+- **Validation where it belongs.** New fields are validated before a response
+  write, even when `*` is present. As in upstream, an existing header is not
+  validated: another component's malformed or nonstring Vary is converted with
+  `String()` (arrays joined with `, `) and kept, so it cannot make every later
+  `vary()` call throw. Characters Node's `setHeader` rejects (controls other
+  than tab, code points above U+00FF) do throw, so `append()` never reflects a
+  CR/LF. Built-in errors do not repeat invalid field text.
+- **No implicit field coercion.** Field values and array entries must be
+  strings. Numeric, null, object and sparse-array fields are rejected. Arrays contain individual
   tokens, without surrounding whitespace or commas; string lists accept HTTP
   whitespace and ignore empty members around actual names. An empty field string
   or a list containing only empty members throws; an empty array is a no-op.
-- **Single reads.** Field arrays and response header arrays are copied through
-  validated single reads. Getters cannot substitute unchecked strings between
+- **Single reads.** Field arrays are copied through validated single reads.
+  Getters cannot substitute unchecked strings between
   validation and output. Response methods are also captured once.
 - **Less repeated work.** A single-name path avoids list allocations. Small
   merges use arrays; larger merges use a Set to avoid quadratic duplicate
   searches. Already-present fields avoid redundant `setHeader` calls.
 
-Existing valid header spelling and formatting are preserved, including existing
+Existing header spelling and formatting are preserved, including existing
 repetitions and empty separators; additions use `, `. If the existing string
 contains only empty list members, a real addition starts a clean list. This is
 not a general-purpose normalizer. Skipping no-op writes is observable to wrappers
 that count `setHeader` calls; the resulting HTTP semantics are unchanged.
-Unlike upstream, arbitrary truthy response properties and numeric existing Vary
-headers are rejected. No response is mutated until validation succeeds.
+Unlike upstream, arbitrary truthy response properties are rejected; methods
+must be functions. No response is mutated until validation succeeds.
 
 ## Verification
 

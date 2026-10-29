@@ -3,15 +3,17 @@
 // VPM modifications © 2026 VentiMath. MIT licensed; see LICENSE.
 const debug = require('vdebug')('body-parser:json')
 const read = require('../read')
-const { normalizeOptions, optionsObject, booleanOption } = require('../utils')
+const { normalizeOptions, optionsObject } = require('../utils')
 const firstNonWhitespace = /[^\x20\x09\x0a\x0d]/
 
 module.exports = function json (options) {
   options = optionsObject(options)
   const normalized = normalizeOptions(options, 'application/json')
-  const { reviver, strict: requestedStrict } = options
-  const strict = booleanOption(requestedStrict, true, 'strict')
-  if (reviver !== undefined && typeof reviver !== 'function') throw new TypeError('reviver must be a function')
+  const { reviver: requestedReviver, strict: requestedStrict } = options
+  // As in body-parser: strict unless exactly false; JSON.parse ignores a
+  // non-function reviver.
+  const strict = requestedStrict !== false
+  const reviver = typeof requestedReviver === 'function' ? requestedReviver : undefined
   const isValidCharset = charset => charset.startsWith('utf-')
   if (!isValidCharset(normalized.defaultCharset)) throw new TypeError('JSON defaultCharset must be a UTF charset')
   const readOptions = { ...normalized, isValidCharset }

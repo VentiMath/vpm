@@ -1,0 +1,9 @@
+{
+  "name": "vpm-legacy-typescript",
+  "private": true,
+  "description": "Test-only TypeScript 5.x compilers used by downstream consumers; excluded from the VPM workspace and package archives",
+  "devDependencies": {
+    "typescript-5.8": "npm:typescript@5.8.3",
+    "typescript-5.9": "npm:typescript@5.9.3"
+  }
+}

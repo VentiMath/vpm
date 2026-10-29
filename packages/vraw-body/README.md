@@ -28,8 +28,10 @@ options throw synchronously in both APIs, before reading or attaching listeners.
 
 - `length`: expected bytes, as a nonnegative safe integer or a string of ASCII
   decimal digits. Omit or use `null` when unknown. Leading zeroes are accepted.
-- `limit`: nonnegative safe integer bytes, or a complete size string accepted by
-  `vbytes`, such as `'100kb'` or `'1.5mb'`. Omit or use `null` for no limit.
+- `limit`: nonnegative bytes, or a complete size string accepted by `vbytes`,
+  such as `'100kb'` or `'1.5mb'`. Omit, use `null`, or use `Infinity` (or any
+  number beyond the safe integer range) for no limit. A fractional numeric limit
+  uses its integer part, which is how raw-body's comparison behaves.
 - `encoding`: a `viconv-lite` encoding name; `true` means UTF-8. Omission, `null`
   or `false` returns a Buffer. A string or `true` can replace the options object.
 
@@ -75,8 +77,8 @@ entry point and uses TextDecoder by default. It is outside body-parser's declare
 
 - A premature close rejects instead of leaving the callback or Promise pending.
 - A body exceeding its declared length fails as soon as the excess arrives.
-- Malformed, negative, fractional numeric and unsafe length/limit values fail
-  explicitly. Invalid values cannot silently disable limits or length checks.
+- Malformed lengths, and malformed, negative or NaN limits, fail explicitly.
+  Invalid values cannot silently disable limits or length checks.
 - Decoder exceptions and invalid chunks enter the normal cleanup/error path.
 - Listener registration rolls back on failure or reentrant completion. Callback
   async resources are explicitly destroyed, even when the callback throws.

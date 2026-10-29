@@ -121,7 +121,7 @@ function stringifyCookie(cookies, options) {
 
 function serialize(name, value, options) {
   const result = pair(name, value, callback(options, 'encode', encodeURIComponent), true);
-  return options == null ? result : attributes(result, options, true);
+  return options == null ? result : legacyAttributes(result, options);
 }
 
 function stringifySetCookie(cookie, options) {
@@ -131,19 +131,46 @@ function stringifySetCookie(cookie, options) {
   const value = cookie.value;
   // An omitted value is an empty cookie; do not call a custom encoder for it.
   const result = pair(name, value == null ? '' : value, value == null ? identity : enc, false);
-  return attributes(result, cookie, false);
+  return attributes(result, cookie);
 }
 
 function identity(value) { return value; }
 
-function attributes(result, cookie, legacy) {
+// cookie 0.7.2 semantics, which Express's res.cookie relies on: a falsy
+// attribute is omitted, maxAge is numerically coerced and floored, and a truthy
+// domain or path is used as its string. Values are still validated before use.
+function legacyAttributes(result, cookie) {
   // Capture every field once before validating and emitting it. A getter must
   // not substitute a different, unvalidated header value on the second read.
   const maxAge = cookie.maxAge;
-  if (maxAge !== undefined && !(legacy && maxAge === null)) {
-    const age = legacy && typeof maxAge === 'number' ? Math.floor(maxAge) : maxAge;
-    if (!Number.isSafeInteger(age)) throw new TypeError('maxAge must be a safe integer');
-    result += '; Max-Age=' + age;
+  const domain = cookie.domain;
+  const path = cookie.path;
+  const expires = cookie.expires;
+  const httpOnly = cookie.httpOnly;
+  const secure = cookie.secure;
+  const partitioned = cookie.partitioned;
+  const priority = cookie.priority;
+  const sameSite = cookie.sameSite;
+  return attributes(result, {
+    maxAge: maxAge == null ? undefined : Math.floor(maxAge),
+    domain: domain ? String(domain) : undefined,
+    path: path ? String(path) : undefined,
+    expires: expires || undefined,
+    httpOnly: Boolean(httpOnly),
+    secure: Boolean(secure),
+    partitioned: Boolean(partitioned),
+    priority: priority || undefined,
+    sameSite: sameSite || undefined,
+  });
+}
+
+function attributes(result, cookie) {
+  // Capture every field once before validating and emitting it. A getter must
+  // not substitute a different, unvalidated header value on the second read.
+  const maxAge = cookie.maxAge;
+  if (maxAge !== undefined) {
+    if (!Number.isSafeInteger(maxAge)) throw new TypeError('maxAge must be a safe integer');
+    result += '; Max-Age=' + maxAge;
   }
   const domain = cookie.domain;
   if (domain !== undefined) {

@@ -20,13 +20,14 @@ if (result) {
 
 The comparison baseline is **read-package-up 11.0.0**. Functions Framework 5.0.2
 calls it with `normalize: false` to choose CommonJS or ES module loading.
-VPM preserves that raw-reading use case and makes it the default.
+VPM preserves that raw-reading use case and requires the same explicit opt-out.
 
 **npm metadata normalization is unsupported.** Upstream normalizes metadata by
 default; VPM always returns the object parsed from the file. It preserves fields
 such as `version`, `repository` and `bin` without rewriting them, and does not add
-inferred fields. Explicit `normalize: true` throws instead of silently returning
-unnormalized data. Consumers relying on upstream's normalized result need a
+inferred fields. Every call must pass `normalize: false`; omitting it or passing
+`true` throws instead of silently returning unnormalized data to a caller written
+for upstream's default. Consumers relying on upstream's normalized result need a
 separate normalization step before switching. The normalized-result types are
 not exported.
 
@@ -38,17 +39,17 @@ other application dependencies may still need those upstream packages.
 
 ## API
 
-`readPackageUp(options?)` returns a promise for `{ packageJson, path }`, or
-`undefined` when no manifest is found. `readPackageUpSync(options?)` returns the
+`readPackageUp(options)` returns a promise for `{ packageJson, path }`, or
+`undefined` when no manifest is found. `readPackageUpSync(options)` returns the
 same result synchronously. Errors reject the async promise or throw from the
-sync function. Options can be omitted or null; inherited option fields are
+sync function. Options must include an own `normalize: false`; inherited option fields are
 ignored, and recognized own fields are read once before filesystem work.
 
 | Option | Contract |
 | --- | --- |
 | `cwd` | Starting directory as a path string or real `file:` URL. Defaults to `process.cwd()`; relative strings resolve against that captured directory. |
 | `stopAt` | Inclusive boundary, which must be the starting directory or an ancestor. Defaults to the filesystem root; relative strings resolve against the starting directory. |
-| `normalize` | Only `false` or omission is accepted. Metadata is always raw. |
+| `normalize` | Required, and only `false` is accepted. Metadata is always raw. |
 | `type` | Only `'file'` or omission is accepted. |
 
 The search checks the starting directory, then its parents. Invalid boundaries
@@ -109,9 +110,9 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
 
-There are **49 package tests**, including the two original upstream tests with
-unchanged assertions. Module loading, AVA registration and fixture setup are
-adapted to an isolated built-in test runner. Those two tests verify lookup;
+There are **51 package tests**, including the two original upstream tests with
+unchanged assertions. Module loading, AVA registration, fixture setup and the
+required `normalize: false` are adapted to an isolated built-in test runner. Those two tests verify lookup;
 they do not establish metadata-normalization compatibility. Additional tests
 cover error propagation and descriptor cleanup, boundaries (including Windows
 path semantics), symlinks, FIFOs, path replacement, changing files, malformed

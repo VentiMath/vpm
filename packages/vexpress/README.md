@@ -135,8 +135,8 @@ node scripts/check-media-archives.cjs
 live prototype edits, inherited setters, proxy fallbacks and isolated app state.
 The pinned upstream suite
 executes **1,261 tests on Node 24**, including its example-application acceptance
-tests. **1,238 pass unchanged**; 23 use explicit assertions for documented VPM
-dependency differences. No upstream tests are skipped on Node 24. Bun 1.4.0 runs
+tests. **1,242 pass unchanged**; 19 use explicit assertions for documented VPM
+dependency diagnostics (error messages and strict-JSON wording, not outcomes). No upstream tests are skipped on Node 24. Bun 1.4.0 runs
 1,255 with six pending runtime limitations reproduced against unchanged Express:
 two overlong filesystem paths, three non-chunked transfer-coding cases, and one
 invalid header containing a newline. The [conformance harness](../../scripts/express-conformance/README.md)

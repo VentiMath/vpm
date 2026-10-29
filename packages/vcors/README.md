@@ -66,8 +66,11 @@ contract is compatible with Node's ServerResponse, including `removeHeader`.
   `/y` decisions. Original `lastIndex` and arrays are untouched. Nested arrays
   are handled iteratively, and cycles/invalid entries fail explicitly. Large
   string allowlists use private Sets for exact matching.
-- **Configuration validation:** header lists contain HTTP tokens; reflected
-  strings cannot inject line breaks/control characters. Flags are booleans,
+- **Configuration validation:** configured header lists contain HTTP tokens.
+  A reflected `Access-Control-Request-Headers` is echoed as cors echoes it,
+  checked only for characters a header cannot carry, so an unusual client list
+  cannot fail the preflight. Reflected strings cannot inject line
+  breaks/control characters. Flags are booleans,
   preflight statuses are successful integers, and max ages have complete numeric
   syntax. Static errors throw at creation; delegated/reflected errors reach
   `next(error)`. Invalid reflected fields are checked before CORS header writes.
@@ -81,10 +84,10 @@ contract is compatible with Node's ServerResponse, including `removeHeader`.
   `Vary: Origin` on successful decisions, including a false/disabled decision.
   This avoids reusing an origin-dependent denial as though it were independent
   of the origin. Delegates that depend on other request headers must arrange
-  the corresponding additional Vary fields themselves. `vvary` preserves valid
-  existing values and avoids duplicate writes. With an absent Vary header,
+  the corresponding additional Vary fields themselves. `vvary` preserves
+  existing values, including malformed ones set elsewhere, and avoids duplicate writes. With an absent Vary header,
   vcors writes its known valid field names directly; exact existing matches and
-  `*` need no merge. Other existing values retain full vvary validation.
+  `*` need no merge. Other existing values go through vvary's merge.
 - **Preflight framing:** a middleware-generated empty response removes existing
   Transfer-Encoding, Trailer and Content-Encoding, then sets Content-Length to
   zero. Continued preflights retain the caller's framing and status.
@@ -120,7 +123,7 @@ bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
 ```
 
-The package runs **39 unmodified upstream tests** and **29 additional regression
+The package runs **39 unmodified upstream tests** and **30 additional regression
 tests** on Node and Bun. Original source/test hashes and test-helper licenses
 are recorded in [PROVENANCE.json](PROVENANCE.json). The upstream tests use the
 built-in runner through a registration adapter; no assertions are changed.

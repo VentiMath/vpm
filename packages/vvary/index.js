@@ -2,6 +2,9 @@
 
 // Derived from vary (MIT); see LICENSE and PROVENANCE.json.
 const invalidToken = /[^!#$%&'*+\-.^_`|~0-9A-Za-z]/;
+// Characters Node's setHeader rejects. No real response header contains them,
+// and append must not reflect a CR/LF from its header argument.
+const invalidHeaderValue = /[^\t\x20-\x7e\x80-\xff]/;
 module.exports = vary;
 module.exports.append = append;
 Object.freeze(vary);
@@ -10,7 +13,10 @@ function token(value) {
   return value.length !== 0 && !invalidToken.test(value);
 }
 
-function names(value) {
+// Field arguments must be valid names. An existing header is only read for
+// names already present: as in vary, another component's malformed or
+// nonstring value must not make every later vary() call throw.
+function names(value, strict) {
   const result = [];
   let start = 0;
   while (start < value.length) {
@@ -21,7 +27,7 @@ function names(value) {
     while (end > start && (value.charCodeAt(end - 1) === 32 || value.charCodeAt(end - 1) === 9)) end--;
     if (start < end) {
       const name = value.slice(start, end);
-      if (!token(name)) throw new TypeError('invalid Vary field name');
+      if (strict && !token(name)) throw new TypeError('invalid Vary field name');
       result.push(name);
     }
     start = next;
@@ -31,6 +37,7 @@ function names(value) {
 
 function append(header, field) {
   if (typeof header !== 'string') throw new TypeError('header must be a string');
+  if (invalidHeaderValue.test(header)) throw new TypeError('header contains an invalid character');
   const single = typeof field === 'string' && token(field);
   // Common single-name calls need neither token arrays nor a membership set.
   if (single) {
@@ -43,7 +50,7 @@ function append(header, field) {
   let fields;
   if (single) fields = [field];
   else if (typeof field === 'string') {
-    fields = names(field);
+    fields = names(field, true);
     if (!fields.length) throw new TypeError('field must contain a header name');
   } else if (Array.isArray(field)) {
     fields = [];
@@ -55,8 +62,7 @@ function append(header, field) {
     }
   } else throw new TypeError('field must be a string or an array of strings');
 
-  // Validate the entire old and new list, even if either includes '*'.
-  const existing = names(header);
+  const existing = names(header, false);
   if (existing.includes('*') || fields.includes('*')) return '*';
   const lowerNames = existing.map(name => name.toLowerCase());
   // A small array avoids Set allocation for ordinary response headers. Large
@@ -78,19 +84,8 @@ function vary(response, field) {
   const setHeader = response.setHeader;
   if (typeof getHeader !== 'function' || typeof setHeader !== 'function') throw new TypeError('response must provide getHeader and setHeader');
   const value = getHeader.call(response, 'Vary');
-  let header;
-  if (value === undefined) header = '';
-  else if (typeof value === 'string') header = value;
-  else if (Array.isArray(value)) {
-    const fields = [];
-    const length = value.length;
-    for (let i = 0; i < length; i++) {
-      const entry = value[i];
-      if (typeof entry !== 'string') throw new TypeError('Vary header entries must be strings');
-      fields.push(entry);
-    }
-    header = fields.join(', ');
-  } else throw new TypeError('Vary header must be a string or an array of strings');
+  // The same conversion vary applies to whatever another component stored.
+  const header = !value ? '' : Array.isArray(value) ? value.join(', ') : String(value);
   const result = append(header, field);
   if (result && result !== header) setHeader.call(response, 'Vary', result);
 }

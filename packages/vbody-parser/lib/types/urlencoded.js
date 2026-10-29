@@ -16,7 +16,7 @@ const createError = require('vhttp-errors')
 const debug = require('vdebug')('body-parser:urlencoded')
 const read = require('../read')
 const qs = require('vqs')
-const { normalizeOptions, optionsObject, booleanOption, integerOption } = require('../utils')
+const { normalizeOptions, optionsObject } = require('../utils')
 
 /**
  * Module exports.
@@ -62,13 +62,21 @@ function urlencoded (options) {
  */
 function createQueryParser (options) {
   const { extended: requestedExtended, parameterLimit: requestedLimit, depth: requestedDepth, charsetSentinel: requestedSentinel, interpretNumericEntities: requestedEntities } = options
-  const extended = booleanOption(requestedExtended, false, 'extended')
-  const parameterLimit = integerOption(requestedLimit, 1000, 1, 'parameterLimit')
-  // Validate supplied depth even when extended parsing is disabled.
-  const configuredDepth = integerOption(requestedDepth, 32, 0, 'depth')
-  const depth = extended ? configuredDepth : 0
-  const charsetSentinel = booleanOption(requestedSentinel, false, 'charsetSentinel')
-  const interpretNumericEntities = booleanOption(requestedEntities, false, 'interpretNumericEntities')
+  // These follow body-parser 2.4.0 and the qs options it passes through, so
+  // configurations from environment strings (parameterLimit: '1000') or
+  // truthy flags start as they do upstream.
+  const extended = Boolean(requestedExtended)
+  let parameterLimit = requestedLimit !== undefined ? requestedLimit : 1000
+  const requestedOrDefaultDepth = extended ? (requestedDepth !== undefined ? requestedDepth : 32) : 0
+  if (isNaN(parameterLimit) || parameterLimit < 1) throw new TypeError('parameterLimit must be a safe integer >= 1 or Infinity')
+  if (isNaN(requestedOrDefaultDepth) || requestedOrDefaultDepth < 0) throw new TypeError('depth must be a safe integer >= 0 or Infinity')
+  // Floor rather than body-parser's `| 0`, which wraps limits >= 2 ** 31 to
+  // values that reject every form.
+  parameterLimit = isFinite(parameterLimit) ? Math.floor(parameterLimit) : Infinity
+  const depth = qsDepth(requestedOrDefaultDepth)
+  // qs ignores non-boolean flags.
+  const charsetSentinel = requestedSentinel === true
+  const interpretNumericEntities = requestedEntities === true
 
   return function parse (body, encoding) {
     if (!body.length) return {}
@@ -106,6 +114,20 @@ function createQueryParser (options) {
       }
     }
   }
+}
+
+/**
+ * The depth qs applies for body-parser's value: a non-number uses qs's default
+ * of 5, and a fraction admits one more nesting level, as qs's loop does.
+ *
+ * @param {*} value
+ * @returns {number}
+ * @private
+ */
+function qsDepth (value) {
+  if (value === false) return 0
+  if (typeof value !== 'number') return 5
+  return Number.isFinite(value) ? Math.ceil(value) : Infinity
 }
 
 /**

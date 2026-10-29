@@ -18,23 +18,6 @@ module.exports = function adapt(root) {
   replace('express.static', '/root path required/', '/root must be a nonempty path string without NUL/');
   replace('express.static', '/root path.*string/', '/root must be a nonempty path string without NUL/');
   replace('express.urlencoded', '/TypeError: option parameterLimit must be a positive number/', '/TypeError: parameterLimit must be a safe integer >= 1 or Infinity/', 4);
-  for (const extended of [false, true]) {
-    replace('express.urlencoded', `it('should work if number is floating point', function (done) {
-        request(createApp({ extended: ${extended}, parameterLimit: 10.1 }))
-          .post('/')
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-          .send(createManyParams(11))
-          .expect(413, /too many parameters/, done)
-      })`, `it('VPM rejects a fractional parameterLimit at construction', function () {
-        assert.throws(() => createApp({ extended: ${extended}, parameterLimit: 10.1 }),
-          { name: 'TypeError', message: 'parameterLimit must be a safe integer >= 1 or Infinity' })
-      })`);
-  }
-  replace('req.accepts', ".set('Accept', '*/html')\n      .expect('text/html', done);", ".set('Accept', '*/html')\n      .expect('', done);");
-  // Node tolerates end(false) as an empty body; Bun rejects it. The changed
-  // negotiation expectation is false, so send a portable empty string.
-  replace('req.accepts', "res.end(req.accepts(['application/json', 'text/html']));", "res.end(req.accepts(['application/json', 'text/html']) || '');");
-  replace('req.acceptsLanguages', ".expect(200, { 'en-us': 'en-us', en: 'en' }, done)", ".expect(200, { 'en-us': 'en-us', en: false }, done)");
   replace('res.cookie', '/option expires is invalid/', '/expires must be a valid Date/');
   replace('res.cookie', '/option maxAge is invalid/', '/maxAge must be a safe integer/');
   replace('res.cookie', '/option priority is invalid/', '/invalid priority/');

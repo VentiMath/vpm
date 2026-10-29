@@ -59,24 +59,44 @@ test('JSON strictness, malformed syntax and per-request reviver failures', async
   assert.ok(error instanceof SyntaxError); assert.equal(error.body, '42');
 });
 
-test('configuration fails at factory construction, including otherwise unused depth', () => {
-  for (const factory of [parser.json, parser.raw, parser.text, parser.urlencoded]) {
+test('construction accepts what body-parser accepts and rejects only unusable configurations', async () => {
+  const factories = [parser.json, parser.raw, parser.text, parser.urlencoded]
+  for (const factory of factories) {
     for (const options of [false, 1, 'json', []]) assert.throws(() => factory(options), TypeError);
-    for (const limit of [-1, NaN, Infinity, 0.5, Number.MAX_SAFE_INTEGER + 1]) assert.throws(() => factory({ limit }));
-    for (const limit of ['', '100kbjunk', {}, '1e3']) assert.throws(() => factory({ limit }));
-    for (const type of ['', [], [null], ['json', 'text/@'], 42, null]) assert.throws(() => factory({ type }), TypeError);
-    for (const option of ['inflate', 'verify', 'defaultCharset']) assert.throws(() => factory({ [option]: 1 }), TypeError);
+    // Unusable limits: upstream boots with these, then has no limit or a 1-byte one.
+    for (const limit of [-1, NaN, '', '100kbjunk', '1e3', {}]) assert.throws(() => factory({ limit }));
+    for (const verify of [1, 'false', {}]) assert.throws(() => factory({ verify }), TypeError);
+    // body-parser 2.4.0 starts with all of these, so applications must too.
+    for (const limit of [Infinity, 1e20, 0.5, 0, '1kb', 2048]) assert.doesNotThrow(() => factory({ limit }));
+    for (const type of ['', [], '*', '*/*', 42, null, ['json', 'text/@'], () => true]) assert.doesNotThrow(() => factory({ type }));
+    for (const inflate of [1, 0, null, 'false']) assert.doesNotThrow(() => factory({ inflate }));
+    for (const verify of [null, 0, '', false]) assert.doesNotThrow(() => factory({ verify }));
   }
-  for (const parameterLimit of [0, -1, NaN, 1.5, '3', null, Number.MAX_SAFE_INTEGER + 1]) {
-    assert.throws(() => parser.urlencoded({ parameterLimit }), TypeError);
-  }
-  for (const depth of [-1, NaN, 1.5, '3', null]) assert.throws(() => parser.urlencoded({ depth }), TypeError);
-  for (const option of ['extended', 'charsetSentinel', 'interpretNumericEntities']) assert.throws(() => parser.urlencoded({ [option]: 'false' }), TypeError);
-  assert.throws(() => parser.json({ strict: 'false' }), TypeError);
-  assert.throws(() => parser.json({ reviver: null }), TypeError);
+  assert.doesNotThrow(() => parser.raw({ defaultCharset: 1 }));
+  for (const parameterLimit of [0, -1, NaN, null]) assert.throws(() => parser.urlencoded({ parameterLimit }), TypeError);
+  for (const parameterLimit of ['1000', 10.1, true, Infinity]) assert.doesNotThrow(() => parser.urlencoded({ parameterLimit }));
+  for (const depth of [-1, NaN]) assert.throws(() => parser.urlencoded({ extended: true, depth }), TypeError);
+  assert.doesNotThrow(() => parser.urlencoded({ extended: false, depth: -1 }));
+  for (const option of ['extended', 'charsetSentinel', 'interpretNumericEntities']) assert.doesNotThrow(() => parser.urlencoded({ [option]: 'false' }));
+  assert.doesNotThrow(() => parser.json({ strict: 'false', reviver: null }));
   assert.throws(() => parser.json({ defaultCharset: 'latin1' }), TypeError);
   assert.throws(() => parser.text({ defaultCharset: 'not-a-charset' }), TypeError);
   assert.throws(() => parser.urlencoded({ defaultCharset: 'utf-16' }), TypeError);
+
+  // The coerced options behave as upstream's do on requests.
+  const form = 'a=1&b=2&c=3';
+  assert.equal((await exchange(parser.urlencoded({ parameterLimit: '2' }), form, formHeader)).status, 413);
+  assert.equal((await exchange(parser.urlencoded({ parameterLimit: 2.9 }), form, formHeader)).status, 413);
+  assert.equal((await exchange(parser.json({ strict: 'false' }), '42', jsonHeader)).status, 400);
+  assert.deepEqual((await exchange(parser.json({ reviver: null }), '{"a":1}', jsonHeader)).result.body, { a: 1 });
+  assert.equal((await exchange(parser.json({ limit: Infinity }), '{"a":1}', jsonHeader)).status, 200);
+  assert.equal((await exchange(parser.json({ limit: 0.5 }), '{}', jsonHeader)).status, 413);
+  assert.equal((await exchange(parser.json({ type: '' }), '{}', jsonHeader)).status, 200);
+  const gzip = { ...jsonHeader, 'content-encoding': 'gzip' };
+  assert.equal((await exchange(parser.json({ inflate: 0 }), zlib.gzipSync('{}'), gzip)).status, 200);
+  const nested = 'a[b][c][d][e][f][g]=x';
+  assert.equal((await exchange(parser.urlencoded({ extended: 1, depth: '3' }), nested, formHeader)).status, 400);
+  assert.deepEqual((await exchange(parser.urlencoded({ extended: true, depth: 1.5 }), 'a[b][c]=x', formHeader)).result.body, { a: { b: { c: 'x' } } });
 });
 
 test('options and type lists are snapshotted, with each getter read once', async () => {

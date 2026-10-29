@@ -144,7 +144,7 @@ vfServer.listen(0, '127.0.0.1', () => {
 });
 
 const manifestReader = require('vread-package-up');
-const manifestResult = manifestReader.readPackageUpSync({cwd:__dirname,stopAt:__dirname});
+const manifestResult = manifestReader.readPackageUpSync({cwd:__dirname,stopAt:__dirname,normalize:false});
 require('node:assert/strict').equal(manifestResult.path, require('node:path').join(__dirname,'package.json'));
 const parseArguments = require('vminimist');
 require('node:assert/strict').deepEqual(parseArguments(['--v=false'], {alias:{verbose:'v'},boolean:'verbose'}), {_:[],verbose:false,v:false});
@@ -207,13 +207,15 @@ assert.equal(signature.unsign(signature.sign('雪', 'key'), 'key'), '雪');
 assert.equal(signature.unsign(signature.sign('雪', 'key'), 'wrong'), false);
 const vary = require('vvary');
 assert.equal(vary.append('Accept,\\tOrigin', 'origin'), 'Accept,\\tOrigin');
-assert.throws(() => vary.append('Bad Header', 'Origin'), TypeError);
+assert.equal(vary.append('Bad Header', 'Origin'), 'Bad Header, Origin');
+assert.throws(() => vary.append('Accept', 'Bad Header'), TypeError);
 const cookie = require('vcookie');
 assert.equal(cookie.parse(cookie.serialize('sid', '雪')).sid, '雪');
 assert.equal(cookie.parseCookie('__proto__=x').__proto__, 'x');
 assert.equal(Object.getPrototypeOf(cookie.parseCookie('')), null);
 assert.equal(cookie.parseSetCookie(cookie.stringifySetCookie({ name: 'x', value: 'y', secure: true })).secure, true);
-assert.throws(() => cookie.serialize('x', 'y', { secure: 'false' }), TypeError);
+assert.equal(cookie.serialize('x', 'y', { secure: 'false', path: null }), 'x=y; Secure');
+assert.throws(() => cookie.stringifySetCookie({ name: 'x', value: 'y', secure: 'false' }), TypeError);
 const disposition = require('vcontent-disposition');
 assert.equal(disposition.parse(disposition.create('雪.txt')).parameters.filename, '雪.txt');
 assert.equal(Object.getPrototypeOf(disposition.parse('attachment').parameters), null);
@@ -251,8 +253,9 @@ assert.equal(typeis.hasBody({ headers: { 'content-length': '-1' } }), false);
 const Negotiator = require('vnegotiator');
 const Accepts = require('vaccepts');
 const request = { headers: { accept: 'text/html;q=2, application/json;q=0.5' } };
-assert.equal(new Negotiator(request).mediaType(['text/html', 'application/json']), 'application/json');
-assert.equal(Accepts(request).types('html', 'json'), 'json');
+assert.equal(new Negotiator(request).mediaType(['text/html', 'application/json']), 'text/html');
+assert.equal(Accepts(request).types('html', 'json'), 'html');
+assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import jwa from 'vjwa';
@@ -280,7 +283,7 @@ vfServer.listen(0, '127.0.0.1', () => {
 });
 
 import { readPackageUp } from 'vread-package-up';
-const manifestResult = await readPackageUp({cwd:new URL('.',import.meta.url),stopAt:new URL('.',import.meta.url)});
+const manifestResult = await readPackageUp({cwd:new URL('.',import.meta.url),stopAt:new URL('.',import.meta.url),normalize:false});
 if (!manifestResult || typeof manifestResult.packageJson !== 'object') throw new Error('manifest ESM consumer failed');
 import parseArguments from 'vminimist';
 if (parseArguments(['--port=08080'], {string:'port'}).port !== '08080') throw new Error('argument parser ESM import failed');
@@ -414,7 +417,7 @@ getTestServer('archive').listen(0).close();
 import {readPackageUp, readPackageUpSync, PackageJsonError, type PackageJson} from 'vread-package-up';
 const manifestResult = readPackageUpSync({cwd:'.',stopAt:'.',normalize:false});
 if (manifestResult) { const manifest: PackageJson = manifestResult.packageJson; const rawName: unknown = manifest.name; }
-void readPackageUp({cwd:'.'});
+void readPackageUp({cwd:'.',normalize:false});
 // @ts-expect-error metadata normalization is unsupported
 readPackageUp({normalize:true});
 // @ts-expect-error package fields are unvalidated JSON values
