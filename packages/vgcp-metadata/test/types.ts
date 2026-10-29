@@ -11,3 +11,9 @@ instance({timeout:'fast'});
 // @ts-expect-error required header is readonly
 HEADERS['Metadata-Flavor']='Other';
 void [id,data,domain,available];
+
+instance({headers: new Headers({x:'test'})});
+instance({headers: [['x','one'], ['y','two']] as const});
+bulk<readonly [{readonly metadataKey:'project/id'}], {'project/id':string}>([{metadataKey:'project/id'}]).then(result => { const id:string=result['project/id']; void id; });
+// @ts-expect-error tuples require string values
+instance({headers: [['x', 123]]});

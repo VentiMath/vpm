@@ -6,10 +6,11 @@ export declare const HEADER_VALUE: 'Google';
 export declare const HEADERS: Readonly<{'Metadata-Flavor': 'Google'}>;
 export declare const METADATA_SERVER_DETECTION: Readonly<Record<'assume-present' | 'none' | 'bios-only' | 'ping-only', string>>;
 export interface Signal { readonly aborted: boolean; addEventListener(type: 'abort', listener: () => void, options?: {once?: boolean}): void; removeEventListener(type: 'abort', listener: () => void): void; }
+export type MetadataHeaders = Record<string, string | number | readonly string[] | undefined> | Iterable<readonly [string, string]>;
 export interface Options {
   params?: Record<string, string>;
   property?: string;
-  headers?: Record<string, string | number | readonly string[] | undefined>;
+  headers?: MetadataHeaders;
   /** Total network budget, including retries. Default 3000 ms; range 1..3600000. */
   timeout?: number;
   signal?: Signal;
@@ -26,7 +27,7 @@ export type BulkResults<T extends readonly MetadataAccessor[]> = {[K in T[number
 export declare function instance<T = any>(options?: string | Options): Promise<T>;
 export declare function project<T = any>(options?: string | Options): Promise<T>;
 export declare function universe<T = any>(options?: string | Options): Promise<T>;
-export declare function bulk<T extends readonly MetadataAccessor[]>(properties: T): Promise<BulkResults<T>>;
+export declare function bulk<T extends readonly Readonly<MetadataAccessor>[], R extends BulkResults<T> = BulkResults<T>>(properties: T): Promise<R>;
 export declare function isAvailable(): Promise<boolean>;
 export declare function resetIsAvailableCache(): void;
 export declare let gcpResidencyCache: boolean | null;

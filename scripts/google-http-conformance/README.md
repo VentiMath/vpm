@@ -174,20 +174,27 @@ error-message assertions to sanitized messages. Other assertions are unchanged.
 The integration consumer exercises CloudEvents' actual native-bigint parser and
 restores the global JSON binding that CloudEvents replaces.
 
-## gcp-metadata 6.1.1
+## gcp-metadata 9.2.3
 
-`node scripts/google-http-conformance/metadata.cjs` (or `bun`) runs all 66 original
-suite entries from commit `63805cd00cddb8efc21a129c8044808207b0b342`, after archive
-SHA-256 verification. `--upstream` runs the unchanged assertions against the
-pinned original. Native fetch is blocked, Nock disables external connections, and
-both implementations explicitly use their Node transports on both runtimes.
+`node scripts/google-http-conformance/metadata.cjs` (or `bun`) runs all 77
+upstream suite entries from commit `cb723569f62de17cb07011e806981b64e80efe3d`,
+under `core/packages/gcp-metadata`. Each saved source is SHA-256 checked; `.txt` suffixes keep the fixture sources
+out of Bun’s ordinary test discovery.
+`--upstream` runs the original behavioral assertions against the pinned 9.2.3
+fixture. Nock 14 disables external connections and intercepts the default
+transports, including native fetch. No test entries are skipped.
 
-VPM adaptations cover three sanitized flavor-error assertions, one unknown-option
-message, the finite cloud timeout, seven primary-failure cases whose secondary
-now succeeds, and the successful secondary after cache reset. The DEBUG_AUTH
-case makes both endpoints fail and expects a static message. TypeScript namespace
-imports of callable/mutable Node modules use `import = require` for TS7 fixture
-compilation. Residency assertions are unchanged. No test entries are skipped.
+VPM adaptations cover sanitized flavor/unknown-option messages, finite cloud
+timeouts, static DEBUG_AUTH output, and static warnings for unknown failures.
+Expected timeouts remain silent. The logging test enables an explicit VPM sink,
+since disabled VPM loggers intentionally do not emit events. Mutable namespace
+imports use `import = require` for TS7 fixture compilation. On both sides,
+Nock `replyWithError` objects become equivalent Error instances: its Fetch
+interceptor otherwise loses their details and throws an unrelated TypeError.
+Residency, successful races, bulk and metadata-value assertions are unchanged.
 
-The integration consumer drives Google Auth 9.15.1 Compute access/ID tokens,
-metadata project lookup and universe-domain 404 fallback using local HTTP.
+Focused local HTTP tests drive Google Auth 10.6.1 and 11.3.2 Compute access/ID
+tokens, project lookup, universe lookup/404 fallback, and 403/404 access-token
+failures through VPM metadata and Gaxios. They assert use of native fetch.
+The integration gate retains Google Auth 9.15.1 coverage and aliases only the
+verified metadata versions (6.1.1, 8.1.2 and 9.2.3) within its consumer graph.

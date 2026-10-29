@@ -1,7 +1,7 @@
 # vgcp-metadata
 
 Google Cloud metadata retrieval on the VPM HTTP, logging and exact-JSON stack.
-A counterpart to `gcp-metadata` 6.1.1 for Node 20+ and Bun, with CommonJS, native
+A counterpart to `gcp-metadata` 9.2.3 for Node 20+ and Bun, with CommonJS, native
 ESM named imports and TypeScript declarations.
 
 ```js
@@ -25,7 +25,8 @@ forms), encoded separators, backslashes, control characters and fragments.
 
 `GCE_METADATA_IP` takes precedence over `GCE_METADATA_HOST`; either accepts an
 HTTP(S) origin, optionally without the scheme. Credentials, non-root paths,
-queries and fragments in host overrides are rejected. Custom headers are copied;
+queries and fragments in host overrides are rejected. Custom headers accept Fetch
+`Headers`, tuple lists and plain records, and are copied before requests begin;
 `Host` and a conflicting `Metadata-Flavor` cannot override routing. Responses
 must contain exactly `Metadata-Flavor: Google`. Proxies and redirects are bypassed.
 
@@ -78,7 +79,8 @@ no-response retries. These controls are environment heuristics, not authenticati
 
 Residency helpers and `gcpResidencyCache`, `getGCPResidency` and `setGCPResidency`
 retain the upstream interface. BIOS paths are frozen; MAC heuristics require a
-complete address and tolerate denied interface inspection. `setGCPResidency(null)`
+complete address and tolerate denied interface inspection. Cloud Run Worker Pools
+are recognized alongside services, jobs and Cloud Functions. `setGCPResidency(null)`
 redetects. Residency does not disable request deadlines.
 
 ## Diagnostics and compatibility
@@ -88,25 +90,33 @@ Returned transport errors retain VPM `GaxiosError` identity, `status` and a mini
 URLs, headers, response bodies, nested errors and cancellation reasons. Error codes
 are limited to known network codes, `ETIMEDOUT`, `ERR_CANCELED`,
 `ERR_METADATA_FLAVOR` and `ERR_METADATA_REQUEST`. Debug output and warnings use
-static messages. Logger output never includes metadata values or credentials.
+static messages. Native-fetch cause chains and Bun socket codes are normalized
+with bounded traversal; an unexpected failure in either endpoint is not hidden
+by an expected network failure in the other. Logger output uses the current
+`gcp-metadata` namespace and DEBUG severity, without metadata values or credentials.
 
 Intentional changes include finite deadlines, no redirects/proxies, validated
 options, endpoint-aware caching, first-success races, bounded bulk work and
 sanitized errors. Code that inspects original transport error payloads must migrate.
 
-The saved benchmark samples use the earlier Gaxios 6-compatible transport.
-They are historical measurements; see the [current client benchmarks](../vgaxios/bench/results/README.md)
-for the Gaxios 8/native-fetch transport. Caller compatibility is tested against
-the current implementation.
+Ordinary metadata requests use native fetch through `vgaxios`; the transport's
+Node fallback remains available for configurations that require it. No new runtime
+dependency is introduced by this upgrade.
 
 ## Verification
 
-Nineteen focused tests cover failure races, cancellation, bounds, real local HTTP,
-privacy, cache invalidation, snapshots and bulk scheduling. All 66 upstream tests
-run from a hash-checked archive, with explicit adaptations for changed race,
-timeout and diagnostic behavior. The integration gate exercises Google Auth's
-Compute access/ID tokens, metadata project lookup and universe fallback through
-these replacements. Installed archives and public declarations are also checked.
+Twenty-six focused tests cover failure races, cancellation, bounds, real local
+HTTP, privacy, cache invalidation, modern headers, nested errors and bulk scheduling.
+All 77 upstream 9.2.3 tests run from hash-checked sources on Node and Bun, with
+explicit adaptations for finite deadlines and private diagnostics. Upstream control
+runs use the same fixture corrections and retain original behavioral assertions.
+
+Google Auth 10.6.1 and 11.3.2 Compute access/ID tokens, project lookup, custom
+universe lookup, 404 universe fallback and 403/404 token errors are exercised over
+local HTTP through the VPM metadata and native-fetch stack. The older Google Auth
+9.15.1 integration remains covered. These checks do not establish compatibility
+with every Google Auth API or validate a live cloud deployment. Installed archives
+and self-contained public declarations are also checked.
 
 See [benchmark evidence](bench/results/README.md), [provenance](PROVENANCE.json),
 and [central improvements](../../IMPROVEMENTS.md).

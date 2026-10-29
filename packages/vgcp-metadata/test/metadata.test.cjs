@@ -79,3 +79,28 @@ test('real HTTP: flavor, body bounds, redirect denial and cancellation',async()=
 test('sparse bulk inputs fail before starting requests',async()=>{let calls=0;transport.request=async()=>{calls++;return response();};await assert.rejects(gcp.bulk([{}]),TypeError);const values=[{metadataKey:'instance'}];values.length=2;await assert.rejects(gcp.bulk(values),TypeError);assert.equal(calls,0);});
 test('caller cancellation listener is removed after successful completion',async()=>{let added=0,removed=0;const signal={aborted:false,addEventListener(){added++;},removeEventListener(){removed++;}};transport.request=async()=>response();await gcp.instance({signal});assert.equal(added,1);assert.equal(removed,1);});
 test('bulk failure stops scheduling additional requests',async()=>{let calls=0;transport.request=async()=>{if(++calls===1)throw new Error('failed');await delay(10);return response();};await assert.rejects(gcp.bulk(Array.from({length:40},(_,i)=>({metadataKey:'instance/'+i}))));await delay(20);assert.equal(calls,16);});
+test('Fetch Headers and tuple lists are copied, validated and preserve required routing',async()=>{
+ const seen=[];transport.request=async o=>{seen.push(o.headers);return response();};
+ const h=new Headers({x:'before'}),pending=gcp.instance({headers:h});h.set('x','after');await pending;assert.equal(seen[0].x,'before');
+ await gcp.bulk([{metadataKey:'instance',headers:[['X','one'],['x','two']]}]);assert.equal(seen[1].x,'one, two');
+ for(const h of [new Headers({Host:'private.test'}),[['metadata-flavor','private']],[['metadata-flavor','Google'],['metadata-flavor','Google']],[['x','PRIVATE\nVALUE']],[[1]]])await assert.rejects(gcp.instance({headers:h}),e=>e instanceof TypeError&&!String(e).includes('PRIVATE'));
+ assert.equal(seen.length,2);
+});
+test('native-fetch and Bun nested errors normalize without exposing diagnostics',async()=>{
+ const socket=code=>Object.assign(new Error('PRIVATE'),{code});
+ const cases=[['ECONNREFUSED',{cause:socket('ConnectionRefused')}],['ECONNREFUSED',{error:socket('FailedToOpenSocket')}],['ENOTFOUND',{cause:{cause:socket('ENOTFOUND')}}],['ETIMEDOUT',{cause:new DOMException('PRIVATE','AbortError')}],['ENOTFOUND',new AggregateError([{cause:socket('ENOTFOUND')},socket('ECONNREFUSED')])]];
+ for(const [code,error]of cases){transport.request=async()=>{throw error;};await assert.rejects(gcp.instance(),e=>e.code===code&&!JSON.stringify(e).includes('PRIVATE'));}
+});
+test('availability bounds error graphs and does not hide unexpected secondary failures',async()=>{
+ const emit=process.emitWarning,warnings=[];process.emitWarning=(...args)=>warnings.push(args);
+ try{
+  const known=Object.assign(new Error('PRIVATE'),{code:'ENOTFOUND'}),cycle=new Error('PRIVATE');cycle.cause=cycle;
+  let deep=known;for(let i=0;i<30;i++)deep={cause:deep};
+  for(const error of [cycle,deep,new AggregateError([]),new AggregateError(Array.from({length:100},()=>known)),new AggregateError([known,new Error('PRIVATE')])]){
+   gcp.resetIsAvailableCache();transport.request=async o=>{throw o.url.startsWith(gcp.HOST_ADDRESS)?known:error;};assert.equal(await gcp.isAvailable(),false);
+  }
+  assert.equal(warnings.length,5);assert.doesNotMatch(JSON.stringify(warnings),/PRIVATE/);
+  gcp.resetIsAvailableCache();transport.request=async()=>{throw {cause:{code:'FailedToOpenSocket'}};};assert.equal(await gcp.isAvailable(),false);assert.equal(warnings.length,5);
+ }finally{process.emitWarning=emit;}
+});
+test('Cloud Run Worker Pools are recognized without disabling deadlines',()=>{for(const key of ['CLOUD_RUN_JOB','FUNCTION_NAME','K_SERVICE','CLOUD_RUN_WORKER_POOL'])delete process.env[key];assert.equal(gcp.isGoogleCloudServerless(),false);process.env.CLOUD_RUN_WORKER_POOL='worker';assert.equal(gcp.isGoogleCloudServerless(),true);gcp.setGCPResidency(null);assert.equal(gcp.getGCPResidency(),true);assert.equal(gcp.requestTimeout(),3000);});
