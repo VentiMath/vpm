@@ -53,7 +53,8 @@ retrieves public signing keys for these consumers, including Firebase Admin.
 using `vagent-base` for connection lifecycle and pooling. `vgaxios` supplies
 Google’s HTTP client API on `vnode-fetch` and the VPM proxy transport, supported
 by `vextend` and `vis-stream`. `vgtoken` exchanges service-account assertions for
-access and ID tokens on this HTTP/signing stack. `vuuid` provides UUID generation
+access and ID tokens on this HTTP/signing stack. `vgoogle-logging-utils` supplies
+diagnostic logging with structured output and optional event sinks. `vuuid` provides UUID generation
 and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 

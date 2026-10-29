@@ -36,7 +36,7 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vextend','vis-stream'].includes(name)) {
+    if (['vextend','vis-stream','vgoogle-logging-utils'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
@@ -147,6 +147,7 @@ try {
 if(new (require('vnode-fetch').Headers)({test:'ok'}).get('test')!=='ok')throw new Error('fetch archive');
 if(typeof require('vgaxios').Gaxios.prototype.destroy!=='function')throw new Error('gaxios archive');
 if(!new (require('vgtoken').GoogleToken)().hasExpired())throw new Error('gtoken archive');
+if(typeof require('vgoogle-logging-utils').getStructuredBackend().log!=='function')throw new Error('logging archive');
 if(!require('vuuid').validate(require('vuuid').v4()))throw new Error('UUID archive');
 if(require('vextend')(true,{}, {a:{b:1}}).a.b!==1)throw new Error('extend archive');
 if(require('vis-stream').readable({pipe(){},_read(){},_readableState:null}))throw new Error('stream archive');
@@ -297,6 +298,8 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import fetchArchive, {Response as ArchiveResponse} from 'vnode-fetch';
+import {placeholder as loggingPlaceholder} from 'vgoogle-logging-utils';
+if (loggingPlaceholder.on('log', () => {}) !== loggingPlaceholder) throw new Error('logging ESM archive');
 import {GoogleToken as ArchiveToken} from 'vgtoken';
 if (!new ArchiveToken().hasExpired()) throw new Error('gtoken ESM archive');
 import {Gaxios as ArchiveGaxios} from 'vgaxios';
@@ -436,6 +439,8 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import typedFetch, {Request as TypedFetchRequest} from 'vnode-fetch';
+import {log as typedLog} from 'vgoogle-logging-utils';
+const typedLogging = typedLog('types'); typedLogging.on('log', (fields, args) => { void [fields,args]; }).info('ok');
 import {GoogleToken as TypedToken, type TokenData as GTokenData} from 'vgtoken';
 const typedToken = new TypedToken({email:'service@example.test', scope:['scope']});
 const getTypedToken: () => Promise<GTokenData> = () => typedToken.getToken();

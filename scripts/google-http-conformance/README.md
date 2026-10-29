@@ -97,3 +97,13 @@ The integration gate additionally runs google-auth-library 9.15.1's real
 `JWT.authorize()` and `fetchIdToken()` methods through version-scoped `vgtoken`,
 `vgaxios` and `vjws` aliases, verifies the emitted RSA assertions, and exchanges
 synthetic tokens with a loopback HTTP server.
+
+## Google SDK logging
+
+`node scripts/google-http-conformance/logging.cjs` (or `bun`) runs all ten public
+logging suite entries from google-logging-utils 0.0.2. Assertions are unchanged for
+VPM and `--upstream`; both runtimes pass. One upstream backend-replacement entry
+has an empty body, so the focused VPM tests separately cover that behavior. Four
+tests for the unexported Temporal helper are outside this public-API replacement.
+The runner verifies the original gax-nodejs commit archive, extracts only the
+logging-utils subtree and compiles its tests with TypeScript 7.

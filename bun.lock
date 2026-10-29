@@ -172,6 +172,10 @@
         "vnode-fetch": "workspace:*",
       },
     },
+    "packages/vgoogle-logging-utils": {
+      "name": "vgoogle-logging-utils",
+      "version": "0.1.0",
+    },
     "packages/vgtoken": {
       "name": "vgtoken",
       "version": "0.1.0",
@@ -483,6 +487,8 @@
     "vfunctions-framework": ["vfunctions-framework@workspace:packages/vfunctions-framework"],
 
     "vgaxios": ["vgaxios@workspace:packages/vgaxios"],
+
+    "vgoogle-logging-utils": ["vgoogle-logging-utils@workspace:packages/vgoogle-logging-utils"],
 
     "vgtoken": ["vgtoken@workspace:packages/vgtoken"],
 
