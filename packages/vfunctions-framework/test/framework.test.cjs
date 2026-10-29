@@ -249,6 +249,34 @@ test('concurrent HTTP handlers see their own execution and trace IDs', () => wit
   }));
 }));
 
+test('HTTP invocation preserves two arguments and the plain-call receiver', () => withServer(function (req, res) {
+  assert.equal(arguments.length, 2); assert.equal(this, undefined);
+  assert.equal(req.abortController, undefined);
+  res.end('ok');
+}, {}, async server => { assert.equal((await request(server)).body, 'ok'); }));
+
+for (const signatureType of ['event', 'cloudevent']) test('concurrent ' + signatureType + ' callbacks retain request context', async () => {
+  function finish(id, done) {
+    const initial = context.getCurrentContext().executionId;
+    setTimeout(() => done(null, { id, initial, later: context.getCurrentContext().executionId }), Number(id) % 4);
+  }
+  const handler = signatureType === 'event' ? function (data, event, done) {
+    assert.equal(arguments.length, 3); finish(event.eventId, done);
+  } : function (event, done) {
+    assert.equal(arguments.length, 2); finish(event.id, done);
+  };
+  await withServer(handler, { signatureType }, async server => {
+    await Promise.all(Array.from({ length: 24 }, async (_, index) => {
+      const id = String(index);
+      const event = signatureType === 'event' ? { data: {}, context: { eventId: id } } :
+        { specversion: '1.0', id, type: 'example', source: '/test', data: {} };
+      const r = await request(server, { method: 'POST', headers: { 'function-execution-id': id,
+        'content-type': signatureType === 'event' ? 'application/json' : 'application/cloudevents+json' }, body: JSON.stringify(event) });
+      assert.equal(r.status, 200); assert.deepEqual(JSON.parse(r.body), { id, initial: id, later: id });
+    }));
+  });
+});
+
 for (const mode of ['structured', 'binary']) test('CloudEvent ' + mode + ' delivery and method filtering', async () => {
   const event = { specversion: '1.0', id: 'one', type: 'example.created', source: '/test', data: { value: 42 } };
   let seen;

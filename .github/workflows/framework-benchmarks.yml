@@ -1,0 +1,44 @@
+name: Framework HTTP benchmarks
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        runtime: [node, bun]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.22.1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.0
+      - run: bun install --frozen-lockfile --ignore-scripts
+      - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
+      - name: Calibrate and measure HTTP
+        env:
+          NODE_ENV: production
+          BENCH_RUNTIME: ${{ matrix.runtime }}
+        run: |
+          mkdir -p benchmark-results
+          VPM_CALIBRATION=1 OUTPUT=benchmark-results/calibration-${BENCH_RUNTIME}.json \
+            "$BENCH_RUNTIME" packages/vfunctions-framework/bench/steady.cjs > benchmark-results/calibration-summary.json
+          for run in 1 2 3; do
+            OUTPUT=benchmark-results/${BENCH_RUNTIME}-${run}.json \
+              "$BENCH_RUNTIME" packages/vfunctions-framework/bench/steady.cjs > benchmark-results/summary-${run}.json
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: framework-benchmark-${{ matrix.runtime }}
+          path: benchmark-results/*.json
+          retention-days: 14

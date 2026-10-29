@@ -26,10 +26,9 @@ const cloud_events_1 = require("./cloud_events");
  * @param res - The response object of the request the completion handler is for
  * @returns An OnDoneCallback for the provided request.
  */
-const invocationDomains = new WeakMap();
-const getOnDoneCallback = (res) => {
+const getOnDoneCallback = (res, invocationDomain) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return invocationDomains.get(res).bind((err, result) => {
+    return invocationDomain.bind((err, result) => {
         if (res.locals.functionExecutionFinished) {
             console.log('Ignoring extra callback call');
         }
@@ -100,10 +99,9 @@ function catchRejection(ret, errorHandler) {
  * @param execute - Runs user's function
  * @return An Express handler function
  */
-const wrapHttpFunction = (execute) => {
+const wrapHttpFunction = (execute, eventHandler = false) => {
     return (req, res) => {
         const d = domain.create();
-        invocationDomains.set(res, d);
         const errorHandler = (err) => {
             if (res.locals.functionExecutionFinished) {
                 console.error(`Exception from a finished function: ${err}`);
@@ -118,7 +116,9 @@ const wrapHttpFunction = (execute) => {
         d.run(() => {
             process.nextTick(() => {
                 try {
-                    const ret = execute(req, res);
+                    // Pass the captured domain directly to internal event
+                    // adapters. Public HTTP handlers retain exactly two args.
+                    const ret = eventHandler ? execute(req, res, d) : execute(req, res);
                     // Ordinary return values (including res.json()) need no
                     // promises. Preserve native/foreign promises and read a
                     // custom thenable's getter once before deferred assimilation.
@@ -136,14 +136,14 @@ const wrapHttpFunction = (execute) => {
  * @return An Express handler function that invokes the user function
  */
 const wrapCloudEventFunction = (userFunction) => {
-    const httpHandler = (req, res) => {
-        const callback = getOnDoneCallback(res);
+    const httpHandler = (req, res, invocationDomain) => {
+        const callback = getOnDoneCallback(res, invocationDomain);
         const cloudEvent = parseCloudEventRequest(req);
         Promise.resolve()
             .then(() => userFunction(cloudEvent))
             .then(result => callback(null, result), err => callback(err, undefined));
     };
-    return wrapHttpFunction(httpHandler);
+    return wrapHttpFunction(httpHandler, true);
 };
 /**
  * Wraps callback style CloudEvent function in an express RequestHandler.
@@ -151,12 +151,12 @@ const wrapCloudEventFunction = (userFunction) => {
  * @return An Express handler function that invokes the user function
  */
 const wrapCloudEventFunctionWithCallback = (userFunction) => {
-    const httpHandler = (req, res) => {
-        const callback = getOnDoneCallback(res);
+    const httpHandler = (req, res, invocationDomain) => {
+        const callback = getOnDoneCallback(res, invocationDomain);
         const cloudEvent = parseCloudEventRequest(req);
         return userFunction(cloudEvent, callback);
     };
-    return wrapHttpFunction(httpHandler);
+    return wrapHttpFunction(httpHandler, true);
 };
 /**
  * Wraps an async event function in an express RequestHandler.
@@ -164,14 +164,14 @@ const wrapCloudEventFunctionWithCallback = (userFunction) => {
  * @return An Express handler function that invokes the user function
  */
 const wrapEventFunction = (userFunction) => {
-    const httpHandler = (req, res) => {
-        const callback = getOnDoneCallback(res);
+    const httpHandler = (req, res, invocationDomain) => {
+        const callback = getOnDoneCallback(res, invocationDomain);
         const { data, context } = parseBackgroundEvent(req);
         Promise.resolve()
             .then(() => userFunction(data, context))
             .then(result => callback(null, result), err => callback(err, undefined));
     };
-    return wrapHttpFunction(httpHandler);
+    return wrapHttpFunction(httpHandler, true);
 };
 /**
  * Wraps a callback style event function in an express RequestHandler.
@@ -179,12 +179,12 @@ const wrapEventFunction = (userFunction) => {
  * @return An Express handler function that invokes the user function
  */
 const wrapEventFunctionWithCallback = (userFunction) => {
-    const httpHandler = (req, res) => {
-        const callback = getOnDoneCallback(res);
+    const httpHandler = (req, res, invocationDomain) => {
+        const callback = getOnDoneCallback(res, invocationDomain);
         const { data, context } = parseBackgroundEvent(req);
         return userFunction(data, context, callback);
     };
-    return wrapHttpFunction(httpHandler);
+    return wrapHttpFunction(httpHandler, true);
 };
 /**
  * Wraps a user function with the provided signature type in an express

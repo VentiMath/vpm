@@ -22,6 +22,8 @@
     "Return 404 before body conversion for unsupported event methods; check own conversion-table members.",
     "Make logging interception idempotent and report the actual ephemeral CLI port.",
     "Dispatch each request to one checked VPM body parser instead of traversing five parser middleware layers; retain original-header validation and raw-body capture.",
-    "Avoid promise allocation for ordinary HTTP handler return values while retaining native/foreign promises, once-read thenable getters and deferred, once-only settlement."
+    "Avoid promise allocation for ordinary HTTP handler return values while retaining native/foreign promises, once-read thenable getters and deferred, once-only settlement.",
+    "Classify known ASCII media types once while retaining full original-header parameter/charset checks, framing validation and the checked fallback for other types.",
+    "Pass captured domains directly to internal event adapters, preserve public handler arguments, reuse completion callbacks, and omit the disabled timeout layer."
   ]
 }

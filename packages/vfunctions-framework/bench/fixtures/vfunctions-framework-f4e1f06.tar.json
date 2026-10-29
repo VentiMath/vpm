@@ -1,0 +1,6 @@
+{
+  "commit": "f4e1f0673445a2867bc89724ca2a7e2cdb7a9e03",
+  "description": "Unmodified HTTP optimization baseline; same VPM dependencies as the current benchmark.",
+  "archive": "vfunctions-framework-f4e1f06.tar.gz",
+  "sha256": "b1e2b31abbf58d77460a0e1b6f16aed7b89a5799824f1582819d5360e0f83f0d"
+}

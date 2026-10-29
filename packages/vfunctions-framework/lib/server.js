@@ -28,6 +28,9 @@ const function_wrappers_1 = require("./function_wrappers");
 const async_local_storage_1 = require("./async_local_storage");
 const execution_context_1 = require("./execution_context");
 const options_1 = require("./options");
+function markExecutionFinished(err, res) {
+    res.locals.functionExecutionFinished = true;
+}
 /**
  * Creates and configures an Express application and returns an HTTP server
  * which will run it.
@@ -97,13 +100,14 @@ function getServer(userFunction, options) {
     }
     if (options.signatureType === 'http') {
         app.use((req, res, next) => {
-            onFinished(res, (err, res) => {
-                res.locals.functionExecutionFinished = true;
-            });
+            onFinished(res, markExecutionFinished);
             next();
         });
     }
-    app.use((0, timeout_1.timeoutMiddleware)(options.timeoutMilliseconds));
+    const timeoutMilliseconds = options.timeoutMilliseconds;
+    if (timeoutMilliseconds > 0) {
+        app.use((0, timeout_1.timeoutMiddleware)(timeoutMilliseconds));
+    }
     // Set up the routes for the user's function
     const requestHandler = (0, function_wrappers_1.wrapUserFunction)(userFunction, options.signatureType);
     if (options.signatureType === 'http') {
