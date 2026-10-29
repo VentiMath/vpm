@@ -1,0 +1,26 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {"package":"https-proxy-agent","version":"7.0.6","tarball":"https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-7.0.6.tgz"},
+  "source": {
+    "repository":"TooTallNate/proxy-agents",
+    "ref":"https-proxy-agent@7.0.6",
+    "commit":"7cf0b795e05218d9e49047d5c93de77d2f606510",
+    "archive":"https://codeload.github.com/TooTallNate/proxy-agents/tar.gz/7cf0b795e05218d9e49047d5c93de77d2f606510",
+    "archiveSha256":"b56fff3bb7ab6c12674333781860badcd3faf5712f801cefd9510bc639cb42de"
+  },
+  "dependencies": {"agent-base":"vagent-base","debug":"vdebug"},
+  "changes": [
+    "Bound cumulative CONNECT headers and connection wait; parse fragmented input without repeatedly copying accumulated prefixes.",
+    "Validate status lines and header syntax, preserve Latin-1 values, skip informational responses and accept all successful 2xx CONNECT responses.",
+    "Return bytes following successful headers to the tunnel; use a portable response replay stream for failed CONNECT responses.",
+    "Snapshot proxy configuration, validate outgoing headers and authority, normalize reserved header decisions case-insensitively and avoid mutating header providers.",
+    "Isolate proxy and destination TLS settings; close actual pending proxy sockets on cancellation, destruction, deadline or parse failure.",
+    "Exclude credentials and response header contents from debug/error messages; capture status before observer callbacks."
+  ],
+  "upstreamTestAdaptations": [
+    "Replace expired 1024-bit TLS fixtures with the pinned repository's agent-base test fixture already checked into VPM (4096-bit, valid through 2035), equally for upstream and VPM.",
+    "Set HTTPS fixture URL protocols explicitly because async-listen 3.1.0 identifies Bun HTTPS servers as HTTP servers; applied equally to upstream and VPM.",
+    "For VPM only, expect the sanitized malformed-header error without reflecting proxy header contents."
+  ]
+}

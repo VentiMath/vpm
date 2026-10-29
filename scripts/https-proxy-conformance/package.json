@@ -1,0 +1,6 @@
+{
+  "name":"vpm-https-proxy-conformance",
+  "private":true,
+  "description":"Pinned upstream HTTPS proxy tests and local proxy fixtures",
+  "dependencies":{"async-listen":"3.1.0","proxy":"2.2.0","agent-base":"7.1.4"}
+}

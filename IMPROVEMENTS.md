@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vhttps-proxy-agent](packages/vhttps-proxy-agent) | https-proxy-agent 7.0.6 | Bounded CONNECT parsing and deadlines, linear fragmented-header buffering, isolated TLS policies, cancellation cleanup, safe header snapshots and preserved tunnel bytes. |
 | [vagent-base](packages/vagent-base) | agent-base 7.1.4 | Zero dependencies, bounded async connects, cancellation cleanup, queue failure recovery, delegation-cycle rejection, private JSON errors and exact byte collection. |
 | [vjwks-rsa](packages/vjwks-rsa) | jwks-rsa 3.2.2 | One dependency, native public-key import, shared concurrent retrieval, immutable cached keys, bounded HTTP requests, exact IDs and algorithm agreement. |
 | [vjsonwebtoken](packages/vjsonwebtoken) | jsonwebtoken 9.0.3 | Two dependencies, finite claim/time validation, reliable callbacks, direct HMAC key import and bounded public-key reuse. |
@@ -63,12 +64,12 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,909 tests**: all pass on Node 24, and Bun passes
-1,906 with three documented runtime-specific skips. All 49 runtime packages'
+The root suite contains **1,942 tests**: all pass on Node 24, and Bun passes
+1,939 with three documented runtime-specific skips. All 50 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **51 packages**, including two declaration-only packages.
+catalog covers **52 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -90,7 +91,9 @@ without skips, with one timeout-code correction. The
 unchanged tests on Node; Bun runs 693, with one upstream-reproduced `OPTIONS *`
 limitation. These upstream suites are separate from the root test count.
 The [Agent suite](scripts/agent-conformance/README.md) adds all 15 upstream
-cases on both runtimes, with documented fixture adaptations.
+cases on both runtimes, with documented fixture adaptations. The
+[HTTPS proxy suite](scripts/https-proxy-conformance/README.md) adds all 18 local
+upstream cases on each runtime, also checked against upstream itself.
 
 ## Dependency scope
 
@@ -143,8 +146,8 @@ previous Express 4 branch. Platform types have their own documented baselines.
 
 The fixture also includes Firebase Admin and JWT consumers: `vjsonwebtoken`
 validates claims, expiry durations reach `vms`, signatures reach `vjwa` through `vjws`, and proxy agents
-reach `vdebug`. `vagent-base` supports the async connectors used by the pinned
-HTTPS proxy agent and `gaxios`. Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
+reach `vdebug`. `vhttps-proxy-agent` uses `vagent-base` for the pinned HTTP CONNECT transport
+used by `gaxios`. Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
 Firebase Admin's JWKS fetcher and public-key verifier use `vjwks-rsa`.
 The wider frameworks, authentication libraries and Google SDKs still contain upstream dependencies.
 A complete VPM Express tree does not mean the entire backend has been replaced.
@@ -184,8 +187,8 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
 - Firebase Admin JWKS retrieval, cache reuse, signature verification and unknown-key
   rejection through its actual consumers, plus JWT key resolution via `vjwks-rsa`.
 
-- Actual HTTP and TLS tunnels through `https-proxy-agent` 7.0.6 using
-  `vagent-base`, including keep-alive reuse and a `gaxios` request. These seven
+- Actual HTTP and TLS tunnels through `vhttps-proxy-agent` in place of
+  `https-proxy-agent` 7.0.6, using `vagent-base`, including keep-alive reuse and a `gaxios` request. These seven
   requests are separate from the 246 HTTP application checks.
 
 The gate checks that every configured target is installed and exercised. VPM
@@ -202,12 +205,48 @@ Firebase handles errors thrown by plain handlers itself; finalhandler is exercis
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
 
+## vhttps-proxy-agent
+
+Replaces `https-proxy-agent` 7.0.6 with HTTP CONNECT transport through HTTP and
+HTTPS proxies. Its two direct dependencies are `vagent-base` and `vdebug`; the
+complete external tree also includes `vms`. This preserves the upstream direct
+count while moving the transport entirely onto VPM packages.
+
+CONNECT headers have a configurable 16 KiB cumulative limit, including interim
+responses. Fragmented input is scanned once and joined only at a complete header
+block, avoiding repeated prefix copying. Strict status/field validation preserves
+Latin-1 values in prototype-free maps. Informational responses are skipped, all
+successful 2xx responses establish a tunnel, and bytes coalesced after successful
+headers are returned to the tunnel.
+
+A configurable 30-second connection deadline closes the real pending socket.
+Request cancellation, agent destruction and parser errors also release it and
+allow queued work to continue. Proxy TLS settings remain separate from the
+origin's verification policy and SNI. Validated header providers are not mutated;
+reserved headers are handled case-insensitively. Configuration snapshots isolate
+caller mutations. Debug/error text excludes credentials and proxy header content.
+Failed CONNECT responses use an isolated replay stream that discards destination
+writes, preserving credential isolation on both runtimes.
+
+**Verification:** 33 focused tests and all 18 pinned upstream cases pass on Node
+24 and Bun. The upstream control also passes all 18 with the same TLS fixture
+updates. The integration gate routes real HTTP/TLS tunnels and `gaxios` through
+the new agent. Packed archives verify dependencies, exports and TypeScript
+consumers. The [API guide](packages/vhttps-proxy-agent/README.md) records limits,
+configuration changes, failed-response replay boundaries and older-version scope.
+
+**Performance:** the [paired benchmark report](packages/vhttps-proxy-agent/bench/results/README.md)
+records all 14 cases, three processes and an identical-upstream control per runtime.
+Fragmented parsing is substantially faster; strict validation and configuration
+snapshots retain costs for single-chunk parsing and construction. Full request
+measurements include the VPM base class and native HTTP/TLS transport.
+
 ## vagent-base
 
 Replaces `agent-base` 7.1.4 while retaining its zero-dependency footprint and
 native HTTP/TLS socket pools. Subclasses still return a socket or delegate agent
-synchronously or through a promise. The consumer gate exercises the actual
-`https-proxy-agent` 7.0.6 and `gaxios` packages through it.
+synchronously or through a promise. The consumer gate exercises `vhttps-proxy-agent` in place of
+`https-proxy-agent` 7.0.6, including the actual `gaxios` consumer.
 
 Failed, cancelled and timed-out connects release their reserved pool slots and
 resume queued work. Queued connector callbacks keep the originating async context.

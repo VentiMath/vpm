@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'https-proxy-agent': { pkg: 'vhttps-proxy-agent', versions: /^7\.0\.6$/ },
   'agent-base': { pkg: 'vagent-base', versions: /^7\.1\.4$/ },
   'jwks-rsa': { pkg: 'vjwks-rsa', versions: /^3\.2\.2$/ },
   jsonwebtoken: { pkg: 'vjsonwebtoken', versions: /^9\.0\.3$/ },
@@ -1171,7 +1172,7 @@ async function run() {
   console.log(`${runtime}: ${checks} HTTP checks passed through vfunctions-framework (replacing ${installed('@google-cloud/functions-framework')}), firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
   console.log('6 Functions Framework startup-option checks passed.');
   console.log('12 JWT algorithms: synchronous/asynchronous signing, Unicode headers, tamper rejection, claims, asynchronous key resolution and Google JWTAccess signing passed through vjsonwebtoken/vjws/vjwa.');
-  console.log('HTTPS proxy consumer: HTTP and TLS tunnels, keep-alive reuse and gaxios requests passed through vagent-base.');
+  console.log('HTTPS proxy consumer: HTTP and TLS tunnels, keep-alive reuse and gaxios requests passed through vhttps-proxy-agent/vagent-base.');
   console.log('Firebase Admin JWKS retrieval, cache reuse, signature verification, unknown-key rejection and JWT key resolution passed through vjwks-rsa.');
   console.log(`${readerParityChecks} raw package-reader comparisons and 3 framework CJS/ESM loading cases passed.`);
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);

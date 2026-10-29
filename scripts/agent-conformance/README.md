@@ -29,7 +29,8 @@ Two fixture adaptations apply equally to upstream and VPM:
   satisfy `instanceof http.Server`, producing an incorrect `http:` URL.
 
 `consumer.cjs` is invoked by the main integration gate after its aliases are
-installed. It sends actual HTTP and TLS traffic through `https-proxy-agent`
-7.0.6, verifies tunnel reuse, and exercises `gaxios` with that same agent.
+installed. It sends actual HTTP and TLS traffic through `vhttps-proxy-agent`
+in place of `https-proxy-agent` 7.0.6, verifies tunnel reuse, and exercises
+`gaxios` with that same agent.
 The separately locked `async-listen` dependency is test-only. This directory,
 the source archive and test TLS credentials are excluded from runtime packages.
