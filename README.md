@@ -1,7 +1,8 @@
 # Venti Package Manager
 
-Venti Package Manager (VPM) is building a comprehensive JavaScript package
-ecosystem with a consistent standard of quality across the entire dependency
+Venti Package Manager (VPM) rebuilds JavaScript infrastructure with fewer
+dependencies, stricter validation, and measured performance. Its goal is a
+comprehensive package ecosystem with a consistent standard across the dependency
 graph: application libraries, development tools, shared utilities, and the
 smallest underlying primitives.
 
@@ -13,7 +14,7 @@ installing only what they need.
 See **[VPM improvements](IMPROVEMENTS.md)** for the package-by-package comparison:
 verified fixes, API improvements, benchmark results, and compatibility tradeoffs.
 
-## Recognizable packages, carefully maintained
+## Recognizable APIs, rebuilt implementations
 
 VPM packages begin as recognizable counterparts to existing packages, generally
 preserving familiar boundaries and APIs under VPM names. Each implementation is
@@ -45,9 +46,9 @@ those APIs. `vexpress` uses VPM packages throughout its runtime dependency tree;
 `vcors` adds cross-origin request handling. Backend startup utilities include
 command-line argument parsing and package-manifest discovery.
 `vfunctions-framework` runs HTTP, CloudEvent and legacy event handlers on this
-stack. `vjws` and `vjwa` implement compact signatures and native cryptographic
-operations used by JWT and Google authentication consumers. Two declaration-only
-packages provide Node and Undici types for development.
+stack. `vjsonwebtoken`, `vjws`, and `vjwa` cover JWT claims, compact signatures,
+and native cryptographic operations used by authentication consumers. Two
+declaration-only packages provide Node and Undici types for development.
 
 Integration tests serve pinned Firebase Functions consumers through the VPM
 framework and compare behavior against Google Functions Framework. Firebase

@@ -47,6 +47,12 @@ try {
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', 'lib/core.js', 'lib/streams.js'].sort());
     }
+    if (name === 'vjsonwebtoken') {
+      assert.deepEqual(metadata.dependencies, { vjws: '0.1.0', vms: '0.1.0' });
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      const lib = fs.readdirSync(path.join(root, 'packages/vjsonwebtoken/lib')).map(file => 'lib/' + file);
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', ...lib].sort());
+    }
     if (name === 'vrouter') {
       assert.deepEqual(metadata.dependencies, { vdebug: '0.1.0', vdepd: '0.1.0', 'vpath-to-regexp': '0.1.0' });
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -106,6 +112,8 @@ try {
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const jwa = require('vjwa');
 const jws = require('vjws');
+const jwt = require('vjsonwebtoken');
+if (jwt.verify(jwt.sign({iat:0}, 'key', {expiresIn:60}), 'key', {clockTimestamp:1}).iat !== 0) throw new Error('installed vjsonwebtoken failed');
 if (!jws.verify(jws.sign({header:{alg:'HS256'},payload:'archive',secret:'key'}), 'HS256', 'key')) throw new Error('installed vjws failed');
 if (!jwa('HS256').verify('archive', jwa('HS256').sign('archive', 'key'), 'key')) throw new Error('installed vjwa failed');
 const vf = require('vfunctions-framework');
@@ -238,6 +246,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import jwa from 'vjwa';
 import jws, { sign as signJws } from 'vjws';
+import jwt, { sign as signJwt, verify as verifyJwt } from 'vjsonwebtoken';
+if (verifyJwt(signJwt({iat:0}, 'key', {expiresIn:60}), 'key', {clockTimestamp:1}).iat !== 0 || typeof jwt.decode !== 'function') throw new Error('installed ESM vjsonwebtoken failed');
 if (!jws.verify(signJws({header:{alg:'HS256'},payload:'archive',secret:'key'}), 'HS256', 'key')) throw new Error('installed ESM vjws failed');
 if (!jwa('HS256').verify('archive', jwa('HS256').sign('archive', 'key'), 'key')) throw new Error('installed ESM vjwa failed');
 import * as vf from 'vfunctions-framework';
@@ -360,6 +370,12 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
   const source = `
 import jwa from 'vjwa';
 import jws from 'vjws';
+import jwt from 'vjsonwebtoken';
+const jwtToken: string = jwt.sign({sub:'student'}, 'key', {expiresIn:'2h'});
+const jwtResult: jwt.Jwt = jwt.verify(jwtToken, 'key', {complete:true});
+jwt.verify(jwtToken, (header, done) => { const kid: string | undefined = header.kid; done(null, 'key'); void kid; },
+  {complete:true}, (error, value) => { const header: jwt.JwtHeader | undefined = value?.header; void [error,header]; });
+void jwtResult;
 const algorithm: jwa.Algorithm = 'HS256';
 const jwsToken: string = jws.sign({header:{alg:'HS256'},payload:'archive',secret:'key'});
 const jwsValid: boolean = jws.verify(jwsToken, 'HS256', 'key');
@@ -661,6 +677,7 @@ globalThis.browserChecked = true;
     assert.match(output, /node_modules\/vcookie-signature\/index\.d\.ts/);
     assert.match(output, /node_modules\/vjwa\/index\.d\.ts/);
     assert.match(output, /node_modules\/vjws\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vjsonwebtoken\/index\.d\.ts/);
     assert.match(output, /node_modules\/vvary\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcontent-disposition\/index\.d\.ts/);
