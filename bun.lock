@@ -180,6 +180,16 @@
         "vjson-bigint": "workspace:*",
       },
     },
+    "packages/vgoogle-auth-library": {
+      "name": "vgoogle-auth-library",
+      "version": "0.1.0",
+      "dependencies": {
+        "vgaxios": "workspace:*",
+        "vgcp-metadata": "workspace:*",
+        "vgoogle-logging-utils": "workspace:*",
+        "vjws": "workspace:*",
+      },
+    },
     "packages/vgoogle-logging-utils": {
       "name": "vgoogle-logging-utils",
       "version": "0.1.0",
@@ -501,6 +511,8 @@
     "vgaxios": ["vgaxios@workspace:packages/vgaxios"],
 
     "vgcp-metadata": ["vgcp-metadata@workspace:packages/vgcp-metadata"],
+
+    "vgoogle-auth-library": ["vgoogle-auth-library@workspace:packages/vgoogle-auth-library"],
 
     "vgoogle-logging-utils": ["vgoogle-logging-utils@workspace:packages/vgoogle-logging-utils"],
 

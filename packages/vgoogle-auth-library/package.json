@@ -1,0 +1,38 @@
+{
+  "name": "vgoogle-auth-library",
+  "version": "0.1.0",
+  "description": "Google authentication clients with VPM transport, isolated JWT caches and credential-safe diagnostics",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vgoogle-auth-library"
+  },
+  "dependencies": {
+    "vgaxios": "workspace:*",
+    "vgcp-metadata": "workspace:*",
+    "vgoogle-logging-utils": "workspace:*",
+    "vjws": "workspace:*"
+  }
+}

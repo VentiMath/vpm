@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'google-auth-library': { pkg: 'vgoogle-auth-library', versions: /^11\.3\.2$/ },
   'gcp-metadata': { pkg: 'vgcp-metadata', versions: /^(?:6\.1\.1|8\.1\.2|9\.2\.3)$/ },
   'json-bigint': { pkg: 'vjson-bigint', versions: /^1\.0\.0$/ },
   'google-logging-utils': { pkg: 'vgoogle-logging-utils', versions: /^(?:0\.0\.2|2\.1\.1)$/ },
@@ -144,6 +145,14 @@ while (queue.length) {
   const data = require(manifest);
   if (data.name === 'content-type') contentTypes.set(manifest, data.version);
   const from = createRequire(manifest);
+  // Google Auth 11 is also a fixture root; version 9 remains uncovered.
+  if (data.name === 'google-auth-library' && targets[data.name].versions.test(data.version)) {
+    const entry = from.resolve(path.dirname(manifest));
+    require(entry);
+    require.cache[entry].exports = replacements[data.name];
+    require.cache[entry].vpmAlias = true;
+    aliased.set(data.name + '@' + data.version, path.relative(modules, path.dirname(entry)));
+  }
   for (const name of Object.keys(Object.assign({}, data.dependencies, data.optionalDependencies))) {
     let child;
     try { child = resolveManifest(from, name); } catch (error) {
@@ -1136,6 +1145,16 @@ async function run() {
     const accessClaims = jwt.verify(authorization.slice('Bearer '.length), keys.RSA.publicKey,
       { algorithms: ['RS256'], audience: 'https://example.invalid', issuer: 'test@example.invalid' });
     assert.equal(accessClaims.sub, 'test@example.invalid');
+
+    // Current Google Auth consumer surface used by Storage and gax upgrades.
+    const currentAuth = require('./google-http-conformance/node_modules/google-auth11');
+    const latestAccess = new currentAuth.JWTAccess('test@example.invalid', keys.RSA.privatePem, 'test-key');
+    const latestAuthorization = latestAccess.getRequestHeaders('https://example.invalid').get('authorization');
+    assert.equal(jwt.verify(latestAuthorization.slice(7), keys.RSA.publicKey, {algorithms:['RS256'],audience:'https://example.invalid'}).sub, 'test@example.invalid');
+    const latestAuth = new currentAuth.GoogleAuth({projectId:'vpm-integration',authClient:new currentAuth.JWT({email:'test@example.invalid',key:keys.RSA.privatePem})});
+    assert.equal(await latestAuth.getProjectId(),'vpm-integration');
+    const latestSignature=await latestAuth.sign('cloud-storage-signing-input');
+    assert.equal(require('node:crypto').verify('sha256',Buffer.from('cloud-storage-signing-input'),keys.RSA.publicKey,Buffer.from(latestSignature,'base64')),true);
 
     // Firebase Admin's real App Check key-fetch/verification path, served locally.
     const firebaseJwt = from(path.join(path.dirname(resolveManifest(from, 'firebase-admin')), 'lib/utils/jwt.js'));
