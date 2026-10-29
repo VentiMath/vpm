@@ -26,6 +26,26 @@ API changes and larger redesigns are possible when they provide a concrete
 benefit. Each package documents its compatibility decisions and differences from
 its upstream counterpart.
 
+## Latest stable compatibility
+
+VPM targets the latest stable upstream APIs and features across runtime packages,
+frontend libraries, development tools, and declarations. Installed application
+versions help identify real callers and provide compatibility baselines; they do
+not set the endpoint for a replacement.
+
+Before starting or releasing a replacement, check upstream's current stable
+release and dependency graph, pin that version in comparison fixtures, and test
+the relevant public APIs, types, and consumers on Node.js 24 and Bun, adding
+browser and toolchain checks where applicable. Retain older compatibility where
+useful, and document intentional differences that improve
+correctness or simplify the design. Prereleases require a separate explicit target.
+
+Existing packages establish compatibility only with their documented, tested
+versions. A completed replacement does not automatically establish parity with a
+newer major release. Known gaps belong in the
+[upgrade roadmap](IMPROVEMENTS.md#latest-stable-upgrade-roadmap), with dependency
+upgrades preceding their callers.
+
 ## The package standard
 
 - **Understandable:** a clear purpose, readable implementation, and useful docs.

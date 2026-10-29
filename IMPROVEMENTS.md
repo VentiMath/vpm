@@ -5,6 +5,39 @@ behind them. Comparisons use the specific upstream versions below. They do not
 imply that every VPM package is faster, that upstream packages are insecure, or
 that these replacements have already improved application performance.
 
+## Latest stable upgrade roadmap
+
+Latest stable APIs and features are the design target. The comparison versions
+below record verified coverage, including older application compatibility;
+they do not establish parity with every later upstream release. The roadmap
+records known gaps, not a completed freshness audit of the entire catalog.
+
+The Google authentication stack was checked against npm's `latest` tags on
+October 29, 2026. Bring its dependencies forward before implementing
+`vgoogle-auth-library`:
+
+| Order | VPM package | Verified comparison baseline | Latest stable target |
+| --- | --- | --- | --- |
+| 1 | vgoogle-logging-utils | 0.0.2 | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
+| 2 | vnode-fetch | 2.7.0 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch) |
+| 3 | vgaxios | 6.7.1 | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
+| 4 | vgcp-metadata | 6.1.1 | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
+| 5 | vgoogle-auth-library | Not implemented; current consumer tests use 9.15.1 | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+
+Google Auth 11 is the direct target; implementing versions 9 and 10 first is not
+a prerequisite. Its current manifest uses gaxios, gcp-metadata,
+google-logging-utils, jws, base64-js, and ecdsa-sig-formatter. It no longer depends
+on gtoken. Existing `vgtoken` work remains useful for older callers, while its own
+latest stable 8.0.0 compatibility remains unverified. The `json-bigint` 1.0.0
+dependency of current gcp-metadata still matches the existing comparison baseline.
+Review the remaining helpers against native facilities and existing VPM signing
+code when implementing the new authentication API.
+
+Recheck stable versions when each step begins. Updates need pinned upstream
+conformance and consumer tests, types, benchmarks, and documented intentional
+differences before their latest-version parity is considered complete. Existing
+version-scoped integration aliases remain limited to their tested baselines.
+
 ## Package comparison
 
 | VPM package | Compared with | Main improvements |
@@ -161,8 +194,9 @@ Firebase Functions 7.4.0, Express 5.3.0, body-parser 2.4.0, router 2.2.0,
 send 1.2.1, serve-static 2.2.1, cors 2.8.6 and qs 6.17.0. This is an isolated
 compatibility target; changing it does not upgrade or deploy an application.
 
-Parent versions determine replacement baselines. Express 5.3.0 and body-parser
-2.4.0 use content-type 2.1.0, shared with type-is and negotiator. Older callers
+Parent versions determine consumer compatibility baselines; latest stable
+upstream releases determine the forward-looking API target. Express 5.3.0 and
+body-parser 2.4.0 use content-type 2.1.0, shared with type-is and negotiator. Older callers
 passed a request object where 2.x requires a string, so overriding their parser
 alone would lose charset information. Firebase Functions 7.4.0 removes the
 previous Express 4 branch. Platform types have their own documented baselines.
