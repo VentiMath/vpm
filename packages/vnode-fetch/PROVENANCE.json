@@ -21,6 +21,16 @@
     "Strip sensitive headers on any cross-origin redirect, including port changes.",
     "Include pool queue time in the request deadline; JSON parse errors omit response contents.",
     "Use native absolute URL conversion while retaining relative Request construction.",
-    "Preserve native Blob bytes, upload failures, immediate abort errors and HTTP keep-alive reuse."
-  ]
+    "Preserve native Blob bytes, upload failures, immediate abort errors and HTTP keep-alive reuse.",
+    "Classify request and body deadlines with ETIMEDOUT so callers can recognize either timer outcome."
+  ],
+  "consumerCompatibility": {
+    "clients": [
+      "gaxios@7.1.3",
+      "gaxios@8.3.2"
+    ],
+    "comparisonTransport": "node-fetch@3.3.2",
+    "fixture": "scripts/google-http-conformance/current-fetch.cjs",
+    "scope": "12 HTTP caller scenarios per client, compared with upstream and native Fetch; not complete Fetch 3 API parity. Package aliases remain version-scoped."
+  }
 }

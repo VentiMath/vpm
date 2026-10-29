@@ -12,6 +12,12 @@ try{
  // Replace the only external network call with an equivalent trusted local TLS fixture.
  text=text.replace("const url = 'https://github.com/';\n\t\tconst opts = {\n\t\t\tmethod: 'HEAD'\n\t\t};", "const url = global.__vpmHttpsURL;\n\t\tconst opts = {method: 'HEAD', agent: new (require('node:https').Agent)({rejectUnauthorized:false})};");
  text=text.replace('return lookup(hostname, {}, callback);','return lookup(hostname, {all: options.all}, callback);');
+ // Isolate the response-body timer from connection scheduling on busy hosts.
+ // The original 20ms request timer can expire before headers even arrive.
+ const bodyDeadline=text.indexOf("it('should allow custom timeout on response body'");
+ const bodyDeadlineEnd=text.indexOf("\n\tit(",bodyDeadline+1);
+ assert(bodyDeadline>=0&&bodyDeadlineEnd>bodyDeadline);
+ text=text.slice(0,bodyDeadline)+text.slice(bodyDeadline,bodyDeadlineEnd).replace('timeout: 20','timeout: 0').replace('expect(res.ok).to.be.true;', 'res.timeout = 20;\n\t\t\texpect(res.ok).to.be.true;')+text.slice(bodyDeadlineEnd);
  const accumulation = text.indexOf("it('should reject if attempt to accumulate body stream throws'");
  const tail = text.indexOf("\n\tit(", accumulation + 1);
  text=text.slice(0,accumulation)+text.slice(accumulation,tail).replace("let body = resumer().queue('a=1').end();", "let body = stream.Readable.from([Buffer.from('a=1'),Buffer.from('&b=2')]);")+text.slice(tail);

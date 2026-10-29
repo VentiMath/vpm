@@ -147,6 +147,8 @@ function FetchError(message, type, systemError) {
   // when err.type is `system`, err.code contains system error code
   if (systemError) {
     this.code = this.errno = systemError.code;
+  } else if (type === 'request-timeout' || type === 'body-timeout') {
+    this.code = this.errno = 'ETIMEDOUT';
   }
 
   // hide custom error implementation details from end-users

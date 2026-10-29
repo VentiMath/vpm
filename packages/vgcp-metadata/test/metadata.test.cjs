@@ -50,6 +50,13 @@ test('transport errors retain Gaxios identity/status without sensitive data',asy
  transport.request=async()=>{throw Object.assign(new Error('PRIVATE_TOKEN'),{code:'PRIVATE_CODE',config:{url:'PRIVATE_URL'},response:{status:403,data:'PRIVATE_BODY',headers:{secret:'PRIVATE_HEADER'}}});};
  await assert.rejects(gcp.instance(),e=>{assert.ok(e instanceof transport.GaxiosError);assert.equal(e.status,403);assert.equal(e.response.status,403);assert.equal(e.code,'ERR_METADATA_REQUEST');assert.doesNotMatch(JSON.stringify(e)+e.stack,/PRIVATE/);assert.equal(e.error,undefined);return true;});
 });
+test('Fetch timeout wins before the metadata deadline without losing its code',async()=>{
+ const {FetchError}=require('../../vnode-fetch');
+ for(const type of ['request-timeout','body-timeout']){
+  transport.request=async o=>{throw new transport.GaxiosError('PRIVATE',o,undefined,new FetchError('PRIVATE',type));};
+  await assert.rejects(gcp.instance({timeout:3000}),e=>e.code==='ETIMEDOUT'&&!String(e).includes('PRIVATE'));
+ }
+});
 test('diagnostics do not contain URLs, headers, query values or returned credentials',async()=>{
  const records=[];process.env.GOOGLE_SDK_NODE_LOGGING='*';logging.setBackend({setFilters(){},log:(...args)=>records.push(args)});transport.request=async()=>response('{"access_token":"SECRET_BODY"}');await gcp.instance({property:'service-accounts/SECRET_PATH/token',params:{q:'SECRET_QUERY'},headers:{authorization:'SECRET_HEADER'}});assert.ok(records.length);assert.doesNotMatch(JSON.stringify(records),/SECRET/);
 });

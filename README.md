@@ -28,10 +28,11 @@ its upstream counterpart.
 
 ## Latest stable compatibility
 
-VPM targets the latest stable upstream APIs and features across runtime packages,
-frontend libraries, development tools, and declarations. Installed application
-versions help identify real callers and provide compatibility baselines; they do
-not set the endpoint for a replacement.
+VPM prioritizes the APIs used by VentiMath's backend and frontend, including the
+libraries they call. Latest stable upstream versions set the compatibility
+target; actual consumers determine which behavior needs implementation and
+verification first. A replacement need not reproduce every upstream feature.
+Reuse native runtime facilities when they meet those callers' requirements.
 
 Before starting or releasing a replacement, check upstream's current stable
 release and dependency graph, pin that version in comparison fixtures, and test
@@ -41,7 +42,8 @@ useful, and document intentional differences that improve
 correctness or simplify the design. Prereleases require a separate explicit target.
 
 Existing packages establish compatibility only with their documented, tested
-versions. A completed replacement does not automatically establish parity with a
+versions and API scope. Caller-level checks do not establish complete package
+parity. A completed replacement does not automatically establish parity with a
 newer major release. Known gaps belong in the
 [upgrade roadmap](IMPROVEMENTS.md#latest-stable-upgrade-roadmap), with dependency
 upgrades preceding their callers.
