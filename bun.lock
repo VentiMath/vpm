@@ -169,6 +169,10 @@
       "name": "vipaddr",
       "version": "0.1.0",
     },
+    "packages/vjwa": {
+      "name": "vjwa",
+      "version": "0.1.0",
+    },
     "packages/vmedia-typer": {
       "name": "vmedia-typer",
       "version": "0.1.0",
@@ -405,6 +409,8 @@
     "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
 
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
+
+    "vjwa": ["vjwa@workspace:packages/vjwa"],
 
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
 

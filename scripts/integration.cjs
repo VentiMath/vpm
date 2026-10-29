@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  jwa: { pkg: 'vjwa', versions: /^2\.0\.1$/ },
   '@google-cloud/functions-framework': { pkg: 'vfunctions-framework', versions: /^5\.0\.2$/ },
   'read-package-up': { pkg: 'vread-package-up', versions: /^11\.0\.0$/, esm: true },
   minimist: { pkg: 'vminimist', versions: /^1\.2\.8$/ },
@@ -1083,6 +1084,26 @@ async function run() {
     const claims = jwt.verify(token, 'secret');
     assert.equal(claims.exp - claims.iat, 7200);
 
+    // Real JWT and Google-auth consumers exercise native JWA signatures offline.
+    const { keys } = require('../packages/vjwa/test/helpers.cjs');
+    for (const family of ['HS', 'RS', 'PS', 'ES']) for (const bits of [256, 384, 512]) {
+      const algorithm = family + bits;
+      const pair = keys[family === 'ES' ? algorithm : 'RSA'];
+      const signing = family === 'HS' ? 'integration-secret' : pair.privateKey;
+      const verifying = family === 'HS' ? signing : pair.publicKey;
+      const signed = jwt.sign({ sub: 'student', aud: 'vpm-test' }, signing, { algorithm, noTimestamp: true });
+      assert.equal(jwt.verify(signed, verifying, { algorithms: [algorithm], audience: 'vpm-test' }).sub, 'student');
+      const parts = signed.split('.');
+      parts[2] = (parts[2][0] === 'A' ? 'B' : 'A') + parts[2].slice(1);
+      assert.throws(() => jwt.verify(parts.join('.'), verifying, { algorithms: [algorithm] }), /invalid signature/);
+    }
+    const { JWTAccess } = from('google-auth-library');
+    const access = new JWTAccess('test@example.invalid', keys.RSA.privatePem, 'test-key');
+    const authorization = access.getRequestHeaders('https://example.invalid').Authorization;
+    const accessClaims = jwt.verify(authorization.slice('Bearer '.length), keys.RSA.publicKey,
+      { algorithms: ['RS256'], audience: 'https://example.invalid', issuer: 'test@example.invalid' });
+    assert.equal(accessClaims.sub, 'test@example.invalid');
+
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {
       assert.ok(stderr.some(line => line.startsWith(namespace)), `no debug output for ${namespace}`);
@@ -1101,6 +1122,7 @@ async function run() {
   const installed = name => require(path.join(modules, name, 'package.json')).version;
   console.log(`${runtime}: ${checks} HTTP checks passed through vfunctions-framework (replacing ${installed('@google-cloud/functions-framework')}), firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
   console.log('6 Functions Framework startup-option checks passed.');
+  console.log('12 JWT algorithm round trips and tamper rejections, plus Google JWTAccess signing, passed through vjwa.');
   console.log(`${readerParityChecks} raw package-reader comparisons and 3 framework CJS/ESM loading cases passed.`);
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
   console.log('Aliased: ' + [...aliased.keys()].map(label => `${label} ×${calls[label.replace(/@[^@]+$/, '')]}`).join(', '));

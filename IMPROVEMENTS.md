@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vjwa](packages/vjwa) | jwa 2.0.1 | Zero dependencies, native ECDSA signature format, canonical encodings, explicit key/algorithm matching and bounded public-key reuse. |
 | [vfunctions-framework](packages/vfunctions-framework) | @google-cloud/functions-framework 5.0.2 | Entirely VPM runtime tree, portable types, isolated request context, exact buffer-view logging, thenable handling, Bun event support, and corrected timeout lifecycle. |
 | [vread-package-up](packages/vread-package-up) | read-package-up 11.0.0 | Zero dependencies for raw manifest lookup, explicit boundaries, descriptor checks and cleanup, strict UTF-8, and errors without source contents. |
 | [vminimist](packages/vminimist) | minimist 1.2.8 | Coherent transitive aliases, boolean-alias fixes, own-property configuration, reserved positional arrays, validated snapshots, and non-variadic argument tails. |
@@ -58,10 +59,10 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,521 tests**: all pass on Node 24, and Bun passes
-1,518 with three documented runtime-specific skips. All 44 runtime packages'
+The root suite contains **1,689 tests**: all pass on Node 24, and Bun passes
+1,686 with three documented runtime-specific skips. All 45 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
-catalog covers **46 packages**, including two declaration-only packages.
+catalog covers **47 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -87,6 +88,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vjwa` | 3 | 0 |
 | `vhttp-errors` | 5 | 1 |
 | `viconv-lite` | 1 | 0 |
 | `vraw-body` | 4 | 3 |
@@ -123,7 +125,8 @@ alone would lose charset information. Firebase Functions 7.4.0 removes the
 previous Express 4 branch. Platform types have their own documented baselines.
 
 The fixture also includes Firebase Admin and jsonwebtoken consumers: expiry
-durations reach `vms`, and proxy agents reach `vdebug`. The wider frameworks,
+durations reach `vms`, signatures reach `vjwa` through `jws`, and proxy agents
+reach `vdebug`. Google `JWTAccess` signing also runs through `vjwa`. The wider frameworks,
 authentication libraries and Google SDKs still contain upstream dependencies.
 A complete VPM Express tree does not mean the entire backend has been replaced.
 
@@ -153,6 +156,8 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
   the HTTP count.
 - Framework CLI/environment precedence, option types and errors, application
   startup callbacks, symbol descriptors, JWT expiry durations and debug output.
+- All 12 signed JWT algorithms and tamper rejection through `jws`/`jsonwebtoken`,
+  plus offline Google `JWTAccess` signing, with `vjwa` substituted underneath.
 
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
@@ -167,6 +172,87 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vjwa
+
+Replaces `jwa` 2.0.1 with zero runtime dependencies. Native `Buffer`,
+`timingSafeEqual` and ECDSA P1363 signatures remove `safe-buffer`,
+`buffer-equal-constant-time` and `ecdsa-sig-formatter` from this package's tree.
+Those packages can still exist under other upstream callers.
+
+**Verified changes:** canonical signature encodings reject padding, whitespace,
+alternate alphabets and nonzero unused bits. Signing enforces key families and
+the correct P-256/P-384/P-521 curve; verification rejects mismatches. RSA-PSS uses
+digest-length salts. Exact byte views honor offsets and lengths. Factory results
+have independent public containers, and key-import options are read without
+mutation. No cryptographic algorithm is implemented in JavaScript.
+
+WeakMaps reuse validated native key operations. A bounded cache stores at most
+16 complete public PEM strings of at most 16 KiB each. Private PEM, mutable
+buffers and import options are parsed on each call. Callers can prepare native
+KeyObjects once to avoid repeated import costs without adding a private-key cache.
+
+**Coverage:** 38 focused tests plus all 65 upstream tests against each of the
+original and replacement implementations, totaling 168 cases on Node and Bun.
+They include OpenSSL interoperability and RFC 7515 Appendix A vectors. The shared
+consumer gate adds all 12 signed JWT algorithms and tampering through
+`jws`/`jsonwebtoken`, plus offline Google `JWTAccess` signing. Archive/type checks
+cover npm/Bun installations and CJS/ESM consumers without ambient platform types.
+
+**Compatibility:** malformed ECDSA lengths now return `false`. Wrong signing
+key families/curves throw; mismatched verification keys return `false`. Byte
+views are bytes rather than JSON objects. Extractable CryptoKeys and native key
+import options are supported; non-extractable CryptoKeys are rejected. Bun's
+native inability to import restricted RSA-PSS keys remains visible; ordinary
+RSA keys work for PS256/384/512. Upstream's explicit `none` operation, JSON input
+coercion and runtime-accepted key sizes remain. Algorithm allowlists, key-strength
+policy and JWT claim validation remain caller responsibilities. The
+[API guide](packages/vjwa/README.md) records these boundaries and test adaptations.
+
+**Performance, 2026-10-28:** Node 24.22.1 and Bun 1.4.0 on macOS arm64. Each of
+42 workloads has three fresh-process reports, ten alternating pairs per report
+(30 pairs total), plus an identical-code control per runtime. Outputs are retained
+and checked, and all samples remain in the [eight raw reports](packages/vjwa/bench/results).
+The [summary script](packages/vjwa/bench/summarize.cjs) reproduces paired medians,
+per-report changes and calibration values. Negative percentages mean faster.
+
+| Operation | Node change | Bun change |
+| --- | ---: | ---: |
+| Factory creation | −81.7% | −93.8% |
+| HMAC signing, KeyObject, HS256/384/512 | −7.7% to −12.6% | −12.2% to −22.9% |
+| HMAC verification, KeyObject, HS256/384/512 | −5.4% to −13.1% | −6.7% to −21.1% |
+| HS256 sign / verify, string secret | −13.4% / −9.5% | −13.1% / −11.4% |
+| RS256 / PS256 verify, warm PEM cache | −49.9% / −48.9% | −28.8% / −26.0% |
+| ES256 sign / verify, KeyObject | −2.7% / +2.5% | −7.2% / −0.6% |
+| ES256 verify, warm PEM cache | −18.3% | −3.5% |
+| RS256 / PS256 / ES256 sign, private PEM | +2.3% / +1.8% / +4.8% | −0.1% / −0.1% / −3.7% |
+| RS256 verify, uncached PEM Buffer | +44.5% | −0.8% |
+| RS256 verify, rotating PEM cache misses | +43.8% | +2.3% |
+| ES256 verify, uncached PEM Buffer | +7.9% | +0.9% |
+| ES256 verify, rotating PEM cache misses | +8.6% | +1.7% |
+| HS256 sign / verify, 64 KiB | −1.3% / −1.9% | −1.3% / −2.3% |
+
+**Remaining costs:** Node's uncached RS256 PEM verification increases from
+43.07 to 62.25 microseconds with a Buffer, and from 44.32 to 64.54 microseconds
+when cycling 20 PEM encodings beyond the 16-entry cache. Explicit native key
+import and metadata validation add work absent from upstream's direct verification
+path. ES256's corresponding costs increase by about 7 microseconds. Prepared
+KeyObjects avoid repeated import; the retained reports show their separate costs.
+The rotating corpus uses different encodings of one public key to force cache
+misses, not a deployed key-rotation workload.
+
+RSA/PSS signing with KeyObjects and larger-curve ECDSA operations are generally
+within 1% of upstream. Node RS512 verification is +2.3%, and mismatched RS256/ES256
+signature verification is +2.5%/+1.4%; all remaining cases are retained in the
+reports. Factory creation saves roughly 0.16 microseconds on Node and 0.10 on Bun,
+so its large percentage should not be read as an application-wide speedup.
+
+Identical-code paired medians range from −5.0% to +2.0% on Node and −4.3% to
++4.1% on Bun across workloads. These are calibration observations, not confidence
+intervals; small changes need caution. One Node ES256 private-PEM report reversed
+direction (−22.1%, versus +4.9%/+4.4% in the other two), and Bun HS256 verification
+also varied between reports. No samples were discarded. These are local operation
+benchmarks, not deployed authentication throughput or startup measurements.
 
 ## vfunctions-framework
 

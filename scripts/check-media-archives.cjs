@@ -37,7 +37,7 @@ try {
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json',
         ...['application', 'express', 'request', 'response', 'utils', 'view', 'handlers'].map(file => 'lib/' + file + '.js')].sort());
     }
-    if (['vread-package-up', 'vminimist', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
+    if (['vjwa', 'vread-package-up', 'vminimist', 'vforwarded', 'vonce', 'vmerge-descriptors', 'vcontent-disposition', 'vcookie', 'vcookie-signature', 'vvary'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
@@ -99,6 +99,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const jwa = require('vjwa');
+if (!jwa('HS256').verify('archive', jwa('HS256').sign('archive', 'key'), 'key')) throw new Error('installed vjwa failed');
 const vf = require('vfunctions-framework');
 const vfTesting = require('vfunctions-framework/testing');
 const vfHttp = require('node:http');
@@ -227,6 +229,8 @@ assert.equal(new Negotiator(request).mediaType(['text/html', 'application/json']
 assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import jwa from 'vjwa';
+if (!jwa('HS256').verify('archive', jwa('HS256').sign('archive', 'key'), 'key')) throw new Error('installed ESM vjwa failed');
 import * as vf from 'vfunctions-framework';
 import * as vfTesting from 'vfunctions-framework/testing';
 import vfHttp from 'node:http';
@@ -345,6 +349,15 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import jwa from 'vjwa';
+const algorithm: jwa.Algorithm = 'HS256';
+const signed: string = jwa(algorithm).sign({sub:'archive'}, 'key');
+const jwtSignatureVerified: boolean = jwa(algorithm).verify({sub:'archive'}, signed, 'key');
+const empty: '' = jwa('none').sign();
+// @ts-expect-error algorithms are case-sensitive
+jwa('hs256');
+// @ts-expect-error a signed algorithm requires key material
+jwa('RS256').sign('message');
 import { http as registerHttp, cloudEvent as registerCloudEvent } from 'vfunctions-framework';
 import { getFunction, getTestServer } from 'vfunctions-framework/testing';
 registerHttp('archive', (req, res) => res.send(req.rawBody?.toString()));
@@ -633,6 +646,7 @@ globalThis.browserChecked = true;
     assert.match(output, /node_modules\/vonce\/index\.d\.ts/);
     assert.match(output, /node_modules\/vmerge-descriptors\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie-signature\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vjwa\/index\.d\.ts/);
     assert.match(output, /node_modules\/vvary\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcontent-disposition\/index\.d\.ts/);
