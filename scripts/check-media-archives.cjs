@@ -27,6 +27,10 @@ try {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), name === 'vnode-fetch' ? ['viconv-lite'] : ['vextend','vhttps-proxy-agent','vis-stream','vnode-fetch']);
       assert.doesNotMatch(run('tar', ['-tzf', packed]), /\/(?:test|bench|node_modules)\//);
     }
+    if (name === 'vgcp-metadata') {
+      assert.deepEqual(metadata.dependencies, {vgaxios:'0.1.0','vgoogle-logging-utils':'0.1.0','vjson-bigint':'0.1.0'});
+      assert.doesNotMatch(run('tar', ['-tzf', packed]), /\/(?:test|bench|node_modules)\//);
+    }
     if (name === 'vgtoken') {
       assert.deepEqual(metadata.dependencies, {vgaxios: '0.1.0', vjws: '0.1.0'});
       assert.doesNotMatch(run('tar', ['-tzf', packed]), /\/(?:test|bench|node_modules)\//);
@@ -146,6 +150,7 @@ try {
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 if(new (require('vnode-fetch').Headers)({test:'ok'}).get('test')!=='ok')throw new Error('fetch archive');
 if(typeof require('vgaxios').Gaxios.prototype.destroy!=='function')throw new Error('gaxios archive');
+if(require('vgcp-metadata').requestTimeout()!==3000)throw new Error('metadata archive');
 if(require('vjson-bigint').parse('9007199254740993').valueOf()!=='9007199254740993')throw new Error('json archive');
 if(!new (require('vgtoken').GoogleToken)().hasExpired())throw new Error('gtoken archive');
 if(typeof require('vgoogle-logging-utils').getStructuredBackend().log!=='function')throw new Error('logging archive');
@@ -299,6 +304,8 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import fetchArchive, {Response as ArchiveResponse} from 'vnode-fetch';
+import {requestTimeout as metadataTimeout} from 'vgcp-metadata';
+if(metadataTimeout()!==3000)throw new Error('metadata ESM archive');
 import jsonBig from 'vjson-bigint';
 if(jsonBig.stringify(jsonBig.parse('9007199254740993'))!=='9007199254740993')throw new Error('json ESM archive');
 import {placeholder as loggingPlaceholder} from 'vgoogle-logging-utils';
@@ -442,6 +449,9 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import typedFetch, {Request as TypedFetchRequest} from 'vnode-fetch';
+import {instance as typedMetadata, type Options as MetadataOptions} from 'vgcp-metadata';
+const metadataOptions: MetadataOptions = {property:'id',timeout:100};
+const metadataContract: (options?: string | MetadataOptions) => Promise<string> = typedMetadata<string>;
 import typedJSON = require('vjson-bigint');
 const exactJSONNumber: typedJSON.ExactNumber = new typedJSON.ExactNumber('9007199254740993');
 const jsonString: string | undefined = typedJSON.stringify({exactJSONNumber});

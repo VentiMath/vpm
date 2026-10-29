@@ -1,0 +1,24 @@
+{
+  "license": "Apache-2.0",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "gcp-metadata",
+    "version": "6.1.1",
+    "tarball": "https://registry.npmjs.org/gcp-metadata/-/gcp-metadata-6.1.1.tgz",
+    "integrity": "sha512-a4tiq7E0/5fTjxPAaH4jpjkSv/uCaU2p5KC6HVGrvl0cDjA8iBZv4vv1gyzlmK0ZUKqwpOyQMKzZQe3lTit77A==",
+    "commit": "63805cd00cddb8efc21a129c8044808207b0b342",
+    "sourceArchiveSha256": "f35f9fe1f6869de3210582c3aa2dd6f9ce1319342f5a5699fc43e2dc1859ce8c"
+  },
+  "dependencies": {
+    "gaxios": "vgaxios",
+    "google-logging-utils": "vgoogle-logging-utils",
+    "json-bigint": "vjson-bigint"
+  },
+  "changes": [
+    "Accept the first valid endpoint response and cancel remaining requests.",
+    "Bound entire requests, retries, response bytes and bulk concurrency.",
+    "Bypass proxies and redirects, validate metadata paths and routing headers.",
+    "Sanitize errors and logs without retaining metadata, headers or request URLs.",
+    "Use exact JSON values, null-prototype bulk results and endpoint-aware availability caching."
+  ]
+}

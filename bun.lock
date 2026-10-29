@@ -172,6 +172,15 @@
         "vnode-fetch": "workspace:*",
       },
     },
+    "packages/vgcp-metadata": {
+      "name": "vgcp-metadata",
+      "version": "0.1.0",
+      "dependencies": {
+        "vgaxios": "workspace:*",
+        "vgoogle-logging-utils": "workspace:*",
+        "vjson-bigint": "workspace:*",
+      },
+    },
     "packages/vgoogle-logging-utils": {
       "name": "vgoogle-logging-utils",
       "version": "0.1.0",
@@ -491,6 +500,8 @@
     "vfunctions-framework": ["vfunctions-framework@workspace:packages/vfunctions-framework"],
 
     "vgaxios": ["vgaxios@workspace:packages/vgaxios"],
+
+    "vgcp-metadata": ["vgcp-metadata@workspace:packages/vgcp-metadata"],
 
     "vgoogle-logging-utils": ["vgoogle-logging-utils@workspace:packages/vgoogle-logging-utils"],
 

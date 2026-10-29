@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'gcp-metadata': { pkg: 'vgcp-metadata', versions: /^6\.1\.1$/ },
   'json-bigint': { pkg: 'vjson-bigint', versions: /^1\.0\.0$/ },
   'google-logging-utils': { pkg: 'vgoogle-logging-utils', versions: /^0\.0\.2$/ },
   gtoken: { pkg: 'vgtoken', versions: /^7\.1\.0$/ },

@@ -55,8 +55,9 @@ Google’s HTTP client API on `vnode-fetch` and the VPM proxy transport, support
 by `vextend` and `vis-stream`. `vgtoken` exchanges service-account assertions for
 access and ID tokens on this HTTP/signing stack. `vgoogle-logging-utils` supplies
 diagnostic logging with structured output and optional event sinks. `vjson-bigint`
-preserves exact JSON numbers without an arithmetic dependency. `vuuid` provides
-UUID generation and parsing.
+preserves exact JSON numbers without an arithmetic dependency. `vgcp-metadata`
+retrieves cloud metadata with bounded requests and credential-safe diagnostics.
+`vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
 Integration tests serve pinned Firebase Functions consumers through the VPM
