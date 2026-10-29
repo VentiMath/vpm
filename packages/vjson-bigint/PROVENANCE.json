@@ -1,0 +1,22 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "json-bigint",
+    "version": "1.0.0",
+    "tarball": "https://registry.npmjs.org/json-bigint/-/json-bigint-1.0.0.tgz",
+    "integrity": "sha512-SiPv/8VpZuWbvLSMtTDU8hEfrZWg/mH/nV/b4o0CYbSxu1UIQPLdwKOCIyLQX+VIPO5vrLX3i8qtqFyhdPSUSQ==",
+    "commit": "390482a8b6b460f98c61c3b65915dbd91fc8e7b2",
+    "sourceArchiveSha256": "ac3b3d6f47d6e88eccc46132c095fb5ffa00b8341c3c5845769f7a04ab7a7791"
+  },
+  "dependencies": {
+    "bignumber.js": "Removed: immutable ExactNumber values and native BigInt; arithmetic is outside the JSON codec API."
+  },
+  "changes": [
+    "Enforce JSON number, string and whitespace syntax with bounded input, number and nesting limits.",
+    "Preserve exact integers and decimals without importing an arithmetic library.",
+    "Check dangerous property names exactly and preserve null-prototype maps.",
+    "Keep serialization state local; quote replacement strings and detect cycles.",
+    "Support replacer arrays, boxed primitives, surrogate escaping and native bigint values."
+  ]
+}

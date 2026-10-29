@@ -32,6 +32,7 @@ jobs:
       - run: node scripts/google-http-conformance/gaxios.cjs
       - run: node scripts/google-http-conformance/gtoken.cjs
       - run: node scripts/google-http-conformance/logging.cjs
+      - run: node scripts/google-http-conformance/json.cjs
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
@@ -77,6 +78,7 @@ jobs:
       - run: bun scripts/google-http-conformance/gaxios.cjs
       - run: bun scripts/google-http-conformance/gtoken.cjs
       - run: bun scripts/google-http-conformance/logging.cjs
+      - run: bun scripts/google-http-conformance/json.cjs
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund

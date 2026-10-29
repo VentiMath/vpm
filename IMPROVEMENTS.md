@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vjson-bigint](packages/vjson-bigint) | json-bigint 1.0.0 | Zero dependencies; exact numeric wrappers/native bigints, strict JSON syntax, bounded parsing, exact prototype-key policies, reentrant serialization and safe replacers. |
 | [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 0.0.2 | Standalone structured JSON, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
 | [vgtoken](packages/vgtoken) | gtoken 7.1.0 | Shared forced refreshes, cached RSA key imports, validated expiry, bounded exchanges, credential-safe errors and POST-body revocation on the VPM HTTP/signing stack. |
 | [vgaxios](packages/vgaxios) | gaxios 6.7.1 | Entirely VPM transport tree, isolated defaults/error state, correct request bodies, bounded retry decisions, cancellable backoff and separate proxy/destination TLS identity. |
@@ -71,8 +72,8 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **2,070 tests**: all pass on Node 24, and Bun passes
-2,067 with three documented runtime-specific skips. All 57 runtime packages'
+The root suite contains **2,087 tests**: all pass on Node 24, and Bun passes
+2,084 with three documented runtime-specific skips. All 58 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
@@ -104,7 +105,7 @@ upstream cases on each runtime, also checked against upstream itself.
 The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
 extend assertions (one obsolete intrinsic-removal test skipped), 47 is-stream
 assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
-109 gaxios tests, 45 gtoken tests and ten logging suite entries on both runtimes. Its documented adaptations are also checked
+109 gaxios tests, 45 gtoken tests ten logging suite entries and 18 json-bigint tests on both runtimes. Its documented adaptations are also checked
 against the published upstream implementations.
 
 ## Dependency scope
@@ -234,6 +235,27 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vjson-bigint
+
+The exact-number JSON codec removes `bignumber.js`. Immutable `ExactNumber`
+values preserve decimal spelling and string conversion; native bigint mode
+continues to serve CloudEvents. Arithmetic methods are intentionally absent.
+Strict numeric/whitespace syntax, input/depth/number limits, exact forbidden-key
+matching and source-free SyntaxErrors strengthen parsing. Per-call serialization
+state handles reentrant callbacks, boxed values, cycles and well-formed surrogate
+escaping; strings returned by a replacer cannot be injected as raw numeric JSON.
+
+All 18 upstream tests run with explicit identity/error-message adaptations, plus
+17 focused tests and 1,000 generated comparisons. Actual CloudEvents bigint parsing,
+installed archives and public declarations pass on Node and Bun.
+
+Metadata-object parsing takes 31% less time on Node and 32% less on Bun; native
+bigint event parsing improves 52%/64%. Remaining costs include Node ordinary
+serialization (+14%), bigint serialization (+30% Node/+15% Bun), and real Node
+SyntaxErrors versus upstream plain-object throws (+235%, about seven microseconds).
+Small-object Bun parsing is variable (+7% pooled paired change). These are
+microbenchmarks, not application speed claims. [Full evidence](packages/vjson-bigint/bench/results/README.md)
 
 ## vgoogle-logging-utils
 

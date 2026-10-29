@@ -107,3 +107,16 @@ has an empty body, so the focused VPM tests separately cover that behavior. Four
 tests for the unexported Temporal helper are outside this public-API replacement.
 The runner verifies the original gax-nodejs commit archive, extracts only the
 logging-utils subtree and compiles its tests with TypeScript 7.
+
+## json-bigint 1.0.0
+
+`node scripts/google-http-conformance/json.cjs` (or `bun`) runs all 18 original
+suite entries from commit `390482a8b6b460f98c61c3b65915dbd91fc8e7b2`.
+The runner verifies the archive SHA-256 before extraction. `--upstream` checks
+the unmodified assertions against the pinned original package. Chai 4.5.0 is an
+isolated fixture alias matching the original suite's major version.
+
+VPM adaptations change the default BigNumber identity to ExactNumber and three
+error-message assertions to sanitized messages. Other assertions are unchanged.
+The integration consumer exercises CloudEvents' actual native-bigint parser and
+restores the global JSON binding that CloudEvents replaces.

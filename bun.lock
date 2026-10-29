@@ -211,6 +211,10 @@
       "name": "vis-stream",
       "version": "0.1.0",
     },
+    "packages/vjson-bigint": {
+      "name": "vjson-bigint",
+      "version": "0.1.0",
+    },
     "packages/vjsonwebtoken": {
       "name": "vjsonwebtoken",
       "version": "0.1.0",
@@ -501,6 +505,8 @@
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
 
     "vis-stream": ["vis-stream@workspace:packages/vis-stream"],
+
+    "vjson-bigint": ["vjson-bigint@workspace:packages/vjson-bigint"],
 
     "vjsonwebtoken": ["vjsonwebtoken@workspace:packages/vjsonwebtoken"],
 
