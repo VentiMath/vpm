@@ -360,6 +360,13 @@
         "vnode-types": "^0.1.0",
       },
     },
+    "packages/vuuid": {
+      "name": "vuuid",
+      "version": "0.1.0",
+      "bin": {
+        "vuuid": "bin/vuuid.cjs",
+      },
+    },
     "packages/vvary": {
       "name": "vvary",
       "version": "0.1.0",
@@ -513,6 +520,8 @@
     "vtype-is": ["vtype-is@workspace:packages/vtype-is"],
 
     "vundici-types": ["vundici-types@workspace:packages/vundici-types"],
+
+    "vuuid": ["vuuid@workspace:packages/vuuid"],
 
     "vvary": ["vvary@workspace:packages/vvary"],
   }

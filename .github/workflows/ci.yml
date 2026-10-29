@@ -27,6 +27,7 @@ jobs:
       - run: node scripts/integration.cjs
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/google-http-conformance/helpers.cjs
+      - run: node scripts/google-http-conformance/uuid.cjs
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
@@ -67,6 +68,7 @@ jobs:
       - run: bun scripts/integration.cjs
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/google-http-conformance/helpers.cjs
+      - run: bun scripts/google-http-conformance/uuid.cjs
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund

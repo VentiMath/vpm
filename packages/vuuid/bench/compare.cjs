@@ -1,0 +1,11 @@
+'use strict';
+const assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs'),upstream=require('../../../scripts/consumers/node_modules/gaxios/node_modules/uuid'),vpm=require('..');
+const id='886313e1-3b8a-5372-9b90-0c9aee199e5d',data=upstream.parse(id),cases=[];
+const add=(name,make,validate)=>cases.push({name,make,validate});
+add('native v4',lib=>()=>lib.v4(),v=>assert(upstream.validate(v)&&upstream.version(v)===4));
+add('v4 custom random bytes',lib=>{const random=Uint8Array.from(data);return()=>lib.v4({random});},v=>assert(upstream.validate(v)&&upstream.version(v)===4));
+add('v1 explicit fields',lib=>{const opts={node:[1,2,3,4,5,6],clockseq:42,msecs:1000,nsecs:0};return()=>lib.v1(opts);},v=>assert(upstream.validate(v)&&upstream.version(v)===1));
+for(const method of ['v3','v5'])for(const [kind,name]of [['short','example.test'],['4KiB','a'.repeat(4096)]])add(method+' '+kind,lib=>()=>lib[method](name,lib[method].DNS),v=>assert.equal(v,upstream[method](name,upstream[method].DNS)));
+add('parse',lib=>()=>lib.parse(id),v=>assert.deepEqual(v,data));add('stringify bytes',lib=>()=>lib.stringify(data),v=>assert.equal(v,id));add('validate',lib=>()=>lib.validate(id),v=>assert.equal(v,true));
+const files=['index.js','package.json','PROVENANCE.json','bench/compare.cjs','../../scripts/consumers/package-lock.json',...fs.readdirSync(path.join(__dirname,'../lib')).map(f=>'lib/'+f),...fs.readdirSync(path.join(__dirname,'../../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist')).filter(f=>f.endsWith('.js')).map(f=>'../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/'+f)];
+require('../../../scripts/bench-paired.cjs').run({root:path.resolve(__dirname,'..'),upstream,vpm,cases,files}).catch(e=>{console.error(e);process.exitCode=1;});

@@ -1,0 +1,30 @@
+{
+  "name": "vuuid",
+  "version": "0.1.0",
+  "description": "Validated UUID generation and parsing using native cryptography",
+  "license": "MIT",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "vuuid": "bin/vuuid.cjs"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib",
+    "bin",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  }
+}

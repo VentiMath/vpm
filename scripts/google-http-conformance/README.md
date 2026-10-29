@@ -22,5 +22,12 @@ All 47 assertions in is-stream 2.0.1's five test groups run through a small
 strict-assert adapter. Only imports, test framework plumbing and temporary-file
 creation change; assertion contents are unchanged. Node and Bun pass both suites.
 
-The UUID and node-fetch source archives are reserved for the next compatibility
-steps. Downloading an archive alone does not establish test coverage.
+`node scripts/google-http-conformance/uuid.cjs` (or `bun`) runs 45 UUID 9.0.1
+upstream tests, including 1,000 deterministic parse round trips. The runner
+changes imports and test registration, skips the four private/browser hash
+helper tests, and preserves all remaining assertions. It also supports
+`--upstream`. The native algorithms are checked through public v3/v5 vectors.
+
+The node-fetch archive is reserved for the next compatibility step; the published
+release tag points to this archive despite its stale internal package version.
+Downloading it alone does not establish test coverage.

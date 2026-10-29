@@ -23,6 +23,11 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (name === 'vuuid') {
+      assert.equal(metadata.dependencies,undefined);
+      assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
+      assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
+    }
     if (['vextend','vis-stream'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -131,6 +136,7 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+if(!require('vuuid').validate(require('vuuid').v4()))throw new Error('UUID archive');
 if(require('vextend')(true,{}, {a:{b:1}}).a.b!==1)throw new Error('extend archive');
 if(require('vis-stream').readable({pipe(){},_read(){},_readableState:null}))throw new Error('stream archive');
 const {Agent:ArchiveAgent}=require('vagent-base');

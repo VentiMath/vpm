@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vuuid](packages/vuuid) | uuid 9.0.1 | Native name hashing, nonmutating random input, checked byte/clock/buffer bounds and exact UUID validation; zero dependencies. |
 | [vextend](packages/vextend) | extend 3.0.2 | Own enumerable strings and symbols, inherited-target isolation, cycle/shared-reference preservation and iterative deep merging. |
 | [vis-stream](packages/vis-stream) | is-stream 2.0.1 | Rejects null internal stream state and avoids duplicate pipe probes in duplex/transform checks. |
 | [vhttps-proxy-agent](packages/vhttps-proxy-agent) | https-proxy-agent 7.0.6 | Bounded CONNECT parsing and deadlines, linear fragmented-header buffering, isolated TLS policies, cancellation cleanup, safe header snapshots and preserved tunnel bytes. |
@@ -66,12 +67,12 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,959 tests**: all pass on Node 24, and Bun passes
-1,956 with three documented runtime-specific skips. All 52 runtime packages'
+The root suite contains **1,968 tests**: all pass on Node 24, and Bun passes
+1,965 with three documented runtime-specific skips. All 53 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **54 packages**, including two declaration-only packages.
+catalog covers **55 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the

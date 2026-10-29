@@ -1,0 +1,416 @@
+{
+  "recordedAt": "2026-10-29T09:03:49.293Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "rounds": 12,
+  "checksum": 4506144,
+  "methodology": "12 alternating paired rounds after 150ms per-variant warmup and four full blocks; 15ms upstream pilot target, capped at 100000 operations. Outputs retained and checked outside timing. Three fresh processes and one identical-upstream control per runtime. No trimming; nanoseconds per operation.",
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "b7e31c5e30e5a32018d5dbb2b5cdb29374c84d7d813dd03944e97a39ff0b1582",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/index.js": "21f90a4f2f933cdbe9e3afe9274b299a4ceb09fe1d47d513d1a3b7a93d76b1d0",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/md5-browser.js": "21a4e167b7ae498e8f3778bac8d7330929099006afca6adfe76b626e0e41d795",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/md5.js": "6ca6276ff35f19ea462bb8c9d6d290994fa9980fc775deb741811ef947196ced",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/native-browser.js": "1574cfc6e8eae48b4ace082086f210e790849788e38f0787095f3c2b2aba1755",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/native.js": "006f218c1c0450ba06917adc2fe7b35f89985b0a7e3d7be9eecdf35d2319b25b",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/nil.js": "7395bd919bd1309bcbced245a59dfc6b077f97992a482af2537343e558795b1f",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/parse.js": "1a87ed6a6bb0a3edbe266ca55aaf1c5af8e963ee9486f74b59cfd615280b21b4",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/regex.js": "acc4c54d987f100093097f4f156ff245394c39d1332eb2114d7e40db00bd6ddd",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/rng-browser.js": "4e0f06e51bf0abb18bc2ef780cec71c15eaa5d9a2238a1449b4f19b67bfbc4dd",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/rng.js": "fdde4350fc69c07bfed4178eedf6121a56264744207d9f5c8f3e5b1b913dbb06",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/sha1-browser.js": "32982388b377b06298f59db97c98077f06e6b4f29fe284d427195a358a72f19e",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/sha1.js": "a9eda407444a3f68a0a4db0373346df18f583abbde2c4bf2b3fbc6d73be2c75e",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/stringify.js": "6be33f7aa42be82a7e9d3c58a4cbbd345ee2876aade92b8ec65889732db2e6a2",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/uuid-bin.js": "7c60635cf5a963da72e35292bcbfa7f7221b08374d69d75103fa82da9d950102",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/v1.js": "86f6dc1a1556a9eddad07231c2a4f13e0ad4b6ff964a04d06866f07e36067002",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/v3.js": "95e0c6fa204355c6ef7dbac5720a3ef5239454ed6820674dfcc143a55ea6c459",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/v35.js": "b8a86ffceb3f1224c2b75b29930215ea590464a257b27ae5d1c867fdae6ff601",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/v4.js": "daadf958ab1e8d7e7b371b22d73539aa85f51a4d7970e502025e2100aecbf07b",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/v5.js": "d15c31975f31b9abf6a195e70a3dca0843a9257cb51b49214cf7a9f4ed30fc5a",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/validate.js": "5497d9adffd73474cf379d3e1b76b28698e408124a0726d54e88282500378502",
+    "../../scripts/consumers/node_modules/gaxios/node_modules/uuid/dist/version.js": "2e69a54d05ef1342b6fe0a2b7fcdb446179db34ea38aa02c17ae0e1f211a55e4",
+    "../../scripts/consumers/package-lock.json": "17d7a1c0f399918a757948f746574a27ba61f6bc00b23ef713ed999d74b28a15",
+    "PROVENANCE.json": "2d2ce82d378b8333d0e3f752b6dbf8d63e417ecbfef1c837eb4224cc76702f8e",
+    "bench/compare.cjs": "babbc0cc57046bff91c5b8a1014c66b5cba8cfed9441c8a8c49e27a11c4c69fd",
+    "index.js": "8f504f3f13862eca0caafc67a4ecaf9a26aa80a7ed40981404701d10fc937510",
+    "lib/parse.js": "1a87ed6a6bb0a3edbe266ca55aaf1c5af8e963ee9486f74b59cfd615280b21b4",
+    "lib/regex.js": "25e73a925029d385da14970c26f978008fe558cb13ceb8f1d7d694695cd7a161",
+    "lib/rng.js": "fdde4350fc69c07bfed4178eedf6121a56264744207d9f5c8f3e5b1b913dbb06",
+    "lib/stringify.js": "6be33f7aa42be82a7e9d3c58a4cbbd345ee2876aade92b8ec65889732db2e6a2",
+    "lib/v1.js": "86f6dc1a1556a9eddad07231c2a4f13e0ad4b6ff964a04d06866f07e36067002",
+    "lib/validate.js": "5497d9adffd73474cf379d3e1b76b28698e408124a0726d54e88282500378502",
+    "lib/version.js": "2e69a54d05ef1342b6fe0a2b7fcdb446179db34ea38aa02c17ae0e1f211a55e4",
+    "package.json": "93e61fbbb34feaa16e100a76a8d02ccc4ea3624a3bff26334c2630c7ce161372"
+  },
+  "rows": [
+    {
+      "case": "native v4",
+      "iterations": 4258,
+      "samples": {
+        "upstream": [
+          59.31000469704213,
+          64.85838421795293,
+          61.29638327854018,
+          60.034053546267984,
+          61.22804133395092,
+          65.08337247534342,
+          56.42320338187017,
+          55.219586660399784,
+          54.93588539220748,
+          69.38914983560215,
+          53.31141380930772,
+          57.80295913574598
+        ],
+        "vpm": [
+          44.81775481446578,
+          40.87411930483462,
+          39.347581023947626,
+          39.88586190699396,
+          40.70784405824594,
+          42.81141380930499,
+          42.87012682010679,
+          41.51972757162521,
+          40.29661813057733,
+          41.4318929074718,
+          38.67238139972019,
+          41.333959605445685
+        ]
+      }
+    },
+    {
+      "case": "v4 custom random bytes",
+      "iterations": 5285,
+      "samples": {
+        "upstream": [
+          63.63935666983518,
+          60.911258278143315,
+          60.1780510879837,
+          70.04881740774535,
+          72.48514664144815,
+          61.0690633869521,
+          70.98713339638968,
+          64.29366130560118,
+          113.00056764425914,
+          70.28533585618948,
+          114.82970671711361,
+          122.03557237464034
+        ],
+        "vpm": [
+          105.63708609270343,
+          174.11712393566697,
+          145.88457899715388,
+          99.68476821192205,
+          186.73926206243112,
+          99.33774834436656,
+          190.53150425732034,
+          97.47719962157416,
+          97.42194891200774,
+          92.39205298013269,
+          91.27246925258913,
+          94.49687795647995
+        ]
+      }
+    },
+    {
+      "case": "v1 explicit fields",
+      "iterations": 5232,
+      "samples": {
+        "upstream": [
+          95.98776758409709,
+          91.77503822628776,
+          185.59671253822845,
+          94.21196483181077,
+          93.7897553516897,
+          111.44552752293345,
+          162.61314984708633,
+          102.68539755351144,
+          118.25477828747722,
+          183.04835626911748,
+          95.597477064227,
+          96.38589449540645
+        ],
+        "vpm": [
+          207.83944954129888,
+          238.72324159019684,
+          184.66475535166862,
+          245.02255351682558,
+          301.9799311926664,
+          194.75496941895983,
+          201.07033639144132,
+          286.96005351682965,
+          244.37748470948512,
+          192.0552370030509,
+          310.8514908256547,
+          209.66322629966717
+        ]
+      }
+    },
+    {
+      "case": "v3 short",
+      "iterations": 5082,
+      "samples": {
+        "upstream": [
+          868.768791814265,
+          809.1875245965986,
+          830.1767020857791,
+          818.1243604879884,
+          800.4311294765728,
+          735.6521054702766,
+          892.0371900826611,
+          713.039551357702,
+          1177.5303030303407,
+          828.5698543880525,
+          721.0826446280959,
+          803.4976387249429
+        ],
+        "vpm": [
+          802.1282959464991,
+          800.6690279417473,
+          918.0850059031868,
+          888.8478945296833,
+          795.7251082251222,
+          772.8256591892974,
+          781.1393152302196,
+          771.9974419519998,
+          831.939590712305,
+          1010.3878394332841,
+          720.3118850846088,
+          798.9964580873765
+        ]
+      }
+    },
+    {
+      "case": "v3 4KiB",
+      "iterations": 425,
+      "samples": {
+        "upstream": [
+          40859.60705882344,
+          41349.01882352899,
+          38660.29411764697,
+          42086.960000000116,
+          39069.1176470591,
+          41464.80470588251,
+          39708.03764705927,
+          40585.000000000415,
+          38407.0588235291,
+          42071.37176470603,
+          38192.157647058855,
+          41305.88235294186
+        ],
+        "vpm": [
+          7234.018823529529,
+          8307.352941176172,
+          6973.430588235286,
+          9189.411764705523,
+          8422.842352941136,
+          7694.018823529083,
+          7086.863529411858,
+          8380.981176470574,
+          8183.823529411979,
+          7829.117647058464,
+          8275.294117646648,
+          7578.43294117586
+        ]
+      }
+    },
+    {
+      "case": "v5 short",
+      "iterations": 12509,
+      "samples": {
+        "upstream": [
+          757.5112319130542,
+          771.1280677911878,
+          843.0629946438402,
+          976.2637301143092,
+          836.9906467343521,
+          800.1105603964999,
+          819.3734111439778,
+          713.1432568550634,
+          767.4308098169302,
+          760.1526900631516,
+          796.9928051802748,
+          752.278359581094
+        ],
+        "vpm": [
+          837.393716524122,
+          846.9302102486292,
+          797.7656087616808,
+          805.7298744903428,
+          804.5639939243856,
+          775.3917179630419,
+          786.0740267007822,
+          762.7740826604886,
+          859.0482052921762,
+          742.0223838836064,
+          809.2339915260912,
+          819.9096650411631
+        ]
+      }
+    },
+    {
+      "case": "v5 4KiB",
+      "iterations": 338,
+      "samples": {
+        "upstream": [
+          34749.99999999998,
+          37372.28698224827,
+          36925.78698224846,
+          38629.5621301771,
+          36674.68047337235,
+          35711.66272189329,
+          36752.340236685974,
+          36547.82840236649,
+          35579.757396450215,
+          35362.79585798786,
+          33899.038461538636,
+          37992.23372781056
+        ],
+        "vpm": [
+          2477.4408284025603,
+          3799.3106508869746,
+          4804.609467456005,
+          2709.565088757457,
+          2667.653846154108,
+          2974.1124260346314,
+          2770.71005917234,
+          2716.715976331867,
+          2768.121301775363,
+          3539.201183431845,
+          4061.884615385039,
+          2643.615384616131
+        ]
+      }
+    },
+    {
+      "case": "parse",
+      "iterations": 8336,
+      "samples": {
+        "upstream": [
+          137.31106046064124,
+          140.58001439539348,
+          233.87511996156675,
+          141.6846209212985,
+          175.9986804222797,
+          252.67406429943088,
+          139.4653310940275,
+          147.44781669869178,
+          152.69121880996585,
+          137.29606525915725,
+          133.44229846451015,
+          139.110484644887
+        ],
+        "vpm": [
+          190.28910748558496,
+          136.39635316700708,
+          140.70501439537793,
+          137.02111324378717,
+          141.01991362768774,
+          251.58949136274035,
+          133.5922504798412,
+          189.89923224569142,
+          143.62404030712182,
+          230.65127159313764,
+          171.98992322457104,
+          154.05566218810404
+        ]
+      }
+    },
+    {
+      "case": "stringify bytes",
+      "iterations": 3375,
+      "samples": {
+        "upstream": [
+          384.97511111105536,
+          720.3087407407885,
+          229.79022222218055,
+          310.1973333334037,
+          1072.8888888889169,
+          197.40740740733736,
+          188.33333333330097,
+          341.4198518519158,
+          311.8642962962676,
+          372.8518518518185,
+          296.3454814815594,
+          187.9259259258106
+        ],
+        "vpm": [
+          241.25925925923013,
+          203.88888888879188,
+          1046.308740740642,
+          230.23437037045372,
+          306.50607407409956,
+          203.5555555555254,
+          380.53066666664864,
+          831.3333333333302,
+          196.90133333332832,
+          196.32118518523012,
+          230.39496296297764,
+          191.8023703704724
+        ]
+      }
+    },
+    {
+      "case": "validate",
+      "iterations": 9617,
+      "samples": {
+        "upstream": [
+          47.99667255897631,
+          42.76281584694906,
+          44.82510138300914,
+          42.98804200897628,
+          43.577414994292575,
+          44.4048039929206,
+          43.02277217433903,
+          43.46033066444824,
+          45.49235728397629,
+          43.48195903082807,
+          43.625038993505974,
+          43.22636996979727
+        ],
+        "vpm": [
+          41.67099927219491,
+          41.120827700882955,
+          41.19444733283535,
+          43.369449932380604,
+          43.079130706081614,
+          42.693459498884266,
+          41.15108661741498,
+          41.484662576757344,
+          42.96641364250187,
+          42.06093376309072,
+          41.61474472282932,
+          41.83134033479892
+        ]
+      }
+    }
+  ]
+}
