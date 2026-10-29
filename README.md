@@ -45,9 +45,9 @@ those APIs. `vexpress` uses VPM packages throughout its runtime dependency tree;
 `vcors` adds cross-origin request handling. Backend startup utilities include
 command-line argument parsing and package-manifest discovery.
 `vfunctions-framework` runs HTTP, CloudEvent and legacy event handlers on this
-stack. `vjwa` begins the authentication branch with native signature operations
-used by JWT and Google authentication consumers. Two declaration-only packages
-provide Node and Undici types for development.
+stack. `vjws` and `vjwa` implement compact signatures and native cryptographic
+operations used by JWT and Google authentication consumers. Two declaration-only
+packages provide Node and Undici types for development.
 
 Integration tests serve pinned Firebase Functions consumers through the VPM
 framework and compare behavior against Google Functions Framework. Firebase

@@ -42,6 +42,11 @@ try {
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json'].sort());
     }
+    if (name === 'vjws') {
+      assert.deepEqual(metadata.dependencies, { vjwa: '0.1.0' });
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', 'lib/core.js', 'lib/streams.js'].sort());
+    }
     if (name === 'vrouter') {
       assert.deepEqual(metadata.dependencies, { vdebug: '0.1.0', vdepd: '0.1.0', 'vpath-to-regexp': '0.1.0' });
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -100,6 +105,8 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const jwa = require('vjwa');
+const jws = require('vjws');
+if (!jws.verify(jws.sign({header:{alg:'HS256'},payload:'archive',secret:'key'}), 'HS256', 'key')) throw new Error('installed vjws failed');
 if (!jwa('HS256').verify('archive', jwa('HS256').sign('archive', 'key'), 'key')) throw new Error('installed vjwa failed');
 const vf = require('vfunctions-framework');
 const vfTesting = require('vfunctions-framework/testing');
@@ -230,6 +237,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import jwa from 'vjwa';
+import jws, { sign as signJws } from 'vjws';
+if (!jws.verify(signJws({header:{alg:'HS256'},payload:'archive',secret:'key'}), 'HS256', 'key')) throw new Error('installed ESM vjws failed');
 if (!jwa('HS256').verify('archive', jwa('HS256').sign('archive', 'key'), 'key')) throw new Error('installed ESM vjwa failed');
 import * as vf from 'vfunctions-framework';
 import * as vfTesting from 'vfunctions-framework/testing';
@@ -350,7 +359,11 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import jwa from 'vjwa';
+import jws from 'vjws';
 const algorithm: jwa.Algorithm = 'HS256';
+const jwsToken: string = jws.sign({header:{alg:'HS256'},payload:'archive',secret:'key'});
+const jwsValid: boolean = jws.verify(jwsToken, 'HS256', 'key');
+const jwsDecoded: jws.Decoded | null = jws.decode(jwsToken);
 const signed: string = jwa(algorithm).sign({sub:'archive'}, 'key');
 const jwtSignatureVerified: boolean = jwa(algorithm).verify({sub:'archive'}, signed, 'key');
 const empty: '' = jwa('none').sign();
@@ -647,6 +660,7 @@ globalThis.browserChecked = true;
     assert.match(output, /node_modules\/vmerge-descriptors\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie-signature\/index\.d\.ts/);
     assert.match(output, /node_modules\/vjwa\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vjws\/index\.d\.ts/);
     assert.match(output, /node_modules\/vvary\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcontent-disposition\/index\.d\.ts/);

@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  jws: { pkg: 'vjws', versions: /^4\.0\.1$/ },
   jwa: { pkg: 'vjwa', versions: /^2\.0\.1$/ },
   '@google-cloud/functions-framework': { pkg: 'vfunctions-framework', versions: /^5\.0\.2$/ },
   'read-package-up': { pkg: 'vread-package-up', versions: /^11\.0\.0$/, esm: true },
@@ -1084,7 +1085,7 @@ async function run() {
     const claims = jwt.verify(token, 'secret');
     assert.equal(claims.exp - claims.iat, 7200);
 
-    // Real JWT and Google-auth consumers exercise native JWA signatures offline.
+    // Real JWT and Google-auth consumers exercise VPM JWS/JWA offline.
     const { keys } = require('../packages/vjwa/test/helpers.cjs');
     for (const family of ['HS', 'RS', 'PS', 'ES']) for (const bits of [256, 384, 512]) {
       const algorithm = family + bits;
@@ -1096,6 +1097,10 @@ async function run() {
       const parts = signed.split('.');
       parts[2] = (parts[2][0] === 'A' ? 'B' : 'A') + parts[2].slice(1);
       assert.throws(() => jwt.verify(parts.join('.'), verifying, { algorithms: [algorithm] }), /invalid signature/);
+      const asynchronous = await new Promise((resolve, reject) => jwt.sign({ sub: 'async-student' }, signing,
+        { algorithm, noTimestamp: true, keyid: 'clé 雪' }, (error, value) => error ? reject(error) : resolve(value)));
+      assert.equal(jwt.verify(asynchronous, verifying, { algorithms: [algorithm] }).sub, 'async-student');
+      assert.equal(jwt.decode(asynchronous, { complete: true }).header.kid, 'clé 雪');
     }
     const { JWTAccess } = from('google-auth-library');
     const access = new JWTAccess('test@example.invalid', keys.RSA.privatePem, 'test-key');
@@ -1122,7 +1127,7 @@ async function run() {
   const installed = name => require(path.join(modules, name, 'package.json')).version;
   console.log(`${runtime}: ${checks} HTTP checks passed through vfunctions-framework (replacing ${installed('@google-cloud/functions-framework')}), firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
   console.log('6 Functions Framework startup-option checks passed.');
-  console.log('12 JWT algorithm round trips and tamper rejections, plus Google JWTAccess signing, passed through vjwa.');
+  console.log('12 JWT algorithms: synchronous/asynchronous signing, Unicode headers and tamper rejection, plus Google JWTAccess signing, passed through vjws/vjwa.');
   console.log(`${readerParityChecks} raw package-reader comparisons and 3 framework CJS/ESM loading cases passed.`);
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
   console.log('Aliased: ' + [...aliased.keys()].map(label => `${label} ×${calls[label.replace(/@[^@]+$/, '')]}`).join(', '));

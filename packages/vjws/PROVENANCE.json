@@ -1,0 +1,47 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "upstream": {
+    "package": "jws",
+    "version": "4.0.1",
+    "tarball": "https://registry.npmjs.org/jws/-/jws-4.0.1.tgz",
+    "integrity": "sha512-EKI/M/yqPncGUUh44xz0PxSidXFr/+r0pA70+gIYhjv+et7yxM+s29Y+VGDkovRofQem0fs7Uvf4+YmAdyRduA==",
+    "npmGitHead": "c0f6b27bcea5a2ad2e304d91c2e842e4076a6b03"
+  },
+  "source": {
+    "repository": "auth0/node-jws",
+    "commit": "44e90947915a238c5bca6bf66d5d7d36edb656a6",
+    "archiveSha256": "318eba2bda144edc5ac466235d7cef9f7701c609a3200f0a12adb8245ee52d34"
+  },
+  "sourceVerification": "All five runtime JavaScript files in the pinned auth0/node-jws source archive exactly match npm jws 4.0.1. The npm gitHead archive at the old repository URL contained only a README; tests use the matching canonical source instead.",
+  "dependencies": {
+    "jwa": "vjwa",
+    "safe-buffer": "native node:buffer"
+  },
+  "changes": [
+    "Use vjwa and native base64url; remove the safe-buffer dependency.",
+    "Require exactly three canonical compact segments and a UTF-8 JSON object header; match the declared algorithm to the explicitly selected algorithm.",
+    "Preserve raw byte payloads, accept empty payloads and empty secrets, and honor non-JSON payload decoding encodings.",
+    "Collect streamed chunks once, propagate source errors, and complete operations only once after both inputs finish.",
+    "Keep bounded, private caches of serialized signing headers and validated parsing metadata; return fresh decoded objects and never cache payloads or keys.",
+    "Validate large payload encodings with native canonical base64url round trips.",
+    "Provide native readable outputs, legacy input compatibility, cancellation cleanup and optional per-input maxBuffer limits.",
+    "Avoid allocating Writable collectors for direct values unless their public input stream is accessed; reject writes to completed inputs before signing."
+  ],
+  "sha256": {
+    "test/fixtures/upstream/LICENSE": "3320319f8a5f42bc4254e65471eca7a5ea4dc8c883c4c24b4868e36b14890bcf",
+    "test/fixtures/upstream/data.txt": "4c27a3fd277e5e5e712555200f52742e80c6c08a3a89d3b4547eb659d095f0b4",
+    "test/fixtures/upstream/index.js": "52b3ac7e9675ed8ef5a1ca48679f0d0da7e1f4639e297a503c9b541846704c52",
+    "test/fixtures/upstream/jws.test.txt": "bcd37c7320773c810c1e63e6b75682e378e3c4f2bea5cec211464fc60040d299",
+    "test/fixtures/upstream/lib/data-stream.js": "21b28bf70f771856223b8f48c563ac6f7f0158eefe7ca5955dedc122f901fa20",
+    "test/fixtures/upstream/lib/sign-stream.js": "75bb778ed57146e9ee1b3cb0235bbbf78c17bfc1e85d34903a9067b41207b7e5",
+    "test/fixtures/upstream/lib/tostring.js": "f564b878221935e72e05caf3fbc483d44550f10958144d00fb2665beae771bfc",
+    "test/fixtures/upstream/lib/verify-stream.js": "ee9d879a54d2efc1174f67ad8ae570d0f7fac26a05bd70b92c828173b3449fef",
+    "test/fixtures/upstream/package.json": "a934389f53e2ac8909d5399410c1ede3e35397be9e9f521bde25b61e1fee0b2f"
+  },
+  "upstreamTestAdaptations": [
+    "Run the original 31 tape test bodies against each implementation through a node:test assertion adapter; no test bodies are removed or skipped.",
+    "Generate native RSA/EC keys, including an actually encrypted private PEM. Bun uses P-384 for the wrong ES256 curve case because its crypto runtime does not support secp256k1.",
+    "For VPM only, replace the invalid-key error case input a.b.c with eyJhbGciOiJFUzUxMiJ9.eA.AA so the token has a valid compact/header structure and reaches key validation. Malformed tokens intentionally return false before importing keys. The retained upstream test source is unchanged."
+  ]
+}
