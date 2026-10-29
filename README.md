@@ -79,7 +79,9 @@ access and ID tokens on this HTTP/signing stack. `vgoogle-logging-utils` supplie
 diagnostic logging with structured output and optional event sinks. `vjson-bigint`
 preserves exact JSON numbers without an arithmetic dependency. `vgcp-metadata`
 supports the current metadata API with bounded requests, credential-safe diagnostics
-and verified Google Auth 10/11 caller paths.
+and verified Google Auth 10/11 caller paths. `vgoogle-auth-library` supplies the
+Google Auth 11 credential flows used by backend SDKs, with isolated JWT caches,
+shared forced refreshes and stricter ID-token verification.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
@@ -108,6 +110,7 @@ integration remain planned work.
 ```sh
 bun install --frozen-lockfile
 npm --prefix scripts/consumers ci --ignore-scripts
+npm --prefix scripts/google-http-conformance ci --ignore-scripts
 bun run test
 bun run test:bun
 bun run typecheck
@@ -160,7 +163,9 @@ tests against vrouter. The [JWT suite](scripts/jwt-conformance/README.md) and
 [JWKS suite](scripts/jwks-conformance/README.md) cover token verification and
 public-key retrieval, including independent middleware consumers. The
 [Agent suite](scripts/agent-conformance/README.md) checks subclass connections
-and native HTTP/TLS pooling alongside real proxy-client integration.
+and native HTTP/TLS pooling alongside real proxy-client integration. The
+[Google Auth suite](scripts/google-auth-conformance/README.md) checks the selected
+current credential flows with upstream controls.
 
 ## License
 

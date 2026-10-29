@@ -1,0 +1,3 @@
+
+# Keep hash-pinned upstream test fixtures byte-for-byte, including deliberate PEM whitespace.
+scripts/google-auth-conformance/upstream-11.3.2/** -whitespace

@@ -15,8 +15,8 @@ establish parity with every upstream API. The roadmap records known gaps, not a
 completed freshness audit of the entire catalog.
 
 The Google authentication stack was checked against npm's `latest` tags on
-October 29, 2026. Bring its dependencies forward before implementing
-`vgoogle-auth-library`:
+October 29, 2026. Its HTTP, metadata, logging and core authentication caller paths
+now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
@@ -24,7 +24,7 @@ October 29, 2026. Bring its dependencies forward before implementing
 | Caller paths verified | vnode-fetch | 2.7.0 API; Gaxios 7.1.3/8.3.2 transport checks against node-fetch 3.3.2 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch), scoped to tested callers |
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
-| 1 | vgoogle-auth-library | Not implemented; upstream 10.6.1/11.3.2 HTTP consumer paths verified | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 
 The Gaxios upgrade now uses native fetch for ordinary calls, with explicit stream,
 redirect, size and deadline handling. Node agents, proxies and client certificates
@@ -37,8 +37,9 @@ google-logging-utils, jws, base64-js, and ecdsa-sig-formatter. It no longer depe
 on gtoken. Existing `vgtoken` work remains useful for older callers, while its own
 latest stable 8.0.0 compatibility remains unverified. The `json-bigint` 1.0.0
 dependency of current gcp-metadata still matches the existing comparison baseline.
-Review the remaining helpers against native facilities and existing VPM signing
-code when implementing the new authentication API.
+`vgoogle-auth-library` uses four VPM dependencies; native Base64 conversion and
+VPM JWS verification remove the other two helpers. Dedicated external-provider
+suites and live cloud deployment remain outside its verified scope.
 
 Recheck stable versions when each step begins. Updates need pinned upstream
 conformance and consumer tests, types, benchmarks, and documented intentional
@@ -49,6 +50,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgoogle-auth-library](packages/vgoogle-auth-library) | google-auth-library 11.3.2 | Four VPM dependencies; isolated JWT caches, shared forced refreshes, per-owner private-key parsing, strict ID-token verification and private debug messages. |
 | [vgcp-metadata](packages/vgcp-metadata) | gcp-metadata 9.2.3 | Entirely VPM runtime tree; first-success endpoint races, finite deadlines, direct requests, credential-safe errors/logs, bounded bulk reads and endpoint-aware availability caching. |
 | [vjson-bigint](packages/vjson-bigint) | json-bigint 1.0.0 | Zero dependencies; exact numeric wrappers/native bigints, strict JSON syntax, bounded parsing, exact prototype-key policies, reentrant serialization and safe replacers. |
 | [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 2.1.1 / 0.0.2 | Current activation/stdout behavior, structured filtering and protected message fields, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
@@ -113,14 +115,15 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,123 tests**: all pass on Node 24, and Bun passes
-2,120 with three documented runtime-specific skips. All 59 runtime packages'
+The root suite contains **2,146 tests**: all pass on Node 24, and Bun passes
+2,143 with three documented runtime-specific skips. All 60 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **61 packages**, including two declaration-only packages.
+catalog covers **62 packages**, including two declaration-only packages.
 
-Runtime packages support Node.js 20+ and Bun, include their own TypeScript
+Runtime packages support Node.js 20+ and Bun, except `vgoogle-auth-library`,
+which follows its current upstream Node 22+ baseline. They include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
 package and integration suites on Node 20, 22, 24 and Bun; current performance
 work targets Node 24 and Bun. Separate archive gates verify npm/Bun installation,
@@ -147,8 +150,10 @@ The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
 extend assertions (one obsolete intrinsic-removal test skipped), 47 is-stream
 assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
 133 applicable Gaxios 8 tests (three private/packaging cases excluded), 45 gtoken tests, 27 logging suite entries across two versions, 18 json-bigint tests
-and 66 metadata tests on both runtimes. Its documented adaptations are also checked
-against the published upstream implementations.
+and 77 metadata tests on both runtimes. Its documented adaptations are also checked
+against the published upstream implementations. The [Google Auth suite](scripts/google-auth-conformance/README.md)
+adds 545 selected upstream tests on each runtime, with original upstream controls
+and 17 focused VPM regression/consumer tests in the root suite.
 
 ## Dependency scope
 
@@ -160,6 +165,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgoogle-auth-library` | 6 | 4 |
 | `vgtoken` | 2 | 2 |
 | `vgaxios` | 3 | 3 |
 | `vnode-fetch` | 1 | 1 |
@@ -215,7 +221,9 @@ used by `vgaxios` for Node-agent and proxy requests. Current Gaxios 7.1.3/8.3.2
 are aliased; older Gaxios 6 callers remain version gaps. `vnode-fetch` replaces Fetch 2.7.0;
 `vextend` and UUID 9’s `vuuid` are version-scoped aliases too. `vis-stream`
 remains available, but is no longer called by the upgraded HTTP client.
-Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
+Google `JWTAccess` signing also runs through `vjws` and `vjwa`. The separate
+Google Auth 11.3.2 fixture is aliased to `vgoogle-auth-library` for current headers,
+project lookup and Storage-style signing; installed version 9 callers remain uncovered.
 Firebase Admin's JWKS fetcher and public-key verifier use `vjwks-rsa`.
 The wider frameworks, authentication libraries and Google SDKs still contain upstream dependencies.
 A complete VPM Express tree does not mean the entire backend has been replaced.
@@ -280,6 +288,34 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgoogle-auth-library
+
+Targets Google Auth 11.3.2's credential and token flows used by backend SDKs:
+application-default discovery, service-account JWTs, OAuth refresh credentials,
+Compute, ID tokens, impersonation, authenticated requests and Cloud Storage-style
+signing. Its four dependencies and their runtime trees are VPM packages. Native
+Base64 conversion and VPM JWS verification remove two direct dependencies.
+
+JWT caches distinguish claims and scope boundaries, invalidate rotated credentials
+and isolate returned headers. Forced token refreshes coalesce, key-file issuers
+are supplied before signing, malformed expiry values reject, and revocation uses
+a POST body with correct promise/cache lifecycle. ID-token verification enforces
+canonical JWS, algorithm/key agreement and finite numeric timestamps. Verification
+errors and default debug messages omit token and request payloads.
+
+Across three paired runs, Node signing for new audiences improves 33.6%, forced
+JWT exchanges with stub transport 33.1%, RSA ID-token verification 46.3% and local
+authenticated HTTP 23.5%. Bun improves the two signing cases 13.0%/14.1% and
+verification 22.3%; local HTTP is near parity. Remaining small costs include
+OAuth2 construction (+87 ns Node, +155 ns Bun) and Node cached JWT headers (+48 ns).
+See [all samples and controls](packages/vgoogle-auth-library/bench/results/README.md).
+
+Dedicated external-provider suites, browser bundling and live cloud deployments
+are outside the current verification claim. Version 9/10 callers are not blindly
+aliased to version 11; Headers and SDK upgrades need explicit consumer checks.
+Next is `vretry-request` against 9.1.0: current Storage and gax use it, and its only
+direct dependency, `extend`, already has a VPM implementation.
 
 ## vgcp-metadata
 
