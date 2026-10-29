@@ -222,9 +222,55 @@ calibrations run `f4e1f06` in both the before and after processes. The
 [manual benchmark workflow](.github/workflows/framework-benchmarks.yml) saves all
 samples and source hashes as artifacts; verified baseline archives are in the
 repository. These warmed round trips are a different measurement from the earlier
-fresh-process runs. Calibration on a busy development machine showed that small
-timing differences could arise without a code change; these are measurement
-flags, not established defects.
+fresh-process runs.
+
+**Linux results, 2026-10-28:** [workflow run 40799052313](https://github.com/VentiMath/vpm/actions/runs/40799052313)
+measured runtime commit `3bba23c` on separate Node 24.22.1 and Bun 1.4.0 workers.
+Node ran on AMD EPYC 9V45; Bun ran on Intel Xeon Platinum 8370C. The
+[eight retained reports](packages/vfunctions-framework/bench/results/steady)
+contain all six comparison runs and both identical-code calibrations. Their
+source, harness, fixture and lockfile hashes identify the measured inputs.
+
+These are median paired changes in HTTP round-trip time across the 24 blocks;
+negative means faster. “Previous VPM” is `f4e1f06`. Different runner hardware
+precludes comparing absolute Node and Bun timings.
+
+| Request | Node vs upstream | Node vs previous VPM | Bun vs upstream | Bun vs previous VPM |
+| --- | ---: | ---: | ---: | ---: |
+| GET | −4.3% | +4.8% | −16.2% | −7.6% |
+| Deep path | −10.6% | −1.7% | −14.5% | +1.0% |
+| JSON | −14.2% | −4.6% | −14.8% | −3.4% |
+| Form | −9.8% | −0.4% | −7.4% | +3.5% |
+| JSON, mixed-case type and charset | −3.5% | −4.8% | −5.9% | −2.9% |
+| Form, mixed-case type and charset | +11.4% | +7.4% | −12.6% | −2.2% |
+| Async JSON | −13.6% | −7.3% | −6.6% | +5.0% |
+| CloudEvent | −13.4% | −6.6% | Not comparable | −0.01% |
+
+**Measurement limits and remaining gaps:** the originally flagged Node JSON
+charset and Bun JSON cases have faster medians in this run. However, identical
+code produced apparent round-trip changes ranging from **−18.0% to +15.5% on
+Node**, and **−6.0% to +13.2% on Bun**, across workloads. These ranges describe
+the calibration; they are not confidence intervals or proof that a measured
+slowdown is harmless. Even separate CI workers did not provide enough stability
+to certify every reported difference as an implementation effect.
+
+Node forms with mixed-case type/charset retain an observed **11.4% gap against
+upstream**. Their three report medians were −4.3%, +26.4% and +11.4%; against
+previous VPM they were +16.8%, +21.6% and −7.9%. The other slower comparisons
+against previous VPM are Node GET, Bun deep paths, Bun forms and Bun async JSON,
+as shown above. Against original VPM `119f04c`, the remaining slower round-trip
+medians are Node GET (+2.6%), Node form charset (+1.0%) and Node async JSON
+(+3.6%); all Bun medians are lower.
+
+Server CPU is a separate metric, not request latency. For example, Node JSON
+uses 15.8% less measured server CPU than previous VPM, while Node form charset
+uses 14.0% more; its identical-code CPU calibration itself differed by 15.6%.
+The [summary script](packages/vfunctions-framework/bench/summarize-steady.cjs)
+reproduces every wall/CPU comparison, per-report median and calibration result.
+The changes remove identifiable redundant work and pass the correctness gates,
+but these results do **not** establish a universal HTTP speedup or resolution of
+every performance flag. Further tuning of the remaining flags needs repeatable
+profiling on controlled hardware.
 
 <details>
 <summary>Earlier startup and HTTP measurements, including the reported regressions</summary>
