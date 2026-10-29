@@ -78,7 +78,8 @@ and `vnode-fetch` for Node agents, proxies and client certificates. `vgtoken` ex
 access and ID tokens on this HTTP/signing stack. `vgoogle-logging-utils` supplies
 diagnostic logging with structured output and optional event sinks. `vjson-bigint`
 preserves exact JSON numbers without an arithmetic dependency. `vgcp-metadata`
-retrieves cloud metadata with bounded requests and credential-safe diagnostics.
+supports the current metadata API with bounded requests, credential-safe diagnostics
+and verified Google Auth 10/11 caller paths.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 

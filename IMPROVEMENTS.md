@@ -23,8 +23,8 @@ October 29, 2026. Bring its dependencies forward before implementing
 | Complete | vgoogle-logging-utils | 2.1.1, plus adapted 0.0.2 coverage | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
 | Caller paths verified | vnode-fetch | 2.7.0 API; Gaxios 7.1.3/8.3.2 transport checks against node-fetch 3.3.2 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch), scoped to tested callers |
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
-| 1 | vgcp-metadata | 6.1.1 | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
-| 2 | vgoogle-auth-library | Not implemented; upstream 10.6.1/11.3.2 HTTP consumer paths verified | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
+| 1 | vgoogle-auth-library | Not implemented; upstream 10.6.1/11.3.2 HTTP consumer paths verified | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 
 The Gaxios upgrade now uses native fetch for ordinary calls, with explicit stream,
 redirect, size and deadline handling. Node agents, proxies and client certificates
@@ -49,7 +49,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
-| [vgcp-metadata](packages/vgcp-metadata) | gcp-metadata 6.1.1 | Entirely VPM runtime tree; first-success endpoint races, finite deadlines, direct requests, credential-safe errors/logs, bounded bulk reads and endpoint-aware availability caching. |
+| [vgcp-metadata](packages/vgcp-metadata) | gcp-metadata 9.2.3 | Entirely VPM runtime tree; first-success endpoint races, finite deadlines, direct requests, credential-safe errors/logs, bounded bulk reads and endpoint-aware availability caching. |
 | [vjson-bigint](packages/vjson-bigint) | json-bigint 1.0.0 | Zero dependencies; exact numeric wrappers/native bigints, strict JSON syntax, bounded parsing, exact prototype-key policies, reentrant serialization and safe replacers. |
 | [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 2.1.1 / 0.0.2 | Current activation/stdout behavior, structured filtering and protected message fields, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
 | [vgtoken](packages/vgtoken) | gtoken 7.1.0 | Shared forced refreshes, cached RSA key imports, validated expiry, bounded exchanges, credential-safe errors and POST-body revocation on the VPM HTTP/signing stack. |
@@ -297,19 +297,25 @@ results are shared within a host/configuration snapshot. Bulk reads validate all
 entries first, bound concurrency, reject duplicates and use null-prototype output.
 Residency heuristics no longer disable timeouts.
 
-Nineteen focused tests and all 66 original upstream entries pass on both runtimes,
-with documented adaptations for intentional race, timeout and diagnostic changes.
-Google Auth's actual Compute token, project-ID and universe-domain callers pass
-through the aliased integration stack. These are local compatibility checks, not
-production deployment or live-cloud validation.
+The 9.2.3 upgrade adds Fetch Headers/tuple input, Cloud Run Worker Pool detection,
+bounded normalization of nested native-fetch/Bun errors, and the current DEBUG
+logging namespace. Unknown failures in a raced endpoint cannot be hidden by a
+normal network failure in the other. No runtime dependency was added.
 
-Text access with stubbed transport takes 40% less time on Node and 38% less on
-Bun. Cached Node availability adds about 0.76 microseconds (+215%) for environment
-invalidation; stubbed JSON adds 5% on Node and improves 26% on Bun. Node HTTP
-measurements are variable (+5.5% JSON/+2.7% text, with process ranges crossing
-zero). Bun's complete HTTP path remains slower (+22% JSON/+28% text) than the
-upstream path using Bun's built-in Fetch compatibility module. The package is not
-presented as a universal speedup. [Full evidence](packages/vgcp-metadata/bench/results/README.md)
+Twenty-six focused tests and all 77 current upstream entries pass on Node and Bun,
+with documented adaptations for intentional timeout and diagnostic differences.
+Google Auth 10.6.1/11.3.2 Compute tokens, project lookup, universe fallback and
+status-dependent errors use the native-fetch VPM stack in local HTTP checks.
+The older Google Auth integration remains covered. These are compatibility tests,
+not production deployment or live-cloud validation.
+
+Compared with current 9.2.3, Node HTTP JSON/text take 18.0%/15.6% less paired
+time. Bun HTTP remains slower by 63.6%/33.9% (about 55/32 microseconds); these
+complete paths include VPM’s additional bounds and lifecycle checks. Cached Node
+availability adds about 0.64 microseconds for configuration-aware reuse. Stubbed
+JSON and text processing improve on both runtimes.
+[Full benchmark evidence](packages/vgcp-metadata/bench/results/README.md) includes
+all samples, process variation and identical-upstream controls.
 
 ## vjson-bigint
 

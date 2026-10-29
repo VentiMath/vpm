@@ -1,46 +1,52 @@
 # Metadata benchmark evidence
 
-These measurements predate the Gaxios 8/native-fetch upgrade and describe the
-source hashes captured at commit `fd273e24`. They remain historical evidence;
-current HTTP performance is recorded in the [vgaxios report](../../../vgaxios/bench/results/README.md).
-Run the source-hash verification at that recorded revision, not against the
-upgraded transport.
+Compared with gcp-metadata 9.2.3 on Node 24.22.1 and Bun 1.4.0, Apple M1 Pro,
+macOS arm64. Three fresh processes and one identical-upstream control per runtime;
+12 alternating paired rounds after warmup. Every sample is retained. Percentages
+are medians of paired ratios, which can differ from ratios of pooled timing medians.
 
-Node 24.22.1 and Bun 1.4.0 on Apple M1 Pro, macOS arm64. Three fresh processes
-and one identical-upstream control per runtime; 12 alternating paired rounds
-after warmup. Every sample is retained. Percentages are medians of paired ratios,
-which can differ from ratios of pooled timing medians.
+HTTP cases use a local server and each implementation's default transport:
+VPM uses native fetch, upstream uses node-fetch 3 on Node and native fetch on Bun.
+VPM also enforces a total request deadline, direct routing, response-byte bounds
+and cancellation of losing requests. Stub cases return a prebuilt response with
+Fetch Headers and isolate metadata preparation, decoding and request lifecycle.
 
-The HTTP cases use a local server, the actual gcp-metadata 6.1.1 consumer and each
-implementation's default HTTP stack. On Bun, upstream gaxios's bare `node-fetch`
-import resolves to Bun's built-in compatibility module. VPM uses vnode-fetch.
-These HTTP results compare those complete installed paths. Stub-transport cases
-exclude networking and isolate metadata validation, JSON/text decoding and request
-lifecycle. Cached availability includes checking whether configuration changed.
+Node HTTP JSON and text take 18.0% and 15.6% less paired time. Bun HTTP JSON and
+text remain slower by 63.6% and 33.9%, or about 55 and 32 microseconds using pooled
+medians. All three processes show the Bun regressions beyond control variation.
+Those rows compare the complete paths, including VPM's bounds and lifecycle checks;
+they do not isolate a single cause. Stub JSON/text handling is faster on both
+runtimes, though the Bun JSON control varies by 9.0%.
 
-| Case | Node upstream → VPM (ns) | Node change | Bun upstream → VPM (ns) | Bun change |
-| --- | ---: | ---: | ---: | ---: |
-| Cached residency | 7 → 7 | −2.2% | 12 → 2 | −86.6% |
-| Cached availability | 352 → 1,111 | +215.1% | 86 → 79 | −5.9% |
-| Assume-present detection | 576 → 355 | −38.3% | 196 → 63 | −66.5% |
-| JSON accessor, stub transport | 2,536 → 2,647 | +4.8% | 2,092 → 1,464 | −26.4% |
-| Text accessor, stub transport | 2,922 → 1,774 | −40.1% | 1,301 → 808 | −37.6% |
-| HTTP JSON metadata | 136,368 → 138,724 | +5.5% | 91,566 → 116,890 | +22.0% |
-| HTTP text metadata | 125,478 → 128,839 | +2.7% | 84,550 → 104,241 | +28.2% |
+Cached Node availability takes 296 → 936 ns (+217.1%): roughly 0.64 microseconds
+for checking host, detection mode and retry settings before cache reuse. Bun's
+cached availability difference is within control variation. Near-zero residency
+measurements are JIT-sensitive and do not imply meaningful application gains.
+These tests exclude cloud network latency and are not production throughput claims.
 
-Node HTTP JSON process changes span −6.6% to +15.2%, with an +8.6%
-identical-upstream control; text spans −0.6% to +15.9%, control +1.6%.
-Those Node HTTP results do not establish a consistent improvement or slowdown.
-Bun HTTP regressions are repeatable: JSON +19.1% to +41.4%, control +4.2%;
-text +22.7% to +38.9%, control +12.2%. They include the different default
-transport implementations described above and remain an optimization opportunity.
+## Node 24
 
-Cached Node availability pays about 0.76 microseconds to check configuration
-before reusing a result. It is a real, repeatable tradeoff for invalidation on
-host/detection/retry changes. Stubbed JSON calls retain +4.8% Node overhead for
-request validation, deadlines and cancellation; text avoids throwing to recognize
-ordinary strings. Bun's near-zero residency timing is JIT-sensitive and is not an
-application performance claim. No benchmark includes cloud network latency.
+| Case | Upstream ns | VPM ns | Paired change | Process changes | Upstream control |
+| --- | ---: | ---: | ---: | --- | ---: |
+| cached residency | 6 | 6 | 0.1% | 0.3%, 0.1%, -0.0% | 0.1% |
+| cached availability | 296 | 936 | 217.1% | 215.9%, 224.7%, 206.2% | -0.5% |
+| assume-present detection | 485 | 300 | -38.3% | -37.2%, -39.7%, -38.1% | -0.4% |
+| JSON accessor with stub transport | 2654 | 2358 | -12.4% | -11.9%, -12.6%, -13.3% | -0.6% |
+| text accessor with stub transport | 2969 | 1593 | -46.5% | -47.1%, -43.8%, -47.5% | 1.8% |
+| HTTP JSON metadata | 266242 | 225778 | -18.0% | -16.4%, -15.9%, -20.4% | -1.9% |
+| HTTP text metadata | 184859 | 152107 | -15.6% | -15.6%, -15.3%, -16.0% | -3.9% |
+
+## Bun 1.4
+
+| Case | Upstream ns | VPM ns | Paired change | Process changes | Upstream control |
+| --- | ---: | ---: | ---: | --- | ---: |
+| cached residency | 11 | 1 | -86.5% | -88.4%, -43.4%, -36.6% | -0.4% |
+| cached availability | 70 | 67 | -1.9% | -2.6%, -2.3%, -1.5% | -3.2% |
+| assume-present detection | 165 | 54 | -66.1% | -66.3%, -66.6%, -63.8% | 0.6% |
+| JSON accessor with stub transport | 1663 | 1332 | -17.7% | -19.5%, -15.8%, -20.1% | 9.0% |
+| text accessor with stub transport | 1209 | 713 | -39.6% | -38.2%, -39.5%, -39.7% | -5.5% |
+| HTTP JSON metadata | 91589 | 146095 | 63.6% | 61.4%, 53.7%, 71.9% | 7.6% |
+| HTTP text metadata | 90300 | 122726 | 33.9% | 32.8%, 33.9%, 35.5% | 1.0% |
 
 Reports contain all samples, source hashes, runtime/CPU details and calibration
 flags. Reproduce from the repository root:

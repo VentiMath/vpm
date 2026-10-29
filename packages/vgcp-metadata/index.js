@@ -1,5 +1,5 @@
 'use strict';
-// Based on gcp-metadata 6.1.1. Copyright 2018 Google LLC.
+// Based on gcp-metadata; API baseline 9.2.3. Copyright 2018 Google LLC.
 // Licensed under Apache-2.0; see LICENSE. Modified for VPM validation,
 // request lifecycle, diagnostics and residency handling.
 const transport = require('vgaxios');
@@ -64,7 +64,13 @@ function endpoint(base, key) {
 function headers(input) {
   const result = Object.create(null);
   if (input !== undefined) {
-    if (!input || typeof input !== 'object' || Array.isArray(input)) throw new TypeError('Invalid metadata headers');
+    if (!input || typeof input !== 'object') throw new TypeError('Invalid metadata headers');
+    // Headers and tuple lists follow the current Fetch interface. Keep the plain
+    // record path allocation-light and retain legacy numeric/array values.
+    if (typeof input[Symbol.iterator] === 'function') {
+      try { input = Object.fromEntries(new Headers(input)); }
+      catch { throw new TypeError('Invalid metadata headers'); }
+    }
     for (const name of Object.keys(input)) {
       if (!/^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/.test(name)) throw new TypeError('Invalid metadata headers');
       const key = name.toLowerCase(), value = input[name];
@@ -104,10 +110,35 @@ function prepare(key, options, retries = 3, fastFail = false) {
     retries: integer(retries, 3, 0, 10, 'retry count')
   };
 }
+function networkCode(error) {
+  // Native fetch and Bun nest socket failures differently. Bound both depth and
+  // total visited nodes; never retain or copy their messages, causes or URLs.
+  const seen = new Set(); let budget = 64;
+  function visit(value, depth) {
+    if (!value || typeof value !== 'object' || depth > 20 || --budget < 0 || seen.has(value)) return undefined;
+    seen.add(value);
+    if (Array.isArray(value.errors)) {
+      if (!value.errors.length || value.errors.length > budget) return undefined;
+      let code;
+      for (const child of value.errors) {
+        const next = visit(child, depth + 1);
+        if (!next) return undefined;
+        code ||= next;
+      }
+      return code;
+    }
+    if (value.name === 'TimeoutError' || value.name === 'AbortError' || value.code === 'TimeoutError' || value.code === 'AbortError' || ['request-timeout', 'body-timeout', 'aborted'].includes(value.type)) return 'ETIMEDOUT';
+    if (value.code === 'ConnectionRefused' || value.code === 'FailedToOpenSocket') return 'ECONNREFUSED';
+    if (networkCodes.has(value.code)) return value.code;
+    if (value.code !== undefined && value.code !== '') return undefined;
+    return visit(value.cause ?? value.error, depth + 1);
+  }
+  return visit(error, 0);
+}
 function safeError(error, forcedCode) {
   const status = error?.response?.status ?? error?.status;
   const validStatus = Number.isInteger(status) && status >= 100 && status <= 599 ? status : undefined;
-  const code = forcedCode || (error?.code === 'TimeoutError' ? 'ETIMEDOUT' : networkCodes.has(error?.code) ? error.code : 'ERR_METADATA_REQUEST');
+  const code = forcedCode || (networkCode(error) || 'ERR_METADATA_REQUEST');
   const result = new transport.GaxiosError('Metadata request failed' + (validStatus ? ' (HTTP ' + validStatus + ')' : ''), {}, validStatus ? {status: validStatus, statusText: '', headers: {}, config: {}, data: ''} : undefined);
   result.code = code;
   return result;
@@ -116,7 +147,7 @@ function shouldRetry(error) {
   const status = error.response?.status;
   if (status !== undefined) return (status >= 100 && status < 200) || status === 408 || status === 429 || (status >= 500 && status < 600);
   // Redirect refusal, body limits and TLS validation cannot be repaired by retrying.
-  return networkCodes.has(error.code || error.error?.code);
+  return networkCode(error) !== undefined;
 }
 function decode(data) {
   if (typeof data !== 'string') return data;
@@ -132,7 +163,7 @@ async function retrieve(config) {
   config.signal?.addEventListener('abort', cancel, {once: true});
   timeout = setTimeout(() => { timedOut = true; controller.abort(); }, config.timeout);
   try {
-    logging.log('gcp metadata').info('Metadata request started');
+    logging.log('gcp-metadata').debug('Metadata request started');
     const options = {headers: config.headers, params: config.params, responseType: 'text', timeout: config.timeout,
       maxContentLength: config.maxContentLength, maxRedirects: 0, noProxy: ['*'], signal: controller.signal,
       retryConfig: {noResponseRetries: config.retries, retry: 3, totalTimeout: config.timeout, shouldRetry}};
@@ -144,13 +175,12 @@ async function retrieve(config) {
     let response;
     if (config.secondary) {
       // A quick DNS failure must not hide a working IP endpoint (or vice versa).
-      try { response = await Promise.any([send(config.url), send(config.secondary)]); }
-      catch (aggregate) { throw aggregate.errors?.[0] || aggregate; }
+      response = await Promise.any([send(config.url), send(config.secondary)]);
       controller.abort();
     } else response = await send(config.url);
     completed = true;
     const data = decode(response.data);
-    logging.log('gcp metadata').info('Metadata request completed');
+    logging.log('gcp-metadata').debug('Metadata request completed');
     return data;
   } catch (error) {
     throw safeError(error, timedOut ? 'ETIMEDOUT' : canceled ? 'ERR_CANCELED' : error?.code === 'ERR_METADATA_FLAVOR' ? error.code : undefined);
