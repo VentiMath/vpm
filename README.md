@@ -47,7 +47,8 @@ those APIs. `vexpress` uses VPM packages throughout its runtime dependency tree;
 command-line argument parsing and package-manifest discovery.
 `vfunctions-framework` runs HTTP, CloudEvent and legacy event handlers on this
 stack. `vjsonwebtoken`, `vjws`, and `vjwa` cover JWT claims, compact signatures,
-and native cryptographic operations used by authentication consumers. Two
+and native cryptographic operations used by authentication consumers. `vjwks-rsa`
+retrieves public signing keys for these consumers, including Firebase Admin. Two
 declaration-only packages provide Node and Undici types for development.
 
 Integration tests serve pinned Firebase Functions consumers through the VPM
@@ -119,6 +120,9 @@ change and runtime limitation recorded. Its separately locked dependencies stay
 outside the workspace and published package archives. The
 [Functions Framework suite](scripts/framework-conformance/README.md) similarly
 checks HTTP/event handling, module loading and logging on Node and Bun.
+The [JWT suite](scripts/jwt-conformance/README.md) and
+[JWKS suite](scripts/jwks-conformance/README.md) cover token verification and
+public-key retrieval, including independent middleware consumers.
 
 ## License
 

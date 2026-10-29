@@ -1,0 +1,30 @@
+{
+  "secp256k1": {
+    "kty": "EC",
+    "x": "kpH6zjDTIyqINLtMxvu46Lz9Q-mOlkuRSiAPQcOppO0",
+    "y": "kZFnIiCL3RBhfAXr3fHYsKKJtNrgyKxVRfpRbB4Gh5Q",
+    "crv": "secp256k1"
+  },
+  "P-384": {
+    "kty": "EC",
+    "x": "PxeJY7og6qebuPrCfT62FFEihk3Fo7tqBPBKKFl0uUNzFJ5Mvmft_ZfxqjcQwhYT",
+    "y": "KWYbssU5GfsjlEFpa78Mf6epGRo1PRszl0E-0nnL94AloFAlA-T1qMJSznHUsouW",
+    "crv": "P-384"
+  },
+  "P-521": {
+    "kty": "EC",
+    "x": "AADMpyBppM3xAEGb0CLDN_cTLFfH_4wsrdtbAewnbD_yVtuPhiok_QoYpgtAxTXg8-xbjwwDjxakfAkp0CdkX_RT",
+    "y": "AfQy15hV2Mnpj2lTPBByCWE8elEZVBY6Vxb6n2G5PSyYxX6vDHN_4lSGvPy0IzPmX2xazTaayScc0qCHW9fNRwDy",
+    "crv": "P-521"
+  },
+  "ed25519": {
+    "kty": "OKP",
+    "crv": "Ed25519",
+    "x": "EOcV4TAIIvhNakcVSVKnofutmLkxWL0evTbFxO6Lu3Y"
+  },
+  "ed448": {
+    "kty": "OKP",
+    "crv": "Ed448",
+    "x": "PFUpMRDnK9QJS2A_sGRyrZ2SvrN6degVyg6MzrhvXGMNFSZa5Qm_cIbI-GJ37qoa8dkTVaxVe6SA"
+  }
+}

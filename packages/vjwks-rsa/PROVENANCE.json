@@ -1,0 +1,24 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "upstream": { "package": "jwks-rsa", "version": "3.2.2", "tarball": "https://registry.npmjs.org/jwks-rsa/-/jwks-rsa-3.2.2.tgz" },
+  "source": {
+    "repository": "auth0/node-jwks-rsa",
+    "ref": "v3.2.2",
+    "commit": "67f55ff7d72e810f6d0e4d9d9c5d217140d44872",
+    "archive": "https://codeload.github.com/auth0/node-jwks-rsa/tar.gz/67f55ff7d72e810f6d0e4d9d9c5d217140d44872",
+    "archiveSha256": "30e6f339b79317b2c3fccbfff84e9b784bd4030da091efe27dd77d3fad1aee9a"
+  },
+  "dependencies": { "debug": "vdebug", "jose": "native crypto and compact-token header parsing", "limiter": "private rolling-minute request limiter", "lru-memoizer": "private bounded LRU cache", "@types/jsonwebtoken": "self-contained declarations" },
+  "changes": [
+    "Native public JWK import with canonical field encodings, key purpose and algorithm-family checks; immutable signing-key records and lazy once-only PEM export.",
+    "Reject ambiguous duplicate signing key IDs and preserve empty IDs as distinct from missing IDs.",
+    "Snapshot and validate client configuration; bound HTTP response bytes, key counts, key field sizes and key IDs.",
+    "Coalesce concurrent signing-key fetch/import work; cache only successful lookups using monotonic fixed expiry and bounded LRU retention.",
+    "Enforce an atomic rolling-minute limit on actual endpoint fetches, including getKeys and getSigningKeys; cache/interceptor hits do not consume capacity.",
+    "Total request deadlines include streaming and custom fetchers; reject invalid UTF-8, premature close, unsupported URI schemes, redirects and unsuccessful status codes.",
+    "Guard adapter error callbacks, handle rejected error hooks, and require token algorithms to agree with the selected public key.",
+    "Bun native crypto rejects secp256k1 and Ed448 JWK imports; these keys are skipped, while native Node supports them."
+  ],
+  "upstreamTestAdaptations": ["The request timeout test expects ETIMEDOUT instead of the upstream incidental ECONNRESET."]
+}

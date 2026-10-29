@@ -1,0 +1,15 @@
+'use strict';
+const { JwksClient } = require('./lib/client');
+const errors = require('./lib/errors');
+const integrations = require('./lib/integrations');
+module.exports = function jwksRsa(options) { return new JwksClient(options); };
+module.exports.JwksClient = JwksClient;
+module.exports.ArgumentError = errors.ArgumentError;
+module.exports.JwksError = errors.JwksError;
+module.exports.JwksRateLimitError = errors.JwksRateLimitError;
+module.exports.SigningKeyNotFoundError = errors.SigningKeyNotFoundError;
+module.exports.expressJwtSecret = integrations.expressJwtSecret;
+module.exports.passportJwtSecret = integrations.passportJwtSecret;
+module.exports.koaJwtSecret = integrations.koaJwtSecret;
+module.exports.hapiJwt2Key = integrations.hapiJwt2Key;
+module.exports.hapiJwt2KeyAsync = integrations.hapiJwt2KeyAsync;

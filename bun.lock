@@ -181,6 +181,13 @@
       "name": "vjwa",
       "version": "0.1.0",
     },
+    "packages/vjwks-rsa": {
+      "name": "vjwks-rsa",
+      "version": "0.1.0",
+      "dependencies": {
+        "vdebug": "workspace:*",
+      },
+    },
     "packages/vjws": {
       "name": "vjws",
       "version": "0.1.0",
@@ -428,6 +435,8 @@
     "vjsonwebtoken": ["vjsonwebtoken@workspace:packages/vjsonwebtoken"],
 
     "vjwa": ["vjwa@workspace:packages/vjwa"],
+
+    "vjwks-rsa": ["vjwks-rsa@workspace:packages/vjwks-rsa"],
 
     "vjws": ["vjws@workspace:packages/vjws"],
 

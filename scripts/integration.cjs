@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'jwks-rsa': { pkg: 'vjwks-rsa', versions: /^3\.2\.2$/ },
   jsonwebtoken: { pkg: 'vjsonwebtoken', versions: /^9\.0\.3$/ },
   jws: { pkg: 'vjws', versions: /^4\.0\.1$/ },
   jwa: { pkg: 'vjwa', versions: /^2\.0\.1$/ },
@@ -1120,6 +1121,29 @@ async function run() {
       { algorithms: ['RS256'], audience: 'https://example.invalid', issuer: 'test@example.invalid' });
     assert.equal(accessClaims.sub, 'test@example.invalid');
 
+    // Firebase Admin's real App Check key-fetch/verification path, served locally.
+    const firebaseJwt = from(path.join(path.dirname(resolveManifest(from, 'firebase-admin')), 'lib/utils/jwt.js'));
+    const publicJwk = { ...keys.RSA.publicKey.export({ format:'jwk' }), kid:'integration-key', alg:'RS256', use:'sig' };
+    let jwksRequests = 0;
+    const jwksServer = http.createServer((_req,res) => { jwksRequests++; res.setHeader('content-type','application/json'); res.end(JSON.stringify({keys:[publicJwk]})); });
+    await new Promise(resolve=>jwksServer.listen(0,'127.0.0.1',resolve));
+    try {
+      const uri = 'http://127.0.0.1:' + jwksServer.address().port + '/keys';
+      const fetcher = new firebaseJwt.JwksFetcher(uri);
+      const fetched = await fetcher.fetchPublicKeys();
+      assert.match(fetched['integration-key'],/PUBLIC KEY/);
+      assert.deepEqual(await fetcher.fetchPublicKeys(),fetched);
+      assert.equal(jwksRequests,1);
+      const verifier = firebaseJwt.PublicKeySignatureVerifier.withJwksUrl(uri);
+      const signed = jwt.sign({sub:'app-check-test'},keys.RSA.privateKey,{algorithm:'RS256',keyid:'integration-key'});
+      await verifier.verify(signed);
+      const wrong = jwt.sign({sub:'app-check-test'},keys.RSA.privateKey,{algorithm:'RS256',keyid:'missing'});
+      await assert.rejects(verifier.verify(wrong));
+      const direct = from('jwks-rsa')({jwksUri:uri});
+      const resolved = await new Promise((resolve,reject)=>jwt.verify(signed,(header,done)=>direct.getSigningKey(header.kid,(error,key)=>done(error,key?.getPublicKey())),{algorithms:['RS256']},(error,payload)=>error?reject(error):resolve(payload)));
+      assert.equal(resolved.sub,'app-check-test');
+    } finally { jwksServer.closeAllConnections(); await new Promise(resolve=>jwksServer.close(resolve)); }
+
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {
       assert.ok(stderr.some(line => line.startsWith(namespace)), `no debug output for ${namespace}`);
@@ -1139,6 +1163,7 @@ async function run() {
   console.log(`${runtime}: ${checks} HTTP checks passed through vfunctions-framework (replacing ${installed('@google-cloud/functions-framework')}), firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
   console.log('6 Functions Framework startup-option checks passed.');
   console.log('12 JWT algorithms: synchronous/asynchronous signing, Unicode headers, tamper rejection, claims, asynchronous key resolution and Google JWTAccess signing passed through vjsonwebtoken/vjws/vjwa.');
+  console.log('Firebase Admin JWKS retrieval, cache reuse, signature verification, unknown-key rejection and JWT key resolution passed through vjwks-rsa.');
   console.log(`${readerParityChecks} raw package-reader comparisons and 3 framework CJS/ESM loading cases passed.`);
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
   console.log('Aliased: ' + [...aliased.keys()].map(label => `${label} ×${calls[label.replace(/@[^@]+$/, '')]}`).join(', '));
