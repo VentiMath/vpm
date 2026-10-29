@@ -1,0 +1,19 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "uuid",
+    "version": "9.0.1",
+    "tarball": "https://registry.npmjs.org/uuid/-/uuid-9.0.1.tgz",
+    "integrity": "sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==",
+    "commit": "ca1d39d58a6308d5311bcb356a931aa818ec0ded"
+  },
+  "dependencies": {},
+  "changes": [
+    "Preserve v1 clock sequencing, parse/stringify layout and secure random pooling from upstream.",
+    "Use native randomUUID for default v4 and native incremental hashing for v3/v5.",
+    "Validate byte inputs, offsets, fixed buffer capacity and explicit v1 clock fields before generation.",
+    "Copy custom random bytes before setting UUID version/variant bits; reject trailing line terminators.",
+    "Server-runtime package with self-contained declarations; CLI command renamed vuuid."
+  ]
+}

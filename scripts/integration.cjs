@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  uuid: { pkg: 'vuuid', versions: /^9\.0\.1$/ },
   extend: { pkg: 'vextend', versions: /^3\.0\.2$/ },
   'is-stream': { pkg: 'vis-stream', versions: /^2\.0\.1$/ },
   'https-proxy-agent': { pkg: 'vhttps-proxy-agent', versions: /^7\.0\.6$/ },
@@ -1154,6 +1155,7 @@ async function run() {
     } finally { jwksServer.closeAllConnections(); await new Promise(resolve=>jwksServer.close(resolve)); }
 
     await require('./agent-conformance/consumer.cjs')(from);
+    await require('./google-http-conformance/consumer.cjs')(from);
 
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {
