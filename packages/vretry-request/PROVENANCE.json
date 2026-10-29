@@ -1,0 +1,24 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "retry-request",
+    "version": "9.1.0",
+    "tarball": "https://registry.npmjs.org/retry-request/-/retry-request-9.1.0.tgz",
+    "integrity": "sha512-FILyVbis+DTo3KRbtKceqpj1595wIF+XQFW/+AVOBdCQmxwNDgcNXXr2FNM0Ej2qD7zVXbJGfH7lo4jB0wwhKA=="
+  },
+  "source": {
+    "repository": "googleapis/google-cloud-node",
+    "directory": "core/packages/retry-request",
+    "commit": "ac7462ac8f1ff429c51aa5dafdfc3b9d4a6b0e0e"
+  },
+  "dependencies": {},
+  "changes": [
+    "Cancel scheduled retries on abort or output stream destruction; ignore duplicate callbacks and stale stream events.",
+    "Settle with the last response or error when the retry budget expires; allow zero-delay asynchronous retries.",
+    "Validate finite nonnegative retry configuration, bound native timer intervals and measure retry budgets with a monotonic clock.",
+    "Forward response and completion only from the accepted stream attempt; preserve buffering and backpressure.",
+    "Snapshot supported own option fields directly, eliminating extend; supply structural declarations without @types/request.",
+    "Defer discarded transport teardown until its current response event finishes, avoiding teeny-request pipeline races."
+  ]
+}
