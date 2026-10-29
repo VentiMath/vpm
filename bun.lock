@@ -165,6 +165,14 @@
         "vstatuses": "workspace:*",
       },
     },
+    "packages/vhttps-proxy-agent": {
+      "name": "vhttps-proxy-agent",
+      "version": "0.1.0",
+      "dependencies": {
+        "vagent-base": "workspace:*",
+        "vdebug": "workspace:*",
+      },
+    },
     "packages/viconv-lite": {
       "name": "viconv-lite",
       "version": "0.1.0",
@@ -433,6 +441,8 @@
     "vfunctions-framework": ["vfunctions-framework@workspace:packages/vfunctions-framework"],
 
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
+
+    "vhttps-proxy-agent": ["vhttps-proxy-agent@workspace:packages/vhttps-proxy-agent"],
 
     "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
 

@@ -53,6 +53,11 @@ try {
       const lib = fs.readdirSync(path.join(root, 'packages/vjsonwebtoken/lib')).map(file => 'lib/' + file);
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', ...lib].sort());
     }
+    if (name === 'vhttps-proxy-agent') {
+      assert.deepEqual(metadata.dependencies, {'vagent-base':'0.1.0',vdebug:'0.1.0'});
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE','README.md','PROVENANCE.json','index.d.ts','index.js','package.json','lib/options.js','lib/response.js'].sort());
+    }
     if (name === 'vagent-base') {
       assert.equal(metadata.dependencies, undefined);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -122,6 +127,8 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const {Agent:ArchiveAgent}=require('vagent-base');
+const {HttpsProxyAgent:ArchiveProxy}=require('vhttps-proxy-agent');
+if (!(new ArchiveProxy('http://localhost:8080') instanceof ArchiveAgent)) throw new Error('proxy inheritance');
 if (!(new ArchiveAgent() instanceof require('node:http').Agent)) throw new Error('agent inheritance');
 const jwa = require('vjwa');
 const jws = require('vjws');
@@ -266,6 +273,8 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import {Agent as ArchiveAgent} from 'vagent-base';
+import {HttpsProxyAgent as ArchiveProxy} from 'vhttps-proxy-agent';
+if (!(new ArchiveProxy('http://localhost:8080') instanceof ArchiveAgent)) throw new Error('proxy ESM inheritance');
 if (typeof ArchiveAgent !== 'function') throw new Error('agent ESM export');
 import jwa from 'vjwa';
 import jws, { sign as signJws } from 'vjws';
@@ -394,6 +403,9 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import {Agent as TypedAgent, type AgentConnectOpts, type ClientRequest as AgentRequest, type Duplex as AgentDuplex} from 'vagent-base';
+import {HttpsProxyAgent as TypedProxy} from 'vhttps-proxy-agent';
+const configuredProxy: TypedAgent = new TypedProxy('https://proxy.test', {headers:()=>({'X-Test':'value'}),maxProxyHeaderSize:16384,connectTimeout:1000});
+void configuredProxy;
 declare const agentSocket: AgentDuplex;
 class DirectAgent extends TypedAgent { connect(_request: AgentRequest, _options: AgentConnectOpts) { return agentSocket; } }
 const configuredAgent = new DirectAgent({connectTimeout:1000});

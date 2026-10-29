@@ -49,7 +49,8 @@ command-line argument parsing and package-manifest discovery.
 stack. `vjsonwebtoken`, `vjws`, and `vjwa` cover JWT claims, compact signatures,
 and native cryptographic operations used by authentication consumers. `vjwks-rsa`
 retrieves public signing keys for these consumers, including Firebase Admin.
-`vagent-base` provides the async connection lifecycle used by proxy agents. Two
+`vhttps-proxy-agent` supplies HTTP CONNECT tunnels through HTTP/HTTPS proxies,
+using `vagent-base` for connection lifecycle and pooling. Two
 declaration-only packages provide Node and Undici types for development.
 
 Integration tests serve pinned Firebase Functions consumers through the VPM

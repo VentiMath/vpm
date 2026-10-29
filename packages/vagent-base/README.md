@@ -97,8 +97,9 @@ bun scripts/integration.cjs
 The focused tests exercise transport, native pools, queue failure recovery,
 cancellation, deadlines, delegation, context, helpers and module imports. All
 15 [pinned upstream cases](../../scripts/agent-conformance/README.md) run against
-both runtimes. Real `https-proxy-agent` 7.0.6 and `gaxios` consumers exercise HTTP
-and TLS tunnels and keep-alive reuse. Archive checks install the packed package
+both runtimes. The integration gate uses `vhttps-proxy-agent` in place of the pinned
+`https-proxy-agent` 7.0.6, including `gaxios` consumers, HTTP/TLS tunnels and
+keep-alive reuse. Archive checks install the packed package
 and compile a native Node subclass with TypeScript 7.
 
 See the [benchmark report](bench/results/README.md) for complete measurements,
