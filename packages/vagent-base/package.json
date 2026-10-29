@@ -1,0 +1,14 @@
+{
+  "name": "vagent-base",
+  "version": "0.1.0",
+  "description": "Async HTTP agents with guarded connection settlement, cancellation and native pooling",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": { ".": { "types": "./index.d.ts", "default": "./index.js" }, "./package.json": "./package.json" },
+  "files": ["index.js", "index.d.ts", "helpers.js", "LICENSE", "README.md", "PROVENANCE.json"],
+  "engines": { "node": ">=20" },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/ventimath/vpm.git", "directory": "packages/vagent-base" },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vagent-base"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "vpm-agent-conformance",
+  "private": true,
+  "description": "Pinned upstream agent-base test helper; excluded from runtime packages",
+  "dependencies": { "async-listen": "3.1.0" }
+}
