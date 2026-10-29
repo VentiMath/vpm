@@ -54,7 +54,12 @@ once with `node:crypto` and reuse it.
 - Asymmetric signatures require canonical unpadded base64url, including zero
   unused bits and the expected byte length. Upstream's permissive decoding can
   accept alternate encodings. Invalid ECDSA lengths return `false` instead of
-  throwing from the removed formatter.
+  throwing from the removed formatter. An exact native decode/encode round trip
+  checks canonical encoding. Native PKCS#1 verification enforces RSA signature
+  length; RSA-PSS retains an explicit modulus-length check because native PSS
+  can accept a signature with a leading zero removed. RSA strings longer than
+  1024 characters also get an explicit length check before decoding, bounding
+  allocations for oversized input without excluding larger keys.
 - Signing requires the appropriate key family. ECDSA requires P-256, P-384 or
   P-521 for ES256, ES384 or ES512 respectively. Verification rejects mismatches.
   RSA-PSS always uses the digest length for its salt, with native key restrictions
@@ -73,11 +78,13 @@ on both runtimes. Bun also lacks secp256k1; it is not a supported JWA curve here
 
 ## Verification and performance
 
-The package has 38 focused tests plus 65 unchanged upstream tests run against
-both the pinned original and VPM (168 test cases total). Coverage includes
+The package has 40 focused tests plus 65 unchanged upstream tests run against
+both the pinned original and VPM (170 test cases total). Coverage includes
 OpenSSL interoperability, RFC 7515 Appendix A vectors, all 12 signing algorithms,
 tampering, 1,800 malformed signature cases, key/import behavior, byte views and
-public-key cache behavior. The upstream TAP runner and historical test helpers
+public-key cache behavior. RSA length fixtures cover removed/added zero prefixes
+in all six RSA/PSS algorithms and 1024/2050/4096/8192-bit keys. The upstream TAP
+runner and historical test helpers
 are adapted to native APIs; on Bun, its unsupported secp256k1 wrong-key fixture
 uses a still-wrong P-384 key. Original assertions are retained.
 
@@ -100,9 +107,27 @@ with native KeyObjects and separate PEM cases. PEM verification measures a warm
 public-key cache. Key generation/loading is excluded; private PEM parsing stays
 inside timed signing. Separate Buffer and rotating-PEM cases measure uncached
 verification. Identical-code controls measure harness variation. The
-[eight raw reports](bench/results) retain every sample and source hash; reproduce
-their paired summaries with `node packages/vjwa/bench/summarize.cjs` (add
-`--verify-current` to check the current files against the recorded hashes).
+[initial eight reports](bench/results) retain every sample and source hash;
+reproduce their historical paired summaries with
+`node packages/vjwa/bench/summarize.cjs`.
+
+The [RSA follow-up](bench/rsa.cjs) compares upstream, the frozen implementation
+from `c3bc17f`, and the current code. It measures 24 operations plus a separate
+native key-import diagnostic, using all six execution orders twice per report,
+three fresh processes per runtime and identical-code controls. The
+[follow-up reports](bench/results/rsa) retain every sample; run:
+
+```sh
+OUTPUT=/tmp/vjwa-rsa-node.json node packages/vjwa/bench/rsa.cjs
+OUTPUT=/tmp/vjwa-rsa-bun.json bun packages/vjwa/bench/rsa.cjs
+CALIBRATION=1 OUTPUT=/tmp/vjwa-rsa-control.json node packages/vjwa/bench/rsa.cjs
+node packages/vjwa/bench/summarize-rsa.cjs --verify-current
+```
+
+The summary verifies that the frozen source matches the initial report and that
+current sources match the follow-up measurements. The native diagnostic's
+labels represent import, import plus key type, and import plus key details;
+they are not package speedups. Public caches remain limited to 16 entries.
 Full measurements and limitations are recorded in the
 [central comparison](../../IMPROVEMENTS.md#vjwa).
 

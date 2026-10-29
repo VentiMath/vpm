@@ -83,6 +83,42 @@ test('PS algorithms require digest-length salt; RS and PS signatures are distinc
   }
 });
 
+test('RSA signature lengths reject removed or added zero prefixes in every key form', () => {
+  for (const { algorithm, message, signature } of require('./fixtures/rsa-lengths.json').leadingZero) {
+    const bytes = Buffer.from(signature, 'base64url');
+    assert.equal(bytes[0], 0);
+    const current = jwa(algorithm);
+    for (const key of [keys.RSA.publicKey, keys.RSA.privateKey, keys.RSA.publicPem,
+      Buffer.from(keys.RSA.publicPem), { key: keys.RSA.publicPem },
+      { key: keys.RSA.publicKey.export({ format: 'der', type: 'pkcs1' }), format: 'der', type: 'pkcs1' },
+      { key: keys.RSA.publicKey.export({ format: 'jwk' }), format: 'jwk' }]) {
+      assert.equal(current.verify(message, signature, key), true, algorithm);
+      for (const changed of [bytes.subarray(1), Buffer.concat([Buffer.alloc(1), bytes]),
+        bytes.subarray(0, -1), Buffer.concat([bytes, Buffer.alloc(1)])]) {
+        assert.equal(current.verify(message, changed.toString('base64url'), key), false, algorithm);
+      }
+      // A rejected oversized input must not poison the cached key's later use.
+      assert.equal(current.verify(message, 'A'.repeat(20000), key), false);
+      assert.equal(current.verify(message, signature, key), true);
+    }
+  }
+});
+
+test('RSA verification supports varied modulus sizes, including non-byte-aligned and large keys', () => {
+  for (const { bits, publicPem, message, signature } of require('./fixtures/rsa-lengths.json').sizes) {
+    const publicKey = crypto.createPublicKey(publicPem);
+    assert.equal(publicKey.asymmetricKeyDetails.modulusLength, bits);
+    assert.equal(Buffer.from(signature, 'base64url').length, Math.ceil(bits / 8));
+    for (const key of [publicKey, publicPem, Buffer.from(publicPem)]) {
+      const current = jwa('RS256');
+      assert.equal(current.verify(message, signature, key), true, String(bits));
+      assert.equal(current.verify(message, signature.slice(0, -4), key), false);
+      assert.equal(current.verify(message, signature + 'AAAA', key), false);
+      assert.equal(current.verify(message + '!', signature, key), false);
+    }
+  }
+});
+
 test('restricted RSA-PSS keys retain native restrictions or native unsupported errors', () => {
   const pem = fs.readFileSync(path.join(__dirname, 'fixtures/restricted-rsa-pss.pem'));
   if (process.versions.bun) {

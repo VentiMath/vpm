@@ -31,7 +31,8 @@
     "Require canonical signature encoding and matching algorithm/key families and EC curves.",
     "Retain JSON input coercion; add exact byte views, native key import options and CryptoKeys.",
     "Prepare immutable native key operations in WeakMaps and cache at most 16 complete public PEM strings, each at most 16 KiB; no private-PEM or mutable-buffer cache.",
-    "Reject non-extractable CryptoKey conversion; native runtime restrictions remain in force."
+    "Reject non-extractable CryptoKey conversion; native runtime restrictions remain in force.",
+    "Avoid redundant RSA modulus metadata on ordinary PKCS#1 verification; retain explicit PSS lengths and bounded oversized-signature decoding. Canonical base64url uses exact native decode/encode round trips."
   ],
   "sha256": {
     "test/fixtures/upstream/buffer-equal-constant-time/LICENSE.txt": "751d0e80fb5c828f8c3de198cc760e1e05377e47c8263ab6ee2f10cdc19ba658",
@@ -73,12 +74,13 @@
     "test/fixtures/upstream/tests/A.5/test.js": "a8b560df2f4cefbdabd5ccc0b183f53556e0bf7cb39e10508127dbe537b46966",
     "test/fixtures/upstream/tests/jwa.test.txt": "5852bdf6d7cf95f3ffe92ba8498d3c929f68802d00ee56a31d5d1cdf29c10911",
     "test/fixtures/keys.json": "e730a16e70bf3c873312ff0d96119fda00624e01ef87f00840a626dddcce2ffe",
-    "test/fixtures/restricted-rsa-pss.pem": "474f730b36c8c70a70a114454356594904b1dcc66ca6d7659b86000756599b77"
+    "test/fixtures/restricted-rsa-pss.pem": "474f730b36c8c70a70a114454356594904b1dcc66ca6d7659b86000756599b77",
+    "test/fixtures/rsa-lengths.json": "1d7aecc44c043509178e29ef14e0f6078282915088d20d51a11cc71818d0230b"
   },
   "upstreamTestAdaptations": [
     "Unchanged test source; jwa.test.js renamed to jwa.test.txt to avoid direct Bun discovery.",
     "65 tests run against both upstream and VPM through a TAP assertion adapter, native JWK-to-PEM and base64url test helpers, and enabled supported-version branches.",
     "Keys generated with native crypto; Bun uses a wrong P-384 key instead of unsupported secp256k1 for the ES256 wrong-key fixture."
   ],
-  "fixtureKeys": "RFC 7515 RSA, P-256 and P-521 keys; locally generated P-384 and restricted RSA-PSS test keys. Public test data only."
+  "fixtureKeys": "RFC 7515 RSA, P-256 and P-521 keys; locally generated P-384 and restricted RSA-PSS test keys. Public test data only. RSA length fixtures add synthetic leading-zero signatures and public 1024/2050/4096/8192-bit verification vectors; generated private keys are not retained."
 }
