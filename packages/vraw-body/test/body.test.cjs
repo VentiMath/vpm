@@ -120,7 +120,7 @@ test('rejects invalid arguments before attaching listeners or starting flow', ()
 test('rejects malformed length and limit values in both APIs before reading', () => {
   const invalid = {
     length: ['', ' 2', '2 ', '-1', '1.5', '1e3', '0x10', '2junk', -1, 0.5, Infinity, NaN, Number.MAX_SAFE_INTEGER + 1, '9007199254740992', {}, true],
-    limit: ['', '1e3', '1kbjunk', -1, 0.5, Infinity, NaN, '8pb', {}, true],
+    limit: ['', '1e3', '1kbjunk', -1, NaN, '8pb', {}, true],
   };
   for (const [key, values] of Object.entries(invalid)) for (const value of values) {
     const stream = new PassThrough();
@@ -301,4 +301,16 @@ test('listener registration failure rolls back earlier registrations', async () 
   const stream = new PassThrough(); const failure = new Error('registration failed');
   stream.on('newListener', event => { if (event === 'data') throw failure; });
   await assert.rejects(body(stream), error => error === failure); clean(stream);
+});
+
+test('unreachable numeric limits mean no limit and fractions floor, as raw-body compares them', async () => {
+  const chunks = [Buffer.from('payload')];
+  for (const limit of [Infinity, 1e20, Number.MAX_SAFE_INTEGER, 7.5, 7]) {
+    assert.deepEqual(await outcome(body, chunks, { limit }), await outcome(upstream, chunks, { limit }), String(limit));
+  }
+  for (const limit of [6.5, 0]) {
+    await assert.rejects(outcome(body, chunks, { limit }), { status: 413, type: 'entity.too.large' });
+    await assert.rejects(outcome(upstream, chunks, { limit }), { status: 413, type: 'entity.too.large' });
+  }
+  for (const limit of [NaN, -1]) assert.throws(() => body(new PassThrough(), { limit }), RangeError);
 });

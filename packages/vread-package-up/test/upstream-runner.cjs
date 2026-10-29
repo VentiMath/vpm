@@ -10,11 +10,12 @@ const previous=process.cwd();
     fs.mkdirSync(path.join(root,'fixture'));
     process.chdir(root);
     const tests=[];
-    // Only module loading and AVA registration are adapted. Original assertions
-    // run in an isolated process with the upstream package metadata as fixture.
+    // Module loading, AVA registration and the required normalize: false opt-out
+    // are adapted. Original assertions run in an isolated process with the
+    // upstream package metadata as fixture.
     const source=fs.readFileSync(path.join(__dirname,'fixtures/upstream-tests.mjs'),'utf8')
       .replace(/^import .*;\n/gm,'').replaceAll('import.meta.url','fixtureURL');
-    new Function('path','test','readPackageUp','readPackageUpSync','fixtureURL',source)(path,(name,fn)=>tests.push({name,fn}),reader.readPackageUp,reader.readPackageUpSync,pathToFileURL(path.join(root,'test.js')));
+    new Function('path','test','readPackageUp','readPackageUpSync','fixtureURL',source)(path,(name,fn)=>tests.push({name,fn}),options=>reader.readPackageUp({normalize:false,...options}),options=>reader.readPackageUpSync({normalize:false,...options}),pathToFileURL(path.join(root,'test.js')));
     const selected=tests.filter(test=>test.name===process.argv[2]);assert.equal(selected.length,1);
     await selected[0].fn({is:assert.strictEqual,deepEqual:assert.deepStrictEqual});
   } finally { process.chdir(previous);fs.rmSync(root,{recursive:true,force:true}); }

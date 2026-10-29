@@ -8,7 +8,7 @@ module.exports = function handlers (args, offset = 0) {
   const active = new Set([args])
   while (frames.length) {
     const frame = frames[frames.length - 1]
-    if (frame.index === frame.length) {
+    if (frame.index >= frame.length) {
       active.delete(frame.array)
       frames.pop()
       continue

@@ -204,7 +204,9 @@ test('expiration uses genuine Date internals, accepts other realms and rejects s
   const upstream = await modern();
   const fake = { valueOf: () => 0, toUTCString: () => 'bad; injected=1' };
   assert.match(upstream.stringifySetCookie({ name: 'x', value: 'y', expires: fake }), /injected=1/);
-  for (const expires of [fake, null, 0, 'today', new Date(NaN)]) assert.throws(() => cookie.serialize('x', 'y', { expires }), TypeError);
+  for (const expires of [fake, 'today', 1, new Date(NaN)]) assert.throws(() => cookie.serialize('x', 'y', { expires }), TypeError);
+  // As in cookie 0.7.2, a falsy expires is omitted.
+  for (const expires of [null, 0, '', false]) assert.equal(cookie.serialize('x', 'y', { expires }), 'x=y');
   const date = new Date(0);
   date.valueOf = date.toUTCString = () => { throw new Error('must not call override'); };
   assert.equal(cookie.serialize('x', 'y', { expires: date }), 'x=y; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
@@ -212,17 +214,30 @@ test('expiration uses genuine Date internals, accepts other realms and rejects s
   assert.equal(cookie.serialize('x', 'y', { expires: foreign }), 'x=y; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
 });
 
-test('typed attributes and safe integer ages reject ambiguous values', () => {
-  for (const maxAge of ['1', NaN, Infinity, -Infinity, 2 ** 53, 1n]) {
+test('serialize coerces attributes as cookie 0.7.2; stringifySetCookie keeps them typed', () => {
+  for (const maxAge of [NaN, Infinity, -Infinity, 'abc', 2 ** 53, 1n]) {
     assert.throws(() => cookie.serialize('x', 'y', { maxAge }), TypeError);
+  }
+  for (const maxAge of ['1', NaN, Infinity, -Infinity, 2 ** 53, 1n, 1.9]) {
     assert.throws(() => cookie.stringifySetCookie({ name: 'x', value: 'y', maxAge }), TypeError);
   }
   assert.equal(cookie.serialize('x', 'y', { maxAge: 1.9 }), 'x=y; Max-Age=1');
-  assert.throws(() => cookie.stringifySetCookie({ name: 'x', value: 'y', maxAge: 1.9 }), TypeError);
-  for (const key of ['domain', 'path', 'priority', 'sameSite', 'httpOnly', 'secure', 'partitioned']) {
-    assert.throws(() => cookie.serialize('x', 'y', { [key]: 1 }), TypeError);
+  assert.equal(cookie.serialize('x', 'y', { maxAge: '3600' }), 'x=y; Max-Age=3600');
+  // Express passes options straight through, so null, empty and truthy values
+  // from configuration must not turn res.cookie into a 500.
+  const omitted = { maxAge: null, domain: null, path: '', expires: null, httpOnly: 0, secure: null, partitioned: '', priority: null, sameSite: '' };
+  assert.equal(cookie.serialize('x', 'y', omitted), 'x=y');
+  assert.equal(cookie.serialize('x', 'y', { httpOnly: 1, secure: 'false', partitioned: {}, sameSite: true }),
+    'x=y; HttpOnly; Secure; Partitioned; SameSite=Strict');
+  for (const [key, value] of [['priority', 1], ['sameSite', 1], ['domain', 'a..b'], ['path', '/a;b']]) {
+    assert.throws(() => cookie.serialize('x', 'y', { [key]: value }), TypeError);
   }
-  for (const key of ['secure', 'httpOnly', 'partitioned']) assert.throws(() => cookie.serialize('x', 'y', { [key]: 'false' }), TypeError);
+  for (const key of ['domain', 'path', 'priority', 'sameSite', 'httpOnly', 'secure', 'partitioned']) {
+    assert.throws(() => cookie.stringifySetCookie({ name: 'x', value: 'y', [key]: 1 }), TypeError);
+  }
+  for (const key of ['secure', 'httpOnly', 'partitioned']) {
+    assert.throws(() => cookie.stringifySetCookie({ name: 'x', value: 'y', [key]: 'false' }), TypeError);
+  }
 });
 
 test('errors do not include cookie secrets or untrusted option values', () => {

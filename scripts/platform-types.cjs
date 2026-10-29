@@ -32,13 +32,14 @@ function compiler() {
   return { path: path.join(directory, metadata.bin.tsc), version: metadata.version };
 }
 // Use the supported CLI instead of depending on an unstable compiler API.
-// All input file/type-root paths in these configurations are absolute.
-function compile(config) {
+// All input file/type-root paths in these configurations are absolute. The
+// legacy-consumer check passes its own TypeScript 5 CLI as tsc.
+function compile(config, tsc = compiler().path) {
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-tsc-'));
   try {
     const file = path.join(temporary, 'tsconfig.json');
     fs.writeFileSync(file, JSON.stringify(config));
-    const result = spawnSync(process.execPath, [compiler().path, '-p', file, '--listFiles', '--pretty', 'false'], {
+    const result = spawnSync(process.execPath, [tsc, '-p', file, '--listFiles', '--pretty', 'false'], {
       cwd: root, encoding: 'utf8', maxBuffer: 8 * 1024 * 1024,
     });
     assert.ifError(result.error);

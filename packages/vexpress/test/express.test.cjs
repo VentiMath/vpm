@@ -238,17 +238,17 @@ for (const mode of ['twice', 'callback-then-throw', 'throw', 'async-twice']) tes
   }));
   sync = false; await rendered; await new Promise(resolve => setImmediate(resolve)); assert.equal(calls, 1);
 });
-test('VPM body parsing and negotiation boundaries are retained in the application', async () => {
+test('body parsing and negotiation match Express in the application', async () => {
   const a = app(); a.use(express.json());
   a.get('/', (req, res) => res.json({ type: req.accepts('html'), language: req.acceptsLanguages('en') }));
   a.post('/', (req, res) => res.json(req.body)); a.use((err, req, res, next) => res.status(err.status || 500).json({ type: err.type, message: err.message }));
   await serve(a, async get => {
     const r = await get('/', { headers: { Accept: '*/html', 'Accept-Language': 'en;q=.5,en-US' } });
-    assert.deepEqual(JSON.parse(r.text), { type: false, language: false });
+    assert.deepEqual(JSON.parse(r.text), { type: 'html', language: 'en' });
     const invalid = await get('/', { method: 'POST', headers: { 'Content-Type': 'application/json' } }, 'true');
     assert.equal(invalid.status, 400); assert.deepEqual(JSON.parse(invalid.text), { type: 'entity.parse.failed', message: 'JSON body must be an object or array' });
   });
-  for (const extended of [true, false]) assert.throws(() => express.urlencoded({ extended, parameterLimit: 10.1 }), TypeError);
+  for (const extended of [true, false]) assert.doesNotThrow(() => express.urlencoded({ extended, parameterLimit: 10.1 }));
 });
 test('listen reports address conflicts once', async () => {
   await serve(app(), async (get, server) => {

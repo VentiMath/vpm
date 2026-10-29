@@ -14,46 +14,43 @@ function optionsObject (options) {
   return options
 }
 
-function booleanOption (value, fallback, name) {
-  if (value === undefined) return fallback
-  if (typeof value !== 'boolean') throw new TypeError(name + ' must be a boolean')
-  return value
-}
-
-function integerOption (value, fallback, minimum, name) {
-  if (value === undefined) return fallback
-  if (value === Infinity || (Number.isSafeInteger(value) && value >= minimum)) return value
-  throw new TypeError(name + ' must be a safe integer >= ' + minimum + ' or Infinity')
-}
-
+// Option coercions follow body-parser 2.4.0, so configurations that start there
+// start here: inflate is on unless exactly false, falsy type/verify/charset use
+// their defaults, and numeric limits reach the reader unchanged (Infinity means
+// no limit). NaN, negative and malformed limits still fail at startup instead
+// of silently disabling or truncating the limit, or rejecting every request.
 function normalizeOptions (options, defaultType) {
   options = optionsObject(options)
   const { inflate, limit: requestedLimit, type: requestedType, verify: requestedVerify, defaultCharset: requestedCharset } = options
-  const limit = requestedLimit == null ? 102400 : bytes.parse(requestedLimit)
-  if (!Number.isSafeInteger(limit) || limit < 0) throw new RangeError('limit must be a nonnegative safe integer byte count')
-  const type = requestedType === undefined ? defaultType : requestedType
-  const verify = requestedVerify === undefined ? false : requestedVerify
+  const limit = requestedLimit == null ? 102400 : typeof requestedLimit === 'number' ? requestedLimit : bytes.parse(requestedLimit)
+  if (Number.isNaN(limit) || limit < 0) throw new RangeError('limit must be a nonnegative byte count')
+  const type = requestedType || defaultType
+  const verify = requestedVerify || false
   if (verify !== false && typeof verify !== 'function') throw new TypeError('verify must be a function or false')
-  const charset = requestedCharset === undefined ? 'utf-8' : requestedCharset
-  if (typeof charset !== 'string' || !charset) throw new TypeError('defaultCharset must be a nonempty string')
-  const defaultCharset = charset.toLowerCase()
-  if (defaultType !== 'application/octet-stream' && !iconv.encodingExists(defaultCharset)) {
+  // raw never decodes, so like body-parser it ignores defaultCharset. The
+  // others fail at startup on a charset every request without one would 415 on.
+  const charset = requestedCharset || 'utf-8'
+  const decodes = defaultType !== 'application/octet-stream'
+  if (decodes && typeof charset !== 'string') throw new TypeError('defaultCharset must be a nonempty string')
+  const defaultCharset = decodes ? charset.toLowerCase() : 'utf-8'
+  if (decodes && !iconv.encodingExists(defaultCharset)) {
     throw new TypeError('unsupported defaultCharset: ' + defaultCharset)
   }
   let shouldParse = type
   if (typeof type !== 'function') {
+    // Normalize valid patterns once. An empty list or a pattern type-is cannot
+    // match keeps upstream's per-request semantics (an empty list accepts any
+    // valid type; an unknown extension matches nothing) instead of throwing.
     const list = Array.isArray(type) ? type.slice() : [type]
-    if (!list.length) throw new TypeError('type must contain at least one media type')
-    for (let i = 0; i < list.length; i++) {
+    let prepared = list.length > 0
+    for (let i = 0; prepared && i < list.length; i++) {
       const normalized = typeis.normalize(list[i])
-      if (typeof normalized !== 'string' || !typeis.match(normalized, normalized.replace(/\*/g, 'x'))) {
-        throw new TypeError('type must contain valid media types, extensions, or wildcard patterns')
-      }
-      list[i] = normalized.toLowerCase()
+      if (typeof normalized !== 'string' || !typeis.match(normalized, normalized.replace(/\*/g, 'x'))) prepared = false
+      else list[i] = normalized.toLowerCase()
     }
-    shouldParse = req => Boolean(typeis(req, list))
+    shouldParse = prepared ? req => Boolean(typeis(req, list)) : req => Boolean(typeis(req, type))
   }
-  return { inflate: booleanOption(inflate, true, 'inflate'), limit, verify, defaultCharset, shouldParse }
+  return { inflate: inflate !== false, limit, verify, defaultCharset, shouldParse }
 }
 
 // Errors supplied by revivers/verifiers may be frozen, primitives, or null.
@@ -107,4 +104,4 @@ function copyStack (error, original) {
   })
 }
 
-module.exports = { normalizeOptions, optionsObject, booleanOption, integerOption, bodyError, passthrough: value => value }
+module.exports = { normalizeOptions, optionsObject, bodyError, passthrough: value => value }

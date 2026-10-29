@@ -23,23 +23,28 @@ test('ordinary negotiation agrees with the pinned upstream across all four heade
   }
 });
 
-test('quality values use complete bounded decimal syntax in all header types', () => {
+test('quality values follow upstream weight parsing in all header types', () => {
   for (const [method, field, available] of cases) {
-    for (const value of ['2', '-1', '+1', '0.8junk', 'Infinity', 'NaN', '0x1', '1e0', '.5', '01', '1.001', '0.1234', '']) {
-      const headers = { [field]: available[0] + ';q=' + value + ', ' + available[1] + ';q=0.5' };
-      assert.deepEqual(Negotiator({ headers })[method](available.slice(0, 2)), [available[1]], JSON.stringify([method, value]));
-    }
-    for (const value of ['1', '1.', '1.0', '1.000', '0.001', '0.5', '0.']) {
-      const headers = { [field]: available[0] + ';Q=' + value };
-      assert.deepEqual(Negotiator({ headers })[method]([available[0]]), Number(value) ? [available[0]] : []);
+    for (const value of ['2', '-1', '+1', '0.8junk', 'Infinity', 'NaN', 'abc', '0x1', '1e0', '.5', '.2', '01', '1.001', '0.1234', '0.5000', '1.', '0.', '']) {
+      for (const header of [available[0] + ';q=' + value + ', ' + available[1] + ';q=0.5', available[0] + ';Q=' + value]) {
+        const headers = { [field]: header };
+        assert.deepEqual(Negotiator({ headers })[method](available.slice(0, 2)), Upstream({ headers })[method](available.slice(0, 2)), JSON.stringify([method, header]));
+        assert.deepEqual(Negotiator({ headers })[method](), Upstream({ headers })[method](), JSON.stringify([method, header]));
+      }
     }
   }
 });
 
-test('invalid explicit weights cannot fall back to a permissive wildcard', () => {
-  const negotiator = Negotiator({ headers: { accept: 'text/html;q=2, */*;q=1' } });
-  assert.equal(negotiator.mediaType(['text/html']), undefined);
-  assert.equal(Upstream({ headers: { accept: 'text/html;q=2, application/json' } }).mediaType(['text/html', 'application/json']), 'text/html');
+test('real client headers with legacy weights negotiate like upstream', () => {
+  // Java HttpURLConnection's default Accept header uses q=.2.
+  const java = { headers: { accept: 'text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2' } };
+  assert.equal(Negotiator(java).mediaType(['application/json']), 'application/json');
+  assert.deepEqual(Negotiator(java).mediaTypes(), Upstream(java).mediaTypes());
+  for (const headers of [{ accept: 'text/html;q=2, */*;q=1' }, { accept: 'application/json;q=abc, text/html' }, { 'accept-language': 'en;q=.5, en-us' }, { 'accept-encoding': 'gzip;q=.5, br;q=0.4' }]) {
+    for (const method of ['mediaTypes', 'languages', 'encodings']) {
+      assert.deepEqual(Negotiator({ headers })[method](['text/html', 'application/json', 'en', 'en-us', 'gzip', 'br']), Upstream({ headers })[method](['text/html', 'application/json', 'en', 'en-us', 'gzip', 'br']));
+    }
+  }
 });
 
 test('media specificity and parameter count override wildcard quality', () => {
@@ -90,10 +95,16 @@ test('language fallback retains upstream base and regional behavior', () => {
   }
 });
 
-test('names are validated before Unicode folding and invalid offered values are skipped', () => {
+test('media names are validated before Unicode folding and invalid offered values are skipped', () => {
   for (const [method, field] of cases) {
-    const bad = method === 'mediaTypes' ? ['text/K', 'text/html\n', 'text/@bad', '*/json', 'text/html/extra'] : ['K', 'utf-8\n', 'bad/name', 'bad name'];
-    for (const value of bad) assert.deepEqual(Negotiator({ headers: { [field]: value } })[method]([value]), []);
+    if (method === 'mediaTypes') {
+      for (const value of ['text/K', 'text/html\n', 'text/@bad', 'text/html/extra']) assert.deepEqual(Negotiator({ headers: { [field]: value } })[method]([value]), []);
+      // A wildcard type with a concrete subtype is a range upstream accepts.
+      assert.deepEqual(Negotiator({ headers: { [field]: '*/json' } })[method](['application/json']), Upstream({ headers: { [field]: '*/json' } })[method](['application/json']));
+    } else {
+      // Languages, charsets and encodings take any nonempty entry, as upstream does (e.g. Java's en_US).
+      for (const value of ['en_US', 'bad name']) assert.deepEqual(Negotiator({ headers: { [field]: value } })[method](), Upstream({ headers: { [field]: value } })[method]());
+    }
     const actual = method === 'mediaTypes' ? 'text/html' : 'en';
     assert.deepEqual(Negotiator({ headers: { [field]: actual } })[method]([null, 1, {}, actual]), [actual]);
   }

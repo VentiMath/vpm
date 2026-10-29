@@ -49,7 +49,7 @@ bun pm pack --ignore-scripts
 | Function | Behavior |
 | --- | --- |
 | `parse(header, options?)` | Legacy request parser. Removes paired surrounding quotes, preserves the first occurrence, and falls back to the raw value if a custom decoder throws. |
-| `serialize(name, value, options?)` | Legacy response serializer. Uses `encodeURIComponent`, the 0.7 character rules, and floors finite fractional `maxAge` values. |
+| `serialize(name, value, options?)` | Legacy response serializer. Uses `encodeURIComponent`, the 0.7 character rules, and 0.7.2's attribute coercion: falsy attributes are omitted, flags are truthy checks, and `maxAge` is numerically coerced and floored. |
 | `parseCookie(header, options?)` | Modern request parser. Preserves quotes. The first decoded value wins; `undefined` permits a later occurrence to retry. Custom decoder errors propagate. |
 | `stringifyCookie(cookies, options?)` | Modern request serializer. Uses own enumerable keys, skipping values that are `undefined`. |
 | `parseSetCookie(header, options?)` | Parses one response field. Recognizes case-insensitive attributes, ignores unknown or invalid attributes, and lets later valid attributes replace earlier ones. |
@@ -88,22 +88,27 @@ Intentional differences from the baselines:
 - **Genuine dates.** Expiration uses captured `Date.prototype` methods, accepts
   Dates from other realms, and rejects invalid or spoofed Dates. Overridden
   `valueOf`/`toUTCString` methods cannot supply unchecked expiration text.
-- **Explicit types.** Names, values, encoded results, domains and paths must be
-  strings; flags must be booleans. Inputs/options must have the documented shape;
-  arrays and nonfunction callbacks are rejected even on empty input. Options may
-  be null or omitted. No implicit object/string coercion or truthy flag coercion.
-  Custom decoders may return a string or undefined, not arbitrary objects.
-- **Exact ages.** Serialized ages must be safe integers after legacy rounding.
-  Numeric strings, infinities and unsafe numbers are rejected. Modern
-  serialization rejects fractions. Legacy null `maxAge` is omitted. Parsing
-  ignores unsafe/infinite ages instead of rounding them or returning Infinity.
+- **Explicit types in the modern API.** Names, values, encoded results, and
+  `stringifySetCookie` domains and paths must be strings; its flags must be
+  booleans. Inputs/options must have the documented shape; arrays and
+  nonfunction callbacks are rejected even on empty input. Options may be null or
+  omitted. Custom decoders may return a string or undefined, not arbitrary
+  objects. Legacy `serialize` keeps 0.7.2's attribute coercion, which Express
+  applications rely on: a null, empty or false attribute is omitted, a truthy
+  flag such as `secure: 1` is emitted, and a truthy domain or path is used as its
+  string, still validated.
+- **Exact ages.** Serialized ages must be safe integers; legacy ages are first
+  coerced and floored as 0.7.2 does, so `'3600'` works. Infinities, NaN and
+  unsafe numbers are rejected. Modern serialization rejects fractions and
+  numeric strings. Parsing ignores unsafe/infinite ages instead of rounding them
+  or returning Infinity.
 - **Private error text.** Built-in validation errors do not interpolate cookie
   values or options. Exceptions deliberately thrown by custom callbacks retain
   their normal modern/legacy behavior; their messages remain the caller's.
 
 These changes harden configuration handling; they do not establish an externally
 exploitable vulnerability in upstream applications. The familiar legacy API
-preserves valid Express output, with the strict input differences above. The
+preserves Express output, including its option coercion. The
 legacy adapters deliberately target 0.7.2 semantics, not the changed aliases in
 1.1.1. Use the four modern function names for the current API.
 

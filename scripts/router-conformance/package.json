@@ -1,0 +1,12 @@
+{
+  "name": "vpm-router-conformance",
+  "private": true,
+  "description": "Pinned test-only dependencies for the router 2.2.0 compatibility suite; never shipped in VPM packages",
+  "dependencies": {
+    "finalhandler": "2.1.1",
+    "mocha": "10.2.0",
+    "router": "2.2.0",
+    "run-series": "1.1.9",
+    "supertest": "6.3.3"
+  }
+}

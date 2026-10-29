@@ -33,36 +33,49 @@ type, or an already-finished body are skipped; an existing body is preserved.
 
 Common options:
 
-- `limit`: nonnegative safe integer bytes or a complete `vbytes` size string.
+- `limit`: nonnegative byte count or a complete `vbytes` size string.
   Omission or `null` means **100 KiB**, including for compressed requests.
-  The limit counts inflated bytes before charset decoding. Infinity is rejected.
+  The limit counts inflated bytes before charset decoding. `Infinity` (or any
+  count above `Number.MAX_SAFE_INTEGER`) means no limit; a fractional count is
+  floored. NaN, negative counts and malformed strings such as `'100kbjunk'` fail
+  at construction; body-parser accepts them and then enforces no limit or a
+  truncated one.
 - `type`: a media type, extension such as `'json'`, wildcard such as `'text/*'`
-  or `'+json'`, nonempty array of these, or synchronous request predicate.
-  String patterns are case-insensitive and arrays are copied at construction.
-- `inflate`: boolean, default `true`. Supports gzip, deflate and Brotli, plus
+  or `'+json'`, array of these, or synchronous request predicate. A falsy value
+  uses the parser's default type. String patterns are case-insensitive and
+  arrays are copied at construction. As in body-parser, an empty array accepts
+  any request with a valid Content-Type and an unknown extension matches nothing.
+- `inflate`: enabled unless exactly `false`. Supports gzip, deflate and Brotli, plus
   Zstandard when the runtime provides `createZstdDecompress`. With `false`,
   compressed bodies are rejected. Stacked content encodings are unsupported.
 - `verify(req, res, buffer, encoding)`: optional synchronous verification hook
   after inflation and before charset decoding/parsing. The Buffer contains the
   inflated original bytes; encoding is the chosen charset, or `null` for raw.
-  Throw to reject. Explicit `false` disables verification.
-- `defaultCharset`: nonempty charset name, default `'utf-8'`. Used when the
-  Content-Type has no charset; ignored for raw decoding. Text supports the
+  Throw to reject. A falsy value disables verification; other non-functions
+  fail at construction.
+- `defaultCharset`: charset name, default `'utf-8'` (also for falsy values). Used
+  when the Content-Type has no charset; ignored by raw. A charset the parser
+  cannot decode fails at construction, since every request without a charset
+  parameter would otherwise be rejected with 415. Text supports the
   `viconv-lite` codec catalog; JSON accepts supported `utf-*` names; forms accept
   only `'utf-8'` and `'iso-8859-1'`.
 
-JSON also accepts `strict` (boolean, default `true`, allowing only objects and
-arrays) and a native `JSON.parse` `reviver` function. `strict: false` permits
-scalar JSON values. Omit a reviver instead of passing `null`.
+JSON also accepts `strict` (enabled unless exactly `false`, allowing only
+objects and arrays) and a native `JSON.parse` `reviver` function; a non-function
+reviver is ignored, as `JSON.parse` ignores it. `strict: false` permits scalar
+JSON values.
 
 Forms also accept:
 
-- `extended`: boolean, default `false`; enable nested object/array fields.
-- `parameterLimit`: positive safe integer or Infinity, default 1000.
-- `depth`: nonnegative safe integer or Infinity, default 32. Validated even
-  when `extended` is false; effective nesting depth is zero in that mode.
-- `charsetSentinel` and `interpretNumericEntities`: booleans, both default false;
-  retain the `vqs` UTF-8 sentinel and Latin-1 numeric-entity behavior.
+- `extended`: truthy to enable nested object/array fields; default `false`.
+- `parameterLimit`: number or numeric string of at least 1, or Infinity;
+  default 1000. Fractions are floored. Values from 2 ** 31 upward keep their
+  meaning instead of wrapping through body-parser's 32-bit conversion.
+- `depth`: number of at least 0, or Infinity, default 32. As in body-parser it is
+  checked only when `extended` is enabled; nesting depth is zero otherwise.
+  Non-numeric values take `vqs`'s default of 5 and fractions round up, as qs does.
+- `charsetSentinel` and `interpretNumericEntities`: enabled only when exactly
+  `true`; retain the `vqs` UTF-8 sentinel and Latin-1 numeric-entity behavior.
 
 These callbacks are synchronous; returned Promises are not awaited. Options
 are validated and snapshotted at factory construction. Application timeouts,
@@ -110,8 +123,11 @@ Functions Framework 5.0.2 consumer fixture.
 
 - Form parameter limits no longer wrap through a signed 32-bit conversion.
   For example, `parameterLimit: 2 ** 32` correctly retains `a=1&b=2`.
-- Configuration rejects malformed/coercible limits, booleans, media patterns,
-  charsets and revivers early. Later option/array mutation cannot alter a parser.
+- Options are coerced as body-parser coerces them, so any configuration that
+  starts there starts here. The exceptions fail at construction rather than
+  booting a parser that cannot work: NaN, negative or malformed limits, and
+  default charsets the parser cannot decode. Later option/array mutation cannot
+  alter a parser.
 - An interrupted compressed request cannot leave the decoder waiting for input
   from a request that has already closed.
 - Callback failures retain their original error and metadata as described above.

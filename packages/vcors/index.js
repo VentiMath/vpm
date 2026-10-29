@@ -128,7 +128,10 @@ function apply(policy, originPolicy, origin, req, res, dynamic, headers) {
   let allowedHeaders = policy.allowed;
   const reflectHeaders = preflight && allowedHeaders === undefined;
   if (reflectHeaders) {
-    allowedHeaders = list(headers == null ? undefined : own(headers, 'access-control-request-headers'), 'request headers');
+    // Reflect what the client asked for, as cors does. Only characters that
+    // cannot appear in a header are refused; the browser decides what to send.
+    const requested = headers == null ? undefined : own(headers, 'access-control-request-headers');
+    allowedHeaders = requested == null ? undefined : header(Array.isArray(requested) ? requested.join(',') : requested, 'request headers');
   }
   // Validate all reflected fields and the existing Vary value before CORS writes.
   if (varyOrigin || reflectHeaders) varyKnown(res, varyOrigin ? (reflectHeaders ? 'Origin, Access-Control-Request-Headers' : 'Origin') : 'Access-Control-Request-Headers');

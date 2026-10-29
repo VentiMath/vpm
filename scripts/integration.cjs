@@ -418,8 +418,8 @@ parserApp.post('/primitive-reviver', express.json({ reviver() { throw null; } })
     res.status(error.status).json({ type: error.type });
   });
 // Exercise byte limits before the framework's parser has consumed the stream.
-for (const limit of ['100kbjunk', '1e3', '', '8pb', Infinity]) {
-  const expected = { name: limit === '8pb' || limit === Infinity ? 'RangeError' : 'TypeError' };
+for (const limit of ['100kbjunk', '1e3', '', '8pb']) {
+  const expected = { name: limit === '8pb' ? 'RangeError' : 'TypeError' };
   assert.throws(() => express.json({ limit }), expected);
   const stream = new PassThrough();
   // raw-body normally interprets a null parse result as unlimited. Invalid
@@ -430,6 +430,8 @@ for (const limit of ['100kbjunk', '1e3', '', '8pb', Infinity]) {
   assert.equal(stream.listenerCount('data'), 0);
   stream.destroy();
 }
+// As in body-parser and raw-body, an Infinity limit means no limit.
+assert.doesNotThrow(() => express.json({ limit: Infinity }));
 parserApp.post('/limit-json', express.json({ limit: '7b' }), (req, res) => res.json(req.body));
 parserApp.post('/limit-raw', express.raw({ limit: '1kb' }), (req, res) => res.json({ length: req.body.length }));
 parserApp.post('/limit-text', express.text({ limit: '3b' }), (req, res) => res.json({ text: req.body }));
@@ -766,17 +768,20 @@ async function run() {
     const defaults = { type: 'html', encoding: 'identity', charset: 'utf-8', language: 'en' };
     for (const [headers, changes] of [
       [{}, {}],
-      [{ accept: 'text/html;q=2, application/json;q=0.7' }, { type: 'json' }],
-      [{ accept: 'text/html;q=0.8junk, application/json;q=0.5' }, { type: 'json' }],
-      [{ accept: '' }, { type: false }],
+      // Quality values are read as negotiator reads them, and an empty Accept
+      // field is treated as absent, as accepts treats it.
+      [{ accept: 'text/html;q=2, application/json;q=0.7' }, {}],
+      [{ accept: 'text/html;q=0.8junk, application/json;q=0.5' }, {}],
+      [{ accept: '' }, {}],
       [{ accept: '*/*;q=0' }, { type: false }],
       [{ accept: 'text/html;q=0, */*;q=1' }, { type: 'json' }],
       [{ accept: 'text/html, application/json, text/html' }, {}],
       [{ accept: ['text/html;q=0.2', 'application/json'] }, { type: 'json' }],
       [{ 'accept-encoding': 'gzip;q=0.5, br;q=0.9' }, { encoding: 'br' }],
       [{ 'accept-encoding': '*;q=0' }, { encoding: false }],
-      [{ 'accept-charset': 'utf-8;Q=2, iso-8859-1;q=0.5' }, { charset: 'iso-8859-1' }],
-      [{ 'accept-language': 'en;q=0.8junk, fr;q=0.5' }, { language: 'fr' }],
+      [{ 'accept-charset': 'utf-8;Q=2, iso-8859-1;q=0.5' }, {}],
+      [{ 'accept-language': 'en;q=0.8junk, fr;q=0.5' }, {}],
+      [{ 'accept-language': 'en;q=0.5, fr;q=0.9' }, { language: 'fr' }],
     ]) {
       const result = await request(apiServer, '/negotiate', { headers });
       assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), { ...defaults, ...changes });
@@ -785,7 +790,7 @@ async function run() {
     assert.equal(profile.status, 200); assert.deepEqual(JSON.parse(profile.body), { type: 'text/html' });
     const specific = await request(apiServer, '/accept-specific', { headers: { accept: 'text/html;level=1;q=0.9, text/html;level=1;profile=a;q=0, application/json;q=0.5' } });
     assert.equal(specific.status, 200); assert.deepEqual(JSON.parse(specific.body), { type: 'application/json' });
-    const formatted = await request(appServer, '/format', { headers: { accept: 'text/html;q=2, application/json;q=0.5' } });
+    const formatted = await request(appServer, '/format', { headers: { accept: 'text/html;q=0.4, application/json;q=0.5' } });
     assert.equal(formatted.status, 200); assert.equal(formatted.body, '{"format":"json"}');
     assert.equal(formatted.headers['content-type'], 'application/json; charset=utf-8');
     assert.match(formatted.headers.vary, /Accept/);

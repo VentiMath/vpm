@@ -45,7 +45,7 @@ test('wildcards dominate valid lists but do not bypass validation', () => {
     assert.equal(vary.append(header, ['Cookie', '*', 'Origin']), '*');
     assert.throws(() => vary.append(header, ['*', 'invalid name']), TypeError);
   }
-  assert.throws(() => vary.append('Bad Header', '*'), TypeError);
+  assert.equal(vary.append('Bad Header', '*'), '*');
   assert.throws(() => vary.append('Bad\r\nHeader', []), TypeError);
   assert.equal(vary.append('Accept', []), 'Accept');
 });
@@ -57,19 +57,24 @@ test('all ASCII token characters are accepted and delimiters/controls rejected',
     if (allowed.includes(String.fromCharCode(i))) assert.equal(vary.append('', [name]), name);
     else {
       assert.throws(() => vary.append('', [name]), TypeError, String(i));
-      // Strings may contain HTTP whitespace/list separators only at boundaries.
-      if (i !== 44) assert.throws(() => vary.append(name + 'X', 'Origin'), TypeError, String(i));
-      else assert.equal(vary.append(name + 'X', 'Origin'), 'X,X, Origin');
+      // An existing header is kept as is unless Node could not have sent it.
+      const control = (i < 32 && i !== 9) || i === 127;
+      if (control) assert.throws(() => vary.append(name + 'X', 'Origin'), TypeError, String(i));
+      else assert.equal(vary.append(name + 'X', 'Origin'), name + 'X, Origin', String(i));
     }
   }
 });
 
-test('invalid existing fields and new fields cannot be reflected into a header', () => {
+test('new fields are validated; an existing header is preserved as vary preserves it', () => {
   for (const value of ['Bad Name', 'A\r\nX: yes', 'A\n', 'A\r', 'A\0', 'Å', 'K', 'X:Y', 'A;B', '"Accept"']) {
-    assert.throws(() => vary.append(value, 'Origin'), TypeError);
     assert.throws(() => vary.append('Accept', value), TypeError);
   }
-  assert.equal(upstream.append('Bad Name', 'Origin'), 'Bad Name, Origin');
+  // Another component's malformed Vary must not make every later call throw.
+  for (const value of ['Bad Name', 'Å', 'X:Y', 'A;B', '"Accept"', 'A,,B']) {
+    assert.equal(vary.append(value, 'Origin'), upstream.append(value, 'Origin'));
+  }
+  // Values Node's setHeader rejects are never echoed back.
+  for (const value of ['A\r\nX: yes', 'A\n', 'A\r', 'A\0', 'K']) assert.throws(() => vary.append(value, 'Origin'), TypeError);
 });
 
 test('no implicit coercion and no mutation of readonly inputs', () => {
@@ -127,8 +132,11 @@ test('response methods and array header elements are read once', () => {
 
 test('invalid response shapes and header values fail before mutation', () => {
   for (const res of [undefined, null, {}, { getHeader: true, setHeader: true }]) assert.throws(() => vary(res, 'Origin'), TypeError);
-  for (const value of [null, 123, {}, ['Accept', 1], 'Invalid Header']) {
-    const res = response(value); assert.throws(() => vary(res, 'Origin'), TypeError); assert.equal(res.writes, 0);
+  // Whatever another component stored is converted as vary converts it.
+  for (const value of [null, 0, '', 123, {}, ['Accept', 1], 'Invalid Header']) {
+    const res = response(value), expected = response(value);
+    vary(res, 'Origin'); upstream(expected, 'Origin');
+    assert.equal(res.value, expected.value);
   }
   const res = response('Accept'); assert.throws(() => vary(res, ['Origin', 'Bad Header']), TypeError); assert.equal(res.writes, 0);
   const error = new Error('response failed');

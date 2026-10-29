@@ -96,6 +96,9 @@ bun test packages/vrouter/test
 npm run typecheck
 node scripts/integration.cjs
 bun scripts/integration.cjs
+npm --prefix scripts/router-conformance ci --ignore-scripts
+node scripts/router-conformance/run.cjs
+bun scripts/router-conformance/run.cjs
 node scripts/check-media-archives.cjs
 node packages/vrouter/bench/compare.cjs
 bun packages/vrouter/bench/compare.cjs
@@ -103,7 +106,7 @@ node packages/vrouter/bench/pathnames.cjs
 bun packages/vrouter/bench/pathnames.cjs
 ```
 
-52 local tests cover upstream parity, all runtime HTTP methods, error and promise
+53 local tests cover upstream parity, handler-less registration, all runtime HTTP methods, error and promise
 routing, URL restoration, options, arrays, async parameter concurrency, 3,000
 synchronous handlers, deep/cyclic registration, prototype names, RegExp state and
 capture parsing. Pathname comparisons include 300 generated URLs and explicit
@@ -118,8 +121,10 @@ Archive tests use npm and Bun installations, Node/Bun CJS/ESM imports, and
 TypeScript 7 CJS/ESM consumers without ambient platform types.
 
 The original router source and upstream test files are retained as verified
-comparison/contract references. The upstream test suite is **not run verbatim**;
-these results refer to the local tests and consumer gate described above.
+references. The [router conformance gate](../../scripts/router-conformance/README.md)
+runs that upstream suite **unchanged**: 694 of 694 tests pass on Node, and Bun
+passes 693 with one `OPTIONS *` request that Bun's HTTP server rejects for
+upstream router too.
 
 ### Initial baseline at `692d773`
 

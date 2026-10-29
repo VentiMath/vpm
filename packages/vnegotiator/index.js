@@ -9,8 +9,6 @@ const contentType = require('vcontent-type');
 // Strict end assertions reject final newlines, unlike JavaScript's $ anchor.
 const TOKEN = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+(?![\s\S])/;
 const MEDIA = /^([!#$%&'*+.^_`|~0-9A-Za-z-]+)\/([!#$%&'*+.^_`|~0-9A-Za-z-]+)(?![\s\S])/;
-const LANGUAGE = /^(?:\*|[A-Za-z]{1,8}(?:-[A-Za-z0-9]{1,8})*)(?![\s\S])/;
-const QUALITY = /^(?:0(?:\.[0-9]{0,3})?|1(?:\.0{0,3})?)(?![\s\S])/;
 const EMPTY_PARAMETERS = Object.freeze(Object.create(null));
 const EMPTY_KEYS = Object.freeze([]);
 const fields = { mediaType: 'accept', charset: 'accept-charset', encoding: 'accept-encoding', language: 'accept-language' };
@@ -37,21 +35,26 @@ function header(request, name) {
   return ''; // Invalid supplied values cannot become permissive absent headers.
 }
 
+// Weights follow negotiator: an absent or empty q is 1, otherwise parseFloat.
+// Real clients send forms outside RFC 9110's grammar, such as Java
+// HttpURLConnection's default "*; q=.2". A non-numeric weight is NaN and is
+// excluded by every q > 0 check, as upstream excludes it.
 function quality(parameters) {
-  if (!Object.hasOwn(parameters, 'q')) return 1;
-  const value = parameters.q;
-  return QUALITY.test(value) ? Number(value) : 0;
+  const value = Object.hasOwn(parameters, 'q') ? parameters.q : undefined;
+  return value ? parseFloat(value) : 1;
 }
 
 function record(value, parameters, kind, order, weighted) {
   let type, subtype, prefix;
   if (kind === 'mediaType') {
     const match = MEDIA.exec(value);
-    if (!match || (match[1] === '*' && match[2] !== '*')) return null;
+    if (!match) return null;
     type = match[1].toLowerCase();
     subtype = match[2].toLowerCase();
   } else {
-    if (!(kind === 'language' ? LANGUAGE : TOKEN).test(value)) return null;
+    // negotiator accepts any nonempty language, charset or encoding entry,
+    // including tags such as Java's en_US; they only take part in comparisons.
+    if (!value) return null;
     if (kind === 'language') {
       const hyphen = value.indexOf('-');
       prefix = (hyphen === -1 ? value : value.slice(0, hyphen)).toLowerCase();
@@ -80,7 +83,8 @@ function parseHeader(value, kind) {
     let identity = false, minimum = 1;
     for (const entry of accepted) {
       if (entry.lower === 'identity' || entry.lower === '*') identity = true;
-      if (entry.q > 0) minimum = Math.min(minimum, entry.q);
+      // negotiator's rule: identity gets the lowest weight, counting q=0 and NaN as 1.
+      minimum = Math.min(minimum, entry.q || 1);
     }
     if (!identity) accepted.push({ value: 'identity', lower: 'identity', q: minimum, o: order, s: 0, p: 0 });
   }

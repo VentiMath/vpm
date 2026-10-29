@@ -4,6 +4,8 @@ const assert = require('node:assert/strict');
 const Router = require('..');
 const upstream = require('./fixtures/load.cjs')();
 const { METHODS } = require('node:http');
+const path = require('node:path');
+const { spawnSync } = require('node:child_process');
 
 function run(router, url = '/', method = 'GET', fields = {}) {
   const req = { url, method, ...fields };
@@ -240,6 +242,17 @@ test('invalid handler lists leave router/route registrations unchanged', () => {
   assert.throws(() => router.use('/x', good, badName), /name getter/); assert.equal(router.stack.length, 1);
   assert.throws(() => router.get('/x', good, badName), /name getter/); assert.equal(router.stack.length, 1);
   assert.throws(() => route.get(good, badName), /name getter/); assert.equal(route.stack.length, 0);
+});
+
+test('use() without handlers throws instead of looping forever', () => {
+  // Run in a child: the regression was a synchronous infinite loop.
+  const source = "const r = require(" + JSON.stringify(path.join(__dirname, '..')) + ")(); try { r.use(); } catch (e) { process.stdout.write(e.message); }";
+  const result = spawnSync(process.execPath, ['-e', source], { encoding: 'utf8', timeout: 10000 });
+  assert.equal(result.error, undefined); assert.equal(result.stdout, 'argument handler is required');
+  const router = Router();
+  for (const register of [() => router.use('/x'), () => router.get('/x'), () => router.all('/x'), () => router.route('/r').get()]) {
+    assert.throws(register, /argument handler is required/);
+  }
 });
 
 test('cyclic handler arrays fail promptly; deep and repeated arrays preserve order', async () => {
