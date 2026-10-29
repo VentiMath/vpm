@@ -53,6 +53,12 @@ try {
       const lib = fs.readdirSync(path.join(root, 'packages/vjsonwebtoken/lib')).map(file => 'lib/' + file);
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', ...lib].sort());
     }
+    if (name === 'vjwks-rsa') {
+      assert.deepEqual(metadata.dependencies, { vdebug:'0.1.0' });
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      const lib = fs.readdirSync(path.join(root,'packages/vjwks-rsa/lib')).map(file=>'lib/'+file);
+      assert.deepEqual(entries.sort(), ['LICENSE','README.md','PROVENANCE.json','index.d.ts','index.js','package.json',...lib].sort());
+    }
     if (name === 'vrouter') {
       assert.deepEqual(metadata.dependencies, { vdebug: '0.1.0', vdepd: '0.1.0', 'vpath-to-regexp': '0.1.0' });
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -113,6 +119,11 @@ try {
 const jwa = require('vjwa');
 const jws = require('vjws');
 const jwt = require('vjsonwebtoken');
+const jwks = require('vjwks-rsa');
+const jwksPair = require('node:crypto').generateKeyPairSync('rsa',{modulusLength:2048});
+jwks({fetcher:()=>({keys:[{...jwksPair.publicKey.export({format:'jwk'}),kid:'archive'}]})}).getSigningKey('archive').then(key=>{
+  if(key.getPublicKey()!==jwksPair.publicKey.export({format:'pem',type:'spki'}))throw new Error('installed vjwks-rsa failed');
+}).catch(error=>{console.error(error);process.exitCode=1;});
 if (jwt.verify(jwt.sign({iat:0}, 'key', {expiresIn:60}), 'key', {clockTimestamp:1}).iat !== 0) throw new Error('installed vjsonwebtoken failed');
 if (!jws.verify(jws.sign({header:{alg:'HS256'},payload:'archive',secret:'key'}), 'HS256', 'key')) throw new Error('installed vjws failed');
 if (!jwa('HS256').verify('archive', jwa('HS256').sign('archive', 'key'), 'key')) throw new Error('installed vjwa failed');
@@ -251,6 +262,8 @@ if (verifyJwt(signJwt({iat:0}, 'key', {expiresIn:60}), 'key', {clockTimestamp:1}
 if (!jws.verify(signJws({header:{alg:'HS256'},payload:'archive',secret:'key'}), 'HS256', 'key')) throw new Error('installed ESM vjws failed');
 if (!jwa('HS256').verify('archive', jwa('HS256').sign('archive', 'key'), 'key')) throw new Error('installed ESM vjwa failed');
 import * as vf from 'vfunctions-framework';
+import jwks, { JwksClient } from 'vjwks-rsa';
+if (!(jwks({fetcher:()=>({keys:[]})}) instanceof JwksClient)) throw new Error('installed ESM vjwks-rsa failed');
 import * as vfTesting from 'vfunctions-framework/testing';
 import vfHttp from 'node:http';
 vf.http('archiveHandler', (req, res) => res.end('archive-ok'));
@@ -371,6 +384,10 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 import jwa from 'vjwa';
 import jws from 'vjws';
 import jwt from 'vjsonwebtoken';
+import jwks from 'vjwks-rsa';
+const jwksClient = jwks({fetcher:async()=>({keys:[]})});
+const signingKey: Promise<jwks.SigningKey> = jwksClient.getSigningKey('archive');
+void signingKey;
 const jwtToken: string = jwt.sign({sub:'student'}, 'key', {expiresIn:'2h'});
 const jwtResult: jwt.Jwt = jwt.verify(jwtToken, 'key', {complete:true});
 jwt.verify(jwtToken, (header, done) => { const kid: string | undefined = header.kid; done(null, 'key'); void kid; },
@@ -678,6 +695,7 @@ globalThis.browserChecked = true;
     assert.match(output, /node_modules\/vjwa\/index\.d\.ts/);
     assert.match(output, /node_modules\/vjws\/index\.d\.ts/);
     assert.match(output, /node_modules\/vjsonwebtoken\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vjwks-rsa\/index\.d\.ts/);
     assert.match(output, /node_modules\/vvary\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcontent-disposition\/index\.d\.ts/);

@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vjwks-rsa](packages/vjwks-rsa) | jwks-rsa 3.2.2 | One dependency, native public-key import, shared concurrent retrieval, immutable cached keys, bounded HTTP requests, exact IDs and algorithm agreement. |
 | [vjsonwebtoken](packages/vjsonwebtoken) | jsonwebtoken 9.0.3 | Two dependencies, finite claim/time validation, reliable callbacks, direct HMAC key import and bounded public-key reuse. |
 | [vjws](packages/vjws) | jws 4.0.1 | Exact byte payloads, UTF-8 headers, canonical compact parsing, algorithm agreement, bounded header reuse and linear stream collection using vjwa. |
 | [vjwa](packages/vjwa) | jwa 2.0.1 | Zero dependencies, native ECDSA signature format, canonical encodings, explicit key/algorithm matching and bounded public-key reuse. |
@@ -61,10 +62,10 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,838 tests**: all pass on Node 24, and Bun passes
-1,835 with three documented runtime-specific skips. All 47 runtime packages'
+The root suite contains **1,874 tests**: all pass on Node 24, and Bun passes
+1,871 with three documented runtime-specific skips. All 48 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
-catalog covers **49 packages**, including two declaration-only packages.
+catalog covers **50 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -78,7 +79,11 @@ The [Express conformance suite](scripts/express-conformance/README.md) adds
 behavior. Bun runs 1,255 with six upstream-reproduced runtime limitations.
 The [Functions Framework suite](scripts/framework-conformance/README.md) adds
 105 upstream tests on each runtime, with no assertion changes or skips.
-Both upstream suites are separate from the root test count.
+The [JWT suite](scripts/jwt-conformance/README.md) adds 512 cases on Node and
+509 on Bun, with three documented Bun limitations. The
+[JWKS suite](scripts/jwks-conformance/README.md) adds 88 cases on each runtime
+without skips, with one timeout-code correction. These upstream suites are
+separate from the root test count.
 
 ## Dependency scope
 
@@ -90,6 +95,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vjwks-rsa` | 5 | 1 |
 | `vjsonwebtoken` | 10 | 2 |
 | `vjws` | 2 | 1 |
 | `vjwa` | 3 | 0 |
@@ -131,6 +137,7 @@ previous Express 4 branch. Platform types have their own documented baselines.
 The fixture also includes Firebase Admin and JWT consumers: `vjsonwebtoken`
 validates claims, expiry durations reach `vms`, signatures reach `vjwa` through `vjws`, and proxy agents
 reach `vdebug`. Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
+Firebase Admin's JWKS fetcher and public-key verifier use `vjwks-rsa`.
 The wider frameworks, authentication libraries and Google SDKs still contain upstream dependencies.
 A complete VPM Express tree does not mean the entire backend has been replaced.
 
@@ -164,6 +171,8 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
   callback-based signing, Unicode key IDs, tamper rejection, claim boundaries and
   asynchronous key resolution, plus offline Google `JWTAccess` signing through
   `vjws` and `vjwa`.
+- Firebase Admin JWKS retrieval, cache reuse, signature verification and unknown-key
+  rejection through its actual consumers, plus JWT key resolution via `vjwks-rsa`.
 
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
@@ -178,6 +187,63 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vjwks-rsa
+
+Replaces `jwks-rsa` 3.2.2 with one direct dependency, `vdebug`, instead of five.
+Native public-key import replaces `jose`; private cache and limiter implementations
+replace `lru-memoizer` and `limiter`. Self-contained declarations remove the runtime
+`@types/jsonwebtoken` dependency. The complete external runtime tree is `vdebug`
+and `vms`.
+
+Concurrent signing-key lookups share one pending endpoint fetch/import, including
+requests for different IDs. Frozen key records export PEM once and cache positive
+lookups with bounded LRU retention and monotonic expiry. The rolling-minute
+limiter counts actual endpoint attempts and rejects immediately when exhausted.
+Neither failed lookups nor whole completed key sets are cached, so key rotation
+remains observable after a lookup expires or a new ID is requested.
+
+HTTP retrieval bounds response bytes and key counts, validates UTF-8/JSON,
+rejects incomplete responses and enforces a deadline even while a server keeps
+streaming. Imported keys require canonical encodings, correct coordinate lengths,
+public signing purpose and matching algorithm families. Duplicate usable key IDs
+reject the set; empty IDs remain distinct from missing IDs. Middleware adapters
+check token/key algorithm agreement and settle error hooks once, including thrown
+errors and rejected promises. Canonical field checks inspect unused base64url bits
+directly instead of decoding and re-encoding fields before native import.
+
+The [API guide](packages/vjwks-rsa/README.md) documents limits, immutable options,
+zero-age cache behavior and other deliberate compatibility changes. Custom fetcher
+byte limits and cancellation remain the caller's responsibility. Node supports
+all tested key families; Bun 1.4.0 rejects native secp256k1 and Ed448 JWK imports,
+which are skipped with explicit capability tests.
+
+**Evidence:** 36 focused tests pass on Node and Bun. The
+[pinned upstream suite](scripts/jwks-conformance/README.md) passes all 88
+JavaScript cases on both runtimes, with one timeout-code correction and no skips.
+The integration gate exercises Firebase Admin's actual JWKS fetcher and signature
+verifier plus `vjsonwebtoken` key resolution. Installed npm/Bun archives pass
+CommonJS, ESM and TypeScript 7 checks without ambient platform types.
+
+**Performance:** the [complete benchmark report](packages/vjwks-rsa/bench/results/README.md)
+retains three fresh processes per runtime, twelve paired rounds per process,
+long warm-ups, identical-code controls and source hashes.
+
+| Operation | Node 24 time change | Bun time change |
+| --- | ---: | ---: |
+| Client construction | −94% | −86% |
+| Cached Promise / callback lookup | −99% / −99% | −94% / −91% |
+| Express cached key provider | −99% | −84% |
+| Eight concurrent custom-fetcher key misses | −65% | −89% |
+| Eight concurrent local HTTP key misses | −66% | −84% |
+| Fresh RSA import and PEM export | +7% | −24% |
+| Missing-key rejection | +17% | −62% |
+
+The two Node regressions add about 2.8 µs and 1.9 µs per operation, respectively;
+validation and deadline checks remain enabled. Node's sequential HTTP and
+multi-key import results vary within the scale of the controls, so no improvement
+is claimed. Bun's sequential local HTTP and eight-key imports take about 29% and
+22% less time. These are package measurements, not application latency promises.
 
 ## vjsonwebtoken
 

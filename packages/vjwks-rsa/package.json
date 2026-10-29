@@ -1,0 +1,15 @@
+{
+  "name": "vjwks-rsa",
+  "version": "0.1.0",
+  "description": "Public signing-key retrieval with native JWK import, bounded requests and shared in-flight work",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": { ".": { "types": "./index.d.ts", "default": "./index.js" }, "./package.json": "./package.json" },
+  "files": ["index.js", "index.d.ts", "lib/", "LICENSE", "README.md", "PROVENANCE.json"],
+  "engines": { "node": ">=20" },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/ventimath/vpm.git", "directory": "packages/vjwks-rsa" },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vjwks-rsa",
+  "dependencies": { "vdebug": "workspace:*" }
+}
