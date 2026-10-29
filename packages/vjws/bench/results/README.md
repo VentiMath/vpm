@@ -1,4 +1,9 @@
-# vjws benchmark results
+# Initial vjws benchmark results
+
+These reports describe commit `adc9cb4`. See the [current performance follow-up](followup/README.md)
+for subsequent changes. Use that commit when checking these historical source
+hashes with `--verify-current`; the summary without that flag still reproduces
+the retained measurements.
 
 Node 24.22.1 and Bun 1.4.0, macOS arm64. The raw reports record the CPU, complete
 runtime versions, timestamps, source hashes and every sample. Three fresh-process

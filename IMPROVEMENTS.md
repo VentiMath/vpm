@@ -60,8 +60,8 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,799 tests**: all pass on Node 24, and Bun passes
-1,796 with three documented runtime-specific skips. All 46 runtime packages'
+The root suite contains **1,803 tests**: all pass on Node 24, and Bun passes
+1,800 with three documented runtime-specific skips. All 46 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
 catalog covers **48 packages**, including two declaration-only packages.
 
@@ -199,8 +199,8 @@ settle once and clean up owned listeners. Manual completion waits for both input
 Two private, bounded header caches reuse validated metadata and serialized headers;
 decoded objects are always fresh, and payloads/keys are not cached by this package.
 
-**Verification:** 46 focused cases plus all 31 upstream cases against each
-implementation (108 package tests) pass on Node 24 and Bun. The original upstream
+**Verification:** 50 focused cases plus all 31 upstream cases against each
+implementation (112 package tests) pass on Node 24 and Bun. The original upstream
 test source is retained; the runner's native key generation, assertion adapter
 and one structurally valid input substitution for its invalid-key test are
 documented in [provenance](packages/vjws/PROVENANCE.json). The integration gate
@@ -208,43 +208,45 @@ exercises all 12 signed algorithms through real `jsonwebtoken`, including its
 callback API and Unicode headers, plus Google `JWTAccess` signing. Installed npm
 and Bun archives are checked through CJS, ESM and TypeScript consumers.
 
-**Performance:** the [harness](packages/vjws/bench/compare.cjs) compares upstream
-`jws`+`jwa`, upstream `jws`+`vjwa`, and `vjws`+`vjwa`. The middle variant separates
-crypto changes from this package's changes. Twelve rounds use all six orders
-twice; three fresh processes per runtime and identical-code controls are retained
-with source hashes and every sample in the [raw results](packages/vjws/bench/results).
-The [summary script](packages/vjws/bench/summarize.cjs) verifies those hashes and
-reproduces paired medians. Workloads include stable/varying headers, KeyObjects,
-warm and uncached PEMs, large payloads and one/many stream chunks.
+**Performance:** the [follow-up harness](packages/vjws/bench/followup.cjs) compares
+upstream `jws`+`jwa`, `vjws` at `adc9cb4`, and the optimized implementation. Both
+VPM variants use the same `vjwa`. Twelve rounds use all six orders twice; three
+fresh processes per runtime and identical-code controls retain every sample and
+source hash. The [summary](packages/vjws/bench/summarize-followup.cjs) verifies
+current hashes and reproduces the results. The [initial comparison](packages/vjws/bench/results/README.md)
+remains available to distinguish inherited crypto costs.
 
-Paired elapsed-time changes against upstream on macOS arm64:
+The optimization removes source-stream Writable/pipe intermediaries while keeping
+native public inputs and output. A lazy 64 KiB scratch buffer is cleared after
+validation; Node uses checked byte counts, while Bun keeps exact round trips for
+its different decoder behavior. Header metadata and common parsing paths avoid
+unnecessary work. The new differential checks cover every byte value, wide
+character aliases, scratch-block boundaries, shared/paused streams and key forms.
 
-| Workload | Node 24.22.1 | Bun 1.4.0 |
-| --- | ---: | ---: |
-| HS256 sign, repeated header | −30% | −43% |
-| HS256 verify, repeated header | −13% | −27% |
-| Decode JWT | −41% | −54% |
-| Validate JWT structure | −46% | −57% |
-| RS256 verify, warm PEM | −48% | −25% |
-| Decode 64 KiB | −58% | −64% |
-| Stream sign, 256 KiB in 1,024 chunks | −84% | −94% |
-| HS256 verify, 64 KiB | +30% | +28% |
-| HS256 verify, varying header | +16% | +3% |
-| Stream sign, one tiny chunk | +12% | +51% |
-| PS256 verify, uncached PEM Buffer | +41% | approximately unchanged |
+Paired elapsed-time changes on Node 24.22.1/Bun 1.4.0, macOS arm64:
 
-The remaining large-payload cost is canonical encoding validation (about 18–20 µs);
-Node varying-header verification adds about 0.44 µs. Tiny streams add about 1.3 µs
-on Node and 3.8 µs on Bun for standard stream lifecycle handling and cleanup.
-Uncached Node RSA/EC PEM verification remains about 7% slower; the larger PSS gap
-and most warm-PEM gains are inherited from `vjwa`, as the bridge demonstrates.
-Identical-code controls span −8.0% to +2.1% on Node and −4.7% to +9.8% on Bun;
-small differences are not strong evidence of a gain or regression. All raw
-measurements, including noisy controls, remain available.
+| Workload | Node vs before | Bun vs before | Node vs upstream | Bun vs upstream |
+| --- | ---: | ---: | ---: | ---: |
+| Stream sign, one tiny chunk | −32% | −35% | −22% | +5% |
+| HS256 verify, 64 KiB | −10% | −4% | +18% | +20% |
+| HS256 verify, varying header | −3% | −9% | +9% | −2% |
+| Decode 64 KiB | −16% | −2% | −66% | −63% |
+| Stream sign, 256 KiB in 1,024 chunks | −33% | −9% | −90% | −95% |
 
-See the [API and compatibility guide](packages/vjws/README.md) and
-[complete benchmark tables](packages/vjws/bench/results/README.md). These are package
-measurements and do not establish deployed authentication throughput.
+The remaining large-token validation costs roughly 11 µs on Node and 15 µs on Bun;
+upstream verification skips these encoding checks. Varying-header verification on
+Node still adds about 0.26 µs for validation and parsing. Tiny-stream overhead is
+removed on Node and reduced to about 5% on Bun. Uncached Node RSA/EC PEM verification
+remains 7–8% slower and PSS about 40% slower; these costs are inherited from `vjwa`.
+Key matching and exact PSS signature length remain enforced.
+
+Controls span −4.7% to +1.5% on Node and −5.2% to +13.4% on Bun. Small differences
+and the smaller Bun improvements should be read cautiously. Unchanged Bun signing
+measured a +10.8% paired difference against before with similar pooled medians;
+no new signing improvement is claimed. All samples, including noisy crypto cases,
+are retained in the [complete follow-up report](packages/vjws/bench/results/followup/README.md).
+The [API guide](packages/vjws/README.md) documents compatibility boundaries. These
+measurements do not establish application throughput.
 
 ## vjwa
 

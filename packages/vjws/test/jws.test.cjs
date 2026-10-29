@@ -103,6 +103,36 @@ test('empty payloads and empty HMAC secrets work synchronously and in streams', 
   }
 });
 
+test('large validation agrees with canonical encoding at all byte values and block edges', () => {
+  const header = b64('{"alg":"none"}');
+  const characters = [...Array.from({ length: 256 }, (_, n) => String.fromCharCode(n)),
+    '\u0100', '\u0141', '\u015f', '\u01ff', '\u0800', '\uff21', '\ud800', '\udfff', '😀'];
+  for (const length of [4096, 4098, 4099, 4100, 87380, 87382, 174760]) {
+    const encoded = 'A'.repeat(length);
+    for (const position of [0, 3, Math.min(87379, length >> 1), length - 1]) for (const character of characters) {
+      const payload = encoded.slice(0, position) + character + encoded.slice(position + 1);
+      const expected = Buffer.from(payload, 'base64url').toString('base64url') === payload;
+      assert.equal(jws.isValid(header + '.' + payload + '.'), expected, `${length}/${position}/${character.charCodeAt(0)}`);
+    }
+  }
+  const realReplacement = raw({ alg: 'HS256', kid: 'valid \ufffd' }, 'x');
+  assert.equal(jws.verify(realReplacement, 'HS256', 'secret'), true);
+  assert.equal(jws.decode(realReplacement).header.kid, 'valid \ufffd');
+});
+
+test('large binary signatures preserve high bytes through native crypto on both sides', () => {
+  const payload = Buffer.alloc(70000); for (let i = 0; i < payload.length; i++) payload[i] = i;
+  for (const algorithm of ['HS256', 'RS256', 'PS256', 'ES256']) {
+    const pair = keys[algorithm === 'ES256' ? algorithm : 'RSA'];
+    const signing = algorithm === 'HS256' ? 'secret' : pair.privateKey;
+    const verifying = algorithm === 'HS256' ? signing : pair.publicKey;
+    const token = jws.sign({ header: { alg: algorithm }, payload, key: signing });
+    assert.equal(upstream.verify(token, algorithm, verifying), true);
+    assert.equal(jws.verify(token, algorithm, verifying), true);
+    assert.deepEqual(Buffer.from(token.split('.')[1], 'base64url'), payload);
+  }
+});
+
 test('large payload validation rejects aliases even when their signatures match', () => {
   for (const size of [3071, 3072, 3073, 65536]) {
     const parts = jws.sign({ header: { alg: 'HS256' }, payload: Buffer.alloc(size, 255), secret: 'secret' }).split('.');
@@ -198,6 +228,23 @@ test('native keys, encrypted options and genuine CryptoKeys pass through vjwa', 
   assert.equal(jws.verify(signed, 'HS256', key), true);
 });
 
+test('validated HMAC verification preserves key forms, errors and exact signatures', () => {
+  const binary = Buffer.from([0, 255, 128, 1]);
+  const backing = Buffer.concat([Buffer.from('prefix'), binary, Buffer.from('suffix')]);
+  for (const algorithm of ['HS256', 'HS384', 'HS512']) {
+    for (const key of ['', 'secret 雪', binary, crypto.createSecretKey(binary),
+      new Uint8Array(backing.buffer, backing.byteOffset + 6, 4), new DataView(backing.buffer, backing.byteOffset + 6, 4)]) {
+      const token = jws.sign({ header: { alg: algorithm, kid: 'changing-' + algorithm }, payload: 'x', key });
+      assert.equal(jws.verify(token, algorithm, key), true);
+      const parts = token.split('.');
+      parts[2] = (parts[2][0] === 'A' ? 'B' : 'A') + parts[2].slice(1);
+      assert.equal(jws.verify(parts.join('.'), algorithm, key), false);
+      parts[2] = 'AA'; assert.equal(jws.verify(parts.join('.'), algorithm, key), false);
+      for (const invalid of [{}, true, keys.RSA.publicKey, keys.RSA.privateKey]) assert.throws(() => jws.verify(token, algorithm, invalid), TypeError);
+    }
+  }
+});
+
 test('stream collection preserves chunk bytes, writes, and delayed keys without premature signing', async () => {
   const stream = jws.createSign({ header: { alg: 'HS256' } });
   const promise = waitDone(stream); let count = 0; stream.on('done', () => count++);
@@ -256,6 +303,19 @@ test('stream limits and invalid chunks reject cleanly without successful output'
   const source = new PassThrough(); const stream = jws.createSign({ header: { alg: 'HS256' }, payload: source, secret: 'secret' });
   const closed = once(stream, 'close'); stream.destroy(); await closed;
   assert.equal(source.destroyed, false); assert.equal(source.listenerCount('data'), 0); assert.equal(source.listenerCount('error'), 0);
+});
+
+test('source collection resumes paused inputs and cancellation preserves another reader', async () => {
+  const source = Readable.from(['paused ', 'source']); source.pause();
+  const signer = jws.createSign({ header: { alg: 'HS256' }, payload: source, secret: 'secret' });
+  assert.equal(jws.decode((await waitDone(signer))[0]).payload, 'paused source');
+  const shared = new PassThrough();
+  const cancelled = jws.createSign({ header: { alg: 'HS256' }, payload: shared, secret: 'secret' });
+  const active = jws.createSign({ header: { alg: 'HS256' }, payload: shared, secret: 'secret' });
+  cancelled.destroy();
+  const done = waitDone(active); shared.end('still readable');
+  assert.equal(jws.decode((await done)[0]).payload, 'still readable');
+  assert.equal(shared.listenerCount('data'), 0); assert.equal(shared.listenerCount('error'), 0);
 });
 
 test('stream verification distinguishes malformed input from invalid-key errors', async () => {

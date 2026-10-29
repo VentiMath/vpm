@@ -43,5 +43,15 @@
     "Run the original 31 tape test bodies against each implementation through a node:test assertion adapter; no test bodies are removed or skipped.",
     "Generate native RSA/EC keys, including an actually encrypted private PEM. Bun uses P-384 for the wrong ES256 curve case because its crypto runtime does not support secp256k1.",
     "For VPM only, replace the invalid-key error case input a.b.c with eyJhbGciOiJFUzUxMiJ9.eA.AA so the token has a valid compact/header structure and reaches key validation. Malformed tokens intentionally return false before importing keys. The retained upstream test source is unchanged."
-  ]
+  ],
+  "performanceFollowup": {
+    "baselineCommit": "adc9cb438db5daefe823e216d84be8b3ffca61cd",
+    "changes": [
+      "Replace source-stream Writable/pipe intermediaries with owned data/end/error/close handlers and a shared input state; materialize native Writable inputs only when requested.",
+      "Reuse one lazy 64 KiB decoding scratch buffer, cleared in finally after each block, to avoid large validation allocations.",
+      "On Node, combine canonical lengths/tail bits, alias/wide-character exclusion and exact native decoded byte counts. Bun retains exact round trips because its Buffer.write treats some invalid ASCII as base64 values.",
+      "Retain only immutable algorithm strings in parsing metadata; validate header UTF-8 only when decoding produced a replacement character."
+    ],
+    "validation": "Differential canonical-encoding checks cover every byte value, wide-character aliases, surrogates, threshold and scratch-block edges. Tests also cover large binary signatures, HMAC key forms, paused/shared input sources and the original stream lifecycle boundaries."
+  }
 }

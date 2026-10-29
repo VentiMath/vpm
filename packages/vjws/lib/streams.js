@@ -8,49 +8,67 @@ function premature() {
   error.code = 'ERR_STREAM_PREMATURE_CLOSE';
   return error;
 }
-class Collector extends Writable {
-  constructor(value, supplied, limit) {
-    // Object mode lets invalid piped chunks become ordinary stream errors,
-    // rather than throwing from another stream's data-event callback.
-    super({ objectMode: true });
-    this.ready = supplied;
+class Input {
+  constructor(value, ready, limit) {
     this.buffer = value;
-    this.chunks = [];
-    this.length = 0;
+    this.ready = ready;
     this.limit = limit;
+    this.length = 0;
+    this.chunks = null;
+    this.error = null;
+    this.stream = null;
   }
+  write(value, encoding) {
+    if (this.ready) throw new Error('JWS input is already complete');
+    const text = typeof value === 'string';
+    const chunk = text ? Buffer.from(value, encoding) : core.bytes(value);
+    if (chunk === null) throw new TypeError('JWS stream chunks must be strings or bytes');
+    if (chunk.length > this.limit - this.length) {
+      const error = new RangeError('JWS input exceeds maxBuffer');
+      error.code = 'ERR_JWS_INPUT_TOO_LARGE';
+      throw error;
+    }
+    // Strings already produced an owned Buffer. Copy caller-owned bytes before
+    // returning from the data/write handler so mutation cannot alter the input.
+    if (chunk.length) (this.chunks ||= []).push(text ? chunk : Buffer.from(chunk));
+    this.length += chunk.length;
+  }
+  end() {
+    if (this.ready) return;
+    const chunks = this.chunks;
+    this.buffer = chunks?.length === 1 ? chunks[0] : Buffer.concat(chunks || [], this.length);
+    this.chunks = null;
+    this.ready = true;
+  }
+}
+class Collector extends Writable {
+  constructor(owner, input) {
+    super({ objectMode: true });
+    this.input = input;
+    this.on('finish', () => owner.complete());
+    this.on('error', error => owner.destroy(error));
+    this.on('close', () => { if (!owner.finished && !input.ready) owner.destroy(premature()); });
+  }
+  get buffer() { return this.input.buffer; }
   _write(value, encoding, callback) {
-    try {
-      if (this.ready) throw new Error('JWS input is already complete');
-      const chunk = typeof value === 'string' ? Buffer.from(value, encoding) : core.bytes(value);
-      if (chunk === null) throw new TypeError('JWS stream chunks must be strings or bytes');
-      if (chunk.length > this.limit - this.length) {
-        const error = new RangeError('JWS input exceeds maxBuffer');
-        error.code = 'ERR_JWS_INPUT_TOO_LARGE';
-        throw error;
-      }
-      // Copy on write so later caller mutation cannot change collected input.
-      if (chunk.length) this.chunks.push(Buffer.from(chunk));
-      this.length += chunk.length;
-      callback();
-    } catch (error) { callback(error); }
+    try { this.input.write(value, encoding); callback(); }
+    catch (error) { this.input.error = error; callback(error); }
   }
   _final(callback) {
-    if (!this.ready) {
-      this.buffer = this.chunks.length === 1 ? this.chunks[0] : Buffer.concat(this.chunks, this.length);
-      this.chunks = [];
-      this.ready = true;
-    }
-    callback();
+    try { this.input.end(); callback(); }
+    catch (error) { this.input.error = error; callback(error); }
   }
-  _destroy(error, callback) { this.chunks = []; callback(error); }
+  _destroy(error, callback) {
+    this.input.chunks = null;
+    if (error) this.input.error = error;
+    callback(error);
+  }
 }
 class Operation extends Readable {
   constructor(signing, options = {}) {
-    super({ objectMode: true, read() {} });
+    super({ objectMode: true });
     const limit = options.maxBuffer ?? constants.MAX_LENGTH;
     if (!Number.isSafeInteger(limit) || limit < 0 || limit > constants.MAX_LENGTH) throw new RangeError('maxBuffer must be a valid nonnegative byte limit');
-    this.limit = limit;
     this.finished = false;
     this.signing = signing;
     this.encoding = options.encoding;
@@ -64,76 +82,71 @@ class Operation extends Readable {
     this.sources = [];
     this.inputs = [];
     this.keyInput = this.collect(key, key != null || this.algorithm === 'none', limit);
-    const name = signing ? 'payload' : 'signature';
-    const value = options[name];
+    const value = options[signing ? 'payload' : 'signature'];
     this.valueInput = this.collect(value, value !== undefined, limit);
-    for (const { source, collector, onError, onEnd, onClose, onData, onDrain } of this.sources) {
+    for (const { source, onError, onEnd, onClose } of this.sources) {
       source.on('error', onError);
       source.on('end', onEnd);
       source.on('close', onClose);
-      if (onData) { source.on('data', onData); collector.on('drain', onDrain); }
     }
+    // Own data listeners avoid a redundant Writable/pipe layer for source
+    // streams. Manual/public inputs are still native Writables, created lazily.
+    // Subscribe immediately for legacy jws outputs that emit on nextTick.
+    for (const { source, onData } of this.sources) source.on('data', onData);
     process.nextTick(() => {
       if (this.finished) return;
-      for (const { source, collector, onData } of this.sources) {
+      for (const { source, input } of this.sources) {
         if (this.finished) break;
         try {
-          if (source.readableEnded) collector.end();
-          // destroy(error) can precede its queued error event. Keep the input
-          // listeners attached until that event, with a fallback for sources
-          // configured not to emit close (or error).
+          if (source.readableEnded) input.end();
           else if (source.destroyed) setImmediate(() => {
             if (!this.finished) this.destroy(source.errored || premature());
           });
-          else if (!onData) source.pipe(collector);
+          else if (typeof source.resume === 'function') source.resume();
         } catch (error) { this.destroy(error); }
       }
       this.complete();
     });
   }
+  _read() {}
   get key() { return this.expose(this.keyInput); }
   get secret() { return this.key; }
-  expose(state) {
-    if (state instanceof Collector) return state;
-    if (!state.input) {
-      state.input = this.collect(state.buffer, true, this.limit, true);
-      if (this.finished) state.input.destroy();
+  expose(input) {
+    if (!input.stream) {
+      input.stream = new Collector(this, input);
+      if (this.finished) input.stream.destroy();
     }
-    return state.input;
+    return input.stream;
   }
-  collect(value, supplied, limit, force = false) {
+  collect(value, supplied, limit) {
     const streamed = value != null && typeof value.pipe === 'function';
-    // Direct values need no Writable allocation. Materialize the public input
-    // lazily if the caller inspects it; streamed/manual inputs remain native.
-    if (supplied && !streamed && !force) return { ready: true, buffer: value };
-    if (streamed && (typeof value.on !== 'function' || typeof value.removeListener !== 'function')) {
-      throw new TypeError('JWS input stream must support events');
-    }
-    const collector = new Collector(streamed ? undefined : value, supplied && !streamed, limit);
-    this.inputs.push(collector);
-    collector.on('finish', () => this.complete());
-    collector.on('error', error => this.destroy(error));
-    collector.on('close', () => { if (!this.finished && !collector.ready) this.destroy(premature()); });
+    if (streamed && (typeof value.on !== 'function' || typeof value.removeListener !== 'function')) throw new TypeError('JWS input stream must support events');
+    const input = new Input(streamed ? undefined : value, supplied && !streamed, limit);
+    this.inputs.push(input);
     if (streamed) {
       let ended = false;
-      const legacy = typeof value.unpipe !== 'function';
-      this.sources.push({ source: value, collector,
-        // Legacy jws outputs use Stream, not Readable, and can emit before our
-        // nextTick. Subscribe immediately and own every detachable listener.
-        onData: legacy ? chunk => { if (!collector.write(chunk) && typeof value.pause === 'function') value.pause(); } : null,
-        onDrain: legacy ? () => { if (typeof value.resume === 'function') value.resume(); } : null,
-        onError: error => this.destroy(error), onEnd: () => { ended = true; if (legacy) collector.end(); },
+      this.sources.push({ source: value, input,
+        onData: chunk => {
+          try { input.write(chunk); }
+          catch (error) { input.error = error; this.destroy(error); }
+        },
+        onError: error => this.destroy(error),
+        onEnd: () => {
+          ended = true;
+          try { input.end(); }
+          catch (error) { this.destroy(error); return; }
+          this.complete();
+        },
         onClose: () => { if (!ended && !this.finished) this.destroy(premature()); } });
     }
-    return collector;
+    return input;
   }
   cleanup() {
-    for (const { source, collector, onError, onEnd, onClose, onData, onDrain } of this.sources) {
-      if (onData) { source.removeListener('data', onData); collector.removeListener('drain', onDrain); }
-      else source.unpipe(collector);
+    for (const { source, onError, onEnd, onClose, onData } of this.sources) {
+      source.removeListener('data', onData);
       if (source.destroyed) {
-        // Cancellation must not turn an already-queued input error into an
-        // unhandled exception. Retain a sink for this event-loop turn only.
+        // Cancellation must not expose an input error already queued for this
+        // event-loop turn, even when native .closed became true before emission.
         const pendingError = () => {};
         source.on('error', pendingError);
         setImmediate(() => source.removeListener('error', pendingError));
@@ -141,13 +154,14 @@ class Operation extends Readable {
       source.removeListener('error', onError);
       source.removeListener('end', onEnd);
       source.removeListener('close', onClose);
+      if (typeof source.pause === 'function' && typeof source.listenerCount === 'function' && source.listenerCount('data') === 0) source.pause();
     }
     this.sources = [];
-    for (const input of this.inputs) input.destroy();
+    for (const input of this.inputs) { input.chunks = null; input.stream?.destroy(); }
   }
   complete() {
     if (this.finished) return this.result;
-    for (const input of this.inputs) if (input.errored) { this.destroy(input.errored); return undefined; }
+    for (const input of this.inputs) if (input.error || input.stream?.errored) { this.destroy(input.error || input.stream.errored); return undefined; }
     if (!this.keyInput.ready || !this.valueInput.ready) return undefined;
     let result, decoded;
     try {
@@ -163,7 +177,6 @@ class Operation extends Readable {
     this.result = result;
     this.finished = true;
     this.cleanup();
-    // Consumer listener exceptions propagate normally, outside crypto handling.
     if (this.signing) this.emit('done', result);
     else this.emit('done', result, decoded);
     if (!this.destroyed) { this.push(result); this.push(null); }
