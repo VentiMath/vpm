@@ -1,0 +1,6 @@
+{
+  "commit": "119f04c8e07d3cec7afc3bf8de251e8acefadc67",
+  "description": "Unmodified previous framework runtime; same VPM dependencies as the current benchmark. Extracted before timing.",
+  "archive": "vfunctions-framework-119f04c.tar.gz",
+  "sha256": "44921228566ff21be69afe427f767fd1e0d38fade855ba841c8eaaa77509e8f7"
+}

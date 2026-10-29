@@ -20,6 +20,8 @@
     "Use native dynamic import and remove wildcard routing from global middleware.",
     "Capture request domains for event completion and explicitly catch synchronous invocation errors on Bun.",
     "Return 404 before body conversion for unsupported event methods; check own conversion-table members.",
-    "Make logging interception idempotent and report the actual ephemeral CLI port."
+    "Make logging interception idempotent and report the actual ephemeral CLI port.",
+    "Dispatch each request to one checked VPM body parser instead of traversing five parser middleware layers; retain original-header validation and raw-body capture.",
+    "Avoid promise allocation for ordinary HTTP handler return values while retaining native/foreign promises, once-read thenable getters and deferred, once-only settlement."
   ]
 }

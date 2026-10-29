@@ -77,6 +77,58 @@ test('thenable getter is read once and rejection is sent once', () => quiet(() =
   });
 }));
 
+test('ordinary response return reads a non-callable then getter once', () => {
+  let reads = 0;
+  return withServer((req, res) => {
+    Object.defineProperty(res, 'then', { get() { reads++; return 42; } });
+    return res.json({ ok: true });
+  }, {}, async server => {
+    const result = await request(server);
+    assert.equal(result.status, 200); assert.equal(result.body, '{"ok":true}');
+    assert.equal(reads, 1);
+  });
+});
+
+test('custom thenables preserve deferred invocation, receiver and first settlement', async () => {
+  const errors = []; const original = console.error;
+  console.error = (...args) => errors.push(args);
+  try {
+    await withServer((req, res) => {
+      let afterGetter = false;
+      const returned = function () {};
+      const then = function (resolve, reject) {
+        assert.equal(this, returned); assert.equal(afterGetter, true);
+        resolve(undefined); reject(new Error('ignored rejection'));
+        res.end('settled'); throw new Error('ignored throw');
+      };
+      then.call = () => { throw new Error('must use the actual callable'); };
+      let reads = 0;
+      Object.defineProperty(returned, 'then', { get() {
+        assert.equal(++reads, 1);
+        queueMicrotask(() => { afterGetter = true; });
+        return then;
+      } });
+      return returned;
+    }, {}, async server => {
+      const result = await request(server);
+      assert.equal(result.status, 200); assert.equal(result.body, 'settled');
+      await new Promise(resolve => setImmediate(resolve));
+      assert.deepEqual(errors, []);
+    });
+  } finally { console.error = original; }
+});
+
+test('promise rejection with an own then getter still reads it once', () => quiet(() => {
+  let reads = 0;
+  return withServer(() => {
+    const result = Promise.reject(new Error('native rejection'));
+    Object.defineProperty(result, 'then', { get() { reads++; return Promise.prototype.then; } });
+    return result;
+  }, {}, async server => {
+    assert.equal((await request(server)).status, 500); assert.equal(reads, 1);
+  });
+}));
+
 for (const [type, body, expected] of [
   ['application/json', '{"a":1}', { a: 1 }],
   ['application/cloudevents+json', '{"id":"one"}', { id: 'one' }],
@@ -87,6 +139,98 @@ for (const [type, body, expected] of [
   const result = await request(server, { method: 'POST', headers: { 'content-type': type }, body });
   assert.equal(result.status, 200); assert.deepEqual(JSON.parse(result.body), { body: expected, raw: body });
   assert.equal(result.headers.etag, undefined); assert.equal(result.headers['x-powered-by'], undefined);
+}));
+
+test('body dispatch preserves mixed-case media types, whitespace and parameters', () => withServer((req, res) => {
+  res.json({ body: req.body, raw: req.rawBody?.toString() });
+}, {}, async server => {
+  const cases = [
+    ['application/json', '{"a":1}', { a: 1 }],
+    ['application/cloudevents+json', '{"id":"one"}', { id: 'one' }],
+    ['text/plain', 'hello', 'hello'],
+    ['application/x-www-form-urlencoded', 'a[b]=hello', { a: { b: 'hello' } }],
+    ['application/octet-stream', 'bytes', { type: 'Buffer', data: [...Buffer.from('bytes')] }],
+  ];
+  for (const [type, body, parsed] of cases) {
+    for (const name of [type, type.toUpperCase(), type.replace(/[a-z]/g, (c, i) => i % 2 ? c.toUpperCase() : c)]) {
+      for (const suffix of ['', '; charset=utf-8', ' \t; CHARSET="UTF-8"; note="x;y"']) {
+        const r = await request(server, { method: 'POST', headers: { 'content-type': name + suffix }, body });
+        assert.equal(r.status, 200, name + suffix);
+        assert.deepEqual(JSON.parse(r.body), { body: parsed, raw: body });
+      }
+    }
+  }
+}));
+
+test('unknown, missing and invalid media types retain raw or unparsed bodies', () => withServer((req, res) => {
+  res.json({ body: req.body, raw: req.rawBody?.toString() });
+}, {}, async server => {
+  for (const type of ['application/problem+json', 'text/json', 'application/xml', 'constructor', 'application/json, text/plain', '', undefined]) {
+    const headers = { 'content-length': '7' }; if (type !== undefined) headers['content-type'] = type;
+    const r = await request(server, { method: 'POST', headers, body: '{"a":1}' });
+    assert.equal(r.status, 200);
+    const raw = ['application/problem+json', 'text/json', 'application/xml'].includes(type);
+    assert.deepEqual(JSON.parse(r.body), raw ? { body: { type: 'Buffer', data: [...Buffer.from('{"a":1}')] }, raw: '{"a":1}' } : {});
+  }
+}));
+
+test('JSON and form dispatch retain strict parsing, charset and encoding errors', () => quiet(() => {
+  let calls = 0;
+  return withServer((req, res) => { calls++; res.end('unexpected'); }, {}, async server => {
+    for (const [type, body, status, extra] of [
+      ['application/json', '{bad}', 400], ['application/cloudevents+json', 'true', 400],
+      ['application/json; charset=iso-8859-1', '{"a":1}', 415],
+      ['application/x-www-form-urlencoded; charset=utf-16', 'a=1', 415],
+      ['application/json', '{}', 415, { 'content-encoding': 'unknown' }],
+    ]) {
+      const r = await request(server, { method: 'POST', headers: { 'content-type': type, ...extra }, body });
+      assert.equal(r.status, status, type);
+    }
+    assert.equal(calls, 0);
+  });
+}));
+
+test('compressed dispatch preserves inflated rawBody and decoded data', () => {
+  const zlib = require('node:zlib');
+  return withServer((req, res) => res.json({ body: req.body, raw: req.rawBody.toString() }), {}, async server => {
+    for (const [encoding, compress] of [['gzip', zlib.gzipSync], ['br', zlib.brotliCompressSync], ['deflate', zlib.deflateSync]]) {
+      for (const [type, body, parsed] of [
+        ['application/json', '{"a":1}', { a: 1 }],
+        ['application/x-www-form-urlencoded', 'a[b]=one', { a: { b: 'one' } }],
+        ['application/cloudevents+json', '{"id":"1"}', { id: '1' }],
+      ]) {
+        const r = await request(server, { method: 'POST', headers: { 'content-type': type, 'content-encoding': encoding }, body: compress(Buffer.from(body)) });
+        assert.equal(r.status, 200); assert.deepEqual(JSON.parse(r.body), { body: parsed, raw: body });
+      }
+    }
+  });
+});
+
+test('form dispatch retains parameter and nesting limits', () => quiet(() => {
+  let calls = 0;
+  return withServer((req, res) => { calls++; res.end(); }, {}, async server => {
+    for (const [body, status] of [[Array.from({ length: 1001 }, (_, i) => 'a' + i + '=1').join('&'), 413], ['a' + '[b]'.repeat(34) + '=1', 400]]) {
+      const r = await request(server, { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body });
+      assert.equal(r.status, status);
+    }
+    assert.equal(calls, 0);
+  });
+}));
+
+test('empty bodies and text/binary charsets preserve parser-specific behavior', () => withServer((req, res) => {
+  res.json({ body: req.body, raw: req.rawBody?.toString('hex') });
+}, {}, async server => {
+  for (const type of ['application/json', 'application/cloudevents+json', 'application/x-www-form-urlencoded']) {
+    const r = await request(server, { method: 'POST', headers: { 'content-type': type, 'content-length': '0' }, body: '' });
+    assert.deepEqual(JSON.parse(r.body), { body: {}, raw: '' });
+  }
+  for (const [type, expected] of [
+    ['text/plain; charset=iso-8859-1', 'é'],
+    ['application/octet-stream; charset=unknown', { type: 'Buffer', data: [233] }],
+  ]) {
+    const r = await request(server, { method: 'POST', headers: { 'content-type': type }, body: Buffer.from([233]) });
+    assert.equal(r.status, 200); assert.deepEqual(JSON.parse(r.body), { body: expected, raw: 'e9' });
+  }
 }));
 
 test('HTTP route, ignored routes, HEAD and query behavior', () => withServer((req, res) => res.json({ path: req.path, query: req.query, params: req.params }), {}, async server => {

@@ -86,7 +86,9 @@ Changes from the pinned upstream framework:
   invalid labels, preserves write encodings outside request context, and can be
   enabled repeatedly without wrapping streams again.
 - HTTP handlers catch rejected thenables, promises from other realms and throwing
-  `then` getters. Event completion binds to the request's captured domain instead
+  `then` getters. Ordinary return values avoid promise allocation; actual
+  thenables retain deferred invocation, once-read getters and first-settlement
+  behavior. Event completion binds to the request's captured domain instead
   of the process-global `process.domain`; synchronous errors are caught explicitly.
   This fixes the upstream event-handler failures reproduced on Bun 1.4.0.
 - Handler registration requires a string name and callable handler. Export lookup
@@ -101,6 +103,10 @@ Changes from the pinned upstream framework:
 - Non-POST requests to event endpoints return 404 before event conversion.
   Conversion tables check own event-type entries. Global middleware no longer
   performs unnecessary wildcard capture; user-handler route parameters remain.
+- Body parsing dispatches directly to the matching VPM parser, replacing five
+  parser middleware layers with one. The selected parser still checks the
+  original Content-Type, charset, encoding and limits, and captures `req.rawBody`.
+  Unknown media types retain the checked binary-parser fallback.
 
 The upstream 1 GiB parser limit, proxy-trust setting, disabled ETags and disabled
 `X-Powered-By` header are retained. Those defaults assume the usual deployment
@@ -130,18 +136,35 @@ for aggregate counts.
 
 ## Benchmarks
 
-[The harness](bench/compare.cjs) measures real CJS/ESM handler loading through
+[The initial harness](bench/compare.cjs) measures real CJS/ESM handler loading through
 server readiness and the first HTTP response. It excludes process launch and
 fixture creation. Request measurements include a sequential keep-alive client,
 200 warmup requests and 1,000 checked round trips per workload. Seven alternating
-fresh-process pairs form each report; three reports are retained per runtime.
+fresh-process pairs form each report; three initial reports are retained per runtime.
 OS filesystem caches are warm. These local measurements are not deployed cold
 starts or concurrent production throughput.
 
-[Raw reports](bench/results) include all samples, runtime/CPU information,
+[Initial raw reports](bench/results) include all samples, runtime/CPU information,
 dependency source hashes and the pinned consumer lockfile hash. Event timing is
 compared on Node only: the published upstream event path fails on Bun, and timing
 that failure would not be a meaningful performance comparison.
+
+The [HTTP follow-up](bench/optimize.cjs) compares upstream, the previous VPM
+runtime (`119f04c`) and the current runtime in six balanced execution orders per
+report. Three [reports per runtime](bench/results/optimized) retain 18 samples
+per variant and workload, including mixed-case Content-Type parameters and an
+async JSON handler. The unchanged previous runtime is stored as a SHA-256-checked
+`git archive` of that commit's `packages/vfunctions-framework/lib` directory;
+extraction happens before timing and both VPM variants use the same dependencies.
+Comparisons use within-round timing ratios, then take their median, so independently
+pooled timings cannot reverse the reported direction of a paired comparison.
+
+Run from the repository root after installing the pinned consumer fixture:
+
+```sh
+OUTPUT=/tmp/framework-node.json node packages/vfunctions-framework/bench/optimize.cjs
+OUTPUT=/tmp/framework-bun.json bun packages/vfunctions-framework/bench/optimize.cjs
+```
 
 Results are recorded in the [central comparison](../../IMPROVEMENTS.md#vfunctions-framework).
 

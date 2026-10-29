@@ -17,6 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.wrapUserFunction = void 0;
 // eslint-disable-next-line n/no-deprecated-api
 const domain = require("domain");
+const { isPromise } = require("node:util/types");
 const logger_1 = require("./logger");
 const invoker_1 = require("./invoker");
 const cloud_events_1 = require("./cloud_events");
@@ -77,6 +78,22 @@ const parseBackgroundEvent = (req) => {
     }
     return { data, context };
 };
+
+// Keep captured thenable state outside the shared invocation callback. Ordinary
+// event handlers return undefined and should not allocate that closure context.
+function catchRejection(ret, errorHandler) {
+    if (isPromise(ret)) {
+        Promise.resolve(ret).catch(errorHandler);
+    }
+    else {
+        const then = ret.then;
+        if (typeof then === 'function') {
+            Promise.resolve({
+                then(resolve, reject) { Reflect.apply(then, ret, [resolve, reject]); },
+            }).catch(errorHandler);
+        }
+    }
+}
 /**
  * Wraps the provided function into an Express handler function with additional
  * instrumentation logic.
@@ -102,9 +119,11 @@ const wrapHttpFunction = (execute) => {
             process.nextTick(() => {
                 try {
                     const ret = execute(req, res);
-                    // Assimilate thenables and promises from other realms.
+                    // Ordinary return values (including res.json()) need no
+                    // promises. Preserve native/foreign promises and read a
+                    // custom thenable's getter once before deferred assimilation.
                     if (ret !== null && (typeof ret === 'object' || typeof ret === 'function')) {
-                        Promise.resolve(ret).catch(errorHandler);
+                        catchRejection(ret, errorHandler);
                     }
                 } catch (error) { errorHandler(error); }
             });
