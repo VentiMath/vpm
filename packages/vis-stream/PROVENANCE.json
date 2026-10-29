@@ -1,0 +1,16 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "is-stream",
+    "version": "2.0.1",
+    "tarball": "https://registry.npmjs.org/is-stream/-/is-stream-2.0.1.tgz",
+    "integrity": "sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==",
+    "commit": "fb8caed475b4107cee3c22be3252a904020eb2d4"
+  },
+  "dependencies": {},
+  "sourceArchive": {
+    "file": "../../scripts/google-http-conformance/is-stream-2.0.1.tar.gz",
+    "sha256": "84d01b48a49f0c61e6b0db191dfc9acbc750a38f1111b72a1cb23fac6687800f"
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "recordedAt": "2026-10-29T09:00:17.572Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "rounds": 12,
+  "checksum": 78112,
+  "methodology": "12 alternating paired rounds after 150ms per-variant warmup and four full blocks; 15ms upstream pilot target, capped at 100000 operations. Outputs retained and checked outside timing. Three fresh processes and one identical-upstream control per runtime. No trimming; nanoseconds per operation.",
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "b7e31c5e30e5a32018d5dbb2b5cdb29374c84d7d813dd03944e97a39ff0b1582",
+    "../../scripts/consumers/node_modules/extend/index.js": "b4879ec38a11a2458846788b91be630e6b1d06eb07f9515adc1ff9030af0b00b",
+    "../../scripts/consumers/package-lock.json": "17d7a1c0f399918a757948f746574a27ba61f6bc00b23ef713ed999d74b28a15",
+    "PROVENANCE.json": "5868db251f54c82e9dba139e18d000e5921929ebd3cbf835d540c6b4882e8e21",
+    "bench/compare.cjs": "6678de6a0efafd2392ad98c904e027a969deceadb807317273a45c3c84a1da71",
+    "index.js": "7e39527e38101182e07757190d08355cd289b9fdb79b54a526098a0a97cbe763",
+    "package.json": "2a1b3c7a28d9adb23cfd9f7cce30152b15235975c9ae99b12948250867809e73"
+  },
+  "rows": [
+    {
+      "case": "shallow three fields",
+      "iterations": 67369,
+      "samples": {
+        "upstream": [
+          65.17154774451215,
+          65.77826596802703,
+          65.32246285383495,
+          82.57321616767385,
+          61.42908459380352,
+          67.95595897222758,
+          90.93017560005354,
+          51.20245216642659,
+          58.064540070358525,
+          142.45053362822642,
+          59.339236147188934,
+          156.9539847704439
+        ],
+        "vpm": [
+          98.8455372649144,
+          86.5475960753462,
+          96.36788433849404,
+          237.0681173833664,
+          72.5816028143507,
+          72.5970550253089,
+          96.03761373925637,
+          88.37459365583585,
+          74.17977111134178,
+          76.37291632650054,
+          101.38998649230412,
+          94.60768305897292
+        ]
+      }
+    },
+    {
+      "case": "deep HTTP options",
+      "iterations": 9665,
+      "samples": {
+        "upstream": [
+          487.86859803414063,
+          507.24262803930867,
+          434.4886704604267,
+          501.0433523021198,
+          498.5341955509507,
+          483.8161407139109,
+          474.2799793067817,
+          449.60341438178966,
+          487.5667873771282,
+          513.4850491464093,
+          492.19699948266566,
+          481.3718572167637
+        ],
+        "vpm": [
+          508.58334195551555,
+          498.9912053802423,
+          490.30439730987996,
+          493.3825142265934,
+          546.1458872219357,
+          512.5926539058453,
+          528.9662700465657,
+          525.4613554061021,
+          557.6564924987118,
+          471.79679255044425,
+          487.4634247283979,
+          502.4357992757374
+        ]
+      }
+    },
+    {
+      "case": "deep 50 records",
+      "iterations": 212,
+      "samples": {
+        "upstream": [
+          27269.066037736182,
+          51897.40566037738,
+          24729.169811320055,
+          26765.13679245292,
+          24093.943396227165,
+          43298.34905660335,
+          26954.00943396223,
+          34912.34433962282,
+          41623.62735849108,
+          26566.235849056397,
+          28234.471698112884,
+          26826.452830188937
+        ],
+        "vpm": [
+          26120.283018867493,
+          32378.339622642405,
+          27586.278301886876,
+          26162.54245282978,
+          57126.17924528327,
+          77867.7311320756,
+          29915.88207547178,
+          24126.37735849094,
+          27298.54245282957,
+          28773.391509433484,
+          36060.73113207526,
+          61225.0377358494
+        ]
+      }
+    }
+  ]
+}

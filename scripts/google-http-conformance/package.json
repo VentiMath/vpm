@@ -1,0 +1,9 @@
+{
+  "name": "vpm-google-http-conformance",
+  "private": true,
+  "description": "Pinned development-only upstream test tools for Google HTTP dependencies",
+  "dependencies": {
+    "random-seed": "0.3.0",
+    "tape": "4.9.1"
+  }
+}

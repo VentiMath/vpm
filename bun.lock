@@ -124,6 +124,10 @@
         "vvary": "workspace:*",
       },
     },
+    "packages/vextend": {
+      "name": "vextend",
+      "version": "0.1.0",
+    },
     "packages/vfinalhandler": {
       "name": "vfinalhandler",
       "version": "0.1.0",
@@ -179,6 +183,10 @@
     },
     "packages/vipaddr": {
       "name": "vipaddr",
+      "version": "0.1.0",
+    },
+    "packages/vis-stream": {
+      "name": "vis-stream",
       "version": "0.1.0",
     },
     "packages/vjsonwebtoken": {
@@ -432,6 +440,8 @@
 
     "vexpress": ["vexpress@workspace:packages/vexpress"],
 
+    "vextend": ["vextend@workspace:packages/vextend"],
+
     "vfinalhandler": ["vfinalhandler@workspace:packages/vfinalhandler"],
 
     "vforwarded": ["vforwarded@workspace:packages/vforwarded"],
@@ -447,6 +457,8 @@
     "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
 
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
+
+    "vis-stream": ["vis-stream@workspace:packages/vis-stream"],
 
     "vjsonwebtoken": ["vjsonwebtoken@workspace:packages/vjsonwebtoken"],
 

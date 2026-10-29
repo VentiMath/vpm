@@ -23,6 +23,11 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (['vextend','vis-stream'].includes(name)) {
+      assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
+    }
     if (name === 'vfunctions-framework') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vbody-parser', 'vexpress', 'vminimist', 'von-finished', 'vread-package-up']);
       assert.equal(metadata.license, 'Apache-2.0');
@@ -126,6 +131,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+if(require('vextend')(true,{}, {a:{b:1}}).a.b!==1)throw new Error('extend archive');
+if(require('vis-stream').readable({pipe(){},_read(){},_readableState:null}))throw new Error('stream archive');
 const {Agent:ArchiveAgent}=require('vagent-base');
 const {HttpsProxyAgent:ArchiveProxy}=require('vhttps-proxy-agent');
 if (!(new ArchiveProxy('http://localhost:8080') instanceof ArchiveAgent)) throw new Error('proxy inheritance');
