@@ -22,9 +22,11 @@ jobs:
         with:
           bun-version: 1.4.0
       - run: bun install --frozen-lockfile --ignore-scripts
-      - run: npm test
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
+      - run: npm test
       - run: node scripts/integration.cjs
+      - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/google-http-conformance/helpers.cjs
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
@@ -51,6 +53,7 @@ jobs:
         with:
           bun-version: 1.4.0
       - run: bun install --frozen-lockfile --ignore-scripts
+      - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
       - run: bun run test:bun
       - run: bun run typecheck
       - run: bun run check:docs
@@ -61,8 +64,9 @@ jobs:
       - run: node scripts/check-legacy-types.cjs
       - run: node scripts/check-type-archives.cjs
       - run: node scripts/check-media-archives.cjs
-      - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/integration.cjs
+      - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/google-http-conformance/helpers.cjs
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund

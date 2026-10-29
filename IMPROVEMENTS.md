@@ -9,6 +9,8 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vextend](packages/vextend) | extend 3.0.2 | Own enumerable strings and symbols, inherited-target isolation, cycle/shared-reference preservation and iterative deep merging. |
+| [vis-stream](packages/vis-stream) | is-stream 2.0.1 | Rejects null internal stream state and avoids duplicate pipe probes in duplex/transform checks. |
 | [vhttps-proxy-agent](packages/vhttps-proxy-agent) | https-proxy-agent 7.0.6 | Bounded CONNECT parsing and deadlines, linear fragmented-header buffering, isolated TLS policies, cancellation cleanup, safe header snapshots and preserved tunnel bytes. |
 | [vagent-base](packages/vagent-base) | agent-base 7.1.4 | Zero dependencies, bounded async connects, cancellation cleanup, queue failure recovery, delegation-cycle rejection, private JSON errors and exact byte collection. |
 | [vjwks-rsa](packages/vjwks-rsa) | jwks-rsa 3.2.2 | One dependency, native public-key import, shared concurrent retrieval, immutable cached keys, bounded HTTP requests, exact IDs and algorithm agreement. |
@@ -64,12 +66,12 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,942 tests**: all pass on Node 24, and Bun passes
-1,939 with three documented runtime-specific skips. All 50 runtime packages'
+The root suite contains **1,959 tests**: all pass on Node 24, and Bun passes
+1,956 with three documented runtime-specific skips. All 52 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **52 packages**, including two declaration-only packages.
+catalog covers **54 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
