@@ -185,9 +185,20 @@ NODE_ENV=production OUTPUT=/tmp/framework-steady-node.json node packages/vfuncti
 NODE_ENV=production OUTPUT=/tmp/framework-steady-bun.json bun packages/vfunctions-framework/bench/steady.cjs
 ```
 
+The [retained Linux reports](bench/results/steady) include three comparisons and
+one identical-code calibration per runtime from
+[run 40799052313](https://github.com/VentiMath/vpm/actions/runs/40799052313).
+Reproduce their paired wall-time and server-CPU summaries without rerunning HTTP:
+
+```sh
+node packages/vfunctions-framework/bench/summarize-steady.cjs
+```
+
 The earlier fresh-process measurements remain available. Small measured
 differences need to be read alongside the calibration and variation between
 reports; the central comparison records remaining gaps as well as improvements.
+The Linux calibration also varied substantially, so the retained results do not
+certify that every HTTP path is faster.
 
 ## Provenance
 

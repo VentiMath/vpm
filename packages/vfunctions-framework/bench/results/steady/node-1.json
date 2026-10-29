@@ -1,0 +1,1539 @@
+{
+  "date": "2026-10-29T01:14:14.528Z",
+  "runtime": "v24.22.1",
+  "bun": null,
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V45 96-Core Processor",
+  "ci": {
+    "repository": "VentiMath/vpm",
+    "runId": "40799052313",
+    "attempt": "1",
+    "commit": "3bba23c9937df37839a41fc03293edf242412d3e"
+  },
+  "upstream": "@google-cloud/functions-framework@5.0.2",
+  "fixtures": {
+    "original": {
+      "commit": "119f04c8e07d3cec7afc3bf8de251e8acefadc67",
+      "description": "Unmodified previous framework runtime; same VPM dependencies as the current benchmark. Extracted before timing.",
+      "archive": "vfunctions-framework-119f04c.tar.gz",
+      "sha256": "44921228566ff21be69afe427f767fd1e0d38fade855ba841c8eaaa77509e8f7"
+    },
+    "before": {
+      "commit": "f4e1f0673445a2867bc89724ca2a7e2cdb7a9e03",
+      "description": "Unmodified HTTP optimization baseline; same VPM dependencies as the current benchmark.",
+      "archive": "vfunctions-framework-f4e1f06.tar.gz",
+      "sha256": "b1e2b31abbf58d77460a0e1b6f16aed7b89a5799824f1582819d5360e0f83f0d"
+    }
+  },
+  "calibration": false,
+  "afterRuntime": {
+    "workspace": "packages/vfunctions-framework/lib"
+  },
+  "installedUpstreamGraph": {
+    "externalInstances": 126,
+    "packages": [
+      "@babel/code-frame@7.29.7",
+      "@babel/helper-validator-identifier@7.29.7",
+      "@google-cloud/functions-framework@5.0.2",
+      "@types/body-parser@1.19.6",
+      "@types/connect@3.4.38",
+      "@types/express-serve-static-core@5.1.3",
+      "@types/express@5.0.6",
+      "@types/http-errors@2.0.5",
+      "@types/node@26.6.5",
+      "@types/normalize-package-data@2.4.4",
+      "@types/qs@6.15.1",
+      "@types/range-parser@1.2.7",
+      "@types/send@1.2.1",
+      "@types/serve-static@2.2.0",
+      "accepts@2.0.0",
+      "ajv-formats@2.1.1",
+      "ajv@8.20.0",
+      "available-typed-arrays@1.0.7",
+      "bignumber.js@9.3.1",
+      "body-parser@2.4.0",
+      "bytes@3.1.2",
+      "call-bind-apply-helpers@1.0.2",
+      "call-bind@1.0.9",
+      "call-bound@1.0.4",
+      "cloudevents@10.0.0",
+      "content-disposition@2.0.1",
+      "content-type@2.1.0",
+      "cookie-signature@1.2.2",
+      "cookie@0.7.2",
+      "debug@4.4.3",
+      "define-data-property@1.1.4",
+      "depd@2.0.0",
+      "dunder-proto@1.0.1",
+      "ee-first@1.1.1",
+      "encodeurl@2.0.0",
+      "es-define-property@1.0.1",
+      "es-errors@1.3.0",
+      "es-object-atoms@1.1.2",
+      "escape-html@1.0.3",
+      "etag@1.8.1",
+      "express@5.3.0",
+      "fast-deep-equal@3.1.3",
+      "fast-uri@3.1.9",
+      "finalhandler@2.1.1",
+      "find-up-simple@1.0.1",
+      "for-each@0.3.5",
+      "forwarded@0.2.0",
+      "fresh@2.0.0",
+      "function-bind@1.1.2",
+      "generator-function@2.0.1",
+      "get-intrinsic@1.3.0",
+      "get-proto@1.0.1",
+      "gopd@1.2.0",
+      "has-property-descriptors@1.0.2",
+      "has-symbols@1.1.0",
+      "has-tostringtag@1.0.2",
+      "hasown@2.0.4",
+      "hosted-git-info@7.0.2",
+      "http-errors@2.0.1",
+      "iconv-lite@0.7.3",
+      "index-to-position@1.2.0",
+      "inherits@2.0.4",
+      "ipaddr.js@1.9.1",
+      "is-arguments@1.2.0",
+      "is-callable@1.2.7",
+      "is-generator-function@1.1.2",
+      "is-promise@4.0.0",
+      "is-regex@1.2.1",
+      "is-typed-array@1.1.15",
+      "js-tokens@4.0.0",
+      "json-bigint@1.0.0",
+      "json-schema-traverse@1.0.0",
+      "lru-cache@10.4.3",
+      "math-intrinsics@1.1.0",
+      "media-typer@1.1.1",
+      "merge-descriptors@2.0.0",
+      "mime-db@1.54.0",
+      "mime-types@3.0.2",
+      "minimist@1.2.8",
+      "ms@2.1.3",
+      "negotiator@1.1.0",
+      "normalize-package-data@6.0.2",
+      "object-inspect@1.13.4",
+      "on-finished@2.4.1",
+      "once@1.4.0",
+      "parse-json@8.3.0",
+      "parseurl@1.3.3",
+      "path-to-regexp@8.4.2",
+      "picocolors@1.1.1",
+      "possible-typed-array-names@1.1.0",
+      "process@0.11.10",
+      "proxy-addr@2.0.8",
+      "qs@6.17.0",
+      "range-parser@1.2.1",
+      "raw-body@3.0.2",
+      "read-package-up@11.0.0",
+      "read-pkg@9.0.1",
+      "require-from-string@2.0.2",
+      "router@2.2.0",
+      "safe-regex-test@1.1.0",
+      "safer-buffer@2.1.2",
+      "semver@7.8.5",
+      "send@1.2.1",
+      "serve-static@2.2.1",
+      "set-function-length@1.2.2",
+      "setprototypeof@1.2.0",
+      "side-channel-list@1.0.1",
+      "side-channel-map@1.0.1",
+      "side-channel-weakmap@1.0.2",
+      "side-channel@1.1.1",
+      "spdx-correct@3.2.0",
+      "spdx-exceptions@2.5.0",
+      "spdx-expression-parse@3.0.1",
+      "spdx-license-ids@3.0.24",
+      "statuses@2.0.2",
+      "toidentifier@1.0.1",
+      "type-fest@4.41.0",
+      "type-is@2.1.0",
+      "undici-types@8.9.0",
+      "unicorn-magic@0.1.0",
+      "unpipe@1.0.0",
+      "util@0.12.5",
+      "uuid@8.3.2",
+      "validate-npm-package-license@3.0.4",
+      "vary@1.1.2",
+      "which-typed-array@1.1.24",
+      "wrappy@1.0.2"
+    ]
+  },
+  "vpmExternalDependencies": 42,
+  "sourceSha256": {
+    "vaccepts": "2fef8efe05317b73fe78ea8d623d57471d3b7d9159e09ec9437578c7464f4388",
+    "vbody-parser": "4e3403b941f4a2b0ca356272ee98e53d0e1e71c898689b91c5b22a5bf33a8947",
+    "vbytes": "151ae1c7b64eef4a20fc93ba7bb51541375f04cdd5f3c588dd140f671e72b324",
+    "vcontent-disposition": "4006b099806f452e1f31dc64d41d149c773934faab53ed812c9a8ad0552f9158",
+    "vcontent-type": "477e8527024f20b727a12291179170f83d0e95953d12a5ff1e50ebc603a55fc3",
+    "vcookie": "4c7f678de8d8f1c76a454b0d637f09befcc70d1e8ff1a887260b208fc07fe2c9",
+    "vcookie-signature": "899f1494886c4ad90553685b5213d40b0aa3e5e88b2dcba79a1ad0a77b3238ae",
+    "vdebug": "ecf80ef98b17be5e8cf9b8ec5217b917577480ac07f744b583e6eb262b6eddc5",
+    "vdepd": "ee3829f6c861cf487e1b87965a1f3166a93028addb0b95a2a4dc3b2d8ec2e92f",
+    "vee-first": "d927683d148f45a5915a59c89a634a357cfb20fae2e7c2db64005cf842e5a168",
+    "vencodeurl": "bd7f5ef7ae1d0d0fede7743f7181164d4b7c5b52bc8f33f7294f15b50af289b8",
+    "vescape-html": "db52125172d2a806a15b9edfffbf2a25be848d0e7bbc43b0bd455df67db052c8",
+    "vetag": "e93890a835089b15a2dd59775b0beef1139d3b1c48055a235d4b4d2c0f5089a2",
+    "vexpress": "8c81b15b6c53b0ea9e98f39b440e05c9dcbee7cc066098f1af6fbfb94db48cc4",
+    "vfinalhandler": "9330dda29325460f44f9769930c6e2d76702532bdf0c8e8044e4a71a4a22490b",
+    "vforwarded": "5e6c2c3d1117b78bf1db37c318accf0b14e92ef8a0c6cd58af1dc55a4cf7b9b9",
+    "vfresh": "8516fd06263fc6b4700c5ac2cf4a6972cffc46e56d1aa1a696d470a2906716d3",
+    "vfunctions-framework": "af00a726443968e452f5880f0edb0faf4669fe4ef54dd1cc8379133af7f874f1",
+    "vhttp-errors": "113eaed052bd901473adcd5e6e94d2928561bc782c06590978a21a18840dd764",
+    "viconv-lite": "554a1ca744001aa7a5e8d15fd0e648559a1a52879494a0ecb44a6352ffc5be4a",
+    "vipaddr": "5c1de5022cd7958e9bcaa6a4adfd9779e79695412f987120aecf01270c4b3460",
+    "vmedia-typer": "90a542554e49f8153ef81562f0fec0c97d27bc6da1020b4ff53ab9397e058080",
+    "vmerge-descriptors": "d9d24a73634d746c88fac3a30aacf1114494c00317807acd1752febda966bd93",
+    "vmime-db": "2a70e3c13b94df296963324142ac8ce9cdede871f5db7fa346d8cd5fe84364c7",
+    "vmime-types": "128c1e742cd163b0df8ff89e0b65e51aa3932663a0f25d38e1e32c02a73146a0",
+    "vminimist": "6af52112c593e0e17cc18ac67350eff7ee08cdf65708bc45f12601a2c7ee4547",
+    "vms": "e96800cf07b0baceb3b8aaac5f20b22ac7bbf8d2625924f5a6b828e9808f4567",
+    "vnegotiator": "bb1e6d7b3a225bdd7790dce6f7a84a8fd5ae0b538df02136c63fe93a8280c2db",
+    "von-finished": "db152c3dba71c63796239edc12f8bce1220dc36d9ae5c7bc9ab0f917b0c35093",
+    "vonce": "556a0c5554347f50e0db879cae061315abeec277a8d84178deb386e47084b378",
+    "vparseurl": "cb1925deddf95146aa73e11c757a915485255144ff5352cce28a39b5e02e7cca",
+    "vpath-to-regexp": "91f93f22beb9ac188a580d5104c755deb621d2df08b21eeba9d859593977bd1d",
+    "vproxy-addr": "7c367e2524de337f7e39a0c9f5c3ab6b650d6e0893556dc1f21c3cba89c544ff",
+    "vqs": "175a6db9fb9b871616d252d4acccd8bdaca16855157369dc844f4b5fe2a957ae",
+    "vrange-parser": "42f70f38c86309c7359e511dc9191784b3b0b9b36512e639c74b5e7b8b24f043",
+    "vraw-body": "add23b93e96f53934353bb29c7c8cbd72c0125dc8c4e23c8fe248e255954f2b1",
+    "vread-package-up": "4c647d0ca80467d4940c6fc7d2055c14f6615c3e34157f202a8b89b5be9dc0a1",
+    "vrouter": "64c070f35af0ebe11ffefa658a7b92c59add261442455e232d91d76e85c84a83",
+    "vsend": "70800014a709ac460936b708c7f88a907addd35a96a88d130bfcba5e83a3fe71",
+    "vserve-static": "6b7bd1a49611e05c2331cf8d917d72f4357dfe53dcf038363ffeb0722ec09eb4",
+    "vstatuses": "64feba7e7320c636352707eba7181b3e18675495a8f0b5c1fff08e87d77d70a3",
+    "vtype-is": "d78b48a4ff9bf9d2b4ac57c3761397220f7445ef654168718f0717e900b6c175",
+    "vvary": "87e0275305188859d22df48d5d35279afaa8e1edc6ebe24ffddc561fb380a06f"
+  },
+  "harnessSha256": {
+    "steady.cjs": "0309214d92a46fe33da1f323203e7d86e63d0edb8bb4a0bdca69e43e87eed37a",
+    "steady-worker.cjs": "dfa1447ad03ac1d983aff8b8639c84f67cbea7011e7dd53783b09fa7abd59d91",
+    "workloads.cjs": "5a7a231f35d8c3a6af2202bcc723d5950ae0007b4d21b5254961b1e6579f11e9",
+    "dependencies.cjs": "fab82cecfc137750bb2e74d23ff661c141143e1351332955af83e71fe4088618"
+  },
+  "consumerLockSha256": "17d7a1c0f399918a757948f746574a27ba61f6bc00b23ef713ed999d74b28a15",
+  "methodology": "Four isolated server processes with the same dependency installation, one shared checked client in the parent process. Servers warmed before measurement, then interleaved in eight balanced short-block orders per workload. Wall microseconds/request measure round trips; server CPU excludes the client and includes the small per-block IPC control cost. Startup excluded. Ratios pair each after block with the corresponding baseline block. Bun CloudEvents omit broken upstream but retain all three VPM variants. No sample trimming.",
+  "warmups": 10000,
+  "iterations": 1000,
+  "orders": [
+    [
+      "upstream",
+      "original",
+      "before",
+      "after"
+    ],
+    [
+      "original",
+      "before",
+      "after",
+      "upstream"
+    ],
+    [
+      "before",
+      "after",
+      "upstream",
+      "original"
+    ],
+    [
+      "after",
+      "upstream",
+      "original",
+      "before"
+    ],
+    [
+      "after",
+      "before",
+      "original",
+      "upstream"
+    ],
+    [
+      "before",
+      "original",
+      "upstream",
+      "after"
+    ],
+    [
+      "original",
+      "upstream",
+      "after",
+      "before"
+    ],
+    [
+      "upstream",
+      "after",
+      "before",
+      "original"
+    ]
+  ],
+  "samples": {
+    "http-get": {
+      "upstream": [
+        {
+          "wallUs": 118.33161300000029,
+          "cpuUs": 206.923
+        },
+        {
+          "wallUs": 69.60938299999997,
+          "cpuUs": 70.566
+        },
+        {
+          "wallUs": 79.21591900000021,
+          "cpuUs": 83.064
+        },
+        {
+          "wallUs": 77.94548899999972,
+          "cpuUs": 56.409
+        },
+        {
+          "wallUs": 61.662648000000445,
+          "cpuUs": 55.881
+        },
+        {
+          "wallUs": 83.92308899999989,
+          "cpuUs": 56.257
+        },
+        {
+          "wallUs": 95.06341500000053,
+          "cpuUs": 94.261
+        },
+        {
+          "wallUs": 79.81773499999964,
+          "cpuUs": 53.539
+        }
+      ],
+      "original": [
+        {
+          "wallUs": 110.96973799999978,
+          "cpuUs": 182.249
+        },
+        {
+          "wallUs": 74.70053800000007,
+          "cpuUs": 92.751
+        },
+        {
+          "wallUs": 59.53101600000082,
+          "cpuUs": 47.969
+        },
+        {
+          "wallUs": 65.50885299999936,
+          "cpuUs": 68.118
+        },
+        {
+          "wallUs": 83.78862400000071,
+          "cpuUs": 61.533
+        },
+        {
+          "wallUs": 79.36759900000017,
+          "cpuUs": 77.662
+        },
+        {
+          "wallUs": 71.29300499999954,
+          "cpuUs": 84.307
+        },
+        {
+          "wallUs": 84.33854700000028,
+          "cpuUs": 60.814
+        }
+      ],
+      "before": [
+        {
+          "wallUs": 104.14185899999939,
+          "cpuUs": 198.798
+        },
+        {
+          "wallUs": 65.10045499999978,
+          "cpuUs": 63.053
+        },
+        {
+          "wallUs": 82.53094599999984,
+          "cpuUs": 84.874
+        },
+        {
+          "wallUs": 59.65461300000061,
+          "cpuUs": 45.061
+        },
+        {
+          "wallUs": 70.36345900000015,
+          "cpuUs": 66.303
+        },
+        {
+          "wallUs": 55.42946000000029,
+          "cpuUs": 35.544
+        },
+        {
+          "wallUs": 83.20098899999995,
+          "cpuUs": 90.222
+        },
+        {
+          "wallUs": 55.441327999999885,
+          "cpuUs": 36.584
+        }
+      ],
+      "after": [
+        {
+          "wallUs": 90.54265500000021,
+          "cpuUs": 159.06
+        },
+        {
+          "wallUs": 78.26339399999961,
+          "cpuUs": 102.329
+        },
+        {
+          "wallUs": 60.06395799999973,
+          "cpuUs": 48.893
+        },
+        {
+          "wallUs": 98.73656500000014,
+          "cpuUs": 89.969
+        },
+        {
+          "wallUs": 75.1801919999998,
+          "cpuUs": 50.331
+        },
+        {
+          "wallUs": 60.02595500000007,
+          "cpuUs": 56.643
+        },
+        {
+          "wallUs": 66.70584999999936,
+          "cpuUs": 46.659
+        },
+        {
+          "wallUs": 72.78244499999984,
+          "cpuUs": 79.934
+        }
+      ]
+    },
+    "http-deep-path": {
+      "upstream": [
+        {
+          "wallUs": 84.10767300000043,
+          "cpuUs": 139.998
+        },
+        {
+          "wallUs": 77.40629699999954,
+          "cpuUs": 86.815
+        },
+        {
+          "wallUs": 83.31946399999833,
+          "cpuUs": 73.887
+        },
+        {
+          "wallUs": 59.69752799999878,
+          "cpuUs": 41.172
+        },
+        {
+          "wallUs": 105.31209899999885,
+          "cpuUs": 120.755
+        },
+        {
+          "wallUs": 87.73606499999914,
+          "cpuUs": 86.132
+        },
+        {
+          "wallUs": 84.35264499999903,
+          "cpuUs": 76.149
+        },
+        {
+          "wallUs": 96.27475299999969,
+          "cpuUs": 91.218
+        }
+      ],
+      "original": [
+        {
+          "wallUs": 103.31293899999946,
+          "cpuUs": 169.011
+        },
+        {
+          "wallUs": 65.63596399999915,
+          "cpuUs": 52.876
+        },
+        {
+          "wallUs": 65.1174260000007,
+          "cpuUs": 60.605
+        },
+        {
+          "wallUs": 56.8898590000008,
+          "cpuUs": 41.413
+        },
+        {
+          "wallUs": 65.0478579999999,
+          "cpuUs": 66.245
+        },
+        {
+          "wallUs": 64.16418699999849,
+          "cpuUs": 61.794
+        },
+        {
+          "wallUs": 82.34915399999954,
+          "cpuUs": 58.599
+        },
+        {
+          "wallUs": 80.69028799999978,
+          "cpuUs": 86.242
+        }
+      ],
+      "before": [
+        {
+          "wallUs": 96.4437799999996,
+          "cpuUs": 172.515
+        },
+        {
+          "wallUs": 59.311915000000226,
+          "cpuUs": 40.399
+        },
+        {
+          "wallUs": 67.30413899999985,
+          "cpuUs": 61.213
+        },
+        {
+          "wallUs": 65.1570300000003,
+          "cpuUs": 43.543
+        },
+        {
+          "wallUs": 66.17412999999942,
+          "cpuUs": 63.237
+        },
+        {
+          "wallUs": 69.17013299999962,
+          "cpuUs": 46.509
+        },
+        {
+          "wallUs": 63.16743799999858,
+          "cpuUs": 59.341
+        },
+        {
+          "wallUs": 65.67017599999963,
+          "cpuUs": 44.426
+        }
+      ],
+      "after": [
+        {
+          "wallUs": 87.60500700000011,
+          "cpuUs": 138.206
+        },
+        {
+          "wallUs": 70.54077200000029,
+          "cpuUs": 66.002
+        },
+        {
+          "wallUs": 83.05672799999957,
+          "cpuUs": 56.174
+        },
+        {
+          "wallUs": 74.34134900000026,
+          "cpuUs": 65.643
+        },
+        {
+          "wallUs": 53.38691900000049,
+          "cpuUs": 35.47
+        },
+        {
+          "wallUs": 64.5504920000003,
+          "cpuUs": 69.729
+        },
+        {
+          "wallUs": 74.00892099999874,
+          "cpuUs": 50.379
+        },
+        {
+          "wallUs": 79.28693299999941,
+          "cpuUs": 66.578
+        }
+      ]
+    },
+    "http-json": {
+      "upstream": [
+        {
+          "wallUs": 118.10420099999828,
+          "cpuUs": 177.006
+        },
+        {
+          "wallUs": 86.42668000000049,
+          "cpuUs": 95.12
+        },
+        {
+          "wallUs": 79.75009499999942,
+          "cpuUs": 67.021
+        },
+        {
+          "wallUs": 69.1322050000017,
+          "cpuUs": 50.84
+        },
+        {
+          "wallUs": 77.76963299999989,
+          "cpuUs": 74.072
+        },
+        {
+          "wallUs": 95.51684499999828,
+          "cpuUs": 81.105
+        },
+        {
+          "wallUs": 101.45162699999855,
+          "cpuUs": 68.764
+        },
+        {
+          "wallUs": 97.83245399999942,
+          "cpuUs": 82.801
+        }
+      ],
+      "original": [
+        {
+          "wallUs": 121.90522200000123,
+          "cpuUs": 151.707
+        },
+        {
+          "wallUs": 118.50220300000001,
+          "cpuUs": 117.781
+        },
+        {
+          "wallUs": 69.52734799999962,
+          "cpuUs": 52.599
+        },
+        {
+          "wallUs": 93.543275,
+          "cpuUs": 82.312
+        },
+        {
+          "wallUs": 84.5029570000006,
+          "cpuUs": 80.219
+        },
+        {
+          "wallUs": 93.19414200000028,
+          "cpuUs": 67.643
+        },
+        {
+          "wallUs": 109.13967299999786,
+          "cpuUs": 93.477
+        },
+        {
+          "wallUs": 83.44993400000021,
+          "cpuUs": 90.013
+        }
+      ],
+      "before": [
+        {
+          "wallUs": 110.43568400000004,
+          "cpuUs": 195.127
+        },
+        {
+          "wallUs": 97.5641140000007,
+          "cpuUs": 69.968
+        },
+        {
+          "wallUs": 71.36323099999936,
+          "cpuUs": 67.727
+        },
+        {
+          "wallUs": 79.24453399999766,
+          "cpuUs": 52.783
+        },
+        {
+          "wallUs": 76.54582499999742,
+          "cpuUs": 82.327
+        },
+        {
+          "wallUs": 75.13225000000239,
+          "cpuUs": 53.13
+        },
+        {
+          "wallUs": 94.30019000000175,
+          "cpuUs": 77.717
+        },
+        {
+          "wallUs": 94.1301280000007,
+          "cpuUs": 63.333
+        }
+      ],
+      "after": [
+        {
+          "wallUs": 96.75392799999827,
+          "cpuUs": 140.933
+        },
+        {
+          "wallUs": 83.09362899999905,
+          "cpuUs": 61.472
+        },
+        {
+          "wallUs": 92.57182400000238,
+          "cpuUs": 91.092
+        },
+        {
+          "wallUs": 81.75655099999858,
+          "cpuUs": 55.943
+        },
+        {
+          "wallUs": 71.69207000000097,
+          "cpuUs": 62.816
+        },
+        {
+          "wallUs": 72.5388810000004,
+          "cpuUs": 50.145
+        },
+        {
+          "wallUs": 81.49836099999811,
+          "cpuUs": 73.821
+        },
+        {
+          "wallUs": 64.74361900000076,
+          "cpuUs": 44.942
+        }
+      ]
+    },
+    "http-form": {
+      "upstream": [
+        {
+          "wallUs": 111.41199399999823,
+          "cpuUs": 143.562
+        },
+        {
+          "wallUs": 81.20388399999865,
+          "cpuUs": 66.478
+        },
+        {
+          "wallUs": 83.14943800000037,
+          "cpuUs": 75.885
+        },
+        {
+          "wallUs": 114.74592900000061,
+          "cpuUs": 131.422
+        },
+        {
+          "wallUs": 128.82906300000104,
+          "cpuUs": 134.561
+        },
+        {
+          "wallUs": 107.55963599999814,
+          "cpuUs": 105.43
+        },
+        {
+          "wallUs": 99.56855799999903,
+          "cpuUs": 91.609
+        },
+        {
+          "wallUs": 117.3247560000018,
+          "cpuUs": 104.25
+        }
+      ],
+      "original": [
+        {
+          "wallUs": 123.4768640000002,
+          "cpuUs": 165.292
+        },
+        {
+          "wallUs": 116.15699400000085,
+          "cpuUs": 103.057
+        },
+        {
+          "wallUs": 92.48985600000015,
+          "cpuUs": 81.258
+        },
+        {
+          "wallUs": 94.03644799999893,
+          "cpuUs": 102.851
+        },
+        {
+          "wallUs": 93.9755350000014,
+          "cpuUs": 81.64
+        },
+        {
+          "wallUs": 116.50218200000018,
+          "cpuUs": 83.488
+        },
+        {
+          "wallUs": 108.64180699999997,
+          "cpuUs": 98.142
+        },
+        {
+          "wallUs": 79.45296999999846,
+          "cpuUs": 75.127
+        }
+      ],
+      "before": [
+        {
+          "wallUs": 130.93508599999768,
+          "cpuUs": 204.01
+        },
+        {
+          "wallUs": 73.55991300000096,
+          "cpuUs": 57.557
+        },
+        {
+          "wallUs": 84.66307400000005,
+          "cpuUs": 76.253
+        },
+        {
+          "wallUs": 97.3351479999983,
+          "cpuUs": 115.704
+        },
+        {
+          "wallUs": 102.34199399999852,
+          "cpuUs": 98.551
+        },
+        {
+          "wallUs": 108.65349400000196,
+          "cpuUs": 93.962
+        },
+        {
+          "wallUs": 96.10871300000144,
+          "cpuUs": 78.797
+        },
+        {
+          "wallUs": 97.45900099999926,
+          "cpuUs": 95.137
+        }
+      ],
+      "after": [
+        {
+          "wallUs": 96.516345,
+          "cpuUs": 127.526
+        },
+        {
+          "wallUs": 81.41849899999943,
+          "cpuUs": 89.939
+        },
+        {
+          "wallUs": 85.31141000000207,
+          "cpuUs": 64.463
+        },
+        {
+          "wallUs": 100.47130900000047,
+          "cpuUs": 85.917
+        },
+        {
+          "wallUs": 91.34351700000116,
+          "cpuUs": 64.6
+        },
+        {
+          "wallUs": 84.47356699999727,
+          "cpuUs": 75.236
+        },
+        {
+          "wallUs": 68.70921799999996,
+          "cpuUs": 48.972
+        },
+        {
+          "wallUs": 86.77630700000009,
+          "cpuUs": 75.911
+        }
+      ]
+    },
+    "http-json-charset": {
+      "upstream": [
+        {
+          "wallUs": 102.49798499999815,
+          "cpuUs": 83.035
+        },
+        {
+          "wallUs": 92.18068800000037,
+          "cpuUs": 87.964
+        },
+        {
+          "wallUs": 113.41452500000014,
+          "cpuUs": 135.279
+        },
+        {
+          "wallUs": 75.0803370000067,
+          "cpuUs": 58.887
+        },
+        {
+          "wallUs": 82.31571099999564,
+          "cpuUs": 74.951
+        },
+        {
+          "wallUs": 147.6127869999982,
+          "cpuUs": 140.481
+        },
+        {
+          "wallUs": 93.79129100000137,
+          "cpuUs": 97.97
+        },
+        {
+          "wallUs": 105.08752000000095,
+          "cpuUs": 89.553
+        }
+      ],
+      "original": [
+        {
+          "wallUs": 138.06886499999746,
+          "cpuUs": 135.378
+        },
+        {
+          "wallUs": 104.70657800000117,
+          "cpuUs": 93.897
+        },
+        {
+          "wallUs": 104.79527199999939,
+          "cpuUs": 104.933
+        },
+        {
+          "wallUs": 73.52836699999898,
+          "cpuUs": 56.952
+        },
+        {
+          "wallUs": 100.55926199999521,
+          "cpuUs": 89.982
+        },
+        {
+          "wallUs": 108.4323760000043,
+          "cpuUs": 117.219
+        },
+        {
+          "wallUs": 104.24946600000112,
+          "cpuUs": 105.839
+        },
+        {
+          "wallUs": 162.71541600000637,
+          "cpuUs": 143.474
+        }
+      ],
+      "before": [
+        {
+          "wallUs": 90.1881620000022,
+          "cpuUs": 134.95
+        },
+        {
+          "wallUs": 87.15197400000034,
+          "cpuUs": 79.229
+        },
+        {
+          "wallUs": 68.0207769999979,
+          "cpuUs": 48.177
+        },
+        {
+          "wallUs": 75.4690649999975,
+          "cpuUs": 73.048
+        },
+        {
+          "wallUs": 67.14267399999517,
+          "cpuUs": 47.601
+        },
+        {
+          "wallUs": 87.26792900000146,
+          "cpuUs": 80.031
+        },
+        {
+          "wallUs": 67.68900199999916,
+          "cpuUs": 47.679
+        },
+        {
+          "wallUs": 130.58369700000185,
+          "cpuUs": 137.201
+        }
+      ],
+      "after": [
+        {
+          "wallUs": 110.51805400000012,
+          "cpuUs": 126.7
+        },
+        {
+          "wallUs": 89.11637600000176,
+          "cpuUs": 63.841
+        },
+        {
+          "wallUs": 92.48311100000137,
+          "cpuUs": 94.703
+        },
+        {
+          "wallUs": 73.70323199999984,
+          "cpuUs": 51.54
+        },
+        {
+          "wallUs": 96.64906500000507,
+          "cpuUs": 82.525
+        },
+        {
+          "wallUs": 68.88775599999644,
+          "cpuUs": 49.381
+        },
+        {
+          "wallUs": 96.744534999998,
+          "cpuUs": 83.834
+        },
+        {
+          "wallUs": 89.77051599999686,
+          "cpuUs": 61.084
+        }
+      ]
+    },
+    "http-form-charset": {
+      "upstream": [
+        {
+          "wallUs": 109.25188999999955,
+          "cpuUs": 154.061
+        },
+        {
+          "wallUs": 119.01603199999954,
+          "cpuUs": 92.142
+        },
+        {
+          "wallUs": 90.12351100000524,
+          "cpuUs": 78.32
+        },
+        {
+          "wallUs": 165.33712699999887,
+          "cpuUs": 158.727
+        },
+        {
+          "wallUs": 114.06806900000083,
+          "cpuUs": 120.373
+        },
+        {
+          "wallUs": 98.97354300000006,
+          "cpuUs": 88.373
+        },
+        {
+          "wallUs": 88.41750799999863,
+          "cpuUs": 83.906
+        },
+        {
+          "wallUs": 86.71620400000393,
+          "cpuUs": 79.553
+        }
+      ],
+      "original": [
+        {
+          "wallUs": 100.24250900000334,
+          "cpuUs": 77.629
+        },
+        {
+          "wallUs": 96.51230300000316,
+          "cpuUs": 110.029
+        },
+        {
+          "wallUs": 129.8544619999957,
+          "cpuUs": 153.49
+        },
+        {
+          "wallUs": 116.31677199999831,
+          "cpuUs": 89.75
+        },
+        {
+          "wallUs": 93.6430909999981,
+          "cpuUs": 88.082
+        },
+        {
+          "wallUs": 110.11321899999894,
+          "cpuUs": 98.198
+        },
+        {
+          "wallUs": 120.62998399999924,
+          "cpuUs": 102.834
+        },
+        {
+          "wallUs": 104.533792000002,
+          "cpuUs": 77.628
+        }
+      ],
+      "before": [
+        {
+          "wallUs": 123.24931700000161,
+          "cpuUs": 208.744
+        },
+        {
+          "wallUs": 74.91454100000556,
+          "cpuUs": 60.342
+        },
+        {
+          "wallUs": 85.60271800000191,
+          "cpuUs": 74.179
+        },
+        {
+          "wallUs": 82.1076549999998,
+          "cpuUs": 59.205
+        },
+        {
+          "wallUs": 109.0310180000015,
+          "cpuUs": 94.372
+        },
+        {
+          "wallUs": 108.96139699999912,
+          "cpuUs": 91.391
+        },
+        {
+          "wallUs": 80.7545420000024,
+          "cpuUs": 57.357
+        },
+        {
+          "wallUs": 113.16601500000252,
+          "cpuUs": 109.839
+        }
+      ],
+      "after": [
+        {
+          "wallUs": 143.45947099999466,
+          "cpuUs": 214.044
+        },
+        {
+          "wallUs": 97.10735399999976,
+          "cpuUs": 84.226
+        },
+        {
+          "wallUs": 72.10395099999732,
+          "cpuUs": 53.446
+        },
+        {
+          "wallUs": 104.86742300000333,
+          "cpuUs": 115.334
+        },
+        {
+          "wallUs": 106.95234099999652,
+          "cpuUs": 101.876
+        },
+        {
+          "wallUs": 127.60836500000005,
+          "cpuUs": 106.313
+        },
+        {
+          "wallUs": 105.74222600000212,
+          "cpuUs": 98.952
+        },
+        {
+          "wallUs": 84.71661199999653,
+          "cpuUs": 68.591
+        }
+      ]
+    },
+    "http-async-json": {
+      "upstream": [
+        {
+          "wallUs": 123.4130989999976,
+          "cpuUs": 160.721
+        },
+        {
+          "wallUs": 99.56691899999714,
+          "cpuUs": 94.9
+        },
+        {
+          "wallUs": 120.93401299999823,
+          "cpuUs": 97.326
+        },
+        {
+          "wallUs": 73.7039120000045,
+          "cpuUs": 53.239
+        },
+        {
+          "wallUs": 87.12877200000366,
+          "cpuUs": 77.498
+        },
+        {
+          "wallUs": 123.0942470000009,
+          "cpuUs": 129.409
+        },
+        {
+          "wallUs": 101.52391100000386,
+          "cpuUs": 101.442
+        },
+        {
+          "wallUs": 95.29453400000057,
+          "cpuUs": 94.198
+        }
+      ],
+      "original": [
+        {
+          "wallUs": 116.53024499999447,
+          "cpuUs": 186.932
+        },
+        {
+          "wallUs": 92.70623199999682,
+          "cpuUs": 85.539
+        },
+        {
+          "wallUs": 88.20293699999456,
+          "cpuUs": 62.286
+        },
+        {
+          "wallUs": 112.67809899999702,
+          "cpuUs": 97.369
+        },
+        {
+          "wallUs": 86.58455799999501,
+          "cpuUs": 79.363
+        },
+        {
+          "wallUs": 74.50858900000458,
+          "cpuUs": 53.773
+        },
+        {
+          "wallUs": 88.28089100000216,
+          "cpuUs": 94.696
+        },
+        {
+          "wallUs": 97.54136899999867,
+          "cpuUs": 81.874
+        }
+      ],
+      "before": [
+        {
+          "wallUs": 133.31578900000022,
+          "cpuUs": 214.464
+        },
+        {
+          "wallUs": 96.9537860000055,
+          "cpuUs": 95.005
+        },
+        {
+          "wallUs": 69.63910100000066,
+          "cpuUs": 48.952
+        },
+        {
+          "wallUs": 79.41241000000446,
+          "cpuUs": 75.249
+        },
+        {
+          "wallUs": 85.74339999999938,
+          "cpuUs": 59.936
+        },
+        {
+          "wallUs": 108.87680700000055,
+          "cpuUs": 92.957
+        },
+        {
+          "wallUs": 121.33078299999761,
+          "cpuUs": 123.667
+        },
+        {
+          "wallUs": 103.18318200000067,
+          "cpuUs": 100.516
+        }
+      ],
+      "after": [
+        {
+          "wallUs": 107.00710800000525,
+          "cpuUs": 150.737
+        },
+        {
+          "wallUs": 101.90348000000085,
+          "cpuUs": 93.287
+        },
+        {
+          "wallUs": 91.90840000000026,
+          "cpuUs": 80.587
+        },
+        {
+          "wallUs": 97.43827800000145,
+          "cpuUs": 64.968
+        },
+        {
+          "wallUs": 108.72512899999856,
+          "cpuUs": 118.439
+        },
+        {
+          "wallUs": 104.6673609999998,
+          "cpuUs": 95.648
+        },
+        {
+          "wallUs": 88.3876120000059,
+          "cpuUs": 87.751
+        },
+        {
+          "wallUs": 80.80794199999946,
+          "cpuUs": 72.409
+        }
+      ]
+    },
+    "cloud-event": {
+      "upstream": [
+        {
+          "wallUs": 129.2236830000038,
+          "cpuUs": 161.787
+        },
+        {
+          "wallUs": 88.41941000000224,
+          "cpuUs": 72.053
+        },
+        {
+          "wallUs": 96.86278700000548,
+          "cpuUs": 96.387
+        },
+        {
+          "wallUs": 82.41868599999725,
+          "cpuUs": 73.787
+        },
+        {
+          "wallUs": 75.471881999998,
+          "cpuUs": 53.503
+        },
+        {
+          "wallUs": 91.79214299999876,
+          "cpuUs": 81.911
+        },
+        {
+          "wallUs": 99.06024700000125,
+          "cpuUs": 83.523
+        },
+        {
+          "wallUs": 96.0566220000037,
+          "cpuUs": 65.963
+        }
+      ],
+      "original": [
+        {
+          "wallUs": 110.69928600000276,
+          "cpuUs": 111.247
+        },
+        {
+          "wallUs": 108.15627300000051,
+          "cpuUs": 111.945
+        },
+        {
+          "wallUs": 74.03983100000187,
+          "cpuUs": 52.613
+        },
+        {
+          "wallUs": 84.7647799999977,
+          "cpuUs": 81.85
+        },
+        {
+          "wallUs": 74.00809299999673,
+          "cpuUs": 53.672
+        },
+        {
+          "wallUs": 85.86385899999732,
+          "cpuUs": 85.638
+        },
+        {
+          "wallUs": 81.01260300000285,
+          "cpuUs": 74.335
+        },
+        {
+          "wallUs": 98.37887300000148,
+          "cpuUs": 67.03
+        }
+      ],
+      "before": [
+        {
+          "wallUs": 116.676836000006,
+          "cpuUs": 134.233
+        },
+        {
+          "wallUs": 102.75741700000071,
+          "cpuUs": 164.968
+        },
+        {
+          "wallUs": 82.2245830000029,
+          "cpuUs": 57.338
+        },
+        {
+          "wallUs": 89.15814800000226,
+          "cpuUs": 97.001
+        },
+        {
+          "wallUs": 71.30833700000221,
+          "cpuUs": 49.305
+        },
+        {
+          "wallUs": 80.68841100000282,
+          "cpuUs": 77.752
+        },
+        {
+          "wallUs": 71.93624799999816,
+          "cpuUs": 49.654
+        },
+        {
+          "wallUs": 94.01036000000022,
+          "cpuUs": 87.451
+        }
+      ],
+      "after": [
+        {
+          "wallUs": 103.11395099999936,
+          "cpuUs": 154.262
+        },
+        {
+          "wallUs": 108.04669099999592,
+          "cpuUs": 111.116
+        },
+        {
+          "wallUs": 68.46564499999658,
+          "cpuUs": 46.715
+        },
+        {
+          "wallUs": 78.30371800000285,
+          "cpuUs": 53.911
+        },
+        {
+          "wallUs": 77.02467800000159,
+          "cpuUs": 70.377
+        },
+        {
+          "wallUs": 90.86960899999394,
+          "cpuUs": 81.613
+        },
+        {
+          "wallUs": 80.61364899999899,
+          "cpuUs": 54.447
+        },
+        {
+          "wallUs": 81.55672700000287,
+          "cpuUs": 75.616
+        }
+      ]
+    }
+  },
+  "medians": {
+    "http-get": {
+      "wallUs": {
+        "upstream": 79.51682699999992,
+        "original": 77.03406850000012,
+        "before": 67.73195699999997,
+        "after": 73.98131849999982,
+        "afterToUpstream": 0.838509190610996,
+        "afterToOriginal": 0.9164589234339,
+        "afterToBefore": 1.0756900805643084
+      },
+      "cpuUs": {
+        "upstream": 63.4875,
+        "original": 72.89,
+        "before": 64.678,
+        "after": 68.2885,
+        "afterToUpstream": 0.9537715871718071,
+        "afterToOriginal": 0.9460122153948203,
+        "afterToBefore": 1.1968554743753375
+      }
+    },
+    "http-deep-path": {
+      "wallUs": {
+        "upstream": 84.23015899999973,
+        "original": 65.37669499999993,
+        "before": 65.92215299999953,
+        "after": 74.1751349999995,
+        "afterToUpstream": 0.89434028442933,
+        "afterToOriginal": 0.9943143501558955,
+        "afterToBefore": 1.1562937830860744
+      },
+      "cpuUs": {
+        "upstream": 86.4735,
+        "original": 61.1995,
+        "before": 52.925,
+        "after": 65.82249999999999,
+        "afterToUpstream": 0.760264691593288,
+        "afterToOriginal": 0.8933058946025029,
+        "afterToBefore": 1.2081539074777
+      }
+    },
+    "http-json": {
+      "wallUs": {
+        "upstream": 90.97176249999939,
+        "original": 93.36870850000014,
+        "before": 86.68733099999918,
+        "after": 81.62745599999835,
+        "afterToUpstream": 0.8705384193525747,
+        "afterToOriginal": 0.7860223336055479,
+        "afterToBefore": 0.9063506503017008
+      },
+      "cpuUs": {
+        "upstream": 77.58850000000001,
+        "original": 86.1625,
+        "before": 68.8475,
+        "after": 62.144000000000005,
+        "afterToUpstream": 0.82212219677143,
+        "afterToOriginal": 0.7621873876490655,
+        "afterToBefore": 0.9111950572419457
+      }
+    },
+    "http-form": {
+      "wallUs": {
+        "upstream": 109.48581499999818,
+        "original": 101.33912749999945,
+        "before": 97.39707449999878,
+        "after": 86.04385850000108,
+        "afterToUpstream": 0.825833073712396,
+        "afterToOriginal": 0.8520209827609053,
+        "afterToBefore": 0.8914599683797191
+      },
+      "cpuUs": {
+        "upstream": 104.84,
+        "original": 90.815,
+        "before": 94.5495,
+        "after": 75.5735,
+        "afterToUpstream": 0.7208869981127874,
+        "afterToOriginal": 0.8143333571565815,
+        "afterToBefore": 0.7702355409515801
+      }
+    },
+    "http-json-charset": {
+      "wallUs": {
+        "upstream": 98.14463799999976,
+        "original": 104.75092500000028,
+        "before": 81.31051949999892,
+        "after": 91.12681349999912,
+        "afterToUpstream": 0.9742078979976823,
+        "afterToOriginal": 0.8668090244470597,
+        "afterToBefore": 1.123978186603896
+      },
+      "cpuUs": {
+        "upstream": 88.7585,
+        "original": 105.386,
+        "before": 76.1385,
+        "after": 73.183,
+        "afterToUpstream": 0.7907368719887065,
+        "afterToOriginal": 0.8472995462611758,
+        "afterToBefore": 0.8723222170189844
+      }
+    },
+    "http-form-charset": {
+      "wallUs": {
+        "upstream": 104.1127164999998,
+        "original": 107.32350550000046,
+        "before": 97.28205750000052,
+        "after": 105.30482450000272,
+        "afterToUpstream": 0.9572797729323632,
+        "afterToOriginal": 0.9538665299087562,
+        "afterToBefore": 1.1675557631797908
+      },
+      "cpuUs": {
+        "upstream": 90.2575,
+        "original": 93.97399999999999,
+        "before": 82.785,
+        "after": 100.414,
+        "afterToUpstream": 0.8881470970714775,
+        "afterToOriginal": 1.0224444985837748,
+        "afterToBefore": 1.1213957909195411
+      }
+    },
+    "http-async-json": {
+      "wallUs": {
+        "upstream": 100.5454150000005,
+        "original": 90.49356149999949,
+        "before": 100.06848400000308,
+        "after": 99.67087900000115,
+        "afterToUpstream": 0.868836621866089,
+        "afterToOriginal": 1.021609766594174,
+        "afterToBefore": 1.0061948143550534
+      },
+      "cpuUs": {
+        "upstream": 96.113,
+        "original": 83.7065,
+        "before": 93.981,
+        "after": 90.519,
+        "afterToUpstream": 0.9014580534403303,
+        "afterToOriginal": 1.0086193077503658,
+        "afterToBefore": 0.9226451704366555
+      }
+    },
+    "cloud-event": {
+      "wallUs": {
+        "upstream": 93.92438250000123,
+        "original": 85.31431949999751,
+        "before": 85.69136550000258,
+        "after": 81.08518800000093,
+        "afterToUpstream": 0.8995604251629125,
+        "afterToOriginal": 0.9632767107661302,
+        "afterToBefore": 0.9676151180183947
+      },
+      "cpuUs": {
+        "upstream": 77.849,
+        "original": 78.0925,
+        "before": 82.60149999999999,
+        "after": 72.9965,
+        "afterToUpstream": 0.9749250666720326,
+        "afterToOriginal": 0.972797207107787,
+        "afterToBefore": 0.9571624786581499
+      }
+    }
+  }
+}
