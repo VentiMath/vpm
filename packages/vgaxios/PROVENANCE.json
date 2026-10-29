@@ -1,0 +1,30 @@
+{
+  "license": "Apache-2.0",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "gaxios",
+    "version": "6.7.1",
+    "tarball": "https://registry.npmjs.org/gaxios/-/gaxios-6.7.1.tgz",
+    "integrity": "sha512-LDODD4TMYx7XXdpwxAVRAIAuB0bzv0s+ywFonY46k126qzQHT9ygyoa9tncmOiQmmDrik65UYsEkv3lbfqQ3yQ==",
+    "commit": "08cb49113544b37334975cb727c49a07d4d13f26",
+    "sourceArchiveSha256": "eb4a816b0ce24cf69dcbc710f026c2eee4241b9c5e65cd5019f988e14853702c"
+  },
+  "dependencies": {
+    "extend": "vextend",
+    "is-stream": "vis-stream",
+    "node-fetch": "vnode-fetch",
+    "https-proxy-agent": "vhttps-proxy-agent",
+    "uuid": "Removed: native crypto.randomUUID for multipart boundaries"
+  },
+  "changes": [
+    "Copy default/error state and use the complete VPM HTTP dependency tree.",
+    "Honor default limits, preserve falsy/byte-view request bodies and append query parameters before fragments.",
+    "Set multipart streams up lazily and validate part header values; preserve explicit Accept casing.",
+    "Settle streamed error bodies using vnode-fetch collection and propagate errors and limits.",
+    "Validate retry bounds, cancel backoff promptly, stop expired retry budgets and avoid replaying one-shot request streams.",
+    "Isolate proxy versus destination client certificates and key agent reuse by both key and certificate; provide explicit destroy().",
+    "Preserve RegExp noProxy state and handle wildcard/host-port bypass rules.",
+    "Retain upstream GaxiosError brand/version protocol for cross-package error recognition.",
+    "Encode native FormData with the runtime serializer instead of dropping its body."
+  ]
+}

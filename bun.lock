@@ -162,6 +162,16 @@
         "vread-package-up": "workspace:*",
       },
     },
+    "packages/vgaxios": {
+      "name": "vgaxios",
+      "version": "0.1.0",
+      "dependencies": {
+        "vextend": "workspace:*",
+        "vhttps-proxy-agent": "workspace:*",
+        "vis-stream": "workspace:*",
+        "vnode-fetch": "workspace:*",
+      },
+    },
     "packages/vhttp-errors": {
       "name": "vhttp-errors",
       "version": "0.1.0",
@@ -247,6 +257,13 @@
       "version": "0.1.0",
       "dependencies": {
         "vcontent-type": "workspace:*",
+      },
+    },
+    "packages/vnode-fetch": {
+      "name": "vnode-fetch",
+      "version": "0.1.0",
+      "dependencies": {
+        "viconv-lite": "workspace:*",
       },
     },
     "packages/vnode-types": {
@@ -457,6 +474,8 @@
 
     "vfunctions-framework": ["vfunctions-framework@workspace:packages/vfunctions-framework"],
 
+    "vgaxios": ["vgaxios@workspace:packages/vgaxios"],
+
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
 
     "vhttps-proxy-agent": ["vhttps-proxy-agent@workspace:packages/vhttps-proxy-agent"],
@@ -488,6 +507,8 @@
     "vms": ["vms@workspace:packages/vms"],
 
     "vnegotiator": ["vnegotiator@workspace:packages/vnegotiator"],
+
+    "vnode-fetch": ["vnode-fetch@workspace:packages/vnode-fetch"],
 
     "vnode-types": ["vnode-types@workspace:packages/vnode-types"],
 
