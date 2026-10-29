@@ -100,13 +100,23 @@ synthetic tokens with a loopback HTTP server.
 
 ## Google SDK logging
 
-`node scripts/google-http-conformance/logging.cjs` (or `bun`) runs all ten public
-logging suite entries from google-logging-utils 0.0.2. Assertions are unchanged for
-VPM and `--upstream`; both runtimes pass. One upstream backend-replacement entry
-has an empty body, so the focused VPM tests separately cover that behavior. Four
-tests for the unexported Temporal helper are outside this public-API replacement.
-The runner verifies the original gax-nodejs commit archive, extracts only the
-logging-utils subtree and compiles its tests with TypeScript 7.
+`node scripts/google-http-conformance/logging.cjs` (or `bun`) runs all 17 public
+suite entries from google-logging-utils 2.1.1 unchanged, plus ten entries from
+0.0.2. Both runtimes pass. `--upstream` runs each published version against its
+original expectations. Each suite contains an empty backend-replacement entry;
+focused VPM tests separately cover stable logger and event-sink identity.
+
+The sole VPM adjustment to the old suite expects an explicitly selected backend
+to work without the environment flag, matching 2.1.1. No entries are skipped.
+Tests for the unexported Temporal helper remain outside this public-API scope.
+
+For 0.0.2, the runner verifies the original gax-nodejs archive and extracts its
+logging-utils subtree. For 2.1.1, the vendored test file matches Git blob
+`e858713021e7734821ccbace5e6358513f90aa69` at release commit
+`cb723569f62de17cb07011e806981b64e80efe3d`; its SHA-256 is verified before use.
+The Apache-2.0 license accompanies that source. TypeScript 7 compiles the tests
+in temporary directories with import wrappers selecting the implementation.
+The published 2.1.1 control is an exact, independently locked development dependency.
 
 ## json-bigint 1.0.0
 

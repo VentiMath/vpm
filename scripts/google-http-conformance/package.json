@@ -13,6 +13,7 @@
     "chai4": "npm:chai@4.5.0",
     "encoding": "0.1.13",
     "form-data": "2.5.5",
+    "google-logging-utils": "2.1.1",
     "mocha": "11.7.5",
     "multiparty": "4.2.3",
     "nock": "13.5.6",

@@ -30,7 +30,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 const targets = {
   'gcp-metadata': { pkg: 'vgcp-metadata', versions: /^6\.1\.1$/ },
   'json-bigint': { pkg: 'vjson-bigint', versions: /^1\.0\.0$/ },
-  'google-logging-utils': { pkg: 'vgoogle-logging-utils', versions: /^0\.0\.2$/ },
+  'google-logging-utils': { pkg: 'vgoogle-logging-utils', versions: /^(?:0\.0\.2|2\.1\.1)$/ },
   gtoken: { pkg: 'vgtoken', versions: /^7\.1\.0$/ },
   gaxios: { pkg: 'vgaxios', versions: /^6\.7\.1$/ },
   'node-fetch': { pkg: 'vnode-fetch', versions: /^2\.7\.0$/ },
