@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 0.0.2 | Standalone structured JSON, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
 | [vgtoken](packages/vgtoken) | gtoken 7.1.0 | Shared forced refreshes, cached RSA key imports, validated expiry, bounded exchanges, credential-safe errors and POST-body revocation on the VPM HTTP/signing stack. |
 | [vgaxios](packages/vgaxios) | gaxios 6.7.1 | Entirely VPM transport tree, isolated defaults/error state, correct request bodies, bounded retry decisions, cancellable backoff and separate proxy/destination TLS identity. |
 | [vnode-fetch](packages/vnode-fetch) | node-fetch 2.7.0 | Native URL handling, checked limits, cross-origin credential isolation, reliable stream cancellation and byte-preserving body collection. |
@@ -70,12 +71,12 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **2,054 tests**: all pass on Node 24, and Bun passes
-2,051 with three documented runtime-specific skips. All 56 runtime packages'
+The root suite contains **2,070 tests**: all pass on Node 24, and Bun passes
+2,067 with three documented runtime-specific skips. All 57 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **58 packages**, including two declaration-only packages.
+catalog covers **59 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -103,7 +104,7 @@ upstream cases on each runtime, also checked against upstream itself.
 The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
 extend assertions (one obsolete intrinsic-removal test skipped), 47 is-stream
 assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
-109 gaxios tests and 45 gtoken tests on both runtimes. Its documented adaptations are also checked
+109 gaxios tests, 45 gtoken tests and ten logging suite entries on both runtimes. Its documented adaptations are also checked
 against the published upstream implementations.
 
 ## Dependency scope
@@ -233,6 +234,27 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgoogle-logging-utils
+
+The dependency-free logging replacement emits standalone JSON from its default
+structured backend, honors custom backends' public interface, preserves logger
+identity and event sinks when switching backends, and returns the callable from
+`.on()`. Disabled placeholders are inert. Sink failures are isolated without
+printing their exception contents; each event tap still gets its own chance to run.
+Filter snapshots are copied, explicit changes invalidate cached decisions, and
+the debug adapter uses `enable()` instead of changing `NODE_DEBUG`.
+
+All 16 focused tests and ten original public suite entries pass on Node and Bun.
+One original entry is empty; focused coverage verifies the missing replacement
+behavior. The internal upstream Temporal helper is outside the exported API.
+
+Formatted Node-style output takes 67% less time on Node 24 and 24% less on Bun;
+disabled invocations take 85%/98% less. Structured custom-backend output is effectively
+unchanged on Node and 5% faster on Bun. Node retains small costs for cached lookup
+(+12 ns), isolated taps (+7 ns), and filtered backend calls (+3 ns). Bun's near-zero
+lookup/disabled-call timings are JIT-specific microbenchmarks. [Full evidence](packages/vgoogle-logging-utils/bench/results/README.md)
+includes three processes, controls and source hashes per runtime.
 
 ## vgtoken
 

@@ -1,0 +1,19 @@
+{
+  "license": "Apache-2.0",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "google-logging-utils",
+    "version": "0.0.2",
+    "tarball": "https://registry.npmjs.org/google-logging-utils/-/google-logging-utils-0.0.2.tgz",
+    "integrity": "sha512-NEgUnEcBiP5HrPzufUkBzJOD/Sxsco3rLNo1F1TNf7ieU8ryUzBhqba8r756CjLX7rn3fHl6iLEwPYuqpoKgQQ==",
+    "commit": "511df04ec5064070adb173b9b8d84056cf7b1758",
+    "sourceArchiveSha256": "245e6d31a4120caac33eda25fad7fa46377393d6134989bea1657028c7e17a54"
+  },
+  "changes": [
+    "Emit standalone structured JSON and support the public custom-backend interface.",
+    "Preserve logger and event-sink identity across backend replacement.",
+    "Return the callable from on() and isolate failing backends and event sinks.",
+    "Make disabled placeholders inert and compile coherent filter snapshots.",
+    "Use the supplied debug factory enable() API without changing NODE_DEBUG."
+  ]
+}

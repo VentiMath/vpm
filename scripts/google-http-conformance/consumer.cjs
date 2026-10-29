@@ -6,6 +6,17 @@ module.exports = async function(from) {
   const {teenyRequest} = from('teeny-request');
   const {Gaxios} = from('gaxios');
   const {JWT} = from('google-auth-library');
+  const logging = from('google-logging-utils');
+  const oldFlag = process.env[logging.env.nodeEnables], records = [];
+  try {
+    process.env[logging.env.nodeEnables] = '*';
+    logging.setBackend(logging.getStructuredBackend({setFilters() {}, log: (_name, _fields, json) => records.push(JSON.parse(json))}));
+    logging.log('vpm-integration').info('HTTP client ready');
+    assert.deepEqual(records, [{severity: 'INFO', message: 'HTTP client ready'}]);
+  } finally {
+    logging.setBackend(undefined);
+    if (oldFlag === undefined) delete process.env[logging.env.nodeEnables]; else process.env[logging.env.nodeEnables] = oldFlag;
+  }
   const {readFileSync} = require('node:fs');
   const {join} = require('node:path');
   const {verify, createPublicKey} = require('node:crypto');
