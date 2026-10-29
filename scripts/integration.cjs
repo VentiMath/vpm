@@ -28,6 +28,8 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  gaxios: { pkg: 'vgaxios', versions: /^6\.7\.1$/ },
+  'node-fetch': { pkg: 'vnode-fetch', versions: /^2\.7\.0$/ },
   uuid: { pkg: 'vuuid', versions: /^9\.0\.1$/ },
   extend: { pkg: 'vextend', versions: /^3\.0\.2$/ },
   'is-stream': { pkg: 'vis-stream', versions: /^2\.0\.1$/ },

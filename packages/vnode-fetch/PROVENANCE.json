@@ -1,0 +1,26 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "node-fetch",
+    "version": "2.7.0",
+    "tarball": "https://registry.npmjs.org/node-fetch/-/node-fetch-2.7.0.tgz",
+    "integrity": "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==",
+    "registryGitHead": "9b9d45881e5ca68757077726b3c0ecf8fdca1f29",
+    "sourceArchiveSha256": "d25cd7556c8c8606156444fbcc183218080b7168a0d7a822940392e00bbeb0f6"
+  },
+  "source": "Adapted from the published 2.7.0 lib/index.js bundle. The v2.7.0 release tag and registry gitHead identify the archived upstream tests; its internal package version remains 2.6.7.",
+  "dependencies": {
+    "whatwg-url": "Removed: native node:url on supported runtimes",
+    "encoding": "Legacy optional textConverted uses viconv-lite lazily"
+  },
+  "changes": [
+    "Validate sizes, deadlines and redirect counts; enforce size on direct buffers as well as streams.",
+    "Reject premature close, clear body listeners/timers and propagate cancellation/limits through response pipelines.",
+    "Copy emitted chunks to preserve bytes when producers reuse buffers.",
+    "Strip sensitive headers on any cross-origin redirect, including port changes.",
+    "Include pool queue time in the request deadline; JSON parse errors omit response contents.",
+    "Use native absolute URL conversion while retaining relative Request construction.",
+    "Preserve native Blob bytes, upload failures, immediate abort errors and HTTP keep-alive reuse."
+  ]
+}

@@ -23,6 +23,10 @@ try {
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    if (name === 'vnode-fetch' || name === 'vgaxios') {
+      assert.deepEqual(Object.keys(metadata.dependencies).sort(), name === 'vnode-fetch' ? ['viconv-lite'] : ['vextend','vhttps-proxy-agent','vis-stream','vnode-fetch']);
+      assert.doesNotMatch(run('tar', ['-tzf', packed]), /\/(?:test|bench|node_modules)\//);
+    }
     if (name === 'vuuid') {
       assert.equal(metadata.dependencies,undefined);
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
@@ -136,6 +140,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+if(new (require('vnode-fetch').Headers)({test:'ok'}).get('test')!=='ok')throw new Error('fetch archive');
+if(typeof require('vgaxios').Gaxios.prototype.destroy!=='function')throw new Error('gaxios archive');
 if(!require('vuuid').validate(require('vuuid').v4()))throw new Error('UUID archive');
 if(require('vextend')(true,{}, {a:{b:1}}).a.b!==1)throw new Error('extend archive');
 if(require('vis-stream').readable({pipe(){},_read(){},_readableState:null}))throw new Error('stream archive');
@@ -285,6 +291,13 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import fetchArchive, {Response as ArchiveResponse} from 'vnode-fetch';
+import {Gaxios as ArchiveGaxios} from 'vgaxios';
+if (typeof fetchArchive !== 'function' || await new ArchiveResponse('ok').text() !== 'ok') throw new Error('fetch ESM archive');
+const archiveClient = new ArchiveGaxios();
+const archiveResult = await archiveClient.request({url:'http://example.test', noProxy:['*'], adapter:async config=>({config, data:'ok', status:200, statusText:'OK', headers:{}, request:{responseURL:config.url}})});
+if (archiveResult.data !== 'ok') throw new Error('gaxios ESM archive');
+archiveClient.destroy();
 import {Agent as ArchiveAgent} from 'vagent-base';
 import {HttpsProxyAgent as ArchiveProxy} from 'vhttps-proxy-agent';
 if (!(new ArchiveProxy('http://localhost:8080') instanceof ArchiveAgent)) throw new Error('proxy ESM inheritance');
@@ -415,6 +428,13 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import typedFetch, {Request as TypedFetchRequest} from 'vnode-fetch';
+import {Gaxios as TypedGaxios} from 'vgaxios';
+const fetchPromise = typedFetch(new TypedFetchRequest('http://example.test'));
+const typedClient = new TypedGaxios({maxContentLength:1024});
+const gaxiosPromise = typedClient.request<{ok:boolean}>({url:'http://example.test', responseType:'json'});
+typedClient.destroy();
+void fetchPromise; void gaxiosPromise;
 import {Agent as TypedAgent, type AgentConnectOpts, type ClientRequest as AgentRequest, type Duplex as AgentDuplex} from 'vagent-base';
 import {HttpsProxyAgent as TypedProxy} from 'vhttps-proxy-agent';
 const configuredProxy: TypedAgent = new TypedProxy('https://proxy.test', {headers:()=>({'X-Test':'value'}),maxProxyHeaderSize:16384,connectTimeout:1000});

@@ -9,6 +9,8 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgaxios](packages/vgaxios) | gaxios 6.7.1 | Entirely VPM transport tree, isolated defaults/error state, correct request bodies, bounded retry decisions, cancellable backoff and separate proxy/destination TLS identity. |
+| [vnode-fetch](packages/vnode-fetch) | node-fetch 2.7.0 | Native URL handling, checked limits, cross-origin credential isolation, reliable stream cancellation and byte-preserving body collection. |
 | [vuuid](packages/vuuid) | uuid 9.0.1 | Native name hashing, nonmutating random input, checked byte/clock/buffer bounds and exact UUID validation; zero dependencies. |
 | [vextend](packages/vextend) | extend 3.0.2 | Own enumerable strings and symbols, inherited-target isolation, cycle/shared-reference preservation and iterative deep merging. |
 | [vis-stream](packages/vis-stream) | is-stream 2.0.1 | Rejects null internal stream state and avoids duplicate pipe probes in duplex/transform checks. |
@@ -67,12 +69,12 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,968 tests**: all pass on Node 24, and Bun passes
-1,965 with three documented runtime-specific skips. All 53 runtime packages'
+The root suite contains **2,012 tests**: all pass on Node 24, and Bun passes
+2,009 with three documented runtime-specific skips. All 55 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **55 packages**, including two declaration-only packages.
+catalog covers **57 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -97,6 +99,11 @@ The [Agent suite](scripts/agent-conformance/README.md) adds all 15 upstream
 cases on both runtimes, with documented fixture adaptations. The
 [HTTPS proxy suite](scripts/https-proxy-conformance/README.md) adds all 18 local
 upstream cases on each runtime, also checked against upstream itself.
+The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
+extend assertions (one obsolete intrinsic-removal test skipped), 47 is-stream
+assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
+109 gaxios tests on both runtimes. Its documented adaptations are also checked
+against the published upstream implementations.
 
 ## Dependency scope
 
@@ -108,6 +115,8 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgaxios` | 5 | 4 |
+| `vnode-fetch` | 1 | 1 |
 | `vjwks-rsa` | 5 | 1 |
 | `vjsonwebtoken` | 10 | 2 |
 | `vjws` | 2 | 1 |
@@ -122,6 +131,9 @@ and 39 total external runtime dependencies, all VPM packages.
 | `vread-package-up` | 3 | 0 |
 | `vfunctions-framework` | 7 | 5 |
 
+`vnode-fetch` replaces the three-package legacy URL subtree with native URL
+support and retains `viconv-lite` for the optional legacy conversion API.
+`vgaxios` has eight total external runtime dependencies, all VPM packages.
 Other runtime replacements retain their direct dependency counts. `vqs` removes
 an 18-package transitive tree from that branch; packages elsewhere may still need
 some of those helpers. `vdebug` uses built-in terminal detection instead of
@@ -150,7 +162,9 @@ previous Express 4 branch. Platform types have their own documented baselines.
 The fixture also includes Firebase Admin and JWT consumers: `vjsonwebtoken`
 validates claims, expiry durations reach `vms`, signatures reach `vjwa` through `vjws`, and proxy agents
 reach `vdebug`. `vhttps-proxy-agent` uses `vagent-base` for the pinned HTTP CONNECT transport
-used by `gaxios`. Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
+used by `vgaxios` in place of `gaxios` 6.7.1. `vnode-fetch` replaces Fetch 2.7.0;
+`vextend`, `vis-stream` and UUID 9’s `vuuid` are version-scoped aliases too.
+Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
 Firebase Admin's JWKS fetcher and public-key verifier use `vjwks-rsa`.
 The wider frameworks, authentication libraries and Google SDKs still contain upstream dependencies.
 A complete VPM Express tree does not mean the entire backend has been replaced.
@@ -194,6 +208,10 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
   `https-proxy-agent` 7.0.6, using `vagent-base`, including keep-alive reuse and a `gaxios` request. These seven
   requests are separate from the 246 HTTP application checks.
 
+- Actual teeny-request multipart uploads and Google HTTP JSON requests, multipart
+  uploads and retries exercise the new HTTP-client aliases. These five requests
+  are separate from the 246 application checks.
+
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
 count too. It checks the single shared content-type 2.x copy and its four callers.
@@ -207,6 +225,52 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vnode-fetch and vgaxios
+
+The Google HTTP client path is implemented through VPM: `vgaxios` uses four
+direct VPM dependencies and native UUID generation. `vnode-fetch` removes the
+legacy URL subtree while retaining Fetch 2’s Node-stream contract and the
+legacy text conversion method through lazily loaded `viconv-lite`.
+
+The transport validates size/deadline/redirect settings, includes pool queue time
+in the request deadline, rejects premature response closure, preserves bytes
+from reused producer buffers, and cleans up cancelled or failed streams without
+losing keep-alive reuse. Cross-origin redirects strip credentials even when only
+the destination port changes. Request/header and body-consumption timeouts are
+separate phases; manually consumed response streams remain caller-owned.
+
+The client snapshots defaults and plain error state, honors default limits,
+keeps query parameters before fragments, preserves falsy and byte-view bodies,
+and encodes native FormData. Multipart headers are validated before lazy upload
+streams start. Retry settings and counts are checked, expired budgets prevent
+another attempt, and backoff is cancellable. One-shot streams are not replayed.
+Custom adapters/fetch implementations and decision callbacks must honor their
+own cancellation contracts. Proxy TLS never receives destination client
+certificates; owned agents have an explicit disposal method.
+
+**Verification:** 23 Fetch and 21 client focused tests, 214 Fetch upstream tests
+and all 109 gaxios upstream tests on Node and Bun, real consumer HTTP/proxy
+integration, public declarations and installed archives. The two conditional
+Fetch skips and intentional gaxios expectation changes are recorded in the
+[compatibility fixture](scripts/google-http-conformance/README.md).
+
+**Performance:** [Fetch results](packages/vnode-fetch/bench/results/README.md)
+and [client results](packages/vgaxios/bench/results/README.md) retain all paired
+samples, three fresh processes, controls and source hashes. Fetch's final Bun
+JSON/streamed-POST medians take 8%/14% less time; its gzip comparison is
+inconclusive because the identical-upstream control varies by 31%. Node HTTP
+cases take 1–7% longer with substantial process variation. Safe 32-chunk body
+collection costs 5.21 → 8.65 µs on Node and 6.04 → 8.39 µs on Bun. Copying
+client defaults adds about 0.61/0.39 µs on Node/Bun. Adapter preparation is
+13–15% slower on Node and about 9% faster on Bun. Multipart uploads take
+8%/50% less paired time on Node/Bun.
+
+Bun substitutes a built-in implementation for upstream gaxios's bare node-fetch
+import. Against that installed baseline, VPM's Bun JSON/POST/error requests take
+14–19% longer and gzip 61% longer. The separate pinned Fetch 2 comparison shows
+14%/9% less time for JSON/gzip. Both baselines are retained; these packages are
+not uniformly faster, and these measurements do not establish production gains.
 
 ## vhttps-proxy-agent
 

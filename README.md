@@ -50,10 +50,10 @@ stack. `vjsonwebtoken`, `vjws`, and `vjwa` cover JWT claims, compact signatures,
 and native cryptographic operations used by authentication consumers. `vjwks-rsa`
 retrieves public signing keys for these consumers, including Firebase Admin.
 `vhttps-proxy-agent` supplies HTTP CONNECT tunnels through HTTP/HTTPS proxies,
-using `vagent-base` for connection lifecycle and pooling. `vextend` and
-`vis-stream` provide the merge and stream-shape helpers beneath Google’s HTTP
-client. Two
-declaration-only packages provide Node and Undici types for development.
+using `vagent-base` for connection lifecycle and pooling. `vgaxios` supplies
+Google’s HTTP client API on `vnode-fetch` and the VPM proxy transport, supported
+by `vextend` and `vis-stream`. `vuuid` provides UUID generation and parsing.
+Two declaration-only packages provide Node and Undici types for development.
 
 Integration tests serve pinned Firebase Functions consumers through the VPM
 framework and compare behavior against Google Functions Framework. Firebase
@@ -79,6 +79,7 @@ integration remain planned work.
 
 ```sh
 bun install --frozen-lockfile
+npm --prefix scripts/consumers ci --ignore-scripts
 bun run test
 bun run test:bun
 bun run typecheck
