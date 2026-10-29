@@ -18,7 +18,7 @@ for (const { name, metadata } of packages) {
 }
 const runtimeCount = packages.filter(({ metadata }) => metadata.vpm?.kind !== 'types').length;
 assert.equal(Number(comparison.match(/All (\d+) runtime packages'\s+public declarations/)?.[1]), runtimeCount, 'current declaration coverage count is stale');
-const files = ['README.md', 'IMPROVEMENTS.md', 'scripts/type-consumers/README.md', 'scripts/express-conformance/README.md', 'scripts/framework-conformance/README.md', 'scripts/router-conformance/README.md', 'scripts/legacy-typescript/README.md', 'scripts/jwt-conformance/README.md', 'scripts/jwks-conformance/README.md', ...packages.map(({ name }) => `packages/${name}/README.md`)];
+const files = ['README.md', 'IMPROVEMENTS.md', 'scripts/type-consumers/README.md', 'scripts/express-conformance/README.md', 'scripts/framework-conformance/README.md', 'scripts/router-conformance/README.md', 'scripts/legacy-typescript/README.md', 'scripts/jwt-conformance/README.md', 'scripts/jwks-conformance/README.md', 'scripts/agent-conformance/README.md', ...packages.map(({ name }) => `packages/${name}/README.md`)];
 let links = 0;
 for (const file of files) {
   const source = fs.readFileSync(path.join(root, file), 'utf8');

@@ -53,6 +53,11 @@ try {
       const lib = fs.readdirSync(path.join(root, 'packages/vjsonwebtoken/lib')).map(file => 'lib/' + file);
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', ...lib].sort());
     }
+    if (name === 'vagent-base') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE','README.md','PROVENANCE.json','index.d.ts','index.js','helpers.js','package.json'].sort());
+    }
     if (name === 'vjwks-rsa') {
       assert.deepEqual(metadata.dependencies, { vdebug:'0.1.0' });
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -116,6 +121,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const {Agent:ArchiveAgent}=require('vagent-base');
+if (!(new ArchiveAgent() instanceof require('node:http').Agent)) throw new Error('agent inheritance');
 const jwa = require('vjwa');
 const jws = require('vjws');
 const jwt = require('vjsonwebtoken');
@@ -258,6 +265,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import {Agent as ArchiveAgent} from 'vagent-base';
+if (typeof ArchiveAgent !== 'function') throw new Error('agent ESM export');
 import jwa from 'vjwa';
 import jws, { sign as signJws } from 'vjws';
 import jwt, { sign as signJwt, verify as verifyJwt } from 'vjsonwebtoken';
@@ -384,6 +393,11 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import {Agent as TypedAgent, type AgentConnectOpts, type ClientRequest as AgentRequest, type Duplex as AgentDuplex} from 'vagent-base';
+declare const agentSocket: AgentDuplex;
+class DirectAgent extends TypedAgent { connect(_request: AgentRequest, _options: AgentConnectOpts) { return agentSocket; } }
+const configuredAgent = new DirectAgent({connectTimeout:1000});
+void configuredAgent;
 import jwa from 'vjwa';
 import jws from 'vjws';
 import jwt from 'vjsonwebtoken';
@@ -653,6 +667,8 @@ globalThis.browserChecked = true;
     strict: true, noEmit: true, target: 'ES2022', lib: ['ES2022'], types: [], skipLibCheck: false,
     module: 'NodeNext', moduleResolution: 'NodeNext',
   } }));
+  fs.writeFileSync(path.join(directory, 'native-agent.cts'), "import {Agent as TypedAgent, type AgentConnectOpts, type ClientRequest as AgentRequest} from 'vagent-base';\nimport * as agentNet from 'node:net';\nimport * as agentHttp from 'node:http';\nclass DirectAgent extends TypedAgent { connect(_request: AgentRequest, options: AgentConnectOpts) { return agentNet.connect(options); } }\nconst nativeAgent: agentHttp.Agent = new DirectAgent({connectTimeout:1000});\nvoid nativeAgent;\n\n");
+  fs.writeFileSync(path.join(directory, 'native-agent.json'), JSON.stringify(require('./platform-types.cjs').configuration([path.join(directory, 'native-agent.cts')])));
   for (const manager of ['npm', 'bun']) {
     // Bun resolves transitive version requests through the registry unless the
     // unpublished package names are explicitly redirected to these archives.
@@ -698,12 +714,15 @@ globalThis.browserChecked = true;
     assert.match(output, /node_modules\/vjwa\/index\.d\.ts/);
     assert.match(output, /node_modules\/vjws\/index\.d\.ts/);
     assert.match(output, /node_modules\/vjsonwebtoken\/index\.d\.ts/);
+    assert.match(output, /node_modules\/vagent-base\/index\.d\.ts/);
     assert.match(output, /node_modules\/vjwks-rsa\/index\.d\.ts/);
     assert.match(output, /node_modules\/vvary\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcookie\/index\.d\.ts/);
     assert.match(output, /node_modules\/vcontent-disposition\/index\.d\.ts/);
     assert.match(output, /node_modules\/vqs\/index\.d\.ts/);
     assert.match(output, /node_modules\/vbody-parser\/index\.d\.ts/);
+    const nativeOutput = run(process.execPath, [tsc.path, '-p', 'native-agent.json', '--listFiles', '--pretty', 'false']);
+    assert.match(nativeOutput, /node_modules\/vagent-base\/index\.d\.ts/);
     console.log(`${manager} archives: Node/Bun CJS and ESM, TypeScript ${tsc.version} CJS and ESM without platform types passed.`);
     fs.rmSync(path.join(directory, 'node_modules'), { recursive: true, force: true });
     fs.rmSync(path.join(directory, 'package-lock.json'), { force: true });

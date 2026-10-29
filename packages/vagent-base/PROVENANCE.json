@@ -1,0 +1,25 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {"package":"agent-base","version":"7.1.4","tarball":"https://registry.npmjs.org/agent-base/-/agent-base-7.1.4.tgz"},
+  "source": {
+    "repository":"TooTallNate/proxy-agents",
+    "ref":"agent-base@7.1.4",
+    "commit":"b923f5363875d8fd56477094d5ffc562840a4b76",
+    "archive":"https://codeload.github.com/TooTallNate/proxy-agents/tar.gz/b923f5363875d8fd56477094d5ffc562840a4b76",
+    "archiveSha256":"181046a2a15cbc2df06287e5256e508bf46583b4513ec8a31b878d74467490b5"
+  },
+  "dependencies": {},
+  "changes": [
+    "Validate and snapshot agent configuration; bound asynchronous connection wait with a configurable 30-second deadline.",
+    "Release reservations and resume native queues after failures, cancellation, delegation and destruction; preserve queued connector async context.",
+    "Reject invalid socket results and delegation cycles, settle each connection once and destroy late sockets.",
+    "Use native structured call sites for protocol inference where supported, without invoking user error formatters.",
+    "Copy response chunks on receipt, support exact byte views and UTF-8 strings, enforce optional byte limits and reject invalid UTF-8 JSON without disclosing payloads.",
+    "Preserve native HTTP/TLS pooling and synchronous or asynchronous subclass connectors with self-contained public declarations."
+  ],
+  "upstreamTestAdaptations": [
+    "Compare TLS pool names against the runtime's native HTTPS Agent method instead of a fixed historical suffix.",
+    "Set HTTPS fixture URL protocols explicitly: async-listen 3.1.0 identifies Bun HTTPS servers as HTTP servers. Applied equally to upstream and VPM."
+  ]
+}

@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vagent-base](packages/vagent-base) | agent-base 7.1.4 | Zero dependencies, bounded async connects, cancellation cleanup, queue failure recovery, delegation-cycle rejection, private JSON errors and exact byte collection. |
 | [vjwks-rsa](packages/vjwks-rsa) | jwks-rsa 3.2.2 | One dependency, native public-key import, shared concurrent retrieval, immutable cached keys, bounded HTTP requests, exact IDs and algorithm agreement. |
 | [vjsonwebtoken](packages/vjsonwebtoken) | jsonwebtoken 9.0.3 | Two dependencies, finite claim/time validation, reliable callbacks, direct HMAC key import and bounded public-key reuse. |
 | [vjws](packages/vjws) | jws 4.0.1 | Exact byte payloads, UTF-8 headers, canonical compact parsing, algorithm agreement, bounded header reuse and linear stream collection using vjwa. |
@@ -62,12 +63,12 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,879 tests**: all pass on Node 24, and Bun passes
-1,876 with three documented runtime-specific skips. All 48 runtime packages'
+The root suite contains **1,909 tests**: all pass on Node 24, and Bun passes
+1,906 with three documented runtime-specific skips. All 49 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **50 packages**, including two declaration-only packages.
+catalog covers **51 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -88,6 +89,8 @@ without skips, with one timeout-code correction. The
 [router suite](scripts/router-conformance/README.md) adds router 2.2.0's 694
 unchanged tests on Node; Bun runs 693, with one upstream-reproduced `OPTIONS *`
 limitation. These upstream suites are separate from the root test count.
+The [Agent suite](scripts/agent-conformance/README.md) adds all 15 upstream
+cases on both runtimes, with documented fixture adaptations.
 
 ## Dependency scope
 
@@ -140,7 +143,8 @@ previous Express 4 branch. Platform types have their own documented baselines.
 
 The fixture also includes Firebase Admin and JWT consumers: `vjsonwebtoken`
 validates claims, expiry durations reach `vms`, signatures reach `vjwa` through `vjws`, and proxy agents
-reach `vdebug`. Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
+reach `vdebug`. `vagent-base` supports the async connectors used by the pinned
+HTTPS proxy agent and `gaxios`. Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
 Firebase Admin's JWKS fetcher and public-key verifier use `vjwks-rsa`.
 The wider frameworks, authentication libraries and Google SDKs still contain upstream dependencies.
 A complete VPM Express tree does not mean the entire backend has been replaced.
@@ -148,7 +152,9 @@ A complete VPM Express tree does not mean the entire backend has been replaced.
 Uncovered versions are reported rather than silently substituted. In this graph,
 `form-data` 2.5.5 arrives through `@types/request` under `retry-request` and brings
 mime-types 2.1.35 and mime-db 1.52.0. That branch is not exercised by the runtime
-gate. Separate development fixtures can also retain older HTTP utility versions.
+gate. `agent-base` 6.0.2 under older `https-proxy-agent` 5.0.1 and
+`http-proxy-agent` 5.0.0 also remains uncovered; the 7.1.4 replacement is not
+substituted across that API boundary. Separate development fixtures can also retain older HTTP utility versions.
 
 ### The integration gate
 
@@ -178,6 +184,10 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
 - Firebase Admin JWKS retrieval, cache reuse, signature verification and unknown-key
   rejection through its actual consumers, plus JWT key resolution via `vjwks-rsa`.
 
+- Actual HTTP and TLS tunnels through `https-proxy-agent` 7.0.6 using
+  `vagent-base`, including keep-alive reuse and a `gaxios` request. These seven
+  requests are separate from the 246 HTTP application checks.
+
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
 count too. It checks the single shared content-type 2.x copy and its four callers.
@@ -191,6 +201,40 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vagent-base
+
+Replaces `agent-base` 7.1.4 while retaining its zero-dependency footprint and
+native HTTP/TLS socket pools. Subclasses still return a socket or delegate agent
+synchronously or through a promise. The consumer gate exercises the actual
+`https-proxy-agent` 7.0.6 and `gaxios` packages through it.
+
+Failed, cancelled and timed-out connects release their reserved pool slots and
+resume queued work. Queued connector callbacks keep the originating async context.
+Destroying the agent settles active and queued requests, and sockets returned
+after cancellation are destroyed. Invalid results and delegation cycles fail
+explicitly. A configurable 30-second default deadline applies while a connector
+promise is pending; it does not cover the queue, socket handshake or response.
+
+Configuration is snapshotted and validated. Modern runtimes use structured call
+sites for automatic HTTP/HTTPS inference without calling custom error formatters.
+Body collection supports exact typed-array windows and UTF-8 strings, copies
+before producers can reuse chunks, and offers an explicit byte limit. JSON
+rejects malformed UTF-8 without including response contents in the error.
+
+**Verification:** 30 focused tests, all 15 pinned upstream cases on Node and Bun,
+real proxy/client integration, self-contained declarations, and installed archive
+consumers. The [API guide](packages/vagent-base/README.md) documents compatibility,
+limits and the older-runtime stack fallback. This targets version 7.1.4; older
+callback-style agent-base 6 callers remain outside its compatibility claim.
+
+**Performance:** see the [complete paired benchmark report](packages/vagent-base/bench/results/README.md)
+for Node 24/Bun results, identical-upstream controls and remaining costs. Node
+HTTP/HTTPS keep-alive takes about 8%/6% less paired time. Bun fresh async connects
+take about 9% more; its queued batch about 11% more with substantial spread.
+Construction adds 0.30/0.12 microseconds on Node/Bun, and multi-chunk collection
+and sanitized JSON failures retain documented costs. This package primarily
+improves connection lifecycle behavior; it is not uniformly faster.
 
 ## vjwks-rsa
 
