@@ -169,6 +169,14 @@
       "name": "vipaddr",
       "version": "0.1.0",
     },
+    "packages/vjsonwebtoken": {
+      "name": "vjsonwebtoken",
+      "version": "0.1.0",
+      "dependencies": {
+        "vjws": "workspace:*",
+        "vms": "workspace:*",
+      },
+    },
     "packages/vjwa": {
       "name": "vjwa",
       "version": "0.1.0",
@@ -416,6 +424,8 @@
     "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
 
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
+
+    "vjsonwebtoken": ["vjsonwebtoken@workspace:packages/vjsonwebtoken"],
 
     "vjwa": ["vjwa@workspace:packages/vjwa"],
 

@@ -1,0 +1,12 @@
+{
+  "name": "vpm-jwt-conformance",
+  "private": true,
+  "description": "Pinned test-only tools for jsonwebtoken 9.0.3 conformance; never shipped in VPM packages",
+  "dependencies": {
+    "atob": "2.1.2",
+    "chai": "4.5.0",
+    "mocha": "11.7.5",
+    "semver": "7.7.2",
+    "sinon": "6.3.5"
+  }
+}

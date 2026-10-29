@@ -25,6 +25,8 @@ jobs:
       - run: npm test
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/integration.cjs
+      - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/express-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/express-conformance/run.cjs
       - run: npm --prefix scripts/framework-conformance ci --ignore-scripts --no-audit --no-fund
@@ -51,6 +53,8 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/integration.cjs
+      - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/express-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/express-conformance/run.cjs
       - run: npm --prefix scripts/framework-conformance ci --ignore-scripts --no-audit --no-fund

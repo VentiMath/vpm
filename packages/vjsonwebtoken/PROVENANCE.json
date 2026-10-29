@@ -1,0 +1,43 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "upstream": {
+    "package": "jsonwebtoken",
+    "version": "9.0.3",
+    "tarball": "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.3.tgz",
+    "integrity": "sha512-MT/xP0CrubFRNLNKvxJ2BYfy53Zkm++5bX9dtuPbqAeQpTVe0MQTFhao8+Cp//EmJp244xt6Drw/GVEGCUj40g==",
+    "npmGitHead": "ed59e76ea37a80f54b833668c02a5271984dcba3"
+  },
+  "source": {
+    "repository": "auth0/node-jsonwebtoken",
+    "ref": "v9.0.3",
+    "archiveSha256": "9cf09fff341e021f7d30d8b16bbc9b339c58e3aeb15b1c2ca50282fc9d789465"
+  },
+  "sourceVerification": "All runtime JavaScript files in the pinned source archive exactly match the installed npm jsonwebtoken 9.0.3 fixture.",
+  "dependencies": {
+    "jws": "vjws",
+    "ms": "vms",
+    "lodash helpers": "native validation and direct callback completion",
+    "semver": "Node 20+ baseline"
+  },
+  "changes": [
+    "Require finite NumericDate claims and time options; honor zero timestamps and maxAge.",
+    "Use canonical compact validation and algorithm/key checks from vjws/vjwa.",
+    "Complete callbacks once, isolate resolver headers, snapshot options before asynchronous key resolution.",
+    "Use native secret import directly for ordinary HMAC keys; retain asymmetric PEM detection.",
+    "Bound immutable public PEM caching to 16 entries and 16 KiB each; cache immutable key metadata weakly; never cache private key strings, secrets or mutable buffers.",
+    "Always encode object JSON as UTF-8; verify UTF-8 even when typ is absent.",
+    "Require explicit none algorithm with no key; disallow asymmetric validation bypass and explicit algorithm/header disagreement.",
+    "Reject top-level payload toJSON methods and boxed option primitives; snapshot own properties and preserve prototype keys as data.",
+    "Use native Error subclasses so Bun diagnostic stacks include the correct name and message.",
+    "Validate issuer/algorithm lists without sparse-array bypasses and make RegExp audience matching deterministic."
+  ],
+  "upstreamTestAdaptations": [
+    "Nine upstream TODO expectations for non-finite iat, exp and nbf now require rejection, retaining each input.",
+    "Object JSON binary-encoding test decodes UTF-8; supplied-key none signing test now requires an error.",
+    "Enable the upstream skipped unsigned callback signing case. Node: 512 pass; Bun: 509 pass, 3 restricted RSA-PSS import tests pending.",
+    "On Bun only, use native Node to re-encode the same two upstream explicit-parameter EC public points as named-curve SPKI for both baseline and VPM; assertions and signing keys remain unchanged.",
+    "Route internal asymmetric validator tests to VPM keys.validate, preserving the upstream helper convention that missing algorithm/key is a no-op.",
+    "Run pinned Mocha/Chai/Sinon tools in an isolated development fixture; independent upstream JWS constructs tokens for both implementations."
+  ]
+}

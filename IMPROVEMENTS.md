@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vjsonwebtoken](packages/vjsonwebtoken) | jsonwebtoken 9.0.3 | Two dependencies, finite claim/time validation, reliable callbacks, direct HMAC key import and bounded public-key reuse. |
 | [vjws](packages/vjws) | jws 4.0.1 | Exact byte payloads, UTF-8 headers, canonical compact parsing, algorithm agreement, bounded header reuse and linear stream collection using vjwa. |
 | [vjwa](packages/vjwa) | jwa 2.0.1 | Zero dependencies, native ECDSA signature format, canonical encodings, explicit key/algorithm matching and bounded public-key reuse. |
 | [vfunctions-framework](packages/vfunctions-framework) | @google-cloud/functions-framework 5.0.2 | Entirely VPM runtime tree, portable types, isolated request context, exact buffer-view logging, thenable handling, Bun event support, and corrected timeout lifecycle. |
@@ -60,10 +61,10 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,803 tests**: all pass on Node 24, and Bun passes
-1,800 with three documented runtime-specific skips. All 46 runtime packages'
+The root suite contains **1,838 tests**: all pass on Node 24, and Bun passes
+1,835 with three documented runtime-specific skips. All 47 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
-catalog covers **48 packages**, including two declaration-only packages.
+catalog covers **49 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -89,6 +90,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vjsonwebtoken` | 10 | 2 |
 | `vjws` | 2 | 1 |
 | `vjwa` | 3 | 0 |
 | `vhttp-errors` | 5 | 1 |
@@ -126,8 +128,8 @@ passed a request object where 2.x requires a string, so overriding their parser
 alone would lose charset information. Firebase Functions 7.4.0 removes the
 previous Express 4 branch. Platform types have their own documented baselines.
 
-The fixture also includes Firebase Admin and jsonwebtoken consumers: expiry
-durations reach `vms`, signatures reach `vjwa` through `vjws`, and proxy agents
+The fixture also includes Firebase Admin and JWT consumers: `vjsonwebtoken`
+validates claims, expiry durations reach `vms`, signatures reach `vjwa` through `vjws`, and proxy agents
 reach `vdebug`. Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
 The wider frameworks, authentication libraries and Google SDKs still contain upstream dependencies.
 A complete VPM Express tree does not mean the entire backend has been replaced.
@@ -158,9 +160,10 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
   the HTTP count.
 - Framework CLI/environment precedence, option types and errors, application
   startup callbacks, symbol descriptors, JWT expiry durations and debug output.
-- All 12 signed JWT algorithms through `jsonwebtoken`, including synchronous and
-  callback-based signing, Unicode key IDs and tamper rejection, plus offline Google
-  `JWTAccess` signing, with `vjws` and `vjwa` substituted underneath.
+- All 12 signed JWT algorithms through `vjsonwebtoken`, including synchronous and
+  callback-based signing, Unicode key IDs, tamper rejection, claim boundaries and
+  asynchronous key resolution, plus offline Google `JWTAccess` signing through
+  `vjws` and `vjwa`.
 
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
@@ -175,6 +178,67 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vjsonwebtoken
+
+Replaces `jsonwebtoken` 9.0.3 with two direct dependencies, `vjws` and `vms`,
+in place of ten. The seven Lodash helpers and legacy semver feature gates are
+removed. Native crypto remains responsible for signing and verification.
+
+The implementation validates finite `iat`, `exp`, `nbf`, clocks and tolerances;
+honors zero timestamps and zero maximum age; rejects malformed algorithm and
+issuer lists; and makes RegExp audience checks repeatable without changing the
+caller's `lastIndex`. Signing snapshots own properties and rejects top-level
+payload serialization hooks. UTF-8 applies to object JSON and verified payloads.
+
+Callback signing uses a direct operation and one next-tick completion. Claim
+conflicts cannot report an error and then continue to return a token. Key
+resolvers receive independent headers, use snapshotted options and complete only
+once. An explicit signing algorithm must match the serialized header. Unsigned
+tokens require explicit `none` and no key; bypassing asymmetric key validation is
+unsupported. The [API guide](packages/vjsonwebtoken/README.md) records intentional
+compatibility changes, including strict claim types and callback error timing.
+
+**Evidence:** 35 focused tests on Node and Bun cover all 12 signed algorithms,
+malformed inputs, time boundaries, key confusion, native import formats,
+CryptoKeys, mutation and callback behavior. The
+[upstream conformance suite](scripts/jwt-conformance/README.md) passes 512 cases
+on Node and 509 on Bun, with three restricted-RSA-PSS import cases pending only
+on Bun. Eleven expectation changes implement documented corrections; the original
+skipped unsigned callback case is enabled. The runner preserves the original
+archive and records Bun's EC fixture encoding adaptation. The HTTP/authentication
+integration gate and installed npm/Bun archives also exercise the replacement.
+
+**Performance:** the [harness](packages/vjsonwebtoken/bench/compare.cjs) compares
+upstream, upstream using VPM dependencies, and the new implementation. Three fresh
+processes per runtime use twelve balanced rounds; identical-code controls, all
+samples and source hashes are retained in the
+[complete report](packages/vjsonwebtoken/bench/results/README.md).
+
+| Operation | Node 24 time change | Bun time change |
+|---|---:|---:|
+| HS256 sign / verify with string secret | −66% / −74% | −55% / −55% |
+| HS256 callback sign / resolver verify | −73% / −76% | −60% / −56% |
+| RS256 / PS256 verify, warm public PEM | −48% / −48% | −30% / −28% |
+| ES256 verify, warm public PEM | −22% | −8% |
+| HS256 sign / verify, 64 KiB JSON | −18% / −37% | −31% / −36% |
+| Decode complete token | −40% | −50% |
+| RS256 / ES256 verify, uncached PEM Buffer | +3% / +3% | −7% / −3% |
+| PS256 verify, uncached PEM Buffer | +32% | −3% |
+
+Ordinary HMAC keys avoid a failed asymmetric import on each operation. A private
+cache holds at most 16 complete public PEM strings of at most 16 KiB each; mutable
+buffers, private PEM, certificates and shared secrets are not cached by input
+identity. Native key metadata is weakly held. Cold RSA-PSS retains `vjwa`'s
+modulus-length validation cost, also visible in the bridge. No correctness guard
+was removed to improve the result.
+
+Node HMAC verification with an existing KeyObject remains 10% faster than
+upstream but 14% slower than the bridge (about 0.49 µs) with VPM's additional
+option/claim validation. Controls range from −4.5% to +3.1% on Node and −5.4% to
++18.1% on Bun; Bun's largest control variation is callback signing. Small changes
+are uncertain, and the report includes per-process results. These measurements
+are operation timings, not application throughput claims.
 
 ## vjws
 

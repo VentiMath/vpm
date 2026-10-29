@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  jsonwebtoken: { pkg: 'vjsonwebtoken', versions: /^9\.0\.3$/ },
   jws: { pkg: 'vjws', versions: /^4\.0\.1$/ },
   jwa: { pkg: 'vjwa', versions: /^2\.0\.1$/ },
   '@google-cloud/functions-framework': { pkg: 'vfunctions-framework', versions: /^5\.0\.2$/ },
@@ -1084,6 +1085,16 @@ async function run() {
     const token = jwt.sign({ sub: 'student' }, 'secret', { expiresIn: '2 hours' });
     const claims = jwt.verify(token, 'secret');
     assert.equal(claims.exp - claims.iat, 7200);
+    const constrained = jwt.sign({ iat: 0, sub: 'student', nonce: 'integration' }, 'secret',
+      { expiresIn: 120, audience: 'vpm-test', issuer: 'ventimath', keyid: 'integration-key' });
+    const resolvedClaims = await new Promise((resolve, reject) => jwt.verify(constrained, (header, done) => {
+      assert.equal(header.kid, 'integration-key');
+      setImmediate(() => done(null, 'secret'));
+    }, { clockTimestamp: 60, audience: 'vpm-test', issuer: 'ventimath', nonce: 'integration', maxAge: 90 },
+    (error, value) => error ? reject(error) : resolve(value)));
+    assert.equal(resolvedClaims.iat, 0);
+    assert.throws(() => jwt.verify(constrained, 'secret', { clockTimestamp: 120 }), jwt.TokenExpiredError);
+    assert.throws(() => jwt.verify(constrained, 'secret', { clockTimestamp: 60, audience: 'wrong' }), /audience invalid/);
 
     // Real JWT and Google-auth consumers exercise VPM JWS/JWA offline.
     const { keys } = require('../packages/vjwa/test/helpers.cjs');
@@ -1127,7 +1138,7 @@ async function run() {
   const installed = name => require(path.join(modules, name, 'package.json')).version;
   console.log(`${runtime}: ${checks} HTTP checks passed through vfunctions-framework (replacing ${installed('@google-cloud/functions-framework')}), firebase-functions ${installed('firebase-functions')}, express ${installed('express')}.`);
   console.log('6 Functions Framework startup-option checks passed.');
-  console.log('12 JWT algorithms: synchronous/asynchronous signing, Unicode headers and tamper rejection, plus Google JWTAccess signing, passed through vjws/vjwa.');
+  console.log('12 JWT algorithms: synchronous/asynchronous signing, Unicode headers, tamper rejection, claims, asynchronous key resolution and Google JWTAccess signing passed through vjsonwebtoken/vjws/vjwa.');
   console.log(`${readerParityChecks} raw package-reader comparisons and 3 framework CJS/ESM loading cases passed.`);
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
   console.log('Aliased: ' + [...aliased.keys()].map(label => `${label} ×${calls[label.replace(/@[^@]+$/, '')]}`).join(', '));
