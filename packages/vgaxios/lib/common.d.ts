@@ -18,7 +18,7 @@ export declare class GaxiosError<T = any> extends Error {
      * @example
      * 'ECONNRESET'
      */
-    code?: string;
+    code?: string | number;
     /**
      * An HTTP Status code.
      * See {@link https://developer.mozilla.org/en-US/docs/Web/API/Response/status Response: status property}
@@ -44,25 +44,49 @@ export declare class GaxiosError<T = any> extends Error {
      * @see {@link GaxiosError[GAXIOS_ERROR_SYMBOL]}
      */
     static [Symbol.hasInstance](instance: unknown): boolean;
-    constructor(message: string, config: GaxiosOptions, response?: GaxiosResponse<T> | undefined, error?: (Error | (Error & {code?: string})) | undefined);
+    constructor(message: string, config: GaxiosOptions, response?: GaxiosResponse<T> | undefined, cause?: unknown);
+    static extractAPIErrorFromResponse(response: GaxiosResponse, fallback?: string): AIPErrorInterface;
 }
-export interface Headers {
-    [index: string]: any;
+export interface Headers extends Iterable<[string, string]> {
+    [Symbol.iterator](): IterableIterator<[string, string]>;
+    append(name: string, value: string): void;
+    delete(name: string): void;
+    get(name: string): string | null;
+    has(name: string): boolean;
+    set(name: string, value: string): void;
+    getSetCookie(): string[];
+    keys(): IterableIterator<string>;
+    values(): IterableIterator<string>;
+    entries(): IterableIterator<[string, string]>;
+    forEach(callback: (value: string, key: string, headers: Headers) => void, thisArg?: any): void;
 }
+export type HeadersInit = Headers | [string, string][] | Record<string, string>;
 export type GaxiosPromise<T = any> = Promise<GaxiosResponse<T>>;
-export interface GaxiosXMLHttpRequest {
-    responseURL: string;
-}
-export interface GaxiosResponse<T = any> {
-    config: GaxiosOptions;
+export interface GaxiosResponse<T = any> extends FetchResponse {
+    config: GaxiosOptionsPrepared;
     data: T;
-    status: number;
-    statusText: string;
-    headers: Headers;
-    request: GaxiosXMLHttpRequest;
+    readonly headers: Headers;
+    readonly ok: boolean;
+    readonly redirected: boolean;
+    readonly type: string;
+    readonly bodyUsed: boolean;
+    bytes(): Promise<Uint8Array>;
+    formData(): Promise<any>;
+    clone(): FetchResponse;
 }
+export interface AIPErrorInterface {message: string; code: number; status: string; [key: string]: unknown;}
+export interface URLSearchParamsLike extends Iterable<[string, string]> {
+    get(name: string): string | null; getAll(name: string): string[]; has(name: string): boolean;
+    set(name: string, value: string): void; append(name: string, value: string): void; delete(name: string): void;
+    toString(): string;
+}
+export interface PreparedURL extends URL {
+    protocol: string; host: string; hostname: string; port: string; pathname: string; search: string; hash: string;
+    username: string; password: string; readonly origin: string; readonly searchParams: URLSearchParamsLike;
+}
+export interface GaxiosOptionsPrepared extends GaxiosOptions {url: PreparedURL; headers: Headers;}
 export interface GaxiosMultipartOptions {
-    headers: Headers;
+    headers: HeadersInit;
     content: string | Uint8Array | Readable;
 }
 /**
@@ -80,8 +104,8 @@ export interface GaxiosOptions {
      */
     baseUrl?: string;
     baseURL?: string | URL;
-    method?: 'GET' | 'HEAD' | 'POST' | 'DELETE' | 'PUT' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
-    headers?: Headers;
+    method?: string;
+    headers?: HeadersInit;
     data?: any;
     body?: any;
     /**
@@ -107,7 +131,7 @@ export interface GaxiosOptions {
      */
     onUploadProgress?: (progressEvent: any) => void;
     responseType?: 'arraybuffer' | 'blob' | 'json' | 'text' | 'stream' | 'unknown';
-    agent?: Agent | ((parsedUrl: URL) => Agent);
+    agent?: Agent | false | ((parsedUrl: URL) => Agent | false | undefined);
     validateStatus?: (status: number) => boolean;
     retryConfig?: RetryConfig;
     retry?: boolean;
@@ -115,11 +139,19 @@ export interface GaxiosOptions {
     size?: number;
     compress?: boolean;
     /**
-     * Implementation of `fetch` to use when making the API call. By default,
-     * will use the browser context if available, and fall back to `node-fetch`
-     * in node.js otherwise.
+     * Override the transport. Native fetch is the default; Node agents, proxies,
+     * client certificates and compress:false use vnode-fetch.
      */
     fetchImplementation?: FetchImplementation;
+    redirect?: 'follow' | 'manual' | 'error';
+    duplex?: 'half';
+    cache?: 'default' | 'force-cache' | 'no-cache' | 'no-store' | 'only-if-cached' | 'reload';
+    credentials?: 'omit' | 'include' | 'same-origin';
+    integrity?: string;
+    keepalive?: boolean;
+    mode?: 'cors' | 'navigate' | 'no-cors' | 'same-origin';
+    referrer?: string;
+    referrerPolicy?: string;
     cert?: string;
     key?: string;
     /**
@@ -223,15 +255,15 @@ export interface FetchResponse {
     readonly status: number;
     readonly statusText: string;
     readonly url: string;
-    readonly body: unknown | null;
-    arrayBuffer(): Promise<unknown>;
-    blob(): Promise<unknown>;
+    readonly body: {readonly locked: boolean; getReader(): {read(): Promise<{done: boolean; value?: Uint8Array}>; cancel(reason?: any): Promise<void>; releaseLock(): void}; cancel(reason?: any): Promise<void>} | null;
+    arrayBuffer(): Promise<ArrayBuffer>;
+    blob(): Promise<{readonly size:number; readonly type:string; text():Promise<string>; arrayBuffer():Promise<ArrayBuffer>}>;
     readonly headers: FetchHeaders;
     json(): Promise<any>;
     text(): Promise<string>;
 }
 export interface FetchRequestInit {
-    method?: string;headers?: Headers;body?: any;signal?: any;agent?: GaxiosOptions['agent'];size?:number;timeout?:number;follow?:number;compress?:boolean;
+    method?: string;headers?: HeadersInit;body?: any;signal?: any;agent?: GaxiosOptions['agent'];size?:number;timeout?:number;follow?:number;compress?:boolean;
 }
 export interface FetchHeaders {
     append(name: string, value: string): void;

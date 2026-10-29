@@ -1,0 +1,8 @@
+{
+  "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+  "test/fixtures/fake.cert": "b2dd991fa5c27ae267cd0e7416bc561bdbfaba6b9aebf786055813429b6697ea",
+  "test/fixtures/fake.key": "370fb26fbf789d9ef2dd01e128979592a70818c5b62067b3b9998a21e82430de",
+  "test/test.getch.ts": "e32b3a7dc3ebcd705ed30743d034319134f1da308e6c2e8b8bd1942d68b1e349",
+  "test/test.index.ts": "0c3668d5afa812db8e05ec8abb64e4712ff33fbe347d9eaeacc219880846d4be",
+  "test/test.retry.ts": "bd983dfd3d82885ea9ad3512dbe216a6fc37a3d0b472ab63bab2dbee9f3d3cd2"
+}

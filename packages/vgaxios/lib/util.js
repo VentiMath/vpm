@@ -13,4 +13,4 @@
 // limitations under the License.
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pkg = void 0;
-exports.pkg = Object.freeze({name: 'gaxios', version: '6.7.1'});
+exports.pkg = Object.freeze({name: 'gaxios', version: '8.3.2'});

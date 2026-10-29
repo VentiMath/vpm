@@ -1,5 +1,11 @@
 # Metadata benchmark evidence
 
+These measurements predate the Gaxios 8/native-fetch upgrade and describe the
+source hashes captured at commit `fd273e24`. They remain historical evidence;
+current HTTP performance is recorded in the [vgaxios report](../../../vgaxios/bench/results/README.md).
+Run the source-hash verification at that recorded revision, not against the
+upgraded transport.
+
 Node 24.22.1 and Bun 1.4.0 on Apple M1 Pro, macOS arm64. Three fresh processes
 and one identical-upstream control per runtime; 12 alternating paired rounds
 after warmup. Every sample is retained. Percentages are medians of paired ratios,

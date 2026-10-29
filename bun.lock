@@ -168,7 +168,6 @@
       "dependencies": {
         "vextend": "workspace:*",
         "vhttps-proxy-agent": "workspace:*",
-        "vis-stream": "workspace:*",
         "vnode-fetch": "workspace:*",
       },
     },

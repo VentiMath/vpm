@@ -107,7 +107,7 @@ function prepare(key, options, retries = 3, fastFail = false) {
 function safeError(error, forcedCode) {
   const status = error?.response?.status ?? error?.status;
   const validStatus = Number.isInteger(status) && status >= 100 && status <= 599 ? status : undefined;
-  const code = forcedCode || (networkCodes.has(error?.code) ? error.code : 'ERR_METADATA_REQUEST');
+  const code = forcedCode || (error?.code === 'TimeoutError' ? 'ETIMEDOUT' : networkCodes.has(error?.code) ? error.code : 'ERR_METADATA_REQUEST');
   const result = new transport.GaxiosError('Metadata request failed' + (validStatus ? ' (HTTP ' + validStatus + ')' : ''), {}, validStatus ? {status: validStatus, statusText: '', headers: {}, config: {}, data: ''} : undefined);
   result.code = code;
   return result;
@@ -138,7 +138,7 @@ async function retrieve(config) {
       retryConfig: {noResponseRetries: config.retries, retry: 3, totalTimeout: config.timeout, shouldRetry}};
     async function send(url) {
       const response = await transport.request({...options, url});
-      if (response.headers?.['metadata-flavor'] !== HEADER_VALUE) throw safeError(undefined, 'ERR_METADATA_FLAVOR');
+      if ((response.headers?.get?.('metadata-flavor') ?? response.headers?.['metadata-flavor']) !== HEADER_VALUE) throw safeError(undefined, 'ERR_METADATA_FLAVOR');
       return response;
     }
     let response;

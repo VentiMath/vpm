@@ -3,16 +3,17 @@
   "checkedOn": "2026-10-29",
   "upstream": {
     "package": "gaxios",
-    "version": "6.7.1",
-    "tarball": "https://registry.npmjs.org/gaxios/-/gaxios-6.7.1.tgz",
-    "integrity": "sha512-LDODD4TMYx7XXdpwxAVRAIAuB0bzv0s+ywFonY46k126qzQHT9ygyoa9tncmOiQmmDrik65UYsEkv3lbfqQ3yQ==",
-    "commit": "08cb49113544b37334975cb727c49a07d4d13f26",
-    "sourceArchiveSha256": "eb4a816b0ce24cf69dcbc710f026c2eee4241b9c5e65cd5019f988e14853702c"
+    "version": "8.3.2",
+    "tarball": "https://registry.npmjs.org/gaxios/-/gaxios-8.3.2.tgz",
+    "integrity": "sha512-7VsaTExxjbDv2ZK1YuC4jbgfN33NI/6/7zdYWUHB6mcg51v4tCBZe+xzjqPzOpVzI+C5k1Kk9OQ80WVrXAHOqw==",
+    "commit": "b3a96877f6830e2869b9026e95c10df41923790d",
+    "sourceDirectory": "core/packages/gaxios",
+    "testHashes": "../../scripts/google-http-conformance/gaxios-8.3.2/SHA256.json"
   },
   "dependencies": {
     "extend": "vextend",
-    "is-stream": "vis-stream",
-    "node-fetch": "vnode-fetch",
+    "is-stream": "Removed: inline stream capability checks",
+    "node-fetch": "Native fetch by default; vnode-fetch for Node agents, proxies, mTLS and compress:false",
     "https-proxy-agent": "vhttps-proxy-agent",
     "uuid": "Removed: native crypto.randomUUID for multipart boundaries"
   },
@@ -25,6 +26,10 @@
     "Isolate proxy versus destination client certificates and key agent reuse by both key and certificate; provide explicit destroy().",
     "Preserve RegExp noProxy state and handle wildcard/host-port bypass rules.",
     "Retain upstream GaxiosError brand/version protocol for cross-package error recognition.",
-    "Encode native FormData with the runtime serializer instead of dropping its body."
+    "Encode native FormData with the runtime serializer instead of dropping its body.",
+    "Use the current Headers/URL/Response API, fetch wrapper, mergeHeaders and AIP-193 error causes.",
+    "Enforce redirect counts, cross-origin credential stripping, decompressed response limits and whole-attempt deadlines around native fetch.",
+    "Keep the original caller signal separate from per-attempt timeout signals and redact copied errors only after final retry.",
+    "Keep Node-readable data for default streamed responses; explicit custom fetch implementations retain their Web Stream data."
   ]
 }
