@@ -6,8 +6,6 @@ const { Buffer } = require('node:buffer');
 const { types } = require('node:util');
 const { RSA_PKCS1_PADDING, RSA_PKCS1_PSS_PADDING, RSA_PSS_SALTLEN_DIGEST } = crypto.constants;
 const algorithms = Object.create(null);
-const invalidBase64url = /[^A-Za-z0-9_-]/;
-const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 const publicKeys = new Map();
 const publicPem = /^-----BEGIN (PUBLIC KEY|RSA PUBLIC KEY)-----\r?\n[A-Za-z0-9+/=\r\n]+-----END \1-----\r?\n?$/;
 
@@ -79,13 +77,11 @@ function signatureBytes(signature, size) {
   if (typeof signature !== 'string') throw new TypeError('signature must be a base64url string');
   const length = signature.length;
   if (size && length !== Math.ceil(size * 4 / 3)) return null;
-  const remainder = length % 4;
-  if (!length || remainder === 1 || invalidBase64url.test(signature)) return null;
-  // Buffer's decoder is deliberately permissive; require canonical unpadded
-  // base64url, including zero unused bits, before decoding untrusted signatures.
-  const last = alphabet.indexOf(signature[length - 1]);
-  if ((remainder === 2 && (last & 15)) || (remainder === 3 && (last & 3))) return null;
-  return Buffer.from(signature, 'base64url');
+  if (!length || length % 4 === 1) return null;
+  // Native decoding is permissive. An exact round trip rejects every alias,
+  // including padding, whitespace, alternate alphabets and nonzero unused bits.
+  const bytes = Buffer.from(signature, 'base64url');
+  return bytes.toString('base64url') === signature ? bytes : null;
 }
 
 function hmac(bits) {
@@ -128,7 +124,10 @@ function asymmetric(family, bits) {
     const options = family === 'ES' ? { key, dsaEncoding: 'ieee-p1363' }
       : family === 'PS' ? { key, padding: RSA_PKCS1_PSS_PADDING, saltLength: RSA_PSS_SALTLEN_DIGEST }
       : { key, padding: RSA_PKCS1_PADDING };
-    state = { matches, options, size: size || (matches ? Math.ceil(key.asymmetricKeyDetails.modulusLength / 8) : 0) };
+    // Native PKCS#1 verification enforces the modulus-sized signature already.
+    // PSS needs our explicit check: some native runtimes accept a missing zero
+    // prefix. Avoid the expensive RSA details lookup when it adds no validation.
+    state = { matches, options, size: size || (matches && family === 'PS' ? Math.ceil(key.asymmetricKeyDetails.modulusLength / 8) : 0) };
     prepared.set(key, state);
     return state;
   }
@@ -146,6 +145,9 @@ function asymmetric(family, bits) {
       if (typeof signature !== 'string') throw new TypeError('signature must be a base64url string');
       const state = prepare(key);
       if (!state.matches) return false;
+      // Keep oversized input rejection ahead of decoding/allocation. Ordinary
+      // RSA signatures need no metadata lookup; larger keys remain supported.
+      if (!state.size && signature.length > 1024) state.size = Math.ceil(key.asymmetricKeyDetails.modulusLength / 8);
       const supplied = signatureBytes(signature, state.size);
       if (supplied === null) return false;
       return crypto.verify(hash, value, state.options, supplied);

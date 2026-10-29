@@ -59,8 +59,8 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,689 tests**: all pass on Node 24, and Bun passes
-1,686 with three documented runtime-specific skips. All 45 runtime packages'
+The root suite contains **1,691 tests**: all pass on Node 24, and Bun passes
+1,688 with three documented runtime-specific skips. All 45 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
 catalog covers **47 packages**, including two declaration-only packages.
 
@@ -192,9 +192,11 @@ WeakMaps reuse validated native key operations. A bounded cache stores at most
 buffers and import options are parsed on each call. Callers can prepare native
 KeyObjects once to avoid repeated import costs without adding a private-key cache.
 
-**Coverage:** 38 focused tests plus all 65 upstream tests against each of the
-original and replacement implementations, totaling 168 cases on Node and Bun.
-They include OpenSSL interoperability and RFC 7515 Appendix A vectors. The shared
+**Coverage:** 40 focused tests plus all 65 upstream tests against each of the
+original and replacement implementations, totaling 170 cases on Node and Bun.
+They include OpenSSL interoperability, RFC 7515 Appendix A vectors, removed/added
+RSA signature zero prefixes across all six RSA/PSS algorithms, and
+1024/2050/4096/8192-bit modulus sizes. The shared
 consumer gate adds all 12 signed JWT algorithms and tampering through
 `jws`/`jsonwebtoken`, plus offline Google `JWTAccess` signing. Archive/type checks
 cover npm/Bun installations and CJS/ESM consumers without ambient platform types.
@@ -209,7 +211,71 @@ coercion and runtime-accepted key sizes remain. Algorithm allowlists, key-streng
 policy and JWT claim validation remain caller responsibilities. The
 [API guide](packages/vjwa/README.md) records these boundaries and test adaptations.
 
-**Performance, 2026-10-28:** Node 24.22.1 and Bun 1.4.0 on macOS arm64. Each of
+**RSA follow-up, 2026-10-28:** the dominant uncached Node cost was reading
+`asymmetricKeyDetails` on every newly imported RSA key. A native diagnostic
+measures import alone at 12.09 microseconds, import plus key type at 12.48, and
+import plus key details at 26.49. Bun's corresponding times are 2.44, 2.47 and
+2.51 microseconds, explaining why the original regression was specific to Node.
+
+Ordinary PKCS#1 verification already checks the modulus-sized signature in native
+crypto. Removing the duplicate metadata lookup preserves that check. RSA-PSS
+still gets an explicit length check: Node's native verifier can accept a valid
+PSS signature after its leading zero is removed. Oversized RSA strings also get
+an explicit length check before decoding; inputs on the metadata-free path decode
+to at most 768 bytes. Native decode/encode round trips retain exact canonical
+base64url checks. Key-family validation, PSS restrictions, import errors and the
+16-entry public cache remain. No private-key or mutable-buffer cache was added.
+
+The [follow-up harness](packages/vjwa/bench/rsa.cjs) compares unmodified upstream,
+a frozen `c3bc17f` implementation and the new code on Node 24.22.1/Bun 1.4.0,
+macOS arm64, Apple M1 Pro. It measures 24 operations plus the native diagnostic:
+12 rounds cover all six variant orders twice; three fresh processes give 36
+paired observations per operation. Separate identical-code controls, source
+hashes and every sample are retained in [eight reports](packages/vjwa/bench/results/rsa).
+The [summary](packages/vjwa/bench/summarize-rsa.cjs) reproduces the values and
+checks the frozen/current source hashes with `--verify-current`. Negative changes
+mean faster; percentages use paired ratios, not ratios of independently pooled
+medians. The native diagnostic row is not a package before/after comparison. The complete
+earlier run is retained in `initial-fixtures/`; the
+[report notes](packages/vjwa/bench/results/rsa/README.md) explain the untimed
+test-fixture correction that prompted a rerun with final source fingerprints.
+
+| Operation | Node vs upstream | Bun vs upstream |
+| --- | ---: | ---: |
+| RS256 verify, uncached PEM Buffer | +6.9% | −1.0% |
+| RS256 verify, rotating PEM cache misses | +6.6% | −0.5% |
+| RS384 / RS512 verify, uncached PEM Buffer | +5.2% / +6.1% | −0.8% / −0.7% |
+| RS384 / RS512 verify, rotating PEM cache misses | +7.8% / +8.3% | +3.2% / +1.8% |
+| RS256 verify, warm PEM cache | −49.9% | −27.7% |
+| RS256 verify, KeyObject | −0.7% | −6.6% |
+| PS256 verify, uncached Buffer / rotating PEM | +37.3% / +41.0% | +0.8% / +1.6% |
+| ES256 verify, uncached Buffer / rotating PEM | +6.3% / +7.5% | +1.1% / +0.0% |
+| RS256 sign, private PEM | +0.2% | −0.3% |
+| HS256 sign / verify, KeyObject | −6.8% / −7.2% | −18.3% / −11.6% |
+
+Node RS256 Buffer verification falls from **61.98 to 45.99 microseconds**
+(upstream 43.40); rotating PEM falls from **62.71 to 47.03 microseconds**
+(upstream 43.89). These are **25.7% and 25.1% faster than previous VPM**, respectively.
+The three Buffer reports show +5.0%, +6.5%, +7.4% against upstream; rotating
+reports show +5.6%, +7.7%, +6.5%. Across all three RSA hashes, uncached verification
+improves 25–26.5%. The remaining 2–4 microseconds of RSA overhead has not been
+eliminated; VPM still imports a key explicitly and validates the key family and
+canonical signature. The rotating corpus uses 20 encodings of one public key,
+not a deployed key-rotation workload.
+
+**Remaining costs and variation:** uncached PS256 retains its metadata check and
+its Node cost; ES256 retains curve validation. Neither is improved materially by
+this change. Identical-code controls span −4.4% to +2.7% on Node and −4.8% to
++5.0% on Bun, so small differences are not robust wins. Bun RS256's warm PEM case
+is +0.2% against previous VPM, and its rotating case is +1.0%. One Bun RS384
+KeyObject report is +30.4% against upstream versus −7.7%/−7.6% in the other two;
+the aggregate is −6.8%. All observations are retained. These local operation
+timings do not establish deployed authentication throughput or startup performance.
+
+<details>
+<summary>Initial measurements before the RSA optimization (2026-10-28)</summary>
+
+**Initial performance:** Node 24.22.1 and Bun 1.4.0 on macOS arm64. Each of
 42 workloads has three fresh-process reports, ten alternating pairs per report
 (30 pairs total), plus an identical-code control per runtime. Outputs are retained
 and checked, and all samples remain in the [eight raw reports](packages/vjwa/bench/results).
@@ -232,7 +298,7 @@ per-report changes and calibration values. Negative percentages mean faster.
 | ES256 verify, rotating PEM cache misses | +8.6% | +1.7% |
 | HS256 sign / verify, 64 KiB | −1.3% / −1.9% | −1.3% / −2.3% |
 
-**Remaining costs:** Node's uncached RS256 PEM verification increases from
+**Original costs:** Node's uncached RS256 PEM verification increases from
 43.07 to 62.25 microseconds with a Buffer, and from 44.32 to 64.54 microseconds
 when cycling 20 PEM encodings beyond the 16-entry cache. Explicit native key
 import and metadata validation add work absent from upstream's direct verification
@@ -253,6 +319,8 @@ intervals; small changes need caution. One Node ES256 private-PEM report reverse
 direction (−22.1%, versus +4.9%/+4.4% in the other two), and Bun HS256 verification
 also varied between reports. No samples were discarded. These are local operation
 benchmarks, not deployed authentication throughput or startup measurements.
+
+</details>
 
 ## vfunctions-framework
 

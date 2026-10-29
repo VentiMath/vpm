@@ -1,0 +1,61 @@
+{
+  "description": "Public synthetic test vectors. Leading-zero signatures use the existing RFC 7515 RSA test key. Size vectors use locally generated keys; private keys are not retained.",
+  "leadingZero": [
+    {
+      "algorithm": "RS256",
+      "message": "vjwa zero-prefix regression RS256 102",
+      "signature": "AFqK8Oz42FDOT6tAy99nN6vHG2IDcVe_qxQnA2TDuBgkvCVef1J4LHQoeHbZkw0lBBouUa1hyuVUENb5AKdEDuItivhrCPtNRh4m6CLcSikYG54S9mQWkrzy39id_tUVqP38zEjznB28hyJOtxBnCKFMSHFgmdbeoL7Be019CKzzG5cnYMlHPzukZQLb2xLcwyUr0auO2Llj8M3GVDKvNhLJse42k3VbBuyiGeDDme61SUs67WlNGK00oQdqVoyXnVw16wKnqzF1vWXpgurwJGuMp_nwb7-tExWIq2NfF_qQkG0-Rio5tvSB7JTiVUoMIm-DSUv5lk_AbxkD4Qs8cw"
+    },
+    {
+      "algorithm": "RS384",
+      "message": "vjwa zero-prefix regression RS384 196",
+      "signature": "AGEm3JTVTgbqKeDbgmynxHf1Ans80YdRL36R-zHBb144KaO3LFMsdU2-I8fZjJgIUI1jZS0szyQ5hoo9qaJp3srnOvHX1E6p0HYbLDIwmt69iEyvEsFJLGzGBlICIwG88jgpB2LWqH7Q43zW1FXhQ_QXpr452UX0ogbym6Okt1sXIU8J0GC_SugBG47Lyea3BS2U8VdG9rKcquW6jf34SdUP_JA32Us7HMuGZixQyJPDqKSfLfAXWAP-L5D4sicyQSTtI8R3QCzp77RWzaFwJDxBB2IEbo77ouhPvB_LLRhRTM5nJSrtU3sVPZlm6rFgcvreH09MgkaUZqyvKSMagA"
+    },
+    {
+      "algorithm": "RS512",
+      "message": "vjwa zero-prefix regression RS512 12",
+      "signature": "ALI-fkheE9i8LuJ_51LkNtProEcVzkz60PMSxCPRW_TodtOGUSNyE617ksbgk3xlqHPZCBy62fiMTblkNP8PN8LjngMHbNCcVMRZKFroQ1j3lrCoJrmRD87fJdox0-137hWL7760MVfY4AtDVKibfHTQHRQobKmei1JXTxTcj3bzbj3WrtMCKUlFm7UOcXsE69jFzVSsu3qLzhWiEWrnSj4yJ9auCAT6Uhemh-oWD8x4sTz8kSSiRePKI02RNFf7XP0ZYsL50aTQb0DXW6z8uD5bORYUUgNbIA3k5koynHAJYFAAuzFJ3639mZibIyZtRfqt9AT2s1weyc8Ek3rjRg"
+    },
+    {
+      "algorithm": "PS256",
+      "message": "vjwa zero-prefix regression PS256 34",
+      "signature": "AEcJQDpr8dpx9F5uziYkZTUEwTPkguh1cxdDj5MURuZK0hCyEn8QV2Ygps9BAbZmb6BYfZt6rbTZMrwpuSUCnF7kHKIZWJi2XgIwNlqoBNFzfiNQ7TcnOXlhRKiZp1srI-3TpQtc2medgueXYj8oSC3HWH-sSEALvcbs6QhTcTRsHlrEy-tTQbOuNb9oy-Pqy4LKy-fU-YrIKcFhv0l51SffjKGeBFnAlV-UDp-MbJUpzKgbLgO0i5TvH3GBh8-v4ppTaXT0tiyN-XzeyA6wiQEtn7LrftFLaVL3iudPyj1_J1YNYZEkVssVyG8aBwI_dfJOhqABZmwVw0CvMQfmqw"
+    },
+    {
+      "algorithm": "PS384",
+      "message": "vjwa zero-prefix regression PS384 230",
+      "signature": "AM0oVtegeYKIc_ugGWTcSDPoFcIFPz_6yLR2gyWucEwmLB1OSkejXUWG9I_10uvqiZxj0PrfyKc9_VaXbftFbiSNaY5KxpCD-3HbxROmvLq70sebzR-C2fAvq-IcLXu3hQgJVjm175EnXfVZY52nA3AHoGqw8IhW7DnkUtnigQAE71SV23-ACJV-0Ze7ETNlifRBkfzC-bxLdRanp93U8dGNuKdfWPh1V9LZaw6l9Txlk8MgkxdvwehtYluihSnYdTRFJ8M54hjEjS6mBrr6oEyJXAEWQH0DolUVb-JvmbD7R7vbbSKtgHQnZo4wfDQrMra6ZnHCFlfT86JGMMz6gA"
+    },
+    {
+      "algorithm": "PS512",
+      "message": "vjwa zero-prefix regression PS512 59",
+      "signature": "ADwEYF3rJrj7dxwPN_kNzj6JKwEb6V8HBDU09L0bhRxqn6SSTJSDrHstsjAn4UxasZQcAYBVeBQyqCNzEnGwEIViPJs77--8DugMqh2MiS6Dhy3kBFNOK88jdez2ZuZci80O9F0sNlX92ye-rCk_UbLSUobKIPOxC4zAiGc4YgnD_XN7UlgavdMPB0kqKMvwFeT6Sv1D3RGWO9U0x7FA1i4RUmzMsGtI5NKDMjn3SsTBObdFcIrgG_lfdkkkckoCmevg2u8zsHMax9eITa_T6-ss85rI0uFl_Xvoz3glJ-jRgofjIn_Kwwbx5ff0lqnAoIUPSmPR3mle13ri33Ka1A"
+    }
+  ],
+  "sizes": [
+    {
+      "bits": 1024,
+      "publicPem": "-----BEGIN PUBLIC KEY-----\nMIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDkqjbnY2gaj0gRnlFKzxzuV0R1\nr2iLZBNe75C2oaskMTq4fQNwrJ1aKUzD/6zriOgxGfil+PVRweRANY9YOOHxyECF\n8G4lYeTkBzaug7+UJ+rxcAdyzvvR6Q772iX76V2Hwjqd/GjfmD3ufkY+azhaWuP2\nBJoxmfCIqNpqAL1GMwIDAQAB\n-----END PUBLIC KEY-----\n",
+      "message": "vjwa modulus size regression 1024",
+      "signature": "p9KvdClxqSy4tpU4tx7KAQSj23ITLikCLwFqkx4OZYOjZdUFra4Gm52y1VGzNhOoDIUdt5hFOTHiStQaqtozOep4d-Ml4bBFxm2AyQX2_a_KHeGFBUfRmq2BJGzD8-udJsffurGERyYpmOqExTp20HVmIo54jIUmPgmny8UKbJo"
+    },
+    {
+      "bits": 2050,
+      "publicPem": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQECXXspZw82qVSbtxLnFZn9\ntfOSciASSQeVIVu8s48N7S+cZT/MQ0XfnvPQiGr5hNmsdJOrH9yOU4D0osCNnDGK\nTEvyzYNTX2mG3btYscR13tvP+4ySZpqfhQHiFoG4sohOJXXsfxOMX4CJIhaZJ2Qe\nQuHIGtvpO8/k7BBpr6n4Ja1cCdbP+57dfHzBP6RhGXGPnKOBEkHymlWA9DwDIC9F\n+eXEKMW5YNHG7QuRjzAOKbvDyp++D3tlmST03ygjaMXSOpgTcLfF6wNNZ4TpbHUU\nc2GQVpG/3YBJsLSUyIktiXgMx0DGeMuEul/u2nzxbBjVhc2D3+GGq3+1s4g2zOJL\nlwIDAQAB\n-----END PUBLIC KEY-----\n",
+      "message": "vjwa modulus size regression 2050",
+      "signature": "AHcEn81JeyANtp_v-68bSuGuajEtUeJBPIWmENAjojifaO2NR5OZdIJL7WJkcWbkemYPyIP3hn7CTCWsbQENqTo4YJ1gytGoKga_JQce2S8aNhhhsyJENQQGfnhmTCJI_wc3bzyRUHTrMowsNTD0GdY2LGiqYc1KI66R9Kg7Mw0j7In8hHidnVt25CX2Hdm975qR129N4Y2Vw9cTObIxCkGjGGF-i4iRiBeAjFpnFPqPgpHs0ZebicKXceq6ASE1EA2lhZN9kTOn59JDDjajUPdRqSSj27HItmJ33pRBB8lExdcXbpdVnWJvA8Afav9GoGhYf6DfZ_7rgaIwtTz0qH0"
+    },
+    {
+      "bits": 4096,
+      "publicPem": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAw4NrVqr8LMNuzPl7Dr3h\nX7Hez5DkVn4AoD//Gwc/Mg6xbkzVqPycmMCrKHfPEdUtQdWJGUks4N6UZFWoPyRP\nr4stzKtT7543I5sDqXkfCoQrvIidEyLA8nKMlw1MOwIQo5AWSWtRgZbm8mL0X+uO\nIg7FhnxLEI0uDWujQ9D8982WsgMmWZJyo5H8dRb9KpVhSqFAtLVfNqZlC3cmRAwy\nKYvhwRVwJbU/RTz+BQvspaYfAvoa5LmQWHw+kmpuYd2ou1Q2/ARhghpTVYFCORo6\neHu+gU1bgUvKJPIOxe3UvuLvCn5GRWQkZ7K9GKJmqRVsv0ZF2gbPJTGfOb0nV+Ql\nGU5/jokyz9LEviRSAdFmyUKKQdRR7trHDLaupgukiXd1tYuapw/zE7BIKrERfjBW\nZl7LbOPqtfZNpvvT8ZKVcCfao+4jr/NTTKY+esOhIvWoN8NUob5UzGQn5VLkOEuF\nONQ+BX8J9gUUcA+5rxWYDFJ/PahII/ylgFxkgI5x4zSL13h1W5CsnmZYrutkd0t4\njniEbexSpi7+ToXyg7i241/mo+HilE91ha5To90MEscZewZHUtz11pPhc9Kd4wgh\nxhr0yl9JIJ6v0lsEbyYYNNmr3X8t7NuGhSYdZ0Sn/I7/mKiqNEqI1fArtv6LBX8G\ncSu8kkyNXo/euNjO5oGQMrMCAwEAAQ==\n-----END PUBLIC KEY-----\n",
+      "message": "vjwa modulus size regression 4096",
+      "signature": "qdirH40F78Dz89UDrwzNqmqkA2RvHC68-iJfrKwaKgfMWQRA4Abc8gQQDiBbZ8DiMuKsPicBggDL0lukBFZfxCM9LNimrZ7gnmEVvCFS7h82YCnSs_h5_C3-190nKOW4kW3EaPmDZ2IDhu2dOzeupCqk2ddBttMhBUMoFfB-fTOnLBY1QfviYjdbKcGz1wKJMky-E1OuMpWuPnmCDOcFHlLl39sERxHkhEEeY3OyivGjXQy10xRwvwS7scbbnMXJOjKsyfxndLAk5UYEUP9L5xK9hh14lvSV_x44XgYEt9BDOdEtlmMeOyqGvzODRgk_Yl3wbJDbqbvOjGuwSjKdgxpuGJBZvKzYIbeNObV-LQhMao8QL4_mnrD3kGlF5cI_ykuBlcyzUhIy57947k-i2-l4nhiUrDSed-iOSI_CBprYs_vuFsY0S4iKKMqskpN28M-2-U9GFEtDdsR-1jwWvJVo1c2mgvmap95PZs-yFGxZ8Im162ayjZF3AVUphql6Gglhr30sdnDhL8KiVGvvvs9anDUaejDBvX9fjd74Pl6dTUSwExJejNiBXxg6ramsVitNjLEPMDS-Xkiba2vmNP4YzaWmRyJkpKgDg1oJ6mX90oowCAF_0oDKLSh8zWZzQbjReqnCuLvkPG1XEGUTGWViJdTGyUbdb5LR9FKhsG4"
+    },
+    {
+      "bits": 8192,
+      "publicPem": "-----BEGIN PUBLIC KEY-----\nMIIEIjANBgkqhkiG9w0BAQEFAAOCBA8AMIIECgKCBAEAlAudmqFDKymMIzy//6v5\n1dznJwDku8AEpIkqjR17NNpVASceSptImXX/MBkYkvV+VBITE1pPrzW1QPDecx9j\neArqD7CEqpiAJZQ9fnLbvrdL7ioPw1nPGR4Ney24FFAb5Upgif92TFyRkJZXJgQ9\nDKPbsTgZswQ73R7swLtKhVwbQdJeSYxAtXAgQipjM/qVPZFYUV9M2beZHbJIiZdG\n28ud9yA0rzktcXC3NCMyKQbb7kKFHR/YFd7KkHXEGMcq9hMSCzlxQIm5bMp3PcHn\nJiEcNC+UGaZ+GG9hEPmIczHaAvehD0jJuKeaak1FUL9KPB8NF9WfvAkRDrrx0yaj\nv0CEVG2xuO8d0Q18X05lAZKO76QjZ0g/xRoT+TF9ZUJClTbzE3pyOBvLNeHVn5V2\nKW9lBSb0aN5i1LwDUcE2y0FAaYvDjJUS5s6TcLPsiANpNHILMvd75+hucTrvI4sp\neWO1u38NdHswGZDO+k97D8s1GVWosyMvkSm9sZ0eNOO0FsxVk1PUKEVJEtaPno9R\nkg+zNkUvdIRHzm9V7T5sHhG0CpI11eKvFUhbvV1lIYSevWeTyVDcu3F72a0N7LqV\nYFQOXaoUnUj/XxCuDvUJcwmr/NEmEC6ah//o1uYF0tdLSU2X+zIPd87mqnvLApFd\nQFuGBDibJuv2aSELXHqst9fy1EA2FZpfrpntYL8EMtwWZSfpsIwBmO12bV1E48Wn\nMOgzYFGuXwI44xczDHEXVwvqPQ6NX8k4DgsG1fp71HT3d9pnVZaLlM7fyWEeYGtf\nmu8TTITwV+uxy0FFVes4rwpaoS6MDePEOD8n6+uoaba18h8FIiKKAsgXWDxt+Llp\n11GolMgPp1fBufqWNVfDi9WHsPkvn/XW26Mv5CTaR826D4+ugwlNovM0B8UOxOp3\nKtXdibZcWhZrhSsyiFLHf+whZrqShYeHWgJDzQZd0y2ZukIQALLDwgNv93ho4Y9U\n0r8I6fEkXOQtjVX3uTkTteIUKMt47PLTNXJ+hZL+5Hu3Nr89bWIbslSZlaosNaV3\nFsmQmEi8TjJwtczaeE7xPYQAkh/m9NgKfidOx+csFz2Xbc5DwpLzqxWLDMjtxr0a\nPQjEDR90Wu5WG7lqcNp9STd6WQiKciQ8LjCGZ0DzwhZwHPTRORa9UPAaodsFjxzb\nUO/KofM4yj7h0FSe3qXTDWkZJJBeifJxnYD/3Jekqv4thvglLOliHvIonyb7JWbT\n7AfkPDZ0lw+bac4zzmrSIC/9R4UDP6M575GHd7Hy6eJ91O4slesfAzwVly7UW0SR\no1JhOYEGB8vAKm4Z6DUkBTzmpVlG4Xk/in9ztMjxaQla93W41YVXF38z/cEelwKb\nUwIDAQAB\n-----END PUBLIC KEY-----\n",
+      "message": "vjwa modulus size regression 8192",
+      "signature": "O5GrhkE7PKBSt2VDXkhEzzqr_yxXeOb3_gW13S6AucZT-7n6PLMFSnRtqWJRvBI2LQvbUKB9q4fxjcxMIxQAJRbOMie9t-fZjycmqDS3gZmXZDbXGD9aEVju0uSC6j1qccLNDB08kYHp196Koh-RNpaBNiZWvCAGH2EzL9Eh9eOsSB-j_4a_5X5GE5mbvkJPe5uRTThIlz1UZlzeGEUZqWtsGY3BZud6t3BRVrZktcTB0sc7dcWSuULlRcfD4cFsYn138hPAmUhKQljiO8wfmww1EePbtRqK5pDsQ3zFiQ2-vkOSMSAfhiYANsuqW4MdPPajpJr8c-azLKdCyIUIhAtY0rDzCbAa_8Y31SlDQ71QXGZag9lEQha4grcYSIZHZVRglr50iqHbb2Jg8d4qEend6pqvjvx3g1aS5nfJTVuaPRLVxgFPTeNUhqMmPbcueJ1tLjB2dEo10FSmTBdvfUvFQf1w82mhI5odUHJASnumtEYlU3pKq19Dn_pRJH1SBXPbOHYEthhNVL7zPk4yZHF5vj74rAY8rdKHd3D2lfFZekuYRwSqJzznwiLRFtLtT85ZoPNaZZxBDCHiFxsePEQNi9eK6skSB-XHB0uS1gtQnny44r6DIRGP5_XazPd9jzxKV9vs8-4iWFF7328N1Tw76EbI3KmB8l4YxqHSuCwTCXbIExkLQfWW0bkWDL7Ne-SCNxawtJaeFn3cHfbFxE-d6lsnqyqS-CkkIxIr1093HVjJS9zAHMDsr0xX0e5r-_690OkR32KqV2js5BXXAj8F9-zfkxHptvrTzKLcvyyPHERLK3wrSXFYh8W57a0qyWd5H-8LlbHoiN8xJ7NA0ORg9MBSSkXsRxqKQj1Zr4kZVPY6vicoYJcN8M5we7WXKuWqQA-SUuKyW5NbimWeV7JHQCi3OHBbySmn1uRbWPBS__X9Ddak97kpcbzyixOyJhU7xgaQTsZ8EnLZSxHCSmzPyh9pAlp-0KnxKpU6ziA-C8ooMPK04TER_nVy0nC7b2DYe9xrolsmNpSWFHNp6fybZQ3XW2voZEKUEYXk1OaNv6o1l9JJ3vNI9KP9iBZ1WCXxaBHahv4i_auHZOdZrRcPZB3xZCIalVjf_M0hwu4HvaTMSNnrQvaZaQ36DCMACy3vkbpcs2pLrPGspTEp7lgoAaYfNeyaZjriaI5XA9PRF-56Hwnwd0j8cyo8KbS3Hz6Kr4mE_c2Vpy1-nWSws-KsrAPs41UcpL-yiYlJXSjCJVQRc-6GU5SFy9DTjhsnywti7i7BnbwSw0NDzYy_9EGo0u1ISgtr_Q6X9VEw3kOLDyfSC35UtjI2KEGWlyxJZB6JxMm2HsyKPJ54unioLQ"
+    }
+  ]
+}
