@@ -5,7 +5,9 @@ const {Readable} = require('node:stream');
 module.exports = async function(from) {
   const {teenyRequest} = from('teeny-request');
   const {Gaxios} = from('gaxios');
-  const {JWT} = from('google-auth-library');
+  const {JWT, Compute, GoogleAuth} = from('google-auth-library');
+  const metadata = from('gcp-metadata');
+  const oldMetadataHost = process.env.GCE_METADATA_HOST, oldMetadataIp = process.env.GCE_METADATA_IP;
   const logging = from('google-logging-utils');
   const oldFlag = process.env[logging.env.nodeEnables], records = [];
   try {
@@ -40,6 +42,17 @@ module.exports = async function(from) {
     request.on('data', chunk => body += chunk);
     request.on('end', () => {
       response.setHeader('content-type', 'application/json');
+      if (request.url.startsWith('/computeMetadata/v1/')) {
+        assert.equal(request.headers['metadata-flavor'], 'Google');
+        response.setHeader('Metadata-Flavor', 'Google');
+        const url = new URL(request.url, 'http://localhost');
+        if (url.pathname.endsWith('/project-id')) response.end('consumer-project');
+        else if (url.pathname.endsWith('/universe-domain')) { response.statusCode = 404; response.end('private error body'); }
+        else if (url.pathname.endsWith('/identity')) { assert.equal(url.searchParams.get('audience'), 'https://consumer.example.test'); response.end('metadata-id-token'); }
+        else if (url.pathname.endsWith('/token')) response.end(JSON.stringify({access_token:'metadata-access-token',expires_in:3600,token_type:'Bearer'}));
+        else response.end('{"numericProjectId":3279739563200103600}');
+        return;
+      }
       if (request.url === '/token') {
         const form = new URLSearchParams(body), assertion = form.get('assertion');
         assert.equal(form.get('grant_type'), 'urn:ietf:params:oauth:grant-type:jwt-bearer');
@@ -79,7 +92,19 @@ module.exports = async function(from) {
     assert.equal(jwt.key, key); assert.equal(jwt.email, 'service@example.test');
     assert.equal(await jwt.fetchIdToken('https://audience.example.test'), 'consumer-id-token');
     assert.equal(assertions, 2);
+    delete process.env.GCE_METADATA_IP; process.env.GCE_METADATA_HOST = uri; metadata.resetIsAvailableCache();
+    assert.equal(await metadata.isAvailable(), true);
+    assert.equal((await metadata.instance()).numericProjectId.valueOf(), '3279739563200103600');
+    const compute = new Compute();
+    assert.equal((await compute.getAccessToken()).token, 'metadata-access-token');
+    assert.equal(await compute.fetchIdToken('https://consumer.example.test'), 'metadata-id-token');
+    const auth = new GoogleAuth();
+    assert.equal(await auth.getGCEProjectId(), 'consumer-project');
+    assert.equal(await auth.getUniverseDomainFromMetadataServer(), 'googleapis.com');
   } finally {
+    metadata.resetIsAvailableCache();
+    if (oldMetadataHost === undefined) delete process.env.GCE_METADATA_HOST; else process.env.GCE_METADATA_HOST = oldMetadataHost;
+    if (oldMetadataIp === undefined) delete process.env.GCE_METADATA_IP; else process.env.GCE_METADATA_IP = oldMetadataIp;
     client.destroy?.();
     server.closeAllConnections();
     await new Promise(resolve => server.close(resolve));

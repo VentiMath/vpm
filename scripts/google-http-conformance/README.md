@@ -120,3 +120,21 @@ VPM adaptations change the default BigNumber identity to ExactNumber and three
 error-message assertions to sanitized messages. Other assertions are unchanged.
 The integration consumer exercises CloudEvents' actual native-bigint parser and
 restores the global JSON binding that CloudEvents replaces.
+
+## gcp-metadata 6.1.1
+
+`node scripts/google-http-conformance/metadata.cjs` (or `bun`) runs all 66 original
+suite entries from commit `63805cd00cddb8efc21a129c8044808207b0b342`, after archive
+SHA-256 verification. `--upstream` runs the unchanged assertions against the
+pinned original. Native fetch is blocked, Nock disables external connections, and
+the upstream control uses its Node transport on both runtimes.
+
+VPM adaptations cover three sanitized flavor-error assertions, one unknown-option
+message, the finite cloud timeout, seven primary-failure cases whose secondary
+now succeeds, and the successful secondary after cache reset. The DEBUG_AUTH
+case makes both endpoints fail and expects a static message. TypeScript namespace
+imports of callable/mutable Node modules use `import = require` for TS7 fixture
+compilation. Residency assertions are unchanged. No test entries are skipped.
+
+The integration consumer drives Google Auth 9.15.1 Compute access/ID tokens,
+metadata project lookup and universe-domain 404 fallback using local HTTP.

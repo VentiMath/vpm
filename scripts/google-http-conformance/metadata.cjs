@@ -1,0 +1,27 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict');
+const {spawnSync}=require('node:child_process'),{createHash}=require('node:crypto'),{compiler}=require('../platform-types.cjs');
+const root=path.resolve(__dirname,'../..'),temporary=fs.mkdtempSync(path.join(os.tmpdir(),'vgcp-conformance-')),upstream=process.argv.includes('--upstream');
+function run(command,args,options={}){const r=spawnSync(command,args,{encoding:'utf8',maxBuffer:4*1024*1024,timeout:120000,...options});if(r.status!==0)console.log(r.stdout+r.stderr);assert.equal(r.status,0,String(r.error||r.signal||'Failed'));return r.stdout;}
+try{
+ const archive=path.join(__dirname,'gcp-metadata-6.1.1.tar.gz');assert.equal(createHash('sha256').update(fs.readFileSync(archive)).digest('hex'),'f35f9fe1f6869de3210582c3aa2dd6f9ce1319342f5a5699fc43e2dc1859ce8c');run('tar',['-xzf',archive,'--strip-components=1','-C',temporary]);fs.symlinkSync(path.join(__dirname,'node_modules'),path.join(temporary,'node_modules'),'dir');
+ const gaxios=path.join(root,upstream?'scripts/consumers/node_modules/gaxios':'packages/vgaxios');
+ const file=path.join(temporary,'test/index.test.ts');let source=fs.readFileSync(file,'utf8');source=source.replace("import * as assert from 'assert';","import assert = require('assert');").replace("import * as nock from 'nock';","import nock = require('nock');").replace("from 'gaxios'",'from '+JSON.stringify(gaxios));
+ // Compile mutable fs/os namespace imports without TS7 ESM namespace wrappers.
+ const helper=path.join(temporary,'test/utils/gcp-residency.ts');let helperSource=fs.readFileSync(helper,'utf8').replace("import * as fs from 'fs';","import fs = require('fs');").replace("import * as os from 'os';","import os = require('os');");fs.writeFileSync(helper,helperSource);
+ if(!upstream){
+  source=source.replaceAll("Invalid response from metadata service: incorrect Metadata-Flavor header. Expected 'Google', got 'wrongHeader'",'Metadata request failed').replaceAll("Invalid response from metadata service: incorrect Metadata-Flavor header. Expected 'Google', got no header",'Metadata request failed').replace('/Invalid response from metadata service: incorrect Metadata-Flavor header./','/Metadata request failed/').replace("/'fake' is not a valid/",'/Unknown metadata configuration option/');
+  source=source.replace('assert.strictEqual(gcp.requestTimeout(), 0);','assert.strictEqual(gcp.requestTimeout(), 3000);');
+  // A successful secondary now wins after a primary error. For diagnostics, make both fail.
+  const start=source.indexOf("  it('should log error if DEBUG_AUTH is set'");const end=source.indexOf('\n  [',start);assert(start>0&&end>start);let block=source.slice(start,end).replace('secondaryHostRequest(500)','secondaryHostRequest(20, \'ENOTFOUND\')').replace('/failed, reason/','/Metadata detection failed/');source=source.slice(0,start)+block+source.slice(end);
+  const failureStart=source.indexOf("    'EHOSTDOWN',"), failureEnd=source.indexOf("  it('should fail fast with GCE_METADATA_HOST",failureStart);assert(failureStart>0&&failureEnd>failureStart);
+  const failureBlock=source.slice(failureStart,failureEnd).replaceAll('assert.strictEqual(false, isGCE);','assert.strictEqual(true, isGCE);');source=source.slice(0,failureStart)+failureBlock+source.slice(failureEnd);
+  // The second lookup after reset succeeds through the available secondary.
+  const resetStart=source.indexOf("  it('resets cache when resetIsAvailableCache() is called'");const resetEnd=source.indexOf("  describe('getGCPResidency'",resetStart);assert(resetStart>0&&resetEnd>resetStart);block=source.slice(resetStart,resetEnd).replace('assert.strictEqual(isGCE, false);','assert.strictEqual(isGCE, true);');source=source.slice(0,resetStart)+block+source.slice(resetEnd);
+ }
+ fs.writeFileSync(file,source);fs.writeFileSync(path.join(temporary,'tsconfig.json'),JSON.stringify({compilerOptions:{target:'ES2022',module:'CommonJS',noCheck:true,noResolve:true,outDir:'compiled',rootDir:'.'},files:['test/index.test.ts','test/gcp-residency.test.ts','test/utils/gcp-residency.ts']}));run(process.execPath,[compiler().path,'-p',path.join(temporary,'tsconfig.json')]);
+ const target=path.join(root,upstream?'scripts/consumers/node_modules/gcp-metadata':'packages/vgcp-metadata');fs.mkdirSync(path.join(temporary,'compiled/src'),{recursive:true});fs.writeFileSync(path.join(temporary,'compiled/src/index.js'),'module.exports=require('+JSON.stringify(target)+');');fs.writeFileSync(path.join(temporary,'compiled/src/gcp-residency.js'),'module.exports=require('+JSON.stringify(path.join(target,upstream?'build/src/gcp-residency.js':'residency.js'))+');');
+ const env={...process.env};for(const key of ['HTTP_PROXY','HTTPS_PROXY','ALL_PROXY','NO_PROXY','http_proxy','https_proxy','all_proxy','no_proxy','DETECT_GCP_RETRIES','DEBUG_AUTH'])delete env[key];
+ const preload=path.join(temporary,'transport.cjs');fs.writeFileSync(preload,"globalThis.fetch=()=>{throw new Error('Native fetch disabled in offline metadata tests');};\n"+(upstream?'require('+JSON.stringify(gaxios)+').instance.defaults.fetchImplementation=require('+JSON.stringify(path.join(root,'scripts/consumers/node_modules/node-fetch'))+');':''));
+ console.log(run(process.execPath,[require.resolve('mocha/bin/mocha.js'),'--no-config','--no-package','--require',preload,'--timeout','10000','--reporter','dot','compiled/test/*.test.js'],{cwd:temporary,env}));
+}finally{fs.rmSync(temporary,{recursive:true,force:true});}

@@ -1,0 +1,38 @@
+{
+  "name": "vgcp-metadata",
+  "version": "0.1.0",
+  "description": "Bounded Google Cloud metadata retrieval with exact JSON and private diagnostics",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "residency.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vgcp-metadata"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vgcp-metadata",
+  "dependencies": {
+    "vgaxios": "workspace:*",
+    "vgoogle-logging-utils": "workspace:*",
+    "vjson-bigint": "workspace:*"
+  }
+}

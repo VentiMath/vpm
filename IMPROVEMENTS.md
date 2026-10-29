@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgcp-metadata](packages/vgcp-metadata) | gcp-metadata 6.1.1 | Entirely VPM runtime tree; first-success endpoint races, finite deadlines, direct requests, credential-safe errors/logs, bounded bulk reads and endpoint-aware availability caching. |
 | [vjson-bigint](packages/vjson-bigint) | json-bigint 1.0.0 | Zero dependencies; exact numeric wrappers/native bigints, strict JSON syntax, bounded parsing, exact prototype-key policies, reentrant serialization and safe replacers. |
 | [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 0.0.2 | Standalone structured JSON, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
 | [vgtoken](packages/vgtoken) | gtoken 7.1.0 | Shared forced refreshes, cached RSA key imports, validated expiry, bounded exchanges, credential-safe errors and POST-body revocation on the VPM HTTP/signing stack. |
@@ -72,8 +73,8 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **2,087 tests**: all pass on Node 24, and Bun passes
-2,084 with three documented runtime-specific skips. All 58 runtime packages'
+The root suite contains **2,106 tests**: all pass on Node 24, and Bun passes
+2,103 with three documented runtime-specific skips. All 59 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
@@ -105,7 +106,8 @@ upstream cases on each runtime, also checked against upstream itself.
 The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
 extend assertions (one obsolete intrinsic-removal test skipped), 47 is-stream
 assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
-109 gaxios tests, 45 gtoken tests ten logging suite entries and 18 json-bigint tests on both runtimes. Its documented adaptations are also checked
+109 gaxios tests, 45 gtoken tests, ten logging suite entries, 18 json-bigint tests
+and 66 metadata tests on both runtimes. Its documented adaptations are also checked
 against the published upstream implementations.
 
 ## Dependency scope
@@ -235,6 +237,36 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgcp-metadata
+
+Cloud metadata retrieval now uses `vgaxios`, `vgoogle-logging-utils` and
+`vjson-bigint`, completing its runtime dependency tree with VPM packages.
+Requests have a finite total deadline, response-byte limits, direct routing and
+mandatory flavor verification. Detection accepts the first valid endpoint success
+and cancels the loser. A quick DNS or IP failure cannot hide the other endpoint's
+success. Redirect/body-limit/TLS failures are not retried; transient failures keep
+bounded retries. No-response retry counts correctly honor zero.
+
+Logs and returned Gaxios errors omit metadata bodies, request URLs, headers and
+nested errors. Status codes remain available to Google Auth callers. Availability
+results are shared within a host/configuration snapshot. Bulk reads validate all
+entries first, bound concurrency, reject duplicates and use null-prototype output.
+Residency heuristics no longer disable timeouts.
+
+Nineteen focused tests and all 66 original upstream entries pass on both runtimes,
+with documented adaptations for intentional race, timeout and diagnostic changes.
+Google Auth's actual Compute token, project-ID and universe-domain callers pass
+through the aliased integration stack. These are local compatibility checks, not
+production deployment or live-cloud validation.
+
+Text access with stubbed transport takes 40% less time on Node and 38% less on
+Bun. Cached Node availability adds about 0.76 microseconds (+215%) for environment
+invalidation; stubbed JSON adds 5% on Node and improves 26% on Bun. Node HTTP
+measurements are variable (+5.5% JSON/+2.7% text, with process ranges crossing
+zero). Bun's complete HTTP path remains slower (+22% JSON/+28% text) than the
+upstream path using Bun's built-in Fetch compatibility module. The package is not
+presented as a universal speedup. [Full evidence](packages/vgcp-metadata/bench/results/README.md)
 
 ## vjson-bigint
 
