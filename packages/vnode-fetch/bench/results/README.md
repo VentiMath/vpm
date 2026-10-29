@@ -1,5 +1,9 @@
 # vnode-fetch benchmark results
 
+Comparison baseline: published node-fetch **2.7.0**. These measurements retain
+that API baseline; the separate Gaxios 7/8 caller checks against Fetch 3 do not
+change this benchmark's comparison target.
+
 Node 24.22.1 and Bun 1.4.0 on the recorded Apple Silicon host. Three fresh
 processes per runtime, 12 alternating paired rounds per process, plus one
 identical-upstream control. All raw samples, source hashes and runtime metadata
@@ -11,25 +15,31 @@ No samples are trimmed. Outputs are retained and checked outside timing.
 
 | Case | Upstream ns | VPM ns | Paired change | Process changes | Upstream control |
 | --- | ---: | ---: | ---: | --- | ---: |
-| Response construction | 390 | 419 | 12.6% | 6.7%, -4.4%, 43.9% | -1.2% |
-| JSON body | 928 | 986 | 0.7% | 0.3%, 5.5%, -0.1% | -0.1% |
-| malformed JSON | 8244 | 7866 | -4.2% | -5.1%, -4.9%, -4.2% | -0.1% |
-| 32-chunk 16KiB body | 5208 | 8647 | 68.4% | 60.5%, 98.4%, 63.3% | 19.9% |
-| HTTP /json | 120145 | 121756 | 1.3% | -0.6%, 8.7%, 1.3% | 0.2% |
-| HTTP /gzip | 220506 | 227704 | 3.6% | 14.9%, 7.6%, 3.6% | -3.3% |
-| HTTP streamed POST | 244558 | 276005 | 6.7% | 7.8%, 25.3%, 3.6% | -4.6% |
+| Response construction | 317 | 306 | -3.1% | 1.8%, -1.1%, -7.7% | -1.5% |
+| JSON body | 928 | 924 | -1.4% | -2.0%, 1.3%, -1.4% | -1.1% |
+| malformed JSON | 7851 | 7757 | -0.5% | -0.3%, -0.8%, -0.6% | -1.8% |
+| 32-chunk 16KiB body | 4532 | 7635 | 66.7% | 92.5%, 61.0%, 64.4% | -0.8% |
+| HTTP /json | 116378 | 113362 | 1.4% | 2.9%, 2.9%, -2.9% | 4.9% |
+| HTTP /gzip | 149867 | 151048 | -0.8% | -4.5%, -0.6%, 4.9% | -12.9% |
+| HTTP streamed POST | 132855 | 131364 | 0.8% | 0.2%, 1.7%, -0.1% | -0.4% |
 
 ## Bun 1.4
 
 | Case | Upstream ns | VPM ns | Paired change | Process changes | Upstream control |
 | --- | ---: | ---: | ---: | --- | ---: |
-| Response construction | 284 | 275 | -8.7% | -14.6%, -8.7%, -16.6% | -1.7% |
-| JSON body | 691 | 689 | -0.3% | -1.5%, 5.6%, -1.0% | -3.2% |
-| malformed JSON | 2437 | 2386 | 6.4% | -5.8%, 6.0%, 11.7% | 1.6% |
-| 32-chunk 16KiB body | 6038 | 8388 | 50.8% | 52.8%, 85.0%, 29.2% | -0.6% |
-| HTTP /json | 96214 | 86150 | -8.2% | -6.9%, -28.8%, -1.3% | 4.6% |
-| HTTP /gzip | 148661 | 139899 | -5.5% | -12.5%, -7.1%, 2.9% | 30.8% |
-| HTTP streamed POST | 156619 | 134562 | -14.4% | -16.4%, -10.0%, -12.0% | -3.6% |
+| Response construction | 278 | 277 | 1.3% | -1.5%, 4.6%, 0.9% | 0.9% |
+| JSON body | 716 | 705 | -1.3% | -1.5%, -1.0%, -1.8% | 2.3% |
+| malformed JSON | 2130 | 2156 | 2.5% | 6.4%, -1.9%, -1.9% | 3.4% |
+| 32-chunk 16KiB body | 4690 | 7593 | 70.2% | 66.7%, 82.6%, 69.5% | -3.2% |
+| HTTP /json | 109144 | 90638 | -14.3% | -17.2%, -17.7%, -13.8% | -1.8% |
+| HTTP /gzip | 156383 | 146618 | -7.3% | -11.0%, -5.8%, -5.1% | 2.3% |
+| HTTP streamed POST | 117740 | 112881 | -8.7% | -8.7%, -12.0%, -7.1% | -3.7% |
+
+Node HTTP changes are small relative to process/control variation; they do not
+establish a speed improvement. Bun HTTP medians favor VPM in these local cases.
+The safe 32-chunk collector remains slower because it copies emitted chunks to
+preserve producer-reused bytes and tracks stream cleanup. These measurements do
+not establish production throughput or the performance of native Fetch.
 
 Reproduce with `node packages/vnode-fetch/bench/compare.cjs` or `bun`, using
 `OUTPUT` to save a report and `CALIBRATION=1` for the upstream control. Verify

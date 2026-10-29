@@ -7,10 +7,12 @@ that these replacements have already improved application performance.
 
 ## Latest stable upgrade roadmap
 
-Latest stable APIs and features are the design target. The comparison versions
-below record verified coverage, including older application compatibility;
-they do not establish parity with every later upstream release. The roadmap
-records known gaps, not a completed freshness audit of the entire catalog.
+Latest stable upstream versions set the compatibility target. Backend and
+frontend consumers determine the API scope and order of work; runtime facilities
+are reused where they satisfy those requirements. The comparison versions below
+record verified coverage, including older application compatibility; they do not
+establish parity with every upstream API. The roadmap records known gaps, not a
+completed freshness audit of the entire catalog.
 
 The Google authentication stack was checked against npm's `latest` tags on
 October 29, 2026. Bring its dependencies forward before implementing
@@ -19,10 +21,16 @@ October 29, 2026. Bring its dependencies forward before implementing
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
 | Complete | vgoogle-logging-utils | 2.1.1, plus adapted 0.0.2 coverage | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
-| 1 | vnode-fetch | 2.7.0 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch) |
-| 2 | vgaxios | 6.7.1 | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
-| 3 | vgcp-metadata | 6.1.1 | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
-| 4 | vgoogle-auth-library | Not implemented; current consumer tests use 9.15.1 | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vnode-fetch | 2.7.0 API; Gaxios 7.1.3/8.3.2 transport checks against node-fetch 3.3.2 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch), scoped to tested callers |
+| 1 | vgaxios | 6.7.1 | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
+| 2 | vgcp-metadata | 6.1.1 | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
+| 3 | vgoogle-auth-library | Not implemented; current authentication integration uses 9.15.1 | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+
+The Fetch prerequisite is verified for the exercised Google-client paths; full
+Fetch 3 API parity is not required to start the Gaxios upgrade. Native Fetch also
+passes ordinary request scenarios. The Gaxios work must explicitly handle stream
+shape, agents and bounds before using it as a replacement transport. The current
+version-3 package alias remains disabled.
 
 Google Auth 11 is the direct target; implementing versions 9 and 10 first is not
 a prerequisite. Its current manifest uses gaxios, gcp-metadata,
@@ -414,6 +422,8 @@ from reused producer buffers, and cleans up cancelled or failed streams without
 losing keep-alive reuse. Cross-origin redirects strip credentials even when only
 the destination port changes. Request/header and body-consumption timeouts are
 separate phases; manually consumed response streams remain caller-owned.
+Both timeout types carry `ETIMEDOUT`, including when the transport timer fires
+before a metadata caller's own timer.
 
 The client snapshots defaults and plain error state, honors default limits,
 keeps query parameters before fragments, preserves falsy and byte-view bodies,
@@ -430,20 +440,25 @@ integration, public declarations and installed archives. The two conditional
 Fetch skips and intentional gaxios expectation changes are recorded in the
 [compatibility fixture](scripts/google-http-conformance/README.md).
 
+Another 24 caller checks cover Gaxios 7.1.3 and 8.3.2 with VPM and published
+node-fetch 3.3.2 on Node 24 and Bun. Native Fetch probes confirm ordinary request
+support and explicitly check the differences in agents, streams and bounds.
+This evidence supports the Gaxios upgrade, not an unrestricted Fetch 3 alias.
+
 **Performance:** [Fetch results](packages/vnode-fetch/bench/results/README.md)
 and [client results](packages/vgaxios/bench/results/README.md) retain all paired
-samples, three fresh processes, controls and source hashes. Fetch's final Bun
-JSON/streamed-POST medians take 8%/14% less time; its gzip comparison is
-inconclusive because the identical-upstream control varies by 31%. Node HTTP
-cases take 1–7% longer with substantial process variation. Safe 32-chunk body
-collection costs 5.21 → 8.65 µs on Node and 6.04 → 8.39 µs on Bun. Copying
+samples, three fresh processes, controls and source hashes. Against Fetch 2.7.0, refreshed Bun
+JSON/gzip/streamed-POST medians take 14%/7%/9% less time. Node HTTP changes range
+from about 1% less to 1% more time, within process/control variation. Safe
+32-chunk body collection costs 4.53 → 7.64 µs on Node and 4.69 → 7.59 µs on Bun.
+These Fetch measurements do not compare native Fetch or Fetch 3. Copying
 client defaults adds about 0.54/0.27 µs on Node/Bun. Adapter preparation is
 4–8% slower on Node and 16–20% faster on Bun. Multipart uploads take
 13%/50% less paired time on Node/Bun.
 
 Bun substitutes a built-in implementation for upstream gaxios's bare node-fetch
 import. Against that installed baseline, VPM's Bun JSON/POST/error requests take
-14–20% longer and gzip 56% longer. The separate pinned Fetch 2 comparison shows
+14–20% longer and gzip 56% longer. The client’s separate pinned Fetch 2 comparison shows
 9%/12% less time for JSON/gzip. Both baselines are retained; these packages are
 not uniformly faster, and these measurements do not establish production gains.
 

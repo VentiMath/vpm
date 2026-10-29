@@ -34,6 +34,8 @@ it does not add a browser bundle or adopt node-fetch 3's different module contra
   preserve agent keep-alive reuse.
 - Request deadlines include time waiting for an agent socket. Request/header
   and body-consumption timeouts remain separate phases, as in Fetch 2.
+  Both timeout errors carry `code` and `errno` equal to `ETIMEDOUT`, so a caller
+  can identify the timeout regardless of which layer's timer fires first.
 - Any cross-origin redirect, including a port change, drops authorization,
   proxy authorization, cookies, `www-authenticate` and an explicit Host header.
   This is stricter than upstream's domain-based credential forwarding.
@@ -46,6 +48,28 @@ protects body-reader methods; it does not impose a limit on a manually consumed
 `response.body`. The upstream tolerant gzip completion mode is retained.
 These are intentional boundaries, not guarantees of complete Fetch Standard
 conformance.
+
+## Current Google clients and native Fetch
+
+Gaxios 7.1.3 and 8.3.2 are tested with `vnode-fetch` through their public
+`fetchImplementation` option. The checks cover JSON and OAuth forms, byte/Blob
+and streamed uploads, Google multipart uploads, response readers, compression,
+errors, retries, cancellation, Node agents, size bounds and redirect limits.
+The same checks run against published node-fetch 3.3.2 as a control. This verifies
+those caller paths; it does not establish complete node-fetch 3 API parity or
+authorize an unrestricted version-3 package alias.
+
+Native Fetch also handles the ordinary request paths on Node 24 and Bun. Passing
+it directly to Gaxios ignores Node agents and the size limit on a response with
+no Content-Length, and returns Web Streams instead of Node streams. Node's
+native Fetch also ignores Gaxios's redirect-count option; Bun honors it. Reusing
+native Fetch therefore needs explicit handling of these requirements in the
+caller or an adapter. Browser Fetch and the runtime's native Fetch are separate
+from the versioned `node-fetch` npm package.
+
+Other Fetch 3 features, such as file-from-path helpers, referrer policies and
+multipart response parsing, are outside the verified caller scope. They are
+deferred until a consumer requires them. Existing Fetch 2 compatibility remains.
 
 ## Verification and performance
 
@@ -60,12 +84,12 @@ retries and proxy transport through the VPM replacement.
 identical-upstream control for each runtime, with retained outputs and paired
 rounds. Run `node packages/vnode-fetch/bench/compare.cjs` (or `bun`) and
 `node packages/vnode-fetch/bench/summarize.cjs --verify-current`.
-The final paired medians show Bun JSON and streamed POST requests taking 8%
-and 14% less time; gzip's 6% reduction is inconclusive against a 31% control
-variation. Node HTTP cases range from 1% to 7% more time, with substantial
-process variation. Safe 32-chunk collection costs 5.21 → 8.65 µs on Node and
-6.04 → 8.39 µs on Bun. Small-body results also vary between processes; the
-[complete report](bench/results/README.md) retains that uncertainty instead of
-claiming uniform gains. These results do not establish application throughput.
+Against node-fetch 2.7.0, the refreshed Bun HTTP JSON, gzip and streamed POST
+paired medians take 14%, 7% and 9% less time. Node HTTP changes range from about
+1% less to 1% more time and do not establish a speed improvement against the
+process/control variation. Safe 32-chunk collection costs 4.53 → 7.64 µs on Node
+and 4.69 → 7.59 µs on Bun. The [complete report](bench/results/README.md)
+retains process ranges and controls. These results do not measure native Fetch,
+Fetch 3, or application throughput.
 
 See [provenance](PROVENANCE.json) and [license](LICENSE).

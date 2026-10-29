@@ -57,7 +57,10 @@ HEAD request uses a local TLS server and fixture certificate. The Buffer.concat
 fault-injection test emits two chunks so both implementations actually call
 concat. Bun's stack assertion checks the function name without assuming Node's
 error-name prefix. The one VPM-specific assertion expects the sanitized collector
-error message. No public behavior assertions are otherwise removed.
+error message. The body-deadline fixture enables its 20ms timeout after headers
+arrive, isolating body collection from connection scheduling on busy hosts. Its
+assertions are unchanged and the same adaptation applies to upstream. No public
+behavior assertions are otherwise removed.
 
 **gaxios 6.7.1:** all 109 tests pass on both runtimes and implementations, with no
 skips. Test imports point to the matching transport/proxy implementation and
@@ -72,6 +75,31 @@ The additional Mocha, Chai, Sinon, Nock, encoding and multipart packages are
 isolated test fixtures. They are not runtime dependencies or shipped VPM files.
 `consumer.cjs` separately exercises real teeny-request and gaxios calls through
 the version-scoped integration aliases, including multipart and retry behavior.
+
+### Current Google clients and native Fetch
+
+`current-fetch.cjs` runs 12 caller scenarios each against pinned Gaxios 7.1.3
+and 8.3.2, using `vnode-fetch`, published node-fetch 3.3.2, or the runtime's native
+Fetch. All traffic uses local HTTP servers. Gaxios remains unmodified and receives
+the transport through its public `fetchImplementation` option. These checks do
+not imply complete Fetch 3 API compatibility. The version-3 source is imported
+by explicit file path so Bun cannot substitute its built-in node-fetch shim.
+
+```sh
+node scripts/google-http-conformance/current-fetch.cjs
+node scripts/google-http-conformance/current-fetch.cjs --upstream
+node scripts/google-http-conformance/current-fetch.cjs --native
+bun test ./scripts/google-http-conformance/current-fetch.cjs
+FETCH_MODE=upstream bun test ./scripts/google-http-conformance/current-fetch.cjs
+FETCH_MODE=native bun test ./scripts/google-http-conformance/current-fetch.cjs
+```
+
+The native comparison verifies ordinary requests, then **asserts the observed
+compatibility gaps**, rather than treating them as supported behavior: ignored
+Node agents, ignored streamed-response size bounds, Web Stream responses, and
+on Node, ignored redirect-count bounds. Bun honors the redirect-count option.
+A passing native probe is therefore not a passing drop-in compatibility gate.
+These observations guide native transport reuse when upgrading VPM callers.
 
 ## Service-account tokens
 
