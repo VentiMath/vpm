@@ -1,0 +1,84 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-28",
+  "upstream": {
+    "package": "jwa",
+    "version": "2.0.1",
+    "gitHead": "02f44f3bfaacb43d5b4199157bfdc715ee2e70f0",
+    "tarball": "https://registry.npmjs.org/jwa/-/jwa-2.0.1.tgz",
+    "integrity": "sha512-hRF04fqJIP8Abbkq5NKGN0Bbr3JxlQ+qhZufXVr0DvujKy93ZCbXZMHDL4EOtodSbCWxOqR8MS1tXA5hwqCXDg==",
+    "sourceArchiveSha256": "7e53f2ec2872c7de46bcd4843aa49fec49f01813c29b1ca49a5e0c03043d66b9"
+  },
+  "fixtureDependencies": {
+    "safe-buffer": {
+      "version": "5.2.1",
+      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+      "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ=="
+    },
+    "buffer-equal-constant-time": {
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/buffer-equal-constant-time/-/buffer-equal-constant-time-1.0.1.tgz",
+      "integrity": "sha512-zRpUiDwd/xk6ADqPMATG8vc9VPrkck7T07OIx0gnjmJAnHnTVXNQG3vfvWNuiZIkwu9KrKdA1iJKfsfTVxE6NA=="
+    },
+    "ecdsa-sig-formatter": {
+      "version": "1.0.11",
+      "resolved": "https://registry.npmjs.org/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.11.tgz",
+      "integrity": "sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ=="
+    }
+  },
+  "changes": [
+    "Use native Buffer, timingSafeEqual and P1363 signatures; remove all runtime dependencies.",
+    "Require canonical signature encoding and matching algorithm/key families and EC curves.",
+    "Retain JSON input coercion; add exact byte views, native key import options and CryptoKeys.",
+    "Prepare immutable native key operations in WeakMaps and cache at most 16 complete public PEM strings, each at most 16 KiB; no private-PEM or mutable-buffer cache.",
+    "Reject non-extractable CryptoKey conversion; native runtime restrictions remain in force."
+  ],
+  "sha256": {
+    "test/fixtures/upstream/buffer-equal-constant-time/LICENSE.txt": "751d0e80fb5c828f8c3de198cc760e1e05377e47c8263ab6ee2f10cdc19ba658",
+    "test/fixtures/upstream/buffer-equal-constant-time/index.js": "873c585bc4b4373d4e9d8d39bd475f9a0816fb7c8fce0f20335f6897090eb068",
+    "test/fixtures/upstream/buffer-equal-constant-time/package.json": "2d3df7ecb57811cf6fc43be180d9801c7c70928e5388391a6f258d889449ef4e",
+    "test/fixtures/upstream/ecdsa-sig-formatter/LICENSE": "50a6b24f8defc31a078aa9799a91d776f83948071574854f12473362aee74d0d",
+    "test/fixtures/upstream/ecdsa-sig-formatter/package.json": "f8c0805a13487310192db6ae04452c4315f5538ae87d7bc20de2904902c34027",
+    "test/fixtures/upstream/ecdsa-sig-formatter/src/ecdsa-sig-formatter.js": "9c7330949ada946a3c89be79ba66597616342c643ef5ab13a646c72147c11666",
+    "test/fixtures/upstream/ecdsa-sig-formatter/src/param-bytes-for-alg.js": "4352fe33309e8085148db1fabc91748137089d830a85498d4e50a17c813ea1fc",
+    "test/fixtures/upstream/jwa/LICENSE": "3320319f8a5f42bc4254e65471eca7a5ea4dc8c883c4c24b4868e36b14890bcf",
+    "test/fixtures/upstream/jwa/index.js": "44700c7211635c48bafc0048c080d5c3d44eb3186a57db987e5f00370b3f68b4",
+    "test/fixtures/upstream/jwa/package.json": "53610fa0143c2cdef9d280e0c029ededf688930648358d4f3e35a081d75219d8",
+    "test/fixtures/upstream/safe-buffer/LICENSE": "c7cc929b57080f4b9d0c6cf57669f0463fc5b39906344dfc8d3bc43426b30eac",
+    "test/fixtures/upstream/safe-buffer/index.js": "184d5c4a83512e3f49d4d5b52f7073f601f933bad11f1fbb3ad364ca5e6478e1",
+    "test/fixtures/upstream/safe-buffer/package.json": "e4018fdbfe625433371f48274fee26f520bbe865e0d8c85bf3aa07424134b90c",
+    "test/fixtures/upstream/tests/A.1/input.bytes.json": "096f23d9ec53b60604caab71024a27d65b93d0233a9bc21cc43aa4e5af9ab4ac",
+    "test/fixtures/upstream/tests/A.1/input.txt": "8574410fe367e57f9e271bdd3e2548803dc13b6cde0c589eb9a6d9f60071f4a7",
+    "test/fixtures/upstream/tests/A.1/key.json": "856558592b818ab1879c2b3e697a7127c4663cfdca8d5a1b89f7e9a805ae3811",
+    "test/fixtures/upstream/tests/A.1/signature.bytes.json": "1545cc57267b8d8f1d39fa59522828d44dc0267f377cd2f16b5dc3710d72fabd",
+    "test/fixtures/upstream/tests/A.1/signature.txt": "13d31e961a1ad8ec2f16b10c4c982e0876a878ad6df144566ee1894acb70f9c3",
+    "test/fixtures/upstream/tests/A.1/test.js": "23aeba738e2f542e5be50f9ce68b78b2608b093ab3296331a0ccfabceda581ce",
+    "test/fixtures/upstream/tests/A.2/input.bytes.json": "d7cad135ef756f864adf3379c809bc9630d2932101f47a4fc2bb6d1868520075",
+    "test/fixtures/upstream/tests/A.2/input.txt": "c88a34847b4ffb12a9326e540f144b3dcc4d5515f18701e7d6e0ee7866c9c705",
+    "test/fixtures/upstream/tests/A.2/key.json": "654a176c1da5e5eb6c0595da5aefd7f2847fcc2290027832729d0aed154e97e4",
+    "test/fixtures/upstream/tests/A.2/signature.bytes.json": "5072417c4f851cbcf3e79672e5b5e09356380c6c78e4c668909f0584da1246ed",
+    "test/fixtures/upstream/tests/A.2/signature.txt": "093bfdd5af095883bae12b31c9d757c2464dd1f03ded6cab4bc281c6e579251c",
+    "test/fixtures/upstream/tests/A.2/test.js": "1da96db2de6f3691fbe1ac7eee65519cff368fb5145424705b022f2cc182a14a",
+    "test/fixtures/upstream/tests/A.3/input.bytes.json": "a076e4960fdf8cd26cb296632e2e10837c29d3a3ddc3ba23dc76ab73d583120e",
+    "test/fixtures/upstream/tests/A.3/input.txt": "21c67368f436577f447f805162ca13b80d046a3fe467247e65ea477aa750fa2e",
+    "test/fixtures/upstream/tests/A.3/key.json": "a010e9ccf601b24a14651c369c4da125c895981f29b8d639acb2f465cb5d8337",
+    "test/fixtures/upstream/tests/A.3/signature.txt": "01a3379647cb88f78bfd213342955974dc0d448fe39cd4797d2cbca6e4639577",
+    "test/fixtures/upstream/tests/A.3/test.js": "998719c6a84a95a0257a1a194b43fc635e359128a6ceed4aeea8c7b471d2b317",
+    "test/fixtures/upstream/tests/A.4/input.bytes.json": "8bb351abe0592c823532a50bac2488792d627b4d00bd0a0f710938ebf5c33eac",
+    "test/fixtures/upstream/tests/A.4/input.txt": "ed7564d83b5a909443036fdf9a6dbf4c811db62a7da36bb80ae5bf50c7158255",
+    "test/fixtures/upstream/tests/A.4/key.json": "9dc3d61e4cc5fa32510525cc69fb716063069e3873f8f2e54293bb09b2b517e2",
+    "test/fixtures/upstream/tests/A.4/signature.txt": "42af8aaf36c54f3fce872eb106495a8bc6e9de182f26a72c847f0ec592d4f2e1",
+    "test/fixtures/upstream/tests/A.4/test.js": "ab13c068a57464918301bdc570d90029950bcd6cf5d9870c8f039314241e20e3",
+    "test/fixtures/upstream/tests/A.5/input.txt": "1813667ce496f81a3e37ca7e93d6b2c728ffee8a605e548c30337f723a587b17",
+    "test/fixtures/upstream/tests/A.5/test.js": "a8b560df2f4cefbdabd5ccc0b183f53556e0bf7cb39e10508127dbe537b46966",
+    "test/fixtures/upstream/tests/jwa.test.txt": "5852bdf6d7cf95f3ffe92ba8498d3c929f68802d00ee56a31d5d1cdf29c10911",
+    "test/fixtures/keys.json": "e730a16e70bf3c873312ff0d96119fda00624e01ef87f00840a626dddcce2ffe",
+    "test/fixtures/restricted-rsa-pss.pem": "474f730b36c8c70a70a114454356594904b1dcc66ca6d7659b86000756599b77"
+  },
+  "upstreamTestAdaptations": [
+    "Unchanged test source; jwa.test.js renamed to jwa.test.txt to avoid direct Bun discovery.",
+    "65 tests run against both upstream and VPM through a TAP assertion adapter, native JWK-to-PEM and base64url test helpers, and enabled supported-version branches.",
+    "Keys generated with native crypto; Bun uses a wrong P-384 key instead of unsupported secp256k1 for the ES256 wrong-key fixture."
+  ],
+  "fixtureKeys": "RFC 7515 RSA, P-256 and P-521 keys; locally generated P-384 and restricted RSA-PSS test keys. Public test data only."
+}
