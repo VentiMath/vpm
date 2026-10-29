@@ -44,7 +44,7 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
+    if (['vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
@@ -152,6 +152,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+let retriedBody; require('vretry-request')(null, {request(o, cb) {cb(null, {statusCode:200}, 'ok');}}, (err, res, body) => {retriedBody=body;});
+if(retriedBody!=='ok')throw new Error('retry archive');
 if(new (require('vnode-fetch').Headers)({test:'ok'}).get('test')!=='ok')throw new Error('fetch archive');
 if(typeof require('vgaxios').Gaxios.prototype.destroy!=='function')throw new Error('gaxios archive');
 if(typeof require('vgoogle-auth-library').GoogleAuth !== 'function')throw new Error('auth archive');
@@ -308,6 +310,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import retryArchive, {defaults as retryDefaults, getNextRetryDelay as retryDelay} from 'vretry-request';
+if(typeof retryArchive!=='function'||retryDefaults.retries!==2||typeof retryDelay!=='function')throw new Error('retry ESM archive');
 import fetchArchive, {Response as ArchiveResponse} from 'vnode-fetch';
 import {GoogleAuth as ArchiveAuth, OAuth2Client as ArchiveOAuth, JWTAccess as ArchiveJWTAccess} from 'vgoogle-auth-library';
 if(await new ArchiveAuth({projectId:'project'}).getProjectId()!=='project'||typeof ArchiveJWTAccess!=='function')throw new Error('auth ESM archive');
@@ -457,6 +461,11 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import typedRetry = require('vretry-request');
+const retryHandle: typedRetry.Abortable = typedRetry(null, {request(o, cb) {cb(null, {statusCode:200}, 'ok');}}, () => {});
+retryHandle.abort();
+const retryStream: typedRetry.RetryStream = typedRetry(null, {request() {throw new Error('fixture');}});
+retryStream.on('error', () => {});retryStream.abort();
 import typedFetch, {Request as TypedFetchRequest} from 'vnode-fetch';
 import {GoogleAuth as TypedAuth, JWT as TypedJWT} from 'vgoogle-auth-library';
 const typedAuth = new TypedAuth({authClient:new TypedJWT({email:'test',key:'test'}),projectId:'project'});

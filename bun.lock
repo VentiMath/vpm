@@ -355,6 +355,10 @@
       "name": "vread-package-up",
       "version": "0.1.0",
     },
+    "packages/vretry-request": {
+      "name": "vretry-request",
+      "version": "0.1.0",
+    },
     "packages/vrouter": {
       "name": "vrouter",
       "version": "0.1.0",
@@ -573,6 +577,8 @@
     "vraw-body": ["vraw-body@workspace:packages/vraw-body"],
 
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
+
+    "vretry-request": ["vretry-request@workspace:packages/vretry-request"],
 
     "vrouter": ["vrouter@workspace:packages/vrouter"],
 

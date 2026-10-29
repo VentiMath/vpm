@@ -25,6 +25,8 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Complete | vretry-request | 9.1.0; Cloud Storage 8.4.0/google-gax 6.14.0 caller paths | [retry-request 9.1.0](https://www.npmjs.com/package/retry-request) |
+| Next | vstream-events | Not implemented | [stream-events 1.0.5](https://www.npmjs.com/package/stream-events), used by teeny-request 11.1.1 |
 
 The Gaxios upgrade now uses native fetch for ordinary calls, with explicit stream,
 redirect, size and deadline handling. Node agents, proxies and client certificates
@@ -50,6 +52,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vretry-request](packages/vretry-request) | retry-request 9.1.0 | Zero dependencies; cancelled backoff, once-only attempt settlement, monotonic retry budgets, bounded timers, isolated stream events and safe transport teardown. |
 | [vgoogle-auth-library](packages/vgoogle-auth-library) | google-auth-library 11.3.2 | Four VPM dependencies; isolated JWT caches, shared forced refreshes, per-owner private-key parsing, strict ID-token verification and private debug messages. |
 | [vgcp-metadata](packages/vgcp-metadata) | gcp-metadata 9.2.3 | Entirely VPM runtime tree; first-success endpoint races, finite deadlines, direct requests, credential-safe errors/logs, bounded bulk reads and endpoint-aware availability caching. |
 | [vjson-bigint](packages/vjson-bigint) | json-bigint 1.0.0 | Zero dependencies; exact numeric wrappers/native bigints, strict JSON syntax, bounded parsing, exact prototype-key policies, reentrant serialization and safe replacers. |
@@ -115,15 +118,15 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,146 tests**: all pass on Node 24, and Bun passes
-2,143 with three documented runtime-specific skips. All 60 runtime packages'
+The root suite contains **2,176 tests**: all pass on Node 24, and Bun passes
+2,173 with three documented runtime-specific skips. All 61 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **62 packages**, including two declaration-only packages.
+catalog covers **63 packages**, including two declaration-only packages.
 
-Runtime packages support Node.js 20+ and Bun, except `vgoogle-auth-library`,
-which follows its current upstream Node 22+ baseline. They include their own TypeScript
+Runtime packages support Node.js 20+ and Bun, except `vgoogle-auth-library` and
+`vretry-request`, which follow their current upstream Node 22+ baselines. They include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
 package and integration suites on Node 20, 22, 24 and Bun; current performance
 work targets Node 24 and Bun. Separate archive gates verify npm/Bun installation,
@@ -153,7 +156,11 @@ assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
 and 77 metadata tests on both runtimes. Its documented adaptations are also checked
 against the published upstream implementations. The [Google Auth suite](scripts/google-auth-conformance/README.md)
 adds 545 selected upstream tests on each runtime, with original upstream controls
-and 17 focused VPM regression/consumer tests in the root suite.
+and 17 focused VPM regression/consumer tests in the root suite. The
+[retry-request suite](scripts/retry-request-conformance/README.md) adds all 30
+upstream tests on each runtime, upstream controls, deterministic timer checks and
+current Cloud Storage/google-gax caller checks; 30 VPM regression tests are in the
+root suite.
 
 ## Dependency scope
 
@@ -165,6 +172,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vretry-request` | 1 | 0 |
 | `vgoogle-auth-library` | 6 | 4 |
 | `vgtoken` | 2 | 2 |
 | `vgaxios` | 3 | 3 |
@@ -288,6 +296,35 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vretry-request
+
+Targets retry-request 9.1.0. Direct option snapshots eliminate its `extend`
+dependency while ignoring inherited fields, retaining undefined defaults and
+validating numeric bounds. Callbacks settle once, and abort cancels both active
+requests and queued retries. Streams isolate attempts, discard rejected bodies
+and completion events, retain backpressure and fail explicitly on premature
+closure. Retry budgets use a monotonic clock; exhausted budgets deliver the last
+response/error instead of hanging. The transport still owns active-request and
+body timeouts.
+
+Teeny-request 11.1.1 attaches a response-body pipeline during its response event.
+Destroying that source earlier in the same dispatch crashes current Cloud Storage
+download retries with `ERR_STREAM_UNABLE_TO_PIPE` on both Node and Bun. VPM
+immediately detaches the discarded attempt and defers teardown to a microtask,
+allowing pipeline attachment to finish. Independent upstream controls reproduce
+the failure, while VPM passes the retry. Cloud Storage 8.4.0 callback/download
+paths and google-gax 6.14.0's retry-request stream branch are checked; the SDKs'
+other retry engines remain outside this package's scope. The integration alias
+covers 9.1.0 only, leaving older installed callers for migration.
+
+Paired callback overhead is 39–52% lower on Node 24 and 33–42% lower on Bun.
+HTTP differences are within measurement noise. Node's 32-chunk and Bun's 16KiB
+stream medians are each +4.2%, with substantial stream/control variation and all
+outlying processes retained. See [benchmark samples and controls](packages/vretry-request/bench/results/README.md)
+for exact times, process ranges and limits. The
+[package README](packages/vretry-request/README.md) records retry counting,
+cancellation, timeout semantics and intentional differences.
 
 ## vgoogle-auth-library
 

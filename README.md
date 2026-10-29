@@ -81,7 +81,9 @@ preserves exact JSON numbers without an arithmetic dependency. `vgcp-metadata`
 supports the current metadata API with bounded requests, credential-safe diagnostics
 and verified Google Auth 10/11 caller paths. `vgoogle-auth-library` supplies the
 Google Auth 11 credential flows used by backend SDKs, with isolated JWT caches,
-shared forced refreshes and stricter ID-token verification.
+shared forced refreshes and stricter ID-token verification. `vretry-request`
+provides cancellable callback and download-stream retries for current Cloud
+Storage and google-gax callers, without external dependencies.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
@@ -111,6 +113,7 @@ integration remain planned work.
 bun install --frozen-lockfile
 npm --prefix scripts/consumers ci --ignore-scripts
 npm --prefix scripts/google-http-conformance ci --ignore-scripts
+npm --prefix scripts/retry-request-conformance ci --ignore-scripts
 bun run test
 bun run test:bun
 bun run typecheck
@@ -142,6 +145,8 @@ with supported upstream packages replaced by their VPM counterparts:
 
 ```sh
 npm --prefix scripts/consumers ci --ignore-scripts
+npm --prefix scripts/google-http-conformance ci --ignore-scripts
+npm --prefix scripts/retry-request-conformance ci --ignore-scripts
 node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs
@@ -165,7 +170,9 @@ public-key retrieval, including independent middleware consumers. The
 [Agent suite](scripts/agent-conformance/README.md) checks subclass connections
 and native HTTP/TLS pooling alongside real proxy-client integration. The
 [Google Auth suite](scripts/google-auth-conformance/README.md) checks the selected
-current credential flows with upstream controls.
+current credential flows with upstream controls. The
+[retry-request suite](scripts/retry-request-conformance/README.md) checks all
+upstream cases, retry lifecycle regressions and current Google SDK callers.
 
 ## License
 
