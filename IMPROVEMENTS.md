@@ -22,15 +22,14 @@ October 29, 2026. Bring its dependencies forward before implementing
 | --- | --- | --- | --- |
 | Complete | vgoogle-logging-utils | 2.1.1, plus adapted 0.0.2 coverage | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
 | Caller paths verified | vnode-fetch | 2.7.0 API; Gaxios 7.1.3/8.3.2 transport checks against node-fetch 3.3.2 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch), scoped to tested callers |
-| 1 | vgaxios | 6.7.1 | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
-| 2 | vgcp-metadata | 6.1.1 | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
-| 3 | vgoogle-auth-library | Not implemented; current authentication integration uses 9.15.1 | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
+| 1 | vgcp-metadata | 6.1.1 | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
+| 2 | vgoogle-auth-library | Not implemented; upstream 10.6.1/11.3.2 HTTP consumer paths verified | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 
-The Fetch prerequisite is verified for the exercised Google-client paths; full
-Fetch 3 API parity is not required to start the Gaxios upgrade. Native Fetch also
-passes ordinary request scenarios. The Gaxios work must explicitly handle stream
-shape, agents and bounds before using it as a replacement transport. The current
-version-3 package alias remains disabled.
+The Gaxios upgrade now uses native fetch for ordinary calls, with explicit stream,
+redirect, size and deadline handling. Node agents, proxies and client certificates
+use the VPM transport. A general node-fetch 3 package alias remains disabled;
+the exercised caller paths do not require one.
 
 Google Auth 11 is the direct target; implementing versions 9 and 10 first is not
 a prerequisite. Its current manifest uses gaxios, gcp-metadata,
@@ -54,7 +53,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vjson-bigint](packages/vjson-bigint) | json-bigint 1.0.0 | Zero dependencies; exact numeric wrappers/native bigints, strict JSON syntax, bounded parsing, exact prototype-key policies, reentrant serialization and safe replacers. |
 | [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 2.1.1 / 0.0.2 | Current activation/stdout behavior, structured filtering and protected message fields, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
 | [vgtoken](packages/vgtoken) | gtoken 7.1.0 | Shared forced refreshes, cached RSA key imports, validated expiry, bounded exchanges, credential-safe errors and POST-body revocation on the VPM HTTP/signing stack. |
-| [vgaxios](packages/vgaxios) | gaxios 6.7.1 | Entirely VPM transport tree, isolated defaults/error state, correct request bodies, bounded retry decisions, cancellable backoff and separate proxy/destination TLS identity. |
+| [vgaxios](packages/vgaxios) | gaxios 8.3.2 | Native fetch by default, modern Headers/Response APIs, isolated error state, bounded retries/streams/redirects and VPM transport for Node agents, proxies and mTLS. |
 | [vnode-fetch](packages/vnode-fetch) | node-fetch 2.7.0 | Native URL handling, checked limits, cross-origin credential isolation, reliable stream cancellation and byte-preserving body collection. |
 | [vuuid](packages/vuuid) | uuid 9.0.1 | Native name hashing, nonmutating random input, checked byte/clock/buffer bounds and exact UUID validation; zero dependencies. |
 | [vextend](packages/vextend) | extend 3.0.2 | Own enumerable strings and symbols, inherited-target isolation, cycle/shared-reference preservation and lazy iterative merging. |
@@ -114,8 +113,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,110 tests**: all pass on Node 24, and Bun passes
-2,107 with three documented runtime-specific skips. All 59 runtime packages'
+The root suite contains **2,123 tests**: all pass on Node 24, and Bun passes
+2,120 with three documented runtime-specific skips. All 59 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
@@ -147,7 +146,7 @@ upstream cases on each runtime, also checked against upstream itself.
 The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
 extend assertions (one obsolete intrinsic-removal test skipped), 47 is-stream
 assertions, 45 UUID tests, 214 Fetch tests (two conditional tests pending) and
-109 gaxios tests, 45 gtoken tests, 27 logging suite entries across two versions, 18 json-bigint tests
+133 applicable Gaxios 8 tests (three private/packaging cases excluded), 45 gtoken tests, 27 logging suite entries across two versions, 18 json-bigint tests
 and 66 metadata tests on both runtimes. Its documented adaptations are also checked
 against the published upstream implementations.
 
@@ -162,7 +161,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
 | `vgtoken` | 2 | 2 |
-| `vgaxios` | 5 | 4 |
+| `vgaxios` | 3 | 3 |
 | `vnode-fetch` | 1 | 1 |
 | `vjwks-rsa` | 5 | 1 |
 | `vjsonwebtoken` | 10 | 2 |
@@ -180,9 +179,9 @@ and 39 total external runtime dependencies, all VPM packages.
 
 `vnode-fetch` replaces the three-package legacy URL subtree with native URL
 support and retains `viconv-lite` for the optional legacy conversion API.
-`vgaxios` has eight total external runtime dependencies, all VPM packages.
+`vgaxios` has seven total external runtime dependencies, all VPM packages.
 `vgtoken` adds service-account exchanges using `vgaxios` and `vjws`; its entire
-11-package external runtime tree is VPM.
+10-package external runtime tree is VPM.
 Other runtime replacements retain their direct dependency counts. `vqs` removes
 an 18-package transitive tree from that branch; packages elsewhere may still need
 some of those helpers. `vdebug` uses built-in terminal detection instead of
@@ -212,8 +211,10 @@ previous Express 4 branch. Platform types have their own documented baselines.
 The fixture also includes Firebase Admin and JWT consumers: `vjsonwebtoken`
 validates claims, expiry durations reach `vms`, signatures reach `vjwa` through `vjws`, and proxy agents
 reach `vdebug`. `vhttps-proxy-agent` uses `vagent-base` for the pinned HTTP CONNECT transport
-used by `vgaxios` in place of `gaxios` 6.7.1. `vnode-fetch` replaces Fetch 2.7.0;
-`vextend`, `vis-stream` and UUID 9’s `vuuid` are version-scoped aliases too.
+used by `vgaxios` for Node-agent and proxy requests. Current Gaxios 7.1.3/8.3.2
+are aliased; older Gaxios 6 callers remain version gaps. `vnode-fetch` replaces Fetch 2.7.0;
+`vextend` and UUID 9’s `vuuid` are version-scoped aliases too. `vis-stream`
+remains available, but is no longer called by the upgraded HTTP client.
 Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
 Firebase Admin's JWKS fetcher and public-key verifier use `vjwks-rsa`.
 The wider frameworks, authentication libraries and Google SDKs still contain upstream dependencies.
@@ -411,8 +412,10 @@ also refreshed with this implementation; application-wide gains are not claimed.
 
 ## vnode-fetch and vgaxios
 
-The Google HTTP client path is implemented through VPM: `vgaxios` uses four
-direct VPM dependencies and native UUID generation. `vnode-fetch` removes the
+The Google HTTP client targets Gaxios 8.3.2. `vgaxios` uses native fetch by
+default and lazily selects `vnode-fetch` for Node agents, proxies, client
+certificates and `compress: false`. It has three direct VPM dependencies and
+uses native UUID generation; the is-stream dependency is gone. `vnode-fetch` removes the
 legacy URL subtree while retaining Fetch 2’s Node-stream contract and the
 legacy text conversion method through lazily loaded `viconv-lite`.
 
@@ -430,14 +433,18 @@ keeps query parameters before fragments, preserves falsy and byte-view bodies,
 and encodes native FormData. Multipart headers are validated before lazy upload
 streams start. Retry settings and counts are checked, expired budgets prevent
 another attempt, and backoff is cancellable. One-shot streams are not replayed.
-Custom adapters/fetch implementations and decision callbacks must honor their
-own cancellation contracts. Proxy TLS never receives destination client
+Native requests have one deadline covering headers and body consumption,
+including successful streams. Each retry has a fresh signal; the original caller
+signal still cancels backoff. Custom adapters/fetch implementations and decision
+callbacks must honor their cancellation contracts. Proxy TLS never receives destination client
 certificates; owned agents have an explicit disposal method.
 
-**Verification:** 23 Fetch and 21 client focused tests, 214 Fetch upstream tests
-and all 109 gaxios upstream tests on Node and Bun, real consumer HTTP/proxy
-integration, public declarations and installed archives. The two conditional
-Fetch skips and intentional gaxios expectation changes are recorded in the
+**Verification:** 23 Fetch and 33 client focused tests, 214 Fetch upstream tests
+and 133 applicable Gaxios 8 tests on Node and Bun, real consumer HTTP/proxy
+integration, public declarations and installed archives. Google Auth 10.6.1 and
+11.3.2 perform real OAuth refresh/authenticated request flows against local
+servers. The two conditional Fetch skips, three upstream-specific Gaxios
+exclusions and intentional expectation changes are recorded in the
 [compatibility fixture](scripts/google-http-conformance/README.md).
 
 Another 24 caller checks cover Gaxios 7.1.3 and 8.3.2 with VPM and published
@@ -451,16 +458,17 @@ samples, three fresh processes, controls and source hashes. Against Fetch 2.7.0,
 JSON/gzip/streamed-POST medians take 14%/7%/9% less time. Node HTTP changes range
 from about 1% less to 1% more time, within process/control variation. Safe
 32-chunk body collection costs 4.53 → 7.64 µs on Node and 4.69 → 7.59 µs on Bun.
-These Fetch measurements do not compare native Fetch or Fetch 3. Copying
-client defaults adds about 0.54/0.27 µs on Node/Bun. Adapter preparation is
-4–8% slower on Node and 16–20% faster on Bun. Multipart uploads take
-13%/50% less paired time on Node/Bun.
+These Fetch measurements do not compare native Fetch or Fetch 3.
 
-Bun substitutes a built-in implementation for upstream gaxios's bare node-fetch
-import. Against that installed baseline, VPM's Bun JSON/POST/error requests take
-14–20% longer and gzip 56% longer. The client’s separate pinned Fetch 2 comparison shows
-9%/12% less time for JSON/gzip. Both baselines are retained; these packages are
-not uniformly faster, and these measurements do not establish production gains.
+The current client report compares Gaxios 8.3.2's installed default against
+VPM's native fetch default, with separate explicit Node-agent rows. The client
+uses the modern Headers, URL and Response interfaces, preserves AIP error
+causes, and redacts copied failures only after the last retry. Its native wrapper
+retains redirect and byte-limit checks that raw native fetch does not provide.
+Node default JSON GET/POST take 22%/11% less paired time, while multipart takes
+8% more. Copying constructor defaults adds 0.51/0.26 microseconds on Node/Bun.
+Bun ordinary HTTP differences mostly overlap process/control variation; its
+agent JSON/gzip paths take 16%/18% less time. See the report for all controls.
 
 ## vhttps-proxy-agent
 

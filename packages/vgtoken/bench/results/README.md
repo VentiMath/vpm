@@ -1,5 +1,11 @@
 # vgtoken benchmark evidence
 
+These measurements predate the Gaxios 8/native-fetch upgrade and describe the
+source hashes captured at commit `e38b4158`. They remain historical evidence;
+current HTTP performance is recorded in the [vgaxios report](../../../vgaxios/bench/results/README.md).
+Run the source-hash verification at that recorded revision, not against the
+upgraded transport.
+
 Compared with gtoken 7.1.0 using the shared paired runner: three fresh processes
 and one identical-upstream control for each runtime. Each case warms both variants,
 then retains 12 alternating rounds. Reports include all samples, runtime/CPU,

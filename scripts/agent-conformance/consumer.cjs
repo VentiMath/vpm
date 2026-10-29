@@ -25,7 +25,7 @@ module.exports=async function(from){
       for(let i=0;i<3;i++)assert.equal(await request(server,scheme),expected+' /consumer');
     }
     assert.equal(tunnels,2,'one reusable tunnel per HTTP/TLS origin');
-    const response=await from('gaxios').request({url:'http://127.0.0.1:'+plain.address().port+'/gaxios',agent,retry:false,proxy:false});
+    const response=await require('../../packages/vgaxios').request({url:'http://127.0.0.1:'+plain.address().port+'/gaxios',agent,retry:false,proxy:false});
     assert.equal(response.data,'plain /gaxios');
     assert.equal(tunnels,2);
   }finally{

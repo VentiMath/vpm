@@ -73,8 +73,8 @@ and native cryptographic operations used by authentication consumers. `vjwks-rsa
 retrieves public signing keys for these consumers, including Firebase Admin.
 `vhttps-proxy-agent` supplies HTTP CONNECT tunnels through HTTP/HTTPS proxies,
 using `vagent-base` for connection lifecycle and pooling. `vgaxios` supplies
-Google’s HTTP client API on `vnode-fetch` and the VPM proxy transport, supported
-by `vextend` and `vis-stream`. `vgtoken` exchanges service-account assertions for
+the current Google HTTP client API using native fetch for ordinary requests
+and `vnode-fetch` for Node agents, proxies and client certificates. `vgtoken` exchanges service-account assertions for
 access and ID tokens on this HTTP/signing stack. `vgoogle-logging-utils` supplies
 diagnostic logging with structured output and optional event sinks. `vjson-bigint`
 preserves exact JSON numbers without an arithmetic dependency. `vgcp-metadata`

@@ -1,184 +1,93 @@
-"use strict";
-// Copyright 2018 Google LLC
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-var _a;
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.GaxiosError = exports.GAXIOS_ERROR_SYMBOL = void 0;
-exports.defaultErrorRedactor = defaultErrorRedactor;
-const url_1 = require("url");
-const util_1 = require("./util");
-const extend_1 = __importDefault(require("vextend"));
-/**
- * Support `instanceof` operator for `GaxiosError`s in different versions of this library.
- *
- * @see {@link GaxiosError[Symbol.hasInstance]}
- */
-exports.GAXIOS_ERROR_SYMBOL = Symbol.for(`${util_1.pkg.name}-gaxios-error`);
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+'use strict';
+// Adapted from gaxios 8.3.2. Copyright Google LLC; Apache-2.0.
+const extend = require('vextend');
+const {headersFrom} = require('./transport');
+const {pkg} = require('./util');
+const GAXIOS_ERROR_SYMBOL = Symbol.for('gaxios-gaxios-error');
+function snapshotValue(value) {
+  if (value instanceof Headers) return headersFrom(value);
+  if (value instanceof URL) return new URL(value);
+  if (value instanceof URLSearchParams) return new URLSearchParams(value);
+  if (value instanceof FormData) {const result = new FormData(); for (const [key, entry] of value) result.append(key, entry); return result;}
+  if (Array.isArray(value)) return extend(true, [], value);
+  if (value && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null)) return extend(true, {}, value);
+  return value;
+}
+function snapshotOptions(options = {}) {
+  const result = extend(true, {}, options);
+  // extend already copies arrays and plain objects; copy only the mutable Web values again.
+  for (const key of ['headers','url','data','body']) {
+    const value = options[key];
+    if (value !== undefined && (value instanceof Headers || value instanceof URL || value instanceof URLSearchParams || value instanceof FormData)) result[key] = snapshotValue(value);
+  }
+  return result;
+}
+function snapshotResponse(response) {
+  let copy;
+  if (response instanceof Response) {
+    copy = new Response(null, {status: response.status, statusText: response.statusText, headers: headersFrom(response.headers)});
+    for (const key of ['url','redirected','type','bodyUsed']) Object.defineProperty(copy, key, {value: response[key], configurable: true});
+  } else copy = extend(true, {}, response);
+  copy.config = snapshotOptions(response.config);
+  if (!(copy instanceof Response)) copy.headers = snapshotValue(response.headers);
+  if (Object.hasOwn(response, 'data')) copy.data = snapshotValue(response.data);
+  return copy;
+}
 class GaxiosError extends Error {
-    /**
-     * Support `instanceof` operator for `GaxiosError` across builds/duplicated files.
-     *
-     * @see {@link GAXIOS_ERROR_SYMBOL}
-     * @see {@link GaxiosError[GAXIOS_ERROR_SYMBOL]}
-     */
-    static [(_a = exports.GAXIOS_ERROR_SYMBOL, Symbol.hasInstance)](instance) {
-        if (instance &&
-            typeof instance === 'object' &&
-            exports.GAXIOS_ERROR_SYMBOL in instance &&
-            instance[exports.GAXIOS_ERROR_SYMBOL] === util_1.pkg.version) {
-            return true;
-        }
-        // fallback to native
-        return Function.prototype[Symbol.hasInstance].call(GaxiosError, instance);
+  static [Symbol.hasInstance](instance) {
+    return !!instance && typeof instance === 'object' && instance[GAXIOS_ERROR_SYMBOL] === pkg.version || Function.prototype[Symbol.hasInstance].call(this, instance);
+  }
+  constructor(message, config = {}, response, cause) {
+    super(message, {cause});
+    this[GAXIOS_ERROR_SYMBOL] = pkg.version;
+    this.config = snapshotOptions(config);
+    this.response = response ? snapshotResponse(response) : undefined;
+    if (this.response?.data instanceof ArrayBuffer) {
+      const text = new TextDecoder().decode(this.response.data);
+      try {this.response.data = JSON.parse(text);} catch {this.response.data = text;}
     }
-    constructor(message, config, response, error) {
-        var _b;
-        super(message);
-        this.config = config;
-        this.response = response ? (0, extend_1.default)(true, {}, response) : undefined;
-        this.error = error;
-        /**
-         * Support `instanceof` operator for `GaxiosError` across builds/duplicated files.
-         *
-         * @see {@link GAXIOS_ERROR_SYMBOL}
-         * @see {@link GaxiosError[Symbol.hasInstance]}
-         * @see {@link https://github.com/microsoft/TypeScript/issues/13965#issuecomment-278570200}
-         * @see {@link https://stackoverflow.com/questions/46618852/require-and-instanceof}
-         * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/@@hasInstance#reverting_to_default_instanceof_behavior}
-         */
-        this[_a] = util_1.pkg.version;
-        // deep-copy config as we do not want to mutate
-        // the existing config for future retries/use
-        this.config = (0, extend_1.default)(true, {}, config);
-        if (this.response) {
-            try {
-                this.response.data = translateData(this.config.responseType, (_b = this.response) === null || _b === void 0 ? void 0 : _b.data);
-            }
-            catch (_c) {
-                // best effort - don't throw an error within an error
-                // we could set `this.response.config.responseType = 'unknown'`, but
-                // that would mutate future calls with this config object.
-            }
-            this.status = this.response.status;
-        }
-        if (error && 'code' in error && error.code) {
-            this.code = error.code;
-        }
-        if (config.errorRedactor) {
-            config.errorRedactor({
-                config: this.config,
-                response: this.response,
-            });
-        }
+    this.error = cause instanceof Error ? cause : undefined;
+    if (response) this.status = response.status;
+    if (cause instanceof DOMException) this.code = cause.name;
+    else if (cause && (typeof cause.code === 'string' || typeof cause.code === 'number')) this.code = cause.code;
+    else if (typeof cause?.cause?.code === 'string') this.code = cause.cause.code;
+  }
+  static extractAPIErrorFromResponse(response, fallback = 'The request failed') {
+    const data = response.data, error = data && typeof data === 'object' && Object.hasOwn(data, 'error') ? data.error : undefined;
+    let message = typeof data === 'string' ? data : fallback;
+    if (typeof error === 'string') return {message: error, code: response.status, status: response.statusText};
+    if (error && typeof error === 'object') {
+      if (typeof error.message === 'string') message = error.message;
+      const messages = Array.isArray(error.errors) ? error.errors.filter(e => e && typeof e.message === 'string').map(e => e.message) : [];
+      return {...snapshotValue(error), message: messages.join('\n') || message, code: typeof error.code === 'number' ? error.code : response.status, status: typeof error.status === 'string' ? error.status : response.statusText};
     }
+    return {message, code: response.status, status: response.statusText};
+  }
 }
+const REDACT = '<<REDACTED> - See `errorRedactor` option in `gaxios` for configuration>.';
+function defaultErrorRedactor(value) {
+  const sensitive = key => /^(?:authentication|authorization|proxy-authorization|cookie|set-cookie)$/i.test(key) || /secret/i.test(key);
+  function redactHeaders(headers) {
+    if (!headers) return;
+    if (typeof headers.forEach === 'function' && typeof headers.set === 'function') headers.forEach((_, key) => {if (sensitive(key)) headers.set(key, REDACT);});
+    else for (const key of Object.keys(headers)) if (sensitive(key)) headers[key] = REDACT;
+  }
+  function redactBody(owner, key) {
+    const body = owner[key];
+    if (typeof body === 'string') {if (/grant_type=|assertion=|secret/i.test(body)) owner[key] = REDACT;}
+    else if (body instanceof URLSearchParams || body instanceof FormData) {
+      for (const name of new Set(body.keys())) if (['grant_type','assertion'].includes(name) || /secret/i.test(name)) body.set(name, REDACT);
+    } else if (body && typeof body === 'object') for (const name of ['grant_type','assertion','client_secret']) if (Object.hasOwn(body, name)) body[name] = REDACT;
+  }
+  if (value.config) {
+    const config = value.config;
+    redactHeaders(config.headers); redactBody(config, 'data'); redactBody(config, 'body');
+    try {const url = new URL(config.url); for (const name of ['token','client_secret']) if (url.searchParams.has(name)) url.searchParams.set(name, REDACT); config.url = config.url instanceof URL ? url : url.toString();} catch {}
+  }
+  if (value.response) {defaultErrorRedactor({config: value.response.config}); redactHeaders(value.response.headers); redactBody(value.response, 'data');}
+  return value;
+}
+exports.GAXIOS_ERROR_SYMBOL = GAXIOS_ERROR_SYMBOL;
 exports.GaxiosError = GaxiosError;
-function translateData(responseType, data) {
-    switch (responseType) {
-        case 'stream':
-            return data;
-        case 'json':
-            return JSON.parse(JSON.stringify(data));
-        case 'arraybuffer':
-            return JSON.parse(Buffer.from(data).toString('utf8'));
-        case 'blob':
-            return JSON.parse(data.text());
-        default:
-            return data;
-    }
-}
-/**
- * An experimental error redactor.
- *
- * @param config Config to potentially redact properties of
- * @param response Config to potentially redact properties of
- *
- * @experimental
- */
-function defaultErrorRedactor(data) {
-    const REDACT = '<<REDACTED> - See `errorRedactor` option in `gaxios` for configuration>.';
-    function redactHeaders(headers) {
-        if (!headers)
-            return;
-        for (const key of Object.keys(headers)) {
-            // any casing of `Authentication`
-            if (/^authentication$/i.test(key)) {
-                headers[key] = REDACT;
-            }
-            // any casing of `Authorization`
-            if (/^(?:authorization|proxy-authorization|cookie|set-cookie)$/i.test(key)) {
-                headers[key] = REDACT;
-            }
-            // anything containing secret, such as 'client secret'
-            if (/secret/i.test(key)) {
-                headers[key] = REDACT;
-            }
-        }
-    }
-    function redactString(obj, key) {
-        if (typeof obj === 'object' &&
-            obj !== null &&
-            typeof obj[key] === 'string') {
-            const text = obj[key];
-            if (/grant_type=/i.test(text) ||
-                /assertion=/i.test(text) ||
-                /secret/i.test(text)) {
-                obj[key] = REDACT;
-            }
-        }
-    }
-    function redactObject(obj) {
-        if (typeof obj === 'object' && obj !== null) {
-            if ('grant_type' in obj) {
-                obj['grant_type'] = REDACT;
-            }
-            if ('assertion' in obj) {
-                obj['assertion'] = REDACT;
-            }
-            if ('client_secret' in obj) {
-                obj['client_secret'] = REDACT;
-            }
-        }
-    }
-    if (data.config) {
-        redactHeaders(data.config.headers);
-        redactString(data.config, 'data');
-        redactObject(data.config.data);
-        redactString(data.config, 'body');
-        redactObject(data.config.body);
-        try {
-            const url = new url_1.URL('', data.config.url);
-            if (url.searchParams.has('token')) {
-                url.searchParams.set('token', REDACT);
-            }
-            if (url.searchParams.has('client_secret')) {
-                url.searchParams.set('client_secret', REDACT);
-            }
-            data.config.url = url.toString();
-        }
-        catch (_b) {
-            // ignore error - no need to parse an invalid URL
-        }
-    }
-    if (data.response) {
-        defaultErrorRedactor({ config: data.response.config });
-        redactHeaders(data.response.headers);
-        redactString(data.response, 'data');
-        redactObject(data.response.data);
-    }
-    return data;
-}
+exports.defaultErrorRedactor = defaultErrorRedactor;
+exports.snapshotOptions = snapshotOptions;

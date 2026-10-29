@@ -1,7 +1,7 @@
 {
   "name": "vgaxios",
   "version": "0.1.0",
-  "description": "Google HTTP client APIs on VPM transport with validated retries and isolated request state",
+  "description": "Google HTTP client with native fetch, VPM agent transport and bounded retries",
   "license": "Apache-2.0",
   "main": "index.js",
   "types": "index.d.ts",
@@ -22,7 +22,6 @@
   ],
   "dependencies": {
     "vextend": "workspace:*",
-    "vis-stream": "workspace:*",
     "vnode-fetch": "workspace:*",
     "vhttps-proxy-agent": "workspace:*"
   },

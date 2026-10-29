@@ -48,6 +48,6 @@ try {
   const env = {...process.env};
   for (const key of ['HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'NO_PROXY', 'http_proxy', 'https_proxy', 'all_proxy', 'no_proxy']) delete env[key];
   const preload = path.join(temporary, 'transport.cjs');
-  fs.writeFileSync(preload, "globalThis.fetch = () => { throw new Error('Native fetch disabled in offline gtoken conformance'); };\n" + (upstream ? 'require(' + JSON.stringify(gaxios) + ').instance.defaults.fetchImplementation = require(' + JSON.stringify(path.join(root, 'scripts/consumers/node_modules/node-fetch')) + ');' : ''));
+  fs.writeFileSync(preload, "globalThis.fetch = () => { throw new Error('Native fetch disabled in offline gtoken conformance'); };\n" + 'require(' + JSON.stringify(gaxios) + ').instance.defaults.fetchImplementation = require(' + JSON.stringify(path.join(root, upstream ? 'scripts/consumers/node_modules/node-fetch' : 'packages/vnode-fetch')) + ');');
   console.log(run(process.execPath, [require.resolve('mocha/bin/mocha.js'), '--no-config', '--no-package', '--require', preload, '--timeout', '10000', '--reporter', 'dot', 'compiled/test/index.js'], {cwd: temporary, env}));
 } finally { fs.rmSync(temporary, {recursive: true, force: true}); }

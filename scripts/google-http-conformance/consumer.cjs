@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const {Readable} = require('node:stream');
 module.exports = async function(from) {
   const {teenyRequest} = from('teeny-request');
-  const {Gaxios} = from('gaxios');
+  const {Gaxios} = require('../../packages/vgaxios');
   const {JWT, Compute, GoogleAuth} = from('google-auth-library');
   const metadata = from('gcp-metadata');
   const oldMetadataHost = process.env.GCE_METADATA_HOST, oldMetadataIp = process.env.GCE_METADATA_IP;
@@ -79,7 +79,7 @@ module.exports = async function(from) {
     assert(result.body.includes('payload'));
     assert(result.body.includes('"metadata":true'));
     const ordinary = await client.request({url: uri + '/query', method: 'POST', params: {q: 'a b'}, data: {ok: true}});
-    assert.equal(ordinary.data.url, '/query?q=a%20b');
+    assert.equal(ordinary.data.url, '/query?q=a+b');
     assert.equal(ordinary.data.body, '{"ok":true}');
     const multipart = await client.request({url: uri, method: 'POST', multipart: [{headers: {'Content-Type': 'text/plain'}, content: Readable.from(['google-upload'])}]});
     assert(multipart.data.body.includes('google-upload'));

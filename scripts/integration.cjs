@@ -32,7 +32,7 @@ const targets = {
   'json-bigint': { pkg: 'vjson-bigint', versions: /^1\.0\.0$/ },
   'google-logging-utils': { pkg: 'vgoogle-logging-utils', versions: /^(?:0\.0\.2|2\.1\.1)$/ },
   gtoken: { pkg: 'vgtoken', versions: /^7\.1\.0$/ },
-  gaxios: { pkg: 'vgaxios', versions: /^6\.7\.1$/ },
+  gaxios: { pkg: 'vgaxios', versions: /^(?:7\.1\.3|8\.3\.2)$/ },
   'node-fetch': { pkg: 'vnode-fetch', versions: /^2\.7\.0$/ },
   uuid: { pkg: 'vuuid', versions: /^9\.0\.1$/ },
   extend: { pkg: 'vextend', versions: /^3\.0\.2$/ },
@@ -136,7 +136,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [path.resolve(modules, '../package.json')];
+const queue = [path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -1168,6 +1168,8 @@ async function run() {
       assert.ok(stderr.some(line => line.startsWith(namespace)), `no debug output for ${namespace}`);
     }
     for (const [name, count] of Object.entries(calls)) {
+      // Current Gaxios no longer needs is-stream; the historical alias remains testable in its own suite.
+      if (name === 'is-stream') {assert.equal(count, 0); continue;}
       assert.ok(count > 0, `${name} was aliased but never reached`);
     }
   } finally {

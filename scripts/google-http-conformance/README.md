@@ -38,9 +38,9 @@ node scripts/google-http-conformance/gaxios.cjs
 bun scripts/google-http-conformance/gaxios.cjs
 ```
 
-Both runners also accept `--upstream` and compare against the published packages
-in `scripts/consumers`. Source archive hashes are checked before extracting into
-temporary directories. The workspace TypeScript 7 compiler translates upstream
+Both runners accept `--upstream`. Fetch compares against the published package
+in `scripts/consumers`; Gaxios compares against the locked `gaxios8` fixture here.
+Archive or individual source hashes are checked before temporary compilation. The workspace TypeScript 7 compiler translates upstream
 tests without type-checking them; it does not rebuild the production packages.
 Temporary wrappers expose node-fetch internals only to its original tests.
 
@@ -62,19 +62,34 @@ arrive, isolating body collection from connection scheduling on busy hosts. Its
 assertions are unchanged and the same adaptation applies to upstream. No public
 behavior assertions are otherwise removed.
 
-**gaxios 6.7.1:** all 109 tests pass on both runtimes and implementations, with no
-skips. Test imports point to the matching transport/proxy implementation and
-proxy environment variables are cleared for deterministic local fixtures.
-Obsolete throw-deprecation Mocha configuration is disabled for both baselines.
-VPM expectations cover working native FormData serialization, keeping destination
-certificates out of proxy options, distinct agents for distinct TLS identities,
-the corresponding private cache keys, and stopping retries before an expired
-budget. The original upstream expectations remain active with `--upstream`.
+**gaxios 8.3.2:** 133 applicable runtime tests pass on Node and Bun. The published
+control passes all 136. Sources are pinned to release commit
+`b3a96877f6830e2869b9026e95c10df41923790d`, with per-file SHA-256 verification.
+Nock 14 and Sinon 21 are isolated aliases matching this suite's dependencies.
+
+VPM skips two tests of upstream's private Bun proxy/stream adapter and one of its
+build-directory allowlist. Real VPM native/agent HTTP tests and installed-archive
+gates cover those responsibilities. The old TypeScript compiler-API portion is
+replaced by the workspace TypeScript 7 consumer/public/archive gates, including
+an augmented `fetch.preconnect` namespace and a Gaxios fetch call-signature
+assignment. Its runtime custom-fetch assertion still runs on both controls.
+
+VPM expectation changes cover destination certificate isolation, distinct TLS
+identities/cache keys, native cancellation reasons, pre-abort rejection before
+an adapter, cancelled backoff preventing another attempt, and bounded retry
+budgets. The original expectations remain active with `--upstream`. On Bun,
+Nock's HTTPS ClientRequest interception omits protocol information; the harness
+normalizes HTTPS `proto` and the default port for both implementations. This
+changes fixture plumbing, not production transport. Proxy classes resolve from
+the implementation under test so `instanceof` compares the matching copy.
 
 The additional Mocha, Chai, Sinon, Nock, encoding and multipart packages are
 isolated test fixtures. They are not runtime dependencies or shipped VPM files.
 `consumer.cjs` separately exercises real teeny-request and gaxios calls through
-the version-scoped integration aliases, including multipart and retry behavior.
+the version-scoped integration aliases, including multipart and retry behavior. Current Google Auth 10.6.1 and 11.3.2
+fixtures separately exercise real OAuth refresh and authenticated request methods
+through vgaxios. Integration also traverses both current auth graphs; Gaxios 6
+is reported as uncovered rather than aliased across its response-shape changes.
 
 ### Current Google clients and native Fetch
 
@@ -108,7 +123,7 @@ upstream gtoken 7.1.0 tests. `--upstream` runs the published package with its
 original behavior assertions. Both implementations pass on both runtimes.
 
 The fixture adapts legacy callable namespace imports for TypeScript 7 and selects
-the published node-fetch 2 transport explicitly for the upstream control. Bun's
+the matching Node transport explicitly for both implementations. Bun's
 native fetch compatibility module bypasses Nock; native fetch is therefore blocked
 in this runner. All token requests are intercepted, with no live Google service
 calls. The source archive hash is verified before extraction.
@@ -165,7 +180,7 @@ restores the global JSON binding that CloudEvents replaces.
 suite entries from commit `63805cd00cddb8efc21a129c8044808207b0b342`, after archive
 SHA-256 verification. `--upstream` runs the unchanged assertions against the
 pinned original. Native fetch is blocked, Nock disables external connections, and
-the upstream control uses its Node transport on both runtimes.
+both implementations explicitly use their Node transports on both runtimes.
 
 VPM adaptations cover three sanitized flavor-error assertions, one unknown-option
 message, the finite cloud timeout, seven primary-failure cases whose secondary

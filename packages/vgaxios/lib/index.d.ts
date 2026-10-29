@@ -1,6 +1,6 @@
 import { GaxiosOptions } from './common';
 import { Gaxios } from './gaxios';
-export { GaxiosError, GaxiosPromise, GaxiosResponse, Headers, RetryConfig, } from './common';
+export * from './common';
 export { Gaxios, GaxiosOptions };
 export * from './interceptor';
 /**

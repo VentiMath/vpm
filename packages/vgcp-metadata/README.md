@@ -94,6 +94,11 @@ Intentional changes include finite deadlines, no redirects/proxies, validated
 options, endpoint-aware caching, first-success races, bounded bulk work and
 sanitized errors. Code that inspects original transport error payloads must migrate.
 
+The saved benchmark samples use the earlier Gaxios 6-compatible transport.
+They are historical measurements; see the [current client benchmarks](../vgaxios/bench/results/README.md)
+for the Gaxios 8/native-fetch transport. Caller compatibility is tested against
+the current implementation.
+
 ## Verification
 
 Nineteen focused tests cover failure races, cancellation, bounds, real local HTTP,

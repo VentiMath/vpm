@@ -64,6 +64,11 @@ previously loaded from that file. Clear `key` to reload a changed file. Raw toke
 fields remain assignable for compatibility; manually populated cache values are
 caller-owned.
 
+The saved benchmark samples use the earlier Gaxios 6-compatible transport.
+They are historical measurements; see the [current client benchmarks](../vgaxios/bench/results/README.md)
+for the Gaxios 8/native-fetch transport. Caller compatibility is tested against
+the current implementation.
+
 ## Verification and performance
 
 Focused tests cover verified signatures, forced-refresh races, cancellation,
@@ -77,7 +82,7 @@ node --test packages/vgtoken/test/*.test.cjs
 bun test packages/vgtoken/test/token.test.cjs
 node scripts/google-http-conformance/gtoken.cjs
 bun scripts/google-http-conformance/gtoken.cjs
-node packages/vgtoken/bench/summarize.cjs --verify-current
+node packages/vgtoken/bench/summarize.cjs
 ```
 
 [Benchmark results](bench/results/README.md) retain paired Node 24/Bun measurements,
