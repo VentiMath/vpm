@@ -58,8 +58,8 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,515 tests**: all pass on Node 24, and Bun passes
-1,512 with three documented runtime-specific skips. All 44 runtime packages'
+The root suite contains **1,521 tests**: all pass on Node 24, and Bun passes
+1,518 with three documented runtime-specific skips. All 44 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
 catalog covers **46 packages**, including two declaration-only packages.
 
@@ -191,11 +191,43 @@ than request-body completion; listeners and socket timeouts are cleaned up.
 Timeout input is bounded to valid integer seconds. Global middleware avoids
 unnecessary wildcard route capture.
 
-**Coverage:** 57 package tests, all 105 upstream tests on both runtimes, the
+**Coverage:** 63 package tests, all 105 upstream tests on both runtimes, the
 shared 245-request Firebase/HTTP gate, CLI startup and installed npm/Bun archive
 checks. The separate upstream hosted/external conformance harness was not run.
 The [API guide](packages/vfunctions-framework/README.md) documents retained
 framework defaults, timeout semantics, structural type limits and compatibility.
+
+**Further HTTP work, 2026-10-28:** exact known ASCII media types are now classified
+once, with ASCII-only optional whitespace and own-header lookup. The checked
+body reader still validates the original header's complete parameters and charset,
+framing, compression and limits. Unknown or malformed media types retain the
+fully checked raw-parser fallback. Differential tests compare these decisions
+against the original five-parser VPM chain, including non-ASCII whitespace,
+invalid parameters, inherited headers and malformed lengths.
+
+Internal event adapters receive the captured request domain directly, avoiding
+the request-to-domain map while retaining domain-bound callbacks. Public handler
+argument counts and concurrent event contexts are tested. The server reuses its
+completion callback and omits the timeout middleware when timeout is disabled;
+active timeout cancellation and cleanup remain unchanged.
+
+The [steady-state harness](packages/vfunctions-framework/bench/steady.cjs) uses
+four isolated server processes and a shared checked client. It compares upstream,
+the original VPM runtime (`119f04c`), the first HTTP optimization (`f4e1f06`) and
+the current runtime. Each workload receives 10,000 warmup requests per server,
+then eight balanced blocks of 1,000 requests per variant. Server CPU is measured
+separately from client CPU; the small per-block IPC control cost is included.
+Three reports provide 24 measured blocks per variant and workload. Identical-code
+calibrations run `f4e1f06` in both the before and after processes. The
+[manual benchmark workflow](.github/workflows/framework-benchmarks.yml) saves all
+samples and source hashes as artifacts; verified baseline archives are in the
+repository. These warmed round trips are a different measurement from the earlier
+fresh-process runs. Calibration on a busy development machine showed that small
+timing differences could arise without a code change; these are measurement
+flags, not established defects.
+
+<details>
+<summary>Earlier startup and HTTP measurements, including the reported regressions</summary>
 
 **Initial performance, 2026-10-28:** pooled medians of 21 fresh-process samples per
 implementation (three reports, seven alternating pairs each), Node 24.22.1 and
@@ -289,6 +321,8 @@ Startup remains ahead of upstream in all paired medians: listening takes
 29–31% less time on Node and 10–17% less on Bun; first response takes about 28%
 less on Node and 7–16% less on Bun. Compared with previous VPM, the paired startup
 medians are 0.7–6.4% lower. Startup and HTTP raw samples remain available together.
+
+</details>
 
 ## vread-package-up
 

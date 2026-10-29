@@ -104,9 +104,11 @@ Changes from the pinned upstream framework:
   Conversion tables check own event-type entries. Global middleware no longer
   performs unnecessary wildcard capture; user-handler route parameters remain.
 - Body parsing dispatches directly to the matching VPM parser, replacing five
-  parser middleware layers with one. The selected parser still checks the
-  original Content-Type, charset, encoding and limits, and captures `req.rawBody`.
-  Unknown media types retain the checked binary-parser fallback.
+  parser middleware layers with one. Known media types receive an exact ASCII
+  match with ASCII-only optional whitespace and own-header lookup; that check
+  is performed once. The selected reader checks the original header's complete
+  parameters, charset, framing, encoding and limits, and captures `req.rawBody`.
+  Unknown or malformed media types retain the checked binary-parser fallback.
 
 The upstream 1 GiB parser limit, proxy-trust setting, disabled ETags and disabled
 `X-Powered-By` header are retained. Those defaults assume the usual deployment
@@ -167,6 +169,25 @@ OUTPUT=/tmp/framework-bun.json bun packages/vfunctions-framework/bench/optimize.
 ```
 
 Results are recorded in the [central comparison](../../IMPROVEMENTS.md#vfunctions-framework).
+
+The [steady-state harness](bench/steady.cjs) isolates each server in a child
+process and interleaves short blocks of requests from a shared client. This
+avoids mixing different implementations' JIT state and measures server CPU
+separately from client CPU. It compares upstream, `119f04c`, `f4e1f06` and current
+VPM after 10,000 warmups per server/workload, using eight balanced blocks of
+1,000 checked requests. The [manual workflow](../../.github/workflows/framework-benchmarks.yml)
+saves three reports per runtime and an identical-code calibration as artifacts.
+The calibration uses `f4e1f06` for both before and after; it measures benchmark
+variation without a code change. Startup is excluded from this harness.
+
+```sh
+NODE_ENV=production OUTPUT=/tmp/framework-steady-node.json node packages/vfunctions-framework/bench/steady.cjs
+NODE_ENV=production OUTPUT=/tmp/framework-steady-bun.json bun packages/vfunctions-framework/bench/steady.cjs
+```
+
+The earlier fresh-process measurements remain available. Small measured
+differences need to be read alongside the calibration and variation between
+reports; the central comparison records remaining gaps as well as improvements.
 
 ## Provenance
 
