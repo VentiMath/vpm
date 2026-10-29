@@ -1,0 +1,36 @@
+{
+  "name": "vjws",
+  "version": "0.1.0",
+  "description": "Compact JSON Web Signatures with strict parsing, exact bytes and linear stream buffering",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib/",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ventimath/vpm.git",
+    "directory": "packages/vjws"
+  },
+  "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vjws",
+  "dependencies": {
+    "vjwa": "workspace:*"
+  }
+}

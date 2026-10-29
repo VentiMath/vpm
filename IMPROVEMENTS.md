@@ -9,6 +9,7 @@ that these replacements have already improved application performance.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vjws](packages/vjws) | jws 4.0.1 | Exact byte payloads, UTF-8 headers, canonical compact parsing, algorithm agreement, bounded header reuse and linear stream collection using vjwa. |
 | [vjwa](packages/vjwa) | jwa 2.0.1 | Zero dependencies, native ECDSA signature format, canonical encodings, explicit key/algorithm matching and bounded public-key reuse. |
 | [vfunctions-framework](packages/vfunctions-framework) | @google-cloud/functions-framework 5.0.2 | Entirely VPM runtime tree, portable types, isolated request context, exact buffer-view logging, thenable handling, Bun event support, and corrected timeout lifecycle. |
 | [vread-package-up](packages/vread-package-up) | read-package-up 11.0.0 | Zero dependencies for raw manifest lookup, explicit boundaries, descriptor checks and cleanup, strict UTF-8, and errors without source contents. |
@@ -59,10 +60,10 @@ that these replacements have already improved application performance.
 
 ## Current verification
 
-The root suite contains **1,691 tests**: all pass on Node 24, and Bun passes
-1,688 with three documented runtime-specific skips. All 45 runtime packages'
+The root suite contains **1,799 tests**: all pass on Node 24, and Bun passes
+1,796 with three documented runtime-specific skips. All 46 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types. The
-catalog covers **47 packages**, including two declaration-only packages.
+catalog covers **48 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, include their own TypeScript
 declarations, and provide CommonJS and native ES module imports. CI runs the
@@ -88,6 +89,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vjws` | 2 | 1 |
 | `vjwa` | 3 | 0 |
 | `vhttp-errors` | 5 | 1 |
 | `viconv-lite` | 1 | 0 |
@@ -125,9 +127,9 @@ alone would lose charset information. Firebase Functions 7.4.0 removes the
 previous Express 4 branch. Platform types have their own documented baselines.
 
 The fixture also includes Firebase Admin and jsonwebtoken consumers: expiry
-durations reach `vms`, signatures reach `vjwa` through `jws`, and proxy agents
-reach `vdebug`. Google `JWTAccess` signing also runs through `vjwa`. The wider frameworks,
-authentication libraries and Google SDKs still contain upstream dependencies.
+durations reach `vms`, signatures reach `vjwa` through `vjws`, and proxy agents
+reach `vdebug`. Google `JWTAccess` signing also runs through `vjws` and `vjwa`.
+The wider frameworks, authentication libraries and Google SDKs still contain upstream dependencies.
 A complete VPM Express tree does not mean the entire backend has been replaced.
 
 Uncovered versions are reported rather than silently substituted. In this graph,
@@ -156,8 +158,9 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
   the HTTP count.
 - Framework CLI/environment precedence, option types and errors, application
   startup callbacks, symbol descriptors, JWT expiry durations and debug output.
-- All 12 signed JWT algorithms and tamper rejection through `jws`/`jsonwebtoken`,
-  plus offline Google `JWTAccess` signing, with `vjwa` substituted underneath.
+- All 12 signed JWT algorithms through `jsonwebtoken`, including synchronous and
+  callback-based signing, Unicode key IDs and tamper rejection, plus offline Google
+  `JWTAccess` signing, with `vjws` and `vjwa` substituted underneath.
 
 The gate checks that every configured target is installed and exercised. VPM
 exports are instrumented before consumers load, so calls through VPM dependencies
@@ -172,6 +175,76 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vjws
+
+Replaces `jws` 4.0.1 with one runtime dependency, `vjwa`. Native Buffer operations
+remove `safe-buffer`; the complete external runtime tree is now that single VPM
+package. JWT claims and authentication policy remain the caller's responsibility.
+
+**Verified changes:** UTF-8 headers preserve non-ASCII key IDs, raw byte payloads
+retain their exact bytes and view offsets, and empty payloads/secrets work across
+sync and stream APIs. Signing selects the algorithm from the exact serialized
+header, avoiding mismatches from getters or `toJSON`. Verification requires an
+explicit algorithm matching the header, exactly three canonical compact segments
+and a valid UTF-8 JSON object header. Unknown critical extensions and unsupported
+unencoded-payload modes are rejected. `decode`/`isValid` remain unauthenticated
+operations, and malformed JWT JSON still throws when decoded.
+
+Stream inputs copy chunks on receipt and concatenate once, replacing upstream's
+repeated copying of the entire accumulated body. Native readable outputs support
+cancellation and async iteration; legacy upstream stream inputs also work.
+Source errors, premature closes, invalid chunks and optional per-input byte limits
+settle once and clean up owned listeners. Manual completion waits for both inputs.
+Two private, bounded header caches reuse validated metadata and serialized headers;
+decoded objects are always fresh, and payloads/keys are not cached by this package.
+
+**Verification:** 46 focused cases plus all 31 upstream cases against each
+implementation (108 package tests) pass on Node 24 and Bun. The original upstream
+test source is retained; the runner's native key generation, assertion adapter
+and one structurally valid input substitution for its invalid-key test are
+documented in [provenance](packages/vjws/PROVENANCE.json). The integration gate
+exercises all 12 signed algorithms through real `jsonwebtoken`, including its
+callback API and Unicode headers, plus Google `JWTAccess` signing. Installed npm
+and Bun archives are checked through CJS, ESM and TypeScript consumers.
+
+**Performance:** the [harness](packages/vjws/bench/compare.cjs) compares upstream
+`jws`+`jwa`, upstream `jws`+`vjwa`, and `vjws`+`vjwa`. The middle variant separates
+crypto changes from this package's changes. Twelve rounds use all six orders
+twice; three fresh processes per runtime and identical-code controls are retained
+with source hashes and every sample in the [raw results](packages/vjws/bench/results).
+The [summary script](packages/vjws/bench/summarize.cjs) verifies those hashes and
+reproduces paired medians. Workloads include stable/varying headers, KeyObjects,
+warm and uncached PEMs, large payloads and one/many stream chunks.
+
+Paired elapsed-time changes against upstream on macOS arm64:
+
+| Workload | Node 24.22.1 | Bun 1.4.0 |
+| --- | ---: | ---: |
+| HS256 sign, repeated header | −30% | −43% |
+| HS256 verify, repeated header | −13% | −27% |
+| Decode JWT | −41% | −54% |
+| Validate JWT structure | −46% | −57% |
+| RS256 verify, warm PEM | −48% | −25% |
+| Decode 64 KiB | −58% | −64% |
+| Stream sign, 256 KiB in 1,024 chunks | −84% | −94% |
+| HS256 verify, 64 KiB | +30% | +28% |
+| HS256 verify, varying header | +16% | +3% |
+| Stream sign, one tiny chunk | +12% | +51% |
+| PS256 verify, uncached PEM Buffer | +41% | approximately unchanged |
+
+The remaining large-payload cost is canonical encoding validation (about 18–20 µs);
+Node varying-header verification adds about 0.44 µs. Tiny streams add about 1.3 µs
+on Node and 3.8 µs on Bun for standard stream lifecycle handling and cleanup.
+Uncached Node RSA/EC PEM verification remains about 7% slower; the larger PSS gap
+and most warm-PEM gains are inherited from `vjwa`, as the bridge demonstrates.
+Identical-code controls span −8.0% to +2.1% on Node and −4.7% to +9.8% on Bun;
+small differences are not strong evidence of a gain or regression. All raw
+measurements, including noisy controls, remain available.
+
+See the [API and compatibility guide](packages/vjws/README.md) and
+[complete benchmark tables](packages/vjws/bench/results/README.md). These are package
+measurements and do not establish deployed authentication throughput.
 
 ## vjwa
 

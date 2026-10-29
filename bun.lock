@@ -173,6 +173,13 @@
       "name": "vjwa",
       "version": "0.1.0",
     },
+    "packages/vjws": {
+      "name": "vjws",
+      "version": "0.1.0",
+      "dependencies": {
+        "vjwa": "workspace:*",
+      },
+    },
     "packages/vmedia-typer": {
       "name": "vmedia-typer",
       "version": "0.1.0",
@@ -411,6 +418,8 @@
     "vipaddr": ["vipaddr@workspace:packages/vipaddr"],
 
     "vjwa": ["vjwa@workspace:packages/vjwa"],
+
+    "vjws": ["vjws@workspace:packages/vjws"],
 
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
 
