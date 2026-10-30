@@ -31,11 +31,16 @@ jobs:
       - run: npm --prefix scripts/numbers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/nodable-entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/xml-builder-conformance/regressions.cjs
+          node scripts/xml-builder-conformance/run.cjs --upstream
+          node scripts/xml-builder-conformance/callers.cjs --upstream
+          node scripts/xml-builder-conformance/bundles.cjs
           node scripts/nodable-entities-conformance/regressions.cjs
           node scripts/nodable-entities-conformance/run.cjs --upstream
           node scripts/nodable-entities-conformance/callers.cjs --upstream
@@ -143,6 +148,7 @@ jobs:
       - run: npm --prefix scripts/numbers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/nodable-entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun run test:bun
@@ -159,6 +165,10 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/xml-builder-conformance/regressions.cjs
+          bun scripts/xml-builder-conformance/run.cjs --upstream
+          bun scripts/xml-builder-conformance/callers.cjs --upstream
+          bun scripts/xml-builder-conformance/bundles.cjs
           bun scripts/nodable-entities-conformance/regressions.cjs
           bun scripts/nodable-entities-conformance/run.cjs --upstream
           bun scripts/nodable-entities-conformance/callers.cjs --upstream

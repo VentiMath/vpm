@@ -1,0 +1,11 @@
+{
+  "name": "vpm-xml-builder-conformance",
+  "private": true,
+  "description": "Pinned XML builder comparison source and actual parser callers",
+  "dependencies": {
+    "fast-xml-builder": "1.3.1",
+    "fast-xml-parser": "5.11.2",
+    "@nodable/entities": "3.1.0",
+    "legacy-entities": "npm:@nodable/entities@2.1.0"
+  }
+}

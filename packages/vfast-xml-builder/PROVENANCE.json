@@ -1,0 +1,22 @@
+{
+  "upstream": {
+    "name": "fast-xml-builder",
+    "version": "1.3.1",
+    "repository": "https://github.com/NaturalIntelligence/fast-xml-builder",
+    "commit": "d7d1d7b7e1ed90474b026d564f3ec7057a35fdec",
+    "npmIntegrity": "sha512-pIM/1n3ntFXKYrUZwW7QCK0gAW7XY+wzj1YMIV3tLDvPj/V+zTGJK5e3/4WJfwj0qWw2ElNXiTixda/R+3YSug==",
+    "license": "MIT"
+  },
+  "reviewed": "2026-10-30",
+  "implementation": "Adapted upstream ordinary and ordered serializers, retaining formatting contracts and MIT attribution",
+  "changes": [
+    "VPM path/naming dependencies and optional path tracking/name validators",
+    "Validated configuration snapshots, deterministic regex filters and custom replacements",
+    "Cycle and callback-reentry guards, consistent element depth bounds including structured raw nodes",
+    "Single-character array wrappers, null ordering, Date values, null-prototype groups, own-only text",
+    "Single text-only processor invocation, output name validation and read-only callback path views",
+    "Selective ordered/grouped/raw attribute filtering and unescaped attribute predicate values",
+    "Inline XML escaping, callable CommonJS/ESM constructor and accurate self-contained declarations"
+  ],
+  "retainedEvidence": "../../scripts/xml-builder-conformance/upstream"
+}

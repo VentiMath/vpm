@@ -143,6 +143,14 @@
       "name": "vextend",
       "version": "0.1.0",
     },
+    "packages/vfast-xml-builder": {
+      "name": "vfast-xml-builder",
+      "version": "0.1.0",
+      "dependencies": {
+        "vpath-expression-matcher": "workspace:*",
+        "vxml-naming": "workspace:*",
+      },
+    },
     "packages/vfinalhandler": {
       "name": "vfinalhandler",
       "version": "0.1.0",
@@ -603,6 +611,8 @@
     "vexpress": ["vexpress@workspace:packages/vexpress"],
 
     "vextend": ["vextend@workspace:packages/vextend"],
+
+    "vfast-xml-builder": ["vfast-xml-builder@workspace:packages/vfast-xml-builder"],
 
     "vfinalhandler": ["vfinalhandler@workspace:packages/vfinalhandler"],
 

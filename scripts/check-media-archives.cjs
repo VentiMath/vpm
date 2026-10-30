@@ -49,6 +49,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vfast-xml-builder') {
+      assert.deepEqual(Object.keys(metadata.dependencies).sort(),['vpath-expression-matcher','vxml-naming']);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.mjs','index.d.ts','index.d.mts','package.json','lib/fxb.js','lib/orderedJs2Xml.js','lib/options.js','lib/util.js','lib/ignoreAttributes.js'].sort());
+    }
     if (name === 'vnodable-entities') {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -197,6 +202,7 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const ArchiveBuilder=require('vfast-xml-builder');if(ArchiveBuilder({arrayNodeName:'x'}).build([1,2])!=='<x>1</x><x>2</x>')throw new Error('XML builder CJS archive');
 const archiveNodable=require('vnodable-entities');if(new archiveNodable.EntityDecoder().decode('&lt;&#65junk;')!=='<&#65junk;'||new archiveNodable.EntityEncoder({encodeAllNamed:false}).encode('<')!=='&lt;')throw new Error('nodable CJS archive');
 const archiveMatcher=require('vpath-expression-matcher');const archivePath=new archiveMatcher.Matcher();archivePath.push('item');
 if(!archivePath.matches(new archiveMatcher.Expression('..item')))throw new Error('matcher CJS archive');
@@ -381,6 +387,7 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import ArchiveBuilderESM,{Builder as ArchiveNamedBuilder} from 'vfast-xml-builder';if(ArchiveBuilderESM!==ArchiveNamedBuilder||new ArchiveBuilderESM().build({r:'<'})!=='<r>&lt;</r>')throw new Error('XML builder ESM archive');
 import {EntityDecoder as ArchiveDecoder,EntityEncoder as ArchiveEncoder,ALL_ENTITIES as ArchiveEntityTable} from 'vnodable-entities';
 if(new ArchiveDecoder({namedEntities:ArchiveEntityTable}).decode('&ocirc;')!=='ô'||new ArchiveEncoder({encodeAllNamed:false}).encode('<')!=='&lt;')throw new Error('nodable ESM archive');
 import archiveMatcher,{Matcher as ArchiveMatcher,Expression as ArchiveExpression} from 'vpath-expression-matcher';
@@ -565,6 +572,7 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import TypedBuilder from 'vfast-xml-builder';const builtXML:string=TypedBuilder({arrayNodeName:'x'}).build([1]);void builtXML;
 import {EntityDecoder as TypedDecoder,EntityEncoder as TypedEncoder,ALL_ENTITIES as TypedEntityTable} from 'vnodable-entities';
 const typedNodableResult:string=new TypedDecoder({namedEntities:TypedEntityTable,onInputEntity:()=> 'allow'}).decode('&lt;');
 const typedNodableEncoded:string=new TypedEncoder({encodeAllNamed:false}).encode('<');void typedNodableResult;void typedNodableEncoded;
@@ -913,7 +921,7 @@ const all: string[] = accepts.types();
 accepts.types([1]);
 void [encoding, accepted, all];
 `;
-  for (const extension of ['cts', 'mts']) fs.writeFileSync(path.join(directory, 'consumer.' + extension), source);
+  for (const extension of ['cts', 'mts']) fs.writeFileSync(path.join(directory, 'consumer.' + extension), (extension==='cts'?"import StrictBuilder = require('vfast-xml-builder');const strictXML:string=new StrictBuilder().build({r:'x'});void strictXML;\n":'')+source);
   fs.writeFileSync(path.join(directory, 'browser-consumer.mjs'), `
 import depd from 'vdepd';
 const warn = depd('browser'), fn = value => value, object = { x: 1 };
