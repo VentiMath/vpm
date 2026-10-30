@@ -1,0 +1,56 @@
+{
+  "name": "vgoogle-cloud-storage",
+  "version": "0.1.0",
+  "description": "Cloud Storage client on VPM foundations with stricter URL signing and checksum handling",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "lib",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vgoogle-cloud-storage"
+  },
+  "dependencies": {
+    "vasync-retry": "workspace:*",
+    "vduplexify": "workspace:*",
+    "vfast-xml-parser": "workspace:*",
+    "vgaxios": "workspace:*",
+    "vgoogle-auth-library": "workspace:*",
+    "vhtml-entities": "workspace:*",
+    "vmime": "workspace:*",
+    "vp-limit": "workspace:*",
+    "vpaginator": "workspace:*",
+    "vprojectify": "workspace:*",
+    "vpromisify": "workspace:*",
+    "vretry-request": "workspace:*",
+    "vteeny-request": "workspace:*"
+  }
+}

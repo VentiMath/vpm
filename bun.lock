@@ -225,6 +225,25 @@
         "vjws": "workspace:*",
       },
     },
+    "packages/vgoogle-cloud-storage": {
+      "name": "vgoogle-cloud-storage",
+      "version": "0.1.0",
+      "dependencies": {
+        "vasync-retry": "workspace:*",
+        "vduplexify": "workspace:*",
+        "vfast-xml-parser": "workspace:*",
+        "vgaxios": "workspace:*",
+        "vgoogle-auth-library": "workspace:*",
+        "vhtml-entities": "workspace:*",
+        "vmime": "workspace:*",
+        "vp-limit": "workspace:*",
+        "vpaginator": "workspace:*",
+        "vprojectify": "workspace:*",
+        "vpromisify": "workspace:*",
+        "vretry-request": "workspace:*",
+        "vteeny-request": "workspace:*",
+      },
+    },
     "packages/vgoogle-logging-utils": {
       "name": "vgoogle-logging-utils",
       "version": "0.1.0",
@@ -648,6 +667,8 @@
     "vgcp-metadata": ["vgcp-metadata@workspace:packages/vgcp-metadata"],
 
     "vgoogle-auth-library": ["vgoogle-auth-library@workspace:packages/vgoogle-auth-library"],
+
+    "vgoogle-cloud-storage": ["vgoogle-cloud-storage@workspace:packages/vgoogle-cloud-storage"],
 
     "vgoogle-logging-utils": ["vgoogle-logging-utils@workspace:packages/vgoogle-logging-utils"],
 

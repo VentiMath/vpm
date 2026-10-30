@@ -1,0 +1,10 @@
+{
+  "name": "vpm-storage-conformance",
+  "private": true,
+  "description": "Pinned Cloud Storage controls and upstream signing/checksum test tools",
+  "dependencies": {
+    "@google-cloud/storage": "8.4.0",
+    "mocha": "11.7.5",
+    "sinon": "21.0.3"
+  }
+}

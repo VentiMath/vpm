@@ -13,3 +13,4 @@ scripts/nodable-entities-conformance/upstream/** -whitespace
 scripts/xml-builder-conformance/upstream/** -whitespace
 scripts/xml-parser-conformance/upstream/** -whitespace
 scripts/mime-conformance/upstream/** -whitespace
+scripts/storage-conformance/upstream/** -whitespace
