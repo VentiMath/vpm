@@ -28,7 +28,7 @@ async function run(upstream=process.argv.includes('--upstream')){
   };
   new Function(...Object.keys(args),'"use strict";\n'+code)(...Object.values(args));
  }
- for(const {file,name,fn}of tests){counts[file]=(counts[file]||0)+1;try{await fn();}catch(error){failures.push({file,name,error:error.message});}}
+ for(const {file,name,fn}of tests){counts[file]=(counts[file]||0)+1;const proto=Object.getOwnPropertyDescriptors(Object.prototype);try{await fn();}catch(error){failures.push({file,name,error:error.message});}finally{for(const key of Reflect.ownKeys(Object.prototype))if(!Object.hasOwn(proto,key))delete Object.prototype[key];Object.defineProperties(Object.prototype,proto);}}
  const known=upstream?[
   ['entities_spec.js.txt','XMLParser External Entities / should set and parse for valid entity set externally',/Missing expected exception/],
   ['x2j_str_spec.js.txt','XMLParser / should parse a XML to JSON string',/prettifyString is not a function/]

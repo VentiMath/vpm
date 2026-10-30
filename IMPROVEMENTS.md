@@ -169,8 +169,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,589 tests**: all pass on Node 24, and Bun passes
-2,586 with three documented runtime-specific skips. All 84 runtime packages'
+The root suite contains **2,590 tests**: all pass on Node 24, and Bun passes
+2,587 with three documented runtime-specific skips. All 84 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
@@ -1067,14 +1067,16 @@ Logs and returned Gaxios errors omit metadata bodies, request URLs, headers and
 nested errors. Status codes remain available to Google Auth callers. Availability
 results are shared within a host/configuration snapshot. Bulk reads validate all
 entries first, bound concurrency, reject duplicates and use null-prototype output.
-Residency heuristics no longer disable timeouts.
+Residency heuristics no longer disable timeouts: on Google Cloud the default
+deadline is 60 seconds rather than upstream's unbounded request, and 3 seconds
+elsewhere. A 4-second metadata token response succeeds as it does upstream.
 
 The 9.2.3 upgrade adds Fetch Headers/tuple input, Cloud Run Worker Pool detection,
 bounded normalization of nested native-fetch/Bun errors, and the current DEBUG
 logging namespace. Unknown failures in a raced endpoint cannot be hidden by a
 normal network failure in the other. No runtime dependency was added.
 
-Twenty-six focused tests and all 77 current upstream entries pass on Node and Bun,
+Twenty-seven focused tests and all 77 current upstream entries pass on Node and Bun,
 with documented adaptations for intentional timeout and diagnostic differences.
 Google Auth 10.6.1/11.3.2 Compute tokens, project lookup, universe fallback and
 status-dependent errors use the native-fetch VPM stack in local HTTP checks.

@@ -43,7 +43,7 @@ test('detection modes and retry counts reject inherited names and malformed numb
 });
 test('entire network operation has a finite deadline and supports cancellation',async()=>{
  transport.request=o=>new Promise((resolve,reject)=>o.signal.addEventListener('abort',()=>reject(Object.assign(new Error('SECRET'),{code:'ABORT_ERR'})),{once:true}));
- gcp.setGCPResidency(true);assert.equal(gcp.requestTimeout(),3000);const start=performance.now();await assert.rejects(gcp.instance({timeout:20}),e=>e.code==='ETIMEDOUT');assert.ok(performance.now()-start<500);
+ gcp.setGCPResidency(true);assert.equal(gcp.requestTimeout(),60000);gcp.setGCPResidency(false);assert.equal(gcp.requestTimeout(),3000);gcp.setGCPResidency(true);const start=performance.now();await assert.rejects(gcp.instance({timeout:20}),e=>e.code==='ETIMEDOUT');assert.ok(performance.now()-start<500);
  const controller=new AbortController(),pending=gcp.instance({signal:controller.signal});controller.abort('SECRET');await assert.rejects(pending,e=>e.code==='ERR_CANCELED'&&!String(e).includes('SECRET'));await assert.rejects(gcp.instance({signal:controller.signal}),e=>e.code==='ERR_CANCELED');
 });
 test('transport errors retain Gaxios identity/status without sensitive data',async()=>{
@@ -103,4 +103,12 @@ test('availability bounds error graphs and does not hide unexpected secondary fa
   gcp.resetIsAvailableCache();transport.request=async()=>{throw {cause:{code:'FailedToOpenSocket'}};};assert.equal(await gcp.isAvailable(),false);assert.equal(warnings.length,5);
  }finally{process.emitWarning=emit;}
 });
-test('Cloud Run Worker Pools are recognized without disabling deadlines',()=>{for(const key of ['CLOUD_RUN_JOB','FUNCTION_NAME','K_SERVICE','CLOUD_RUN_WORKER_POOL'])delete process.env[key];assert.equal(gcp.isGoogleCloudServerless(),false);process.env.CLOUD_RUN_WORKER_POOL='worker';assert.equal(gcp.isGoogleCloudServerless(),true);gcp.setGCPResidency(null);assert.equal(gcp.getGCPResidency(),true);assert.equal(gcp.requestTimeout(),3000);});
+test('Cloud Run Worker Pools are recognized without disabling deadlines',()=>{for(const key of ['CLOUD_RUN_JOB','FUNCTION_NAME','K_SERVICE','CLOUD_RUN_WORKER_POOL'])delete process.env[key];assert.equal(gcp.isGoogleCloudServerless(),false);process.env.CLOUD_RUN_WORKER_POOL='worker';assert.equal(gcp.isGoogleCloudServerless(),true);gcp.setGCPResidency(null);assert.equal(gcp.getGCPResidency(),true);assert.equal(gcp.requestTimeout(),60000);});
+test('on Google Cloud a slow metadata server gets a long deadline, as upstream waits for it',async()=>{
+ // Upstream disables its timeout on Google Cloud; a 3 s total budget there failed
+ // token fetches that took a little longer under load.
+ transport.request=async o=>{assert.equal(o.timeout,60000);await delay(3200);return response('{"access_token":"t"}');};
+ gcp.setGCPResidency(true);
+ try{assert.equal((await gcp.instance('service-accounts/default/token')).access_token,'t');}
+ finally{gcp.setGCPResidency(null);}
+});

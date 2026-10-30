@@ -38,9 +38,12 @@ upstream. JSON depth/number bounds still apply; bounds failures reject the reque
 ## Deadlines and bulk requests
 
 All network operations, including retries, have a finite deadline. `timeout`
-defaults to 3,000 ms in every environment and accepts integers from 1 to 3,600,000.
-`requestTimeout()` returns that default; cloud residency no longer selects an
-unbounded request. For long polling, choose a deadline longer than the server's
+accepts integers from 1 to 3,600,000. `requestTimeout()` returns the default:
+3,000 ms off Google Cloud and 60,000 ms when residency detection finds Google
+Cloud. Upstream disables the timeout there, because the metadata server can
+answer slowly under load or at instance start and a short budget would fail token
+fetches that succeed upstream; VPM keeps a deadline, sized to Cloud Functions'
+default execution timeout. For long polling, choose a deadline longer than the server's
 `timeout_sec`. An optional abort signal cancels the operation and is detached
 when it settles. Caller abort reasons are not copied into errors.
 
@@ -105,7 +108,7 @@ dependency is introduced by this upgrade.
 
 ## Verification
 
-Twenty-six focused tests cover failure races, cancellation, bounds, real local
+Twenty-seven focused tests cover failure races, cancellation, bounds, real local
 HTTP, privacy, cache invalidation, modern headers, nested errors and bulk scheduling.
 All 77 upstream 9.2.3 tests run from hash-checked sources on Node and Bun, with
 explicit adaptations for finite deadlines and private diagnostics. Upstream control
