@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vanynum / vstrnum | anynum 1.0.1, strnum 2.5.1; fast-xml-parser 5.11.2 and Storage 8.4.0 multipart XML | [anynum](https://www.npmjs.com/package/anynum), [strnum](https://www.npmjs.com/package/strnum), checked October 30, 2026 |
 | Caller paths verified | vhtml-entities | html-entities 2.6.0; Storage 8.4.0 ApiError decoding | [html-entities 2.6.0](https://www.npmjs.com/package/html-entities), checked October 30, 2026 |
 | Caller paths verified | vretry / vasync-retry | retry 0.13.1, async-retry 1.3.3; Storage 8.4.0 multipart retry methods | [retry](https://www.npmjs.com/package/retry), [async-retry](https://www.npmjs.com/package/async-retry), checked October 30, 2026 |
 | Caller paths verified | vyocto-queue / vp-limit | Queue 1.2.2, limiter 7.3.3; Storage 8.4.0 batches replacing p-limit 3.1.0 | [yocto-queue](https://www.npmjs.com/package/yocto-queue), [p-limit](https://www.npmjs.com/package/p-limit), checked October 30, 2026 |
@@ -71,6 +72,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vanynum](packages/vanynum) | anynum 1.0.1 | All 770 Unicode 18 decimal digits, 160 omitted upstream; compact lookup pages, preserved text/sign policy and self-contained types. |
+| [vstrnum](packages/vstrnum) | strnum 2.5.1 | Consistent overflow/options, signed-zero and fractional-exponent fixes, repeatable regex exclusions, own-option reads and VPM Unicode normalization. |
 | [vhtml-entities](packages/vhtml-entities) | html-entities 2.6.0 | Complete named tables; safe scalar/reference parsing, prototype-free named lookups, correct numeric attribute handling and fast plain-text/special-character paths. |
 | [vretry](packages/vretry) | retry 0.13.1 | Zero dependencies; complete reset/timer cleanup, validated schedules, monotonic budgets, safe error accounting and guarded callbacks. |
 | [vasync-retry](packages/vasync-retry) | async-retry 1.3.3 | VPM-only scheduler; immutable caller options, terminal bail, observed late failures and settled hook errors. |
@@ -149,12 +152,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,429 tests**: all pass on Node 24, and Bun passes
-2,426 with three documented runtime-specific skips. All 73 runtime packages'
+The root suite contains **2,444 tests**: all pass on Node 24, and Bun passes
+2,441 with three documented runtime-specific skips. All 75 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **75 packages**, including two declaration-only packages.
+catalog covers **77 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -229,6 +232,11 @@ Its 21 focused root tests cover all level/mode combinations, malformed reference
 and seeded inputs. Actual Storage ApiError methods decode 16 string/Buffer bodies
 and preserve structured-message bypass behavior.
 
+The [numeric suite](scripts/numbers-conformance/README.md) retains 32 anynum and
+47 strnum cases with original controls on both runtimes. Its 14 focused tests
+and one conformance gate are in the root suite; current XML/Storage callers
+exercise 70 instrumented numeric conversions.
+
 ## Dependency scope
 
 The Express application stack is implemented throughout: `vexpress` has 28 direct
@@ -239,6 +247,8 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vanynum` | 0 | 0 |
+| `vstrnum` | 1 | 1 (`vanynum`) |
 | `vhtml-entities` | 0 | 0 |
 | `vretry` | 0 | 0 |
 | `vasync-retry` | 1 | 1 (all VPM) |
@@ -378,6 +388,39 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vanynum and vstrnum
+
+The comparison baselines are anynum 1.0.1 and strnum 2.5.1, verified against
+current npm versions on October 30, 2026. `vanynum` uses pinned official Unicode
+18.0.0 data: 770 decimal digits, including 160 absent from upstream's list.
+Compact typed lookup pages occupy 13,308 bytes versus upstream's 63,904-byte BMP
+table plus supplementary Map; these figures exclude module/object overhead.
+Non-digit text, unpaired surrogates and the existing three-minus policy are preserved.
+
+`vstrnum` uses `vanynum` and checks grammar, exponent and leading-zero policies
+before overflow handling. Radix overflow follows the infinity option too. A
+single integer zero is accepted in signed zero and fractional exponent inputs;
+global/sticky exclusions restore their state, and direct own-field option reads
+avoid merging and prototype injection. Ordinary decimal precision checks and the
+upstream exponent/radix rounding policy remain explicit in its README.
+
+Both packages pass all 79 retained upstream cases plus 14 focused tests and a
+root-suite conformance gate on Node 24 and Bun. Exhaustive Unicode checks cover
+all code points. Current fast-xml-parser 5.11.2 source runs 12 differential XML
+cases and two intentional-difference cases; Storage 8.4.0 performs two multipart
+uploads with string/Buffer XML, producing 70 instrumented numeric-parser calls.
+Its bundled CJS dependency is tested using the same release's unbundled source
+with only the strnum import adapted. No live application migration is claimed.
+
+The [fixture](scripts/numbers-conformance) retains sources, SHA-256 hashes,
+licenses, upstream controls and generation checks. Package READMEs document each
+intentional difference; [normalization benchmarks](packages/vanynum/bench/results/README.md)
+and [parsing benchmarks](packages/vstrnum/bench/results/README.md) retain every
+paired run and control, with measured gains and regressions. XML-default numeric
+parsing takes about 56% / 66% less time on Node / Bun; every measured parser case
+improves. Dense Unicode normalization remains a 10% Bun regression. Neither
+measurement establishes whole-application gains.
 
 ## vhtml-entities
 

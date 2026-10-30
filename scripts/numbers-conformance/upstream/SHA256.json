@@ -1,0 +1,16 @@
+{
+  "anynum/LICENSE.txt": "8e75fc0e776c62ccadb8178ece8d3daa9ba7601fb0a49b2dfb0ea9a7a5c0aa07",
+  "anynum/anynum.js.txt": "145baf706e6c004a15aa71a3783bcb0f0c97ae83fe4010d56f7a6d981ea713e5",
+  "anynum/digitTable.js.txt": "c649d39c53ebe6817c71407de8105b6d8cbc2326867f90d59f49ab02d9271b44",
+  "anynum/package.json.txt": "41c5d60f0aa8b5f4133aeff56573a8c4130d4d1c19dc240398ff806b40a4470e",
+  "anynum/tests/anynum.test.js.txt": "2e703bfff9da5e7d8dabac3f2c8d995b67798d4d18e48fdc9dffda4b1ea80f6c",
+  "strnum/LICENSE.txt": "2aa16be0f4fad003a352a955a43314e9d1d8deef7034060a82ac9c49f32b81e2",
+  "strnum/package.json.txt": "7efcf7c2b83b9d0054dd637da0b15983a4f43b9aedb999ae895ff9c0b23c7170",
+  "strnum/strnum.js.txt": "629ac48bfc12de3bc04b36320e532423212804e04a5b7aa475e76d71de089db3",
+  "strnum/tests/anynum_test.js.txt": "1a67043d245b1682b70ab4423e545ca348dc3d20d2b327cd8fbe990691fc938d",
+  "strnum/tests/infinity_test.js.txt": "7d364a38e93f1b315ca95869a14fddf1de5d7b06b17a102915f8cee61edcb40d",
+  "strnum/tests/specs_test.js.txt": "6093efacd0dc109aea8c6e0dd6f462b4f5ebbc6e5bf536b87509b32884e0bd97",
+  "strnum/tests/strnum_test.js.txt": "f939199d4a592766352b53385db8ed4ad902dfdce1e9f78fb2de421ad061fbb4",
+  "unicode/DerivedNumericType.txt": "3dade4d96bd00d71b10022bf70b370090f3ca947f977ad4dc2854e06c4d074f6",
+  "unicode/LICENSE.txt": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96"
+}

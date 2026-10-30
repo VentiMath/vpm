@@ -21,6 +21,10 @@
       "name": "vagent-base",
       "version": "0.1.0",
     },
+    "packages/vanynum": {
+      "name": "vanynum",
+      "version": "0.1.0",
+    },
     "packages/vasync-retry": {
       "name": "vasync-retry",
       "version": "0.1.0",
@@ -452,6 +456,13 @@
       "name": "vstream-events",
       "version": "0.1.0",
     },
+    "packages/vstrnum": {
+      "name": "vstrnum",
+      "version": "0.1.0",
+      "dependencies": {
+        "vanynum": "0.1.0",
+      },
+    },
     "packages/vteeny-request": {
       "name": "vteeny-request",
       "version": "0.1.0",
@@ -540,6 +551,8 @@
     "vaccepts": ["vaccepts@workspace:packages/vaccepts"],
 
     "vagent-base": ["vagent-base@workspace:packages/vagent-base"],
+
+    "vanynum": ["vanynum@workspace:packages/vanynum"],
 
     "vasync-retry": ["vasync-retry@workspace:packages/vasync-retry"],
 
@@ -674,6 +687,8 @@
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
 
     "vstream-events": ["vstream-events@workspace:packages/vstream-events"],
+
+    "vstrnum": ["vstrnum@workspace:packages/vstrnum"],
 
     "vteeny-request": ["vteeny-request@workspace:packages/vteeny-request"],
 

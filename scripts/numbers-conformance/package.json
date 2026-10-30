@@ -1,0 +1,6 @@
+{
+  "name": "vpm-numbers-conformance",
+  "private": true,
+  "description": "Pinned Unicode normalization and numeric parsing controls, excluded from runtime archives",
+  "dependencies": { "anynum": "1.0.1", "strnum": "2.5.1", "@byspec/numbers": "0.1.1" }
+}

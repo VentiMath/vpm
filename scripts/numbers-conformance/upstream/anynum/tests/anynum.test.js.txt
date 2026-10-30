@@ -1,0 +1,156 @@
+import { anynum } from '../anynum.js';
+
+// ─── Passthrough (zero allocation path) ───────────────────────────────────────
+describe('anynum', () => {
+  it('ASCII digits unchanged', () => {
+    expect(anynum('1234567890')).toBe('1234567890');
+  });
+
+  it('ASCII string with no digits unchanged', () => {
+    expect(anynum('hello world')).toBe('hello world');
+  });
+
+  it('empty string', () => {
+    expect(anynum('')).toBe('');
+  });
+
+  it('non-string passthrough', () => {
+    expect(anynum(123)).toBe(123);
+    expect(anynum(null)).toBe(null);
+    expect(anynum(undefined)).toBe(undefined);
+  });
+
+  // ─── Devanagari (Hindi) ───────────────────────────────────────────────────────
+
+  it('Devanagari digits', () => {
+    expect(anynum('०१२३४५६७८९')).toBe('0123456789');
+  });
+
+  it('Devanagari number with decimal', () => {
+    expect(anynum('१२.३४')).toBe('12.34');
+  });
+
+  it('Devanagari mixed with text', () => {
+    expect(anynum('कीमत: ४५ रुपये')).toBe('कीमत: 45 रुपये');
+  });
+
+  // ─── Arabic-Indic ─────────────────────────────────────────────────────────────
+
+  it('Arabic-Indic digits', () => {
+    expect(anynum('٠١٢٣٤٥٦٧٨٩')).toBe('0123456789');
+  });
+
+  it('Extended Arabic-Indic (Urdu/Persian)', () => {
+    expect(anynum('۰۱۲۳۴۵۶۷۸۹')).toBe('0123456789');
+  });
+
+  it('Arabic-Indic float string', () => {
+    expect(anynum('١٢٣.٤٥')).toBe('123.45');
+  });
+
+  // ─── Bengali ──────────────────────────────────────────────────────────────────
+
+  it('Bengali digits', () => {
+    expect(anynum('০১২৩৪৫৬৭৮৯')).toBe('0123456789');
+  });
+
+  // ─── Thai ─────────────────────────────────────────────────────────────────────
+
+  it('Thai digits', () => {
+    expect(anynum('๐๑๒๓๔๕๖๗๘๙')).toBe('0123456789');
+  });
+
+  it('Thai mixed string', () => {
+    expect(anynum('ราคา ๑๒๓ บาท')).toBe('ราคา 123 บาท');
+  });
+
+  // ─── Fullwidth (Japanese context) ─────────────────────────────────────────────
+
+  it('Fullwidth digits', () => {
+    expect(anynum('０１２３４５６７８９')).toBe('0123456789');
+  });
+
+  it('Fullwidth float', () => {
+    expect(anynum('３．１４')).toBe('3．14'); // note: fullwidth period is NOT converted (not a digit)
+  });
+
+  // ─── Other scripts ────────────────────────────────────────────────────────────
+
+  it('Gujarati digits', () => {
+    expect(anynum('૦૧૨૩૪૫૬૭૮૯')).toBe('0123456789');
+  });
+
+  it('Tamil digits', () => {
+    expect(anynum('௦௧௨௩௪௫௬௭௮௯')).toBe('0123456789');
+  });
+
+  it('Tibetan digits', () => {
+    expect(anynum('༠༡༢༣༤༥༦༧༨༩')).toBe('0123456789');
+  });
+
+  it('Myanmar digits', () => {
+    expect(anynum('၀၁၂၃၄၅၆၇၈၉')).toBe('0123456789');
+  });
+
+  it('Khmer digits', () => {
+    expect(anynum('០១២៣៤៥៦៧៨៩')).toBe('0123456789');
+  });
+
+  it('Mongolian digits', () => {
+    expect(anynum('᠐᠑᠒᠓᠔᠕᠖᠗᠘᠙')).toBe('0123456789');
+  });
+
+  // ─── Supplementary plane (surrogate pairs) ────────────────────────────────────
+
+  it('Mathematical Bold digits (> 0xFFFF)', () => {
+    expect(anynum('𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗')).toBe('0123456789');
+  });
+
+  it('Mathematical Monospace digits', () => {
+    expect(anynum('𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿')).toBe('0123456789');
+  });
+
+  it('Adlam digits', () => {
+    expect(anynum('𞥐𞥑𞥒𞥓𞥔𞥕𞥖𞥗𞥘𞥙')).toBe('0123456789');
+  });
+
+  // ─── Mixed scripts in one string ──────────────────────────────────────────────
+
+  it('mixed scripts in one string', () => {
+    expect(anynum('१2३')).toBe('123');
+  });
+
+  it('mixed scripts with separators', () => {
+    expect(anynum('१,२३४.५६')).toBe('1,234.56');
+  });
+
+  it('mixed ASCII and Devanagari in expression', () => {
+    expect(anynum('-१२.३')).toBe('-12.3');
+  });
+
+  // ─── Negative / sign strings ──────────────────────────────────────────────────
+
+  it('negative Devanagari number string', () => {
+    expect(anynum('-१२३')).toBe('-123');
+  });
+
+  it('plus-prefixed', () => {
+    expect(anynum('+٤٢')).toBe('+42');
+  });
+
+  // ─── Edge cases ───────────────────────────────────────────────────────────────
+
+  it('single digit', () => {
+    expect(anynum('५')).toBe('5');
+  });
+
+  it('only non-digit unicode (no conversion)', () => {
+    const s = 'नमस्ते';
+    expect(anynum(s)).toBe(s);
+  });
+
+  it('long ASCII string (fast path)', () => {
+    const s = '1234567890'.repeat(1000);
+    expect(anynum(s)).toBe(s);
+  });
+});
