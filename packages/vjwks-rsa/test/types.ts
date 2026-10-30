@@ -17,3 +17,6 @@ jwks({ cache:true });
 // @ts-expect-error key identifiers are not numbers
 client.getSigningKey(1);
 void [promise,keys,secret,hapi];
+
+const fallbackClient = jwks({fetcher:async()=>({keys:[]}), cacheMaxAgeFallback: 30000, async onStaleCacheFallback(error, kid, key) { const id: string | null | undefined = kid; const pem: string = key.getPublicKey(); void [error, id, pem]; }});
+void fallbackClient;

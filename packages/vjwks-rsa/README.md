@@ -1,18 +1,19 @@
 # vjwks-rsa
 
 Public signing-key retrieval for JWT consumers. A counterpart to `jwks-rsa`
-3.2.2, using native crypto, a bounded private cache, shared in-flight retrieval,
+4.1.0, using native crypto, a bounded private cache, shared in-flight retrieval,
 and one direct runtime dependency: `vdebug`.
 
 Node.js 24+ and Bun are supported. Performance comparisons target Node 24 and Bun.
 
-The verified baseline remains **jwks-rsa 3.2.2**. Latest stable **4.1.0**, checked
-October 30, 2026, is the next parity target: Firebase Admin 14.5.0 requires
-`jwks-rsa ^4.0.1`. Version 4 behavior and Admin 14 callers are not yet verified.
-See the [upgrade roadmap](../../IMPROVEMENTS.md#latest-stable-upgrade-roadmap).
+The current target is **jwks-rsa 4.1.0**, including opt-in stale-key fallback.
+Both its upstream suite and Firebase Admin **14.5.0** token callers are verified,
+with retained 3.2.2 / Admin 12.7.0 coverage. The latest version was checked
+October 30, 2026. This is package compatibility evidence; SDK installation and
+application adoption remain separate steps.
 The package includes CommonJS, native ESM imports and self-contained declarations.
 The [repository comparison](../../IMPROVEMENTS.md#vjwks-rsa) and
-[benchmark report](bench/results/README.md) record measured benefits and costs.
+[benchmark report](bench/results/4.1.0/README.md) record measured benefits and costs.
 
 ## Usage
 
@@ -55,6 +56,8 @@ the verifier's expected algorithms independently of untrusted token contents.
 | `cache` | `true` | Cache successful `getSigningKey` lookups. |
 | `cacheMaxEntries` | `5` | Maximum cached lookup IDs; `0` disables caching. |
 | `cacheMaxAge` | `600000` ms | Fixed lifetime since insertion, using a monotonic clock; `0` disables caching. |
+| `cacheMaxAgeFallback` | `0` (off) | Extra lifetime after `cacheMaxAge` during an endpoint failure; requires a nonzero enabled cache. |
+| `onStaleCacheFallback(error, kid, key)` | None | Notification for each stale result; thrown errors and rejected promises reject the lookup. |
 | `rateLimit` | `false` | Enforce an exact rolling-minute endpoint request limit. |
 | `jwksRequestsPerMinute` | `10` | Maximum endpoint attempts in any rolling 60 seconds. |
 | `getKeysInterceptor()` | None | Return raw JWKs or a promise for them. A missing match falls back to the endpoint. |
@@ -63,7 +66,8 @@ Options are snapshotted from own properties and frozen; reconfigure by creating 
 new client. Numeric limits must be safe integers. Cache entries and requests per
 minute are capped at one million; `maxKeys` has the same ceiling. Timeouts and
 byte limits are capped at 2,147,483,647. Key IDs are limited to 1,024 characters;
-individual encoded key fields are limited to 16,384 characters.
+individual encoded key fields are limited to 16,384 characters. The sum of fresh
+and fallback cache lifetimes must also be a safe integer.
 
 Concurrent `getSigningKey` and `getSigningKeys` calls share one endpoint fetch and
 import while it is pending, even for different IDs. Failures are not cached.
@@ -79,11 +83,33 @@ Custom fetchers supply already-parsed objects, so transport byte/UTF-8 limits ar
 their responsibility. A timeout rejects the caller but cannot cancel a custom
 fetcher or interceptor that does not provide cancellation.
 
+## Optional outage fallback
+
+`cacheMaxAgeFallback` preserves an already retrieved key for a bounded extra
+window after its normal cache lifetime. This trades freshness for availability:
+a rotated or revoked key can remain trusted during an outage until that window
+ends. The default is off. Firebase Admin 14.5.0 disables this package's cache and
+uses its own six-hour cache, so this option does not change that caller's policy.
+
+Each expired lookup attempts a refresh. Only an endpoint transport failure,
+HTTP error, timeout, or custom-fetcher rejection permits stale fallback.
+Malformed or oversized responses, invalid key sets, absent IDs, interceptor
+failures and local rate limits fail closed. An endpoint refresh that fails without an outage
+removes that ID's old cached entry. Stale reads do not restart the original monotonic
+deadline or become fresh cache hits, and each successful fallback invokes the
+notification hook. Concurrent refreshes still share one pending request.
+
+This fixes a reproduced 4.1.0 behavior where a stale result is cached as fresh,
+allowing use past the documented fallback deadline and suppressing further
+notifications during that fresh period. VPM uses one bounded cache for both
+fresh and stale records, rather than a second stale-key store.
+
 ## Keys and compatibility
 
 RSA, EC (P-256, P-384, P-521, secp256k1) and OKP (Ed25519, Ed448) public signing
 keys are supported when the runtime can import them. Node 24 supports all these
-families. Bun 1.4.0 rejects native secp256k1 and Ed448 JWK imports; those keys are
+families. secp256k1/ES256K is a retained extension beyond upstream 4.1,
+which removed it when moving to JOSE 6. Bun 1.4.0 rejects native secp256k1 and Ed448 JWK imports; those keys are
 skipped, with explicit capability tests. Symmetric, private and encryption keys
 are excluded. Encodings must be canonical unpadded base64url; curve coordinates
 must have the correct length. `key_ops`, when provided, must be `['verify']`.
@@ -102,7 +128,9 @@ no cache, unlike upstream's nonexpiring interpretation.
 
 The exported errors are `ArgumentError`, `JwksError`, `JwksRateLimitError` and
 `SigningKeyNotFoundError`. Deadline failures use `code: 'ETIMEDOUT'`; HTTP status
-errors include `statusCode`. Native transport errors retain their original codes.
+errors include `statusCode`. Endpoint failures expose `isEndpointUnavailable: true`;
+invalid documents and local policy errors do not. Native transport errors retain
+their original codes. Frozen custom-fetcher errors are wrapped with their cause.
 
 ## Middleware adapters
 
@@ -135,23 +163,33 @@ reported a second time.
 From the repository root:
 
 ```sh
-node --test packages/vjwks-rsa/test/jwks.test.cjs
-bun test packages/vjwks-rsa/test/jwks.test.cjs
+node --test packages/vjwks-rsa/test/*.test.cjs
+bun test packages/vjwks-rsa/test
 npm --prefix scripts/consumers ci --ignore-scripts
 npm --prefix scripts/jwks-conformance ci --ignore-scripts
 node scripts/jwks-conformance/run.cjs
 bun scripts/jwks-conformance/run.cjs
-node scripts/integration.cjs
-bun scripts/integration.cjs
+node scripts/jwks-conformance/callers.cjs
+bun scripts/jwks-conformance/callers.cjs
+node scripts/jwks-conformance/regressions.cjs
+bun scripts/jwks-conformance/regressions.cjs
 ```
 
-The 36 focused tests cover key imports and ambiguity, option snapshots, expiry,
-rotation, rate limits, concurrent requests, callbacks, adapter failures and real
-HTTP error lifecycles. All 88 pinned upstream JavaScript tests run on both
-runtimes, with one documented timeout-code correction in the
-[conformance fixture](../../scripts/jwks-conformance/README.md). Integration tests
-exercise Firebase Admin's actual JWKS fetcher and signature verifier, plus
-`vjsonwebtoken` key resolution. Archive gates check installed code and types.
+All **47 focused tests** pass on both runtimes, covering key imports, option
+snapshots, cache/fallback expiry, rotation, rate limits, concurrency, adapters,
+notification failures and real HTTP error lifecycles. The upstream suites run
+**96 current** and **88 legacy** JavaScript cases on each runtime, against VPM
+and unmodified upstream controls, without skips. The sole expectation adaptation
+is the request timeout code; the [fixture guide](../../scripts/jwks-conformance/README.md)
+records the exact sources and commands.
+
+Real Firebase Admin 14.5.0 callers verify RSA and EC signatures, unknown/missing
+IDs, invalid signatures, expiry, cache reuse, rotation/removal and outage recovery.
+Its App Check verifier also checks signed claims and maps rejection errors.
+Import/call counters prove VPM is exercised. Firebase Auth's certificate endpoint
+path does not use JWKS and is outside this comparison. The existing integration
+gate retains Admin 12.7.0 and `vjsonwebtoken` key resolution. Installed npm/Bun
+archive gates check CommonJS, ESM and TypeScript 7 declarations.
 
 [Provenance](PROVENANCE.json) identifies the pinned source and changes. The
 upstream MIT [license](LICENSE) is preserved. Tests, comparison fixtures and

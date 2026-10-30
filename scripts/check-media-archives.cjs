@@ -726,7 +726,7 @@ import jwa from 'vjwa';
 import jws from 'vjws';
 import jwt from 'vjsonwebtoken';
 import jwks from 'vjwks-rsa';
-const jwksClient = jwks({fetcher:async()=>({keys:[]})});
+const jwksClient = jwks({fetcher:async()=>({keys:[]}), cacheMaxAgeFallback:30000, onStaleCacheFallback(error,kid,key) { const id:string|null|undefined=kid; const pem:string=key.getPublicKey(); void [error,id,pem]; }});
 const signingKey: Promise<jwks.SigningKey> = jwksClient.getSigningKey('archive');
 void signingKey;
 const jwtToken: string = jwt.sign({sub:'student'}, 'key', {expiresIn:'2h'});

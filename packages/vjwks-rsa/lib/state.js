@@ -4,11 +4,13 @@ const { JwksRateLimitError } = require('./errors');
 const now = () => performance.now();
 class Cache {
   #values = new Map();
-  constructor(max, age, clock = now) { this.max = max; this.age = age; this.clock = clock; }
-  get(id) {
+  constructor(max, age, clock = now, fallback = 0) { this.max = max; this.age = age; this.clock = clock; this.fallback = fallback; }
+  get(id, stale = false) {
     const entry = this.#values.get(id);
     if (!entry) return;
-    if (this.clock() - entry.time >= this.age) { this.#values.delete(id); return; }
+    const elapsed = this.clock() - entry.time;
+    if (elapsed >= this.age + this.fallback) { this.#values.delete(id); return; }
+    if (!stale && elapsed >= this.age) return;
     this.#values.delete(id); this.#values.set(id, entry);
     return entry.value;
   }
@@ -18,6 +20,7 @@ class Cache {
     if (this.#values.size >= this.max) this.#values.delete(this.#values.keys().next().value);
     this.#values.set(id, { value, time: this.clock() });
   }
+  delete(id) { this.#values.delete(id); }
 }
 class RateLimit {
   #times = [];

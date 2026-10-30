@@ -20,7 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
-| Next upgrade | vjwks-rsa | 3.2.2 API and Firebase Admin 12.7.0 token callers | [jwks-rsa 4.1.0](https://www.npmjs.com/package/jwks-rsa), checked October 30, 2026 |
+| Caller paths verified | vjwks-rsa | 4.1.0 API and Firebase Admin 14.5.0 token callers; retained 3.2.2 / Admin 12.7.0 coverage | [jwks-rsa 4.1.0](https://www.npmjs.com/package/jwks-rsa), checked October 30, 2026 |
 | Complete | vgoogle-logging-utils | 2.1.1, plus adapted 0.0.2 coverage | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
 | Caller paths verified | vnode-fetch | 2.7.0 API; Gaxios 7.1.3/8.3.2 transport checks against node-fetch 3.3.2 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch), scoped to tested callers |
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
@@ -52,9 +52,10 @@ now have current comparison targets:
 
 Firebase Admin **14.5.0** requires `jwks-rsa ^4.0.1`, Google Auth 11, and optional
 Storage 8 / Firestore 9. Firebase Functions **7.4.0** permits Admin 14. These npm
-manifests were checked October 30, 2026. Existing `vjwks-rsa` coverage remains
-3.2.2; **4.1.0 parity and Admin 14 token callers are the next upgrade checks**.
-The older package family remains built. SDK upgrades and actual adoption of VPM
+manifests were checked October 30, 2026. The `vjwks-rsa` 4.1.0 API and Admin 14 JWKS/App Check
+callers now pass against upstream controls on Node 24 and Bun. The next leaf is
+`lodash.camelcase` 4.3.0, used by current `@grpc/proto-loader` 0.8.1; that leads
+toward the gRPC loader on `vprotobufjs` and `vlong`. SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
 
@@ -131,7 +132,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vis-stream](packages/vis-stream) | is-stream 2.0.1 | Rejects null internal stream state and avoids duplicate pipe probes in duplex/transform checks. |
 | [vhttps-proxy-agent](packages/vhttps-proxy-agent) | https-proxy-agent 7.0.6 | Bounded CONNECT parsing and deadlines, linear fragmented-header buffering, isolated TLS policies, cancellation cleanup, safe header snapshots and preserved tunnel bytes. |
 | [vagent-base](packages/vagent-base) | agent-base 9.0.0 / 7.1.4 | Structural delegation with guarded dispatch, CommonJS and ESM exports, zero dependencies, bounded async connects, cancellation cleanup, queue failure recovery, delegation-cycle rejection, private JSON errors and exact byte collection. |
-| [vjwks-rsa](packages/vjwks-rsa) | jwks-rsa 3.2.2 | One dependency, native public-key import, shared concurrent retrieval, immutable cached keys, bounded HTTP requests, exact IDs and algorithm agreement. |
+| [vjwks-rsa](packages/vjwks-rsa) | jwks-rsa 4.1.0; retained 3.2.2 coverage | One dependency, native public-key import, shared concurrent retrieval, immutable cached keys, bounded HTTP requests, exact IDs and algorithm agreement. |
 | [vjsonwebtoken](packages/vjsonwebtoken) | jsonwebtoken 9.0.3 | Two dependencies, finite claim/time validation, reliable callbacks, direct HMAC key import and bounded public-key reuse. |
 | [vjws](packages/vjws) | jws 4.0.1 | Exact byte payloads, UTF-8 headers, canonical compact parsing, algorithm agreement, bounded header reuse and linear stream collection using vjwa. |
 | [vjwa](packages/vjwa) | jwa 2.0.1 | Zero dependencies, native ECDSA signature format, canonical encodings, explicit key/algorithm matching and bounded public-key reuse. |
@@ -184,8 +185,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,628 tests**: all pass on Node 24, and Bun passes
-2,625 with three documented runtime-specific skips. All 87 runtime packages'
+The root suite contains **2,639 tests**: all pass on Node 24, and Bun passes
+2,636 with three documented runtime-specific skips. All 87 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
@@ -206,7 +207,7 @@ The [Functions Framework suite](scripts/framework-conformance/README.md) adds
 105 upstream tests on each runtime, with no assertion changes or skips.
 The [JWT suite](scripts/jwt-conformance/README.md) adds 512 cases on Node and
 509 on Bun, with three documented Bun limitations. The
-[JWKS suite](scripts/jwks-conformance/README.md) adds 88 cases on each runtime
+[JWKS suites](scripts/jwks-conformance/README.md) add 96 current and 88 retained cases on each runtime
 without skips, with one timeout-code correction. The
 [router suite](scripts/router-conformance/README.md) adds router 2.2.0's 694
 unchanged tests on Node; Bun runs 693, with one upstream-reproduced `OPTIONS *`
@@ -310,7 +311,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | `vgtoken` | 2 | 2 |
 | `vgaxios` | 3 | 3 |
 | `vnode-fetch` | 1 | 1 |
-| `vjwks-rsa` | 5 | 1 |
+| `vjwks-rsa` | 6 | 1 |
 | `vjsonwebtoken` | 10 | 2 |
 | `vjws` | 2 | 1 |
 | `vjwa` | 3 | 0 |
@@ -1468,9 +1469,10 @@ available separately without relabeling their samples.
 
 ## vjwks-rsa
 
-Replaces `jwks-rsa` 3.2.2 with one direct dependency, `vdebug`, instead of five.
+Replaces `jwks-rsa` 4.1.0 with one direct dependency, `vdebug`, instead of six.
+The 3.2.2 compatibility suite remains passing.
 Native public-key import replaces `jose`; private cache and limiter implementations
-replace `lru-memoizer` and `limiter`. Self-contained declarations remove the runtime
+replace `lru-memoizer`, `lru-cache` and `limiter`. Self-contained declarations remove the runtime
 `@types/jsonwebtoken` dependency. The complete external runtime tree is `vdebug`
 and `vms`.
 
@@ -1496,32 +1498,43 @@ byte limits and cancellation remain the caller's responsibility. Node supports
 all tested key families; Bun 1.4.0 rejects native secp256k1 and Ed448 JWK imports,
 which are skipped with explicit capability tests.
 
-**Evidence:** 36 focused tests pass on Node and Bun. The
-[pinned upstream suite](scripts/jwks-conformance/README.md) passes all 88
-JavaScript cases on both runtimes, with one timeout-code correction and no skips.
-The integration gate exercises Firebase Admin's actual JWKS fetcher and signature
-verifier plus `vjsonwebtoken` key resolution. Installed npm/Bun archives pass
-CommonJS, ESM and TypeScript 7 checks without ambient platform types.
+**4.1 upgrade:** opt-in stale-key fallback keeps a fixed monotonic deadline and
+never caches an old result as fresh. A controlled comparison reproduces upstream
+4.1.0 serving a key past its fallback deadline; VPM retries and rejects there.
+Each stale return invokes its hook, including safe rejection of async hook
+failures. Invalid/oversized responses and local policy failures cannot invoke
+fallback. secp256k1/ES256K remains a documented native Node extension beyond 4.1.
 
-**Performance:** the [complete benchmark report](packages/vjwks-rsa/bench/results/README.md)
-retains three fresh processes per runtime, twelve paired rounds per process,
-long warm-ups, identical-code controls and source hashes.
+**Evidence:** 47 focused tests pass on Node and Bun. The
+[pinned upstream suites](scripts/jwks-conformance/README.md) pass all 96 current
+and 88 legacy JavaScript cases against VPM and stock controls on both runtimes,
+with one timeout-code adaptation and no skips. Actual Firebase Admin 14.5.0
+JWKS and App Check callers check signatures, claims, cache reuse, rotation,
+missing keys and outage recovery, with observed VPM calls. That SDK disables
+jwks-rsa's cache in favor of its own six-hour cache. The existing integration gate
+retains Admin 12.7.0 and `vjsonwebtoken` key resolution. Installed npm/Bun archives
+check CommonJS, ESM and TypeScript 7 without ambient platform types.
+
+**Performance against 4.1.0:** the [current report](packages/vjwks-rsa/bench/results/4.1.0/README.md)
+retains three fresh processes and an identical-code control per runtime, with
+fifteen cases, twelve paired rounds, fixed warmups, raw samples and source hashes.
+The [3.2.2 report](packages/vjwks-rsa/bench/results/README.md) remains historical.
 
 | Operation | Node 24 time change | Bun time change |
 | --- | ---: | ---: |
-| Client construction | −94% | −86% |
-| Cached Promise / callback lookup | −99% / −99% | −94% / −91% |
-| Express cached key provider | −99% | −84% |
-| Eight concurrent custom-fetcher key misses | −65% | −89% |
-| Eight concurrent local HTTP key misses | −66% | −84% |
-| Fresh RSA import and PEM export | +7% | −24% |
-| Missing-key rejection | +17% | −62% |
+| Client construction | −93% | −88% |
+| Cached Promise / callback lookup | −99% / −98% | −90% / −87% |
+| Fresh RSA / EC import and PEM export | −38% / −16% | −11% / approximately flat |
+| Eight concurrent local HTTP key misses | −88% | −85% |
+| Firebase Admin 14 JWKS refresh | −22% | −8% |
+| Firebase Admin 14 cached signature verification | Unchanged within noise | Unchanged within noise |
 
-The two Node regressions add about 2.8 µs and 1.9 µs per operation, respectively;
-validation and deadline checks remain enabled. Node's sequential HTTP and
-multi-key import results vary within the scale of the controls, so no improvement
-is claimed. Bun's sequential local HTTP and eight-key imports take about 29% and
-22% less time. These are package measurements, not application latency promises.
+The prior Node RSA and missing-key regressions against 3.2.2 do not appear against
+4.1.0; this changes the upstream baseline, not VPM's importer. Cached verification
+remains dominated by JWT work and bypasses JWKS retrieval. Admin's six-hour cache
+makes key refresh occasional, so these refresh gains do not imply a per-request
+application speedup. Nanosecond repeated-PEM results are too small and unstable on
+Bun to support a practical improvement claim.
 
 ## vjsonwebtoken
 

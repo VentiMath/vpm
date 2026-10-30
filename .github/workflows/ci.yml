@@ -148,7 +148,14 @@ jobs:
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: node scripts/jwks-conformance/run.cjs
+      - run: |
+          node scripts/jwks-conformance/regressions.cjs
+          node scripts/jwks-conformance/run.cjs
+          node scripts/jwks-conformance/run.cjs --upstream
+          node scripts/jwks-conformance/run.cjs --legacy
+          node scripts/jwks-conformance/run.cjs --upstream --legacy
+          node scripts/jwks-conformance/callers.cjs
+          node scripts/jwks-conformance/callers.cjs --upstream
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/http-proxy-conformance ci --ignore-scripts --no-audit --no-fund
       - run: |
@@ -320,7 +327,14 @@ jobs:
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
-      - run: bun scripts/jwks-conformance/run.cjs
+      - run: |
+          bun scripts/jwks-conformance/regressions.cjs
+          bun scripts/jwks-conformance/run.cjs
+          bun scripts/jwks-conformance/run.cjs --upstream
+          bun scripts/jwks-conformance/run.cjs --legacy
+          bun scripts/jwks-conformance/run.cjs --upstream --legacy
+          bun scripts/jwks-conformance/callers.cjs
+          bun scripts/jwks-conformance/callers.cjs --upstream
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/http-proxy-conformance ci --ignore-scripts --no-audit --no-fund
       - run: |
