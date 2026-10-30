@@ -123,7 +123,8 @@ bun run typecheck
 bun run check:docs
 ```
 
-Tests run against Node.js and Bun. The workspace uses TypeScript 7.0.2 with VPM's
+Runtime tests, CI and benchmarks target Node.js 24 and Bun. The workspace uses
+TypeScript 7.0.2 with VPM's
 `vnode-types` and `vundici-types` for development checks. These declaration-only
 packages have separate compiler and Node API baselines; their documentation
 explains adoption and compatibility. Runtime packages retain self-contained

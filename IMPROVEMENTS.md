@@ -137,11 +137,10 @@ TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
 catalog covers **64 packages**, including two declaration-only packages.
 
-Runtime packages support Node.js 20+ and Bun, except `vgoogle-auth-library` and
-`vretry-request`, which follow their current upstream Node 22+ baselines. They include their own TypeScript
-declarations, and provide CommonJS and native ES module imports. CI runs the
-package and integration suites on Node 20, 22, 24 and Bun; current performance
-work targets Node 24 and Bun. Separate archive gates verify npm/Bun installation,
+Runtime verification and performance work target Node.js 24 and Bun. Packages
+include their own TypeScript declarations and provide CommonJS and native ES
+module imports. CI runs the package and integration suites on these same two
+runtimes. Separate archive gates verify npm/Bun installation,
 exported files, module imports and TypeScript 7 consumers. Test fixtures and
 benchmarks are excluded from installable archives.
 
