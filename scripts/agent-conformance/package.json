@@ -2,5 +2,9 @@
   "name": "vpm-agent-conformance",
   "private": true,
   "description": "Pinned upstream agent-base test helper; excluded from runtime packages",
-  "dependencies": { "async-listen": "3.1.0" }
+  "dependencies": {
+    "agent-base": "9.0.0",
+    "async-listen": "3.1.0",
+    "http-proxy-agent": "9.1.0"
+  }
 }

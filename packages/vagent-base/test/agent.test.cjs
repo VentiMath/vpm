@@ -191,3 +191,44 @@ test('collection grows across mixed chunk boundaries without changing bytes or l
   await assert.rejects(toBuffer(Readable.from(parts),{limit:expected.length-1}),RangeError);
   assert.deepEqual(await toBuffer(['',Buffer.alloc(0),'雪','']),Buffer.from('雪'));
 });
+test('agent-base 9 structural delegates handle synchronous and asynchronous results',async t=>{
+  const {url}=await serve(t);
+  for(const asynchronous of [false,true]){
+    const delegate={addRequest(q,o){http.globalAgent.addRequest(q,o);}};
+    class Structural extends Agent{connect(){return asynchronous?Promise.resolve(delegate):delegate;}}
+    const agent=managed(t,Structural,{maxSockets:1});
+    assert.deepEqual(await Promise.all([body(url,{agent}),body(url,{agent})]),['ok','ok']);
+    assert.equal(agent.totalSocketCount,0);
+  }
+});
+test('structural delegation reads addRequest once and preserves its receiver',async t=>{
+  const {url}=await serve(t);let reads=0;
+  const delegate={get addRequest(){reads++;return function(q,o){assert.equal(this,delegate);http.globalAgent.addRequest(q,o);};}};
+  class Structural extends Agent{connect(){return Promise.resolve(delegate);}}
+  assert.equal(await body(url,{agent:managed(t,Structural)}),'ok');assert.equal(reads,1);
+});
+test('throwing delegate getters settle the request and release a limited queue',async t=>{
+  const {url}=await serve(t);let calls=0;
+  class Structural extends Direct{async connect(q,o){if(++calls===1)return{get addRequest(){throw Error('delegate getter');}};return super.connect(q,o);}}
+  const agent=managed(t,Structural,{maxSockets:1});
+  const results=await Promise.allSettled([body(url,{agent}),body(url,{agent})]);
+  assert.equal(results[0].reason.message,'delegate getter');assert.deepEqual(results[1],{status:'fulfilled',value:'ok'});
+});
+test('throwing structural delegates settle once and drain queued work',async t=>{
+  const {url}=await serve(t);let calls=0;
+  class Structural extends Direct{connect(q,o){if(++calls===1)return{addRequest(){throw Error('delegate call');}};return super.connect(q,o);}}
+  const agent=managed(t,Structural,{maxSockets:1});
+  const results=await Promise.allSettled([body(url,{agent}),body(url,{agent})]);
+  assert.equal(results[0].reason.message,'delegate call');assert.deepEqual(results[1],{status:'fulfilled',value:'ok'});
+});
+test('delegation cycles through a structural adapter are rejected',async t=>{
+  let agent;const delegate={addRequest(q,o){agent.addRequest(q,o);}};
+  class Structural extends Agent{connect(){return delegate;}}agent=managed(t,Structural);
+  await assert.rejects(body('http://127.0.0.1:1',{agent}),{code:'ERR_AGENT_CYCLE'});
+});
+test('cancelled connections never invoke a late shared delegate',async t=>{
+  const pending=pendingAgent(t);const request=req('http://127.0.0.1:1',{agent:pending.agent});
+  const result=Promise.resolve(request);request.destroy();await assert.rejects(result);
+  let calls=0;pending.resolve({addRequest(){calls++;},destroy(){assert.fail('shared delegate must not be destroyed');}});
+  await delay(2);assert.equal(calls,0);
+});

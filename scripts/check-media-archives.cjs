@@ -501,6 +501,9 @@ const configuredProxy: TypedAgent = new TypedProxy('https://proxy.test', {header
 void configuredProxy;
 declare const agentSocket: AgentDuplex;
 class DirectAgent extends TypedAgent { connect(_request: AgentRequest, _options: AgentConnectOpts) { return agentSocket; } }
+class StructuralAgent extends TypedAgent { connect() { return {addRequest(request: AgentRequest, options: AgentConnectOpts) { void [request, options]; }}; } }
+const structuralAgent: TypedAgent = new StructuralAgent();
+void structuralAgent;
 const configuredAgent = new DirectAgent({connectTimeout:1000});
 void configuredAgent;
 import jwa from 'vjwa';

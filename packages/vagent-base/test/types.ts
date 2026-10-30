@@ -11,6 +11,12 @@ class Direct extends Agent {
 const agent = new Direct({keepAlive:true,connectTimeout:1000});
 const native: http.Agent = agent;
 class Delegating extends Agent { connect() { return http.globalAgent; } }
+class StructuralDelegate extends Agent {
+  connect() {
+    return {addRequest(request: ClientRequest, options: AgentConnectOpts) { void [request, options]; }};
+  }
+}
+const structural: http.Agent = new StructuralDelegate();
 const delegated: http.Agent = new Delegating();
 http.get('http://example.invalid', {agent});
 const response = req(new URL('https://example.invalid'), {agent});
@@ -21,4 +27,4 @@ const bytes: Promise<Uint8Array> = toBuffer([new Uint8Array([1]),'abc'],{limit:1
 new Agent();
 // @ts-expect-error only byte-like chunks are accepted
 toBuffer([123]);
-void [native,bytes,delegated];
+void [native,bytes,delegated,structural];

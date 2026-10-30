@@ -72,7 +72,8 @@ stack. `vjsonwebtoken`, `vjws`, and `vjwa` cover JWT claims, compact signatures,
 and native cryptographic operations used by authentication consumers. `vjwks-rsa`
 retrieves public signing keys for these consumers, including Firebase Admin.
 `vhttps-proxy-agent` supplies HTTP CONNECT tunnels through HTTP/HTTPS proxies,
-using `vagent-base` for connection lifecycle and pooling. `vgaxios` supplies
+using `vagent-base` for connection lifecycle and pooling. The agent base also
+supports the current agent-base 9 API and ESM proxy callers. `vgaxios` supplies
 the current Google HTTP client API using native fetch for ordinary requests
 and `vnode-fetch` for Node agents, proxies and client certificates. `vgtoken` exchanges service-account assertions for
 access and ID tokens on this HTTP/signing stack. `vgoogle-logging-utils` supplies

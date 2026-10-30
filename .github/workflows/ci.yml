@@ -55,6 +55,11 @@ jobs:
       - run: node scripts/jwks-conformance/run.cjs
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/agent-conformance/run.cjs
+      - if: matrix.node == 24
+        run: |
+          node scripts/agent-conformance/current/run.cjs
+          node scripts/agent-conformance/current/run.cjs --upstream
+          node scripts/agent-conformance/current/proxy.cjs
       - run: npm --prefix scripts/https-proxy-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/https-proxy-conformance/run.cjs
       - run: npm --prefix scripts/express-conformance ci --ignore-scripts --no-audit --no-fund
@@ -114,6 +119,10 @@ jobs:
       - run: bun scripts/jwks-conformance/run.cjs
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/agent-conformance/run.cjs
+      - run: |
+          bun scripts/agent-conformance/current/run.cjs
+          bun scripts/agent-conformance/current/run.cjs --upstream
+          bun scripts/agent-conformance/current/proxy.cjs
       - run: npm --prefix scripts/https-proxy-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/https-proxy-conformance/run.cjs
       - run: npm --prefix scripts/express-conformance ci --ignore-scripts --no-audit --no-fund

@@ -41,7 +41,7 @@ const targets = {
   extend: { pkg: 'vextend', versions: /^3\.0\.2$/ },
   'is-stream': { pkg: 'vis-stream', versions: /^2\.0\.1$/ },
   'https-proxy-agent': { pkg: 'vhttps-proxy-agent', versions: /^7\.0\.6$/ },
-  'agent-base': { pkg: 'vagent-base', versions: /^7\.1\.4$/ },
+  'agent-base': { pkg: 'vagent-base', versions: /^(?:7\.1\.4|9\.0\.0)$/ },
   'jwks-rsa': { pkg: 'vjwks-rsa', versions: /^3\.2\.2$/ },
   jsonwebtoken: { pkg: 'vjsonwebtoken', versions: /^9\.0\.3$/ },
   jws: { pkg: 'vjws', versions: /^4\.0\.1$/ },
