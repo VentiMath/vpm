@@ -1,0 +1,13 @@
+{
+  "upstream": {
+    "name": "is-unsafe",
+    "version": "2.0.2",
+    "repository": "https://github.com/NaturalIntelligence/is-unsafe",
+    "commit": "fcc5f3010c1c8e04dbe8baa1f47fee4f2078625f",
+    "license": "MIT",
+    "npmIntegrity": "sha512-HgbIHPBH0KHHCcjLfGsCvhtPTVxjaAZlXjwdz7/GQC40SjSe4sfQsar8J5VFo8JOSbarkpV0OLG95bbaNd9aAQ=="
+  },
+  "reviewed": "2026-10-30",
+  "retainedEvidence": "../../scripts/xml-helpers-conformance/upstream",
+  "implementation": "Rewritten matching engine retaining upstream contextual patterns and metadata"
+}

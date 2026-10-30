@@ -1,0 +1,10 @@
+import api from './index.js';
+export const name = api.name;
+export const ncName = api.ncName;
+export const qName = api.qName;
+export const nmToken = api.nmToken;
+export const nmTokens = api.nmTokens;
+export const validate = api.validate;
+export const validateAll = api.validateAll;
+export const sanitize = api.sanitize;
+export const createValidator = api.createValidator;

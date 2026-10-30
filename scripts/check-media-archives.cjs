@@ -49,6 +49,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vxml-naming' || name === 'vis-unsafe') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.mjs','index.d.ts','package.json',...(name === 'vis-unsafe' ? ['index.d.mts',...fs.readdirSync(path.join(root,'packages/vis-unsafe/contexts')).map(f=>'contexts/'+f)] : [])].sort());
+    }
     if (name === 'vanynum' || name === 'vstrnum') {
       assert.deepEqual(metadata.dependencies, name === 'vanynum' ? undefined : {vanynum:'0.1.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -182,6 +187,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveXMLNaming=require('vxml-naming'),archiveUnsafe=require('vis-unsafe');
+if(!archiveXMLNaming.qName('𐀀:part')||!archiveUnsafe.isUnsafe('<script>',archiveUnsafe.HTML))throw new Error('XML helpers CJS archive');
 const archiveAnyNumber=require('vanynum'),archiveStringNumber=require('vstrnum');
 if(archiveAnyNumber('१२')!=='12'||archiveAnyNumber.anynum!==archiveAnyNumber||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers CJS archive');
 const archiveEntities=require('vhtml-entities');if(archiveEntities.decode('&copy;')!=='©'||archiveEntities.encode('<')!=='&lt;'||archiveEntities.decodeEntity('&#65;')!=='A')throw new Error('entities CJS archive');
@@ -361,6 +368,9 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import {qName as archiveQName} from 'vxml-naming';
+import archiveUnsafe,{HTML as archiveHTML} from 'vis-unsafe';
+if(!archiveQName('𐀀:part')||!archiveUnsafe('<script>',archiveHTML))throw new Error('XML helpers ESM archive');
 import archiveAnyNumber,{anynum as archiveNamedNumber} from 'vanynum';
 import archiveStringNumber from 'vstrnum';
 if(archiveAnyNumber!==archiveNamedNumber||archiveAnyNumber('१२')!=='12'||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers ESM archive');
@@ -538,6 +548,10 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import {qName as typedQName} from 'vxml-naming';
+import typedUnsafe,{HTML as typedHTML} from 'vis-unsafe';
+const typedXMLName:boolean=typedQName('𐀀:part');const typedUnsafeResult:boolean=typedUnsafe('<script>',typedHTML);
+void typedXMLName;void typedUnsafeResult;
 import typedAnyNumber,{anynum as typedNamedNumber} from 'vanynum';
 import typedStringNumber from 'vstrnum';
 const typedNormalized:string=typedNamedNumber('१२');

@@ -256,6 +256,10 @@
       "name": "vis-stream",
       "version": "0.1.0",
     },
+    "packages/vis-unsafe": {
+      "name": "vis-unsafe",
+      "version": "0.1.0",
+    },
     "packages/vjson-bigint": {
       "name": "vjson-bigint",
       "version": "0.1.0",
@@ -500,6 +504,10 @@
       "name": "vvary",
       "version": "0.1.0",
     },
+    "packages/vxml-naming": {
+      "name": "vxml-naming",
+      "version": "0.1.0",
+    },
     "packages/vyocto-queue": {
       "name": "vyocto-queue",
       "version": "0.1.0",
@@ -620,6 +628,8 @@
 
     "vis-stream": ["vis-stream@workspace:packages/vis-stream"],
 
+    "vis-unsafe": ["vis-unsafe@workspace:packages/vis-unsafe"],
+
     "vjson-bigint": ["vjson-bigint@workspace:packages/vjson-bigint"],
 
     "vjsonwebtoken": ["vjsonwebtoken@workspace:packages/vjsonwebtoken"],
@@ -699,6 +709,8 @@
     "vuuid": ["vuuid@workspace:packages/vuuid"],
 
     "vvary": ["vvary@workspace:packages/vvary"],
+
+    "vxml-naming": ["vxml-naming@workspace:packages/vxml-naming"],
 
     "vyocto-queue": ["vyocto-queue@workspace:packages/vyocto-queue"],
   }

@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vxml-naming / vis-unsafe | xml-naming 0.3.0, is-unsafe 2.0.2; parser 5.11.2, builder 1.3.1 and Storage 8.4.0 callers | [xml-naming](https://www.npmjs.com/package/xml-naming), [is-unsafe](https://www.npmjs.com/package/is-unsafe), checked October 30, 2026 |
 | Caller paths verified | vanynum / vstrnum | anynum 1.0.1, strnum 2.5.1; fast-xml-parser 5.11.2 and Storage 8.4.0 multipart XML | [anynum](https://www.npmjs.com/package/anynum), [strnum](https://www.npmjs.com/package/strnum), checked October 30, 2026 |
 | Caller paths verified | vhtml-entities | html-entities 2.6.0; Storage 8.4.0 ApiError decoding | [html-entities 2.6.0](https://www.npmjs.com/package/html-entities), checked October 30, 2026 |
 | Caller paths verified | vretry / vasync-retry | retry 0.13.1, async-retry 1.3.3; Storage 8.4.0 multipart retry methods | [retry](https://www.npmjs.com/package/retry), [async-retry](https://www.npmjs.com/package/async-retry), checked October 30, 2026 |
@@ -72,6 +73,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vxml-naming](packages/vxml-naming) | xml-naming 0.3.0 | Correct XML name ranges, consistent diagnostics, valid sanitization and bounded cache contracts; current XML parser/builder callers verified. |
+| [vis-unsafe](packages/vis-unsafe) | is-unsafe 2.0.2 | Repeatable custom regex checks, isolated built-in patterns, validated custom contexts and combined HTML/XML scans; all nine heuristic contexts retained. |
 | [vanynum](packages/vanynum) | anynum 1.0.1 | All 770 Unicode 18 decimal digits, 160 omitted upstream; compact lookup pages, preserved text/sign policy and self-contained types. |
 | [vstrnum](packages/vstrnum) | strnum 2.5.1 | Consistent overflow/options, signed-zero and fractional-exponent fixes, repeatable regex exclusions, own-option reads and VPM Unicode normalization. |
 | [vhtml-entities](packages/vhtml-entities) | html-entities 2.6.0 | Complete named tables; safe scalar/reference parsing, prototype-free named lookups, correct numeric attribute handling and fast plain-text/special-character paths. |
@@ -152,12 +155,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,444 tests**: all pass on Node 24, and Bun passes
-2,441 with three documented runtime-specific skips. All 75 runtime packages'
+The root suite contains **2,454 tests**: all pass on Node 24, and Bun passes
+2,451 with three documented runtime-specific skips. All 77 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **77 packages**, including two declaration-only packages.
+catalog covers **79 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -247,6 +250,8 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vxml-naming` | 0 | 0 |
+| `vis-unsafe` | 0 | 0 |
 | `vanynum` | 0 | 0 |
 | `vstrnum` | 1 | 1 (`vanynum`) |
 | `vhtml-entities` | 0 | 0 |
@@ -388,6 +393,53 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vxml-naming and vis-unsafe
+
+The baselines are xml-naming 0.3.0 and is-unsafe 2.0.2, current on October 30,
+2026. Both replacements have zero dependencies. `vxml-naming` follows the same
+name grammar for XML 1.0 Fifth Edition and XML 1.1 Second Edition, fixing omitted
+U+0487/supplementary characters and incorrectly admitted multiplication/division
+signs. It enforces normalized Nmtokens, provides consistent UTF-16 diagnostics,
+repairs QName components and invalid Unicode, rejects coercion, and validates
+cache limits. Numeric/nested version options from the current parser remain
+accepted because both supported XML editions use identical name productions.
+
+`vis-unsafe` retains all nine upstream contexts and their patterns. It makes
+global/sticky matching repeatable, checks entire custom rule lists, and isolates
+built-in regexes from caller mutation. Boolean HTML/XML checks combine rules by
+identical flags without constructing match metadata. These are heuristic checks,
+not a substitute for escaping, parameterized queries or parser resource limits.
+The CJS implementation and ESM facade load all contexts; upstream's potential
+per-context tree shaking is not preserved.
+
+The [fixture](scripts/xml-helpers-conformance) executes all 78 naming and 294
+unsafe-string upstream cases. Eight naming assertions are explicitly corrected
+to the XML specifications; the unmodified suite runs against upstream. Nine
+focused tests and one retained-suite gate are in the root count. Additional
+controls reproduce 14 upstream/VPM differences and check 20,000 seeded scanner
+comparisons. Naming tests cover every Unicode code point at a name start and
+continuation plus 20,000 repair/validation combinations.
+
+Actual parser 5.11.2 and builder 1.3.1 source runs six differential parser cases,
+a supplementary entity case and five builder cases. Storage 8.4.0 performs two
+multipart uploads with six mocked requests through these XML sources. Ordinary
+Storage responses construct validators but do not call name/entity checks;
+dedicated DTD and builder cases establish those paths. The parser's independent
+`XMLValidator` still has a BMP-only grammar, and the builder validates names only
+when `sanitizeName` is configured. These are caller limitations, not completed
+parser replacement work.
+
+[Name benchmarks](packages/vxml-naming/bench/results/README.md) show faster
+invalid-start diagnostics and valid-name sanitization. BMP QName checks remain
+7.2% slower on Node and 12.7% on Bun; invalid-name repair is 9.9% / 38.9% slower.
+[Predicate benchmarks](packages/vis-unsafe/bench/results/README.md) show plain
+HTML/XML entity checks taking 74.0% / 67.8% less time and long plain text taking
+68.2% / 16.6% less time on Node / Bun. Early script matches remain 37.7% / 21.8%
+slower, and diagnostic pattern isolation adds cost: first-reason results take
+94 → 150 ns on Node and 35 → 124 ns on Bun. Full results include all-match,
+custom-regex and cache cases, paired processes, source hashes and identical
+upstream controls. These utility measurements do not establish application gains.
 
 ## vanynum and vstrnum
 
