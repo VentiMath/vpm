@@ -44,7 +44,7 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
+    if (['vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
@@ -158,6 +158,8 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const decoratedStream = require('vstream-events')({emit(){return true;},_read(){return 42;}});
+const archiveDuplex=require('vduplexify')();
+if(typeof archiveDuplex.setReadable!=='function'||archiveDuplex.readableHighWaterMark!==16384)throw new Error('duplexify CJS archive');archiveDuplex.destroy();
 const {teenyRequest:archiveTeeny}=require('vteeny-request');
 if(typeof archiveTeeny.defaults!=='function'||archiveTeeny.stats.counters.concurrentRequests!==0)throw new Error('teeny-request CJS archive');
 if(decoratedStream._read()!==42)throw new Error('stream-events archive');
@@ -322,6 +324,8 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import streamEventsArchive from 'vstream-events';
+import archiveDuplexify from 'vduplexify';
+const archiveDuplex=archiveDuplexify.obj();if(!archiveDuplex.readableObjectMode)throw new Error('duplexify ESM archive');archiveDuplex.destroy();
 import {teenyRequest as archiveTeeny} from 'vteeny-request';
 if(typeof archiveTeeny.close!=='function')throw new Error('teeny-request ESM archive');
 if(typeof streamEventsArchive!=='function')throw new Error('stream-events ESM archive');
@@ -479,6 +483,9 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import typedStreamEvents = require('vstream-events');
+import typedDuplexify = require('vduplexify');
+class TypedDuplexProxy extends typedDuplexify {}
+new TypedDuplexProxy(null,null,{objectMode:true}).write(false);
 import {teenyRequest as typedTeeny} from 'vteeny-request';
 typedTeeny({uri:'http://example.test',proxy:false,timeout:100},(error,response,body)=>{if(response){const status:number=response.statusCode;void status;}void error;void body;});
 const typedDecoratedStream = typedStreamEvents({emit(){return false;},_read(){return 42;},custom:'value'});

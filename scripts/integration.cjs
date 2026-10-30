@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  duplexify: { pkg: 'vduplexify', versions: /^4\.1\.3$/ },
   'teeny-request': { pkg: 'vteeny-request', versions: /^11\.1\.1$/ },
   'http-proxy-agent': { pkg: 'vhttp-proxy-agent', versions: /^(?:7\.0\.2|9\.1\.0)$/ },
   'stream-events': { pkg: 'vstream-events', versions: /^1\.0\.5$/ },
@@ -141,7 +142,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [...['teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
+const queue = [...['duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -150,7 +151,7 @@ while (queue.length) {
   if (data.name === 'content-type') contentTypes.set(manifest, data.version);
   const from = createRequire(manifest);
   // Current Auth and retry helpers are fixture roots; older majors stay uncovered.
-  if (['google-auth-library', 'retry-request', 'stream-events', 'teeny-request'].includes(data.name) && targets[data.name].versions.test(data.version)) {
+  if (['duplexify', 'google-auth-library', 'retry-request', 'stream-events', 'teeny-request'].includes(data.name) && targets[data.name].versions.test(data.version)) {
     const entry = from.resolve(path.dirname(manifest));
     require(entry);
     require.cache[entry].exports = replacements[data.name];
@@ -1189,6 +1190,7 @@ async function run() {
     await require('./stream-events-conformance/callers.cjs')(replacements['stream-events'], false, false);
     await require('./http-proxy-conformance/callers.cjs')(replacements['http-proxy-agent']);
     await require('./teeny-conformance/callers.cjs')(replacements['teeny-request']);
+    await require('./duplexify-conformance/callers.cjs')(replacements.duplexify);
 
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {

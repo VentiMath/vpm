@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vduplexify | 4.1.3; Storage 8.4.0 and google-gax 6.14.0 streams | [duplexify 4.1.3](https://www.npmjs.com/package/duplexify) |
 | Complete | vretry-request | 9.1.0; Cloud Storage 8.4.0/google-gax 6.14.0 caller paths | [retry-request 9.1.0](https://www.npmjs.com/package/retry-request) |
 | Caller paths verified | vteeny-request | 11.1.1 upstream suite and Storage 8.4.0 callbacks/downloads/multipart uploads | [teeny-request 11.1.1](https://www.npmjs.com/package/teeny-request) |
 | Complete | vstream-events | 1.0.5; teeny-request 11.1.1 and current Storage/gax callers | [stream-events 1.0.5](https://www.npmjs.com/package/stream-events), used by teeny-request 11.1.1 |
@@ -65,6 +66,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vduplexify](packages/vduplexify) | duplexify 4.1.3 | Zero dependencies; native streams, settled teardown, preserved falsy end values, nonmutating options, explicit premature-close errors and current Storage/gax callers. |
 | [vteeny-request](packages/vteeny-request) | teeny-request 11.1.1 | Four VPM dependencies; total deadlines, canceled connections, ordered multipart completion, immutable request options, bounded isolated proxy pools and safe error messages. |
 | [vhttp-proxy-agent](packages/vhttp-proxy-agent) | http-proxy-agent 9.1.0; 7.0.2 caller coverage | Two VPM dependencies, prepared absolute requests, preserved streamed bodies, bounded TCP/TLS connections, credential-safe diagnostics and isolated configuration. |
 | [vstream-events](packages/vstream-events) | stream-events 1.0.5 | Zero dependencies; independent once-only read/write notifications, exact method results and receivers, reentrant restoration and validation before mutation. |
@@ -134,12 +136,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,254 tests**: all pass on Node 24, and Bun passes
-2,251 with three documented runtime-specific skips. All 64 runtime packages'
+The root suite contains **2,286 tests**: all pass on Node 24, and Bun passes
+2,283 with three documented runtime-specific skips. All 65 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **66 packages**, including two declaration-only packages.
+catalog covers **67 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -182,7 +184,11 @@ teeny-request download checks; 21 focused VPM tests are in the root suite.
 The [teeny-request suite](scripts/teeny-conformance/README.md) adds all 116 active
 upstream cases on both runtimes, with two retained upstream skips, explicit
 control outcomes and Cloud Storage multipart caller checks. Its 28 focused
-regression tests are in the root suite.
+regression tests are in the root suite. The
+[duplexify suite](scripts/duplexify-conformance/README.md) adds all 16 upstream
+cases and 37 original assertions on both runtimes, plus one VPM premature-close
+assertion. Its 32 focused root tests and current Storage/gax callers exercise
+buffering, dynamic attachment, pending-operation settlement and cancellation.
 
 ## Dependency scope
 
@@ -194,6 +200,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vduplexify` | 4 | 0 |
 | `vteeny-request` | 4 | 4 (all VPM) |
 | `vstream-events` | 1 | 0 |
 | `vretry-request` | 1 | 0 |
@@ -324,6 +331,42 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vduplexify
+
+Targets duplexify **4.1.3**. Native Node 24/Bun streams replace all four runtime
+dependencies: readable-stream, inherits, end-of-stream and stream-shift. The
+adapter retains independent attachment, replacement, nested corking, drain
+backpressure, 16 KiB/16-object defaults, and constructor/subclass APIs.
+
+`end(false)`, `end(0)` and `end('')` preserve object-mode values. Frozen options
+work and `.obj` respects an explicit watermark. Destruction settles pending
+writes and finalization callbacks, removes adapter listeners and destroys a
+shared source/sink only once. `destroy:false` preserves caller ownership even
+for streams attached after destruction. Premature close now reports
+`ERR_STREAM_PREMATURE_CLOSE`; invalid attachments fail before replacing the
+current stream. Native lifecycle overrides are rejected.
+
+Normal completion preserves the pending HTTP response after upload writes
+finish. Explicit `autoDestroy:true` opts into native completion destruction;
+the default retains upstream's error-only destruction behavior. Byte chunk
+boundaries may coalesce through native `read()`. See the [package API](packages/vduplexify/README.md)
+for finalization, ownership and null-attachment semantics.
+
+All upstream cases run with the documented premature-close assertion addition.
+Current Storage download/multipart and google-gax retry, client, bidirectional
+and cancellation callers run with published controls, keeping VPM retry and
+transport implementations constant. These checks cover actual SDK code against
+local services; they do not establish full SDK parity or production adoption.
+
+[Paired benchmarks and identical-upstream controls](packages/vduplexify/bench/results/README.md)
+cover setup, transfers, a one-byte buffer stress case, replacement and a real
+google-gax bidirectional wrapper. Node construction takes 43–46% less time and
+ordinary transfers take 23–37% less. Bun construction takes 26–39% less; ordinary
+transfer differences are small. The one-byte-buffer stress case remains 31%
+slower on Node and 10% on Bun; Node sink replacement is 10% slower and the Bun
+gax wrapper is 13% slower. Gax controls are noisy, so precise end-to-end speed
+claims are unwarranted. All samples, controls and process variation are retained.
 
 ## vteeny-request
 
