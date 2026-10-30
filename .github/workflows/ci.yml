@@ -39,6 +39,7 @@ jobs:
       - run: npm --prefix scripts/nodable-entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm test
+      - run: node scripts/check-body-options.cjs
       - run: node scripts/integration.cjs
       - run: |
           node scripts/object-hash-conformance/regressions.cjs
@@ -178,6 +179,7 @@ jobs:
       - run: npm --prefix scripts/nodable-entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun run test:bun
+      - run: bun scripts/check-body-options.cjs
       - run: bun run typecheck
       - run: bun run check:docs
       - run: node scripts/numbers-conformance/generate-data.cjs --check

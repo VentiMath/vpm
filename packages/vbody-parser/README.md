@@ -38,8 +38,8 @@ Common options:
   The limit counts inflated bytes before charset decoding. `Infinity` (or any
   count above `Number.MAX_SAFE_INTEGER`) means no limit; a fractional count is
   floored. NaN, negative counts and malformed strings such as `'100kbjunk'` fail
-  at construction; body-parser accepts them and then enforces no limit or a
-  truncated one.
+  at construction. Upstream also rejects NaN and empty strings, but accepts
+  negative bounds and partially parses strings such as `'100kbjunk'` and `'1e3'`.
 - `type`: a media type, extension such as `'json'`, wildcard such as `'text/*'`
   or `'+json'`, array of these, or synchronous request predicate. A falsy value
   uses the parser's default type. String patterns are case-insensitive and
@@ -59,7 +59,8 @@ Common options:
   cannot decode fails at construction, since every request without a charset
   parameter would otherwise be rejected with 415. Text supports the
   `viconv-lite` codec catalog; JSON accepts supported `utf-*` names; forms accept
-  only `'utf-8'` and `'iso-8859-1'`.
+  only `'utf-8'` and `'iso-8859-1'`. Configured names are case-insensitive,
+  including form defaults that upstream rejects when capitalized.
 
 JSON also accepts `strict` (enabled unless exactly `false`, allowing only
 objects and arrays) and a native `JSON.parse` `reviver` function; a non-function
@@ -124,11 +125,10 @@ Functions Framework 5.0.2 consumer fixture.
 
 - Form parameter limits no longer wrap through a signed 32-bit conversion.
   For example, `parameterLimit: 2 ** 32` correctly retains `a=1&b=2`.
-- Options are coerced as body-parser coerces them, so any configuration that
-  starts there starts here. The exceptions fail at construction rather than
-  booting a parser that cannot work: NaN, negative or malformed limits, and
-  default charsets the parser cannot decode. Later option/array mutation cannot
-  alter a parser.
+- Numeric strings, truthy flags, falsy defaults and infinite bounds follow
+  body-parser's option coercions. Negative or partially parsed limits and
+  default charsets the parser cannot decode fail at construction. Later
+  option/array mutation cannot alter a parser.
 - An interrupted compressed request cannot leave the decoder waiting for input
   from a request that has already closed.
 - Callback failures retain their original error and metadata as described above.
@@ -147,6 +147,15 @@ and `vmime-db`. These improvements do not establish production performance
 gains or the existence of an upstream security vulnerability.
 
 ## Verification and measurements
+
+The [construction comparison](../../scripts/check-body-options.cjs) runs against
+the full, locked body-parser 2.4.0 dependency tree on Node 24 and Bun in CI.
+It covers 1,632 single-option configurations (34 values across 12 options and
+four factories), plus 34 form-depth cases with `extended: true`. Of these 1,666
+cases, 1,600 match upstream. The 66 explicit differences are 65 early rejections
+of unusable limits/charsets and one accepted uppercase form charset. New or
+disappearing differences fail the gate. This measures factory acceptance;
+request behavior and option snapshots have separate middleware tests.
 
 From the repository root:
 
