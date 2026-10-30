@@ -12,3 +12,4 @@ scripts/path-matcher-conformance/upstream/** -whitespace
 scripts/nodable-entities-conformance/upstream/** -whitespace
 scripts/xml-builder-conformance/upstream/** -whitespace
 scripts/xml-parser-conformance/upstream/** -whitespace
+scripts/mime-conformance/upstream/** -whitespace

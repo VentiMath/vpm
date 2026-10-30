@@ -1,0 +1,11 @@
+{
+  "LICENSE.txt": "c8510092b3952c919cac96bac329114cc3b3be3478d237061266060ba7f69f86",
+  "dist/types/other.js.txt": "04c22263efca392a5ab7a1f02e4be5dc4a34c4f714b127f55ae466a3c0f7574d",
+  "dist/types/standard.js.txt": "7a7bc870f690526bfff47b3c1087c5899bc26b49552e815f196ac8e15827b9f2",
+  "package.json.txt": "cd1f0e69da288e9182f92295fd9e19e60bb11a6087dac2ed99dd515679618012",
+  "scripts/build.ts.txt": "e6702d8091c854c7535c14e4b579203e45e878716af0bee7c434b9df2473b5af",
+  "src/Mime.ts.txt": "e19311c514328cda9e7d7f2cc88c2cec1350261d2889f5dfacc19da948f4cad8",
+  "src/mime_cli.ts.txt": "0788ad201feb20ff53b9410ea16f64e462261efe783fd1c5c584904dc7301e8e",
+  "test/mime.test.js.txt": "fee8945a3fadcd9470f0f037bec5db43f77f52d2fb1e5dec892d58cd4a9c0dcb",
+  "test/test_util.js.txt": "8867dcc88f22df77a60e23a67fa75357b08428f98427a12cbd9ed40a0b8baeb2"
+}

@@ -32,12 +32,18 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/mime-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-parser-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/nodable-entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/mime-conformance/regressions.cjs
+          node scripts/mime-conformance/run.cjs --upstream
+          node scripts/mime-conformance/callers.cjs --upstream
+          node scripts/mime-conformance/callers.cjs --legacy
+          node scripts/mime-conformance/bundles.cjs
           node scripts/xml-parser-conformance/regressions.cjs
           node scripts/xml-parser-conformance/run.cjs --upstream
           node scripts/xml-parser-conformance/callers.cjs --upstream
@@ -154,6 +160,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/mime-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-parser-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/nodable-entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
@@ -171,6 +178,11 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/mime-conformance/regressions.cjs
+          bun scripts/mime-conformance/run.cjs --upstream
+          bun scripts/mime-conformance/callers.cjs --upstream
+          bun scripts/mime-conformance/callers.cjs --legacy
+          bun scripts/mime-conformance/bundles.cjs
           bun scripts/xml-parser-conformance/regressions.cjs
           bun scripts/xml-parser-conformance/run.cjs --upstream
           bun scripts/xml-parser-conformance/callers.cjs --upstream

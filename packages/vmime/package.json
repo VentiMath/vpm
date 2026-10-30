@@ -1,0 +1,84 @@
+{
+  "name": "vmime",
+  "version": "0.1.0",
+  "description": "MIME lookup with atomic definitions and immutable built-in mappings",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "default": "./index.js"
+    },
+    "./lite": {
+      "import": {
+        "types": "./lite.d.mts",
+        "default": "./lite.mjs"
+      },
+      "require": {
+        "types": "./lite.d.ts",
+        "default": "./lite.js"
+      },
+      "default": "./lite.js"
+    },
+    "./types/standard.js": {
+      "import": {
+        "types": "./types/standard.d.mts",
+        "default": "./types/standard.mjs"
+      },
+      "require": {
+        "types": "./types/standard.d.ts",
+        "default": "./types/standard.js"
+      },
+      "default": "./types/standard.js"
+    },
+    "./types/other.js": {
+      "import": {
+        "types": "./types/other.d.mts",
+        "default": "./types/other.mjs"
+      },
+      "require": {
+        "types": "./types/other.d.ts",
+        "default": "./types/other.js"
+      },
+      "default": "./types/other.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "vmime": "bin/vmime.cjs"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "lite.js",
+    "lite.mjs",
+    "lite.d.ts",
+    "lite.d.mts",
+    "lib",
+    "types",
+    "bin",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vmime"
+  }
+}
