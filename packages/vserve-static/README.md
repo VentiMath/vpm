@@ -1,7 +1,7 @@
 # vserve-static
 
 Static-file middleware for the Express 5 stack, built on `vsend` and the VPM URL
-helpers. A counterpart to `serve-static` 2.2.1 for Node.js 20+ and Bun.
+helpers. A counterpart to `serve-static` 2.2.1 for Node.js 24+ and Bun.
 
 Its four direct runtime dependencies are `vencodeurl`, `vescape-html`,
 `vparseurl`, and `vsend`. Including transitive dependencies, its external runtime
@@ -97,7 +97,7 @@ VPM counterparts into the pinned Express 5.3.0, Functions Framework 5.0.2,
 firebase-functions 7.4.0, and serve-static 2.2.1 stack. Its HTTP checks cover
 static delivery, downloads, ranges, callbacks, fallthrough, mount roots,
 redirect queries, and conflicting headers, alongside the other VPM packages.
-It runs on Node 20, 22, 24 and Bun in CI. This package targets that Express 5 path.
+It runs on Node 24 and Bun in CI. This package targets that Express 5 path.
 
 ```sh
 npm --prefix scripts/consumers ci --ignore-scripts

@@ -2,7 +2,7 @@
 
 Parse duration strings and format milliseconds. Zero runtime dependencies, with
 bundled TypeScript declarations and CommonJS/ES module imports. A counterpart to
-`ms` 2.1.3 for Node.js 20+ and Bun.
+`ms` 2.1.3 for Node.js 24+ and Bun.
 
 ## Use
 

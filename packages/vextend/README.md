@@ -1,6 +1,6 @@
 # vextend
 
-Own-property shallow and deep merging for Node.js 20+ and Bun, compared with
+Own-property shallow and deep merging for Node.js 24+ and Bun, compared with
 `extend` 3.0.2. Zero runtime dependencies; CommonJS, native ESM default import,
 and self-contained TypeScript declarations.
 

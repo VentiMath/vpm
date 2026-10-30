@@ -1,7 +1,7 @@
 # vstatuses
 
 HTTP status codes, reason phrases, and category tables with zero runtime
-dependencies. A counterpart to `statuses` 2.0.2 for Node.js 20+ and Bun, with
+dependencies. A counterpart to `statuses` 2.0.2 for Node.js 24+ and Bun, with
 bundled TypeScript declarations and CommonJS/ES module imports.
 
 ## Use

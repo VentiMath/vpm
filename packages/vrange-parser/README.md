@@ -1,6 +1,6 @@
 # vrange-parser
 
-Strict HTTP range parsing for Node.js 20+ and Bun, with no runtime dependencies.
+Strict HTTP range parsing for Node.js 24+ and Bun, with no runtime dependencies.
 A counterpart to `range-parser` 1.2.1 with exact numeric syntax, safe bounds,
 oversized suffix handling, and stable ordering when combining ranges.
 

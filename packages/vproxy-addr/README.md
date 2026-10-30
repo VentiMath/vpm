@@ -278,7 +278,7 @@ throughput or tail-latency improvement is inferred from these measurements.
 
 ## Distribution and provenance
 
-Node.js 20+ package baseline; local verification targets Node 24 and Bun.
+Node.js 24+ package baseline; local verification targets Node 24 and Bun.
 Use the workspace or `bun pm pack --ignore-scripts` in this directory and install
 the archives of this package and its two VPM dependencies. These packages are
 not yet published to npm. Test fixtures and benchmark results stay out of archives.

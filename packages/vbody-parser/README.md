@@ -1,7 +1,7 @@
 # vbody-parser
 
 JSON, URL-encoded form, text and raw-body middleware for Node.js HTTP servers and
-Express-style applications. Requires Node.js 20+ or Bun. CommonJS, native ESM
+Express-style applications. Requires Node.js 24+ or Bun. CommonJS, native ESM
 default/named imports, and self-contained TypeScript declarations are included.
 
 ```js

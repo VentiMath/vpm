@@ -16,7 +16,7 @@ const claims = jwt.verify(token, key, {
 });
 ```
 
-CommonJS and native ESM named/default imports are supported on Node 20+ and Bun.
+CommonJS and native ESM named/default imports are supported on Node 24+ and Bun.
 The [declarations](index.d.ts) do not require ambient Node, Undici or DOM types.
 
 ## API

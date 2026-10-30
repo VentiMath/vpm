@@ -1,6 +1,9 @@
 # Developing VPM
 
 Use **Node.js 24**, **Bun 1.4.0**, and the workspace's **TypeScript 7.0.2** compiler.
+Every runtime package declares `engines.node: ">=24"`; earlier Node versions are
+outside the support contract. Browser compatibility remains package-specific.
+The documentation gate checks the runtime declaration on every package.
 Package archives use standard metadata and can be installed with existing tools.
 A standalone VPM CLI, registry and native Bun integration remain future work.
 
@@ -75,7 +78,10 @@ useful; prereleases need an explicit target.
 Implement and test the behavior, compare it with upstream, then exercise the
 callers. Check public types and installed archives. Benchmarks should retain
 inputs, methodology, raw measurements and source hashes; include regressions and
-controls rather than selecting only favorable cases.
+controls rather than selecting only favorable cases. Retained reports preserve the
+metadata and source hashes recorded when measured. An engine-only metadata change
+does not alter those samples; `--verify-current` can report a manifest mismatch
+until a fresh measurement is recorded. Do not rewrite old hashes to imply a rerun.
 
 A package README identifies the upstream version, explains specific fixes and
 intentional differences, and links to the supporting tests and benchmarks.

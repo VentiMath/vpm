@@ -2,7 +2,7 @@
 
 HTTP file delivery using VPM packages, with explicit conditional request rules,
 validated options, and guarded stream cleanup. A counterpart to `send` 1.2.1 for
-Node.js 20+ and Bun. All eleven direct runtime dependencies have VPM counterparts;
+Node.js 24+ and Bun. All eleven direct runtime dependencies have VPM counterparts;
 the complete external dependency tree contains thirteen VPM packages.
 
 ## Use
@@ -130,8 +130,8 @@ including transitive calls. Checks include `res.sendFile`, `res.download`,
 completion/error callbacks, static extensions/indexes, redirects with queries,
 fallthrough, dotfiles, HEAD, ranges, and conditional responses. A 416 integration
 case caught and corrected `vfinalhandler` dropping explicit Content-Range error
-metadata. No application manifest is changed. The gate runs in CI on Node 20,
-22, 24 and Bun; it does not validate an older Express 4 stack.
+metadata. No application manifest is changed. The gate runs in CI on Node 24
+and Bun; it does not validate an older Express 4 stack.
 
 Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 

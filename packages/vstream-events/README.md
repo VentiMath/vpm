@@ -2,7 +2,7 @@
 
 One-time `reading` and `writing` notifications for Node streams. Replaces
 `stream-events` 1.0.5 with no external dependencies, including no `stubs`.
-Supports Node.js 20+ and Bun; performance work targets Node 24 and Bun.
+Supports Node.js 24+ and Bun; performance work targets Node 24 and Bun.
 
 ```js
 const streamEvents = require('vstream-events');

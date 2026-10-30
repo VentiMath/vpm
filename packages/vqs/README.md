@@ -1,6 +1,6 @@
 # vqs
 
-Parse and serialize nested query strings and form fields. Requires Node.js 20+
+Parse and serialize nested query strings and form fields. Requires Node.js 24+
 or Bun, with **zero runtime dependencies**, CommonJS and native ESM named/default
 imports, and bundled TypeScript declarations.
 

@@ -88,5 +88,5 @@ node packages/vgoogle-logging-utils/bench/summarize.cjs --verify-current
 ```
 
 [Benchmark evidence](bench/results/README.md) includes raw samples and controls.
-Node.js 20+ and Bun; Apache-2.0. [Provenance](PROVENANCE.json) records the source
+Node.js 24+ and Bun; Apache-2.0. [Provenance](PROVENANCE.json) records the source
 commits, the older conformance archive, and the exact current upstream test source.

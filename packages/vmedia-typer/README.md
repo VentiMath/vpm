@@ -2,7 +2,7 @@
 
 Parse, validate, and format bare media types, with explicit ASCII validation and
 consistent parse/format behavior. Zero runtime dependencies. CommonJS, native
-ESM named/default imports, and self-contained TypeScript declarations; Node 20+.
+ESM named/default imports, and self-contained TypeScript declarations; Node 24+.
 
 ```js
 const media = require('vmedia-typer');

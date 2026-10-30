@@ -34,7 +34,7 @@ format(content);               // 'text/html; charset=utf-16le'
 
 Upstream 3.1.1 already includes span-based quoted-string processing and other
 performance improvements. The shared-prototype and input-validation differences
-remain relevant to both comparison versions; this package retains Node 20 and
+remain relevant to both comparison versions; this package supports Node 24 and
 CommonJS support alongside ES module imports.
 
 ## API and compatibility
@@ -109,7 +109,7 @@ The shared integration gate aliases this package into the four consumers above
 and exercises HTTP checks with all VPM replacements installed together. These
 include UTF-16 JSON decoding, unsupported charset rejection, weighted Accept
 negotiation with quoted commas, and preserving parameters when Express changes
-a response charset. CI runs on Node 20, 22, 24 and Bun.
+a response charset. CI runs on Node 24 and Bun.
 
 Current shared coverage is recorded in the [central integration gate description](../../IMPROVEMENTS.md#the-integration-gate).
 

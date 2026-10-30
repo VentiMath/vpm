@@ -2,7 +2,7 @@
 
 JSON Web Algorithm signing and verification using native crypto, with no external
 runtime dependencies. Replaces `jwa` 2.0.1 beneath JWS/JWT consumers. Supports
-Node.js 20+ and Bun; benchmarks target Node 24 and Bun.
+Node.js 24+ and Bun; benchmarks target Node 24 and Bun.
 
 ```js
 const jwa = require('vjwa')

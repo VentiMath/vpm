@@ -3,7 +3,7 @@
 Observe when an HTTP request or response finishes, closes, or encounters a socket
 error. Callbacks retain the async context in which they were registered.
 
-`von-finished` is a modernized counterpart to `on-finished` 2.4.1 for Node.js 20+
+`von-finished` is a modernized counterpart to `on-finished` 2.4.1 for Node.js 24+
 and Bun. Its only external runtime dependency is VPM's [`vee-first`](../vee-first).
 
 ## Use

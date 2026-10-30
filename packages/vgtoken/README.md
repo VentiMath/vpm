@@ -90,6 +90,6 @@ three fresh processes per runtime, identical-upstream controls and source hashes
 They measure package work and local HTTP, not Google service latency or deployed
 application performance.
 
-Node.js 20+ and Bun. CommonJS and native ESM exports. Public declarations require
+Node.js 24+ and Bun. CommonJS and native ESM exports. Public declarations require
 no ambient Node, Undici or DOM types. MIT license; upstream sources, fixture key
 and immutable archive provenance are recorded in [PROVENANCE.json](PROVENANCE.json).

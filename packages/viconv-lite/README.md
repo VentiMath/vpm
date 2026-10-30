@@ -1,6 +1,6 @@
 # viconv-lite
 
-Character encoding and decoding for Node.js 20+ and Bun. Based on `iconv-lite`
+Character encoding and decoding for Node.js 24+ and Bun. Based on `iconv-lite`
 0.7.3, with all 414 supported encoding names and aliases, unchanged conversion
 tables, corrected streaming boundaries, and **zero external runtime dependencies**.
 

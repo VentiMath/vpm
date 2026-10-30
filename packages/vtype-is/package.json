@@ -11,7 +11,7 @@
   },
   "files": ["index.js", "index.d.ts", "LICENSE", "README.md"],
   "dependencies": { "vcontent-type": "workspace:*", "vmedia-typer": "workspace:*", "vmime-types": "workspace:*" },
-  "engines": { "node": ">=20" },
+  "engines": { "node": ">=24" },
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/ventimath/vpm.git", "directory": "packages/vtype-is" },
   "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vtype-is"

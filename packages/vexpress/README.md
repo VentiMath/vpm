@@ -1,7 +1,7 @@
 # vexpress
 
 Express 5-style HTTP applications built entirely on VPM runtime packages, derived
-from Express **5.3.0**. Supports Node.js 20+ and Bun. Performance measurements
+from Express **5.3.0**. Supports Node.js 24+ and Bun. Performance measurements
 target Node 24 and Bun. Public TypeScript declarations are included.
 
 ```js

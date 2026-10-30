@@ -3,7 +3,7 @@
 Match request Content-Type headers against extensions, media types, wildcards
 and structured suffixes. Preserves the Express-compatible type-is 2.x API with
 case-insensitive matching and explicit validation. CommonJS, native ESM
-named/default imports and self-contained TypeScript declarations; Node 20+.
+named/default imports and self-contained TypeScript declarations; Node 24+.
 
 ```js
 const typeis = require('vtype-is');

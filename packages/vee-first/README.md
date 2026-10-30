@@ -5,7 +5,7 @@ listeners, and invoke a callback once. Zero runtime dependencies.
 
 `vee-first` is VPM's modernized counterpart to `ee-first` 1.1.1. It keeps the
 callback API, deferred listener assignment, and `.cancel()` handle. It supports
-Node.js 20+ and Bun; browser use requires an EventEmitter-compatible object.
+Node.js 24+ and Bun; browser use requires an EventEmitter-compatible object.
 
 ## Use
 

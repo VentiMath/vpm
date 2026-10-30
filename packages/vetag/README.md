@@ -1,6 +1,6 @@
 # vetag
 
-Compatible HTTP entity tags for Node.js 20+ and Bun, with no external runtime
+Compatible HTTP entity tags for Node.js 24+ and Bun, with no external runtime
 dependencies. A counterpart to `etag` 1.8.1 using native one-shot hashing when
 available, with a `createHash` fallback for older supported runtimes.
 

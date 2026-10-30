@@ -88,8 +88,8 @@ transitive dependency. Loading both upstream and VPM Node globals is unsupported
 ## Compatibility
 
 - **Node API target: 22.** These are not universal declarations for every Node
-  version. The runtime packages' separate Node 20+ support does not make Node 22
-  APIs available on Node 20.
+  version. VPM runtime packages target Node 24 and Bun; this declaration package
+  still describes the Node 22 API surface and is not complete Node 24 API coverage.
 - **TypeScript minimum: 7.0.2.** Strict checks use 7.0.2 in
   Node-only and mixed DOM/Node projects, including CJS and ESM archive consumers.
 - **Types only.** No JavaScript API, Node runtime replacement, or application

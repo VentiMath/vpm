@@ -2,7 +2,7 @@
 
 HTTP content negotiation with upstream-compatible quality values, deterministic
 ties and one parse per offered value. A callable/new-able counterpart to negotiator
-1.1.0, with its four header families and legacy method aliases. Node 20+,
+1.1.0, with its four header families and legacy method aliases. Node 24+,
 CommonJS, native ESM default/named imports and self-contained TypeScript types.
 
 ```js

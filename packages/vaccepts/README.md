@@ -2,7 +2,7 @@
 
 Express-compatible content negotiation using **vnegotiator** and **vmime-types**.
 Provides the familiar extension shortcuts and boolean/string/list return API
-from accepts 2.0.0. Node 20+, CommonJS, native ESM default imports and
+from accepts 2.0.0. Node 24+, CommonJS, native ESM default imports and
 self-contained TypeScript declarations.
 
 ```js

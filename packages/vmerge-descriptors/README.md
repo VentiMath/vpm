@@ -153,7 +153,7 @@ OUTPUT=/tmp/vmerge-bun.json bun packages/vmerge-descriptors/bench/compare.cjs
 
 ## Distribution and provenance
 
-Node.js 20+ package baseline; local verification uses Node 24 and Bun. Install
+Node.js 24+ package baseline; local verification uses Node 24 and Bun. Install
 from the workspace or run `bun pm pack --ignore-scripts` in
 `packages/vmerge-descriptors`, then install the resulting archive with npm or Bun.
 These packages are not yet published to npm. Archives include only source,

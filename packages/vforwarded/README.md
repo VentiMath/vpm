@@ -142,7 +142,7 @@ OUTPUT=/tmp/vforwarded-bun.json bun packages/vforwarded/bench/compare.cjs
 
 ## Distribution and provenance
 
-Node.js 20+ package baseline; local tests and measurements target Node 24 and Bun.
+Node.js 24+ package baseline; local tests and measurements target Node 24 and Bun.
 Install from this workspace, or run `bun pm pack --ignore-scripts` in
 `packages/vforwarded` and install the archive using npm or Bun. VPM does not yet
 publish these packages to npm. Archives include source, declarations, package

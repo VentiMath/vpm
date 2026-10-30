@@ -160,7 +160,7 @@ OUTPUT=/tmp/vonce-bun.json bun packages/vonce/bench/compare.cjs
 
 ## Distribution and provenance
 
-Node.js 20+ package baseline; this change was tested and benchmarked locally on
+Node.js 24+ package baseline; this change was tested and benchmarked locally on
 Node 24 and Bun. Install from this workspace or run `bun pm pack --ignore-scripts`
 in `packages/vonce` and install the resulting archive with npm or Bun. VPM does
 not yet publish these packages to npm. Archives contain only source, declarations,

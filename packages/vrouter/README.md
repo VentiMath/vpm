@@ -1,6 +1,6 @@
 # vrouter
 
-Express 5-style routing, derived from `router` 2.2.0. Supports Node.js 20+ and Bun.
+Express 5-style routing, derived from `router` 2.2.0. Supports Node.js 24+ and Bun.
 Public declarations are included and do not require ambient Node or browser types.
 
 ```js

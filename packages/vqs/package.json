@@ -21,7 +21,7 @@
     "PROVENANCE.json"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "license": "BSD-3-Clause",
   "repository": {

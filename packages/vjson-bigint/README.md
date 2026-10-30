@@ -1,7 +1,7 @@
 # vjson-bigint
 
 Exact JSON numbers without an arithmetic dependency. A counterpart to
-`json-bigint` 1.0.0 for Node 20+ and Bun, with CommonJS, native ESM default import
+`json-bigint` 1.0.0 for Node 24+ and Bun, with CommonJS, native ESM default import
 and TypeScript declarations.
 
 ```js
