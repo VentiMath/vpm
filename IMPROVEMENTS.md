@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vnodable-entities | @nodable/entities 3.1.0; parser 5.11.2 and Storage 8.4.0 callers | [@nodable/entities 3.1.0](https://www.npmjs.com/package/@nodable/entities), checked October 30, 2026 |
 | Caller paths verified | vpath-expression-matcher | path-expression-matcher 1.6.2; parser 5.11.2, builder 1.3.1 and Storage 8.4.0 callers | [path-expression-matcher 1.6.2](https://www.npmjs.com/package/path-expression-matcher), checked October 30, 2026 |
 | Caller paths verified | vxml-naming / vis-unsafe | xml-naming 0.3.0, is-unsafe 2.0.2; parser 5.11.2, builder 1.3.1 and Storage 8.4.0 callers | [xml-naming](https://www.npmjs.com/package/xml-naming), [is-unsafe](https://www.npmjs.com/package/is-unsafe), checked October 30, 2026 |
 | Caller paths verified | vanynum / vstrnum | anynum 1.0.1, strnum 2.5.1; fast-xml-parser 5.11.2 and Storage 8.4.0 multipart XML | [anynum](https://www.npmjs.com/package/anynum), [strnum](https://www.npmjs.com/package/strnum), checked October 30, 2026 |
@@ -74,6 +75,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vnodable-entities](packages/vnodable-entities) | @nodable/entities 3.1.0 | Strict numeric references, atomic registration/budgets, consistent XML-version reset, corrected tables, private state and complete custom-prefix encoding. |
 | [vpath-expression-matcher](packages/vpath-expression-matcher) | path-expression-matcher 1.6.2 | Correct rooted/deep path matching, bracket-aware parsing, isolated matcher state/views, immutable compiled patterns and current XML/Storage caller checks. |
 | [vxml-naming](packages/vxml-naming) | xml-naming 0.3.0 | Correct XML name ranges, consistent diagnostics, valid sanitization and bounded cache contracts; current XML parser/builder callers verified. |
 | [vis-unsafe](packages/vis-unsafe) | is-unsafe 2.0.2 | Repeatable custom regex checks, isolated built-in patterns, validated custom contexts and combined HTML/XML scans; all nine heuristic contexts retained. |
@@ -157,12 +159,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,468 tests**: all pass on Node 24, and Bun passes
-2,465 with three documented runtime-specific skips. All 78 runtime packages'
+The root suite contains **2,485 tests**: all pass on Node 24, and Bun passes
+2,482 with three documented runtime-specific skips. All 79 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **80 packages**, including two declaration-only packages.
+catalog covers **81 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -252,6 +254,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vnodable-entities` | 0 | 0 |
 | `vpath-expression-matcher` | 0 | 0 |
 | `vxml-naming` | 0 | 0 |
 | `vis-unsafe` | 0 | 0 |
@@ -396,6 +399,45 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vnodable-entities
+
+The baseline is **@nodable/entities 3.1.0**, checked October 30, 2026. Both codecs
+and all 15 categorized tables remain available with zero runtime dependencies,
+CommonJS/ESM exports and self-contained declarations. The combined table retains
+932 names, including 23 nonstandard aliases; it is not a complete HTML5 table.
+Four standard-name mappings are corrected: ocirc, boxDl, boxdL and af.
+
+Numeric references require complete valid digits, preserve malformed references,
+and apply XML Char restrictions to U+FFFE/U+FFFF as well as nulls/surrogates and
+XML 1.0 controls. Long names and leading-zero references are no longer silently
+limited to 32 characters. Replacement text is always literal and single-pass.
+Registration uses own keys and validates before committing maps or resetting
+budgets. Unknown hook results reject, reentrant mutation is blocked, and failed
+registration cannot replenish expansion budgets. Post-checks run on plain/empty
+strings too and must return strings. Reset restores the initial XML version,
+preventing a prior XML 1.1 document from changing a later default-version parse.
+
+Infinity remains supported because the current parser uses it for unlimited
+counts. NaN, negative/fractional/unsafe limits reject. Attempted expansions remain
+charged after rejected output. These are expansion limits, not complete document
+size, callback-output or DTD nesting limits. Explicit leave/remove precedence and
+finite encoder quotas returning a literal suffix preserve upstream contracts.
+
+Encoding handles ASCII and arbitrary-length custom matches with longest-prefix
+selection, immutable map caching and isolated trie inspection. Mutable/accessor
+maps are never shared through the cache. Three upstream ASCII output expectations
+are explicitly adapted; the other retained expectations stay unchanged.
+
+The [fixture](scripts/nodable-entities-conformance) runs all 246 upstream cases,
+19 paired discriminators, 17 focused tests, every Unicode code point under both
+XML versions, and 10,000 independent encoder comparisons. Actual parser 5.11.2
+checks cover entities, attributes, DTD hooks, budgets and reuse. Storage 8.4.0
+completes two multipart uploads with six mocked requests and escaped-key decoding.
+Browser bundles execute successfully and discard unused entity tables.
+[Benchmarks](packages/vnodable-entities/bench/results/README.md) retain three fresh
+processes and identical-upstream controls on both runtimes, including regressions.
+No application dependencies are automatically migrated.
 
 ## vpath-expression-matcher
 
