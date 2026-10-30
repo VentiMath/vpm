@@ -367,6 +367,10 @@
       "name": "vparseurl",
       "version": "0.1.0",
     },
+    "packages/vpath-expression-matcher": {
+      "name": "vpath-expression-matcher",
+      "version": "0.1.0",
+    },
     "packages/vpath-to-regexp": {
       "name": "vpath-to-regexp",
       "version": "0.1.0",
@@ -667,6 +671,8 @@
     "vpaginator": ["vpaginator@workspace:packages/vpaginator"],
 
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
+
+    "vpath-expression-matcher": ["vpath-expression-matcher@workspace:packages/vpath-expression-matcher"],
 
     "vpath-to-regexp": ["vpath-to-regexp@workspace:packages/vpath-to-regexp"],
 

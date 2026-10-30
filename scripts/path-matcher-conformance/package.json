@@ -1,0 +1,10 @@
+{
+  "name": "vpm-path-matcher-conformance",
+  "private": true,
+  "description": "Pinned path expression and XML caller controls excluded from runtime archives",
+  "dependencies": {
+    "path-expression-matcher": "1.6.2",
+    "fast-xml-parser": "5.11.2",
+    "fast-xml-builder": "1.3.1"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "LICENSE.txt": "75486ea0af9309140ca6e2c401d7e67bea8f4892344e5707f6394dc5e83dfc44",
+  "package.json.txt": "23d66f07e32d68067a9e57731a2f5bde89bd298a400fcc7d1c004fc39565733c",
+  "src/Expression.js.txt": "9f5ddbd1efd021616fe8c9fb9f6d0e6ea1c2a4d41a37a94d93a3acc86bb72f1d",
+  "src/ExpressionSet.js.txt": "a6250aa83ce7f238614fb7421f31e541c63c415a295e3764687693464918f3c4",
+  "src/Matcher.js.txt": "d3b6ddfa1e9a07d6db63939e55106f4df3e8f2e48119c81e372f60f157914d66",
+  "src/index.d.ts.txt": "f311cf5e41496764fd9617400d8cba7ce4a745d1f4288705bb2fad2365856151",
+  "src/index.js.txt": "ebbf22c6979f6b2b05c580922e7dd197f4f4a246d504d4c0cc8e64778f12d4ed",
+  "test/expression_set_test.js.txt": "83bb00a255b1f3f5223dfc83ac2106446a4b421fd62c27e75334750976488a77",
+  "test/keep_attr_test.js.txt": "aeb7ce17ab80c9c0d57c5479683b2ce1957268497af9194c734c8384d62e6cbd",
+  "test/namespace_test.js.txt": "6e6a1ac3dc3030b8863984d5dafcf9a606b9d5a1ffbdce0c53f60d8fcc477d00",
+  "test/readOnly_test.js.txt": "f0b831fb6ef7b98c982003390dc086a598df0fdbfab5b127052cc4e4ef895f8b",
+  "test/test.js.txt": "9c38a2e819da52bb34f2ddc4b75b6f012536ee2fd240002a028bf36a796f996a"
+}

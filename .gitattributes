@@ -8,3 +8,4 @@ scripts/entities-conformance/upstream/** whitespace=-blank-at-eof
 # Preserve formatting in hash-pinned upstream numeric sources and Unicode data.
 scripts/numbers-conformance/upstream/** -whitespace
 scripts/xml-helpers-conformance/upstream/** -whitespace
+scripts/path-matcher-conformance/upstream/** -whitespace
