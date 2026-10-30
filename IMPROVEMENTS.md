@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vproto3-json-serializer | proto3-json-serializer 4.1.0; gax 6.14.0 fallback and Firestore 9.4.0 schemas with protobuf 7/8 | [proto3-json-serializer 4.1.0](https://www.npmjs.com/package/proto3-json-serializer), checked October 30, 2026 |
 | Caller paths verified | vprotobufjs | protobuf.js 8.8.1; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 serialization against 7.6.6 controls | [protobuf.js 8.8.1](https://www.npmjs.com/package/protobufjs), checked October 30, 2026 |
 | Caller paths verified | vlong | long 5.3.2; protobuf.js 8.8.1/7.6.6, proto-loader 0.8.1 and google-gax 6.14.0 integer paths | [long 5.3.2](https://www.npmjs.com/package/long), checked October 30, 2026 |
 | Caller paths verified | vobject-hash | object-hash 3.0.0; google-gax 6.14.0 gRPC/fallback protobuf caches | [object-hash 3.0.0](https://www.npmjs.com/package/object-hash), checked October 30, 2026 |
@@ -82,6 +83,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vproto3-json-serializer](packages/vproto3-json-serializer) | proto3-json-serializer 4.1.0 | Correct byte slices and collections, signed durations, offset timestamps, FieldMasks and Any wrappers; validated scalars, safe output keys and verified Google fallback callers. |
 | [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
 | [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
 | [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Exact gax string cache keys with a direct crypto path; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
@@ -173,12 +175,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,611 tests**: all pass on Node 24, and Bun passes
-2,608 with three documented runtime-specific skips. All 86 runtime packages'
+The root suite contains **2,626 tests**: all pass on Node 24, and Bun passes
+2,623 with three documented runtime-specific skips. All 87 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **88 packages**, including two declaration-only packages.
+catalog covers **89 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -268,6 +270,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vproto3-json-serializer` | 1 | 1 (`vprotobufjs`) |
 | `vprotobufjs` | 1 | 1 (`vlong`) |
 | `vlong` | 0 | 0 |
 | `vobject-hash` | 0 | 0 |
@@ -420,6 +423,48 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vproto3-json-serializer
+
+The baseline is **proto3-json-serializer 4.1.0**, checked October 30, 2026.
+The two public conversion functions and Google's numeric-enum option remain,
+with `vprotobufjs` replacing the sole package dependency. Reflected types from
+both protobuf 7.6.6 and 8.8.1 are exercised.
+
+Byte views retain their offsets; repeated/map scalar values receive the same
+conversion as singular values. Signed durations, offset timestamp fractions,
+calendar/zone validation, FieldMask casing, Any wrapper envelopes and JSON field
+aliases are corrected. Scalar type/range checks cover every collection path.
+Own prototype-named output properties remain data, recursion is bounded and
+conflicting oneofs/field aliases fail. Unknown fields remain ignored.
+
+Non-finite numbers inside Value are rejected instead of silently changing into
+strings. Ordinary float/double fields retain their special-string mapping.
+Fifteen focused tests and thirteen paired correction probes cover these behaviors.
+All **316 unchanged upstream tests execute**: 310 pass with protobuf 7, with six
+explicitly verified differences for that Value policy; 308 pass with protobuf 8,
+with two additional NullValue-presence differences that affect the original
+serializer as well. No assertion sources are edited or cases skipped.
+
+Twelve checks including controls drive actual google-gax 6.14.0 fallback code
+with Firestore 9.4.0 schemas: request bodies/URLs, decoded values, Status/Any error
+details and resumable-upload start serialization. Both protobuf generations pass.
+Synthetic data and a replaced outbound upload transport keep this a local caller
+check, not live cloud or complete SDK verification. Browser bundles, packed
+installations and declarations are also checked.
+
+Paired local measurements show actual gax/Firestore request construction taking
+11% less time on Node and 17% less on Bun, with response decoding taking 28% / 18%
+less. These compare the serializer plus protobuf stacks. Direct Google-shaped
+serialization, with identical protobuf types, takes 22% / 49% less time.
+Remaining validation costs include 1 KiB byte input (+197 ns / 49% Node,
++482 ns / 103% Bun) and Bun Timestamp parsing (+58 ns / 31%). Bun byte-output
+variation and indistinguishable Google-shaped input results are documented;
+these are local CPU measurements, not application-throughput claims.
+
+See the [package contract](packages/vproto3-json-serializer/README.md),
+[fixture scope](scripts/protojson-conformance/README.md) and
+[paired measurements](packages/vproto3-json-serializer/bench/results/README.md).
 
 ## vprotobufjs
 

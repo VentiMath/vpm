@@ -441,6 +441,13 @@
       "name": "vpromisify",
       "version": "0.1.0",
     },
+    "packages/vproto3-json-serializer": {
+      "name": "vproto3-json-serializer",
+      "version": "0.1.0",
+      "dependencies": {
+        "vprotobufjs": "workspace:*",
+      },
+    },
     "packages/vprotobufjs": {
       "name": "vprotobufjs",
       "version": "0.1.0",
@@ -758,6 +765,8 @@
     "vprojectify": ["vprojectify@workspace:packages/vprojectify"],
 
     "vpromisify": ["vpromisify@workspace:packages/vpromisify"],
+
+    "vproto3-json-serializer": ["vproto3-json-serializer@workspace:packages/vproto3-json-serializer"],
 
     "vprotobufjs": ["vprotobufjs@workspace:packages/vprotobufjs"],
 

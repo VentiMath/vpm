@@ -1,0 +1,17 @@
+{
+  "upstream": {
+    "name": "proto3-json-serializer",
+    "version": "4.1.0",
+    "repository": "https://github.com/googleapis/google-cloud-node",
+    "directory": "core/packages/proto3-json-serializer-nodejs",
+    "commit": "703154ba1720ff2d1a5832ad0683a3c3bcbbadd1",
+    "integrity": "sha512-Z0Blk2BTZTPp9ZXOWnRG/P3bkEs53FtMv59sl4xU44xcDdYhKlVO/AqAHTYXAlW9HdislqQxjSornP3457wkag=="
+  },
+  "checked": "2026-10-30",
+  "license": "Apache-2.0",
+  "changes": [
+    "Schema-directed scalar conversion shared by singular, repeated and map fields.",
+    "Correct typed-array slices, safe object properties, signed durations and offset timestamps.",
+    "Preserve root APIs, numeric enums and tested protobuf 7/8 caller compatibility."
+  ]
+}
