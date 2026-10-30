@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vgoogle-cloud-storage | @google-cloud/storage 8.4.0; object and signing operations, Firebase Admin 12.7.0 factory | [Storage 8.4.0](https://www.npmjs.com/package/@google-cloud/storage), checked October 30, 2026 |
 | Caller paths verified | vmime | mime 4.1.2; Storage 8.4.0 upload/compose callers using mime 3.0.0 | [mime 4.1.2](https://www.npmjs.com/package/mime), checked October 30, 2026 |
 | Caller paths verified | vfast-xml-parser | fast-xml-parser 5.11.2; Storage 8.4.0 multipart callers | [fast-xml-parser 5.11.2](https://www.npmjs.com/package/fast-xml-parser), checked October 30, 2026 |
 | Caller paths verified | vfast-xml-builder | fast-xml-builder 1.3.1; parser 5.11.2 and Storage 8.4.0 callers | [fast-xml-builder 1.3.1](https://www.npmjs.com/package/fast-xml-builder), checked October 30, 2026 |
@@ -78,6 +79,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, sliced CRC32C initialization, real HTTP and Firebase callers. |
 | [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
 | [vfast-xml-parser](packages/vfast-xml-parser) | fast-xml-parser 5.11.2 | Reusable parser setup, exact depth limits, deterministic filters, safer callbacks and stricter XML syntax checks; all six helpers use VPM. |
 | [vfast-xml-builder](packages/vfast-xml-builder) | fast-xml-builder 1.3.1 | Bounded raw/ordinary traversal, deterministic filters, corrected array/text handling, readonly callback paths and faster serialization. |
@@ -165,12 +167,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,562 tests**: all pass on Node 24, and Bun passes
-2,559 with three documented runtime-specific skips. All 82 runtime packages'
+The root suite contains **2,571 tests**: all pass on Node 24, and Bun passes
+2,568 with three documented runtime-specific skips. All 83 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **84 packages**, including two declaration-only packages.
+catalog covers **85 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -260,6 +262,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgoogle-cloud-storage` | 14 | 13 (all VPM) |
 | `vmime` | 0 | 0 |
 | `vfast-xml-parser` | 6 | 6 (all VPM) |
 | `vfast-xml-builder` | 2 | 2 (both VPM) |
@@ -408,6 +411,37 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgoogle-cloud-storage
+
+The baseline is **@google-cloud/storage 8.4.0**, checked October 30, 2026.
+The published SDK and declarations are retained, with all 13 direct library
+dependencies replaced by VPM packages. Its unused `abort-controller` dependency
+is removed; Node 24/Bun provide the native controller used by resumable uploads.
+
+Signed URLs reject malformed SHA-256 digests and caller query parameters that
+overwrite authentication fields. Canonical headers combine case variants,
+exclude undefined fields consistently, normalize spaces/tabs and preserve host
+ports. Invalid actions and header values settle both callback/promise APIs.
+CRC32C initialization now respects typed-array and DataView slice boundaries.
+Module exports ignore inherited properties.
+
+Verification covers 110 retained upstream tests on both runtimes and controls,
+nine focused tests, five paired regression probes, independent RSA signature
+verification, 25 real local HTTP requests per caller run and Firebase Admin
+12.7.0's actual Storage factory. HTTP coverage includes simple/resumable/local
+uploads, integrity-checked downloads, pagination, existence, deletion, transient
+retries and corrupt-checksum cleanup. Packed npm/Bun installs and standalone
+declarations are checked. Broader SDK methods, live IAM/cloud operations and
+browser bundles are retained or possible but not independently certified.
+
+[Measurements](packages/vgoogle-cloud-storage/bench/results/README.md) compare
+construction, handle creation, real RSA signing, CRC32C and local HTTP paths
+against the complete upstream client, with three fresh processes and an
+identical-upstream control per runtime. Node listing/download take about 17%/19%
+less time. Bun metadata/listing remain about 9%/15% slower; upload/download
+also trend slower with noisy controls. RSA signing is broadly unchanged.
+[API, migration and verification scope](packages/vgoogle-cloud-storage/README.md).
 
 ## vmime
 

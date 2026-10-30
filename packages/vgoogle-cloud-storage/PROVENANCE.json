@@ -1,0 +1,14 @@
+{
+  "upstream": {
+    "name": "@google-cloud/storage",
+    "version": "8.4.0",
+    "repository": "https://github.com/googleapis/google-cloud-node",
+    "directory": "handwritten/storage",
+    "commit": "27d6be61e43e2f54a78ffc78e141f79471848623",
+    "integrity": "sha512-M3kA6UA2Tjp5aznCrgKcm9CzOjiQyRMnquqalqXAeS5wvkqqZxN8wpNjjHafOSYs6lQ82U7f2i8we4eTfIrpkA=="
+  },
+  "checked": "2026-10-30",
+  "license": "Apache-2.0",
+  "source": "Published CJS implementation and declarations retained under lib, with VPM dependency imports, local package metadata, self-contained structural platform types and focused signing/checksum corrections. Original published files and selected source/tests are retained in the comparison fixture.",
+  "scope": "Actual VentiMath backend save, signing, listing, exists and delete paths; local file uploads and bucket creation; selected upstream signing, checksum and helper tests. Other upstream APIs remain available but are not all independently verified."
+}
