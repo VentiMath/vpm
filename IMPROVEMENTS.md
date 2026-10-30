@@ -27,7 +27,8 @@ now have current comparison targets:
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 | Complete | vretry-request | 9.1.0; Cloud Storage 8.4.0/google-gax 6.14.0 caller paths | [retry-request 9.1.0](https://www.npmjs.com/package/retry-request) |
 | Complete | vstream-events | 1.0.5; teeny-request 11.1.1 and current Storage/gax callers | [stream-events 1.0.5](https://www.npmjs.com/package/stream-events), used by teeny-request 11.1.1 |
-| Next | vagent-base | 7.1.4 | [agent-base 9.0.0](https://www.npmjs.com/package/agent-base), required by current http-proxy-agent 9.1.0 |
+| Complete | vagent-base | 9.0.0 API, current ESM proxy caller and retained 7.1.4 coverage | [agent-base 9.0.0](https://www.npmjs.com/package/agent-base), required by current http-proxy-agent 9.1.0 |
+| Next | vhttp-proxy-agent | Not implemented | [http-proxy-agent 9.1.0](https://www.npmjs.com/package/http-proxy-agent) |
 
 The Gaxios upgrade now uses native fetch for ordinary calls, with explicit stream,
 redirect, size and deadline handling. Node agents, proxies and client certificates
@@ -44,9 +45,11 @@ dependency of current gcp-metadata still matches the existing comparison baselin
 VPM JWS verification remove the other two helpers. Dedicated external-provider
 suites and live cloud deployment remain outside its verified scope.
 
-The next foundation upgrade is `vagent-base` from 7.1.4 to 9.0.0 before building
-`vhttp-proxy-agent` against 9.1.0. That proxy release also adds
-`proxy-agent-negotiate` 1.1.0, whose needed behavior remains to be assessed.
+`vagent-base` now covers 9.0.0, including structural delegation and the current
+ESM proxy caller. Next is `vhttp-proxy-agent` against 9.1.0. Its optional
+`proxy-agent-negotiate` 1.1.0 helper loads Kerberos on demand; ordinary proxy
+connections do not need that native peer. Needed authentication scope remains
+to be assessed when building the caller.
 Current teeny-request 11.1.1 still requests `http-proxy-agent` and
 `https-proxy-agent` 7.x; those callers need explicit migration checks rather than
 an unrestricted major-version alias.
@@ -73,7 +76,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vextend](packages/vextend) | extend 3.0.2 | Own enumerable strings and symbols, inherited-target isolation, cycle/shared-reference preservation and lazy iterative merging. |
 | [vis-stream](packages/vis-stream) | is-stream 2.0.1 | Rejects null internal stream state and avoids duplicate pipe probes in duplex/transform checks. |
 | [vhttps-proxy-agent](packages/vhttps-proxy-agent) | https-proxy-agent 7.0.6 | Bounded CONNECT parsing and deadlines, linear fragmented-header buffering, isolated TLS policies, cancellation cleanup, safe header snapshots and preserved tunnel bytes. |
-| [vagent-base](packages/vagent-base) | agent-base 7.1.4 | Zero dependencies, bounded async connects, cancellation cleanup, queue failure recovery, delegation-cycle rejection, private JSON errors and exact byte collection. |
+| [vagent-base](packages/vagent-base) | agent-base 9.0.0 / 7.1.4 | Structural delegation with guarded dispatch, CommonJS and ESM exports, zero dependencies, bounded async connects, cancellation cleanup, queue failure recovery, delegation-cycle rejection, private JSON errors and exact byte collection. |
 | [vjwks-rsa](packages/vjwks-rsa) | jwks-rsa 3.2.2 | One dependency, native public-key import, shared concurrent retrieval, immutable cached keys, bounded HTTP requests, exact IDs and algorithm agreement. |
 | [vjsonwebtoken](packages/vjsonwebtoken) | jsonwebtoken 9.0.3 | Two dependencies, finite claim/time validation, reliable callbacks, direct HMAC key import and bounded public-key reuse. |
 | [vjws](packages/vjws) | jws 4.0.1 | Exact byte payloads, UTF-8 headers, canonical compact parsing, algorithm agreement, bounded header reuse and linear stream collection using vjwa. |
@@ -127,8 +130,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,197 tests**: all pass on Node 24, and Bun passes
-2,194 with three documented runtime-specific skips. All 62 runtime packages'
+The root suite contains **2,203 tests**: all pass on Node 24, and Bun passes
+2,200 with three documented runtime-specific skips. All 62 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
@@ -154,8 +157,9 @@ without skips, with one timeout-code correction. The
 [router suite](scripts/router-conformance/README.md) adds router 2.2.0's 694
 unchanged tests on Node; Bun runs 693, with one upstream-reproduced `OPTIONS *`
 limitation. These upstream suites are separate from the root test count.
-The [Agent suite](scripts/agent-conformance/README.md) adds all 15 upstream
-cases on both runtimes, with documented fixture adaptations. The
+The [Agent suite](scripts/agent-conformance/README.md) adds all 16 current and 15 older upstream
+cases on both runtimes, with documented fixture adaptations and current ESM
+proxy caller checks. The
 [HTTPS proxy suite](scripts/https-proxy-conformance/README.md) adds all 18 local
 upstream cases on each runtime, also checked against upstream itself.
 The [Google HTTP fixture](scripts/google-http-conformance/README.md) adds 90
@@ -252,7 +256,7 @@ Uncovered versions are reported rather than silently substituted. In this graph,
 `form-data` 2.5.5 arrives through `@types/request` under `retry-request` and brings
 mime-types 2.1.35 and mime-db 1.52.0. That branch is not exercised by the runtime
 gate. `agent-base` 6.0.2 under older `https-proxy-agent` 5.0.1 and
-`http-proxy-agent` 5.0.0 also remains uncovered; the 7.1.4 replacement is not
+`http-proxy-agent` 5.0.0 also remains uncovered; the 7.1.4/9.0.0 replacement is not
 substituted across that API boundary. Separate development fixtures can also retain older HTTP utility versions.
 
 ### The integration gate
@@ -623,7 +627,7 @@ measurements include the VPM base class and native HTTP/TLS transport.
 
 ## vagent-base
 
-Replaces `agent-base` 7.1.4 while retaining its zero-dependency footprint and
+Targets `agent-base` 9.0.0, retains 7.1.4 coverage, and keeps zero dependencies and
 native HTTP/TLS socket pools. Subclasses still return a socket or delegate agent
 synchronously or through a promise. The consumer gate exercises `vhttps-proxy-agent` in place of
 `https-proxy-agent` 7.0.6, including the actual `gaxios` consumer.
@@ -635,25 +639,34 @@ after cancellation are destroyed. Invalid results and delegation cycles fail
 explicitly. A configurable 30-second default deadline applies while a connector
 promise is pending; it does not cover the queue, socket handshake or response.
 
+Structural delegates with `addRequest()` no longer need native Agent inheritance.
+Their method is read once and dispatched with the correct receiver; throwing
+getters or methods settle the request and release queued work. Cancellation
+ignores late shared delegates without destroying them. VPM retains CommonJS and
+named ESM exports alongside upstream 9's ESM API.
+
 Configuration is snapshotted and validated. Modern runtimes use structured call
 sites for automatic HTTP/HTTPS inference without calling custom error formatters.
 Body collection supports exact typed-array windows and UTF-8 strings, copies
 before producers can reuse chunks, and offers an explicit byte limit. JSON
 rejects malformed UTF-8 without including response contents in the error.
 
-**Verification:** 30 focused tests, all 15 pinned upstream cases on Node and Bun,
-real proxy/client integration, self-contained declarations, and installed archive
+**Verification:** 36 focused tests, all 16 current and 15 older pinned upstream
+cases on Node and Bun, published http-proxy-agent 9.1.0 ESM caller checks, older
+proxy/client integration, self-contained declarations, and installed archive
 consumers. The [API guide](packages/vagent-base/README.md) documents compatibility,
-limits and the older-runtime stack fallback. This targets version 7.1.4; older
+limits and the older-runtime stack fallback. The older
 callback-style agent-base 6 callers remain outside its compatibility claim.
 
-**Performance:** see the [complete paired benchmark report](packages/vagent-base/bench/results/README.md)
-for Node 24/Bun results, identical-upstream controls and remaining costs. Node
-HTTP/HTTPS keep-alive takes about 8%/6% less paired time. Bun fresh async connects
-take about 9% more; its queued batch about 11% more with substantial spread.
-Construction adds 0.30/0.12 microseconds on Node/Bun, and multi-chunk collection
-and sanitized JSON failures retain documented costs. This package primarily
-improves connection lifecycle behavior; it is not uniformly faster.
+**Performance:** the [current paired benchmark report](packages/vagent-base/bench/results/README.md)
+compares agent-base 9.0.0 on Node 24/Bun, with three fresh processes and controls
+per runtime. Node HTTP keep-alive and fresh synchronous connections take about
+7%/8% less time. Bun fresh synchronous connections take 14% more and structural
+delegation 20% more; other transport results vary substantially. Construction
+adds 390/165 ns on Node/Bun, while byte snapshots and sanitized JSON failures
+retain documented costs. This is a compatibility and lifecycle improvement,
+not a claim of uniformly faster execution. The older 7.1.4 measurements remain
+available separately without relabeling their samples.
 
 ## vjwks-rsa
 

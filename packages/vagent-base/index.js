@@ -134,12 +134,17 @@ class Agent extends http.Agent {
     const accept=socket=>{
       if(settled){if(socket instanceof Duplex)socket.destroy();return;}
       if(request.destroyed){if(socket instanceof Duplex)socket.destroy();abort();return;}
-      if(!(socket instanceof Duplex) && !(socket instanceof http.Agent)){fail(error('ERR_AGENT_SOCKET','connect() must return a Duplex stream or HTTP Agent'));return;}
+      let addRequest;
+      try {
+        if(socket !== null && (typeof socket === 'object' || typeof socket === 'function')) addRequest=socket.addRequest;
+      } catch(failure){fail(failure);return;}
+      const delegate=typeof addRequest==='function';
+      if(!(socket instanceof Duplex) && !delegate){fail(error('ERR_AGENT_SOCKET','connect() must return a Duplex stream or an agent with addRequest()'));return;}
       if(socket instanceof Duplex && socket.destroyed){fail(error('ERR_AGENT_SOCKET','connect() returned a destroyed stream'));return;}
       settled=true;cleanup();
-      if(socket instanceof http.Agent){
+      if(delegate){
         removeQueued(this,request);
-        try { socket.addRequest(request,connectOptions); }
+        try { Reflect.apply(addRequest,socket,[request,connectOptions]); }
         catch(failure){removeQueued(this,request);delegations.delete(request);complete(normalize(failure));}
         drain(this);return;
       }

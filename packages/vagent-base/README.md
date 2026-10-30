@@ -1,6 +1,6 @@
 # vagent-base
 
-An `agent-base` 7.1.4 counterpart for subclasses that create HTTP or HTTPS
+An `agent-base` 9.0.0 counterpart for subclasses that create HTTP or HTTPS
 connections synchronously or asynchronously. It retains native connection
 pooling and has **zero runtime dependencies**, like that upstream version.
 Node.js 20+ and Bun are supported; performance work targets Node 24 and Bun.
@@ -21,10 +21,14 @@ https.get('https://example.com/', { agent }, response => response.resume());
 // Reuse the agent for subsequent requests, then call agent.destroy().
 ```
 
-`connect(request, options)` returns a native Duplex stream, a native HTTP Agent,
-or a promise/thenable resolving to either. Native TCP and TLS options pass
-through, with `secureEndpoint` identifying the destination. Delegating agents
-must extend `http.Agent`. Direct and indirect delegation cycles are rejected.
+`connect(request, options)` returns a native Duplex stream, an agent with a
+callable `addRequest(request, options)`, or a promise/thenable resolving to either.
+Native TCP and TLS options pass through, with `secureEndpoint` identifying the
+destination. Delegates may be native agents or structural objects, matching
+agent-base 9. The method is read once and called with the delegate as its receiver.
+Getter and method failures settle the request and release queued work. Direct
+and indirect cycles through VPM agents are rejected. A late shared delegate is
+ignored after cancellation; it is not destroyed because other requests may use it.
 CommonJS and named ES module exports provide `Agent`, `req`, `toBuffer` and `json`.
 Public declarations are self-contained and accept native Node streams and agents.
 
@@ -74,7 +78,9 @@ oversized chunk. The default is `Infinity`, preserving upstream behavior.
 
 ## Compatibility and evidence
 
-This targets the 7.1.4 API. The older callback-style `agent-base` 6 branches are
+This targets the 9.0.0 API and retains tested 7.1.4 compatibility. Agent-base 9 is
+ESM-only; VPM retains CommonJS and named ESM exports from the same implementation.
+The older callback-style `agent-base` 6 branches are
 reported separately by the consumer gate and are not aliased. Internal upstream
 socket-reservation methods are not public APIs here. Subclasses implement
 `connect()`, leaving native socket handoff to the base class.
@@ -90,21 +96,31 @@ bun test packages/vagent-base/test
 npm --prefix scripts/agent-conformance ci --ignore-scripts
 node scripts/agent-conformance/run.cjs
 bun scripts/agent-conformance/run.cjs
+node scripts/agent-conformance/current/run.cjs
+node scripts/agent-conformance/current/run.cjs --upstream
+node scripts/agent-conformance/current/proxy.cjs
+bun scripts/agent-conformance/current/run.cjs
+bun scripts/agent-conformance/current/run.cjs --upstream
+bun scripts/agent-conformance/current/proxy.cjs
 node scripts/integration.cjs
 bun scripts/integration.cjs
 ```
 
-The focused tests exercise transport, native pools, queue failure recovery,
-cancellation, deadlines, delegation, context, helpers and module imports. All
-15 [pinned upstream cases](../../scripts/agent-conformance/README.md) run against
-both runtimes. The integration gate uses `vhttps-proxy-agent` in place of the pinned
+The 36 focused tests exercise transport, native pools, queue failure recovery,
+cancellation, deadlines, structural delegation, context, helpers and module
+imports. All 16 current and 15 older
+[pinned upstream cases](../../scripts/agent-conformance/README.md) run on both
+runtimes, alongside upstream controls. The published ESM http-proxy-agent 9.1.0
+caller passes HTTP/TLS proxy, keep-alive, Basic auth, event and binary POST checks
+with only its agent-base import changed. Kerberos negotiation is outside this
+agent-base caller check. The integration gate uses `vhttps-proxy-agent` in place of the pinned
 `https-proxy-agent` 7.0.6, including `gaxios` consumers, HTTP/TLS tunnels and
 keep-alive reuse. Archive checks install the packed package
 and compile a native Node subclass with TypeScript 7.
 
 See the [benchmark report](bench/results/README.md) for complete measurements,
 controls and remaining costs. [Provenance](PROVENANCE.json) records the source
-commit, archive hash and adaptations. The public TLS key and certificate under
+commits, source hashes and adaptations. The public TLS key and certificate under
 `test/` are upstream test fixtures; they are excluded from the package archive.
 
 ## License

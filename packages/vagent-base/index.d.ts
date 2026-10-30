@@ -70,9 +70,13 @@ export interface AgentOptions {
   [key: string]: unknown;
 }
 export interface DelegateAgent { destroy(): void; maxSockets: number; }
+/** A structural delegate, supported by agent-base 9 without native inheritance. */
+export interface RequestDelegate {
+  addRequest(request: ClientRequest, options: AgentConnectOpts): void;
+}
 export abstract class Agent {
   constructor(options?: AgentOptions);
-  abstract connect(request: ClientRequest, options: AgentConnectOpts): Duplex | DelegateAgent | PromiseLike<Duplex | DelegateAgent>;
+  abstract connect(request: ClientRequest, options: AgentConnectOpts): Duplex | DelegateAgent | RequestDelegate | PromiseLike<Duplex | DelegateAgent | RequestDelegate>;
   options: Record<string, any>;
   keepAlive: boolean;
   keepAliveMsecs: number;

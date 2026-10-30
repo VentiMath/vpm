@@ -4,7 +4,7 @@ const {createHash}=require('node:crypto');
 const http=require('node:http'),https=require('node:https'),net=require('node:net'),tls=require('node:tls');
 const {once}=require('node:events');
 const {Readable}=require('node:stream');
-const upstream=require('../../../scripts/consumers/node_modules/agent-base'),vpm=require('..');
+const upstream=require('../../../scripts/agent-conformance/node_modules/agent-base/dist/index.js'),vpm=require('..');
 const calibration=process.env.CALIBRATION==='1',variants={upstream,vpm:calibration?upstream:vpm};
 const median=xs=>{const a=xs.slice().sort((a,b)=>a-b);return (a[(a.length-1)>>1]+a[a.length>>1])/2;};
 const retain=new Array(64);let checksum=0;
@@ -36,6 +36,7 @@ add('reject malformed JSON',lib=>async()=>{try{await lib.json([Buffer.from('{inv
     add(name,lib=>{class Direct extends lib.Agent{connect(q,o){const socket=(o.secureEndpoint?tls:net).connect(o);return async?Promise.resolve(socket):socket;}}const a=new Direct({keepAlive});agents.push(a);return()=>transfer(server,scheme,a);},v=>assert.equal(v,'ok'));
   }
   add('eight queued HTTP requests',lib=>{class Direct extends lib.Agent{async connect(q,o){return net.connect(o);}}const a=new Direct({keepAlive:true,maxSockets:1});agents.push(a);return()=>Promise.all(Array.from({length:8},()=>transfer(plain,'http',a)));},v=>assert.deepEqual(v,Array(8).fill('ok')));
+  add('HTTP structural delegation',lib=>{const target=new http.Agent({keepAlive:true});agents.push(target);const delegate={addRequest(q,o){target.addRequest(q,o);}};class Delegate extends lib.Agent{connect(){return delegate;}}const a=new Delegate({keepAlive:true});agents.push(a);return()=>transfer(plain,'http',a);},v=>assert.equal(v,'ok'));
   const rows=[];
   try{
     for(const item of cases){
@@ -57,10 +58,10 @@ add('reject malformed JSON',lib=>async()=>{try{await lib.json([Buffer.from('{inv
   }finally{for(const a of agents)a.destroy();for(const server of [plain,secure]){server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}}
 
   const root=path.resolve(__dirname,'..');
-  const files=['index.js','helpers.js','package.json','PROVENANCE.json','bench/compare.cjs','test/tls-key.pem','test/tls-cert.pem','../../scripts/consumers/package-lock.json',
-    ...['index.js','helpers.js'].map(f=>'../../scripts/consumers/node_modules/agent-base/dist/'+f),'../../scripts/consumers/node_modules/agent-base/package.json'];
+  const files=['index.js','helpers.js','package.json','PROVENANCE.json','bench/compare.cjs','test/tls-key.pem','test/tls-cert.pem','../../scripts/agent-conformance/package-lock.json',
+    ...['index.js','helpers.js'].map(f=>'../../scripts/agent-conformance/node_modules/agent-base/dist/'+f),'../../scripts/agent-conformance/node_modules/agent-base/package.json'];
   const report={recordedAt:new Date().toISOString(),runtime:process.versions,cpu:os.cpus()[0].model,platform:process.platform,arch:process.arch,calibration,rounds:12,checksum,
-    methodology:'agent-base 7.1.4 versus vagent-base; 12 alternating paired rounds, 200ms per-variant warmup and four full-block warmups, 20ms upstream pilot target; 1–100000 operations per block. Outputs retained and validated outside timing. Three fresh processes plus identical-upstream control per runtime. Native local HTTP/TLS transfers use equivalent connection options; fresh cases disable keep-alive. Eight queued requests share a warm connection with maxSockets=1. Collection and JSON use identical iterable byte chunks. No trimming; nanoseconds per operation.',
+    methodology:'agent-base 9.0.0 versus vagent-base; 12 alternating paired rounds, 200ms per-variant warmup and four full-block warmups, 20ms upstream pilot target; 1–100000 operations per block. Outputs retained and validated outside timing. Three fresh processes plus identical-upstream control per runtime. Native local HTTP/TLS transfers use equivalent connection options; fresh cases disable keep-alive. Eight queued requests share a warm connection with maxSockets=1. Collection and JSON use identical iterable byte chunks. No trimming; nanoseconds per operation.',
     hashes:Object.fromEntries(files.sort().map(file=>[file,createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')])),rows};
   if(process.env.OUTPUT)fs.writeFileSync(process.env.OUTPUT,JSON.stringify(report,null,2)+'\n');
   console.table(rows.map(r=>({case:r.case,upstream:Math.round(median(r.samples.upstream)),vpm:Math.round(median(r.samples.vpm)),change:(100*(median(r.samples.vpm.map((v,i)=>v/r.samples.upstream[i]))-1)).toFixed(1)+'%'})));
