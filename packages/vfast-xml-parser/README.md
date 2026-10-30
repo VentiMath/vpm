@@ -76,8 +76,9 @@ are documented in its README.
 ## Evidence
 
 [Conformance fixtures](../../scripts/xml-parser-conformance) pin source, MIT
-licensing, integrity and hashes. They execute 331 upstream cases: 322 unchanged
-passes, seven specified validation differences, and two originally disabled
+licensing, integrity and hashes. They execute 331 upstream cases: 321 unchanged
+passes, one timing case that checks outputs and permits zero elapsed milliseconds,
+seven specified validation differences, and two originally disabled
 failures recorded explicitly. One upstream test requiring a 102 MB asset is omitted;
 a separate generated document of over 1 MB is parsed and validated.
 

@@ -637,8 +637,9 @@ handling is independent of output processors. Validation rejects malformed roots
 attributes, declarations and references that upstream can accept. Default parsing
 retains upstream permissiveness; full XML/DTD/schema conformance is not claimed.
 
-The [fixture](scripts/xml-parser-conformance) executes 331 retained cases: 322
-unchanged passes, seven specified validation differences and two originally disabled
+The [fixture](scripts/xml-parser-conformance) executes 331 retained cases: 321
+unchanged passes, one timing case that checks outputs and permits zero elapsed
+milliseconds, seven specified validation differences and two originally disabled
 diagnostics. One 102 MB upstream asset test is omitted; generated >1 MB parsing,
 1,000 seeded round trips, 35 paired discriminators and 50 focused tests cover the
 implementation. Actual Storage 8.4.0 calls verify three multipart uploads and

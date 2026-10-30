@@ -6,7 +6,7 @@ function expect(actual){return{
  toThrowError:v=>assert.throws(actual,typeof v==='string'?e=>e.message===v:v),
  not:{toEqual:v=>assert.notDeepEqual(actual,v),toContain:v=>assert.ok(!actual.includes(v)),toThrowError:()=>assert.doesNotThrow(actual),toBe:v=>assert.notEqual(actual,v)}
 };}
-async function run(upstream=process.argv.includes('--upstream')){
+async function run(upstream=process.argv.includes('--upstream'),clock=Date){
  const base=path.join(__dirname,'upstream'),installed=path.join(__dirname,'node_modules/fast-xml-parser');
  for(const [file,hash]of Object.entries(require('./upstream/SHA256.json'))){
   const snapshot=fs.readFileSync(path.join(base,file));assert.equal(createHash('sha256').update(snapshot).digest('hex'),hash,file);
@@ -21,10 +21,18 @@ async function run(upstream=process.argv.includes('--upstream')){
  for(const file of fs.readdirSync(path.join(base,'spec')).filter(f=>f.endsWith('_spec.js.txt')).sort()){
   if(file==='large_spec.js.txt'){omitted.push(file);continue;}
   let code=fs.readFileSync(path.join(base,'spec',file),'utf8').replace(/^import .*\r?\n/gm,'').replace(/\bxit\(/g,'it(').replace('import.meta.url','__sourceURL');
+  if(file==='pathExpression_spec.js.txt'){
+   // A successful sub-millisecond run can have zero elapsed wall-clock time.
+   // Keep all 100 parses and check their output instead of requiring clock advancement.
+   const timing='expect(duration).toBeGreaterThan(0);';assert.equal(code.split(timing).length,2);
+   code=code.replace(timing,'expect(duration >= 0).toBeTrue();');
+   const loop='for (let i = 0; i < 100; i++) {\n        parser.parse(xmlData);\n      }';assert.equal(code.split(loop).length,2);
+   code=code.replace(loop,"for (let i = 0; i < 100; i++) {\n        expect(parser.parse(xmlData)).toEqual({root:{script:'content1',style:'content2'}});\n      }");
+  }
   const sourceURL=pathToFileURL(path.join(base,'spec',file)).href;
   const args={...api,EntityDecoder:entities.EntityDecoder,COMMON_HTML:entities.COMMON_HTML,Expression,...utils,
    fs:{readFileSync:(file,...args)=>fs.readFileSync(file+'.txt',...args)},path,fileURLToPath:require('node:url').fileURLToPath,dirname:path.dirname,__sourceURL:sourceURL,
-   describe:(name,fn)=>{stack.push(name);fn();stack.pop();},it:(name,fn)=>tests.push({file,name:[...stack,name].join(' / '),fn}),expect,console:{log(){},error(){}}
+   describe:(name,fn)=>{stack.push(name);fn();stack.pop();},it:(name,fn)=>tests.push({file,name:[...stack,name].join(' / '),fn}),expect,Date:clock,console:{log(){},error(){}}
   };
   new Function(...Object.keys(args),'"use strict";\n'+code)(...Object.values(args));
  }
@@ -46,7 +54,7 @@ async function run(upstream=process.argv.includes('--upstream')){
  assert.equal(tests.length,331);assert.deepEqual(failures.map(f=>[f.file,f.name]),known.map(k=>k.slice(0,2)));
  failures.forEach((f,i)=>assert.match(f.error,known[i][2]));
  assert.deepEqual(omitted,['large_spec.js.txt']);
- console.log(`${upstream?'Upstream':'VPM'} retained XML cases: ${331-failures.length} unchanged passes; ${upstream?0:7} specified validation differences; 2 originally disabled diagnostics. One 102 MB upstream asset case omitted; generated stress coverage is separate.`);
+ console.log(`${upstream?'Upstream':'VPM'} retained XML cases: ${330-failures.length} unchanged passes; 1 timing case verifies outputs and permits zero elapsed milliseconds; ${upstream?0:7} specified validation differences; 2 originally disabled diagnostics. One 102 MB upstream asset case omitted; generated stress coverage is separate.`);
  return{cases:tests.length,counts,failures};
 }
 module.exports=run;if(require.main===module)run().catch(e=>{console.error(e);process.exitCode=1;});

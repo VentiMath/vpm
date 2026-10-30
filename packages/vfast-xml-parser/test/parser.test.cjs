@@ -3,7 +3,7 @@ const {test}=require('node:test'),assert=require('node:assert/strict');
 const {XMLParser,XMLValidator,XMLBuilder}=require('..');
 const {cases}=require('../../../scripts/xml-parser-conformance/regressions.cjs');
 for(const [name,fn,expected]of cases)test(name,()=>assert.deepEqual(fn(require('..')),expected));
-test('retained upstream parser and validator cases',async()=>{await require('../../../scripts/xml-parser-conformance/run.cjs')();});
+test('retained upstream parser and validator cases with zero elapsed milliseconds',async()=>{await require('../../../scripts/xml-parser-conformance/run.cjs')(false,{now:()=>0});});
 test('only strings and byte views are accepted',()=>{
  for(const value of [null,undefined,23,[],{},new ArrayBuffer(4),new Uint16Array(2)])assert.throws(()=>new XMLParser().parse(value),/string or Uint8Array/);
  const data=Buffer.from('junk<r>café 🧪</r>junk');assert.deepEqual(new XMLParser().parse(new Uint8Array(data.buffer,data.byteOffset+4,data.length-8)),{r:'café 🧪'});
