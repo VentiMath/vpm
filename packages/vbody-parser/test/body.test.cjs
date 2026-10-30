@@ -112,6 +112,22 @@ test('options and type lists are snapshotted, with each getter read once', async
   assert.doesNotThrow(() => parser.json(Object.freeze({ type: Object.freeze(['json', '+json']) })));
 });
 
+test('empty and partially invalid type lists remain isolated from caller mutation', async () => {
+  for (const [kind, body, media] of [
+    ['json', '{}', 'application/json'], ['raw', 'hello', 'application/octet-stream'],
+    ['text', 'hello', 'text/plain'], ['urlencoded', 'a=1', 'application/x-www-form-urlencoded'],
+  ]) {
+    for (const initial of [[], ['unknown-extension'], [media, 'text/@'], ['text/@', media], [42, media]]) {
+      const type = initial.slice();
+      const middleware = parser[kind]({ type });
+      assert.deepEqual(type, initial, 'construction must not normalize the caller array');
+      const expected = await exchange(before[kind]({ type: initial.slice() }), body, { 'content-type': media });
+      type.splice(0, type.length, expected.result.body === null ? media : 'unknown-extension');
+      assert.deepEqual(await exchange(middleware, body, { 'content-type': media }), expected, kind + ': ' + JSON.stringify(initial));
+    }
+  }
+});
+
 test('form parameter and nesting limits, including values above the 32-bit range', async () => {
   for (const parameterLimit of [2 ** 31, 2 ** 32, Number.MAX_SAFE_INTEGER, Infinity]) {
     const result = await exchange(parser.urlencoded({ extended: true, parameterLimit }), 'a=1&b=2', formHeader);
