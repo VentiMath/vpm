@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vobject-hash | object-hash 3.0.0; google-gax 6.14.0 gRPC/fallback protobuf caches | [object-hash 3.0.0](https://www.npmjs.com/package/object-hash), checked October 30, 2026 |
 | Caller paths verified | vgoogle-cloud-storage | @google-cloud/storage 8.4.0; object and signing operations, Firebase Admin 12.7.0 factory | [Storage 8.4.0](https://www.npmjs.com/package/@google-cloud/storage), checked October 30, 2026 |
 | Caller paths verified | vmime | mime 4.1.2; Storage 8.4.0 upload/compose callers using mime 3.0.0 | [mime 4.1.2](https://www.npmjs.com/package/mime), checked October 30, 2026 |
 | Caller paths verified | vfast-xml-parser | fast-xml-parser 5.11.2; Storage 8.4.0 multipart callers | [fast-xml-parser 5.11.2](https://www.npmjs.com/package/fast-xml-parser), checked October 30, 2026 |
@@ -79,6 +80,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Exact gax string cache keys with a direct crypto path; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
 | [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, sliced CRC32C initialization, real HTTP and Firebase callers. |
 | [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
 | [vfast-xml-parser](packages/vfast-xml-parser) | fast-xml-parser 5.11.2 | Reusable parser setup, exact depth limits, deterministic filters, safer callbacks and stricter XML syntax checks; all six helpers use VPM. |
@@ -167,12 +169,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,571 tests**: all pass on Node 24, and Bun passes
-2,568 with three documented runtime-specific skips. All 83 runtime packages'
+The root suite contains **2,589 tests**: all pass on Node 24, and Bun passes
+2,586 with three documented runtime-specific skips. All 84 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **85 packages**, including two declaration-only packages.
+catalog covers **86 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -262,6 +264,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vobject-hash` | 0 | 0 |
 | `vgoogle-cloud-storage` | 14 | 13 (all VPM) |
 | `vmime` | 0 | 0 |
 | `vfast-xml-parser` | 6 | 6 (all VPM) |
@@ -411,6 +414,34 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vobject-hash
+
+The baseline is **object-hash 3.0.0**, checked October 30, 2026. Ordinary
+serialization remains compatible. Plain strings use a direct crypto path and
+algorithm names are indexed once. This preserves the exact cache keys used by
+google-gax 6.14.0's gRPC and fallback protobuf caches.
+
+Corrections frame Buffer lengths, retain unordered binary bytes, hash DataView
+windows, preserve sparse holes and map key/value roles, include file timestamps,
+and return actual passthrough bytes. Bigint typed arrays are supported. Options
+are read from own properties and validated. These fixes intentionally change
+affected digests; persisted fingerprints may need migration. Node 24/Bun are
+the targets; upstream's browser crypto bundle is not included.
+
+All 68 retained upstream cases pass with documented fixture repairs, alongside
+18 focused tests and nine paired upstream-failing probes. Generated differential
+inputs cover twelve option configurations. Actual gax modules execute twelve
+instrumented cache calls per run, covering cache identity, clear, forced loads,
+immutable inputs and protobuf round trips. Both runtimes, original controls,
+packed npm/Bun installs and standalone declarations are checked.
+
+[Measurements](packages/vobject-hash/bench/results/README.md) compare string and
+object hashing with actual cache-hit and forced-load callers, using three fresh
+processes and identical-upstream controls. Gax cache hits take about 61% less
+CPU time on Node and 39–43% less on Bun while retaining exact keys. Two Bun
+nested-record cases remain 1–3% slower, with variation documented.
+[API, digest migration and limits](packages/vobject-hash/README.md).
 
 ## vgoogle-cloud-storage
 

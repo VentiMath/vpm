@@ -1,0 +1,1 @@
+{"name":"vpm-object-hash-conformance","private":true,"description":"Pinned object-hash baseline and current google-gax cache callers","dependencies":{"object-hash":"3.0.0","google-gax":"6.14.0","mocha":"11.7.5"}}

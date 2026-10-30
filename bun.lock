@@ -388,6 +388,10 @@
         "vundici-types": "workspace:*",
       },
     },
+    "packages/vobject-hash": {
+      "name": "vobject-hash",
+      "version": "0.1.0",
+    },
     "packages/von-finished": {
       "name": "von-finished",
       "version": "0.1.0",
@@ -721,6 +725,8 @@
     "vnode-fetch": ["vnode-fetch@workspace:packages/vnode-fetch"],
 
     "vnode-types": ["vnode-types@workspace:packages/vnode-types"],
+
+    "vobject-hash": ["vobject-hash@workspace:packages/vobject-hash"],
 
     "von-finished": ["von-finished@workspace:packages/von-finished"],
 
