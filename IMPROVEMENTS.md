@@ -175,8 +175,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,626 tests**: all pass on Node 24, and Bun passes
-2,623 with three documented runtime-specific skips. All 87 runtime packages'
+The root suite contains **2,628 tests**: all pass on Node 24, and Bun passes
+2,625 with three documented runtime-specific skips. All 87 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
@@ -1274,14 +1274,17 @@ Token data and claims are copied and frozen. Expiry must be a nonnegative safe
 integer; absent expiry remains uncached. The issuer, RSA key, assertion audience
 and issuance/expiry relationship are checked before sending. Credential files are
 bounded regular UTF-8 files. Errors retain safe codes and HTTP status while
-omitting transport configuration and remote descriptions. Exchanges have a
+omitting transport configuration and arbitrary remote descriptions. Four exact,
+documented Google signature/user/scope descriptions remain available when paired
+with the expected OAuth code; unknown or decorated messages stay redacted.
+Exchanges have a
 30-second default deadline, a 1 MiB response limit, and no redirects. Per-waiter
 cancellation preserves shared requests until the last waiter leaves. Revocation
 uses a POST form body, cancels old refreshes, and preserves client configuration.
 See the [package README](packages/vgtoken/README.md) for intentional API differences
 and custom-transporter responsibilities.
 
-All 37 focused cases and all 45 adapted upstream cases pass on Node and Bun.
+All 39 focused cases and all 45 adapted upstream cases pass on Node and Bun.
 The integration gate exercises google-auth-library 9.15.1's real authorization
 and ID-token clients with verified assertions and a local HTTP server.
 

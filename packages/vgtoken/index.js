@@ -11,6 +11,12 @@ const REVOKE_URL = 'https://oauth2.googleapis.com/revoke';
 const FILE_LIMIT = 1024 * 1024;
 const defaultTransporter = Object.freeze({request});
 const oauthErrors = new Set(['invalid_request', 'invalid_client', 'invalid_grant', 'unauthorized_client', 'unsupported_grant_type', 'invalid_scope', 'access_denied', 'server_error', 'temporarily_unavailable']);
+// Exact public Google diagnostics; never copy an arbitrary server description.
+// https://developers.google.com/identity/protocols/oauth2/service-account#error-codes
+const oauthDescriptions = new Map([
+  ['invalid_grant', new Set(['Invalid JWT Signature.', 'Not a valid email', 'Invalid email or User ID.'])],
+  ['invalid_scope', new Set(['Invalid OAuth scope or ID token audience provided.'])],
+]);
 class TokenError extends Error {
   constructor(code, message, status) { super(message); this.name = 'TokenError'; this.code = code; if (status !== undefined) this.status = status; }
 }
@@ -19,11 +25,13 @@ function failure(code, message) { const error = new TokenError(code, message); l
 function safeError(error) {
   if (error instanceof TokenError && localErrors.has(error)) return error;
   // Never retain a transport error: config, cause and response data can contain credentials.
-  let status, remote;
+  let status, remote, description;
   try { status = error?.response?.status ?? error?.status; remote = error?.response?.data?.error; } catch { /* Unreadable transport diagnostics are discarded. */ }
+  try { description = error?.response?.data?.error_description; } catch { /* Preserve the readable code/status if only the description getter fails. */ }
   const validStatus = Number.isInteger(status) && status >= 100 && status <= 599 ? status : undefined;
   const code = oauthErrors.has(remote) ? remote : 'TOKEN_REQUEST_FAILED';
-  return new TokenError(code, 'Token request failed' + (validStatus ? ' (HTTP ' + validStatus + ')' : '') + (code !== 'TOKEN_REQUEST_FAILED' ? ': ' + code : ''), validStatus);
+  const detail = oauthDescriptions.get(code)?.has(description) ? ': ' + description : '';
+  return new TokenError(code, 'Token request failed' + (validStatus ? ' (HTTP ' + validStatus + ')' : '') + (code !== 'TOKEN_REQUEST_FAILED' ? ': ' + code : '') + detail, validStatus);
 }
 function integer(value, name, min, max) {
   if (!Number.isSafeInteger(value) || value < min || value > max) throw failure('INVALID_OPTIONS', name + ' is outside its supported range');
