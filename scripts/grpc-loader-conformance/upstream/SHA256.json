@@ -1,0 +1,13 @@
+{
+  "LICENSE": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+  "test_protos/enums.proto": "33ac7cafb551a9ff98cf5fbb734b90e841dd02e3e4b895162bad233927036c00",
+  "test_protos/messages.proto": "7e5252810e6393ac1212ad66f7dbf235891d52af87de635da10deb93bc0b72c1",
+  "test_protos/method_options.proto": "652788ba76e15665b418d5aa9933f47b09d8cd87f4356ab19912b67dbf8b2ace",
+  "test_protos/rpc.desc.bin": "4151ab93ba24849568778efa93746081bdeb61f417e4693d10b464416f3eded9",
+  "test_protos/rpc.desc.json": "c7569860091c01292360798475fecb22516b0cd5f5d3a84d022b3f7eca8d548d",
+  "test_protos/rpc.desc.ts": "f05de93a4bcf19906849a9e2f7c5db98ca9f791cf62a32754b61cc4c322d94a1",
+  "test_protos/rpc.proto": "1928df0145f82e89fce7bdbe1852fc5cb5b92cfb7f304fcbfc03fae604d48a34",
+  "test_protos/rpc.proto.json": "c46f6e244ca61bdecd9820a1396f849f495aabbab0acbdbacc51b8d254252114",
+  "test_protos/well_known.proto": "71e31257e3c0f3d1cfc677f22bdc7da771b8825b38f72328912aa18e81d726e6",
+  "test/descriptor_type_test.ts.txt": "87af4002896eb8a3970fc2a4129169df3646b82f0749d7e1ac72833a16d51b4c"
+}

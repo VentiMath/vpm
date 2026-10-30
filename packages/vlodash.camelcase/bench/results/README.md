@@ -65,10 +65,10 @@ Install the two comparison fixtures as described in the
 [package README](../../README.md), then run from the repository root:
 
 ```sh
-node packages/vlodash.camelcase/bench/compare.cjs > /tmp/camel-node.json
-bun packages/vlodash.camelcase/bench/compare.cjs > /tmp/camel-bun.json
-CALIBRATION=1 node packages/vlodash.camelcase/bench/compare.cjs > /tmp/camel-node-control.json
-CALIBRATION=1 bun packages/vlodash.camelcase/bench/compare.cjs > /tmp/camel-bun-control.json
+OUTPUT=/tmp/camel-node.json node packages/vlodash.camelcase/bench/compare.cjs
+OUTPUT=/tmp/camel-bun.json bun packages/vlodash.camelcase/bench/compare.cjs
+CALIBRATION=1 OUTPUT=/tmp/camel-node-control.json node packages/vlodash.camelcase/bench/compare.cjs
+CALIBRATION=1 OUTPUT=/tmp/camel-bun-control.json bun packages/vlodash.camelcase/bench/compare.cjs
 node packages/vlodash.camelcase/bench/summarize.cjs
 ```
 

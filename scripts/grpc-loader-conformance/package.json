@@ -1,0 +1,10 @@
+{
+  "name": "vpm-grpc-loader-conformance",
+  "private": true,
+  "description": "Pinned gRPC loader runtime tests and Google proto fixtures",
+  "dependencies": {
+    "@grpc/proto-loader": "0.8.1",
+    "google-proto-files": "3.0.3",
+    "mocha": "11.7.5"
+  }
+}
