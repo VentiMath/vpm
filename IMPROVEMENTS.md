@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vprotobufjs | protobuf.js 8.8.1; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 serialization against 7.6.6 controls | [protobuf.js 8.8.1](https://www.npmjs.com/package/protobufjs), checked October 30, 2026 |
 | Caller paths verified | vlong | long 5.3.2; protobuf.js 8.8.1/7.6.6, proto-loader 0.8.1 and google-gax 6.14.0 integer paths | [long 5.3.2](https://www.npmjs.com/package/long), checked October 30, 2026 |
 | Caller paths verified | vobject-hash | object-hash 3.0.0; google-gax 6.14.0 gRPC/fallback protobuf caches | [object-hash 3.0.0](https://www.npmjs.com/package/object-hash), checked October 30, 2026 |
 | Caller paths verified | vgoogle-cloud-storage | @google-cloud/storage 8.4.0; object and signing operations, Firebase Admin 12.7.0 factory | [Storage 8.4.0](https://www.npmjs.com/package/@google-cloud/storage), checked October 30, 2026 |
@@ -81,6 +82,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
 | [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
 | [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Exact gax string cache keys with a direct crypto path; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
 | [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, sliced CRC32C initialization, real HTTP and Firebase callers. |
@@ -171,12 +173,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,601 tests**: all pass on Node 24, and Bun passes
-2,598 with three documented runtime-specific skips. All 85 runtime packages'
+The root suite contains **2,611 tests**: all pass on Node 24, and Bun passes
+2,608 with three documented runtime-specific skips. All 86 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **87 packages**, including two declaration-only packages.
+catalog covers **88 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -266,6 +268,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vprotobufjs` | 1 | 1 (`vlong`) |
 | `vlong` | 0 | 0 |
 | `vobject-hash` | 0 | 0 |
 | `vgoogle-cloud-storage` | 14 | 13 (all VPM) |
@@ -417,6 +420,43 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vprotobufjs
+
+The baseline is **protobuf.js 8.8.1**, checked October 30, 2026. Full, light and
+minimal runtimes, descriptor/ProtoJSON/text-format extensions and Google schemas
+are retained. The sole runtime dependency changes from `long` to `vlong`;
+version 8's earlier helper consolidation is credited to upstream.
+
+Packed varint readers and dynamically generated decoders restore temporary bounds
+after errors. Explicit lengths require nonnegative safe integers, skipped varints
+are bounded to ten bytes, empty messages correctly skip unknown groups, and the
+shared LongBits zero cannot be mutated to corrupt later writes. Failed reads can
+still advance their cursor or append partial values. Existing SDK static decoders
+keep their generated logic while receiving VPM readers and writers.
+
+All **79 unchanged upstream runtime files / 2,877 assertions** pass on Node 24
+and Bun, with original controls. Separate CLI and legacy UMD-loader tests are
+excluded; modern browser bundles are independently executed. Ten focused tests,
+seven paired correction probes, packed installations and public declarations
+cover the changed behavior and package surfaces.
+
+**22 caller checks including controls** load actual proto-loader 0.8.1,
+google-gax 6.14.0 and Firestore 9.4.0 code. Selected gRPC/fallback, descriptor,
+Proto3 JSON, Timestamp and Firestore Value/Document paths preserve exact wire bytes
+and int64 values against protobuf 7.6.6. The descriptor map round-trip failure
+in 7.6.6 is already fixed upstream in 8.8.1; VPM retains that improvement. This is
+local serialization evidence, not complete SDK or deployment migration coverage.
+
+Measured gRPC deserialization takes **35% less time on Node / 21% less on Bun**;
+Google-shaped decode/conversion takes **32% / 25% less**. Remaining regressions
+include Node's short packed reader (about 12 ns / 30% more), malformed decoding
+(6% more on Node / 19% on Bun) and generated Firestore Document encoding.
+Bun small-message controls are noisy; detailed samples and limitations remain visible.
+
+See the [package contract](packages/vprotobufjs/README.md),
+[fixture scope](scripts/protobuf-conformance/README.md) and
+[paired measurements](packages/vprotobufjs/bench/results/README.md).
 
 ## vlong
 

@@ -441,6 +441,13 @@
       "name": "vpromisify",
       "version": "0.1.0",
     },
+    "packages/vprotobufjs": {
+      "name": "vprotobufjs",
+      "version": "0.1.0",
+      "dependencies": {
+        "vlong": "workspace:*",
+      },
+    },
     "packages/vproxy-addr": {
       "name": "vproxy-addr",
       "version": "0.1.0",
@@ -751,6 +758,8 @@
     "vprojectify": ["vprojectify@workspace:packages/vprojectify"],
 
     "vpromisify": ["vpromisify@workspace:packages/vpromisify"],
+
+    "vprotobufjs": ["vprotobufjs@workspace:packages/vprotobufjs"],
 
     "vproxy-addr": ["vproxy-addr@workspace:packages/vproxy-addr"],
 

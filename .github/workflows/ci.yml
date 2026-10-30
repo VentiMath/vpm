@@ -32,6 +32,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/protobuf-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/long-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/object-hash-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/storage-conformance ci --ignore-scripts --no-audit --no-fund
@@ -43,6 +44,12 @@ jobs:
       - run: node scripts/check-body-options.cjs
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/protobuf-conformance/regressions.cjs
+          node scripts/protobuf-conformance/run.cjs
+          node scripts/protobuf-conformance/run.cjs --upstream
+          node scripts/protobuf-conformance/callers.cjs --upstream
+          node scripts/protobuf-conformance/callers.cjs --legacy
+          node scripts/protobuf-conformance/bundles.cjs
           node scripts/long-conformance/regressions.cjs
           node scripts/long-conformance/run.cjs
           node scripts/long-conformance/run.cjs --upstream
@@ -177,6 +184,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/protobuf-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/long-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/object-hash-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/storage-conformance ci --ignore-scripts --no-audit --no-fund
@@ -199,6 +207,12 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/protobuf-conformance/regressions.cjs
+          bun scripts/protobuf-conformance/run.cjs
+          bun scripts/protobuf-conformance/run.cjs --upstream
+          bun scripts/protobuf-conformance/callers.cjs --upstream
+          bun scripts/protobuf-conformance/callers.cjs --legacy
+          bun scripts/protobuf-conformance/bundles.cjs
           bun scripts/long-conformance/regressions.cjs
           bun scripts/long-conformance/run.cjs
           bun scripts/long-conformance/run.cjs --upstream

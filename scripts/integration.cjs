@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  protobufjs: {pkg:'vprotobufjs',versions:/^8\.8\.1$/},
   long: {pkg:'vlong',versions:/^5\.3\.2$/},
   'object-hash': {pkg:'vobject-hash',versions:/^3\.0\.0$/},
   '@google-cloud/storage': {pkg:'vgoogle-cloud-storage',versions:/^8\.4\.0$/},
@@ -167,7 +168,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [path.join(__dirname, 'long-conformance/package.json'), path.join(__dirname, 'object-hash-conformance/package.json'), path.join(__dirname, 'storage-conformance/package.json'), ...['@google-cloud/promisify', '@google-cloud/projectify', '@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
+const queue = [path.join(__dirname, 'protobuf-conformance/package.json'), path.join(__dirname, 'long-conformance/package.json'), path.join(__dirname, 'object-hash-conformance/package.json'), path.join(__dirname, 'storage-conformance/package.json'), ...['@google-cloud/promisify', '@google-cloud/projectify', '@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -208,6 +209,24 @@ while (queue.length) {
       continue;
     }
     const entry = from.resolve(name);
+    if (name === 'protobufjs') {
+      // All public runtime/extension entries share VPM constructors. The 7.x
+      // migration is tested separately with actual SDK source loading.
+      const { Module } = require('node:module');
+      const upstreamRoot = path.dirname(child);
+      const vpmRoot = path.join(__dirname, '../packages/vprotobufjs');
+      for (const subpath of ['index.js','light.js','minimal.js','ext/descriptor.js','ext/descriptor/index.js','ext/protojson.js','ext/textformat.js']) {
+        const id = require.resolve(path.join(upstreamRoot, subpath));
+        const cached = new Module(id);
+        cached.filename = id;
+        cached.exports = subpath === 'index.js' ? replacements.protobufjs : require(path.join(vpmRoot, subpath));
+        cached.loaded = true;
+        cached.vpmAlias = true;
+        require.cache[id] = cached;
+      }
+      assert.equal(from('protobufjs/minimal').Reader, replacements.protobufjs.Reader);
+      assert(from('protobufjs/ext/descriptor').FileDescriptorSet instanceof replacements.protobufjs.Type);
+    }
     if (!require.cache[entry]?.vpmAlias) {
       require(entry);
       require.cache[entry].exports = replacements[name];
@@ -1226,6 +1245,7 @@ async function run() {
     await require('./xml-builder-conformance/callers.cjs')();
     await require('./xml-parser-conformance/callers.cjs')();
     await require('./mime-conformance/callers.cjs')();
+    require('./protobuf-conformance/callers.cjs')();
     require('./long-conformance/callers.cjs')();
     require('./object-hash-conformance/callers.cjs')();
     await require('./storage-conformance/callers.cjs')();

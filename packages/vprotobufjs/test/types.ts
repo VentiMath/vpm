@@ -1,0 +1,11 @@
+import * as pb from 'vprotobufjs';
+import * as minimal from 'vprotobufjs/minimal';
+import 'vprotobufjs/ext/descriptor';
+import * as protojson from 'vprotobufjs/ext/protojson';
+const root: pb.Root = pb.parse('syntax="proto3"; message Item {int64 id=1;}').root;
+const type: pb.Type = root.lookupType('Item');
+const bytes: Uint8Array = type.encode(type.fromObject({id:'9007199254740993'})).finish();
+const reader: minimal.Reader = minimal.Reader.create(bytes);
+const descriptor = root.toDescriptor('proto3');
+const recreated: pb.Root = pb.Root.fromDescriptor(descriptor);
+void reader; void recreated; void protojson;

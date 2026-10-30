@@ -1,0 +1,80 @@
+{
+  "name": "vprotobufjs",
+  "version": "0.1.0",
+  "description": "Protocol Buffers with VPM integers, resilient reader bounds and verified Google SDK callers",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "browser": {
+    "fs": false
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "light.js",
+    "light.d.ts",
+    "minimal.js",
+    "minimal.d.ts",
+    "src/",
+    "ext/",
+    "google/",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "vlong": "workspace:*"
+  },
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vprotobufjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./index": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./index.js": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./light": {
+      "types": "./light.d.ts",
+      "default": "./light.js"
+    },
+    "./light.js": {
+      "types": "./light.d.ts",
+      "default": "./light.js"
+    },
+    "./minimal": {
+      "types": "./minimal.d.ts",
+      "default": "./minimal.js"
+    },
+    "./minimal.js": {
+      "types": "./minimal.d.ts",
+      "default": "./minimal.js"
+    },
+    "./ext/debug": "./ext/debug/index.js",
+    "./ext/*.js": {
+      "types": "./ext/*.d.ts",
+      "default": "./ext/*.js"
+    },
+    "./ext/*": {
+      "types": "./ext/*.d.ts",
+      "default": "./ext/*.js"
+    },
+    "./google/*": "./google/*",
+    "./src/*.js": "./src/*.js",
+    "./src/*": "./src/*.js",
+    "./package.json": "./package.json"
+  }
+}

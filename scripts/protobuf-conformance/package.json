@@ -1,0 +1,14 @@
+{
+  "name": "vpm-protobuf-conformance",
+  "private": true,
+  "description": "Pinned protobuf runtime tests and current gRPC, gax and Firestore callers",
+  "dependencies": {
+    "protobufjs": "8.8.1",
+    "protobufjs-cli": "2.7.1",
+    "@grpc/proto-loader": "0.8.1",
+    "google-gax": "6.14.0",
+    "@google-cloud/firestore": "9.4.0",
+    "tape": "5.10.3",
+    "reflect-metadata": "0.2.2"
+  }
+}
