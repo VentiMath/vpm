@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Next upgrade | vjwks-rsa | 3.2.2 API and Firebase Admin 12.7.0 token callers | [jwks-rsa 4.1.0](https://www.npmjs.com/package/jwks-rsa), checked October 30, 2026 |
 | Complete | vgoogle-logging-utils | 2.1.1, plus adapted 0.0.2 coverage | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
 | Caller paths verified | vnode-fetch | 2.7.0 API; Gaxios 7.1.3/8.3.2 transport checks against node-fetch 3.3.2 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch), scoped to tested callers |
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
@@ -48,6 +49,14 @@ now have current comparison targets:
 | Complete | vstream-events | 1.0.5; teeny-request 11.1.1 and current Storage/gax callers | [stream-events 1.0.5](https://www.npmjs.com/package/stream-events), used by teeny-request 11.1.1 |
 | Complete | vagent-base | 9.0.0 API, current ESM proxy caller and retained 7.1.4 coverage | [agent-base 9.0.0](https://www.npmjs.com/package/agent-base), required by current http-proxy-agent 9.1.0 |
 | Caller paths verified | vhttp-proxy-agent | 9.1.0 upstream suite; teeny-request 11.1.1/Storage 8.4.0 callers replacing 7.0.2 | [http-proxy-agent 9.1.0](https://www.npmjs.com/package/http-proxy-agent) |
+
+Firebase Admin **14.5.0** requires `jwks-rsa ^4.0.1`, Google Auth 11, and optional
+Storage 8 / Firestore 9. Firebase Functions **7.4.0** permits Admin 14. These npm
+manifests were checked October 30, 2026. Existing `vjwks-rsa` coverage remains
+3.2.2; **4.1.0 parity and Admin 14 token callers are the next upgrade checks**.
+The older package family remains built. SDK upgrades and actual adoption of VPM
+packages require separate installation and application verification; changing an
+SDK version does not automatically install VPM replacements.
 
 The Gaxios upgrade now uses native fetch for ordinary calls, with explicit stream,
 redirect, size and deadline handling. Node agents, proxies and client certificates

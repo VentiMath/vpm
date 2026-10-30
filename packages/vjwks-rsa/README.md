@@ -5,6 +5,11 @@ Public signing-key retrieval for JWT consumers. A counterpart to `jwks-rsa`
 and one direct runtime dependency: `vdebug`.
 
 Node.js 24+ and Bun are supported. Performance comparisons target Node 24 and Bun.
+
+The verified baseline remains **jwks-rsa 3.2.2**. Latest stable **4.1.0**, checked
+October 30, 2026, is the next parity target: Firebase Admin 14.5.0 requires
+`jwks-rsa ^4.0.1`. Version 4 behavior and Admin 14 callers are not yet verified.
+See the [upgrade roadmap](../../IMPROVEMENTS.md#latest-stable-upgrade-roadmap).
 The package includes CommonJS, native ESM imports and self-contained declarations.
 The [repository comparison](../../IMPROVEMENTS.md#vjwks-rsa) and
 [benchmark report](bench/results/README.md) record measured benefits and costs.
