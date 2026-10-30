@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'proto3-json-serializer': {pkg:'vproto3-json-serializer',versions:/^4\.1\.0$/},
   protobufjs: {pkg:'vprotobufjs',versions:/^8\.8\.1$/},
   long: {pkg:'vlong',versions:/^5\.3\.2$/},
   'object-hash': {pkg:'vobject-hash',versions:/^3\.0\.0$/},
@@ -168,7 +169,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [path.join(__dirname, 'protobuf-conformance/package.json'), path.join(__dirname, 'long-conformance/package.json'), path.join(__dirname, 'object-hash-conformance/package.json'), path.join(__dirname, 'storage-conformance/package.json'), ...['@google-cloud/promisify', '@google-cloud/projectify', '@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
+const queue = [path.join(__dirname, 'protojson-conformance/package.json'), path.join(__dirname, 'protobuf-conformance/package.json'), path.join(__dirname, 'long-conformance/package.json'), path.join(__dirname, 'object-hash-conformance/package.json'), path.join(__dirname, 'storage-conformance/package.json'), ...['@google-cloud/promisify', '@google-cloud/projectify', '@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -1245,6 +1246,7 @@ async function run() {
     await require('./xml-builder-conformance/callers.cjs')();
     await require('./xml-parser-conformance/callers.cjs')();
     await require('./mime-conformance/callers.cjs')();
+    await require('./protojson-conformance/callers.cjs')();
     require('./protobuf-conformance/callers.cjs')();
     require('./long-conformance/callers.cjs')();
     require('./object-hash-conformance/callers.cjs')();

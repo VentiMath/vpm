@@ -1,0 +1,34 @@
+{
+  "name": "vproto3-json-serializer",
+  "version": "0.1.0",
+  "description": "Proto3 JSON conversion with exact bytes, validated times and consistent scalar handling",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "vprotobufjs": "workspace:*"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vproto3-json-serializer"
+  }
+}
