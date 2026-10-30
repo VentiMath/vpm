@@ -1,0 +1,12 @@
+{
+  "upstream": {
+    "name": "object-hash",
+    "version": "3.0.0",
+    "repository": "https://github.com/puleos/object-hash",
+    "commit": "1045a05d42c2077f7b380617d0f3d32c851234dd",
+    "integrity": "sha512-RSn9F68PjH9HqtltsSnqYC1XXoWe9Bju5+213R98cNGttag9q9yAOTzdbsqvIa7aNm5WffBZFpWYr2aWrklWAw=="
+  },
+  "checked": "2026-10-30",
+  "license": "MIT",
+  "source": "Derived from the upstream serializer. Primitive string fast path, cached algorithms, own validated options, binary-safe unordered serialization, framed buffers, sparse holes, ordered map pairs, DataView bytes, file timestamps and bigint typed arrays. Synchronous Node 24/Bun API; no browser crypto bundle."
+}

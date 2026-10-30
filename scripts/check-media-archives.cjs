@@ -44,7 +44,7 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vyocto-queue','vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
+    if (['vobject-hash','vyocto-queue','vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
@@ -220,6 +220,7 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveHash=require('vobject-hash');if(archiveHash('hello')!==require('node:crypto').createHash('sha1').update('string:5:hello').digest('hex'))throw new Error('Hash CJS archive');if(!Buffer.isBuffer(archiveHash(Buffer.from([255]),{algorithm:'passthrough',encoding:'buffer'})))throw new Error('Hash binary archive');
 const archiveStorage=require('vgoogle-cloud-storage');const storageFile=new archiveStorage.Storage({projectId:'archive'}).bucket('fixture').file('a.pdf');if(storageFile.name!=='a.pdf'||archiveStorage.CRC32C.from(new Uint8Array([0,1,2,3,4,0]).subarray(1,5)).toString()!=='AQIDBA==')throw new Error('Storage CJS archive');
 const archiveMime=require('vmime'),archiveLite=require('vmime/lite'),archiveTable=require('vmime/types/standard.js');if(archiveMime.getType('photo.JPG')!=='image/jpeg'||archiveLite.getType('a.docx')!==null||new archiveMime.Mime(archiveTable).getType('txt')!=='text/plain'||!Object.isFrozen(archiveTable['text/plain']))throw new Error('MIME CJS archive');
 const ArchiveParser=require('vfast-xml-parser');if(new ArchiveParser.XMLParser().parse('<r>&amp;</r>',true).r!=='&'||ArchiveParser.XMLValidator.validate('<r/><s/>')===true||new ArchiveParser.XMLBuilder().build({r:'x'})!=='<r>x</r>')throw new Error('XML parser CJS archive');
@@ -408,6 +409,7 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import archiveHashESM,{sha1 as archiveSHA1} from 'vobject-hash';if(archiveHashESM('a')!==archiveSHA1('a'))throw new Error('Hash ESM archive');
 import {Storage as ArchiveStorage,CRC32C as ArchiveCRC} from 'vgoogle-cloud-storage';if(new ArchiveStorage({projectId:'archive'}).bucket('fixture').file('a.pdf').name!=='a.pdf'||ArchiveCRC.from(0).toString()!=='AAAAAA==')throw new Error('Storage ESM archive');
 import archiveMimeESM,{Mime as ArchiveMimeClass} from 'vmime';import archiveLiteESM from 'vmime/lite';import archiveOther from 'vmime/types/other.js';if(archiveMimeESM.getType('a.js')!=='text/javascript'||archiveLiteESM.getType('txt')!=='text/plain'||new ArchiveMimeClass(archiveOther).getType('docx')!=='application/vnd.openxmlformats-officedocument.wordprocessingml.document')throw new Error('MIME ESM archive');
 import {XMLParser as ArchiveParserESM,XMLValidator as ArchiveValidatorESM} from 'vfast-xml-parser';if(new ArchiveParserESM().parse('<r><a/></r>').r.a!==''||ArchiveValidatorESM.validate('<r a="&bad"/>')===true)throw new Error('XML parser ESM archive');
@@ -596,6 +598,7 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import typedHash,{writeToStream as typedWriteHash} from 'vobject-hash';const typedDigest:string=typedHash({x:1});const typedDigestBytes:Uint8Array=typedHash('a',{encoding:'buffer'});typedWriteHash('a',{write(data:string|Uint8Array){void data;}});void typedDigest;void typedDigestBytes;
 import {Storage as TypedStorage,type File as TypedStorageFile} from 'vgoogle-cloud-storage';const typedStorageFile:TypedStorageFile=new TypedStorage({projectId:'archive'}).bucket('fixture').file('a.pdf');const typedStorageURL:Promise<[string]>=typedStorageFile.getSignedUrl({action:'read',version:'v4',expires:Date.now()+60000});void typedStorageURL;
 import typedMime,{Mime as TypedMime} from 'vmime';import typedLite from 'vmime/lite';import typedStandard from 'vmime/types/standard.js';import typedOther from 'vmime/types/other.js';const typedMimeInstance:TypedMime=new TypedMime(typedStandard,typedOther);const typedMimeResult:string|null=typedMime.getType('a.txt');const typedMimeSet:Set<string>|null=typedLite.getAllExtensions('text/plain');void typedMimeInstance;void typedMimeResult;void typedMimeSet;
 // @ts-expect-error exported extension arrays are readonly

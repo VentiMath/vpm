@@ -1,0 +1,11 @@
+{
+  "LICENSE.txt": "ea9e6806c48a8a043ad8f2446527dc860617068265cffbef3efa4aaba39f18d8",
+  "index.js.txt": "99af0590e6993552b8a3313cb40843cfa9ad5be62abd966340d394a2f732178d",
+  "test/blob.js.txt": "32b21d5058f55abfea559672287730b1d98bd26eccc6ec3c5515f6a5b2cef43a",
+  "test/index.js.txt": "b2a3784b3cbdd744460166ca12fc3e9bc2409afe3f719b632dd71aed3246b967",
+  "test/object-classes.js.txt": "9ac3447061e75ea7f0fa0aaba24d12e9efa2f42d947aab38d04ab7e0c8d2c893",
+  "test/old-crypto.js.txt": "16eb286856519e0f780b6617df8dd64c1045b9981359108a7cadd98b888f549b",
+  "test/replacer.js.txt": "46fc1db6b2aece3d4dbe5f97ee24b2687aebba48a2d4f884ada19198094dd00f",
+  "test/types.js.txt": "1f6c21ce9f744bbe0ca20193bc5346bead9058c02f3574d13c89e63e37c50949",
+  "test/writeToStream.js.txt": "60ba480d1c9374ee49f83dcec6b76021b80f3568dd9f38fffa826f40bfd70015"
+}

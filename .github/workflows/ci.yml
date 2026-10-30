@@ -32,6 +32,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/object-hash-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/storage-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/mime-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-parser-conformance ci --ignore-scripts --no-audit --no-fund
@@ -40,6 +41,10 @@ jobs:
       - run: npm test
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/object-hash-conformance/regressions.cjs
+          node scripts/object-hash-conformance/run.cjs
+          node scripts/object-hash-conformance/run.cjs --upstream
+          node scripts/object-hash-conformance/callers.cjs --upstream
           node scripts/storage-conformance/regressions.cjs
           node scripts/storage-conformance/run.cjs
           node scripts/storage-conformance/run.cjs --upstream
@@ -166,6 +171,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/object-hash-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/storage-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/mime-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-parser-conformance ci --ignore-scripts --no-audit --no-fund
@@ -185,6 +191,10 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/object-hash-conformance/regressions.cjs
+          bun scripts/object-hash-conformance/run.cjs
+          bun scripts/object-hash-conformance/run.cjs --upstream
+          bun scripts/object-hash-conformance/callers.cjs --upstream
           bun scripts/storage-conformance/regressions.cjs
           bun scripts/storage-conformance/run.cjs
           bun scripts/storage-conformance/run.cjs --upstream
