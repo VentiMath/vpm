@@ -44,8 +44,13 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
+    if (['vyocto-queue','vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
+    }
+    if (name === 'vp-limit') {
+      assert.deepEqual(metadata.dependencies, {'vyocto-queue':'0.1.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
@@ -162,6 +167,9 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveQueue=new (require('vyocto-queue'))();archiveQueue.enqueue('ok');if(archiveQueue.dequeue()!=='ok')throw new Error('queue CJS archive');
+const archiveLimit=require('vp-limit')(1);if(archiveLimit.concurrency!==1||typeof require('vp-limit').limitFunction!=='function')throw new Error('limit CJS archive');
+archiveLimit(x=>x,42).then(x=>{if(x!==42)throw new Error('limit CJS task');});
 const decoratedStream = require('vstream-events')({emit(){return true;},_read(){return 42;}});
 const archivePromisify=require('vpromisify'),archiveProjectify=require('vprojectify');
 if(!archivePromisify.promisify(cb=>cb(null,1)).promisified_)throw new Error('promisify CJS archive');
@@ -333,6 +341,10 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import ArchiveQueue from 'vyocto-queue';
+import archiveLimit,{limitFunction as archiveLimitFunction} from 'vp-limit';
+const archiveQueue=new ArchiveQueue();archiveQueue.enqueue(1);if([...archiveQueue.drain()][0]!==1)throw new Error('queue ESM archive');
+if(await archiveLimit(1)(x=>x,42)!==42||await archiveLimitFunction(x=>x,{concurrency:1})(7)!==7)throw new Error('limit ESM archive');
 import streamEventsArchive from 'vstream-events';
 import {promisify as archivePromisify} from 'vpromisify';
 import {replaceProjectIdToken as archiveProjectify} from 'vprojectify';
@@ -497,6 +509,12 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import TypedQueue from 'vyocto-queue';
+import typedLimit,{limitFunction as typedLimitFunction,type LimitFunction as TypedLimit} from 'vp-limit';
+const typedQueue=new TypedQueue<string>();typedQueue.enqueue('ok');const typedDequeued:string|undefined=typedQueue.dequeue();
+const typedLimiter:TypedLimit=typedLimit({concurrency:2,rejectOnClear:true});
+const typedLimited:Promise<number>=typedLimiter((x:number)=>x,1);
+const typedLimitedFn:Promise<string>=typedLimitFunction((s:string)=>s,{concurrency:1})('ok');
 import typedStreamEvents = require('vstream-events');
 import {promisify as typedCloudPromisify, callbackify as typedCloudCallbackify} from 'vpromisify';
 import {replaceProjectIdToken as typedProjectify} from 'vprojectify';

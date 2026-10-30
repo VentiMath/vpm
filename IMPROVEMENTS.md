@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vyocto-queue / vp-limit | Queue 1.2.2, limiter 7.3.3; Storage 8.4.0 batches replacing p-limit 3.1.0 | [yocto-queue](https://www.npmjs.com/package/yocto-queue), [p-limit](https://www.npmjs.com/package/p-limit), checked October 30, 2026 |
 | Caller paths verified | vpromisify / vprojectify | Both 6.2.1; Storage 8.4.0 wrappers and request decoration | [promisify](https://www.npmjs.com/package/@google-cloud/promisify), [projectify](https://www.npmjs.com/package/@google-cloud/projectify) |
 | Caller paths verified | vpaginator | 7.2.0; Storage 8.4.0 listing APIs | [@google-cloud/paginator 7.2.0](https://www.npmjs.com/package/@google-cloud/paginator) |
 | Caller paths verified | vduplexify | 4.1.3; Storage 8.4.0 and google-gax 6.14.0 streams | [duplexify 4.1.3](https://www.npmjs.com/package/duplexify) |
@@ -68,6 +69,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vyocto-queue](packages/vyocto-queue) | yocto-queue 1.2.2 | Zero dependencies; constant-time FIFO operations, current live iteration/draining semantics, direct private-state initialization and CommonJS/ESM entry points. |
+| [vp-limit](packages/vp-limit) | p-limit 7.3.3; 3.1.0 Storage caller coverage | VPM-only queue; avoids queue allocations for free slots, forwards wrapper arguments directly, preserves async context and current rejection safeguards. |
 | [vpromisify](packages/vpromisify) | @google-cloud/promisify 6.2.1 | Zero dependencies; safe method wrapping, captured options, settled callbacks, thenable handling and unambiguous falsy rejections. |
 | [vprojectify](packages/vprojectify) | @google-cloud/projectify 6.2.1 | Zero dependencies; literal token substitution, own-data traversal, null-prototype records, cycles and deep inputs. |
 | [vpaginator](packages/vpaginator) | @google-cloud/paginator 7.2.0 | VPM-only dependency; isolated queries, nonmutating pages, backpressure, cancellation, validated limits and current Storage listings. |
@@ -141,12 +144,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,350 tests**: all pass on Node 24, and Bun passes
-2,347 with three documented runtime-specific skips. All 68 runtime packages'
+The root suite contains **2,373 tests**: all pass on Node 24, and Bun passes
+2,370 with three documented runtime-specific skips. All 70 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **70 packages**, including two declaration-only packages.
+catalog covers **72 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -204,6 +207,11 @@ promisify and five projectify upstream cases with original controls on both
 runtimes, plus actual Storage wrapper/decorator checks. Its 36 focused tests
 are in the root suite.
 
+The [Queue and concurrency suite](scripts/queue-limit-conformance/README.md) adds
+all seven queue and 30 limiter upstream cases with original controls on both
+runtimes. Its 23 focused tests are in the root suite; actual Storage batch methods
+exercise six limiters and 125 tasks, also checked with upstream 3.1.0 and 7.3.3.
+
 ## Dependency scope
 
 The Express application stack is implemented throughout: `vexpress` has 28 direct
@@ -214,6 +222,8 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vyocto-queue` | 0 | 0 |
+| `vp-limit` | 1 | 1 (all VPM) |
 | `vpromisify` | 0 | 0 |
 | `vprojectify` | 0 | 0 |
 | `vpaginator` | 1 | 1 (all VPM) |
@@ -348,6 +358,33 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vyocto-queue and vp-limit
+
+`vyocto-queue` implements the current **1.2.2** queue API without dependencies.
+Its private state is initialized directly rather than calling a subclass override
+during construction. FIFO operations, live linked iteration, partial draining and
+empty-queue reference cleanup preserve current upstream behavior.
+
+`vp-limit` targets **7.3.3**, including mutable concurrency, options-object creation,
+`rejectOnClear`, `map` and `limitFunction`. Free slots bypass queue records and
+intermediate promises. Queued work preserves the submitting async context; task
+failures release capacity and iterator failures retain rejection observers.
+The default clear operation intentionally leaves discarded promises unresolved;
+callers awaiting them should opt into `rejectOnClear`. Neither implementation
+bounds pending work or cancels active I/O.
+
+All 37 retained upstream cases and 23 focused cases pass on Node 24 and Bun.
+Storage **8.4.0** uses the replacement in delete, permission-change, upload and
+download batches; installed p-limit 3.1.0 and current 7.3.3 provide caller controls.
+See [queue measurements](packages/vyocto-queue/bench/results/README.md) and
+[limiter measurements](packages/vp-limit/bench/results/README.md) for paired
+results, fresh-process variation and identical-upstream controls. These local
+operation costs do not establish application or cloud-transfer throughput gains.
+Limiter task cases take 23–41% less time on Node and 17–42% less on Bun. Most
+queue operations remain near upstream; Bun draining takes about 19% less time.
+Tiny queue creation and roundtrip results are noisy, including regressions, and
+are retained with controls rather than claimed as wins.
 
 ## vpromisify and vprojectify
 

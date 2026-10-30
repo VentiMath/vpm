@@ -1,0 +1,28 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-30",
+  "upstream": {
+    "package": "p-limit",
+    "version": "7.3.3",
+    "tarball": "https://registry.npmjs.org/p-limit/-/p-limit-7.3.3.tgz",
+    "integrity": "sha512-SKgVvDU5TNIxQ4r30U75BNLC6a+6GOEjngrk/ysM5+Zu3oJuk1SC5ApzIzY/7PjCEjoVPMWJ0zho/4QUiEB7TQ=="
+  },
+  "source": {
+    "repository": "sindresorhus/p-limit",
+    "ref": "v7.3.3",
+    "commit": "4d4ec71803d8736567249c3dde06ea82795ae7c7",
+    "manifest": "scripts/queue-limit-conformance/upstream/p-limit/SHA256.json"
+  },
+  "changes": [
+    "Skip queue records and intermediate promises when a slot is already available.",
+    "Preserve submission async context, latest clearQueue rejection and iterator-error handling.",
+    "Forward limitFunction arguments directly without a per-call task closure."
+  ],
+  "upstreamTestAdaptations": [
+    "Retain source files with trailing whitespace normalized and SHA-256 hashes.",
+    "Execute all original runtime cases with a node:test assertion adapter; replace three test-only timing/random helper imports with equivalent built-ins.",
+    "Widen the 600ms serial test upper bound from 650ms to 3000ms for host scheduler jitter; keep its lower bound and independent barrier-based concurrency checks.",
+    "Observe cleared pending promises immediately while preserving the original later rejection assertions.",
+    "Run both clearQueue rejection cases unconditionally on the supported Node 24 and Bun runtimes."
+  ]
+}

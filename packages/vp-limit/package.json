@@ -1,0 +1,34 @@
+{
+  "name": "vp-limit",
+  "version": "0.1.0",
+  "description": "Promise concurrency control with caller context, queue clearing and batch mapping",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vp-limit"
+  },
+  "dependencies": {
+    "vyocto-queue": "0.1.0"
+  }
+}
