@@ -1,0 +1,6 @@
+{
+  "name": "vpm-camelcase-conformance",
+  "private": true,
+  "description": "Pinned camel-case baseline and current gRPC loader caller",
+  "dependencies": { "lodash.camelcase": "4.3.0", "@grpc/proto-loader": "0.8.1" }
+}

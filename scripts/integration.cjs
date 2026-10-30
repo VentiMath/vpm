@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'lodash.camelcase': {pkg:'vlodash.camelcase',versions:/^4\.3\.0$/},
   'proto3-json-serializer': {pkg:'vproto3-json-serializer',versions:/^4\.1\.0$/},
   protobufjs: {pkg:'vprotobufjs',versions:/^8\.8\.1$/},
   long: {pkg:'vlong',versions:/^5\.3\.2$/},
@@ -1246,6 +1247,7 @@ async function run() {
     await require('./xml-builder-conformance/callers.cjs')();
     await require('./xml-parser-conformance/callers.cjs')();
     await require('./mime-conformance/callers.cjs')();
+    require('./camelcase-conformance/callers.cjs')(replacements['lodash.camelcase']);
     await require('./protojson-conformance/callers.cjs')();
     require('./protobuf-conformance/callers.cjs')();
     require('./long-conformance/callers.cjs')();

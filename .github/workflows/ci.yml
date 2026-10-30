@@ -32,6 +32,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/camelcase-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/protojson-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/protobuf-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/long-conformance ci --ignore-scripts --no-audit --no-fund
@@ -45,6 +46,10 @@ jobs:
       - run: node scripts/check-body-options.cjs
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/camelcase-conformance/run.cjs
+          node scripts/camelcase-conformance/callers.cjs --upstream
+          node scripts/camelcase-conformance/callers.cjs --stack
+          node scripts/camelcase-conformance/bundles.cjs
           node scripts/protojson-conformance/regressions.cjs
           node scripts/protojson-conformance/run.cjs
           node scripts/protojson-conformance/run.cjs --upstream
@@ -200,6 +205,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/camelcase-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/protojson-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/protobuf-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/long-conformance ci --ignore-scripts --no-audit --no-fund
@@ -224,6 +230,10 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/camelcase-conformance/run.cjs
+          bun scripts/camelcase-conformance/callers.cjs --upstream
+          bun scripts/camelcase-conformance/callers.cjs --stack
+          bun scripts/camelcase-conformance/bundles.cjs
           bun scripts/protojson-conformance/regressions.cjs
           bun scripts/protojson-conformance/run.cjs
           bun scripts/protojson-conformance/run.cjs --upstream

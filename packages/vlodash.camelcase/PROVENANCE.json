@@ -1,0 +1,19 @@
+{
+  "upstream": {
+    "name": "lodash.camelcase",
+    "version": "4.3.0",
+    "repository": "https://github.com/lodash/lodash",
+    "tarball": "https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz",
+    "integrity": "sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA==",
+    "indexSha256": "6b743e2e9e76749f9774b238203640280a030d03dd6874104b2e225b1a3eb7c3"
+  },
+  "checked": "2026-10-30",
+  "license": "MIT",
+  "changes": [
+    "Direct conversion for ordinary ASCII method names; ASCII word tokenization avoids Unicode setup and general Lodash helper wrappers.",
+    "Retain upstream Unicode word boundaries, Latin-1/Extended-A transliteration and grapheme-aware capitalization in a lazily loaded module.",
+    "Remove dynamic Function-based global discovery and duplicate lowercasing/whole-word symbol arrays.",
+    "Handle zero BigInts without division by a number, and recognize boxed Symbols without consulting Symbol.toStringTag.",
+    "Self-contained declarations and CommonJS/native ESM default export; no runtime dependencies or result cache."
+  ]
+}

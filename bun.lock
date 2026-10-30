@@ -329,6 +329,10 @@
         "vjwa": "workspace:*",
       },
     },
+    "packages/vlodash.camelcase": {
+      "name": "vlodash.camelcase",
+      "version": "0.1.0",
+    },
     "packages/vlong": {
       "name": "vlong",
       "version": "0.1.0",
@@ -721,6 +725,8 @@
     "vjwks-rsa": ["vjwks-rsa@workspace:packages/vjwks-rsa"],
 
     "vjws": ["vjws@workspace:packages/vjws"],
+
+    "vlodash.camelcase": ["vlodash.camelcase@workspace:packages/vlodash.camelcase"],
 
     "vlong": ["vlong@workspace:packages/vlong"],
 

@@ -50,6 +50,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vlodash.camelcase') {
+      assert.equal(metadata.dependencies,undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','unicode.js','index.d.ts','package.json'].sort());
+    }
     if (name === 'vproto3-json-serializer') {
       assert.deepEqual(metadata.dependencies, {vprotobufjs:'0.1.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -250,6 +255,7 @@ const archiveXMLNaming=require('vxml-naming'),archiveUnsafe=require('vis-unsafe'
 if(!archiveXMLNaming.qName('𐀀:part')||!archiveUnsafe.isUnsafe('<script>',archiveUnsafe.HTML))throw new Error('XML helpers CJS archive');
 const archiveAnyNumber=require('vanynum'),archiveStringNumber=require('vstrnum');
 if(archiveAnyNumber('१२')!=='12'||archiveAnyNumber.anynum!==archiveAnyNumber||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers CJS archive');
+const archiveCamelCase=require('vlodash.camelcase');if(archiveCamelCase('GetIamPolicy')!=='getIamPolicy'||archiveCamelCase('déjà vu')!=='dejaVu'||archiveCamelCase(0n)!=='0')throw new Error('camelCase CJS archive');
 const archiveEntities=require('vhtml-entities');if(archiveEntities.decode('&copy;')!=='©'||archiveEntities.encode('<')!=='&lt;'||archiveEntities.decodeEntity('&#65;')!=='A')throw new Error('entities CJS archive');
 const archiveRetry=require('vretry');if(archiveRetry.timeouts({retries:1})[0]!==1000||require('vretry/lib/retry_operation')!==archiveRetry.RetryOperation)throw new Error('retry CJS archive');
 require('vasync-retry')(()=>7,{retries:0}).then(x=>{if(x!==7)throw new Error('async retry CJS archive');});
@@ -445,6 +451,7 @@ if(!archiveQName('𐀀:part')||!archiveUnsafe('<script>',archiveHTML))throw new 
 import archiveAnyNumber,{anynum as archiveNamedNumber} from 'vanynum';
 import archiveStringNumber from 'vstrnum';
 if(archiveAnyNumber!==archiveNamedNumber||archiveAnyNumber('१२')!=='12'||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers ESM archive');
+import archiveCamelCaseESM from 'vlodash.camelcase';if(archiveCamelCaseESM('XMLHttpRequest')!=='xmlHttpRequest'||archiveCamelCaseESM('déjà vu')!=='dejaVu')throw new Error('camelCase ESM archive');
 import {encode as archiveEncodeEntities,decode as archiveDecodeEntities,decodeEntity as archiveDecodeEntity} from 'vhtml-entities';
 if(archiveEncodeEntities('<')!=='&lt;'||archiveDecodeEntities('&copy;')!=='©'||archiveDecodeEntity('&#65;')!=='A')throw new Error('entities ESM archive');
 import archiveRetry,{operation as archiveOperation} from 'vretry';
@@ -647,6 +654,7 @@ const typedNormalized:string=typedNamedNumber('१२');
 const typedParsed:string|number|null=typedStringNumber('12',{unicode:true});
 const typedUnchanged:{id:number}=typedAnyNumber({id:1});
 void [typedNormalized,typedParsed,typedUnchanged];
+import typedCamelCase from 'vlodash.camelcase';const typedCamelResult:string=typedCamelCase(0n);void typedCamelResult;
 import {encode as typedEncodeEntities,decode as typedDecodeEntities,type EncodeOptions as TypedEntityOptions} from 'vhtml-entities';
 const typedEntityOptions:TypedEntityOptions={mode:'nonAscii',level:'html5'};
 const typedEntityResult:string=typedDecodeEntities(typedEncodeEntities('雪',typedEntityOptions));
