@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/lodash/lodash",
+  "commit": "f299b52f39486275a9e6483b60a410e06520c538",
+  "source": "test/test.js",
+  "sourceSha256": "11444e3ed9a629f1e1eda35fc4808857e650c266abc6b050bb59b15eeff45633",
+  "section": "lodash.camelCase (two tests, twelve assertions; no edits)",
+  "sectionSha256": "3166220341d95781bc192e06b700ed0e9a02c584ed1e208b27cb88311d4bab45"
+}

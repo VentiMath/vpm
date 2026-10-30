@@ -4,6 +4,8 @@ scripts/google-auth-conformance/upstream-11.3.2/** -whitespace
 scripts/queue-limit-conformance/upstream/** -whitespace
 # Preserve the hash-pinned entity snapshots' final blank line.
 scripts/entities-conformance/upstream/** whitespace=-blank-at-eof
+# Preserve the final blank line in the unchanged canonical camelCase test section.
+scripts/camelcase-conformance/upstream/camelcase.tests.js.txt whitespace=-blank-at-eof
 
 # Preserve formatting in hash-pinned upstream numeric sources and Unicode data.
 scripts/numbers-conformance/upstream/** -whitespace

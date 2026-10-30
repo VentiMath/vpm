@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vlodash.camelcase | lodash.camelcase 4.3.0; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 method aliases | [lodash.camelcase 4.3.0](https://www.npmjs.com/package/lodash.camelcase), checked October 30, 2026 |
 | Caller paths verified | vjwks-rsa | 4.1.0 API and Firebase Admin 14.5.0 token callers; retained 3.2.2 / Admin 12.7.0 coverage | [jwks-rsa 4.1.0](https://www.npmjs.com/package/jwks-rsa), checked October 30, 2026 |
 | Complete | vgoogle-logging-utils | 2.1.1, plus adapted 0.0.2 coverage | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
 | Caller paths verified | vnode-fetch | 2.7.0 API; Gaxios 7.1.3/8.3.2 transport checks against node-fetch 3.3.2 | [node-fetch 3.3.2](https://www.npmjs.com/package/node-fetch), scoped to tested callers |
@@ -53,9 +54,9 @@ now have current comparison targets:
 Firebase Admin **14.5.0** requires `jwks-rsa ^4.0.1`, Google Auth 11, and optional
 Storage 8 / Firestore 9. Firebase Functions **7.4.0** permits Admin 14. These npm
 manifests were checked October 30, 2026. The `vjwks-rsa` 4.1.0 API and Admin 14 JWKS/App Check
-callers now pass against upstream controls on Node 24 and Bun. The next leaf is
-`lodash.camelcase` 4.3.0, used by current `@grpc/proto-loader` 0.8.1; that leads
-toward the gRPC loader on `vprotobufjs` and `vlong`. SDK upgrades and actual adoption of VPM
+callers now pass against upstream controls on Node 24 and Bun. `vlodash.camelcase` now covers the 4.3.0 method-name conversion used by
+`@grpc/proto-loader` 0.8.1. The next package is that gRPC loader, using the completed
+converter, `vprotobufjs` and `vlong` for its runtime caller paths. SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
 
@@ -93,6 +94,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vlodash.camelcase](packages/vlodash.camelcase) | lodash.camelcase 4.3.0 | Direct ASCII identifier conversion, lazy compatible Unicode handling, single object coercion and corrected zero BigInts/Symbol branding; actual gRPC and Google method aliases. |
 | [vproto3-json-serializer](packages/vproto3-json-serializer) | proto3-json-serializer 4.1.0 | Correct byte slices and collections, signed durations, offset timestamps, FieldMasks and Any wrappers; validated scalars, safe output keys and verified Google fallback callers. |
 | [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
 | [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
@@ -185,12 +187,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,639 tests**: all pass on Node 24, and Bun passes
-2,636 with three documented runtime-specific skips. All 87 runtime packages'
+The root suite contains **2,657 tests**: all pass on Node 24, and Bun passes
+2,654 with three documented runtime-specific skips. All 88 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **89 packages**, including two declaration-only packages.
+catalog covers **90 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -199,6 +201,11 @@ module imports. CI runs the package and integration suites on these same two
 runtimes. Separate archive gates verify npm/Bun installation,
 exported files, module imports and TypeScript 7 consumers. Test fixtures and
 benchmarks are excluded from installable archives.
+
+The [camel-case fixture](scripts/camelcase-conformance/README.md) adds 347,735
+exact comparisons with 4.3.0, two unchanged canonical tests (twelve assertions),
+upstream controls for three coercion fixes and 43 instrumented gRPC/Google caller
+conversions on each runtime. Eighteen focused tests are in the root count.
 
 The [Express conformance suite](scripts/express-conformance/README.md) adds
 1,261 upstream tests on Node 24, with documented expectation changes for VPM
@@ -281,6 +288,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vlodash.camelcase` | 0 | 0 |
 | `vproto3-json-serializer` | 1 | 1 (`vprotobufjs`) |
 | `vprotobufjs` | 1 | 1 (`vlong`) |
 | `vlong` | 0 | 0 |
@@ -434,6 +442,41 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vlodash.camelcase
+
+Replaces `lodash.camelcase` 4.3.0 without adding runtime dependencies. Ordinary
+ASCII identifiers return directly or lowercase their initial letter. Other ASCII
+names use compact tokenization, and only non-ASCII inputs initialize the retained
+Unicode tables. Unicode boundaries, Latin mappings and joined-emoji capitalization
+match the standalone package. There is no result cache or arbitrary input limit.
+
+Native Symbol branding replaces spoofable `Symbol.toStringTag` checks. Zero
+BigInts no longer throw, and zero-valued objects are coerced once rather than twice.
+Those three differences have stock upstream controls. Dynamic global discovery,
+duplicate lowercasing and full-word symbol-array allocation are removed.
+
+**Evidence:** 18 focused tests and 347,735 exact differential comparisons pass on
+Node 24 and Bun. The standalone package ships no tests; two unchanged canonical
+Lodash camelCase tests contribute twelve assertions, explicitly scoped as selected
+coverage. Actual proto-loader 0.8.1, gax 6.14.0 and Firestore 9.4.0 callers verify
+13 synthetic aliases, generated client methods, wire round-trips and 17 shipped
+Firestore methods, with 43 observed conversion calls. A separate run combines
+VPM camel-case and protobuf implementations. Installed npm/Bun archives include
+CJS, ESM and standalone TypeScript 7 declarations.
+
+Equivalent browser bundles run without Node globals and with string code
+generation disabled. Minified IIFEs are 4,793 bytes versus 5,619 upstream (15%
+smaller); Node gzip is 2,264 versus 2,604 bytes. This includes the same four-string
+caller harness, not a whole application bundle.
+
+**Performance:** [paired measurements](packages/vlodash.camelcase/bench/results/README.md)
+show short PascalCase RPC conversion taking 83% less time on Node 24 and 87% less
+on Bun; already-camelCase names take 91% and 94% less. Latin-accent conversion
+improves 12% and 7%. The actual 13-method gRPC loader improves about 7% on each
+runtime. Full Firestore schema loading and Node's gax result are inconclusive
+against process variation and identical-upstream controls. No application-level
+speedup is claimed.
 
 ## vproto3-json-serializer
 
