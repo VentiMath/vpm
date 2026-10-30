@@ -19,6 +19,9 @@ declare namespace jwksRsa {
   interface RequestAgent { destroy(): void; }
   interface OptionsBase {
     cache?: boolean; cacheMaxEntries?: number; cacheMaxAge?: number;
+    /** Opt-in extra lifetime after cacheMaxAge, measured from the last successful lookup. Stale reads never extend it. */
+    cacheMaxAgeFallback?: number;
+    onStaleCacheFallback?(error: Error, kid: string | null | undefined, key: SigningKey): void | Promise<void>;
     rateLimit?: boolean; jwksRequestsPerMinute?: number;
     timeout?: number; maxResponseBytes?: number; maxKeys?: number;
     requestHeaders?: Headers; requestAgent?: RequestAgent | false;
@@ -58,7 +61,7 @@ declare namespace jwksRsa {
   function hapiJwt2Key(options: HapiJwtOptions): (decoded: DecodedToken | undefined, callback: HapiCallback) => void;
   function hapiJwt2KeyAsync(options: HapiJwtOptions): (decoded: DecodedToken | undefined) => Promise<{ key: string }>;
   class ArgumentError extends Error { name: 'ArgumentError'; constructor(message: string); }
-  class JwksError extends Error { name: 'JwksError'; code?: string; statusCode?: number; constructor(message: string); }
+  class JwksError extends Error { name: 'JwksError'; code?: string; statusCode?: number; isEndpointUnavailable?: true; constructor(message: string); }
   class JwksRateLimitError extends Error { name: 'JwksRateLimitError'; constructor(message?: string); }
   class SigningKeyNotFoundError extends Error { name: 'SigningKeyNotFoundError'; constructor(message: string); }
 }

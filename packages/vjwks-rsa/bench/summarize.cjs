@@ -1,11 +1,11 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {createHash}=require('node:crypto');
-const folder=path.join(__dirname,'results'),root=path.resolve(__dirname,'..');
+const folder=path.join(__dirname,'results/4.1.0'),root=path.resolve(__dirname,'..');
 const reports=fs.readdirSync(folder).filter(f=>f.endsWith('.json')).map(f=>({file:f,...JSON.parse(fs.readFileSync(path.join(folder,f)))}));
 assert.equal(reports.length,8,'three measurements and one control per runtime');
 const median=xs=>{const a=xs.slice().sort((a,b)=>a-b);return(a[(a.length-1)>>1]+a[a.length>>1])/2;};
-for(const r of reports){assert.equal(r.rows.length,12);for(const row of r.rows){assert.equal(row.samples.upstream.length,12);assert.equal(row.samples.vpm.length,12);}if(process.argv.includes('--verify-current'))for(const [f,hash]of Object.entries(r.hashes))assert.equal(createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex'),hash,r.file+': '+f);}
+for(const r of reports){assert.equal(r.rows.length,15);for(const row of r.rows){assert.equal(row.samples.upstream.length,12);assert.equal(row.samples.vpm.length,12);}if(process.argv.includes('--verify-current'))for(const [f,hash]of Object.entries(r.hashes))assert.equal(createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex'),hash,r.file+': '+f);}
 for(const runtime of ['node','bun']){
   const measured=reports.filter(r=>r.file.startsWith(runtime+'-')&&!r.calibration),control=reports.find(r=>r.file.startsWith(runtime+'-')&&r.calibration);
   assert.equal(measured.length,3);assert(control);

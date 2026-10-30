@@ -4,8 +4,10 @@ const {createHash,createPublicKey}=require('node:crypto');
 const {createRequire}=require('node:module');
 const http=require('node:http');
 const {once}=require('node:events');
-const upstream=require('../../../scripts/consumers/node_modules/jwks-rsa');
+const upstream=require('../../../scripts/jwks-conformance/node_modules/jwks-rsa');
 const vpm=require('..');
+const {load:firebase}=require('../../../scripts/jwks-conformance/firebase.cjs');
+const jwt=require('../../../scripts/jwks-conformance/node_modules/jsonwebtoken');
 const {keys}=require('../../vjwa/test/helpers.cjs');
 const calibration=process.env.CALIBRATION==='1';
 const variants={upstream,vpm:calibration?upstream:vpm};
@@ -24,6 +26,7 @@ const cases=[];
 function add(name,make,validate,async=true){cases.push({name,make,validate,async});}
 add('client creation',lib=>()=>lib({jwksUri:'https://example.invalid/keys'}),c=>assert.equal(typeof c.getSigningKey,'function'),false);
 add('cached key Promise',async lib=>{const c=lib({fetcher:async()=>({keys:[rsa]})});await c.getSigningKey('rsa');return ()=>c.getSigningKey('rsa');},key=>assert.equal(key.kid,'rsa'));
+add('cached key with fallback enabled',async lib=>{const c=lib({cacheMaxAgeFallback:30000,fetcher:async()=>({keys:[rsa]})});await c.getSigningKey('rsa');return ()=>c.getSigningKey('rsa');},key=>assert.equal(key.kid,'rsa'));
 add('cached key callback',async lib=>{const c=lib({fetcher:async()=>({keys:[rsa]})});await c.getSigningKey('rsa');return ()=>new Promise((resolve,reject)=>c.getSigningKey('rsa',(e,k)=>e?reject(e):resolve(k)));},key=>assert.equal(key.kid,'rsa'));
 for(const [label,jwk]of [['RSA',rsa],['EC',ec]]){
   add(label+' import and PEM',lib=>{const c=lib({cache:false,fetcher:async()=>({keys:[jwk]})});return async()=> (await c.getSigningKey(jwk.kid)).getPublicKey();},pem=>assertPem(pem,label==='RSA'?rsaPem:ecPem));
@@ -45,6 +48,9 @@ add('Express cached key provider',lib=>{const provider=lib.expressJwtSecret({fet
   const agents=[];
   add('HTTP sequential key miss',lib=>{const agent=new http.Agent({keepAlive:true});agents.push(agent);const c=lib({cache:false,jwksUri:uri,requestAgent:agent});return async()=> (await c.getSigningKey('key-0')).getPublicKey();},pem=>assertPem(pem,rsaPem));
   add('HTTP concurrent eight-kid misses',lib=>{const agent=new http.Agent({keepAlive:true});agents.push(agent);return async()=>{const c=lib({jwksUri:uri,requestAgent:agent});return (await Promise.all(mixed.map(k=>c.getSigningKey(k.kid)))).map(k=>k.getPublicKey());};},assertMixed);
+  add('Firebase Admin JWKS refresh',lib=>{const agent=new http.Agent({keepAlive:true});agents.push(agent);const c=new (firebase(lib).JwksFetcher)(uri,agent);return async()=> (await c.refresh())['key-0'];},pem=>assertPem(pem,rsaPem));
+  const signed=jwt.sign({sub:'benchmark'},keys.RSA.privateKey,{algorithm:'RS256',keyid:'key-0'});
+  add('Firebase Admin cached signature verification',async lib=>{const agent=new http.Agent({keepAlive:true});agents.push(agent);const verifier=firebase(lib).PublicKeySignatureVerifier.withJwksUrl(uri,agent);await verifier.verify(signed);return ()=>verifier.verify(signed);},result=>assert.equal(result,undefined));
   const rows=[];
   try{
     for(const item of cases){
@@ -64,12 +70,12 @@ add('Express cached key provider',lib=>{const provider=lib.expressJwtSecret({fet
       rows.push({case:item.name,iterations,samples});
     }
   }finally{for(const a of agents)a.destroy();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}
-  const root=path.resolve(__dirname,'..'),files=new Set(['index.js','package.json','PROVENANCE.json','bench/compare.cjs','../vjwa/test/fixtures/keys.json','../vdebug/index.js','../vms/index.js','../../scripts/consumers/package-lock.json']);
+  const root=path.resolve(__dirname,'..'),files=new Set(['index.js','package.json','PROVENANCE.json','bench/compare.cjs','../vjwa/test/fixtures/keys.json','../vdebug/index.js','../vms/index.js','../../scripts/jwks-conformance/package-lock.json','../../scripts/jwks-conformance/firebase.cjs','../../scripts/jwks-conformance/node_modules/firebase-admin/lib/utils/jwt.js']);
   for(const f of fs.readdirSync(path.join(root,'lib')))files.add('lib/'+f);
   const seen=new Set();function record(manifest){if(seen.has(manifest))return;seen.add(manifest);const dir=path.dirname(manifest),p=JSON.parse(fs.readFileSync(manifest));for(const f of fs.readdirSync(dir,{recursive:true})){if(f.startsWith('node_modules/')||!/(?:\.js|package\.json)$/.test(f))continue;files.add(path.relative(root,path.join(dir,f)));}const from=createRequire(manifest);for(const name of Object.keys(p.dependencies||{})){let child;try{child=from.resolve(name+'/package.json');}catch{for(const folder of from.resolve.paths(name)){const candidate=path.join(folder,name,'package.json');if(fs.existsSync(candidate)){child=candidate;break;}}}assert(child);record(child);}}
-  record(path.resolve(root,'../../scripts/consumers/node_modules/jwks-rsa/package.json'));
+  record(path.resolve(root,'../../scripts/jwks-conformance/node_modules/jwks-rsa/package.json'));
   const report={recordedAt:new Date().toISOString(),runtime:process.versions,cpu:os.cpus()[0].model,platform:process.platform,arch:process.arch,calibration,rounds:12,checksum,
-    methodology:'jwks-rsa 3.2.2 and vjwks-rsa; 12 alternating paired rounds, 200 ms per-variant warmup plus 4 full-block warmups after 16 initial calls, 20 ms upstream pilot target, 1–100000 operations per block. Outputs retained, consumed and validated; PEMs compared by SPKI bytes outside timing because upstream Bun omits the trailing newline. Three fresh processes plus one identical-upstream control per runtime. PEM cases include native import and actual export; repeated export starts warm. Eight-key JWKS alternates one RSA and one EC public key with eight distinct IDs. Concurrent cases create fresh clients; custom-fetch case asserts eight upstream fetches versus one VPM fetch. Local HTTP uses equivalent keep-alive agents. No trimming; nanoseconds per operation.',
+    methodology:'jwks-rsa 4.1.0 and vjwks-rsa; 12 alternating paired rounds, 200 ms per-variant warmup plus 4 full-block warmups after 16 initial calls, 20 ms upstream pilot target, 1–100000 operations per block. Outputs retained, consumed and validated; PEMs compared by SPKI bytes outside timing because upstream Bun omits the trailing newline. Three fresh processes plus one identical-upstream control per runtime. PEM cases include native import and actual export; repeated export starts warm. Eight-key JWKS alternates one RSA and one EC public key with eight distinct IDs. Concurrent cases create fresh clients; custom-fetch case asserts eight upstream fetches versus one VPM fetch. Local HTTP uses equivalent keep-alive agents. Firebase Admin 14.5.0 refresh uses its actual JwksFetcher; cached verification uses its PublicKeySignatureVerifier and stock jsonwebtoken after one initial fetch. No trimming; nanoseconds per operation.',
     hashes:Object.fromEntries([...files].sort().map(file=>[file,createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex')])),rows};
   if(process.env.OUTPUT)fs.writeFileSync(process.env.OUTPUT,JSON.stringify(report,null,2)+'\n');
   console.table(rows.map(r=>({case:r.case,upstream:Math.round(median(r.samples.upstream)),vpm:Math.round(median(r.samples.vpm)),change:(100*(median(r.samples.vpm.map((v,i)=>v/r.samples.upstream[i]))-1)).toFixed(1)+'%'})));

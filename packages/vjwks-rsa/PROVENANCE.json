@@ -1,15 +1,26 @@
 {
   "license": "MIT",
-  "checkedOn": "2026-10-28",
-  "upstream": { "package": "jwks-rsa", "version": "3.2.2", "tarball": "https://registry.npmjs.org/jwks-rsa/-/jwks-rsa-3.2.2.tgz" },
+  "checkedOn": "2026-10-30",
+  "upstream": {
+    "package": "jwks-rsa",
+    "version": "4.1.0",
+    "tarball": "https://registry.npmjs.org/jwks-rsa/-/jwks-rsa-4.1.0.tgz"
+  },
   "source": {
     "repository": "auth0/node-jwks-rsa",
-    "ref": "v3.2.2",
-    "commit": "67f55ff7d72e810f6d0e4d9d9c5d217140d44872",
-    "archive": "https://codeload.github.com/auth0/node-jwks-rsa/tar.gz/67f55ff7d72e810f6d0e4d9d9c5d217140d44872",
-    "archiveSha256": "30e6f339b79317b2c3fccbfff84e9b784bd4030da091efe27dd77d3fad1aee9a"
+    "ref": "9f8bbdb6c8da64849dd2e3360be74d4c270714d4",
+    "commit": "9f8bbdb6c8da64849dd2e3360be74d4c270714d4",
+    "archive": "https://codeload.github.com/auth0/node-jwks-rsa/tar.gz/9f8bbdb6c8da64849dd2e3360be74d4c270714d4",
+    "archiveSha256": "7820f3cca966ffd15c6c9c623c8a6455edb5664ca320f13eca600745f90a830a"
   },
-  "dependencies": { "debug": "vdebug", "jose": "native crypto and compact-token header parsing", "limiter": "private rolling-minute request limiter", "lru-memoizer": "private bounded LRU cache", "@types/jsonwebtoken": "self-contained declarations" },
+  "dependencies": {
+    "debug": "vdebug",
+    "jose": "native crypto and compact-token header parsing",
+    "limiter": "private rolling-minute request limiter",
+    "lru-memoizer": "private bounded LRU cache",
+    "@types/jsonwebtoken": "self-contained declarations",
+    "lru-cache": "private bounded monotonic cache with fixed stale deadline"
+  },
   "changes": [
     "Native public JWK import with canonical field encodings, key purpose and algorithm-family checks; immutable signing-key records and lazy once-only PEM export.",
     "Reject ambiguous duplicate signing key IDs and preserve empty IDs as distinct from missing IDs.",
@@ -18,7 +29,24 @@
     "Enforce an atomic rolling-minute limit on actual endpoint fetches, including getKeys and getSigningKeys; cache/interceptor hits do not consume capacity.",
     "Total request deadlines include streaming and custom fetchers; reject invalid UTF-8, premature close, unsupported URI schemes, redirects and unsuccessful status codes.",
     "Guard adapter error callbacks, handle rejected error hooks, and require token algorithms to agree with the selected public key.",
-    "Bun native crypto rejects secp256k1 and Ed448 JWK imports; these keys are skipped, while native Node supports them."
+    "Bun native crypto rejects secp256k1 and Ed448 JWK imports; these keys are skipped, while native Node supports them.",
+    "Opt-in 4.1 stale fallback with monotonic fixed expiry, no fresh re-caching of stale keys, and rejection of malformed or oversized responses. The fallback notification also safely awaits rejected asynchronous hooks."
   ],
-  "upstreamTestAdaptations": ["The request timeout test expects ETIMEDOUT instead of the upstream incidental ECONNRESET."]
+  "upstreamTestAdaptations": [
+    "The request timeout test expects ETIMEDOUT instead of the upstream incidental ECONNRESET."
+  ],
+  "legacy": {
+    "upstream": {
+      "package": "jwks-rsa",
+      "version": "3.2.2",
+      "tarball": "https://registry.npmjs.org/jwks-rsa/-/jwks-rsa-3.2.2.tgz"
+    },
+    "source": {
+      "repository": "auth0/node-jwks-rsa",
+      "ref": "v3.2.2",
+      "commit": "67f55ff7d72e810f6d0e4d9d9c5d217140d44872",
+      "archive": "https://codeload.github.com/auth0/node-jwks-rsa/tar.gz/67f55ff7d72e810f6d0e4d9d9c5d217140d44872",
+      "archiveSha256": "30e6f339b79317b2c3fccbfff84e9b784bd4030da091efe27dd77d3fad1aee9a"
+    }
+  }
 }

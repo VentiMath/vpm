@@ -1,4 +1,8 @@
-# vjwks-rsa benchmark evidence
+# Historical vjwks-rsa / jwks-rsa 3.2.2 evidence
+
+For current 4.1.0 comparisons, see the [current report](4.1.0/README.md).
+This report describes the October 28 implementation, retained without rewriting
+its results or hashes.
 
 Compared with unmodified `jwks-rsa` 3.2.2 on Apple M1 Pro, macOS arm64,
 Node 24.22.1 and Bun 1.4.0. Recorded October 28, 2026 (October 29 UTC).
@@ -7,7 +11,7 @@ latency or production throughput measurements.
 
 ## Method
 
-The [harness](../compare.cjs) runs three fresh processes per runtime plus one
+The [historical harness](https://github.com/VentiMath/vpm/blob/485f830f22e50b12f3e782cfc6c791411c6917f6/packages/vjwks-rsa/bench/compare.cjs) runs three fresh processes per runtime plus one
 identical-upstream control. Each case warms both variants for at least 200 ms,
 then runs four complete warm-up blocks and twelve balanced, alternating paired
 rounds. A warmed upstream pilot targets 20 ms per block, bounded to 1–100,000
@@ -91,7 +95,8 @@ application work can dominate these package-level differences.
 
 ## Reproduce
 
-From the repository root, with the pinned consumer fixture installed:
+Use repository commit `485f830f22e50b12f3e782cfc6c791411c6917f6`, with its pinned
+consumer fixture installed. The current harness and summarizer target 4.1.0:
 
 ```sh
 npm --prefix scripts/consumers ci --ignore-scripts

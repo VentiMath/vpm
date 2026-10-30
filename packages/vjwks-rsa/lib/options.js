@@ -5,8 +5,8 @@ const own = (object, key) => Object.hasOwn(object, key) ? object[key] : undefine
 function options(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw new ArgumentError('An options object must be provided');
   const result = {};
-  for (const key of ['jwksUri', 'fetcher', 'getKeysInterceptor', 'requestAgent', 'proxy', 'handleSigningKeyError']) result[key] = own(input, key);
-  for (const key of ['fetcher', 'getKeysInterceptor', 'handleSigningKeyError']) if (result[key] !== undefined && typeof result[key] !== 'function') throw new ArgumentError(key + ' must be a function');
+  for (const key of ['jwksUri', 'fetcher', 'getKeysInterceptor', 'requestAgent', 'proxy', 'handleSigningKeyError', 'onStaleCacheFallback']) result[key] = own(input, key);
+  for (const key of ['fetcher', 'getKeysInterceptor', 'handleSigningKeyError', 'onStaleCacheFallback']) if (result[key] !== undefined && typeof result[key] !== 'function') throw new ArgumentError(key + ' must be a function');
   if (result.proxy !== undefined) throw new ArgumentError('Use requestAgent for proxy support');
   if (result.jwksUri !== undefined) {
     if (typeof result.jwksUri !== 'string') throw new ArgumentError('jwksUri must be a string');
@@ -21,6 +21,7 @@ function options(input) {
   }
   for (const [key, fallback, min, max] of [
     ['cacheMaxEntries', 5, 0, 1000000], ['cacheMaxAge', 600000, 0, Number.MAX_SAFE_INTEGER],
+    ['cacheMaxAgeFallback', 0, 0, Number.MAX_SAFE_INTEGER],
     ['timeout', 30000, 0, 2147483647], ['jwksRequestsPerMinute', 10, 1, 1000000],
     ['maxResponseBytes', 1048576, 1, 2147483647], ['maxKeys', 100, 1, 1000000],
   ]) {
@@ -28,6 +29,7 @@ function options(input) {
     result[key] = value === undefined ? fallback : value;
     if (!Number.isSafeInteger(result[key]) || result[key] < min || result[key] > max) throw new ArgumentError(key + ' must be a safe integer between ' + min + ' and ' + max);
   }
+  if (!Number.isSafeInteger(result.cacheMaxAge + result.cacheMaxAgeFallback)) throw new ArgumentError('Combined cache lifetime must be a safe integer');
   const headers = own(input, 'requestHeaders');
   if (headers !== undefined) {
     if (!headers || typeof headers !== 'object' || Array.isArray(headers)) throw new ArgumentError('requestHeaders must be an object');

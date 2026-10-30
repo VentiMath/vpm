@@ -2,7 +2,7 @@
 const debug = require('vdebug')('jwks');
 const { options, own } = require('./options');
 const { JwksError } = require('./errors');
-const { request, deadline } = require('./request');
+const { request, deadline, isEndpointUnavailable } = require('./request');
 const { Cache, RateLimit } = require('./state');
 const { retrieveSigningKeys, keyArray, validateKid, select } = require('./keys');
 function asError(error) { return error instanceof Error ? error : new JwksError('JWKS operation failed'); }
@@ -14,7 +14,7 @@ class JwksClient {
   constructor(input) {
     const opts = this.#options = options(input);
     Object.defineProperty(this, 'options', { value: opts, enumerable:true });
-    this.#cache = opts.cache && opts.cacheMaxEntries && opts.cacheMaxAge ? new Cache(opts.cacheMaxEntries, opts.cacheMaxAge) : null;
+    this.#cache = opts.cache && opts.cacheMaxEntries && opts.cacheMaxAge ? new Cache(opts.cacheMaxEntries, opts.cacheMaxAge, undefined, opts.cacheMaxAgeFallback) : null;
     this.#limit = opts.rateLimit ? new RateLimit(opts.jwksRequestsPerMinute) : null;
     this.getSigningKey = this.getSigningKey.bind(this);
   }
@@ -48,7 +48,24 @@ class JwksClient {
       const intercepted = await deadline(() => opts.getKeysInterceptor(), opts.timeout);
       if (intercepted != null) key = select(retrieveSigningKeys(intercepted, opts.maxKeys), kid, true);
     }
-    if (!key) key = select(await this.getSigningKeys(), kid);
+    if (!key) {
+      try { key = select(await this.getSigningKeys(), kid); }
+      catch (error) {
+        if (opts.cacheMaxAgeFallback && isEndpointUnavailable(error)) {
+          const stale = this.#cache?.get(id, true);
+          if (stale) {
+            // Never reinsert a stale key: that would restart its lifetime.
+            await opts.onStaleCacheFallback?.(error, kid, stale);
+            return stale;
+          }
+        } else {
+          // A successful refresh without this key, invalid document, or local
+          // policy failure must not leave an old key eligible for resurrection.
+          this.#cache?.delete(id);
+        }
+        throw error;
+      }
+    }
     this.#cache?.set(id, key);
     return key;
   }
