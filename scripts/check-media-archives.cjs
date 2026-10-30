@@ -49,6 +49,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vfast-xml-parser') {
+      assert.deepEqual(Object.keys(metadata.dependencies).sort(),['vfast-xml-builder','vis-unsafe','vnodable-entities','vpath-expression-matcher','vstrnum','vxml-naming']);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.mjs','index.d.ts','index.d.mts','package.json','lib/ignoreAttributes.js','lib/util.js','lib/validator.js',...['DocTypeReader','OptionsBuilder','OrderedObjParser','XMLParser','node2json','xmlNode'].map(n=>'lib/xmlparser/'+n+'.js')].sort());
+    }
     if (name === 'vfast-xml-builder') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(),['vpath-expression-matcher','vxml-naming']);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -202,6 +207,7 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const ArchiveParser=require('vfast-xml-parser');if(new ArchiveParser.XMLParser().parse('<r>&amp;</r>',true).r!=='&'||ArchiveParser.XMLValidator.validate('<r/><s/>')===true||new ArchiveParser.XMLBuilder().build({r:'x'})!=='<r>x</r>')throw new Error('XML parser CJS archive');
 const ArchiveBuilder=require('vfast-xml-builder');if(ArchiveBuilder({arrayNodeName:'x'}).build([1,2])!=='<x>1</x><x>2</x>')throw new Error('XML builder CJS archive');
 const archiveNodable=require('vnodable-entities');if(new archiveNodable.EntityDecoder().decode('&lt;&#65junk;')!=='<&#65junk;'||new archiveNodable.EntityEncoder({encodeAllNamed:false}).encode('<')!=='&lt;')throw new Error('nodable CJS archive');
 const archiveMatcher=require('vpath-expression-matcher');const archivePath=new archiveMatcher.Matcher();archivePath.push('item');
@@ -387,6 +393,7 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import {XMLParser as ArchiveParserESM,XMLValidator as ArchiveValidatorESM} from 'vfast-xml-parser';if(new ArchiveParserESM().parse('<r><a/></r>').r.a!==''||ArchiveValidatorESM.validate('<r a="&bad"/>')===true)throw new Error('XML parser ESM archive');
 import ArchiveBuilderESM,{Builder as ArchiveNamedBuilder} from 'vfast-xml-builder';if(ArchiveBuilderESM!==ArchiveNamedBuilder||new ArchiveBuilderESM().build({r:'<'})!=='<r>&lt;</r>')throw new Error('XML builder ESM archive');
 import {EntityDecoder as ArchiveDecoder,EntityEncoder as ArchiveEncoder,ALL_ENTITIES as ArchiveEntityTable} from 'vnodable-entities';
 if(new ArchiveDecoder({namedEntities:ArchiveEntityTable}).decode('&ocirc;')!=='ô'||new ArchiveEncoder({encodeAllNamed:false}).encode('<')!=='&lt;')throw new Error('nodable ESM archive');
@@ -572,6 +579,7 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import {XMLParser as TypedParser,XMLBuilder as TypedParserBuilder,XMLValidator as TypedValidator,type X2jOptions} from 'vfast-xml-parser';const parserOpts:X2jOptions={processEntities:{maxEntityCount:2},htmlEntities:{copy:'©'}};new TypedParser(parserOpts).parse(new Uint8Array(),false);const parserBuilt:string=new TypedParserBuilder().build({r:'x'});TypedValidator.validate(parserBuilt);
 import TypedBuilder from 'vfast-xml-builder';const builtXML:string=TypedBuilder({arrayNodeName:'x'}).build([1]);void builtXML;
 import {EntityDecoder as TypedDecoder,EntityEncoder as TypedEncoder,ALL_ENTITIES as TypedEntityTable} from 'vnodable-entities';
 const typedNodableResult:string=new TypedDecoder({namedEntities:TypedEntityTable,onInputEntity:()=> 'allow'}).decode('&lt;');

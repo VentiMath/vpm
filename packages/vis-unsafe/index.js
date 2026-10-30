@@ -27,8 +27,16 @@ function expose(rules, label) {
   return Object.freeze(list);
 }
 const registry = {};
-for (const label of ['HTML', 'XML', 'SVG', 'SQL', 'SQL-STRICT', 'SHELL', 'REDOS', 'NOSQL', 'LOG']) {
-  const list = expose(require('./contexts/' + label.toLowerCase() + '.js'), label);
+// Literal module paths let browser bundlers include the same nine contexts.
+const contexts = {
+  HTML: require('./contexts/html.js'), XML: require('./contexts/xml.js'),
+  SVG: require('./contexts/svg.js'), SQL: require('./contexts/sql.js'),
+  'SQL-STRICT': require('./contexts/sql-strict.js'), SHELL: require('./contexts/shell.js'),
+  REDOS: require('./contexts/redos.js'), NOSQL: require('./contexts/nosql.js'),
+  LOG: require('./contexts/log.js'),
+};
+for (const [label, rules] of Object.entries(contexts)) {
+  const list = expose(rules, label);
   registry[label] = list;
   exports[label.replace('-', '_')] = list;
 }

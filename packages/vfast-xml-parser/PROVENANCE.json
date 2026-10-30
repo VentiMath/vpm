@@ -1,0 +1,21 @@
+{
+  "upstream": {
+    "name": "fast-xml-parser",
+    "version": "5.11.2",
+    "repository": "https://github.com/NaturalIntelligence/fast-xml-parser",
+    "commit": "80e88a848b073fd630bc181291a24922c6d1e839",
+    "npmIntegrity": "sha512-R9iDuNrQYeQut46cn2r2wHKn4HYzVDvDm5J1wW+koZewykv0yuO2HChTYeZtrULyHIDM9cj9TUXloCsueCQUog==",
+    "license": "MIT"
+  },
+  "reviewed": "2026-10-30",
+  "implementation": "Adapted stable v5 parser and validator; XMLBuilder delegates to vfast-xml-builder. CLI and experimental v6 sources excluded.",
+  "changes": [
+    "All six direct dependencies use VPM packages",
+    "Reusable per-parser engine, compiled stop expressions, immutable option snapshots, document cleanup and reentry protection",
+    "Exact element depth bounds and validated entity limits; one self-closing transform; safe callback-produced names and attributes",
+    "Repeatable regex filters, grouped predicates, XML declaration version independent of output transforms, correct XML Name validation",
+    "Stricter validator for roots, attributes, declarations and references; linear malformed-whitespace handling and sliced text scans",
+    "Explicit string/Uint8Array inputs, safe entity registration, CJS/ESM exports and self-contained declarations"
+  ],
+  "retainedEvidence": "../../scripts/xml-parser-conformance/upstream"
+}

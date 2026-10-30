@@ -76,9 +76,9 @@ and 20,000 generated repair/validation combinations.
 The [shared caller fixture](../../scripts/xml-helpers-conformance) replaces imports
 in actual fast-xml-parser **5.11.2** and fast-xml-builder **1.3.1** source. It checks
 DTD names and entities, ordinary and ordered builders, and Storage **8.4.0**
-multipart uploads. The parser's separately implemented `XMLValidator` still
-rejects supplementary names; that limitation belongs to the future parser
-replacement. The builder validates names only when `sanitizeName` is configured.
+multipart uploads. That pinned upstream parser's `XMLValidator` rejects
+supplementary names; [vfast-xml-parser](../vfast-xml-parser) now corrects that
+limitation with VPM's naming grammar. The builder validates names only when `sanitizeName` is configured.
 Storage's ordinary multipart path creates validators but does not validate names.
 
 [Benchmarks](bench/results/README.md) include raw samples, source hashes,
