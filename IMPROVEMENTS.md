@@ -3615,7 +3615,10 @@ coerces them (numeric strings, truthy flags, falsy type/verify, Infinity
 limits), so every configuration that boots upstream boots here. The exceptions
 fail at construction: NaN, negative or malformed limits and undecodable default
 charsets, which upstream accepts and then enforces no limit, a truncated limit,
-or a 415 on every request. Type arrays are copied and option snapshots are stable.
+or a 415 on every request. Type arrays are copied and option snapshots are stable,
+including empty lists and lists containing invalid patterns or unknown extensions.
+The fallback matcher retains its private copy instead of rereading the caller's
+mutable array; regression tests exercise all four parser factories.
 
 Compressed reads register the body reader before starting the pipe and observe
 abort/error/premature-close events on the original request. They stop the owned
@@ -3649,7 +3652,7 @@ validation of parsed data.
 
 **Dependencies and evidence:** nine direct dependencies remain nine, all VPM
 packages; the complete external tree contains fifteen packages. No new runtime
-primitive is needed. Twenty-one focused tests cover normal upstream behavior,
+primitive is needed. Twenty-two focused tests cover normal upstream behavior,
 limits, option mutation, charsets, corrupt/truncated compression, frozen/primitive
 callback failures, lazy stack reads/overrides/fallbacks, real client disconnects,
 cleanup and exports. Middleware

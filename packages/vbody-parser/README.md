@@ -43,7 +43,8 @@ Common options:
 - `type`: a media type, extension such as `'json'`, wildcard such as `'text/*'`
   or `'+json'`, array of these, or synchronous request predicate. A falsy value
   uses the parser's default type. String patterns are case-insensitive and
-  arrays are copied at construction. As in body-parser, an empty array accepts
+  arrays are copied at construction, including empty lists and lists containing
+  unknown extensions or invalid patterns. As in body-parser, an empty array accepts
   any request with a valid Content-Type and an unknown extension matches nothing.
 - `inflate`: enabled unless exactly `false`. Supports gzip, deflate and Brotli, plus
   Zstandard when the runtime provides `createZstdDecompress`. With `false`,

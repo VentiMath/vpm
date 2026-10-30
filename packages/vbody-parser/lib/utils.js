@@ -48,7 +48,9 @@ function normalizeOptions (options, defaultType) {
       if (typeof normalized !== 'string' || !typeis.match(normalized, normalized.replace(/\*/g, 'x'))) prepared = false
       else list[i] = normalized.toLowerCase()
     }
-    shouldParse = prepared ? req => Boolean(typeis(req, list)) : req => Boolean(typeis(req, type))
+    // The fallback must retain the copy too: empty/partially invalid lists are
+    // accepted, but later caller mutations must not change this middleware.
+    shouldParse = req => Boolean(typeis(req, list))
   }
   return { inflate: inflate !== false, limit, verify, defaultCharset, shouldParse }
 }

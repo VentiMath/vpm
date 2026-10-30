@@ -18,7 +18,7 @@
   },
   "changes": [
     "Use VPM counterparts for all nine runtime dependencies.",
-    "Validate and snapshot configuration, without signed 32-bit coercion of form limits.",
+    "Validate and snapshot configuration, including empty or partially invalid type lists, without signed 32-bit coercion of form limits.",
     "Observe request abort/error/close while decompressing; register readers before piping and settle once.",
     "Wrap parser and verifier failures without modifying thrown errors.",
     "Resolve and cache original error stacks on first access where efficient, preserving an eager copy on older V8, native Error wrappers, original traces and captured fallbacks.",
