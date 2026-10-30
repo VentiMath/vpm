@@ -22,10 +22,16 @@ node scripts/xml-parser-conformance/bundles.cjs
 
 The same commands run under Bun. A small assertion-backed Jasmine adapter strips
 imports, supplies the selected implementations and reads retained asset text.
-Test bodies and expected results are unchanged. Both disabled `xit` cases execute.
-There are 331 executed cases: upstream has 329 unchanged passes and two disabled
-failures; VPM has 322 unchanged passes, seven explicit validation differences and
-the same two disabled diagnostics. Every expected failure is identified by exact
+Both disabled `xit` cases execute. One timing case is adapted: its 100 parses now
+check their output and permit zero elapsed milliseconds, which is valid at
+`Date.now()` resolution. The focused suite injects a constant clock into the
+fixture without modifying the global clock, so this boundary is exercised on
+every run. Original snapshots and hashes remain unchanged.
+
+There are 331 executed cases: upstream has 328 unchanged passes, one adapted
+timing case and two disabled failures; VPM has 321 unchanged passes, that same
+timing case, seven explicit validation differences and the same two disabled
+diagnostics. Every expected failure is identified by exact
 file/title and a checked diagnostic; any other failure rejects the gate.
 
 The seven differences are:
