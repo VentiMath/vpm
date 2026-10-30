@@ -97,6 +97,8 @@ google-gax callers using native streams and no external dependencies.
 nonmutating page snapshots, stream backpressure and cancellation.
 `vpromisify` bridges callbacks and promises throughout Storage; `vprojectify`
 substitutes project IDs in request data with literal, cycle-safe traversal.
+`vyocto-queue` provides the FIFO primitive for `vp-limit`, which supplies
+current concurrency control and verified Storage batch-operation callers.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
@@ -191,6 +193,8 @@ The [stream-events suite](scripts/stream-events-conformance/README.md) verifies
 stream notifications, lazy downloads and exact body delivery in those callers.
 The [teeny-request suite](scripts/teeny-conformance/README.md) checks the current
 request API and Cloud Storage callback, download and multipart upload paths.
+The [Queue and concurrency suite](scripts/queue-limit-conformance/README.md)
+checks current queue/limiter APIs and Storage batch-operation callers.
 The [Cloud utility suite](scripts/cloud-utils-conformance/README.md) checks
 callback/promise adapters, project-ID substitution and current Storage callers.
 The [paginator suite](scripts/paginator-conformance/README.md) verifies the

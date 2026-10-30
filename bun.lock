@@ -330,6 +330,13 @@
       "name": "vonce",
       "version": "0.1.0",
     },
+    "packages/vp-limit": {
+      "name": "vp-limit",
+      "version": "0.1.0",
+      "dependencies": {
+        "vyocto-queue": "0.1.0",
+      },
+    },
     "packages/vpaginator": {
       "name": "vpaginator",
       "version": "0.1.0",
@@ -465,6 +472,10 @@
     },
     "packages/vvary": {
       "name": "vvary",
+      "version": "0.1.0",
+    },
+    "packages/vyocto-queue": {
+      "name": "vyocto-queue",
       "version": "0.1.0",
     },
   },
@@ -609,6 +620,8 @@
 
     "vonce": ["vonce@workspace:packages/vonce"],
 
+    "vp-limit": ["vp-limit@workspace:packages/vp-limit"],
+
     "vpaginator": ["vpaginator@workspace:packages/vpaginator"],
 
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
@@ -650,5 +663,7 @@
     "vuuid": ["vuuid@workspace:packages/vuuid"],
 
     "vvary": ["vvary@workspace:packages/vvary"],
+
+    "vyocto-queue": ["vyocto-queue@workspace:packages/vyocto-queue"],
   }
 }

@@ -28,6 +28,8 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'yocto-queue': { pkg: 'vyocto-queue', versions: /^(?:0\.1\.0|1\.2\.2)$/ },
+  'p-limit': { pkg: 'vp-limit', versions: /^(?:3\.1\.0|7\.3\.3)$/ },
   '@google-cloud/promisify': { pkg: 'vpromisify', versions: /^6\.2\.1$/ },
   '@google-cloud/projectify': { pkg: 'vprojectify', versions: /^6\.2\.1$/ },
   '@google-cloud/paginator': { pkg: 'vpaginator', versions: /^7\.2\.0$/ },
@@ -1196,6 +1198,7 @@ async function run() {
     await require('./teeny-conformance/callers.cjs')(replacements['teeny-request']);
     await require('./duplexify-conformance/callers.cjs')(replacements.duplexify);
     await require('./paginator-conformance/callers.cjs')(replacements['@google-cloud/paginator']);
+    await require('./queue-limit-conformance/callers.cjs')(replacements['p-limit']);
     await require('./cloud-utils-conformance/callers.cjs')(replacements['@google-cloud/promisify'],replacements['@google-cloud/projectify']);
 
     // Debug namespaces from the consumers reached vdebug's output.

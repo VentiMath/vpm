@@ -1,0 +1,9 @@
+{
+  "name": "vpm-queue-limit-conformance",
+  "private": true,
+  "description": "Pinned controls for FIFO queues and concurrency limits; excluded from VPM archives",
+  "dependencies": {
+    "yocto-queue": "1.2.2",
+    "p-limit": "7.3.3"
+  }
+}
