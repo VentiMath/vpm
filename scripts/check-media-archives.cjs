@@ -50,6 +50,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vgrpc-proto-loader') {
+      assert.deepEqual(metadata.dependencies,{'vlodash.camelcase':'0.1.0',vlong:'0.1.0',vprotobufjs:'0.1.0'});
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','util.js','index.d.ts','package.json'].sort());
+    }
     if (name === 'vlodash.camelcase') {
       assert.equal(metadata.dependencies,undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -255,6 +260,8 @@ const archiveXMLNaming=require('vxml-naming'),archiveUnsafe=require('vis-unsafe'
 if(!archiveXMLNaming.qName('𐀀:part')||!archiveUnsafe.isUnsafe('<script>',archiveUnsafe.HTML))throw new Error('XML helpers CJS archive');
 const archiveAnyNumber=require('vanynum'),archiveStringNumber=require('vstrnum');
 if(archiveAnyNumber('१२')!=='12'||archiveAnyNumber.anynum!==archiveAnyNumber||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers CJS archive');
+const archiveGrpcLoader=require('vgrpc-proto-loader'),archiveGrpcDefs=archiveGrpcLoader.fromJSON({nested:{M:{fields:{id:{type:'int64',id:1}}},S:{methods:{GetThing:{requestType:'M',responseType:'M'}}}}},{longs:String});
+if(archiveGrpcDefs.S.GetThing.originalName!=='getThing'||archiveGrpcDefs.M.deserialize(archiveGrpcDefs.M.serialize({id:'9007199254740993'})).id!=='9007199254740993'||archiveGrpcLoader.isAnyExtension(null))throw new Error('gRPC loader CJS archive');
 const archiveCamelCase=require('vlodash.camelcase');if(archiveCamelCase('GetIamPolicy')!=='getIamPolicy'||archiveCamelCase('déjà vu')!=='dejaVu'||archiveCamelCase(0n)!=='0')throw new Error('camelCase CJS archive');
 const archiveEntities=require('vhtml-entities');if(archiveEntities.decode('&copy;')!=='©'||archiveEntities.encode('<')!=='&lt;'||archiveEntities.decodeEntity('&#65;')!=='A')throw new Error('entities CJS archive');
 const archiveRetry=require('vretry');if(archiveRetry.timeouts({retries:1})[0]!==1000||require('vretry/lib/retry_operation')!==archiveRetry.RetryOperation)throw new Error('retry CJS archive');
@@ -451,6 +458,9 @@ if(!archiveQName('𐀀:part')||!archiveUnsafe('<script>',archiveHTML))throw new 
 import archiveAnyNumber,{anynum as archiveNamedNumber} from 'vanynum';
 import archiveStringNumber from 'vstrnum';
 if(archiveAnyNumber!==archiveNamedNumber||archiveAnyNumber('१२')!=='12'||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers ESM archive');
+import {fromJSON as archiveGrpcFromJSON,isAnyExtension as archiveGrpcAny,Long as archiveGrpcLong} from 'vgrpc-proto-loader';
+const archiveGrpcMessage=archiveGrpcFromJSON({nested:{M:{fields:{id:{type:'int64',id:1}}}}}).M;
+if(!(archiveGrpcMessage.deserialize(archiveGrpcMessage.serialize({id:'9007199254740993'})).id instanceof archiveGrpcLong)||!archiveGrpcAny({'@type':'M'}))throw new Error('gRPC loader ESM archive');
 import archiveCamelCaseESM from 'vlodash.camelcase';if(archiveCamelCaseESM('XMLHttpRequest')!=='xmlHttpRequest'||archiveCamelCaseESM('déjà vu')!=='dejaVu')throw new Error('camelCase ESM archive');
 import {encode as archiveEncodeEntities,decode as archiveDecodeEntities,decodeEntity as archiveDecodeEntity} from 'vhtml-entities';
 if(archiveEncodeEntities('<')!=='&lt;'||archiveDecodeEntities('&copy;')!=='©'||archiveDecodeEntity('&#65;')!=='A')throw new Error('entities ESM archive');
@@ -654,6 +664,9 @@ const typedNormalized:string=typedNamedNumber('१२');
 const typedParsed:string|number|null=typedStringNumber('12',{unicode:true});
 const typedUnchanged:{id:number}=typedAnyNumber({id:1});
 void [typedNormalized,typedParsed,typedUnchanged];
+import {fromJSON as typedGrpcLoad,isAnyExtension as typedGrpcAny,type MessageTypeDefinition as TypedGrpcMessage,type ByteBuffer as TypedGrpcBuffer} from 'vgrpc-proto-loader';
+const typedGrpcDefinition=typedGrpcLoad({nested:{M:{fields:{id:{type:'string',id:1}}}}}).M as TypedGrpcMessage<{id:string},{id:string}>;
+const typedGrpcBytes:TypedGrpcBuffer=typedGrpcDefinition.serialize({id:'one'});const typedGrpcText:string=typedGrpcBytes.toString('hex');void [typedGrpcAny(null),typedGrpcText];
 import typedCamelCase from 'vlodash.camelcase';const typedCamelResult:string=typedCamelCase(0n);void typedCamelResult;
 import {encode as typedEncodeEntities,decode as typedDecodeEntities,type EncodeOptions as TypedEntityOptions} from 'vhtml-entities';
 const typedEntityOptions:TypedEntityOptions={mode:'nonAscii',level:'html5'};

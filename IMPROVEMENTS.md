@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vgrpc-proto-loader | @grpc/proto-loader 0.8.1 runtime API; gax 6.14.0 and Firestore 9.4.0 local gRPC callers | [@grpc/proto-loader 0.8.1](https://www.npmjs.com/package/@grpc/proto-loader), checked October 30, 2026 |
 | Caller paths verified | vlodash.camelcase | lodash.camelcase 4.3.0; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 method aliases | [lodash.camelcase 4.3.0](https://www.npmjs.com/package/lodash.camelcase), checked October 30, 2026 |
 | Caller paths verified | vjwks-rsa | 4.1.0 API and Firebase Admin 14.5.0 token callers; retained 3.2.2 / Admin 12.7.0 coverage | [jwks-rsa 4.1.0](https://www.npmjs.com/package/jwks-rsa), checked October 30, 2026 |
 | Complete | vgoogle-logging-utils | 2.1.1, plus adapted 0.0.2 coverage | [google-logging-utils 2.1.1](https://www.npmjs.com/package/google-logging-utils) |
@@ -55,8 +56,10 @@ Firebase Admin **14.5.0** requires `jwks-rsa ^4.0.1`, Google Auth 11, and option
 Storage 8 / Firestore 9. Firebase Functions **7.4.0** permits Admin 14. These npm
 manifests were checked October 30, 2026. The `vjwks-rsa` 4.1.0 API and Admin 14 JWKS/App Check
 callers now pass against upstream controls on Node 24 and Bun. `vlodash.camelcase` now covers the 4.3.0 method-name conversion used by
-`@grpc/proto-loader` 0.8.1. The next package is that gRPC loader, using the completed
-converter, `vprotobufjs` and `vlong` for its runtime caller paths. SDK upgrades and actual adoption of VPM
+`@grpc/proto-loader` 0.8.1. `vgrpc-proto-loader` now covers its runtime API with
+those VPM foundations and actual Firestore calls. Next is `@js-sdsl/ordered-map`
+4.4.2, the remaining leaf beneath `@grpc/grpc-js` 1.14.7; both targets were checked
+October 30, 2026. SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
 
@@ -94,6 +97,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgrpc-proto-loader](packages/vgrpc-proto-loader) | @grpc/proto-loader 0.8.1 | Reused private descriptors and codecs, isolated public definitions, safe method-option keys and VPM protobuf/long/camel-case dependencies; real Google SDK runtime calls. |
 | [vlodash.camelcase](packages/vlodash.camelcase) | lodash.camelcase 4.3.0 | Direct ASCII identifier conversion, lazy compatible Unicode handling, single object coercion and corrected zero BigInts/Symbol branding; actual gRPC and Google method aliases. |
 | [vproto3-json-serializer](packages/vproto3-json-serializer) | proto3-json-serializer 4.1.0 | Correct byte slices and collections, signed durations, offset timestamps, FieldMasks and Any wrappers; validated scalars, safe output keys and verified Google fallback callers. |
 | [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
@@ -187,12 +191,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,657 tests**: all pass on Node 24, and Bun passes
-2,654 with three documented runtime-specific skips. All 88 runtime packages'
+The root suite contains **2,675 tests**: all pass on Node 24, and Bun passes
+2,672 with three documented runtime-specific skips. All 89 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **90 packages**, including two declaration-only packages.
+catalog covers **91 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -201,6 +205,12 @@ module imports. CI runs the package and integration suites on these same two
 runtimes. Separate archive gates verify npm/Bun installation,
 exported files, module imports and TypeScript 7 consumers. Test fixtures and
 benchmarks are excluded from installable archives.
+
+The [gRPC loader fixture](scripts/grpc-loader-conformance/README.md) adds all eight
+upstream runtime tests without assertion changes or skips, 185 comparison groups
+and eleven local gRPC calls, including the generated Firestore client, on each
+runtime. Its 18 focused tests are included in the root count. The code-generation
+CLI is outside this runtime package.
 
 The [camel-case fixture](scripts/camelcase-conformance/README.md) adds 347,735
 exact comparisons with 4.3.0, two unchanged canonical tests (twelve assertions),
@@ -288,6 +298,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgrpc-proto-loader` | 4 (including CLI-only `yargs`) | 3 (`vlodash.camelcase`, `vlong`, `vprotobufjs`; runtime API only) |
 | `vlodash.camelcase` | 0 | 0 |
 | `vproto3-json-serializer` | 1 | 1 (`vprotobufjs`) |
 | `vprotobufjs` | 1 | 1 (`vlong`) |
@@ -442,6 +453,43 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgrpc-proto-loader
+
+Targets the runtime API of **@grpc/proto-loader 0.8.1**, with `vprotobufjs`,
+`vlong` and `vlodash.camelcase` as its three dependencies. The upstream package's
+fourth dependency, `yargs`, serves its separate code-generation CLI; that CLI is
+not implemented here. Runtime loading for Google SDKs does not need it.
+
+Root descriptor export already constructs each message's metadata. VPM reuses
+that private data and per-type codecs within a load instead of rebuilding them
+for every RPC. Public descriptor objects remain independently mutable, and new
+loads observe changed JSON or file inputs. Namespace traversal avoids temporary
+concatenation arrays, duplicate explicit resolution and descriptor Buffer copies.
+
+A parsed `__proto__` method option is retained as own data rather than changing
+the options object's prototype. `isAnyExtension` returns false for null and
+primitives instead of throwing; inherited string `@type` remains compatible.
+Upstream controls reproduce both behaviors. Protobuf 8 also fixes the descriptor
+map round-trip failure reproduced with the stock protobuf-7 dependency. Metadata
+follows protobuf 8, while selected message wire bytes match the stock 7.x stack.
+
+**Evidence:** 18 focused tests, all eight upstream runtime tests, 185 comparison
+groups across 36 conversion-option combinations, full Firestore descriptor data
+and four `.proto` fixtures. Actual gRPC endpoints interoperate in both directions
+across all four RPC modes. google-gax 6.14.0 loads files and JSON, and Firestore
+9.4.0's generated client completes `getDocument`, `batchGetDocuments` and `write`
+against a local upstream server. Both runtimes and upstream controls pass.
+The retained test bodies and assertions are unchanged; one legacy import is
+adapted during temporary TypeScript 7 compilation. Installed npm/Bun archive and
+standalone declaration checks cover the public runtime surface.
+
+[Paired benchmarks](packages/vgrpc-proto-loader/bench/results/README.md) show forced
+Firestore loading through gax taking **28% less time on Node 24 and 27% less on
+Bun**. Direct schema loading improves 33% / 30%, and an original-loader/protobuf-8
+control still shows 19% / 20% gains. Node async-file loading and Bun serialization
+are inconclusive against control variation. These measure schema/codec work,
+not cloud-request latency.
 
 ## vlodash.camelcase
 

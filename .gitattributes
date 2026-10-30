@@ -17,3 +17,6 @@ scripts/xml-parser-conformance/upstream/** -whitespace
 scripts/mime-conformance/upstream/** -whitespace
 scripts/storage-conformance/upstream/** -whitespace
 scripts/object-hash-conformance/upstream/** -whitespace
+
+# Preserve the original hash-pinned gRPC runtime test sources.
+scripts/grpc-loader-conformance/upstream/** -whitespace

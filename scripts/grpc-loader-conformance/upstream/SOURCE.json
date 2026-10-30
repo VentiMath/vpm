@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/grpc/grpc-node",
+  "commit": "a558430ac87b77449c3b4cbe44821ecb50f1d81f",
+  "version": "0.8.1",
+  "directory": "packages/proto-loader",
+  "files": "Unchanged test/descriptor_type_test.ts and complete test_protos directory; runtime suite, not CLI generator.",
+  "storage": "test/descriptor_type_test.ts is stored with a .txt suffix; its contents are unchanged."
+}

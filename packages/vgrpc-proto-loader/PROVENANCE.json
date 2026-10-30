@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "@grpc/proto-loader",
+    "version": "0.8.1",
+    "repository": "https://github.com/grpc/grpc-node",
+    "commit": "a558430ac87b77449c3b4cbe44821ecb50f1d81f",
+    "integrity": "sha512-wtF6h+DY6M3YaDBPAmvuuA6jV8Sif9MjtOI5euKFWRgCDl5PeDpPsHR9u2l6St5ceY8AZgoNDww5+HvEsXFsGg==",
+    "sourceHashes": {
+      "index.js": "6f99a960ec14b1afc20fc996824815d9d89d58e7d537c2f2e5c028d8012b012e",
+      "util.js": "72101d764f31ece6d3c22cc6674c32ab3fb1f4975756d9ee4e39f3b155fb6f03",
+      "index.d.ts": "5f318c52eac7a06cd901b55e8e930d2c3dd51b7dbdca01b130e61c3e9b8b4f0a"
+    }
+  },
+  "checked": "2026-10-30",
+  "license": "Apache-2.0",
+  "changes": [
+    "Runtime loading API uses vlodash.camelcase, vprotobufjs 8.8.1 and vlong; code-generation CLI and its yargs dependency are outside this package.",
+    "Reuse private root descriptors and per-type codecs within one load; retain separate mutable public descriptor objects.",
+    "Walk namespaces directly and avoid duplicate explicit resolve passes and descriptor Buffer copies.",
+    "Treat __proto__ dictionary entries as own data; make isAnyExtension return false for nonobjects.",
+    "Self-contained declarations with native Node Buffer inference when available."
+  ]
+}

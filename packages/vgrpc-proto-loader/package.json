@@ -1,0 +1,37 @@
+{
+  "name": "vgrpc-proto-loader",
+  "version": "0.1.0",
+  "description": "gRPC protobuf loading with VPM dependencies, reused descriptors and verified Google SDK callers",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "util.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "vlodash.camelcase": "workspace:*",
+    "vlong": "workspace:*",
+    "vprotobufjs": "workspace:*"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vgrpc-proto-loader"
+  }
+}
