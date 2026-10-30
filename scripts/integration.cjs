@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  '@google-cloud/paginator': { pkg: 'vpaginator', versions: /^7\.2\.0$/ },
   duplexify: { pkg: 'vduplexify', versions: /^4\.1\.3$/ },
   'teeny-request': { pkg: 'vteeny-request', versions: /^11\.1\.1$/ },
   'http-proxy-agent': { pkg: 'vhttp-proxy-agent', versions: /^(?:7\.0\.2|9\.1\.0)$/ },
@@ -142,7 +143,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [...['duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
+const queue = [...['@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -150,8 +151,9 @@ while (queue.length) {
   const data = require(manifest);
   if (data.name === 'content-type') contentTypes.set(manifest, data.version);
   const from = createRequire(manifest);
-  // Current Auth and retry helpers are fixture roots; older majors stay uncovered.
-  if (['duplexify', 'google-auth-library', 'retry-request', 'stream-events', 'teeny-request'].includes(data.name) && targets[data.name].versions.test(data.version)) {
+  // Current SDK helpers are fixture roots. Alias scope records tested caller
+  // versions, independently of whether a newer VPM replacement has been built.
+  if (['@google-cloud/paginator', 'duplexify', 'google-auth-library', 'retry-request', 'stream-events', 'teeny-request'].includes(data.name) && targets[data.name].versions.test(data.version)) {
     const entry = from.resolve(path.dirname(manifest));
     require(entry);
     require.cache[entry].exports = replacements[data.name];
@@ -1191,6 +1193,7 @@ async function run() {
     await require('./http-proxy-conformance/callers.cjs')(replacements['http-proxy-agent']);
     await require('./teeny-conformance/callers.cjs')(replacements['teeny-request']);
     await require('./duplexify-conformance/callers.cjs')(replacements.duplexify);
+    await require('./paginator-conformance/callers.cjs')(replacements['@google-cloud/paginator']);
 
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {
@@ -1218,7 +1221,7 @@ async function run() {
   console.log(`${readerParityChecks} raw package-reader comparisons and 3 framework CJS/ESM loading cases passed.`);
   console.log(`Shared content-type ${[...contentTypes.values()][0]}: ${[...contentTypeCallers].sort().join(', ')}.`);
   console.log('Aliased: ' + [...aliased.keys()].map(label => `${label} ×${calls[label.replace(/@[^@]+$/, '')]}`).join(', '));
-  console.log('Not covered by VPM: ' + ([...uncovered].map(([label, via]) => `${label} (via ${[...via].join(', ')})`).join('; ') || 'none'));
+  console.log('Outside this run’s caller-version alias scope (built replacements may exist): ' + ([...uncovered].map(([label, via]) => `${label} (via ${[...via].join(', ')})`).join('; ') || 'none'));
 }
 
 run().catch(error => { console.error(error); process.exitCode = 1; });

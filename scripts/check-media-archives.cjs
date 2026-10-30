@@ -49,6 +49,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vpaginator') {
+      assert.deepEqual(metadata.dependencies,{vextend:'0.1.0'});
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','resource-stream.js','index.d.ts','package.json'].sort());
+    }
     if (name === 'vfunctions-framework') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vbody-parser', 'vexpress', 'vminimist', 'von-finished', 'vread-package-up']);
       assert.equal(metadata.license, 'Apache-2.0');
@@ -158,6 +163,8 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const decoratedStream = require('vstream-events')({emit(){return true;},_read(){return 42;}});
+const {paginator:archivePaginator}=require('vpaginator');
+if(archivePaginator.parseArguments_([{maxApiCalls:2}]).maxApiCalls!==2)throw new Error('paginator CJS archive');
 const archiveDuplex=require('vduplexify')();
 if(typeof archiveDuplex.setReadable!=='function'||archiveDuplex.readableHighWaterMark!==16384)throw new Error('duplexify CJS archive');archiveDuplex.destroy();
 const {teenyRequest:archiveTeeny}=require('vteeny-request');
@@ -324,6 +331,8 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import streamEventsArchive from 'vstream-events';
+import {paginator as archivePaginator} from 'vpaginator';
+if(archivePaginator.parseArguments_([{maxResults:3}]).maxResults!==3)throw new Error('paginator ESM archive');
 import archiveDuplexify from 'vduplexify';
 const archiveDuplex=archiveDuplexify.obj();if(!archiveDuplex.readableObjectMode)throw new Error('duplexify ESM archive');archiveDuplex.destroy();
 import {teenyRequest as archiveTeeny} from 'vteeny-request';
@@ -483,6 +492,10 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import typedStreamEvents = require('vstream-events');
+import {ResourceStream as TypedPaginatorStream, paginator as typedPaginator} from 'vpaginator';
+const typedPages=new TypedPaginatorStream<{id:number}>({maxApiCalls:1},(q,cb)=>cb(null,[{id:1}],null));
+typedPages.on('data',item=>{const id:number=item.id;void id;});
+typedPaginator.streamify('list');
 import typedDuplexify = require('vduplexify');
 class TypedDuplexProxy extends typedDuplexify {}
 new TypedDuplexProxy(null,null,{objectMode:true}).write(false);

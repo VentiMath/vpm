@@ -1,0 +1,6 @@
+{
+  "name": "vpm-paginator-conformance",
+  "private": true,
+  "description": "Pinned upstream paginator tests and comparison fixtures",
+  "dependencies": {"@google-cloud/paginator": "7.2.0", "mocha": "11.7.5", "expect": "29.7.0", "jest-mock": "29.7.0", "@sinonjs/fake-timers": "13.0.5"}
+}

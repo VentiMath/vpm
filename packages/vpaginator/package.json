@@ -1,0 +1,14 @@
+{
+  "name": "vpaginator",
+  "version": "0.1.0",
+  "description": "Automatic API pagination with demand-driven object streams, isolated queries and cancellable requests",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {".": {"types": "./index.d.ts", "default": "./index.js"}, "./package.json": "./package.json"},
+  "files": ["index.js", "resource-stream.js", "index.d.ts", "README.md", "LICENSE", "PROVENANCE.json"],
+  "dependencies": {"vextend": "0.1.0"},
+  "engines": {"node": ">=24"},
+  "license": "Apache-2.0",
+  "repository": {"type": "git", "url": "git+https://github.com/VentiMath/vpm.git", "directory": "packages/vpaginator"}
+}
