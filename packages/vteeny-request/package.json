@@ -1,0 +1,14 @@
+{
+  "name": "vteeny-request",
+  "version": "0.1.0",
+  "description": "Callback and streaming HTTP requests for Google SDK callers with coherent cancellation and multipart uploads",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {".": {"types": "./index.d.ts", "default": "./index.js"}, "./package.json": "./package.json"},
+  "files": ["index.js", "index.d.ts", "lib", "README.md", "LICENSE", "PROVENANCE.json"],
+  "dependencies": {"vnode-fetch": "workspace:*", "vhttp-proxy-agent": "workspace:*", "vhttps-proxy-agent": "workspace:*", "vstream-events": "workspace:*"},
+  "engines": {"node": ">=24"},
+  "license": "Apache-2.0",
+  "repository": {"type": "git", "url": "git+https://github.com/ventimath/vpm.git", "directory": "packages/vteeny-request"}
+}

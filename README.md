@@ -88,6 +88,9 @@ provides cancellable callback and download-stream retries for current Cloud
 Storage and google-gax callers, without external dependencies.
 `vstream-events` supplies independent one-time read/write notifications for
 these download streams, also without external dependencies.
+`vteeny-request` supplies the current callback, lazy-download and multipart
+upload APIs, with total deadlines and shared VPM proxy pools. It uses
+`vnode-fetch` for consistent Node streams on both runtimes.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
@@ -180,6 +183,8 @@ current credential flows with upstream controls. The
 upstream cases, retry lifecycle regressions and current Google SDK callers.
 The [stream-events suite](scripts/stream-events-conformance/README.md) verifies
 stream notifications, lazy downloads and exact body delivery in those callers.
+The [teeny-request suite](scripts/teeny-conformance/README.md) checks the current
+request API and Cloud Storage callback, download and multipart upload paths.
 
 ## License
 

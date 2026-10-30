@@ -22,7 +22,7 @@ runtimes. There are no skipped tests or changed retry assertions.
 retry budgets, and cancellation of initial waits. Controls reproduce upstream's
 retry-after-abort and exhausted-deadline hangs and verify the VPM fixes.
 
-`callers.cjs` substitutes only retry-request inside current **Cloud Storage 8.4.0**
+Standalone `callers.cjs` substitutes only retry-request inside current **Cloud Storage 8.4.0**
 and **google-gax 6.14.0**. It exercises Storage callback and readable download
 retries using teeny-request 11.1.1 and a local HTTP server, plus google-gax's
 retry-request server-streaming branch with in-memory gRPC-shaped streams.
@@ -45,5 +45,7 @@ node scripts/retry-request-conformance/callers.cjs --check-control
 bun scripts/retry-request-conformance/callers.cjs --check-control
 ```
 
-The root integration gate also invokes these SDK caller checks. Aliases remain
+The root integration gate also invokes these SDK caller checks with its broader
+VPM aliases, including vteeny-request. The teeny fixture separately holds
+vretry-request constant while comparing HTTP transports. Retry aliases remain
 limited to 9.1.0; older installed retry-request versions remain migration work.

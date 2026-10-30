@@ -22,8 +22,13 @@ jobs:
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/retry-request-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/teeny-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: node scripts/integration.cjs
+      - run: |
+          node scripts/teeny-conformance/run.cjs
+          node scripts/teeny-conformance/run.cjs --upstream
+          node scripts/teeny-conformance/callers.cjs --upstream
       - run: node scripts/google-http-conformance/helpers.cjs
       - run: node scripts/google-http-conformance/uuid.cjs
       - run: node scripts/google-http-conformance/fetch.cjs
@@ -81,6 +86,7 @@ jobs:
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/retry-request-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/teeny-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun run test:bun
       - run: bun run typecheck
       - run: bun run check:docs
@@ -92,6 +98,10 @@ jobs:
       - run: node scripts/check-type-archives.cjs
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
+      - run: |
+          bun scripts/teeny-conformance/run.cjs
+          bun scripts/teeny-conformance/run.cjs --upstream
+          bun scripts/teeny-conformance/callers.cjs --upstream
       - run: bun scripts/google-http-conformance/helpers.cjs
       - run: bun scripts/google-http-conformance/uuid.cjs
       - run: bun scripts/google-http-conformance/fetch.cjs

@@ -26,6 +26,7 @@ now have current comparison targets:
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 | Complete | vretry-request | 9.1.0; Cloud Storage 8.4.0/google-gax 6.14.0 caller paths | [retry-request 9.1.0](https://www.npmjs.com/package/retry-request) |
+| Caller paths verified | vteeny-request | 11.1.1 upstream suite and Storage 8.4.0 callbacks/downloads/multipart uploads | [teeny-request 11.1.1](https://www.npmjs.com/package/teeny-request) |
 | Complete | vstream-events | 1.0.5; teeny-request 11.1.1 and current Storage/gax callers | [stream-events 1.0.5](https://www.npmjs.com/package/stream-events), used by teeny-request 11.1.1 |
 | Complete | vagent-base | 9.0.0 API, current ESM proxy caller and retained 7.1.4 coverage | [agent-base 9.0.0](https://www.npmjs.com/package/agent-base), required by current http-proxy-agent 9.1.0 |
 | Caller paths verified | vhttp-proxy-agent | 9.1.0 upstream suite; teeny-request 11.1.1/Storage 8.4.0 callers replacing 7.0.2 | [http-proxy-agent 9.1.0](https://www.npmjs.com/package/http-proxy-agent) |
@@ -50,8 +51,10 @@ ESM proxy caller. `vhttp-proxy-agent` covers the 9.1.0 ordinary forwarding API
 and verifies teeny-request 11.1.1/Storage 8.4.0 callers still using 7.0.2. Automatic
 Negotiate and `onProxyAuth` are explicitly unsupported; the optional native
 Kerberos helper is omitted. These features were not found in application calls.
-The next caller is `vteeny-request`, retaining explicit version-scoped migration
-checks for both proxy agents.
+`vteeny-request` now covers the 11.1.1 callback/download API and actual Storage
+multipart uploads, using four VPM dependencies throughout. It uses `vnode-fetch`
+on Node 24 and Bun for Node streams and proxy agents; a node-fetch 3 alias is
+still unnecessary for these caller paths.
 
 Recheck stable versions when each step begins. Updates need pinned upstream
 conformance and consumer tests, types, benchmarks, and documented intentional
@@ -62,6 +65,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vteeny-request](packages/vteeny-request) | teeny-request 11.1.1 | Four VPM dependencies; total deadlines, canceled connections, ordered multipart completion, immutable request options, bounded isolated proxy pools and safe error messages. |
 | [vhttp-proxy-agent](packages/vhttp-proxy-agent) | http-proxy-agent 9.1.0; 7.0.2 caller coverage | Two VPM dependencies, prepared absolute requests, preserved streamed bodies, bounded TCP/TLS connections, credential-safe diagnostics and isolated configuration. |
 | [vstream-events](packages/vstream-events) | stream-events 1.0.5 | Zero dependencies; independent once-only read/write notifications, exact method results and receivers, reentrant restoration and validation before mutation. |
 | [vretry-request](packages/vretry-request) | retry-request 9.1.0 | Zero dependencies; cancelled backoff, once-only attempt settlement, monotonic retry budgets, bounded timers, isolated stream events and safe transport teardown. |
@@ -130,12 +134,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,226 tests**: all pass on Node 24, and Bun passes
-2,223 with three documented runtime-specific skips. All 63 runtime packages'
+The root suite contains **2,254 tests**: all pass on Node 24, and Bun passes
+2,251 with three documented runtime-specific skips. All 64 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **65 packages**, including two declaration-only packages.
+catalog covers **66 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -175,6 +179,10 @@ current Cloud Storage/google-gax caller checks; 30 VPM regression tests are in t
 root suite. The [stream-events suite](scripts/stream-events-conformance/README.md)
 adds all four upstream tests on both runtimes, independent bug controls and
 teeny-request download checks; 21 focused VPM tests are in the root suite.
+The [teeny-request suite](scripts/teeny-conformance/README.md) adds all 116 active
+upstream cases on both runtimes, with two retained upstream skips, explicit
+control outcomes and Cloud Storage multipart caller checks. Its 28 focused
+regression tests are in the root suite.
 
 ## Dependency scope
 
@@ -186,6 +194,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vteeny-request` | 4 | 4 (all VPM) |
 | `vstream-events` | 1 | 0 |
 | `vretry-request` | 1 | 0 |
 | `vgoogle-auth-library` | 6 | 4 |
@@ -293,6 +302,10 @@ own process, serves Firebase `onRequest` handlers and Express applications throu
 - Actual teeny-request multipart uploads and Google HTTP JSON requests, multipart
   uploads and retries exercise the new HTTP-client aliases. These five requests
   are separate from the 246 application checks.
+- Current Cloud Storage 8.4.0 callback/download retries and multipart uploads
+  exercise `vteeny-request` through five additional attempts with
+  `vretry-request`. The original teeny caller separately verifies both proxy
+  protocols against `vhttp-proxy-agent`; alias scope and controls remain explicit.
 - Google auth’s actual `JWT.authorize()` and `fetchIdToken()` methods exchange
   synthetic access/ID tokens through `vgtoken` and `vgaxios`, with native RSA
   verification of each emitted assertion. These two local requests are also
@@ -311,6 +324,46 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vteeny-request
+
+**Target:** teeny-request 11.1.1 callback/download API and Cloud Storage 8.4.0
+multipart uploads. Four upstream dependencies become four VPM dependencies:
+`vnode-fetch`, both proxy agents and `vstream-events`. The complete runtime
+subtree uses VPM packages; this does not imply application deployment.
+
+The replacement uses one Node-stream transport on Node 24 and Bun. It enforces
+a total deadline through redirects and response consumption, closes connections
+when downloads are canceled, and destroys stalled or future multipart inputs
+when uploads fail. Multipart supports arbitrary sequential parts and completes
+string-only bodies. Upstream supports two parts and leaves two-string uploads
+unfinished. Headers, exact byte views, defaults and pool options are snapshotted;
+query fields append to existing parameters and fragments are removed. Error
+messages omit request URLs, credentials and response excerpts.
+
+Agent caching includes the proxy, protocol and configuration instead of only the
+destination protocol. The cache is bounded to 64 entries, preserves active
+requests during eviction/closure and enables proxy keep-alive for `forever`
+requests. Statistics continue to count requests awaiting headers, including
+correct settlement across `resetStats()`. Optional size limits bound callback
+and stream consumption. Callback text decoding avoids retaining an extra copy
+of every byte chunk while preserving UTF-8 boundaries and immutable output.
+
+**Verification:** 28 focused tests, all 116 active upstream cases on Node 24 and
+Bun, and real Storage callback retries, download retries and streamed multipart
+uploads. The completion-aware upstream harness retains two skipped tests and
+requires the published Node control to reproduce two original assertion
+mismatches; see the [fixture explanation](scripts/teeny-conformance/README.md).
+Types, packed imports, exact archive contents and composed integrations are
+checked separately. Older teeny majors and the full `request` API are not targets.
+
+**Measurements:** [paired requests and controls](packages/vteeny-request/bench/results/README.md)
+show about 55%/37% less time for HTTP proxy calls on Node/Bun and about 94%
+less for TLS proxy calls, primarily from honoring keep-alive. Node direct-call
+medians favor VPM, but noisy controls limit precise claims. Bun direct callback
+medians retain overhead, and upload/download differences are inconclusive across
+processes. Defaults creation adds about 2 µs on Node and 0.5 µs on Bun for
+validation and snapshots. The report includes every sample and control.
 
 ## vhttp-proxy-agent
 

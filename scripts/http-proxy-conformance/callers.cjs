@@ -10,6 +10,11 @@ module.exports = async function checkCallers(library = require('../../packages/v
   const previous = require.cache[entry].exports, agents = [], cleanups = [];
   class Counted extends library.HttpProxyAgent {constructor(...args) {super(...args); agents.push(this);}}
   require.cache[entry].exports = {HttpProxyAgent: Counted};
+  // This suite verifies the upstream caller against the selected proxy agent,
+  // even when the enclosing integration run also aliases teeny-request.
+  const freshEntries = ['teeny-request', 'teeny-request/build/src/agents.js', './node_modules/@google-cloud/storage/build/cjs/src/nodejs-common/util.js'].map(name => fixture.resolve(name));
+  const saved = freshEntries.map(file => require.cache[file]);
+  for (const file of freshEntries) delete require.cache[file];
   const lifecycle = {after: close => cleanups.push(close)};
   try {
     const body = Buffer.alloc(128 * 1024, 197);
@@ -41,6 +46,7 @@ module.exports = async function checkCallers(library = require('../../packages/v
     assert.equal(agents.length, 8);
     console.log('teeny-request 11.1.1 callback/stream and Cloud Storage 8.4.0 callback/download passed through HTTP and TLS forward proxies (8 constructed agents).');
   } finally {
+    for (let i = 0; i < freshEntries.length; i++) {if (saved[i]) require.cache[freshEntries[i]] = saved[i]; else delete require.cache[freshEntries[i]];}
     require.cache[entry].exports = previous;
     for (const agent of agents) agent.destroy();
     for (const close of cleanups.reverse()) await close();

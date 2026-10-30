@@ -1,0 +1,6 @@
+{
+  "name": "vpm-teeny-conformance",
+  "private": true,
+  "description": "Pinned teeny-request source tests and development-only transport controls",
+  "dependencies": {"teeny-request": "11.1.1", "mocha": "11.7.5", "sinon": "21.0.3", "nock": "14.0.1"}
+}
