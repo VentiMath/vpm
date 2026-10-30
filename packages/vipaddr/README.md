@@ -217,7 +217,7 @@ OUTPUT=/tmp/vipaddr-bun.json bun packages/vipaddr/bench/compare.cjs
 
 ## Distribution and provenance
 
-The package retains VPM's Node.js 20+ package baseline; local verification and
+The package retains VPM's Node.js 24+ package baseline; local verification and
 benchmarks target Node 24 and Bun. Use the workspace or pack an archive with
 `bun pm pack --ignore-scripts` inside this directory. VPM has not published these
 packages to npm.

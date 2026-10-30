@@ -20,7 +20,7 @@
     "PROVENANCE.json"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "license": "Apache-2.0",
   "repository": {

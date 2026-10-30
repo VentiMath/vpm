@@ -26,6 +26,6 @@
     "vhttps-proxy-agent": "workspace:*"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   }
 }

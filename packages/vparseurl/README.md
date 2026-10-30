@@ -1,7 +1,7 @@
 # vparseurl
 
 Parse and cache HTTP request URLs with zero external runtime dependencies.
-`vparseurl` is a modernized counterpart to `parseurl` 1.3.3 for Node.js 20+ and Bun.
+`vparseurl` is a modernized counterpart to `parseurl` 1.3.3 for Node.js 24+ and Bun.
 
 ## Use
 

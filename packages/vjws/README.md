@@ -3,7 +3,7 @@
 Compact JSON Web Signatures with strict parsing, byte-preserving payloads and
 stream collection that copies accumulated data once. Replaces `jws` 4.0.1 using
 one dependency, [`vjwa`](../vjwa), instead of `jwa` and `safe-buffer`.
-Supports Node.js 20+ and Bun, with CommonJS, native ESM and self-contained types.
+Supports Node.js 24+ and Bun, with CommonJS, native ESM and self-contained types.
 Current performance measurements target Node 24 and Bun.
 
 ## Signing and verification

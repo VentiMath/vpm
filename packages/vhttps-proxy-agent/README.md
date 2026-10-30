@@ -3,7 +3,7 @@
 HTTP CONNECT tunnels for HTTP and HTTPS requests, through HTTP or HTTPS proxies.
 This is a counterpart to `https-proxy-agent` 7.0.6 using `vagent-base` and `vdebug`.
 Its complete external dependency tree is those two packages plus `vms`.
-Node.js 20+ and Bun are supported; performance work targets Node 24 and Bun.
+Node.js 24+ and Bun are supported; performance work targets Node 24 and Bun.
 
 ```js
 const https = require('node:https');

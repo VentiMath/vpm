@@ -3,7 +3,7 @@
 An `agent-base` 9.0.0 counterpart for subclasses that create HTTP or HTTPS
 connections synchronously or asynchronously. It retains native connection
 pooling and has **zero runtime dependencies**, like that upstream version.
-Node.js 20+ and Bun are supported; performance work targets Node 24 and Bun.
+Node.js 24+ and Bun are supported; performance work targets Node 24 and Bun.
 
 ```js
 const { Agent } = require('vagent-base');

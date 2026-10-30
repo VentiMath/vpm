@@ -1,6 +1,6 @@
 # vfresh
 
-Conditional HTTP freshness checks for Node.js 20+ and Bun, with no runtime
+Conditional HTTP freshness checks for Node.js 24+ and Bun, with no runtime
 dependencies. A counterpart to `fresh` 2.0.0 that parses quoted entity tags and
 handles cache-control directive casing.
 

@@ -1,7 +1,7 @@
 # vgoogle-auth-library
 
 Google authentication clients on the VPM HTTP, metadata, logging and signing
-stack. Based on `google-auth-library` **11.3.2**, for Node 22+ and Bun; tested on
+stack. Based on `google-auth-library` **11.3.2**, for Node 24+ and Bun; tested on
 Node 24 and Bun 1.4. CommonJS, native ESM named imports and self-contained
 TypeScript declarations are included.
 

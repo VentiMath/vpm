@@ -1,7 +1,7 @@
 # vescape-html
 
 Escape HTML text with zero runtime dependencies, bundled TypeScript declarations,
-and CommonJS/ES module import support. Requires Node.js 20+ or Bun.
+and CommonJS/ES module import support. Requires Node.js 24+ or Bun.
 
 `vescape-html` is VPM's counterpart to `escape-html` 1.0.3. It preserves the
 escaping and input-conversion contract while skipping long unchanged spans more

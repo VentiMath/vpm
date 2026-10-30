@@ -265,7 +265,7 @@ all cases; none of these measurements establishes application HTTP throughput.
 
 ## Distribution and provenance
 
-Node.js 20+ package baseline; local testing and benchmarks target Node 24 and Bun.
+Node.js 24+ package baseline; local testing and benchmarks target Node 24 and Bun.
 Use the workspace or pack with `bun pm pack --ignore-scripts` and install the
 resulting archive. Not yet published to npm. Tests, upstream fixtures and benchmark
 results are excluded from the seven-file archive.

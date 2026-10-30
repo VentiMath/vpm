@@ -1,7 +1,7 @@
 # vmime-db
 
 An immutable, typed counterpart to `mime-db` 1.54.0. Includes the same 2,522 MIME
-records, with zero runtime dependencies, for Node.js 20+ and Bun.
+records, with zero runtime dependencies, for Node.js 24+ and Bun.
 
 The catalog is preserved byte for byte. VPM changes how the shared data is
 exposed and verified; it does not claim to have invented better MIME assignments.

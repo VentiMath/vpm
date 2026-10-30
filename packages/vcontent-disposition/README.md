@@ -1,7 +1,7 @@
 # vcontent-disposition
 
 Create, parse, and format Content-Disposition headers for downloads and multipart
-fields. Zero runtime dependencies, Node.js 20+, CommonJS and native ES module
+fields. Zero runtime dependencies, Node.js 24+, CommonJS and native ES module
 imports, and self-contained TypeScript declarations.
 
 The consumer target is `content-disposition` **2.0.1**, used by Express **5.3.0**

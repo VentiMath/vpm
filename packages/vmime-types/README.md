@@ -2,7 +2,7 @@
 
 MIME lookup and Content-Type helpers with immutable mappings and correct charset
 parameter recognition for valid media-type syntax. A counterpart to
-`mime-types` 3.0.2 for Node.js 20+ and Bun, with one runtime dependency:
+`mime-types` 3.0.2 for Node.js 24+ and Bun, with one runtime dependency:
 [`vmime-db`](../vmime-db).
 
 ## Use

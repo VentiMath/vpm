@@ -1,7 +1,7 @@
 # vretry-request
 
 Callback and readable-stream retry policy targeting `retry-request` **9.1.0**,
-with zero runtime dependencies. Supports Node.js 22+ and Bun; performance work
+with zero runtime dependencies. Supports Node.js 24+ and Bun; performance work
 targets Node 24 and Bun. The caller supplies the transport.
 
 ```js

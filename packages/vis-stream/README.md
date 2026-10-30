@@ -1,7 +1,7 @@
 # vis-stream
 
 Node stream-shape predicates, compared with `is-stream` 2.0.1. Zero runtime
-dependencies; Node.js 20+ and Bun; CommonJS and native ESM imports, with
+dependencies; Node.js 24+ and Bun; CommonJS and native ESM imports, with
 self-contained TypeScript narrowing declarations.
 
 ```js

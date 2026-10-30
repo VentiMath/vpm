@@ -2,7 +2,7 @@
 
 Parse command-line options with the familiar minimist API, coherent aliases,
 own-property lookups and self-contained TypeScript declarations. Derived from
-**minimist 1.2.8**, with zero runtime dependencies. Supports Node.js 20+ and Bun,
+**minimist 1.2.8**, with zero runtime dependencies. Supports Node.js 24+ and Bun,
 CommonJS and native ES module default imports.
 
 ```js

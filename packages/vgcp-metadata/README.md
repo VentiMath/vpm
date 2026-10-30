@@ -1,7 +1,7 @@
 # vgcp-metadata
 
 Google Cloud metadata retrieval on the VPM HTTP, logging and exact-JSON stack.
-A counterpart to `gcp-metadata` 9.2.3 for Node 20+ and Bun, with CommonJS, native
+A counterpart to `gcp-metadata` 9.2.3 for Node 24+ and Bun, with CommonJS, native
 ESM named imports and TypeScript declarations.
 
 ```js

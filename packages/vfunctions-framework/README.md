@@ -1,7 +1,7 @@
 # vfunctions-framework
 
 HTTP, CloudEvent and legacy event functions on the VPM stack, derived from
-`@google-cloud/functions-framework` **5.0.2**. Supports Node.js 20+ and Bun;
+`@google-cloud/functions-framework` **5.0.2**. Supports Node.js 24+ and Bun;
 performance work targets Node 24 and Bun. Includes portable TypeScript declarations.
 
 ```js

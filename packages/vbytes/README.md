@@ -1,6 +1,6 @@
 # vbytes
 
-Byte-size parsing and formatting for Node.js 20+ and Bun, with zero runtime
+Byte-size parsing and formatting for Node.js 24+ and Bun, with zero runtime
 dependencies. A VPM counterpart to `bytes` 3.1.2 with complete-input parsing,
 exact decimal scaling, and validated formatting options.
 

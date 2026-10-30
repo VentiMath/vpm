@@ -1,7 +1,7 @@
 # vuuid
 
 UUID v1, v3, v4 and v5 generation, parsing, validation and formatting, compared
-with `uuid` 9.0.1. Zero runtime dependencies, native cryptography, Node.js 20+
+with `uuid` 9.0.1. Zero runtime dependencies, native cryptography, Node.js 24+
 and Bun. CommonJS and native named ESM exports include self-contained types.
 
 ```js

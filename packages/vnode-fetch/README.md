@@ -1,7 +1,7 @@
 # vnode-fetch
 
 The `node-fetch` 2.7.0 server API with native URL handling, checked limits and
-reliable stream cleanup. Supports Node.js 20+ and Bun, CommonJS and native ESM,
+reliable stream cleanup. Supports Node.js 24+ and Bun, CommonJS and native ESM,
 with self-contained TypeScript declarations. Its one runtime dependency is
 `viconv-lite`, loaded only by the legacy `textConverted()` method.
 

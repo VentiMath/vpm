@@ -1,6 +1,6 @@
 # vfinalhandler
 
-Final HTTP error and 404 responses for Node.js 20+ and Bun. A counterpart to
+Final HTTP error and 404 responses for Node.js 24+ and Bun. A counterpart to
 `finalhandler` 2.1.1 with guarded completion, consistent response framing, and
 bundled TypeScript declarations.
 

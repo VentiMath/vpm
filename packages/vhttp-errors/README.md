@@ -1,6 +1,6 @@
 # vhttp-errors
 
-HTTP error factories and named constructors for Node.js 20+ and Bun. A counterpart
+HTTP error factories and named constructors for Node.js 24+ and Bun. A counterpart
 to `http-errors` 2.0.1 with **one runtime dependency, `vstatuses`, instead of five**.
 Native prototype operations and local constructor naming replace `inherits`,
 `setprototypeof`, and `toidentifier`. Invalid statuses become 500 errors, removing

@@ -129,7 +129,7 @@ bun pm pack --destination /tmp
 
 Install the resulting `vdepd-0.1.0.tgz` using `npm install /tmp/vdepd-0.1.0.tgz`
 or `bun add /tmp/vdepd-0.1.0.tgz`. Registry publication and automatic substitution
-for upstream names are not provided. Engines remain Node >=20; local performance
+for upstream names are not provided. Engines remain Node >=24; local performance
 measurements target Node 24 and Bun. The existing CI matrix also verifies older
 supported Node runtimes.
 

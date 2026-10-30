@@ -2,7 +2,7 @@
 
 Read a Node.js byte stream into a Buffer or decoded string, validate its byte
 length and limit, and reliably settle the read on completion or failure.
-Requires Node.js 20+ or Bun. CommonJS and native ESM default imports are supported.
+Requires Node.js 24+ or Bun. CommonJS and native ESM default imports are supported.
 
 ```js
 const getRawBody = require('vraw-body');

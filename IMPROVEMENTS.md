@@ -182,7 +182,8 @@ TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
 catalog covers **89 packages**, including two declaration-only packages.
 
-Runtime verification and performance work target Node.js 24 and Bun. Packages
+All runtime packages declare Node.js 24+; CI and performance work target Node.js
+24 and Bun. Earlier Node versions are outside the current support contract. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
 module imports. CI runs the package and integration suites on these same two
 runtimes. Separate archive gates verify npm/Bun installation,
@@ -3588,7 +3589,7 @@ Near-parity values should be treated as noise, not claimed as wins.
 **Consumer and baseline:** Express 5.3.0 uses `content-disposition` 2.0.1 in
 `res.download()` and `res.attachment()`. The current 3.0.0 release is also retained
 as an exact source fixture and benchmark baseline. Both upstream and VPM have
-zero runtime dependencies. VPM keeps CommonJS and named ESM imports on Node 20+.
+zero runtime dependencies. VPM keeps CommonJS and named ESM imports on Node 24+.
 
 **Correctness:** direct null-prototype parameter maps prevent the shared-ancestor
 interference reproduced in both upstream versions. Invalid primitive inputs,

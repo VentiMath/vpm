@@ -2,7 +2,7 @@
 
 Encode whole URL strings while preserving existing percent escapes. Zero external
 runtime dependencies, with TypeScript declarations and CommonJS/ES module support.
-Requires Node.js 20+ or Bun.
+Requires Node.js 24+ or Bun.
 
 `vencodeurl` is a modernized counterpart to `encodeurl` 2.0.0. It preserves the
 function API and ordinary encoding behavior while fixing malformed-Unicode and

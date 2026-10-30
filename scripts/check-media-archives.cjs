@@ -22,6 +22,7 @@ try {
     const packed = path.join(directory, archive);
     dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
+    assert.equal(metadata.engines?.node, '>=24', name + ': packed runtime baseline');
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
     if (name === 'vnode-fetch' || name === 'vgaxios') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), name === 'vnode-fetch' ? ['viconv-lite'] : ['vextend','vhttps-proxy-agent','vnode-fetch']);

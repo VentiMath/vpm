@@ -23,7 +23,7 @@
     "validate.cjs"
   ],
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "license": "MIT",
   "repository": {

@@ -10,7 +10,7 @@
     "./package.json": "./package.json"
   },
   "files": ["index.js", "index.d.ts", "LICENSE", "README.md"],
-  "engines": { "node": ">=20" },
+  "engines": { "node": ">=24" },
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/ventimath/vpm.git", "directory": "packages/vmedia-typer" },
   "homepage": "https://github.com/ventimath/vpm/tree/main/packages/vmedia-typer"

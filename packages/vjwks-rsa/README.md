@@ -4,7 +4,7 @@ Public signing-key retrieval for JWT consumers. A counterpart to `jwks-rsa`
 3.2.2, using native crypto, a bounded private cache, shared in-flight retrieval,
 and one direct runtime dependency: `vdebug`.
 
-Node.js 20+ and Bun are supported. Performance comparisons target Node 24 and Bun.
+Node.js 24+ and Bun are supported. Performance comparisons target Node 24 and Bun.
 The package includes CommonJS, native ESM imports and self-contained declarations.
 The [repository comparison](../../IMPROVEMENTS.md#vjwks-rsa) and
 [benchmark report](bench/results/README.md) record measured benefits and costs.

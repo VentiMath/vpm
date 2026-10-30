@@ -1,6 +1,6 @@
 # vdebug
 
-Namespace-based debug logging for Node.js 20+, Bun, and modern browsers. A
+Namespace-based debug logging for Node.js 24+, Bun, and modern browsers. A
 counterpart to `debug` 4.4.3 with compiled namespace filters, monotonic elapsed
 timing, and bundled TypeScript declarations. Its only external runtime dependency
 is VPM's [`vms`](../vms).

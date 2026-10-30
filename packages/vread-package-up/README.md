@@ -2,7 +2,7 @@
 
 Find and read the nearest `package.json`, with no external dependencies.
 Provides async and sync readers, explicit search boundaries, UTF-8 validation,
-and self-contained TypeScript declarations. Supports Node.js 20+ and Bun,
+and self-contained TypeScript declarations. Supports Node.js 24+ and Bun,
 CommonJS and native ES module named imports.
 
 ```js

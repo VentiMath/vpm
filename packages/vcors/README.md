@@ -3,7 +3,7 @@
 CORS middleware for Express-style applications, compared with `cors` **2.8.5
 and 2.8.6**. Static policies are compiled once, origin regexes have isolated
 state, callbacks settle once, and generated preflight responses have coherent
-empty-body framing. Supports Node.js 20+ and Bun; benchmarks target Node 24 and Bun.
+empty-body framing. Supports Node.js 24+ and Bun; benchmarks target Node 24 and Bun.
 
 ```js
 const cors = require('vcors')
