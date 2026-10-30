@@ -209,6 +209,14 @@
         "vstatuses": "workspace:*",
       },
     },
+    "packages/vhttp-proxy-agent": {
+      "name": "vhttp-proxy-agent",
+      "version": "0.1.0",
+      "dependencies": {
+        "vagent-base": "workspace:*",
+        "vdebug": "workspace:*",
+      },
+    },
     "packages/vhttps-proxy-agent": {
       "name": "vhttps-proxy-agent",
       "version": "0.1.0",
@@ -527,6 +535,8 @@
     "vgtoken": ["vgtoken@workspace:packages/vgtoken"],
 
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
+
+    "vhttp-proxy-agent": ["vhttp-proxy-agent@workspace:packages/vhttp-proxy-agent"],
 
     "vhttps-proxy-agent": ["vhttps-proxy-agent@workspace:packages/vhttps-proxy-agent"],
 

@@ -1,0 +1,31 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "http-proxy-agent",
+    "version": "9.1.0",
+    "tarball": "https://registry.npmjs.org/http-proxy-agent/-/http-proxy-agent-9.1.0.tgz",
+    "integrity": "sha512-2NxoveTT58mjYT4n3RPTEfCZGLMbidoO8XEieXfpSYxu+PQJ1qpx4ypwH6N+uF9twBPIvRRgvkvW5HUTYWENig=="
+  },
+  "source": {
+    "repository": "TooTallNate/proxy-agents",
+    "ref": "http-proxy-agent@9.1.0",
+    "commit": "b7e5f7ccce1a3ac5b339cc4c587974e8989cbc16",
+    "manifest": "scripts/http-proxy-conformance/upstream/SHA256.json"
+  },
+  "dependencies": {
+    "agent-base": "vagent-base",
+    "debug": "vdebug"
+  },
+  "changes": [
+    "Prepare absolute targets and headers when requests register, preserving queued and streamed body bytes.",
+    "Validate and snapshot proxy URLs, TLS options and headers; preserve zero and empty values; normalize reserved header decisions case-insensitively.",
+    "Bind origin-form paths to the requested destination, preserving double slashes, dot segments and escapes without Host-header rerouting.",
+    "Bound TCP/TLS establishment and destroy pending connections on cancellation, timeout or agent destruction.",
+    "Redact credentials from diagnostic events and logs; verify TLS before signaling proxy readiness.",
+    "Use two VPM dependencies; explicitly reject unused automatic Negotiate/onProxyAuth options rather than silently ignoring them."
+  ],
+  "upstreamTestAdaptations": [
+    "Set the HTTPS fixture URL protocol explicitly for async-listen on Bun; applied equally to upstream and VPM."
+  ]
+}
