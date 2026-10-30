@@ -17,7 +17,7 @@ try{
  source=source.replace(/\.replyWithError\((\{[^{}]*\})\)/g, '.replyWithError(Object.assign(new Error("Mock network error"), $1))');
  if(!upstream){
   source=source.replaceAll("Invalid response from metadata service: incorrect Metadata-Flavor header. Expected 'Google', got 'wrongHeader'",'Metadata request failed').replaceAll("Invalid response from metadata service: incorrect Metadata-Flavor header. Expected 'Google', got no header",'Metadata request failed').replace('/Invalid response from metadata service: incorrect Metadata-Flavor header./','/Metadata request failed/').replace("/'fake' is not a valid/",'/Unknown metadata configuration option/');
-  source=source.replace('assert.strictEqual(gcp.requestTimeout(), 0);','assert.strictEqual(gcp.requestTimeout(), 3000);');
+  source=source.replace('assert.strictEqual(gcp.requestTimeout(), 0);','assert.strictEqual(gcp.requestTimeout(), 60000);');
   source=source.replace("const logger = logging.log('gcp-metadata');","logging.setBackend({setFilters(){},log(){}}); const logger = logging.log('gcp-metadata');").replace("logger.instance.removeListener('log', listener);","logger.instance.removeListener('log', listener); logging.setBackend(undefined);");
   source=source.replace('/All promises were rejected/', '/Metadata detection failed/');
   // Expected timeouts are silent; unknown failures emit a static, credential-safe warning.

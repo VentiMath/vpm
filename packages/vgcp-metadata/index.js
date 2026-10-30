@@ -95,7 +95,12 @@ function parameters(input) {
   }
   return result;
 }
-function requestTimeout() { return 3000; }
+// gcp-metadata disables its request timeout on Google Cloud, where the metadata
+// server can respond slowly under load or at instance start; a 3 s budget there
+// fails token fetches that would have succeeded. Keep a deadline, but a generous
+// one: Cloud Functions' default execution timeout.
+const GCP_REQUEST_TIMEOUT = 60000;
+function requestTimeout() { return getGCPResidency() ? GCP_REQUEST_TIMEOUT : 3000; }
 function prepare(key, options, retries = 3, fastFail = false) {
   const primary = baseUrl(process.env.GCE_METADATA_IP || process.env.GCE_METADATA_HOST);
   const url = endpoint(primary, key);
