@@ -27,6 +27,8 @@ bun run test
 bun run test:bun
 bun run typecheck
 bun run check:docs
+node scripts/check-body-options.cjs
+bun scripts/check-body-options.cjs
 node scripts/integration.cjs
 bun scripts/integration.cjs
 node scripts/check-media-archives.cjs

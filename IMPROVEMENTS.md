@@ -3610,12 +3610,12 @@ record runtime versions, source hashes, and all samples.
 
 **Correctness and lifecycle:** replaces body-parser 2.4.0's signed 32-bit form
 parameter conversion with a floored count. `parameterLimit: 2 ** 32` retains
-both fields in `a=1&b=2`. Options are coerced exactly as body-parser 2.4.0
-coerces them (numeric strings, truthy flags, falsy type/verify, Infinity
-limits), so every configuration that boots upstream boots here. The exceptions
-fail at construction: NaN, negative or malformed limits and undecodable default
-charsets, which upstream accepts and then enforces no limit, a truncated limit,
-or a 415 on every request. Type arrays are copied and option snapshots are stable,
+both fields in `a=1&b=2`. Numeric strings, truthy flags, falsy type/verify and
+Infinity limits follow body-parser 2.4.0's option coercions. Negative bounds,
+partially parsed limit strings and unusable default charsets fail at construction;
+NaN and empty limit strings are already rejected by both implementations.
+Configured default charset names are case-insensitive, including form defaults.
+Type arrays are copied and option snapshots are stable,
 including empty lists and lists containing invalid patterns or unknown extensions.
 The fallback matcher retains its private copy instead of rereading the caller's
 mutable array; regression tests exercise all four parser factories.
@@ -3643,8 +3643,12 @@ a body-sized placeholder to manufacture an engine-specific error message.
 parser subpaths, byte limits after inflation, charset decoding, synchronous
 verification, revivers, nested forms and gzip/deflate/Brotli support. Zstandard
 is available when the runtime supplies it, as upstream already supports.
-Only unusable limits and charsets fail early; a construction differential over
-1,632 option values matches upstream everywhere else.
+The checked-in [construction differential](scripts/check-body-options.cjs)
+compares 1,632 single-option configurations plus 34 extended form-depth cases
+against the independently installed upstream tree. Node 24 and Bun each match
+in 1,600 cases; 65 explicit early rejections and one accepted uppercase form
+charset account for the remaining 66. CI rejects unexpected changes to either
+side. This is construction coverage, not exhaustive request-behavior parity.
 Callback-error identity and exact messages/stacks are not preserved; the original
 is available through `cause`. Internal `lib/*` exports are excluded. The default
 byte limit remains 100 KiB. Applications still control request timeouts and
