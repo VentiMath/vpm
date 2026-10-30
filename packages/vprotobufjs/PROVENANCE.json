@@ -1,0 +1,18 @@
+{
+  "upstream": {
+    "name": "protobufjs",
+    "version": "8.8.1",
+    "repository": "https://github.com/protobufjs/protobuf.js",
+    "commit": "798b4c942cca81a7ae0a2694f28ecd2985d386c9",
+    "integrity": "sha512-d9e9179bjXSJdpJ3+R9fP8hzXsnKLyxTjHLG1dUzje8a27pPyXCe6PrcRtgx2rjoM3IZzHd2vAs+6J/BsO1k7Q=="
+  },
+  "checked": "2026-10-30",
+  "license": "BSD-3-Clause",
+  "changes": [
+    "Derived full/light/minimal runtimes and extensions; long is replaced by vlong.",
+    "Restore temporary reader bounds on decode and packed-read failures.",
+    "Validate explicit decode/skip lengths and bound skipped varints to ten bytes.",
+    "Correct unknown group skipping for empty message types.",
+    "Protect the shared LongBits zero value against mutation."
+  ]
+}

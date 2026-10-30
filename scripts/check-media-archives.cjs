@@ -49,6 +49,13 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vprotobufjs') {
+      assert.deepEqual(metadata.dependencies, {vlong:'0.1.0'});
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      const library=['src','ext','google'].flatMap(dir=>fs.readdirSync(path.join(root,'packages/vprotobufjs',dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vprotobufjs',dir,f)).isFile()).map(f=>dir+'/'+f));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json',...['index','light','minimal'].flatMap(n=>[n+'.js',n+'.d.ts']),...library].sort());
+      assert.doesNotMatch(entries.join('\n'), /(?:test|bench|node_modules|dist|cli)\//);
+    }
     if (name === 'vgoogle-cloud-storage') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vasync-retry','vduplexify','vfast-xml-parser','vgaxios','vgoogle-auth-library','vhtml-entities','vmime','vp-limit','vpaginator','vprojectify','vpromisify','vretry-request','vteeny-request']);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -220,6 +227,9 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveProtobuf=require('vprotobufjs'),archiveProtoType=archiveProtobuf.parse('message Item {optional int64 id=1;}').root.lookupType('Item');
+const archiveProtoBytes=archiveProtoType.encode(archiveProtoType.fromObject({id:'9007199254740993'})).finish();if(archiveProtoType.decode(archiveProtoBytes).id.toString()!=='9007199254740993'||!Object.isFrozen(archiveProtobuf.util.LongBits.zero))throw new Error('Protobuf CJS archive');
+if(require('vprotobufjs/minimal').Reader!==archiveProtobuf.Reader||require('vprotobufjs/ext/descriptor').FileDescriptorSet.constructor!==archiveProtobuf.Type)throw new Error('Protobuf archive subpaths');
 const archiveLong=require('vlong');if(archiveLong.fromString('18446744073709551615',true).add(1).toString()!=='0'||archiveLong.fromBytes(new Uint8Array(8)).toString()!=='0')throw new Error('Long CJS archive');
 const archiveHash=require('vobject-hash');if(archiveHash('hello')!==require('node:crypto').createHash('sha1').update('string:5:hello').digest('hex'))throw new Error('Hash CJS archive');if(!Buffer.isBuffer(archiveHash(Buffer.from([255]),{algorithm:'passthrough',encoding:'buffer'})))throw new Error('Hash binary archive');
 const archiveStorage=require('vgoogle-cloud-storage');const storageFile=new archiveStorage.Storage({projectId:'archive'}).bucket('fixture').file('a.pdf');if(storageFile.name!=='a.pdf'||archiveStorage.CRC32C.from(new Uint8Array([0,1,2,3,4,0]).subarray(1,5)).toString()!=='AQIDBA==')throw new Error('Storage CJS archive');
@@ -410,6 +420,7 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import {Reader as ArchiveProtoReader, Root as ArchiveProtoRoot} from 'vprotobufjs';import archiveProtoMinimal from 'vprotobufjs/minimal';if(ArchiveProtoReader!==archiveProtoMinimal.Reader||typeof ArchiveProtoRoot.fromJSON!=='function')throw new Error('Protobuf ESM archive');
 import archiveLongESM from 'vlong';if(archiveLongESM.fromBigInt(-9223372036854775808n).toString()!=='-9223372036854775808')throw new Error('Long ESM archive');
 import archiveHashESM,{sha1 as archiveSHA1} from 'vobject-hash';if(archiveHashESM('a')!==archiveSHA1('a'))throw new Error('Hash ESM archive');
 import {Storage as ArchiveStorage,CRC32C as ArchiveCRC} from 'vgoogle-cloud-storage';if(new ArchiveStorage({projectId:'archive'}).bucket('fixture').file('a.pdf').name!=='a.pdf'||ArchiveCRC.from(0).toString()!=='AAAAAA==')throw new Error('Storage ESM archive');
@@ -600,6 +611,7 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import * as ArchiveProto from 'vprotobufjs';import 'vprotobufjs/ext/descriptor';import * as ArchiveProtoJSON from 'vprotobufjs/ext/protojson';const archiveTypedRoot:ArchiveProto.Root=ArchiveProto.Root.fromDescriptor(new ArchiveProto.Root().toDescriptor('proto3'));void archiveTypedRoot;void ArchiveProtoJSON;
 import TypedLong from 'vlong';const typedLong:TypedLong=TypedLong.fromBytes(new Uint8Array(8));const typedInteger:bigint=typedLong.add(TypedLong.ONE).toBigInt();void typedInteger;
 import typedHash,{writeToStream as typedWriteHash} from 'vobject-hash';const typedDigest:string=typedHash({x:1});const typedDigestBytes:Uint8Array=typedHash('a',{encoding:'buffer'});typedWriteHash('a',{write(data:string|Uint8Array){void data;}});void typedDigest;void typedDigestBytes;
 import {Storage as TypedStorage,type File as TypedStorageFile} from 'vgoogle-cloud-storage';const typedStorageFile:TypedStorageFile=new TypedStorage({projectId:'archive'}).bucket('fixture').file('a.pdf');const typedStorageURL:Promise<[string]>=typedStorageFile.getSignedUrl({action:'read',version:'v4',expires:Date.now()+60000});void typedStorageURL;
