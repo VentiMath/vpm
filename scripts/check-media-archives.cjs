@@ -49,6 +49,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vhtml-entities') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json','lib/data.js'].sort());
+    }
     if (name === 'vretry' || name === 'vasync-retry') {
       assert.deepEqual(metadata.dependencies, name === 'vretry' ? undefined : {vretry:'0.1.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -172,6 +177,7 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveEntities=require('vhtml-entities');if(archiveEntities.decode('&copy;')!=='©'||archiveEntities.encode('<')!=='&lt;'||archiveEntities.decodeEntity('&#65;')!=='A')throw new Error('entities CJS archive');
 const archiveRetry=require('vretry');if(archiveRetry.timeouts({retries:1})[0]!==1000||require('vretry/lib/retry_operation')!==archiveRetry.RetryOperation)throw new Error('retry CJS archive');
 require('vasync-retry')(()=>7,{retries:0}).then(x=>{if(x!==7)throw new Error('async retry CJS archive');});
 const archiveQueue=new (require('vyocto-queue'))();archiveQueue.enqueue('ok');if(archiveQueue.dequeue()!=='ok')throw new Error('queue CJS archive');
@@ -348,6 +354,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import {encode as archiveEncodeEntities,decode as archiveDecodeEntities,decodeEntity as archiveDecodeEntity} from 'vhtml-entities';
+if(archiveEncodeEntities('<')!=='&lt;'||archiveDecodeEntities('&copy;')!=='©'||archiveDecodeEntity('&#65;')!=='A')throw new Error('entities ESM archive');
 import archiveRetry,{operation as archiveOperation} from 'vretry';
 import ArchiveRetryOperation from 'vretry/lib/retry_operation.js';
 import archiveAsyncRetry from 'vasync-retry';
@@ -520,6 +528,10 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import {encode as typedEncodeEntities,decode as typedDecodeEntities,type EncodeOptions as TypedEntityOptions} from 'vhtml-entities';
+const typedEntityOptions:TypedEntityOptions={mode:'nonAscii',level:'html5'};
+const typedEntityResult:string=typedDecodeEntities(typedEncodeEntities('雪',typedEntityOptions));
+void typedEntityResult;
 import {operation as typedRetryOperation, type Options as TypedRetryOptions} from 'vretry';
 import TypedRetryOperation from 'vretry/lib/retry_operation';
 import typedAsyncRetry from 'vasync-retry';

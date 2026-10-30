@@ -213,6 +213,10 @@
         "vjws": "workspace:*",
       },
     },
+    "packages/vhtml-entities": {
+      "name": "vhtml-entities",
+      "version": "0.1.0",
+    },
     "packages/vhttp-errors": {
       "name": "vhttp-errors",
       "version": "0.1.0",
@@ -588,6 +592,8 @@
     "vgoogle-logging-utils": ["vgoogle-logging-utils@workspace:packages/vgoogle-logging-utils"],
 
     "vgtoken": ["vgtoken@workspace:packages/vgtoken"],
+
+    "vhtml-entities": ["vhtml-entities@workspace:packages/vhtml-entities"],
 
     "vhttp-errors": ["vhttp-errors@workspace:packages/vhttp-errors"],
 

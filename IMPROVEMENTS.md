@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vhtml-entities | html-entities 2.6.0; Storage 8.4.0 ApiError decoding | [html-entities 2.6.0](https://www.npmjs.com/package/html-entities), checked October 30, 2026 |
 | Caller paths verified | vretry / vasync-retry | retry 0.13.1, async-retry 1.3.3; Storage 8.4.0 multipart retry methods | [retry](https://www.npmjs.com/package/retry), [async-retry](https://www.npmjs.com/package/async-retry), checked October 30, 2026 |
 | Caller paths verified | vyocto-queue / vp-limit | Queue 1.2.2, limiter 7.3.3; Storage 8.4.0 batches replacing p-limit 3.1.0 | [yocto-queue](https://www.npmjs.com/package/yocto-queue), [p-limit](https://www.npmjs.com/package/p-limit), checked October 30, 2026 |
 | Caller paths verified | vpromisify / vprojectify | Both 6.2.1; Storage 8.4.0 wrappers and request decoration | [promisify](https://www.npmjs.com/package/@google-cloud/promisify), [projectify](https://www.npmjs.com/package/@google-cloud/projectify) |
@@ -70,6 +71,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vhtml-entities](packages/vhtml-entities) | html-entities 2.6.0 | Complete named tables; safe scalar/reference parsing, prototype-free named lookups, correct numeric attribute handling and fast plain-text/special-character paths. |
 | [vretry](packages/vretry) | retry 0.13.1 | Zero dependencies; complete reset/timer cleanup, validated schedules, monotonic budgets, safe error accounting and guarded callbacks. |
 | [vasync-retry](packages/vasync-retry) | async-retry 1.3.3 | VPM-only scheduler; immutable caller options, terminal bail, observed late failures and settled hook errors. |
 | [vyocto-queue](packages/vyocto-queue) | yocto-queue 1.2.2 | Zero dependencies; constant-time FIFO operations, current live iteration/draining semantics, direct private-state initialization and CommonJS/ESM entry points. |
@@ -147,12 +149,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,408 tests**: all pass on Node 24, and Bun passes
-2,405 with three documented runtime-specific skips. All 72 runtime packages'
+The root suite contains **2,429 tests**: all pass on Node 24, and Bun passes
+2,426 with three documented runtime-specific skips. All 73 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **74 packages**, including two declaration-only packages.
+catalog covers **75 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -221,6 +223,12 @@ tests are in the root suite. Storage multipart methods execute 15 retry operatio
 and 21 attempts; the fixture documents existing SDK observation and resumption
 limitations separately from retry-package fixes.
 
+The [HTML entity suite](scripts/entities-conformance/README.md) adds all 30
+upstream runtime/metadata cases with controls, including every HTML5 named entry.
+Its 21 focused root tests cover all level/mode combinations, malformed references
+and seeded inputs. Actual Storage ApiError methods decode 16 string/Buffer bodies
+and preserve structured-message bypass behavior.
+
 ## Dependency scope
 
 The Express application stack is implemented throughout: `vexpress` has 28 direct
@@ -231,6 +239,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vhtml-entities` | 0 | 0 |
 | `vretry` | 0 | 0 |
 | `vasync-retry` | 1 | 1 (all VPM) |
 | `vyocto-queue` | 0 | 0 |
@@ -369,6 +378,33 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vhtml-entities
+
+Targets **html-entities 2.6.0**, preserving its full XML/HTML4/HTML5 named data,
+canonical encoding choices, mode character sets and body/attribute/strict scopes.
+Named lookup tables are frozen and have no prototype. Numeric decoding preserves
+U+10FFFF, replaces surrogate references, and rejects malformed single references
+without truncating junk or producing NUL. Attribute decoding correctly accepts
+numeric references before equals signs. Numeric zero encodes as `0`, and own
+configuration and text contracts are validated explicitly.
+
+The original controls reproduce each corrected result. All 30 retained runtime/
+metadata cases and 21 focused tests pass on Node 24 and Bun, including all named
+tables and thousands of generated inputs. Storage **8.4.0**'s actual ApiError
+constructor verifies error-body conversion, bytes, combined/deduplicated messages
+and structured-message bypass. No live cloud service is used. XML's historical C1
+numeric remapping and encoder control-character/lone-surrogate behavior remain
+compatible; this API is an entity converter, not an HTML sanitizer or XML validator.
+
+The [package README](packages/vhtml-entities/README.md) has the explicit upstream/
+VPM comparison; [paired benchmarks](packages/vhtml-entities/bench/results/README.md)
+retain raw samples, source hashes, three processes and identical-code controls.
+Plain-text decoding takes about 83% / 39% less time on Node / Bun; Storage-shaped
+errors take about 7% / 17% less and numeric decoding about 32% / 35% less. Short
+special-character encoding takes 53% / 48% less. Bun Unicode `nonAscii` encoding
+is a repeatable 21% regression; dense named decoding varies in direction across
+processes. These are local conversion costs, not cloud or application throughput.
 
 ## vretry and vasync-retry
 

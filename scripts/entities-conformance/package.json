@@ -1,0 +1,6 @@
+{
+  "name": "vpm-entities-conformance",
+  "private": true,
+  "description": "Pinned HTML entity controls and retained upstream tests, excluded from package archives",
+  "dependencies": {"html-entities": "2.6.0"}
+}

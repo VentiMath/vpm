@@ -1,0 +1,10 @@
+{
+  "LICENSE.txt": "0b7d299289fa4cbe7453d07c107df872a6c2231847d553bedea7e876d016af75",
+  "README.md.txt": "7262434d60e86e4a1c16621cf76e347ca1ef3c1062897bc88e3bde9199645d4b",
+  "package.json.txt": "6aa136e2ee124476c6d0af7119be45d38cc8fb5af5c78c757bb6e033274b70fa",
+  "src/index.ts.txt": "0306d4ab576f31784a86c4ae5cd756187b49c733c78e9a8a2ec8f74906a0bd00",
+  "src/named-references.ts.txt": "49f6ffd4b1049887c7ec3d6e820f4d43fce3d46b4584ead7b5220c0ccd3f1708",
+  "src/numeric-unicode-map.ts.txt": "5131f2fd45ce5493da165bf8c86b89f9420ac7078eb7a302231561cf0cca7501",
+  "src/surrogate-pairs.ts.txt": "542077e4b2daadc4b6ab327512fa2a3ad6c3318ce367dd02148ca8c9b3c9a3d8",
+  "test/index.test.ts.txt": "acf79d35ffb2b1d31130706e2cc049b9827bc071d485ad4dcc152c4c7c252bc5"
+}

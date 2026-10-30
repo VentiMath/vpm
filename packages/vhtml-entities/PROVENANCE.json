@@ -1,0 +1,40 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-30",
+  "upstream": {
+    "package": "html-entities",
+    "version": "2.6.0",
+    "tarball": "https://registry.npmjs.org/html-entities/-/html-entities-2.6.0.tgz",
+    "integrity": "sha512-kig+rMn/QOVRvr7c86gQ8lWXq+Hkv6CbAH1hLu+RG338StTpE8Z0b44SDVaqVu7HGKf27frdmUYEs9hTUX/cLQ=="
+  },
+  "source": {
+    "repository": "mdevils/html-entities",
+    "commit": "58d1635d40d858efd5b6540f7b62c3a382a35bf1",
+    "manifest": "scripts/entities-conformance/upstream/SHA256.json"
+  },
+  "additionalSource": {
+    "path": "packages/vescape-html/index.js",
+    "commit": "e4a0132793e201f0567af8a573cd00370ee4eb56",
+    "origin": "escape-html 1.0.3 / VPM special-character scanning; attribution retained in LICENSE"
+  },
+  "changes": [
+    "Preserve complete named data while generating frozen prototype-free named maps.",
+    "Preserve U+10FFFF and replace numeric surrogate references.",
+    "Validate whole numeric references in one pass without losing overflow detection.",
+    "Decode numeric references before equals signs in attributes.",
+    "Preserve numeric zero encoding; validate text and own options explicitly.",
+    "Fast plain-text decoding and specialized five-character encoding.",
+    "Zero dependencies, CJS/ESM exports and public TypeScript declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/entities-conformance",
+    "upstreamCases": 30,
+    "focusedTests": 21,
+    "caller": "Storage 8.4.0 ApiError, 16 decoded bodies plus structured/direct bypass checks",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ],
+    "adaptations": "See scripts/entities-conformance/README.md for native assertion/type-erasure adapters, replacement build gates and generated data provenance."
+  }
+}
