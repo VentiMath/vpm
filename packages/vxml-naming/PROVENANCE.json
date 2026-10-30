@@ -1,0 +1,13 @@
+{
+  "upstream": {
+    "name": "xml-naming",
+    "version": "0.3.0",
+    "repository": "https://github.com/NaturalIntelligence/xml-naming",
+    "commit": "0330d0cfa57ee483a834c474b2d0a4f0449ee81d",
+    "license": "MIT",
+    "npmIntegrity": "sha512-ghig2TBE/H11aOVgmahA3MhimvkBr6JIYknH/Dhdk10nXwdbIqBJsbfMxpvFPG8bAw77gN29aQWvKpmVoPlvPQ=="
+  },
+  "reviewed": "2026-10-30",
+  "retainedEvidence": "../../scripts/xml-helpers-conformance/upstream",
+  "implementation": "Independent XML grammar implementation with upstream API compatibility"
+}

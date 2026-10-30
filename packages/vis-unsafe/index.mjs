@@ -1,0 +1,15 @@
+import api from './index.js';
+export const isUnsafe = api.isUnsafe;
+export const whyUnsafe = api.whyUnsafe;
+export const allUnsafe = api.allUnsafe;
+export const VALID_CONTEXTS = api.VALID_CONTEXTS;
+export const HTML = api.HTML;
+export const XML = api.XML;
+export const SVG = api.SVG;
+export const SQL = api.SQL;
+export const SQL_STRICT = api.SQL_STRICT;
+export const SHELL = api.SHELL;
+export const REDOS = api.REDOS;
+export const NOSQL = api.NOSQL;
+export const LOG = api.LOG;
+export default api.isUnsafe;
