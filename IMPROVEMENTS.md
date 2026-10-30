@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vlong | long 5.3.2; protobuf.js 8.8.1/7.6.6, proto-loader 0.8.1 and google-gax 6.14.0 integer paths | [long 5.3.2](https://www.npmjs.com/package/long), checked October 30, 2026 |
 | Caller paths verified | vobject-hash | object-hash 3.0.0; google-gax 6.14.0 gRPC/fallback protobuf caches | [object-hash 3.0.0](https://www.npmjs.com/package/object-hash), checked October 30, 2026 |
 | Caller paths verified | vgoogle-cloud-storage | @google-cloud/storage 8.4.0; object and signing operations, Firebase Admin 12.7.0 factory | [Storage 8.4.0](https://www.npmjs.com/package/@google-cloud/storage), checked October 30, 2026 |
 | Caller paths verified | vmime | mime 4.1.2; Storage 8.4.0 upload/compose callers using mime 3.0.0 | [mime 4.1.2](https://www.npmjs.com/package/mime), checked October 30, 2026 |
@@ -80,6 +81,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
 | [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Exact gax string cache keys with a direct crypto path; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
 | [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, sliced CRC32C initialization, real HTTP and Firebase callers. |
 | [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
@@ -169,12 +171,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,590 tests**: all pass on Node 24, and Bun passes
-2,587 with three documented runtime-specific skips. All 84 runtime packages'
+The root suite contains **2,601 tests**: all pass on Node 24, and Bun passes
+2,598 with three documented runtime-specific skips. All 85 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **86 packages**, including two declaration-only packages.
+catalog covers **87 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -264,6 +266,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vlong` | 0 | 0 |
 | `vobject-hash` | 0 | 0 |
 | `vgoogle-cloud-storage` | 14 | 13 (all VPM) |
 | `vmime` | 0 | 0 |
@@ -414,6 +417,41 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vlong
+
+The baseline is **long 5.3.2**, checked October 30, 2026. It already has zero
+runtime dependencies; VPM retains that property. Arithmetic and optional
+WebAssembly acceleration remain, while complete integer/radix validation rejects
+silently accepted junk. Decimal conversion uses native Number/BigInt paths;
+nondecimal parsing combines validation and bounded two-word accumulation.
+Formatting uses native conversion instead of repeated Long division.
+
+Small `fromInt` values no longer share a mutable cache. Shared constants and their
+constructor properties are immutable; methods that return those constants can
+also return frozen objects. Byte constructors require exactly eight valid bytes,
+read array elements once and respect Uint8Array slices. These intentional input
+and mutability differences are described in the [package README](packages/vlong/README.md).
+
+All **175 unchanged upstream/Closure cases** pass on Node 24 and Bun, alongside
+ten focused tests with an independent BigInt oracle, disabled-WebAssembly
+coverage, every radix and 10,000-digit inputs. Seven paired regression probes
+fail on upstream and pass on VPM. Sixteen real caller paths verify protobuf.js
+8.8.1 and the 7.6.6 used by Google, proto-loader 0.8.1 and google-gax 6.14.0,
+including exact wire bytes, timestamps, signed/unsigned limits, defaults and
+version-specific int64 map keys. This is integer-boundary coverage, not a claim
+that the entire SDK is replaced or verified.
+
+Measured protobuf 8/7 encoding takes **36% / 28% less time on Node**;
+decoding and conversion takes **66% / 64% less on Node** and **35% / 37% less
+on Bun**. Independent small integers cost 3–4 ns more on Node; validated byte
+arrays cost about 3 ns more on both. Bun protobuf 7 encoding is inconclusive
+because its control varies nearly as much as the measured gain.
+
+[Measurements](packages/vlong/bench/results/README.md) cover construction, parsing,
+formatting, arithmetic, bytes and actual protobuf conversions. Three fresh
+processes and one identical-upstream control run on each runtime; local CPU
+measurements do not establish application or network throughput gains.
 
 ## vobject-hash
 

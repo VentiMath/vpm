@@ -329,6 +329,10 @@
         "vjwa": "workspace:*",
       },
     },
+    "packages/vlong": {
+      "name": "vlong",
+      "version": "0.1.0",
+    },
     "packages/vmedia-typer": {
       "name": "vmedia-typer",
       "version": "0.1.0",
@@ -703,6 +707,8 @@
     "vjwks-rsa": ["vjwks-rsa@workspace:packages/vjwks-rsa"],
 
     "vjws": ["vjws@workspace:packages/vjws"],
+
+    "vlong": ["vlong@workspace:packages/vlong"],
 
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
 

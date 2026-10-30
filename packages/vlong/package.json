@@ -1,0 +1,31 @@
+{
+  "name": "vlong",
+  "version": "0.1.0",
+  "description": "64-bit integer arithmetic with strict parsing, native string conversion and isolated values",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vlong"
+  }
+}

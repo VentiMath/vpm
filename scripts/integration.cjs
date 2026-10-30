@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  long: {pkg:'vlong',versions:/^5\.3\.2$/},
   'object-hash': {pkg:'vobject-hash',versions:/^3\.0\.0$/},
   '@google-cloud/storage': {pkg:'vgoogle-cloud-storage',versions:/^8\.4\.0$/},
   mime: {pkg:'vmime',versions:/^(?:3\.0\.0|4\.1\.2)$/},
@@ -166,7 +167,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [path.join(__dirname, 'object-hash-conformance/package.json'), path.join(__dirname, 'storage-conformance/package.json'), ...['@google-cloud/promisify', '@google-cloud/projectify', '@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
+const queue = [path.join(__dirname, 'long-conformance/package.json'), path.join(__dirname, 'object-hash-conformance/package.json'), path.join(__dirname, 'storage-conformance/package.json'), ...['@google-cloud/promisify', '@google-cloud/projectify', '@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -1225,6 +1226,7 @@ async function run() {
     await require('./xml-builder-conformance/callers.cjs')();
     await require('./xml-parser-conformance/callers.cjs')();
     await require('./mime-conformance/callers.cjs')();
+    require('./long-conformance/callers.cjs')();
     require('./object-hash-conformance/callers.cjs')();
     await require('./storage-conformance/callers.cjs')();
     await require('./storage-conformance/firebase.cjs')();
