@@ -1,0 +1,29 @@
+{
+  "license": "Apache-2.0",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "@google-cloud/projectify",
+    "version": "6.2.1",
+    "tarball": "https://registry.npmjs.org/@google-cloud/projectify/-/projectify-6.2.1.tgz",
+    "integrity": "sha512-PV9oy7VpQRXLuqKuU5RSOHFQyWgvw2sT9MoTGykja9j6c9pv5+ttKTJiFsccu500YYIGiz8JCOsb60PfKmiV/w=="
+  },
+  "source": {
+    "repository": "googleapis/google-cloud-node",
+    "directory": "core/projectify",
+    "ref": "projectify-v6.2.1",
+    "commit": "c6fbbcb565d7485d6fece20487fc00a6675074b8",
+    "manifest": "scripts/cloud-utils-conformance/upstream/projectify/SHA256.json"
+  },
+  "changes": [
+    "Substitute project IDs literally without replacement-pattern interpretation or reprocessing inserted text.",
+    "Traverse own data fields in arrays and plain/null-prototype records without calling accessors.",
+    "Retain object mutation and cloned-array conventions while preserving cycles and shared references.",
+    "Use iterative traversal for deep input; keep transport objects and byte views opaque."
+  ],
+  "upstreamTestAdaptations": [
+    "Compile retained sources with TypeScript 7 and execute all cases with Mocha.",
+    "Use CommonJS import assignments for callable assert and mutable util exports.",
+    "Await three asynchronous promisify tests explicitly, preserving original assertions for both implementations.",
+    "Normalize trailing source whitespace before hashing."
+  ]
+}
