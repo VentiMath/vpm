@@ -1,0 +1,28 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "duplexify",
+    "version": "4.1.3",
+    "tarball": "https://registry.npmjs.org/duplexify/-/duplexify-4.1.3.tgz",
+    "integrity": "sha512-M3BmBhwJRZsSx38lZyhE53Csddgzl5R7xGJNk7CVddZD6CcmwMCH8J+7AprIrQKH7TonKxaCjcv27Qmf+sQ+oA=="
+  },
+  "source": {
+    "repository": "mafintosh/duplexify",
+    "ref": "v4.1.3",
+    "commit": "94c835466622b46aefa8573265bc92f24ebcf297",
+    "manifest": "scripts/duplexify-conformance/upstream/SHA256.json"
+  },
+  "changes": [
+    "Replace all four dependencies with native Node 24/Bun streams and public reads.",
+    "Preserve delayed attachment, dynamic replacement, drain backpressure, nested corking and subclassing.",
+    "Do not mutate options; honor object-mode highWaterMark and preserve falsy end values.",
+    "Settle active and queued operations on destruction; detach adapter listeners and destroy shared children once.",
+    "Surface premature close as ERR_STREAM_PREMATURE_CLOSE instead of silently closing.",
+    "Preserve normal upload completion without destroying the pending HTTP response."
+  ],
+  "upstreamTestAdaptations": [
+    "Change only the import and add an ERR_STREAM_PREMATURE_CLOSE assertion to the upstream close test for VPM.",
+    "Keep all 16 original cases and 37 assertions; VPM has 38 assertions with the additional close-error check."
+  ]
+}

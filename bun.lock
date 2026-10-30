@@ -74,6 +74,10 @@
       "name": "vdepd",
       "version": "0.1.0",
     },
+    "packages/vduplexify": {
+      "name": "vduplexify",
+      "version": "0.1.0",
+    },
     "packages/vee-first": {
       "name": "vee-first",
       "version": "0.1.0",
@@ -513,6 +517,8 @@
     "vdebug": ["vdebug@workspace:packages/vdebug"],
 
     "vdepd": ["vdepd@workspace:packages/vdepd"],
+
+    "vduplexify": ["vduplexify@workspace:packages/vduplexify"],
 
     "vee-first": ["vee-first@workspace:packages/vee-first"],
 

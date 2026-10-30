@@ -91,6 +91,8 @@ these download streams, also without external dependencies.
 `vteeny-request` supplies the current callback, lazy-download and multipart
 upload APIs, with total deadlines and shared VPM proxy pools. It uses
 `vnode-fetch` for consistent Node streams on both runtimes.
+`vduplexify` joins delayed readable/writable streams for current Storage and
+google-gax callers using native streams and no external dependencies.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
@@ -185,6 +187,8 @@ The [stream-events suite](scripts/stream-events-conformance/README.md) verifies
 stream notifications, lazy downloads and exact body delivery in those callers.
 The [teeny-request suite](scripts/teeny-conformance/README.md) checks the current
 request API and Cloud Storage callback, download and multipart upload paths.
+The [duplexify suite](scripts/duplexify-conformance/README.md) checks dynamic
+stream attachment, backpressure, cancellation and current SDK callers.
 
 ## License
 
