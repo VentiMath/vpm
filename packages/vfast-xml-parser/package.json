@@ -1,0 +1,50 @@
+{
+  "name": "vfast-xml-parser",
+  "version": "0.1.0",
+  "description": "XML parsing and validation with VPM foundations and predictable resource limits",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      },
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "lib",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vfast-xml-parser"
+  },
+  "dependencies": {
+    "vnodable-entities": "workspace:*",
+    "vfast-xml-builder": "workspace:*",
+    "vis-unsafe": "workspace:*",
+    "vpath-expression-matcher": "workspace:*",
+    "vstrnum": "workspace:*",
+    "vxml-naming": "workspace:*"
+  }
+}

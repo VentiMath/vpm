@@ -151,6 +151,18 @@
         "vxml-naming": "workspace:*",
       },
     },
+    "packages/vfast-xml-parser": {
+      "name": "vfast-xml-parser",
+      "version": "0.1.0",
+      "dependencies": {
+        "vfast-xml-builder": "workspace:*",
+        "vis-unsafe": "workspace:*",
+        "vnodable-entities": "workspace:*",
+        "vpath-expression-matcher": "workspace:*",
+        "vstrnum": "workspace:*",
+        "vxml-naming": "workspace:*",
+      },
+    },
     "packages/vfinalhandler": {
       "name": "vfinalhandler",
       "version": "0.1.0",
@@ -613,6 +625,8 @@
     "vextend": ["vextend@workspace:packages/vextend"],
 
     "vfast-xml-builder": ["vfast-xml-builder@workspace:packages/vfast-xml-builder"],
+
+    "vfast-xml-parser": ["vfast-xml-parser@workspace:packages/vfast-xml-parser"],
 
     "vfinalhandler": ["vfinalhandler@workspace:packages/vfinalhandler"],
 

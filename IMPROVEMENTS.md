@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vfast-xml-parser | fast-xml-parser 5.11.2; Storage 8.4.0 multipart callers | [fast-xml-parser 5.11.2](https://www.npmjs.com/package/fast-xml-parser), checked October 30, 2026 |
 | Caller paths verified | vfast-xml-builder | fast-xml-builder 1.3.1; parser 5.11.2 and Storage 8.4.0 callers | [fast-xml-builder 1.3.1](https://www.npmjs.com/package/fast-xml-builder), checked October 30, 2026 |
 | Caller paths verified | vnodable-entities | @nodable/entities 3.1.0; parser 5.11.2 and Storage 8.4.0 callers | [@nodable/entities 3.1.0](https://www.npmjs.com/package/@nodable/entities), checked October 30, 2026 |
 | Caller paths verified | vpath-expression-matcher | path-expression-matcher 1.6.2; parser 5.11.2, builder 1.3.1 and Storage 8.4.0 callers | [path-expression-matcher 1.6.2](https://www.npmjs.com/package/path-expression-matcher), checked October 30, 2026 |
@@ -76,6 +77,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfast-xml-parser](packages/vfast-xml-parser) | fast-xml-parser 5.11.2 | Reusable parser setup, exact depth limits, deterministic filters, safer callbacks and stricter XML syntax checks; all six helpers use VPM. |
 | [vfast-xml-builder](packages/vfast-xml-builder) | fast-xml-builder 1.3.1 | Bounded raw/ordinary traversal, deterministic filters, corrected array/text handling, readonly callback paths and faster serialization. |
 | [vnodable-entities](packages/vnodable-entities) | @nodable/entities 3.1.0 | Strict numeric references, atomic registration/budgets, consistent XML-version reset, corrected tables, private state and complete custom-prefix encoding. |
 | [vpath-expression-matcher](packages/vpath-expression-matcher) | path-expression-matcher 1.6.2 | Correct rooted/deep path matching, bracket-aware parsing, isolated matcher state/views, immutable compiled patterns and current XML/Storage caller checks. |
@@ -161,12 +163,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,502 tests**: all pass on Node 24, and Bun passes
-2,499 with three documented runtime-specific skips. All 80 runtime packages'
+The root suite contains **2,552 tests**: all pass on Node 24, and Bun passes
+2,549 with three documented runtime-specific skips. All 81 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **82 packages**, including two declaration-only packages.
+catalog covers **83 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -256,6 +258,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vfast-xml-parser` | 6 | 6 (all VPM) |
 | `vfast-xml-builder` | 2 | 2 (both VPM) |
 | `vnodable-entities` | 0 | 0 |
 | `vpath-expression-matcher` | 0 | 0 |
@@ -403,6 +406,38 @@ Firebase handles errors thrown by plain handlers itself; finalhandler is exercis
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
 
+## vfast-xml-parser
+
+The baseline is **fast-xml-parser 5.11.2**, checked October 30, 2026. All six
+runtime dependencies now use VPM replacements; the seven-package external runtime
+tree also includes `vanynum`. The stable parser/validator API and builder re-export
+are covered. CLI and experimental v6 APIs are excluded.
+
+The adapted parser reuses compiled setup, scans text in slices, snapshots options,
+resets document state after success/failure, validates depth/entity budgets, applies
+one self-closing name transformation and checks callback-produced names/attributes.
+Filters are deterministic, grouped predicates work, and XML declaration version
+handling is independent of output processors. Validation rejects malformed roots,
+attributes, declarations and references that upstream can accept. Default parsing
+retains upstream permissiveness; full XML/DTD/schema conformance is not claimed.
+
+The [fixture](scripts/xml-parser-conformance) executes 331 retained cases: 322
+unchanged passes, seven specified validation differences and two originally disabled
+diagnostics. One 102 MB upstream asset test is omitted; generated >1 MB parsing,
+1,000 seeded round trips, 35 paired discriminators and 50 focused tests cover the
+implementation. Actual Storage 8.4.0 calls verify three multipart uploads and
+12 mocked requests with string/Buffer responses, checksums and completion XML.
+Public types, CJS/ESM exports and packed consumers are checked on Node 24 and Bun.
+A browser-target VM check caught and fixed dynamic context imports in `vis-unsafe`;
+its literal imports preserve the same rules and allow the parser bundle to execute.
+
+[Measurements](packages/vfast-xml-parser/bench/results/README.md) include fresh
+Storage-shaped parses, reuse, attributes, ordered output, entities and validation,
+with three processes and identical-upstream controls per runtime. Fresh Storage-shaped
+parses take about 32% less time on Node and 27–28% less on Bun in this sample;
+all 13 aggregate cases favor VPM, with noisy cases documented. These measurements
+do not establish end-to-end upload gains or deployed adoption.
+
 ## vfast-xml-builder
 
 The baseline is **fast-xml-builder 1.3.1**, checked October 30, 2026. The adapted
@@ -542,19 +577,19 @@ Actual parser 5.11.2 and builder 1.3.1 source runs six differential parser cases
 a supplementary entity case and five builder cases. Storage 8.4.0 performs two
 multipart uploads with six mocked requests through these XML sources. Ordinary
 Storage responses construct validators but do not call name/entity checks;
-dedicated DTD and builder cases establish those paths. The parser's independent
-`XMLValidator` still has a BMP-only grammar, and the builder validates names only
-when `sanitizeName` is configured. These are caller limitations, not completed
-parser replacement work.
+dedicated DTD and builder cases establish those paths. The pinned upstream parser's independent
+`XMLValidator` has a BMP-only grammar; [vfast-xml-parser](packages/vfast-xml-parser)
+now replaces it with the VPM naming grammar. The builder validates names only
+when `sanitizeName` is configured.
 
 [Name benchmarks](packages/vxml-naming/bench/results/README.md) show faster
 invalid-start diagnostics and valid-name sanitization. BMP QName checks remain
 7.2% slower on Node and 12.7% on Bun; invalid-name repair is 9.9% / 38.9% slower.
 [Predicate benchmarks](packages/vis-unsafe/bench/results/README.md) show plain
-HTML/XML entity checks taking 74.0% / 67.8% less time and long plain text taking
-68.2% / 16.6% less time on Node / Bun. Early script matches remain 37.7% / 21.8%
+HTML/XML entity checks taking 73.5% / 67.2% less time and long plain text taking
+68.1% / 16.3% less time on Node / Bun. Early script matches remain 38.8% / 23.5%
 slower, and diagnostic pattern isolation adds cost: first-reason results take
-94 → 150 ns on Node and 35 → 124 ns on Bun. Full results include all-match,
+94 → 149 ns on Node and 35 → 123 ns on Bun. Full results include all-match,
 custom-regex and cache cases, paired processes, source hashes and identical
 upstream controls. These utility measurements do not establish application gains.
 

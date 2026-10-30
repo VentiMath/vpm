@@ -60,6 +60,8 @@ rejects the supplementary entity before checking its value. Storage itself
 accounts for two validator constructions and no name/entity checks on ordinary
 responses. This fixture does not claim that helpers affect every XML document.
 
-Known caller limits are asserted: the parser's independent `XMLValidator` still
-rejects supplementary names, and the builder's default `sanitizeName: false`
-bypasses name checks. No application dependencies are automatically migrated.
+Known upstream caller limits are asserted: the pinned parser's independent
+`XMLValidator` rejects supplementary names, and the builder's default
+`sanitizeName: false` bypasses name checks. The separate
+[vfast-xml-parser](../../packages/vfast-xml-parser) replacement now corrects the
+validator's supplementary-name limitation. No application dependencies are automatically migrated.

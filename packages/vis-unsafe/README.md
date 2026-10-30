@@ -54,7 +54,9 @@ copies add work to diagnostic APIs. Copy a built-in list to make your own rules.
 The CommonJS implementation and ESM facade load all nine contexts. This package
 does not preserve upstream's potential ESM per-context tree shaking. That is a
 known packaging difference; the current server-side XML caller is the verified
-integration target. Browser bundle size has not been measured.
+integration target. Literal context imports now allow browser bundlers to include those rules. The
+combined vfast-xml-parser browser-target bundle is executed without Node globals
+in its conformance fixture; this is not a standalone vis-unsafe bundle-size study.
 
 ## Evidence and scope
 
