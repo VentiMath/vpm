@@ -26,7 +26,8 @@ now have current comparison targets:
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 | Complete | vretry-request | 9.1.0; Cloud Storage 8.4.0/google-gax 6.14.0 caller paths | [retry-request 9.1.0](https://www.npmjs.com/package/retry-request) |
-| Next | vstream-events | Not implemented | [stream-events 1.0.5](https://www.npmjs.com/package/stream-events), used by teeny-request 11.1.1 |
+| Complete | vstream-events | 1.0.5; teeny-request 11.1.1 and current Storage/gax callers | [stream-events 1.0.5](https://www.npmjs.com/package/stream-events), used by teeny-request 11.1.1 |
+| Next | vagent-base | 7.1.4 | [agent-base 9.0.0](https://www.npmjs.com/package/agent-base), required by current http-proxy-agent 9.1.0 |
 
 The Gaxios upgrade now uses native fetch for ordinary calls, with explicit stream,
 redirect, size and deadline handling. Node agents, proxies and client certificates
@@ -43,6 +44,13 @@ dependency of current gcp-metadata still matches the existing comparison baselin
 VPM JWS verification remove the other two helpers. Dedicated external-provider
 suites and live cloud deployment remain outside its verified scope.
 
+The next foundation upgrade is `vagent-base` from 7.1.4 to 9.0.0 before building
+`vhttp-proxy-agent` against 9.1.0. That proxy release also adds
+`proxy-agent-negotiate` 1.1.0, whose needed behavior remains to be assessed.
+Current teeny-request 11.1.1 still requests `http-proxy-agent` and
+`https-proxy-agent` 7.x; those callers need explicit migration checks rather than
+an unrestricted major-version alias.
+
 Recheck stable versions when each step begins. Updates need pinned upstream
 conformance and consumer tests, types, benchmarks, and documented intentional
 differences before their latest-version parity is considered complete. Existing
@@ -52,6 +60,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vstream-events](packages/vstream-events) | stream-events 1.0.5 | Zero dependencies; independent once-only read/write notifications, exact method results and receivers, reentrant restoration and validation before mutation. |
 | [vretry-request](packages/vretry-request) | retry-request 9.1.0 | Zero dependencies; cancelled backoff, once-only attempt settlement, monotonic retry budgets, bounded timers, isolated stream events and safe transport teardown. |
 | [vgoogle-auth-library](packages/vgoogle-auth-library) | google-auth-library 11.3.2 | Four VPM dependencies; isolated JWT caches, shared forced refreshes, per-owner private-key parsing, strict ID-token verification and private debug messages. |
 | [vgcp-metadata](packages/vgcp-metadata) | gcp-metadata 9.2.3 | Entirely VPM runtime tree; first-success endpoint races, finite deadlines, direct requests, credential-safe errors/logs, bounded bulk reads and endpoint-aware availability caching. |
@@ -118,12 +127,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,176 tests**: all pass on Node 24, and Bun passes
-2,173 with three documented runtime-specific skips. All 61 runtime packages'
+The root suite contains **2,197 tests**: all pass on Node 24, and Bun passes
+2,194 with three documented runtime-specific skips. All 62 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **63 packages**, including two declaration-only packages.
+catalog covers **64 packages**, including two declaration-only packages.
 
 Runtime packages support Node.js 20+ and Bun, except `vgoogle-auth-library` and
 `vretry-request`, which follow their current upstream Node 22+ baselines. They include their own TypeScript
@@ -160,7 +169,9 @@ and 17 focused VPM regression/consumer tests in the root suite. The
 [retry-request suite](scripts/retry-request-conformance/README.md) adds all 30
 upstream tests on each runtime, upstream controls, deterministic timer checks and
 current Cloud Storage/google-gax caller checks; 30 VPM regression tests are in the
-root suite.
+root suite. The [stream-events suite](scripts/stream-events-conformance/README.md)
+adds all four upstream tests on both runtimes, independent bug controls and
+teeny-request download checks; 21 focused VPM tests are in the root suite.
 
 ## Dependency scope
 
@@ -172,6 +183,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vstream-events` | 1 | 0 |
 | `vretry-request` | 1 | 0 |
 | `vgoogle-auth-library` | 6 | 4 |
 | `vgtoken` | 2 | 2 |
@@ -297,6 +309,30 @@ Firebase handles errors thrown by plain handlers itself; finalhandler is exercis
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
 
+## vstream-events
+
+Targets stream-events 1.0.5 and removes its `stubs` dependency. Read and write
+notifications have independent once-only state: upstream shares a mutable
+counter, leaving one direction emitting repeatedly. VPM preserves exact method
+results instead of replacing them with `emit()`'s boolean result when listeners
+are present. Original functions are restored before invoking user code, so
+reentrancy cannot duplicate notifications or overwrite application replacements.
+Readable-only and writable-only objects are supported, with both methods
+validated before mutation. Explicit redecoration remains supported.
+
+All four upstream tests and 21 focused package tests pass on Node and Bun.
+Current teeny-request 11.1.1 preserves lazy reading and exact download bytes;
+Cloud Storage 8.4.0 and google-gax 6.14.0 retry caller paths also pass with the
+replacement. Independent controls reproduce the two upstream notification bugs.
+
+Native chunk/object stream benchmarks take 22–32% less time on Node 24 and
+28–30% less on Bun. Native PassThrough setup costs 73 ns more on Node and 14 ns
+more on Bun in raw medians; Node's paired setup regression is 59.3%. HTTP
+processes vary too much to establish a throughput improvement. See
+[all samples and controls](packages/vstream-events/bench/results/README.md) and
+the [package contract](packages/vstream-events/README.md), including restoration,
+exceptions, descriptors and redecoration behavior.
+
 ## vretry-request
 
 Targets retry-request 9.1.0. Direct option snapshots eliminate its `extend`
@@ -351,8 +387,8 @@ See [all samples and controls](packages/vgoogle-auth-library/bench/results/READM
 Dedicated external-provider suites, browser bundling and live cloud deployments
 are outside the current verification claim. Version 9/10 callers are not blindly
 aliased to version 11; Headers and SDK upgrades need explicit consumer checks.
-Next is `vretry-request` against 9.1.0: current Storage and gax use it, and its only
-direct dependency, `extend`, already has a VPM implementation.
+Current Storage and gax retry paths are now checked with `vretry-request` 9.1.0
+compatibility; the replacement removes its upstream `extend` dependency.
 
 ## vgcp-metadata
 

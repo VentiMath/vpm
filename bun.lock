@@ -399,6 +399,10 @@
       "name": "vstatuses",
       "version": "0.1.0",
     },
+    "packages/vstream-events": {
+      "name": "vstream-events",
+      "version": "0.1.0",
+    },
     "packages/vtype-is": {
       "name": "vtype-is",
       "version": "0.1.0",
@@ -587,6 +591,8 @@
     "vserve-static": ["vserve-static@workspace:packages/vserve-static"],
 
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
+
+    "vstream-events": ["vstream-events@workspace:packages/vstream-events"],
 
     "vtype-is": ["vtype-is@workspace:packages/vtype-is"],
 

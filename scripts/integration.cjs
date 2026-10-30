@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'stream-events': { pkg: 'vstream-events', versions: /^1\.0\.5$/ },
   'retry-request': { pkg: 'vretry-request', versions: /^9\.1\.0$/ },
   'google-auth-library': { pkg: 'vgoogle-auth-library', versions: /^11\.3\.2$/ },
   'gcp-metadata': { pkg: 'vgcp-metadata', versions: /^(?:6\.1\.1|8\.1\.2|9\.2\.3)$/ },
@@ -138,7 +139,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [path.join(__dirname, 'retry-request-conformance/node_modules/retry-request/package.json'), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
+const queue = [...['retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -147,7 +148,7 @@ while (queue.length) {
   if (data.name === 'content-type') contentTypes.set(manifest, data.version);
   const from = createRequire(manifest);
   // Current Auth and retry helpers are fixture roots; older majors stay uncovered.
-  if (['google-auth-library', 'retry-request'].includes(data.name) && targets[data.name].versions.test(data.version)) {
+  if (['google-auth-library', 'retry-request', 'stream-events'].includes(data.name) && targets[data.name].versions.test(data.version)) {
     const entry = from.resolve(path.dirname(manifest));
     require(entry);
     require.cache[entry].exports = replacements[data.name];
@@ -1183,6 +1184,7 @@ async function run() {
     await require('./agent-conformance/consumer.cjs')(from);
     await require('./google-http-conformance/consumer.cjs')(from);
     await require('./retry-request-conformance/callers.cjs')(replacements['retry-request']);
+    await require('./stream-events-conformance/callers.cjs')(replacements['stream-events'], false, false);
 
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {

@@ -44,7 +44,7 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
+    if (['vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
@@ -152,6 +152,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const decoratedStream = require('vstream-events')({emit(){return true;},_read(){return 42;}});
+if(decoratedStream._read()!==42)throw new Error('stream-events archive');
 let retriedBody; require('vretry-request')(null, {request(o, cb) {cb(null, {statusCode:200}, 'ok');}}, (err, res, body) => {retriedBody=body;});
 if(retriedBody!=='ok')throw new Error('retry archive');
 if(new (require('vnode-fetch').Headers)({test:'ok'}).get('test')!=='ok')throw new Error('fetch archive');
@@ -310,6 +312,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import streamEventsArchive from 'vstream-events';
+if(typeof streamEventsArchive!=='function')throw new Error('stream-events ESM archive');
 import retryArchive, {defaults as retryDefaults, getNextRetryDelay as retryDelay} from 'vretry-request';
 if(typeof retryArchive!=='function'||retryDefaults.retries!==2||typeof retryDelay!=='function')throw new Error('retry ESM archive');
 import fetchArchive, {Response as ArchiveResponse} from 'vnode-fetch';
@@ -461,6 +465,9 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import typedStreamEvents = require('vstream-events');
+const typedDecoratedStream = typedStreamEvents({emit(){return false;},_read(){return 42;},custom:'value'});
+const streamEventCustom: string = typedDecoratedStream.custom;
 import typedRetry = require('vretry-request');
 const retryHandle: typedRetry.Abortable = typedRetry(null, {request(o, cb) {cb(null, {statusCode:200}, 'ok');}}, () => {});
 retryHandle.abort();

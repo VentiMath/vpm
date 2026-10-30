@@ -47,6 +47,8 @@ jobs:
           node scripts/retry-request-conformance/run.cjs
           node scripts/retry-request-conformance/timers.cjs
           node scripts/retry-request-conformance/callers.cjs --check-control
+          node scripts/stream-events-conformance/run.cjs
+          node scripts/stream-events-conformance/callers.cjs --upstream
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
@@ -104,6 +106,8 @@ jobs:
           bun scripts/retry-request-conformance/run.cjs
           bun scripts/retry-request-conformance/timers.cjs
           bun scripts/retry-request-conformance/callers.cjs --check-control
+          bun scripts/stream-events-conformance/run.cjs
+          bun scripts/stream-events-conformance/callers.cjs --upstream
       - run: npm --prefix scripts/jwt-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/jwt-conformance/run.cjs
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
