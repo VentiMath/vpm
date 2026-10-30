@@ -89,6 +89,11 @@ try {
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
       assert.deepEqual(entries.sort(), ['LICENSE','README.md','PROVENANCE.json','index.d.ts','index.js','helpers.js','package.json'].sort());
     }
+    if (name === 'vteeny-request') {
+      assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vhttp-proxy-agent','vhttps-proxy-agent','vnode-fetch','vstream-events']);
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
+      assert.deepEqual(entries.sort(), ['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json','lib/agents.js','lib/options.js','lib/multipart.js','lib/statistics.js','lib/read.js'].sort());
+    }
     if (name === 'vjwks-rsa') {
       assert.deepEqual(metadata.dependencies, { vdebug:'0.1.0' });
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
@@ -153,6 +158,8 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const decoratedStream = require('vstream-events')({emit(){return true;},_read(){return 42;}});
+const {teenyRequest:archiveTeeny}=require('vteeny-request');
+if(typeof archiveTeeny.defaults!=='function'||archiveTeeny.stats.counters.concurrentRequests!==0)throw new Error('teeny-request CJS archive');
 if(decoratedStream._read()!==42)throw new Error('stream-events archive');
 let retriedBody; require('vretry-request')(null, {request(o, cb) {cb(null, {statusCode:200}, 'ok');}}, (err, res, body) => {retriedBody=body;});
 if(retriedBody!=='ok')throw new Error('retry archive');
@@ -315,6 +322,8 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import streamEventsArchive from 'vstream-events';
+import {teenyRequest as archiveTeeny} from 'vteeny-request';
+if(typeof archiveTeeny.close!=='function')throw new Error('teeny-request ESM archive');
 if(typeof streamEventsArchive!=='function')throw new Error('stream-events ESM archive');
 import retryArchive, {defaults as retryDefaults, getNextRetryDelay as retryDelay} from 'vretry-request';
 if(typeof retryArchive!=='function'||retryDefaults.retries!==2||typeof retryDelay!=='function')throw new Error('retry ESM archive');
@@ -470,6 +479,8 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import typedStreamEvents = require('vstream-events');
+import {teenyRequest as typedTeeny} from 'vteeny-request';
+typedTeeny({uri:'http://example.test',proxy:false,timeout:100},(error,response,body)=>{if(response){const status:number=response.statusCode;void status;}void error;void body;});
 const typedDecoratedStream = typedStreamEvents({emit(){return false;},_read(){return 42;},custom:'value'});
 const streamEventCustom: string = typedDecoratedStream.custom;
 import typedRetry = require('vretry-request');

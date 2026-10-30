@@ -411,6 +411,16 @@
       "name": "vstream-events",
       "version": "0.1.0",
     },
+    "packages/vteeny-request": {
+      "name": "vteeny-request",
+      "version": "0.1.0",
+      "dependencies": {
+        "vhttp-proxy-agent": "workspace:*",
+        "vhttps-proxy-agent": "workspace:*",
+        "vnode-fetch": "workspace:*",
+        "vstream-events": "workspace:*",
+      },
+    },
     "packages/vtype-is": {
       "name": "vtype-is",
       "version": "0.1.0",
@@ -603,6 +613,8 @@
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
 
     "vstream-events": ["vstream-events@workspace:packages/vstream-events"],
+
+    "vteeny-request": ["vteeny-request@workspace:packages/vteeny-request"],
 
     "vtype-is": ["vtype-is@workspace:packages/vtype-is"],
 

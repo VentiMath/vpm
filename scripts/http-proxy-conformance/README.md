@@ -25,7 +25,9 @@ Storage callback/download paths through HTTP and TLS forward proxies. These
 eight requests check Basic proxy authentication, response status and body bytes.
 The control uses the caller's pinned **http-proxy-agent 7.0.2**. The root
 integration gate repeats the caller checks with its broader VPM aliases and
-requires the proxy replacement to be reached. Success paths are covered here;
+requires the proxy replacement to be reached. It reloads the original teeny
+transport for this comparison even when the outer integration aliases teeny
+itself; separate teeny tests exercise VPM composition. Success paths are covered here;
 retry behavior has its own suite.
 
 ```sh

@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'teeny-request': { pkg: 'vteeny-request', versions: /^11\.1\.1$/ },
   'http-proxy-agent': { pkg: 'vhttp-proxy-agent', versions: /^(?:7\.0\.2|9\.1\.0)$/ },
   'stream-events': { pkg: 'vstream-events', versions: /^1\.0\.5$/ },
   'retry-request': { pkg: 'vretry-request', versions: /^9\.1\.0$/ },
@@ -149,7 +150,7 @@ while (queue.length) {
   if (data.name === 'content-type') contentTypes.set(manifest, data.version);
   const from = createRequire(manifest);
   // Current Auth and retry helpers are fixture roots; older majors stay uncovered.
-  if (['google-auth-library', 'retry-request', 'stream-events'].includes(data.name) && targets[data.name].versions.test(data.version)) {
+  if (['google-auth-library', 'retry-request', 'stream-events', 'teeny-request'].includes(data.name) && targets[data.name].versions.test(data.version)) {
     const entry = from.resolve(path.dirname(manifest));
     require(entry);
     require.cache[entry].exports = replacements[data.name];
@@ -1187,6 +1188,7 @@ async function run() {
     await require('./retry-request-conformance/callers.cjs')(replacements['retry-request']);
     await require('./stream-events-conformance/callers.cjs')(replacements['stream-events'], false, false);
     await require('./http-proxy-conformance/callers.cjs')(replacements['http-proxy-agent']);
+    await require('./teeny-conformance/callers.cjs')(replacements['teeny-request']);
 
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {

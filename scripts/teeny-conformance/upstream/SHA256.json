@@ -1,0 +1,10 @@
+{
+  "LICENSE": "8c6db340475136df3c1201d458fa5755698eace76e510471ecc9d857d6083dac",
+  "package.json": "dae08b95c2d0a3b2d98c0f94236da3acfffa190a91a44ed9a1f9a4464b64f29a",
+  "src/TeenyStatistics.ts.txt": "afac68e6b7216161bfc6c68d49dd2bc9c4b89553f9c937a23b5a345abeff5ebc",
+  "src/agents.ts.txt": "f8adfc9960a6d9d028329e245c44f92de898416bb54d3aeac78abb0abac7070c",
+  "src/index.ts.txt": "fbf6b437a38bf84d258588d0de4fabce58bcb7d833512a34899c2b856ad5eb60",
+  "test/TeenyStatistics.ts.txt": "c12825a06a79d622afaad3de64462d1600e83a9dd25226489e29b248de5cf92b",
+  "test/agents.ts.txt": "5adaf55509d73a2b1d0b78b6479a6738499f7b52ac191565423ffa834db75228",
+  "test/index.ts.txt": "2495a3e1fa0c1b26fec6df6c7a911882bddd76cc8560df17a0e17bd34b3f3475"
+}

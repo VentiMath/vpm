@@ -1,0 +1,32 @@
+{
+  "license": "Apache-2.0",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "teeny-request",
+    "version": "11.1.1",
+    "tarball": "https://registry.npmjs.org/teeny-request/-/teeny-request-11.1.1.tgz",
+    "integrity": "sha512-I5OLOkPN3QDN2l1H/eGueuKaq32CdAcXt91WOF/bOfadtZD1WQ8/Fk28WsqDcGjIyhAW/GQDagYhVEjhuZUFyQ=="
+  },
+  "source": {
+    "repository": "googleapis/google-cloud-node",
+    "ref": "teeny-request-v11.1.1",
+    "commit": "72f2e23f1f1a035d85edf1b218948d365aa0bb7f",
+    "directory": "core/packages/teeny-request",
+    "manifest": "scripts/teeny-conformance/upstream/SHA256.json"
+  },
+  "dependencies": {"node-fetch": "vnode-fetch", "http-proxy-agent": "vhttp-proxy-agent", "https-proxy-agent": "vhttps-proxy-agent", "stream-events": "vstream-events"},
+  "changes": [
+    "Use the same Node-stream transport on Node 24 and Bun, retaining SDK callback and lazy download APIs.",
+    "Enforce a total deadline through redirects and response bodies; propagate cancellation to connections and upload streams.",
+    "Serialize arbitrary multipart parts in order, end string-only uploads and cancel stalled input streams.",
+    "Snapshot mutable headers, byte views and pool options; append query parameters to existing queries; sanitize request errors.",
+    "Bound and isolate agent caching by protocol, proxy and pool configuration; enable proxy keep-alive for forever requests.",
+    "Preserve per-request statistics across resetStats and add response-size limits."
+  ],
+  "upstreamTestAdaptations": [
+    "Await callback and stream assertions before teardown; correct proxy constructor imports in the test file.",
+    "Supply HTTPS metadata to Nock on Bun, equally for both implementations; real HTTP/TLS tests run without that shim.",
+    "Retain two skipped upstream multipart tests and add real-network multipart regressions.",
+    "Require the published Node control to reproduce exactly its two error-message/compression-header assertion failures."
+  ]
+}
