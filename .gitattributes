@@ -2,3 +2,5 @@
 # Keep hash-pinned upstream test fixtures byte-for-byte, including deliberate PEM whitespace.
 scripts/google-auth-conformance/upstream-11.3.2/** -whitespace
 scripts/queue-limit-conformance/upstream/** -whitespace
+# Preserve the hash-pinned entity snapshots' final blank line.
+scripts/entities-conformance/upstream/** whitespace=-blank-at-eof

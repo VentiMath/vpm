@@ -28,9 +28,14 @@ jobs:
       - run: npm --prefix scripts/cloud-utils-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/queue-limit-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/retry-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/entities-conformance/regressions.cjs
+          node scripts/entities-conformance/run.cjs
+          node scripts/entities-conformance/run.cjs --upstream
+          node scripts/entities-conformance/callers.cjs --upstream
           node scripts/retry-conformance/regressions.cjs
           node scripts/retry-conformance/run.cjs
           node scripts/retry-conformance/run.cjs --upstream
@@ -117,9 +122,11 @@ jobs:
       - run: npm --prefix scripts/cloud-utils-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/queue-limit-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/retry-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun run test:bun
       - run: bun run typecheck
       - run: bun run check:docs
+      - run: node --disable-warning=ExperimentalWarning scripts/entities-conformance/generate-data.cjs --check
       - run: npm --prefix scripts/type-consumers ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/sync-types.cjs --check
       - run: npm run test:types
@@ -129,6 +136,10 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/entities-conformance/regressions.cjs
+          bun scripts/entities-conformance/run.cjs
+          bun scripts/entities-conformance/run.cjs --upstream
+          bun scripts/entities-conformance/callers.cjs --upstream
           bun scripts/retry-conformance/regressions.cjs
           bun scripts/retry-conformance/run.cjs
           bun scripts/retry-conformance/run.cjs --upstream

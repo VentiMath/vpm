@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'html-entities': { pkg: 'vhtml-entities', versions: /^2\.6\.0$/ },
   retry: { pkg: 'vretry', versions: /^0\.13\.1$/ },
   'async-retry': { pkg: 'vasync-retry', versions: /^1\.3\.3$/ },
   'yocto-queue': { pkg: 'vyocto-queue', versions: /^(?:0\.1\.0|1\.2\.2)$/ },
@@ -1200,6 +1201,7 @@ async function run() {
     await require('./teeny-conformance/callers.cjs')(replacements['teeny-request']);
     await require('./duplexify-conformance/callers.cjs')(replacements.duplexify);
     await require('./paginator-conformance/callers.cjs')(replacements['@google-cloud/paginator']);
+    require('./entities-conformance/callers.cjs')(replacements['html-entities']);
     await require('./retry-conformance/callers.cjs')(replacements['async-retry']);
     await require('./queue-limit-conformance/callers.cjs')(replacements['p-limit']);
     await require('./cloud-utils-conformance/callers.cjs')(replacements['@google-cloud/promisify'],replacements['@google-cloud/projectify']);
