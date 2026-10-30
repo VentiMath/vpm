@@ -28,6 +28,8 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  anynum: { pkg: 'vanynum', versions: /^1\.0\.1$/, esm: true },
+  strnum: { pkg: 'vstrnum', versions: /^2\.5\.1$/, esm: true },
   'html-entities': { pkg: 'vhtml-entities', versions: /^2\.6\.0$/ },
   retry: { pkg: 'vretry', versions: /^0\.13\.1$/ },
   'async-retry': { pkg: 'vasync-retry', versions: /^1\.3\.3$/ },
@@ -185,7 +187,8 @@ while (queue.length) {
       continue;
     }
     const entry = from.resolve(name);
-    // The VPM framework imports its own reader; keep this ESM baseline for comparisons.
+    // Keep ESM controls intact. The framework uses its own reader; the numeric
+    // fixture adapts the unbundled XML parser import and counts VPM calls there.
     if (targets[name].esm) {
       aliased.set(label, path.relative(modules, path.dirname(entry)));
       continue;
@@ -999,7 +1002,7 @@ async function run() {
       assert.equal(failed.status, 500); assert.equal(failed.body, 'Internal Server Error');
     }
     assert.ok(stderr.some(line => line.includes('"severity":"ERROR"') && line.includes('forbidden by policy')));
-    assert.ok(stderr.some(line => line.includes('"severity":"ERROR"') && line.includes('unexpected failure')));
+    assert.ok(stderr.some(line => line.includes('"severity":"ERROR"') && line.includes('unexpected failure')), 'Missing crash log; captured ERROR records: ' + JSON.stringify(stderr.filter(line => line.includes('"severity":"ERROR"'))));
     const missing = await request(apiServer, '/missing');
     assert.equal(missing.status, 404); assert.equal(missing.body, '{"error":"not found"}');
 
@@ -1201,6 +1204,7 @@ async function run() {
     await require('./teeny-conformance/callers.cjs')(replacements['teeny-request']);
     await require('./duplexify-conformance/callers.cjs')(replacements.duplexify);
     await require('./paginator-conformance/callers.cjs')(replacements['@google-cloud/paginator']);
+    await require('./numbers-conformance/callers.cjs')();
     require('./entities-conformance/callers.cjs')(replacements['html-entities']);
     await require('./retry-conformance/callers.cjs')(replacements['async-retry']);
     await require('./queue-limit-conformance/callers.cjs')(replacements['p-limit']);

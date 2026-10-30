@@ -1,0 +1,33 @@
+{
+  "name": "vanynum",
+  "version": "0.1.0",
+  "description": "Unicode decimal digit and minus normalization with complete pinned data",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json",
+    "lib/data.js"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "(MIT AND Unicode-3.0)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vanynum"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-30",
+  "upstream": {
+    "package": "strnum",
+    "version": "2.5.1",
+    "tarball": "https://registry.npmjs.org/strnum/-/strnum-2.5.1.tgz",
+    "integrity": "sha512-UM4nTLWzQiDBseVxUGxN0wJzIk0UU89Qi7pKXz9qISo+lhviJikTuikBsK/oFRlpvYHvSdz0TVoLyQ+sEpYwxA=="
+  },
+  "source": {
+    "repository": "NaturalIntelligence/strnum",
+    "commit": "5aa0a504335d30d761c0b79865b40eb80da5a2ab",
+    "manifest": "scripts/numbers-conformance/upstream/SHA256.json"
+  },
+  "changes": [
+    "Reuse vanynum for opt-in Unicode normalization.",
+    "Apply decimal grammar, exponent and leading-zero policies before overflow; apply the infinity option to radix overflow too.",
+    "Accept signed zero and fractional exponents with one integer zero when leadingZeros is false.",
+    "Keep global/sticky skipLike matching repeatable and restore lastIndex.",
+    "Read own options without Object.assign allocation or __proto__ injection.",
+    "Preserve upstream ordinary-decimal roundtrip checks and documented exponent/radix rounding policies.",
+    "Provide CommonJS/default ESM imports and self-contained public types."
+  ],
+  "verification": {
+    "fixture": "scripts/numbers-conformance",
+    "upstreamCases": 47,
+    "focusedTests": 8,
+    "caller": "fast-xml-parser 5.11.2: 12 differential and 2 intentional-difference cases; Storage 8.4.0: two multipart uploads; 70 instrumented numeric conversions",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "license": "MIT AND Unicode-3.0",
+  "checkedOn": "2026-10-30",
+  "upstream": {
+    "package": "anynum",
+    "version": "1.0.1",
+    "tarball": "https://registry.npmjs.org/anynum/-/anynum-1.0.1.tgz",
+    "integrity": "sha512-N6//FLET/tXYNM/F6ABca1oH6fWB+KlTt909Le28WMDBk8oaT4vY17DCrwg2MvmuqUKt3Ni4N5dGJ/EoBgcO6A=="
+  },
+  "source": {
+    "repository": "NaturalIntelligence/anynum",
+    "commit": "72a498f0f40000bb53434f9e3fe9535803a99b7e",
+    "manifest": "scripts/numbers-conformance/upstream/SHA256.json"
+  },
+  "changes": [
+    "Generate complete Unicode 18.0.0 decimal-digit coverage from pinned official data (770 digits versus 610).",
+    "Use 49 compact digit pages plus one empty page and a 508-byte page index instead of a wide BMP table and supplementary Map.",
+    "Preserve non-digit text, malformed surrogates, minus policy and non-string identity.",
+    "Provide CommonJS, named/default ESM imports and self-contained public types."
+  ],
+  "verification": {
+    "fixture": "scripts/numbers-conformance",
+    "upstreamCases": 32,
+    "focusedTests": 6,
+    "caller": "fast-xml-parser 5.11.2: 12 differential and 2 intentional-difference cases; Storage 8.4.0: two multipart uploads; 70 instrumented numeric conversions",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  },
+  "unicode": {
+    "version": "18.0.0",
+    "source": "https://www.unicode.org/Public/18.0.0/ucd/extracted/DerivedNumericType.txt",
+    "license": "Unicode-3.0",
+    "generation": "scripts/numbers-conformance/generate-data.cjs"
+  }
+}

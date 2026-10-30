@@ -28,10 +28,15 @@ jobs:
       - run: npm --prefix scripts/cloud-utils-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/queue-limit-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/retry-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/numbers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/numbers-conformance/regressions.cjs
+          node scripts/numbers-conformance/run.cjs
+          node scripts/numbers-conformance/run.cjs --upstream
+          node scripts/numbers-conformance/callers.cjs --upstream
           node scripts/entities-conformance/regressions.cjs
           node scripts/entities-conformance/run.cjs
           node scripts/entities-conformance/run.cjs --upstream
@@ -122,10 +127,12 @@ jobs:
       - run: npm --prefix scripts/cloud-utils-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/queue-limit-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/retry-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/numbers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun run test:bun
       - run: bun run typecheck
       - run: bun run check:docs
+      - run: node scripts/numbers-conformance/generate-data.cjs --check
       - run: node --disable-warning=ExperimentalWarning scripts/entities-conformance/generate-data.cjs --check
       - run: npm --prefix scripts/type-consumers ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/sync-types.cjs --check
@@ -136,6 +143,10 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/numbers-conformance/regressions.cjs
+          bun scripts/numbers-conformance/run.cjs
+          bun scripts/numbers-conformance/run.cjs --upstream
+          bun scripts/numbers-conformance/callers.cjs --upstream
           bun scripts/entities-conformance/regressions.cjs
           bun scripts/entities-conformance/run.cjs
           bun scripts/entities-conformance/run.cjs --upstream
