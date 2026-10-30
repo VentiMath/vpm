@@ -1,0 +1,10 @@
+{
+  "name": "vpm-retry-conformance",
+  "private": true,
+  "description": "Pinned controls for retry scheduling and promise retries; excluded from package archives",
+  "dependencies": {
+    "@sinonjs/fake-timers": "13.0.5",
+    "async-retry": "1.3.3",
+    "retry": "0.13.1"
+  }
+}

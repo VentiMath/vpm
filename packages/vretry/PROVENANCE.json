@@ -1,0 +1,32 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-30",
+  "upstream": {
+    "package": "retry",
+    "version": "0.13.1",
+    "tarball": "https://registry.npmjs.org/retry/-/retry-0.13.1.tgz",
+    "integrity": "sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg=="
+  },
+  "source": {
+    "repository": "tim-kos/node-retry",
+    "commit": "b8e26ea7adda3f11c19086a762d15e95521f3e4e",
+    "manifest": "scripts/retry-conformance/upstream/retry/SHA256.json"
+  },
+  "changes": [
+    "Validated own configuration and finite schedule allocation; chunked safe timers and monotonic retry budgets.",
+    "Reset and stop cancel all timers; guarded callback attempts and duplicate scheduling.",
+    "Prototype-free error-message counts with latest-tie selection.",
+    "Preflighted own-data method wrapping and immutable option snapshots.",
+    "CommonJS/ESM exports and bundled TypeScript declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/retry-conformance",
+    "focusedTests": 20,
+    "upstreamCases": 26,
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ],
+    "adaptations": "See scripts/retry-conformance/README.md for deterministic clocks, assertion/helper adapters, repaired vacuous loops and Storage caller limitations."
+  }
+}

@@ -49,6 +49,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vretry' || name === 'vasync-retry') {
+      assert.deepEqual(metadata.dependencies, name === 'vretry' ? undefined : {vretry:'0.1.0'});
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json',...(name === 'vretry' ? ['retry-operation.js','retry-operation.d.ts'] : [])].sort());
+    }
     if (name === 'vp-limit') {
       assert.deepEqual(metadata.dependencies, {'vyocto-queue':'0.1.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -167,6 +172,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveRetry=require('vretry');if(archiveRetry.timeouts({retries:1})[0]!==1000||require('vretry/lib/retry_operation')!==archiveRetry.RetryOperation)throw new Error('retry CJS archive');
+require('vasync-retry')(()=>7,{retries:0}).then(x=>{if(x!==7)throw new Error('async retry CJS archive');});
 const archiveQueue=new (require('vyocto-queue'))();archiveQueue.enqueue('ok');if(archiveQueue.dequeue()!=='ok')throw new Error('queue CJS archive');
 const archiveLimit=require('vp-limit')(1);if(archiveLimit.concurrency!==1||typeof require('vp-limit').limitFunction!=='function')throw new Error('limit CJS archive');
 archiveLimit(x=>x,42).then(x=>{if(x!==42)throw new Error('limit CJS task');});
@@ -341,6 +348,10 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import archiveRetry,{operation as archiveOperation} from 'vretry';
+import ArchiveRetryOperation from 'vretry/lib/retry_operation.js';
+import archiveAsyncRetry from 'vasync-retry';
+if(archiveRetry.operation!==archiveOperation||!(archiveOperation() instanceof ArchiveRetryOperation)||await archiveAsyncRetry(()=>7,{retries:0})!==7)throw new Error('retry ESM archive');
 import ArchiveQueue from 'vyocto-queue';
 import archiveLimit,{limitFunction as archiveLimitFunction} from 'vp-limit';
 const archiveQueue=new ArchiveQueue();archiveQueue.enqueue(1);if([...archiveQueue.drain()][0]!==1)throw new Error('queue ESM archive');
@@ -509,6 +520,13 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import {operation as typedRetryOperation, type Options as TypedRetryOptions} from 'vretry';
+import TypedRetryOperation from 'vretry/lib/retry_operation';
+import typedAsyncRetry from 'vasync-retry';
+const typedRetryOpts:TypedRetryOptions={retries:2};
+const typedRetryOp:TypedRetryOperation=typedRetryOperation(typedRetryOpts);
+const typedRetryResult:Promise<number>=typedAsyncRetry((bail,n)=>n,typedRetryOpts);
+void [typedRetryOp,typedRetryResult];
 import TypedQueue from 'vyocto-queue';
 import typedLimit,{limitFunction as typedLimitFunction,type LimitFunction as TypedLimit} from 'vp-limit';
 const typedQueue=new TypedQueue<string>();typedQueue.enqueue('ok');const typedDequeued:string|undefined=typedQueue.dequeue();
