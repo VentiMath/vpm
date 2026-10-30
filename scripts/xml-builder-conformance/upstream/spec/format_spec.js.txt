@@ -1,0 +1,58 @@
+
+import XMLBuilder from "../src/fxb.js";
+import { Expression } from "path-expression-matcher";
+
+describe("Format without indentation", function () {
+  const expectedXml = `
+<root>
+<child1>hello</child1>
+<child2>world</child2>
+</root>`
+
+  it("when order is preserved", function () {
+    const jObj = [
+      {
+        root: [
+          { child1: [{ "#text": "hello" }] },
+          { child2: [{ "#text": "world" }] }
+        ]
+      }
+    ];
+
+    const builderOptions = {
+      format: true,
+      preserveOrder: true,
+      indentBy: ""
+    };
+
+
+    const builder = new XMLBuilder(builderOptions);
+    let output = builder.build(jObj);
+    // console.log(output);
+    expect(output).toEqual(expectedXml);
+
+  });
+  xit("when order is not preserved", function () {
+    // TODO: This test is failing due an extra line in the starting of the document
+    // But not changing the behavior for backward compatibility.
+    // Will be fixed in major release
+    const jObj = {
+      root: {
+        child1: "hello",
+        child2: "world",
+      }
+    }
+
+    const builderOptions = {
+      format: true,
+      indentBy: ""
+    };
+
+
+    const builder = new XMLBuilder(builderOptions);
+    let output = builder.build(jObj);
+    //console.log(output);
+    expect(output).toEqual(expectedXml);
+
+  });
+});

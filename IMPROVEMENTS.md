@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vfast-xml-builder | fast-xml-builder 1.3.1; parser 5.11.2 and Storage 8.4.0 callers | [fast-xml-builder 1.3.1](https://www.npmjs.com/package/fast-xml-builder), checked October 30, 2026 |
 | Caller paths verified | vnodable-entities | @nodable/entities 3.1.0; parser 5.11.2 and Storage 8.4.0 callers | [@nodable/entities 3.1.0](https://www.npmjs.com/package/@nodable/entities), checked October 30, 2026 |
 | Caller paths verified | vpath-expression-matcher | path-expression-matcher 1.6.2; parser 5.11.2, builder 1.3.1 and Storage 8.4.0 callers | [path-expression-matcher 1.6.2](https://www.npmjs.com/package/path-expression-matcher), checked October 30, 2026 |
 | Caller paths verified | vxml-naming / vis-unsafe | xml-naming 0.3.0, is-unsafe 2.0.2; parser 5.11.2, builder 1.3.1 and Storage 8.4.0 callers | [xml-naming](https://www.npmjs.com/package/xml-naming), [is-unsafe](https://www.npmjs.com/package/is-unsafe), checked October 30, 2026 |
@@ -75,6 +76,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfast-xml-builder](packages/vfast-xml-builder) | fast-xml-builder 1.3.1 | Bounded raw/ordinary traversal, deterministic filters, corrected array/text handling, readonly callback paths and faster serialization. |
 | [vnodable-entities](packages/vnodable-entities) | @nodable/entities 3.1.0 | Strict numeric references, atomic registration/budgets, consistent XML-version reset, corrected tables, private state and complete custom-prefix encoding. |
 | [vpath-expression-matcher](packages/vpath-expression-matcher) | path-expression-matcher 1.6.2 | Correct rooted/deep path matching, bracket-aware parsing, isolated matcher state/views, immutable compiled patterns and current XML/Storage caller checks. |
 | [vxml-naming](packages/vxml-naming) | xml-naming 0.3.0 | Correct XML name ranges, consistent diagnostics, valid sanitization and bounded cache contracts; current XML parser/builder callers verified. |
@@ -159,12 +161,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,485 tests**: all pass on Node 24, and Bun passes
-2,482 with three documented runtime-specific skips. All 79 runtime packages'
+The root suite contains **2,502 tests**: all pass on Node 24, and Bun passes
+2,499 with three documented runtime-specific skips. All 80 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **81 packages**, including two declaration-only packages.
+catalog covers **82 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -254,6 +256,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vfast-xml-builder` | 2 | 2 (both VPM) |
 | `vnodable-entities` | 0 | 0 |
 | `vpath-expression-matcher` | 0 | 0 |
 | `vxml-naming` | 0 | 0 |
@@ -399,6 +402,39 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfast-xml-builder
+
+The baseline is **fast-xml-builder 1.3.1**, checked October 30, 2026. The adapted
+ordinary and ordered serializers use VPM's path matcher and XML naming packages;
+both direct dependencies have replacements. CommonJS/ESM exports and declarations
+cover the callable builder and its options without claiming phantom runtime types.
+
+Single-character array names, null item order, Date array values and null-prototype
+attribute groups work. Text-only objects invoke processors once; inherited text
+cannot replace own children, and object-valued processor results are escaped after
+conversion. Attribute regexes are repeatable, selective filtering works across
+ordered/grouped/raw children, and predicates inspect original attribute values.
+Sanitizer results must themselves be valid names. Callback paths are read-only.
+
+Configuration is copied/frozen, cycles and same-builder callback reentry reject,
+and depth bounds cover structured raw traversal as well as ordinary/ordered nodes.
+Raw strings remain intentional markup; the builder is not a complete XML validator
+or an output-size limiter. Existing default-name permissiveness, boolean flags'
+truthiness and differing pretty-print newline conventions are documented.
+
+The [fixture](scripts/xml-builder-conformance) executes all 136 retained upstream
+cases: 135 pass unchanged, with one originally disabled formatting mismatch
+explicitly reproduced on both implementations. Seventeen paired discriminators
+and 17 focused tests cover fixes, depth matrices, reuse and 4,000 generated escaping
+comparisons. Actual parser 5.11.2 callers and Storage 8.4.0 one-/three-part uploads
+verify escaped completion bodies and eight mocked HTTP requests. Browser bundles,
+packed installs and declaration consumers are checked.
+
+[Benchmarks](packages/vfast-xml-builder/bench/results/README.md) retain source hashes,
+three fresh processes and identical-upstream controls per runtime. Ordinary calls
+avoid unused path/name work, and default escaping uses an inline loop. These are
+serialization measurements, not end-to-end upload speedups or deployed adoption.
 
 ## vnodable-entities
 

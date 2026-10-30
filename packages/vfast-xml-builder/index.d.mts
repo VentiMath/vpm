@@ -1,0 +1,10 @@
+import type API from './index.js';
+export type MatcherView=API.MatcherView;
+export type SanitizeNameContext=API.SanitizeNameContext;
+export type EntityReplacement=API.EntityReplacement;
+export type XmlBuilderOptions=API.XmlBuilderOptions;
+export type XMLBuilder=API.XMLBuilder;
+export type XMLBuilderConstructor=API.XMLBuilderConstructor;
+declare const Builder:XMLBuilderConstructor;
+export {Builder};
+export default Builder;

@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'fast-xml-builder': {pkg:'vfast-xml-builder',versions:/^1\.3\.1$/,esm:true},
   '@nodable/entities': { pkg: 'vnodable-entities', versions: /^3\.1\.0$/, esm: true },
   'path-expression-matcher': { pkg: 'vpath-expression-matcher', versions: /^1\.6\.2$/, esm: true },
   'xml-naming': { pkg: 'vxml-naming', versions: /^0\.3\.0$/, esm: true },
@@ -1212,6 +1213,7 @@ async function run() {
     await require('./xml-helpers-conformance/callers.cjs')();
     await require('./path-matcher-conformance/callers.cjs')();
     await require('./nodable-entities-conformance/callers.cjs')();
+    await require('./xml-builder-conformance/callers.cjs')();
     require('./entities-conformance/callers.cjs')(replacements['html-entities']);
     await require('./retry-conformance/callers.cjs')(replacements['async-retry']);
     await require('./queue-limit-conformance/callers.cjs')(replacements['p-limit']);
