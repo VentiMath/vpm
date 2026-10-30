@@ -1,0 +1,15 @@
+{
+  "upstream": {
+    "name": "mime",
+    "version": "4.1.2",
+    "repository": "https://github.com/broofa/mime",
+    "commit": "f2e2240c96e64ea60dcbfb9cff54aeda24126b2b",
+    "integrity": "sha512-ikRzZ2RwbUVDyL9SsU0f2Phcmav4yq5r8faH5ZZKHtOZrMBLnrQOrj0uvqZ5R1uQnj+RO7Wcklw/lAf81mP9LQ=="
+  },
+  "license": "MIT",
+  "checked": "2026-10-30",
+  "data": "Exact standard/other table values and ordering from the published mime 4.1.2 distribution, including starred conflict preferences. No runtime download or MIME database dependency.",
+  "implementation": "Reimplemented lookup and transactional definition logic. Built-in state is locked privately and inspection returns copies. Both module systems and frozen extension arrays are supported.",
+  "snapshots": "../../scripts/mime-conformance/upstream/SHA256.json",
+  "storageCompatibility": "Storage 8.4.0 uses getType; mime 3.0.0 retained as migration control. MIME data follows 4.1.2, not historical assignments."
+}

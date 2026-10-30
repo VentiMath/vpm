@@ -1,0 +1,9 @@
+{
+  "name": "vpm-mime-conformance",
+  "private": true,
+  "description": "Pinned mime 4 library baseline and retained mime 3 Storage compatibility controls",
+  "dependencies": {
+    "mime": "4.1.2",
+    "mime-legacy": "npm:mime@3.0.0"
+  }
+}

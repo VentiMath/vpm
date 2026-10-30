@@ -1,0 +1,416 @@
+{
+  "from": "mime 3.0.0",
+  "to": "mime 4.1.2",
+  "changes": [
+    {
+      "extension": "210",
+      "before": null,
+      "after": "model/step"
+    },
+    {
+      "extension": "aac",
+      "before": "audio/x-aac",
+      "after": "audio/aac"
+    },
+    {
+      "extension": "adts",
+      "before": null,
+      "after": "audio/aac"
+    },
+    {
+      "extension": "age",
+      "before": null,
+      "after": "application/vnd.age"
+    },
+    {
+      "extension": "aml",
+      "before": null,
+      "after": "application/automationml-aml+xml"
+    },
+    {
+      "extension": "amlx",
+      "before": null,
+      "after": "application/automationml-amlx+zip"
+    },
+    {
+      "extension": "appinstaller",
+      "before": null,
+      "after": "application/appinstaller"
+    },
+    {
+      "extension": "appx",
+      "before": null,
+      "after": "application/appx"
+    },
+    {
+      "extension": "appxbundle",
+      "before": null,
+      "after": "application/appxbundle"
+    },
+    {
+      "extension": "asc",
+      "before": "application/pgp-signature",
+      "after": "application/pgp-keys"
+    },
+    {
+      "extension": "avci",
+      "before": null,
+      "after": "image/avci"
+    },
+    {
+      "extension": "avcs",
+      "before": null,
+      "after": "image/avcs"
+    },
+    {
+      "extension": "bary",
+      "before": null,
+      "after": "model/vnd.bary"
+    },
+    {
+      "extension": "bdo",
+      "before": null,
+      "after": "application/vnd.nato.bindingdataobject+xml"
+    },
+    {
+      "extension": "blend",
+      "before": null,
+      "after": "application/x-blender"
+    },
+    {
+      "extension": "brush",
+      "before": null,
+      "after": "application/vnd.procreate.brush"
+    },
+    {
+      "extension": "brushset",
+      "before": null,
+      "after": "application/vnd.procrate.brushset"
+    },
+    {
+      "extension": "btf",
+      "before": null,
+      "after": "image/prs.btif"
+    },
+    {
+      "extension": "cld",
+      "before": null,
+      "after": "model/vnd.cld"
+    },
+    {
+      "extension": "cpl",
+      "before": null,
+      "after": "application/cpl+xml"
+    },
+    {
+      "extension": "cwl",
+      "before": null,
+      "after": "application/cwl"
+    },
+    {
+      "extension": "dcm",
+      "before": null,
+      "after": "application/dicom"
+    },
+    {
+      "extension": "dcmp",
+      "before": null,
+      "after": "application/vnd.dcmp+xml"
+    },
+    {
+      "extension": "dib",
+      "before": null,
+      "after": "image/bmp"
+    },
+    {
+      "extension": "dng",
+      "before": null,
+      "after": "image/x-adobe-dng"
+    },
+    {
+      "extension": "dpx",
+      "before": null,
+      "after": "image/dpx"
+    },
+    {
+      "extension": "drm",
+      "before": null,
+      "after": "application/vnd.procreate.dream"
+    },
+    {
+      "extension": "es",
+      "before": "application/ecmascript",
+      "after": null
+    },
+    {
+      "extension": "facti",
+      "before": null,
+      "after": "image/vnd.blockfact.facti"
+    },
+    {
+      "extension": "fbx",
+      "before": null,
+      "after": "application/vnd.autodesk.fbx"
+    },
+    {
+      "extension": "fdf",
+      "before": "application/vnd.fdf",
+      "after": "application/fdf"
+    },
+    {
+      "extension": "gdraw",
+      "before": null,
+      "after": "application/vnd.google-apps.drawing"
+    },
+    {
+      "extension": "ged",
+      "before": null,
+      "after": "text/vnd.familysearch.gedcom"
+    },
+    {
+      "extension": "gform",
+      "before": null,
+      "after": "application/vnd.google-apps.form"
+    },
+    {
+      "extension": "ggs",
+      "before": null,
+      "after": "application/vnd.geogebra.slides"
+    },
+    {
+      "extension": "gjam",
+      "before": null,
+      "after": "application/vnd.google-apps.jam"
+    },
+    {
+      "extension": "gmap",
+      "before": null,
+      "after": "application/vnd.google-apps.map"
+    },
+    {
+      "extension": "gscript",
+      "before": null,
+      "after": "application/vnd.google-apps.script"
+    },
+    {
+      "extension": "gsite",
+      "before": null,
+      "after": "application/vnd.google-apps.site"
+    },
+    {
+      "extension": "hsj2",
+      "before": "image/hsj2",
+      "after": null
+    },
+    {
+      "extension": "ipynb",
+      "before": null,
+      "after": "application/x-ipynb+json"
+    },
+    {
+      "extension": "jaii",
+      "before": null,
+      "after": "image/jaii"
+    },
+    {
+      "extension": "jais",
+      "before": null,
+      "after": "image/jais"
+    },
+    {
+      "extension": "jfif",
+      "before": null,
+      "after": "image/pjpeg"
+    },
+    {
+      "extension": "jpgm",
+      "before": "video/jpm",
+      "after": "image/jpm"
+    },
+    {
+      "extension": "js",
+      "before": "application/javascript",
+      "after": "text/javascript"
+    },
+    {
+      "extension": "jt",
+      "before": null,
+      "after": "model/jt"
+    },
+    {
+      "extension": "jxl",
+      "before": null,
+      "after": "image/jxl"
+    },
+    {
+      "extension": "lottie",
+      "before": null,
+      "after": "application/zip+dotlottie"
+    },
+    {
+      "extension": "m2t",
+      "before": null,
+      "after": "video/mp2t"
+    },
+    {
+      "extension": "m2ts",
+      "before": null,
+      "after": "video/mp2t"
+    },
+    {
+      "extension": "m4b",
+      "before": null,
+      "after": "audio/mp4"
+    },
+    {
+      "extension": "mht",
+      "before": null,
+      "after": "message/rfc822"
+    },
+    {
+      "extension": "mhtml",
+      "before": null,
+      "after": "message/rfc822"
+    },
+    {
+      "extension": "mjs",
+      "before": "application/javascript",
+      "after": "text/javascript"
+    },
+    {
+      "extension": "mpf",
+      "before": null,
+      "after": "application/media-policy-dataset+xml"
+    },
+    {
+      "extension": "mpp",
+      "before": "application/vnd.ms-project",
+      "after": "application/dash-patch+xml"
+    },
+    {
+      "extension": "msix",
+      "before": null,
+      "after": "application/msix"
+    },
+    {
+      "extension": "msixbundle",
+      "before": null,
+      "after": "application/msixbundle"
+    },
+    {
+      "extension": "mts",
+      "before": "model/vnd.mts",
+      "after": "video/mp2t"
+    },
+    {
+      "extension": "one",
+      "before": null,
+      "after": "application/onenote"
+    },
+    {
+      "extension": "onea",
+      "before": null,
+      "after": "application/onenote"
+    },
+    {
+      "extension": "p21",
+      "before": null,
+      "after": "model/step"
+    },
+    {
+      "extension": "prc",
+      "before": "application/x-mobipocket-ebook",
+      "after": "model/prc"
+    },
+    {
+      "extension": "pyo",
+      "before": null,
+      "after": "model/vnd.pytha.pyox"
+    },
+    {
+      "extension": "pyox",
+      "before": null,
+      "after": "model/vnd.pytha.pyox"
+    },
+    {
+      "extension": "sql",
+      "before": "application/x-sql",
+      "after": "application/sql"
+    },
+    {
+      "extension": "step",
+      "before": null,
+      "after": "model/step"
+    },
+    {
+      "extension": "stp",
+      "before": null,
+      "after": "model/step"
+    },
+    {
+      "extension": "stpnc",
+      "before": null,
+      "after": "model/step"
+    },
+    {
+      "extension": "u3d",
+      "before": null,
+      "after": "model/u3d"
+    },
+    {
+      "extension": "uo",
+      "before": null,
+      "after": "application/vnd.uoml+xml"
+    },
+    {
+      "extension": "usda",
+      "before": null,
+      "after": "model/vnd.usda"
+    },
+    {
+      "extension": "vdx",
+      "before": null,
+      "after": "application/vnd.ms-visio.viewer"
+    },
+    {
+      "extension": "vsdx",
+      "before": null,
+      "after": "application/vnd.visio"
+    },
+    {
+      "extension": "vtx",
+      "before": null,
+      "after": "application/vnd.visio"
+    },
+    {
+      "extension": "wgsl",
+      "before": null,
+      "after": "text/wgsl"
+    },
+    {
+      "extension": "wif",
+      "before": null,
+      "after": "application/watcherinfo+xml"
+    },
+    {
+      "extension": "xdcf",
+      "before": null,
+      "after": "application/vnd.gov.sk.xmldatacontainer+xml"
+    },
+    {
+      "extension": "xfdf",
+      "before": "application/vnd.adobe.xfdf",
+      "after": "application/xfdf"
+    },
+    {
+      "extension": "xhtm",
+      "before": null,
+      "after": "application/vnd.pwg-xhtml-print+xml"
+    },
+    {
+      "extension": "xsf",
+      "before": null,
+      "after": "application/prs.xsf+xml"
+    }
+  ]
+}

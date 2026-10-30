@@ -318,6 +318,13 @@
       "name": "vmerge-descriptors",
       "version": "0.1.0",
     },
+    "packages/vmime": {
+      "name": "vmime",
+      "version": "0.1.0",
+      "bin": {
+        "vmime": "bin/vmime.cjs",
+      },
+    },
     "packages/vmime-db": {
       "name": "vmime-db",
       "version": "0.1.0",
@@ -675,6 +682,8 @@
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
 
     "vmerge-descriptors": ["vmerge-descriptors@workspace:packages/vmerge-descriptors"],
+
+    "vmime": ["vmime@workspace:packages/vmime"],
 
     "vmime-db": ["vmime-db@workspace:packages/vmime-db"],
 

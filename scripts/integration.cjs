@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  mime: {pkg:'vmime',versions:/^(?:3\.0\.0|4\.1\.2)$/},
   'fast-xml-parser': {pkg:'vfast-xml-parser',versions:/^5\.11\.2$/},
   'fast-xml-builder': {pkg:'vfast-xml-builder',versions:/^1\.3\.1$/,esm:true},
   '@nodable/entities': { pkg: 'vnodable-entities', versions: /^3\.1\.0$/, esm: true },
@@ -118,7 +119,12 @@ function counting(name, value) {
   return new Proxy(value, {
     apply(target, thisArg, args) { calls[name]++; return Reflect.apply(target, thisArg, args); },
     construct(target, args, newTarget) { calls[name]++; return Reflect.construct(target, args, newTarget); },
-    get(target, key, receiver) { if (typeof key === 'string') calls[name]++; return Reflect.get(target, key, receiver); },
+    get(target, key, receiver) {
+      if (typeof key === 'string') calls[name]++;
+      const member = Reflect.get(target, key, receiver);
+      // Mime stores private instance state; instrumentation must preserve its receiver.
+      return name === 'mime' && key !== 'Mime' && typeof member === 'function' ? member.bind(target) : member;
+    },
   });
 }
 // Instrument VPM exports before loading their parents, so transitive calls
@@ -1216,6 +1222,7 @@ async function run() {
     await require('./nodable-entities-conformance/callers.cjs')();
     await require('./xml-builder-conformance/callers.cjs')();
     await require('./xml-parser-conformance/callers.cjs')();
+    await require('./mime-conformance/callers.cjs')();
     require('./entities-conformance/callers.cjs')(replacements['html-entities']);
     await require('./retry-conformance/callers.cjs')(replacements['async-retry']);
     await require('./queue-limit-conformance/callers.cjs')(replacements['p-limit']);

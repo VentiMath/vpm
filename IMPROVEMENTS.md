@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vmime | mime 4.1.2; Storage 8.4.0 upload/compose callers using mime 3.0.0 | [mime 4.1.2](https://www.npmjs.com/package/mime), checked October 30, 2026 |
 | Caller paths verified | vfast-xml-parser | fast-xml-parser 5.11.2; Storage 8.4.0 multipart callers | [fast-xml-parser 5.11.2](https://www.npmjs.com/package/fast-xml-parser), checked October 30, 2026 |
 | Caller paths verified | vfast-xml-builder | fast-xml-builder 1.3.1; parser 5.11.2 and Storage 8.4.0 callers | [fast-xml-builder 1.3.1](https://www.npmjs.com/package/fast-xml-builder), checked October 30, 2026 |
 | Caller paths verified | vnodable-entities | @nodable/entities 3.1.0; parser 5.11.2 and Storage 8.4.0 callers | [@nodable/entities 3.1.0](https://www.npmjs.com/package/@nodable/entities), checked October 30, 2026 |
@@ -77,6 +78,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
 | [vfast-xml-parser](packages/vfast-xml-parser) | fast-xml-parser 5.11.2 | Reusable parser setup, exact depth limits, deterministic filters, safer callbacks and stricter XML syntax checks; all six helpers use VPM. |
 | [vfast-xml-builder](packages/vfast-xml-builder) | fast-xml-builder 1.3.1 | Bounded raw/ordinary traversal, deterministic filters, corrected array/text handling, readonly callback paths and faster serialization. |
 | [vnodable-entities](packages/vnodable-entities) | @nodable/entities 3.1.0 | Strict numeric references, atomic registration/budgets, consistent XML-version reset, corrected tables, private state and complete custom-prefix encoding. |
@@ -163,12 +165,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,552 tests**: all pass on Node 24, and Bun passes
-2,549 with three documented runtime-specific skips. All 81 runtime packages'
+The root suite contains **2,562 tests**: all pass on Node 24, and Bun passes
+2,559 with three documented runtime-specific skips. All 82 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **83 packages**, including two declaration-only packages.
+catalog covers **84 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -258,6 +260,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vmime` | 0 | 0 |
 | `vfast-xml-parser` | 6 | 6 (all VPM) |
 | `vfast-xml-builder` | 2 | 2 (both VPM) |
 | `vnodable-entities` | 0 | 0 |
@@ -405,6 +408,30 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vmime
+
+The baseline is **mime 4.1.2**, checked October 30, 2026. Full/lite tables
+preserve its 1,016 MIME types, 1,240 extension assignments and preference order.
+Lookup scans only the suffix. Custom definitions are atomic on conflicts and
+invalid entries; privately locked instances resist prototype-call mutation, and
+inspection Maps and exported table arrays cannot change built-in mappings.
+Empty Content-Type misses return `null`. The package supports CJS/ESM, standalone
+types, a renamed CLI and a browser-target bundle, with zero runtime dependencies.
+
+All 15 retained upstream cases pass on both runtimes, alongside ten focused
+cases, exhaustive tables, 5,000 seeded paths and six checked behavior differences.
+Actual Storage 8.4.0 upload/compose callers pass with mime 3, mime 4 and VPM;
+explicit metadata, gzip bytes and inference are checked with mocked transport.
+The current data adds 69 extensions, changes 11 assignments and removes two
+relative to mime 3; `.js`/`.mjs` become `text/javascript`. These are recorded
+migration differences, not failures to replace an older package family.
+
+[Measurements](packages/vmime/bench/results/README.md) show 69% less lookup
+time on Node and 53% less on Bun for the Storage-style object name. Full-table
+construction remains slower (about 0.54 vs 0.37 ms on Node, 0.59 vs 0.29 ms on
+Bun), as do two small Bun operations. A noisy Node constructor control is
+explicitly flagged; these are local CPU measurements, not application speedups. [API, scope and provenance](packages/vmime/README.md).
 
 ## vfast-xml-parser
 

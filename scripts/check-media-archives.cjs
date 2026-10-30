@@ -49,6 +49,12 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vmime') {
+      assert.equal(metadata.dependencies, undefined);
+      assert.equal(metadata.bin.vmime,'bin/vmime.cjs');
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json','lib/Mime.js','bin/vmime.cjs',...['index','lite','types/standard','types/other'].flatMap(n=>[n+'.js',n+'.mjs',n+'.d.ts',n+'.d.mts'])].sort());
+    }
     if (name === 'vfast-xml-parser') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(),['vfast-xml-builder','vis-unsafe','vnodable-entities','vpath-expression-matcher','vstrnum','vxml-naming']);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -207,6 +213,7 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveMime=require('vmime'),archiveLite=require('vmime/lite'),archiveTable=require('vmime/types/standard.js');if(archiveMime.getType('photo.JPG')!=='image/jpeg'||archiveLite.getType('a.docx')!==null||new archiveMime.Mime(archiveTable).getType('txt')!=='text/plain'||!Object.isFrozen(archiveTable['text/plain']))throw new Error('MIME CJS archive');
 const ArchiveParser=require('vfast-xml-parser');if(new ArchiveParser.XMLParser().parse('<r>&amp;</r>',true).r!=='&'||ArchiveParser.XMLValidator.validate('<r/><s/>')===true||new ArchiveParser.XMLBuilder().build({r:'x'})!=='<r>x</r>')throw new Error('XML parser CJS archive');
 const ArchiveBuilder=require('vfast-xml-builder');if(ArchiveBuilder({arrayNodeName:'x'}).build([1,2])!=='<x>1</x><x>2</x>')throw new Error('XML builder CJS archive');
 const archiveNodable=require('vnodable-entities');if(new archiveNodable.EntityDecoder().decode('&lt;&#65junk;')!=='<&#65junk;'||new archiveNodable.EntityEncoder({encodeAllNamed:false}).encode('<')!=='&lt;')throw new Error('nodable CJS archive');
@@ -393,6 +400,7 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import archiveMimeESM,{Mime as ArchiveMimeClass} from 'vmime';import archiveLiteESM from 'vmime/lite';import archiveOther from 'vmime/types/other.js';if(archiveMimeESM.getType('a.js')!=='text/javascript'||archiveLiteESM.getType('txt')!=='text/plain'||new ArchiveMimeClass(archiveOther).getType('docx')!=='application/vnd.openxmlformats-officedocument.wordprocessingml.document')throw new Error('MIME ESM archive');
 import {XMLParser as ArchiveParserESM,XMLValidator as ArchiveValidatorESM} from 'vfast-xml-parser';if(new ArchiveParserESM().parse('<r><a/></r>').r.a!==''||ArchiveValidatorESM.validate('<r a="&bad"/>')===true)throw new Error('XML parser ESM archive');
 import ArchiveBuilderESM,{Builder as ArchiveNamedBuilder} from 'vfast-xml-builder';if(ArchiveBuilderESM!==ArchiveNamedBuilder||new ArchiveBuilderESM().build({r:'<'})!=='<r>&lt;</r>')throw new Error('XML builder ESM archive');
 import {EntityDecoder as ArchiveDecoder,EntityEncoder as ArchiveEncoder,ALL_ENTITIES as ArchiveEntityTable} from 'vnodable-entities';
@@ -579,6 +587,10 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import typedMime,{Mime as TypedMime} from 'vmime';import typedLite from 'vmime/lite';import typedStandard from 'vmime/types/standard.js';import typedOther from 'vmime/types/other.js';const typedMimeInstance:TypedMime=new TypedMime(typedStandard,typedOther);const typedMimeResult:string|null=typedMime.getType('a.txt');const typedMimeSet:Set<string>|null=typedLite.getAllExtensions('text/plain');void typedMimeInstance;void typedMimeResult;void typedMimeSet;
+// @ts-expect-error exported extension arrays are readonly
+typedStandard['text/plain'].push('bad');
+
 import {XMLParser as TypedParser,XMLBuilder as TypedParserBuilder,XMLValidator as TypedValidator,type X2jOptions} from 'vfast-xml-parser';const parserOpts:X2jOptions={processEntities:{maxEntityCount:2},htmlEntities:{copy:'©'}};new TypedParser(parserOpts).parse(new Uint8Array(),false);const parserBuilt:string=new TypedParserBuilder().build({r:'x'});TypedValidator.validate(parserBuilt);
 import TypedBuilder from 'vfast-xml-builder';const builtXML:string=TypedBuilder({arrayNodeName:'x'}).build([1]);void builtXML;
 import {EntityDecoder as TypedDecoder,EntityEncoder as TypedEncoder,ALL_ENTITIES as TypedEntityTable} from 'vnodable-entities';
@@ -955,6 +967,8 @@ globalThis.browserChecked = true;
       ? ['install', '--ignore-scripts', '--no-audit', '--no-fund', '--cache', path.join(directory, 'npm-cache')]
       : ['install', '--ignore-scripts']);
     assert.ok(fs.statSync(path.join(directory, 'node_modules/vfunctions-framework/lib/main.js')).mode & 0o111);
+    assert.ok(fs.statSync(path.join(directory,'node_modules/vmime/bin/vmime.cjs')).mode & 0o111);
+    for(const runtime of [process.execPath,'bun'])assert.equal(run(runtime,['node_modules/vmime/bin/vmime.cjs','--reverse','image/jpeg']),'jpg\n');
     for (const runtime of [process.execPath, 'bun']) {
       const cli = spawnSync(runtime, ['node_modules/vfunctions-framework/lib/main.js', '--help'], { cwd: directory, encoding: 'utf8' });
       assert.equal(cli.status, 0, cli.stderr);
