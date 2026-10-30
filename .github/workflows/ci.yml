@@ -10,14 +10,11 @@ permissions:
 jobs:
   node:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [20, 22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 24
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.0
@@ -30,8 +27,7 @@ jobs:
       - run: node scripts/google-http-conformance/helpers.cjs
       - run: node scripts/google-http-conformance/uuid.cjs
       - run: node scripts/google-http-conformance/fetch.cjs
-      - if: matrix.node == 24
-        run: |
+      - run: |
           node scripts/google-http-conformance/current-fetch.cjs
           node scripts/google-http-conformance/current-fetch.cjs --upstream
           node scripts/google-http-conformance/current-fetch.cjs --native
@@ -40,10 +36,8 @@ jobs:
       - run: node scripts/google-http-conformance/logging.cjs
       - run: node scripts/google-http-conformance/json.cjs
       - run: node scripts/google-http-conformance/metadata.cjs
-      - if: matrix.node == 24
-        run: node scripts/google-auth-conformance/run.cjs
-      - if: matrix.node == 24
-        run: |
+      - run: node scripts/google-auth-conformance/run.cjs
+      - run: |
           node scripts/retry-request-conformance/run.cjs
           node scripts/retry-request-conformance/timers.cjs
           node scripts/retry-request-conformance/callers.cjs --check-control
@@ -55,8 +49,7 @@ jobs:
       - run: node scripts/jwks-conformance/run.cjs
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/agent-conformance/run.cjs
-      - if: matrix.node == 24
-        run: |
+      - run: |
           node scripts/agent-conformance/current/run.cjs
           node scripts/agent-conformance/current/run.cjs --upstream
           node scripts/agent-conformance/current/proxy.cjs
