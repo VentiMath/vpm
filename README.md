@@ -84,6 +84,8 @@ Google Auth 11 credential flows used by backend SDKs, with isolated JWT caches,
 shared forced refreshes and stricter ID-token verification. `vretry-request`
 provides cancellable callback and download-stream retries for current Cloud
 Storage and google-gax callers, without external dependencies.
+`vstream-events` supplies independent one-time read/write notifications for
+these download streams, also without external dependencies.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
@@ -173,6 +175,8 @@ and native HTTP/TLS pooling alongside real proxy-client integration. The
 current credential flows with upstream controls. The
 [retry-request suite](scripts/retry-request-conformance/README.md) checks all
 upstream cases, retry lifecycle regressions and current Google SDK callers.
+The [stream-events suite](scripts/stream-events-conformance/README.md) verifies
+stream notifications, lazy downloads and exact body delivery in those callers.
 
 ## License
 

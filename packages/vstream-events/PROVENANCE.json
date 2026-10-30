@@ -1,0 +1,25 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "stream-events",
+    "version": "1.0.5",
+    "tarball": "https://registry.npmjs.org/stream-events/-/stream-events-1.0.5.tgz",
+    "integrity": "sha512-E1GUzBSgvct8Jsb3v2X15pjzN1tYebtbLaMg+eBOUOAxgbLoSbT2NS91ckc5lJD1KfLjId+jXJRgo0qnV5Nerg=="
+  },
+  "source": {
+    "repository": "stephenplusplus/stream-events",
+    "ref": "v1.0.5",
+    "commit": "b53b9533cbccbad8dd50633ab95b6f3fe4e6258e",
+    "licenseCommit": "5cd27e04319f81836fb8018df36f5c09534194ab",
+    "licenseNote": "The 1.0.5 manifest declares MIT; the explicit upstream LICENSE was added in the recorded later commit."
+  },
+  "dependencies": {},
+  "changes": [
+    "Replace stubs with independent one-time hooks, preventing shared-counter repeat notifications.",
+    "Restore original methods before calling user code; preserve return values, arguments and receivers.",
+    "Preserve explicit redecoration while preventing retained hooks or callbacks from repeating a notification or clobbering replacement methods.",
+    "Support readable-only and writable-only streams; validate both directions before mutation.",
+    "Supply self-contained structural types, including constructor-style .call(this) use."
+  ]
+}
