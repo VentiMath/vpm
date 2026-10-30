@@ -1,0 +1,13 @@
+{
+  "upstream": {
+    "name": "path-expression-matcher",
+    "version": "1.6.2",
+    "repository": "https://github.com/NaturalIntelligence/path-expression-matcher",
+    "commit": "2f933682011d047b6c62d37376f2f433d3f02826",
+    "npmIntegrity": "sha512-enSlaiat05iasnzmgNxRj8reFdj3puY2QpNgP1aPIaVfT6nn9ICuPoFlKHk8EN22HcwewshO+mN2DGbkCEOtqQ==",
+    "license": "MIT"
+  },
+  "reviewed": "2026-10-30",
+  "implementation": "Independent implementation of the documented path expression and matcher APIs",
+  "retainedEvidence": "../../scripts/path-matcher-conformance/upstream"
+}

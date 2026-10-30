@@ -49,6 +49,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vpath-expression-matcher') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.mjs','index.d.ts','index.d.mts','package.json','lib/expression.js','lib/matcher.js','lib/set.js'].sort());
+    }
     if (name === 'vxml-naming' || name === 'vis-unsafe') {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -187,6 +192,8 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveMatcher=require('vpath-expression-matcher');const archivePath=new archiveMatcher.Matcher();archivePath.push('item');
+if(!archivePath.matches(new archiveMatcher.Expression('..item')))throw new Error('matcher CJS archive');
 const archiveXMLNaming=require('vxml-naming'),archiveUnsafe=require('vis-unsafe');
 if(!archiveXMLNaming.qName('𐀀:part')||!archiveUnsafe.isUnsafe('<script>',archiveUnsafe.HTML))throw new Error('XML helpers CJS archive');
 const archiveAnyNumber=require('vanynum'),archiveStringNumber=require('vstrnum');
@@ -368,6 +375,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import archiveMatcher,{Matcher as ArchiveMatcher,Expression as ArchiveExpression} from 'vpath-expression-matcher';
+const archivePath=new ArchiveMatcher();archivePath.push('item');if(archiveMatcher.Matcher!==ArchiveMatcher||!archivePath.matches(new ArchiveExpression('..item')))throw new Error('matcher ESM archive');
 import {qName as archiveQName} from 'vxml-naming';
 import archiveUnsafe,{HTML as archiveHTML} from 'vis-unsafe';
 if(!archiveQName('𐀀:part')||!archiveUnsafe('<script>',archiveHTML))throw new Error('XML helpers ESM archive');
@@ -548,6 +557,10 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import typedMatcher,{Matcher as TypedMatcher,Expression as TypedExpression,ExpressionSet as TypedSet} from 'vpath-expression-matcher';
+const typedPath=new TypedMatcher();typedPath.push('item');const typedSnapshot=typedPath.readOnly().snapshot();typedPath.restore(typedSnapshot);
+const typedHit:TypedExpression<number>|null=new TypedSet<number>().add(new TypedExpression('..item',{},42)).findMatch(typedPath);
+void typedHit;void new typedMatcher.Matcher();
 import {qName as typedQName} from 'vxml-naming';
 import typedUnsafe,{HTML as typedHTML} from 'vis-unsafe';
 const typedXMLName:boolean=typedQName('𐀀:part');const typedUnsafeResult:boolean=typedUnsafe('<script>',typedHTML);

@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'path-expression-matcher': { pkg: 'vpath-expression-matcher', versions: /^1\.6\.2$/, esm: true },
   'xml-naming': { pkg: 'vxml-naming', versions: /^0\.3\.0$/, esm: true },
   'is-unsafe': { pkg: 'vis-unsafe', versions: /^2\.0\.2$/, esm: true },
   anynum: { pkg: 'vanynum', versions: /^1\.0\.1$/, esm: true },
@@ -1208,6 +1209,7 @@ async function run() {
     await require('./paginator-conformance/callers.cjs')(replacements['@google-cloud/paginator']);
     await require('./numbers-conformance/callers.cjs')();
     await require('./xml-helpers-conformance/callers.cjs')();
+    await require('./path-matcher-conformance/callers.cjs')();
     require('./entities-conformance/callers.cjs')(replacements['html-entities']);
     await require('./retry-conformance/callers.cjs')(replacements['async-retry']);
     await require('./queue-limit-conformance/callers.cjs')(replacements['p-limit']);
