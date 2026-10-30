@@ -49,6 +49,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vnodable-entities') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.mjs','index.d.ts','index.d.mts','package.json','lib/decoder.js','lib/encoder.js','lib/options.js','lib/tables.js','lib/tables.mjs','lib/all-entities.mjs'].sort());
+    }
     if (name === 'vpath-expression-matcher') {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -192,6 +197,7 @@ try {
     }
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
+const archiveNodable=require('vnodable-entities');if(new archiveNodable.EntityDecoder().decode('&lt;&#65junk;')!=='<&#65junk;'||new archiveNodable.EntityEncoder({encodeAllNamed:false}).encode('<')!=='&lt;')throw new Error('nodable CJS archive');
 const archiveMatcher=require('vpath-expression-matcher');const archivePath=new archiveMatcher.Matcher();archivePath.push('item');
 if(!archivePath.matches(new archiveMatcher.Expression('..item')))throw new Error('matcher CJS archive');
 const archiveXMLNaming=require('vxml-naming'),archiveUnsafe=require('vis-unsafe');
@@ -375,6 +381,8 @@ assert.equal(Accepts(request).types('html', 'json'), 'html');
 assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json');
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
+import {EntityDecoder as ArchiveDecoder,EntityEncoder as ArchiveEncoder,ALL_ENTITIES as ArchiveEntityTable} from 'vnodable-entities';
+if(new ArchiveDecoder({namedEntities:ArchiveEntityTable}).decode('&ocirc;')!=='ô'||new ArchiveEncoder({encodeAllNamed:false}).encode('<')!=='&lt;')throw new Error('nodable ESM archive');
 import archiveMatcher,{Matcher as ArchiveMatcher,Expression as ArchiveExpression} from 'vpath-expression-matcher';
 const archivePath=new ArchiveMatcher();archivePath.push('item');if(archiveMatcher.Matcher!==ArchiveMatcher||!archivePath.matches(new ArchiveExpression('..item')))throw new Error('matcher ESM archive');
 import {qName as archiveQName} from 'vxml-naming';
@@ -557,6 +565,9 @@ assert.equal(Negotiator({ headers: {} }).mediaType(['text/html']), 'text/html');
 assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
+import {EntityDecoder as TypedDecoder,EntityEncoder as TypedEncoder,ALL_ENTITIES as TypedEntityTable} from 'vnodable-entities';
+const typedNodableResult:string=new TypedDecoder({namedEntities:TypedEntityTable,onInputEntity:()=> 'allow'}).decode('&lt;');
+const typedNodableEncoded:string=new TypedEncoder({encodeAllNamed:false}).encode('<');void typedNodableResult;void typedNodableEncoded;
 import typedMatcher,{Matcher as TypedMatcher,Expression as TypedExpression,ExpressionSet as TypedSet} from 'vpath-expression-matcher';
 const typedPath=new TypedMatcher();typedPath.push('item');const typedSnapshot=typedPath.readOnly().snapshot();typedPath.restore(typedSnapshot);
 const typedHit:TypedExpression<number>|null=new TypedSet<number>().add(new TypedExpression('..item',{},42)).findMatch(typedPath);

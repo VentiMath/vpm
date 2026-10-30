@@ -1,0 +1,14 @@
+{
+  "upstream": {
+    "name": "@nodable/entities",
+    "version": "3.1.0",
+    "repository": "https://github.com/nodable/val-parsers",
+    "directory": "Entity",
+    "commit": "b89ecb0d419969e2989b74c5304bc9b66931727e",
+    "npmIntegrity": "sha512-LsS/DjHr+uDM647Gru/cA8+J3a3HfhttwCKLyuoyN7yXTFCxKBtSgMQBvrW9yNPa2/zDRUNuGPaH5QUFoa4arQ==",
+    "license": "MIT"
+  },
+  "reviewed": "2026-10-30",
+  "implementation": "Independent codecs with retained categorized entity tables and four standard-name corrections",
+  "retainedEvidence": "../../scripts/nodable-entities-conformance/upstream"
+}

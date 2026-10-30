@@ -1,0 +1,17 @@
+{
+  "LICENSE.txt": "750cb3fb6362804957ef52caaf9b5c824015be44d494637330d7cd8834d31d40",
+  "docs/EntityDecoder.md.txt": "72247678bb17f8e49cbb0769792661f4392bdcadfd4e03065c28e5746fc0cb0a",
+  "docs/EntityEncoder.md.txt": "54234c051920fe6a9c1c9be3b2529d2f3491ce2964f9adb7b4641821fa2458db",
+  "docs/NCR.md.txt": "f38df9674e0b82324dce2deee6ab3a4cb8c491d0f526ae08b178bb2f96e9bb4f",
+  "package.json.txt": "81fc13661f9431f9f72ae5a1723482a1bcb473af463b93ca0b27c42461a6c6c9",
+  "specs/EntityDecoder.ncr.test.js.txt": "5e5d60a976bf669e370b3b6aa3651b6e04b58c8b88e7ad061da7768fc35d8c3a",
+  "specs/EntityDecoder.test.js.txt": "367a8dda2c701547db7b375e8ebea9015973e749ac96870a9a28b57256434213",
+  "specs/EntityEncoder.test.js.txt": "040d295973b0bcd3f52aad3e0130dd391c0bcfa1b3ae1cb1901a05fb7f4d9888",
+  "src/EntityDecoder.js.txt": "8ed5018fda48ac38ed40b89bdc656f7cfe2ee093ad0a1404194abd52cd3a1fd4",
+  "src/EntityEncoder.js.txt": "63d9f77545f346ac0369953c2795f0e9ca54c349567d835a37044cf3eb2c5328",
+  "src/all-entities.js.txt": "2f1340ab32dce314f41638b7ee6d0368b974e3302983154b815a6d49a6dfb63b",
+  "src/entities.js.txt": "53194108797c23165a1ba79fbe6e021c9a523719e9e351f709a4b44e403cb09b",
+  "src/entityTries.js.txt": "fa2838d141fba0e8ee5bd2197956c3f6b1d23668be2c8841a585614ea7051f99",
+  "src/index.d.ts.txt": "e0d0b9fe6ecc058856747dc88050ba03c4aa22c9a89508e75cd22e569f21c13c",
+  "src/index.js.txt": "a36fd1bcbfe9f95551e2cd7586a0aa3de4691070b98fd25b6884da9038222df3"
+}

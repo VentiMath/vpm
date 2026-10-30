@@ -324,6 +324,10 @@
         "vcontent-type": "workspace:*",
       },
     },
+    "packages/vnodable-entities": {
+      "name": "vnodable-entities",
+      "version": "0.1.0",
+    },
     "packages/vnode-fetch": {
       "name": "vnode-fetch",
       "version": "0.1.0",
@@ -657,6 +661,8 @@
     "vms": ["vms@workspace:packages/vms"],
 
     "vnegotiator": ["vnegotiator@workspace:packages/vnegotiator"],
+
+    "vnodable-entities": ["vnodable-entities@workspace:packages/vnodable-entities"],
 
     "vnode-fetch": ["vnode-fetch@workspace:packages/vnode-fetch"],
 

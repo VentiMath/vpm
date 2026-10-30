@@ -9,3 +9,4 @@ scripts/entities-conformance/upstream/** whitespace=-blank-at-eof
 scripts/numbers-conformance/upstream/** -whitespace
 scripts/xml-helpers-conformance/upstream/** -whitespace
 scripts/path-matcher-conformance/upstream/** -whitespace
+scripts/nodable-entities-conformance/upstream/** -whitespace
