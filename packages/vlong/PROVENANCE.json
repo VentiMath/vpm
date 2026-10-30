@@ -1,0 +1,19 @@
+{
+  "upstream": {
+    "name": "long",
+    "version": "5.3.2",
+    "repository": "https://github.com/dcodeIO/long.js",
+    "commit": "e1bcb4f65096465b69f0fd67e68fc2a79a67ade9",
+    "integrity": "sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA=="
+  },
+  "checked": "2026-10-30",
+  "license": "Apache-2.0",
+  "changes": [
+    "Derived from long 5.3.2 with existing bit arithmetic and optional WebAssembly acceleration.",
+    "Validate complete integer strings and radices, with bounded two-word or BigInt accumulation for arbitrarily long input.",
+    "Use native string conversion; preserve signed/unsigned wrapping.",
+    "Remove mutable small-integer caches and freeze shared constants.",
+    "Require exactly eight valid bytes; include Uint8Array declarations.",
+    "Self-contained declarations and common CommonJS/native ESM default entry."
+  ]
+}
