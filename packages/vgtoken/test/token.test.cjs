@@ -117,6 +117,46 @@ test('failed forced refresh clears token and expiry without modifying frozen err
 test('redacts unknown errors including JSON parser excerpts and credentials', async () => {
   await assert.rejects(make(async () => { throw new Error('private-key-secret'); }).getToken(), error => { assert.equal(error.message, 'Token request failed'); assert.equal(error.config, undefined); return true; });
 });
+test('preserves exact public Google diagnostics for promises, callbacks and revocation', async () => {
+  for (const [remote, description] of [
+    ['invalid_grant', 'Invalid JWT Signature.'],
+    ['invalid_grant', 'Not a valid email'],
+    ['invalid_grant', 'Invalid email or User ID.'],
+    ['invalid_scope', 'Invalid OAuth scope or ID token audience provided.'],
+  ]) {
+    const failure = Object.freeze({config: {assertion: 'secret'}, response: {status: 400, data: {error: remote, error_description: description}}});
+    const token = make(async () => { throw failure; });
+    const check = error => {
+      assert.equal(error.message, 'Token request failed (HTTP 400): ' + remote + ': ' + description);
+      assert.equal(error.code, remote); assert.equal(error.status, 400);
+      assert.equal(error.response, undefined); assert.equal(error.config, undefined); assert.equal(error.cause, undefined);
+      assert.doesNotMatch(require('node:util').inspect(error), /secret|assertion|error_description/); return true;
+    };
+    await assert.rejects(token.getToken(), check);
+    await new Promise((resolve, reject) => token.getToken(error => { try { check(error); resolve(); } catch (failure) { reject(failure); } }));
+    token.rawToken = {access_token: 'revocation-secret'};
+    await assert.rejects(token.revokeToken(), check);
+  }
+});
+test('does not forward decorated, unknown, mismatched or unreadable descriptions', async () => {
+  for (const [remote, description] of [
+    ['invalid_grant', 'Invalid JWT Signature. secret'],
+    ['invalid_grant', 'Invalid JWT Signature.\nsecret'],
+    ['invalid_grant', 'Invalid JWT Signature.\n'],
+    ['invalid_grant', 'unknown-secret'],
+    ['invalid_grant', {toString() { throw Error('must not coerce'); }}],
+    ['invalid_scope', 'Invalid JWT Signature.'],
+    ['unknown-secret', 'Invalid JWT Signature.'],
+  ]) {
+    const token = make(async () => { throw {response: {status: 400, data: {error: remote, error_description: description}}}; });
+    await assert.rejects(token.getToken(), error => {
+      const code = remote === 'unknown-secret' ? '' : ': ' + remote;
+      assert.equal(error.message, 'Token request failed (HTTP 400)' + code); return true;
+    });
+  }
+  const token = make(async () => { throw {response: {status: 400, data: {error: 'invalid_grant', get error_description() { throw Error('secret'); }}}}; });
+  await assert.rejects(token.getToken(), error => { assert.equal(error.message, 'Token request failed (HTTP 400): invalid_grant'); return true; });
+});
 test('revocation uses POST body, coalesces and preserves configuration', async () => {
   const pending = deferred(); let calls = 0;
   const token = make(opts => { calls++; assert.equal(opts.url, 'https://oauth2.googleapis.com/revoke'); assert.equal(opts.method, 'POST'); assert.deepEqual(opts.data, {token: 'a&b?c'}); return pending.promise; }, {eagerRefreshThresholdMillis: 5000});

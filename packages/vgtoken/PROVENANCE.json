@@ -18,6 +18,7 @@
     "Cache the parsed RSA private key per instance.",
     "Validate token data, expiry and assertion claims; freeze copied token data and additional claims.",
     "Bound requests, disable credential-bearing redirects and sanitize transport errors.",
+    "Retain four exact public Google diagnostics paired with their OAuth codes; redact arbitrary or decorated descriptions.",
     "Use current Google OAuth endpoints and POST revocation tokens in the form body.",
     "Bound credential-file reads and reject malformed UTF-8 without exposing file contents."
   ]

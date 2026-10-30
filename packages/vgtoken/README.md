@@ -28,9 +28,13 @@ const {access_token} = await token.getToken();
   `scope` are retained. Additional claims are copied as JSON and deeply frozen;
   assign a new `additionalClaims` object to change them.
 - Errors expose a stable `TokenError.code`, optional HTTP `status`, and a safe
-  message. They omit transport configuration, response bodies, causes and remote
-  descriptions, which can contain assertions or credentials. Standard OAuth error
-  codes such as `invalid_grant` remain available.
+  message. Four exact public Google descriptions are retained for invalid signatures,
+  invalid users and invalid scopes, paired with their documented OAuth error codes.
+  Unknown descriptions, modified messages and appended text remain omitted, along
+  with transport configuration, response bodies and causes. This preserves useful
+  diagnostics without copying arbitrary server or custom-transporter data. See
+  [Google's error reference](https://developers.google.com/identity/protocols/oauth2/service-account#troubleshooting).
+  Standard OAuth codes such as `invalid_grant` remain available.
 - Revocation shares concurrent calls, cancels an outstanding refresh, and holds new
   refreshes until revocation settles. Successful revocation clears token/expiry
   state while retaining configuration. Failed revocation retains the current token.
