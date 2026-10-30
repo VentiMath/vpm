@@ -1,0 +1,29 @@
+{
+  "license": "Apache-2.0",
+  "checkedOn": "2026-10-29",
+  "upstream": {
+    "package": "@google-cloud/promisify",
+    "version": "6.2.1",
+    "tarball": "https://registry.npmjs.org/@google-cloud/promisify/-/promisify-6.2.1.tgz",
+    "integrity": "sha512-/+RvLJ5u+WhGay6Z3aY6OApDQmNqq1427Mmt7Eov9kYp69gdUiGSwFnygeTxfz69XBtYZLAnWikGMIoFXtKt+A=="
+  },
+  "source": {
+    "repository": "googleapis/google-cloud-node",
+    "directory": "core/promisify",
+    "ref": "promisify-v6.2.1",
+    "commit": "c6fbbcb565d7485d6fece20487fc00a6675074b8",
+    "manifest": "scripts/cloud-utils-conformance/upstream/promisify/SHA256.json"
+  },
+  "changes": [
+    "Preserve receiver, callback-mode returns, custom Promise constructors and tuple/singular results.",
+    "Avoid accessor execution while wrapping own prototype methods; preflight immutable methods and preserve descriptors.",
+    "Snapshot validated options, ignore inherited/accessor flags and settle callbacks once.",
+    "Handle synchronous throws and thenables in callback mode; normalize falsy rejection reasons."
+  ],
+  "upstreamTestAdaptations": [
+    "Compile retained sources with TypeScript 7 and execute all cases with Mocha.",
+    "Use CommonJS import assignments for callable assert and mutable util exports.",
+    "Await three asynchronous promisify tests explicitly, preserving original assertions for both implementations.",
+    "Normalize trailing source whitespace before hashing."
+  ]
+}

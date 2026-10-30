@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vpromisify / vprojectify | Both 6.2.1; Storage 8.4.0 wrappers and request decoration | [promisify](https://www.npmjs.com/package/@google-cloud/promisify), [projectify](https://www.npmjs.com/package/@google-cloud/projectify) |
 | Caller paths verified | vpaginator | 7.2.0; Storage 8.4.0 listing APIs | [@google-cloud/paginator 7.2.0](https://www.npmjs.com/package/@google-cloud/paginator) |
 | Caller paths verified | vduplexify | 4.1.3; Storage 8.4.0 and google-gax 6.14.0 streams | [duplexify 4.1.3](https://www.npmjs.com/package/duplexify) |
 | Complete | vretry-request | 9.1.0; Cloud Storage 8.4.0/google-gax 6.14.0 caller paths | [retry-request 9.1.0](https://www.npmjs.com/package/retry-request) |
@@ -67,6 +68,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vpromisify](packages/vpromisify) | @google-cloud/promisify 6.2.1 | Zero dependencies; safe method wrapping, captured options, settled callbacks, thenable handling and unambiguous falsy rejections. |
+| [vprojectify](packages/vprojectify) | @google-cloud/projectify 6.2.1 | Zero dependencies; literal token substitution, own-data traversal, null-prototype records, cycles and deep inputs. |
 | [vpaginator](packages/vpaginator) | @google-cloud/paginator 7.2.0 | VPM-only dependency; isolated queries, nonmutating pages, backpressure, cancellation, validated limits and current Storage listings. |
 | [vduplexify](packages/vduplexify) | duplexify 4.1.3 | Zero dependencies; native streams, settled teardown, preserved falsy end values, nonmutating options, explicit premature-close errors and current Storage/gax callers. |
 | [vteeny-request](packages/vteeny-request) | teeny-request 11.1.1 | Four VPM dependencies; total deadlines, canceled connections, ordered multipart completion, immutable request options, bounded isolated proxy pools and safe error messages. |
@@ -138,12 +141,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,314 tests**: all pass on Node 24, and Bun passes
-2,311 with three documented runtime-specific skips. All 66 runtime packages'
+The root suite contains **2,350 tests**: all pass on Node 24, and Bun passes
+2,347 with three documented runtime-specific skips. All 68 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **68 packages**, including two declaration-only packages.
+catalog covers **70 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -196,6 +199,11 @@ The [paginator suite](scripts/paginator-conformance/README.md) adds all 65
 upstream cases on both runtimes and original controls, plus current Storage
 listing checks. Its 28 focused regression tests are in the root suite.
 
+The [Cloud utility suite](scripts/cloud-utils-conformance/README.md) adds 27
+promisify and five projectify upstream cases with original controls on both
+runtimes, plus actual Storage wrapper/decorator checks. Its 36 focused tests
+are in the root suite.
+
 ## Dependency scope
 
 The Express application stack is implemented throughout: `vexpress` has 28 direct
@@ -206,6 +214,8 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vpromisify` | 0 | 0 |
+| `vprojectify` | 0 | 0 |
 | `vpaginator` | 1 | 1 (all VPM) |
 | `vduplexify` | 4 | 0 |
 | `vteeny-request` | 4 | 4 (all VPM) |
@@ -338,6 +348,33 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vpromisify and vprojectify
+
+Both target the current **6.2.1** packages without runtime dependencies.
+`vpromisify` preserves callback delegation and promise tuples while snapshotting
+options, skipping prototype accessors, preflighting immutable methods and
+ignoring inherited wrapper flags. Callback conversion assimilates thenables,
+reports synchronous throws asynchronously and wraps falsy rejection reasons
+with `ERR_FALSY_VALUE_REJECTION` instead of passing a success-shaped error.
+
+`vprojectify` substitutes project IDs literally, handles null-prototype records
+and uses iterative traversal for deep/cyclic graphs. It visits own enumerable
+data fields, preserving ordinary record identity and cloning arrays; accessors,
+streams, byte views and class instances are opaque. Mutations are not
+transactional if a later field fails.
+
+All 32 upstream cases and 36 focused cases pass on Node 24 and Bun. Actual
+Storage **8.4.0** checks verify 36 callback/promise wrapper invocations and seven
+project substitutions across metadata, existence, error, query, JSON, URL and
+multipart paths. See [vpromisify measurements](packages/vpromisify/bench/results/README.md)
+and [vprojectify measurements](packages/vprojectify/bench/results/README.md) for
+paired timing results, controls and remaining tradeoffs. Node promise conversion
+takes 19–22% less time, and nested project substitution 45–46% less; the latter
+improves 11–15% on Bun. Remaining costs include Node wrapper creation (+32%,
+about 7 ns), Bun class wrapping (+52%, about 1.7 microseconds per 20 methods),
+Bun flat-record substitution (+21%, about 24 ns), and tiny unchanged-input
+checks. These are local operations, not application throughput measurements.
 
 ## vpaginator
 

@@ -1,0 +1,14 @@
+'use strict';
+const assert=require('node:assert/strict'),path=require('node:path');
+const upstream=require('../../../scripts/cloud-utils-conformance/node_modules/@google-cloud/projectify'),vpm=require('..');
+const token='{{projectId}}';
+const cases=[
+ {name:'unchanged URL',async:false,make:lib=>()=>lib.replaceProjectIdToken('https://storage.googleapis.com/storage/v1/b/bucket/o','project'),validate:x=>assert.equal(x,'https://storage.googleapis.com/storage/v1/b/bucket/o')},
+ {name:'single-token URL',async:false,make:lib=>()=>lib.replaceProjectIdToken('https://example.test/projects/'+token+'/items','project'),validate:x=>assert.equal(x,'https://example.test/projects/project/items')},
+ {name:'three-token string',async:false,make:lib=>()=>lib.replaceProjectIdToken(token+'/'+token+'/'+token,'project'),validate:x=>assert.equal(x,'project/project/project')},
+ {name:'flat query record',async:false,make:lib=>()=>lib.replaceProjectIdToken({project:token,prefix:'reports/',maxResults:100},'project'),validate:x=>assert.deepEqual(x,{project:'project',prefix:'reports/',maxResults:100})},
+ {name:'nested request body',async:false,make:lib=>()=>lib.replaceProjectIdToken({name:'projects/'+token+'/items',labels:{project:token,kind:'report'},items:[{project:token},{project:token}]},'project'),validate:x=>{assert.equal(x.labels.project,'project');assert.equal(x.items[1].project,'project');}},
+ {name:'100-item page',async:false,make:lib=>()=>lib.replaceProjectIdToken(Array.from({length:100},(_,i)=>({name:i,project:token})),'project'),validate:x=>{assert.equal(x.length,100);assert.equal(x[99].project,'project');}},
+ {name:'opaque buffer',async:false,make:lib=>{const body=Buffer.from(token);return()=>lib.replaceProjectIdToken(body,'project');},validate:x=>assert.equal(x.toString(),token)}
+];
+require('../../../scripts/bench-paired.cjs').run({root:path.resolve(__dirname,'..'),upstream,vpm,cases,files:['index.js','bench/compare.cjs','../../scripts/cloud-utils-conformance/upstream/projectify/SHA256.json']}).catch(e=>{console.error(e);process.exitCode=1;});

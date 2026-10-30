@@ -345,6 +345,14 @@
       "name": "vpath-to-regexp",
       "version": "0.1.0",
     },
+    "packages/vprojectify": {
+      "name": "vprojectify",
+      "version": "0.1.0",
+    },
+    "packages/vpromisify": {
+      "name": "vpromisify",
+      "version": "0.1.0",
+    },
     "packages/vproxy-addr": {
       "name": "vproxy-addr",
       "version": "0.1.0",
@@ -606,6 +614,10 @@
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
 
     "vpath-to-regexp": ["vpath-to-regexp@workspace:packages/vpath-to-regexp"],
+
+    "vprojectify": ["vprojectify@workspace:packages/vprojectify"],
+
+    "vpromisify": ["vpromisify@workspace:packages/vpromisify"],
 
     "vproxy-addr": ["vproxy-addr@workspace:packages/vproxy-addr"],
 

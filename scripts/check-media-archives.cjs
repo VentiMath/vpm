@@ -44,7 +44,7 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
+    if (['vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
@@ -163,6 +163,9 @@ try {
   }
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const decoratedStream = require('vstream-events')({emit(){return true;},_read(){return 42;}});
+const archivePromisify=require('vpromisify'),archiveProjectify=require('vprojectify');
+if(!archivePromisify.promisify(cb=>cb(null,1)).promisified_)throw new Error('promisify CJS archive');
+if(archiveProjectify.replaceProjectIdToken('{{projectId}}','p')!=='p')throw new Error('projectify CJS archive');
 const {paginator:archivePaginator}=require('vpaginator');
 if(archivePaginator.parseArguments_([{maxApiCalls:2}]).maxApiCalls!==2)throw new Error('paginator CJS archive');
 const archiveDuplex=require('vduplexify')();
@@ -331,6 +334,9 @@ assert.equal(Accepts({ headers: { accept: '' } }).types('json', 'html'), 'json')
 `);
   fs.writeFileSync(path.join(directory, 'consumer.mjs'), `
 import streamEventsArchive from 'vstream-events';
+import {promisify as archivePromisify} from 'vpromisify';
+import {replaceProjectIdToken as archiveProjectify} from 'vprojectify';
+if(!archivePromisify(cb=>cb(null,1)).promisified_||archiveProjectify('{{projectId}}','p')!=='p')throw new Error('cloud helpers ESM archive');
 import {paginator as archivePaginator} from 'vpaginator';
 if(archivePaginator.parseArguments_([{maxResults:3}]).maxResults!==3)throw new Error('paginator ESM archive');
 import archiveDuplexify from 'vduplexify';
@@ -492,6 +498,11 @@ assert.equal(new Accepts({ headers: {} }).types('html'), 'html');
 `);
   const source = `
 import typedStreamEvents = require('vstream-events');
+import {promisify as typedCloudPromisify, callbackify as typedCloudCallbackify} from 'vpromisify';
+import {replaceProjectIdToken as typedProjectify} from 'vprojectify';
+const typedCloudResult:Promise<[number]>=typedCloudPromisify((cb:(e:Error|null,n:number)=>void)=>cb(null,1))();
+typedCloudCallbackify(async()=>[1,'x'] as [number,string])((e,n,s)=>{const count:number=n;const text:string=s;void e;void count;void text;});
+const typedProjectResult:{id:string}=typedProjectify({id:'{{projectId}}'},'p');
 import {ResourceStream as TypedPaginatorStream, paginator as typedPaginator} from 'vpaginator';
 const typedPages=new TypedPaginatorStream<{id:number}>({maxApiCalls:1},(q,cb)=>cb(null,[{id:1}],null));
 typedPages.on('data',item=>{const id:number=item.id;void id;});

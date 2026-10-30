@@ -25,9 +25,14 @@ jobs:
       - run: npm --prefix scripts/teeny-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/duplexify-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/paginator-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/cloud-utils-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/cloud-utils-conformance/regressions.cjs
+          node scripts/cloud-utils-conformance/run.cjs
+          node scripts/cloud-utils-conformance/run.cjs --upstream
+          node scripts/cloud-utils-conformance/callers.cjs --upstream
           node scripts/paginator-conformance/regressions.cjs
           node scripts/paginator-conformance/run.cjs
           node scripts/paginator-conformance/run.cjs --upstream
@@ -99,6 +104,7 @@ jobs:
       - run: npm --prefix scripts/teeny-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/duplexify-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/paginator-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/cloud-utils-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun run test:bun
       - run: bun run typecheck
       - run: bun run check:docs
@@ -111,6 +117,10 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/cloud-utils-conformance/regressions.cjs
+          bun scripts/cloud-utils-conformance/run.cjs
+          bun scripts/cloud-utils-conformance/run.cjs --upstream
+          bun scripts/cloud-utils-conformance/callers.cjs --upstream
           bun scripts/paginator-conformance/regressions.cjs
           bun scripts/paginator-conformance/run.cjs
           bun scripts/paginator-conformance/run.cjs --upstream

@@ -1,0 +1,11 @@
+{
+  "name": "vpm-cloud-utils-conformance",
+  "private": true,
+  "description": "Pinned upstream controls for Google Cloud promise and project-ID helpers; excluded from VPM archives",
+  "dependencies": {
+    "@google-cloud/promisify": "6.2.1",
+    "@google-cloud/projectify": "6.2.1",
+    "mocha": "11.7.5",
+    "sinon": "21.0.0"
+  }
+}

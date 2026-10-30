@@ -28,6 +28,8 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  '@google-cloud/promisify': { pkg: 'vpromisify', versions: /^6\.2\.1$/ },
+  '@google-cloud/projectify': { pkg: 'vprojectify', versions: /^6\.2\.1$/ },
   '@google-cloud/paginator': { pkg: 'vpaginator', versions: /^7\.2\.0$/ },
   duplexify: { pkg: 'vduplexify', versions: /^4\.1\.3$/ },
   'teeny-request': { pkg: 'vteeny-request', versions: /^11\.1\.1$/ },
@@ -143,7 +145,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [...['@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
+const queue = [...['@google-cloud/promisify', '@google-cloud/projectify', '@google-cloud/paginator', 'duplexify', 'teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -153,7 +155,7 @@ while (queue.length) {
   const from = createRequire(manifest);
   // Current SDK helpers are fixture roots. Alias scope records tested caller
   // versions, independently of whether a newer VPM replacement has been built.
-  if (['@google-cloud/paginator', 'duplexify', 'google-auth-library', 'retry-request', 'stream-events', 'teeny-request'].includes(data.name) && targets[data.name].versions.test(data.version)) {
+  if (['@google-cloud/promisify', '@google-cloud/projectify', '@google-cloud/paginator', 'duplexify', 'google-auth-library', 'retry-request', 'stream-events', 'teeny-request'].includes(data.name) && targets[data.name].versions.test(data.version)) {
     const entry = from.resolve(path.dirname(manifest));
     require(entry);
     require.cache[entry].exports = replacements[data.name];
@@ -1194,6 +1196,7 @@ async function run() {
     await require('./teeny-conformance/callers.cjs')(replacements['teeny-request']);
     await require('./duplexify-conformance/callers.cjs')(replacements.duplexify);
     await require('./paginator-conformance/callers.cjs')(replacements['@google-cloud/paginator']);
+    await require('./cloud-utils-conformance/callers.cjs')(replacements['@google-cloud/promisify'],replacements['@google-cloud/projectify']);
 
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {

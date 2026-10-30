@@ -95,6 +95,8 @@ upload APIs, with total deadlines and shared VPM proxy pools. It uses
 google-gax callers using native streams and no external dependencies.
 `vpaginator` supplies current Storage listing pagination with isolated queries,
 nonmutating page snapshots, stream backpressure and cancellation.
+`vpromisify` bridges callbacks and promises throughout Storage; `vprojectify`
+substitutes project IDs in request data with literal, cycle-safe traversal.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
@@ -189,6 +191,8 @@ The [stream-events suite](scripts/stream-events-conformance/README.md) verifies
 stream notifications, lazy downloads and exact body delivery in those callers.
 The [teeny-request suite](scripts/teeny-conformance/README.md) checks the current
 request API and Cloud Storage callback, download and multipart upload paths.
+The [Cloud utility suite](scripts/cloud-utils-conformance/README.md) checks
+callback/promise adapters, project-ID substitution and current Storage callers.
 The [paginator suite](scripts/paginator-conformance/README.md) verifies the
 current pagination API and Storage bucket, file and HMAC-key listing callers.
 The [duplexify suite](scripts/duplexify-conformance/README.md) checks dynamic
