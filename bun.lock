@@ -330,6 +330,13 @@
       "name": "vonce",
       "version": "0.1.0",
     },
+    "packages/vpaginator": {
+      "name": "vpaginator",
+      "version": "0.1.0",
+      "dependencies": {
+        "vextend": "0.1.0",
+      },
+    },
     "packages/vparseurl": {
       "name": "vparseurl",
       "version": "0.1.0",
@@ -593,6 +600,8 @@
     "von-finished": ["von-finished@workspace:packages/von-finished"],
 
     "vonce": ["vonce@workspace:packages/vonce"],
+
+    "vpaginator": ["vpaginator@workspace:packages/vpaginator"],
 
     "vparseurl": ["vparseurl@workspace:packages/vparseurl"],
 

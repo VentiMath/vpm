@@ -93,6 +93,8 @@ upload APIs, with total deadlines and shared VPM proxy pools. It uses
 `vnode-fetch` for consistent Node streams on both runtimes.
 `vduplexify` joins delayed readable/writable streams for current Storage and
 google-gax callers using native streams and no external dependencies.
+`vpaginator` supplies current Storage listing pagination with isolated queries,
+nonmutating page snapshots, stream backpressure and cancellation.
 `vuuid` provides UUID generation and parsing.
 Two declaration-only packages provide Node and Undici types for development.
 
@@ -187,6 +189,8 @@ The [stream-events suite](scripts/stream-events-conformance/README.md) verifies
 stream notifications, lazy downloads and exact body delivery in those callers.
 The [teeny-request suite](scripts/teeny-conformance/README.md) checks the current
 request API and Cloud Storage callback, download and multipart upload paths.
+The [paginator suite](scripts/paginator-conformance/README.md) verifies the
+current pagination API and Storage bucket, file and HMAC-key listing callers.
 The [duplexify suite](scripts/duplexify-conformance/README.md) checks dynamic
 stream attachment, backpressure, cancellation and current SDK callers.
 

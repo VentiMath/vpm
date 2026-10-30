@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vpaginator | 7.2.0; Storage 8.4.0 listing APIs | [@google-cloud/paginator 7.2.0](https://www.npmjs.com/package/@google-cloud/paginator) |
 | Caller paths verified | vduplexify | 4.1.3; Storage 8.4.0 and google-gax 6.14.0 streams | [duplexify 4.1.3](https://www.npmjs.com/package/duplexify) |
 | Complete | vretry-request | 9.1.0; Cloud Storage 8.4.0/google-gax 6.14.0 caller paths | [retry-request 9.1.0](https://www.npmjs.com/package/retry-request) |
 | Caller paths verified | vteeny-request | 11.1.1 upstream suite and Storage 8.4.0 callbacks/downloads/multipart uploads | [teeny-request 11.1.1](https://www.npmjs.com/package/teeny-request) |
@@ -66,6 +67,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vpaginator](packages/vpaginator) | @google-cloud/paginator 7.2.0 | VPM-only dependency; isolated queries, nonmutating pages, backpressure, cancellation, validated limits and current Storage listings. |
 | [vduplexify](packages/vduplexify) | duplexify 4.1.3 | Zero dependencies; native streams, settled teardown, preserved falsy end values, nonmutating options, explicit premature-close errors and current Storage/gax callers. |
 | [vteeny-request](packages/vteeny-request) | teeny-request 11.1.1 | Four VPM dependencies; total deadlines, canceled connections, ordered multipart completion, immutable request options, bounded isolated proxy pools and safe error messages. |
 | [vhttp-proxy-agent](packages/vhttp-proxy-agent) | http-proxy-agent 9.1.0; 7.0.2 caller coverage | Two VPM dependencies, prepared absolute requests, preserved streamed bodies, bounded TCP/TLS connections, credential-safe diagnostics and isolated configuration. |
@@ -136,12 +138,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,286 tests**: all pass on Node 24, and Bun passes
-2,283 with three documented runtime-specific skips. All 65 runtime packages'
+The root suite contains **2,314 tests**: all pass on Node 24, and Bun passes
+2,311 with three documented runtime-specific skips. All 66 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **67 packages**, including two declaration-only packages.
+catalog covers **68 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -190,6 +192,10 @@ cases and 37 original assertions on both runtimes, plus one VPM premature-close
 assertion. Its 32 focused root tests and current Storage/gax callers exercise
 buffering, dynamic attachment, pending-operation settlement and cancellation.
 
+The [paginator suite](scripts/paginator-conformance/README.md) adds all 65
+upstream cases on both runtimes and original controls, plus current Storage
+listing checks. Its 28 focused regression tests are in the root suite.
+
 ## Dependency scope
 
 The Express application stack is implemented throughout: `vexpress` has 28 direct
@@ -200,6 +206,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vpaginator` | 1 | 1 (all VPM) |
 | `vduplexify` | 4 | 0 |
 | `vteeny-request` | 4 | 4 (all VPM) |
 | `vstream-events` | 1 | 0 |
@@ -331,6 +338,30 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vpaginator
+
+Targets **@google-cloud/paginator 7.2.0**, with `vextend` as its only dependency.
+It snapshots pages without mutating them, respects readable high-water marks,
+validates limits, ignores duplicate or late callbacks, and cancels pending
+request handles when supplied. Query snapshots omit inherited fields, stream
+options cannot override lifecycle methods, and wrapping is idempotent.
+
+Current Storage **8.4.0** bucket, file and HMAC-key callers pass with promises,
+callbacks, manual pagination, object streams, limits and errors. All 65 upstream
+cases and 28 focused cases pass on Node 24 and Bun. Storage does not return its
+listing HTTP handles: pagination cancellation prevents future pages but cannot
+abort those in-flight HTTP calls. At most one request and one page snapshot are
+retained alongside the readable queue; automatic aggregation retains all records.
+
+[Paired performance results](packages/vpaginator/bench/results/README.md) retain
+three comparison processes and an identical-upstream control for each runtime.
+Query preparation takes 21–34% less time on Node and about 60–61% less on Bun.
+One-page aggregation takes 4–7% / 19–26% more, ten-page aggregation 23% / 31%
+more, and 128-object delivery 32% / 45% more (Node / Bun). The slow-consumer
+stress case is effectively unchanged on Node and 15% slower on Bun. Controls,
+process variation and absolute timings are retained. No application throughput
+claim is made.
 
 ## vduplexify
 
