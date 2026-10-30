@@ -21,6 +21,13 @@
       "name": "vagent-base",
       "version": "0.1.0",
     },
+    "packages/vasync-retry": {
+      "name": "vasync-retry",
+      "version": "0.1.0",
+      "dependencies": {
+        "vretry": "0.1.0",
+      },
+    },
     "packages/vbody-parser": {
       "name": "vbody-parser",
       "version": "0.1.0",
@@ -389,6 +396,10 @@
       "name": "vread-package-up",
       "version": "0.1.0",
     },
+    "packages/vretry": {
+      "name": "vretry",
+      "version": "0.1.0",
+    },
     "packages/vretry-request": {
       "name": "vretry-request",
       "version": "0.1.0",
@@ -526,6 +537,8 @@
 
     "vagent-base": ["vagent-base@workspace:packages/vagent-base"],
 
+    "vasync-retry": ["vasync-retry@workspace:packages/vasync-retry"],
+
     "vbody-parser": ["vbody-parser@workspace:packages/vbody-parser"],
 
     "vbytes": ["vbytes@workspace:packages/vbytes"],
@@ -641,6 +654,8 @@
     "vraw-body": ["vraw-body@workspace:packages/vraw-body"],
 
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
+
+    "vretry": ["vretry@workspace:packages/vretry"],
 
     "vretry-request": ["vretry-request@workspace:packages/vretry-request"],
 

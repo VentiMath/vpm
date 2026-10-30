@@ -1,0 +1,49 @@
+{
+  "name": "vretry",
+  "version": "0.1.0",
+  "description": "Bounded retry scheduling with safe reset and error accounting",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json",
+    "./lib/retry_operation": {
+      "types": "./retry-operation.d.ts",
+      "default": "./retry-operation.js"
+    },
+    "./lib/retry_operation.js": {
+      "types": "./retry-operation.d.ts",
+      "default": "./retry-operation.js"
+    },
+    "./lib/retry": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./lib/retry.js": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json",
+    "retry-operation.js",
+    "retry-operation.d.ts"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vretry"
+  }
+}

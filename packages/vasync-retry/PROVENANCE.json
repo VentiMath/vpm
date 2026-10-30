@@ -1,0 +1,32 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-10-30",
+  "upstream": {
+    "package": "async-retry",
+    "version": "1.3.3",
+    "tarball": "https://registry.npmjs.org/async-retry/-/async-retry-1.3.3.tgz",
+    "integrity": "sha512-wfr/jstw9xNi/0teMHrRW7dsz3Lt5ARhYNZ2ewpadnhaIp5mbALhOAP+EAdsC7t4Z6wqsDVv9+W6gm1Dk9mEyw=="
+  },
+  "source": {
+    "repository": "vercel/async-retry",
+    "commit": "9505be1f829ea297e7aff6c731ca3d5bd7052ed7",
+    "manifest": "scripts/retry-conformance/upstream/async-retry/SHA256.json"
+  },
+  "changes": [
+    "Replace retry with vretry.",
+    "Copy caller options instead of mutating randomize.",
+    "Terminal bail and settlement cancel pending timers while observing late task results.",
+    "Normalize falsy failures with original causes; observe throwing and rejected retry hooks.",
+    "CommonJS/ESM entry point and bundled TypeScript declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/retry-conformance",
+    "focusedTests": 15,
+    "upstreamCases": 9,
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ],
+    "adaptations": "See scripts/retry-conformance/README.md for deterministic clocks, assertion/helper adapters, repaired vacuous loops and Storage caller limitations."
+  }
+}

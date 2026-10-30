@@ -25,6 +25,7 @@ now have current comparison targets:
 | Complete | vgaxios | 8.3.2 API; Google Auth 10.6.1/11.3.2 callers | [gaxios 8.3.2](https://www.npmjs.com/package/gaxios) |
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
+| Caller paths verified | vretry / vasync-retry | retry 0.13.1, async-retry 1.3.3; Storage 8.4.0 multipart retry methods | [retry](https://www.npmjs.com/package/retry), [async-retry](https://www.npmjs.com/package/async-retry), checked October 30, 2026 |
 | Caller paths verified | vyocto-queue / vp-limit | Queue 1.2.2, limiter 7.3.3; Storage 8.4.0 batches replacing p-limit 3.1.0 | [yocto-queue](https://www.npmjs.com/package/yocto-queue), [p-limit](https://www.npmjs.com/package/p-limit), checked October 30, 2026 |
 | Caller paths verified | vpromisify / vprojectify | Both 6.2.1; Storage 8.4.0 wrappers and request decoration | [promisify](https://www.npmjs.com/package/@google-cloud/promisify), [projectify](https://www.npmjs.com/package/@google-cloud/projectify) |
 | Caller paths verified | vpaginator | 7.2.0; Storage 8.4.0 listing APIs | [@google-cloud/paginator 7.2.0](https://www.npmjs.com/package/@google-cloud/paginator) |
@@ -69,6 +70,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vretry](packages/vretry) | retry 0.13.1 | Zero dependencies; complete reset/timer cleanup, validated schedules, monotonic budgets, safe error accounting and guarded callbacks. |
+| [vasync-retry](packages/vasync-retry) | async-retry 1.3.3 | VPM-only scheduler; immutable caller options, terminal bail, observed late failures and settled hook errors. |
 | [vyocto-queue](packages/vyocto-queue) | yocto-queue 1.2.2 | Zero dependencies; constant-time FIFO operations, current live iteration/draining semantics, direct private-state initialization and CommonJS/ESM entry points. |
 | [vp-limit](packages/vp-limit) | p-limit 7.3.3; 3.1.0 Storage caller coverage | VPM-only queue; avoids queue allocations for free slots, forwards wrapper arguments directly, preserves async context and current rejection safeguards. |
 | [vpromisify](packages/vpromisify) | @google-cloud/promisify 6.2.1 | Zero dependencies; safe method wrapping, captured options, settled callbacks, thenable handling and unambiguous falsy rejections. |
@@ -144,12 +147,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,373 tests**: all pass on Node 24, and Bun passes
-2,370 with three documented runtime-specific skips. All 70 runtime packages'
+The root suite contains **2,408 tests**: all pass on Node 24, and Bun passes
+2,405 with three documented runtime-specific skips. All 72 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **72 packages**, including two declaration-only packages.
+catalog covers **74 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -212,6 +215,12 @@ all seven queue and 30 limiter upstream cases with original controls on both
 runtimes. Its 23 focused tests are in the root suite; actual Storage batch methods
 exercise six limiters and 125 tasks, also checked with upstream 3.1.0 and 7.3.3.
 
+The [retry suite](scripts/retry-conformance/README.md) adds 26 retry and nine
+async-retry upstream cases with original controls on both runtimes. Its 35 focused
+tests are in the root suite. Storage multipart methods execute 15 retry operations
+and 21 attempts; the fixture documents existing SDK observation and resumption
+limitations separately from retry-package fixes.
+
 ## Dependency scope
 
 The Express application stack is implemented throughout: `vexpress` has 28 direct
@@ -222,6 +231,8 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vretry` | 0 | 0 |
+| `vasync-retry` | 1 | 1 (all VPM) |
 | `vyocto-queue` | 0 | 0 |
 | `vp-limit` | 1 | 1 (all VPM) |
 | `vpromisify` | 0 | 0 |
@@ -358,6 +369,37 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vretry and vasync-retry
+
+`vretry` targets **retry 0.13.1**. Reset cancels timers and clears errors, reserved
+error messages are counted correctly, retry budgets use a monotonic clock, zero
+budgets are honored, and long delays avoid native timer overflow. Validated own
+configuration bounds allocation. Callback wrappers preflight method replacement,
+preserve receivers and ignore stale or duplicate completions.
+
+`vasync-retry` targets **1.3.3**, replacing its sole dependency with `vretry`.
+Options remain untouched, bail is terminal, late task rejections stay observed,
+falsy failures keep their cause, and throwing/rejected hooks settle the operation.
+The retry budget is a scheduling limit, not a hard deadline or active-I/O cancel.
+Neither package provides idempotency.
+
+All 35 retained upstream cases and 35 focused cases pass on Node 24 and Bun.
+Current Storage **8.4.0** multipart retry methods execute 15 operations / 21
+attempts with both libraries. The fixture records existing immediate-part rejection,
+resumed-part numbering and abort-result behavior; these SDK issues remain outside
+the replacement's guarantees. See the package READMEs for explicit upstream/fix
+tables and the [fixture](scripts/retry-conformance/README.md) for adaptations.
+
+[Scheduler measurements](packages/vretry/bench/results/README.md) show operation
+creation taking 42% / 71% less CPU time on Node / Bun. Wrapper construction costs
+more (50 → 687ns / 59 → 481ns) due to validation and property handling; calls through
+an existing wrapper take 37% / 53% less. Reset and error counting also retain
+measured regressions. Storage uses operation creation, not callback wrapping.
+[Promise measurements](packages/vasync-retry/bench/results/README.md) show configured
+async success taking 24% / 37% less and bail about 30% less. Bun thenables take
+about 5% more. The real 1ms retry is timer-dominated with noisy controls; no network
+latency improvement is claimed. Raw samples, source hashes and controls are retained.
 
 ## vyocto-queue and vp-limit
 

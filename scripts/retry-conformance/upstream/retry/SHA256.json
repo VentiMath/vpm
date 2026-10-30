@@ -1,0 +1,13 @@
+{
+  "License.txt": "01ad164273e8e095abc9dbd1c21e194594a671af7d528cb43ee7b4c903ba7da3",
+  "README.md.txt": "be4dedd3f0b8f427606c8064ef40f468ed17feaa3546ceedd08f271d07c13908",
+  "index.js.txt": "3262dfe2074acaac44b9eaae4b04b3b9321e936046c389b967a8c968db1c20f4",
+  "lib/retry.js.txt": "3142d1f03e5f1e78a0c0b00a25b4626c94a3de8389898c96bb26e96616277bcb",
+  "lib/retry_operation.js.txt": "3cae72ed382f42ba21b75f2f8096803beef7fe208f9885794fb86cf4be5c93d4",
+  "package.json.txt": "7ae366b6b8133485abf27abe657c0ffa2d32600611ecf2c4fe5246165bed73d5",
+  "test/common.js.txt": "97e33652ea160813f762f96f41004a46efe27449767689ae1aed323e168d4271",
+  "test/integration/test-forever.js.txt": "6f1a7d7f2a6ddad485f3bd868b18cfbc3f0244094a0b8e37db4ac5d73fdbfce8",
+  "test/integration/test-retry-operation.js.txt": "b1d53db8837ccbf720c3b758c8b4e151a8c04caf9604517fcc19d1264e8c7ace",
+  "test/integration/test-retry-wrap.js.txt": "1983c1e30c0c1df29e306a44a856f6471a50f167862acaa402ef29d5b961066b",
+  "test/integration/test-timeouts.js.txt": "48c08ff322d155dc9e2b33344429996d73da9335e6ca6056d778cc02e0fb71c6"
+}
