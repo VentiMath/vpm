@@ -1,0 +1,14 @@
+{
+  "name": "vhttp-proxy-agent",
+  "version": "0.1.0",
+  "description": "HTTP forward proxies with prepared requests, bounded connections and private diagnostics",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {".": {"types": "./index.d.ts", "default": "./index.js"}, "./package.json": "./package.json"},
+  "files": ["index.js", "index.d.ts", "lib", "LICENSE", "README.md", "PROVENANCE.json"],
+  "dependencies": {"vagent-base": "workspace:*", "vdebug": "workspace:*"},
+  "engines": {"node": ">=24"},
+  "license": "MIT",
+  "repository": {"type": "git", "url": "git+https://github.com/ventimath/vpm.git", "directory": "packages/vhttp-proxy-agent"}
+}

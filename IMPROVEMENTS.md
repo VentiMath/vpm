@@ -28,7 +28,7 @@ now have current comparison targets:
 | Complete | vretry-request | 9.1.0; Cloud Storage 8.4.0/google-gax 6.14.0 caller paths | [retry-request 9.1.0](https://www.npmjs.com/package/retry-request) |
 | Complete | vstream-events | 1.0.5; teeny-request 11.1.1 and current Storage/gax callers | [stream-events 1.0.5](https://www.npmjs.com/package/stream-events), used by teeny-request 11.1.1 |
 | Complete | vagent-base | 9.0.0 API, current ESM proxy caller and retained 7.1.4 coverage | [agent-base 9.0.0](https://www.npmjs.com/package/agent-base), required by current http-proxy-agent 9.1.0 |
-| Next | vhttp-proxy-agent | Not implemented | [http-proxy-agent 9.1.0](https://www.npmjs.com/package/http-proxy-agent) |
+| Caller paths verified | vhttp-proxy-agent | 9.1.0 upstream suite; teeny-request 11.1.1/Storage 8.4.0 callers replacing 7.0.2 | [http-proxy-agent 9.1.0](https://www.npmjs.com/package/http-proxy-agent) |
 
 The Gaxios upgrade now uses native fetch for ordinary calls, with explicit stream,
 redirect, size and deadline handling. Node agents, proxies and client certificates
@@ -46,13 +46,12 @@ VPM JWS verification remove the other two helpers. Dedicated external-provider
 suites and live cloud deployment remain outside its verified scope.
 
 `vagent-base` now covers 9.0.0, including structural delegation and the current
-ESM proxy caller. Next is `vhttp-proxy-agent` against 9.1.0. Its optional
-`proxy-agent-negotiate` 1.1.0 helper loads Kerberos on demand; ordinary proxy
-connections do not need that native peer. Needed authentication scope remains
-to be assessed when building the caller.
-Current teeny-request 11.1.1 still requests `http-proxy-agent` and
-`https-proxy-agent` 7.x; those callers need explicit migration checks rather than
-an unrestricted major-version alias.
+ESM proxy caller. `vhttp-proxy-agent` covers the 9.1.0 ordinary forwarding API
+and verifies teeny-request 11.1.1/Storage 8.4.0 callers still using 7.0.2. Automatic
+Negotiate and `onProxyAuth` are explicitly unsupported; the optional native
+Kerberos helper is omitted. These features were not found in application calls.
+The next caller is `vteeny-request`, retaining explicit version-scoped migration
+checks for both proxy agents.
 
 Recheck stable versions when each step begins. Updates need pinned upstream
 conformance and consumer tests, types, benchmarks, and documented intentional
@@ -63,6 +62,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vhttp-proxy-agent](packages/vhttp-proxy-agent) | http-proxy-agent 9.1.0; 7.0.2 caller coverage | Two VPM dependencies, prepared absolute requests, preserved streamed bodies, bounded TCP/TLS connections, credential-safe diagnostics and isolated configuration. |
 | [vstream-events](packages/vstream-events) | stream-events 1.0.5 | Zero dependencies; independent once-only read/write notifications, exact method results and receivers, reentrant restoration and validation before mutation. |
 | [vretry-request](packages/vretry-request) | retry-request 9.1.0 | Zero dependencies; cancelled backoff, once-only attempt settlement, monotonic retry budgets, bounded timers, isolated stream events and safe transport teardown. |
 | [vgoogle-auth-library](packages/vgoogle-auth-library) | google-auth-library 11.3.2 | Four VPM dependencies; isolated JWT caches, shared forced refreshes, per-owner private-key parsing, strict ID-token verification and private debug messages. |
@@ -130,12 +130,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,203 tests**: all pass on Node 24, and Bun passes
-2,200 with three documented runtime-specific skips. All 62 runtime packages'
+The root suite contains **2,226 tests**: all pass on Node 24, and Bun passes
+2,223 with three documented runtime-specific skips. All 63 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **64 packages**, including two declaration-only packages.
+catalog covers **65 packages**, including two declaration-only packages.
 
 Runtime verification and performance work target Node.js 24 and Bun. Packages
 include their own TypeScript declarations and provide CommonJS and native ES
@@ -311,6 +311,48 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vhttp-proxy-agent
+
+**Target:** http-proxy-agent 9.1.0, with explicit migration coverage for
+teeny-request 11.1.1 and Cloud Storage 8.4.0 paths still using 7.0.2. Two direct
+VPM dependencies replace three upstream dependencies; the optional native
+Kerberos peer is unnecessary for these callers. Automatic Negotiate and
+`onProxyAuth` are rejected explicitly, so this is scoped forwarding compatibility.
+
+Absolute request targets and headers are prepared at registration, avoiding a
+second buffered-request rewrite after connecting. Delayed agent delegation
+verifies the existing header prefix and preserves queued UTF-8/binary body bytes
+and pending-byte accounting. Origin-form paths remain bound to the requested
+authority, including paths beginning with `//`; custom Host headers do not
+redirect the target. Dot segments and escapes are preserved, fragments removed.
+
+Configuration is validated and copied; empty and zero header values survive,
+case variants share authentication decisions, and providers run once per request
+without mutation. TCP/TLS establishment has a finite default deadline, and
+cancellation or destruction closes the pending socket. TLS readiness follows
+certificate verification. Diagnostic events redact proxy credentials, query and
+fragment; logs omit request/header contents. HTTP destinations have an explicit
+protocol, avoiding unnecessary stack inspection on each request.
+
+**Verification:** 23 focused tests and all 16 pinned upstream cases pass on both
+Node 24 and Bun. Published upstream passes the same suite. Eight real
+teeny-request/Storage callback and streaming paths exercise HTTP/TLS forward
+proxies, Basic authentication and exact bodies; the 7.0.2 control passes too.
+Root integration instruments and exercises the replacement, while archive gates
+check packed dependencies, files, CJS/ESM exports and standalone declarations.
+See the [API and intentional differences](packages/vhttp-proxy-agent/README.md)
+and [conformance fixture](scripts/http-proxy-conformance/README.md).
+
+**Measurements:** the [paired benchmark report](packages/vhttp-proxy-agent/bench/results/README.md)
+records construction, request preparation, complete HTTP/TLS proxy requests,
+streamed bodies and queues against 9.1.0. Node keep-alive traffic and queued
+batches take about 21–22% less paired time; Bun TLS-proxy keep-alive and queues
+improve about 10%/9%. Construction adds 0.5–2.0 microseconds depending on runtime
+and options. Bun dynamic headers add 63 ns, and complete GETs with a new agent
+remain 3.3% slower. Controls and process variation are reported alongside every
+case. These local transport measurements do not demonstrate an
+application-wide performance improvement or application adoption.
 
 ## vstream-events
 

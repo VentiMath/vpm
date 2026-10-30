@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  'http-proxy-agent': { pkg: 'vhttp-proxy-agent', versions: /^(?:7\.0\.2|9\.1\.0)$/ },
   'stream-events': { pkg: 'vstream-events', versions: /^1\.0\.5$/ },
   'retry-request': { pkg: 'vretry-request', versions: /^9\.1\.0$/ },
   'google-auth-library': { pkg: 'vgoogle-auth-library', versions: /^11\.3\.2$/ },
@@ -139,7 +140,7 @@ const uncovered = new Map();
 const contentTypes = new Map();
 const contentTypeCallers = new Set();
 const seen = new Set();
-const queue = [...['retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
+const queue = [...['teeny-request', 'retry-request', 'stream-events'].map(name => path.join(__dirname, 'retry-request-conformance/node_modules', name, 'package.json')), path.resolve(modules, '../package.json'), ...[10, 11].map(version => path.join(__dirname, 'google-http-conformance/node_modules/google-auth' + version + '/package.json'))];
 while (queue.length) {
   const manifest = queue.pop();
   if (seen.has(manifest)) continue;
@@ -1185,6 +1186,7 @@ async function run() {
     await require('./google-http-conformance/consumer.cjs')(from);
     await require('./retry-request-conformance/callers.cjs')(replacements['retry-request']);
     await require('./stream-events-conformance/callers.cjs')(replacements['stream-events'], false, false);
+    await require('./http-proxy-conformance/callers.cjs')(replacements['http-proxy-agent']);
 
     // Debug namespaces from the consumers reached vdebug's output.
     for (const namespace of ['express:application', 'router', 'send', 'body-parser:json', 'finalhandler']) {

@@ -48,6 +48,11 @@ jobs:
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/jwks-conformance/run.cjs
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/http-proxy-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: |
+          node scripts/http-proxy-conformance/run.cjs
+          node scripts/http-proxy-conformance/run.cjs --upstream
+          node scripts/http-proxy-conformance/callers.cjs --upstream
       - run: node scripts/agent-conformance/run.cjs
       - run: |
           node scripts/agent-conformance/current/run.cjs
@@ -111,6 +116,11 @@ jobs:
       - run: npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/jwks-conformance/run.cjs
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/http-proxy-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: |
+          bun scripts/http-proxy-conformance/run.cjs
+          bun scripts/http-proxy-conformance/run.cjs --upstream
+          bun scripts/http-proxy-conformance/callers.cjs --upstream
       - run: bun scripts/agent-conformance/run.cjs
       - run: |
           bun scripts/agent-conformance/current/run.cjs

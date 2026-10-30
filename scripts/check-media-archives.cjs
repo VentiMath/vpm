@@ -79,10 +79,10 @@ try {
       const lib = fs.readdirSync(path.join(root, 'packages/vjsonwebtoken/lib')).map(file => 'lib/' + file);
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.d.ts', 'index.js', 'package.json', ...lib].sort());
     }
-    if (name === 'vhttps-proxy-agent') {
+    if (name === 'vhttps-proxy-agent' || name === 'vhttp-proxy-agent') {
       assert.deepEqual(metadata.dependencies, {'vagent-base':'0.1.0',vdebug:'0.1.0'});
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(file => !file.endsWith('/')).map(file => file.replace(/^package\//, ''));
-      assert.deepEqual(entries.sort(), ['LICENSE','README.md','PROVENANCE.json','index.d.ts','index.js','package.json','lib/options.js','lib/response.js'].sort());
+      assert.deepEqual(entries.sort(), ['LICENSE','README.md','PROVENANCE.json','index.d.ts','index.js','package.json','lib/options.js',name === 'vhttp-proxy-agent' ? 'lib/request.js' : 'lib/response.js'].sort());
     }
     if (name === 'vagent-base') {
       assert.equal(metadata.dependencies, undefined);
@@ -168,6 +168,8 @@ if(require('vextend')(true,{}, {a:{b:1}}).a.b!==1)throw new Error('extend archiv
 if(require('vis-stream').readable({pipe(){},_read(){},_readableState:null}))throw new Error('stream archive');
 const {Agent:ArchiveAgent}=require('vagent-base');
 const {HttpsProxyAgent:ArchiveProxy}=require('vhttps-proxy-agent');
+const {HttpProxyAgent:ArchiveForward}=require('vhttp-proxy-agent');
+if (!(new ArchiveForward('http://localhost:8080') instanceof ArchiveAgent)) throw new Error('forward proxy inheritance');
 if (!(new ArchiveProxy('http://localhost:8080') instanceof ArchiveAgent)) throw new Error('proxy inheritance');
 if (!(new ArchiveAgent() instanceof require('node:http').Agent)) throw new Error('agent inheritance');
 const jwa = require('vjwa');
@@ -337,6 +339,8 @@ if (archiveResult.data !== 'ok') throw new Error('gaxios ESM archive');
 archiveClient.destroy();
 import {Agent as ArchiveAgent} from 'vagent-base';
 import {HttpsProxyAgent as ArchiveProxy} from 'vhttps-proxy-agent';
+import {HttpProxyAgent as ArchiveForward} from 'vhttp-proxy-agent';
+if (!(new ArchiveForward('http://localhost:8080') instanceof ArchiveAgent)) throw new Error('forward proxy ESM inheritance');
 if (!(new ArchiveProxy('http://localhost:8080') instanceof ArchiveAgent)) throw new Error('proxy ESM inheritance');
 if (typeof ArchiveAgent !== 'function') throw new Error('agent ESM export');
 import jwa from 'vjwa';
@@ -497,6 +501,9 @@ typedClient.destroy();
 void fetchPromise; void gaxiosPromise;
 import {Agent as TypedAgent, type AgentConnectOpts, type ClientRequest as AgentRequest, type Duplex as AgentDuplex} from 'vagent-base';
 import {HttpsProxyAgent as TypedProxy} from 'vhttps-proxy-agent';
+import {HttpProxyAgent as TypedForward} from 'vhttp-proxy-agent';
+const forwardProxy: TypedAgent = new TypedForward('http://proxy.test', {headers:()=>({'X-Test':'value'}),connectTimeout:1000});
+void forwardProxy;
 const configuredProxy: TypedAgent = new TypedProxy('https://proxy.test', {headers:()=>({'X-Test':'value'}),maxProxyHeaderSize:16384,connectTimeout:1000});
 void configuredProxy;
 declare const agentSocket: AgentDuplex;
