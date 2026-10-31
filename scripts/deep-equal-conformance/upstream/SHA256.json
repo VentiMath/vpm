@@ -1,0 +1,10 @@
+{
+  "LICENSE": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a",
+  "README.md": "ada32c1b53bd74640a22806e99b25c2b8ab2946eed338f325114be87bd5b9fce",
+  "package.json": "a5c63940db0260739be9e2ac67f3aac268df4db5770420ee4e34e493152f97d2",
+  "spec/es6tests.js": "b5c0b5409b9ad5eb00c49ef030b0953ac634aee487360bd875650981dafe090e",
+  "spec/tests.js": "5401d2a9251b88d90ec2cb3964fc7617a03005e1f76ba5d871119b5e3db27d99",
+  "src/index.jst": "e6475b939b2fd0336664a9cf0f2daaba158dbd1e430caca48041507a486a3226",
+  "spec/index.spec.js.txt": "37f34d31145d987bfe68435da70d720f32ee45011e7e853d8dc782e2697bf8fa",
+  "spec/react.spec.js.txt": "d9c7f32b85549f2f498378a9006504dbf79795d15d6fc1405fb784b80b331a3f"
+}

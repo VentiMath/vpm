@@ -143,6 +143,10 @@
       "name": "vextend",
       "version": "0.1.0",
     },
+    "packages/vfast-deep-equal": {
+      "name": "vfast-deep-equal",
+      "version": "0.1.0",
+    },
     "packages/vfast-xml-builder": {
       "name": "vfast-xml-builder",
       "version": "0.1.0",
@@ -716,6 +720,8 @@
     "vexpress": ["vexpress@workspace:packages/vexpress"],
 
     "vextend": ["vextend@workspace:packages/vextend"],
+
+    "vfast-deep-equal": ["vfast-deep-equal@workspace:packages/vfast-deep-equal"],
 
     "vfast-xml-builder": ["vfast-xml-builder@workspace:packages/vfast-xml-builder"],
 

@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vfast-deep-equal | fast-deep-equal 3.1.3; Firestore 9.4.0 document, query and transform equality | [fast-deep-equal 3.1.3](https://www.npmjs.com/package/fast-deep-equal), checked October 30, 2026 |
 | Caller paths verified | vgoogle-gax | google-gax 6.14.0; Firestore 9.4.0 RPCs, transactions, batches, queries and native REST | [google-gax 6.14.0](https://www.npmjs.com/package/google-gax), checked October 30, 2026 |
 | Caller paths verified | vopentelemetry-api | @opentelemetry/api 1.10.0; SDK 3.0.0 and gax 6.14.0 tracing helpers | [@opentelemetry/api 1.10.0](https://www.npmjs.com/package/@opentelemetry/api), checked October 30, 2026 |
 | Caller paths verified | vgrpc-js | @grpc/grpc-js 1.14.7; gax 6.14.0 / Firestore 9.4.0 local HTTP/2 callers | [@grpc/grpc-js 1.14.7](https://www.npmjs.com/package/@grpc/grpc-js), checked October 30, 2026 |
@@ -68,8 +69,8 @@ checked October 30, 2026. `vopentelemetry-api` now covers the zero-dependency
 `@opentelemetry/api` 1.10.0 API, including current SDK interoperability and actual
 gax tracing helpers. `vgoogle-gax` now covers 6.14.0 itself with ten VPM runtime
 dependencies, checked Firestore 9.4.0 callers and native REST transport. Those
-latest targets were checked October 30, 2026. Next are `fast-deep-equal` 3.1.3
-and `functional-red-black-tree` 1.0.1, the remaining small dependencies before
+latest targets were checked October 30, 2026. `vfast-deep-equal` now covers 3.1.3 with verified Firestore equality callers.
+Next is `functional-red-black-tree` 1.0.1, the remaining small dependency before
 the Firestore client and generated API package.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
@@ -109,6 +110,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
 | [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership and ten VPM dependencies; actual Firestore transactions/batches/queries verified. |
 | [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
 | [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Complete-frame fast path, released network chunks, preserved metadata keys/binary values and own package namespaces; actual Firestore calls over HTTP/2 and two VPM dependencies. |
@@ -207,12 +209,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,729 tests**: all pass on Node 24, and Bun passes
-2,726 with three documented runtime-specific skips. All 93 runtime packages'
+The root suite contains **2,744 tests**: all pass on Node 24, and Bun passes
+2,741 with three documented runtime-specific skips. All 94 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **95 packages**, including two declaration-only packages.
+catalog covers **96 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -336,6 +338,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vfast-deep-equal` | 0 | 0 |
 | `vgoogle-gax` | 11 | 10 (all VPM; unused direct node-fetch removed) |
 | `vopentelemetry-api` | 0 | 0 |
 | `vgrpc-js` | 2 | 2 (`vgrpc-proto-loader`, `vordered-map`) |
@@ -495,6 +498,35 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfast-deep-equal
+
+Targets **fast-deep-equal 3.1.3**, checked October 30, 2026. No runtime dependencies.
+All entry points support Map/Set, typed arrays and binary buffers; React variants
+retain the owner-cycle skip. Buffer comparisons preserve bytes lost by UTF-8
+conversion, DataView comparisons terminate and respect offsets, null-prototype
+records work, non-callable conversion fields compare as data, and arrays require
+an array on both sides. Promise and weak collections require identity. Ordinary
+cyclic graphs and unlisted exotic objects remain outside the supported contract.
+
+**626 unchanged upstream tests** pass on Node 24 and Bun, including React rendering
+controls. Fifteen focused tests include 2,000 deterministic JSON-pair comparisons.
+Actual Firestore 9.4.0 document/query/filter/array-transform/aggregate comparisons
+pass. Original controls reproduce two false positives for distinct binary values;
+VPM fixes both. These SDK tests are local equality checks, not deployed database
+measurements. All four module entry points have self-contained declarations and
+isolated archive checks.
+
+The measured 1 KiB Buffer case takes **65% less time on Node / 88% less on Bun**;
+small records improve 14% on both. Actual Firestore equality paths take **4–9%
+less time on Node**. Bun retains **7–25% caller regressions** in pooled results,
+with the query case varying +15–79% per process; Node nested Map comparison is
+20% slower. The report preserves all samples, controls and the initial run that
+prompted caller tuning. These are equality CPU measurements, not request latency.
+
+See the [package contract](packages/vfast-deep-equal/README.md),
+[conformance record](scripts/deep-equal-conformance/README.md) and
+[paired measurements](packages/vfast-deep-equal/bench/results/README.md).
 
 ## vgoogle-gax
 

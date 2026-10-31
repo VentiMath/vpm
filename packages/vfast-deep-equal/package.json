@@ -1,0 +1,84 @@
+{
+  "name": "vfast-deep-equal",
+  "version": "0.1.0",
+  "description": "Deep equality for Firestore records, binary data, collections and React elements",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.js"
+    },
+    "./react": {
+      "types": "./react.d.ts",
+      "import": "./react.mjs",
+      "default": "./react.js"
+    },
+    "./es6": {
+      "types": "./es6/index.d.ts",
+      "import": "./es6/index.mjs",
+      "default": "./es6/index.js"
+    },
+    "./es6/react": {
+      "types": "./es6/react.d.ts",
+      "import": "./es6/react.mjs",
+      "default": "./es6/react.js"
+    },
+    "./package.json": "./package.json",
+    "./index": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.js"
+    },
+    "./index.js": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.js"
+    },
+    "./react.js": {
+      "types": "./react.d.ts",
+      "import": "./react.mjs",
+      "default": "./react.js"
+    },
+    "./es6/index": {
+      "types": "./es6/index.d.ts",
+      "import": "./es6/index.mjs",
+      "default": "./es6/index.js"
+    },
+    "./es6/index.js": {
+      "types": "./es6/index.d.ts",
+      "import": "./es6/index.mjs",
+      "default": "./es6/index.js"
+    },
+    "./es6/react.js": {
+      "types": "./es6/react.d.ts",
+      "import": "./es6/react.mjs",
+      "default": "./es6/react.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "react.js",
+    "react.mjs",
+    "react.d.ts",
+    "special.js",
+    "es6",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vfast-deep-equal"
+  }
+}
