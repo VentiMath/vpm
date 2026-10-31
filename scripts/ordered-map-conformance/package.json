@@ -1,0 +1,11 @@
+{
+  "name": "vpm-ordered-map-conformance",
+  "private": true,
+  "description": "Pinned ordered-map comparison and unchanged upstream test helpers",
+  "dependencies": {
+    "@js-sdsl/ordered-map": "4.4.2",
+    "js-sdsl": "4.4.2",
+    "chai": "4.5.0",
+    "mocha": "11.7.5"
+  }
+}

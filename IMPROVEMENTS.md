@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vordered-map | @js-sdsl/ordered-map 4.4.2; gRPC 1.14.7 Channelz diagnostics | [@js-sdsl/ordered-map 4.4.2](https://www.npmjs.com/package/@js-sdsl/ordered-map), checked October 30, 2026 |
 | Caller paths verified | vgrpc-proto-loader | @grpc/proto-loader 0.8.1 runtime API; gax 6.14.0 and Firestore 9.4.0 local gRPC callers | [@grpc/proto-loader 0.8.1](https://www.npmjs.com/package/@grpc/proto-loader), checked October 30, 2026 |
 | Caller paths verified | vlodash.camelcase | lodash.camelcase 4.3.0; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 method aliases | [lodash.camelcase 4.3.0](https://www.npmjs.com/package/lodash.camelcase), checked October 30, 2026 |
 | Caller paths verified | vjwks-rsa | 4.1.0 API and Firebase Admin 14.5.0 token callers; retained 3.2.2 / Admin 12.7.0 coverage | [jwks-rsa 4.1.0](https://www.npmjs.com/package/jwks-rsa), checked October 30, 2026 |
@@ -57,9 +58,10 @@ Storage 8 / Firestore 9. Firebase Functions **7.4.0** permits Admin 14. These np
 manifests were checked October 30, 2026. The `vjwks-rsa` 4.1.0 API and Admin 14 JWKS/App Check
 callers now pass against upstream controls on Node 24 and Bun. `vlodash.camelcase` now covers the 4.3.0 method-name conversion used by
 `@grpc/proto-loader` 0.8.1. `vgrpc-proto-loader` now covers its runtime API with
-those VPM foundations and actual Firestore calls. Next is `@js-sdsl/ordered-map`
-4.4.2, the remaining leaf beneath `@grpc/grpc-js` 1.14.7; both targets were checked
-October 30, 2026. SDK upgrades and actual adoption of VPM
+those VPM foundations and actual Firestore calls. `vordered-map` now covers
+4.4.2 and gRPC's Channelz diagnostic handlers. Next is `vgrpc-js`, targeting
+`@grpc/grpc-js` 1.14.7 with both direct dependencies built; these targets were
+checked October 30, 2026. SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
 
@@ -97,6 +99,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Checked foreign/stale iterators and retained pair access, reused iterator allocations, correct reverse-end movement and logarithmic indexed position lookup; real gRPC Channelz handlers. |
 | [vgrpc-proto-loader](packages/vgrpc-proto-loader) | @grpc/proto-loader 0.8.1 | Reused private descriptors and codecs, isolated public definitions, safe method-option keys and VPM protobuf/long/camel-case dependencies; real Google SDK runtime calls. |
 | [vlodash.camelcase](packages/vlodash.camelcase) | lodash.camelcase 4.3.0 | Direct ASCII identifier conversion, lazy compatible Unicode handling, single object coercion and corrected zero BigInts/Symbol branding; actual gRPC and Google method aliases. |
 | [vproto3-json-serializer](packages/vproto3-json-serializer) | proto3-json-serializer 4.1.0 | Correct byte slices and collections, signed durations, offset timestamps, FieldMasks and Any wrappers; validated scalars, safe output keys and verified Google fallback callers. |
@@ -191,12 +194,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,675 tests**: all pass on Node 24, and Bun passes
-2,672 with three documented runtime-specific skips. All 89 runtime packages'
+The root suite contains **2,682 tests**: all pass on Node 24, and Bun passes
+2,679 with three documented runtime-specific skips. All 90 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **91 packages**, including two declaration-only packages.
+catalog covers **92 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -205,6 +208,11 @@ module imports. CI runs the package and integration suites on these same two
 runtimes. Separate archive gates verify npm/Bun installation,
 exported files, module imports and TypeScript 7 consumers. Test fixtures and
 benchmarks are excluded from installable archives.
+
+The [ordered-map fixture](scripts/ordered-map-conformance/README.md) adds all 14
+unchanged upstream tests, 54,500 deterministic differential operations/bounds,
+four original-package bug controls and all seven real Channelz handlers on each
+runtime. Seven focused tests are included in the root count.
 
 The [gRPC loader fixture](scripts/grpc-loader-conformance/README.md) adds all eight
 upstream runtime tests without assertion changes or skips, 185 comparison groups
@@ -298,6 +306,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vordered-map` | 0 | 0 |
 | `vgrpc-proto-loader` | 4 (including CLI-only `yargs`) | 3 (`vlodash.camelcase`, `vlong`, `vprotobufjs`; runtime API only) |
 | `vlodash.camelcase` | 0 | 0 |
 | `vproto3-json-serializer` | 1 | 1 (`vprotobufjs`) |
@@ -453,6 +462,31 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vordered-map
+
+Based on **@js-sdsl/ordered-map 4.4.2**, retaining its red-black tree and complete
+OrderedMap runtime method surface with zero dependencies. Shared navigation
+methods and a lazy reusable pair proxy reduce iterator allocations. Foreign
+iterators cannot mutate another map; detached/cleared iterators and retained
+pairs at the end marker throw. This prevents the upstream sentinel-write bug
+that makes missing-key lookups return an unrelated value. Reverse-end predecessor
+movement is corrected, and indexed position access uses subtree counts in O(log n).
+
+All 14 unchanged upstream tests, 54,500 mixed differential checks and all seven
+gRPC 1.14.7 Channelz handlers pass on Node 24 and Bun. Channelz tracks diagnostic
+entities and pages through them; these results do not claim faster HTTP/2 payload
+processing. The [package contract](packages/vordered-map/README.md) explains pair
+identity, iterator invalidation, stricter positions and index access, and the
+retained limitation that erasing can swap other iterators' node payloads.
+
+[Paired benchmarks](packages/vordered-map/bench/results/README.md) show 100-entry
+iterator pages taking 11% / 42% less time on Node / Bun, and actual Channelz pages
+8% / 24% less. Bun's 7.5% control bias limits the precise caller claim. Indexed
+position access falls from 16.2 / 13.6 µs to 36 / 26 ns; gRPC does not use it.
+Regressions remain: Node erase/reinsert batches cost 3.3% more, Bun updates 5.6%
+more, and Bun shuffled insertion 5.1% more with a 3.6% control bias. Reference-count
+changes are inconclusive against their controls. All cases and raw runs remain.
 
 ## vgrpc-proto-loader
 

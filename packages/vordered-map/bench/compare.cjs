@@ -1,0 +1,21 @@
+'use strict';
+const path=require('node:path'),assert=require('node:assert/strict');
+const upstream=require('../../../scripts/ordered-map-conformance/node_modules/@js-sdsl/ordered-map'),vpm=require('..');
+const {channelz,info,invoke,entry}=require('../../../scripts/ordered-map-conformance/consumers.cjs');
+const entries=Array.from({length:4096},(_,i)=>[i,{id:i}]);
+let seed=0x51d51;const shuffled=entries.slice(0,1024);for(let i=shuffled.length-1;i>0;i--){seed=(Math.imul(seed,1664525)+1013904223)>>>0;const j=seed%(i+1);[shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];}
+const cases=[],add=(name,make,validate)=>cases.push({name,make,validate}),equal=expected=>value=>assert.equal(value,expected);
+add('map / 16 hit and miss lookups',lib=>{const m=new lib.OrderedMap(entries);return()=>{let sum=0;for(let i=0;i<16;i++){sum+=m.getElementByKey(i*251).id;sum+=m.getElementByKey(5000+i)?.id||0;}return sum;};},equal(30120));
+add('map / ordered insertion 1024',lib=>()=>new lib.OrderedMap(entries.slice(0,1024)).size(),equal(1024));
+add('map / shuffled insertion 1024',lib=>()=>new lib.OrderedMap(shuffled).size(),equal(1024));
+add('map / update 128 existing keys',lib=>{const m=new lib.OrderedMap(entries);return()=>{for(let i=0;i<128;i++)m.setElement(i,entries[i][1]);return m.getElementByKey(127).id;};},equal(127));
+add('map / erase and reinsert 128',lib=>{const m=new lib.OrderedMap(entries.slice(0,128));return()=>{for(let i=0;i<128;i++)m.eraseElementByKey(i);for(let i=0;i<128;i++)m.setElement(i,entries[i][1]);return m.size();};},equal(128));
+add('map / iterator page of 100',lib=>{const m=new lib.OrderedMap(entries);return()=>{let sum=0,n=0;for(const i=m.lowerBound(2048);!i.equals(m.end())&&n<100;i.next(),n++)sum+=i.pointer[1].id;return sum;};},equal(209750));
+add('map / forEach 256',lib=>{const m=new lib.OrderedMap(entries.slice(0,256));return()=>{let sum=0;m.forEach(pair=>{sum+=pair[1].id;});return sum;};},equal(32640));
+add('map / generator 256',lib=>{const m=new lib.OrderedMap(entries.slice(0,256));return()=>{let sum=0;for(const pair of m)sum+=pair[1].id;return sum;};},equal(32640));
+add('map / indexed middle of 4096',lib=>{const m=new lib.OrderedMap(entries,undefined,true);return()=>m.getElementByPos(2048)[1].id;},equal(2048));
+add('gRPC / existing child ref-unref',lib=>{const c=channelz(lib),t=new c.ChannelzChildrenTracker(),ref={kind:'socket',id:35,name:'socket'};for(let i=0;i<128;i++)t.refChild({...ref,id:i});return()=>{t.refChild(ref);t.unrefChild(ref);return t.getChildLists().sockets.getElementByKey(35).count;};},equal(1));
+add('gRPC / register-unregister 128 children',lib=>{const c=channelz(lib),refs=Array.from({length:128},(_,id)=>({kind:'channel',id,name:'channel'}));return()=>{const t=new c.ChannelzChildrenTracker();for(const r of refs)t.refChild(r);for(const r of refs)t.unrefChild(r);return t.getChildLists().channels.size();};},equal(0));
+add('gRPC / GetTopChannels page of 100',lib=>{const c=channelz(lib),details=info(c);for(let i=0;i<4096;i++)c.registerChannelzChannel('channel'+i,()=>details,true);const handler=c.getChannelzHandlers().GetTopChannels;return()=>invoke(handler,{start_channel_id:'2048',max_results:'100'});},result=>{assert.equal(result.error,null);assert.equal(result.value.channel.length,100);assert.equal(result.value.channel[0].ref.channel_id,2048);assert.equal(result.value.channel[99].ref.channel_id,2147);assert.equal(result.value.end,false);});
+const root=path.resolve(__dirname,'..'),original=require.resolve('../../../scripts/ordered-map-conformance/node_modules/@js-sdsl/ordered-map');
+require('../../../scripts/bench-paired.cjs').run({root,upstream,vpm,cases,files:['index.js','package.json','PROVENANCE.json','bench/compare.cjs','../../scripts/ordered-map-conformance/consumers.cjs','../../scripts/ordered-map-conformance/package-lock.json','../../scripts/protobuf-conformance/package-lock.json',path.relative(root,entry),path.relative(root,original)]}).catch(e=>{console.error(e);process.exitCode=1;});

@@ -1,0 +1,32 @@
+{
+  "upstream": {
+    "name": "@js-sdsl/ordered-map",
+    "version": "4.4.2",
+    "repository": "https://github.com/js-sdsl/js-sdsl",
+    "commit": "5662fb7f8df48c7def3e979f6fc707ec98e2e534",
+    "tag": "v4.4.2",
+    "license": "MIT",
+    "checked": "2026-10-30",
+    "tarball": "https://registry.npmjs.org/@js-sdsl/ordered-map/-/ordered-map-4.4.2.tgz",
+    "integrity": "sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw=="
+  },
+  "derivation": "Readable JavaScript derived from the pinned TypeScript sources using TypeScript 7.0.2, removing imports/type-only declarations and expanding the bounds-check macro. The resulting JavaScript is maintained directly. Public declarations derive from the published package.",
+  "sourceSHA256": {
+    "src/container/ContainerBase/index.ts": "0658d6dcabad6e2b160d3e12390eac90ff3c73688683b8d5ba27b59c63ccfb77",
+    "src/container/TreeContainer/Base/TreeNode.ts": "393c97902723c03033b8762e28993d39c9fbde2df840fe86993e9ae982ea6da3",
+    "src/utils/throwError.ts": "9df652c29dd6bda344c270d04c59a8dfa417ba4d5d454abe0f5f07f8ef9372e5",
+    "src/container/TreeContainer/Base/index.ts": "54e71b793fb9b38c93d37d91f5cc122961d1a7e87e5887f389abb81f253381ea",
+    "src/container/TreeContainer/Base/TreeIterator.ts": "4b977d2b30b52a0295bd67fc240978571f7d10bc86d5a4783023aa9a60059925",
+    "src/container/TreeContainer/OrderedMap.ts": "cf960cdaa1c9726c5fe74b74f137f2ab55109e25c687603aff369dbebb07daa3"
+  },
+  "declarationSHA256": "bcb14be213a11d4ae3a33bd4af11d57b50a0897c0f7df0fa98cd8ee80a1b4a20",
+  "changes": [
+    "Shared iterator navigation methods and one lazy live pair proxy per iterator.",
+    "Reject foreign, detached and cleared iterators; retained pairs cannot access end sentinels.",
+    "Validate integer positions and use existing subtree counts for logarithmic indexed position access.",
+    "Reverse-end predecessor returns the smallest key; empty predecessor throws RangeError.",
+    "Index access without enableIndex throws RangeError instead of returning inconsistent values.",
+    "Array constructor overload contextually types tuple literals and permits readonly input pairs."
+  ],
+  "scope": "The complete OrderedMap runtime method surface is retained. Iterator pair identity is now stable; deletion still swaps node payloads as upstream does, so callers must not rely on unrelated iterators retaining a particular key across erase. No runtime dependencies."
+}

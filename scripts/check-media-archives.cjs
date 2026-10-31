@@ -45,7 +45,7 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vlong','vobject-hash','vyocto-queue','vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
+    if (['vordered-map','vlong','vobject-hash','vyocto-queue','vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
@@ -260,6 +260,7 @@ const archiveXMLNaming=require('vxml-naming'),archiveUnsafe=require('vis-unsafe'
 if(!archiveXMLNaming.qName('𐀀:part')||!archiveUnsafe.isUnsafe('<script>',archiveUnsafe.HTML))throw new Error('XML helpers CJS archive');
 const archiveAnyNumber=require('vanynum'),archiveStringNumber=require('vstrnum');
 if(archiveAnyNumber('१२')!=='12'||archiveAnyNumber.anynum!==archiveAnyNumber||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers CJS archive');
+const archiveOrdered=new (require('vordered-map').OrderedMap)([[2,'b'],[1,'a']],undefined,true);if(archiveOrdered.getElementByPos(1)[1]!=='b'||archiveOrdered.lowerBound(1).index!==0)throw new Error('Ordered map CJS archive');
 const archiveGrpcLoader=require('vgrpc-proto-loader'),archiveGrpcDefs=archiveGrpcLoader.fromJSON({nested:{M:{fields:{id:{type:'int64',id:1}}},S:{methods:{GetThing:{requestType:'M',responseType:'M'}}}}},{longs:String});
 if(archiveGrpcDefs.S.GetThing.originalName!=='getThing'||archiveGrpcDefs.M.deserialize(archiveGrpcDefs.M.serialize({id:'9007199254740993'})).id!=='9007199254740993'||archiveGrpcLoader.isAnyExtension(null))throw new Error('gRPC loader CJS archive');
 const archiveCamelCase=require('vlodash.camelcase');if(archiveCamelCase('GetIamPolicy')!=='getIamPolicy'||archiveCamelCase('déjà vu')!=='dejaVu'||archiveCamelCase(0n)!=='0')throw new Error('camelCase CJS archive');
@@ -458,6 +459,7 @@ if(!archiveQName('𐀀:part')||!archiveUnsafe('<script>',archiveHTML))throw new 
 import archiveAnyNumber,{anynum as archiveNamedNumber} from 'vanynum';
 import archiveStringNumber from 'vstrnum';
 if(archiveAnyNumber!==archiveNamedNumber||archiveAnyNumber('१२')!=='12'||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers ESM archive');
+import {OrderedMap as ArchiveOrderedMap} from 'vordered-map';if(new ArchiveOrderedMap([[1,'a']]).getElementByKey(1)!=='a')throw new Error('Ordered map ESM archive');
 import {fromJSON as archiveGrpcFromJSON,isAnyExtension as archiveGrpcAny,Long as archiveGrpcLong} from 'vgrpc-proto-loader';
 const archiveGrpcMessage=archiveGrpcFromJSON({nested:{M:{fields:{id:{type:'int64',id:1}}}}}).M;
 if(!(archiveGrpcMessage.deserialize(archiveGrpcMessage.serialize({id:'9007199254740993'})).id instanceof archiveGrpcLong)||!archiveGrpcAny({'@type':'M'}))throw new Error('gRPC loader ESM archive');
@@ -664,6 +666,7 @@ const typedNormalized:string=typedNamedNumber('१२');
 const typedParsed:string|number|null=typedStringNumber('12',{unicode:true});
 const typedUnchanged:{id:number}=typedAnyNumber({id:1});
 void [typedNormalized,typedParsed,typedUnchanged];
+import {OrderedMap as TypedOrderedMap,type OrderedMapIterator as TypedMapIterator} from 'vordered-map';const archiveTypedMap=new TypedOrderedMap<number,string>([[1,'a']]);const archiveTypedIter:TypedMapIterator<number,string>=archiveTypedMap.begin();const archiveTypedValue:string=archiveTypedIter.pointer[1];void archiveTypedValue;
 import {fromJSON as typedGrpcLoad,isAnyExtension as typedGrpcAny,type MessageTypeDefinition as TypedGrpcMessage,type ByteBuffer as TypedGrpcBuffer} from 'vgrpc-proto-loader';
 const typedGrpcDefinition=typedGrpcLoad({nested:{M:{fields:{id:{type:'string',id:1}}}}}).M as TypedGrpcMessage<{id:string},{id:string}>;
 const typedGrpcBytes:TypedGrpcBuffer=typedGrpcDefinition.serialize({id:'one'});const typedGrpcText:string=typedGrpcBytes.toString('hex');void [typedGrpcAny(null),typedGrpcText];
