@@ -26,8 +26,16 @@ VPM transport. The following adaptations apply identically to both variants:
   Certificate verification and peer-name assertions remain enabled. The committed
   server key is public test-only material; the CA signing key is discarded.
 - Test files run in alphabetical order on both runtimes. Node already returned
-  that order; Bun's directory enumeration differed. Experimental outlier
-  detection is enabled as in upstream's gulp task.
+  that order; Bun's directory enumeration differed. The one no-deadline test
+  replaces global `setTimeout` and counts every call, so it runs in its own fresh
+  process. That process supplies an explicit HTTP/2 Date response header, on both
+  runtimes and for both variants. Bun's `node:http2` otherwise starts a Date-cache
+  timer inside `respond()`, unrelated to gRPC deadlines; diagnostic stack traces
+  identified this after an original-upstream failure in Linux/Bun CI. No timers
+  are filtered, mocked or disabled, and the zero-timer assertion stays intact.
+  The main process excludes exactly that case and the isolated process requires
+  exactly one case; aggregate counts remain 508. Experimental outlier detection
+  is enabled as in upstream's gulp task.
 
 Test bodies and assertions remain unchanged. The 508 cases include nine original
 skips: five DNS/TXT/IPv6 cases, continuation after shutdown, NoCompress and two
