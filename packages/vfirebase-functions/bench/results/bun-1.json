@@ -1,0 +1,152 @@
+{
+  "recordedAt": "2026-10-31T23:11:38.645Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.3",
+    "unicode": "17.0",
+    "sqlite": "3.53.2",
+    "modules": "147"
+  },
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+  "platform": "linux",
+  "arch": "x64",
+  "calibration": false,
+  "first": "upstream",
+  "rounds": 12,
+  "checksum": 47796,
+  "methodology": "12 alternating paired rounds after 150ms per-variant warmup and four full blocks; 15ms upstream pilot target, capped at 100000 operations. Separately compiled measurement loops per variant; the second process sets up VPM first. Outputs retained and checked outside timing. Three fresh processes and one identical-upstream control per runtime. No trimming; nanoseconds per operation.",
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "963f872bb2d8c60f04a3c2728d3af97d4990fade66eaa1056ff91b087a8230e2",
+    "../../scripts/firebase-functions-conformance/package-lock.json": "ae5bb209042ea7473c98562f75b519bb068086b535bb9a3bac0b25fcd81db961",
+    "../vgoogle-cloud-firestore/package.json": "84bc8cfff12ae51290d4e0dd5c6a67b598a83dd91fa01d5d501ece1a62bf419f",
+    "bench/compare.cjs": "2e432eb8947b16291a04d8f68846af7eb4bbbd6453ff5e01ec7b68a924b41e2e",
+    "lib/common/providers/firestore.js": "8a6d5a85dc92c094d41cf4af2ae92daa1838334c50a2d02deda849c57ddc4b08",
+    "lib/common/providers/https.js": "5e610f9b887a96170d9155e963ffce70f7c10f679efb59b11d7a6f574ce15190",
+    "package.json": "18ae549d204afdc2dcabf2b4c130d7b9d8da6cb7167a85ff7c56d9a5ce6f7d41"
+  },
+  "rows": [
+    {
+      "case": "firestore trigger / decode event into a snapshot",
+      "iterations": 444,
+      "samples": {
+        "upstream": [
+          26989.993243243287,
+          26680.905405405632,
+          25532.24099099102,
+          26360.71846846822,
+          19362.36936936943,
+          13868.27927927925,
+          13795.288288288186,
+          11702.56531531521,
+          12198.680180180365,
+          12042.186936936629,
+          11912.076576576252,
+          12092.313063063202
+        ],
+        "vpm": [
+          19579.076576576426,
+          21036.191441441635,
+          18873.6779279279,
+          30583.25675675684,
+          16640.22072072061,
+          28315.592342342163,
+          10519.33108108126,
+          19892.720720720405,
+          10224.472972973253,
+          24046.86036036023,
+          10919.09009009007,
+          17482.545045045033
+        ]
+      }
+    },
+    {
+      "case": "firestore trigger / decode and read data()",
+      "iterations": 425,
+      "samples": {
+        "upstream": [
+          30368.089411764657,
+          28065.002352940985,
+          40978.065882352574,
+          25068.837647058364,
+          17748.322352941508,
+          18338.36941176474,
+          24918.672941176363,
+          27818.57882352918,
+          17985.868235294165,
+          23268.465882353186,
+          37736.025882352755,
+          30826.08705882355
+        ],
+        "vpm": [
+          28779.18117647074,
+          25526.790588235275,
+          14778.381176470515,
+          14648.084705882758,
+          14216.319999999649,
+          21998.01176470614,
+          13967.974117647505,
+          14061.724705882572,
+          14417.01647058835,
+          25492.063529411953,
+          22335.068235293766,
+          20107.061176470725
+        ]
+      }
+    },
+    {
+      "case": "callable / validate and decode a request body",
+      "iterations": 3719,
+      "samples": {
+        "upstream": [
+          617.5157300349989,
+          704.6017746706057,
+          1318.1382091959263,
+          1329.861521914422,
+          1315.74132831409,
+          704.5595590212524,
+          636.526216724905,
+          1297.7865017477143,
+          826.0500134444513,
+          707.0099489110266,
+          668.3108362463997,
+          613.2586716859681
+        ],
+        "vpm": [
+          663.6364614143964,
+          1643.9335842968533,
+          1232.5358967463744,
+          1250.6515192256518,
+          2048.5939768754565,
+          710.4901855337001,
+          669.3361118579497,
+          713.883301962871,
+          601.8230707180113,
+          630.2360849691946,
+          622.14385587521,
+          1188.3718741597058
+        ]
+      }
+    }
+  ]
+}

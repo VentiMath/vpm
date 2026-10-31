@@ -1,0 +1,21 @@
+{
+  "name": "vpm-firebase-functions-conformance",
+  "private": true,
+  "description": "Pinned firebase-functions 7.4.0 control and its unit-test tools at the versions of its lockfile, with firebase-admin 14.5.0 as the peer",
+  "dependencies": {
+    "@apollo/server": "5.5.1",
+    "@as-integrations/express4": "1.1.2",
+    "chai": "4.5.0",
+    "chai-as-promised": "7.1.2",
+    "firebase-admin": "14.5.0",
+    "firebase-functions": "7.4.0",
+    "genkit": "1.37.0",
+    "graphql": "16.14.2",
+    "jsonwebtoken": "9.0.3",
+    "jwk-to-pem": "2.0.7",
+    "mocha": "11.7.6",
+    "mock-require": "3.0.3",
+    "nock": "13.5.6",
+    "sinon": "22.1.0"
+  }
+}

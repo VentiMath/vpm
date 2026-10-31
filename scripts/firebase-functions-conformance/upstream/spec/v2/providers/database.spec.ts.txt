@@ -1,0 +1,816 @@
+// The MIT License (MIT)
+//
+// Copyright (c) 2022 Firebase
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+import { expect } from "chai";
+import * as sinon from "sinon";
+import { PathPattern } from "../../../src/common/utilities/path-pattern";
+import * as database from "../../../src/v2/providers/database";
+import { expectType } from "../../common/metaprogramming";
+import { MINIMAL_V2_ENDPOINT } from "../../fixtures";
+import { CloudEvent, onInit } from "../../../src/v2/core";
+import * as params from "../../../src/params";
+import * as logger from "../../../src/logger";
+import { stackToWire } from "../../../src/runtime/manifest";
+
+const RAW_RTDB_EVENT: database.RawRTDBCloudEvent = {
+  data: {
+    ["@type"]: "type.googleapis.com/google.events.firebase.database.v1.ReferenceEventData",
+    data: {},
+    delta: {},
+  },
+  firebasedatabasehost: "firebaseio.com",
+  instance: "my-instance",
+  ref: "foo/bar",
+  location: "us-central1",
+  id: "id",
+  source: "source",
+  specversion: "1.0",
+  time: "time",
+  type: "type",
+  authid: "uid",
+  authtype: "unauthenticated",
+};
+
+const TEST_RTDB_INSTANCE_ENV_VAR = "TEST_RTDB_INSTANCE_FOR_GETOPTS";
+const RESOLVED_RTDB_INSTANCE = "resolved-instance";
+
+describe("database", () => {
+  afterEach(() => {
+    params.clearParams();
+    sinon.restore();
+    delete process.env.FUNCTIONS_CONTROL_API;
+    delete process.env[TEST_RTDB_INSTANCE_ENV_VAR];
+  });
+
+  describe("makeParams", () => {
+    it("should make params with basic path", () => {
+      const event: database.RawRTDBCloudEvent = {
+        ...RAW_RTDB_EVENT,
+        ref: "match_a/something/else/nothing/end/match_b",
+      };
+
+      expect(
+        database.makeParams(
+          event,
+          new PathPattern("{a}/something/else/*/end/{b}"),
+          new PathPattern("*")
+        )
+      ).to.deep.equal({
+        a: "match_a",
+        b: "match_b",
+      });
+    });
+
+    it("should make params with multi segment path", () => {
+      const event: database.RawRTDBCloudEvent = {
+        ...RAW_RTDB_EVENT,
+        ref: "something/is/a/thing/else/match_a/hello/match_b/world",
+      };
+
+      expect(
+        database.makeParams(
+          event,
+          new PathPattern("something/**/else/{a}/hello/{b}/world"),
+          new PathPattern("*")
+        )
+      ).to.deep.equal({
+        a: "match_a",
+        b: "match_b",
+      });
+    });
+
+    it("should make params with multi segment path capture", () => {
+      const event: database.RawRTDBCloudEvent = {
+        ...RAW_RTDB_EVENT,
+        ref: "something/is/a/thing/else/match_a/hello/match_b/world",
+      };
+
+      expect(
+        database.makeParams(
+          event,
+          new PathPattern("something/{path=**}/else/{a}/hello/{b}/world"),
+          new PathPattern("*")
+        )
+      ).to.deep.equal({
+        path: "is/a/thing",
+        a: "match_a",
+        b: "match_b",
+      });
+    });
+
+    it("should make params for a full path and instance", () => {
+      const event: database.RawRTDBCloudEvent = {
+        ...RAW_RTDB_EVENT,
+        ref: "something/is/a/thing/else/match_a/hello/match_b/world",
+      };
+
+      expect(
+        database.makeParams(
+          event,
+          new PathPattern("something/{path=**}/else/{a}/hello/{b}/world"),
+          new PathPattern("*")
+        )
+      ).to.deep.equal({
+        path: "is/a/thing",
+        a: "match_a",
+        b: "match_b",
+      });
+    });
+  });
+
+  describe("getOpts", () => {
+    it("should return opts when passed in a path", () => {
+      expect(database.getOpts("/foo/{bar}/")).to.deep.equal({
+        path: "foo/{bar}",
+        instance: "*",
+        opts: {},
+      });
+    });
+
+    it("should return opts when passed in an options object", () => {
+      expect(
+        database.getOpts({
+          ref: "/foo/{bar}/",
+          region: "us-central1",
+        })
+      ).to.deep.equal({
+        path: "foo/{bar}",
+        instance: "*",
+        opts: {
+          region: "us-central1",
+        },
+      });
+    });
+
+    it("should preserve instance Expression", () => {
+      const p = params.defineString(TEST_RTDB_INSTANCE_ENV_VAR);
+
+      expect(database.getOpts({ ref: "/foo", instance: p })).to.deep.include({
+        path: "foo",
+        instance: p,
+      });
+    });
+  });
+
+  describe("makeEndpoint", () => {
+    it("should create an endpoint with an instance wildcard", () => {
+      const ep = database.makeEndpoint(
+        database.writtenEventType,
+        {
+          region: "us-central1",
+          labels: { 1: "2" },
+        },
+        new PathPattern("foo/bar"),
+        new PathPattern("*")
+      );
+
+      expect(ep).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {
+          1: "2",
+        },
+        region: ["us-central1"],
+        eventTrigger: {
+          eventType: database.writtenEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/bar",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create an endpoint without an instance wildcard", () => {
+      const ep = database.makeEndpoint(
+        database.writtenEventType,
+        {
+          region: "us-central1",
+          labels: { 1: "2" },
+        },
+        new PathPattern("foo/bar"),
+        new PathPattern("my-instance")
+      );
+
+      expect(ep).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {
+          1: "2",
+        },
+        region: ["us-central1"],
+        eventTrigger: {
+          eventType: database.writtenEventType,
+          eventFilters: {
+            instance: "my-instance",
+          },
+          eventFilterPathPatterns: {
+            ref: "foo/bar",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create an endpoint with an instance Expression as a path pattern", () => {
+      const instance = params.defineString(TEST_RTDB_INSTANCE_ENV_VAR);
+      const ep = database.makeEndpoint(
+        database.writtenEventType,
+        {
+          region: "us-central1",
+          labels: { 1: "2" },
+        },
+        new PathPattern("foo/bar"),
+        instance
+      );
+
+      expect(ep).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {
+          1: "2",
+        },
+        region: ["us-central1"],
+        eventTrigger: {
+          eventType: database.writtenEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/bar",
+            instance,
+          },
+          retry: false,
+        },
+      });
+    });
+  });
+
+  describe("onChangedOperation", () => {
+    it("should create a function for a written event", () => {
+      const func = database.onChangedOperation(database.writtenEventType, "/foo/{bar}/", () => 2);
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {},
+        eventTrigger: {
+          eventType: database.writtenEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/{bar}",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a function for a updated event", () => {
+      const func = database.onChangedOperation(database.updatedEventType, "/foo/{bar}/", () => 2);
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {},
+        eventTrigger: {
+          eventType: database.updatedEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/{bar}",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a complex function", () => {
+      const func = database.onChangedOperation(
+        database.writtenEventType,
+        {
+          ref: "/foo/{path=**}/{bar}/",
+          instance: "my-instance",
+          region: "us-central1",
+          cpu: "gcf_gen1",
+          minInstances: 2,
+        },
+        () => 2
+      );
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        cpu: "gcf_gen1",
+        minInstances: 2,
+        region: ["us-central1"],
+        labels: {},
+        eventTrigger: {
+          eventType: database.writtenEventType,
+          eventFilters: {
+            instance: "my-instance",
+          },
+          eventFilterPathPatterns: {
+            ref: "foo/{path=**}/{bar}",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should supply retry", () => {
+      const func = database.onChangedOperation(
+        database.writtenEventType,
+        {
+          ref: "/foo/{path=**}/{bar}/",
+          instance: "my-instance",
+          region: "us-central1",
+          cpu: "gcf_gen1",
+          minInstances: 2,
+          retry: true,
+        },
+        () => 2
+      );
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        cpu: "gcf_gen1",
+        minInstances: 2,
+        region: ["us-central1"],
+        labels: {},
+        eventTrigger: {
+          eventType: database.writtenEventType,
+          eventFilters: {
+            instance: "my-instance",
+          },
+          eventFilterPathPatterns: {
+            ref: "foo/{path=**}/{bar}",
+          },
+          retry: true,
+        },
+      });
+    });
+  });
+
+  describe("onOperation", () => {
+    it("should create a function for a created event", () => {
+      const func = database.onOperation(database.createdEventType, "/foo/{bar}/", () => 2);
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {},
+        eventTrigger: {
+          eventType: database.createdEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/{bar}",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a function for a deleted event", () => {
+      const func = database.onOperation(database.deletedEventType, "/foo/{bar}/", () => 2);
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {},
+        eventTrigger: {
+          eventType: database.deletedEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/{bar}",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a complex function", () => {
+      const func = database.onOperation(
+        database.createdEventType,
+        {
+          ref: "/foo/{path=**}/{bar}/",
+          instance: "my-instance",
+          region: "us-central1",
+          cpu: "gcf_gen1",
+          minInstances: 2,
+        },
+        () => 2
+      );
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        cpu: "gcf_gen1",
+        minInstances: 2,
+        region: ["us-central1"],
+        labels: {},
+        eventTrigger: {
+          eventType: database.createdEventType,
+          eventFilters: {
+            instance: "my-instance",
+          },
+          eventFilterPathPatterns: {
+            ref: "foo/{path=**}/{bar}",
+          },
+          retry: false,
+        },
+      });
+    });
+  });
+
+  describe("onValueWritten", () => {
+    it("should create a function with a reference", () => {
+      const func = database.onValueWritten("/foo/{bar}/", (event) => {
+        expectType<{ bar: string }>(event.params);
+      });
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {},
+        eventTrigger: {
+          eventType: database.writtenEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/{bar}",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a function with opts", () => {
+      const func = database.onValueWritten(
+        {
+          ref: "/foo/{path=**}/{bar}/",
+          instance: "my-instance",
+          region: "us-central1",
+          cpu: "gcf_gen1",
+          minInstances: 2,
+        },
+        (event) => {
+          expectType<{ path: string; bar: string }>(event.params);
+        }
+      );
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        cpu: "gcf_gen1",
+        minInstances: 2,
+        region: ["us-central1"],
+        labels: {},
+        eventTrigger: {
+          eventType: database.writtenEventType,
+          eventFilters: {
+            instance: "my-instance",
+          },
+          eventFilterPathPatterns: {
+            ref: "foo/{path=**}/{bar}",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    describe("v1-compatible getters", () => {
+      it("should provide v1-compatible getters on the event object", async () => {
+        let capturedEvent: any;
+        const func = database.onValueWritten("/foo/{bar}/", (e) => {
+          capturedEvent = e;
+        });
+
+        const raw = {
+          ...RAW_RTDB_EVENT,
+          ref: "foo/bar-value",
+          data: {
+            ["@type"]: "type.googleapis.com/google.events.firebase.database.v1.ReferenceEventData",
+            data: { key: "old_val" },
+            delta: { key: "new_val" },
+          },
+        };
+
+        await func(raw);
+
+        expect(capturedEvent.context).to.deep.equal({
+          eventId: "id",
+          timestamp: "time",
+          eventType: "providers/google.firebase.database/eventTypes/ref.write",
+          authType: "UNAUTHENTICATED",
+          resource: {
+            service: "firebaseio.com",
+            name: "projects/_/instances/my-instance/refs/foo/bar-value",
+          },
+          params: { bar: "bar-value" },
+        });
+
+        expect(capturedEvent.change).to.be.an("object");
+        expect(capturedEvent.change.before.val()).to.deep.equal({ key: "old_val" });
+        expect(capturedEvent.change.after.val()).to.deep.equal({ key: "new_val" });
+      });
+    });
+  });
+
+  describe("onValueCreated", () => {
+    it("should create a function with a reference", () => {
+      const func = database.onValueCreated("/foo/{bar}/", (event) => {
+        expectType<{ bar: string }>(event.params);
+      });
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {},
+        eventTrigger: {
+          eventType: database.createdEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/{bar}",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a function with opts", () => {
+      const func = database.onValueCreated(
+        {
+          ref: "/foo/{path=**}/{bar}/",
+          instance: "instance",
+          region: "us-central1",
+          cpu: "gcf_gen1",
+          minInstances: 2,
+        },
+        (event) => {
+          expectType<{
+            path: string;
+            bar: string;
+          }>(event.params);
+        }
+      );
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        cpu: "gcf_gen1",
+        minInstances: 2,
+        region: ["us-central1"],
+        labels: {},
+        eventTrigger: {
+          eventType: database.createdEventType,
+          eventFilters: {
+            instance: "instance",
+          },
+          eventFilterPathPatterns: {
+            ref: "foo/{path=**}/{bar}",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a function with instance Expression without deployment warning", () => {
+      process.env.FUNCTIONS_CONTROL_API = "true";
+      const warnSpy = sinon.spy(logger, "warn");
+      const instance = params.defineString(TEST_RTDB_INSTANCE_ENV_VAR);
+
+      const func = database.onValueCreated(
+        {
+          ref: "/foo/{bar}/",
+          instance,
+        },
+        () => 2
+      );
+
+      expect(warnSpy.callCount).to.equal(0);
+      expect(func.__endpoint.eventTrigger.eventFilters).to.deep.equal({});
+      expect(func.__endpoint.eventTrigger.eventFilterPathPatterns).to.deep.equal({
+        ref: "foo/{bar}",
+        instance,
+      });
+
+      const wire = stackToWire({
+        specVersion: "v1alpha1",
+        requiredAPIs: [],
+        endpoints: {
+          exprInstance: func.__endpoint,
+        },
+      }) as any;
+
+      expect(wire.endpoints.exprInstance.eventTrigger.eventFilterPathPatterns.instance).to.equal(
+        `{{ params.${TEST_RTDB_INSTANCE_ENV_VAR} }}`
+      );
+      expect(warnSpy.callCount).to.equal(0);
+    });
+
+    it("should resolve instance Expression at runtime", async () => {
+      process.env[TEST_RTDB_INSTANCE_ENV_VAR] = RESOLVED_RTDB_INSTANCE;
+      const instance = params.defineString(TEST_RTDB_INSTANCE_ENV_VAR);
+      const valueSpy = sinon.spy(instance, "value");
+      let capturedEvent: database.DatabaseEvent<any, { bar: string }>;
+
+      const func = database.onValueCreated(
+        {
+          ref: "/foo/{bar}/",
+          instance,
+        },
+        (event) => {
+          capturedEvent = event;
+        }
+      );
+
+      await func({
+        ...RAW_RTDB_EVENT,
+        instance: RESOLVED_RTDB_INSTANCE,
+        ref: "foo/bar-value",
+      } as any);
+
+      expect(valueSpy.callCount).to.equal(1);
+      expect(capturedEvent.params).to.deep.equal({ bar: "bar-value" });
+    });
+  });
+
+  describe("onValueUpdated", () => {
+    it("should create a function with a reference", () => {
+      const func = database.onValueUpdated("/foo/{bar}/", (event) => {
+        expectType<{ bar: string }>(event.params);
+      });
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {},
+        eventTrigger: {
+          eventType: database.updatedEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/{bar}",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a function with opts", () => {
+      const func = database.onValueUpdated(
+        {
+          ref: "/foo/{path=**}/{bar}/",
+          instance: "my-instance",
+          region: "us-central1",
+          cpu: "gcf_gen1",
+          minInstances: 2,
+        },
+        (event) => {
+          expectType<{ path: string; bar: string }>(event.params);
+        }
+      );
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        cpu: "gcf_gen1",
+        minInstances: 2,
+        region: ["us-central1"],
+        labels: {},
+        eventTrigger: {
+          eventType: database.updatedEventType,
+          eventFilters: {
+            instance: "my-instance",
+          },
+          eventFilterPathPatterns: {
+            ref: "foo/{path=**}/{bar}",
+          },
+          retry: false,
+        },
+      });
+    });
+  });
+
+  describe("onValueDeleted", () => {
+    it("should create a function with a reference", () => {
+      const func = database.onValueDeleted("/foo/{bar}/", (event) => {
+        expectType<{ bar: string }>(event.params);
+      });
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        labels: {},
+        eventTrigger: {
+          eventType: database.deletedEventType,
+          eventFilters: {},
+          eventFilterPathPatterns: {
+            ref: "foo/{bar}",
+            instance: "*",
+          },
+          retry: false,
+        },
+      });
+    });
+
+    it("should create a function with opts", () => {
+      const func = database.onValueDeleted(
+        {
+          ref: "/foo/{path=**}/{bar}/",
+          instance: "my-instance",
+          region: "us-central1",
+          cpu: "gcf_gen1",
+          minInstances: 2,
+        },
+        (event) => {
+          expectType<{ path: string; bar: string }>(event.params);
+        }
+      );
+
+      expect(func.__endpoint).to.deep.equal({
+        ...MINIMAL_V2_ENDPOINT,
+        platform: "gcfv2",
+        cpu: "gcf_gen1",
+        minInstances: 2,
+        region: ["us-central1"],
+        labels: {},
+        eventTrigger: {
+          eventType: database.deletedEventType,
+          eventFilters: {
+            instance: "my-instance",
+          },
+          eventFilterPathPatterns: {
+            ref: "foo/{path=**}/{bar}",
+          },
+          retry: false,
+        },
+      });
+    });
+  });
+
+  describe("common behavior", () => {
+    const eventHandlers = {
+      onValueWritten: database.onValueWritten,
+      onValueCreated: database.onValueCreated,
+      onValueUpdated: database.onValueUpdated,
+      onValueDeleted: database.onValueDeleted,
+    };
+
+    for (const [name, handler] of Object.entries(eventHandlers)) {
+      it(`calls init function for ${name}`, async () => {
+        const event: CloudEvent<string> = {
+          specversion: "1.0",
+          id: "id",
+          source: "source",
+          type: "type",
+          time: "now",
+          data: "data",
+        };
+
+        let hello;
+        onInit(() => (hello = "world"));
+        expect(hello).to.be.undefined;
+        await (handler as any)("path", () => null)(event);
+        expect(hello).to.equal("world");
+      });
+
+      it(`should pass auth context into the event for ${name}`, async () => {
+        const raw = {
+          ...RAW_RTDB_EVENT,
+        };
+
+        const func = (handler as any)("foo/bar", (event: any) => {
+          expect(event.authId).to.equal("uid");
+          expect(event.authType).to.equal("unauthenticated");
+        });
+
+        await func(raw);
+      });
+    }
+  });
+});

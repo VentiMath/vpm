@@ -32,6 +32,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vfirebase-functions | firebase-functions 7.4.0 on vfirebase-admin; its unit suite, VentiMath's HTTP, callable, scheduled, task-queue and Firestore-triggered functions, and the deploy manifest | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked October 31, 2026 |
 | Caller paths verified | vfirebase-admin | firebase-admin 14.5.0 without Realtime Database; its unit suite, and VentiMath's Auth, Firestore, Storage and FCM calls against local servers | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked October 31, 2026 |
 | Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
@@ -103,10 +104,13 @@ calls, and `@fastify/busboy` only parses `multipart/mixed` responses, which no
 Admin 14 API requests. Admin 14 also removed the namespaced API
 (`admin.firestore()`, `admin.messaging()`, `admin.apps`), which VentiMath's
 backend still uses, so adopting it includes moving those calls to the modular
-API. Next is `firebase-functions` 7.4.0. Admin 12.7's older Storage 7,
-gax 4, gtoken 8 and `form-data` 2.5.5 branches are not separate work: the Admin
-14 upgrade removes them. After the backend, frontend foundations, UI and build
-tools follow.
+API. `vfirebase-functions` now covers `firebase-functions` 7.4.0 on
+`vfirebase-admin`, checked October 31, 2026, completing the backend: every
+package VentiMath's Cloud Functions load is a VPM package or eliminated, apart
+from type-only declaration packages and `safe-buffer`. Admin 12.7's older
+Storage 7, gax 4, gtoken 8 and `form-data` 2.5.5 branches are not separate work:
+the Admin 14 upgrade removes them. Next are frontend foundations, UI and build
+tools.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -145,6 +149,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | VPM dependencies with vfirebase-admin as the peer; providers and Admin services loaded on first use (a VentiMath-shaped codebase loads 57 modules in 42 ms instead of 663 in 481 ms), `onInit` run once under concurrency and a working bin directory argument; identical responses, logs, events and deploy manifest. |
 | [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, 56% less CPU per ID-token signature check and half the cold-start modules; identical Auth, Firestore, Storage and FCM caller behavior. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | All six dependencies are VPM with one gax stack, 65 modules and about 50 ms at import instead of 404 and 270 ms, reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
@@ -248,12 +253,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,776 tests**: all pass on Node 24, and Bun passes
-2,773 with three documented runtime-specific skips. All 98 runtime packages'
+The root suite contains **2,782 tests**: all pass on Node 24, and Bun passes
+2,779 with three documented runtime-specific skips. All 99 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **100 packages**, including two declaration-only packages.
+catalog covers **101 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -377,6 +382,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vfirebase-functions` | 5 (including `@types/cors` and `@types/express`) | 3 (`vcors`, `vexpress`, `vprotobufjs`; `vfirebase-admin` peer) |
 | `vfirebase-admin` | 9 (including `@firebase/database-compat`, `@firebase/database-types` and `@fastify/busboy`) | 6 (all VPM; Realtime Database and multipart parsing eliminated) |
 | `vgoogle-cloud-firestore` | 6 (including `@google-cloud/firestore-api` ^0.2.0, which adds a second `google-gax`) | 6 (all VPM, one gax stack) |
 | `vgoogle-cloud-firestore-api` | 2 | 3 (`vgoogle-gax`, `vgoogle-logging-utils`, `vlong`; logging is imported directly so import does not load gax) |
@@ -541,6 +547,40 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfirebase-functions
+
+Targets **firebase-functions 7.4.0**, checked October 31, 2026, with
+`vfirebase-admin` as its peer. The published CommonJS, ES module and declaration
+builds are retained with `cors`, `express` and `protobufjs` mapped to VPM
+packages; VPM's own declarations replace `@types/cors` and `@types/express`.
+[PROVENANCE.json](packages/vfirebase-functions/PROVENANCE.json) lists the files
+changed beyond that.
+
+Upstream's provider indexes require every provider at import, and the providers
+require Firestore, Auth, App Check and the Realtime Database client: importing
+`firebase-functions/v2` for its logger loads 663 modules in about 480 ms on
+Node 22. Here providers and Admin services load on first use, and a codebase with
+HTTP, callable, scheduled, task-queue and Firestore functions loads 57 modules
+in about 42 ms (58 ms on Bun instead of 463 ms) before its first request. This
+also keeps `vfirebase-admin`'s omitted Realtime Database client from failing the
+import; only `DataSnapshot#ref` needs it. `onInit` callbacks ran once per
+invocation arriving before the first run finished; they now run once. The
+`firebase-functions` bin now reads its documented directory argument. Firestore
+trigger events decode about 14% faster on Node through VPM's protobuf and
+Firestore packages.
+
+The release's **996 unit tests** pass for the original; VPM passes 995, and the
+remaining `DataSnapshot#ref` test must fail with vfirebase-admin's explanation.
+VentiMath's function shapes served from one host (HTTP with and without CORS,
+handler errors, callable with and without auth, scheduler, task queue) and a
+protobuf Firestore trigger produce identical responses, logs, handler results
+and endpoint definitions, and the bin writes an identical deploy manifest.
+Three regression cases and six focused tests cover the changes.
+
+See the [package contract](packages/vfirebase-functions/README.md),
+[conformance record](scripts/firebase-functions-conformance/README.md) and
+[measurements](packages/vfirebase-functions/bench/results/README.md).
 
 ## vfirebase-admin
 

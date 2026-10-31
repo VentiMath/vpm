@@ -1,0 +1,153 @@
+{
+  "recordedAt": "2026-10-31T23:11:31.307Z",
+  "runtime": {
+    "node": "22.22.0",
+    "acorn": "8.15.0",
+    "ada": "2.9.2",
+    "amaro": "1.1.4",
+    "ares": "1.34.6",
+    "brotli": "1.1.0",
+    "cjs_module_lexer": "2.1.0",
+    "cldr": "47.0",
+    "icu": "77.1",
+    "llhttp": "9.3.0",
+    "modules": "127",
+    "napi": "10",
+    "nbytes": "0.1.1",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.64.0",
+    "openssl": "3.5.4",
+    "simdjson": "3.13.0",
+    "simdutf": "6.4.2",
+    "sqlite": "3.50.4",
+    "tz": "2025b",
+    "undici": "6.23.0",
+    "unicode": "16.0",
+    "uv": "1.51.0",
+    "uvwasi": "0.0.23",
+    "v8": "12.4.254.21-node.33",
+    "zlib": "1.3.1-470d3a2",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+  "platform": "linux",
+  "arch": "x64",
+  "calibration": false,
+  "first": "vpm",
+  "rounds": 12,
+  "checksum": 56702,
+  "methodology": "12 alternating paired rounds after 150ms per-variant warmup and four full blocks; 15ms upstream pilot target, capped at 100000 operations. Separately compiled measurement loops per variant; the second process sets up VPM first. Outputs retained and checked outside timing. Three fresh processes and one identical-upstream control per runtime. No trimming; nanoseconds per operation.",
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "963f872bb2d8c60f04a3c2728d3af97d4990fade66eaa1056ff91b087a8230e2",
+    "../../scripts/firebase-functions-conformance/package-lock.json": "ae5bb209042ea7473c98562f75b519bb068086b535bb9a3bac0b25fcd81db961",
+    "../vgoogle-cloud-firestore/package.json": "84bc8cfff12ae51290d4e0dd5c6a67b598a83dd91fa01d5d501ece1a62bf419f",
+    "bench/compare.cjs": "2e432eb8947b16291a04d8f68846af7eb4bbbd6453ff5e01ec7b68a924b41e2e",
+    "lib/common/providers/firestore.js": "8a6d5a85dc92c094d41cf4af2ae92daa1838334c50a2d02deda849c57ddc4b08",
+    "lib/common/providers/https.js": "5e610f9b887a96170d9155e963ffce70f7c10f679efb59b11d7a6f574ce15190",
+    "package.json": "18ae549d204afdc2dcabf2b4c130d7b9d8da6cb7167a85ff7c56d9a5ce6f7d41"
+  },
+  "rows": [
+    {
+      "case": "firestore trigger / decode event into a snapshot",
+      "iterations": 458,
+      "samples": {
+        "upstream": [
+          25230.72270742374,
+          24784.75545851521,
+          27315.270742358367,
+          24894.879912663906,
+          23899.60917030562,
+          26394.59388646279,
+          23827.772925764544,
+          23543.528384279613,
+          25294.57641921402,
+          25869.262008733847,
+          26405.67685589492,
+          26533.320960698587
+        ],
+        "vpm": [
+          23778.115720524143,
+          22018.454148471737,
+          21626.917030567663,
+          22157.015283842833,
+          21557.886462882358,
+          18919.290393013078,
+          13076.080786026381,
+          22320.975982532866,
+          22174.879912663866,
+          26605.506550218433,
+          23265.030567685895,
+          23630.48689956309
+        ]
+      }
+    },
+    {
+      "case": "firestore trigger / decode and read data()",
+      "iterations": 317,
+      "samples": {
+        "upstream": [
+          40863.78864353332,
+          29645.47318612015,
+          26315.545741325008,
+          34294.69716088347,
+          27834.07570977914,
+          28953.331230284053,
+          37809.5646687701,
+          37260.482649842845,
+          39626.30283911649,
+          24443.15772870617,
+          33640.9242902212,
+          37197.84858044147
+        ],
+        "vpm": [
+          36956.41009463767,
+          21908.031545741633,
+          36923.48264984265,
+          23216.760252366108,
+          26373.362776024955,
+          28557.356466876983,
+          38290.280757097746,
+          33030.621451103936,
+          33376.59305993724,
+          48952.78864353295,
+          29945.687697161342,
+          30788.82649842222
+        ]
+      }
+    },
+    {
+      "case": "callable / validate and decode a request body",
+      "iterations": 24276,
+      "samples": {
+        "upstream": [
+          894.4332674246257,
+          1208.6124155544578,
+          634.5135112868592,
+          602.0622425440781,
+          583.1653896852861,
+          615.60553633217,
+          622.73269896194,
+          586.1317350469685,
+          612.285508320979,
+          605.387831603227,
+          592.1005931784474,
+          600.8025210084056
+        ],
+        "vpm": [
+          621.3656286043853,
+          1248.8899324435688,
+          1088.8841654308746,
+          610.217663535996,
+          634.7083539298031,
+          645.4098698302837,
+          622.6057011039707,
+          618.6469352446917,
+          657.4865299060798,
+          573.7254490031369,
+          599.7786290987007,
+          597.9621436810056
+        ]
+      }
+    }
+  ]
+}
