@@ -20,3 +20,4 @@ scripts/object-hash-conformance/upstream/** -whitespace
 
 # Preserve the original hash-pinned gRPC runtime test sources.
 scripts/grpc-loader-conformance/upstream/** -whitespace
+scripts/ordered-map-conformance/upstream/** -whitespace

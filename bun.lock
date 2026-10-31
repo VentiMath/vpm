@@ -420,6 +420,10 @@
       "name": "vonce",
       "version": "0.1.0",
     },
+    "packages/vordered-map": {
+      "name": "vordered-map",
+      "version": "0.1.0",
+    },
     "packages/vp-limit": {
       "name": "vp-limit",
       "version": "0.1.0",
@@ -768,6 +772,8 @@
     "von-finished": ["von-finished@workspace:packages/von-finished"],
 
     "vonce": ["vonce@workspace:packages/vonce"],
+
+    "vordered-map": ["vordered-map@workspace:packages/vordered-map"],
 
     "vp-limit": ["vp-limit@workspace:packages/vp-limit"],
 
