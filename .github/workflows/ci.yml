@@ -33,6 +33,7 @@ jobs:
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-loader-conformance ci --ignore-scripts --no-audit --no-fund
@@ -50,6 +51,10 @@ jobs:
       - run: node scripts/check-body-options.cjs
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/gax-conformance/run.cjs --upstream
+          node scripts/gax-conformance/run.cjs
+          node scripts/gax-conformance/regressions.cjs
+          node scripts/gax-conformance/callers.cjs --upstream
           node scripts/otel-conformance/run.cjs --upstream
           node scripts/otel-conformance/run.cjs
           node scripts/otel-conformance/regressions.cjs
@@ -226,6 +231,7 @@ jobs:
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-loader-conformance ci --ignore-scripts --no-audit --no-fund
@@ -254,6 +260,10 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/gax-conformance/run.cjs --upstream
+          bun scripts/gax-conformance/run.cjs
+          bun scripts/gax-conformance/regressions.cjs
+          bun scripts/gax-conformance/callers.cjs --upstream
           bun scripts/otel-conformance/run.cjs --upstream
           bun scripts/otel-conformance/run.cjs
           bun scripts/otel-conformance/regressions.cjs

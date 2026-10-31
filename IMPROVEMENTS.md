@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vgoogle-gax | google-gax 6.14.0; Firestore 9.4.0 RPCs, transactions, batches, queries and native REST | [google-gax 6.14.0](https://www.npmjs.com/package/google-gax), checked October 30, 2026 |
 | Caller paths verified | vopentelemetry-api | @opentelemetry/api 1.10.0; SDK 3.0.0 and gax 6.14.0 tracing helpers | [@opentelemetry/api 1.10.0](https://www.npmjs.com/package/@opentelemetry/api), checked October 30, 2026 |
 | Caller paths verified | vgrpc-js | @grpc/grpc-js 1.14.7; gax 6.14.0 / Firestore 9.4.0 local HTTP/2 callers | [@grpc/grpc-js 1.14.7](https://www.npmjs.com/package/@grpc/grpc-js), checked October 30, 2026 |
 | Caller paths verified | vordered-map | @js-sdsl/ordered-map 4.4.2; gRPC 1.14.7 Channelz diagnostics | [@js-sdsl/ordered-map 4.4.2](https://www.npmjs.com/package/@js-sdsl/ordered-map), checked October 30, 2026 |
@@ -65,8 +66,11 @@ those VPM foundations and actual Firestore calls. `vordered-map` now covers
 1.14.7 transport with those two VPM dependencies and local Firestore callers; these targets were
 checked October 30, 2026. `vopentelemetry-api` now covers the zero-dependency
 `@opentelemetry/api` 1.10.0 API, including current SDK interoperability and actual
-gax tracing helpers. The next package is `vgoogle-gax` 6.14.0 itself.
-Both latest targets were checked October 30, 2026.
+gax tracing helpers. `vgoogle-gax` now covers 6.14.0 itself with ten VPM runtime
+dependencies, checked Firestore 9.4.0 callers and native REST transport. Those
+latest targets were checked October 30, 2026. Next are `fast-deep-equal` 3.1.3
+and `functional-red-black-tree` 1.0.1, the remaining small dependencies before
+the Firestore client and generated API package.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -105,6 +109,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership and ten VPM dependencies; actual Firestore transactions/batches/queries verified. |
 | [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
 | [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Complete-frame fast path, released network chunks, preserved metadata keys/binary values and own package namespaces; actual Firestore calls over HTTP/2 and two VPM dependencies. |
 | [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Checked foreign/stale iterators and retained pair access, reused iterator allocations, correct reverse-end movement and logarithmic indexed position lookup; real gRPC Channelz handlers. |
@@ -202,12 +207,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,698 tests**: all pass on Node 24, and Bun passes
-2,695 with three documented runtime-specific skips. All 92 runtime packages'
+The root suite contains **2,729 tests**: all pass on Node 24, and Bun passes
+2,726 with three documented runtime-specific skips. All 93 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **94 packages**, including two declaration-only packages.
+catalog covers **95 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -216,6 +221,13 @@ module imports. CI runs the package and integration suites on these same two
 runtimes. Separate archive gates verify npm/Bun installation,
 exported files, module imports and TypeScript 7 consumers. Test fixtures and
 benchmarks are excluded from installable archives.
+
+The [gax fixture](scripts/gax-conformance/README.md) adds 751 active cases and four
+original skips on both runtimes, with one explicit strict-ProtoJSON expectation
+change. Local Firestore 9.4.0 tests exercise generated RPCs, `getAll`, transactions,
+batch commits and streamed queries. Real REST and current SDK 3.0.0 tracing
+controls pass. Its 28 focused tests and three new retry-status tests are included
+in the root count.
 
 The [OpenTelemetry fixture](scripts/otel-conformance/README.md) adds 1,151 unchanged
 upstream common cases, 11,000 deterministic valid-input comparisons and original
@@ -324,6 +336,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgoogle-gax` | 11 | 10 (all VPM; unused direct node-fetch removed) |
 | `vopentelemetry-api` | 0 | 0 |
 | `vgrpc-js` | 2 | 2 (`vgrpc-proto-loader`, `vordered-map`) |
 | `vordered-map` | 0 | 0 |
@@ -482,6 +495,41 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgoogle-gax
+
+Targets **google-gax 6.14.0** with its RPC, retry, pagination, LRO, generated
+service clients, tracing and REST APIs. Ten VPM runtime dependencies replace
+all used external packages; the unused direct node-fetch dependency is removed.
+Ordinary REST calls use the native fetch transport through VPM auth/gaxios.
+
+Timeout calls snapshot options instead of mutating a shared deadline. Compiled
+resource paths preserve literal replacement characters, enforce complete binding
+validation, handle arbitrary positive-length `**` matches and check repeated
+bindings. The REST parser detects incomplete framing and trailing data while
+assembling fragmented messages once. It keeps strict ProtoJSON validation.
+
+Actual Firestore callers exposed two additional integration requirements: gRPC
+can deliver terminal status after readable end, and gaxios owns the adapted
+native-fetch body stream. Both are handled explicitly, retaining normal HTTP
+premature-end checks and single-error delivery. Protobuf 8 Any messages are
+identified through type metadata while preserving gax's decoded error shapes.
+
+The upstream gate executes 755 cases: 751 pass and four retain upstream skips,
+with one documented stricter malformed-message assertion. Both runtimes also
+exercise actual Firestore 9.4.0 transactions, batch commits, query streams and
+RPCs, native REST and current OpenTelemetry SDK tracing. Cloud deployments,
+browser bundles and older gax majors remain outside verified coverage.
+
+Repeated path operations take 46–87% less time in the retained measurements;
+fragmented JSON parsing takes 71% less on Node and 75% less on Bun. Node bare
+template construction remains 10% slower (+0.16 µs), while construction plus first
+render is slightly faster. Local Firestore RPCs show no clear application gain;
+the +5.9% Bun unary result and comparable control drift are documented.
+
+See the [package contract](packages/vgoogle-gax/README.md),
+[conformance and caller controls](scripts/gax-conformance/README.md), and
+[paired measurements](packages/vgoogle-gax/bench/results/README.md).
 
 ## vopentelemetry-api
 
