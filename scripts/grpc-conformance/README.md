@@ -37,7 +37,14 @@ VPM transport. The following adaptations apply identically to both variants:
   exactly one case; aggregate counts remain 508. Experimental outlier detection
   is enabled as in upstream's gulp task.
 
-Test bodies and assertions remain unchanged. The 508 cases include nine original
+- Two deadline wording assertions accept either the server's `Deadline exceeded`
+  or the client's elapsed-time form. Both retain their `DEADLINE_EXCEEDED` status
+  assertion; Linux scheduling can let either peer's deadline fire first.
+- The two address-randomization cases use the same seeded random sequence in
+  both variants. Their selection assertions are unchanged; upstream explicitly
+  documents a 1-in-10,000 random failure in the first case.
+
+All other assertions remain unchanged. The 508 cases include nine original
 skips: five DNS/TXT/IPv6 cases, continuation after shutdown, NoCompress and two
 weighted-round-robin timing cases. No VPM skips are added.
 
