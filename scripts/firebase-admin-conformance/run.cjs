@@ -84,7 +84,9 @@ try {
   // readonly property", for the original and VPM alike.
   const engineWording = process.versions.bun ? ['FirebaseApp #name should be read-only', 'FirebaseApp #options should be read-only',
     'addReadonlyGetter() should make the new property read-only', 'Auth app is read-only',
-    'TenantManager authForTenant() should return a TenantAwareAuth with read-only tenant ID',     'Messaging app is read-only', 'Storage app is read-only', 'Firestore app is read-only', 'Installations app is read-only',
+    'TenantManager authForTenant() should return a TenantAwareAuth with read-only tenant ID',
+    // The Database suite only runs for the original (VPM omits that client).
+    ...(upstream ? ['Database app is read-only'] : []),     'Messaging app is read-only', 'Storage app is read-only', 'Firestore app is read-only', 'Installations app is read-only',
     ...['getTemplate', 'getTemplateAtVersion', 'validateTemplate', 'publishTemplate', 'rollback'].map(method => `RemoteConfig ${method} should resolve with Remote Config template on success`),
     'RemoteConfig createTemplateFromJSON should succeed when a valid json string is provided'] : [];
   const expected = new Map(engineWording.map(title => [title, /but got 'Attempted to assign to readonly prope/]));
