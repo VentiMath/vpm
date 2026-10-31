@@ -1,0 +1,1 @@
+export {FirestoreClient} from './index';

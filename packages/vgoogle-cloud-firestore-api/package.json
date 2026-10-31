@@ -1,0 +1,74 @@
+{
+  "name": "vgoogle-cloud-firestore-api",
+  "version": "0.1.0",
+  "description": "Cloud Firestore and Firestore Admin API clients on one VPM transport stack, with lazy loading and safe failure handling",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.js"
+    },
+    "./v1": {
+      "types": "./v1/index.d.ts",
+      "default": "./v1/index.js"
+    },
+    "./v1/firestore_client_config.json": "./v1/firestore_client_config.json",
+    "./v1/firestore_admin_client_config.json": "./v1/firestore_admin_client_config.json",
+    "./client_v1": {
+      "types": "./v1/firestore_client.d.ts",
+      "default": "./v1/firestore_client.js"
+    },
+    "./admin_v1": {
+      "types": "./v1/firestore_admin_client.d.ts",
+      "default": "./v1/firestore_admin_client.js"
+    },
+    "./protos": {
+      "types": "./protos/protos.d.ts",
+      "default": "./protos/protos.js"
+    },
+    "./protos/protos": {
+      "types": "./protos/protos.d.ts",
+      "default": "./protos/protos.js"
+    },
+    "./protos/protos.json": "./protos/protos.json",
+    "./build/protos/protos": {
+      "types": "./protos/protos.d.ts",
+      "default": "./protos/protos.js"
+    },
+    "./build/protos/protos.json": "./protos/protos.json",
+    "./build/src/v1": {
+      "types": "./v1/index.d.ts",
+      "default": "./v1/index.js"
+    },
+    "./build/src/v1/firestore_client_config.json": "./v1/firestore_client_config.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "lib",
+    "v1",
+    "protos",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "dependencies": {
+    "vgoogle-gax": "workspace:*",
+    "vgoogle-logging-utils": "workspace:*",
+    "vlong": "workspace:*"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vgoogle-cloud-firestore-api"
+  }
+}
