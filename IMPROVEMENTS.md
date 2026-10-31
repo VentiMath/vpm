@@ -521,11 +521,12 @@ layout exactly, iterators, bounds, the fixes and enumerability. An actual Firest
 9.4.0 `onSnapshot` query over a local gRPC Listen stream produces the same ordering,
 change indexes and retained snapshot with either tree.
 
-The Firestore Watch change pattern is **at parity** (1.4% less time on Node 22,
-3.5% less on Bun); range `forEach` takes **18% less time on Node**. Measuring each
-tree with separately compiled call sites matters here: with shared closures, two
-identical copies measured 10-24% apart, which the identical-upstream control cannot
-detect. These are tree CPU measurements, not listener latency.
+The Firestore Watch change pattern is **at parity** (+0.5% on Node 22, −1.4% on
+Bun), as are lookups and removal; range `forEach` takes **about 8% less time** on
+both runtimes. Measuring each tree with separately compiled call sites and
+alternating setup order matters here: with shared closures, two identical copies
+measured 10-24% apart, which the identical-upstream control cannot detect. These
+are tree CPU measurements, not listener latency.
 
 See the [package contract](packages/vfunctional-red-black-tree/README.md),
 [conformance record](scripts/rbtree-conformance/README.md) and
