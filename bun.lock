@@ -187,6 +187,10 @@
       "name": "vfresh",
       "version": "0.1.0",
     },
+    "packages/vfunctional-red-black-tree": {
+      "name": "vfunctional-red-black-tree",
+      "version": "0.1.0",
+    },
     "packages/vfunctions-framework": {
       "name": "vfunctions-framework",
       "version": "0.1.0",
@@ -732,6 +736,8 @@
     "vforwarded": ["vforwarded@workspace:packages/vforwarded"],
 
     "vfresh": ["vfresh@workspace:packages/vfresh"],
+
+    "vfunctional-red-black-tree": ["vfunctional-red-black-tree@workspace:packages/vfunctional-red-black-tree"],
 
     "vfunctions-framework": ["vfunctions-framework@workspace:packages/vfunctions-framework"],
 

@@ -34,6 +34,7 @@ jobs:
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/deep-equal-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/rbtree-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -57,6 +58,10 @@ jobs:
           node scripts/deep-equal-conformance/run.cjs
           node scripts/deep-equal-conformance/regressions.cjs
           node scripts/deep-equal-conformance/callers.cjs --upstream
+          node scripts/rbtree-conformance/run.cjs --upstream
+          node scripts/rbtree-conformance/run.cjs
+          node scripts/rbtree-conformance/regressions.cjs
+          node scripts/rbtree-conformance/callers.cjs --upstream
           node scripts/gax-conformance/run.cjs --upstream
           node scripts/gax-conformance/run.cjs
           node scripts/gax-conformance/regressions.cjs
@@ -238,6 +243,7 @@ jobs:
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/deep-equal-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/rbtree-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -272,6 +278,10 @@ jobs:
           bun scripts/deep-equal-conformance/run.cjs
           bun scripts/deep-equal-conformance/regressions.cjs
           bun scripts/deep-equal-conformance/callers.cjs --upstream
+          bun scripts/rbtree-conformance/run.cjs --upstream
+          bun scripts/rbtree-conformance/run.cjs
+          bun scripts/rbtree-conformance/regressions.cjs
+          bun scripts/rbtree-conformance/callers.cjs --upstream
           bun scripts/gax-conformance/run.cjs --upstream
           bun scripts/gax-conformance/run.cjs
           bun scripts/gax-conformance/regressions.cjs

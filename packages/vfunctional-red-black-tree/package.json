@@ -1,0 +1,44 @@
+{
+  "name": "vfunctional-red-black-tree",
+  "version": "0.1.0",
+  "description": "Persistent red-black trees for Firestore listeners, with checked index lookups",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.js"
+    },
+    "./rbtree": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.js"
+    },
+    "./rbtree.js": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vfunctional-red-black-tree"
+  }
+}

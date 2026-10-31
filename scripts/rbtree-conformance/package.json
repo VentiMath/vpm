@@ -1,0 +1,10 @@
+{
+  "name": "vpm-rbtree-conformance",
+  "private": true,
+  "description": "Pinned upstream red-black tree tests and the original implementation as a control",
+  "dependencies": {
+    "functional-red-black-tree": "1.0.1",
+    "iota-array": "0.0.1",
+    "tape": "2.14.1"
+  }
+}

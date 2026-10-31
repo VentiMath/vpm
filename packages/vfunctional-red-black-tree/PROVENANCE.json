@@ -1,0 +1,20 @@
+{
+  "upstream": {
+    "name": "functional-red-black-tree",
+    "version": "1.0.1",
+    "repository": "https://github.com/mikolalysenko/functional-red-black-tree",
+    "tarball": "https://registry.npmjs.org/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz",
+    "tarballSha256": "d942dfa760778f80a331d3e84b4471e8eaf98a5d43cd0443d6022fa6cf745f0d",
+    "integrity": "sha512-dsKNQNdj6xA3T+QlADDA7mOSlX0qiMINjn0cgr+eGHGsbSHzTabcIogz2+p/iqP1Xs6EP/sS2SbqH+brGTbq0g=="
+  },
+  "checked": "2026-10-31",
+  "license": "MIT",
+  "retainedEvidence": "../../scripts/rbtree-conformance/upstream",
+  "changes": [
+    "Derived from functional-red-black-tree 1.0.1 with its persistent path-copying insert and removal, node layout and property enumerability.",
+    "at() returns an invalid iterator for an empty tree or any index that is not an in-range integer, instead of throwing or treating NaN as zero.",
+    "A truthy non-function comparator throws at construction instead of on the second insert.",
+    "Iterative keys, values and forEach traversal with range pruning; the four range lookups share one search routine.",
+    "Self-contained declarations, with nullable nodes; CommonJS and native ESM default entries."
+  ]
+}

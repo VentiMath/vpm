@@ -29,6 +29,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
   'fast-deep-equal': {pkg:'vfast-deep-equal',versions:/^3\.1\.3$/},
+  'functional-red-black-tree': {pkg:'vfunctional-red-black-tree',versions:/^1\.0\.1$/},
   'google-gax': {pkg:'vgoogle-gax',versions:/^6\.14\.0$/},
   '@opentelemetry/api': {pkg:'vopentelemetry-api',versions:/^1\.10\.0$/},
   '@grpc/grpc-js': {pkg:'vgrpc-js',versions:/^1\.14\.7$/},
@@ -1254,6 +1255,7 @@ async function run() {
     await require('./xml-parser-conformance/callers.cjs')();
     await require('./mime-conformance/callers.cjs')();
     require('./deep-equal-conformance/callers.cjs')();
+    await require('./rbtree-conformance/callers.cjs')();
     await require('./gax-conformance/callers.cjs')();
     await require('./otel-conformance/callers.cjs')(replacements['@opentelemetry/api']);
     await require('./grpc-conformance/callers.cjs')(replacements['@grpc/grpc-js']);
