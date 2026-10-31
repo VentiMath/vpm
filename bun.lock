@@ -248,6 +248,14 @@
       "name": "vgoogle-logging-utils",
       "version": "0.1.0",
     },
+    "packages/vgrpc-js": {
+      "name": "vgrpc-js",
+      "version": "0.1.0",
+      "dependencies": {
+        "vgrpc-proto-loader": "workspace:*",
+        "vordered-map": "workspace:*",
+      },
+    },
     "packages/vgrpc-proto-loader": {
       "name": "vgrpc-proto-loader",
       "version": "0.1.0",
@@ -710,6 +718,8 @@
     "vgoogle-cloud-storage": ["vgoogle-cloud-storage@workspace:packages/vgoogle-cloud-storage"],
 
     "vgoogle-logging-utils": ["vgoogle-logging-utils@workspace:packages/vgoogle-logging-utils"],
+
+    "vgrpc-js": ["vgrpc-js@workspace:packages/vgrpc-js"],
 
     "vgrpc-proto-loader": ["vgrpc-proto-loader@workspace:packages/vgrpc-proto-loader"],
 

@@ -28,6 +28,7 @@ const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/
 
 // Upstream name -> VPM package and the upstream versions that package targets.
 const targets = {
+  '@grpc/grpc-js': {pkg:'vgrpc-js',versions:/^1\.14\.7$/},
   '@js-sdsl/ordered-map': {pkg:'vordered-map',versions:/^4\.4\.2$/},
   '@grpc/proto-loader': {pkg:'vgrpc-proto-loader',versions:/^0\.8\.1$/},
   'lodash.camelcase': {pkg:'vlodash.camelcase',versions:/^4\.3\.0$/},
@@ -1249,6 +1250,7 @@ async function run() {
     await require('./xml-builder-conformance/callers.cjs')();
     await require('./xml-parser-conformance/callers.cjs')();
     await require('./mime-conformance/callers.cjs')();
+    await require('./grpc-conformance/callers.cjs')(replacements['@grpc/grpc-js']);
     require('./ordered-map-conformance/callers.cjs')(replacements['@js-sdsl/ordered-map']);
     await require('./grpc-loader-conformance/callers.cjs')(replacements['@grpc/proto-loader']);
     require('./camelcase-conformance/callers.cjs')(replacements['lodash.camelcase']);

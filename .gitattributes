@@ -21,3 +21,10 @@ scripts/object-hash-conformance/upstream/** -whitespace
 # Preserve the original hash-pinned gRPC runtime test sources.
 scripts/grpc-loader-conformance/upstream/** -whitespace
 scripts/ordered-map-conformance/upstream/** -whitespace
+scripts/grpc-conformance/upstream/** -whitespace
+# Preserve the published gRPC license and compiler-output formatting.
+packages/vgrpc-js/LICENSE whitespace=cr-at-eol
+packages/vgrpc-js/build/src/client-interceptors.js whitespace=-blank-at-eol
+packages/vgrpc-js/build/src/server-call.js whitespace=-blank-at-eol
+packages/vgrpc-js/build/src/transport.js whitespace=-blank-at-eol
+packages/vgrpc-js/build/src/transport.d.ts whitespace=-blank-at-eol
