@@ -32,10 +32,15 @@ three optional GraphQL peers are exposed from the fixture.
 All **996 tests** pass for the original on Node. VPM passes 995; the remaining
 test reads `DataSnapshot#ref`, which needs the Realtime Database client
 vfirebase-admin omits, and must fail with its explanation. On Bun both
-libraries also fail the same 29 tests: 25 logger tests capture output by
-replacing `process.stdout.write`, which Bun's `console` does not call (the
-logger's output is identical), and four Database/Storage tests expect a throw
-Bun does not produce. `run.cjs` requires exactly these sets.
+libraries also fail the same 25 logger tests, which capture output by replacing
+`process.stdout.write`; Bun's `console` does not call it (the logger's output
+is identical). `run.cjs` requires exactly these sets.
+
+Some specs leave `process.env` and the SDK's config cache changed (one sets
+`GCLOUD_PROJECT` to the string `"undefined"`), so four Database and Storage
+tests that expect a missing-config error pass or fail depending on which files
+ran first. Directory listing order differs between filesystems and runtimes, so
+`run.cjs` loads the spec files in sorted order.
 
 `regressions.cjs` runs each case in a fresh process per library: modules loaded
 by importing `v2`, `v2/https` and `v2/firestore`; how many times `onInit` runs

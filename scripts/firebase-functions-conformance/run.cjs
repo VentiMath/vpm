@@ -12,10 +12,6 @@ const root = path.resolve(__dirname, '../..');
 const upstream = process.argv.includes('--upstream');
 const only = process.argv.find(arg => arg.startsWith('--grep='))?.slice(7);
 const BUN_RUNTIME_DIFFERENCES = [
-  "Database Functions should throw when endpoint is accessed",
-  "Database Functions should throw when trigger is accessed",
-  "Storage Functions process.env.FIREBASE_CONFIG not set should throw when endpoint is accessed",
-  "Storage Functions process.env.FIREBASE_CONFIG not set should throw when trigger is accessed",
   "logger compat should format multiple arguments in console.error",
   "logger compat should patch console.debug with DEBUG severity",
   "logger compat should patch console.error for Error objects preserving the original stack",
@@ -83,8 +79,11 @@ try {
     fs.writeFileSync(filename, text);
   }
   const report = path.join(temporary, 'report.json');
+  // Some specs leave process.env and the config cache changed, so later specs
+  // depend on what ran before them. Load files in one sorted order everywhere;
+  // directory listing order differs between filesystems and runtimes.
   const args = [path.join(__dirname, 'node_modules/mocha/bin/mocha.js'), '--reporter', 'json', '--reporter-option', 'output=' + report, '--exit',
-    '--file', path.join(build, 'mocha/setup.js'), ...fs.readdirSync(path.join(build, 'spec'), {recursive: true}).filter(f => f.endsWith('.spec.js')).map(f => path.join(build, 'spec', f))];
+    '--file', path.join(build, 'mocha/setup.js'), ...fs.readdirSync(path.join(build, 'spec'), {recursive: true}).filter(f => f.endsWith('.spec.js')).sort().map(f => path.join(build, 'spec', f))];
   if (only) args.push('--grep', only);
   // The optional GraphQL peers the Data Connect specs load are not workspace
   // packages; expose exactly those three from the fixture to VPM's lib.
@@ -101,11 +100,10 @@ try {
   // DataSnapshot#ref opens the Realtime Database client through Firebase
   // Admin, which vfirebase-admin omits; it must fail with that explanation.
   const expected = upstream ? {} : {'DataSnapshot #ref: firebase.database.Reference should return a ref for correct instance, not the default instance': /^vfirebase-admin does not include the Realtime Database client/};
-  // Under Bun both libraries fail the same tests: the logger specs capture output
-  // by replacing process.stdout.write and process.stderr.write, which Bun's
-  // console does not call, and four Database/Storage specs expect a throw that
-  // Bun's runtime does not produce. The logger's own output is identical.
-  if (process.versions.bun) for (const title of BUN_RUNTIME_DIFFERENCES) expected[title] = /^(?:undefined is not an object \(evaluating 'last\.trim'\)|JSON Parse error: Unexpected EOF|expected \[Function\] to throw Error)/;
+  // Under Bun both libraries fail the same logger specs: they capture output by
+  // replacing process.stdout.write and process.stderr.write, which Bun's console
+  // does not call. The logger's own output is identical.
+  if (process.versions.bun) for (const title of BUN_RUNTIME_DIFFERENCES) expected[title] = /^(?:undefined is not an object \(evaluating 'last\.trim'\)|JSON Parse error: Unexpected EOF)/;
   const unexpected = stats.failures.filter(failure => !expected[failure.fullTitle]?.test(failure.err.message || ''));
   for (const failure of stats.failures) console.log(failure.fullTitle in expected ? 'EXPECTED' : 'FAIL', failure.fullTitle, '\n ', (failure.err.message || '').split('\n')[0]);
   console.log(`${upstream ? 'Upstream' : 'VPM'} Firebase Functions suite: ${stats.stats.passes} passed, ${stats.stats.failures} failed (${stats.stats.failures - unexpected.length} expected), ${stats.stats.pending} pending of ${stats.stats.tests}.`);
