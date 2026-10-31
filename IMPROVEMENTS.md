@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vopentelemetry-api | @opentelemetry/api 1.10.0; SDK 3.0.0 and gax 6.14.0 tracing helpers | [@opentelemetry/api 1.10.0](https://www.npmjs.com/package/@opentelemetry/api), checked October 30, 2026 |
 | Caller paths verified | vgrpc-js | @grpc/grpc-js 1.14.7; gax 6.14.0 / Firestore 9.4.0 local HTTP/2 callers | [@grpc/grpc-js 1.14.7](https://www.npmjs.com/package/@grpc/grpc-js), checked October 30, 2026 |
 | Caller paths verified | vordered-map | @js-sdsl/ordered-map 4.4.2; gRPC 1.14.7 Channelz diagnostics | [@js-sdsl/ordered-map 4.4.2](https://www.npmjs.com/package/@js-sdsl/ordered-map), checked October 30, 2026 |
 | Caller paths verified | vgrpc-proto-loader | @grpc/proto-loader 0.8.1 runtime API; gax 6.14.0 and Firestore 9.4.0 local gRPC callers | [@grpc/proto-loader 0.8.1](https://www.npmjs.com/package/@grpc/proto-loader), checked October 30, 2026 |
@@ -62,9 +63,10 @@ callers now pass against upstream controls on Node 24 and Bun. `vlodash.camelcas
 those VPM foundations and actual Firestore calls. `vordered-map` now covers
 4.4.2 and gRPC's Channelz diagnostic handlers. `vgrpc-js` now covers the
 1.14.7 transport with those two VPM dependencies and local Firestore callers; these targets were
-checked October 30, 2026. The next dependency is `vopentelemetry-api`, targeting the zero-dependency
-`@opentelemetry/api` 1.10.0 tracing/context API used by google-gax 6.14.0, then
-`vgoogle-gax` itself. Both latest targets were checked October 30, 2026.
+checked October 30, 2026. `vopentelemetry-api` now covers the zero-dependency
+`@opentelemetry/api` 1.10.0 API, including current SDK interoperability and actual
+gax tracing helpers. The next package is `vgoogle-gax` 6.14.0 itself.
+Both latest targets were checked October 30, 2026.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -103,6 +105,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
 | [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Complete-frame fast path, released network chunks, preserved metadata keys/binary values and own package namespaces; actual Firestore calls over HTTP/2 and two VPM dependencies. |
 | [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Checked foreign/stale iterators and retained pair access, reused iterator allocations, correct reverse-end movement and logarithmic indexed position lookup; real gRPC Channelz handlers. |
 | [vgrpc-proto-loader](packages/vgrpc-proto-loader) | @grpc/proto-loader 0.8.1 | Reused private descriptors and codecs, isolated public definitions, safe method-option keys and VPM protobuf/long/camel-case dependencies; real Google SDK runtime calls. |
@@ -199,12 +202,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,689 tests**: all pass on Node 24, and Bun passes
-2,686 with three documented runtime-specific skips. All 91 runtime packages'
+The root suite contains **2,698 tests**: all pass on Node 24, and Bun passes
+2,695 with three documented runtime-specific skips. All 92 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **93 packages**, including two declaration-only packages.
+catalog covers **94 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -213,6 +216,11 @@ module imports. CI runs the package and integration suites on these same two
 runtimes. Separate archive gates verify npm/Bun installation,
 exported files, module imports and TypeScript 7 consumers. Test fixtures and
 benchmarks are excluded from installable archives.
+
+The [OpenTelemetry fixture](scripts/otel-conformance/README.md) adds 1,151 unchanged
+upstream common cases, 11,000 deterministic valid-input comparisons and original
+bug controls. SDK 3.0.0 and gax 6.14.0 tracing checks pass on both runtimes. Nine
+focused tests are included in the root count.
 
 The [gRPC fixture](scripts/grpc-conformance/README.md) adds 499 active upstream
 cases, 1,504 differential comparisons and twelve local interoperability/Firestore/TLS
@@ -316,6 +324,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vopentelemetry-api` | 0 | 0 |
 | `vgrpc-js` | 2 | 2 (`vgrpc-proto-loader`, `vordered-map`) |
 | `vordered-map` | 0 | 0 |
 | `vgrpc-proto-loader` | 4 (including CLI-only `yargs`) | 3 (`vlodash.camelcase`, `vlong`, `vprotobufjs`; runtime API only) |
@@ -473,6 +482,35 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vopentelemetry-api
+
+Based on **@opentelemetry/api 1.10.0**, retaining the API, no-op implementations,
+native ESM, CommonJS and experimental entry with zero runtime dependencies.
+Baggage input and output records are isolated by shallow copies, preserving
+opaque metadata identity. Trace-state updates validate the existing grammar and
+length limits, overflow parsing preserves the first 32 entries in wire order,
+and immutable states cache serialized output. Original-package controls reproduce
+the input/output mutation, invalid-update and overflow-order defects.
+
+The shared global symbol and API compatibility version remain 1.10.0; the package
+version is independently 0.1.0. Provider interoperability and upstream's duplicate
+registration/version gates are preserved. Actual SDK 3.0.0/context manager 3.0.0
+and Google gax 6.14.0 helpers verify async contexts and recorded parent/attempt
+spans across CJS and ESM implementations. The original common suite passes all
+1,151 cases on both runtimes. No telemetry exporter or SDK is bundled, and no
+application deployment or cloud-export latency claim follows from these checks.
+
+Repeated trace-state serialization takes 93–99.6% less time; eight-entry updates
+improve 33% on Node and 30% on Bun. Baggage construction improves 36% / 10%.
+Costs remain: setting an entry takes 5% / 13% more, Bun enumeration takes 134%
+more (169 ns for eight isolated records), and Bun's full 32-entry first parse
+plus serialization takes 5% more. Full gax tracing results are inconclusive
+against same-upstream controls; no cloud-latency improvement is claimed.
+
+See the [package contract](packages/vopentelemetry-api/README.md),
+[fixture boundaries](scripts/otel-conformance/README.md) and
+[paired measurements](packages/vopentelemetry-api/bench/results/README.md).
 
 ## vgrpc-js
 

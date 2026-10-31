@@ -28,3 +28,7 @@ packages/vgrpc-js/build/src/client-interceptors.js whitespace=-blank-at-eol
 packages/vgrpc-js/build/src/server-call.js whitespace=-blank-at-eol
 packages/vgrpc-js/build/src/transport.js whitespace=-blank-at-eol
 packages/vgrpc-js/build/src/transport.d.ts whitespace=-blank-at-eol
+
+scripts/otel-conformance/upstream/** -whitespace
+# Preserve generated upstream file endings after removing source-map comments.
+packages/vopentelemetry-api/dist/** whitespace=-blank-at-eof
