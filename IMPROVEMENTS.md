@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
 | Caller paths verified | vfunctional-red-black-tree | functional-red-black-tree 1.0.1; Firestore 9.4.0 `onSnapshot` listener ordering, change indexes and retained snapshots | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
 | Caller paths verified | vfast-deep-equal | fast-deep-equal 3.1.3; Firestore 9.4.0 document, query and transform equality | [fast-deep-equal 3.1.3](https://www.npmjs.com/package/fast-deep-equal), checked October 30, 2026 |
@@ -75,8 +76,10 @@ latest targets were checked October 30, 2026. `vfast-deep-equal` now covers 3.1.
 `vfunctional-red-black-tree` now covers 1.0.1 with verified Firestore listener
 callers, checked October 31, 2026. `vgoogle-cloud-firestore-api` now covers the
 generated `@google-cloud/firestore-api` 0.7.1 clients on the VPM gax stack,
-checked October 31, 2026. Next is the Firestore client itself, built on that
-package directly rather than on the older API ranges current Firestore releases pin.
+checked October 31, 2026. `vgoogle-cloud-firestore` now covers Firestore 9.4.0,
+the version Firebase Admin 14 uses, on that package and the VPM gax stack
+instead of the older API package and second gax stack 9.4.0 pins, checked
+October 31, 2026.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -115,6 +118,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | All six dependencies are VPM with one gax stack, 65 modules and about 50 ms at import instead of 404 and 270 ms, reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Same persistent trees and node layout; `at()` no longer throws on empty trees or selects the first entry for `NaN`; non-function comparators fail at construction; iterative, range-pruned traversal. Actual Firestore listener paths verified. |
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
@@ -216,12 +220,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,763 tests**: all pass on Node 24, and Bun passes
-2,760 with three documented runtime-specific skips. All 96 runtime packages'
+The root suite contains **2,769 tests**: all pass on Node 24, and Bun passes
+2,766 with three documented runtime-specific skips. All 97 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **98 packages**, including two declaration-only packages.
+catalog covers **99 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -345,6 +349,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgoogle-cloud-firestore` | 6 (including `@google-cloud/firestore-api` ^0.2.0, which adds a second `google-gax`) | 6 (all VPM, one gax stack) |
 | `vgoogle-cloud-firestore-api` | 2 | 3 (`vgoogle-gax`, `vgoogle-logging-utils`, `vlong`; logging is imported directly so import does not load gax) |
 | `vfunctional-red-black-tree` | 0 | 0 |
 | `vfast-deep-equal` | 0 | 0 |
@@ -507,6 +512,42 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgoogle-cloud-firestore
+
+Targets **@google-cloud/firestore 9.4.0**, checked October 31, 2026, the
+version Firebase Admin 14 uses. The published implementation is retained, with
+its dependencies mapped to `vgoogle-cloud-firestore-api`, `vgoogle-gax`,
+`vprotobufjs`, `vfast-deep-equal`, `vfunctional-red-black-tree` and
+`vopentelemetry-api`; [PROVENANCE.json](packages/vgoogle-cloud-firestore/PROVENANCE.json)
+lists the six files changed beyond that.
+
+9.4.0 pins `@google-cloud/firestore-api` ^0.2.0, which installs a second, older
+google-gax stack, and loads it at import: 404 modules and about 270 ms, though
+its own lazy-load tests forbid loading gax or protobufjs at import (they never
+run because other tests load gax first). Here there is one stack, and import
+loads 65 modules in about 50 ms; import, a client and a first encode take about
+70 ms instead of 270 ms on Node 22. After `terminate()`, upstream's queries,
+document gets, `getAll`, aggregates and listeners wait forever while their
+rejection goes unhandled, which ends a Node process by default; here they
+reject at once. `terminate()` rejects with an Error instead of a string, a
+failure closing an idle connection no longer fails the operation that released
+it, and the deprecated v1beta1 accessor throws a descriptive error.
+Declarations work under any package name and need no ambient Node types.
+
+**1,008 of the 1,009 active upstream unit and conformance tests** pass unchanged
+on Node and Bun; the one remaining test registers a tracer provider through
+OpenTelemetry API 1.9, which API 1.10.0 ignores by design, and a separate check
+covers that path with SDK 3.0.0. A local gRPC Firestore receives identical
+requests from both libraries, directly and through Firebase Admin 14.5.0, for
+writes with every transform, gets, queries, aggregates, streams, transactions,
+batches, BulkWriter and a listener, with identical results. Four regression
+cases reproduce the behavioral defects with the original; six focused tests and
+a type test cover the package. Per-operation CPU is at parity.
+
+See the [package contract](packages/vgoogle-cloud-firestore/README.md),
+[conformance record](scripts/firestore-conformance/README.md) and
+[measurements](packages/vgoogle-cloud-firestore/bench/results/README.md).
 
 ## vgoogle-cloud-firestore-api
 

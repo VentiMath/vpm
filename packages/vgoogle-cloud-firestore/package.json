@@ -1,0 +1,46 @@
+{
+  "name": "vgoogle-cloud-firestore",
+  "version": "0.1.0",
+  "description": "Cloud Firestore client with VPM dependencies, one transport stack and lazy loading",
+  "type": "commonjs",
+  "main": "./build/src/index.js",
+  "types": "./types/firestore.d.ts",
+  "exports": {
+    ".": {
+      "types": "./types/firestore.d.ts",
+      "default": "./build/src/index.js"
+    },
+    "./pipelines": {
+      "types": "./types/pipelines.d.ts",
+      "default": "./build/src/pipelines/index.js"
+    },
+    "./package.json": "./package.json",
+    "./build/src/path": "./build/src/path.js"
+  },
+  "files": [
+    "build/protos",
+    "build/src",
+    "types",
+    "pipelines",
+    "LICENSE",
+    "PROVENANCE.json",
+    "README.md"
+  ],
+  "dependencies": {
+    "vfast-deep-equal": "workspace:*",
+    "vfunctional-red-black-tree": "workspace:*",
+    "vgoogle-cloud-firestore-api": "workspace:*",
+    "vgoogle-gax": "workspace:*",
+    "vopentelemetry-api": "workspace:*",
+    "vprotobufjs": "workspace:*"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vgoogle-cloud-firestore"
+  }
+}

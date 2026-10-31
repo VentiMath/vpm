@@ -233,6 +233,18 @@
         "vjws": "workspace:*",
       },
     },
+    "packages/vgoogle-cloud-firestore": {
+      "name": "vgoogle-cloud-firestore",
+      "version": "0.1.0",
+      "dependencies": {
+        "vfast-deep-equal": "workspace:*",
+        "vfunctional-red-black-tree": "workspace:*",
+        "vgoogle-cloud-firestore-api": "workspace:*",
+        "vgoogle-gax": "workspace:*",
+        "vopentelemetry-api": "workspace:*",
+        "vprotobufjs": "workspace:*",
+      },
+    },
     "packages/vgoogle-cloud-firestore-api": {
       "name": "vgoogle-cloud-firestore-api",
       "version": "0.1.0",
@@ -755,6 +767,8 @@
     "vgcp-metadata": ["vgcp-metadata@workspace:packages/vgcp-metadata"],
 
     "vgoogle-auth-library": ["vgoogle-auth-library@workspace:packages/vgoogle-auth-library"],
+
+    "vgoogle-cloud-firestore": ["vgoogle-cloud-firestore@workspace:packages/vgoogle-cloud-firestore"],
 
     "vgoogle-cloud-firestore-api": ["vgoogle-cloud-firestore-api@workspace:packages/vgoogle-cloud-firestore-api"],
 
