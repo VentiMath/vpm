@@ -14,6 +14,18 @@ record verified coverage, including older application compatibility; they do not
 establish parity with every upstream API. The roadmap records known gaps, not a
 completed freshness audit of the entire catalog.
 
+Work follows the backend's request path (static files and body parsing, routing,
+Express, CORS, the Functions Framework, token verification, then Firebase Admin
+and Firebase Functions), building each package after its dependencies. Two rules
+decide what is built at all:
+
+- **One version per package family.** Only the latest stable version is built;
+  callers move up to it. A built newer replacement also completes older versions
+  still present in a lockfile, which the caller upgrade then removes.
+- **Unused means unnecessary.** A dependency no caller path needs is eliminated,
+  not rebuilt, as with the `side-channel`, `lodash.*`, `ajv` and `readable-stream`
+  families already removed.
+
 The Google authentication stack was checked against npm's `latest` tags on
 October 29, 2026. Its HTTP, metadata, logging and core authentication caller paths
 now have current comparison targets:
@@ -80,6 +92,17 @@ checked October 31, 2026. `vgoogle-cloud-firestore` now covers Firestore 9.4.0,
 the version Firebase Admin 14 uses, on that package and the VPM gax stack
 instead of the older API package and second gax stack 9.4.0 pins, checked
 October 31, 2026.
+
+Next is `firebase-admin` 14.5.0 itself. VentiMath's backend uses its app,
+auth, Firestore, Storage and messaging (`sendEachForMulticast`) APIs, all on
+dependencies VPM already provides. Its two other dependencies are not needed:
+`@firebase/database-compat` and its 12-package Realtime Database and websocket
+tree serve only `getDatabase()`, which VentiMath never calls, and
+`@fastify/busboy` only parses `multipart/mixed` responses, which no Admin 14
+API requests. `firebase-functions` 7.4.0 follows. Admin 12.7's older Storage 7,
+gax 4, gtoken 8 and `form-data` 2.5.5 branches are not separate work: the Admin
+14 upgrade removes them. After the backend, frontend foundations, UI and build
+tools follow.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
