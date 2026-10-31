@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
 | Caller paths verified | vfunctional-red-black-tree | functional-red-black-tree 1.0.1; Firestore 9.4.0 `onSnapshot` listener ordering, change indexes and retained snapshots | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
 | Caller paths verified | vfast-deep-equal | fast-deep-equal 3.1.3; Firestore 9.4.0 document, query and transform equality | [fast-deep-equal 3.1.3](https://www.npmjs.com/package/fast-deep-equal), checked October 30, 2026 |
 | Caller paths verified | vgoogle-gax | google-gax 6.14.0; Firestore 9.4.0 RPCs, transactions, batches, queries and native REST | [google-gax 6.14.0](https://www.npmjs.com/package/google-gax), checked October 30, 2026 |
@@ -72,8 +73,10 @@ gax tracing helpers. `vgoogle-gax` now covers 6.14.0 itself with ten VPM runtime
 dependencies, checked Firestore 9.4.0 callers and native REST transport. Those
 latest targets were checked October 30, 2026. `vfast-deep-equal` now covers 3.1.3 with verified Firestore equality callers.
 `vfunctional-red-black-tree` now covers 1.0.1 with verified Firestore listener
-callers, checked October 31, 2026. Next are the generated `@google-cloud/firestore-api`
-package and the Firestore client itself.
+callers, checked October 31, 2026. `vgoogle-cloud-firestore-api` now covers the
+generated `@google-cloud/firestore-api` 0.7.1 clients on the VPM gax stack,
+checked October 31, 2026. Next is the Firestore client itself, built on that
+package directly rather than on the older API ranges current Firestore releases pin.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -112,6 +115,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Same persistent trees and node layout; `at()` no longer throws on empty trees or selects the first entry for `NaN`; non-function comparators fail at construction; iterative, range-pruned traversal. Actual Firestore listener paths verified. |
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
 | [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership and ten VPM dependencies; actual Firestore transactions/batches/queries verified. |
@@ -212,12 +216,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,753 tests**: all pass on Node 24, and Bun passes
-2,750 with three documented runtime-specific skips. All 95 runtime packages'
+The root suite contains **2,763 tests**: all pass on Node 24, and Bun passes
+2,760 with three documented runtime-specific skips. All 96 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **97 packages**, including two declaration-only packages.
+catalog covers **98 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -341,6 +345,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgoogle-cloud-firestore-api` | 2 | 3 (`vgoogle-gax`, `vgoogle-logging-utils`, `vlong`; logging is imported directly so import does not load gax) |
 | `vfunctional-red-black-tree` | 0 | 0 |
 | `vfast-deep-equal` | 0 | 0 |
 | `vgoogle-gax` | 11 | 10 (all VPM; unused direct node-fetch removed) |
@@ -502,6 +507,49 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgoogle-cloud-firestore-api
+
+Targets **@google-cloud/firestore-api 0.7.1**, checked October 31, 2026: the
+generated `FirestoreClient` (17 RPCs) and `FirestoreAdminClient` (32 RPCs, 10
+long-running) with their options, overloads, routing headers, retry
+configuration, path helpers, operations helpers, `protos` namespace and export
+paths. Upstream generates one copy of each wrapper per method (about 4,400
+lines); here a data table drives one shared implementation, and the declarations
+are generated from that table and the proto JSON.
+
+Upstream loads 346 modules at import, including its gax stack and the 1.3 MB
+static `protos` module; this package loads three, and gax only when a client is
+constructed. Upstream hashes the 300 KB proto JSON on every construction and
+parses it on every error that carries details; both are cached here. Routing
+headers go into a copy of the caller's options instead of the options object
+itself, and a routed field under a missing parent message no longer throws
+synchronously. A failed stub no longer also raises an unhandled rejection, and
+`close()` waits for its locations and operations clients. A server stream
+opened on a closing client fails at once instead of after about seven seconds
+of no-response retries. Operations helpers accept a missing request, and path
+builders name a missing argument. Status
+details are decoded for long-running and paged calls as well as unary calls,
+and undecodable details are kept.
+
+**320 unchanged generated unit tests** pass on Node and Bun for both the original
+and VPM. A local gRPC server receives identical requests, routing and client
+headers (31 requests over 24 RPCs) and returns identical results (25 call
+outcomes) from both libraries, covering unary, paged, server-streaming,
+bidirectional, long-running, regex-routed and error calls. Nine regression
+cases reproduce each behavioral change with the original. Ten focused tests cover lazy
+loading, entry points, headers, closed clients, failures, operations, status
+details and paths.
+
+Constructing a client takes **65-80% less time** on both runtimes, and decoding
+an error's status details about **99.5% less**. Import takes about 2 ms instead
+of about 270 ms; import plus the first client is about 20% faster. Per-call
+overhead goes through the same gax call path and shows no established
+difference.
+
+See the [package contract](packages/vgoogle-cloud-firestore-api/README.md),
+[conformance record](scripts/firestore-api-conformance/README.md) and
+[measurements](packages/vgoogle-cloud-firestore-api/bench/results/README.md).
 
 ## vfunctional-red-black-tree
 

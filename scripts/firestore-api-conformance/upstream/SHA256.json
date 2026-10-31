@@ -1,0 +1,6 @@
+{
+  "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+  "package.json": "3142d2ded0e1085a0bcd70ef4e0b54a6854d6ea0b187bac3e19b51d6997b5b9f",
+  "test/gapic_firestore_admin_v1.ts.txt": "95e402e7be8a68d82c10371b817274509bb994cca266163ea725e7d1809937d0",
+  "test/gapic_firestore_v1.ts.txt": "2357fcb03689a250cab5eb89c8f8ce45f8d4c1a3eb36515c31c1e6d6fe949fe4"
+}

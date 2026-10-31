@@ -1,0 +1,11 @@
+{
+  "name": "vpm-firestore-api-conformance",
+  "private": true,
+  "description": "Pinned @google-cloud/firestore-api 0.7.1 control and its generated unit-test tools",
+  "dependencies": {
+    "@google-cloud/firestore-api": "0.7.1",
+    "google-gax": "6.14.0",
+    "mocha": "11.7.5",
+    "sinon": "20.0.0"
+  }
+}
