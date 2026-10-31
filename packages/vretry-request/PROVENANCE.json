@@ -19,6 +19,7 @@
     "Validate finite nonnegative retry configuration, bound native timer intervals and measure retry budgets with a monotonic clock.",
     "Forward response and completion only from the accepted stream attempt; preserve buffering and backpressure.",
     "Snapshot supported own option fields directly, eliminating extend; supply structural declarations without @types/request.",
-    "Defer discarded transport teardown until its current response event finishes, avoiding teeny-request pipeline races."
+    "Defer discarded transport teardown until its current response event finishes, avoiding teeny-request pipeline races.",
+    "Add explicit responseAfterEnd for gRPC transports that emit terminal status after readable end; preserve default HTTP early-end detection and abort cleanup."
   ]
 }

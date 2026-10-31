@@ -12,7 +12,7 @@ function shouldRetry(response) {
 const defaults = {
   objectMode: false, retries: 2, maxRetryDelay: 64, retryDelayMultiplier: 2,
   totalTimeout: 600, noResponseRetries: 2, currentRetryAttempt: 0,
-  shouldRetryFn: shouldRetry,
+  shouldRetryFn: shouldRetry, responseAfterEnd: false,
 };
 
 function nonnegative(value, name, integer = false) {
@@ -71,6 +71,7 @@ function retryRequest(requestOpts, options, callback) {
     currentRetryAttempt: manualAttempt ? ownAttempt : defaults.currentRetryAttempt,
     maxRetryDelay: option(options, 'maxRetryDelay'), retryDelayMultiplier: option(options, 'retryDelayMultiplier'),
     totalTimeout: option(options, 'totalTimeout'), shouldRetryFn: option(options, 'shouldRetryFn'),
+    responseAfterEnd: option(options, 'responseAfterEnd'),
   };
   if (typeof opts.request !== 'function') throw new TypeError('A request library must be provided to vretry-request.');
   if (typeof opts.shouldRetryFn !== 'function') throw new TypeError('shouldRetryFn must be a function');
@@ -81,6 +82,7 @@ function retryRequest(requestOpts, options, callback) {
   nonnegative(opts.retryDelayMultiplier, 'retryDelayMultiplier');
   nonnegative(opts.totalTimeout, 'totalTimeout');
   if (typeof opts.objectMode !== 'boolean') throw new TypeError('objectMode must be a boolean');
+  if (typeof opts.responseAfterEnd !== 'boolean') throw new TypeError('responseAfterEnd must be a boolean');
   return callback ? callbacks(requestOpts, opts, callback, manualAttempt) : streams(requestOpts, opts, manualAttempt);
 }
 
@@ -277,7 +279,7 @@ function streams(requestOpts, opts, manualAttempt) {
     }
 
     function onEnd() {
-      if (state.handled || stopped || active !== state) return;
+      if (state.handled || stopped || active !== state || opts.responseAfterEnd) return;
       const error = new Error('Request stream ended without a response');
       error.code = 'ERR_STREAM_PREMATURE_CLOSE';
       onError(error);
