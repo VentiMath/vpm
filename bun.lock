@@ -428,6 +428,10 @@
       "name": "vonce",
       "version": "0.1.0",
     },
+    "packages/vopentelemetry-api": {
+      "name": "vopentelemetry-api",
+      "version": "0.1.0",
+    },
     "packages/vordered-map": {
       "name": "vordered-map",
       "version": "0.1.0",
@@ -782,6 +786,8 @@
     "von-finished": ["von-finished@workspace:packages/von-finished"],
 
     "vonce": ["vonce@workspace:packages/vonce"],
+
+    "vopentelemetry-api": ["vopentelemetry-api@workspace:packages/vopentelemetry-api"],
 
     "vordered-map": ["vordered-map@workspace:packages/vordered-map"],
 

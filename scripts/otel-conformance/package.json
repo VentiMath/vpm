@@ -1,0 +1,14 @@
+{
+  "name": "vpm-otel-conformance",
+  "private": true,
+  "description": "Pinned OpenTelemetry API, upstream tests and real provider comparison tools",
+  "dependencies": {
+    "@opentelemetry/api": "1.10.0",
+    "mocha": "11.7.5",
+    "sinon": "18.0.1",
+    "api-current": "npm:@opentelemetry/api@1.10.0",
+    "@opentelemetry/context-async-hooks": "3.0.0",
+    "@opentelemetry/sdk-trace": "3.0.0",
+    "api-previous": "npm:@opentelemetry/api@1.9.0"
+  }
+}

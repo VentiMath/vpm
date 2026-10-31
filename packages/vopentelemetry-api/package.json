@@ -1,0 +1,47 @@
+{
+  "name": "vopentelemetry-api",
+  "version": "0.1.0",
+  "description": "OpenTelemetry API with isolated baggage entries and validated, cached trace state",
+  "type": "commonjs",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
+      "default": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./experimental": {
+      "require": {
+        "types": "./dist/experimental/index.d.cts",
+        "default": "./dist/experimental/index.cjs"
+      },
+      "default": {
+        "types": "./dist/experimental/index.d.mts",
+        "default": "./dist/experimental/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "Apache-2.0",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vopentelemetry-api"
+  }
+}

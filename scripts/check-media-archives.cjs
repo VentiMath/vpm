@@ -50,6 +50,13 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vopentelemetry-api') {
+      assert.equal(metadata.dependencies,undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      const library=fs.readdirSync(path.join(root,'packages/vopentelemetry-api/dist'),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vopentelemetry-api/dist',f)).isFile()).map(f=>'dist/'+f);
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json',...library].sort());
+      assert.doesNotMatch(entries.join('\n'),/(?:test|bench|node_modules)\/|\.map$/);
+    }
     if (name === 'vgrpc-js') {
       assert.deepEqual(metadata.dependencies,{'vgrpc-proto-loader':'0.1.0','vordered-map':'0.1.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -267,6 +274,7 @@ const archiveXMLNaming=require('vxml-naming'),archiveUnsafe=require('vis-unsafe'
 if(!archiveXMLNaming.qName('𐀀:part')||!archiveUnsafe.isUnsafe('<script>',archiveUnsafe.HTML))throw new Error('XML helpers CJS archive');
 const archiveAnyNumber=require('vanynum'),archiveStringNumber=require('vstrnum');
 if(archiveAnyNumber('१२')!=='12'||archiveAnyNumber.anynum!==archiveAnyNumber||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers CJS archive');
+const archiveOtel=require('vopentelemetry-api');if(archiveOtel.createTraceState('a=1').set('bad','\\n').serialize()!=='a=1')throw new Error('OpenTelemetry CJS');if(typeof require('vopentelemetry-api/experimental').wrapTracer!=='function')throw new Error('OpenTelemetry experimental CJS');
 const archiveGrpc=require('vgrpc-js'),archiveGrpcMetadata=new archiveGrpc.Metadata();archiveGrpcMetadata.set('__proto__','safe');if(archiveGrpcMetadata.getMap().__proto__!=='safe')throw new Error('gRPC CJS archive');
 const archiveOrdered=new (require('vordered-map').OrderedMap)([[2,'b'],[1,'a']],undefined,true);if(archiveOrdered.getElementByPos(1)[1]!=='b'||archiveOrdered.lowerBound(1).index!==0)throw new Error('Ordered map CJS archive');
 const archiveGrpcLoader=require('vgrpc-proto-loader'),archiveGrpcDefs=archiveGrpcLoader.fromJSON({nested:{M:{fields:{id:{type:'int64',id:1}}},S:{methods:{GetThing:{requestType:'M',responseType:'M'}}}}},{longs:String});
@@ -467,6 +475,7 @@ if(!archiveQName('𐀀:part')||!archiveUnsafe('<script>',archiveHTML))throw new 
 import archiveAnyNumber,{anynum as archiveNamedNumber} from 'vanynum';
 import archiveStringNumber from 'vstrnum';
 if(archiveAnyNumber!==archiveNamedNumber||archiveAnyNumber('१२')!=='12'||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers ESM archive');
+import {createTraceState as archiveOtelState} from 'vopentelemetry-api';import {wrapTracer as archiveOtelWrap} from 'vopentelemetry-api/experimental';if(archiveOtelState('a=1').serialize()!=='a=1'||typeof archiveOtelWrap!=='function')throw new Error('OpenTelemetry ESM');
 import {Metadata as ArchiveGrpcMetadata,credentials as archiveGrpcCredentials,Client as ArchiveGrpcClient} from 'vgrpc-js';const archiveGrpcClient=new ArchiveGrpcClient('localhost:1',archiveGrpcCredentials.createInsecure());archiveGrpcClient.close();if(new ArchiveGrpcMetadata().get('test').length!==0)throw new Error('gRPC ESM archive');
 import {OrderedMap as ArchiveOrderedMap} from 'vordered-map';if(new ArchiveOrderedMap([[1,'a']]).getElementByKey(1)!=='a')throw new Error('Ordered map ESM archive');
 import {fromJSON as archiveGrpcFromJSON,isAnyExtension as archiveGrpcAny,Long as archiveGrpcLong} from 'vgrpc-proto-loader';
@@ -675,6 +684,7 @@ const typedNormalized:string=typedNamedNumber('१२');
 const typedParsed:string|number|null=typedStringNumber('12',{unicode:true});
 const typedUnchanged:{id:number}=typedAnyNumber({id:1});
 void [typedNormalized,typedParsed,typedUnchanged];
+import {type Context as ArchiveOtelContext,ROOT_CONTEXT as archiveOtelContext,createTraceState as archiveTypedOtelState} from 'vopentelemetry-api';import {wrapTracer as archiveTypedOtelWrap} from 'vopentelemetry-api/experimental';const archiveTypedOtelContext:ArchiveOtelContext=archiveOtelContext;const archiveTypedOtelString:string=archiveTypedOtelState('a=1').serialize();void [archiveTypedOtelContext,archiveTypedOtelString,archiveTypedOtelWrap];
 import {Metadata as TypedGrpcMetadata,Server as TypedGrpcServer,type ServiceDefinition as TypedGrpcService} from 'vgrpc-js';const archiveTypedMetadata=new TypedGrpcMetadata();archiveTypedMetadata.set('key','value');const archiveTypedGrpcServer=new TypedGrpcServer();const archiveTypedGrpcService:TypedGrpcService={};archiveTypedGrpcServer.addService(archiveTypedGrpcService,{});
 import {OrderedMap as TypedOrderedMap,type OrderedMapIterator as TypedMapIterator} from 'vordered-map';const archiveTypedMap=new TypedOrderedMap<number,string>([[1,'a']]);const archiveTypedIter:TypedMapIterator<number,string>=archiveTypedMap.begin();const archiveTypedValue:string=archiveTypedIter.pointer[1];void archiveTypedValue;
 import {fromJSON as typedGrpcLoad,isAnyExtension as typedGrpcAny,type MessageTypeDefinition as TypedGrpcMessage,type ByteBuffer as TypedGrpcBuffer} from 'vgrpc-proto-loader';
