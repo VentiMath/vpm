@@ -119,8 +119,9 @@ are skipped without discarding valid siblings.
 Duplicate IDs among usable signing keys reject the key set rather than choosing
 an arbitrary key. Empty-string IDs are preserved and matched exactly. A missing
 or null lookup ID selects a key only when there is exactly one usable key.
-PEM text uses native SPKI export; on Bun this includes a trailing newline that
-upstream's WebCrypto path omits, with identical encoded key bytes.
+PEM text uses native SPKI export, which ends with a newline on Node and Bun.
+jwks-rsa 3.2.2 also ends with one; 4.1.0's WebCrypto path omits it. The encoded
+key bytes are identical, so key parsing and signature checks are unaffected.
 Upstream's incidental acceptance of non-string IDs, ambiguous IDs, mutable cache
 records, inherited configuration, invalid limits and noncanonical fields is not
 preserved. An explicit obsolete `proxy` option is rejected. Zero cache age means
