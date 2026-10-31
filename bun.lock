@@ -179,6 +179,20 @@
         "vstatuses": "workspace:*",
       },
     },
+    "packages/vfirebase-admin": {
+      "name": "vfirebase-admin",
+      "version": "0.1.0",
+      "dependencies": {
+        "vfast-deep-equal": "workspace:*",
+        "vgoogle-auth-library": "workspace:*",
+        "vjsonwebtoken": "workspace:*",
+        "vjwks-rsa": "workspace:*",
+      },
+      "optionalDependencies": {
+        "vgoogle-cloud-firestore": "workspace:*",
+        "vgoogle-cloud-storage": "workspace:*",
+      },
+    },
     "packages/vforwarded": {
       "name": "vforwarded",
       "version": "0.1.0",
@@ -753,6 +767,8 @@
     "vfast-xml-parser": ["vfast-xml-parser@workspace:packages/vfast-xml-parser"],
 
     "vfinalhandler": ["vfinalhandler@workspace:packages/vfinalhandler"],
+
+    "vfirebase-admin": ["vfirebase-admin@workspace:packages/vfirebase-admin"],
 
     "vforwarded": ["vforwarded@workspace:packages/vforwarded"],
 

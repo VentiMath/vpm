@@ -37,6 +37,7 @@ jobs:
       - run: npm --prefix scripts/rbtree-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/firestore-api-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/firestore-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/firebase-admin-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -72,6 +73,10 @@ jobs:
           node scripts/firestore-conformance/run.cjs --upstream
           node scripts/firestore-conformance/run.cjs
           node scripts/firestore-conformance/regressions.cjs
+          node scripts/firebase-admin-conformance/run.cjs --upstream
+          node scripts/firebase-admin-conformance/run.cjs
+          node scripts/firebase-admin-conformance/regressions.cjs
+          node scripts/firebase-admin-conformance/callers.cjs
           node scripts/gax-conformance/run.cjs --upstream
           node scripts/gax-conformance/run.cjs
           node scripts/gax-conformance/regressions.cjs
@@ -258,6 +263,7 @@ jobs:
       - run: npm --prefix scripts/rbtree-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/firestore-api-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/firestore-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/firebase-admin-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -303,6 +309,10 @@ jobs:
           bun scripts/firestore-conformance/run.cjs --upstream
           bun scripts/firestore-conformance/run.cjs
           bun scripts/firestore-conformance/regressions.cjs
+          bun scripts/firebase-admin-conformance/run.cjs --upstream
+          bun scripts/firebase-admin-conformance/run.cjs
+          bun scripts/firebase-admin-conformance/regressions.cjs
+          bun scripts/firebase-admin-conformance/callers.cjs
           bun scripts/gax-conformance/run.cjs --upstream
           bun scripts/gax-conformance/run.cjs
           bun scripts/gax-conformance/regressions.cjs

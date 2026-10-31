@@ -1,0 +1,152 @@
+{
+  "recordedAt": "2026-10-31T22:22:20.354Z",
+  "runtime": {
+    "node": "22.22.0",
+    "acorn": "8.15.0",
+    "ada": "2.9.2",
+    "amaro": "1.1.4",
+    "ares": "1.34.6",
+    "brotli": "1.1.0",
+    "cjs_module_lexer": "2.1.0",
+    "cldr": "47.0",
+    "icu": "77.1",
+    "llhttp": "9.3.0",
+    "modules": "127",
+    "napi": "10",
+    "nbytes": "0.1.1",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.64.0",
+    "openssl": "3.5.4",
+    "simdjson": "3.13.0",
+    "simdutf": "6.4.2",
+    "sqlite": "3.50.4",
+    "tz": "2025b",
+    "undici": "6.23.0",
+    "unicode": "16.0",
+    "uv": "1.51.0",
+    "uvwasi": "0.0.23",
+    "v8": "12.4.254.21-node.33",
+    "zlib": "1.3.1-470d3a2",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+  "platform": "linux",
+  "arch": "x64",
+  "calibration": false,
+  "first": "upstream",
+  "rounds": 12,
+  "checksum": 246592,
+  "methodology": "12 alternating paired rounds after 150ms per-variant warmup and four full blocks; 15ms upstream pilot target, capped at 100000 operations. Separately compiled measurement loops per variant; the second process sets up VPM first. Outputs retained and checked outside timing. Three fresh processes and one identical-upstream control per runtime. No trimming; nanoseconds per operation.",
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "963f872bb2d8c60f04a3c2728d3af97d4990fade66eaa1056ff91b087a8230e2",
+    "../../scripts/firebase-admin-conformance/package-lock.json": "1b27b6f0e873a29b247c90dd5832c22de55276d178c86fffb896aeecb66d458b",
+    "../vjsonwebtoken/package.json": "72247660babb441f296b2a77f8718e8ee8038a2a2edd9cebb0f89cf41b600d04",
+    "bench/compare.cjs": "3eff2167e7b1284e2bf38d3a17491bf9f9c7110fbb8643aba2e0a201d1d0b1ed",
+    "lib/utils/jwt.js": "bd1c779fb103753b815bbfc036aad95e85f3fdc2ada4fb6cc1cb0d86211edd3e",
+    "package.json": "ac40978ff25b8f69b1913c01bd29fd8d1a2e723381e02ec1ff36f4bf078744d6"
+  },
+  "rows": [
+    {
+      "case": "auth / verify RS256 ID token signature",
+      "iterations": 160,
+      "samples": {
+        "upstream": [
+          93609.45625000028,
+          103895.25000000006,
+          84604.90000000007,
+          93642.06250000038,
+          81541.28749999998,
+          98861.48749999961,
+          76077.68749999977,
+          77179.61250000016,
+          85584.00625000005,
+          78067.04999999994,
+          100882,
+          86614.58750000008
+        ],
+        "vpm": [
+          56074.10000000001,
+          42397.174999999974,
+          36955.95000000011,
+          35389.63124999981,
+          36684.41875,
+          37130.781249999956,
+          40229.09374999983,
+          40083.87499999984,
+          38783.131249999766,
+          40625.91875000052,
+          39477.94999999985,
+          36376.20625000011
+        ]
+      }
+    },
+    {
+      "case": "auth / decode ID token",
+      "iterations": 1367,
+      "samples": {
+        "upstream": [
+          8022.321141185133,
+          10628.16459400143,
+          10219.441843452796,
+          10918.497439648749,
+          10674.760058522232,
+          5758.056327724945,
+          6089.700073152959,
+          6129.548646671552,
+          6406.028529626973,
+          5928.035844915849,
+          6060.858083394247,
+          7522.160204827986
+        ],
+        "vpm": [
+          4420.429407461605,
+          5870.171177761469,
+          7452.221653255299,
+          7009.590343818623,
+          7404.401609363544,
+          5488.705925383972,
+          4385.111923921103,
+          5116.34455010967,
+          4087.9473299194256,
+          5381.962692026299,
+          3934.076810534097,
+          4085.454279444072
+        ]
+      }
+    },
+    {
+      "case": "messaging / copy and validate a message",
+      "iterations": 4964,
+      "samples": {
+        "upstream": [
+          2848.3515310233515,
+          3460.5749395648777,
+          2667.7508058017906,
+          3150.6893634166086,
+          2668.6663980660496,
+          3171.9107574537106,
+          4169.252618855703,
+          2683.7274375503057,
+          2669.857171635745,
+          2957.506647864624,
+          3137.922844480184,
+          2651.1136180500484
+        ],
+        "vpm": [
+          2455.967365028224,
+          2899.994963738922,
+          2721.820910556005,
+          2668.3531426269224,
+          2562.851128122504,
+          2523.474012892781,
+          2590.298348106347,
+          2552.4873086221132,
+          2678.7103142626825,
+          2486.5537872683326,
+          2987.018533440809,
+          2926.790088638176
+        ]
+      }
+    }
+  ]
+}

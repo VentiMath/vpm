@@ -1,0 +1,151 @@
+{
+  "recordedAt": "2026-10-31T22:22:37.172Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.3",
+    "unicode": "17.0",
+    "sqlite": "3.53.2",
+    "modules": "147"
+  },
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+  "platform": "linux",
+  "arch": "x64",
+  "calibration": true,
+  "first": "upstream",
+  "rounds": 12,
+  "checksum": 331738,
+  "methodology": "12 alternating paired rounds after 150ms per-variant warmup and four full blocks; 15ms upstream pilot target, capped at 100000 operations. Separately compiled measurement loops per variant; the second process sets up VPM first. Outputs retained and checked outside timing. Three fresh processes and one identical-upstream control per runtime. No trimming; nanoseconds per operation.",
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "963f872bb2d8c60f04a3c2728d3af97d4990fade66eaa1056ff91b087a8230e2",
+    "../../scripts/firebase-admin-conformance/package-lock.json": "1b27b6f0e873a29b247c90dd5832c22de55276d178c86fffb896aeecb66d458b",
+    "../vjsonwebtoken/package.json": "72247660babb441f296b2a77f8718e8ee8038a2a2edd9cebb0f89cf41b600d04",
+    "bench/compare.cjs": "3eff2167e7b1284e2bf38d3a17491bf9f9c7110fbb8643aba2e0a201d1d0b1ed",
+    "lib/utils/jwt.js": "bd1c779fb103753b815bbfc036aad95e85f3fdc2ada4fb6cc1cb0d86211edd3e",
+    "package.json": "ac40978ff25b8f69b1913c01bd29fd8d1a2e723381e02ec1ff36f4bf078744d6"
+  },
+  "rows": [
+    {
+      "case": "auth / verify RS256 ID token signature",
+      "iterations": 371,
+      "samples": {
+        "upstream": [
+          50544.684636118545,
+          44585.38005390822,
+          80573.08625336921,
+          46197.684636118756,
+          42318.75202156355,
+          48732.816711590334,
+          42537.14824797822,
+          52979.43935309958,
+          41206.490566037675,
+          60004.11859838275,
+          47654.62803234517,
+          47672.22102425893
+        ],
+        "vpm": [
+          47772.23719676566,
+          49954.37466307294,
+          48898.29649595678,
+          65425.857142857254,
+          63292.66307277632,
+          44185.369272237294,
+          49519.48517520205,
+          42461.10781671153,
+          46508.363881401856,
+          40024.54716981133,
+          53086.355795147814,
+          41849.61455525576
+        ]
+      }
+    },
+    {
+      "case": "auth / decode ID token",
+      "iterations": 2953,
+      "samples": {
+        "upstream": [
+          10253.793769048461,
+          6332.3013884185675,
+          5734.8669150016985,
+          7055.124957670139,
+          5336.262106332571,
+          5162.617676938644,
+          6286.917372163961,
+          9365.414493735147,
+          9416.166948865586,
+          4878.858449034894,
+          5911.495767016584,
+          6667.918726718606
+        ],
+        "vpm": [
+          9095.532678631935,
+          7470.504232983394,
+          5443.885201490002,
+          8228.157805621386,
+          5952.81002370476,
+          5352.619708770741,
+          7549.411107348417,
+          9956.693870640058,
+          6711.406705045657,
+          5276.379275313236,
+          5036.656620386046,
+          5330.670843210233
+        ]
+      }
+    },
+    {
+      "case": "messaging / copy and validate a message",
+      "iterations": 5030,
+      "samples": {
+        "upstream": [
+          1376.8588469184954,
+          1312.3111332008327,
+          1293.4753479125638,
+          1648.0351888667808,
+          1544.0284294234455,
+          1474.2487077535293,
+          1396.3586481112875,
+          2721.6065606361503,
+          2652.0926441351594,
+          1479.40854870784,
+          1607.0942345923897,
+          1684.0192842942242
+        ],
+        "vpm": [
+          1471.4421471173127,
+          1382.3361829025262,
+          1285.166003976187,
+          1244.3302186878625,
+          1417.5964214711646,
+          1425.3226640158496,
+          1394.9043737574434,
+          1516.2876739562219,
+          2708.06620278328,
+          1683.4335984095194,
+          1540.144731610343,
+          1514.572763419478
+        ]
+      }
+    }
+  ]
+}

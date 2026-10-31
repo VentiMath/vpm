@@ -32,6 +32,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vfirebase-admin | firebase-admin 14.5.0 without Realtime Database; its unit suite, and VentiMath's Auth, Firestore, Storage and FCM calls against local servers | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked October 31, 2026 |
 | Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
 | Caller paths verified | vfunctional-red-black-tree | functional-red-black-tree 1.0.1; Firestore 9.4.0 `onSnapshot` listener ordering, change indexes and retained snapshots | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
@@ -93,13 +94,16 @@ the version Firebase Admin 14 uses, on that package and the VPM gax stack
 instead of the older API package and second gax stack 9.4.0 pins, checked
 October 31, 2026.
 
-Next is `firebase-admin` 14.5.0 itself. VentiMath's backend uses its app,
-auth, Firestore, Storage and messaging (`sendEachForMulticast`) APIs, all on
-dependencies VPM already provides. Its two other dependencies are not needed:
-`@firebase/database-compat` and its 12-package Realtime Database and websocket
-tree serve only `getDatabase()`, which VentiMath never calls, and
-`@fastify/busboy` only parses `multipart/mixed` responses, which no Admin 14
-API requests. `firebase-functions` 7.4.0 follows. Admin 12.7's older Storage 7,
+`vfirebase-admin` now covers `firebase-admin` 14.5.0, checked October 31,
+2026. VentiMath's backend uses its app, auth, Firestore, Storage and messaging
+(`sendEachForMulticast`) APIs, all on VPM dependencies. Its two other
+dependencies are eliminated: `@firebase/database-compat` and its Realtime
+Database and websocket tree serve only `getDatabase()`, which VentiMath never
+calls, and `@fastify/busboy` only parses `multipart/mixed` responses, which no
+Admin 14 API requests. Admin 14 also removed the namespaced API
+(`admin.firestore()`, `admin.messaging()`, `admin.apps`), which VentiMath's
+backend still uses, so adopting it includes moving those calls to the modular
+API. Next is `firebase-functions` 7.4.0. Admin 12.7's older Storage 7,
 gax 4, gtoken 8 and `form-data` 2.5.5 branches are not separate work: the Admin
 14 upgrade removes them. After the backend, frontend foundations, UI and build
 tools follow.
@@ -141,6 +145,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, 56% less CPU per ID-token signature check and half the cold-start modules; identical Auth, Firestore, Storage and FCM caller behavior. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | All six dependencies are VPM with one gax stack, 65 modules and about 50 ms at import instead of 404 and 270 ms, reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Same persistent trees and node layout; `at()` no longer throws on empty trees or selects the first entry for `NaN`; non-function comparators fail at construction; iterative, range-pruned traversal. Actual Firestore listener paths verified. |
@@ -243,12 +248,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,769 tests**: all pass on Node 24, and Bun passes
-2,766 with three documented runtime-specific skips. All 97 runtime packages'
+The root suite contains **2,776 tests**: all pass on Node 24, and Bun passes
+2,773 with three documented runtime-specific skips. All 98 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **99 packages**, including two declaration-only packages.
+catalog covers **100 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -372,6 +377,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vfirebase-admin` | 9 (including `@firebase/database-compat`, `@firebase/database-types` and `@fastify/busboy`) | 6 (all VPM; Realtime Database and multipart parsing eliminated) |
 | `vgoogle-cloud-firestore` | 6 (including `@google-cloud/firestore-api` ^0.2.0, which adds a second `google-gax`) | 6 (all VPM, one gax stack) |
 | `vgoogle-cloud-firestore-api` | 2 | 3 (`vgoogle-gax`, `vgoogle-logging-utils`, `vlong`; logging is imported directly so import does not load gax) |
 | `vfunctional-red-black-tree` | 0 | 0 |
@@ -535,6 +541,39 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfirebase-admin
+
+Targets **firebase-admin 14.5.0**, checked October 31, 2026. The published
+implementation is retained with its dependencies mapped to VPM packages;
+[PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) lists the files
+changed beyond that. `@firebase/database-compat`, `@firebase/database-types` and
+`@fastify/busboy` are eliminated: `vfirebase-admin/database` throws a
+descriptive error, and the `multipart/mixed` responses no Admin API reads fail
+with `ERR_UNSUPPORTED_MULTIPART_RESPONSE`.
+
+While public keys are missing or expired, upstream starts one key request per
+concurrent token verification (ID tokens and session cookies, App Check and
+phone-number verification); here concurrent callers share the request. Upstream
+sends FCM's HTTP/2 requests with `:scheme: https:`, which RFC 9113 forbids and
+Node's HTTP/2 server rejects; here it is `https`. Through `vjsonwebtoken`,
+`verifyIdToken`'s signature check takes **56% less time** on Node 22 (33% on
+Bun), and an app with Auth, Firestore, Messaging and Storage loads 335 modules
+in about 180 ms instead of 653 in about 380 ms. Public declarations need no
+ambient Node types.
+
+The original passes its **6,146 unit tests**. VPM runs the 6,062 that do not
+need the Realtime Database client; all pass except 46 that assert the `https:`
+scheme or multipart parsing, each required to fail on exactly that. VentiMath's
+Admin calls (`verifyIdToken` with revocation checks, `getUser`, `updateUser`,
+`revokeRefreshTokens`, `deleteUsers`, a Firestore scenario, Storage `save`,
+`exists`, `delete` and signed URLs, and `sendEachForMulticast`) produce
+identical requests and results against local servers. Three regression cases
+and seven focused tests cover the changes.
+
+See the [package contract](packages/vfirebase-admin/README.md),
+[conformance record](scripts/firebase-admin-conformance/README.md) and
+[measurements](packages/vfirebase-admin/bench/results/README.md).
 
 ## vgoogle-cloud-firestore
 

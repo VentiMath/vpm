@@ -233,7 +233,10 @@ async function child(library, mode) {
   }
 }
 
-if (process.argv[2] === '--child') {
+module.exports = {startServer, scenario};
+if (require.main !== module) {
+  // Used by other fixtures (firebase-admin-conformance/callers.cjs).
+} else if (process.argv[2] === '--child') {
   child(process.argv[3], process.argv[4]).then(result => process.stdout.write(JSON.stringify(result), () => process.exit()), error => { console.error(error); process.exit(1); });
 } else {
   const summary = [];
