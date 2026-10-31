@@ -28,6 +28,8 @@ declare namespace retryRequest {
   interface Options {
     request?: (requestOpts: any, callback?: any) => RequestHandle | RequestStream | void;
     objectMode?: boolean;
+    /** Wait for a transport's response/status after readable end (e.g. gRPC). The transport must enforce its deadline. */
+    responseAfterEnd?: boolean;
     retries?: number;
     noResponseRetries?: number;
     currentRetryAttempt?: number;

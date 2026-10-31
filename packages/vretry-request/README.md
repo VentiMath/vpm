@@ -26,6 +26,11 @@ before its accepted body ends. The returned readable supports `abort()`,
 `error` events. `objectMode: true` supports gRPC-style object streams. A string
 request becomes `{url: string}`; object and null request arguments pass through.
 
+Transports such as gRPC may deliver their terminal status after readable `end`.
+They can set `responseAfterEnd: true` to retain the buffered body until that
+response arrives. The transport must enforce its own deadline; abort still
+detaches it. Ordinary HTTP streams retain the default early-end error check.
+
 ## Retry policy
 
 The default response policy retries HTTP 100–199, 429 and 500–599. Defaults are
