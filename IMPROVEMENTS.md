@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vfunctional-red-black-tree | functional-red-black-tree 1.0.1; Firestore 9.4.0 `onSnapshot` listener ordering, change indexes and retained snapshots | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
 | Caller paths verified | vfast-deep-equal | fast-deep-equal 3.1.3; Firestore 9.4.0 document, query and transform equality | [fast-deep-equal 3.1.3](https://www.npmjs.com/package/fast-deep-equal), checked October 30, 2026 |
 | Caller paths verified | vgoogle-gax | google-gax 6.14.0; Firestore 9.4.0 RPCs, transactions, batches, queries and native REST | [google-gax 6.14.0](https://www.npmjs.com/package/google-gax), checked October 30, 2026 |
 | Caller paths verified | vopentelemetry-api | @opentelemetry/api 1.10.0; SDK 3.0.0 and gax 6.14.0 tracing helpers | [@opentelemetry/api 1.10.0](https://www.npmjs.com/package/@opentelemetry/api), checked October 30, 2026 |
@@ -70,8 +71,9 @@ checked October 30, 2026. `vopentelemetry-api` now covers the zero-dependency
 gax tracing helpers. `vgoogle-gax` now covers 6.14.0 itself with ten VPM runtime
 dependencies, checked Firestore 9.4.0 callers and native REST transport. Those
 latest targets were checked October 30, 2026. `vfast-deep-equal` now covers 3.1.3 with verified Firestore equality callers.
-Next is `functional-red-black-tree` 1.0.1, the remaining small dependency before
-the Firestore client and generated API package.
+`vfunctional-red-black-tree` now covers 1.0.1 with verified Firestore listener
+callers, checked October 31, 2026. Next are the generated `@google-cloud/firestore-api`
+package and the Firestore client itself.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -110,6 +112,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Same persistent trees and node layout; `at()` no longer throws on empty trees or selects the first entry for `NaN`; non-function comparators fail at construction; iterative, range-pruned traversal. Actual Firestore listener paths verified. |
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
 | [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership and ten VPM dependencies; actual Firestore transactions/batches/queries verified. |
 | [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
@@ -209,12 +212,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,744 tests**: all pass on Node 24, and Bun passes
-2,741 with three documented runtime-specific skips. All 94 runtime packages'
+The root suite contains **2,753 tests**: all pass on Node 24, and Bun passes
+2,750 with three documented runtime-specific skips. All 95 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **96 packages**, including two declaration-only packages.
+catalog covers **97 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -338,6 +341,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vfunctional-red-black-tree` | 0 | 0 |
 | `vfast-deep-equal` | 0 | 0 |
 | `vgoogle-gax` | 11 | 10 (all VPM; unused direct node-fetch removed) |
 | `vopentelemetry-api` | 0 | 0 |
@@ -498,6 +502,34 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfunctional-red-black-tree
+
+Targets **functional-red-black-tree 1.0.1**, checked October 31, 2026. No runtime
+dependencies. Firestore 9.4.0 keeps `onSnapshot` results in this persistent tree.
+The path-copying insert and removal, node layout and property enumerability are
+retained, so earlier tree versions keep their contents and code inspecting nodes
+still works. `at()` returns an invalid iterator for an empty tree, where upstream
+throws, and for indexes that are not in-range integers, where upstream maps `NaN`
+to the first entry. A non-function comparator fails at construction instead of on
+the second insert. Traversals are iterative, and bounded `forEach` prunes subtrees.
+
+**25,663 unchanged upstream assertions** in its 9 tape tests pass on Node and Bun,
+including internal red-black invariant checks. Nine focused tests cover persistence
+across 2,000 generated operations, 3,000 operations matching the original node
+layout exactly, iterators, bounds, the fixes and enumerability. An actual Firestore
+9.4.0 `onSnapshot` query over a local gRPC Listen stream produces the same ordering,
+change indexes and retained snapshot with either tree.
+
+The Firestore Watch change pattern is **at parity** (1.4% less time on Node 22,
+3.5% less on Bun); range `forEach` takes **18% less time on Node**. Measuring each
+tree with separately compiled call sites matters here: with shared closures, two
+identical copies measured 10-24% apart, which the identical-upstream control cannot
+detect. These are tree CPU measurements, not listener latency.
+
+See the [package contract](packages/vfunctional-red-black-tree/README.md),
+[conformance record](scripts/rbtree-conformance/README.md) and
+[paired measurements](packages/vfunctional-red-black-tree/bench/results/README.md).
 
 ## vfast-deep-equal
 
