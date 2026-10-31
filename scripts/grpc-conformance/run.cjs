@@ -24,18 +24,33 @@ try {
   assert.equal(result.status,0,result.output);
   const selected=process.env.GRPC_TEST_FILES?.split(',');
   const suites=fs.readdirSync(path.join(temporary,'build/test')).filter(x=>/^test-.*\.js$/.test(x)&&(!selected||selected.includes(x.slice(0,-3)))).sort();
-  fs.writeFileSync(path.join(temporary,'run.cjs'),`const Mocha=require('mocha'),fs=require('node:fs');const m=new Mocha({reporter:'json',timeout:10000});for(const f of ${JSON.stringify(suites)})m.addFile(__dirname+'/build/test/'+f);m.run(n=>{process.exitCode=n?1:0;setTimeout(()=>process.exit(process.exitCode),250).unref();});`);
-  const run=spawnSync(process.execPath,[path.join(temporary,'run.cjs')],{cwd:temporary,encoding:'utf8',maxBuffer:16e6,timeout:240000,env:{...process.env,GRPC_EXPERIMENTAL_ENABLE_OUTLIER_DETECTION:'true'}});
-  if(process.env.OUTPUT)fs.writeFileSync(process.env.OUTPUT,run.stdout);
-  if(run.stderr)process.stderr.write(run.stderr);
-  const offset=run.stdout.indexOf('{\n  "stats"');
-  if(offset<0){console.error(run.stdout);throw run.error||new Error('No Mocha report');}
-  const report=JSON.parse(run.stdout.slice(offset));
+  // The no-deadline test replaces global.setTimeout and counts every call.
+  // Run it alone, with an explicit Date response header: Bun otherwise starts
+  // an HTTP/2 Date-cache timer inside the measured call. No gRPC timer is masked.
+  // Keep the original test and assertion intact in both variants.
+  const timerTest='^Calls without deadlines ';
+  const groups=[{files:suites,grep:timerTest,invert:true}];
+  if(suites.includes('test-deadline.js'))groups.push({files:['test-deadline.js'],grep:timerTest,invert:false});
+  const reports=[],raw=[];
+  for(const [index,group]of groups.entries()) {
+    const runner=path.join(temporary,'run-'+index+'.cjs');
+    const dateHeader=group.invert?'':`const http2=require('node:http2'),createServer=http2.createServer;http2.createServer=function(...args){const server=createServer.apply(this,args);server.prependListener('stream',stream=>{const respond=stream.respond;stream.respond=function(headers,options){return respond.call(this,{date:'Thu, 01 Jan 1970 00:00:00 GMT',...headers},options);};});return server;};`;
+    fs.writeFileSync(runner,`${dateHeader}const Mocha=require('mocha');const m=new Mocha({reporter:'json',timeout:10000,grep:new RegExp(${JSON.stringify(group.grep)}),invert:${group.invert}});for(const f of ${JSON.stringify(group.files)})m.addFile(__dirname+'/build/test/'+f);m.run(n=>{process.exitCode=n?1:0;setTimeout(()=>process.exit(process.exitCode),250).unref();});`);
+    const run=spawnSync(process.execPath,[runner],{cwd:temporary,encoding:'utf8',maxBuffer:16e6,timeout:240000,env:{...process.env,GRPC_EXPERIMENTAL_ENABLE_OUTLIER_DETECTION:'true'}});
+    raw.push(run.stdout);if(run.stderr)process.stderr.write(run.stderr);
+    const offset=run.stdout.indexOf('{\n  "stats"');
+    if(offset<0){console.error(run.stdout);throw run.error||new Error('No Mocha report');}
+    const report=JSON.parse(run.stdout.slice(offset));assert.ifError(run.error);assert.equal(run.status,report.stats.failures?1:0);
+    if(!group.invert)assert.equal(report.stats.tests,1,'isolated timer test must execute exactly once');
+    reports.push(report);
+  }
+  if(process.env.OUTPUT)fs.writeFileSync(process.env.OUTPUT,raw.join('\n'));
+  const report={stats:{suites:0,tests:0,passes:0,pending:0,failures:0,duration:0},failures:[],pending:[]};
+  for(const part of reports){for(const key of Object.keys(report.stats))report.stats[key]+=part.stats[key];report.failures.push(...part.failures);report.pending.push(...part.pending);}
+  report.stats.start=reports[0].stats.start;report.stats.end=reports.at(-1).stats.end;
   const summary={variant:upstream?'upstream':'vpm',runtime:process.versions.bun?'bun':'node',files:suites.length,namespaceImportAdapters:adapters,stats:report.stats,failures:report.failures.map(f=>({title:f.fullTitle,error:f.err.message})),pending:report.pending.map(f=>f.fullTitle)};
   console.log(JSON.stringify(summary,null,2));
   if(process.env.SUMMARY)fs.writeFileSync(process.env.SUMMARY,JSON.stringify(summary));
   if(!selected){assert.equal(report.stats.tests,508);assert.equal(report.stats.pending,9);}
-  assert.ifError(run.error);
-  assert.equal(run.status,report.stats.failures?1:0);
-  if(!process.argv.includes('--report-only'))assert.equal(run.status,0,`Upstream conformance had ${report.stats.failures} failures`);
+  if(!process.argv.includes('--report-only'))assert.equal(report.stats.failures,0,`Upstream conformance had ${report.stats.failures} failures`);
 } finally {fs.rmSync(temporary,{recursive:true,force:true});}
