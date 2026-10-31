@@ -1,0 +1,62 @@
+{
+  "name": "vgoogle-gax",
+  "version": "0.1.0",
+  "description": "Google API extensions with VPM dependencies, isolated call options and checked resource paths and JSON streams",
+  "type": "commonjs",
+  "main": "./build/src/index.js",
+  "types": "./build/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/src/index.d.ts",
+      "require": "./build/src/index.js",
+      "default": "./index.mjs"
+    },
+    "./fallback": {
+      "types": "./build/src/fallback.d.ts",
+      "require": "./build/src/fallback.js",
+      "default": "./fallback.mjs"
+    },
+    "./gax": {
+      "types": "./build/src/gax.d.ts",
+      "default": "./build/src/gax.js"
+    },
+    "./build/src/protobuf": {
+      "types": "./build/src/protobuf.d.ts",
+      "default": "./build/src/protobuf.js"
+    },
+    "./build/src/index.js": {
+      "types": "./build/src/index.d.ts",
+      "default": "./build/src/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "build",
+    "index.mjs",
+    "fallback.mjs",
+    "LICENSE",
+    "PROVENANCE.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "vgrpc-js": "workspace:*",
+    "vgrpc-proto-loader": "workspace:*",
+    "vopentelemetry-api": "workspace:*",
+    "vduplexify": "workspace:*",
+    "vgoogle-auth-library": "workspace:*",
+    "vgoogle-logging-utils": "workspace:*",
+    "vobject-hash": "workspace:*",
+    "vproto3-json-serializer": "workspace:*",
+    "vprotobufjs": "workspace:*",
+    "vretry-request": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vgoogle-gax"
+  }
+}

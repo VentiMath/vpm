@@ -1,0 +1,3 @@
+import api from './build/src/fallback.js';
+export default api;
+export const {PathTemplate,routingHeader,CallSettings,constructSettings,RetryOptions,createDefaultBackoffSettings,version,BundleDescriptor,LongrunningDescriptor,PageDescriptor,StreamDescriptor,ResumableUploadDescriptor,ResumableUploadSession,ResumableUploadState,resumableUploadStub,resumableSourceFromFile,StreamType,OperationsClient,IamClient,LocationsClient,makeUUID,defaultToObjectOptions,GrpcClient,protobufFromJSON,operationsProtos,IamProtos,LocationProtos,protobuf,protobufMinimal,warn,Operation,operation,GoogleError,fallback,lro,createApiCall} = api;

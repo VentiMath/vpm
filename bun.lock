@@ -244,6 +244,22 @@
         "vteeny-request": "workspace:*",
       },
     },
+    "packages/vgoogle-gax": {
+      "name": "vgoogle-gax",
+      "version": "0.1.0",
+      "dependencies": {
+        "vduplexify": "workspace:*",
+        "vgoogle-auth-library": "workspace:*",
+        "vgoogle-logging-utils": "workspace:*",
+        "vgrpc-js": "workspace:*",
+        "vgrpc-proto-loader": "workspace:*",
+        "vobject-hash": "workspace:*",
+        "vopentelemetry-api": "workspace:*",
+        "vproto3-json-serializer": "workspace:*",
+        "vprotobufjs": "workspace:*",
+        "vretry-request": "workspace:*",
+      },
+    },
     "packages/vgoogle-logging-utils": {
       "name": "vgoogle-logging-utils",
       "version": "0.1.0",
@@ -720,6 +736,8 @@
     "vgoogle-auth-library": ["vgoogle-auth-library@workspace:packages/vgoogle-auth-library"],
 
     "vgoogle-cloud-storage": ["vgoogle-cloud-storage@workspace:packages/vgoogle-cloud-storage"],
+
+    "vgoogle-gax": ["vgoogle-gax@workspace:packages/vgoogle-gax"],
 
     "vgoogle-logging-utils": ["vgoogle-logging-utils@workspace:packages/vgoogle-logging-utils"],
 
