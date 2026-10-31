@@ -20,6 +20,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vgrpc-js | @grpc/grpc-js 1.14.7; gax 6.14.0 / Firestore 9.4.0 local HTTP/2 callers | [@grpc/grpc-js 1.14.7](https://www.npmjs.com/package/@grpc/grpc-js), checked October 30, 2026 |
 | Caller paths verified | vordered-map | @js-sdsl/ordered-map 4.4.2; gRPC 1.14.7 Channelz diagnostics | [@js-sdsl/ordered-map 4.4.2](https://www.npmjs.com/package/@js-sdsl/ordered-map), checked October 30, 2026 |
 | Caller paths verified | vgrpc-proto-loader | @grpc/proto-loader 0.8.1 runtime API; gax 6.14.0 and Firestore 9.4.0 local gRPC callers | [@grpc/proto-loader 0.8.1](https://www.npmjs.com/package/@grpc/proto-loader), checked October 30, 2026 |
 | Caller paths verified | vlodash.camelcase | lodash.camelcase 4.3.0; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 method aliases | [lodash.camelcase 4.3.0](https://www.npmjs.com/package/lodash.camelcase), checked October 30, 2026 |
@@ -59,9 +60,12 @@ manifests were checked October 30, 2026. The `vjwks-rsa` 4.1.0 API and Admin 14 
 callers now pass against upstream controls on Node 24 and Bun. `vlodash.camelcase` now covers the 4.3.0 method-name conversion used by
 `@grpc/proto-loader` 0.8.1. `vgrpc-proto-loader` now covers its runtime API with
 those VPM foundations and actual Firestore calls. `vordered-map` now covers
-4.4.2 and gRPC's Channelz diagnostic handlers. Next is `vgrpc-js`, targeting
-`@grpc/grpc-js` 1.14.7 with both direct dependencies built; these targets were
-checked October 30, 2026. SDK upgrades and actual adoption of VPM
+4.4.2 and gRPC's Channelz diagnostic handlers. `vgrpc-js` now covers the
+1.14.7 transport with those two VPM dependencies and local Firestore callers; these targets were
+checked October 30, 2026. The next dependency is `vopentelemetry-api`, targeting the zero-dependency
+`@opentelemetry/api` 1.10.0 tracing/context API used by google-gax 6.14.0, then
+`vgoogle-gax` itself. Both latest targets were checked October 30, 2026.
+SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
 
@@ -99,6 +103,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Complete-frame fast path, released network chunks, preserved metadata keys/binary values and own package namespaces; actual Firestore calls over HTTP/2 and two VPM dependencies. |
 | [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Checked foreign/stale iterators and retained pair access, reused iterator allocations, correct reverse-end movement and logarithmic indexed position lookup; real gRPC Channelz handlers. |
 | [vgrpc-proto-loader](packages/vgrpc-proto-loader) | @grpc/proto-loader 0.8.1 | Reused private descriptors and codecs, isolated public definitions, safe method-option keys and VPM protobuf/long/camel-case dependencies; real Google SDK runtime calls. |
 | [vlodash.camelcase](packages/vlodash.camelcase) | lodash.camelcase 4.3.0 | Direct ASCII identifier conversion, lazy compatible Unicode handling, single object coercion and corrected zero BigInts/Symbol branding; actual gRPC and Google method aliases. |
@@ -194,12 +199,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,682 tests**: all pass on Node 24, and Bun passes
-2,679 with three documented runtime-specific skips. All 90 runtime packages'
+The root suite contains **2,689 tests**: all pass on Node 24, and Bun passes
+2,686 with three documented runtime-specific skips. All 91 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **92 packages**, including two declaration-only packages.
+catalog covers **93 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -208,6 +213,11 @@ module imports. CI runs the package and integration suites on these same two
 runtimes. Separate archive gates verify npm/Bun installation,
 exported files, module imports and TypeScript 7 consumers. Test fixtures and
 benchmarks are excluded from installable archives.
+
+The [gRPC fixture](scripts/grpc-conformance/README.md) adds 499 active upstream
+cases, 1,504 differential comparisons and twelve local interoperability/Firestore/TLS
+calls. Node passes all active upstream cases; Bun retains two failures matched
+against the original transport in the same invocation. Nine upstream skips remain.
 
 The [ordered-map fixture](scripts/ordered-map-conformance/README.md) adds all 14
 unchanged upstream tests, 54,500 deterministic differential operations/bounds,
@@ -306,6 +316,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vgrpc-js` | 2 | 2 (`vgrpc-proto-loader`, `vordered-map`) |
 | `vordered-map` | 0 | 0 |
 | `vgrpc-proto-loader` | 4 (including CLI-only `yargs`) | 3 (`vlodash.camelcase`, `vlong`, `vprotobufjs`; runtime API only) |
 | `vlodash.camelcase` | 0 | 0 |
@@ -462,6 +473,38 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vgrpc-js
+
+Derived from **@grpc/grpc-js 1.14.7**, retaining the HTTP/2 transport and its
+client/server, retry, resolver, credential, diagnostic and experimental exports.
+Its two dependencies and their dependency trees are VPM packages. Complete
+frames avoid fragment assembly while retaining independent output buffers and
+receive-size checks. Fragmented-message inputs are released immediately after
+emission instead of remaining attached to an idle decoder.
+
+Metadata conversion preserves own `__proto__` keys with an ordinary result
+prototype, classifies incoming binary names case-insensitively, and splits
+combined custom binary array values. Package loading creates own namespace
+objects instead of traversing inherited functions. Original controls reproduce
+each corrected behavior. Normal validation/coercion contracts remain in place.
+
+The [fixture](scripts/grpc-conformance/README.md) runs the original 508-case suite:
+499 active cases pass on Node 24. Bun retains two HTTP/2 failures reproduced by
+the original control; nine original skips remain. Seven focused tests, 1,504 exact
+differential comparisons and actual gax/Firestore local calls pass on both
+runtimes. The public declarations compile without ambient platform types and
+installable archives are checked in CJS and ESM consumers. See the
+[package contract](packages/vgrpc-js/README.md) for verification boundaries and
+[paired measurements](packages/vgrpc-js/bench/results/README.md) for timing evidence.
+
+Complete small/coalesced frames take 69–73% less time on Node and 57–58% less on
+Bun; complete 16 KiB frames take 28% / 8% less. Local unary calls improve 4.8% on
+Node, while Bun unary and streaming differences are inconclusive. Costs remain:
+metadata parsing is 10% / 8% slower (92 / 58 ns per six headers), Node cloning is
+8% slower (28 ns), and Node fragmented decoding records 4.7% more time with a
+3.9% control bias. The benchmark report includes every case and identical-code
+controls; these results do not imply a deployed application speedup.
 
 ## vordered-map
 

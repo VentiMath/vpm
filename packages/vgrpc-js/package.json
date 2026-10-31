@@ -1,0 +1,47 @@
+{
+  "name": "vgrpc-js",
+  "version": "0.1.0",
+  "description": "gRPC HTTP/2 transport with VPM dependencies, faster frame decoding and safe metadata conversion",
+  "type": "commonjs",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js"
+    },
+    "./package.json": "./package.json",
+    "./build/src/*": {
+      "types": "./build/src/*.d.ts",
+      "default": "./build/src/*.js"
+    },
+    "./build/src/*.js": {
+      "types": "./build/src/*.d.ts",
+      "default": "./build/src/*.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.mjs",
+    "index.d.ts",
+    "build/src",
+    "proto",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "vgrpc-proto-loader": "workspace:*",
+    "vordered-map": "workspace:*"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vgrpc-js"
+  }
+}

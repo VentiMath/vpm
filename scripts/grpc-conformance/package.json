@@ -1,0 +1,11 @@
+{
+  "name": "vpm-grpc-conformance",
+  "private": true,
+  "description": "Pinned original gRPC transport and upstream conformance tools",
+  "dependencies": {
+    "@grpc/grpc-js": "1.14.7",
+    "@grpc/proto-loader": "0.8.1",
+    "mocha": "11.7.5",
+    "lodash": "4.17.21"
+  }
+}

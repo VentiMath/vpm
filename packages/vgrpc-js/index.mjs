@@ -1,0 +1,3 @@
+import api from './build/src/index.js';
+export default api;
+export const {credentials, Metadata, logVerbosity, status, connectivityState, propagate, compressionAlgorithms, Client, loadPackageDefinition, makeClientConstructor, makeGenericClientConstructor, Channel, closeClient, waitForClientReady, ChannelCredentials, CallCredentials, loadObject, load, setLogger, setLogVerbosity, Server, ServerCredentials, getClientChannel, StatusBuilder, ListenerBuilder, RequesterBuilder, InterceptingCall, InterceptorConfigurationError, getChannelzServiceDefinition, getChannelzHandlers, addAdminServicesToServer, ServerListenerBuilder, ResponderBuilder, ServerInterceptingCall, ServerMetricRecorder, experimental} = api;

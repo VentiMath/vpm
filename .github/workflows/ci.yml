@@ -32,6 +32,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-loader-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/camelcase-conformance ci --ignore-scripts --no-audit --no-fund
@@ -48,6 +49,9 @@ jobs:
       - run: node scripts/check-body-options.cjs
       - run: node scripts/integration.cjs
       - run: |
+          node scripts/grpc-conformance/compare.cjs
+          node scripts/grpc-conformance/regressions.cjs
+          node scripts/grpc-conformance/callers.cjs --upstream
           node scripts/ordered-map-conformance/run.cjs
           node scripts/ordered-map-conformance/run.cjs --upstream
           node scripts/ordered-map-conformance/differential.cjs
@@ -215,6 +219,7 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-loader-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/camelcase-conformance ci --ignore-scripts --no-audit --no-fund
@@ -242,6 +247,9 @@ jobs:
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
       - run: |
+          bun scripts/grpc-conformance/compare.cjs
+          bun scripts/grpc-conformance/regressions.cjs
+          bun scripts/grpc-conformance/callers.cjs --upstream
           bun scripts/ordered-map-conformance/run.cjs
           bun scripts/ordered-map-conformance/run.cjs --upstream
           bun scripts/ordered-map-conformance/differential.cjs
