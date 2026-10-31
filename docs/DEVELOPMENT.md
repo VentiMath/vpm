@@ -83,6 +83,17 @@ metadata and source hashes recorded when measured. An engine-only metadata chang
 does not alter those samples; `--verify-current` can report a manifest mismatch
 until a fresh measurement is recorded. Do not rewrite old hashes to imply a rerun.
 
+Paired measurements in one process are sensitive to which variant runs first:
+shared closures and call sites see that variant's object shapes first. Two
+identical copies of a package measured 10-24% apart that way, and an
+identical-upstream control cannot detect it because it passes the same module
+twice. The shared harnesses compile a separate measurement loop per variant, and
+`scripts/bench-paired.cjs` sets up VPM first in the `-2.json` process (or with
+`BENCH_FIRST=vpm`), so order effects appear as per-process spread. Keep case
+closures and comparators per variant where practical, and treat differences
+within the per-process spread as unestablished. Reports recorded before this
+change set up upstream first in every process.
+
 A package README identifies the upstream version, explains specific fixes and
 intentional differences, and links to the supporting tests and benchmarks.
 `PROVENANCE.json` records source origins and changes. Keep the central
