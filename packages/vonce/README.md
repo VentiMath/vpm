@@ -84,7 +84,7 @@ The shared gate passes HTTP checks on Node 24.22.1 and Bun 1.4.0. Its real
 Express `app.listen()` checks include successful startup, a late error after
 startup, and EADDRINUSE; state-shaped callback metadata cannot suppress the
 callback. Packed archives pass npm/Bun installation, Node/Bun CJS/ESM consumers,
-and TypeScript 7.0.2 without Node, Undici or DOM ambient declarations.
+and TypeScript 7.1 without Node, Undici or DOM ambient declarations.
 
 ```sh
 node --test packages/vonce/test/*.test.cjs

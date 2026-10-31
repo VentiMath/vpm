@@ -3917,7 +3917,7 @@ failed merge may have already copied earlier properties.
 package, pass on Node 24.22.1 and Bun 1.4.0. The shared gate checks real Express startup success/error paths and a symbol
 getter copied into an application. Proxy-order, symbol-snapshot and overlapping
 typed-array regressions protect the optimized enumeration paths. Isolated npm/Bun archives pass Node/Bun CJS/ESM
-consumers and TypeScript 7.0.2 with no platform ambient declarations.
+consumers and TypeScript 7.1 with no platform ambient declarations.
 
 **Initial performance, 2026-10-27:** nine alternating-order samples compare unmodified
 upstream fixtures. `vonce` construction cases take 8.2–11.5× upstream on Node and
@@ -4445,7 +4445,7 @@ declarations against an actual Undici runtime. Replacing that baseline with VPM
 would compare VPM against itself. Runtime declarations are separately checked
 without any Node, Undici, or DOM ambient types.
 
-**Evidence:** strict type gates run on the workspace's TypeScript 7.0.2 CLI,
+**Evidence:** strict type gates run on the workspace's TypeScript 7.1 CLI (7.1.0-beta),
 including CJS/ESM consumers and projects with and without DOM declarations.
 Isolated archive installations check the real published-file selection and
 rewritten workspace dependency versions. A reproducibility check compares every

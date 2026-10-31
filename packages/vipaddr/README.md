@@ -118,7 +118,7 @@ IPv6 subnet boundaries, compatible-versus-mapped IPv6, family separation and
 malformed proxy addresses. The shared gate runs HTTP checks on Node 24
 and Bun. Archive checks install the package using npm and Bun, exercise both
 runtimes' CommonJS/ESM imports, verify the eight-file archive and compile TypeScript
-7.0.2 consumers without Node, Undici or DOM ambient declarations.
+7.1 consumers without Node, Undici or DOM ambient declarations.
 
 ```sh
 node --test packages/vipaddr/test/*.test.cjs

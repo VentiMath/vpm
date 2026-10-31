@@ -33,7 +33,7 @@ that use those APIs.
 
 Install this package together with `vnode-types`; see the
 [archive installation instructions](../vnode-types/README.md#installation).
-TypeScript **7.0.2 or later** is required. Checks use 7.0.2 in Node-only and
+TypeScript **7.0.2 or later** is required. Checks use the workspace's 7.1 compiler in Node-only and
 mixed DOM/Node projects, with `skipLibCheck: false`.
 
 ```ts

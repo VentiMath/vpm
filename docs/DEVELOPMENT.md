@@ -1,6 +1,9 @@
 # Developing VPM
 
-Use **Node.js 24**, **Bun 1.4.0**, and the workspace's **TypeScript 7.0.2** compiler.
+Use **Node.js 24**, **Bun 1.4.0**, and the workspace's **TypeScript 7.1** compiler.
+TypeScript 7.1.0 is due in November 2026; until it is released the workspace pins
+7.1.0-beta, and moves to 7.1.0 when it ships. 7.0.2 remains the declared minimum
+where packages state one.
 Every runtime package declares `engines.node: ">=24"`; earlier Node versions are
 outside the support contract. Browser compatibility remains package-specific.
 The documentation gate checks the runtime declaration on every package.

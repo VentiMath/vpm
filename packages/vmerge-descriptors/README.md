@@ -75,7 +75,7 @@ The shared gate passes HTTP checks on Node 24.22.1 and Bun 1.4.0 with VPM
 aliased into real Express/Functions Framework callers. Express application
 construction also preserves a nonenumerable symbol getter without invoking it.
 Packed archives pass npm/Bun installation, Node/Bun CJS/ESM consumers and strict
-TypeScript 7.0.2 without Node, Undici or DOM ambient types.
+TypeScript 7.1 without Node, Undici or DOM ambient types.
 
 ```sh
 node --test packages/vmerge-descriptors/test/*.test.cjs

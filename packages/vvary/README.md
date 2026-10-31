@@ -79,7 +79,7 @@ runs HTTP checks on Node 24.22.1 and Bun 1.4.0. Added response cases cover
 arrays, tab-separated fields, case-insensitive duplicates, wildcards and invalid
 fields; existing negotiation and preflight checks exercise Vary behavior too.
 Packed npm/Bun archives pass Node/Bun CJS/ESM consumers and strict TypeScript
-7.0.2 without Node, Undici or DOM ambient types. The response declaration also
+7.1 without Node, Undici or DOM ambient types. The response declaration also
 accepts a real Node ServerResponse in the workspace type test.
 
 ```sh

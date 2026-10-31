@@ -75,7 +75,7 @@ The shared gate aliases Express's signing calls to VPM and verifies real HTTP
 cookies, including tampered and padded signatures, through Express 5.3.0,
 Functions Framework 5.0.2 and Firebase Functions 7.4.0 on Node and Bun. Signature expectations
 also use an unaliased upstream fixture. Packed archives install under npm and
-Bun, pass Node/Bun CJS/ESM checks, and compile with strict TypeScript 7.0.2 without
+Bun, pass Node/Bun CJS/ESM checks, and compile with strict TypeScript 7.1 without
 Node, Undici or DOM ambient types.
 
 ```sh

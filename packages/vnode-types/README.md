@@ -90,7 +90,7 @@ transitive dependency. Loading both upstream and VPM Node globals is unsupported
 - **Node API target: 22.** These are not universal declarations for every Node
   version. VPM runtime packages target Node 24 and Bun; this declaration package
   still describes the Node 22 API surface and is not complete Node 24 API coverage.
-- **TypeScript minimum: 7.0.2.** Strict checks use 7.0.2 in
+- **TypeScript minimum: 7.0.2.** Strict checks use the workspace's 7.1 compiler in
   Node-only and mixed DOM/Node projects, including CJS and ESM archive consumers.
 - **Types only.** No JavaScript API, Node runtime replacement, or application
   throughput improvement is provided.

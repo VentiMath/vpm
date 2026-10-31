@@ -130,7 +130,7 @@ Cookie signing now uses the separate [`vcookie-signature`](../vcookie-signature)
 replacement in the shared gate; it is not a dependency of `vcookie`.
 
 Packed-archive checks install with both npm and Bun and exercise Node/Bun CJS
-and ESM consumers plus strict TypeScript 7.0.2 without Node, Undici or DOM ambient
+and ESM consumers plus strict TypeScript 7.1 without Node, Undici or DOM ambient
 types. Archives contain only the implementation, declarations, license, README,
 package metadata and provenance. Fixtures and benchmarks stay in the repository.
 
