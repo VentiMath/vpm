@@ -50,6 +50,11 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
+    if (name === 'vfast-deep-equal') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json','special.js',...['index','react','es6/index','es6/react'].flatMap(s=>[s+'.js',s+'.mjs',s+'.d.ts'])].sort());
+    }
     if (name === 'vgoogle-gax') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vduplexify','vgoogle-auth-library','vgoogle-logging-utils','vgrpc-js','vgrpc-proto-loader','vobject-hash','vopentelemetry-api','vproto3-json-serializer','vprotobufjs','vretry-request']);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
@@ -281,6 +286,7 @@ const archiveXMLNaming=require('vxml-naming'),archiveUnsafe=require('vis-unsafe'
 if(!archiveXMLNaming.qName('𐀀:part')||!archiveUnsafe.isUnsafe('<script>',archiveUnsafe.HTML))throw new Error('XML helpers CJS archive');
 const archiveAnyNumber=require('vanynum'),archiveStringNumber=require('vstrnum');
 if(archiveAnyNumber('१२')!=='12'||archiveAnyNumber.anynum!==archiveAnyNumber||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers CJS archive');
+for(const sub of ['', '/react', '/es6', '/es6/react', '/index', '/index.js', '/react.js', '/es6/index', '/es6/index.js', '/es6/react.js']){const eq=require('vfast-deep-equal'+sub);if(!eq(Object.create(null),Object.create(null))||eq(Buffer.from([255]),Buffer.from([254])))throw new Error('deep equality CJS '+sub);}
 const archiveGax=require('vgoogle-gax');if(new archiveGax.PathTemplate('items/{name}').render({name:'$&'})!=='items/$&')throw new Error('gax CJS');if(typeof require('vgoogle-gax/fallback').GrpcClient!=='function'||typeof require('vgoogle-gax/gax').CallSettings!=='function'||!require('vgoogle-gax/build/src/protobuf').protobufMinimal.Reader)throw new Error('gax subpaths');
 const archiveOtel=require('vopentelemetry-api');if(archiveOtel.createTraceState('a=1').set('bad','\\n').serialize()!=='a=1')throw new Error('OpenTelemetry CJS');if(typeof require('vopentelemetry-api/experimental').wrapTracer!=='function')throw new Error('OpenTelemetry experimental CJS');
 const archiveGrpc=require('vgrpc-js'),archiveGrpcMetadata=new archiveGrpc.Metadata();archiveGrpcMetadata.set('__proto__','safe');if(archiveGrpcMetadata.getMap().__proto__!=='safe')throw new Error('gRPC CJS archive');
@@ -483,6 +489,7 @@ if(!archiveQName('𐀀:part')||!archiveUnsafe('<script>',archiveHTML))throw new 
 import archiveAnyNumber,{anynum as archiveNamedNumber} from 'vanynum';
 import archiveStringNumber from 'vstrnum';
 if(archiveAnyNumber!==archiveNamedNumber||archiveAnyNumber('१२')!=='12'||archiveStringNumber('−१२',{unicode:true})!==-12)throw new Error('numbers ESM archive');
+import archiveEqual from 'vfast-deep-equal';import archiveEqualReact from 'vfast-deep-equal/react';import archiveEqualES6 from 'vfast-deep-equal/es6';import archiveEqualES6React from 'vfast-deep-equal/es6/react';for(const eq of [archiveEqual,archiveEqualReact,archiveEqualES6,archiveEqualES6React])if(!eq({a:1},{a:1}))throw new Error('deep equality ESM');
 import {PathTemplate as ArchiveGaxPath} from 'vgoogle-gax';import {GrpcClient as ArchiveGaxFallback} from 'vgoogle-gax/fallback';if(new ArchiveGaxPath('items/{name}').render({name:'one'})!=='items/one'||typeof ArchiveGaxFallback!=='function')throw new Error('gax ESM');
 import {createTraceState as archiveOtelState} from 'vopentelemetry-api';import {wrapTracer as archiveOtelWrap} from 'vopentelemetry-api/experimental';if(archiveOtelState('a=1').serialize()!=='a=1'||typeof archiveOtelWrap!=='function')throw new Error('OpenTelemetry ESM');
 import {Metadata as ArchiveGrpcMetadata,credentials as archiveGrpcCredentials,Client as ArchiveGrpcClient} from 'vgrpc-js';const archiveGrpcClient=new ArchiveGrpcClient('localhost:1',archiveGrpcCredentials.createInsecure());archiveGrpcClient.close();if(new ArchiveGrpcMetadata().get('test').length!==0)throw new Error('gRPC ESM archive');
