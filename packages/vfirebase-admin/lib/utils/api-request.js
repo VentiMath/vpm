@@ -27,8 +27,7 @@ const validator = require("./validator");
 const {HttpRequestPlan} = require("./http-request");
 const http2 = require("http2");
 const events_1 = require("events");
-const credential_internal_1 = require("../app/credential-internal");
-const index_1 = require("../utils/index");
+const {captureRequest, authorizeRequest} = require("./authorized-request");
 class DefaultRequestResponse {
     /**
      * Constructs a new `RequestResponse` from the given `LowLevelResponse`.
@@ -552,28 +551,10 @@ class AuthorizedHttpClient extends HttpClient {
         super();
         this.app = app;
     }
-    send(request) {
-        return this.getToken().then((token) => {
-            const requestCopy = Object.assign({}, request);
-            requestCopy.headers = Object.assign({}, request.headers);
-            const authHeader = 'Authorization';
-            requestCopy.headers[authHeader] = `Bearer ${token}`;
-            let quotaProjectId;
-            if (this.app.options.credential instanceof credential_internal_1.ApplicationDefaultCredential) {
-                quotaProjectId = this.app.options.credential.getQuotaProjectId();
-            }
-            quotaProjectId = process.env.GOOGLE_CLOUD_QUOTA_PROJECT || quotaProjectId;
-            if (!requestCopy.headers['x-goog-user-project'] && validator.isNonEmptyString(quotaProjectId)) {
-                requestCopy.headers['x-goog-user-project'] = quotaProjectId;
-            }
-            if (!requestCopy.httpAgent && this.app.options.httpAgent) {
-                requestCopy.httpAgent = this.app.options.httpAgent;
-            }
-            if (!requestCopy.headers['X-Goog-Api-Client']) {
-                requestCopy.headers['X-Goog-Api-Client'] = (0, index_1.getMetricsHeader)();
-            }
-            return super.send(requestCopy);
-        });
+    async send(request) {
+        const captured = captureRequest(request);
+        const token = await this.getToken();
+        return super.send(authorizeRequest(captured, this.app, token, true));
     }
     getToken() {
         return this.app.INTERNAL.getToken()
@@ -586,25 +567,10 @@ class AuthorizedHttp2Client extends Http2Client {
         super();
         this.app = app;
     }
-    send(request) {
-        return this.getToken().then((token) => {
-            const requestCopy = Object.assign({}, request);
-            requestCopy.headers = Object.assign({}, request.headers);
-            const authHeader = 'Authorization';
-            requestCopy.headers[authHeader] = `Bearer ${token}`;
-            let quotaProjectId;
-            if (this.app.options.credential instanceof credential_internal_1.ApplicationDefaultCredential) {
-                quotaProjectId = this.app.options.credential.getQuotaProjectId();
-            }
-            quotaProjectId = process.env.GOOGLE_CLOUD_QUOTA_PROJECT || quotaProjectId;
-            if (!requestCopy.headers['x-goog-user-project'] && validator.isNonEmptyString(quotaProjectId)) {
-                requestCopy.headers['x-goog-user-project'] = quotaProjectId;
-            }
-            if (!requestCopy.headers['X-Goog-Api-Client']) {
-                requestCopy.headers['X-Goog-Api-Client'] = (0, index_1.getMetricsHeader)();
-            }
-            return super.send(requestCopy);
-        });
+    async send(request) {
+        const captured = captureRequest(request);
+        const token = await this.getToken();
+        return super.send(authorizeRequest(captured, this.app, token, false));
     }
     getToken() {
         return this.app.INTERNAL.getToken()

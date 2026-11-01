@@ -159,5 +159,17 @@ native timer overflow. The HTTP-date tests use an explicit non-UTC timezone;
 long timer tests record scheduled segments without actually waiting days. A
 local HTTP server verifies the complete retry path. Date/seconds grammar follows
 [RFC 9110 sections 5.6.7 and 10.2.3](https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after),
-including obsolete date formats and the two-digit-year rule. Response projection,
-authorized-header helpers and HTTP/2 transport remain separate retained code.
+including obsolete date formats and the two-digit-year rule. Response projection and
+HTTP/2 transport remain separate retained code.
+
+
+`authorized-headers.cjs` compares captured request options and header values
+across delayed token acquisition for both HTTP clients. Original controls show
+case-duplicate Authorization overriding the acquired token, case-sensitive quota
+and metrics replacement, lost prototype-named header data and post-call mutation.
+A real HTTP/1 server confirms credential/quota/metrics wire values. The HTTP/2
+header boundary is inspected before transport because upstream's malformed
+`:scheme` prevents the ordinary Node wire request; the separate actual FCM
+caller verifies the corrected VPM HTTP/2 transport. App deletion after token
+acquisition still rejects. These controls concern authorization/options/headers;
+Auth and message operation builders own request bodies.
