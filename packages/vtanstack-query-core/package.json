@@ -1,26 +1,25 @@
 {
   "name": "vtanstack-query-core",
   "version": "0.1.0",
-  "description": "TanStack Query's framework-agnostic core: query and mutation caches, observers, retries and hydration",
+  "description": "Independent query caching and request lifecycles for the APIs VentiMath uses",
   "type": "module",
-  "main": "./build/modern/index.cjs",
-  "module": "./build/modern/index.js",
-  "types": "./build/modern/index.d.ts",
+  "main": "./query-client.js",
+  "module": "./query-client.js",
+  "types": "./query-client.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./build/modern/index.d.ts",
-        "default": "./build/modern/index.js"
-      },
-      "require": {
-        "types": "./build/modern/index.d.cts",
-        "default": "./build/modern/index.cjs"
-      }
+      "types": "./query-client.d.ts",
+      "default": "./query-client.js"
     },
     "./package.json": "./package.json"
   },
   "files": [
-    "build/modern",
+    "query-client.js",
+    "query-client.d.ts",
+    "runtime.js",
+    "cache.js",
+    "observer.js",
+    "mutation.js",
     "README.md",
     "LICENSE",
     "PROVENANCE.json"

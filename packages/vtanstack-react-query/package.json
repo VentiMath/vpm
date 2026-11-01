@@ -1,26 +1,22 @@
 {
   "name": "vtanstack-react-query",
   "version": "0.1.0",
-  "description": "TanStack Query for React on vtanstack-query-core",
+  "description": "Independent React query and mutation hooks on vtanstack-query-core",
   "type": "module",
-  "main": "./build/modern/index.cjs",
-  "module": "./build/modern/index.js",
-  "types": "./build/modern/index.d.ts",
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./application.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./build/modern/index.d.ts",
-        "default": "./build/modern/index.js"
-      },
-      "require": {
-        "types": "./build/modern/index.d.cts",
-        "default": "./build/modern/index.cjs"
-      }
+      "types": "./application.d.ts",
+      "default": "./index.js"
     },
     "./package.json": "./package.json"
   },
   "files": [
-    "build/modern",
+    "index.js",
+    "application.d.ts",
+    "bindings.js",
     "README.md",
     "LICENSE",
     "PROVENANCE.json"
