@@ -15,8 +15,6 @@ const original = require('../../../scripts/emotion-conformance/node_modules/@emo
   await require('../../../scripts/bench-paired.cjs').run({
     root: path.resolve(__dirname, '..'), upstream: original, vpm: hash, cases,
     files: ['index.js', 'package.json', 'PROVENANCE.json', 'bench/compare.cjs',
-      '../../scripts/emotion-conformance/package-lock.json',
-      '../../scripts/emotion-conformance/node_modules/@emotion/hash/dist/emotion-hash.cjs.js',
-      '../../scripts/emotion-conformance/node_modules/@emotion/hash/dist/emotion-hash.cjs.dev.js'],
+      '../../scripts/emotion-conformance/node_modules/@emotion/hash'],
   });
 })().catch(error => { console.error(error); process.exitCode = 1; });
