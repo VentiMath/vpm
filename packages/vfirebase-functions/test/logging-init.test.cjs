@@ -55,8 +55,9 @@ test('a deep log record is bounded rather than overflowing the call stack', t =>
 
 test('a previous initializer completing cannot suppress a newly registered callback', async t => {
   capture(t);
-  const modulePath = require.resolve('../lib/common/onInit.js'); delete require.cache[modulePath];
-  const {onInit, withInit} = require(modulePath);
+  // onInit replaces the registration. Do not evict CommonJS alone: an earlier
+  // ESM import deliberately retains that same module instance.
+  const {onInit, withInit} = require('../lib/common/onInit.js');
   let release, old = 0, current = 0;
   onInit(async () => {old++; await new Promise(resolve => {release = resolve;});});
   const run = withInit(function () {return this.value;});
