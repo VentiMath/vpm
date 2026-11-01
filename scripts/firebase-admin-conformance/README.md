@@ -102,3 +102,15 @@ inputs, prototype writes and linking/unlinking validation. Oversized arrays are
 rejected before copying; custom iterators cannot substitute different UIDs.
 The package tests run these controls on Node 24 and Bun. The 166 unchanged
 upstream user-management tests also run as part of the complete Admin suite.
+
+`token-verification.cjs` signs tokens with the retained public test-fixture key
+and supplies its public key through each SDK's normal key-fetch adapter. Twelve
+valid/error outcomes match, including real RSA verification, tampering, unknown
+keys, expiry, disabled users and revocation. Controls reproduce ID/session subject
+exemptions, malformed legacy-token/audience TypeErrors, nonnumeric authentication
+times and mutation during revocation lookup. Blocking events retain their subject
+exemption. A direct comparison control checks an invalid user-record timestamp;
+normal UserRecord projection still follows its existing date-normalization contract.
+No live token service or credentials are involved; accepting a locally
+signed malformed token is not evidence of signature forgery. The 228 unchanged
+upstream verifier/verification tests run within the complete Admin gate.
