@@ -117,3 +117,22 @@ bun scripts/storage-conformance/save.cjs
 [Focused save measurements](../../packages/vgoogle-cloud-storage/bench/save-results/README.md)
 use the isolated harness and preserve all results. Earlier whole-client and
 Firebase consumer reports are historical after this source change.
+
+## Independent upload stream
+
+`lib/upload-stream.js` now owns `File.createWriteStream()` option snapshots,
+lazy setup, gzip/hash pipelines, cancellation and response-metadata completion.
+The lower multipart/resumable HTTP transport is still retained. Eight focused
+groups preserve normal/empty/gzip/partial/resumed uploads, checksums and deletion
+errors, prove backpressure with a slow sink, and reproduce original frozen-option,
+post-cancellation upload and missing-metadata hang failures.
+
+```sh
+node --test packages/vgoogle-cloud-storage/test/upload-stream.test.cjs
+bun test packages/vgoogle-cloud-storage/test/upload-stream.test.cjs
+```
+
+The existing 25-request HTTP callers, concurrent-save control and 110 original
+signing/checksum/helper tests pass on Node 24 and Bun. [Stream measurements](../../packages/vgoogle-cloud-storage/bench/stream-results/README.md)
+cover construction, pipeline overhead and real local multipart uploads. The earlier
+save report predates this pipeline change; its raw source hashes remain available.

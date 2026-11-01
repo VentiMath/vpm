@@ -26,6 +26,8 @@ function snapshot(value) {
   return result;
 }
 
+exports.snapshot = snapshot;
+
 function writeAttempt(file, data, options) {
   return new Promise((resolve, reject) => {
     let stream;

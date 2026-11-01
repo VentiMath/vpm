@@ -1,7 +1,7 @@
 # vgoogle-cloud-storage
 
 **Implementation status:** endpoint selection, per-client emulator context,
-CRC32C, hash-stream validation, V2/V4 URL signing and File.save orchestration have
+CRC32C, hash-stream validation, V2/V4 URL signing, File.save and createWriteStream orchestration have
 independent VPM implementations. Remaining bucket/file operations, upload/download
 transport and signed POST policies
 retain upstream runtime code with focused changes. Rewriting those
@@ -102,7 +102,7 @@ part of your application contract.
 ## Verified scope
 
 The broader published SDK implementation and public declarations are retained;
-endpoint configuration, CRC32C, hash streams, V2/V4 URL signing and File.save
+endpoint configuration, CRC32C, hash streams, V2/V4 URL signing, File.save and createWriteStream
 orchestration are independently implemented.
 Independent verification focuses on backend object uploads, signed URLs,
 listings, existence checks and deletion, plus local-file uploads and bucket
@@ -112,7 +112,7 @@ Checks on Node 24 and Bun cover:
 
 - 110 retained upstream signer, CRC32C and lazy-import tests, with documented
   fixture adaptations and original-upstream controls.
-- Twenty-eight focused tests, five paired regression probes, ordinary V2/V4 URL parity,
+- Thirty-six focused tests, five paired regression probes, ordinary V2/V4 URL parity,
   and independently verified RSA signatures for corrected canonical requests.
 - CRC32C controls compare 260 lengths, five chunkings, resumed seeds and real
   files against an independent bit-at-a-time oracle. Upstream controls reproduce
@@ -142,27 +142,41 @@ These checks require no cloud credentials and perform no live cloud operations.
 Cloud IAM, production service behavior, browser bundles and unlisted SDK methods
 have not been independently verified. [Fixtures and commands](../../scripts/storage-conformance/README.md).
 
+## Upload stream ownership
+
+`File.createWriteStream()` now captures plain options/metadata and owns lazy MIME
+setup, gzip/checksum pipelines, backpressure and completion. Frozen options are
+accepted without mutation. Destroying a stream during MIME resolution cannot
+start an upload afterwards. Successful completion waits for response metadata;
+transport closure without that metadata rejects with `ERR_STREAM_PREMATURE_CLOSE`
+instead of leaving `finish` pending. Cancellation removes owned listeners.
+Partial/resumed uploads and existing checksum/deletion failure codes remain covered.
+
+Eight focused groups reproduce the original failures and verify normal/empty,
+compressed, partial and resumed uploads, slow-sink backpressure and error identity
+on Node 24 and Bun. The existing 25-request HTTP suite and concurrent-save control
+also pass. Lower multipart/resumable transport and other SDK operations remain
+retained upstream code; this is still a partial independent rewrite.
+
 ## Performance
 
-[Current save measurements](bench/save-results/README.md) separate orchestration
-with an in-memory Writable from a real localhost multipart upload with CRC32C.
-Each implementation runs in its own process with balanced order and identical-
-source controls. Both client runtimes use the same separate Node 24 HTTP server.
-Synthetic cases isolate per-call allocation and stream completion overhead; they
-do not measure network throughput. The upload case includes the entire VPM
-client dependency stack and does not isolate this component's effect.
+[Current upload-stream measurements](bench/stream-results/README.md) separate stream
+construction, in-memory pipeline completion and real localhost multipart uploads
+with CRC32C. Four balanced process pairs and two identical-source controls retain
+all samples. Both runtimes use the same separate Node 24 HTTP server. The local
+HTTP case includes the entire VPM client dependency stack; it does not isolate
+this component or establish cloud latency or production throughput.
 
-On this recording, real 64 KiB uploads use 44% less paired time on Node and 61%
-less on Bun than upstream. Synthetic 64 KiB save orchestration costs about
-5.60 µs versus 0.75 µs on Node, and 4.02 µs versus 0.77 µs on Bun: upstream does
-not copy the payload. Small-buffer overhead also rises (1.83 versus 0.82 µs on
-Node, 0.85 versus 0.73 µs on Bun); callback handling is slower on Node and faster
-on Bun. These costs are retained in the report alongside the upload results.
+Node's 64 KiB local upload uses 43% less paired time. Bun's observed 57%
+reduction is inconclusive against its noisy identical-source controls. Construction
+and immediate destruction are slower: 4.69 versus 1.87 µs on Node and 1.42 versus
+0.81 µs on Bun, including option snapshots and lifecycle ownership. Node's
+construction result is strongly order-sensitive, and synthetic pipeline results
+are inconclusive. These costs and all raw samples are retained.
 
-[Earlier client measurements](bench/results/README.md) predate this save rewrite.
-Their source hashes and observed regressions remain as historical evidence;
-they are not a fresh measurement of the current SDK. None of these local results
-establishes cloud request latency or production throughput.
+[Previous save measurements](bench/save-results/README.md) and
+[earlier client measurements](bench/results/README.md) predate the new upload
+pipeline. Their raw samples and source hashes remain historical evidence.
 
 ## Provenance
 

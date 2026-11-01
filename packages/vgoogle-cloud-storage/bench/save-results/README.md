@@ -1,5 +1,8 @@
 # vgoogle-cloud-storage measurements
 
+> Historical: this recording predates the independent createWriteStream pipeline.
+> See [current stream measurements](../stream-results/README.md).
+
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
 balanced upstream-first / VPM-first order; two further pairs run identical

@@ -1,0 +1,1852 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-01T23:38:22.033Z",
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/storage-conformance/node_modules/@google-cloud/storage/build/cjs/src": "1ad8807edfcfa9901bc8e9a776c578e97c74ec960626db793dcb2866d67c80bd",
+    "../../scripts/storage-conformance/node_modules/@google-cloud/storage/package.json": "a00e8f2a8070ce71de7b8cde6d6f8766e0b2fb182ae3e6b14f4eca341c69e004",
+    "../../scripts/storage-conformance/package-lock.json": "b3b0b3f20b8c2046eb523fc31c4356430120234b6ae2e5a7d2df01551ab9b998",
+    "../vagent-base/helpers.js": "4298ab93d9c651aed7ff5994dae7d1dd81054d0e434bcb411247854c794445ef",
+    "../vagent-base/index.js": "731eaba1027bff984d63a3ea2b968ffecfad1f151a8ae94c4644156df68090ce",
+    "../vagent-base/package.json": "d24bbcff0ccf2e339ce413f777ba15979d15bf97d9b99a18a7a6d8f457c85ea3",
+    "../vanynum/index.js": "9927abaa5359998dfef4b0b462d57e9ae0ceeed40de014809c1d1d7c44573fd6",
+    "../vanynum/lib/data.js": "fd215fc6641fb6cd1ab29381ee4d6ebac14a6e5163c28ea8102244f932f739a1",
+    "../vanynum/package.json": "24c1f3dc109849b7d47b8ee3c90e25bff2cceff1166ff07f1946f90f8897e3df",
+    "../vasync-retry/index.js": "1213a1802f8ec54d7e9518faa391716f34e47ff0a295f8dbea41a8e235893e5a",
+    "../vasync-retry/package.json": "2e4a9f1166a966ff4c1bbfb101f415a7229f57aa14fb8937ae806ec5f6568ba1",
+    "../vdebug/browser.js": "3c1b2627c53e30f2d16d716af8876748a23711e6e46a9adfe4f9b40607aea660",
+    "../vdebug/common.js": "254bc0c2c3ba2be1390be1868cd673b2234fb9a9d13d8a0111057adf267fcd36",
+    "../vdebug/index.js": "1fc8d6bb80c52520bc38a267f957eb75311de97ae1aaba77ef02626b1ea05aea",
+    "../vdebug/node.js": "f81361333e685333b23a215e32f42cd6b04d9e0f782ce69b9f2bf4eabc51d49d",
+    "../vdebug/package.json": "9a9b4874092613f3ae4e06ceb766d4fdf20211e1577b338d229fde8bf3c985eb",
+    "../vduplexify/index.js": "6a7624d47e7c3ca79014eac986ba4c2ea98cd72ff8e4cd05e4a00d8c957d878e",
+    "../vduplexify/package.json": "7ea6fd85506d028a6bb3289db4ec68e198400379bf0ef123e5a7b9f59c1a33c8",
+    "../vextend/index.js": "72abf452a13791fb49af359a5f849c3a65f25c87c986e62df6c91079f5411c69",
+    "../vextend/package.json": "cedd1a3af250f77ca86b624cfa0e19da40acd4708323cce251198063670b6287",
+    "../vfast-xml-builder/index.js": "07a30f3222804cfa7cfbe83332b5b690ac324d53860d4b235ae1759856a522fb",
+    "../vfast-xml-builder/index.mjs": "4b72fc9863e0c4048dab3855567ff97c53155fdc39f95dacf8098a5773405b43",
+    "../vfast-xml-builder/lib/fxb.js": "aa7c7e4507c1b39f4501474fac1a52b365dd60152faa3bb8f7fc9b430c8c7171",
+    "../vfast-xml-builder/lib/ignoreAttributes.js": "5221e771e32bcaebf6e4bd4f545f0648854b40579d91278668616289a9b5b270",
+    "../vfast-xml-builder/lib/options.js": "453efccac02b5dc6ee091902c9691cbd4c958f6acbbf0bbbaf7b7c63227b4315",
+    "../vfast-xml-builder/lib/orderedJs2Xml.js": "11717b684f3fd33f100fa3431783f888d5916d475553face24846113fb1c7fef",
+    "../vfast-xml-builder/lib/util.js": "3dd06292c277f8067388aa14b7a3630211ee6698393c76172b99a2d32b08eed2",
+    "../vfast-xml-builder/package.json": "3734cdbba27184c048a1782045aff134392d6c102dd27e46fec3f700ec7d74ff",
+    "../vfast-xml-parser/index.js": "6b51b8dce04649a5092173248da9de107847609f2982fc10dfdc2164a31b4ac0",
+    "../vfast-xml-parser/index.mjs": "f4a2fd8c9bafd19d4327db06f11f0dd6237938c6fc24cb1aab82b03379c1bc33",
+    "../vfast-xml-parser/lib/ignoreAttributes.js": "dfab3b95a21f61cf98f3d765a8708220f8a090a3218e9b260e4889ede4d4227f",
+    "../vfast-xml-parser/lib/util.js": "e8c861337a21e2cd1f59aa863a6f42db364520a468ba720f3bb873697cf33ece",
+    "../vfast-xml-parser/lib/validator.js": "d9f9fb29c600c73ba1320e95da6e108cf87d0e2b42a9e0046ff660e6df1dfc8d",
+    "../vfast-xml-parser/lib/xmlparser/DocTypeReader.js": "9c3fc81887fbd1a792a6497ae13c05f9e8a6411e84bcb932ec13031d85f41bc2",
+    "../vfast-xml-parser/lib/xmlparser/OptionsBuilder.js": "5265f9a9626486c06e2ca3a1491c2269395795dcba37a7abcd44ff57ca0b47ec",
+    "../vfast-xml-parser/lib/xmlparser/OrderedObjParser.js": "d6eba8909e4c24dedc91030bc2e70734b11fc77f0d5bbdff749ba55894730b85",
+    "../vfast-xml-parser/lib/xmlparser/XMLParser.js": "7a1a5a84dfe77b92b52a4e6721d3b7d2c4833bf529be5c837ab1d364f4b95c78",
+    "../vfast-xml-parser/lib/xmlparser/node2json.js": "776a41e109de70d938b06189ba5269db8d619b9a9c099beac4b7615cbeb48cfe",
+    "../vfast-xml-parser/lib/xmlparser/xmlNode.js": "2008a9a63aec712daffc6bfb582e15a6ad7a4679051cdd95b49a4df46cc448c4",
+    "../vfast-xml-parser/package.json": "26804b91ca380ce34df38fc7eb1f560982acaf29ff33226e10d3bff00da7dcbe",
+    "../vgaxios/index.js": "3c1b09c5a0dbbd3230dcd3c7b61e4eb026d9ebe02e62db4496f73e4fd3017506",
+    "../vgaxios/lib/common.js": "534404bd1968947a13857e48992aa1d3395e284f31742b73981f96a76b876f8a",
+    "../vgaxios/lib/gaxios.js": "f2b38a6e8133b4840e0edacaaa865a625d88bd78b7dfe48a5765ec143f4b22bb",
+    "../vgaxios/lib/interceptor.js": "8f651e3a4b8afe8d00023943f2cdcde39f59afa5415dd095e8e2efe78fdd8f58",
+    "../vgaxios/lib/retry.js": "6d65a39061ee73cb844209d3de9778410c4de9652c7d7a40176061aeb7ce16ca",
+    "../vgaxios/lib/transport.js": "ac88420c282130379ddbae13ac51b8bc0b07d6d96ddf3c235681974b0e88f33b",
+    "../vgaxios/lib/util.js": "4929969d5d3f55dcd4adbe821a9300b363049e976e8137b583886f9e335793e7",
+    "../vgaxios/package.json": "5f4e97a2b1e68e4cada1d6841f2d798d1d7b4689cb58776c7a5e7776724c7fab",
+    "../vgcp-metadata/index.js": "bb0c7bac33fe130f0c9846968fd8495ce0c8197f5830c7d2299200ec8e946c45",
+    "../vgcp-metadata/package.json": "e2324ad23034299d1a0b6225f7aeadd8e7356d3576861a0cc6fc47a771b404e3",
+    "../vgcp-metadata/residency.js": "b9c19aa8a56461b5b4f7f10afc2abfc83162dd2eb2e71f301e68a0cfa1d5eefb",
+    "../vgoogle-auth-library/index.js": "b0b5b796b4ec219b176671551a5b281867d2087016f46bcc5ed0605e2725f5a6",
+    "../vgoogle-auth-library/lib/auth/authclient.js": "7fc9a6968ca95d983beffa23916dafd909afe7b990eda000c02bb9172d015b2c",
+    "../vgoogle-auth-library/lib/auth/awsclient.js": "58c9274614b12faa958013311ff5dbc04abd7bf60f82b299acdca6b88302ab6e",
+    "../vgoogle-auth-library/lib/auth/awsrequestsigner.js": "2627d188ae8ab36b0315e123c8c705b666e810c5057f5ae9e9b4505adc3d5f04",
+    "../vgoogle-auth-library/lib/auth/baseexternalclient.js": "e8bc7952d46e5e7618f1b8f8892fd84965c794e1d6952d45a06ff50f6f08813e",
+    "../vgoogle-auth-library/lib/auth/certificatesubjecttokensupplier.js": "63d55c894f2a76f489c535742c87516e4a99f2010b8f52505906dbfb07c07540",
+    "../vgoogle-auth-library/lib/auth/computeclient.js": "4b971a5116c9eec05d79e8a6890d9cfd558f42fd7031e506ed0cd8b694b06d2c",
+    "../vgoogle-auth-library/lib/auth/credentials.js": "0856a805dbf33b8b1a40c49dd3add9cf801bc96e53c04fcab72c049537dd02d2",
+    "../vgoogle-auth-library/lib/auth/defaultawssecuritycredentialssupplier.js": "70dd0026fb0cbba1a31cc75e8cc09a64e6c60a746c4b91cef6f5fac2542aa23a",
+    "../vgoogle-auth-library/lib/auth/downscopedclient.js": "b21940c9730bf747691c598c2ae1dd50a5dfd60e87fe9fdcc521560d93ba31c3",
+    "../vgoogle-auth-library/lib/auth/envDetect.js": "56575b968f1d7df0c7d0f3b1da4edc11c6e2a0f474de3af3bb3054a29ae0c7ae",
+    "../vgoogle-auth-library/lib/auth/executable-response.js": "c6f43416c982b1099a2e6d77f98639c4ecaa1e2ffdf39ae9b3e62eb5dd14f21f",
+    "../vgoogle-auth-library/lib/auth/externalAccountAuthorizedUserClient.js": "9f2a199dcb3f78f47c9384e474f802e48feef58330e2ffad35dbe471eb4a535c",
+    "../vgoogle-auth-library/lib/auth/externalclient.js": "ea5afc6448c7eefad82c74acc33053e3aabf03e33da9c362882896a5a12cd598",
+    "../vgoogle-auth-library/lib/auth/filesubjecttokensupplier.js": "24af8ac1c5834841e5fc2f42ca245534ddcda4a8495d4bab211e7e1e94dff438",
+    "../vgoogle-auth-library/lib/auth/gdchclient.js": "121341b362cc814db5b427c1c3ecfe39a4d78b17f8ebda4df325cf5b3c1f212f",
+    "../vgoogle-auth-library/lib/auth/googleauth.js": "170acc90c7098c604eff6a150e822f8022a75fe3f5aa058de95ce8b562c95cb4",
+    "../vgoogle-auth-library/lib/auth/iam.js": "371b7b2e9ebbc8f53b93fb6b76cc3b2e522e40268eb3b082bc129ac86e49a850",
+    "../vgoogle-auth-library/lib/auth/identitypoolclient.js": "2b0ece821c278964636a5f88732a9583c4cc444ffc5b20be766be85adf022e52",
+    "../vgoogle-auth-library/lib/auth/idtokenclient.js": "dabe5c9b91e7cbdb7621758e2994e5188680915c86fc23d65a3f4d9a2d3e8481",
+    "../vgoogle-auth-library/lib/auth/impersonated.js": "f586dca5a88a6cb95d2ecc034a8e8540b963a62c7111c708d7eee384bd77728b",
+    "../vgoogle-auth-library/lib/auth/jwtaccess.js": "625a67d16b9c35b8785478135f5bcc2f1b6d03d11a867e22fda8956dce8539d8",
+    "../vgoogle-auth-library/lib/auth/jwtclient.js": "93450a7e7b18c2cd2af319959719e9f9cfbe131496d375d05ff82de2dd4d6f83",
+    "../vgoogle-auth-library/lib/auth/loginticket.js": "bed7b4d7d988f1853cbafff1e161308ebe6853b18d4bc82ca90ffee2d655c659",
+    "../vgoogle-auth-library/lib/auth/oauth2client.js": "52104f510872c4a885ef6da93535544d7d4c1a1d61a1e59003d628640dac3dac",
+    "../vgoogle-auth-library/lib/auth/oauth2common.js": "226aee74f5ead371efd2bd2a9df34e3623e24b19a9a4ec570c15d826e75700e9",
+    "../vgoogle-auth-library/lib/auth/passthrough.js": "7abe1e40fb20b7c541b9f6f95e69dac839a1cebd44eded7912599e9a8eeb4ea1",
+    "../vgoogle-auth-library/lib/auth/pluggable-auth-client.js": "5cdde432c9cb6f79a0a0e30e0c66b3429ceae0bb9ccc27b69c1b651d7aec4d62",
+    "../vgoogle-auth-library/lib/auth/pluggable-auth-handler.js": "93203ae9e827ce9920c9859c879ea223fb20d3d84c8a00f56e733971573c025b",
+    "../vgoogle-auth-library/lib/auth/refreshclient.js": "cb132c4f70ffb22b74144d03c0fe7e6283e3735722ab7b2aee292ee33c700729",
+    "../vgoogle-auth-library/lib/auth/stscredentials.js": "a949b6922fecf9359de735f15426386b2857b55c8adc3cf617e6e6c5052bd0df",
+    "../vgoogle-auth-library/lib/auth/urlsubjecttokensupplier.js": "81a3b016ea65eb4c929f882596d3016c208c114184ab41e0626bec61010d7705",
+    "../vgoogle-auth-library/lib/crypto/browser/crypto.js": "83c268d1d160b4cb7fac8c6f9fe494f1d721c514e41e75f753464c8083ca19cf",
+    "../vgoogle-auth-library/lib/crypto/crypto.js": "8758e94d44d98ec6fa4a9152e39a39eb71093e8d8cab984d0e39e51d916a91e2",
+    "../vgoogle-auth-library/lib/crypto/node/crypto.js": "fa9f95a0bc44eb4950c10a70f8a10c7f7baf8a6bf058fd5226dd5dd17f42dac9",
+    "../vgoogle-auth-library/lib/crypto/shared.js": "78daa87942ec154222f7e56bb39d8c38e7f06ea3640006e84567573d9874fab1",
+    "../vgoogle-auth-library/lib/gtoken/errorWithCode.js": "00942e18451e05ea3e483db65688f91cbc358b596412d73ba317b3c561b2ef02",
+    "../vgoogle-auth-library/lib/gtoken/getCredentials.js": "7aa1214fad3b285150270c316d76c293d6f98200583214da789ec2be4d7b80da",
+    "../vgoogle-auth-library/lib/gtoken/getToken.js": "c912d1b71af8d3d04804075c7a8856db3a6cb98a360b67c636d6ec780e3aedd1",
+    "../vgoogle-auth-library/lib/gtoken/googleToken.js": "557201b69a0918d6709c7b2dbb2d66afd076d3b884e1718482ac2767253bd4af",
+    "../vgoogle-auth-library/lib/gtoken/jwsSign.js": "38e3919b868fd5180b104a7c34db25f2fffac7af34a1b32c398bc2b2e53eb951",
+    "../vgoogle-auth-library/lib/gtoken/revokeToken.js": "184e397021eaa6a563343c9996644311305193a4f4194fd86c8090beaeeb5a4d",
+    "../vgoogle-auth-library/lib/gtoken/tokenHandler.js": "a7a1af26a1d5a9ceac2a1855deafeed800508ed6a29c7bd45862d03e8f7210d3",
+    "../vgoogle-auth-library/lib/gtoken/tokenOptions.js": "46940bac62d876e35e1f6b4fba177d71566ecea20ea4dd29ca2d156849b67fed",
+    "../vgoogle-auth-library/lib/index.js": "1d8fe9d96d4c616aa81510114c9724a02dc1a24393423466009673effa75c714",
+    "../vgoogle-auth-library/lib/shared.cjs": "3145bb35f78aa9bbc72f39e304138303af798ed650f20421b56a558b65f0269d",
+    "../vgoogle-auth-library/lib/signing-key.js": "d95c30b123c3d681cc12cbd21c5fc6c35ecd23b2efeb1c1934762a21177061ec",
+    "../vgoogle-auth-library/lib/util.js": "41da637132bb426ba43c7a79bb6df5585fcd5602c84b00a692256fd33eb39be7",
+    "../vgoogle-auth-library/lib/verify-token.js": "acd77f4d0bab1750dee6d87c80b7d046713f5fd5cb991bb44b37a9dfefc90aab",
+    "../vgoogle-auth-library/package.json": "264dd6ad1c029f0c6fc168eb9f83e8043162137b62da5e8bb3a371e423c2ef0b",
+    "../vgoogle-logging-utils/index.js": "1202c23cfd16da181c688f8495c64ce2147b1d7c6027c83d70db3be61a5ef528",
+    "../vgoogle-logging-utils/package.json": "a57957244287a402b8ef97a1bdd2c3e5bf31c911519d0073bed716bd01231edb",
+    "../vhtml-entities/index.js": "09df5a9b15ebc8109ba1f13c25c4df2347b86668b549e135ba03caa9df5415e7",
+    "../vhtml-entities/lib/data.js": "9e76affa97e27a2c41ec2ba903a469b2d454bdf014511033ded01104c88df9df",
+    "../vhtml-entities/package.json": "fce79c313a6f6464be4a829a824284e750edcdf943f45221c1ed29e73d3d84cd",
+    "../vhttp-proxy-agent/index.js": "20c860dcdcdc048398b5c0f86703c83e753aba666410ae7f756a1212520e7212",
+    "../vhttp-proxy-agent/lib/options.js": "6b05d157a22148e4ba8c7ee096553c4de8a9d46b67ad7f738594da485f1cd0d1",
+    "../vhttp-proxy-agent/lib/request.js": "ecb4d983c998c164d05cdc676b919a6577c23dfa8fc1f31377815b3a541d8b41",
+    "../vhttp-proxy-agent/package.json": "3827c40e79d3caeab63d8eebed837911cc7b786c308ed9e926d635337df12dc3",
+    "../vhttps-proxy-agent/index.js": "44c432e83314f5917486cc7b4e4fc79b1e9a07bed86cbdd70a73dfb48766042f",
+    "../vhttps-proxy-agent/lib/options.js": "fd609604affb6a9f23db34ccfac13ced2d4f42eedaeb8dbe06f149dd2c7a4446",
+    "../vhttps-proxy-agent/lib/response.js": "55fe3144b1ac3f923e84da22db1bc9a3f0c6f169f3831d58516c688c9378f31f",
+    "../vhttps-proxy-agent/package.json": "e22440d108669dd9a06f7f1fbf90c3aed9c4f783ea46884047856f2adc975aae",
+    "../viconv-lite/encodings/dbcs-codec.js": "c048a369a58d91839f8829f74ddf1a87bb48da4289b88b314efbe68dffa67a55",
+    "../viconv-lite/encodings/dbcs-data.js": "17f52a22ed26a2fe1cfab8164ad07152d60e6e38087e492e85ee4aec249f1f2c",
+    "../viconv-lite/encodings/index.js": "a96a42738187fbb6eed876c843c8fd88c6d88729902159a983025d7341e50abd",
+    "../viconv-lite/encodings/internal.js": "1fe6027248d0eda949860aa8b6d05f66b2ab65beaffed79fc62530396eb3752e",
+    "../viconv-lite/encodings/sbcs-codec.js": "59b9330cd3dff677a738f0635b17db9a33d144e3b80ace3212c112a69e4ec5d4",
+    "../viconv-lite/encodings/sbcs-data-generated.js": "2cf44b3f70c61c9cdd59fda7ec085bc3180809638f208c7239688ccb90a48866",
+    "../viconv-lite/encodings/sbcs-data.js": "1e01fec80d139b957684eba698bb64a0a03fb58d9fa93514d9e810034c76213a",
+    "../viconv-lite/encodings/utf16.js": "c6ce809eacaa2d740be9021032050b2fadd2d270d477512122d01cd74913e9da",
+    "../viconv-lite/encodings/utf32.js": "2aa121fefead952f0cb8bae51f995dcc436dfa735f024c7142ca9ec3002157af",
+    "../viconv-lite/encodings/utf7.js": "08ac17a4da47ba9d1ec8e60af3f05652f3549ce884e3266bfb26747e087a171a",
+    "../viconv-lite/index.js": "1bf0bfdaabf3fc40eb38b85e2c848c592907b223f3d64e969526124401be7daf",
+    "../viconv-lite/lib/bom-handling.js": "e4019126f7695139538bfdeb9f0c933948ddde1d91b2989fbef46bad65aed0d4",
+    "../viconv-lite/lib/helpers/merge-exports.js": "d35d1b580fd9c56028a5268c31a304bfa1bf21c6c3918586d6316c7726f1cb18",
+    "../viconv-lite/lib/index.js": "7d5413318192aad9428d5d477be8bb31e73929615eaf57b7c05f634823ce2441",
+    "../viconv-lite/lib/options.js": "dc310ff0a2ea6ab0385d2940c68ba3ea0c52d46769c637bcfa8a30ff90aa0ef9",
+    "../viconv-lite/lib/streams.js": "cbef50992149c8c2c5eae188df6d0a9da9bdf8df54cf95b3703d3a93cb727473",
+    "../viconv-lite/package.json": "04960b94048b74b06ebe6d17439aa09db78128f6f4875a2acbf41449320c8e15",
+    "../vis-unsafe/contexts/html.js": "ed378c52e574ef4b1bfe78b9daaba1a59468dad31a3421dd97f828362f94a3c8",
+    "../vis-unsafe/contexts/log.js": "69e1137bfb75241801e9cfa9a47cd4e579805bc5a55f5adcec44cd989659a1b5",
+    "../vis-unsafe/contexts/nosql.js": "f8b9b9cf6bb95455a2f7ab21660c23ee1bab21853deb154df2673c406387fcd4",
+    "../vis-unsafe/contexts/redos.js": "dd2465d1049106405f9158c16cebcb25379d72052a7f50fe00de1c7018796ca8",
+    "../vis-unsafe/contexts/shell.js": "3b2b51be6fb562196fe05c9c4bf2482b285e31af62c4c669dc393d19bf7b1136",
+    "../vis-unsafe/contexts/sql-strict.js": "249d57f14e38491f29683bf31a853eebee42df9c53f5f66bc7779c6aa07bea10",
+    "../vis-unsafe/contexts/sql.js": "adda44411f75371d1f3b87ece4360e460461f2b1149d45567c4a3ae5d43706b4",
+    "../vis-unsafe/contexts/svg.js": "4bcec04170b7b3344e2c0956c2a3fe445f69b14e8d751cf3be7eca340f478390",
+    "../vis-unsafe/contexts/xml.js": "c2da8606630d63f3bf57dcbb460fd872c4ee29ceb5189f137a2d1befc8c0de9a",
+    "../vis-unsafe/index.js": "7674ce1c8381b3aaa8d4f75e549120ec0277a2e6236b4b7051e0be627b067cde",
+    "../vis-unsafe/index.mjs": "22e3fe6e464bd43c7bcb9852fbf6b99a3c59e724c9bdbb07a65921d4d49dab48",
+    "../vis-unsafe/package.json": "420b4f0affe36a5d8388bdae609a8f37dde0823b957c61d0e403fd9f01df417b",
+    "../vjson-bigint/index.js": "560474c1f6f4393855ffb5ddd280a3300a7749aaed33055ebae216e3324acfbf",
+    "../vjson-bigint/package.json": "090086a7f60cc4fdb16c510312f295fb91c53ff44899cd1a082bcef2ccc345f1",
+    "../vjwa/index.js": "0a5e022a0b8d0cbd23e0b1498298a5343686108b0c37ec231ceee046ee29ec06",
+    "../vjwa/package.json": "8ae943c8162284eedf48e0a3ffd6d34b9df678e85ed3a371f94cfb401e12a38a",
+    "../vjws/index.js": "e0af233255cd436ad872535635cb55767f0773e812759f0f8813edd6ab028e33",
+    "../vjws/lib/core.js": "08a0e6b4bd35ef7d88b436b5d4e8a05ed622dc11879f59cda7603820152f302d",
+    "../vjws/lib/streams.js": "72f00d83136ff0d4a7158ad7a550a017d2bcd11a4ac2304f050d767d07481d44",
+    "../vjws/package.json": "5d8c9ba8af41fb8e4617103d299cc65da8e5259feaacd46a592298d7472ed72f",
+    "../vmime/bin/vmime.cjs": "61ae8eb57a483f98f06ee18d2e79b0a40dc05896162454f4a3b232bb03a69412",
+    "../vmime/index.js": "1c142beba3fa232c0eef9f586ae74c2b84085d31f5eb0025aa3ebbb50fc8c0df",
+    "../vmime/index.mjs": "dbaf83d238e0660dd4513b997cfc61b353a5b6d1b4f64e4fa8c5836aa70bea8b",
+    "../vmime/lib/Mime.js": "a824f84a63363cb239de200e7d2ef50dfda67b2d2311d56e0d344c535d8f1750",
+    "../vmime/lite.js": "d3b53fa567be18d8d238ae1be1c8271cdf3a1a878a7fbad612582630e04ecb28",
+    "../vmime/lite.mjs": "c6e81eb3bfafa71c1212c8f7c63eef8eb0ae0eb2f560744c011aaceca80b9653",
+    "../vmime/package.json": "ac912a3e38cec92c859955804566a99c252f3e403de9fe3e34cfb5a7de2d1b75",
+    "../vmime/types/other.js": "2b21af309809541a9bbde86ab8bd23d74331596dc675909e5d1529186eb81f61",
+    "../vmime/types/other.mjs": "c217fe0d086f91c6d6f71177ffa3c123277a0c432f4108467942c36f6b6e8be7",
+    "../vmime/types/standard.js": "b88f6a1a2c7708dd4d57af371f0afe48f17fd000cfaad726f6b86ea53393df05",
+    "../vmime/types/standard.mjs": "d6db19c46962acaf87cfb8272d60ebd0834a6f8e6ae82ed1e3d2b64b655d4615",
+    "../vms/index.js": "d9588344a02afff2204b10c91da7bf084a31eb7afbd97b2607416db73d3f0d65",
+    "../vms/package.json": "3602aa940ddaafad5e6db551950cb8ff50b9b3cfe376e6dd1a7995f218f3cf2a",
+    "../vnodable-entities/index.js": "518104a1abc8f9e0c6087f31ee2611d41f0023da06e9eb079a4461fc381162c5",
+    "../vnodable-entities/index.mjs": "d6b81fc74a49f0bc025e0936281d02092d20c45367a77db81d603e487a506491",
+    "../vnodable-entities/lib/all-entities.mjs": "816704ea199d496368d92b36540942f96c068756d1682a5c9ba8661d463f3271",
+    "../vnodable-entities/lib/decoder.js": "ec5df14b41e6cb6063405a7cba6714c72340b6e44ea86b68eeb00fab162b9119",
+    "../vnodable-entities/lib/encoder.js": "6bf916bd3b20f3299682131bcc40076a4eec2ca4942006f5e2ef7ec3d7ca317d",
+    "../vnodable-entities/lib/options.js": "57b88360507a68bdad4e600f8e98faf7015b3891d488ac96a7949ce0865983a7",
+    "../vnodable-entities/lib/tables.js": "bdadee3240b7875ec4b63af932c752fd28124322224daf72efa3a384944c48a0",
+    "../vnodable-entities/lib/tables.mjs": "4b88c32a9abe340460ba4d636aae60a0c974fbf987bc0a49ae273c8e0b4e0175",
+    "../vnodable-entities/package.json": "67e9e9058a0821a86794407877c8ea38e5ee842b6442982511e680ef54c33a53",
+    "../vnode-fetch/index.js": "98939365a1ffde081e3c8e1e3861f4734fdd22e97a9ed5a41b93ddd8ad0bacf0",
+    "../vnode-fetch/package.json": "bcd99e8011a81017296fa570fb9d487ec4a36440bfa45b4f3d7cf65e670a930c",
+    "../vp-limit/index.js": "85c8f72aa93fd71ab84f19730b3170a41300a2451e9810abd374ba2508401358",
+    "../vp-limit/package.json": "003e7b6697d566d299c918cb97b123e91115381c0b9994b452323516ad935c19",
+    "../vpaginator/index.js": "a80c5c359f070828f42d1b4c56995fb44dc82b9f73ceadcda46f21de404dcaa0",
+    "../vpaginator/package.json": "a589c3760d148516cf6ee37e7757a0b06b0b519b0c3f5d5bb12dcdad11fe7dfe",
+    "../vpaginator/resource-stream.js": "1e271df7f539d71b84794109c7b0ab2b99fe434b28d9e8ddd6926900fea1141b",
+    "../vpath-expression-matcher/index.js": "f4d27ce7df63b6b056c564125a8d43db542accdb566878f8c72b24c7777ec45c",
+    "../vpath-expression-matcher/index.mjs": "3e53934b8b8488459fc2f1cad159e53efc737ca9ffeb8bd0c21fcbe7c7e9b8f8",
+    "../vpath-expression-matcher/lib/expression.js": "7bbbd688b8fdf7b44272e9d4b88edb44058882e9c53648dca8ce260f73482317",
+    "../vpath-expression-matcher/lib/matcher.js": "325d04e0715f0db83461a80ff1b7d82e6a3dff9875a600cb1074cd570dc457f7",
+    "../vpath-expression-matcher/lib/set.js": "210e9af3f01a0a6d81ac7c1e84bb1de852a65005323e8c6692398262f412402a",
+    "../vpath-expression-matcher/package.json": "15d589cb7381ff35fdb0e08996c3a36c12dc240efc58223e952b34057f85a4f8",
+    "../vprojectify/index.js": "ed3e28fba837ecb7d238a6d2a881b2d4d0495105b34fa0b6d54a77f831dec437",
+    "../vprojectify/package.json": "4228452af9bd589314731ed6da705e17a6ba9d5e1520fd50df53653315be4ec5",
+    "../vpromisify/index.js": "0db8f8ffbd74d048e515d311975779bd9f3ecc533f31b95db98f235df2cc5fd7",
+    "../vpromisify/package.json": "251a87c78bb94326546e48f2ab8edf38bd2e8f60dcfaf0375019a89ab182e763",
+    "../vretry-request/index.js": "21500d1286f4c89fdfaa67e25eeb3b36862d5898c0166ad4c700d04f8b1c60c3",
+    "../vretry-request/package.json": "6d93add04a26d664715a0ffab0c5ce6547abecbeb37ff619ac0ec9bb37ee6e48",
+    "../vretry/index.js": "d39943c0a0fa75de27561540910382a4610d7406036d5f533e8561fb109b7120",
+    "../vretry/package.json": "72bc8a09d2e43957cba29a898c826c1ffb8b9cdd21ca5abd13dce62ff956a6ec",
+    "../vretry/retry-operation.js": "bf388947c464add8e84714880bc271cf3041ff8b6c5a7d6e4f1a4dbd9768bcbe",
+    "../vstream-events/index.js": "fed2e7068ca3ae9fd62754f7874234e5db2623652436eb11f83548c562d70e14",
+    "../vstream-events/package.json": "0218a8e4e11d9e0e9ab70ff91c418580b265e36c629df722ebf1a61f74287e09",
+    "../vstrnum/index.js": "3ea0e06b3bb14b24c9146aedf520a495c9475d7bae0b74054665a9d60ff2bf2c",
+    "../vstrnum/package.json": "2ae23b0c9cbae8aff705170d2c299f023b87b8fb1b4399d28300f0de31caab60",
+    "../vteeny-request/index.js": "e63cfe2daf3fcb38ea76994d96aab51b4b6fb2a4fbdfea156838d5afea8ba9bf",
+    "../vteeny-request/lib/agents.js": "92debf29cda04411d55e36a6772169de979133f36a0bcfce998a4d36a5bd5a32",
+    "../vteeny-request/lib/multipart.js": "0baff2fcb6fd12eeb3be39100c781dbc10e3ec8efd3cbe58ad230c2a279aa752",
+    "../vteeny-request/lib/options.js": "e17f9e80f17967fcf1c62d1f5f19977cc5c4db302abb28b058c34211c0e72ef0",
+    "../vteeny-request/lib/read.js": "9cdbc9f0c8c63e4ac556f614f068212e01961cb8c4d680c97a17302895e5b2b0",
+    "../vteeny-request/lib/statistics.js": "74994e23c22ed8fd410e76939820b495abbb1108ca50b45a7fa120b1ea4e5b82",
+    "../vteeny-request/package.json": "753dfea5d305028eb9936654d20de988491f98cb5494f8fe5b254c77b0dc3f70",
+    "../vxml-naming/index.js": "821f0a32847dec3cac7a68b73f88adbce393a7047a37a376d7dc481412ea9aa3",
+    "../vxml-naming/index.mjs": "c340da953d1a3cface4c9c397a409a5c07ea5add02017113805e80d6be6c7dcc",
+    "../vxml-naming/package.json": "193fe5956941640dc16be19581ce8b2e9f34cf916a67a9cccd854af58141aeea",
+    "../vyocto-queue/index.js": "fde0a18ef94650701ddc867d2ad39a560f2c2d6bab2ae648af60b92b40fa1db3",
+    "../vyocto-queue/package.json": "bd94d689916e208b1ccc893f6241a421f02d07c4c98561d620a05c087e807ee1",
+    "bench/http-server.cjs": "802dc37a5b767edead2a53b672172816bc6856f45c184c978147e3f26e17e9e5",
+    "bench/stream.cjs": "da5d80cfebbdcb5b70aa1ffd28a0f6c5f934740ef8fff9c16068fbb531fe2e98",
+    "index.js": "b0b5b796b4ec219b176671551a5b281867d2087016f46bcc5ed0605e2725f5a6",
+    "index.mjs": "bb5251a11e88e6e8fae142fe53e5a88e265f7ac6b9dc5a626074ffca1bce7081",
+    "lib/acl.js": "ee1b5b2213f68236516f2f578aba3ebaf7f8d336ad14d88be6ecd221e93d9781",
+    "lib/bucket.js": "2e82941221bdc345649add56907ef60c9453a2566561802d81b9936deee760eb",
+    "lib/channel.js": "bdcddd52698ded0e7ca4cfaa98dfbc0f73441f8f7559f251e98ab27c50bbd2e2",
+    "lib/crc32c.js": "7d4fa354d0484d1a8efe2af3b6448b8acd931f61b3cb0521d7562b97e2d30532",
+    "lib/file.js": "52bd41f6485789ded39dba41084576e110dc97bb8862b3fe7c2ddc8014729003",
+    "lib/hash-stream-validator.js": "8e52e5736b45018a29b43ec448140a86e7e81e6f4304ba6654f6c5d8145a836a",
+    "lib/hmacKey.js": "f35447335f530f524c9c7fd9a2886748395b446f92fbd4b4cc5232484d90008f",
+    "lib/iam.js": "0c305af662e263381fafcba43c26a8618e5e61c2a33d2a169030457fffd2e195",
+    "lib/index.js": "b4d1b84eaccf80ce1fbc316c59711fe209621b9e6dfbf828e73d916cd0bae9ee",
+    "lib/nodejs-common/index.js": "596e68222a2faeb32c306328f0643d0ab49c503abca0e5e0d658bb49a1fb44d1",
+    "lib/nodejs-common/service-object.js": "ffbbf7cdbd7251cdf17106727b81568ca94ef96daabf6bb1131e2d0b236a3dd9",
+    "lib/nodejs-common/service.js": "463bb759aff108dda43c454a14de9f3617d2e5c25f700fd672435d6ad706c6c9",
+    "lib/nodejs-common/util.js": "5dc4981ea656b387d3c00efabbf2862d1e3740af61094773cc9b5b61bf3b9761",
+    "lib/notification.js": "39f85fe2e5009c0c40878b74ad7d641ea7f6f3c79ab07b2bbc8fc7d10f7c1f11",
+    "lib/package-json-helper.cjs": "32f1f4aef0b6df5847b00a92c8455f8034e536f80d7b1df22b642296fda43f28",
+    "lib/resumable-upload.js": "9ea06a3ea1445b027ed24f374422367c620bce32b53e8ace18b8a661bf6bf9cc",
+    "lib/save.js": "df50088ae1fa72361ba6aa48defc84c77953515ee0e4824c2851c49f8ee3bc9a",
+    "lib/signer.js": "63b2e7b70c5a4354e803b19d4d38c411ac6799290ecd323605fdb1290cf153d0",
+    "lib/storage-endpoint.js": "095e963caf4745dbeb055060b47fc691a36c324e9951a7e0f86b90e7d8882107",
+    "lib/storage.js": "10c17f9dc9ee66e456f1453a64db51d911e9cf85d3d83b969884aad3289e98fc",
+    "lib/transfer-manager.js": "b8f560fa1b5232dc3f999b29037df6aed1ae0f5039292838d4a1d9797a5c8fd9",
+    "lib/upload-stream.js": "b3aceab5b4142a70cbbbd6e549a525fc9f650683badc3909f0c8fdd943dd4f0b",
+    "lib/util.js": "69f91c5e5b78d89fb35ac64239af434a262c84eda1bd7cb62d0d03d79828bbbd",
+    "package.json": "f2bff2c4511e1b77fbc87a26a8200cc45e03b99c5dc506ec8897c37c621ec0f8"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 58960,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 11377,
+            "samples": [
+              3061.1248132196583,
+              4563.24892326624,
+              1592.1266590489647,
+              2277.2479564032656,
+              3105.256218686821,
+              1892.3742638656934,
+              3071.5222817966064,
+              1683.6380416629975,
+              3818.9109607102087,
+              4007.1671793970336,
+              4231.05827546805,
+              7240.763558055723
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 627,
+            "samples": [
+              17838.982456140096,
+              16066.918660287361,
+              49987.17384370049,
+              17514.087719298528,
+              16908.626794258056,
+              77065.92344497607,
+              16793.527910685792,
+              15081.472089314251,
+              28934.676236044575,
+              15403.708133971539,
+              15619.881977671499,
+              28620.015948963497
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 503,
+            "samples": [
+              33575.71172962257,
+              16466.866799204054,
+              18097.58051689855,
+              14873.093439363876,
+              38082.421471173315,
+              17158.21669980052,
+              14257.371769383306,
+              34271.039761431886,
+              14704.854870775258,
+              16005.880715706291,
+              16405.318091451147,
+              39278.49502982101
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              892680.5555555195,
+              1009291.6666666395,
+              1024953.6666666851,
+              839907.444444432,
+              802861.111111118,
+              802032.3333333484,
+              955407.4444444672,
+              843199.1111111124,
+              817129.6666666623,
+              811439.8888889,
+              1002935.2222222263,
+              912375.0000000352
+            ]
+          }
+        ],
+        "checksum": 40864
+      },
+      "vpm": {
+        "pid": 58979,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 11377,
+            "samples": [
+              4948.9063900852525,
+              5001.296475344988,
+              4706.439834754328,
+              4733.658609475256,
+              4663.158126043768,
+              4070.5737013272405,
+              4694.965720312912,
+              4609.757229498119,
+              4689.92634262108,
+              4692.779291553127,
+              4100.945591983821,
+              4628.625736134311
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 627,
+            "samples": [
+              33606.79266347688,
+              21825.690590111644,
+              22194.577352472355,
+              36354.931419457884,
+              22823.497607655347,
+              22583.599681020652,
+              40948.4322169059,
+              21407.561403508993,
+              21750.132376395373,
+              21874.800637958564,
+              55295.586921850125,
+              24322.435406698438
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 503,
+            "samples": [
+              19995.278330020166,
+              20064.6938369781,
+              22862.242544731722,
+              20504.39165009944,
+              19237.90457256475,
+              19586.232604373432,
+              19817.013916500902,
+              21959.244532803077,
+              20302.93240556673,
+              19181.578528826994,
+              19593.357852882924,
+              19233.679920476865
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              700490.7777777589,
+              545643.5555555698,
+              632430.5555555535,
+              541060.111111114,
+              795888.8888888902,
+              649259.2222222508,
+              586504.5555555703,
+              513638.88888888847,
+              568365.6666666744,
+              505592.66666666896,
+              484037.0000000197,
+              535726.8888888535
+            ]
+          }
+        ],
+        "checksum": 6048
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 58981,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 2447,
+            "samples": [
+              4543.182263996729,
+              4563.2407029015085,
+              7192.4462607274245,
+              4680.595422966875,
+              4530.445443400087,
+              4566.578259092769,
+              4726.552921945241,
+              7765.733551287311,
+              5434.119738455263,
+              7920.412750306484,
+              4623.331426236226,
+              4707.055986922765
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 401,
+            "samples": [
+              23898.79551122208,
+              23355.152119700986,
+              47967.478802992526,
+              22568.476309226793,
+              22655.236907730636,
+              22508.206982543707,
+              25412.30423940123,
+              49823.66832917703,
+              61716.02244389017,
+              22580.42394014966,
+              22853.28428927686,
+              52069.51371571065
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 479,
+            "samples": [
+              21998.173277661444,
+              30256.611691023034,
+              23366.475991649277,
+              40159.70772442584,
+              22572.025052192326,
+              21523.225469728804,
+              31983.645093945663,
+              39328.810020876495,
+              22102.906054279614,
+              22041.492693110577,
+              21224.513569937713,
+              39498.17327766179
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 15,
+            "samples": [
+              619999.999999997,
+              613411.1333333446,
+              593599.9999999998,
+              1006083.3333333298,
+              679433.333333327,
+              601616.6666666777,
+              557058.3333333313,
+              602902.7999999926,
+              661086.1333333408,
+              571802.7333333339,
+              586144.4000000119,
+              588755.5333333239
+            ]
+          }
+        ],
+        "checksum": 10880
+      },
+      "upstream": {
+        "pid": 58982,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 2447,
+            "samples": [
+              904.747445852056,
+              5194.166326113611,
+              5430.81651001225,
+              831.3073150796795,
+              827.2374335921517,
+              843.9758888434743,
+              932.655496526346,
+              851.3653453208137,
+              3806.191254597478,
+              4642.623620760115,
+              835.4274621986052,
+              832.6350633428518
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 401,
+            "samples": [
+              17600.269326683127,
+              51689.628428927615,
+              16963.63092269325,
+              16921.44638403979,
+              16379.573566084848,
+              16061.097256857962,
+              44258.31172069816,
+              17012.7805486285,
+              21379.571072319257,
+              23502.80548628427,
+              18636.11720698248,
+              43980.98503740659
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 479,
+            "samples": [
+              19381.00208768268,
+              26593.162839248605,
+              29081.505219206363,
+              18929.018789144066,
+              41636.655532358745,
+              16380.567849687215,
+              16706.768267223277,
+              16429.192066806154,
+              38249.65135699404,
+              17153.0104384135,
+              16991.03966597067,
+              15864.649269310756
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 15,
+            "samples": [
+              2153650.000000001,
+              1505030.533333335,
+              1321091.6666666588,
+              1329980.53333334,
+              1264463.9333333394,
+              1413963.8666666695,
+              1215366.6666666595,
+              1313322.2000000083,
+              1230766.6666666593,
+              1225508.333333331,
+              1188383.3333333314,
+              1182000.0000000012
+            ]
+          }
+        ],
+        "checksum": 5984
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 58983,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 11493,
+            "samples": [
+              1618.1625337161731,
+              2599.9774645436373,
+              1926.9918211084985,
+              2132.5190115722635,
+              3114.7075611241607,
+              1626.131123292438,
+              2238.3770120943223,
+              4035.2932219611907,
+              3791.075785260593,
+              3978.1569651091963,
+              3825.1942921778436,
+              5819.411815887936
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 619,
+            "samples": [
+              16676.830371566997,
+              17184.841680129102,
+              32385.90468497577,
+              17806.610662358813,
+              16062.129240710803,
+              76201.73667205144,
+              17399.03069466879,
+              15698.303715670678,
+              37218.42972536376,
+              14393.10662358653,
+              15619.61550888512,
+              15540.5896607432
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 626,
+            "samples": [
+              32182.707667731684,
+              16375.333865815006,
+              17043.92971246038,
+              37672.05750798744,
+              15148.295527156593,
+              16626.929712460238,
+              32360.223642172423,
+              15695.886581469562,
+              15958.798722044994,
+              31206.53514376983,
+              15579.340255591012,
+              15798.654952076644
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 11,
+            "samples": [
+              984049.1818181776,
+              1085882.5454545447,
+              1406886.3636363691,
+              1119564.4545454425,
+              942492.4545454484,
+              1300874.9999999881,
+              866575.7272727371,
+              847481.0909090758,
+              915655.272727277,
+              902803.0000000317,
+              849147.7272727106,
+              780587.0909090695
+            ]
+          }
+        ],
+        "checksum": 26976
+      },
+      "vpm": {
+        "pid": 59012,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 11493,
+            "samples": [
+              4698.878273731832,
+              5122.04167754286,
+              4641.426694509694,
+              4705.346036718,
+              4580.715827025145,
+              4054.95736535282,
+              4634.150439397889,
+              4638.446619681545,
+              4639.113721395639,
+              4662.5699991299125,
+              4643.3844079004575,
+              4617.995736535279
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 619,
+            "samples": [
+              30362.68174474955,
+              24174.13731825546,
+              22525.108239095483,
+              32028.607431341,
+              20930.061389337574,
+              26767.56865912797,
+              54920.90791599351,
+              20251.951534733707,
+              21401.993537964478,
+              28685.513731825224,
+              21187.06138933759,
+              19940.899838448815
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 626,
+            "samples": [
+              21255.790734824386,
+              30612.02076677286,
+              20398.16293929685,
+              20131.3226837061,
+              57364.21725239593,
+              22592.651757188545,
+              21535.608626198173,
+              20931.17731629419,
+              24321.817891373626,
+              21184.372204472744,
+              20563.56389776359,
+              22074.081469648296
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 11,
+            "samples": [
+              564234.9090909109,
+              575560.6363636203,
+              504124.99999997223,
+              428340.90909090353,
+              465003.8181818094,
+              463689.3636363559,
+              436121.27272730175,
+              475007.63636365015,
+              450795.45454543474,
+              455049.18181818124,
+              408704.5454545081,
+              405412.9090909142
+            ]
+          }
+        ],
+        "checksum": 5856
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 59026,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 2334,
+            "samples": [
+              4767.459297343617,
+              4638.960582690663,
+              7335.029562982002,
+              4653.206083975991,
+              4607.308483290474,
+              4619.412167952006,
+              4704.530848329041,
+              8237.164524421602,
+              5621.0012853470425,
+              5642.530419880038,
+              7250.625107112274,
+              4907.758354755777
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 391,
+            "samples": [
+              23027.17391304333,
+              23544.010230179214,
+              41025.89514066487,
+              22144.501278772386,
+              21765.87723785159,
+              21787.83120204607,
+              23819.161125319813,
+              43404.731457800655,
+              22566.49616368278,
+              22648.44245524301,
+              22698.317135549893,
+              22223.78516624058
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 465,
+            "samples": [
+              22079.8387096771,
+              37614.4258064517,
+              21018.63655913989,
+              21339.24731182834,
+              20910.93333333349,
+              21700.896774193527,
+              37726.075268816814,
+              21005.28817204332,
+              29201.52473118256,
+              21857.79569892465,
+              37747.668817204394,
+              21265.591397849512
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 17,
+            "samples": [
+              1530970.5882352907,
+              935360.2941176392,
+              986004.9411764682,
+              726970.588235297,
+              608026.9411764701,
+              630527.0000000024,
+              614068.5882353008,
+              608575.999999991,
+              937458.3529411746,
+              695122.5882352954,
+              624041.6470588223,
+              695308.823529411
+            ]
+          }
+        ],
+        "checksum": 11040
+      },
+      "upstream": {
+        "pid": 59027,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 2334,
+            "samples": [
+              861.2536418166352,
+              870.3586118251826,
+              3842.991002570691,
+              919.8084832904948,
+              4491.145672664944,
+              853.7202227934738,
+              879.5522707797895,
+              868.2163667523727,
+              860.0218508997469,
+              4158.6868037703425,
+              842.2592116538025,
+              5430.180805484141
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 391,
+            "samples": [
+              16579.17647058811,
+              16966.644501278788,
+              17412.723785166127,
+              22788.578005115174,
+              55250.00000000004,
+              18455.77493606122,
+              18149.191815856957,
+              17155.797953964364,
+              16347.506393861962,
+              128480.92583120204,
+              17799.4450127876,
+              21606.67263427115
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 465,
+            "samples": [
+              52976.16559139809,
+              23392.741935483555,
+              15880.107526881371,
+              16901.522580645335,
+              15405.46666666668,
+              18399.999999999596,
+              14669.086021505733,
+              14543.817204301338,
+              15162.096774193615,
+              15057.25806451635,
+              14281.361290322919,
+              18374.1032258064
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 17,
+            "samples": [
+              857730.3529411759,
+              968600.5294117609,
+              843548.9999999925,
+              823963.2352941124,
+              815561.2941176487,
+              901715.7058823586,
+              848436.2941176454,
+              888524.5294117713,
+              1065267.1764705968,
+              904171.5882353053,
+              801053.8823529367,
+              841830.8823529514
+            ]
+          }
+        ],
+        "checksum": 7200
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 59028,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 6998,
+            "samples": [
+              2144.142469276935,
+              1904.4191197484947,
+              3085.5780222920826,
+              853.7082023435244,
+              3347.7243498142307,
+              1076.855387253496,
+              3063.3812517862257,
+              2606.060017147758,
+              2237.6333238068,
+              2597.658902543579,
+              869.194769934268,
+              2885.7412117747913
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 442,
+            "samples": [
+              16558.72850678722,
+              16093.986425339484,
+              16658.278280542836,
+              16320.51131221717,
+              16569.760180995552,
+              16749.246606334706,
+              16706.165158371132,
+              16115.667420814387,
+              16060.14479638,
+              17634.61538461532,
+              16543.269230769314,
+              17396.4004524887
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 725,
+            "samples": [
+              15618.390344827652,
+              13673.620689655294,
+              14665.517241379222,
+              15382.758620689543,
+              13327.413793103602,
+              14099.253793103408,
+              13813.103448275859,
+              15007.873103448468,
+              14321.896551723981,
+              14095.286896551976,
+              14048.678620689503,
+              16428.217931034567
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              964532.4444444315,
+              888763.8888888886,
+              931018.5555555361,
+              1330106.4444444566,
+              1070509.2222222246,
+              932912.0000000128,
+              925217.5555555671,
+              977106.4444444417,
+              906453.6666666704,
+              1255634.2222222206,
+              1026564.7777777708,
+              1169064.7777777992
+            ]
+          }
+        ],
+        "checksum": 14560
+      },
+      "vpm": {
+        "pid": 59029,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 6998,
+            "samples": [
+              847.3791083166614,
+              1943.1444698485254,
+              2118.730351529004,
+              2046.1977707916492,
+              2353.5355815947464,
+              900.5550157187739,
+              2562.273792512146,
+              3245.266504715633,
+              2837.989425550158,
+              3286.3139468419504,
+              5403.329522720777,
+              3542.41097456415
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 442,
+            "samples": [
+              48251.7918552035,
+              17416.572398190314,
+              16153.185520361827,
+              23351.054298642415,
+              75057.1266968326,
+              19862.46153846137,
+              18213.613122171773,
+              22365.85746606314,
+              26003.29864253375,
+              47590.21493212682,
+              15467.760180995336,
+              15389.32805429873
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 725,
+            "samples": [
+              48769.59724137938,
+              14735.575172413708,
+              16921.95448275862,
+              31236.264827586074,
+              15623.965517241482,
+              15271.437241379253,
+              37983.562758620574,
+              17595.460689655174,
+              29614.368275862063,
+              14563.562758620687,
+              15659.252413793027,
+              33539.94206896553
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              792365.7777777812,
+              829000.0000000014,
+              871458.3333333444,
+              809861.1111111293,
+              876726.7777777507,
+              841606.4444443994,
+              842296.2222222547,
+              781194.4444444836,
+              811583.3333333486,
+              1303699.1111110991,
+              726643.4444444611,
+              715203.6666666896
+            ]
+          }
+        ],
+        "checksum": 6080
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 59032,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 11410,
+            "samples": [
+              1587.6314636283948,
+              1577.8155127081525,
+              2216.454864154253,
+              1572.7907099035924,
+              1546.5490797546,
+              2378.604294478529,
+              1560.5425942155955,
+              1567.8461875547798,
+              3785.776336546886,
+              3248.5867659947407,
+              3227.446713409287,
+              3359.1001752848338
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 479,
+            "samples": [
+              18120.39039665946,
+              29817.240083507113,
+              19038.62212943636,
+              50483.9081419626,
+              16398.22546972853,
+              16749.30480167016,
+              16350.208768267343,
+              50644.484342379634,
+              17511.394572025107,
+              18358.820459289862,
+              16415.102296450983,
+              16699.54697286045
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 601,
+            "samples": [
+              15396.422628951714,
+              31899.68053244606,
+              17702.717138103293,
+              41122.01830282882,
+              17485.163061564133,
+              15488.0748752079,
+              32086.730449251463,
+              14785.703826954905,
+              15918.469217970061,
+              32812.18801996681,
+              14636.995008319453,
+              15655.226289517579
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 7,
+            "samples": [
+              1047029.7142856648,
+              982160.7142857179,
+              1307785.7142856636,
+              1032690.428571446,
+              950434.4285714328,
+              1063756.000000012,
+              940440.5714285531,
+              964398.7142857051,
+              971202.2857142334,
+              940238.1428571971,
+              1216827.4285714426,
+              1025124.9999999864
+            ]
+          }
+        ],
+        "checksum": 13376
+      },
+      "upstream": {
+        "pid": 59047,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "stream construction and destroy",
+            "iterations": 11410,
+            "samples": [
+              1504.3821209465348,
+              1558.4465381244536,
+              2270.599649430322,
+              1559.987642418927,
+              1586.2328659070963,
+              3960.4184925503896,
+              3373.1595092024545,
+              3263.230324276954,
+              3149.350043821208,
+              3096.154688869405,
+              6673.732865907108,
+              6261.941279579309
+            ]
+          },
+          {
+            "case": "stream pipeline / 64 bytes without checksum",
+            "iterations": 479,
+            "samples": [
+              21713.63883089801,
+              37523.4008350728,
+              15409.795407098185,
+              15697.634655532202,
+              16260.872651357187,
+              41266.61377870586,
+              17848.382045928658,
+              20458.94363256768,
+              16190.588726513683,
+              45628.219206680296,
+              24645.701461378132,
+              20964.59498956191
+            ]
+          },
+          {
+            "case": "stream pipeline / 65536 bytes without checksum",
+            "iterations": 601,
+            "samples": [
+              16046.520798668877,
+              17082.154742096383,
+              78538.40931780389,
+              17940.65391014955,
+              17856.21297836957,
+              23027.31447587359,
+              43743.69051580711,
+              16793.46921797013,
+              17661.259567387693,
+              46577.99500831949,
+              21772.94841930084,
+              16899.196339434144
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 7,
+            "samples": [
+              806023.714285662,
+              842035.7142857548,
+              969017.8571429116,
+              804613.1428571113,
+              853107.1428571652,
+              942112.9999999981,
+              846636.8571429094,
+              866821.4285714515,
+              780696.4285714458,
+              871243.9999999983,
+              814708.2857143298,
+              1244434.571428558
+            ]
+          }
+        ],
+        "checksum": 5888
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "stream construction and destroy",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3088.389250241714,
+          "vpmNs": 4691.352817087103,
+          "changePct": 51.90289943924435
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 878.0563955864349,
+          "vpmNs": 4693.82570494482,
+          "changePct": 434.5699579820173
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2857.342512833899,
+          "vpmNs": 4640.270207952666,
+          "changePct": 62.39810898100795
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 874.9554413024861,
+          "vpmNs": 4837.608826049697,
+          "changePct": 452.89773600907967
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2417.6461131751894,
+          "vpmNs": 2457.904687053446,
+          "changePct": 1.665197137780594
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3122.7523663453067,
+          "vpmNs": 1902.0431638913237,
+          "changePct": -39.09081026116177
+        }
+      ]
+    },
+    {
+      "case": "stream pipeline / 64 bytes without checksum",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 17211.35725677829,
+          "vpmNs": 22703.548644338,
+          "changePct": 31.91027474254966
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18118.1932668328,
+          "vpmNs": 23626.973815461533,
+          "changePct": 30.40469028836952
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 16930.83602584805,
+          "vpmNs": 23349.62277867547,
+          "changePct": 37.911812169392924
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 17974.31841432228,
+          "vpmNs": 22673.379795396453,
+          "changePct": 26.14319649155583
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 16564.244343891387,
+          "vpmNs": 21114.159502262257,
+          "changePct": 27.46829293211195
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 20711.769311064796,
+          "vpmNs": 17815.892484342283,
+          "changePct": -13.981793555297351
+        }
+      ]
+    },
+    {
+      "case": "stream pipeline / 65536 bytes without checksum",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 16812.541749502285,
+          "vpmNs": 19906.146123260536,
+          "changePct": 18.400575117381244
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18041.01461377878,
+          "vpmNs": 22969.250521920803,
+          "changePct": 27.31684449930045
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 16501.131789137624,
+          "vpmNs": 21395.69968051128,
+          "changePct": 29.662013211697726
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 15642.787096774025,
+          "vpmNs": 21779.34623655909,
+          "changePct": 39.22932084814088
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 14210.575172413694,
+          "vpmNs": 17258.707586206896,
+          "changePct": 21.44974694416588
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 17898.43344425956,
+          "vpmNs": 16701.8161397671,
+          "changePct": -6.685597978275826
+        }
+      ]
+    },
+    {
+      "case": "HTTP multipart upload / 64KiB + CRC32C",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 867939.833333316,
+          "vpmNs": 557004.6111111222,
+          "changePct": -35.824513437532836
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1288893.0666666739,
+          "vpmNs": 602259.7333333351,
+          "changePct": -53.27310318373463
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 929073.8636363627,
+          "vpmNs": 459369.2727272686,
+          "changePct": -50.55621617324233
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 853083.3235294106,
+          "vpmNs": 695215.7058823532,
+          "changePct": -18.50553319855336
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 970819.4444444366,
+          "vpmNs": 820291.666666675,
+          "changePct": -15.505228973231267
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 849872.0000000373,
+          "vpmNs": 1003642.8571428522,
+          "changePct": 18.093413730868658
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "stream construction and destroy",
+      "upstream_ns": 1868,
+      "vpm_ns": 4693,
+      "change_pct": 248.5,
+      "upstream_first_pct": 57.2,
+      "vpm_first_pct": 443.7,
+      "process_range_pct": "51.9, 434.6, 62.4, 452.9",
+      "control_max_abs_pct": 39.1,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "stream pipeline / 64 bytes without checksum",
+      "upstream_ns": 17593,
+      "vpm_ns": 23027,
+      "change_pct": 31.2,
+      "upstream_first_pct": 34.9,
+      "vpm_first_pct": 28.3,
+      "process_range_pct": "31.9, 30.4, 37.9, 26.1",
+      "control_max_abs_pct": 27.5,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "stream pipeline / 65536 bytes without checksum",
+      "upstream_ns": 16657,
+      "vpm_ns": 21588,
+      "change_pct": 28.5,
+      "upstream_first_pct": 24,
+      "vpm_first_pct": 33.3,
+      "process_range_pct": "18.4, 27.3, 29.7, 39.2",
+      "control_max_abs_pct": 21.4,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "HTTP multipart upload / 64KiB + CRC32C",
+      "upstream_ns": 898507,
+      "vpm_ns": 579632,
+      "change_pct": -43.2,
+      "upstream_first_pct": -43.2,
+      "vpm_first_pct": -35.9,
+      "process_range_pct": "-35.8, -53.3, -50.6, -18.5",
+      "control_max_abs_pct": 18.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

@@ -45,15 +45,9 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
-    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
-    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
-    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _File_instances, _File_validateIntegrity;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.File = exports.FileExceptionMessages = exports.RequestError = exports.SkipReason = exports.STORAGE_POST_POLICY_BASE_URL = exports.ActionToHTTPMethod = void 0;
 const index_js_1 = require("./nodejs-common/index.js");
@@ -74,6 +68,7 @@ const crc32c_js_1 = require("./crc32c.js");
 const hash_stream_validator_js_1 = require("./hash-stream-validator.js");
 const async_retry_1 = __importDefault(require("vasync-retry"));
 const saveOperation = require("./save.js");
+const uploadStream = require("./upload-stream.js");
 var ActionToHTTPMethod;
 (function (ActionToHTTPMethod) {
     ActionToHTTPMethod["read"] = "GET";
@@ -604,7 +599,6 @@ class File extends index_js_1.ServiceObject {
             id: encodeURIComponent(name),
             methods,
         });
-        _File_instances.add(this);
         this.bucket = bucket;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.storage = bucket.parent;
@@ -1461,197 +1455,7 @@ class File extends index_js_1.ServiceObject {
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     createWriteStream(options = {}) {
-        var _a;
-        (_a = options.metadata) !== null && _a !== void 0 ? _a : (options.metadata = {});
-        if (options.contentType) {
-            options.metadata.contentType = options.contentType;
-        }
-        let crc32c = true;
-        let md5 = false;
-        if (typeof options.validation === 'string') {
-            options.validation = options.validation.toLowerCase();
-            crc32c = options.validation === 'crc32c';
-            md5 = options.validation === 'md5';
-        }
-        else if (options.validation === false) {
-            crc32c = false;
-            md5 = false;
-        }
-        if (options.offset) {
-            if (md5) {
-                throw new RangeError(FileExceptionMessages.MD5_RESUMED_UPLOAD);
-            }
-            if (crc32c && !options.isPartialUpload && !options.resumeCRC32C) {
-                throw new RangeError(FileExceptionMessages.MISSING_RESUME_CRC32C_FINAL_UPLOAD);
-            }
-        }
-        /**
-         * A callback for determining when the underlying pipeline is complete.
-         * It's possible the pipeline callback could error before the write stream
-         * calls `final` so by default this will destroy the write stream unless the
-         * write stream sets this callback via its `final` handler.
-         * @param error An optional error
-         */
-        let pipelineCallback = error => {
-            writeStream.destroy(error || undefined);
-        };
-        // A stream for consumer to write to
-        const writeStream = new stream_1.Writable({
-            final(cb) {
-                // Set the pipeline callback to this callback so the pipeline's results
-                // can be populated to the consumer
-                pipelineCallback = cb;
-                emitStream.end();
-            },
-            write(chunk, encoding, cb) {
-                emitStream.write(chunk, encoding, cb);
-            },
-        });
-        // If the write stream, which is returned to the caller, catches an error we need to make sure that
-        // at least one of the streams in the pipeline below gets notified so that they
-        // all get cleaned up / destroyed.
-        writeStream.once('error', e => {
-            emitStream.destroy(e);
-        });
-        // If the write stream is closed, cleanup the pipeline below by calling destroy on one of the streams.
-        writeStream.once('close', () => {
-            emitStream.destroy();
-        });
-        const emitStream = new util_js_2.PassThroughShim();
-        // If `writeStream` is destroyed before the `writing` event, `emitStream` will not have any listeners. This prevents an unhandled error.
-        const noop = () => { };
-        emitStream.on('error', noop);
-        const fileWriteStream = (0, duplexify_1.default)();
-        let fileWriteStreamMetadataReceived = false;
-        // Handing off emitted events to users
-        emitStream.on('reading', () => writeStream.emit('reading'));
-        emitStream.on('writing', () => writeStream.emit('writing'));
-        fileWriteStream.on('uri', evt => writeStream.emit('uri', evt));
-        fileWriteStream.on('progress', evt => writeStream.emit('progress', evt));
-        fileWriteStream.on('response', resp => writeStream.emit('response', resp));
-        fileWriteStream.once('metadata', () => {
-            fileWriteStreamMetadataReceived = true;
-        });
-        writeStream.once('writing', async () => {
-            try {
-                if (!options.metadata.contentType ||
-                    options.metadata.contentType === 'auto') {
-                    const mime = await (0, util_js_2.getMime)();
-                    const detectedContentType = mime.getType(this.name);
-                    if (detectedContentType) {
-                        options.metadata.contentType = detectedContentType;
-                    }
-                }
-                let gzip = options.gzip;
-                if (gzip === 'auto') {
-                    gzip = COMPRESSIBLE_MIME_REGEX.test(options.metadata.contentType || '');
-                }
-                if (gzip) {
-                    options.metadata.contentEncoding = 'gzip';
-                }
-                const transformStreams = [];
-                if (gzip) {
-                    transformStreams.push(zlib.createGzip());
-                }
-                let hashCalculatingStream = null;
-                if (crc32c || md5) {
-                    const crc32cInstance = options.resumeCRC32C
-                        ? crc32c_js_1.CRC32C.from(options.resumeCRC32C)
-                        : undefined;
-                    hashCalculatingStream = new hash_stream_validator_js_1.HashStreamValidator({
-                        crc32c,
-                        crc32cInstance,
-                        md5,
-                        crc32cGenerator: this.crc32cGenerator,
-                        updateHashesOnly: true,
-                    });
-                    transformStreams.push(hashCalculatingStream);
-                }
-                if (options.resumable === false) {
-                    this.startSimpleUpload_(fileWriteStream, options);
-                }
-                else {
-                    this.startResumableUpload_(fileWriteStream, options);
-                }
-                // remove temporary noop listener as we now create a pipeline that handles the errors
-                emitStream.removeListener('error', noop);
-                if (fileWriteStream.destroyed) {
-                    let callbackCalled = false;
-                    const onError = (err) => {
-                        if (!callbackCalled) {
-                            callbackCalled = true;
-                            pipelineCallback(err);
-                        }
-                    };
-                    fileWriteStream.once('error', onError);
-                    emitStream.destroy();
-                    process.nextTick(() => {
-                        fileWriteStream.removeListener('error', onError);
-                        if (!callbackCalled) {
-                            callbackCalled = true;
-                            const err = fileWriteStream.errored ||
-                                new Error('Write stream destroyed');
-                            pipelineCallback(err);
-                        }
-                    });
-                    return;
-                }
-                (0, stream_1.pipeline)(emitStream, ...transformStreams, fileWriteStream, async (e) => {
-                    if (e) {
-                        return pipelineCallback(e);
-                    }
-                    // If this is a partial upload, we don't expect final metadata yet.
-                    if (options.isPartialUpload) {
-                        // Emit CRC32c for this completed chunk if hash validation is active.
-                        if (hashCalculatingStream === null || hashCalculatingStream === void 0 ? void 0 : hashCalculatingStream.crc32c) {
-                            writeStream.emit('crc32c', hashCalculatingStream.crc32c);
-                        }
-                        // Resolve the pipeline for this *partial chunk*.
-                        return pipelineCallback();
-                    }
-                    // We want to make sure we've received the metadata from the server in order
-                    // to properly validate the object's integrity. Depending on the type of upload,
-                    // the stream could close before the response is returned.
-                    if (!fileWriteStreamMetadataReceived) {
-                        try {
-                            await new Promise((resolve, reject) => {
-                                fileWriteStream.once('metadata', resolve);
-                                fileWriteStream.once('error', reject);
-                            });
-                        }
-                        catch (e) {
-                            return pipelineCallback(e);
-                        }
-                    }
-                    // Emit the local CRC32C value for future validation, if validation is enabled.
-                    if (hashCalculatingStream === null || hashCalculatingStream === void 0 ? void 0 : hashCalculatingStream.crc32c) {
-                        writeStream.emit('crc32c', hashCalculatingStream.crc32c);
-                    }
-                    try {
-                        // Metadata may not be ready if the upload is a partial upload,
-                        // nothing to validate yet.
-                        const metadataNotReady = options.isPartialUpload && !this.metadata;
-                        if (hashCalculatingStream && !metadataNotReady) {
-                            await __classPrivateFieldGet(this, _File_instances, "m", _File_validateIntegrity).call(this, hashCalculatingStream, {
-                                crc32c,
-                                md5,
-                            });
-                        }
-                        pipelineCallback();
-                    }
-                    catch (e) {
-                        pipelineCallback(e);
-                    }
-                });
-            }
-            catch (err) {
-                emitStream.removeListener('error', noop);
-                emitStream.destroy(err);
-                fileWriteStream.destroy(err);
-                pipelineCallback(err);
-            }
-        });
-        return writeStream;
+        return uploadStream.createWriteStream(this, options, COMPRESSIBLE_MIME_REGEX);
     }
     delete(optionsOrCallback, cb) {
         const options = typeof optionsOrCallback === 'object' ? optionsOrCallback : {};
@@ -3620,51 +3424,6 @@ class File extends index_js_1.ServiceObject {
     }
 }
 exports.File = File;
-_File_instances = new WeakSet(), _File_validateIntegrity =
-/**
- *
- * @param hashCalculatingStream
- * @param verify
- * @returns {boolean} Returns `true` if valid, throws with error otherwise
- */
-async function _File_validateIntegrity(hashCalculatingStream, verify = {}) {
-    const metadata = this.metadata;
-    // If we're doing validation, assume the worst
-    let dataMismatch = !!(verify.crc32c || verify.md5);
-    if (verify.crc32c && metadata.crc32c) {
-        dataMismatch = !hashCalculatingStream.test('crc32c', metadata.crc32c);
-    }
-    if (verify.md5 && metadata.md5Hash) {
-        dataMismatch = !hashCalculatingStream.test('md5', metadata.md5Hash);
-    }
-    if (dataMismatch) {
-        const errors = [];
-        let code = '';
-        let message = '';
-        try {
-            await this.delete();
-            if (verify.md5 && !metadata.md5Hash) {
-                code = 'MD5_NOT_AVAILABLE';
-                message = FileExceptionMessages.MD5_NOT_AVAILABLE;
-            }
-            else {
-                code = 'FILE_NO_UPLOAD';
-                message = FileExceptionMessages.UPLOAD_MISMATCH;
-            }
-        }
-        catch (e) {
-            const error = e;
-            code = 'FILE_NO_UPLOAD_DELETE';
-            message = `${FileExceptionMessages.UPLOAD_MISMATCH_DELETE_FAIL}${error.message}`;
-            errors.push(error);
-        }
-        const error = new RequestError(message);
-        error.code = code;
-        error.errors = errors;
-        throw error;
-    }
-    return true;
-};
 /*! Developer Documentation
  *
  * All async methods (except for streams) will return a Promise in the event
