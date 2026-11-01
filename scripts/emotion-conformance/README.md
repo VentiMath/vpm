@@ -8,17 +8,22 @@ Baseline: **Emotion 11.14**: @emotion/react 11.14.0, @emotion/styled 11.14.1,
 1.2.0, the latest releases checked November 1, 2026. From the
 `@emotion/styled@11.14.1` tag (commit
 `49229553967b6050c92d9602eb577bdc48167e91`), `upstream/` retains the tests of
-hash, weak-memoize, sheet, cache, react and styled (with their snapshots), the
+hash, weak-memoize, sheet, cache, react, styled and babel-plugin (with their
+snapshots and fixtures, the private `babel-tester` package they use, and the
+root and babel-plugin `package.json` files, which locate package roots for
+the plugin's target class names), the
 repository's Jest configurations (`jest.config.js`, `jest.dist.js`,
 `jest.prod.js`), Babel configuration, `test-utils` and
 `babel-preset-emotion-dev` packages, and the license. Files carry a `.txt`
 suffix and are verified against `SHA256.json` before use.
 
 The fixture pins the originals and the test tools at the versions in the
-repository's lockfile: Jest 29.7.0 with jsdom, Babel 7.18.9 (presets and
-plugins at the lockfile's versions; `babel-preset-current-node-syntax` 1.0.1 and
-`cheerio` 1.0.0-rc.3 are overridden to the lockfile's, as later releases need a
-newer Babel and `TextDecoder`), React 16.14.0, react-test-renderer 16.8.6,
+repository's lockfile: Jest 29.7.0 with jsdom, Babel 7.18.9 (every `@babel/*`
+package at the lockfile's 7.18 line through npm overrides, as the plugin's
+snapshots record Babel's generator output; `babel-preset-current-node-syntax`
+1.0.1 and `cheerio` 1.0.0-rc.3 are overridden to the lockfile's too, as later
+releases need a newer Babel and `TextDecoder`), babel-plugin-macros 3.1.0 and
+babel-check-duplicated-nodes 1.0.0 for the plugin's tests, React 16.14.0, react-test-renderer 16.8.6,
 Testing Library 13.0.0-alpha.5, Enzyme 3.11.0, React 18 (the lockfile's
 `react18`, `react18-dom` and `react18-test-renderer` aliases of
 18.0.0-rc.0-next-aa8f2bdbc-20211215, installed without enforcing peers as Yarn
@@ -57,16 +62,20 @@ maps React, React DOM and the test renderer to React 18. Without
 every importer (the tests, the remaining originals, @emotion/css and
 @emotion/server); `--vpm=hash,memoize` selects some. One test file,
 `get-label-from-stack-trace.js`, imports a module from upstream's sources
-that no package publishes, and is not run.
+that no package publishes, and is not run; neither are the four tests of the
+macro entries (`*-macro/index.js`), which VPM does not build (their fixtures
+run through the plugin itself in `css.js`, `global.js`, `styled.js` and
+`vanilla-emotion.js`).
 
-In development, 285 tests pass and 8 are gated to production; in production, 5
-pass; under React 18, 288 pass (311 snapshots). The same holds with VPM's packages: currently vemotion-hash,
+In development, 415 tests pass (130 of them the Babel plugin's) and 8 are
+gated to production (435 snapshots); in production, 5 pass; under React 18,
+418 pass (441 snapshots). The same holds with VPM's packages: currently vemotion-hash,
 vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet,
 vemotion-utils, vemotion-serialize, vemotion-is-prop-valid,
 vemotion-use-insertion-effect-with-fallbacks, vemotion-cache, vemotion-react
 and vemotion-styled: all twelve, so no original Emotion package runs (the
-companion packages @emotion/css and @emotion/server run on VPM's too). 305 and 11 snapshots
-match.
+companion packages @emotion/css and @emotion/server run on VPM's too). All
+435, 11 and 441 snapshots match.
 
 `compare-serialize.cjs` runs 20,000 generated style arguments (objects with
 nested selectors and at-rules, fallback arrays, numbers, booleans, null, custom

@@ -24,10 +24,14 @@ for (const [file, hash] of Object.entries(require('./upstream/SHA256.json'))) {
 assert.equal(require('./node_modules/@emotion/react/package.json').version, '11.14.0');
 
 // Emotion's packages and the two packages below them that VPM provides.
-const emotion = ['hash', 'memoize', 'unitless', 'weak-memoize', 'utils', 'sheet', 'use-insertion-effect-with-fallbacks', 'serialize', 'is-prop-valid', 'cache', 'react', 'styled'];
+const emotion = ['hash', 'memoize', 'unitless', 'weak-memoize', 'utils', 'sheet', 'use-insertion-effect-with-fallbacks', 'serialize', 'is-prop-valid', 'cache', 'react', 'styled', 'babel-plugin'];
 // Tests of modules that are not part of the published packages (they import
 // `../src/...`, which exists only in upstream's repository).
 const sourceOnly = ['packages/react/__tests__/get-label-from-stack-trace.js'];
+// Tests of the macro entries (@emotion/react/macro, @emotion/styled/macro,
+// @emotion/css/macro), which VPM does not build. Their fixtures still run
+// through the plugin in css.js, global.js, styled.js and vanilla-emotion.js.
+const macroOnly = ['css-macro', 'global-macro', 'styled-macro', 'vanilla-emotion-macro'].map(name => `packages/babel-plugin/__tests__/${name}/index.js`);
 
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'emotion-conformance-'));
 try {
@@ -43,14 +47,27 @@ try {
   const modules = path.join(temporary, 'node_modules');
   fs.mkdirSync(modules);
   for (const name of fs.readdirSync(path.join(fixture, 'node_modules'))) {
-    if (name.startsWith('.')) continue;
+    if (name.startsWith('.') || name === '@emotion') continue;
     fs.symlinkSync(path.join(fixture, 'node_modules', name), path.join(modules, name), 'dir');
   }
   fs.symlinkSync(path.join(temporary, 'scripts/test-utils'), path.join(modules, 'test-utils'), 'dir');
+  fs.symlinkSync(path.join(temporary, 'scripts/babel-tester'), path.join(modules, 'babel-tester'), 'dir');
   fs.symlinkSync(path.join(temporary, 'scripts/babel-preset-emotion-dev'), path.join(modules, 'babel-preset-emotion-dev'), 'dir');
   const moduleNameMapper = {};
+  // @emotion/*: each original, except that with VPM's Babel plugin selected,
+  // Babel (which resolves plugins with Node, not Jest) loads VPM's plugin to
+  // compile the test files too.
   const selected = upstream ? [] : process.argv.find(arg => arg.startsWith('--vpm='))?.slice(6).split(',') ?? emotion.filter(name => fs.existsSync(path.join(packages, 'vemotion-' + name)));
   for (const name of selected) assert.ok(emotion.includes(name) && fs.existsSync(path.join(packages, 'vemotion-' + name)), name);
+  fs.mkdirSync(path.join(modules, '@emotion'));
+  for (const name of fs.readdirSync(path.join(fixture, 'node_modules/@emotion'))) {
+    const target = name === 'babel-plugin' && selected.includes('babel-plugin') ? path.join(packages, 'vemotion-babel-plugin') : path.join(fixture, 'node_modules/@emotion', name);
+    fs.symlinkSync(target, path.join(modules, '@emotion', name), 'dir');
+  }
+  // The retained packages/babel-plugin/package.json (which locates the
+  // package root for target class names) names a package @emotion/babel-plugin
+  // in Jest's module map; the plugin's name is mapped to the library under test.
+  moduleNameMapper['^@emotion/babel-plugin$'] = selected.includes('babel-plugin') ? path.join(packages, 'vemotion-babel-plugin/index.cjs') : require.resolve('@emotion/babel-plugin', {paths: [fixture]});
   if (selected.length) {
     for (const name of fs.readdirSync(packages).filter(name => name.startsWith('vemotion-') || name === 'vstylis')) {
       fs.symlinkSync(path.join(packages, name), path.join(modules, name), 'dir');
@@ -58,13 +75,14 @@ try {
     // Every import of a selected package, from the tests, from the original
     // packages and from the companion packages they use (@emotion/css,
     // @emotion/server), resolves to VPM's.
-    moduleNameMapper[`^@emotion/(${selected.join('|')})($|/.*)`] = 'vemotion-$1$2';
+    const mapped = selected.filter(name => name !== 'babel-plugin');
+    if (mapped.length) moduleNameMapper[`^@emotion/(${mapped.join('|')})($|/.*)`] = 'vemotion-$1$2';
   }
   fs.writeFileSync(path.join(temporary, 'jest.harness.js'), `const config = require('./${mode === 'production' ? 'jest.prod.js' : 'jest.config.js'}')
 const react18 = ${react === '18'} ? require('./jest-react18.config.js').moduleNameMapper : {}
 module.exports = Object.assign({}, config, {
   transformIgnorePatterns: require('./jest.dist.js').transformIgnorePatterns,
-  testPathIgnorePatterns: [...config.testPathIgnorePatterns, ${sourceOnly.map(file => JSON.stringify('<rootDir>/' + file)).join(', ')}],
+  testPathIgnorePatterns: [...config.testPathIgnorePatterns, ${[...sourceOnly, ...macroOnly].map(file => JSON.stringify('<rootDir>/' + file)).join(', ')}],
   moduleNameMapper: Object.assign({}, react18, ${JSON.stringify(moduleNameMapper)}),
   // Packages under test resolve React and their other dependencies from the
   // fixture, as an application's would.
@@ -83,7 +101,7 @@ module.exports = Object.assign({}, config, {
     if (file.status === 'failed' && !file.assertionResults.length) statuses.push([relative, 'failed']), console.log('FAIL', relative, '\n ', file.message.split('\n').slice(0, 12).join('\n  '));
     for (const test of file.assertionResults) {
       statuses.push([relative + ' › ' + test.fullName, test.status]);
-      if (test.status === 'failed') console.log('FAIL', relative, '›', test.fullName, '\n ', test.failureMessages.join('\n').split('\n').slice(0, 12).join('\n  '));
+      if (test.status === 'failed') console.log('FAIL', relative, '›', test.fullName, '\n ', test.failureMessages.join('\n').split('\n').slice(0, Number(process.env.FAILURE_LINES || 12)).join('\n  '));
     }
   }
   if (process.env.OUTPUT) fs.writeFileSync(process.env.OUTPUT, JSON.stringify(statuses));
