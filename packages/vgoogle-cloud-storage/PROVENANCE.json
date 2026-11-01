@@ -10,5 +10,12 @@
   "checked": "2026-10-30",
   "license": "Apache-2.0",
   "source": "Published CJS implementation and declarations retained under lib, with VPM dependency imports, local package metadata, self-contained structural platform types and focused signing/checksum corrections. Original published files and selected source/tests are retained in the comparison fixture.",
-  "scope": "Actual VentiMath backend save, signing, listing, exists and delete paths; local file uploads and bucket creation; selected upstream signing, checksum and helper tests. Other upstream APIs remain available but are not all independently verified."
+  "scope": "Actual VentiMath backend save, signing, listing, exists and delete paths; local file uploads and bucket creation; selected upstream signing, checksum and helper tests. Other upstream APIs remain available but are not all independently verified.",
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "The Storage runtime retains the published upstream CJS implementation, with VPM imports and focused signing/checksum fixes.",
+    "targetScope": "Bucket/file metadata, save/upload, existence, deletion, listing and signing paths used by VentiMath and Firebase Admin.",
+    "remainingWork": "Independently implement the application-facing runtime paths; retain current conformance and correctness fixes as requirements."
+  }
 }

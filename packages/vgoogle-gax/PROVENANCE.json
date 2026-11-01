@@ -289,5 +289,12 @@
     "Consume the gaxios-owned response stream and avoid duplicate pipeline errors.",
     "Opt into gRPC terminal status after readable end; retain HTTP premature-end detection in vretry-request.",
     "Identify protobuf 8 Any messages structurally and preserve empty nested error payloads."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "The GAX runtime is upstream-derived with focused changes to streaming, paths, deadlines and VPM dependencies. Those changes do not make the complete runtime an independent rewrite.",
+    "targetScope": "The RPC/REST, retry, paging and streaming adapters exercised by the Firestore and Storage callers.",
+    "remainingWork": "Independently implement the application-facing runtime paths; retain current conformance and correctness fixes as requirements."
+  }
 }

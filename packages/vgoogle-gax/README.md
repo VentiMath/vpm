@@ -1,5 +1,10 @@
 # vgoogle-gax
 
+**Implementation status:** this package retains upstream runtime code with
+focused VPM changes. Its tests establish compatibility and the documented fixes;
+an independent rewrite of the application-facing paths is still pending.
+[Provenance](PROVENANCE.json) records this boundary.
+
 Google API client support targeting **google-gax 6.14.0**: RPC calls, retries,
 pagination, resource paths, long-running operations, tracing and REST fallback.
 Runs on Node.js 24+ and Bun. All ten runtime dependencies are VPM packages;

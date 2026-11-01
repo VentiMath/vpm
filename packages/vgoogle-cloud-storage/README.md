@@ -1,5 +1,10 @@
 # vgoogle-cloud-storage
 
+**Implementation status:** this package retains upstream runtime code with
+focused VPM changes. Its tests establish compatibility and the documented fixes;
+an independent rewrite of the application-facing paths is still pending.
+[Provenance](PROVENANCE.json) records this boundary.
+
 Google Cloud Storage client built on VPM packages. The API starts from
 **@google-cloud/storage 8.4.0**, with stricter signed-URL handling and corrected
 CRC32C initialization from sliced byte views. Supports Node 24+ and Bun.

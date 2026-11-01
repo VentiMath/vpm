@@ -1,5 +1,10 @@
 # vgoogle-auth-library
 
+**Implementation status:** this package retains upstream runtime code with
+focused VPM changes. Its tests establish compatibility and the documented fixes;
+an independent rewrite of the application-facing paths is still pending.
+[Provenance](PROVENANCE.json) records this boundary.
+
 Google authentication clients on the VPM HTTP, metadata, logging and signing
 stack. Based on `google-auth-library` **11.3.2**, for Node 24+ and Bun; tested on
 Node 24 and Bun 1.4. CommonJS, native ESM named imports and self-contained
