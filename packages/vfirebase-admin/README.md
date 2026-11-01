@@ -1,7 +1,7 @@
 # vfirebase-admin
 
 **Implementation status:** app registration, service lifetime, token refresh
-ownership, option snapshots and credential adapters now use a VPM redesign.
+ownership, option snapshots, credential adapters and Auth response records use VPM redesigns.
 Google Auth, Auth service methods and the other service implementations remain upstream-derived;
 this is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
 the boundary.
@@ -40,6 +40,15 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 | `@fastify/busboy` | Omitted (see below) |
 
 ## Changes from 14.5.0
+
+- **Auth response records.** User, provider, timestamp and MFA records use
+  explicit field projections. Serializing JSON-shaped claims preserves own
+  `__proto__` and `constructor` keys without changing `Object.prototype` or
+  returning aliases to the original claims. Nested JSON data in TOTP output is detached too;
+  its public getter retains upstream's identity contract. A bounded shallow walk with an iterative
+  fallback handles deeply nested records and reports cycles explicitly.
+  Malformed MFA collections must be arrays. Auth request and token-verification
+  implementations remain upstream-derived.
 
 - **Credential transport and identity.** Factories distinguish HTTP agents and
   pass them through to JSON auth clients. Validated credential data is detached
@@ -109,17 +118,17 @@ upstream-derived and tracked separately.
 
 Missing-dependency errors name the VPM packages.
 
-The isolated measurements include the redesigned app and credential layers.
-Setup and teardown still cost more: Node context creation/read takes about
-343 ns versus 201 ns, repeated initialization 878 ns versus 599 ns, and disposal
-of three services 1.21 µs versus 0.49 µs. A direct credential acquisition from a
-cached Google client takes 367 ns versus 190 ns on Node and 249 ns versus
-169 ns on Bun; it now coordinates concurrent calls and validates the returned
-expiry. Twenty concurrent acquisitions take about 54% less CPU on Node and 58%
-less on Bun in the synthetic-provider case. Service-account factory reuse has
-no established difference on Node and costs more on Bun (5.0 µs versus 2.1 µs).
-These cases measure CPU work, excluding network latency. The report retains
-all thirteen cases and their identical-source controls.
+The isolated measurements include the redesigned app, credential and Auth record
+layers. User-record serialization takes about 218 ns versus 317 ns on Node
+(31% less time) and 267 ns versus 479 ns on Bun (44% less time), beyond the
+observed identical-source control spread in every comparison pair. Bun record
+construction still costs more: 1.31 µs versus 1.19 µs. The Node construction
+comparison has no established direction at the recorded precision.
+
+App/credential setup, some cached acquisitions and service cleanup also retain
+regressions; concurrent acquisition benefits from sharing pending work. The
+[full report](bench/results/README.md) includes all fifteen cases, process orders,
+controls and raw samples. These measure local CPU work, excluding network latency.
 
 ## Evidence
 
@@ -135,6 +144,9 @@ all thirteen cases and their identical-source controls.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [User-record controls](../../scripts/firebase-admin-conformance/user-records.cjs)
+  compare 160 generated responses and isolate prototype, aliasing and deep-data
+  cases against the original on both runtimes.
 - [Credential controls](../../scripts/firebase-admin-conformance/credentials.cjs)
   and [local OAuth transport](../../scripts/firebase-admin-conformance/credential-transport.cjs)
   verify the credential changes against the original, including actual signed
