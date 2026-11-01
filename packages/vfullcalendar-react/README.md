@@ -49,6 +49,12 @@ v6 packages (`@fullcalendar/core` as the calendar, `@fullcalendar/daygrid`,
 | `@fullcalendar/core` 7.1.3 (types) | `vfullcalendar-core` |
 | `temporal-polyfill` ^1.0.1 (peer) | Not needed: time zones are read through `Intl` |
 
+## Installation
+
+Install the [7.1.3 calendar release](../../docs/INSTALLATION.md). Its React archive
+pins both VPM dependencies to the same public release; application overrides
+are unnecessary. React and React DOM remain peer dependencies.
+
 ## Changes from 7.1.3
 
 The calendar retains 7.1.3 runtime code apart from the two package names,

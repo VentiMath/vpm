@@ -8,6 +8,8 @@ Every runtime package declares `engines.node: ">=24"`; earlier Node versions are
 outside the support contract. Browser compatibility remains package-specific.
 The documentation gate checks the runtime declaration on every package.
 Package archives use standard metadata and can be installed with existing tools.
+[Calendar installation and release packaging](INSTALLATION.md) use public GitHub
+Release URLs, with internal dependencies pinned inside the published archives.
 A standalone VPM CLI, registry and native Bun integration remain future work.
 
 ## Setup

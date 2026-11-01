@@ -10,7 +10,8 @@ const sha256 = text => createHash('sha256').update(text).digest('hex');
 const REQUEST_CHUNKS = ['chunks/cb8ba596.js', 'chunks/0472806b.d.ts'];
 
 test('package metadata: VPM dependencies, React peers, no polyfill', () => {
-  assert.deepEqual(metadata.dependencies, {'vfull-ui-headless-calendar': '0.1.0', 'vfullcalendar-core': '0.1.0'});
+  assert.equal(metadata.version, provenance.upstream.version);
+  assert.deepEqual(metadata.dependencies, {'vfull-ui-headless-calendar': 'workspace:*', 'vfullcalendar-core': 'workspace:*'});
   assert.deepEqual(metadata.peerDependencies, {react: '^17 || ^18 || ^19', 'react-dom': '^17 || ^18 || ^19'});
   assert.equal(metadata.type, 'module');
   assert.equal(metadata.vpm.platform, 'browser');

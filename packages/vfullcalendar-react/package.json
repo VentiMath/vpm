@@ -1,6 +1,6 @@
 {
   "name": "vfullcalendar-react",
-  "version": "0.1.0",
+  "version": "7.1.3",
   "description": "FullCalendar 7 for React on VPM's headless calendar engine, without temporal-polyfill",
   "type": "module",
   "main": "./index.js",
@@ -139,8 +139,8 @@
     "PROVENANCE.json"
   ],
   "dependencies": {
-    "vfull-ui-headless-calendar": "0.1.0",
-    "vfullcalendar-core": "0.1.0"
+    "vfull-ui-headless-calendar": "workspace:*",
+    "vfullcalendar-core": "workspace:*"
   },
   "peerDependencies": {
     "react": "^17 || ^18 || ^19",

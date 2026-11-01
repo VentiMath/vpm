@@ -21,6 +21,7 @@ The collection uses standard JavaScript package metadata and module exports.
 The broader goal is an ecosystem that earns native support from package tooling,
 including `bun install`, through demonstrated quality and practical adoption.
 
+[Install calendar packages](docs/INSTALLATION.md) ·
 [Browse packages](packages/) ·
 [Improvements and evidence](IMPROVEMENTS.md) ·
 [Development guide](docs/DEVELOPMENT.md)

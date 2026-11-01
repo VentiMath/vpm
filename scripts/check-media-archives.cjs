@@ -28,11 +28,11 @@ try {
     if (metadata.vpm?.platform === 'browser') {
       browserArchives[name] = 'file:' + packed;
       assert.equal(metadata.engines?.node, '>=24', name + ': packed runtime baseline');
-      for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+      for (const [dependency, version] of Object.entries(metadata.dependencies || {})) assert.equal(version, require(path.join(root, 'packages', dependency, 'package.json')).version);
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(f => !f.endsWith('/')).map(f => f.replace(/^package\//, ''));
       assert.ok(!entries.some(f => /^(test|bench|node_modules)\//.test(f)), name + ': no test, bench or node_modules files');
       if (name === 'vfullcalendar-react') {
-        assert.deepEqual(metadata.dependencies, {'vfull-ui-headless-calendar': '0.1.0', 'vfullcalendar-core': '0.1.0'});
+        assert.deepEqual(metadata.dependencies, {'vfull-ui-headless-calendar': '7.1.3', 'vfullcalendar-core': '7.1.3'});
         assert.deepEqual(Object.keys(metadata.peerDependencies).sort(), ['react', 'react-dom']);
         for (const file of ['index.js', 'index.d.ts', 'daygrid.js', 'timegrid.js', 'interaction.js', 'skeleton.css', 'themes/classic/theme.css', 'locales/fr.js', 'chunks/cb8ba596.js', 'LICENSE', 'PROVENANCE.json', 'README.md']) assert.ok(entries.includes(file), name + ': ' + file);
         const extracted = path.join(directory, name + '-extracted');
@@ -74,7 +74,7 @@ try {
     }
     dependencies[name] = 'file:' + packed;
     assert.equal(metadata.engines?.node, '>=24', name + ': packed runtime baseline');
-    for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+    for (const [dependency, version] of Object.entries(metadata.dependencies || {})) assert.equal(version, require(path.join(root, 'packages', dependency, 'package.json')).version);
     if (name === 'vnode-fetch' || name === 'vgaxios') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), name === 'vnode-fetch' ? ['viconv-lite'] : ['vextend','vhttps-proxy-agent','vnode-fetch']);
       assert.doesNotMatch(run('tar', ['-tzf', packed]), /\/(?:test|bench|node_modules)\//);
