@@ -677,6 +677,24 @@
         "vanynum": "0.1.0",
       },
     },
+    "packages/vtanstack-query-core": {
+      "name": "vtanstack-query-core",
+      "version": "0.1.0",
+    },
+    "packages/vtanstack-react-query": {
+      "name": "vtanstack-react-query",
+      "version": "0.1.0",
+      "dependencies": {
+        "vtanstack-query-core": "0.1.0",
+      },
+      "peerDependencies": {
+        "@types/react": "^18 || ^19",
+        "react": "^18 || ^19",
+      },
+      "optionalPeers": [
+        "@types/react",
+      ],
+    },
     "packages/vteeny-request": {
       "name": "vteeny-request",
       "version": "0.1.0",
@@ -967,6 +985,10 @@
     "vstream-events": ["vstream-events@workspace:packages/vstream-events"],
 
     "vstrnum": ["vstrnum@workspace:packages/vstrnum"],
+
+    "vtanstack-query-core": ["vtanstack-query-core@workspace:packages/vtanstack-query-core"],
+
+    "vtanstack-react-query": ["vtanstack-react-query@workspace:packages/vtanstack-react-query"],
 
     "vteeny-request": ["vteeny-request@workspace:packages/vteeny-request"],
 

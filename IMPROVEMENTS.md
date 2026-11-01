@@ -32,6 +32,8 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Suites verified | vtanstack-react-query | @tanstack/react-query 5.105.0; its 609 tests (hooks, suspense, SSR hydration, type tests) | [@tanstack/react-query 5.105.0](https://www.npmjs.com/package/@tanstack/react-query), checked November 1, 2026 |
+| Suites verified | vtanstack-query-core | @tanstack/query-core 5.105.0; its 1,608 tests, and long timers on a simulated clock | [@tanstack/query-core 5.105.0](https://www.npmjs.com/package/@tanstack/query-core), checked November 1, 2026 |
 | Suites verified | vfullcalendar-react | @fullcalendar/react 7.1.3; its React suite, FullCalendar's 1,542-spec browser suite on the React build (identical per spec), a mounted calendar's time zone and JSON feed behavior, and declarations under TypeScript 7.1, 5.8 and 5.9 | [@fullcalendar/react 7.1.3](https://www.npmjs.com/package/@fullcalendar/react), checked November 1, 2026 |
 | Caller paths verified | vfullcalendar-core | @fullcalendar/core 7.1.3 and the copy of its JSON feed request that @fullcalendar/react 7.1.3 bundles; requests and results against a recording server | [@fullcalendar/core 7.1.3](https://www.npmjs.com/package/@fullcalendar/core), checked November 1, 2026 |
 | Suite and time zones verified | vfull-ui-headless-calendar | @full-ui/headless-calendar 7.1.3 on temporal-polyfill 1.0.1; its vitest suite, and every IANA zone around every offset change from 1840 to 2100 against the runtime's own time zone data | [@full-ui/headless-calendar 7.1.3](https://www.npmjs.com/package/@full-ui/headless-calendar), checked November 1, 2026 |
@@ -124,6 +126,8 @@ are made unnecessary rather than rebuilt. `vfullcalendar-core` covers
 extend and the JSON feed request. `vfullcalendar-react` covers
 `@fullcalendar/react` 7.1.3 on those two packages, completing FullCalendar;
 VentiMath's six calendar files move to the 7.x API when it adopts them.
+TanStack Query follows: `vtanstack-query-core` and `vtanstack-react-query` cover
+5.105.0, the same major version as VentiMath's 5.90, so no migration is needed.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -162,6 +166,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.0 | `gcTime`, `staleTime` and `refetchInterval` beyond about 24.8 days last as asked (30-day `gcTime` collected at once, 30-day `refetchInterval` fetched every millisecond), declarations that compile without DOM types, and the modern build only (1.7 MB instead of 3.9 MB unpacked); all 1,608 upstream tests pass. |
+| [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.0 | On vtanstack-query-core with its fixes; modern build only, without codemods (0.8 MB instead of 1.8 MB unpacked); all 609 upstream tests pass. |
 | [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | The calendar unchanged on VPM's headless engine and core: no `temporal-polyfill`, correct named time zones where the polyfill is wrong, `#fragment` JSON feeds that keep their range, and an application bundle 8% smaller gzipped; identical results on FullCalendar's 1,542-spec browser suite. |
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
@@ -269,14 +275,14 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,800 tests**: all pass on Node 24, and Bun passes
-2,797 with three documented runtime-specific skips. All 101 Node runtime packages'
+The root suite contains **2,808 tests**: all pass on Node 24, and Bun passes
+2,805 with three documented runtime-specific skips. All 102 Node runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **104 packages**, including two declaration-only packages and
-one browser package, `vfullcalendar-react`, whose declarations are checked with
-DOM and React types.
+catalog covers **106 packages**, including two declaration-only packages and
+two browser packages, `vfullcalendar-react` and `vtanstack-react-query`, whose
+declarations are checked with DOM and React types.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -400,6 +406,8 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vtanstack-query-core` | 0 | 0 |
+| `vtanstack-react-query` | 1 (`@tanstack/query-core`; React peer) | 1 (`vtanstack-query-core`; React peer) |
 | `vfullcalendar-react` | 3 (`@full-ui/headless-calendar`, `@fullcalendar/core`; `temporal-polyfill` peer) | 2 (`vfull-ui-headless-calendar`, `vfullcalendar-core`; React peers) |
 | `vfullcalendar-core` | 2 (`@full-ui/headless-calendar` and `temporal-polyfill` peers) | 0 |
 | `vfull-ui-headless-calendar` | 1 (`temporal-polyfill` peer) | 0 |
@@ -568,6 +576,33 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vtanstack-query-core and vtanstack-react-query
+
+Target **@tanstack/query-core and @tanstack/react-query 5.105.0**, checked
+November 1, 2026. The published modern builds are retained, with the React
+package's `@tanstack/query-core` specifier mapped to `vtanstack-query-core`;
+the provenance files record the hashes.
+
+The platform's timers treat a delay above 2^31 - 1 ms as 1 ms, and the default
+timeout provider passed every delay through: a `gcTime` of 30 days collected an
+unused query at once, and a `refetchInterval` of 30 days fetched 1,001 times in
+the first second. The default provider now runs longer delays as a chain of
+timers. The core's declarations typed a query function's signal with the DOM's
+`AbortSignal` and failed to compile without DOM or Node types; they now use the
+runtime's type with a structural fallback. The legacy builds, TypeScript
+sources and migration codemods, which no `exports` entry reaches, are not
+shipped: 1.7 MB instead of 3.9 MB for the core, 0.8 MB instead of 1.8 MB for
+React.
+
+Upstream's suites, run with their own vitest configuration against the built
+modules, pass in full for the original and VPM: **1,608 core tests** (Node and
+Bun) and **609 React tests** (Node), runtime and type tests. Three regression
+cases and eight focused tests cover the changes.
+
+See the [core](packages/vtanstack-query-core/README.md) and
+[React](packages/vtanstack-react-query/README.md) package contracts and the
+[conformance record](scripts/tanstack-query-conformance/README.md).
 
 ## vfullcalendar-react
 

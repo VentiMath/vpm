@@ -1,0 +1,53 @@
+{
+  "name": "vtanstack-react-query",
+  "version": "0.1.0",
+  "description": "TanStack Query for React on vtanstack-query-core",
+  "type": "module",
+  "main": "./build/modern/index.cjs",
+  "module": "./build/modern/index.js",
+  "types": "./build/modern/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./build/modern/index.d.ts",
+        "default": "./build/modern/index.js"
+      },
+      "require": {
+        "types": "./build/modern/index.d.cts",
+        "default": "./build/modern/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "build/modern",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vtanstack-react-query"
+  },
+  "dependencies": {
+    "vtanstack-query-core": "0.1.0"
+  },
+  "peerDependencies": {
+    "@types/react": "^18 || ^19",
+    "react": "^18 || ^19"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    }
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}
