@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/floating-ui/floating-ui",
+  "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+  "tag": "@floating-ui/utils@0.2.12",
+  "files": {
+    "LICENSE": "0e4c9a9b6c71019cbbea3bdc20b01223110a9035700f9c960c8fcbf78c2325ce",
+    "getOppositeAxisPlacements.test.ts": "7bc2c4795ea8bbbf431fe06afe0877487461109a5013da71cbc5b3978ad052aa",
+    "getOverflowAncestors.test.ts": "2b8536ee66d322e549ea2193b44d0e235f4df4f453438608c3d5bf9b2c082e1a"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "vpm-floating-utils-conformance",
+  "private": true,
+  "dependencies": {
+    "@floating-ui/utils": "0.2.12",
+    "@floating-ui/core": "1.7.5",
+    "@floating-ui/dom": "1.7.6",
+    "jsdom": "27.4.0"
+  }
+}

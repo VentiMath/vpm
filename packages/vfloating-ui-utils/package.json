@@ -1,0 +1,54 @@
+{
+  "name": "vfloating-ui-utils",
+  "version": "0.1.0",
+  "description": "Independent placement and DOM helpers for Floating UI",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./runtime.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./runtime.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./dom": {
+      "import": {
+        "types": "./dom.d.mts",
+        "default": "./dom.mjs"
+      },
+      "require": {
+        "types": "./dom.d.cts",
+        "default": "./dom.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.cts",
+    "*.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vfloating-ui-utils"
+  }
+}

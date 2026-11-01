@@ -222,6 +222,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfloating-ui-utils](packages/vfloating-ui-utils) | @floating-ui/utils 0.2.12 | Independent zero-dependency placement and DOM helpers; owned fallback arrays, iterative ancestry and browser-tested Floating UI core/dom callers. |
 | [vreact-is](packages/vreact-is) | react-is 19.3.1 | Independent zero-dependency React classification; single discriminator reads, direct predicates, browser ESM and verified React 19.1/MUI callers. |
 | [vclsx](packages/vclsx) | clsx 2.1.1 | Independent zero-dependency class names; own dictionary fields, stack-safe deep arrays, explicit cycle errors and shared CJS/ESM identities. |
 | [vemotion-babel-plugin](packages/vemotion-babel-plugin) | @emotion/babel-plugin 11.13.5 | Minifies with vstylis (the original's stylis 4.2.0 turned `border: 1px /* thin */ solid red` into `border:1pxsolid red`), its own source maps and imports, no macros: 3 dependencies instead of 11, all VPM; otherwise the original's output, target class names included. |
@@ -350,12 +351,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 111 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **122 packages**, including two declaration-only packages and
-nine browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
+compiler in NodeNext and bundler resolution modes. The catalog covers **123 packages**, including two declaration-only packages and
+ten browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react` and `vemotion-styled`, whose declarations are checked with DOM
-(and React) types in their fixtures.
+`vemotion-react`, `vemotion-styled` and `vfloating-ui-utils`, whose declarations are checked with DOM
+(and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -663,6 +664,23 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfloating-ui-utils
+
+The baseline is **@floating-ui/utils 0.2.12**. Both helper entry points are
+independently implemented with no dependencies. Placement results cannot poison
+future calls, ancestry traversal is iterative, and DOM predicates handle foreign
+realms without requiring every DOM constructor on the global object. The 0.2.12
+padding contract is retained. Twenty-one unchanged upstream tests and 24 real
+Chrome positioning cases exercise core 1.7.5/dom 1.7.6 with only utils replaced.
+Packed npm/Bun consumers and TypeScript 7 declarations are checked separately.
+The isolated Node run supports 41% less time for RTL alignment sides and 62% less
+for unaligned fallback placements. Expanded placement lists cost 40/34 ns more
+on Node/Bun (20%/24% paired changes); Bun alignment extraction costs 8 ns more
+(34%). Other directions remain inconclusive. These are helper CPU costs, not
+browser frame-rate measurements.
+See [API and scope](packages/vfloating-ui-utils/README.md) and
+[isolated measurements](packages/vfloating-ui-utils/bench/results/README.md).
 
 ## Emotion
 

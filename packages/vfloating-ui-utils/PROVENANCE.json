@@ -1,0 +1,30 @@
+{
+  "upstream": {
+    "name": "@floating-ui/utils",
+    "version": "0.2.12",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "directory": "packages/utils",
+    "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+    "integrity": "sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent source-informed implementation of the placement and DOM API. No upstream runtime is included. Public declarations and unchanged test sources retain their MIT attribution; this is not a clean-room claim.",
+  "scope": "The full utils and utils/dom export surface used below Floating UI core/dom/react, including VentiMath Tiptap popovers, dropdowns and tooltips. Callers are not migrated by this package.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "Placement helpers and DOM ancestry/containment utilities."
+  },
+  "changes": [
+    "Fallback placement arrays belong to each call; mutating one cannot corrupt future calls.",
+    "Iterative nearest-overflow and ancestor enumeration avoid recursion and repeated array concatenation. A 20,000-node control overflows upstream on Node; Bun tail-call optimization already handles the nearest-ancestor control.",
+    "DOM type checks use available realm constructors and work when a host exposes window without copying every constructor onto globalThis. isWebKit always returns a boolean.",
+    "Current 0.2.12 padding semantics, including nullish defaults and inherited side values, are preserved."
+  ],
+  "verification": {
+    "upstream": "21 unchanged upstream tests; only imports redirected, with the used assertion methods backed by node:assert/strict and genuine JSDOM.",
+    "callers": "Chrome executes pinned core 1.7.5/dom 1.7.6 against upstream and VPM utils: 24 placement/RTL/middleware cases plus overflow, shadow slots, iframes and modal top layers.",
+    "packaging": "Packed npm/Bun installs, Node/Bun CJS/ESM, browser bundling and TypeScript 7 DOM consumers."
+  }
+}
