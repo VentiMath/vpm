@@ -971,8 +971,8 @@ Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
 service lifecycle, token lease, option snapshots, credential adapters, Auth response records,
 user-management plans, token policy, key caches, signature adaptation, Auth
 request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy and authorization
-headers, JSON/text response projection and Firestore client configuration/registry
-have source-informed VPM implementations. Multipart/raw-HTTP helpers, other service APIs and Google Auth
+headers, JSON/text response projection, Firestore client configuration/registry
+and Storage contexts have source-informed VPM implementations. Multipart/raw-HTTP helpers, other service APIs and Google Auth
 remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
@@ -1106,6 +1106,14 @@ a conflicting `preferRest` value. Project and credential come from one app-optio
 snapshot; settings getters are read once. Failed construction is not cached.
 Entry-point export routing and underlying Google Cloud Firestore operations
 remain retained and tracked separately.
+
+Storage has an independent app/client facade and configuration projection.
+Explicit ADC projects are honored; project and credential share one options
+snapshot. Emulator configuration is per client, with stable Firebase download-URL
+routing and a lifetime check for named buckets. One unchanged upstream assertion
+that requires global environment mutation is now an exact intentional difference,
+verified by two real servers. Underlying Storage operations remain separately
+tracked; its own endpoint resolver is independently implemented.
 
 ## vgoogle-cloud-firestore
 
@@ -1588,8 +1596,9 @@ for the replacement caller.
 ## vgoogle-cloud-storage
 
 The baseline is **@google-cloud/storage 8.4.0**, checked October 30, 2026.
-The published SDK and declarations are retained, with all 13 direct library
-dependencies replaced by VPM packages. Its unused `abort-controller` dependency
+Endpoint configuration is independently implemented; the rest of the published
+SDK and declarations are retained with focused changes. All 13 direct library
+dependencies are VPM packages. Its unused `abort-controller` dependency
 is removed; Node 24/Bun provide the native controller used by resumable uploads.
 
 Signed URLs reject malformed SHA-256 digests and caller query parameters that
@@ -1608,12 +1617,19 @@ retries and corrupt-checksum cleanup. Packed npm/Bun installs and standalone
 declarations are checked. Broader SDK methods, live IAM/cloud operations and
 browser bundles are retained or possible but not independently certified.
 
-[Measurements](packages/vgoogle-cloud-storage/bench/results/README.md) compare
-construction, handle creation, real RSA signing, CRC32C and local HTTP paths
-against the complete upstream client, with three fresh processes and an
-identical-upstream control per runtime. Node listing/download take about 17%/19%
-less time. Bun metadata/listing remain about 9%/15% slower; upload/download
-also trend slower with noisy controls. RSA signing is broadly unchanged.
+An owned endpoint resolver now makes explicit API endpoints select the same
+server for metadata and uploads. Optional per-client emulator configuration
+replaces Admin's global environment mutation. Existing clients retain their
+Firebase download URLs and signed-form bucket routes after environment changes.
+Canonical default endpoints preserve normal authentication, and endpoint syntax
+is checked. Two-server original/VPM controls exercise those boundaries on both
+runtimes, including verified V4 form signatures.
+
+[Measurements](packages/vgoogle-cloud-storage/bench/results/README.md) use one
+selected SDK per fresh worker, four balanced comparison pairs and two identical-
+source controls. A separate Node 24 server serves both client runtimes. All ten
+CPU/localhost workloads and their regressions/inconclusive results are retained;
+old shared-process percentages are historical and are not current evidence.
 [API, migration and verification scope](packages/vgoogle-cloud-storage/README.md).
 
 ## vmime

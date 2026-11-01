@@ -31,11 +31,14 @@ mint tokens (passing an empty-string key for unsigned emulator tokens, which
 
 The original passes all **6,146 tests** on Node. VPM runs 6,062: the two
 Realtime Database spec files (the 84 tests of the `Database` suite) are left out
-because the implementation they require is omitted. Exactly 46 VPM tests must
+because the implementation they require is omitted. Exactly 47 VPM tests must
 fail, each on a recorded assertion:
 
 - 39 `Http2Client` and `AuthorizedHttp2Client` tests assert the request carried
   `:scheme: https:`; VPM sends the bare `https` that RFC 9113 requires.
+- One Storage test requires writing `STORAGE_EMULATOR_HOST` globally. VPM passes
+  the emulator to each client instead. `storage-context.cjs` verifies preserved
+  routing and isolation through two actual local servers.
 - 7 tests expect multipart responses to be parsed; VPM rejects them with
   `ERR_UNSUPPORTED_MULTIPART_RESPONSE`. (The eighth multipart test, an
   `Http2Client` one, fails first on its `:scheme` assertion.)
@@ -216,3 +219,13 @@ verify that project and credential come from one options snapshot and that
 settings are read once. Distinct database identity, cached reuse, and retry after
 a failed constructor remain compatible. Actual Firestore RPCs are verified by
 `callers.cjs`; this facade rewrite does not replace the underlying client runtime.
+
+`storage-context.cjs` runs each implementation in its own process with two local
+HTTP servers. It reproduces global emulator leakage between apps, an explicit
+endpoint overriding uploads but not metadata, and ambient changes redirecting
+Firebase download URLs or changing signed-form bucket routes. V2/V4 URLs and an
+independently verified V4 form signature preserve normal behavior. Controls also
+cover ADC project selection, one app-options snapshot, canonical default endpoint
+authentication classification, and access after app deletion. The original test
+requiring global mutation remains unchanged and must fail on precisely its
+recorded assertion. No other upstream test is adapted for this change.

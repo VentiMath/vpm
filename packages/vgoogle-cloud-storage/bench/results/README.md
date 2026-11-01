@@ -1,73 +1,75 @@
-# Storage client measurements
+# vgoogle-cloud-storage measurements
 
-Storage 8.4.0 versus `vgoogle-cloud-storage`, on Node **24.22.1** and Bun
-**1.4.0**, Apple M1 Pro, macOS arm64. Negative changes mean less time per
-operation. These are local CPU/localhost measurements, not cloud latency or
-application throughput claims.
+Each timed
+implementation runs alone in a fresh process. Four comparison pairs use
+balanced upstream-first / VPM-first order; two further pairs run identical
+upstream code in separate processes as controls. Warmup lasts at least 150 ms
+per case, followed by recalibration on warmed code, four warmup blocks and 12
+recorded blocks. Both workers in a pair use the same iteration count, targeting
+10 ms blocks with a one-million-operation cap. Results are retained and checked
+outside timing. All samples are kept, including outliers.
 
-Each runtime has three fresh processes and one identical-upstream control.
-Each case has 150 ms warmup per variant, four full warmup blocks and 12
-alternating paired rounds. The pilot targets 15 ms per block, capped at 100,000
-operations. Results are retained; assertions run outside timing. There is no
-sample trimming. JSON files retain every sample, runtime details and source
-hashes for this client, its VPM dependency graph, fixture lock and harness.
+The comparison units are per-process medians. The change column is the median
+of four process-pair percentage changes; the two order columns expose order
+sensitivity. The nanosecond columns are medians of the four process medians.
+They need not produce exactly the percentage in the change column.
 
-Signed URLs use actual RSA-2048 signatures with an ephemeral key generated
-outside timing. HTTP cases use real SDK requests against localhost, with
-CRC32C validation on 64 KiB uploads/downloads. Upload body assertions and
-response construction run in the same local server for both variants. No real
-credentials or live cloud services are used. Client construction is warm module
-construction, not process startup.
+A direction is unestablished when it reverses across processes or any pair
+overlaps the largest absolute control difference (with a minimum 2% floor).
+This is a conservative descriptive check, not a confidence interval. Process
+isolation reduces shared JIT feedback; environmental noise and GC remain.
+Negative changes mean less time; these are local workload measurements, not
+application throughput or latency guarantees.
 
-Upstream's short-lived download pipelines exceed the default ten EventEmitter
-listeners. The benchmark sets the threshold to 32 **for both variants** to keep
-warning output out of timings. Runtime code and correctness tests retain the
-default. This does not change stream cleanup or suppress request errors.
+## Node 24.22.1
 
-| Case | Node upstream → VPM, µs | Paired change | Bun upstream → VPM, µs | Paired change |
-| --- | ---: | ---: | ---: | ---: |
-| Storage construction | 0.947 → 0.846 | −9.5% | 1.072 → 0.892 | −17.5% |
-| Bucket + file handles | 16.983 → 16.947 | −2.4% | 18.629 → 17.578 | −5.2% |
-| V2 URL, RSA-2048 | 875.168 → 879.058 | +0.5% | 706.657 → 701.480 | +1.0% |
-| V4 URL, RSA-2048 | 893.695 → 894.155 | −0.1% | 730.574 → 725.710 | +0.4% |
-| CRC32C, 64 KiB | 337.928 → 335.327 | −0.4% | 570.507 → 571.939 | −0.6% |
-| HTTP object metadata | 202.885 → 157.001 | −22.6% | 94.706 → 105.225 | +9.4% |
-| HTTP listing, one page | 188.442 → 151.302 | −16.5% | 120.080 → 138.854 | +14.9% |
-| HTTP multipart upload, 64 KiB | 903.974 → 827.729 | −7.4% | 1220.306 → 1253.076 | +3.4% |
-| HTTP download, 64 KiB | 341.314 → 276.864 | −18.6% | 197.485 → 230.452 | +9.5% |
+Recorded 2026-11-01T17:12:53.427Z on Apple M1 Pro, darwin/arm64.
 
-Times are medians of 36 samples; changes are medians of paired ratios, so the
-percentage need not equal the ratio of the two pooled time medians.
+[Raw samples, processes, controls and source hashes](node-isolated.json).
 
-## Variation and limits
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Storage construction | 950 | 1820 | 94.3% | 94.3% | 99.2% | 1.4% | higher time in every pair, beyond control spread |
+| custom endpoint construction | 1043 | 2333 | 123.7% | 122.2% | 123.7% | 1.4% | higher time in every pair, beyond control spread |
+| bucket + file handles | 17392 | 17282 | -0.8% | -2.4% | 36.8% | 4.2% | unestablished at this precision |
+| v2 signed URL / RSA fixture | 862447 | 877197 | 1.4% | 4.9% | 1.4% | 1% | unestablished at this precision |
+| v4 signed URL / RSA fixture | 891090 | 879520 | -1.9% | -1.1% | -16.1% | 0.8% | unestablished at this precision |
+| CRC32C / 64KiB | 343820 | 343874 | 1.5% | -2.4% | 9.9% | 0.4% | unestablished at this precision |
+| HTTP object metadata | 205219 | 178253 | -17.7% | -25% | -5.3% | 25.2% | unestablished at this precision |
+| HTTP automatic listing / one page | 191043 | 154447 | -16.7% | -19.5% | -7.9% | 13% | unestablished at this precision |
+| HTTP multipart upload / 64KiB + CRC32C | 802715 | 776002 | -8.1% | -50.8% | -3.9% | 8.8% | unestablished at this precision |
+| HTTP download / 64KiB + CRC32C | 378119 | 263557 | -29.7% | -47.3% | -28% | 10.3% | lower time in every pair, beyond control spread |
 
-Node metadata, listing, upload and download improve in all three processes.
-Their per-process changes are respectively −22% to −23%, −16% to −20%, −7% to
-−8%, and −15% to −21%. Identical-upstream controls are +15.3%, +1.0%, −8.7%
-and +3.4%. The metadata control is noisy, and the upload difference is smaller
-than its control offset; the exact percentages should not be treated as precise
-speedup estimates. Listing and download have clearer improvements.
+## Bun 1.4.0
 
-All four Bun HTTP cases are **slower in every process**. Metadata changes range
-from +0.1% to +17%, listing from +6% to +33%, upload from +2% to +13%, and
-download from +8% to +14%. Their controls are +1.8%, −7.7%, +12.8% and +11.4%.
-Upload/download differences are smaller than the corresponding control offsets;
-metadata/listing still show an unfavorable trend. These measurements do not
-support an across-the-board Bun HTTP improvement.
+Recorded 2026-11-01T17:13:37.523Z on Apple M1 Pro, darwin/arm64.
 
-Construction improves across processes, but Bun's magnitude varies from 10% to
-24%. Handle creation is variable on Bun and close to control noise on Node.
-RSA signing and CRC32C are broadly unchanged: pooled paired differences are
-about 1% or less, with some process outliers. Signing corrections remain enabled
-in every VPM measurement.
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
+
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Storage construction | 990 | 906 | -7.6% | -7.6% | -11.1% | 9.5% | unestablished at this precision |
+| custom endpoint construction | 1129 | 1358 | 17.6% | 20.6% | 13.9% | 3.5% | higher time in every pair, beyond control spread |
+| bucket + file handles | 16338 | 16118 | -1.4% | -1.4% | 5.6% | 2.6% | unestablished at this precision |
+| v2 signed URL / RSA fixture | 694360 | 694843 | -0.1% | -0.4% | -0.1% | 5.2% | unestablished at this precision |
+| v4 signed URL / RSA fixture | 698833 | 701808 | 0.5% | 1.2% | 0.5% | 70.1% | unestablished at this precision |
+| CRC32C / 64KiB | 560363 | 548572 | -2.4% | -0.9% | -3.3% | 1% | unestablished at this precision |
+| HTTP object metadata | 99877 | 104691 | 6.6% | -1.7% | 6.6% | 5.7% | unestablished at this precision |
+| HTTP automatic listing / one page | 102378 | 118536 | 16.1% | -2.2% | 25.5% | 19.7% | unestablished at this precision |
+| HTTP multipart upload / 64KiB + CRC32C | 1015731 | 1047919 | 1.6% | -28.5% | 8.2% | 15.4% | unestablished at this precision |
+| HTTP download / 64KiB + CRC32C | 259123 | 261434 | -5.6% | -5.6% | 2.7% | 10.6% | unestablished at this precision |
 
 ## Reproduce
 
-From the repository root, install the Storage comparison fixture, then run
-`node packages/vgoogle-cloud-storage/bench/compare.cjs` or the same command with
-`bun`. Set `OUTPUT` to retain a report and `CALIBRATION=1` for an upstream/upstream
-control. Run benchmarks sequentially without concurrent test suites.
+Run these commands from the repository root after installing the pinned
+fixtures used by `bench/compare.cjs`:
 
 ```sh
-node -e "require('./scripts/bench-paired.cjs').summarize(require('node:path').resolve('packages/vgoogle-cloud-storage'))" -- --verify-current
+OUTPUT=packages/vgoogle-cloud-storage/bench/results/node-isolated.json node packages/vgoogle-cloud-storage/bench/compare.cjs
+OUTPUT=packages/vgoogle-cloud-storage/bench/results/bun-isolated.json bun packages/vgoogle-cloud-storage/bench/compare.cjs
+node scripts/render-bench-report.cjs packages/vgoogle-cloud-storage
 ```
+
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.

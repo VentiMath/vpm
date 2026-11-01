@@ -1,12 +1,11 @@
 # vfirebase-admin
 
 **Implementation status:** VPM independently implements app and credential
-management, the Auth operations used by VentiMath, and HTTP/1 and HTTP/2 request,
-retry, authorization, session handling, JSON/text response projection and Firestore
-client configuration/registry ownership. Multipart
-and raw-HTTP helpers, endpoint schemas,
-other service APIs and Google Auth remain upstream-derived. This is a partial
-SDK rewrite; [provenance](PROVENANCE.json) maps the boundary.
+management and the Auth operations used by VentiMath. It also owns HTTP transport,
+responses, retries, authorization, Firestore client configuration and Storage
+contexts. Endpoint schemas, remaining service APIs and Google Auth remain
+upstream-derived. This is a partial SDK rewrite;
+[provenance](PROVENANCE.json) maps the boundary.
 
 The Firebase Admin SDK, targeting **firebase-admin 14.5.0**, the latest stable
 release checked October 31, 2026. All dependencies are VPM packages; Node.js 24+
@@ -42,6 +41,15 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 | `@fastify/busboy` | Omitted (see below) |
 
 ## Changes from 14.5.0
+
+- **Per-client Storage context.** Credential and project come from one app-options
+  snapshot, including an explicit project with application-default credentials.
+  Emulator configuration is passed to each client instead of writing
+  `STORAGE_EMULATOR_HOST`. Changing the environment later cannot redirect an
+  existing client's metadata, Firebase download URLs or signed-form routes.
+  Metadata and uploads honor the same explicit endpoint. Named buckets check app
+  lifetime without copying all options. Underlying Storage operations remain
+  separately tracked in `vgoogle-cloud-storage`.
 
 - **Firestore client configuration.** Each database has one owned client/settings
   record. Mutating the original `preferRest` option cannot disguise a conflicting
@@ -227,36 +235,40 @@ Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
 previous JWT improvements; they do not isolate the HTTP rewrite alone. The
-[full report](bench/results/README.md) includes all forty-one cases, process
+[full report](bench/results/README.md) includes all forty-five cases, process
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
-Firestore option projection takes 141 ns versus 177 ns on Node (21% less median
-paired time), and repeated initialization takes 13 ns versus 19 ns (32% less).
-Node's cached lookup comparison is inconclusive. On Bun, option projection takes
-79 ns versus 75 ns (+7%) and cached lookup 10 ns versus 9 ns (+18% paired time);
-repeated initialization is inconclusive. These measure the Admin accessor and
+Storage's application-default context takes 2.1 µs versus 3.8 µs on Node (45%
+less median paired time). Default bucket access costs 3% (10.3 versus 10.0 µs);
+service-account setup and explicit bucket access are inconclusive. All four Bun
+Storage comparisons are inconclusive. These include the underlying Storage client.
+
+Firestore repeated initialization takes 13 ns versus 18 ns on Node (28% less
+median paired time) and 9 ns versus 17 ns on Bun (47% less). Bun's cached lookup
+takes 10 ns versus 9 ns (+18% paired time); Node's cached lookup and both option
+projection comparisons are inconclusive. These measure the Admin accessor and
 configuration work, not Firestore operations or RPC latency.
 
 The response-only JSON case eagerly parses and consumes the value inside timing.
-Node's comparison is inconclusive; Bun takes 644 ns versus 610 ns (+5%). Malformed
-JSON diagnostics take 9.5 µs versus 8.7 µs on Node (+9%), and empty-response
-classification costs about 6%. Both Bun error-path comparisons are inconclusive.
-Detached headers and private parsing state retain their measured costs.
+JSON, malformed-JSON diagnostics and empty-response classification are all
+inconclusive on both runtimes in this recording. Raw costs, earlier recordings
+in Git history, and the source-matched controls remain available.
 
 The HTTP cases serialize requests and consume synthetic response streams; they
 exclude sockets and network latency. HTTP/1 with Auth-style headers costs about
-19% on Node and 25% on Bun. HTTP/2 single requests cost about 58% and 53%,
-respectively. The twenty-request HTTP/2 batch is inconclusive on Node and costs
-34% on Bun (61.9 µs versus 46.3 µs). Session setup is inconclusive on both. These
-are not real FCM batch latencies. Authorized requests retain costs too: explicit
-headers cost 22% on Node, while Bun's default/explicit cases cost 40% and 52%.
-Node's default-header comparison is inconclusive.
+31% on Bun and is inconclusive on Node. HTTP/2 single requests and twenty-request
+batches are inconclusive on Node; on Bun they cost 41% and 39%, respectively
+(3.7 versus 2.7 µs, and 63.0 versus 45.9 µs). Node's synthetic session setup costs
+110% (226 versus 106 ns); Bun's is inconclusive. These are not real FCM batch
+latencies. Authorized requests retain costs too: explicit headers cost 28% on
+Node, while Bun's default/explicit cases cost 38% and 56%. Node's default-header
+comparison is inconclusive.
 
-Custom retry-policy capture takes 114 ns versus 10 ns on Node and 362 ns versus
+Custom retry-policy capture takes 113 ns versus 10 ns on Node and 374 ns versus
 12 ns on Bun; it copies and freezes caller settings instead of retaining them.
-Default construction takes 9 ns versus 14 ns and 4 ns versus 17 ns, respectively.
-Strict UTC HTTP-date parsing costs 466 ns versus 240 ns on Node and 429 ns versus
+Default construction takes 9 ns versus 14 ns and 7 ns versus 18 ns, respectively.
+Strict UTC HTTP-date parsing costs 466 ns versus 241 ns on Node and 432 ns versus
 42 ns on Bun. Setup/error-path regressions retain their full percentages and
 controls; ordinary request success does not parse retry dates.
 
@@ -271,8 +283,9 @@ wire compatibility; these CPU timings do not establish application latency.
 
 - [Upstream suite](../../scripts/firebase-admin-conformance/README.md): the
   release's 6,146 unit tests pass for the original. VPM runs the 6,062 that do not
-  require the Realtime Database client; all pass except 46 that assert the
-  `https:` scheme or multipart parsing, each required to fail on exactly that.
+  require the Realtime Database client; all pass except 47 that assert the
+  `https:` scheme, multipart parsing or global Storage emulator mutation, each
+  required to fail on its exact recorded assertion.
 - [Callers](../../scripts/firebase-admin-conformance/callers.cjs): `verifyIdToken`
   with revocation checks, `getUser`, `updateUser`, `revokeRefreshTokens`,
   `deleteUsers` (Auth emulator protocol), a full Firestore scenario (gRPC),
@@ -281,6 +294,9 @@ wire compatibility; these CPU timings do not establish application latency.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [Storage context controls](../../scripts/firebase-admin-conformance/storage-context.cjs)
+  compare two real server destinations, metadata/uploads/download URLs, V2/V4
+  signatures, ADC projects, captured options and deleted-app access.
 - [Firestore configuration controls](../../scripts/firebase-admin-conformance/firestore-facade.cjs)
   reproduce mutable settings and inconsistent option reads, and verify database
   identity and retry after failed construction.

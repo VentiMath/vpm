@@ -50,6 +50,8 @@ export interface StorageOptions extends ServiceOptions {
      * Defaults to `storage.googleapis.com`.
      */
     apiEndpoint?: string;
+    /** Per-client emulator endpoint. Overrides the ambient emulator; mutually exclusive with apiEndpoint. */
+    emulatorHost?: string;
     crc32cGenerator?: CRC32CValidatorGenerator;
     retryOptions?: RetryOptions;
 }
@@ -336,6 +338,8 @@ export declare const RETRYABLE_ERR_FN_DEFAULT: (err?: ApiError) => boolean;
  * @class
  */
 export declare class Storage extends Service {
+    /** Captured emulator endpoint, or undefined for a normal/custom API endpoint. */
+    readonly emulatorHost?: string;
     /**
      * {@link Bucket} class.
      *

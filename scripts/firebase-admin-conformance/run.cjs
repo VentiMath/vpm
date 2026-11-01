@@ -99,6 +99,11 @@ try {
     'RemoteConfig createTemplateFromJSON should succeed when a valid json string is provided'] : [];
   const expected = new Map(engineWording.map(title => [title, /but got 'Attempted to assign to readonly prope/]));
   for (const [title, pattern] of Object.entries(upstream ? {} : unavailable)) expected.set(title, pattern);
+  // Each Storage client now captures its own emulator configuration. The
+  // original assertion explicitly requires the process-wide mutation removed
+  // by this design; paired two-server wire controls verify preserved routing.
+  if (!upstream) expected.set('Storage Emulator mode sets STORAGE_EMULATOR_HOST if FIREBASE_STORAGE_EMULATOR_HOST is set',
+    /^expected undefined to equal 'http:\/\/localhost:9199'$/);
   // VPM sends the HTTP/2 :scheme pseudo-header as 'https' (RFC 9113); upstream
   // sends 'https:', and these Http2Client tests assert that value on a mocked
   // session (Http2Client and AuthorizedHttp2Client). Each must fail on exactly

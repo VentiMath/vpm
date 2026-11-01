@@ -4,6 +4,7 @@
 const assert = require('node:assert/strict'), path = require('node:path');
 const roots = {upstream: path.resolve(__dirname, '../../../scripts/firebase-admin-conformance/node_modules/firebase-admin'), vpm: path.resolve(__dirname, '..')};
 const library = root => ({jwt: require(path.join(root, 'lib/utils/jwt.js')), messaging: require(path.join(root, 'lib/messaging/messaging-internal.js')),
+  AdminStorage: require(path.join(root, 'lib/storage/storage.js')).Storage,
   FirestoreService: require(path.join(root, 'lib/firestore/firestore-internal.js')).FirestoreService,
   getFirestoreOptions: require(path.join(root, 'lib/firestore/firestore-internal.js')).getFirestoreOptions,
   HttpClient: require(path.join(root, 'lib/utils/api-request.js')).HttpClient,
@@ -68,7 +69,7 @@ const user = {localId: 'ada', email: 'ada@example.com', emailVerified: true, dis
   customAttributes: '{"role":"teacher","classes":["math","science"]}'};
 const env = {token, publicKey, message, library, certificate, user, noKid, syntheticHttp, syntheticHttp2, syntheticSessions};
 // A worker constructs only its selected SDK; both workers use the same fixed token.
-const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, FirestoreService, getFirestoreOptions, HttpClient, AuthorizedHttpClient, Http2Client, Http2SessionHandler, RequestClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
+const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, AdminStorage, FirestoreService, getFirestoreOptions, HttpClient, AuthorizedHttpClient, Http2Client, Http2SessionHandler, RequestClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
 const syntheticCredential = 'const credential = new ApplicationDefaultCredential(); const client = {credentials: {access_token: "bench", expiry_date: Date.now() + 3600000}, getAccessToken: async () => ({token: "bench"})}; credential.googleAuth.getClient = async () => client; ';
 // The transport returns fixed JSON outside network I/O; these cases measure the
 // complete public operation's request planning and result projection, not HTTP.
@@ -118,10 +119,16 @@ const cases = [
   {name: 'credential / reuse service-account factory', make: compiled('return () => credentialFactory.cert(certificate).clientEmail;'), validate: v => assert.equal(v, certificate.client_email)},
   {name: 'credential / acquire cached Google client token', async: true, make: compiled(syntheticCredential + 'return () => credential.getAccessToken().then(token => token.access_token);'), validate: v => assert.equal(v, 'bench')},
   {name: 'credential / twenty concurrent acquisitions', async: true, make: compiled(syntheticCredential + 'return () => Promise.all(Array.from({length: 20}, () => credential.getAccessToken())).then(tokens => tokens.every(token => token.access_token === "bench"));'), validate: v => assert.equal(v, true)},
+  {name: 'storage / construct service-account context', make: compiled('const app = new FirebaseApp({projectId: "bench", credential: credentialFactory.cert(certificate)}, "bench"); return () => new AdminStorage(app);'), validate: value => assert.equal(value.app.name, 'bench')},
+  {name: 'storage / construct application-default context', make: compiled('const app = new FirebaseApp({projectId: "bench", credential: new ApplicationDefaultCredential()}, "bench"); return () => new AdminStorage(app);'), validate: value => assert.equal(value.app.name, 'bench')},
+  {name: 'storage / default bucket handle', make: compiled('const app = new FirebaseApp({projectId: "bench", storageBucket: "fixture", credential: new ApplicationDefaultCredential()}, "bench"), service = new AdminStorage(app); return () => service.bucket().name;'), validate: value => assert.equal(value, 'fixture')},
+  {name: 'storage / explicit bucket handle', make: compiled('const app = new FirebaseApp({projectId: "bench", credential: new ApplicationDefaultCredential()}, "bench"), service = new AdminStorage(app); return () => service.bucket("fixture").name;'), validate: value => assert.equal(value, 'fixture')},
 ];
 require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream: roots.upstream, vpm: roots.vpm, cases,
   files: ['package.json', 'lib', 'bench/compare.cjs', 'bench/token-fixture.json', 'bench/no-kid-fixture.json', '../vjsonwebtoken/index.js', '../vjsonwebtoken/lib', '../vjws/index.js', '../vjws/lib', '../vjwa/index.js',
-    '../vgoogle-auth-library/lib', '../../scripts/firebase-admin-conformance/upstream/test/resources/mock.key.json',
+    '../vgoogle-auth-library/lib', '../vgoogle-cloud-storage/lib', '../vgoogle-cloud-firestore/build/src',
+    '../../scripts/firebase-admin-conformance/node_modules/@google-cloud/storage/build/cjs/src',
+    '../../scripts/firebase-admin-conformance/node_modules/@google-cloud/firestore/build/src', '../../scripts/firebase-admin-conformance/upstream/test/resources/mock.key.json',
     '../../scripts/firebase-admin-conformance/package-lock.json', '../../scripts/firebase-admin-conformance/node_modules/firebase-admin/lib',
     '../../scripts/firebase-admin-conformance/node_modules/google-auth-library/build/src',
     '../../scripts/firebase-admin-conformance/node_modules/jsonwebtoken/index.js', '../../scripts/firebase-admin-conformance/node_modules/jsonwebtoken/lib',

@@ -28,6 +28,7 @@ const package_json_helper_cjs_1 = require("./package-json-helper.cjs");
 const hmacKey_js_1 = require("./hmacKey.js");
 const crc32c_js_1 = require("./crc32c.js");
 const google_auth_library_1 = require("vgoogle-auth-library");
+const {storageEndpoint, normalizeEndpoint} = require("./storage-endpoint");
 var IdempotencyStrategy;
 (function (IdempotencyStrategy) {
     IdempotencyStrategy[IdempotencyStrategy["RetryAlways"] = 0] = "RetryAlways";
@@ -457,21 +458,9 @@ class Storage extends index_js_1.Service {
     constructor(options = {}) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         const universe = options.universeDomain || google_auth_library_1.DEFAULT_UNIVERSE;
-        let apiEndpoint = `https://storage.${universe}`;
-        let customEndpoint = false;
-        // Note: EMULATOR_HOST is an experimental configuration variable. Use apiEndpoint instead.
-        const EMULATOR_HOST = process.env.STORAGE_EMULATOR_HOST;
-        if (typeof EMULATOR_HOST === 'string') {
-            apiEndpoint = Storage.sanitizeEndpoint(EMULATOR_HOST);
-            customEndpoint = true;
-        }
-        if (options.apiEndpoint && options.apiEndpoint !== apiEndpoint) {
-            apiEndpoint = Storage.sanitizeEndpoint(options.apiEndpoint);
-            customEndpoint = true;
-        }
-        options = Object.assign({}, options, { apiEndpoint });
-        // Note: EMULATOR_HOST is an experimental configuration variable. Use apiEndpoint instead.
-        const baseUrl = EMULATOR_HOST || `${options.apiEndpoint}/storage/v1`;
+        const {apiEndpoint, baseUrl, customEndpoint, emulatorHost} = storageEndpoint(
+            options, process.env.STORAGE_EMULATOR_HOST || undefined, universe);
+        options = {...options, apiEndpoint};
         const config = {
             apiEndpoint: options.apiEndpoint,
             retryOptions: {
@@ -509,6 +498,7 @@ class Storage extends index_js_1.Service {
             packageJson: (0, package_json_helper_cjs_1.getPackageJSON)(),
         };
         super(config, options);
+        Object.defineProperty(this, "emulatorHost", {value: emulatorHost});
         /**
          * Reference to {@link Storage.acl}.
          *
@@ -522,12 +512,8 @@ class Storage extends index_js_1.Service {
         this.getBucketsStream = paginator_1.paginator.streamify('getBuckets');
         this.getHmacKeysStream = paginator_1.paginator.streamify('getHmacKeys');
     }
-    static sanitizeEndpoint(url) {
-        if (!exports.PROTOCOL_REGEX.test(url)) {
-            url = `https://${url}`;
-        }
-        return url.replace(/\/+$/, ''); // Remove trailing slashes
-    }
+    static sanitizeEndpoint(url) {return normalizeEndpoint(url);}
+
     /**
      * Get a reference to a Cloud Storage bucket.
      *

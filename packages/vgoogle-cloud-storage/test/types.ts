@@ -14,3 +14,9 @@ CRC32C.from(new DataView(new ArrayBuffer(4)));
 file.getSignedUrl({action:'toString',expires:Date.now()});
 // @ts-expect-error incorrect save payload
 file.save({hello:'world'});
+
+const emulatorStorage = new Storage({projectId:'fixture',emulatorHost:'http://127.0.0.1:9199'});
+const emulatorEndpoint: string | undefined = emulatorStorage.emulatorHost;
+void emulatorEndpoint;
+// @ts-expect-error captured endpoint is read-only
+emulatorStorage.emulatorHost = 'http://127.0.0.1:9091';
