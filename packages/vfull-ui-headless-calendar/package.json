@@ -1,0 +1,32 @@
+{
+  "name": "vfull-ui-headless-calendar",
+  "version": "0.1.0",
+  "description": "FullCalendar's headless date engine, with IANA time zones read through Intl instead of temporal-polyfill",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vfull-ui-headless-calendar"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "tests/DateEnvFormatting.test.ts.txt": "8079a655638bb9927c6ddbec25ac776a6e16823d46fb04ce25da44a23ab80abe",
+  "tests/FormattingAdapters.test.ts.txt": "43e9f1c9af7776084e696dbe5109832f28d9841ae8e8e6c0e10e7c8c988dd9f1",
+  "tests/NativeDateFormatter.test.ts.txt": "32845175c4981fd02e2b4e1e3a01f3d7d6a1fa1ea8134aa36a4b77f9e96de6b9",
+  "vitest.config.ts.txt": "b03753d7e992037d03b62c392d686aca8d4f2f6d4a2f40ba47e9e1ee9e974aba",
+  "LICENSE.md": "000882c713ee4c9729c7eeafbebb04a98a633517c2e95f1258fc488853124df3"
+}

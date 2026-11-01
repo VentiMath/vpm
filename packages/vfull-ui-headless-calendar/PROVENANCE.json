@@ -1,0 +1,35 @@
+{
+  "upstream": {
+    "name": "@full-ui/headless-calendar",
+    "version": "7.1.3",
+    "tag": "v7.1.3",
+    "commit": "6b890e803c66d1e6db2fb21c449936155b7e81fc",
+    "repository": "https://github.com/fullcalendar/fullcalendar/tree/6b890e803c66d1e6db2fb21c449936155b7e81fc/packages/headless-calendar",
+    "tarball": "https://registry.npmjs.org/@full-ui/headless-calendar/-/headless-calendar-7.1.3.tgz",
+    "tarballSha256": "dbca24160c3b87a7274590872a3a3c2b4987035e0c7acc666edc7d9784ee2ed4",
+    "integrity": "sha512-CFomIp87osqY65Hlu2c0e2ZnofBe9tKOO8IoPzIfSPVDK/+aGz4Itj6mLu4xPjIvzRDQiopcVzYlip6u1bvYxw=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "retainedEvidence": "../../scripts/headless-calendar-conformance/upstream",
+  "source": "The published index.js (ES module) and index.d.ts of 7.1.3. index.d.ts is unchanged.",
+  "omittedDependencies": {
+    "temporal-polyfill": "Peer dependency (^1.0.1) used for named time zones; they are read through Intl.DateTimeFormat instead."
+  },
+  "modified": [
+    "index.js"
+  ],
+  "added": [],
+  "removed": [],
+  "sourceSHA256": {
+    "index.js": "84d1510cfddb00db08f51d71e5453028b08e035b13418faeb6afa64d96e2e6cd",
+    "index.d.ts": "6519d6b8117853254ddfe03db9e3893393c11c2f40e74a15ad32ae0d90bf1fe5"
+  },
+  "changes": [
+    "Derived from @full-ui/headless-calendar 7.1.3's published ES module: date markers, durations, ranges, DateEnv and the native, function and command formatters.",
+    "Named IANA time zones are read through Intl.DateTimeFormat instead of temporal-polyfill, with Temporal's 'compatible' handling of skipped and repeated wall-clock times; the temporal-polyfill peer dependency is removed.",
+    "Years 0-99 in date arrays and ISO strings are no longer read as 1900-1999.",
+    "Time zone offsets are rounded as a whole, so a fractional minute never prints as ':60'.",
+    "The local time zone keeps milliseconds when converting a marker to a Date."
+  ]
+}

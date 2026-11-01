@@ -227,6 +227,10 @@
       "name": "vfresh",
       "version": "0.1.0",
     },
+    "packages/vfull-ui-headless-calendar": {
+      "name": "vfull-ui-headless-calendar",
+      "version": "0.1.0",
+    },
     "packages/vfunctional-red-black-tree": {
       "name": "vfunctional-red-black-tree",
       "version": "0.1.0",
@@ -803,6 +807,8 @@
     "vforwarded": ["vforwarded@workspace:packages/vforwarded"],
 
     "vfresh": ["vfresh@workspace:packages/vfresh"],
+
+    "vfull-ui-headless-calendar": ["vfull-ui-headless-calendar@workspace:packages/vfull-ui-headless-calendar"],
 
     "vfunctional-red-black-tree": ["vfunctional-red-black-tree@workspace:packages/vfunctional-red-black-tree"],
 

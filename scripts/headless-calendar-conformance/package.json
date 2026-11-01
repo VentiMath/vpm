@@ -1,0 +1,10 @@
+{
+  "name": "headless-calendar-conformance",
+  "private": true,
+  "description": "Pinned @full-ui/headless-calendar 7.1.3 control, its temporal-polyfill peer and the release's test runner",
+  "dependencies": {
+    "@full-ui/headless-calendar": "7.1.3",
+    "temporal-polyfill": "1.0.1",
+    "vitest": "4.0.18"
+  }
+}

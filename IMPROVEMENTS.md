@@ -32,6 +32,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Suite and time zones verified | vfull-ui-headless-calendar | @full-ui/headless-calendar 7.1.3 on temporal-polyfill 1.0.1; its vitest suite, and every IANA zone around every offset change from 1840 to 2100 against the runtime's own time zone data | [@full-ui/headless-calendar 7.1.3](https://www.npmjs.com/package/@full-ui/headless-calendar), checked November 1, 2026 |
 | Caller paths verified | vfirebase-functions | firebase-functions 7.4.0 on vfirebase-admin; its unit suite, VentiMath's HTTP, callable, scheduled, task-queue and Firestore-triggered functions, and the deploy manifest | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked October 31, 2026 |
 | Caller paths verified | vfirebase-admin | firebase-admin 14.5.0 without Realtime Database; its unit suite, and VentiMath's Auth, Firestore, Storage and FCM calls against local servers | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked October 31, 2026 |
 | Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
@@ -109,8 +110,16 @@ API. `vfirebase-functions` now covers `firebase-functions` 7.4.0 on
 package VentiMath's Cloud Functions load is a VPM package or eliminated, apart
 from type-only declaration packages and `safe-buffer`. Admin 12.7's older
 Storage 7, gax 4, gtoken 8 and `form-data` 2.5.5 branches are not separate work:
-the Admin 14 upgrade removes them. Next are frontend foundations, UI and build
-tools.
+the Admin 14 upgrade removes them.
+
+The frontend starts with FullCalendar 7, VentiMath's calendar: `@fullcalendar/react`
+7.1.3 depends on `@fullcalendar/core` and `@full-ui/headless-calendar` 7.1.3, and
+6.x is npm's `legacy` line, so the 6.1.17 packages VentiMath locks are not
+rebuilt. `vfull-ui-headless-calendar` covers `@full-ui/headless-calendar` 7.1.3,
+checked November 1, 2026, without its `temporal-polyfill` peer: polyfill packages
+are made unnecessary rather than rebuilt. `@fullcalendar/core` and
+`@fullcalendar/react` follow; VentiMath's six calendar files move to the 7.x API
+when it adopts them.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -149,6 +158,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | VPM dependencies with vfirebase-admin as the peer; providers and Admin services loaded on first use (a VentiMath-shaped codebase loads 57 modules in 42 ms instead of 663 in 481 ms), `onInit` run once under concurrency and a working bin directory argument; identical responses, logs, events and deploy manifest. |
 | [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, 56% less CPU per ID-token signature check and half the cold-start modules; identical Auth, Firestore, Storage and FCM caller behavior. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | All six dependencies are VPM with one gax stack, 65 modules and about 50 ms at import instead of 404 and 270 ms, reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
@@ -253,12 +263,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,782 tests**: all pass on Node 24, and Bun passes
-2,779 with three documented runtime-specific skips. All 99 runtime packages'
+The root suite contains **2,790 tests**: all pass on Node 24, and Bun passes
+2,787 with three documented runtime-specific skips. All 100 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **101 packages**, including two declaration-only packages.
+catalog covers **102 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -382,6 +392,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vfull-ui-headless-calendar` | 1 (`temporal-polyfill` peer) | 0 |
 | `vfirebase-functions` | 5 (including `@types/cors` and `@types/express`) | 3 (`vcors`, `vexpress`, `vprotobufjs`; `vfirebase-admin` peer) |
 | `vfirebase-admin` | 9 (including `@firebase/database-compat`, `@firebase/database-types` and `@fastify/busboy`) | 6 (all VPM; Realtime Database and multipart parsing eliminated) |
 | `vgoogle-cloud-firestore` | 6 (including `@google-cloud/firestore-api` ^0.2.0, which adds a second `google-gax`) | 6 (all VPM, one gax stack) |
@@ -547,6 +558,44 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfull-ui-headless-calendar
+
+Targets **@full-ui/headless-calendar 7.1.3**, checked November 1, 2026, the
+date engine under `@fullcalendar/core` and `@fullcalendar/react` 7.1.3. The
+published ES module and declarations are retained;
+[PROVENANCE.json](packages/vfull-ui-headless-calendar/PROVENANCE.json) records
+the changes.
+
+The original reads named IANA time zones through its `temporal-polyfill` peer,
+20 modules and about 411 KiB of source in a bundle. Here they are read through
+`Intl.DateTimeFormat`, with Temporal's `'compatible'` handling of skipped and
+repeated wall-clock times, in one 41 KiB module. Where a runtime has no native
+`Temporal` (Node.js 24, the iOS 15 WebView, browsers before Temporal shipped),
+the polyfill samples each zone every 60 days and misses offset changes that come
+in pairs inside one period. Against Node's own time zone data from 1840 to 2100
+the original has wrong offsets in 29 zones, among them Casablanca for weeks in most
+years from 2018 to 2083, Fiji in 2020-2021, Cairo in 2010 and 2014 and much of
+Europe in the 1940s. Years 0-99 are no longer read as
+1900-1999, offsets are rounded as a whole so Denver's local mean time prints as
+`-07:00` rather than `-06:60`, and the `'local'` zone keeps milliseconds when
+converting to a `Date`. VentiMath's calendar uses the `'local'` zone, which
+never needed the polyfill.
+
+The release's **75 vitest tests** pass for VPM and the original on Bun; Node
+22's ICU renders UTC as "GMT" instead of "GMT+0", failing the same two for both.
+Against a reference built from the runtime's `longOffset` zone names, VPM
+matches every zone around every offset change from 1840 to 2100 and across the
+whole `Date` range: 418 zones and about 2.8 million conversions on Node, 445
+zones on Bun. Four regression cases and eight focused tests cover the
+changes.
+Named-zone conversions take 66-84% less time than the polyfill on Node; against
+Bun's native `Temporal`, reading instants takes 44% less time and resolving
+wall-clock day cells about 89% more.
+
+See the [package contract](packages/vfull-ui-headless-calendar/README.md),
+[conformance record](scripts/headless-calendar-conformance/README.md) and
+[measurements](packages/vfull-ui-headless-calendar/bench/results/README.md).
 
 ## vfirebase-functions
 
