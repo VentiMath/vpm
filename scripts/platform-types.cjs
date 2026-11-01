@@ -34,7 +34,7 @@ function compiler() {
 }
 // Use the supported CLI instead of depending on an unstable compiler API.
 // All input file/type-root paths in these configurations are absolute. The
-// legacy-consumer check passes its own TypeScript 5 CLI as tsc.
+// caller may explicitly pass another path to the configured compiler.
 function compile(config, tsc = compiler().path) {
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-tsc-'));
   try {

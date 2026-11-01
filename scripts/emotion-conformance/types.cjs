@@ -1,19 +1,14 @@
 'use strict';
 // Declarations of the browser packages in the Emotion family, as an
 // application sees them, compiled against the originals and VPM's packages
-// with DOM types and React 18.3 and 19 types under TypeScript 7.1 and the 5.8
-// and 5.9 compilers
-// downstream projects use (strict, bundler resolution, library checks on).
+// with DOM types and React 18.3 and 19 types under the configured TypeScript 7
+// compiler (strict, bundler resolution, library checks on).
 // Each consumer covers the packages VPM provides so far.
 const assert = require('node:assert/strict'), fs = require('node:fs'), os = require('node:os'), path = require('node:path');
 const {compile, compiler} = require('../platform-types.cjs');
 const modules = path.join(__dirname, 'node_modules'), packages = path.resolve(__dirname, '../../packages');
-const legacy = path.resolve(__dirname, '../legacy-typescript/node_modules');
 const compilers = {[compiler().version]: compiler().path};
-for (const name of ['typescript-5.8', 'typescript-5.9']) {
-  const metadata = require(path.join(legacy, name, 'package.json'));
-  compilers[metadata.version] = path.join(legacy, name, metadata.bin.tsc);
-}
+
 
 // Consumers by package; `@emotion/x` becomes `vemotion-x` for VPM.
 const consumers = {

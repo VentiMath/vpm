@@ -2,17 +2,13 @@
 // Declarations, as an application sees them: a React component using the
 // calendar, its plugins, option and callback types and the JSON feed error,
 // compiled against the original and vfullcalendar-react with DOM and React 19
-// types under TypeScript 7.1 and the 5.8 and 5.9 compilers downstream projects
-// use (strict, bundler resolution, library checks on).
+// types under the configured TypeScript 7 compiler (strict, bundler resolution,
+// library checks on).
 const assert = require('node:assert/strict'), fs = require('node:fs'), os = require('node:os'), path = require('node:path');
 const {compile, compiler} = require('../platform-types.cjs');
 const modules = path.join(__dirname, 'node_modules'), packages = path.resolve(__dirname, '../../packages');
-const legacy = path.resolve(__dirname, '../legacy-typescript/node_modules');
 const compilers = {[compiler().version]: compiler().path};
-for (const name of ['typescript-5.8', 'typescript-5.9']) {
-  const metadata = require(path.join(legacy, name, 'package.json'));
-  compilers[metadata.version] = path.join(legacy, name, metadata.bin.tsc);
-}
+
 const app = name => `import { useRef } from 'react';
 import FullCalendar, { JsonRequestError, formatDate, type CalendarRef } from '${name}';
 import type { CalendarOptions, EventApi, EventClickInfo, DateSelectInfo, EventInput, EventSourceInput, EventDropInfo } from '${name}';

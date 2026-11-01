@@ -21,7 +21,7 @@
     "fixture": "scripts/emotion-conformance",
     "upstreamSuite": "Current complete fixture: React 16 development 413 pass, 2 pre-existing Babel-plugin differences, 8 skipped; React 18 development 416 pass, the same 2 differences, 5 skipped; production 5 pass and 418 skipped. All original styled assertions execute in development; the production suite is explicitly much smaller.",
     "regression": "hook-order.cjs renders a styled component whose theme prop comes and goes with React 16.14: React reports a change in the order of hooks for the original and nothing for VPM.",
-    "declarations": "types.cjs compiles a TSX application (shorthands with props, shouldForwardProp, styled components, withComponent, an augmented Theme, and two expected errors) with React 18.3 and 19 types under TypeScript 7.1, 5.8 and 5.9.",
+    "declarations": "types.cjs compiles a TSX application (shorthands with props, shouldForwardProp, styled components, withComponent, an augmented Theme, and two expected errors) with React 18.3 and 19 types under the configured TypeScript 7 compiler.",
     "runtimes": [
       "Node.js 24",
       "Bun"
