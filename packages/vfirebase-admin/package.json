@@ -154,7 +154,6 @@
     "README.md"
   ],
   "dependencies": {
-    "vfast-deep-equal": "workspace:*",
     "vgoogle-auth-library": "workspace:*",
     "vjsonwebtoken": "workspace:*",
     "vjwks-rsa": "workspace:*"

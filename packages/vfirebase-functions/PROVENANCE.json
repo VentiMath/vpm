@@ -378,13 +378,14 @@
       "lib/common/trace.js": "Own header parsing using W3C traceparent validation and Google decimal span conversion through BigInt. Case-insensitive carrier lookup, sampling-bit masking, portable-header precedence, shared AsyncLocalStorage.",
       "lib/v2/trace.js": "Own invocation adapter preserving the handler receiver and request-scoped async trace state.",
       "lib/common/config.js": "Own lazy environment/file configuration loader, accepting JSON whitespace and falling back to cwd when PWD is absent.",
-      "lib/common/app.js": "Own lazy Admin app selection and emulator override; setting the same app does not delete it and unexpected registry errors propagate. The underlying Admin implementation remains a separate retained dependency.",
+      "lib/common/app.js": "Own lazy Admin app selection and emulator override; setting the same app does not delete it and unexpected registry errors propagate. Admin service implementations remain a separately tracked dependency.",
       "lib/common/api.js": "Own required-service registration preserving shared manifest arrays and the existing reason-merging contract.",
       "lib/runtime/loader.js": "Own iterative depth-first deployment discovery with ancestor cycle detection, duplicate endpoint rejection, prototype-safe output, ESM loading and shared legacy-parameter projection.",
       "lib/runtime/discovery-server.js": "Own minimal Node HTTP server for deployment manifests and shutdown, avoiding the Express import for CLI discovery.",
       "lib/bin/firebase-functions.js": "Own CLI entry point for manifest files and HTTP discovery; ESM forwards to it.",
       "lib/v2/compat.js": "Own per-property memoized compatibility accessors, safe for prototype-named fields and inherited marker properties.",
       "lib/v2/index.js": "Own lazy export table. The ESM facade shares CJS providers and state; unrelated provider implementations remain retained."
-    }
+    },
+    "remainingWork": "Generic parameter expressions, shared helpers and unrelated provider implementations remain upstream-derived. The 29 listed runtime components, including the HTTP/callable, scheduler, Firestore-event and deployment paths, are already redesigned."
   }
 }

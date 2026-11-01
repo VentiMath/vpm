@@ -16,235 +16,69 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FirebaseApp = exports.FirebaseAppInternals = void 0;
-const credential_internal_1 = require("./credential-internal");
-const validator = require("../utils/validator");
-const deep_copy_1 = require("../utils/deep-copy");
-const error_1 = require("./error");
-const TOKEN_EXPIRY_THRESHOLD_MILLIS = 5 * 60 * 1000;
-/**
- * Internals of a FirebaseApp instance.
- */
-class FirebaseAppInternals {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    constructor(credential_) {
-        this.credential_ = credential_;
-        this.tokenListeners_ = [];
-        this.isRefreshing = false;
-    }
-    getToken(forceRefresh = false) {
-        if (forceRefresh || this.shouldRefresh()) {
-            this.promiseToCachedToken_ = this.refreshToken();
-        }
-        return this.promiseToCachedToken_;
-    }
-    getCachedToken() {
-        return this.cachedToken_ || null;
-    }
-    refreshToken() {
-        this.isRefreshing = true;
-        return Promise.resolve(this.credential_.getAccessToken())
-            .then((result) => {
-            // Since the developer can provide the credential implementation, we want to weakly verify
-            // the return type until the type is properly exported.
-            if (!validator.isNonNullObject(result) ||
-                typeof result.expires_in !== 'number' ||
-                typeof result.access_token !== 'string') {
-                throw new error_1.FirebaseAppError({
-                    code: error_1.AppErrorCode.INVALID_CREDENTIAL,
-                    message: `Invalid access token generated: "${JSON.stringify(result)}". Valid access ` +
-                        'tokens must be an object with the "expires_in" (number) and "access_token" ' +
-                        '(string) properties.',
-                });
-            }
-            const token = {
-                accessToken: result.access_token,
-                expirationTime: Date.now() + (result.expires_in * 1000),
-            };
-            if (!this.cachedToken_
-                || this.cachedToken_.accessToken !== token.accessToken
-                || this.cachedToken_.expirationTime !== token.expirationTime) {
-                // Update the cache before firing listeners. Listeners may directly query the
-                // cached token state.
-                this.cachedToken_ = token;
-                this.tokenListeners_.forEach((listener) => {
-                    listener(token.accessToken);
-                });
-            }
-            return token;
-        })
-            .catch((error) => {
-            let errorMessage = (typeof error === 'string') ? error : error.message;
-            errorMessage = 'Credential implementation provided to initializeApp() via the ' +
-                '"credential" property failed to fetch a valid Google OAuth2 access token with the ' +
-                `following error: "${errorMessage}".`;
-            if (errorMessage.indexOf('invalid_grant') !== -1) {
-                errorMessage += ' There are two likely causes: (1) your server time is not properly ' +
-                    'synced or (2) your certificate key file has been revoked. To solve (1), re-sync the ' +
-                    'time on your server. To solve (2), make sure the key ID for your key file is still ' +
-                    'present at https://console.firebase.google.com/iam-admin/serviceaccounts/project. If ' +
-                    'not, generate a new key file at ' +
-                    'https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk.';
-            }
-            throw new error_1.FirebaseAppError({
-                code: error_1.AppErrorCode.INVALID_CREDENTIAL,
-                message: errorMessage,
-                cause: error
-            });
-        })
-            .finally(() => {
-            this.isRefreshing = false;
-        });
-    }
-    shouldRefresh() {
-        return (!this.cachedToken_ || (this.cachedToken_.expirationTime - Date.now()) <= TOKEN_EXPIRY_THRESHOLD_MILLIS)
-            && !this.isRefreshing;
-    }
-    /**
-     * Adds a listener that is called each time a token changes.
-     *
-     * @param listener - The listener that will be called with each new token.
-     */
-    addAuthTokenListener(listener) {
-        this.tokenListeners_.push(listener);
-        if (this.cachedToken_) {
-            listener(this.cachedToken_.accessToken);
-        }
-    }
-    /**
-     * Removes a token listener.
-     *
-     * @param listener - The listener to remove.
-     */
-    removeAuthTokenListener(listener) {
-        this.tokenListeners_ = this.tokenListeners_.filter((other) => other !== listener);
-    }
-}
-exports.FirebaseAppInternals = FirebaseAppInternals;
-/**
- * Global context object for a collection of services using a shared authentication state.
- *
- * @internal
- */
+const {getApplicationDefault} = require('./credential-internal');
+const {FirebaseAppError, AppErrorCode} = require('./error');
+const {snapshotOptions} = require('./options-snapshot');
+const {FirebaseAppInternals} = require('./token-lease');
+
+// App lifetime and service lifetime share an explicit closing boundary. A
+// failed cleanup cannot reopen an app or leave another service unvisited.
 class FirebaseApp {
-    constructor(options, name, autoInit = false, appStore) {
-        this.appStore = appStore;
-        this.services_ = {};
-        this.isDeleted_ = false;
-        this.autoInit_ = false;
-        this.customCredential_ = true;
-        this.name_ = name;
-        this.options_ = (0, deep_copy_1.deepCopy)(options);
-        this.autoInit_ = autoInit;
-        if (!validator.isNonNullObject(this.options_)) {
-            throw new error_1.FirebaseAppError({
-                code: error_1.AppErrorCode.INVALID_APP_OPTIONS,
-                message: 'Invalid Firebase app options passed as the first argument to initializeApp() for the ' +
-                    `app named "${this.name_}". Options must be a non-null object.`
-            });
-        }
-        const hasCredential = ('credential' in this.options_);
-        if (!hasCredential) {
-            this.customCredential_ = false;
-            this.options_.credential = (0, credential_internal_1.getApplicationDefault)(this.options_.httpAgent);
-        }
-        const credential = this.options_.credential;
-        if (typeof credential !== 'object' || credential === null || typeof credential.getAccessToken !== 'function') {
-            throw new error_1.FirebaseAppError({
-                code: error_1.AppErrorCode.INVALID_APP_OPTIONS,
-                message: 'Invalid Firebase app options passed as the first argument to initializeApp() for the ' +
-                    `app named "${this.name_}". The "credential" property must be an object which implements ` +
-                    'the Credential interface.'
-            });
-        }
-        this.INTERNAL = new FirebaseAppInternals(credential);
+  #name; #options; #automatic; #customCredential; #store;
+  #state = 'active'; #services = new Map(); #initializing; #deletion;
+  constructor(options, name, autoInit = false, store) {
+    this.#name = name; this.#automatic = autoInit; this.#store = store;
+    const invalid = message => new FirebaseAppError({code: AppErrorCode.INVALID_APP_OPTIONS,
+      message: 'Invalid Firebase app options passed as the first argument to initializeApp() for the ' +
+        `app named "${name}". ${message}`});
+    if (!options || typeof options !== 'object' || Array.isArray(options)) throw invalid('Options must be a non-null object.');
+    try {this.#options = snapshotOptions(options);}
+    catch (error) {throw invalid(error.message);}
+    this.#customCredential = Object.hasOwn(this.#options, 'credential');
+    if (!this.#customCredential) this.#options.credential = getApplicationDefault(this.#options.httpAgent);
+    const credential = this.#options.credential;
+    if (!credential || typeof credential !== 'object' || typeof credential.getAccessToken !== 'function') {
+      throw invalid('The "credential" property must be an object which implements the Credential interface.');
     }
-    /**
-     * Returns the name of the FirebaseApp instance.
-     *
-     * @returns The name of the FirebaseApp instance.
-     */
-    get name() {
-        this.checkDestroyed_();
-        return this.name_;
-    }
-    /**
-     * Returns the options for the FirebaseApp instance.
-     *
-     * @returns The options for the FirebaseApp instance.
-     */
-    get options() {
-        this.checkDestroyed_();
-        return (0, deep_copy_1.deepCopy)(this.options_);
-    }
-    /**
-     * @internal
-     */
-    getOrInitService(name, init) {
-        return this.ensureService_(name, () => init(this));
-    }
-    /**
-     * Returns `true` if this app was initialized with auto-initialization.
-     *
-     * @internal
-     */
-    autoInit() {
-        return this.autoInit_;
-    }
-    /**
-     * Returns `true` if the `FirebaseApp` instance was initialized with a custom
-     * `Credential`.
-     *
-     * @internal
-     */
-    customCredential() {
-        return this.customCredential_;
-    }
-    /**
-     * Deletes the FirebaseApp instance.
-     *
-     * @returns An empty Promise fulfilled once the FirebaseApp instance is deleted.
-     */
-    delete() {
-        this.checkDestroyed_();
-        // Also remove the instance from the AppStore. This is needed to support the existing
-        // app.delete() use case. In the future we can remove this API, and deleteApp() will
-        // become the only way to tear down an App.
-        this.appStore?.removeApp(this.name);
-        return Promise.all(Object.keys(this.services_).map((serviceName) => {
-            const service = this.services_[serviceName];
-            if (isStateful(service)) {
-                return service.delete();
-            }
-            return Promise.resolve();
-        })).then(() => {
-            this.services_ = {};
-            this.isDeleted_ = true;
-        });
-    }
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    ensureService_(serviceName, initializer) {
-        this.checkDestroyed_();
-        if (!(serviceName in this.services_)) {
-            this.services_[serviceName] = initializer();
-        }
-        return this.services_[serviceName];
-    }
-    /**
-     * Throws an Error if the FirebaseApp instance has already been deleted.
-     */
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    checkDestroyed_() {
-        if (this.isDeleted_) {
-            throw new error_1.FirebaseAppError({
-                code: error_1.AppErrorCode.APP_DELETED,
-                message: `Firebase app named "${this.name_}" has already been deleted.`
-            });
-        }
-    }
+    this.INTERNAL = new FirebaseAppInternals(credential);
+  }
+  get name() {this.#assertReadable(); return this.#name;}
+  get options() {this.#assertReadable(); return snapshotOptions(this.#options);}
+  autoInit() {return this.#automatic;}
+  customCredential() {return this.#customCredential;}
+  getOrInitService(name, initialize) {return this.ensureService_(name, () => initialize(this));}
+  ensureService_(name, initialize) {
+    if (this.#state !== 'active') throw this.#deletedError();
+    if (this.#services.has(name)) return this.#services.get(name);
+    if (this.#initializing?.has(name)) throw new FirebaseAppError({code: AppErrorCode.INTERNAL_ERROR,
+      message: `Recursive initialization of Firebase service "${name}".`});
+    (this.#initializing ??= new Set()).add(name);
+    try {
+      const service = initialize();
+      this.#services.set(name, service);
+      return service;
+    } finally {this.#initializing.delete(name);}
+  }
+  delete() {
+    if (this.#state === 'closing') return this.#deletion;
+    this.#assertReadable();
+    if (this.#initializing?.size) throw new FirebaseAppError({code: AppErrorCode.INTERNAL_ERROR,
+      message: 'Cannot delete an app from a service initializer.'});
+    this.#state = 'closing';
+    this.#store?.removeApp(this.#name, this);
+    const services = [...this.#services.values()];
+    this.#deletion = Promise.allSettled(services.map(service => Promise.resolve().then(() => {
+      if (typeof service?.delete === 'function') return service.delete();
+    }))).then(results => {
+      this.#services.clear(); this.#state = 'deleted';
+      const failure = results.find(result => result.status === 'rejected');
+      if (failure) throw failure.reason;
+    });
+    return this.#deletion;
+  }
+  #deletedError() {return new FirebaseAppError({code: AppErrorCode.APP_DELETED,
+    message: `Firebase app named "${this.#name}" has already been deleted.`});}
+  #assertReadable() {if (this.#state === 'deleted') throw this.#deletedError();}
 }
 exports.FirebaseApp = FirebaseApp;
-function isStateful(service) {
-    return typeof service.delete === 'function';
-}
+exports.FirebaseAppInternals = FirebaseAppInternals;

@@ -11,7 +11,7 @@ test('every original entry point resolves; Realtime Database explains its absenc
   assert.deepEqual(Object.keys(metadata.exports), Object.keys(original.exports));
   for (const entry of Object.keys(metadata.exports).filter(name => name !== './database' && name !== './package.json')) assert.equal(typeof load(entry.slice(1)), 'object', entry);
   assert.throws(() => load('/database'), /does not include the Realtime Database client/);
-  assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vfast-deep-equal', 'vgoogle-auth-library', 'vjsonwebtoken', 'vjwks-rsa']);
+  assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vgoogle-auth-library', 'vjsonwebtoken', 'vjwks-rsa']);
   assert.deepEqual(Object.keys(metadata.optionalDependencies).sort(), ['vgoogle-cloud-firestore', 'vgoogle-cloud-storage']);
 });
 

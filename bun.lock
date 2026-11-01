@@ -285,7 +285,6 @@
       "name": "vfirebase-admin",
       "version": "0.1.0",
       "dependencies": {
-        "vfast-deep-equal": "workspace:*",
         "vgoogle-auth-library": "workspace:*",
         "vjsonwebtoken": "workspace:*",
         "vjwks-rsa": "workspace:*",

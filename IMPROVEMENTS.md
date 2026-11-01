@@ -62,7 +62,7 @@ now have current comparison targets:
 | Suites verified | vfullcalendar-react | @fullcalendar/react 7.1.3; its React suite, FullCalendar's 1,542-spec browser suite on the React build (identical per spec), a mounted calendar's time zone and JSON feed behavior, and declarations under the configured TypeScript 7 compiler | [@fullcalendar/react 7.1.3](https://www.npmjs.com/package/@fullcalendar/react), checked November 1, 2026 |
 | Caller paths verified | vfullcalendar-core | @fullcalendar/core 7.1.3 and the copy of its JSON feed request that @fullcalendar/react 7.1.3 bundles; requests and results against a recording server | [@fullcalendar/core 7.1.3](https://www.npmjs.com/package/@fullcalendar/core), checked November 1, 2026 |
 | Suite and time zones verified | vfull-ui-headless-calendar | @full-ui/headless-calendar 7.1.3 on temporal-polyfill 1.0.1; its vitest suite, and every IANA zone around every offset change from 1840 to 2100 against the runtime's own time zone data | [@full-ui/headless-calendar 7.1.3](https://www.npmjs.com/package/@full-ui/headless-calendar), checked November 1, 2026 |
-| Caller paths verified | vfirebase-functions | firebase-functions 7.4.0 on vfirebase-admin; its unit suite, VentiMath's HTTP, callable, scheduled, task-queue and Firestore-triggered functions, and the deploy manifest | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked October 31, 2026 |
+| Caller paths verified | vfirebase-functions | firebase-functions 7.4.0 on vfirebase-admin; its unit suite, VentiMath's HTTP, callable, scheduled and Firestore-triggered functions, and the deploy manifest | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked October 31, 2026 |
 | Caller paths verified | vfirebase-admin | firebase-admin 14.5.0 without Realtime Database; its unit suite, and VentiMath's Auth, Firestore, Storage and FCM calls against local servers | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked October 31, 2026 |
 | Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
@@ -135,11 +135,12 @@ Admin 14 API requests. Admin 14 also removed the namespaced API
 (`admin.firestore()`, `admin.messaging()`, `admin.apps`), which VentiMath's
 backend still uses, so adopting it includes moving those calls to the modular
 API. `vfirebase-functions` now covers `firebase-functions` 7.4.0 on
-`vfirebase-admin`, checked October 31, 2026, completing the backend: every
+`vfirebase-admin`, checked October 31, 2026. Its dependency inventory now covers every
 package VentiMath's Cloud Functions load is a VPM package or eliminated, apart
 from type-only declaration packages and `safe-buffer`. Admin 12.7's older
 Storage 7, gax 4, gtoken 8 and `form-data` 2.5.5 branches are not separate work:
-the Admin 14 upgrade removes them.
+the Admin 14 upgrade removes them. This dependency coverage does not mean the
+retained SDK implementations have completed their independent rewrites.
 
 The frontend starts with FullCalendar 7, VentiMath's calendar: `@fullcalendar/react`
 7.1.3 depends on `@fullcalendar/core` and `@full-ui/headless-calendar` 7.1.3, and
@@ -225,7 +226,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Mixed implementation on VPM dependencies: independent logging, initialization, declaration assembly and HTTP/scheduler factories; non-mutating manifest serialization and shared CJS/ESM state. Callable request validation, verification orchestration, payload conversion and response lifecycle are independently implemented, with prototype-safe data and cancellation cleanup. Firestore event adapters, secret accessors and registration are independently implemented; changed protobuf events decode once, field masks preserve sibling changes, and JSON secret errors omit credential excerpts. Trace propagation, configuration and iterative deployment discovery are independently implemented. Admin/Firestore clients, generic parameter expressions and other SDK services remain adapted upstream code; a complete package-wide rewrite remains pending. |
-| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, 56% less CPU per ID-token signature check and half the cold-start modules; identical Auth, Firestore, Storage and FCM caller behavior. |
+| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, redesigned app/token/service lifetimes; isolated CPU measurements and identical Auth, Firestore, Storage and FCM caller behavior. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | All six dependencies are VPM with one gax stack, 65 modules and about 50 ms at import instead of 404 and 270 ms, reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Same persistent trees and node layout; `at()` no longer throws on empty trees or selects the first entry for `NaN`; non-function comparators fail at construction; iterative, range-pruned traversal. Actual Firestore listener paths verified. |
@@ -480,7 +481,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | `vfullcalendar-core` | 2 (`@full-ui/headless-calendar` and `temporal-polyfill` peers) | 0 |
 | `vfull-ui-headless-calendar` | 1 (`temporal-polyfill` peer) | 0 |
 | `vfirebase-functions` | 5 (including `@types/cors` and `@types/express`) | 3 (`vcors`, `vexpress`, `vprotobufjs`; `vfirebase-admin` peer) |
-| `vfirebase-admin` | 9 (including `@firebase/database-compat`, `@firebase/database-types` and `@fastify/busboy`) | 6 (all VPM; Realtime Database and multipart parsing eliminated) |
+| `vfirebase-admin` | 9 (including `@firebase/database-compat`, `@firebase/database-types` and `@fastify/busboy`) | 5 (3 direct, 2 optional; app-option comparison internal) |
 | `vgoogle-cloud-firestore` | 6 (including `@google-cloud/firestore-api` ^0.2.0, which adds a second `google-gax`) | 6 (all VPM, one gax stack) |
 | `vgoogle-cloud-firestore-api` | 2 | 3 (`vgoogle-gax`, `vgoogle-logging-utils`, `vlong`; logging is imported directly so import does not load gax) |
 | `vfunctional-red-black-tree` | 0 | 0 |
@@ -936,13 +937,19 @@ See the [package contract](packages/vfirebase-functions/README.md),
 
 ## vfirebase-admin
 
-Targets **firebase-admin 14.5.0**, checked October 31, 2026. The published
-implementation is retained with its dependencies mapped to VPM packages;
-[PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) lists the files
-changed beyond that. `@firebase/database-compat`, `@firebase/database-types` and
-`@fastify/busboy` are eliminated: `vfirebase-admin/database` throws a
-descriptive error, and the `multipart/mixed` responses no Admin API reads fail
-with `ERR_UNSUPPORTED_MULTIPART_RESPONSE`.
+Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
+service lifecycle, token lease and option snapshots have source-informed VPM
+implementations. Credential adapters and service APIs remain upstream-derived.
+[PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
+Realtime Database and multipart parsing are omitted; app-option equality is
+internal, leaving three direct and two optional dependencies.
+
+Registries require the exact app instance. A closing app cannot create services;
+concurrent deletion shares cleanup and visits all services even after a failure.
+Token refreshes share a pending acquisition even when forced, recover after
+synchronous provider errors and reject invalid expiry without printing tokens.
+Iterative option snapshots avoid prototype setters, detach null-prototype
+records, support deep values and reject cycles explicitly.
 
 While public keys are missing or expired, upstream starts one key request per
 concurrent token verification (ID tokens and session cookies, App Check and
@@ -950,11 +957,10 @@ phone-number verification); here concurrent callers share the request. Upstream
 sends FCM's HTTP/2 requests with `:scheme: https:`, which RFC 9113 forbids and
 Node's HTTP/2 server rejects; here it is `https`. Signature verification and
 decoding use `vjsonwebtoken`. Earlier Node 22 and same-process timing claims
-are historical; current signature, decoding and messaging CPU comparisons use
-isolated Node 24 and Bun workers. Signature-only verification takes 46.2%
-less time on Node and 26.8% less on Bun; decoding takes 27.1% and 35.5% less.
-Message validation is inconclusive. These exclude claim/revocation checks and
-key fetching. Public declarations need no ambient Node types.
+are historical; current comparisons use isolated Node 24 and Bun workers with
+identical-source controls. They cover CPU work and synthetic credential
+providers, excluding claim/revocation checks and key fetching. Public
+declarations need no ambient Node types.
 
 The original passes its **6,146 unit tests**. VPM runs the 6,062 that do not
 need the Realtime Database client; all pass except 46 that assert the `https:`
@@ -962,8 +968,8 @@ scheme or multipart parsing, each required to fail on exactly that. VentiMath's
 Admin calls (`verifyIdToken` with revocation checks, `getUser`, `updateUser`,
 `revokeRefreshTokens`, `deleteUsers`, a Firestore scenario, Storage `save`,
 `exists`, `delete` and signed URLs, and `sendEachForMulticast`) produce
-identical requests and results against local servers. Three regression cases
-and seven focused tests cover the changes.
+identical requests and results against local servers. Existing regression probes plus isolated app-lifecycle controls and eight
+focused tests cover the changes.
 
 See the [package contract](packages/vfirebase-admin/README.md),
 [conformance record](scripts/firebase-admin-conformance/README.md) and
