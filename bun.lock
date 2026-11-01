@@ -134,7 +134,6 @@
         "vemotion-serialize": "0.1.0",
         "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
         "vemotion-utils": "0.1.0",
-        "vemotion-weak-memoize": "0.1.0",
       },
       "peerDependencies": {
         "react": ">=16.8.0",

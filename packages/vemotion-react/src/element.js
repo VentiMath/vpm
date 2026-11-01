@@ -1,73 +1,54 @@
 import * as React from 'react';
 import {serializeStyles} from 'vemotion-serialize';
-import {useInsertionEffectAlwaysWithSyncFallback} from 'vemotion-use-insertion-effect-with-fallbacks';
-import {getRegisteredStyles, insertStyles, registerStyles} from 'vemotion-utils';
-import isBrowser from '#is-browser';
+import {getRegisteredStyles} from 'vemotion-utils';
 import isDevelopment from '#is-development';
 import {withEmotionCache} from './context.js';
 import {getLabelFromStackTrace} from './label.js';
-import {ThemeContext} from './theming.js';
+import {useTheme} from './theming.js';
+import {StyleBatch, StyleInsertion} from './style-batch.js';
 
-// The element a css prop renders through: it serializes the css prop with
-// the element's registered class names, inserts the styles and renders the
-// original element with the class.
-
+// These names are part of Emotion's JSX/Babel boundary.
 const TYPE = '__EMOTION_TYPE_PLEASE_DO_NOT_USE__';
 const LABEL = '__EMOTION_LABEL_PLEASE_DO_NOT_USE__';
-const hasOwn = Object.prototype.hasOwnProperty;
-
-/** The props of the css prop element for an element of `type`. */
+export const hasCss = props => props != null && Object.hasOwn(props, 'css');
 export function createEmotionProps(type, props) {
   if (isDevelopment && typeof props.css === 'string' && props.css.includes(':')) {
     throw new Error(`Strings are not allowed as css prop values, please wrap it in a css template literal from '@emotion/react' like this: css\`${props.css}\``);
   }
-  const emotionProps = {};
-  for (const key in props) if (hasOwn.call(props, key)) emotionProps[key] = props[key];
-  emotionProps[TYPE] = type;
-  // Opt-in runtime labels, unless the Babel plugin labeled the styles.
-  if (isDevelopment && globalThis.EMOTION_RUNTIME_AUTO_LABEL && props.css && (typeof props.css !== 'object' || typeof props.css.name !== 'string' || !props.css.name.includes('-'))) {
+  const result = Object.fromEntries(Object.entries(props));
+  result[TYPE] = type;
+  if (isDevelopment && globalThis.EMOTION_RUNTIME_AUTO_LABEL && props.css &&
+    (typeof props.css !== 'object' || typeof props.css.name !== 'string' || !props.css.name.includes('-'))) {
     const label = getLabelFromStackTrace(new Error().stack);
-    if (label) emotionProps[LABEL] = label;
+    if (label) result[LABEL] = label;
   }
-  return emotionProps;
+  return result;
 }
 
-/** Inserts styles; on the server, renders them in a style element. */
-function Insertion({cache, serialized, isStringTag}) {
-  registerStyles(cache, serialized, isStringTag);
-  const rules = useInsertionEffectAlwaysWithSyncFallback(() => insertStyles(cache, serialized, isStringTag));
-  if (isBrowser || rules === undefined) return null;
-  let names = serialized.name;
-  for (let next = serialized.next; next !== undefined; next = next.next) names += ' ' + next.name;
-  return React.createElement('style', {'data-emotion': `${cache.key} ${names}`, dangerouslySetInnerHTML: {__html: rules}, nonce: cache.sheet.nonce});
+function planElement(cache, theme, props, ref) {
+  const component = props[TYPE];
+  const input = typeof props.css === 'string' && cache.registered[props.css] !== undefined ? cache.registered[props.css] : props.css;
+  const arguments_ = [input];
+  const existing = typeof props.className === 'string'
+    ? getRegisteredStyles(cache.registered, arguments_, props.className)
+    : props.className == null ? '' : `${props.className} `;
+  let serialized = serializeStyles(arguments_, undefined, theme);
+  if (isDevelopment && props[LABEL] && !serialized.name.includes('-')) serialized = serializeStyles([serialized, `label:${props[LABEL]};`]);
+  const batch = new StyleBatch(cache, true);
+  const forwarded = Object.create(null);
+  for (const key of Object.keys(props)) {
+    if (key !== 'css' && key !== TYPE && (!isDevelopment || key !== LABEL)) forwarded[key] = props[key];
+  }
+  forwarded.className = existing + batch.add(serialized, typeof component === 'string');
+  if (ref) forwarded.ref = ref;
+  return {component, forwarded, batch};
 }
 
 const Emotion = withEmotionCache((props, cache, ref) => {
-  let cssProp = props.css;
-  // A class name from Emotion's css() (the vanilla package) stands for its styles.
-  if (typeof cssProp === 'string' && cache.registered[cssProp] !== undefined) cssProp = cache.registered[cssProp];
-  const WrappedComponent = props[TYPE];
-  const registeredStyles = [cssProp];
-  let className = '';
-  if (typeof props.className === 'string') className = getRegisteredStyles(cache.registered, registeredStyles, props.className);
-  else if (props.className != null) className = `${props.className} `;
-  let serialized = serializeStyles(registeredStyles, undefined, React.useContext(ThemeContext));
-  if (isDevelopment && !serialized.name.includes('-') && props[LABEL]) serialized = serializeStyles([serialized, 'label:' + props[LABEL] + ';']);
-  className += `${cache.key}-${serialized.name}`;
-  const newProps = {};
-  for (const key in props) {
-    if (hasOwn.call(props, key) && key !== 'css' && key !== TYPE && (!isDevelopment || key !== LABEL)) newProps[key] = props[key];
-  }
-  newProps.className = className;
-  if (ref) newProps.ref = ref;
-  return React.createElement(
-    React.Fragment,
-    null,
-    React.createElement(Insertion, {cache, serialized, isStringTag: typeof WrappedComponent === 'string'}),
-    React.createElement(WrappedComponent, newProps),
-  );
+  const plan = planElement(cache, useTheme(), props, ref);
+  return React.createElement(React.Fragment, null,
+    React.createElement(StyleInsertion, {batch: plan.batch}),
+    React.createElement(plan.component, plan.forwarded));
 });
 if (isDevelopment) Emotion.displayName = 'EmotionCssPropInternal';
-
 export default Emotion;
-export const hasCss = props => props != null && hasOwn.call(props, 'css');

@@ -170,3 +170,14 @@ Babel-plugin differences and eight skips with React 16 in development; React 18
 runs 416 passing assertions, the same two differences and five skips. Production
 runs five assertions and skips 418. Its narrower coverage is intentional in
 upstream's configuration and is not equivalent to development coverage.
+
+`react-lifecycle.cjs` compares the published React package and VPM in isolated
+consumer trees. It reproduces theme-function results reused across independent
+renders and Global hydration claiming styles from the wrong document. VPM
+keeps iframe styles within that document, replaces them on update and removes
+them on unmount. It also checks 20,000-level class arrays, reusable subarrays
+and cycle diagnostics; Node's original overflows at that depth, while Bun's
+original tolerates it. The focused package tests invoke these probes on both
+runtimes. Shared rendering plans and explicit GlobalSheet lifecycle are a
+source-informed redesign; JSX protocol adapters and declarations remain
+attributed compatibility surfaces.

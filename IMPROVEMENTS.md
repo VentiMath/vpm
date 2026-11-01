@@ -208,7 +208,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | --- | --- | --- |
 | [vemotion-babel-plugin](packages/vemotion-babel-plugin) | @emotion/babel-plugin 11.13.5 | Minifies with vstylis (the original's stylis 4.2.0 turned `border: 1px /* thin */ solid red` into `border:1pxsolid red`), its own source maps and imports, no macros: 3 dependencies instead of 11, all VPM; otherwise the original's output, target class names included. |
 | [vemotion-styled](packages/vemotion-styled) | @emotion/styled 11.14.1 | Reads the theme context on every render (the original's conditional read changed the order of hooks when a `theme` prop came and went), forwards current HTML attributes through vemotion-is-prop-valid, and has no macro entry: 4 direct dependencies, all VPM. |
-| [vemotion-react](packages/vemotion-react) | @emotion/react 11.14.0 | Without the macro entry and its runtime dependency on the Babel plugin (with babel-plugin-macros, cosmiconfig and @babel/runtime) and hoist-non-react-statics: 5 direct dependencies, all VPM; JSX types on `React.JSX`, checked with React 18.3 and 19 types. |
+| [vemotion-react](packages/vemotion-react) | @emotion/react 11.14.0 | Redesigned cache/theme ownership and rendering, document-scoped Global lifecycle, and iterative class-name traversal. Without the macro entry and its runtime dependency on the Babel plugin (with babel-plugin-macros, cosmiconfig and @babel/runtime) and hoist-non-react-statics: 4 direct dependencies, all VPM; JSX types on `React.JSX`, checked with React 18.3 and 19 types. |
 | [vemotion-cache](packages/vemotion-cache) | @emotion/cache 11.14.0 | Redesigned cache/compiler/hydration: per-insertion destinations, container-document hydration, full-CSS compilation keys, bounded storage and custom-plugin isolation. On vstylis (stylis 4.4.0); Emotion's prefixer by property name (the original's copy of stylis 4.0.13's invented `-webkit-box-flex-wrap` and others), a valid `-ms-flex-item-align`, and `-ms-flex-pack` kept for `space-between`; otherwise identical CSS over 10,000 generated styles, VentiMath's RTL configuration included. |
 | [vemotion-is-prop-valid](packages/vemotion-is-prop-valid) | @emotion/is-prop-valid 1.4.0 | Forwards 17 current HTML and SVG attributes the original rejected (`command`, `commandFor`, `closedBy`, `part`, `shadowRootMode`, `imageSrcSet`, `noModule`, `precedence`...), which styled elements dropped. |
 | [vemotion-use-insertion-effect-with-fallbacks](packages/vemotion-use-insertion-effect-with-fallbacks) | @emotion/use-insertion-effect-with-fallbacks 1.2.0 | The same behavior, written for VPM. |
@@ -463,7 +463,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | --- | ---: | ---: |
 | `vemotion-babel-plugin` | 11 (Babel helpers and runtime, babel-plugin-macros, source-map, convert-source-map, find-root, escape-string-regexp, stylis, three Emotion packages) | 3 (`vemotion-hash`, `vemotion-serialize`, `vstylis`) |
 | `vemotion-styled` | 6 (four Emotion packages, `@emotion/babel-plugin`, `@babel/runtime`; React and `@emotion/react` peers) | 4 (VPM Emotion packages; React and `vemotion-react` peers) |
-| `vemotion-react` | 8 (five Emotion packages, `@emotion/babel-plugin`, `@babel/runtime`, `hoist-non-react-statics`; React peer) | 5 (VPM Emotion packages; React peer) |
+| `vemotion-react` | 8 (five Emotion packages, `@emotion/babel-plugin`, `@babel/runtime`, `hoist-non-react-statics`; React peer) | 4 (VPM Emotion packages; React peer) |
 | `vemotion-cache` | 5 (four Emotion packages, `stylis`) | 3 (`vemotion-sheet`, `vemotion-utils` declarations, `vstylis`) |
 | `vemotion-is-prop-valid` | 1 (`@emotion/memoize`) | 1 (`vemotion-memoize`) |
 | `vemotion-use-insertion-effect-with-fallbacks` | 0 (React peer) | 0 (React peer) |
@@ -709,10 +709,13 @@ across isolated caches reported separately. Seven focused regression tests
 and the complete Emotion/MUI fixture cover this change. Server microbenchmarks
 and full-stack styled measurements use the isolated-process harness.
 
-`vemotion-react` currently remains an upstream-derived port of @emotion/react
-11.14.0. Its Global, css-prop insertion, context and theming control flow
-closely follows upstream; an independent application-facing rewrite remains
-pending. Passing conformance tests is not evidence of independent design.
+`vemotion-react` now replaces the former close translations of Global,
+CSS-prop insertion, context and theming with component-owned cache/theme state,
+a GlobalSheet lifecycle and shared StyleBatch rendering plans. This is a
+source-informed redesign, with attribution retained. Independent mounts no
+longer share a function theme result, iframe hydration uses the container's
+document, and class arrays use bounded-call-stack traversal with cycle errors.
+The actual MUI/React 19 caller still produces identical markup and CSS.
 Without the `macro` entry it no longer depends at run time on the Babel plugin
 (and through it babel-plugin-macros, cosmiconfig and @babel/runtime);
 hoist-non-react-statics is a small internal function. Applications alias the
