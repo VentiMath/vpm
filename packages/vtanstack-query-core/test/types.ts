@@ -1,5 +1,4 @@
-import {QueryClient, QueryObserver, timeoutManager, hashKey, type QueryFunctionContext, type QueryKey, type DehydratedState} from 'vtanstack-query-core';
-import {dehydrate, hydrate} from 'vtanstack-query-core';
+import {QueryClient, QueryObserver, hashKey, type QueryFunctionContext, type QueryKey} from 'vtanstack-query-core';
 const client = new QueryClient({defaultOptions: {queries: {gcTime: 30 * 24 * 60 * 60 * 1000, staleTime: 60_000}}});
 const observer = new QueryObserver<string[], Error, number>(client, {
   queryKey: ['todos', {done: false}],
@@ -11,10 +10,6 @@ const observer = new QueryObserver<string[], Error, number>(client, {
   select: todos => todos.length,
 });
 const count: number | undefined = observer.getCurrentResult().data;
-const state: DehydratedState = dehydrate(client);
-hydrate(new QueryClient(), state);
-const timer = timeoutManager.setTimeout(() => undefined, 1000);
-timeoutManager.clearTimeout(timer);
 const key: string = hashKey(['todos', 1]);
 // @ts-expect-error select receives the query function's data
 new QueryObserver<string[], Error, number>(client, {queryKey: ['x'], queryFn: async () => ['a'], select: (todos: number) => todos});

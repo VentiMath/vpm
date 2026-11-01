@@ -1,23 +1,17 @@
 'use strict';
-// Runs TanStack Query 5.105.0's own vitest suites against the pinned originals
-// (--upstream) or the VPM packages: `--package core` (query-core) or
-// `--package react` (react-query). The tests import their package's modules
-// from ../ (src); each becomes a re-export of the published build module under
-// test, so internal modules keep one identity. '@tanstack/query-core' (and
-// vtanstack-query-core) resolve to the core under test, which react-query and
-// the persister share. Type tests (*.test-d.*) run with vitest's typecheck, as
-// upstream configures it, against the built declarations.
+// Retained original suites are controls for the comparison release. They access
+// private modules and APIs outside VPM's application-facing subset; the rewrite
+// is checked through public APIs by application.cjs, sharing.cjs and devtools.cjs.
 const assert = require('node:assert/strict'), fs = require('node:fs'), os = require('node:os'), path = require('node:path'), {spawnSync} = require('node:child_process'), {createHash} = require('node:crypto');
 const argument = name => process.argv.find(arg => arg.startsWith(`--${name}=`))?.split('=')[1];
 const upstream = process.argv.includes('--upstream'), which = argument('package') ?? 'core';
+assert.ok(upstream, 'The independent VPM subset uses application.cjs; this runner retains the full upstream control only.');
 assert.ok(['core', 'react'].includes(which), '--package=core|react');
 for (const [file, hash] of Object.entries(require('./upstream/SHA256.json'))) {
   assert.equal(createHash('sha256').update(fs.readFileSync(path.join(__dirname, 'upstream', file))).digest('hex'), hash, file);
 }
-const modules = path.join(__dirname, 'node_modules'), packages = path.resolve(__dirname, '../../packages');
-const roots = upstream
-  ? {core: path.join(modules, '@tanstack/query-core'), react: path.join(modules, '@tanstack/react-query')}
-  : {core: path.join(packages, 'vtanstack-query-core'), react: path.join(packages, 'vtanstack-react-query')};
+const modules = path.join(__dirname, 'node_modules');
+const roots = {core: path.join(modules, '@tanstack/query-core'), react: path.join(modules, '@tanstack/react-query')};
 for (const name of ['query-core', 'react-query']) assert.equal(require(path.join(modules, '@tanstack', name, 'package.json')).version, '5.105.0');
 const dirName = which === 'core' ? 'query-core' : 'react-query';
 
