@@ -157,18 +157,12 @@ frozen/reusable declarations; the benchmark includes construction of a fresh
 64-endpoint input for both libraries. The report retains every sample and the
 identical-code controls, including inconclusive results.
 
-The current recording establishes lower legacy trace-parsing time: about 11%
-on both runtimes. Portable-header results are inconclusive. Discovery of 64
-grouped endpoints takes 96% more time on Node (11,781 to 23,148 ns); Bun
-has no established direction. This is deployment work with cycle and collision
-checks, separate from request processing.
-
-Changed protobuf-event materialization takes 44% less time on Node and 38% less
-on Bun. Trigger construction still costs more on both runtimes. Node callable
-encoding/decoding costs more; Bun decoding costs less, while its encoding result
-is inconclusive. The complete report retains all sixteen cases, including
-regressions, outliers and identical-code controls. These local CPU measurements
-do not imply a general speedup or application latency guarantee.
+Trace parsing, event materialization and invocation results differ by runtime
+and case; the report records which directions hold beyond the control variation.
+Input preservation and discovery validation add deployment costs, and several
+callable paths cost more. The complete report retains all sixteen cases,
+including regressions, outliers and identical-code controls. These local CPU
+measurements do not imply a general speedup or application latency guarantee.
 
 MIT licensing, the pinned source and the files changed from it are recorded in
 [PROVENANCE.json](PROVENANCE.json).

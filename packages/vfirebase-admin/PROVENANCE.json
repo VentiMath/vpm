@@ -12,7 +12,7 @@
   "checked": "2026-10-31",
   "license": "Apache-2.0",
   "retainedEvidence": "../../scripts/firebase-admin-conformance/upstream",
-  "source": "Source-informed VPM app registry, service lifecycle, token lease and option snapshot implementation, alongside retained Firebase Admin 14.5.0 service implementations. Upstream source and tests were reviewed; matching diagnostics and public declarations remain attributed. This is not a clean-room claim.",
+  "source": "Source-informed VPM app registry, service lifecycle, token lease, option snapshots and credential adapters, alongside retained Firebase Admin 14.5.0 service implementations. Upstream source and tests informed compatibility; diagnostics and public declarations remain attributed. Google Auth is a separately tracked upstream-derived dependency. This is not a clean-room claim.",
   "dependencyMap": {
     "google-auth-library": "vgoogle-auth-library",
     "jsonwebtoken": "vjsonwebtoken",
@@ -45,7 +45,9 @@
     "lib/database/index.js",
     "lib/esm/database/index.js",
     "lib/app/lifecycle.js",
-    "lib/app/firebase-app.js"
+    "lib/app/firebase-app.js",
+    "lib/app/credential-internal.js",
+    "lib/app/credential-factory.js"
   ],
   "removed": [
     "lib/database/database.d.ts",
@@ -56,7 +58,9 @@
   "added": [
     "lib/platform.d.ts",
     "lib/app/token-lease.js",
-    "lib/app/options-snapshot.js"
+    "lib/app/options-snapshot.js",
+    "lib/app/credential-document.js",
+    "lib/app/credential-session.js"
   ],
   "sourceSHA256": {
     "lib/app-check/app-check-api-client-internal.d.ts": "81914798466ebfeadc6bb52dec1e6b7dded7a3cf760d2d7470c91e6510de1cbe",
@@ -310,23 +314,32 @@
     "Public declarations need no ambient Node types; Buffer is Node's Buffer where Node types are loaded, and httpAgent accepts any Node http or https Agent.",
     "An app registry deletes only the exact instance it owns. Service instances use a Map, so prototype-named services do not collide. Closing an app prevents new services, coalesces concurrent deletion and attempts every cleanup even after a failure.",
     "Forced token refreshes share one pending credential acquisition. Synchronous throws become rejected promises and allow retry. Token responses require a non-empty token and finite positive expiry; malformed-response diagnostics omit response contents.",
-    "App option snapshots preserve own prototype-named keys without mutating Object.prototype, detach null-prototype records, support deep records iteratively and reject ancestor cycles. Opaque credential/agent instances retain identity. FIREBASE_CONFIG accepts leading JSON whitespace."
+    "App option snapshots preserve own prototype-named keys without mutating Object.prototype, detach null-prototype records, support deep records iteratively and reject ancestor cycles. Opaque credential/agent instances retain identity. FIREBASE_CONFIG accepts leading JSON whitespace.",
+    "CredentialDocument detaches validated JSON before authentication; frozen camel-case service accounts work and file changes cannot switch identity between validation and first use. New factory calls observe rotated file content. Malformed JSON errors preserve a sanitized SyntaxError without credential excerpts.",
+    "CredentialSession shares client discovery and token acquisition, retries failures and memoizes project/email lookups including an absent email. Access-token results contain only access_token and expires_in; empty tokens and non-finite or expired lifetimes are rejected.",
+    "Factories respect HTTP agent identity. JSON Google Auth clients receive the agent option that upstream omits. Certificate/refresh caches keep at most 64 entries per agent and kind, indexed by a SHA-256 digest rather than plaintext credentials.",
+    "Credential inputs must be plain acyclic JSON data with at most 64 nested containers; conflicting aliases and mismatched credential kinds are rejected. The legacy refreshToken tag is normalized to authorized_user. Generated key/protocol material and Google Auth provider implementations are retained dependencies."
   ],
   "implementation": {
-    "kind": "mixed: independent app runtime with retained service implementations",
+    "kind": "mixed: independent app and credential runtimes with retained service implementations",
     "replacementStatus": "application-facing service rewrite pending",
     "targetScope": "App credentials, Auth, Firestore, Storage and messaging.",
     "independentComponents": {
       "lib/app/lifecycle.js": "Own registry with instance ownership, idempotent initialization and environment configuration. Existing credential/agent comparison diagnostics are retained.",
       "lib/app/firebase-app.js": "Own service Map and explicit active/closing/deleted lifecycle, with coalesced complete cleanup and failed-initializer recovery.",
       "lib/app/token-lease.js": "Own cached token lease and pending-acquisition ownership, with finite-expiry validation and retry after synchronous/asynchronous failures.",
-      "lib/app/options-snapshot.js": "Own iterative snapshots and option comparison without prototype setters or recursive traversal."
+      "lib/app/options-snapshot.js": "Own iterative snapshots and option comparison without prototype setters or recursive traversal.",
+      "lib/app/credential-internal.js": "Own ADC and explicit JSON credential adapters over a shared CredentialSession. JSON validation and credential identity are separated from provider invocation; Google Auth remains a retained dependency.",
+      "lib/app/credential-factory.js": "Own agent-aware credential pools with weak agent keys, 64-entry bounded JSON caches, digest-only keys and explicit ADC reset.",
+      "lib/app/credential-document.js": "Own detached JSON credential documents, alias/type validation and sanitized file errors. A factory can read/validate one snapshot and pass that exact snapshot to authentication.",
+      "lib/app/credential-session.js": "Own shared discovery/acquisition and per-credential memoization; forwards agent options to JSON clients and projects a validated two-field access-token result."
     },
-    "remainingWork": "Credential provider adapters, Auth methods and service facades still use upstream-derived implementations; Firestore and Storage client rewrites are tracked separately."
+    "remainingWork": "Auth methods and Firestore/Storage/messaging service facades still use upstream-derived implementations. Google Auth and the underlying service client runtimes are tracked separately."
   },
   "verification": {
-    "applicationRuntime": "Eight focused tests on Node 24 and Bun; app-lifecycle.cjs reproduces defects against an isolated original process and verifies deep options, safe keys, token retries and service cleanup.",
+    "applicationRuntime": "Ten focused tests on Node 24 and Bun, including isolated original app/credential controls, deep/shared options, provider/cleanup recovery, file rotation and actual signed-JWT/refresh-token OAuth POSTs through a local HTTP server and a counting agent.",
     "upstreamSuite": "6,062 retained upstream tests: Node 6,016 pass with 46 existing exact differences; Bun 6,001 pass with those 46 and 15 existing engine-wording differences.",
-    "callers": "Identical 17 Auth/Storage/FCM requests, 25 Firestore RPCs and 17 results on Node 24 and Bun."
+    "callers": "Identical 17 Auth/Storage/FCM requests, 25 Firestore RPCs and 17 results on Node 24 and Bun.",
+    "credentialAdapters": "148 upstream app/credential tests pass on Node. Original controls reproduce agent-insensitive caches, omitted JSON-client agents, frozen-input mutation, validation/use identity drift, unsanitized parse errors and unbounded credential retention. Native local OAuth requests verify RSA signatures and both request bodies on Node and Bun."
   }
 }

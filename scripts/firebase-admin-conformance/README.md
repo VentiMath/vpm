@@ -77,3 +77,12 @@ expiry and token redaction, local registry ownership, same-name imposters,
 prototype-named services, concurrent/failed cleanup and app-option prototype
 pollution. VPM also checks deep/null-prototype options, cycle rejection and
 initializer recovery. Run it with Node 24 or Bun; the package test invokes it.
+
+`credentials.cjs` isolates original/VPM controls for agent-sensitive factory
+identity, frozen and mutated credential inputs, file snapshots/rotation, shared
+discovery/acquisition, validated token projections, retry, cache eviction and
+JSON error redaction. `credential-transport.cjs` redirects only the OAuth request
+destination to a local server: RSA signing, token request bodies, Gaxios,
+configured HTTP Agent selection and response conversion run normally. The
+server verifies the signature and both JWT/refresh-token forms. Both scripts
+run on Node 24 and Bun through the package tests; no live credentials are used.
