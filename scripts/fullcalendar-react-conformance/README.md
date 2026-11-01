@@ -26,7 +26,8 @@ node scripts/fullcalendar-react-conformance/browser-compare.cjs
 Repeat the first three with Bun. The browser suite needs a Chrome or Chromium
 binary (`CHROME_PATH`, or a standard location).
 
-`react-suite.cjs` runs the release's 27 React tests (jsdom) with the package
+`react-suite.cjs` runs the release's 27 React tests (jsdom, in UTC as upstream's
+CI runs; one test builds dates from the current time) with the package
 under test linked as `../dist`, as upstream's tests import it, and one React for
 tests and calendar. All 27 pass for both libraries. One test calls
 `vi.resetModules()` and re-imports the package; in upstream's repository the
@@ -40,7 +41,9 @@ under test, the suite's 248 files and plugins are bundled with esbuild (with
 upstream's injection of the suite's global helpers), and Jasmine runs them in
 headless Chromium after the jQuery, jasmine-jquery, jquery-simulate and jQuery UI
 scripts upstream's Karma configuration loads, at its 1280x1696 window, in a
-fixed order, with Google Calendar's live-API tests skipped as upstream's CI
+fixed order, in `America/Phoenix` (a non-UTC offset, which the suite's local
+time zone specs need, without daylight saving changes that shift specs built
+from the current date), with Google Calendar's live-API tests skipped as upstream's CI
 does (`--no-gcal`). `browser-compare.cjs` runs it for both libraries and requires
 the same status for each of the 1,542 specs. Five fail for both in this
 configuration and are pinned by name: four `destroy` specs count React's 137

@@ -6,7 +6,9 @@
 // suite and its plugins are bundled with esbuild and run with Jasmine 3.99.1 in
 // headless Chromium after the same jQuery, jasmine-jquery, jquery-simulate and
 // jQuery UI scripts upstream's Karma configuration loads, at its 1280x1696
-// window. Results are written per spec; compare.cjs compares the libraries.
+// window, in America/Phoenix: a fixed non-UTC offset, as the suite's local time
+// zone specs need, without daylight saving changes that shift specs built from
+// the current date. Results are written per spec; compare.cjs compares the libraries.
 const assert = require('node:assert/strict'), fs = require('node:fs'), os = require('node:os'), path = require('node:path'), http = require('node:http');
 const {verify} = require('./upstream.cjs');
 const upstream = process.argv.includes('--upstream');
@@ -133,12 +135,14 @@ ${scripts.map((_, i) => `<script src="/lib${i}.js"></script>`).join('')}
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   const {chromium} = require('playwright-core');
-  const executablePath = process.env.CHROME_PATH || ['/opt/pw-browsers/chromium/chrome-linux/chrome', '/usr/bin/google-chrome', '/usr/bin/chromium'].find(fs.existsSync)
-    || (fs.existsSync('/opt/pw-browsers') ? fs.readdirSync('/opt/pw-browsers') : []).filter(d => d.startsWith('chromium-')).map(d => path.join('/opt/pw-browsers', d, 'chrome-linux/chrome')).find(fs.existsSync);
-  assert.ok(executablePath, 'no Chrome or Chromium found; set CHROME_PATH');
+  // CHROME_PATH, a system Chrome (CI runners), or else Playwright's own browser.
+  const pwBrowsers = process.env.PLAYWRIGHT_BROWSERS_PATH || '/opt/pw-browsers';
+  const executablePath = process.env.CHROME_PATH || ['/usr/bin/google-chrome', '/usr/bin/chromium'].find(fs.existsSync)
+    || (fs.existsSync(pwBrowsers) ? fs.readdirSync(pwBrowsers) : []).filter(d => d.startsWith('chromium-'))
+      .flatMap(d => ['chrome-linux64', 'chrome-linux'].map(sub => path.join(pwBrowsers, d, sub, 'chrome'))).find(fs.existsSync);
   const browser = await chromium.launch({executablePath, args: ['--no-sandbox']});
   try {
-    const context = await browser.newContext({viewport: {width: 1280, height: 1696}, timezoneId: 'America/New_York', locale: 'en-US'});
+    const context = await browser.newContext({viewport: {width: 1280, height: 1696}, timezoneId: 'America/Phoenix', locale: 'en-US'});
     const tab = await context.newPage();
     const console = [];
     tab.on('pageerror', error => console.push('pageerror: ' + error.message));

@@ -30,8 +30,10 @@ exports.runVitest = function runVitest({upstream, files, env = {}}) {
   test: {environment: 'jsdom', include: ${JSON.stringify(include)}, globals: true, server: {deps: {inline: [/@fullcalendar[\\\\/]react/]}}},
 };\n`);
     const report = path.join(temporary, 'report.json');
+    // UTC, as upstream's CI runs: some tests build dates from the current time,
+    // and on a day a local zone changes offset their expected counts are off.
     const result = spawnSync(process.execPath, [path.join(modules, 'vitest/vitest.mjs'), 'run', '--root', temporary, '--config', path.join(temporary, 'vitest.config.mjs'), '--reporter=json', '--outputFile=' + report],
-      {cwd: temporary, encoding: 'utf8', timeout: 600000, env: {...process.env, TZ: 'America/New_York', ...env}});
+      {cwd: temporary, encoding: 'utf8', timeout: 600000, env: {...process.env, TZ: 'UTC', ...env}});
     try { return JSON.parse(fs.readFileSync(report, 'utf8')); } catch {
       throw new Error('Suite produced no report\n' + result.stdout.slice(-6000) + result.stderr.slice(-6000));
     }
