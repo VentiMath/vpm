@@ -3,8 +3,8 @@
 **Implementation status:** app registration, service lifetime, token refresh
 ownership, option snapshots, credential adapters, Auth response records,
 user-management plans, token policy, key caching, signature adaptation, Auth
-request dispatch and HTTP/1 request plans use VPM redesigns. Google Auth, shared
-retry/authorization helpers, HTTP/2 and other service implementations remain
+request dispatch, HTTP/1 request plans and retry policy use VPM redesigns. Google
+Auth, response/authorization helpers, HTTP/2 and other service implementations remain
 upstream-derived. This is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
 the boundary.
 
@@ -49,8 +49,18 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   responses and invalid compressed bodies reject instead of remaining pending;
   failures destroy their streams and release buffered chunks. Completed error
   responses keep connections reusable. Gzip/deflate coding is case-insensitive,
-  and Brotli responses are decoded. Common retry policy, response projection,
-  authorization headers and HTTP/2 still use retained implementations.
+  and Brotli responses are decoded. Response projection, authorization headers
+  and HTTP/2 transport still use retained implementations. The retry policy is independently implemented.
+
+- **Owned retry policy.** Each client captures its retry settings and arrays;
+  later caller mutations cannot change an in-flight budget. Counts/delay limits
+  must be nonnegative safe integers and the backoff factor must be finite.
+  Retry-After accepts complete decimal seconds or HTTP dates, including the two
+  obsolete date forms interpreted in UTC. Junk suffixes, impossible dates and
+  numeric prefixes are not accepted as delays. An explicit zero is honored;
+  valid excessive delays stop retries when they exceed the configured budget.
+  Header names are case-insensitive. Long timer waits use bounded segments so
+  native timer overflow cannot turn a long delay into an immediate attempt.
 
 - **Auth request ownership and resource identity.** JSON-shaped input is copied
   before project lookup, so asynchronous discovery and validation cannot mutate
@@ -178,16 +188,24 @@ Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
 previous JWT improvements; they do not isolate the HTTP rewrite alone. The
-[full report](bench/results/README.md) includes all twenty-five cases, process
+[full report](bench/results/README.md) includes all thirty cases, process
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
 The HTTP cases serialize a request and consume a synthetic response stream;
 they exclude sockets and network latency. With Auth-style headers, the Bun case
-takes about 2.7 µs versus 2.3 µs (+16% median paired time). Both Node transport
+takes about 2.7 µs versus 2.3 µs (+21% median paired time). Both Node transport
 comparisons and Bun's headerless comparison remain inconclusive under the
 control checks. Request ownership, header normalization and response-failure
 handling have a CPU cost; these changes are not presented as a transport speedup.
+
+The retry cases expose their costs separately. Custom policy capture takes about
+115 ns versus 10 ns on Node and 362 ns versus 3 ns on Bun; it copies and freezes
+caller settings instead of retaining them. Default-policy construction takes
+16 ns versus 10 ns on Node and 6 ns versus 11 ns on Bun. Strict UTC HTTP-date
+parsing takes 469 ns versus 242 ns on Node and 425 ns versus 42 ns on Bun. These
+setup/error-path regressions are retained with their full percentages and
+controls; ordinary request success does not execute the retry-date parser.
 
 Token verification, record serialization and concurrent acquisition have separate
 cases. Record construction, cached-key reads, app/credential setup and cleanup
@@ -210,6 +228,9 @@ wire compatibility; these CPU timings do not establish application latency.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [Retry controls](../../scripts/firebase-admin-conformance/http-retry.cjs)
+  compare normal budgets and actual HTTP retries, then reproduce mutable policy,
+  numeric-prefix, timezone and timer-overflow failures in the original adapter.
 - [HTTP controls](../../scripts/firebase-admin-conformance/http-transport.cjs)
   compare retry bytes, header casing, partial responses, compression failures,
   timeouts and connection reuse against the original on local servers.

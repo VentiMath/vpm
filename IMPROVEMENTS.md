@@ -970,8 +970,8 @@ See the [package contract](packages/vfirebase-functions/README.md),
 Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
 service lifecycle, token lease, option snapshots, credential adapters, Auth response records,
 user-management plans, token policy, key caches, signature adaptation, Auth
-request dispatch and HTTP/1 request plans have source-informed VPM implementations.
-Shared retry/authorization helpers, HTTP/2, other service APIs and Google Auth
+request dispatch, HTTP/1 request plans and retry policy have source-informed VPM implementations.
+Response/authorization helpers, HTTP/2, other service APIs and Google Auth
 remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
@@ -1036,8 +1036,8 @@ HTTP/1 request plans capture wire bytes once for retries. Explicit content types
 survive header casing, and completed errors preserve connection reuse. Truncated
 responses and malformed gzip settle as errors rather than leaving pending promises;
 failed streams are destroyed and buffered chunks released. Case-insensitive
-coding and Brotli are supported. Shared retry policy, response projection,
-authorization headers and HTTP/2 remain retained. Actual local HTTP controls
+coding and Brotli are supported. Response projection, authorization headers
+and HTTP/2 transport remain retained. Actual local HTTP controls
 verify the changes on Node and Bun.
 
 While public keys are missing or expired, upstream starts one key request per
@@ -1060,11 +1060,18 @@ Admin calls (`verifyIdToken` with revocation checks, `getUser`, `updateUser`,
 `exists`, `delete` and signed URLs, and `sendEachForMulticast`) produce
 identical requests and results against local servers. Existing regression probes,
 isolated app-lifecycle, user-record, user-operation, token-policy, key/cache and
-request-dispatch and HTTP lifecycle controls, and sixteen focused tests cover the changes.
+request-dispatch, HTTP lifecycle and retry controls, and seventeen focused tests cover the changes.
 
 See the [package contract](packages/vfirebase-admin/README.md),
 [conformance record](scripts/firebase-admin-conformance/README.md) and
 [measurements](packages/vfirebase-admin/bench/results/README.md).
+
+The HTTP/1 and HTTP/2 clients now share an independently implemented retry
+policy. It owns validated settings and arrays, parses complete Retry-After
+values, treats HTTP dates as UTC, honors explicit zero delays, rejects invalid
+limits and splits long native timer waits. Normal upstream retry behavior and
+actual request callers remain verified; focused controls reproduce each fixed
+boundary. Response projection and transport authorization remain retained.
 
 ## vgoogle-cloud-firestore
 

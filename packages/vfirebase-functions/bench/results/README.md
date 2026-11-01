@@ -23,53 +23,53 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T14:41:06.719Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T15:19:27.272Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| logger / formatted status | 480 | 345 | -28.1% | -42.8% | -26.3% | 3.6% | lower time in every pair, beyond control spread |
-| logger / structured request | 569 | 590 | 3% | 2.9% | 4% | 2.1% | higher time in every pair, beyond control spread |
-| logger / nested data | 6330 | 4149 | -34.7% | -34.7% | -33.1% | 2% | lower time in every pair, beyond control spread |
-| initializer / already initialized handler | 49 | 56 | 16% | 15.4% | 17% | 1.2% | higher time in every pair, beyond control spread |
-| declaration / HTTP endpoint | 987 | 785 | -19.9% | -18.2% | -20.6% | 2.9% | lower time in every pair, beyond control spread |
-| declaration / serialize 64 fresh endpoints | 47272 | 53633 | 13.9% | 10.8% | 68.9% | 4.2% | higher time in every pair, beyond control spread |
-| request / initialized HTTP handler | 222 | 212 | -4.9% | -4.9% | -4.8% | 9.1% | unestablished at this precision |
-| callable / encode structured payload | 839 | 1190 | 41.4% | 42.5% | 41.1% | 2.4% | higher time in every pair, beyond control spread |
-| callable / decode structured payload | 1053 | 1218 | 14.5% | 14.4% | 15.7% | 4.8% | higher time in every pair, beyond control spread |
-| request / callable without token headers | 2044 | 2437 | 17.4% | 18.9% | 17.4% | 3.7% | higher time in every pair, beyond control spread |
-| trace / portable header extraction | 257 | 207 | -18.9% | -18.5% | -19.6% | 44% | unestablished at this precision |
-| trace / legacy decimal span extraction | 241 | 217 | -10.8% | -10% | -11.6% | 12.8% | unestablished at this precision |
-| discovery / 64 grouped endpoints | 12150 | 22120 | 81.3% | 81.3% | 81.1% | 5.9% | higher time in every pair, beyond control spread |
-| secret / runtime string read | 454 | 454 | -0.3% | 2.2% | -5.5% | 1.1% | unestablished at this precision |
-| declaration / Firestore written trigger | 844 | 922 | 9.4% | 9.4% | 18.4% | 1.5% | higher time in every pair, beyond control spread |
-| event / materialize changed protobuf documents | 3129 | 1772 | -43.4% | -39.9% | -45.1% | 0.9% | lower time in every pair, beyond control spread |
+| logger / formatted status | 480 | 349 | -27.3% | -26.6% | -27.3% | 1.7% | lower time in every pair, beyond control spread |
+| logger / structured request | 567 | 593 | 4.8% | 4.4% | 5.5% | 1.1% | higher time in every pair, beyond control spread |
+| logger / nested data | 6408 | 4127 | -36% | -36.4% | -35.4% | 3.2% | lower time in every pair, beyond control spread |
+| initializer / already initialized handler | 48 | 56 | 14.6% | 14.7% | 14.6% | 5.2% | higher time in every pair, beyond control spread |
+| declaration / HTTP endpoint | 988 | 820 | -16.3% | -16.3% | -14.9% | 70.5% | unestablished at this precision |
+| declaration / serialize 64 fresh endpoints | 47166 | 54273 | 12.9% | 15.6% | -11.8% | 27.9% | unestablished at this precision |
+| request / initialized HTTP handler | 223 | 213 | -4.2% | -3.5% | -9.3% | 3.5% | unestablished at this precision |
+| callable / encode structured payload | 856 | 1196 | 42.1% | 42.6% | 38% | 1.5% | higher time in every pair, beyond control spread |
+| callable / decode structured payload | 1065 | 1215 | 14.8% | 15.6% | 13.8% | 1.8% | higher time in every pair, beyond control spread |
+| request / callable without token headers | 2071 | 2442 | 18.1% | -10.9% | 21.2% | 2.3% | unestablished at this precision |
+| trace / portable header extraction | 256 | 209 | -17.7% | -17.2% | -20.3% | 0.7% | lower time in every pair, beyond control spread |
+| trace / legacy decimal span extraction | 246 | 215 | -12.5% | -12.1% | -12.7% | 2.8% | lower time in every pair, beyond control spread |
+| discovery / 64 grouped endpoints | 11877 | 22181 | 86.8% | 83.6% | 92.4% | 2.4% | higher time in every pair, beyond control spread |
+| secret / runtime string read | 450 | 459 | 0.5% | 0.5% | 13.3% | 2.9% | unestablished at this precision |
+| declaration / Firestore written trigger | 853 | 930 | 9.1% | 7.7% | 10.3% | 3.9% | higher time in every pair, beyond control spread |
+| event / materialize changed protobuf documents | 3172 | 1729 | -45.5% | -46% | -45.5% | 3.1% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T14:42:12.154Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T15:20:31.728Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| logger / formatted status | 573 | 547 | -4.9% | -6.4% | -4.9% | 3.4% | unestablished at this precision |
-| logger / structured request | 249 | 241 | -3.3% | -3.5% | -3.3% | 2% | unestablished at this precision |
-| logger / nested data | 7280 | 3777 | -48.2% | -49.6% | -48.2% | 8.9% | lower time in every pair, beyond control spread |
-| initializer / already initialized handler | 62 | 71 | 13.8% | 17% | 13.2% | 3.5% | higher time in every pair, beyond control spread |
-| declaration / HTTP endpoint | 384 | 475 | 24.7% | 23.2% | 26.3% | 2.6% | higher time in every pair, beyond control spread |
-| declaration / serialize 64 fresh endpoints | 37526 | 43484 | 15.7% | 18% | 14% | 6.8% | higher time in every pair, beyond control spread |
-| request / initialized HTTP handler | 265 | 247 | -6.2% | -9% | -6% | 2.3% | lower time in every pair, beyond control spread |
-| callable / encode structured payload | 1253 | 924 | -26.2% | -28% | -24.1% | 2.3% | lower time in every pair, beyond control spread |
-| callable / decode structured payload | 1327 | 884 | -33.3% | -34.3% | -32.5% | 3.9% | lower time in every pair, beyond control spread |
-| request / callable without token headers | 1708 | 2038 | 17.9% | 17.9% | 24.8% | 5.5% | higher time in every pair, beyond control spread |
-| trace / portable header extraction | 204 | 160 | -19.8% | -9.5% | -29.2% | 13.4% | unestablished at this precision |
-| trace / legacy decimal span extraction | 181 | 167 | -7.2% | -7.2% | -5% | 3% | unestablished at this precision |
-| discovery / 64 grouped endpoints | 13972 | 14040 | -0.4% | -27.5% | 0.2% | 1.7% | unestablished at this precision |
-| secret / runtime string read | 3 | 3 | 1.1% | -17.5% | 1.1% | 63.9% | unestablished at this precision |
-| declaration / Firestore written trigger | 576 | 762 | 34.1% | 41.1% | 22.2% | 3.9% | higher time in every pair, beyond control spread |
-| event / materialize changed protobuf documents | 2665 | 1584 | -40.6% | -40.6% | -40.7% | 10.7% | lower time in every pair, beyond control spread |
+| logger / formatted status | 571 | 560 | -2.9% | -3.4% | -2.8% | 11.6% | unestablished at this precision |
+| logger / structured request | 242 | 246 | 2.6% | -1.8% | 7.1% | 3.3% | unestablished at this precision |
+| logger / nested data | 7126 | 3759 | -47.5% | -47.5% | -47.1% | 9.1% | lower time in every pair, beyond control spread |
+| initializer / already initialized handler | 62 | 68 | 8.9% | 10.1% | 7.3% | 73.3% | unestablished at this precision |
+| declaration / HTTP endpoint | 385 | 480 | 24.5% | 24.5% | 22.2% | 29.6% | unestablished at this precision |
+| declaration / serialize 64 fresh endpoints | 38158 | 43879 | 16.2% | 16.2% | 19.7% | 72.9% | unestablished at this precision |
+| request / initialized HTTP handler | 262 | 250 | -3.3% | -6.6% | 6.3% | 4.4% | unestablished at this precision |
+| callable / encode structured payload | 1249 | 909 | -27.1% | -27.1% | -27% | 7.5% | lower time in every pair, beyond control spread |
+| callable / decode structured payload | 1348 | 874 | -34.9% | -36% | -34.2% | 15.7% | lower time in every pair, beyond control spread |
+| request / callable without token headers | 1753 | 1940 | 10.7% | 11.7% | 9.3% | 2.9% | higher time in every pair, beyond control spread |
+| trace / portable header extraction | 191 | 154 | -19.8% | -21.4% | -16.5% | 10.6% | lower time in every pair, beyond control spread |
+| trace / legacy decimal span extraction | 177 | 161 | -9.3% | -10.7% | -2.7% | 2.8% | unestablished at this precision |
+| discovery / 64 grouped endpoints | 13891 | 13812 | -0.6% | -4.2% | 2.4% | 1.3% | unestablished at this precision |
+| secret / runtime string read | 3 | 3 | -18.2% | -43.7% | 27.4% | 64.2% | unestablished at this precision |
+| declaration / Firestore written trigger | 543 | 776 | 41% | 43.9% | 41% | 14.5% | higher time in every pair, beyond control spread |
+| event / materialize changed protobuf documents | 2588 | 1620 | -37.6% | -38.4% | -37% | 8.9% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 
