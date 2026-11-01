@@ -112,6 +112,7 @@ jobs:
           node scripts/emotion-conformance/run.cjs --upstream --mode=production
           node scripts/emotion-conformance/run.cjs --mode=production
           node scripts/emotion-conformance/regressions.cjs
+          node scripts/emotion-conformance/types.cjs
           node scripts/gax-conformance/run.cjs --upstream
           node scripts/gax-conformance/run.cjs
           node scripts/gax-conformance/regressions.cjs

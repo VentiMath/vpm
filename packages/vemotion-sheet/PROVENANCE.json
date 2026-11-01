@@ -1,0 +1,27 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/sheet",
+    "version": "1.4.0",
+    "tarball": "https://registry.npmjs.org/@emotion/sheet/-/sheet-1.4.0.tgz",
+    "tarballSha256": "4dce2470fef70b3af4cae7661dfc2e68a067dd96d2ff3467713a6ec627d05122",
+    "integrity": "sha512-fTBW9/8r2w3dXWYM4HCB1Rdp8NLibOw2+XELH5m5+AkWiL/KqYX6dc0kKYlaYyKjrQ6ds33MCdMPEwgs2z1rqg=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM: the StyleSheet class with the same public fields (MUI subclasses it and sets before, and reads nonce, container, isSpeedy, prepend and insertionPoint), private fields and methods for the rest.",
+    "Style elements are created by the container's document (an iframe's head, for instance) rather than the global document.",
+    "The #is-development condition chooses development or production behavior, as in the original's conditional builds.",
+    "ES module with bundled declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds.",
+    "declarations": "scripts/emotion-conformance/types.cjs compiles an application against the declarations with DOM types under TypeScript 7.1, 5.8 and 5.9.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

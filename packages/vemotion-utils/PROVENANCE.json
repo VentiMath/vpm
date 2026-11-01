@@ -1,0 +1,27 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/utils",
+    "version": "1.4.2",
+    "tarball": "https://registry.npmjs.org/@emotion/utils/-/utils-1.4.2.tgz",
+    "tarballSha256": "a1414945e9920aac2c4622bbf12b69960b90fdbb4367c5c6bcb1126556840967",
+    "integrity": "sha512-3vLclRofFziIa3J2wDh9jjbkUz9qk5Vi3IZ/FSTKViB0k+ef0fPV7dYrUIugbgupYDx7v9ud/SjrtEP8Y4xLoA=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM: getRegisteredStyles, registerStyles and insertStyles with the original's behavior, and the EmotionCache, SerializedStyles and RegisteredCache types.",
+    "Depends on vemotion-sheet, whose StyleSheet type its declarations use: @emotion/utils imports @emotion/sheet's types without depending on it, so installed on its own (pnpm, isolated installs) its declarations fail to compile (TS2307).",
+    "The #is-browser condition chooses browser or server behavior, as in the original's conditional builds.",
+    "ES module with bundled declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds.",
+    "declarations": "scripts/emotion-conformance/types.cjs compiles an application against the declarations with DOM types under TypeScript 7.1, 5.8 and 5.9.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "vemotion-sheet",
+  "version": "0.1.0",
+  "description": "Style element sheet for Emotion: insertRule in production, one element per rule in development",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#is-development": {
+      "development": "./src/conditions/true.js",
+      "default": "./src/conditions/false.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src/",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vemotion-sheet"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

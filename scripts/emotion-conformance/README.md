@@ -31,6 +31,7 @@ node scripts/emotion-conformance/run.cjs
 node scripts/emotion-conformance/run.cjs --upstream --mode=production
 node scripts/emotion-conformance/run.cjs --mode=production
 node scripts/emotion-conformance/regressions.cjs
+node scripts/emotion-conformance/types.cjs
 ```
 
 Repeat the regressions with Bun; Jest runs on Node.
@@ -48,10 +49,18 @@ that no package publishes, and is not run.
 
 In development, 285 tests pass and 8 are gated to production; in production, 5
 pass. The same holds with VPM's packages: currently vemotion-hash,
-vemotion-memoize, vemotion-unitless and vemotion-weak-memoize, with the
-original packages above them. 305 and 11 snapshots match.
+vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet and
+vemotion-utils, with the original packages above them. 305 and 11 snapshots
+match.
+
+`types.cjs` compiles an application using each VPM package's API (subclassing
+`StyleSheet` as MUI does, the cache and serialized style types) against the
+originals' and VPM's declarations with DOM types, under TypeScript 7.1, 5.8 and
+5.9.
 
 `regressions.cjs` reproduces each change with the originals: two styles
 differing by characters whose UTF-16 code units share a low byte get the same
-class name, `gridArea` and `lineClamp` numbers are serialized with `px`, and
-`undefined` results are recomputed by memoize.
+class name, `gridArea` and `lineClamp` numbers are serialized with `px`,
+`undefined` results are recomputed by memoize, and @emotion/utils's
+declarations, installed with only its declared dependencies, fail to compile
+because they import the undeclared `@emotion/sheet`.

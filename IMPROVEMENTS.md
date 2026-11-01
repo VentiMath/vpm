@@ -32,6 +32,8 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Suite verified | vemotion-utils | @emotion/utils 1.4.2; Emotion's 293-test suite with it in place of the original, and its declarations under TypeScript 7.1, 5.8 and 5.9 | [@emotion/utils 1.4.2](https://www.npmjs.com/package/@emotion/utils), checked November 1, 2026 |
+| Suite verified | vemotion-sheet | @emotion/sheet 1.4.0; Emotion's 293-test suite with it in place of the original, and its declarations under TypeScript 7.1, 5.8 and 5.9 | [@emotion/sheet 1.4.0](https://www.npmjs.com/package/@emotion/sheet), checked November 1, 2026 |
 | Suite verified | vemotion-hash | @emotion/hash 0.9.2; Emotion's 293-test suite with it in place of the original | [@emotion/hash 0.9.2](https://www.npmjs.com/package/@emotion/hash), checked November 1, 2026 |
 | Suite verified | vemotion-memoize | @emotion/memoize 0.9.0; Emotion's 293-test suite with it in place of the original | [@emotion/memoize 0.9.0](https://www.npmjs.com/package/@emotion/memoize), checked November 1, 2026 |
 | Suite verified | vemotion-unitless | @emotion/unitless 0.10.0; Emotion's 293-test suite with it in place of the original | [@emotion/unitless 0.10.0](https://www.npmjs.com/package/@emotion/unitless), checked November 1, 2026 |
@@ -140,7 +142,7 @@ stylis 4.2.0; its suite passes with 4.4.0, the version VentiMath already
 installs.
 Emotion's own packages follow on it, each written for VPM: first the leaves
 `vemotion-hash`, `vemotion-memoize`, `vemotion-unitless` and
-`vemotion-weak-memoize`.
+`vemotion-weak-memoize`, then `vemotion-sheet` and `vemotion-utils`.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -179,6 +181,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vemotion-sheet](packages/vemotion-sheet) | @emotion/sheet 1.4.0 | The same behavior and public fields (MUI subclasses it), written for VPM; elements created by the container's document. |
+| [vemotion-utils](packages/vemotion-utils) | @emotion/utils 1.4.2 | Declares the sheet package its types import (@emotion/utils does not, so its declarations fail to compile when installed alone); otherwise the same behavior, written for VPM. |
 | [vemotion-hash](packages/vemotion-hash) | @emotion/hash 0.9.2 | Hashes UTF-8 bytes: the original kept each code unit's low byte, so styles differing by characters such as 中 and 伭 shared a class name and rendered alike; identical hashes for ASCII. |
 | [vemotion-memoize](packages/vemotion-memoize) | @emotion/memoize 0.9.0 | Caches `undefined` results too. |
 | [vemotion-unitless](packages/vemotion-unitless) | @emotion/unitless 0.10.0 | Adds `gridArea` and `lineClamp`, which were serialized with `px`. |
@@ -293,14 +297,15 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,824 tests**: all pass on Node 24, and Bun passes
-2,821 with three documented runtime-specific skips. All 107 Node runtime packages'
+The root suite contains **2,830 tests**: all pass on Node 24, and Bun passes
+2,827 with three documented runtime-specific skips. All 107 Node runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **111 packages**, including two declaration-only packages and
-two browser packages, `vfullcalendar-react` and `vtanstack-react-query`, whose
-declarations are checked with DOM and React types.
+catalog covers **113 packages**, including two declaration-only packages and
+four browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
+`vemotion-sheet` and `vemotion-utils`, whose declarations are checked with DOM
+(and React) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -424,6 +429,8 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vemotion-sheet` | 0 | 0 |
+| `vemotion-utils` | 0 (its types import the undeclared `@emotion/sheet`) | 1 (`vemotion-sheet`, for its types) |
 | `vemotion-hash` | 0 | 0 |
 | `vemotion-memoize` | 0 | 0 |
 | `vemotion-unitless` | 0 | 0 |
@@ -600,15 +607,18 @@ Firebase handles errors thrown by plain handlers itself; finalhandler is exercis
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
 
-## Emotion's leaf packages
+## Emotion's leaf, sheet and utility packages
 
-`vemotion-hash`, `vemotion-memoize`, `vemotion-unitless` and
-`vemotion-weak-memoize` target @emotion/hash 0.9.2, @emotion/memoize 0.9.0,
-@emotion/unitless 0.10.0 and @emotion/weak-memoize 0.4.0, checked November 1,
-2026, written for VPM. Emotion's suite (293 tests across hash, weak-memoize,
-sheet, cache, react and styled, with 305 snapshots, in development and
-production builds) runs against the published packages and passes in full with
-these four in place of the originals.
+`vemotion-hash`, `vemotion-memoize`, `vemotion-unitless`,
+`vemotion-weak-memoize`, `vemotion-sheet` and `vemotion-utils` target
+@emotion/hash 0.9.2, @emotion/memoize 0.9.0, @emotion/unitless 0.10.0,
+@emotion/weak-memoize 0.4.0, @emotion/sheet 1.4.0 and @emotion/utils 1.4.2,
+checked November 1, 2026, written for VPM. Emotion's suite (293 tests across
+hash, weak-memoize, sheet, cache, react and styled, with 305 snapshots, in
+development and production builds) runs against the published packages and
+passes in full with these six in place of the originals. The sheet keeps the
+original's public fields, which MUI's `StyledEngineProvider` relies on when it
+subclasses `StyleSheet`.
 
 @emotion/hash keeps only the low byte of each UTF-16 code unit, so two styles
 differing by characters whose code units share it (`content: "中"` and
@@ -616,8 +626,10 @@ differing by characters whose code units share it (`content: "中"` and
 with the first's styles. vemotion-hash hashes UTF-8 bytes, identical for ASCII,
 without needing `TextEncoder` (absent in jsdom). @emotion/unitless lacks
 `gridArea` and `lineClamp`, so `gridArea: 2` became `grid-area:2px`; memoize
-recomputed `undefined` results. Three regression cases reproduce these with the
-originals.
+recomputed `undefined` results; and @emotion/utils's declarations import
+`@emotion/sheet`, which it does not depend on, so they fail to compile when it
+is installed on its own (vemotion-utils depends on vemotion-sheet). Four
+regression cases reproduce these with the originals.
 
 See the [conformance record](scripts/emotion-conformance/README.md).
 

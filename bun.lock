@@ -101,9 +101,20 @@
       "name": "vemotion-memoize",
       "version": "0.1.0",
     },
+    "packages/vemotion-sheet": {
+      "name": "vemotion-sheet",
+      "version": "0.1.0",
+    },
     "packages/vemotion-unitless": {
       "name": "vemotion-unitless",
       "version": "0.1.0",
+    },
+    "packages/vemotion-utils": {
+      "name": "vemotion-utils",
+      "version": "0.1.0",
+      "dependencies": {
+        "vemotion-sheet": "0.1.0",
+      },
     },
     "packages/vemotion-weak-memoize": {
       "name": "vemotion-weak-memoize",
@@ -846,7 +857,11 @@
 
     "vemotion-memoize": ["vemotion-memoize@workspace:packages/vemotion-memoize"],
 
+    "vemotion-sheet": ["vemotion-sheet@workspace:packages/vemotion-sheet"],
+
     "vemotion-unitless": ["vemotion-unitless@workspace:packages/vemotion-unitless"],
+
+    "vemotion-utils": ["vemotion-utils@workspace:packages/vemotion-utils"],
 
     "vemotion-weak-memoize": ["vemotion-weak-memoize@workspace:packages/vemotion-weak-memoize"],
 

@@ -1,0 +1,48 @@
+{
+  "name": "vemotion-utils",
+  "version": "0.1.0",
+  "description": "Registration and insertion of serialized styles in an Emotion cache",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#is-browser": {
+      "edge-light": "./src/conditions/false.js",
+      "workerd": "./src/conditions/false.js",
+      "worker": "./src/conditions/false.js",
+      "browser": "./src/conditions/true.js",
+      "default": "./src/conditions/is-browser.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src/",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vemotion-utils"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "dependencies": {
+    "vemotion-sheet": "0.1.0"
+  }
+}

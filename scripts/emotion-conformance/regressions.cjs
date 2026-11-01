@@ -37,5 +37,31 @@ const load = async name => (await import(pathToFileURL(path.join(packages, name,
   }
   found.push('undefined results recomputed by memoize');
 
+  // 4. @emotion/utils's declarations import @emotion/sheet, which it does not
+  // depend on: installed on its own (pnpm, or any isolated install), its types
+  // fail to compile.
+  {
+    const fs = require('node:fs'), os = require('node:os'), {compile} = require('../platform-types.cjs');
+    const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'emotion-utils-alone-'));
+    try {
+      const errors = {};
+      for (const [library, target, name] of [['upstream', path.join(__dirname, 'node_modules/@emotion/utils'), '@emotion/utils'], ['vpm', path.join(packages, 'vemotion-utils'), 'vemotion-utils']]) {
+        // The package and its declared dependencies, as an isolated install lays them out.
+        const root = path.join(directory, library), modules = path.join(root, 'node_modules');
+        fs.mkdirSync(path.join(modules, '@emotion'), {recursive: true});
+        fs.cpSync(target, path.join(modules, name), {recursive: true, dereference: true});
+        for (const dependency of Object.keys(require(path.join(target, 'package.json')).dependencies || {})) fs.cpSync(path.join(packages, dependency), path.join(modules, dependency), {recursive: true, dereference: true});
+        const file = path.join(root, 'app.ts');
+        fs.writeFileSync(file, `import type {EmotionCache} from '${name}';\nexport declare const cache: EmotionCache;\n`);
+        errors[library] = compile({files: [file], compilerOptions: {strict: true, noEmit: true, target: 'ES2022', lib: ['ES2022', 'DOM'], module: 'ESNext', moduleResolution: 'Bundler', types: [], skipLibCheck: false}}).output.match(/error TS\d+: [^\n]*/g) || [];
+      }
+      assert.ok(errors.upstream.some(error => /TS2307: Cannot find module '@emotion\/sheet'/.test(error)), JSON.stringify(errors));
+      assert.deepEqual(errors.vpm, []);
+    } finally {
+      fs.rmSync(directory, {recursive: true, force: true});
+    }
+    found.push("@emotion/utils's types needing @emotion/sheet, which it does not depend on (TS2307 when installed alone)");
+  }
+
   console.log(`Reproduced in Emotion 11.14 and fixed (${found.length}):\n- ${found.join('\n- ')}`);
 })().catch(error => { console.error(error); process.exitCode = 1; });

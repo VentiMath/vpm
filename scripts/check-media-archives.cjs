@@ -38,6 +38,10 @@ try {
         const sources = entries.filter(f => /\.(js|d\.ts)$/.test(f)).map(f => fs.readFileSync(path.join(extracted, 'package', f), 'utf8'));
         assert.ok(!sources.some(text => /['"](@full-ui\/headless-calendar|@fullcalendar\/core[^'"]*|temporal-polyfill[^'"]*)['"]/.test(text)), name + ': only VPM calendar packages are imported');
       }
+      if (name === 'vemotion-sheet' || name === 'vemotion-utils') {
+        assert.deepEqual(metadata.dependencies, name === 'vemotion-utils' ? {'vemotion-sheet': '0.1.0'} : undefined);
+        assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/conditions/true.js', 'src/conditions/false.js', ...(name === 'vemotion-utils' ? ['src/conditions/is-browser.js'] : [])].sort());
+      }
       continue;
     }
     dependencies[name] = 'file:' + packed;
@@ -80,6 +84,12 @@ try {
       assert.equal(metadata.peerDependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','protected-api.js','protected-api.d.ts','package.json'].sort());
+    }
+    if (['vemotion-hash','vemotion-memoize','vemotion-unitless','vemotion-weak-memoize','vstylis'].includes(name)) {
+      assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      const sources = name === 'vstylis' ? ['constants','element','middleware','parser','prefix','scanner','serializer','tokenize'].map(module => `src/${module}.js`) : [];
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json',...sources].sort());
     }
     if (name === 'vfunctional-red-black-tree') {
       assert.equal(metadata.dependencies, undefined);
