@@ -1,0 +1,37 @@
+{
+  "name": "vemotion-babel-plugin",
+  "version": "0.1.0",
+  "description": "Emotion's Babel plugin: compile-time css, styled, Global and css prop, with labels, source maps and component selectors",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.cjs",
+    "index.d.ts",
+    "src/",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vemotion-babel-plugin"
+  },
+  "dependencies": {
+    "vemotion-hash": "0.1.0",
+    "vemotion-serialize": "0.1.0",
+    "vstylis": "0.1.0"
+  }
+}

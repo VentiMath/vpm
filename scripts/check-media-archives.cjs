@@ -13,6 +13,8 @@ function run(command, args, cwd = directory) {
 }
 try {
   const dependencies = {};
+  // Browser packages' archives, installed only where a Node package depends on them.
+  const browserArchives = {};
   const runtimePackages = fs.readdirSync(path.join(root, 'packages')).filter(name => require(path.join(root, 'packages', name, 'package.json')).vpm?.kind !== 'types');
   for (const name of runtimePackages) {
     run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', directory, '--quiet'], path.join(root, 'packages', name));
@@ -24,6 +26,7 @@ try {
     // Browser packages are packed and checked here, but not installed into the
     // Node consumers below: their React peers would be fetched for nothing.
     if (metadata.vpm?.platform === 'browser') {
+      browserArchives[name] = 'file:' + packed;
       assert.equal(metadata.engines?.node, '>=24', name + ': packed runtime baseline');
       for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
       const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(f => !f.endsWith('/')).map(f => f.replace(/^package\//, ''));
@@ -109,6 +112,11 @@ try {
       assert.equal(metadata.peerDependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','protected-api.js','protected-api.d.ts','package.json'].sort());
+    }
+    if (name === 'vemotion-babel-plugin') {
+      assert.deepEqual(metadata.dependencies, {'vemotion-hash': '0.1.0', 'vemotion-serialize': '0.1.0', vstylis: '0.1.0'});
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.cjs','index.d.ts','package.json',...['imports','label','source-map','styles','target-class-name','transformers'].map(module => `src/${module}.cjs`)].sort());
     }
     if (['vemotion-hash','vemotion-memoize','vemotion-unitless','vemotion-weak-memoize','vstylis','vemotion-is-prop-valid'].includes(name)) {
       assert.deepEqual(metadata.dependencies, name === 'vemotion-is-prop-valid' ? {'vemotion-memoize': '0.1.0'} : undefined);
@@ -369,6 +377,18 @@ try {
       assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'index.d.ts', 'index.js', 'package.json'].sort());
     }
   }
+  // Node packages may depend on browser packages without React peers
+  // (vemotion-babel-plugin on vemotion-serialize): their archives are
+  // installed too, with what they depend on.
+  const addBrowserDependencies = name => {
+    for (const dependency of Object.keys(require(path.join(root, 'packages', name, 'package.json')).dependencies || {})) {
+      if (browserArchives[dependency] && !dependencies[dependency]) {
+        dependencies[dependency] = browserArchives[dependency];
+        addBrowserDependencies(dependency);
+      }
+    }
+  };
+  for (const name of Object.keys(dependencies)) addBrowserDependencies(name);
   fs.writeFileSync(path.join(directory, 'consumer.cjs'), `
 const archiveProtobuf=require('vprotobufjs'),archiveProtoType=archiveProtobuf.parse('message Item {optional int64 id=1;}').root.lookupType('Item');
 const archiveProtoBytes=archiveProtoType.encode(archiveProtoType.fromObject({id:'9007199254740993'})).finish();if(archiveProtoType.decode(archiveProtoBytes).id.toString()!=='9007199254740993'||!Object.isFrozen(archiveProtobuf.util.LongBits.zero))throw new Error('Protobuf CJS archive');
@@ -391,6 +411,7 @@ for(const sub of ['', '/react', '/es6', '/es6/react', '/index', '/index.js', '/r
 for(const sub of ['','/rbtree','/rbtree.js']){const createTree=require('vfunctional-red-black-tree'+sub);const tree=createTree().insert(2,'b').insert(1,'a');if(tree.keys.join()!=='1,2'||tree.remove(1).length!==1||tree.length!==2||createTree().at(0).valid)throw new Error('red-black tree CJS archive '+sub);}
 {const {QueryClient,timeoutManager,hashKey}=require('vtanstack-query-core');if(typeof new QueryClient().getQueryCache!=='function'||hashKey(['a',{b:1,a:2}])!=='["a",{"a":2,"b":1}]'||typeof timeoutManager.setTimeout!=='function')throw new Error('tanstack query core CJS archive');}
 if(Object.keys(require('vfullcalendar-core')).length!==0||typeof require('vfullcalendar-core/protected-api').requestJson!=='function')throw new Error('fullcalendar core CJS archive');
+{const emotionPlugin=require('vemotion-babel-plugin');if(typeof emotionPlugin!=='function'||emotionPlugin({types:{}},{}).name!=='@emotion')throw new Error('emotion babel plugin CJS archive');}
 {const calendar=require('vfull-ui-headless-calendar');const zoned=new calendar.DateEnv({timeZone:'America/New_York',calendarSystem:'gregory',locale:{codes:['en-US'],week:{dow:0,doy:1},simpleNumberFormat:new Intl.NumberFormat('en-US'),options:{}}});if(zoned.toDate(new Date(Date.UTC(2024,2,10,2,30))).toISOString()!=='2024-03-10T07:30:00.000Z'||calendar.parseMarker('0050-06-01').marker.getUTCFullYear()!==50)throw new Error('headless calendar CJS archive');}
 {const {logger}=require('vfirebase-functions/v2'),{onRequest,onCall}=require('vfirebase-functions/v2/https'),{onDocumentCreated}=require('vfirebase-functions/v2/firestore');const fn=onRequest((q,r)=>r.send('ok')),callable=onCall(()=>({})),trigger=onDocumentCreated('rooms/{id}',()=>{});if(typeof logger.info!=='function'||fn.__endpoint.platform!=='gcfv2'||!callable.__endpoint.callableTrigger||!trigger.__endpoint.eventTrigger)throw new Error('Firebase Functions CJS archive');}
 {const {initializeApp,deleteApp}=require('vfirebase-admin/app'),app=initializeApp({projectId:'archive'},'archive-cjs');const {getFirestore,FieldValue}=require('vfirebase-admin/firestore');if(getFirestore(app).doc('a/b').path!=='a/b'||FieldValue!==require('vgoogle-cloud-firestore').FieldValue||typeof require('vfirebase-admin/auth').getAuth(app).verifyIdToken!=='function'||typeof require('vfirebase-admin/messaging').getMessaging(app).sendEachForMulticast!=='function'||require('vfirebase-admin').SDK_VERSION!=='0.1.0')throw new Error('Firebase Admin CJS archive');let databaseError;try{require('vfirebase-admin/database');}catch(error){databaseError=error;}if(!/Realtime Database/.test(databaseError?.message))throw new Error('Firebase Admin database archive');void deleteApp(app);}

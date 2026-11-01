@@ -32,6 +32,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Suite verified | vemotion-babel-plugin | @emotion/babel-plugin 11.13.5; its 130 tests (two pinned by name) and Emotion's runtime suite compiled with it | [@emotion/babel-plugin 11.13.5](https://www.npmjs.com/package/@emotion/babel-plugin), checked November 1, 2026 |
 | Suite verified | vemotion-styled | @emotion/styled 11.14.1; Emotion's suite under React 16 and 18 with all twelve VPM Emotion packages in place of the originals, and its declarations with React 18.3 and 19 types under TypeScript 7.1, 5.8 and 5.9 | [@emotion/styled 11.14.1](https://www.npmjs.com/package/@emotion/styled), checked November 1, 2026 |
 | Suite verified | vemotion-react | @emotion/react 11.14.0; Emotion's suite under React 16 and 18 with it in place of the original, and its declarations with React 18.3 and 19 types under TypeScript 7.1, 5.8 and 5.9 | [@emotion/react 11.14.0](https://www.npmjs.com/package/@emotion/react), checked November 1, 2026 |
 | Suite and differential verified | vemotion-cache | @emotion/cache 11.14.0; Emotion's suite under React 16 and 18, 10,000 generated styles with identical CSS in development and production (including VentiMath's RTL and `@layer` configurations), and its declarations under TypeScript 7.1, 5.8 and 5.9 | [@emotion/cache 11.14.0](https://www.npmjs.com/package/@emotion/cache), checked November 1, 2026 |
@@ -151,8 +152,8 @@ Emotion's own packages follow on it, each written for VPM: first the leaves
 `vemotion-weak-memoize`, then `vemotion-sheet`, `vemotion-utils`,
 `vemotion-serialize`, `vemotion-is-prop-valid` and
 `vemotion-use-insertion-effect-with-fallbacks`, then `vemotion-cache` on
-vstylis, `vemotion-react` and `vemotion-styled`, completing Emotion's runtime;
-the Babel plugin follows.
+vstylis, `vemotion-react` and `vemotion-styled`, completing Emotion's runtime,
+and `vemotion-babel-plugin`.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -191,6 +192,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vemotion-babel-plugin](packages/vemotion-babel-plugin) | @emotion/babel-plugin 11.13.5 | Minifies with vstylis (the original's stylis 4.2.0 turned `border: 1px /* thin */ solid red` into `border:1pxsolid red`), its own source maps and imports, no macros: 3 dependencies instead of 11, all VPM; otherwise the original's output, target class names included. |
 | [vemotion-styled](packages/vemotion-styled) | @emotion/styled 11.14.1 | Reads the theme context on every render (the original's conditional read changed the order of hooks when a `theme` prop came and went), forwards current HTML attributes through vemotion-is-prop-valid, and has no macro entry: 4 direct dependencies, all VPM. |
 | [vemotion-react](packages/vemotion-react) | @emotion/react 11.14.0 | Without the macro entry and its runtime dependency on the Babel plugin (with babel-plugin-macros, cosmiconfig and @babel/runtime) and hoist-non-react-statics: 5 direct dependencies, all VPM; JSX types on `React.JSX`, checked with React 18.3 and 19 types. |
 | [vemotion-cache](packages/vemotion-cache) | @emotion/cache 11.14.0 | On vstylis (stylis 4.4.0); Emotion's prefixer by property name (the original's copy of stylis 4.0.13's invented `-webkit-box-flex-wrap` and others), a valid `-ms-flex-item-align`, and `-ms-flex-pack` kept for `space-between`; otherwise identical CSS over 10,000 generated styles, VentiMath's RTL configuration included. |
@@ -313,12 +315,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,843 tests**: all pass on Node 24, and Bun passes
-2,840 with three documented runtime-specific skips. All 108 Node runtime packages'
+The root suite contains **2,846 tests**: all pass on Node 24, and Bun passes
+2,843 with three documented runtime-specific skips. All 109 Node runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **119 packages**, including two declaration-only packages and
+catalog covers **120 packages**, including two declaration-only packages and
 nine browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -447,6 +449,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vemotion-babel-plugin` | 11 (Babel helpers and runtime, babel-plugin-macros, source-map, convert-source-map, find-root, escape-string-regexp, stylis, three Emotion packages) | 3 (`vemotion-hash`, `vemotion-serialize`, `vstylis`) |
 | `vemotion-styled` | 6 (four Emotion packages, `@emotion/babel-plugin`, `@babel/runtime`; React and `@emotion/react` peers) | 4 (VPM Emotion packages; React and `vemotion-react` peers) |
 | `vemotion-react` | 8 (five Emotion packages, `@emotion/babel-plugin`, `@babel/runtime`, `hoist-non-react-statics`; React peer) | 5 (VPM Emotion packages; React peer) |
 | `vemotion-cache` | 5 (four Emotion packages, `stylis`) | 5 (four VPM Emotion packages, `vstylis`) |
@@ -698,6 +701,16 @@ context only when a component's `theme` prop was null, so a component whose
 reports in development (reproduced with React 16.14); vemotion-styled reads it
 on every render. With it, all twelve of Emotion's packages are VPM's, and
 Emotion's suite passes in full with no original package loaded.
+
+`vemotion-babel-plugin` targets @emotion/babel-plugin 11.13.5 with its options
+and output, target class names included. The original minifies with stylis
+4.2.0, which drops the space a comment separates two words with
+(`border: 1px /* thin */ solid red` became `border:1pxsolid red`); VPM's
+minifies with vstylis. Source maps, added imports and package roots are the
+plugin's own code, and there are no macros: 3 dependencies instead of 11. The
+plugin's own 130 tests pass, except two pinned by name (a fixture importing the
+`@emotion/react/macro` entry, and the snapshot recording the dropped space),
+and Emotion's runtime suite passes with its test files compiled by it.
 
 See the [conformance record](scripts/emotion-conformance/README.md).
 

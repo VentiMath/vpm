@@ -99,7 +99,18 @@ const load = async name => (await import(pathToFileURL(path.join(packages, name,
     found.push('a styled component whose theme prop comes and goes changing the order of its hooks (React warns)');
   }
 
-  // 9. @emotion/utils's declarations import @emotion/sheet, which it does not
+  // 9. @emotion/babel-plugin minifies with stylis 4.2.0, which drops the space
+  // a comment separates two words with: `border: 1px /* thin */ solid red`
+  // became `border:1pxsolid red`, an invalid declaration.
+  {
+    const babel = require('./node_modules/@babel/core');
+    const compiled = plugin => babel.transformSync('import { css } from "@emotion/css"\nconst thin = css`\n  border: 1px\n  /* thin */\n  solid red;\n`', {plugins: [[plugin, {sourceMap: false}]], babelrc: false, configFile: false, filename: path.join(__dirname, 'thin.js')}).code;
+    assert.match(compiled(require('./node_modules/@emotion/babel-plugin').default), /styles: "border:1pxsolid red"/);
+    assert.match(compiled(require(path.join(packages, 'vemotion-babel-plugin/index.cjs'))), /styles: "border:1px solid red"/);
+    found.push('the Babel plugin minifying border: 1px /* thin */ solid red to border:1pxsolid red');
+  }
+
+  // 10. @emotion/utils's declarations import @emotion/sheet, which it does not
   // depend on: installed on its own (pnpm, or any isolated install), its types
   // fail to compile.
   {

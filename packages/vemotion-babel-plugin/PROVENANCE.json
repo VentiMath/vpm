@@ -1,0 +1,30 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/babel-plugin",
+    "version": "11.13.5",
+    "tarball": "https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.13.5.tgz",
+    "tarballSha256": "c7ec8ec79826cd8fe6fea046b6db59640dc32a276ba8a3e5dfdcc3eb1e11acb2",
+    "integrity": "sha512-pxHCpT2ex+0q+HH91/zsdHkw/lXd468DIN2zvfvLtPKLLMo6gQj7oLObq8PhkrxOZb/gGCq03S3Z7PDhS8pduQ=="
+  },
+  "source": "Written for VPM to the upstream plugin's options and output. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM: the visitors, the css, keyframes, injectGlobal, Global, css prop and styled transforms, labels, minification, static serialization, target class names and import maps.",
+    "Minifies with vstylis (stylis 4.4.0) instead of stylis 4.2.0, which dropped the space a comment separates two words with: border: 1px /* thin */ solid red became border:1pxsolid red.",
+    "Source maps are written by the plugin (one mapping, the JSON of source-map's SourceMapGenerator) and imports are added as @babel/helper-module-imports adds them; package roots are found without find-root. Dependencies: vemotion-hash, vemotion-serialize and vstylis (3), instead of @babel/helper-module-imports, @babel/runtime, babel-plugin-macros, convert-source-map, escape-string-regexp, find-root, source-map, stylis and three Emotion packages (11).",
+    "No macros export (VPM's Emotion packages have no macro entries).",
+    "Without a file name, target class names hash the code with the module name @emotion/babel-plugin, as the original does (it finds its own package), so class names stay the same.",
+    "CommonJS, which Babel 7 loads synchronously; it loads VPM's ES modules with require().",
+    "Bundled declarations of the plugin's options."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamTests": "The plugin's own tests (130) pass with this plugin, except two pinned by name: a fixture importing the @emotion/react/macro entry, and a snapshot recording stylis 4.2.0's dropped space.",
+    "endToEnd": "The plugin compiles Emotion's *.test.js files in the runtime suite, with VPM's runtime packages: all pass under React 16 and 18.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

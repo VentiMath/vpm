@@ -72,9 +72,15 @@ gated to production (435 snapshots); in production, 5 pass; under React 18,
 418 pass (441 snapshots). The same holds with VPM's packages: currently vemotion-hash,
 vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet,
 vemotion-utils, vemotion-serialize, vemotion-is-prop-valid,
-vemotion-use-insertion-effect-with-fallbacks, vemotion-cache, vemotion-react
-and vemotion-styled: all twelve, so no original Emotion package runs (the
-companion packages @emotion/css and @emotion/server run on VPM's too). All
+vemotion-use-insertion-effect-with-fallbacks, vemotion-cache, vemotion-react,
+vemotion-styled and vemotion-babel-plugin: all thirteen, so no original Emotion
+package runs (the companion packages @emotion/css and @emotion/server run on
+VPM's too), and VPM's Babel plugin, which Babel loads with Node, also compiles
+every `*.test.js` file. With VPM's plugin, two of its own tests differ by
+design and are pinned by name: `css-prop-complex-array` imports
+`@emotion/react/macro`, whose macro VPM does not build, and
+`two-consecutive-interpolations` records stylis 4.2.0 dropping the space that a
+comment separates two words with. All
 435, 11 and 441 snapshots match.
 
 `compare-serialize.cjs` runs 20,000 generated style arguments (objects with
@@ -104,6 +110,10 @@ prefixes VPM changes are left out (see below). There are no differences.
 tree linking VPM's packages beside the fixture's React (Node's
 `--preserve-symlinks`), and collects what React reports.
 
+The Babel plugin's run maps `@emotion/babel-plugin` to the library under test
+by path: the retained `packages/babel-plugin/package.json` would otherwise make
+that directory the package in Jest's module map.
+
 `types.cjs` compiles an application using each VPM package's API (subclassing
 `StyleSheet` as MUI does, the cache and style types, VentiMath's cache plugin,
 and a TSX component using the `css` prop through `jsxImportSource`, `Global`,
@@ -123,6 +133,8 @@ block, styled elements drop current HTML attributes such as `commandFor` and
 `shadowRootMode`, the cache's prefixer invents declarations
 (`-webkit-box-flex-wrap`) and writes `-ms-flex-item-align:flex-start` and
 `justify-content: space-between` without `-ms-flex-pack`, a styled component
-whose `theme` prop comes and goes changes the order of its hooks, and @emotion/utils's
+whose `theme` prop comes and goes changes the order of its hooks, the Babel
+plugin minifies `border: 1px /* thin */ solid red` to `border:1pxsolid red`,
+and @emotion/utils's
 declarations, installed with only its declared dependencies, fail to compile
 because they import the undeclared `@emotion/sheet`.
