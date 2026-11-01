@@ -1,71 +1,77 @@
-# vstrnum paired benchmarks
+# vstrnum measurements
 
-Baseline: **strnum 2.5.1**. Recorded October 30, 2026 on Apple M1 Pro,
-darwin arm64, with Node.js 24.22.1 and Bun 1.4.0. Times are nanoseconds per
-operation; lower is better.
+These records supersede the earlier same-process comparison. Each timed
+implementation runs alone in a fresh process. Four comparison pairs use
+balanced upstream-first / VPM-first order; two further pairs run identical
+upstream code in separate processes as controls. Warmup lasts at least 150 ms
+per case, followed by recalibration on warmed code, four warmup blocks and 12
+recorded blocks. Both workers in a pair use the same iteration count, targeting
+10 ms blocks with a one-million-operation cap. Results are retained and checked
+outside timing. All samples are kept, including outliers.
 
-Three fresh processes and one identical-upstream control per runtime. Each case
-gets 150ms of warmup per variant and four full warmup blocks, then 12 alternating
-paired rounds. A 15ms upstream pilot selects the iteration count, capped at
-100,000. Inputs vary across 32 strings for normalization and 64 for parsing
-(four for radix parsing). Outputs are retained and checked outside timing.
-No samples are discarded. Benchmarks ran serially without concurrent test runs.
+The comparison units are per-process medians. The change column is the median
+of four process-pair percentage changes; the two order columns expose order
+sensitivity. The nanosecond columns are medians of the four process medians.
+They need not produce exactly the percentage in the change column.
 
-Displayed times are medians of 36 samples. Changes are medians of paired ratios,
-not ratios of the displayed medians; each process's change is also shown. Controls
-measure identical upstream code in both slots, without subtraction. Small changes
-near the control and process variation do not establish a meaningful gain.
+A direction is unestablished when it reverses across processes or any pair
+overlaps the largest absolute control difference (with a minimum 2% floor).
+This is a conservative descriptive check, not a confidence interval. Process
+isolation reduces shared JIT feedback; environmental noise and GC remain.
+Negative changes mean less time; these are local CPU measurements, not
+application throughput or latency guarantees.
 
-## Node
+## Node 24.22.1
 
-| Case | Upstream ns | VPM ns | Paired change | Three process changes | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| short integers | 334 | 159 | -52.2% | -52.1%, -52.2%, -52.5% | +0.4% |
-| XML default options | 354 | 157 | -55.7% | -56.0%, -55.2%, -55.9% | -0.2% |
-| non-numeric XML values | 207 | 77 | -62.8% | -61.9%, -62.8%, -63.3% | +1.8% |
-| decimal with trailing zeros | 492 | 325 | -33.9% | -34.2%, -32.4%, -33.8% | -0.9% |
-| scientific notation | 318 | 192 | -40.1% | -38.9%, -40.9%, -40.2% | -0.0% |
-| hex binary octal | 229 | 108 | -52.8% | -52.7%, -53.0%, -52.9% | -0.4% |
-| precision-preserving rejection | 400 | 276 | -31.5% | -34.8%, -30.9%, -31.6% | +0.2% |
-| Unicode normalization | 631 | 416 | -34.4% | -34.3%, -34.7%, -34.1% | -0.5% |
-| skip pattern | 157 | 54 | -65.5% | -65.3%, -66.3%, -65.5% | +0.4% |
-| overflow handling | 242 | 178 | -27.2% | -27.3%, -26.3%, -28.4% | -0.0% |
-| long decimal 4KiB | 10,320 | 5,900 | -42.9% | -42.7%, -42.8%, -43.6% | -0.1% |
+Recorded 2026-11-01T07:05:36.175Z on Apple M1 Pro, darwin/arm64.
 
-## Bun
+[Raw samples, processes, controls and source hashes](node-isolated.json).
 
-| Case | Upstream ns | VPM ns | Paired change | Three process changes | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| short integers | 244 | 96 | -60.5% | -61.2%, -60.8%, -59.8% | +0.2% |
-| XML default options | 277 | 93 | -66.1% | -67.6%, -65.8%, -65.5% | -0.0% |
-| non-numeric XML values | 150 | 42 | -72.2% | -71.4%, -72.5%, -72.6% | +1.0% |
-| decimal with trailing zeros | 455 | 202 | -56.6% | -53.8%, -57.6%, -58.0% | -0.8% |
-| scientific notation | 235 | 117 | -50.6% | -49.2%, -50.4%, -52.2% | +1.4% |
-| hex binary octal | 218 | 60 | -72.6% | -72.6%, -72.2%, -72.9% | -0.0% |
-| precision-preserving rejection | 326 | 188 | -42.3% | -42.7%, -41.3%, -43.0% | +0.3% |
-| Unicode normalization | 487 | 292 | -41.1% | -37.2%, -41.1%, -41.3% | +0.8% |
-| skip pattern | 147 | 36 | -75.6% | -75.8%, -75.4%, -75.6% | -0.5% |
-| overflow handling | 183 | 108 | -40.7% | -40.0%, -43.3%, -40.7% | +0.1% |
-| long decimal 4KiB | 9,272 | 5,387 | -41.9% | -41.9%, -42.3%, -41.3% | -0.3% |
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| short integers | 327 | 153 | -53.4% | -53.4% | -53.2% | 2.2% | lower time in every pair, beyond control spread |
+| XML default options | 346 | 152 | -56% | -56.8% | -56% | 0.7% | lower time in every pair, beyond control spread |
+| non-numeric XML values | 199 | 67 | -66.5% | -66.4% | -66.5% | 1.6% | lower time in every pair, beyond control spread |
+| decimal with trailing zeros | 484 | 319 | -33.8% | -34.8% | -33.8% | 0.2% | lower time in every pair, beyond control spread |
+| scientific notation | 315 | 185 | -41.3% | -42.4% | -40.2% | 3.1% | lower time in every pair, beyond control spread |
+| hex binary octal | 221 | 102 | -53.8% | -54% | -52.7% | 2.3% | lower time in every pair, beyond control spread |
+| precision-preserving rejection | 383 | 269 | -29.6% | -28.8% | -29.6% | 4.7% | lower time in every pair, beyond control spread |
+| Unicode normalization | 624 | 404 | -35.1% | -36% | -34.2% | 2% | lower time in every pair, beyond control spread |
+| skip pattern | 150 | 49 | -67.1% | -66.4% | -67.1% | 2.7% | lower time in every pair, beyond control spread |
+| overflow handling | 234 | 171 | -26.8% | -27.2% | -26.4% | 1.8% | lower time in every pair, beyond control spread |
+| long decimal 4KiB | 10303 | 5879 | -42.7% | -43.1% | -42.2% | 0.4% | lower time in every pair, beyond control spread |
 
-## Interpretation
+## Bun 1.4.0
 
-Every measured case improves in all three processes on both runtimes. Parsing
-with the XML defaults takes about **56% less time on Node and 66% less on Bun**;
-non-numeric XML values take 63% / 72% less. The long-decimal and overflow cases
-also improve after retaining the grammar and option checks. These are isolated
-parsing costs, not XML-document, network or application throughput measurements.
+Recorded 2026-11-01T07:06:21.969Z on Apple M1 Pro, darwin/arm64.
+
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
+
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| short integers | 256 | 90 | -64.9% | -76.1% | -64.8% | 1.9% | lower time in every pair, beyond control spread |
+| XML default options | 277 | 93 | -65.6% | -67.5% | -64.1% | 7.6% | lower time in every pair, beyond control spread |
+| non-numeric XML values | 151 | 42 | -71.9% | -78.1% | -71.3% | 1.4% | lower time in every pair, beyond control spread |
+| decimal with trailing zeros | 422 | 191 | -55.4% | -55.4% | -55.4% | 1.8% | lower time in every pair, beyond control spread |
+| scientific notation | 232 | 111 | -52.6% | 2.2% | -52.7% | 3.2% | unestablished at this precision |
+| hex binary octal | 221 | 52 | -76.1% | -76.3% | -76.1% | 8.6% | lower time in every pair, beyond control spread |
+| precision-preserving rejection | 324 | 188 | -42% | -42.2% | -42% | 3.4% | lower time in every pair, beyond control spread |
+| Unicode normalization | 471 | 272 | -42.5% | -42.5% | -41.7% | 4.4% | lower time in every pair, beyond control spread |
+| skip pattern | 144 | 36 | -75.1% | -75.1% | -70.7% | 2.4% | lower time in every pair, beyond control spread |
+| overflow handling | 185 | 106 | -42.9% | -36.6% | -43% | 3.6% | lower time in every pair, beyond control spread |
+| long decimal 4KiB | 9230 | 5390 | -41.9% | -41.6% | -41.9% | 1.4% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 
+Run these commands from the repository root after installing the pinned
+fixtures used by `bench/compare.cjs`:
+
 ```sh
-npm --prefix scripts/numbers-conformance ci --ignore-scripts
-OUTPUT=packages/vstrnum/bench/results/node-1.json node packages/vstrnum/bench/compare.cjs
-CALIBRATION=1 OUTPUT=packages/vstrnum/bench/results/node-control.json node packages/vstrnum/bench/compare.cjs
-node packages/vstrnum/bench/summarize.cjs --verify-current
+OUTPUT=packages/vstrnum/bench/results/node-isolated.json node packages/vstrnum/bench/compare.cjs
+OUTPUT=packages/vstrnum/bench/results/bun-isolated.json bun packages/vstrnum/bench/compare.cjs
+node scripts/render-bench-report.cjs packages/vstrnum
 ```
 
-Repeat with fresh processes `2` and `3`, then with `bun` and corresponding output
-names. The eight JSON reports retain runtime/CPU metadata, all samples, checksums,
-and SHA-256 hashes for implementation, benchmark, shared harness and pinned source
-manifest. `--verify-current` checks those hashes against the checkout.
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.

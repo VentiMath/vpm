@@ -67,10 +67,10 @@ Browser bundling and deployment are not certified by the Node/Bun checks.
 - [Paired measurements](bench/results/README.md) retain all samples, controls,
   source hashes and regressions.
 
-The measured 1 KiB Buffer comparison takes 65% less time on Node and 88% less
-on Bun; small equal records improve 14% on both. Actual Firestore equality paths
-improve 4–9% on Node. Bun retains caller regressions of 7–25% in pooled results
-(with a larger, unstable query spread), and nested Map equality is 20% slower on
-Node. The report includes those costs, controls and the earlier measurements.
+The isolated Node 24 / Bun measurements preserve the large Buffer improvement.
+Several ordinary Node comparisons improve; nested Map equality is inconclusive.
+Bun retains regressions in some Firestore query comparisons; other caller results
+overlap control variation. The linked report gives every case, both process-order
+groups and the controls instead of treating small differences as established.
 
 MIT licensing and the pinned source are recorded in [PROVENANCE.json](PROVENANCE.json).

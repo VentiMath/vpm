@@ -5,6 +5,17 @@ behind them. Comparisons use the specific upstream versions below. They do not
 imply that every VPM package is faster, that upstream packages are insecure, or
 that these replacements have already improved application performance.
 
+Benchmark reports with `schemaVersion: 2` use separate processes for each timed
+implementation, balanced process order and independent identical-source controls.
+Earlier same-process performance differences are provisional, particularly small
+ones; they are not corrected by subtracting a fixed percentage. See the
+[measurement method](docs/DEVELOPMENT.md#replacing-a-package).
+
+Several recent SDK and UI entries below are currently patched upstream builds.
+Their compatibility evidence describes those forks, not independent VPM
+implementations. Replacement work is scoped to the APIs used by applications;
+that work must be verified before the implementation status changes.
+
 ## Latest stable upgrade roadmap
 
 Latest stable upstream versions set the compatibility target. Backend and
@@ -722,9 +733,9 @@ ends at its first colon, and a comment at the end of the input keeps its text.
 stylis's `namespace` assigns its switched variable in a case label, which
 JavaScriptCore (Safari, Bun) evaluates differently from V8, scoping
 `a:not([href])` as `a.scope:not.scope([href])`; stylis fails its own namespace
-test under Bun. vstylis gives one result everywhere. Performance is on par with
-stylis on Node and Bun. Six regression cases and eight focused tests cover the
-changes.
+test under Bun. vstylis gives one result everywhere. The process-isolated Node
+24 / Bun measurements do not establish a performance difference beyond control
+variation. Six regression cases and eight focused tests cover the changes.
 
 See the [package contract](packages/vstylis/README.md) and the
 [conformance record](scripts/stylis-conformance/README.md).
@@ -1015,12 +1026,11 @@ layout exactly, iterators, bounds, the fixes and enumerability. An actual Firest
 9.4.0 `onSnapshot` query over a local gRPC Listen stream produces the same ordering,
 change indexes and retained snapshot with either tree.
 
-The Firestore Watch change pattern is **at parity** (+0.5% on Node 22, −1.4% on
-Bun), as are lookups and removal; range `forEach` takes **about 8% less time** on
-both runtimes. Measuring each tree with separately compiled call sites and
-alternating setup order matters here: with shared closures, two identical copies
-measured 10-24% apart, which the identical-upstream control cannot detect. These
-are tree CPU measurements, not listener latency.
+The latest process-isolated Node 24 / Bun recording is too variable to establish
+per-case differences, including the Firestore Watch pattern. Raw data includes
+slower Bun traversals and is preserved alongside the controls. Inconclusive
+results do not establish parity or erase possible regressions. These are tree
+CPU measurements, not listener latency.
 
 See the [package contract](packages/vfunctional-red-black-tree/README.md),
 [conformance record](scripts/rbtree-conformance/README.md) and
@@ -1044,12 +1054,11 @@ VPM fixes both. These SDK tests are local equality checks, not deployed database
 measurements. All four module entry points have self-contained declarations and
 isolated archive checks.
 
-The measured 1 KiB Buffer case takes **65% less time on Node / 88% less on Bun**;
-small records improve 14% on both. Actual Firestore equality paths take **4–9%
-less time on Node**. Bun retains **7–25% caller regressions** in pooled results,
-with the query case varying +15–79% per process; Node nested Map comparison is
-20% slower. The report preserves all samples, controls and the initial run that
-prompted caller tuning. These are equality CPU measurements, not request latency.
+The process-isolated Node 24 / Bun measurements preserve the large Buffer
+improvement. Some Node array and caller cases improve; nested Map comparison is
+inconclusive. Some Bun Firestore query comparisons regress; others are
+inconclusive. The report includes raw samples, balanced process order and separate
+identical-source controls. These are equality CPU measurements, not request latency.
 
 See the [package contract](packages/vfast-deep-equal/README.md),
 [conformance record](scripts/deep-equal-conformance/README.md) and
@@ -1351,16 +1360,12 @@ including exact wire bytes, timestamps, signed/unsigned limits, defaults and
 version-specific int64 map keys. This is integer-boundary coverage, not a claim
 that the entire SDK is replaced or verified.
 
-Measured protobuf 8/7 encoding takes **36% / 28% less time on Node**;
-decoding and conversion takes **66% / 64% less on Node** and **35% / 37% less
-on Bun**. Independent small integers cost 3–4 ns more on Node; validated byte
-arrays cost about 3 ns more on both. Bun protobuf 7 encoding is inconclusive
-because its control varies nearly as much as the measured gain.
-
-[Measurements](packages/vlong/bench/results/README.md) cover construction, parsing,
-formatting, arithmetic, bytes and actual protobuf conversions. Three fresh
-processes and one identical-upstream control run on each runtime; local CPU
-measurements do not establish application or network throughput gains.
+[Process-isolated measurements](packages/vlong/bench/results/README.md) cover
+construction, parsing, formatting, arithmetic, bytes and actual protobuf
+conversions on Node 24 and Bun. Several protobuf conversion paths improve;
+validated byte arrays cost more, and small-integer construction is inconclusive. Each case
+shows both process orders and independent controls; local CPU measurements do
+not establish application or network throughput gains.
 
 ## vobject-hash
 
@@ -1661,9 +1666,9 @@ The [fixture](scripts/numbers-conformance) retains sources, SHA-256 hashes,
 licenses, upstream controls and generation checks. Package READMEs document each
 intentional difference; [normalization benchmarks](packages/vanynum/bench/results/README.md)
 and [parsing benchmarks](packages/vstrnum/bench/results/README.md) retain every
-paired run and control, with measured gains and regressions. XML-default numeric
-parsing takes about 56% / 66% less time on Node / Bun; every measured parser case
-improves. Dense Unicode normalization remains a 10% Bun regression. Neither
+run and control. The parser now uses process-isolated Node 24 / Bun recordings,
+which retain substantial parsing gains and mark inconclusive cases. The older
+normalization figures remain provisional until separately remeasured. Neither
 measurement establishes whole-application gains.
 
 ## vhtml-entities

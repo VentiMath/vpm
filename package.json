@@ -3,7 +3,7 @@
   "private": true,
   "workspaces": ["packages/*"],
   "scripts": {
-    "test": "node --test packages/*/test/*.test.cjs",
+    "test": "node --test packages/*/test/*.test.cjs scripts/test/*.test.cjs",
     "test:bun": "bun test",
     "typecheck": "tsc --noEmit && node scripts/check-public-types.cjs",
     "test:types": "node scripts/check-platform-types.cjs",
