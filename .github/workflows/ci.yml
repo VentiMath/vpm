@@ -45,6 +45,8 @@ jobs:
       - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/clsx-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/clsx-conformance/archives.cjs
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -316,6 +318,8 @@ jobs:
       - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/clsx-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/clsx-conformance/archives.cjs
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund

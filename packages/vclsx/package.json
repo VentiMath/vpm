@@ -1,0 +1,53 @@
+{
+  "name": "vclsx",
+  "version": "0.1.0",
+  "description": "Conditional class names with own-property dictionaries and stack-safe array traversal",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./runtime.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./runtime.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./lite": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./lite.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./lite.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.cjs",
+    "runtime.mjs",
+    "lite.cjs",
+    "lite.mjs",
+    "index.d.cts",
+    "index.d.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vclsx"
+  }
+}

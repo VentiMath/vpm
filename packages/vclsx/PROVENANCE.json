@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "clsx",
+    "version": "2.1.1",
+    "repository": "https://github.com/lukeed/clsx",
+    "commit": "925494cf31bcd97d3337aacd34e659e80cae7fe2",
+    "integrity": "sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent accumulator and bounded/iterative traversal implementation informed by the clsx API and tests. No upstream runtime is included; the MIT license, type contract and unchanged tests retain attribution.",
+  "scope": "Full and lite conditional class names used directly in VentiMath components and by MUI. Native ESM and CommonJS on Node 24/Bun; browser bundling and native ESM entry. UMD global builds are not provided.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "Conditional strings, numbers, dictionaries and nested arrays; string-only lite entry."
+  },
+  "changes": [
+    "Only own enumerable truthy dictionary fields become classes; inherited fields are intentionally excluded.",
+    "A bounded fast traversal switches to explicit frames for deep arrays; cycles throw a deterministic TypeError while shared subarrays remain valid.",
+    "Readonly nested arrays are accepted by the declarations; CJS and native ESM share function identities."
+  ]
+}

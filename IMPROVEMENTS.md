@@ -222,6 +222,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vclsx](packages/vclsx) | clsx 2.1.1 | Independent zero-dependency class names; own dictionary fields, stack-safe deep arrays, explicit cycle errors and shared CJS/ESM identities. |
 | [vemotion-babel-plugin](packages/vemotion-babel-plugin) | @emotion/babel-plugin 11.13.5 | Minifies with vstylis (the original's stylis 4.2.0 turned `border: 1px /* thin */ solid red` into `border:1pxsolid red`), its own source maps and imports, no macros: 3 dependencies instead of 11, all VPM; otherwise the original's output, target class names included. |
 | [vemotion-styled](packages/vemotion-styled) | @emotion/styled 11.14.1 | Reads the theme context on every render (the original's conditional read changed the order of hooks when a `theme` prop came and went), forwards current HTML attributes through vemotion-is-prop-valid, and has no macro entry: 4 direct dependencies, all VPM. |
 | [vemotion-react](packages/vemotion-react) | @emotion/react 11.14.0 | Redesigned cache/theme ownership and rendering, document-scoped Global lifecycle, and iterative class-name traversal. Without the macro entry and its runtime dependency on the Babel plugin (with babel-plugin-macros, cosmiconfig and @babel/runtime) and hoist-non-react-statics: 4 direct dependencies, all VPM; JSX types on `React.JSX`, checked with React 18.3 and 19 types. |
@@ -346,9 +347,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 109 Node runtime packages' public declarations compile
+recorded by the tests. All 110 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **120 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **121 packages**, including two declaration-only packages and
 nine browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

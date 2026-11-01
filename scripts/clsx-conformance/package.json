@@ -1,0 +1,13 @@
+{
+  "name": "vpm-clsx-conformance",
+  "private": true,
+  "dependencies": {
+    "clsx": "2.1.1",
+    "uvu": "0.5.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@mui/material": "7.2.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1"
+  }
+}
