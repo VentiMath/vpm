@@ -32,6 +32,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Caller paths verified | vfullcalendar-core | @fullcalendar/core 7.1.3 and the copy of its JSON feed request that @fullcalendar/react 7.1.3 bundles; requests and results against a recording server | [@fullcalendar/core 7.1.3](https://www.npmjs.com/package/@fullcalendar/core), checked November 1, 2026 |
 | Suite and time zones verified | vfull-ui-headless-calendar | @full-ui/headless-calendar 7.1.3 on temporal-polyfill 1.0.1; its vitest suite, and every IANA zone around every offset change from 1840 to 2100 against the runtime's own time zone data | [@full-ui/headless-calendar 7.1.3](https://www.npmjs.com/package/@full-ui/headless-calendar), checked November 1, 2026 |
 | Caller paths verified | vfirebase-functions | firebase-functions 7.4.0 on vfirebase-admin; its unit suite, VentiMath's HTTP, callable, scheduled, task-queue and Firestore-triggered functions, and the deploy manifest | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked October 31, 2026 |
 | Caller paths verified | vfirebase-admin | firebase-admin 14.5.0 without Realtime Database; its unit suite, and VentiMath's Auth, Firestore, Storage and FCM calls against local servers | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked October 31, 2026 |
@@ -117,8 +118,9 @@ The frontend starts with FullCalendar 7, VentiMath's calendar: `@fullcalendar/re
 6.x is npm's `legacy` line, so the 6.1.17 packages VentiMath locks are not
 rebuilt. `vfull-ui-headless-calendar` covers `@full-ui/headless-calendar` 7.1.3,
 checked November 1, 2026, without its `temporal-polyfill` peer: polyfill packages
-are made unnecessary rather than rebuilt. `@fullcalendar/core` and
-`@fullcalendar/react` follow; VentiMath's six calendar files move to the 7.x API
+are made unnecessary rather than rebuilt. `vfullcalendar-core` covers
+`@fullcalendar/core` 7.1.3, which in v7 holds only the option types connectors
+extend and the JSON feed request. `@fullcalendar/react` follows; VentiMath's six calendar files move to the 7.x API
 when it adopts them.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
@@ -158,6 +160,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | VPM dependencies with vfirebase-admin as the peer; providers and Admin services loaded on first use (a VentiMath-shaped codebase loads 57 modules in 42 ms instead of 663 in 481 ms), `onInit` run once under concurrency and a working bin directory argument; identical responses, logs, events and deploy manifest. |
 | [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, 56% less CPU per ID-token signature check and half the cold-start modules; identical Auth, Firestore, Storage and FCM caller behavior. |
@@ -263,12 +266,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,790 tests**: all pass on Node 24, and Bun passes
-2,787 with three documented runtime-specific skips. All 100 runtime packages'
+The root suite contains **2,795 tests**: all pass on Node 24, and Bun passes
+2,792 with three documented runtime-specific skips. All 101 runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **102 packages**, including two declaration-only packages.
+catalog covers **103 packages**, including two declaration-only packages.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -392,6 +395,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vfullcalendar-core` | 2 (`@full-ui/headless-calendar` and `temporal-polyfill` peers) | 0 |
 | `vfull-ui-headless-calendar` | 1 (`temporal-polyfill` peer) | 0 |
 | `vfirebase-functions` | 5 (including `@types/cors` and `@types/express`) | 3 (`vcors`, `vexpress`, `vprotobufjs`; `vfirebase-admin` peer) |
 | `vfirebase-admin` | 9 (including `@firebase/database-compat`, `@firebase/database-types` and `@fastify/busboy`) | 6 (all VPM; Realtime Database and multipart parsing eliminated) |
@@ -558,6 +562,32 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfullcalendar-core
+
+Targets **@fullcalendar/core 7.1.3**, checked November 1, 2026. In FullCalendar
+7 the connectors are self-contained, and `@fullcalendar/core` keeps only the
+option interfaces they extend through `declare module` and the JSON feed request
+(`requestJson`, `JsonRequestError`, `identity`); `@fullcalendar/react` 7.1.3
+bundles its own copy of the request. The published files are retained;
+[PROVENANCE.json](packages/vfullcalendar-core/PROVENANCE.json) records the
+changes.
+
+A JSON feed URL with a `#fragment` had its parameters appended after the
+fragment, which fetch never sends, so the server received no `start` or `end`;
+the query now goes ahead of the fragment, without a dangling `?` or `&`. The
+declarations named the DOM's `Response` and failed to compile without DOM or
+Node types; they now use the runtime's fetch `Response` with a structural
+fallback. Importing the entry no longer prints a console message, which the
+package's own `sideEffects: false` made bundler-dependent. The two peers, which
+neither entry imports, are removed.
+
+Eleven feed calls and a refused connection give identical requests and results
+through the original, React's copy and VPM, apart from the URL changes; three
+regression cases and five focused tests cover the changes.
+
+See the [package contract](packages/vfullcalendar-core/README.md) and
+[conformance record](scripts/fullcalendar-core-conformance/README.md).
 
 ## vfull-ui-headless-calendar
 

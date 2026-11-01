@@ -1,0 +1,9 @@
+{
+  "name": "fullcalendar-core-conformance",
+  "private": true,
+  "description": "Pinned @fullcalendar/core 7.1.3 control and @fullcalendar/react 7.1.3, whose bundled JSON feed request is the copy that runs today",
+  "dependencies": {
+    "@fullcalendar/core": "7.1.3",
+    "@fullcalendar/react": "7.1.3"
+  }
+}
