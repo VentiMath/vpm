@@ -99,7 +99,7 @@ now have current comparison targets:
 | Caller paths verified | vproto3-json-serializer | proto3-json-serializer 4.1.0; gax 6.14.0 fallback and Firestore 9.4.0 schemas with protobuf 7/8 | [proto3-json-serializer 4.1.0](https://www.npmjs.com/package/proto3-json-serializer), checked October 30, 2026 |
 | Caller paths verified | vprotobufjs | protobuf.js 8.8.1; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 serialization against 7.6.6 controls | [protobuf.js 8.8.1](https://www.npmjs.com/package/protobufjs), checked October 30, 2026 |
 | Caller paths verified | vlong | long 5.3.2; protobuf.js 8.8.1/7.6.6, proto-loader 0.8.1 and google-gax 6.14.0 integer paths | [long 5.3.2](https://www.npmjs.com/package/long), checked October 30, 2026 |
-| Caller paths verified | vobject-hash | object-hash 3.0.0; google-gax 6.14.0 gRPC/fallback protobuf caches | [object-hash 3.0.0](https://www.npmjs.com/package/object-hash), checked October 30, 2026 |
+| Runtime dependency removed | vobject-hash | Retained object-hash 3.0.0 comparison package; GAX now owns its JSON cache | [object-hash 3.0.0](https://www.npmjs.com/package/object-hash), checked October 30, 2026 |
 | Caller paths verified | vgoogle-cloud-storage | @google-cloud/storage 8.4.0; object and signing operations, Firebase Admin 12.7.0 factory | [Storage 8.4.0](https://www.npmjs.com/package/@google-cloud/storage), checked October 30, 2026 |
 | Caller paths verified | vmime | mime 4.1.2; Storage 8.4.0 upload/compose callers using mime 3.0.0 | [mime 4.1.2](https://www.npmjs.com/package/mime), checked October 30, 2026 |
 | Caller paths verified | vfast-xml-parser | fast-xml-parser 5.11.2; Storage 8.4.0 multipart callers | [fast-xml-parser 5.11.2](https://www.npmjs.com/package/fast-xml-parser), checked October 30, 2026 |
@@ -130,7 +130,7 @@ those VPM foundations and actual Firestore calls. `vordered-map` now covers
 1.14.7 transport with those two VPM dependencies and local Firestore callers; these targets were
 checked October 30, 2026. `vopentelemetry-api` now covers the zero-dependency
 `@opentelemetry/api` 1.10.0 API, including current SDK interoperability and actual
-gax tracing helpers. `vgoogle-gax` now covers 6.14.0 itself with ten VPM runtime
+gax tracing helpers. `vgoogle-gax` now covers 6.14.0 itself with nine VPM runtime
 dependencies, checked Firestore 9.4.0 callers and native REST transport. Those
 latest targets were checked October 30, 2026. `vfast-deep-equal` now covers 3.1.3 with verified Firestore equality callers.
 `vfunctional-red-black-tree` now covers 1.0.1 with verified Firestore listener
@@ -247,7 +247,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Same persistent trees and node layout; `at()` no longer throws on empty trees or selects the first entry for `NaN`; non-function comparators fail at construction; iterative, range-pruned traversal. Actual Firestore listener paths verified. |
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
-| [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership and ten VPM dependencies; actual Firestore transactions/batches/queries verified. |
+| [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership, independent JSON proto caching and nine VPM dependencies; actual Firestore transactions/batches/queries verified. |
 | [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
 | [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Complete-frame fast path, released network chunks, preserved metadata keys/binary values and own package namespaces; actual Firestore calls over HTTP/2 and two VPM dependencies. |
 | [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Checked foreign/stale iterators and retained pair access, reused iterator allocations, correct reverse-end movement and logarithmic indexed position lookup; real gRPC Channelz handlers. |
@@ -256,7 +256,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vproto3-json-serializer](packages/vproto3-json-serializer) | proto3-json-serializer 4.1.0 | Correct byte slices and collections, signed durations, offset timestamps, FieldMasks and Any wrappers; validated scalars, safe output keys and verified Google fallback callers. |
 | [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
 | [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
-| [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Exact gax string cache keys with a direct crypto path; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
+| [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Retained comparison package, no current VPM runtime consumers; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
 | [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, sliced CRC32C initialization, real HTTP and Firebase callers. |
 | [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
 | [vfast-xml-parser](packages/vfast-xml-parser) | fast-xml-parser 5.11.2 | Reusable parser setup, exact depth limits, deterministic filters, safer callbacks and stricter XML syntax checks; all six helpers use VPM. |
@@ -502,7 +502,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | `vgoogle-cloud-firestore-api` | 2 | 3 (`vgoogle-gax`, `vgoogle-logging-utils`, `vlong`; logging is imported directly so import does not load gax) |
 | `vfunctional-red-black-tree` | 0 | 0 |
 | `vfast-deep-equal` | 0 | 0 |
-| `vgoogle-gax` | 11 | 10 (all VPM; unused direct node-fetch removed) |
+| `vgoogle-gax` | 11 | 9 (all VPM; node-fetch and object-hash removed) |
 | `vopentelemetry-api` | 0 | 0 |
 | `vgrpc-js` | 2 | 2 (`vgrpc-proto-loader`, `vordered-map`) |
 | `vordered-map` | 0 | 0 |
@@ -1196,9 +1196,16 @@ See the [package contract](packages/vfast-deep-equal/README.md),
 ## vgoogle-gax
 
 Targets **google-gax 6.14.0** with its RPC, retry, pagination, LRO, generated
-service clients, tracing and REST APIs. Ten VPM runtime dependencies replace
-all used external packages; the unused direct node-fetch dependency is removed.
+service clients, tracing and REST APIs. Nine VPM runtime dependencies remain;
+the unused direct node-fetch and general object-hash dependencies are removed.
 Ordinary REST calls use the native fetch transport through VPM auth/gaxios.
+
+The JSON proto cache is independently implemented. Native SHA-256 replaces a
+full generic object serializer; the compiled descriptor is the same JSON snapshot
+used for identity. Separate gRPC implementations cannot reuse each other's stubs.
+Refresh replaces the cached result, clearing releases it, and failed compilations
+are retryable. The separate file-based proto cache and remaining GAX runtime
+still retain upstream implementations.
 
 Timeout calls snapshot options instead of mutating a shared deadline. Compiled
 resource paths preserve literal replacement characters, enforce complete binding
@@ -1218,11 +1225,11 @@ exercise actual Firestore 9.4.0 transactions, batch commits, query streams and
 RPCs, native REST and current OpenTelemetry SDK tracing. Cloud deployments,
 browser bundles and older gax majors remain outside verified coverage.
 
-Repeated path operations take 46–87% less time in the retained measurements;
-fragmented JSON parsing takes 71% less on Node and 75% less on Bun. Node bare
-template construction remains 10% slower (+0.16 µs), while construction plus first
-render is slightly faster. Local Firestore RPCs show no clear application gain;
-the +5.9% Bun unary result and comparable control drift are documented.
+The current isolated-process benchmark covers JSON proto caches, the Firestore
+schema, helper work and local Firestore RPCs. Raw samples, balanced process order
+and identical-upstream controls replace the previous shared-process report.
+Results compare the complete selected stack and do not establish deployed
+application speedups.
 
 See the [package contract](packages/vgoogle-gax/README.md),
 [conformance and caller controls](scripts/gax-conformance/README.md), and
@@ -1501,7 +1508,11 @@ not establish application or network throughput gains.
 The baseline is **object-hash 3.0.0**, checked October 30, 2026. Ordinary
 serialization remains compatible. Plain strings use a direct crypto path and
 algorithm names are indexed once. This preserves the exact cache keys used by
-google-gax 6.14.0's gRPC and fallback protobuf caches.
+the original google-gax 6.14.0 gRPC and fallback protobuf caches. Current
+`vgoogle-gax` independently owns this small JSON-only operation with native
+SHA-256, removing the need for a general object serializer. No VPM runtime
+package now depends on `vobject-hash`; the retained code is not counted as an
+independent rewrite.
 
 Corrections frame Buffer lengths, retain unordered binary bytes, hash DataView
 windows, preserve sparse holes and map key/value roles, include file timestamps,
@@ -1517,11 +1528,11 @@ instrumented cache calls per run, covering cache identity, clear, forced loads,
 immutable inputs and protobuf round trips. Both runtimes, original controls,
 packed npm/Bun installs and standalone declarations are checked.
 
-[Measurements](packages/vobject-hash/bench/results/README.md) compare string and
-object hashing with actual cache-hit and forced-load callers, using three fresh
-processes and identical-upstream controls. Gax cache hits take about 61% less
-CPU time on Node and 39–43% less on Bun while retaining exact keys. Two Bun
-nested-record cases remain 1–3% slower, with variation documented.
+[Historical measurements](packages/vobject-hash/bench/results/README.md) cover
+the retained serializer and the original upstream cache caller. They use the
+older shared-process methodology and do not establish current GAX performance.
+See the isolated [current GAX report](packages/vgoogle-gax/bench/results/README.md)
+for the replacement caller.
 [API, digest migration and limits](packages/vobject-hash/README.md).
 
 ## vgoogle-cloud-storage

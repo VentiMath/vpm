@@ -280,7 +280,7 @@
     "build/protos/google/iam/v1/logging/audit_data.proto": "b512ff77579597854cc76e266e0925c8fa7de470b5f0e15ea6a865f44dd123c7"
   },
   "changes": [
-    "Replaces all ten used runtime dependencies with VPM packages; removes unused direct node-fetch dependency.",
+    "Uses nine VPM runtime dependencies; removes unused direct node-fetch and replaces object-hash in the JSON proto cache with native SHA-256.",
     "Restores native fetch for ordinary REST calls by removing legacy forced Node agents.",
     "Snapshots timeout options per call.",
     "Validates path rendering and matching with precompiled templates.",
@@ -288,13 +288,17 @@
     "Self-contained declarations and explicit ESM exports; omits source maps.",
     "Consume the gaxios-owned response stream and avoid duplicate pipeline errors.",
     "Opt into gRPC terminal status after readable end; retain HTTP premature-end detection in vretry-request.",
-    "Identify protobuf 8 Any messages structurally and preserve empty nested error payloads."
+    "Identify protobuf 8 Any messages structurally and preserve empty nested error payloads.",
+    "Independently implements JSON descriptor cache ownership: compile the serialized snapshot, scope gRPC results by the selected compiler, preserve refresh and clear behavior, and publish only successful results."
   ],
   "implementation": {
     "kind": "upstream-derived with focused modifications",
     "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "The GAX runtime is upstream-derived with focused changes to streaming, paths, deadlines and VPM dependencies. Those changes do not make the complete runtime an independent rewrite.",
-    "targetScope": "The RPC/REST, retry, paging and streaming adapters exercised by the Firestore and Storage callers.",
-    "remainingWork": "Independently implement the application-facing runtime paths; retain current conformance and correctness fixes as requirements."
+    "basis": "The JSON descriptor cache is independently implemented. The remaining GAX runtime is upstream-derived with focused changes to streaming, paths, deadlines and VPM dependencies; conformance does not make the complete runtime an independent rewrite.",
+    "targetScope": "The RPC/REST, retry, paging and streaming adapters exercised by the application Firestore callers.",
+    "remainingWork": "Independently implement the remaining application-facing RPC/REST, retry, paging and streaming paths. The legacy file-based proto cache and unrelated generated services remain upstream-derived.",
+    "independentComponents": {
+      "jsonProtoCache": "Native bounded-size digest keys, compile-time JSON snapshots, compiler-scoped caches, explicit refresh/clear and failure recovery; called by gRPC loadProtoJSON and REST protobufFromJSON."
+    }
   }
 }

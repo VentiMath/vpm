@@ -440,7 +440,6 @@
         "vgoogle-logging-utils": "workspace:*",
         "vgrpc-js": "workspace:*",
         "vgrpc-proto-loader": "workspace:*",
-        "vobject-hash": "workspace:*",
         "vopentelemetry-api": "workspace:*",
         "vproto3-json-serializer": "workspace:*",
         "vprotobufjs": "workspace:*",

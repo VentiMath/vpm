@@ -1,14 +1,14 @@
 # vgoogle-gax
 
-**Implementation status:** this package retains upstream runtime code with
-focused VPM changes. Its tests establish compatibility and the documented fixes;
-an independent rewrite of the application-facing paths is still pending.
-[Provenance](PROVENANCE.json) records this boundary.
+**Implementation status:** the JSON descriptor cache is independently implemented.
+The remaining runtime retains upstream code with focused VPM changes; its
+application-facing rewrite is still pending. Tests establish compatibility and
+the documented fixes. [Provenance](PROVENANCE.json) records this boundary.
 
 Google API client support targeting **google-gax 6.14.0**: RPC calls, retries,
 pagination, resource paths, long-running operations, tracing and REST fallback.
-Runs on Node.js 24+ and Bun. All ten runtime dependencies are VPM packages;
-the unused direct `node-fetch` dependency is removed.
+Runs on Node.js 24+ and Bun. All nine runtime dependencies are VPM packages;
+the unused direct `node-fetch` and general `object-hash` dependencies are removed.
 
 ```js
 const {PathTemplate} = require('vgoogle-gax');
@@ -23,6 +23,14 @@ module through their constructor. The caller fixture demonstrates this with
 Firestore; it does not install VPM into an application automatically.
 
 ## Changes from 6.14.0
+
+- JSON descriptor caching uses native SHA-256 and compiles the exact JSON
+  snapshot used for its key. Input accessors or later mutations cannot change
+  that compiled snapshot. Results are scoped by the supplied gRPC implementation;
+  one compiler cannot reuse another compiler's stubs. Equal serialized content
+  still shares results, changed content is recompiled, refresh replaces the
+  entry, clearing releases it, and compilation failures are not cached. Only
+  fixed-size digest keys are retained, rather than full descriptor strings.
 
 - Each timeout invocation gets its own options object. Concurrent calls cannot
   overwrite each other's deadlines, and frozen caller options work.
@@ -53,6 +61,12 @@ the existing generated clients for locations, IAM and operations, and the
 upstream retry, pagination, streaming, transcoding and tracing APIs. Public
 declarations compile without ambient Node, Undici or DOM types.
 
+JSON descriptors are JSON data, as emitted by protobuf.js. Serialization hooks
+are observed once per call; non-JSON properties are outside that contract.
+Property insertion order remains part of cache identity. Compiled results are
+shared and must not be mutated; this change does not freeze public protobuf
+objects or redesign the separate file-based proto cache.
+
 Malformed ProtoJSON fields are rejected by `vproto3-json-serializer`; a string
 where a message object is required no longer silently becomes an empty message.
 Invalid resource bindings and conflicting repeated values throw `TypeError`.
@@ -69,6 +83,8 @@ the verified scope.
 - [Focused tests](test/gax.test.cjs) and
   [upstream bug controls](../../scripts/gax-conformance/regressions.cjs) cover the
   timeout, path, malformed-stream and cancellation fixes.
+  [Cache controls](../../scripts/gax-conformance/proto-cache.cjs) reproduce compiler
+  mixing and descriptor/key mismatch before verifying the independent cache.
 - [Actual callers](../../scripts/gax-conformance/callers.cjs) exercise Firestore
   9.4.0 unary/server-stream/bidirectional RPCs, `getAll`, batch commits,
   read/write transactions and streamed queries against local servers. REST tests
@@ -77,10 +93,13 @@ the verified scope.
 - [Benchmarks](bench/results/README.md) retain paired samples, controls and source
   hashes. They measure both helpers and actual Firestore SDK requests.
 
-Recorded repeated path operations take 46–87% less time, and the fragmented
-64 KiB JSON case takes 71% less on Node and 75% less on Bun. Node bare template
-construction costs an extra 0.16 µs; first render offsets that setup cost. Local
-Firestore RPC timings are approximately level, with a noisy +5.9% Bun unary
-result explicitly retained in the report.
+The current benchmark uses one selected GAX implementation per process, balanced
+order and identical-upstream controls. It includes cache hits/refreshes, the actual
+Firestore schema, helper work and local Firestore RPCs. These local measurements
+are not deployment performance guarantees; unsupported directions and regressions
+remain in the report. Small-schema cache hits take about 69% less time on
+Node and 55–56% less on Bun in these recordings. Firestore-schema cache hits
+show no established change on either runtime; local RPC differences also remain
+unestablished. These comparisons include the selected dependency stacks.
 
 Apache-2.0 upstream provenance is recorded in [PROVENANCE.json](PROVENANCE.json).

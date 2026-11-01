@@ -25,8 +25,8 @@ try {
   const output=path.join(temporary,'source',file.slice(0,-4));fs.mkdirSync(path.dirname(output),{recursive:true});fs.writeFileSync(output,source);files.push(output);
  }
  const result=compile({files,compilerOptions:{rootDir:path.join(temporary,'source'),outDir:path.join(temporary,'build'),target:'ES2022',module:'CommonJS',noCheck:true,esModuleInterop:true,useDefineForClassFields:false}});assert.equal(result.status,0,result.output);
- const aliases=original?{}:Object.fromEntries(['vgrpc-js','vgrpc-proto-loader','vopentelemetry-api','vduplexify','vgoogle-auth-library','vgoogle-logging-utils','vobject-hash','vproto3-json-serializer','vprotobufjs','vretry-request'].map(name=>[name,path.resolve(__dirname,'../../packages',name)]));
- const mapping={'@grpc/grpc-js':'vgrpc-js','@grpc/proto-loader':'vgrpc-proto-loader','@opentelemetry/api':'vopentelemetry-api','duplexify':'vduplexify','google-auth-library':'vgoogle-auth-library','google-logging-utils':'vgoogle-logging-utils','object-hash':'vobject-hash','proto3-json-serializer':'vproto3-json-serializer','protobufjs':'vprotobufjs','retry-request':'vretry-request'};
+ const aliases=original?{}:Object.fromEntries(['vgrpc-js','vgrpc-proto-loader','vopentelemetry-api','vduplexify','vgoogle-auth-library','vgoogle-logging-utils','vproto3-json-serializer','vprotobufjs','vretry-request'].map(name=>[name,path.resolve(__dirname,'../../packages',name)]));
+ const mapping={'@grpc/grpc-js':'vgrpc-js','@grpc/proto-loader':'vgrpc-proto-loader','@opentelemetry/api':'vopentelemetry-api','duplexify':'vduplexify','google-auth-library':'vgoogle-auth-library','google-logging-utils':'vgoogle-logging-utils','proto3-json-serializer':'vproto3-json-serializer','protobufjs':'vprotobufjs','retry-request':'vretry-request'};
  const tests=files.map(f=>path.basename(f,'.ts')+'.js').filter(f=>!['utils.js','otelHarness.js'].includes(f)).sort();
  fs.writeFileSync(path.join(temporary,'run.cjs'),`
  const {createRequire,isBuiltin}=require('node:module'),path=require('node:path'),fs=require('node:fs');

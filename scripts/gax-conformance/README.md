@@ -46,6 +46,15 @@ streams. Local REST calls run through real Google Auth and gaxios, including
 native-fetch selection, error status mapping and a truncated stream emitting
 exactly one error. No cloud credentials or deployment are involved.
 
+`proto-cache.cjs` runs each implementation in a separate process. It preserves
+content-based hits, changed descriptors, forced refresh, global clearing and
+failed-compilation retries, and demonstrates upstream compiler mixing and
+key/descriptor mismatch from accessors. The new cache compiles one JSON snapshot
+and detaches nested descriptor options. The benchmark loads only the selected
+GAX implementation per worker; both local RPC variants use the same upstream
+server fixture. CPU helper timings and local loopback RPC timings are distinct
+from deployed latency.
+
 ```sh
 npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/protobuf-conformance ci --ignore-scripts --no-audit --no-fund
