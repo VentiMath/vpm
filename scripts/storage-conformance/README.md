@@ -97,3 +97,23 @@ mutation and delayed serialization failures for accepted numeric seeds. VPM uses
 private derived slicing tables, normalizes signed/unsigned 32-bit seeds and rejects
 out-of-range seeds at construction. The broader bucket/file and signing runtime
 is still retained; this checksum rewrite does not imply those paths are rebuilt.
+
+## Independent save orchestration
+
+`lib/save.js` owns option/byte snapshots, per-upload retries, callback settlement
+and stream completion. Multipart/resumable transport remains retained SDK code.
+Seven tests include original/VPM controls for shared retry state, mutable payloads
+and duplicate callbacks, plus factories, progress and premature closure. The HTTP
+control holds a non-idempotent upload open while a conditional upload receives
+503: original code prevents its retry; VPM keeps the retry independent.
+
+```sh
+node --test packages/vgoogle-cloud-storage/test/save.test.cjs
+bun test packages/vgoogle-cloud-storage/test/save.test.cjs
+node scripts/storage-conformance/save.cjs
+bun scripts/storage-conformance/save.cjs
+```
+
+[Focused save measurements](../../packages/vgoogle-cloud-storage/bench/save-results/README.md)
+use the isolated harness and preserve all results. Earlier whole-client and
+Firebase consumer reports are historical after this source change.

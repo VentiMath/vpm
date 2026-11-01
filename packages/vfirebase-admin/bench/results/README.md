@@ -1,9 +1,9 @@
 # vfirebase-admin measurements
 
-These recordings precede the independent Storage hash-stream and URL-signing implementations.
+These recordings precede the independent Storage hash-stream, URL-signing and save implementations.
 Their retained source hashes describe that earlier tree, not the current
-transitive Storage source. Current signing, hash-stream and transfer measurements are in
-[the Storage report](../../../vgoogle-cloud-storage/bench/results/README.md).
+transitive Storage source. Earlier signing and hash-stream measurements are in
+[the historical Storage report](../../../vgoogle-cloud-storage/bench/results/README.md); current uploads are measured in [the save report](../../../vgoogle-cloud-storage/bench/save-results/README.md).
 Re-record this report before attributing an end-to-end change to that rewrite.
 
 Each timed

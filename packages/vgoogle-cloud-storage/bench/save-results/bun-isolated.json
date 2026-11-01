@@ -1,0 +1,1812 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-01T23:07:51.570Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/storage-conformance/node_modules/@google-cloud/storage/build/cjs/src": "1ad8807edfcfa9901bc8e9a776c578e97c74ec960626db793dcb2866d67c80bd",
+    "../../scripts/storage-conformance/node_modules/@google-cloud/storage/package.json": "a00e8f2a8070ce71de7b8cde6d6f8766e0b2fb182ae3e6b14f4eca341c69e004",
+    "../../scripts/storage-conformance/package-lock.json": "b3b0b3f20b8c2046eb523fc31c4356430120234b6ae2e5a7d2df01551ab9b998",
+    "../vagent-base/helpers.js": "4298ab93d9c651aed7ff5994dae7d1dd81054d0e434bcb411247854c794445ef",
+    "../vagent-base/index.js": "731eaba1027bff984d63a3ea2b968ffecfad1f151a8ae94c4644156df68090ce",
+    "../vagent-base/package.json": "d24bbcff0ccf2e339ce413f777ba15979d15bf97d9b99a18a7a6d8f457c85ea3",
+    "../vanynum/index.js": "9927abaa5359998dfef4b0b462d57e9ae0ceeed40de014809c1d1d7c44573fd6",
+    "../vanynum/lib/data.js": "fd215fc6641fb6cd1ab29381ee4d6ebac14a6e5163c28ea8102244f932f739a1",
+    "../vanynum/package.json": "24c1f3dc109849b7d47b8ee3c90e25bff2cceff1166ff07f1946f90f8897e3df",
+    "../vasync-retry/index.js": "1213a1802f8ec54d7e9518faa391716f34e47ff0a295f8dbea41a8e235893e5a",
+    "../vasync-retry/package.json": "2e4a9f1166a966ff4c1bbfb101f415a7229f57aa14fb8937ae806ec5f6568ba1",
+    "../vdebug/browser.js": "3c1b2627c53e30f2d16d716af8876748a23711e6e46a9adfe4f9b40607aea660",
+    "../vdebug/common.js": "254bc0c2c3ba2be1390be1868cd673b2234fb9a9d13d8a0111057adf267fcd36",
+    "../vdebug/index.js": "1fc8d6bb80c52520bc38a267f957eb75311de97ae1aaba77ef02626b1ea05aea",
+    "../vdebug/node.js": "f81361333e685333b23a215e32f42cd6b04d9e0f782ce69b9f2bf4eabc51d49d",
+    "../vdebug/package.json": "9a9b4874092613f3ae4e06ceb766d4fdf20211e1577b338d229fde8bf3c985eb",
+    "../vduplexify/index.js": "6a7624d47e7c3ca79014eac986ba4c2ea98cd72ff8e4cd05e4a00d8c957d878e",
+    "../vduplexify/package.json": "7ea6fd85506d028a6bb3289db4ec68e198400379bf0ef123e5a7b9f59c1a33c8",
+    "../vextend/index.js": "72abf452a13791fb49af359a5f849c3a65f25c87c986e62df6c91079f5411c69",
+    "../vextend/package.json": "cedd1a3af250f77ca86b624cfa0e19da40acd4708323cce251198063670b6287",
+    "../vfast-xml-builder/index.js": "07a30f3222804cfa7cfbe83332b5b690ac324d53860d4b235ae1759856a522fb",
+    "../vfast-xml-builder/index.mjs": "4b72fc9863e0c4048dab3855567ff97c53155fdc39f95dacf8098a5773405b43",
+    "../vfast-xml-builder/lib/fxb.js": "aa7c7e4507c1b39f4501474fac1a52b365dd60152faa3bb8f7fc9b430c8c7171",
+    "../vfast-xml-builder/lib/ignoreAttributes.js": "5221e771e32bcaebf6e4bd4f545f0648854b40579d91278668616289a9b5b270",
+    "../vfast-xml-builder/lib/options.js": "453efccac02b5dc6ee091902c9691cbd4c958f6acbbf0bbbaf7b7c63227b4315",
+    "../vfast-xml-builder/lib/orderedJs2Xml.js": "11717b684f3fd33f100fa3431783f888d5916d475553face24846113fb1c7fef",
+    "../vfast-xml-builder/lib/util.js": "3dd06292c277f8067388aa14b7a3630211ee6698393c76172b99a2d32b08eed2",
+    "../vfast-xml-builder/package.json": "3734cdbba27184c048a1782045aff134392d6c102dd27e46fec3f700ec7d74ff",
+    "../vfast-xml-parser/index.js": "6b51b8dce04649a5092173248da9de107847609f2982fc10dfdc2164a31b4ac0",
+    "../vfast-xml-parser/index.mjs": "f4a2fd8c9bafd19d4327db06f11f0dd6237938c6fc24cb1aab82b03379c1bc33",
+    "../vfast-xml-parser/lib/ignoreAttributes.js": "dfab3b95a21f61cf98f3d765a8708220f8a090a3218e9b260e4889ede4d4227f",
+    "../vfast-xml-parser/lib/util.js": "e8c861337a21e2cd1f59aa863a6f42db364520a468ba720f3bb873697cf33ece",
+    "../vfast-xml-parser/lib/validator.js": "d9f9fb29c600c73ba1320e95da6e108cf87d0e2b42a9e0046ff660e6df1dfc8d",
+    "../vfast-xml-parser/lib/xmlparser/DocTypeReader.js": "9c3fc81887fbd1a792a6497ae13c05f9e8a6411e84bcb932ec13031d85f41bc2",
+    "../vfast-xml-parser/lib/xmlparser/OptionsBuilder.js": "5265f9a9626486c06e2ca3a1491c2269395795dcba37a7abcd44ff57ca0b47ec",
+    "../vfast-xml-parser/lib/xmlparser/OrderedObjParser.js": "d6eba8909e4c24dedc91030bc2e70734b11fc77f0d5bbdff749ba55894730b85",
+    "../vfast-xml-parser/lib/xmlparser/XMLParser.js": "7a1a5a84dfe77b92b52a4e6721d3b7d2c4833bf529be5c837ab1d364f4b95c78",
+    "../vfast-xml-parser/lib/xmlparser/node2json.js": "776a41e109de70d938b06189ba5269db8d619b9a9c099beac4b7615cbeb48cfe",
+    "../vfast-xml-parser/lib/xmlparser/xmlNode.js": "2008a9a63aec712daffc6bfb582e15a6ad7a4679051cdd95b49a4df46cc448c4",
+    "../vfast-xml-parser/package.json": "26804b91ca380ce34df38fc7eb1f560982acaf29ff33226e10d3bff00da7dcbe",
+    "../vgaxios/index.js": "3c1b09c5a0dbbd3230dcd3c7b61e4eb026d9ebe02e62db4496f73e4fd3017506",
+    "../vgaxios/lib/common.js": "534404bd1968947a13857e48992aa1d3395e284f31742b73981f96a76b876f8a",
+    "../vgaxios/lib/gaxios.js": "f2b38a6e8133b4840e0edacaaa865a625d88bd78b7dfe48a5765ec143f4b22bb",
+    "../vgaxios/lib/interceptor.js": "8f651e3a4b8afe8d00023943f2cdcde39f59afa5415dd095e8e2efe78fdd8f58",
+    "../vgaxios/lib/retry.js": "6d65a39061ee73cb844209d3de9778410c4de9652c7d7a40176061aeb7ce16ca",
+    "../vgaxios/lib/transport.js": "ac88420c282130379ddbae13ac51b8bc0b07d6d96ddf3c235681974b0e88f33b",
+    "../vgaxios/lib/util.js": "4929969d5d3f55dcd4adbe821a9300b363049e976e8137b583886f9e335793e7",
+    "../vgaxios/package.json": "5f4e97a2b1e68e4cada1d6841f2d798d1d7b4689cb58776c7a5e7776724c7fab",
+    "../vgcp-metadata/index.js": "bb0c7bac33fe130f0c9846968fd8495ce0c8197f5830c7d2299200ec8e946c45",
+    "../vgcp-metadata/package.json": "e2324ad23034299d1a0b6225f7aeadd8e7356d3576861a0cc6fc47a771b404e3",
+    "../vgcp-metadata/residency.js": "b9c19aa8a56461b5b4f7f10afc2abfc83162dd2eb2e71f301e68a0cfa1d5eefb",
+    "../vgoogle-auth-library/index.js": "b0b5b796b4ec219b176671551a5b281867d2087016f46bcc5ed0605e2725f5a6",
+    "../vgoogle-auth-library/lib/auth/authclient.js": "7fc9a6968ca95d983beffa23916dafd909afe7b990eda000c02bb9172d015b2c",
+    "../vgoogle-auth-library/lib/auth/awsclient.js": "58c9274614b12faa958013311ff5dbc04abd7bf60f82b299acdca6b88302ab6e",
+    "../vgoogle-auth-library/lib/auth/awsrequestsigner.js": "2627d188ae8ab36b0315e123c8c705b666e810c5057f5ae9e9b4505adc3d5f04",
+    "../vgoogle-auth-library/lib/auth/baseexternalclient.js": "e8bc7952d46e5e7618f1b8f8892fd84965c794e1d6952d45a06ff50f6f08813e",
+    "../vgoogle-auth-library/lib/auth/certificatesubjecttokensupplier.js": "63d55c894f2a76f489c535742c87516e4a99f2010b8f52505906dbfb07c07540",
+    "../vgoogle-auth-library/lib/auth/computeclient.js": "4b971a5116c9eec05d79e8a6890d9cfd558f42fd7031e506ed0cd8b694b06d2c",
+    "../vgoogle-auth-library/lib/auth/credentials.js": "0856a805dbf33b8b1a40c49dd3add9cf801bc96e53c04fcab72c049537dd02d2",
+    "../vgoogle-auth-library/lib/auth/defaultawssecuritycredentialssupplier.js": "70dd0026fb0cbba1a31cc75e8cc09a64e6c60a746c4b91cef6f5fac2542aa23a",
+    "../vgoogle-auth-library/lib/auth/downscopedclient.js": "b21940c9730bf747691c598c2ae1dd50a5dfd60e87fe9fdcc521560d93ba31c3",
+    "../vgoogle-auth-library/lib/auth/envDetect.js": "56575b968f1d7df0c7d0f3b1da4edc11c6e2a0f474de3af3bb3054a29ae0c7ae",
+    "../vgoogle-auth-library/lib/auth/executable-response.js": "c6f43416c982b1099a2e6d77f98639c4ecaa1e2ffdf39ae9b3e62eb5dd14f21f",
+    "../vgoogle-auth-library/lib/auth/externalAccountAuthorizedUserClient.js": "9f2a199dcb3f78f47c9384e474f802e48feef58330e2ffad35dbe471eb4a535c",
+    "../vgoogle-auth-library/lib/auth/externalclient.js": "ea5afc6448c7eefad82c74acc33053e3aabf03e33da9c362882896a5a12cd598",
+    "../vgoogle-auth-library/lib/auth/filesubjecttokensupplier.js": "24af8ac1c5834841e5fc2f42ca245534ddcda4a8495d4bab211e7e1e94dff438",
+    "../vgoogle-auth-library/lib/auth/gdchclient.js": "121341b362cc814db5b427c1c3ecfe39a4d78b17f8ebda4df325cf5b3c1f212f",
+    "../vgoogle-auth-library/lib/auth/googleauth.js": "170acc90c7098c604eff6a150e822f8022a75fe3f5aa058de95ce8b562c95cb4",
+    "../vgoogle-auth-library/lib/auth/iam.js": "371b7b2e9ebbc8f53b93fb6b76cc3b2e522e40268eb3b082bc129ac86e49a850",
+    "../vgoogle-auth-library/lib/auth/identitypoolclient.js": "2b0ece821c278964636a5f88732a9583c4cc444ffc5b20be766be85adf022e52",
+    "../vgoogle-auth-library/lib/auth/idtokenclient.js": "dabe5c9b91e7cbdb7621758e2994e5188680915c86fc23d65a3f4d9a2d3e8481",
+    "../vgoogle-auth-library/lib/auth/impersonated.js": "f586dca5a88a6cb95d2ecc034a8e8540b963a62c7111c708d7eee384bd77728b",
+    "../vgoogle-auth-library/lib/auth/jwtaccess.js": "625a67d16b9c35b8785478135f5bcc2f1b6d03d11a867e22fda8956dce8539d8",
+    "../vgoogle-auth-library/lib/auth/jwtclient.js": "93450a7e7b18c2cd2af319959719e9f9cfbe131496d375d05ff82de2dd4d6f83",
+    "../vgoogle-auth-library/lib/auth/loginticket.js": "bed7b4d7d988f1853cbafff1e161308ebe6853b18d4bc82ca90ffee2d655c659",
+    "../vgoogle-auth-library/lib/auth/oauth2client.js": "52104f510872c4a885ef6da93535544d7d4c1a1d61a1e59003d628640dac3dac",
+    "../vgoogle-auth-library/lib/auth/oauth2common.js": "226aee74f5ead371efd2bd2a9df34e3623e24b19a9a4ec570c15d826e75700e9",
+    "../vgoogle-auth-library/lib/auth/passthrough.js": "7abe1e40fb20b7c541b9f6f95e69dac839a1cebd44eded7912599e9a8eeb4ea1",
+    "../vgoogle-auth-library/lib/auth/pluggable-auth-client.js": "5cdde432c9cb6f79a0a0e30e0c66b3429ceae0bb9ccc27b69c1b651d7aec4d62",
+    "../vgoogle-auth-library/lib/auth/pluggable-auth-handler.js": "93203ae9e827ce9920c9859c879ea223fb20d3d84c8a00f56e733971573c025b",
+    "../vgoogle-auth-library/lib/auth/refreshclient.js": "cb132c4f70ffb22b74144d03c0fe7e6283e3735722ab7b2aee292ee33c700729",
+    "../vgoogle-auth-library/lib/auth/stscredentials.js": "a949b6922fecf9359de735f15426386b2857b55c8adc3cf617e6e6c5052bd0df",
+    "../vgoogle-auth-library/lib/auth/urlsubjecttokensupplier.js": "81a3b016ea65eb4c929f882596d3016c208c114184ab41e0626bec61010d7705",
+    "../vgoogle-auth-library/lib/crypto/browser/crypto.js": "83c268d1d160b4cb7fac8c6f9fe494f1d721c514e41e75f753464c8083ca19cf",
+    "../vgoogle-auth-library/lib/crypto/crypto.js": "8758e94d44d98ec6fa4a9152e39a39eb71093e8d8cab984d0e39e51d916a91e2",
+    "../vgoogle-auth-library/lib/crypto/node/crypto.js": "fa9f95a0bc44eb4950c10a70f8a10c7f7baf8a6bf058fd5226dd5dd17f42dac9",
+    "../vgoogle-auth-library/lib/crypto/shared.js": "78daa87942ec154222f7e56bb39d8c38e7f06ea3640006e84567573d9874fab1",
+    "../vgoogle-auth-library/lib/gtoken/errorWithCode.js": "00942e18451e05ea3e483db65688f91cbc358b596412d73ba317b3c561b2ef02",
+    "../vgoogle-auth-library/lib/gtoken/getCredentials.js": "7aa1214fad3b285150270c316d76c293d6f98200583214da789ec2be4d7b80da",
+    "../vgoogle-auth-library/lib/gtoken/getToken.js": "c912d1b71af8d3d04804075c7a8856db3a6cb98a360b67c636d6ec780e3aedd1",
+    "../vgoogle-auth-library/lib/gtoken/googleToken.js": "557201b69a0918d6709c7b2dbb2d66afd076d3b884e1718482ac2767253bd4af",
+    "../vgoogle-auth-library/lib/gtoken/jwsSign.js": "38e3919b868fd5180b104a7c34db25f2fffac7af34a1b32c398bc2b2e53eb951",
+    "../vgoogle-auth-library/lib/gtoken/revokeToken.js": "184e397021eaa6a563343c9996644311305193a4f4194fd86c8090beaeeb5a4d",
+    "../vgoogle-auth-library/lib/gtoken/tokenHandler.js": "a7a1af26a1d5a9ceac2a1855deafeed800508ed6a29c7bd45862d03e8f7210d3",
+    "../vgoogle-auth-library/lib/gtoken/tokenOptions.js": "46940bac62d876e35e1f6b4fba177d71566ecea20ea4dd29ca2d156849b67fed",
+    "../vgoogle-auth-library/lib/index.js": "1d8fe9d96d4c616aa81510114c9724a02dc1a24393423466009673effa75c714",
+    "../vgoogle-auth-library/lib/shared.cjs": "3145bb35f78aa9bbc72f39e304138303af798ed650f20421b56a558b65f0269d",
+    "../vgoogle-auth-library/lib/signing-key.js": "d95c30b123c3d681cc12cbd21c5fc6c35ecd23b2efeb1c1934762a21177061ec",
+    "../vgoogle-auth-library/lib/util.js": "41da637132bb426ba43c7a79bb6df5585fcd5602c84b00a692256fd33eb39be7",
+    "../vgoogle-auth-library/lib/verify-token.js": "acd77f4d0bab1750dee6d87c80b7d046713f5fd5cb991bb44b37a9dfefc90aab",
+    "../vgoogle-auth-library/package.json": "264dd6ad1c029f0c6fc168eb9f83e8043162137b62da5e8bb3a371e423c2ef0b",
+    "../vgoogle-logging-utils/index.js": "1202c23cfd16da181c688f8495c64ce2147b1d7c6027c83d70db3be61a5ef528",
+    "../vgoogle-logging-utils/package.json": "a57957244287a402b8ef97a1bdd2c3e5bf31c911519d0073bed716bd01231edb",
+    "../vhtml-entities/index.js": "09df5a9b15ebc8109ba1f13c25c4df2347b86668b549e135ba03caa9df5415e7",
+    "../vhtml-entities/lib/data.js": "9e76affa97e27a2c41ec2ba903a469b2d454bdf014511033ded01104c88df9df",
+    "../vhtml-entities/package.json": "fce79c313a6f6464be4a829a824284e750edcdf943f45221c1ed29e73d3d84cd",
+    "../vhttp-proxy-agent/index.js": "20c860dcdcdc048398b5c0f86703c83e753aba666410ae7f756a1212520e7212",
+    "../vhttp-proxy-agent/lib/options.js": "6b05d157a22148e4ba8c7ee096553c4de8a9d46b67ad7f738594da485f1cd0d1",
+    "../vhttp-proxy-agent/lib/request.js": "ecb4d983c998c164d05cdc676b919a6577c23dfa8fc1f31377815b3a541d8b41",
+    "../vhttp-proxy-agent/package.json": "3827c40e79d3caeab63d8eebed837911cc7b786c308ed9e926d635337df12dc3",
+    "../vhttps-proxy-agent/index.js": "44c432e83314f5917486cc7b4e4fc79b1e9a07bed86cbdd70a73dfb48766042f",
+    "../vhttps-proxy-agent/lib/options.js": "fd609604affb6a9f23db34ccfac13ced2d4f42eedaeb8dbe06f149dd2c7a4446",
+    "../vhttps-proxy-agent/lib/response.js": "55fe3144b1ac3f923e84da22db1bc9a3f0c6f169f3831d58516c688c9378f31f",
+    "../vhttps-proxy-agent/package.json": "e22440d108669dd9a06f7f1fbf90c3aed9c4f783ea46884047856f2adc975aae",
+    "../viconv-lite/encodings/dbcs-codec.js": "c048a369a58d91839f8829f74ddf1a87bb48da4289b88b314efbe68dffa67a55",
+    "../viconv-lite/encodings/dbcs-data.js": "17f52a22ed26a2fe1cfab8164ad07152d60e6e38087e492e85ee4aec249f1f2c",
+    "../viconv-lite/encodings/index.js": "a96a42738187fbb6eed876c843c8fd88c6d88729902159a983025d7341e50abd",
+    "../viconv-lite/encodings/internal.js": "1fe6027248d0eda949860aa8b6d05f66b2ab65beaffed79fc62530396eb3752e",
+    "../viconv-lite/encodings/sbcs-codec.js": "59b9330cd3dff677a738f0635b17db9a33d144e3b80ace3212c112a69e4ec5d4",
+    "../viconv-lite/encodings/sbcs-data-generated.js": "2cf44b3f70c61c9cdd59fda7ec085bc3180809638f208c7239688ccb90a48866",
+    "../viconv-lite/encodings/sbcs-data.js": "1e01fec80d139b957684eba698bb64a0a03fb58d9fa93514d9e810034c76213a",
+    "../viconv-lite/encodings/utf16.js": "c6ce809eacaa2d740be9021032050b2fadd2d270d477512122d01cd74913e9da",
+    "../viconv-lite/encodings/utf32.js": "2aa121fefead952f0cb8bae51f995dcc436dfa735f024c7142ca9ec3002157af",
+    "../viconv-lite/encodings/utf7.js": "08ac17a4da47ba9d1ec8e60af3f05652f3549ce884e3266bfb26747e087a171a",
+    "../viconv-lite/index.js": "1bf0bfdaabf3fc40eb38b85e2c848c592907b223f3d64e969526124401be7daf",
+    "../viconv-lite/lib/bom-handling.js": "e4019126f7695139538bfdeb9f0c933948ddde1d91b2989fbef46bad65aed0d4",
+    "../viconv-lite/lib/helpers/merge-exports.js": "d35d1b580fd9c56028a5268c31a304bfa1bf21c6c3918586d6316c7726f1cb18",
+    "../viconv-lite/lib/index.js": "7d5413318192aad9428d5d477be8bb31e73929615eaf57b7c05f634823ce2441",
+    "../viconv-lite/lib/options.js": "dc310ff0a2ea6ab0385d2940c68ba3ea0c52d46769c637bcfa8a30ff90aa0ef9",
+    "../viconv-lite/lib/streams.js": "cbef50992149c8c2c5eae188df6d0a9da9bdf8df54cf95b3703d3a93cb727473",
+    "../viconv-lite/package.json": "04960b94048b74b06ebe6d17439aa09db78128f6f4875a2acbf41449320c8e15",
+    "../vis-unsafe/contexts/html.js": "ed378c52e574ef4b1bfe78b9daaba1a59468dad31a3421dd97f828362f94a3c8",
+    "../vis-unsafe/contexts/log.js": "69e1137bfb75241801e9cfa9a47cd4e579805bc5a55f5adcec44cd989659a1b5",
+    "../vis-unsafe/contexts/nosql.js": "f8b9b9cf6bb95455a2f7ab21660c23ee1bab21853deb154df2673c406387fcd4",
+    "../vis-unsafe/contexts/redos.js": "dd2465d1049106405f9158c16cebcb25379d72052a7f50fe00de1c7018796ca8",
+    "../vis-unsafe/contexts/shell.js": "3b2b51be6fb562196fe05c9c4bf2482b285e31af62c4c669dc393d19bf7b1136",
+    "../vis-unsafe/contexts/sql-strict.js": "249d57f14e38491f29683bf31a853eebee42df9c53f5f66bc7779c6aa07bea10",
+    "../vis-unsafe/contexts/sql.js": "adda44411f75371d1f3b87ece4360e460461f2b1149d45567c4a3ae5d43706b4",
+    "../vis-unsafe/contexts/svg.js": "4bcec04170b7b3344e2c0956c2a3fe445f69b14e8d751cf3be7eca340f478390",
+    "../vis-unsafe/contexts/xml.js": "c2da8606630d63f3bf57dcbb460fd872c4ee29ceb5189f137a2d1befc8c0de9a",
+    "../vis-unsafe/index.js": "7674ce1c8381b3aaa8d4f75e549120ec0277a2e6236b4b7051e0be627b067cde",
+    "../vis-unsafe/index.mjs": "22e3fe6e464bd43c7bcb9852fbf6b99a3c59e724c9bdbb07a65921d4d49dab48",
+    "../vis-unsafe/package.json": "420b4f0affe36a5d8388bdae609a8f37dde0823b957c61d0e403fd9f01df417b",
+    "../vjson-bigint/index.js": "560474c1f6f4393855ffb5ddd280a3300a7749aaed33055ebae216e3324acfbf",
+    "../vjson-bigint/package.json": "090086a7f60cc4fdb16c510312f295fb91c53ff44899cd1a082bcef2ccc345f1",
+    "../vjwa/index.js": "0a5e022a0b8d0cbd23e0b1498298a5343686108b0c37ec231ceee046ee29ec06",
+    "../vjwa/package.json": "8ae943c8162284eedf48e0a3ffd6d34b9df678e85ed3a371f94cfb401e12a38a",
+    "../vjws/index.js": "e0af233255cd436ad872535635cb55767f0773e812759f0f8813edd6ab028e33",
+    "../vjws/lib/core.js": "08a0e6b4bd35ef7d88b436b5d4e8a05ed622dc11879f59cda7603820152f302d",
+    "../vjws/lib/streams.js": "72f00d83136ff0d4a7158ad7a550a017d2bcd11a4ac2304f050d767d07481d44",
+    "../vjws/package.json": "5d8c9ba8af41fb8e4617103d299cc65da8e5259feaacd46a592298d7472ed72f",
+    "../vmime/bin/vmime.cjs": "61ae8eb57a483f98f06ee18d2e79b0a40dc05896162454f4a3b232bb03a69412",
+    "../vmime/index.js": "1c142beba3fa232c0eef9f586ae74c2b84085d31f5eb0025aa3ebbb50fc8c0df",
+    "../vmime/index.mjs": "dbaf83d238e0660dd4513b997cfc61b353a5b6d1b4f64e4fa8c5836aa70bea8b",
+    "../vmime/lib/Mime.js": "a824f84a63363cb239de200e7d2ef50dfda67b2d2311d56e0d344c535d8f1750",
+    "../vmime/lite.js": "d3b53fa567be18d8d238ae1be1c8271cdf3a1a878a7fbad612582630e04ecb28",
+    "../vmime/lite.mjs": "c6e81eb3bfafa71c1212c8f7c63eef8eb0ae0eb2f560744c011aaceca80b9653",
+    "../vmime/package.json": "ac912a3e38cec92c859955804566a99c252f3e403de9fe3e34cfb5a7de2d1b75",
+    "../vmime/types/other.js": "2b21af309809541a9bbde86ab8bd23d74331596dc675909e5d1529186eb81f61",
+    "../vmime/types/other.mjs": "c217fe0d086f91c6d6f71177ffa3c123277a0c432f4108467942c36f6b6e8be7",
+    "../vmime/types/standard.js": "b88f6a1a2c7708dd4d57af371f0afe48f17fd000cfaad726f6b86ea53393df05",
+    "../vmime/types/standard.mjs": "d6db19c46962acaf87cfb8272d60ebd0834a6f8e6ae82ed1e3d2b64b655d4615",
+    "../vms/index.js": "d9588344a02afff2204b10c91da7bf084a31eb7afbd97b2607416db73d3f0d65",
+    "../vms/package.json": "3602aa940ddaafad5e6db551950cb8ff50b9b3cfe376e6dd1a7995f218f3cf2a",
+    "../vnodable-entities/index.js": "518104a1abc8f9e0c6087f31ee2611d41f0023da06e9eb079a4461fc381162c5",
+    "../vnodable-entities/index.mjs": "d6b81fc74a49f0bc025e0936281d02092d20c45367a77db81d603e487a506491",
+    "../vnodable-entities/lib/all-entities.mjs": "816704ea199d496368d92b36540942f96c068756d1682a5c9ba8661d463f3271",
+    "../vnodable-entities/lib/decoder.js": "ec5df14b41e6cb6063405a7cba6714c72340b6e44ea86b68eeb00fab162b9119",
+    "../vnodable-entities/lib/encoder.js": "6bf916bd3b20f3299682131bcc40076a4eec2ca4942006f5e2ef7ec3d7ca317d",
+    "../vnodable-entities/lib/options.js": "57b88360507a68bdad4e600f8e98faf7015b3891d488ac96a7949ce0865983a7",
+    "../vnodable-entities/lib/tables.js": "bdadee3240b7875ec4b63af932c752fd28124322224daf72efa3a384944c48a0",
+    "../vnodable-entities/lib/tables.mjs": "4b88c32a9abe340460ba4d636aae60a0c974fbf987bc0a49ae273c8e0b4e0175",
+    "../vnodable-entities/package.json": "67e9e9058a0821a86794407877c8ea38e5ee842b6442982511e680ef54c33a53",
+    "../vnode-fetch/index.js": "98939365a1ffde081e3c8e1e3861f4734fdd22e97a9ed5a41b93ddd8ad0bacf0",
+    "../vnode-fetch/package.json": "bcd99e8011a81017296fa570fb9d487ec4a36440bfa45b4f3d7cf65e670a930c",
+    "../vp-limit/index.js": "85c8f72aa93fd71ab84f19730b3170a41300a2451e9810abd374ba2508401358",
+    "../vp-limit/package.json": "003e7b6697d566d299c918cb97b123e91115381c0b9994b452323516ad935c19",
+    "../vpaginator/index.js": "a80c5c359f070828f42d1b4c56995fb44dc82b9f73ceadcda46f21de404dcaa0",
+    "../vpaginator/package.json": "a589c3760d148516cf6ee37e7757a0b06b0b519b0c3f5d5bb12dcdad11fe7dfe",
+    "../vpaginator/resource-stream.js": "1e271df7f539d71b84794109c7b0ab2b99fe434b28d9e8ddd6926900fea1141b",
+    "../vpath-expression-matcher/index.js": "f4d27ce7df63b6b056c564125a8d43db542accdb566878f8c72b24c7777ec45c",
+    "../vpath-expression-matcher/index.mjs": "3e53934b8b8488459fc2f1cad159e53efc737ca9ffeb8bd0c21fcbe7c7e9b8f8",
+    "../vpath-expression-matcher/lib/expression.js": "7bbbd688b8fdf7b44272e9d4b88edb44058882e9c53648dca8ce260f73482317",
+    "../vpath-expression-matcher/lib/matcher.js": "325d04e0715f0db83461a80ff1b7d82e6a3dff9875a600cb1074cd570dc457f7",
+    "../vpath-expression-matcher/lib/set.js": "210e9af3f01a0a6d81ac7c1e84bb1de852a65005323e8c6692398262f412402a",
+    "../vpath-expression-matcher/package.json": "15d589cb7381ff35fdb0e08996c3a36c12dc240efc58223e952b34057f85a4f8",
+    "../vprojectify/index.js": "ed3e28fba837ecb7d238a6d2a881b2d4d0495105b34fa0b6d54a77f831dec437",
+    "../vprojectify/package.json": "4228452af9bd589314731ed6da705e17a6ba9d5e1520fd50df53653315be4ec5",
+    "../vpromisify/index.js": "0db8f8ffbd74d048e515d311975779bd9f3ecc533f31b95db98f235df2cc5fd7",
+    "../vpromisify/package.json": "251a87c78bb94326546e48f2ab8edf38bd2e8f60dcfaf0375019a89ab182e763",
+    "../vretry-request/index.js": "21500d1286f4c89fdfaa67e25eeb3b36862d5898c0166ad4c700d04f8b1c60c3",
+    "../vretry-request/package.json": "6d93add04a26d664715a0ffab0c5ce6547abecbeb37ff619ac0ec9bb37ee6e48",
+    "../vretry/index.js": "d39943c0a0fa75de27561540910382a4610d7406036d5f533e8561fb109b7120",
+    "../vretry/package.json": "72bc8a09d2e43957cba29a898c826c1ffb8b9cdd21ca5abd13dce62ff956a6ec",
+    "../vretry/retry-operation.js": "bf388947c464add8e84714880bc271cf3041ff8b6c5a7d6e4f1a4dbd9768bcbe",
+    "../vstream-events/index.js": "fed2e7068ca3ae9fd62754f7874234e5db2623652436eb11f83548c562d70e14",
+    "../vstream-events/package.json": "0218a8e4e11d9e0e9ab70ff91c418580b265e36c629df722ebf1a61f74287e09",
+    "../vstrnum/index.js": "3ea0e06b3bb14b24c9146aedf520a495c9475d7bae0b74054665a9d60ff2bf2c",
+    "../vstrnum/package.json": "2ae23b0c9cbae8aff705170d2c299f023b87b8fb1b4399d28300f0de31caab60",
+    "../vteeny-request/index.js": "e63cfe2daf3fcb38ea76994d96aab51b4b6fb2a4fbdfea156838d5afea8ba9bf",
+    "../vteeny-request/lib/agents.js": "92debf29cda04411d55e36a6772169de979133f36a0bcfce998a4d36a5bd5a32",
+    "../vteeny-request/lib/multipart.js": "0baff2fcb6fd12eeb3be39100c781dbc10e3ec8efd3cbe58ad230c2a279aa752",
+    "../vteeny-request/lib/options.js": "e17f9e80f17967fcf1c62d1f5f19977cc5c4db302abb28b058c34211c0e72ef0",
+    "../vteeny-request/lib/read.js": "9cdbc9f0c8c63e4ac556f614f068212e01961cb8c4d680c97a17302895e5b2b0",
+    "../vteeny-request/lib/statistics.js": "74994e23c22ed8fd410e76939820b495abbb1108ca50b45a7fa120b1ea4e5b82",
+    "../vteeny-request/package.json": "753dfea5d305028eb9936654d20de988491f98cb5494f8fe5b254c77b0dc3f70",
+    "../vxml-naming/index.js": "821f0a32847dec3cac7a68b73f88adbce393a7047a37a376d7dc481412ea9aa3",
+    "../vxml-naming/index.mjs": "c340da953d1a3cface4c9c397a409a5c07ea5add02017113805e80d6be6c7dcc",
+    "../vxml-naming/package.json": "193fe5956941640dc16be19581ce8b2e9f34cf916a67a9cccd854af58141aeea",
+    "../vyocto-queue/index.js": "fde0a18ef94650701ddc867d2ad39a560f2c2d6bab2ae648af60b92b40fa1db3",
+    "../vyocto-queue/package.json": "bd94d689916e208b1ccc893f6241a421f02d07c4c98561d620a05c087e807ee1",
+    "bench/http-server.cjs": "802dc37a5b767edead2a53b672172816bc6856f45c184c978147e3f26e17e9e5",
+    "bench/save.cjs": "8686c04ec48719e3b628a9f975ad161e8bf0f6791dd3c929be6c26e3e3c76dba",
+    "index.js": "b0b5b796b4ec219b176671551a5b281867d2087016f46bcc5ed0605e2725f5a6",
+    "index.mjs": "bb5251a11e88e6e8fae142fe53e5a88e265f7ac6b9dc5a626074ffca1bce7081",
+    "lib/acl.js": "ee1b5b2213f68236516f2f578aba3ebaf7f8d336ad14d88be6ecd221e93d9781",
+    "lib/bucket.js": "2e82941221bdc345649add56907ef60c9453a2566561802d81b9936deee760eb",
+    "lib/channel.js": "bdcddd52698ded0e7ca4cfaa98dfbc0f73441f8f7559f251e98ab27c50bbd2e2",
+    "lib/crc32c.js": "7d4fa354d0484d1a8efe2af3b6448b8acd931f61b3cb0521d7562b97e2d30532",
+    "lib/file.js": "56e787ce57dc258d88ba31aa9488a158b3fe2b2a1c361f0e461d7b8b04a17ea7",
+    "lib/hash-stream-validator.js": "8e52e5736b45018a29b43ec448140a86e7e81e6f4304ba6654f6c5d8145a836a",
+    "lib/hmacKey.js": "f35447335f530f524c9c7fd9a2886748395b446f92fbd4b4cc5232484d90008f",
+    "lib/iam.js": "0c305af662e263381fafcba43c26a8618e5e61c2a33d2a169030457fffd2e195",
+    "lib/index.js": "b4d1b84eaccf80ce1fbc316c59711fe209621b9e6dfbf828e73d916cd0bae9ee",
+    "lib/nodejs-common/index.js": "596e68222a2faeb32c306328f0643d0ab49c503abca0e5e0d658bb49a1fb44d1",
+    "lib/nodejs-common/service-object.js": "ffbbf7cdbd7251cdf17106727b81568ca94ef96daabf6bb1131e2d0b236a3dd9",
+    "lib/nodejs-common/service.js": "463bb759aff108dda43c454a14de9f3617d2e5c25f700fd672435d6ad706c6c9",
+    "lib/nodejs-common/util.js": "5dc4981ea656b387d3c00efabbf2862d1e3740af61094773cc9b5b61bf3b9761",
+    "lib/notification.js": "39f85fe2e5009c0c40878b74ad7d641ea7f6f3c79ab07b2bbc8fc7d10f7c1f11",
+    "lib/package-json-helper.cjs": "32f1f4aef0b6df5847b00a92c8455f8034e536f80d7b1df22b642296fda43f28",
+    "lib/resumable-upload.js": "9ea06a3ea1445b027ed24f374422367c620bce32b53e8ace18b8a661bf6bf9cc",
+    "lib/save.js": "c36de66bdc73835254cd23279fcac3bb22b983e8a5387650002e5736772067c3",
+    "lib/signer.js": "63b2e7b70c5a4354e803b19d4d38c411ac6799290ecd323605fdb1290cf153d0",
+    "lib/storage-endpoint.js": "095e963caf4745dbeb055060b47fc691a36c324e9951a7e0f86b90e7d8882107",
+    "lib/storage.js": "10c17f9dc9ee66e456f1453a64db51d911e9cf85d3d83b969884aad3289e98fc",
+    "lib/transfer-manager.js": "b8f560fa1b5232dc3f999b29037df6aed1ae0f5039292838d4a1d9797a5c8fd9",
+    "lib/util.js": "69f91c5e5b78d89fb35ac64239af434a262c84eda1bd7cb62d0d03d79828bbbd",
+    "package.json": "f2bff2c4511e1b77fbc87a26a8200cc45e03b99c5dc506ec8897c37c621ec0f8"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40411,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 15273,
+            "samples": [
+              886.1743599816664,
+              925.5630851830022,
+              799.3763504223124,
+              778.9808812937872,
+              797.7885811562878,
+              741.2836377921811,
+              734.5833169645779,
+              784.3771361225713,
+              794.263864335755,
+              713.8386695475692,
+              800.895894716165,
+              730.7394094153063
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 11952,
+            "samples": [
+              784.3352576974554,
+              808.4176706827279,
+              860.8601070950552,
+              822.7945950468505,
+              754.7098393574237,
+              829.2997824631856,
+              775.3618641231564,
+              843.2340194109809,
+              850.495732931726,
+              781.1140394912975,
+              843.3177710843388,
+              750.571703480596
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 9856,
+            "samples": [
+              960.9332386363517,
+              961.5209009740299,
+              910.6846590909031,
+              982.5782264610419,
+              949.6880073051873,
+              996.4784902597258,
+              914.8953936688406,
+              909.9490665584242,
+              939.2417816558653,
+              891.0858360389531,
+              940.0829951298552,
+              1001.7966720779069
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 8,
+            "samples": [
+              1177380.1250000133,
+              1149604.25000001,
+              1210739.6249999737,
+              1082614.624999991,
+              1370624.9999999898,
+              1358025.9999999953,
+              1242593.7499999974,
+              1224198.0000000012,
+              1328374.9999999942,
+              1151317.6249999902,
+              1064385.3750000005,
+              1087500.0000000056
+            ]
+          }
+        ],
+        "checksum": 27488
+      },
+      "vpm": {
+        "pid": 40429,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 15273,
+            "samples": [
+              817.8266876186755,
+              880.0278923590665,
+              855.0192496562576,
+              827.6724939435624,
+              853.0221960322104,
+              842.1943298631548,
+              894.0231781575346,
+              827.1841157598368,
+              867.7650101486287,
+              854.3944215281879,
+              833.565180383684,
+              843.069992797749
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 11952,
+            "samples": [
+              3930.461429049537,
+              4034.8929886211536,
+              3906.752008032126,
+              4052.798025435071,
+              3968.620983935751,
+              3972.891566265054,
+              3868.2996151271773,
+              3848.4563253012066,
+              3788.082914993307,
+              4109.542336010711,
+              3907.344628514061,
+              4104.689591700136
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 9856,
+            "samples": [
+              901.0713271103741,
+              847.4871144480437,
+              816.642958603902,
+              889.1876014610367,
+              835.5316558441688,
+              900.6950081168835,
+              949.9712865259664,
+              925.8108766233838,
+              834.5170454545593,
+              829.3678977272757,
+              838.9940137987044,
+              803.0514407467471
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 8,
+            "samples": [
+              498015.62499999366,
+              518453.12500000774,
+              411291.7500000037,
+              335916.750000024,
+              489864.62499999563,
+              395796.87500000204,
+              485270.8749999977,
+              610026.0000000049,
+              456135.49999998783,
+              367859.37499999476,
+              469651.1250000128,
+              452296.8750000018
+            ]
+          }
+        ],
+        "checksum": 4448
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40430,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 3168,
+            "samples": [
+              916.2720959595953,
+              727.3910984848462,
+              852.0886994949441,
+              872.1856060606036,
+              923.3349116161733,
+              845.9463383838381,
+              741.3983585858571,
+              850.6025883838348,
+              839.738320707062,
+              861.9002525252546,
+              975.4839015151654,
+              718.6710858585835
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 3322,
+            "samples": [
+              4824.967489464183,
+              4856.148404575549,
+              4412.740818783836,
+              4339.74262492473,
+              4149.470800722453,
+              4153.885611077671,
+              4373.645394340772,
+              4278.446718844059,
+              4152.882299819393,
+              4523.103552077033,
+              3844.947621914512,
+              3671.106863335346
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 13350,
+            "samples": [
+              834.2758801498175,
+              888.6548314606696,
+              841.0112359550534,
+              821.2734082397045,
+              833.0087640449458,
+              882.54996254682,
+              888.9544569288443,
+              831.5324344569282,
+              865.8395505617948,
+              861.3077902621658,
+              905.0499625468138,
+              860.1123595505587
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 19,
+            "samples": [
+              413390.3684210533,
+              465978.0526315707,
+              565931.9999999992,
+              378177.6315789485,
+              380528.473684212,
+              499574.57894737145,
+              533054.8421052658,
+              406037.2631578933,
+              328559.2105263205,
+              468171.05263158074,
+              560046.0526315816,
+              399822.36842105957
+            ]
+          }
+        ],
+        "checksum": 35616
+      },
+      "upstream": {
+        "pid": 40459,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 3168,
+            "samples": [
+              732.5994318181821,
+              663.1022727272718,
+              689.8936237373764,
+              744.2657828282818,
+              743.423926767675,
+              632.6019570707008,
+              753.7613636363694,
+              905.3557449494858,
+              632.5363005050485,
+              722.301136363638,
+              787.2869318181807,
+              668.4816919191923
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 3322,
+            "samples": [
+              698.9139072847731,
+              751.0033112582696,
+              738.9373871161921,
+              622.3410596026423,
+              770.2814569536425,
+              792.3314268512864,
+              734.4220349187248,
+              628.5370258880259,
+              779.5502709211215,
+              783.4262492474497,
+              610.287477423241,
+              809.4521372667133
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 13350,
+            "samples": [
+              914.7970786516844,
+              900.8552059925122,
+              882.8401498127373,
+              920.5087640449482,
+              919.1260674157256,
+              901.6635205992483,
+              913.3176779026259,
+              979.7971535580513,
+              892.2721348314608,
+              861.4263670411991,
+              942.6528838951251,
+              999.2853183520606
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 19,
+            "samples": [
+              1145453.9473684237,
+              1033725.8947368378,
+              990769.7368421037,
+              969973.6842105243,
+              980710.526315785,
+              1108098.6842105177,
+              1005712.7368421142,
+              1110697.3684210468,
+              934971.473684216,
+              1123447.3684210475,
+              937953.9473684296,
+              956932.0000000037
+            ]
+          }
+        ],
+        "checksum": 10368
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40460,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 16573,
+            "samples": [
+              735.0736137090436,
+              729.2709829240331,
+              731.6267422916789,
+              736.039039401436,
+              721.0221444518193,
+              711.3603451396855,
+              739.8731068605554,
+              737.5425089000155,
+              743.1791468050446,
+              710.9732094370365,
+              736.1446328365423,
+              694.3271586315103
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 15138,
+            "samples": [
+              809.0787422380696,
+              799.8469414717905,
+              828.1889945831721,
+              806.2656889945816,
+              782.9799180869345,
+              790.1170564143196,
+              765.8816224071895,
+              698.7768529528333,
+              738.0185625577974,
+              822.483154974235,
+              721.861672611971,
+              733.3586339014405
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 11815,
+            "samples": [
+              910.9641980533255,
+              908.1816335167206,
+              953.4066864155733,
+              999.3687685146012,
+              966.7795175624121,
+              1013.9723233178289,
+              1005.4168429962025,
+              1020.2884468895572,
+              914.1627592044022,
+              979.0203131612385,
+              906.6828607702241,
+              988.5279729157907
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              1256088.000000015,
+              1181296.33333332,
+              1143564.777777783,
+              1218606.5555555513,
+              1419365.7777777845,
+              1144078.6666666502,
+              1175458.3333333307,
+              1273995.4444444317,
+              1266893.4444444505,
+              1222319.4444444391,
+              1234268.4444444482,
+              1174833.3333333295
+            ]
+          }
+        ],
+        "checksum": 51616
+      },
+      "vpm": {
+        "pid": 40466,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 16573,
+            "samples": [
+              830.9952332106443,
+              865.2275387678737,
+              857.5921679840702,
+              852.4431907319138,
+              823.2088939841935,
+              813.2379170940666,
+              797.1172992216251,
+              832.9612019549869,
+              809.984613528028,
+              854.069872684486,
+              803.9129910094716,
+              814.9902854039685
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 15138,
+            "samples": [
+              3951.1576826529204,
+              3985.1945435328353,
+              3848.102985863395,
+              3934.8411282864286,
+              3932.9447086801515,
+              3914.984872506283,
+              3923.96340335579,
+              3884.006011362132,
+              4036.7755317743413,
+              3886.26027216276,
+              3919.53197251949,
+              3918.397938961543
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 11815,
+            "samples": [
+              838.5597968683912,
+              888.3057977147755,
+              857.0038087177211,
+              867.3013965298247,
+              867.6188743123017,
+              934.2432501057999,
+              837.0891239949242,
+              891.1270418958891,
+              877.055945831584,
+              820.0310622090667,
+              867.0827761320288,
+              886.1158696572081
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              442138.8888889245,
+              531791.6666666759,
+              472648.22222223296,
+              385384.2222222536,
+              586638.888888855,
+              387902.777777779,
+              404560.22222219367,
+              369930.5555555333,
+              488546.33333333675,
+              509050.88888890133,
+              529430.5555555386,
+              624861.1111111334
+            ]
+          }
+        ],
+        "checksum": 4352
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40468,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 13596,
+            "samples": [
+              841.5955428067051,
+              841.748749632244,
+              848.828111209178,
+              856.6091497499303,
+              851.0346425419252,
+              894.8434833774638,
+              834.9176963812926,
+              824.9301265077975,
+              878.322080023536,
+              821.5375845837008,
+              880.9607237422792,
+              813.1435716387168
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 2278,
+            "samples": [
+              4619.62247585597,
+              4279.228709394234,
+              4092.9727831431196,
+              3991.9521510096492,
+              4077.5535557506223,
+              4027.015364354697,
+              3980.8678665495845,
+              4101.130377524121,
+              4051.653643546999,
+              4098.148814749749,
+              3850.7098331869693,
+              4687.9574187884145
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 12441,
+            "samples": [
+              874.0253998874666,
+              860.3441041716973,
+              833.3400852021513,
+              836.4312354312322,
+              942.0196125713427,
+              878.7979262117208,
+              848.3977976046888,
+              891.4609758057987,
+              889.9572381641434,
+              857.1089140744277,
+              871.9925247166666,
+              821.1826219757315
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 22,
+            "samples": [
+              394452.68181818636,
+              703179.9090909152,
+              474041.6818181798,
+              428323.8636363649,
+              541518.9545454537,
+              394109.86363636557,
+              361984.8181818229,
+              454217.77272726805,
+              474998.09090909775,
+              350143.9545454497,
+              366401.5000000001,
+              546435.5909090893
+            ]
+          }
+        ],
+        "checksum": 29056
+      },
+      "upstream": {
+        "pid": 40469,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 13596,
+            "samples": [
+              744.4131362165336,
+              753.4385113268592,
+              727.0244924977914,
+              739.3595910561912,
+              743.3712121212122,
+              707.9257869961747,
+              795.7855251544576,
+              703.9540305972315,
+              721.2415416298941,
+              713.1509267431576,
+              719.5100029420432,
+              747.4532950867901
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 2278,
+            "samples": [
+              885.7919227392421,
+              681.4091308164873,
+              864.8849868305841,
+              600.9657594381159,
+              970.8077260755052,
+              648.1014047409841,
+              884.9135206321524,
+              618.6167690957122,
+              795.4894644424598,
+              698.2550482879419,
+              789.2339771729484,
+              629.2800702370915
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 12441,
+            "samples": [
+              921.5832328590951,
+              870.3513383168544,
+              933.1142994936107,
+              921.9047504219934,
+              891.6988184229542,
+              892.9479945341982,
+              888.018165742301,
+              895.2221686359646,
+              872.253677357128,
+              890.9285427216515,
+              921.8779037054954,
+              954.8870669560371
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 22,
+            "samples": [
+              1123524.6363636407,
+              1140422.3181818184,
+              1169214.0000000005,
+              1159062.4999999942,
+              1269232.9545454455,
+              1175024.636363632,
+              1129022.72727272,
+              1063416.6818181772,
+              1117954.5454545466,
+              1126070.0909090866,
+              1061426.136363645,
+              1002062.5000000068
+            ]
+          }
+        ],
+        "checksum": 9312
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40485,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 6704,
+            "samples": [
+              810.3682875894972,
+              710.0363961813853,
+              767.1602028639587,
+              755.9292959427192,
+              785.5820405727948,
+              717.6250000000042,
+              760.1866050119343,
+              728.3773866348432,
+              715.8723150358027,
+              854.9871718377162,
+              719.6387231503569,
+              791.7537291169414
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 12790,
+            "samples": [
+              777.8310398748989,
+              777.8212666145372,
+              748.8076622361169,
+              778.8506645817045,
+              812.8485535574599,
+              815.1387802971046,
+              734.2389366692688,
+              758.4538702110982,
+              787.0699765441786,
+              807.2354182955486,
+              786.1968725566884,
+              734.5256450351847
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 9611,
+            "samples": [
+              1023.193840391223,
+              928.9963583394027,
+              933.8128186453021,
+              987.6139839766885,
+              927.2534595775676,
+              964.4114036000415,
+              987.0373530329791,
+              965.4476121111323,
+              958.7408178129264,
+              1014.579648319634,
+              938.603267089787,
+              962.3608365414589
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              1058263.8888888848,
+              1051166.6666666567,
+              1141439.7777777796,
+              1017143.5555555744,
+              1043333.3333333193,
+              1144689.7777777596,
+              1167328.7777777861,
+              1093240.6666666642,
+              1097000.0000000051,
+              1132634.2222222239,
+              1184111.1111111029,
+              1005398.1111111119
+            ]
+          }
+        ],
+        "checksum": 29408
+      },
+      "vpm": {
+        "pid": 40486,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 6704,
+            "samples": [
+              741.9078162291206,
+              683.1057577565642,
+              754.0833830548964,
+              673.5158114558528,
+              682.0741348448712,
+              805.203311455845,
+              680.7752088305494,
+              784.1214200477259,
+              752.7409009546473,
+              767.8375596658707,
+              707.8485978520333,
+              725.2946002386614
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 12790,
+            "samples": [
+              717.5397967161869,
+              718.4616888193895,
+              703.8311180609904,
+              729.3067240031229,
+              728.4857701329223,
+              729.7498045347896,
+              740.7609851446445,
+              722.9605942142304,
+              708.0922595777973,
+              728.8604378420663,
+              734.9426896012567,
+              731.2483971853007
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 9611,
+            "samples": [
+              935.000624284679,
+              970.8667152221312,
+              914.4946415565411,
+              936.7695349079166,
+              868.4016231401449,
+              983.5562376443621,
+              1074.2074706065964,
+              962.5472895640395,
+              967.0993653105847,
+              935.8851316200147,
+              1022.7257309332974,
+              921.3921548225997
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              1064009.2222222139,
+              1213638.8888888834,
+              1110833.3333333274,
+              1025203.6666666602,
+              988388.8888888729,
+              1122949.11111111,
+              1263574.0000000119,
+              1021689.8888888864,
+              1086157.3333333277,
+              1018625.0000000048,
+              1070203.7777777808,
+              1355708.3333333442
+            ]
+          }
+        ],
+        "checksum": 5856
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40488,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 15340,
+            "samples": [
+              784.9928943937412,
+              778.6397653194281,
+              756.5596479791416,
+              791.8269230769213,
+              759.09928292047,
+              777.4853324641462,
+              836.1962190352016,
+              753.0177314211205,
+              762.6357887874824,
+              814.9473272490245,
+              778.7646675358516,
+              742.9786179921769
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 12581,
+            "samples": [
+              1029.0120022255712,
+              917.113742945707,
+              790.9910182020509,
+              835.4959860106453,
+              807.450997535968,
+              746.3204832684199,
+              783.9069231380591,
+              791.3421031714485,
+              786.0066767347555,
+              727.008981797945,
+              761.733963913842,
+              783.7280820284582
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 9897,
+            "samples": [
+              891.4022431039756,
+              906.6888956249427,
+              917.0076790946812,
+              875.3451550975117,
+              853.490956855613,
+              957.9670607254718,
+              886.257653834497,
+              944.2213802162288,
+              912.0272809942313,
+              937.2368394462887,
+              1005.1824795392699,
+              904.3228250985096
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              1131254.666666665,
+              1105180.55555556,
+              1076777.7777777812,
+              1131486.1111111187,
+              1073208.3333333423,
+              1234685.2222222222,
+              1106124.9999999949,
+              1106189.7777777733,
+              1034194.444444438,
+              1102578.666666659,
+              1083453.6666666786,
+              1069018.5555555571
+            ]
+          }
+        ],
+        "checksum": 27808
+      },
+      "upstream": {
+        "pid": 40489,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "save orchestration / 64 bytes",
+            "iterations": 15340,
+            "samples": [
+              777.5423728813565,
+              731.4157105606264,
+              748.5984354628417,
+              738.5511734028664,
+              751.1869621903489,
+              719.1112777053443,
+              745.4612125162987,
+              714.3361799217738,
+              714.8114732724914,
+              733.5859191655821,
+              711.3130378096478,
+              716.7861799217726
+            ]
+          },
+          {
+            "case": "save orchestration / 65536 bytes",
+            "iterations": 12581,
+            "samples": [
+              725.5119624831075,
+              691.8103489388759,
+              758.3260472140581,
+              737.3950401398996,
+              701.5606072649213,
+              725.1940227326978,
+              754.2590414116514,
+              731.8641602416342,
+              712.562594388362,
+              735.2025276210092,
+              729.7909546141028,
+              737.8620141483117
+            ]
+          },
+          {
+            "case": "save orchestration / callback",
+            "iterations": 9897,
+            "samples": [
+              919.1841972314858,
+              933.4479135091451,
+              1060.9695867434664,
+              853.2257249671538,
+              891.4485197534518,
+              1010.0241487319412,
+              861.3511164999429,
+              933.9404870162655,
+              935.4476103869808,
+              858.8797615439091,
+              962.6359502879749,
+              875.7030413256539
+            ]
+          },
+          {
+            "case": "HTTP multipart upload / 64KiB + CRC32C",
+            "iterations": 9,
+            "samples": [
+              1015810.1111110984,
+              1079518.5555555488,
+              952217.5555555603,
+              950180.555555562,
+              1068601.777777758,
+              1040245.3333333344,
+              1046305.5555555659,
+              1255546.3333333137,
+              1045740.7777777615,
+              1024162.0000000087,
+              911796.333333339,
+              1166856.4444444452
+            ]
+          }
+        ],
+        "checksum": 4960
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "save orchestration / 64 bytes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 789.3205002291631,
+          "vpmNs": 848.0460944149797,
+          "changePct": 7.440018873039134
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 727.45028409091,
+          "vpmNs": 851.3456439393894,
+          "changePct": 17.031453909363805
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 733.3501780003612,
+          "vpmNs": 827.1020635974189,
+          "changePct": 12.784054386226874
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 733.1920417769913,
+          "vpmNs": 845.2884304207109,
+          "changePct": 15.288816879686618
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 758.0579504773268,
+          "vpmNs": 733.6012082338909,
+          "changePct": -3.2262364939298127
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 732.5008148631043,
+          "vpmNs": 778.0625488917872,
+          "changePct": 6.2200250298967585
+        }
+      ]
+    },
+    {
+      "case": "save orchestration / 65536 bytes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 815.6061328647893,
+          "vpmNs": 3949.541206492644,
+          "changePct": 384.24613883419596
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 744.9703491872308,
+          "vpmNs": 4309.094671884395,
+          "changePct": 478.4249905497119
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 786.548487250627,
+          "vpmNs": 3921.74768793764,
+          "changePct": 398.60215250633473
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 743.7445127304452,
+          "vpmNs": 4085.263169446871,
+          "changePct": 449.2831341301593
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 778.3408522283016,
+          "vpmNs": 728.6731039874943,
+          "changePct": -6.38123363287616
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 730.8275574278684,
+          "vpmNs": 788.4988474684033,
+          "changePct": 7.8912309004202985
+        }
+      ]
+    },
+    {
+      "case": "save orchestration / callback",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 944.8855012175213,
+          "vpmNs": 843.240564123374,
+          "changePct": -10.757381393107824
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 914.0573782771551,
+          "vpmNs": 860.7100749063623,
+          "changePct": -5.836318883103764
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 972.8999153618254,
+          "vpmNs": 867.4601354210632,
+          "changePct": -10.837680040453979
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 894.0850815850814,
+          "vpmNs": 866.168314444182,
+          "changePct": -3.1223837323632653
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 963.3861200707502,
+          "vpmNs": 949.6584122359781,
+          "changePct": -1.4249434934524463
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 926.3160553703154,
+          "vpmNs": 909.358088309587,
+          "changePct": -1.830689100379368
+        }
+      ]
+    },
+    {
+      "case": "HTTP multipart upload / 64KiB + CRC32C",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1194059.8749999935,
+          "vpmNs": 462893.31250000035,
+          "changePct": -61.23365986986181
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 998241.2368421089,
+          "vpmNs": 439684.210526312,
+          "changePct": -55.954112663464684
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1220462.9999999953,
+          "vpmNs": 480597.27777778485,
+          "changePct": -60.62172488819516
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1127546.4090909034,
+          "vpmNs": 441270.8181818165,
+          "changePct": -60.86450946727808
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1095120.3333333347,
+          "vpmNs": 1078180.555555554,
+          "changePct": -1.546841681426836
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1042993.0555555479,
+          "vpmNs": 1103879.6111111096,
+          "changePct": 5.837676025861027
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "save orchestration / 64 bytes",
+      "upstream_ns": 733,
+      "vpm_ns": 847,
+      "change_pct": 14,
+      "upstream_first_pct": 10.1,
+      "vpm_first_pct": 16.2,
+      "process_range_pct": "7.4, 17.0, 12.8, 15.3",
+      "control_max_abs_pct": 6.2,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "save orchestration / 65536 bytes",
+      "upstream_ns": 766,
+      "vpm_ns": 4017,
+      "change_pct": 423.9,
+      "upstream_first_pct": 391.4,
+      "vpm_first_pct": 463.9,
+      "process_range_pct": "384.2, 478.4, 398.6, 449.3",
+      "control_max_abs_pct": 7.9,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "save orchestration / callback",
+      "upstream_ns": 929,
+      "vpm_ns": 863,
+      "change_pct": -8.3,
+      "upstream_first_pct": -10.8,
+      "vpm_first_pct": -4.5,
+      "process_range_pct": "-10.8, -5.8, -10.8, -3.1",
+      "control_max_abs_pct": 1.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "HTTP multipart upload / 64KiB + CRC32C",
+      "upstream_ns": 1160803,
+      "vpm_ns": 452082,
+      "change_pct": -60.7,
+      "upstream_first_pct": -60.9,
+      "vpm_first_pct": -58.4,
+      "process_range_pct": "-61.2, -56.0, -60.6, -60.9",
+      "control_max_abs_pct": 5.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

@@ -73,6 +73,7 @@ const util_js_2 = require("./util.js");
 const crc32c_js_1 = require("./crc32c.js");
 const hash_stream_validator_js_1 = require("./hash-stream-validator.js");
 const async_retry_1 = __importDefault(require("vasync-retry"));
+const saveOperation = require("./save.js");
 var ActionToHTTPMethod;
 (function (ActionToHTTPMethod) {
     ActionToHTTPMethod["read"] = "GET";
@@ -3340,76 +3341,7 @@ class File extends index_js_1.ServiceObject {
      * ```
      */
     save(data, optionsOrCallback, callback) {
-        var _a;
-        callback =
-            typeof optionsOrCallback === 'function' ? optionsOrCallback : callback;
-        const options = typeof optionsOrCallback === 'object' ? optionsOrCallback : {};
-        const validationError = (0, util_js_2.handleContextValidation)((_a = options.metadata) === null || _a === void 0 ? void 0 : _a.contexts, callback);
-        if (validationError)
-            return validationError;
-        let maxRetries = this.storage.retryOptions.maxRetries;
-        if (!this.shouldRetryBasedOnPreconditionAndIdempotencyStrat(options === null || options === void 0 ? void 0 : options.preconditionOpts)) {
-            maxRetries = 0;
-        }
-        const returnValue = (0, async_retry_1.default)(async (bail) => {
-            return new Promise((resolve, reject) => {
-                if (maxRetries === 0) {
-                    this.storage.retryOptions.autoRetry = false;
-                }
-                const writable = this.createWriteStream(options);
-                if (options.onUploadProgress) {
-                    writable.on('progress', options.onUploadProgress);
-                }
-                const handleError = (err) => {
-                    if (this.storage.retryOptions.autoRetry &&
-                        this.storage.retryOptions.retryableErrorFn(err)) {
-                        return reject(err);
-                    }
-                    return bail(err);
-                };
-                if (typeof data === 'string' ||
-                    Buffer.isBuffer(data) ||
-                    data instanceof Uint8Array) {
-                    writable
-                        .on('error', handleError)
-                        .on('finish', () => resolve())
-                        .end(data);
-                }
-                else {
-                    (0, stream_1.pipeline)(data, writable, err => {
-                        if (err) {
-                            if (typeof data !== 'function') {
-                                // Only PipelineSourceFunction can be retried. Async-iterables
-                                // and Readable streams can only be consumed once.
-                                return bail(err);
-                            }
-                            handleError(err);
-                        }
-                        else {
-                            resolve();
-                        }
-                    });
-                }
-            });
-        }, {
-            retries: maxRetries,
-            factor: this.storage.retryOptions.retryDelayMultiplier,
-            maxTimeout: this.storage.retryOptions.maxRetryDelay * 1000, //convert to milliseconds
-            maxRetryTime: this.storage.retryOptions.totalTimeout * 1000, //convert to milliseconds
-        });
-        if (!callback) {
-            return returnValue;
-        }
-        return (async () => {
-            try {
-                await returnValue;
-            }
-            catch (err) {
-                callback(err);
-                return;
-            }
-            callback();
-        })();
+        return saveOperation.save(this, data, optionsOrCallback, callback);
     }
     setMetadata(metadata, optionsOrCallback, cb) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -3536,8 +3468,9 @@ class File extends index_js_1.ServiceObject {
     startResumableUpload_(dup, options = {}) {
         var _a;
         (_a = options.metadata) !== null && _a !== void 0 ? _a : (options.metadata = {});
-        const retryOptions = this.storage.retryOptions;
-        if (!this.shouldRetryBasedOnPreconditionAndIdempotencyStrat(options.preconditionOpts)) {
+        const scopedPolicy = options[saveOperation.uploadPolicy];
+        const retryOptions = scopedPolicy || this.storage.retryOptions;
+        if (!scopedPolicy && !this.shouldRetryBasedOnPreconditionAndIdempotencyStrat(options.preconditionOpts)) {
             retryOptions.autoRetry = false;
         }
         const cfg = {
@@ -3570,7 +3503,7 @@ class File extends index_js_1.ServiceObject {
         }
         catch (error) {
             dup.destroy(error);
-            this.storage.retryOptions.autoRetry = this.instanceRetryValue;
+            if (!scopedPolicy) this.storage.retryOptions.autoRetry = this.instanceRetryValue;
             return;
         }
         uploadStream
@@ -3589,7 +3522,7 @@ class File extends index_js_1.ServiceObject {
         })
             .on('progress', evt => dup.emit('progress', evt));
         dup.setWritable(uploadStream);
-        this.storage.retryOptions.autoRetry = this.instanceRetryValue;
+        if (!scopedPolicy) this.storage.retryOptions.autoRetry = this.instanceRetryValue;
     }
     /**
      * Takes a readable stream and pipes it to a remote file. Unlike

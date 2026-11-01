@@ -2,10 +2,12 @@
 const fs = require('node:fs'), path = require('node:path');
 const {verify} = require('./bench-process.cjs');
 const root = path.resolve(process.argv[2] ?? '.');
+const suite = process.argv[3] ?? 'results', driver = process.argv[4] ?? 'compare.cjs';
+if (!/^[\w-]+$/.test(suite) || !/^[\w-]+\.cjs$/.test(driver)) throw Error('Expected a benchmark directory name and driver filename');
 const name = JSON.parse(fs.readFileSync(path.join(root, 'package.json'))).name;
 const reports = ['node', 'bun'].map(runtime => {
   const file = `${runtime}-isolated.json`;
-  const report = JSON.parse(fs.readFileSync(path.join(root, 'bench/results', file)));
+  const report = JSON.parse(fs.readFileSync(path.join(root, 'bench', suite, file)));
   verify(report, root);
   return {file, report};
 });
@@ -38,12 +40,12 @@ for (const {file, report} of reports) {
   lines.push('');
 }
 lines.push('## Reproduce', '', 'Run these commands from the repository root after installing the pinned',
-  'fixtures used by `bench/compare.cjs`:', '', '```sh',
-  `OUTPUT=packages/${name}/bench/results/node-isolated.json node packages/${name}/bench/compare.cjs`,
-  `OUTPUT=packages/${name}/bench/results/bun-isolated.json bun packages/${name}/bench/compare.cjs`,
-  `node scripts/render-bench-report.cjs packages/${name}`, '```', '',
+  `fixtures used by bench/${driver}:`, '', '```sh',
+  `OUTPUT=packages/${name}/bench/${suite}/node-isolated.json node packages/${name}/bench/${driver}`,
+  `OUTPUT=packages/${name}/bench/${suite}/bun-isolated.json bun packages/${name}/bench/${driver}`,
+  `node scripts/render-bench-report.cjs packages/${name} ${suite} ${driver}`, '```', '',
   'The renderer verifies the source hashes and recording structure before writing',
   'this page. File hashes are SHA-256; directory hashes cover a sorted recursive',
   'name/hash manifest. Historical reports remain in repository history.', '');
-fs.writeFileSync(path.join(root, 'bench/results/README.md'), lines.join('\n'));
+fs.writeFileSync(path.join(root, 'bench', suite, 'README.md'), lines.join('\n'));
 console.log(`${name}: verified both runtime recordings and rendered the report`);

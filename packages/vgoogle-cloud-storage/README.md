@@ -1,8 +1,9 @@
 # vgoogle-cloud-storage
 
 **Implementation status:** endpoint selection, per-client emulator context,
-CRC32C, hash-stream validation and V2/V4 URL signing have independent VPM
-implementations. Bucket/file operations, transport and signed POST policies
+CRC32C, hash-stream validation, V2/V4 URL signing and File.save orchestration have
+independent VPM implementations. Remaining bucket/file operations, upload/download
+transport and signed POST policies
 retain upstream runtime code with focused changes. Rewriting those
 application-facing paths is still pending.
 [Provenance](PROVENANCE.json) records this boundary.
@@ -30,6 +31,20 @@ capable of signing. V2 remains the default signing version for compatibility;
 V4 signatures expire within seven days.
 
 ## Changes
+
+- `File.save` captures plain option records and Buffer/Uint8Array payloads before
+  asynchronous work. Mutating caller metadata or bytes cannot alter the captured
+  upload; each retry gets its own option record. This intentionally copies byte
+  payloads, adding allocation proportional to their size. Source factories remain
+  caller-owned and must produce a fresh stream on each retry.
+- Each save owns its retry configuration. A non-idempotent write cannot disable
+  retries on another write using the same Storage client. Invalid contexts settle
+  once without starting an upload; premature stream closure rejects instead of
+  leaving the operation pending. Promise/callback/progress APIs are preserved.
+  One-shot streams are not replayed, and uploads with retries disabled avoid
+  allocating a retry operation. The existing multipart/resumable transport and
+  direct `createWriteStream` API remain retained code; this rewrite does not claim
+  per-operation isolation for every SDK method.
 
 - Endpoint configuration belongs to each client. `apiEndpoint` overrides an ambient
   emulator for both metadata and uploads; the two routes cannot silently select
@@ -87,7 +102,8 @@ part of your application contract.
 ## Verified scope
 
 The broader published SDK implementation and public declarations are retained;
-endpoint configuration, CRC32C, hash streams and V2/V4 URL signing are independently implemented.
+endpoint configuration, CRC32C, hash streams, V2/V4 URL signing and File.save
+orchestration are independently implemented.
 Independent verification focuses on backend object uploads, signed URLs,
 listings, existence checks and deletion, plus local-file uploads and bucket
 creation. Retaining the broader API does not certify every SDK operation.
@@ -96,7 +112,7 @@ Checks on Node 24 and Bun cover:
 
 - 110 retained upstream signer, CRC32C and lazy-import tests, with documented
   fixture adaptations and original-upstream controls.
-- Twenty-one focused tests, five paired regression probes, ordinary V2/V4 URL parity,
+- Twenty-eight focused tests, five paired regression probes, ordinary V2/V4 URL parity,
   and independently verified RSA signatures for corrected canonical requests.
 - CRC32C controls compare 260 lengths, five chunkings, resumed seeds and real
   files against an independent bit-at-a-time oracle. Upstream controls reproduce
@@ -107,6 +123,10 @@ Checks on Node 24 and Bun cover:
 - Five signer groups reproduce original destination/provider mutation failures,
   check query getter and frozen-date handling, and verify app-used V2/V4 download
   URLs independently with RSA public keys.
+- Seven save groups cover original mutable-payload, shared-policy and duplicate-
+  callback failures, retries, factories, progress and premature closure. A paired
+  real HTTP control holds a non-idempotent upload open while another upload
+  receives 503: VPM preserves the conditional upload's retry; original code does not.
 - 25 real local HTTP requests per caller run: binary multipart and resumable
   uploads, download integrity, automatic/manual/streamed pagination, callbacks,
   cleanup, checksum failure deletion and transient retries.
@@ -124,29 +144,25 @@ have not been independently verified. [Fixtures and commands](../../scripts/stor
 
 ## Performance
 
-[Measurements and methodology](bench/results/README.md) compare the full client
-against Storage 8.4.0, including actual RSA signing and localhost transfers with
-checksum validation. Each worker loads only its selected implementation; four
-comparison pairs balance order and two additional pairs use identical upstream
-code. Both client runtimes talk to the same separate Node 24 server. Signing
-uses one retained public test key and the same start/expiry values across workers;
-CRC32C checks use a fixed known checksum. Warning thresholds are set equally to
-keep warning I/O outside timing. All comparisons, including costs and inconclusive
-results, remain in the report. They do not predict cloud request latency.
+[Current save measurements](bench/save-results/README.md) separate orchestration
+with an in-memory Writable from a real localhost multipart upload with CRC32C.
+Each implementation runs in its own process with balanced order and identical-
+source controls. Both client runtimes use the same separate Node 24 HTTP server.
+Synthetic cases isolate per-call allocation and stream completion overhead; they
+do not measure network throughput. The upload case includes the entire VPM
+client dependency stack and does not isolate this component's effect.
 
-The twenty workloads separate signer preparation without RSA and canonical
-headers/queries from actual signatures, checksums and HTTP transfers. Node V4
-preparation uses 48% less paired time (11.1 vs 21.0 µs). Other signer comparisons,
-including both real RSA paths on both runtimes, are inconclusive under the
-control-spread rule. This does not establish faster cloud signing.
+On this recording, real 64 KiB uploads use 44% less paired time on Node and 61%
+less on Bun than upstream. Synthetic 64 KiB save orchestration costs about
+5.60 µs versus 0.75 µs on Node, and 4.02 µs versus 0.77 µs on Bun: upstream does
+not copy the payload. Small-buffer overhead also rises (1.83 versus 0.82 µs on
+Node, 0.85 versus 0.73 µs on Bun); callback handling is slower on Node and faster
+on Bun. These costs are retained in the report alongside the upload results.
 
-Existing CRC32C and combined checksum-stream cases retain measured improvements;
-all samples and uncertain cases remain in the report. Custom endpoint construction
-costs 112% more paired time on Node (2.37 vs 1.12 µs) and 19% more on Bun
-(1.48 vs 1.20 µs). Bun metadata requests cost 57% more (176 vs 111 µs), while
-integrity-checked uploads use 50% less paired time (702 vs 1,060 µs). These are
-full-client comparisons incorporating earlier VPM components and existing
-validation; they do not isolate the new signer or predict cloud latency.
+[Earlier client measurements](bench/results/README.md) predate this save rewrite.
+Their source hashes and observed regressions remain as historical evidence;
+they are not a fresh measurement of the current SDK. None of these local results
+establishes cloud request latency or production throughput.
 
 ## Provenance
 

@@ -1,5 +1,10 @@
 # vgoogle-cloud-storage measurements
 
+Historical recording: these samples predate the independent File.save rewrite.
+Their retained hashes describe that earlier source tree. Current save orchestration
+and upload measurements are in [the focused save report](../save-results/README.md).
+Other workloads have not been re-recorded for this change.
+
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
 balanced upstream-first / VPM-first order; two further pairs run identical

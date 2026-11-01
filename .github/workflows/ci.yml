@@ -198,6 +198,7 @@ jobs:
           node scripts/storage-conformance/run.cjs
           node scripts/storage-conformance/run.cjs --upstream
           node scripts/storage-conformance/callers.cjs --upstream
+          node scripts/storage-conformance/save.cjs
           node scripts/storage-conformance/firebase.cjs --upstream
           node scripts/mime-conformance/regressions.cjs
           node scripts/mime-conformance/run.cjs --upstream
@@ -488,6 +489,7 @@ jobs:
           bun scripts/storage-conformance/run.cjs
           bun scripts/storage-conformance/run.cjs --upstream
           bun scripts/storage-conformance/callers.cjs --upstream
+          bun scripts/storage-conformance/save.cjs
           bun scripts/storage-conformance/firebase.cjs --upstream
           bun scripts/mime-conformance/regressions.cjs
           bun scripts/mime-conformance/run.cjs --upstream
