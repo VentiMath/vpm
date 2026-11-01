@@ -102,9 +102,21 @@ plugins, the default prefixer, and VentiMath's two configurations from its
 `RootThemeProvider` (its `wrapInLayer('mui')` plugin, after stylis-plugin-rtl
 for right-to-left). The original runs on stylis 4.4.0 (from the stylis
 fixture), the version vemotion-cache uses, and stylis-plugin-rtl on stylis
-4.4.0 beside it and on vstylis beside VPM. The CSS, inserted state and messages
-must be the same in production and development; the declarations whose
-prefixes VPM changes are left out (see below). There are no differences.
+4.4.0 beside it and on vstylis beside VPM. CSS, inserted state and distinct
+warning text match in production and development; the declarations whose
+prefixes VPM changes are left out (see below). VPM now isolates custom-plugin
+compilation and development diagnostics per cache. The runner reports warning
+repetitions separately: 1,478 of 10,000 development cases with no/default
+plugins and 1,516 with LTR/RTL plugins repeat diagnostics across caches;
+production has no warning differences. No CSS/state/distinct-text differences
+remain on Node 24 or Bun.
+
+The upstream Jest suite runs on Node 24. The retained Jest 29 runner fails to
+load VPM ES modules under Bun; it is not counted as Bun conformance coverage.
+Bun runs the focused package tests, generated cache/serialization comparisons,
+regression probes and ten MUI/React 19 caller renders. Seven cache tests include
+bounded compiled storage, reused names, custom-plugin request isolation and
+original-control browser probes for nested insertions and iframe hydration.
 
 `hook-order.cjs` (run by `regressions.cjs`) renders a styled component whose
 `theme` prop comes and goes, with React 16.14 and react-test-renderer, from a

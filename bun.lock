@@ -106,10 +106,8 @@
       "name": "vemotion-cache",
       "version": "0.1.0",
       "dependencies": {
-        "vemotion-memoize": "0.1.0",
         "vemotion-sheet": "0.1.0",
         "vemotion-utils": "0.1.0",
-        "vemotion-weak-memoize": "0.1.0",
         "vstylis": "0.1.0",
       },
     },

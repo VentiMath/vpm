@@ -7,7 +7,7 @@
 // mode, with no stylis plugins, with the default prefixer, and with
 // VentiMath's two cache configurations (src/contexts/RootThemeProvider.tsx: its
 // wrapInLayer('mui') plugin, after stylis-plugin-rtl 2.1.1 for right-to-left). The CSS, the
-// inserted and registered state and the messages logged must be identical in
+// inserted state and the distinct messages logged must be identical in
 // the production build and under the development condition, except where the
 // prefixer differs by design: those inputs are compared without it here, and
 // regressions.cjs covers them. The original runs on stylis 4.4.0 (from
@@ -65,7 +65,11 @@ function run(createCache, cases, plugins) {
           outputs.push(['throws', error.message]);
         }
       }
-      return JSON.stringify([outputs, [...logged]]);
+      // VPM isolates custom-plugin caches and development diagnostics between
+      // requests. Each request can therefore repeat a warning upstream's
+      // shared cache suppresses. Compare exact CSS/state and exact warning
+      // text, while retaining the separately reported repetition difference.
+      return {value: JSON.stringify([outputs, [...new Set(logged)].sort()]), warnings: logged.length};
     });
   } finally {
     console.error = original;
@@ -104,8 +108,8 @@ if (process.argv[2] === '--child') {
     ];
     for (const [label, plugins] of configurations) {
       const expected = run(upstream, generate(count), plugins(upstreamRtl)), actual = run(vpm, generate(count), plugins(vpmRtl));
-      const differences = expected.flatMap((value, index) => (value === actual[index] ? [] : [{index, expected: value.slice(0, 500), actual: actual[index].slice(0, 500)}]));
-      report[label] = {differences: differences.length, examples: differences.slice(0, 3)};
+      const differences = expected.flatMap(({value}, index) => (value === actual[index].value ? [] : [{index, expected: value.slice(0, 500), actual: actual[index].value.slice(0, 500)}]));
+      report[label] = {differences: differences.length, warningRepetitionsChanged: expected.filter((item, i) => item.warnings !== actual[i].warnings).length, examples: differences.slice(0, 3)};
     }
     process.stdout.write(JSON.stringify(report));
   })();
@@ -115,9 +119,9 @@ if (process.argv[2] === '--child') {
     const result = spawnSync(process.execPath, [...flags, __filename, '--child', String(count)], {encoding: 'utf8', timeout: 600000});
     assert.equal(result.status, 0, result.stderr);
     const report = JSON.parse(result.stdout);
-    for (const [label, {differences, examples}] of Object.entries(report)) {
+    for (const [label, {differences, warningRepetitionsChanged, examples}] of Object.entries(report)) {
       for (const example of examples) console.log(build, label, example);
-      console.log(`${build}, ${label}: ${count} generated styles (class and global, regular and compat mode), ${differences} differences from @emotion/cache 11.14.0.`);
+      console.log(`${build}, ${label}: ${count} generated styles (class and global, regular and compat mode), ${differences} CSS/state/distinct-warning differences from @emotion/cache 11.14.0; ${warningRepetitionsChanged} cases repeat diagnostics across isolated caches.`);
     }
     assert.ok(Object.values(report).every(({differences}) => differences === 0));
   }

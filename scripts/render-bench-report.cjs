@@ -10,7 +10,7 @@ const reports = ['node', 'bun'].map(runtime => {
   return {file, report};
 });
 const lines = [`# ${name} measurements`, '',
-  'These records supersede the earlier same-process comparison. Each timed',
+  'Each timed',
   'implementation runs alone in a fresh process. Four comparison pairs use',
   'balanced upstream-first / VPM-first order; two further pairs run identical',
   'upstream code in separate processes as controls. Warmup lasts at least 150 ms',

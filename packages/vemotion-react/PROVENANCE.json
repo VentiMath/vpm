@@ -8,9 +8,9 @@
     "tarballSha256": "56ab452022e865baa9fc02d12ad5a57b2c0d8884c5cc1b0bff5308a26d92b1f4",
     "integrity": "sha512-O000MLDBDdk/EohJPFUqvnp4qnHeYkVP5B0xEG0D/L7cOKP9kefu2DXn8dj74cQfsEzUqh+sr1RzFqiL1o+PpA=="
   },
-  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "source": "Source-informed plain-JavaScript port of upstream React integration. Global, css-prop insertion, cache context and theming closely follow upstream control flow; changed syntax and dependency names do not make these independent implementations. Existing attribution and conformance tests are retained.",
   "changes": [
-    "Written for VPM in plain JavaScript (React.createElement): the css prop element and createEmotionProps, jsx, the automatic runtimes, Global, ClassNames, css, keyframes, the cache context, ThemeProvider, useTheme and withTheme, with the original's behavior.",
+    "Plain-JavaScript port (React.createElement) of the css prop element, JSX runtimes, Global, ClassNames, css, keyframes, cache context and theming.",
     "On vemotion-cache, vemotion-serialize, vemotion-utils, vemotion-weak-memoize and vemotion-use-insertion-effect-with-fallbacks; hoist-non-react-statics (and react-is) is replaced by a small internal function (also the _isolated-hnrs entry).",
     "No macro entry, so no runtime dependency on @emotion/babel-plugin (with babel-plugin-macros, cosmiconfig and @babel/runtime); 5 direct dependencies instead of 8.",
     "Declarations on React's React.JSX namespace (@types/react 18.2.7 and later), checked with React 18.3 and 19 types.",
@@ -19,11 +19,17 @@
   ],
   "verification": {
     "fixture": "scripts/emotion-conformance",
-    "upstreamSuite": "The complete VPM Emotion stack is checked against the pinned upstream suite. React 16 development: 413 passing, two documented Babel-plugin differences, eight skipped (423 total). React 18 development: 416 passing, the same two differences, five skipped. Production: five passing and 418 skipped. See scripts/emotion-conformance/README.md for the configuration, adaptations and snapshot counts.",
+    "upstreamSuite": "Complete fixture: React 16 development 413 pass, 2 existing Babel-plugin differences, 8 skipped; React 18 development 416 pass, the same 2 differences, 5 skipped; production 5 pass and 418 skipped.",
     "declarations": "types.cjs compiles a TSX application (css prop through jsxImportSource, Global, ClassNames, theming, keyframes, and two expected errors) against the declarations with DOM and React 18.3 and 19 types under the configured TypeScript 7 compiler.",
     "runtimes": [
       "Node.js 24",
       "Bun"
     ]
+  },
+  "implementation": {
+    "kind": "upstream-derived port",
+    "replacementStatus": "independent application-facing rewrite pending",
+    "basis": "Manual source comparison finds closely retained control flow in Global, element insertion, context and theming. Functional fixes and dependency reductions remain valid but do not establish independent architecture.",
+    "targetScope": "VentiMath and MUI cache/theme providers, Global styles, css-prop rendering and ClassNames."
   }
 }
