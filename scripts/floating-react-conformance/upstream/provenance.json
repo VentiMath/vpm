@@ -1,0 +1,13 @@
+{
+  "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+  "directory": "packages/react/test/unit",
+  "sha256": {
+    "useMergeRefs.test.tsx.txt": "2147f3cb41018296f310746876eca9970d74cd1b46c4fcf0bb48a11db0c469be",
+    "useClick.test.tsx.txt": "193f38d4164318c54036897a111c379ea18fd8190119996696a45f2e15c9dc81",
+    "useRole.test.tsx.txt": "a0bce98eb44f527a00617c0b2cd2a111a4d1e4e08e53f6365c9284fafb95ad78",
+    "FloatingList.test.tsx.txt": "0faf54ca45704659bc4bbf46c3889bfaccbd4cbd87f5373a1cf2939666cf20a6",
+    "setupTests.ts.txt": "786bc4f32938796cde26c999e03902ef08d490f7ee01b1c498827d229fad4a4c",
+    "LICENSE": "46c97b198a78dc0befc1a823ba7bcdf993726a887d0215edcce575a61b947115",
+    "FloatingDelayGroup.test.tsx.txt": "eaafad1a511ecdcd5f6b9b7f8afdaf1f5093ab9e40f80af85e8ebddb2a9a5f8f"
+  }
+}

@@ -53,6 +53,10 @@ jobs:
       - run: node scripts/tabbable-conformance/run.cjs
       - run: node scripts/tabbable-conformance/archives.cjs
       - run: node scripts/tabbable-conformance/browser.cjs
+      - run: npm --prefix scripts/floating-react-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/floating-react-conformance/run.cjs
+      - run: node scripts/floating-react-conformance/archives.cjs
+      - run: node scripts/floating-react-conformance/browser.cjs
       - run: npm --prefix scripts/floating-react-dom-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-react-dom-conformance/run.cjs
       - run: node scripts/floating-react-dom-conformance/archives.cjs
@@ -346,6 +350,9 @@ jobs:
       - run: npm --prefix scripts/tabbable-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/tabbable-conformance/run.cjs
       - run: node scripts/tabbable-conformance/archives.cjs
+      - run: npm --prefix scripts/floating-react-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/floating-react-conformance/run.cjs
+      - run: node scripts/floating-react-conformance/archives.cjs
       - run: npm --prefix scripts/floating-react-dom-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/floating-react-dom-conformance/run.cjs
       - run: node scripts/floating-react-dom-conformance/archives.cjs

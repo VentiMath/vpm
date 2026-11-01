@@ -1,0 +1,316 @@
+import * as React from "react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, expect, test, vi } from "vitest";
+import {
+  useFloating,
+  useClick,
+  useHover,
+  useFocus,
+  useDismiss,
+  useRole,
+  useInteractions,
+  useMergeRefs,
+  FloatingPortal,
+  FloatingFocusManager,
+  FloatingList,
+  useListItem,
+  useListNavigation,
+  useTypeahead,
+} from "subject";
+afterEach(() => {
+  cleanup();
+  vi.useRealTimers();
+});
+const settle = () => act(async () => {});
+function Popover({ modal = false, initialFocus = 0 }) {
+  const [open, setOpen] = React.useState(false),
+    { context, refs } = useFloating({ open, onOpenChange: setOpen });
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useClick(context),
+    useDismiss(context),
+    useRole(context),
+  ]);
+  return (
+    <>
+      <button ref={refs.setReference} {...getReferenceProps()}>
+        Open
+      </button>
+      <button>After</button>
+      {open && (
+        <FloatingPortal>
+          <FloatingFocusManager
+            context={context}
+            modal={modal}
+            initialFocus={initialFocus}
+          >
+            <div ref={refs.setFloating} {...getFloatingProps()}>
+              <button>First</button>
+              <button>Last</button>
+            </div>
+          </FloatingFocusManager>
+        </FloatingPortal>
+      )}
+    </>
+  );
+}
+test("popover portal focuses content, Escape closes and restores trigger", async () => {
+  render(<Popover />);
+  screen.getByText("Open").focus();
+  fireEvent.click(screen.getByText("Open"));
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText("First"));
+  expect(screen.getByRole("dialog")).toBeInTheDocument();
+  fireEvent.keyDown(document.activeElement!, { key: "Escape" });
+  await settle();
+  expect(screen.queryByRole("dialog")).toBeNull();
+  expect(document.activeElement).toBe(screen.getByText("Open"));
+});
+test("outside pointer dismiss does not steal focus from its destination", async () => {
+  render(<Popover />);
+  fireEvent.click(screen.getByText("Open"));
+  await settle();
+  const after = screen.getByText("After");
+  await userEvent.click(after);
+  await settle();
+  expect(screen.queryByRole("dialog")).toBeNull();
+  expect(document.activeElement).toBe(after);
+});
+test("modal Tab wraps and restores previous outside accessibility attributes", async () => {
+  const outside = document.createElement("button");
+  outside.setAttribute("aria-hidden", "false");
+  document.body.append(outside);
+  try {
+    render(<Popover modal />);
+    fireEvent.click(screen.getByText("Open"));
+    await settle();
+    expect(outside.getAttribute("aria-hidden")).toBe("true");
+    screen.getByText("Last").focus();
+    await userEvent.tab();
+    expect(document.activeElement).toBe(screen.getByText("First"));
+    await userEvent.tab({ shift: true });
+    expect(document.activeElement).toBe(screen.getByText("Last"));
+    cleanup();
+    await settle();
+    expect(outside.getAttribute("aria-hidden")).toBe(
+      process.env.VPM_ORIGINAL === "1" ? null : "false",
+    );
+    expect(outside.hasAttribute("inert")).toBe(false);
+  } finally {
+    outside.remove();
+  }
+});
+const MenuContext = React.createContext<any>(null);
+function Item({ label, disabled = false }) {
+  const { active, getItemProps } = React.useContext(MenuContext),
+    { ref, index } = useListItem({ label: disabled ? null : label });
+  return (
+    <button
+      ref={ref}
+      role="menuitem"
+      disabled={disabled}
+      tabIndex={index === active ? 0 : -1}
+      {...getItemProps()}
+    >
+      {label}
+    </button>
+  );
+}
+function Menu() {
+  const [open, setOpen] = React.useState(false),
+    [active, setActive] = React.useState<number | null>(null),
+    list = React.useRef([]),
+    labels = React.useRef([]),
+    { context, refs } = useFloating({ open, onOpenChange: setOpen });
+  const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
+    [
+      useClick(context, { event: "mousedown" }),
+      useDismiss(context, { outsidePressEvent: "mousedown" }),
+      useRole(context, { role: "menu" }),
+      useListNavigation(context, {
+        listRef: list,
+        activeIndex: active,
+        onNavigate: setActive,
+        loop: true,
+      }),
+      useTypeahead(context, {
+        listRef: labels,
+        activeIndex: active,
+        onMatch: setActive,
+      }),
+    ],
+  );
+  return (
+    <>
+      <button ref={refs.setReference} {...getReferenceProps()}>
+        Menu
+      </button>
+      {open && (
+        <FloatingPortal>
+          <FloatingFocusManager context={context} modal={false}>
+            <div ref={refs.setFloating} {...getFloatingProps()}>
+              <MenuContext.Provider value={{ active, getItemProps }}>
+                <FloatingList elementsRef={list} labelsRef={labels}>
+                  <Item label="Alpha" />
+                  <Item label="Blocked" disabled />
+                  <Item label="Beta" />
+                  <Item label="Bravo" />
+                </FloatingList>
+              </MenuContext.Provider>
+            </div>
+          </FloatingFocusManager>
+        </FloatingPortal>
+      )}
+    </>
+  );
+}
+test("app-shaped menu navigates, skips disabled items, wraps and typeaheads", async () => {
+  render(<Menu />);
+  fireEvent.mouseDown(screen.getByText("Menu"), { button: 0 });
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText("Alpha"));
+  fireEvent.keyDown(document.activeElement!, { key: "ArrowDown" });
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText("Beta"));
+  fireEvent.keyDown(document.activeElement!, { key: "End" });
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText("Bravo"));
+  fireEvent.keyDown(document.activeElement!, { key: "ArrowDown" });
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText("Alpha"));
+  fireEvent.keyDown(document.activeElement!, { key: "b" });
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText("Beta"));
+  fireEvent.keyDown(document.activeElement!, { key: "b" });
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText("Bravo"));
+});
+function Tooltip({ enabled = true }) {
+  const [open, setOpen] = React.useState(false),
+    { context, refs } = useFloating({ open, onOpenChange: setOpen });
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    useHover(context, {
+      enabled,
+      mouseOnly: true,
+      move: false,
+      restMs: 40,
+      delay: { close: 20 },
+    }),
+    useFocus(context),
+    useDismiss(context),
+    useRole(context, { role: "tooltip" }),
+  ]);
+  return (
+    <>
+      <button ref={refs.setReference} {...getReferenceProps()}>
+        Hint
+      </button>
+      {open && (
+        <div ref={refs.setFloating} {...getFloatingProps()}>
+          Help
+        </div>
+      )}
+    </>
+  );
+}
+test("tooltip rest and close delays, Escape and re-entry", async () => {
+  vi.useFakeTimers();
+  render(<Tooltip />);
+  const ref = screen.getByText("Hint");
+  fireEvent.mouseEnter(ref);
+  fireEvent.mouseMove(ref);
+  await act(async () => vi.advanceTimersByTime(39));
+  expect(screen.queryByRole("tooltip")).toBeNull();
+  await act(async () => vi.advanceTimersByTime(1));
+  expect(ref.getAttribute("aria-describedby")).toBe(
+    screen.getByRole("tooltip").id,
+  );
+  fireEvent.keyDown(ref, { key: "Escape" });
+  await settle();
+  fireEvent.mouseMove(ref);
+  await act(async () => vi.advanceTimersByTime(80));
+  expect(screen.queryByRole("tooltip")).toBeNull();
+  fireEvent.mouseLeave(ref);
+  fireEvent.mouseEnter(ref);
+  fireEvent.mouseMove(ref);
+  await act(async () => vi.advanceTimersByTime(40));
+  expect(screen.getByRole("tooltip")).toBeInTheDocument();
+  fireEvent.mouseLeave(ref);
+  await act(async () => vi.advanceTimersByTime(20));
+  expect(screen.queryByRole("tooltip")).toBeNull();
+});
+test("disabling hover cancels pending open", async () => {
+  vi.useFakeTimers();
+  const mounted = render(<Tooltip />);
+  fireEvent.mouseEnter(screen.getByText("Hint"));
+  mounted.rerender(<Tooltip enabled={false} />);
+  await act(async () => vi.advanceTimersByTime(100));
+  expect(screen.queryByRole("tooltip")).toBeNull();
+});
+test("composed props run internal and user handlers and strip item state", () => {
+  let api: any;
+  function App() {
+    api = useInteractions([
+      {
+        reference: { onClick: () => calls.push("internal") },
+        item: ({ active }) => ({ "aria-current": active }),
+      },
+    ]);
+    return null;
+  }
+  const calls = [];
+  render(<App />);
+  api.getReferenceProps({ onClick: () => calls.push("user") }).onClick({});
+  expect(calls).toEqual(["internal", "user"]);
+  const item = api.getItemProps({ active: true, selected: true, title: "x" });
+  expect(item["aria-current"]).toBe(true);
+  expect(item.active).toBeUndefined();
+  expect(item.selected).toBeUndefined();
+});
+test("React 19 merged ref cleanup and callback identity survive rerenders", () => {
+  const releases = [],
+    a = () => () => releases.push("a"),
+    b = { current: null };
+  let merged: any;
+  function App() {
+    merged = useMergeRefs([a, b]);
+    return null;
+  }
+  const mounted = render(<App />),
+    old = merged;
+  mounted.rerender(<App />);
+  expect(merged).toBe(old);
+  const node = document.createElement("div"),
+    release = merged(node) || (() => merged(null));
+  expect(b.current).toBe(node);
+  release();
+  expect(releases).toEqual(["a"]);
+  expect(b.current).toBe(null);
+});
+test("merged ref cleanup releases remaining refs even after a callback throws", () => {
+  const calls = [],
+    error = new Error("cleanup");
+  let merged: any;
+  function App() {
+    merged = useMergeRefs([
+      () => () => {
+        calls.push("first");
+        throw error;
+      },
+      () => () => calls.push("second"),
+    ]);
+    return null;
+  }
+  render(<App />);
+  const release = merged(document.createElement("div")) || (() => merged(null));
+  expect(() => release()).toThrow(error);
+  expect(calls).toEqual(
+    process.env.VPM_ORIGINAL === "1" ? ["first"] : ["first", "second"],
+  );
+});

@@ -222,6 +222,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
 | [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
+| [vfloating-ui-react](packages/vfloating-ui-react) | @floating-ui/react 0.27.20 | Independent app-used popover, menu and tooltip interactions on VPM positioning/tabbable; complete ref cleanup and restoration of existing accessibility attributes. Explicit public subset. |
 | [vfloating-ui-react-dom](packages/vfloating-ui-react-dom) | @floating-ui/react-dom 2.1.9 | Independent React 19 positioning hook; stale-measurement protection, retained-element reopening and cycle-safe middleware comparison. |
 | [vfloating-ui-dom](packages/vfloating-ui-dom) | @floating-ui/dom 1.8.0 | Independent browser geometry and lifecycle updates; owned subscriptions, complete cleanup, inherited platform overrides and real-browser conformance. |
 | [vfloating-ui-core](packages/vfloating-ui-core) | @floating-ui/core 1.8.0 | Independent positioning and all middleware on VPM utils; stable async execution plans, inherited platform support, safe data keys and bounded inline geometry, verified with actual DOM callers. |
@@ -354,11 +355,11 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 111 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **127 packages**, including two declaration-only packages and
-fourteen browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
+compiler in NodeNext and bundler resolution modes. The catalog covers **128 packages**, including two declaration-only packages and
+fifteen browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom` and `vtabbable`, whose declarations are checked with DOM
+`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react` and `vtabbable`, whose declarations are checked with DOM
 (and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
@@ -687,6 +688,21 @@ TypeScript 7 declarations pass. [API and scope](packages/vtabbable/README.md).
 they do not establish CSS resolution, browser layout or application latency improvements.
 The 120-radio model takes 84%/88% less paired time on Node/Bun; small four-control
 forms remain inconclusive. All comparisons are retained.
+
+## vfloating-ui-react
+
+Targets **@floating-ui/react 0.27.20** with independent React 19 popover, dropdown
+and tooltip interactions on VPM positioning and tabbable. Merged refs finish all
+cleanup callbacks even after an error, and modal cleanup restores existing
+`aria-hidden` values. Two original-package controls reproduce those faults.
+
+Both runtimes pass 37 unchanged upstream tests plus nine app-shaped scenarios.
+Chrome exercises ten mounted focus/ARIA/menu checks; packed npm/Bun installs,
+CJS/ESM, SSR, browser bundling and TypeScript 7 consumers pass. This is the app-used
+subset, with advanced tree, polygon, transition and virtual/grid APIs omitted.
+[Scope and evidence](packages/vfloating-ui-react/README.md) and
+[isolated CPU measurements](packages/vfloating-ui-react/bench/results/README.md)
+state the limits; these results do not establish browser frame-rate gains.
 
 ## vfloating-ui-react-dom
 

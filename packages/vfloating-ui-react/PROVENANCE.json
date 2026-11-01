@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "@floating-ui/react",
+    "version": "0.27.20",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "directory": "packages/react",
+    "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+    "integrity": "sha512-CMqMy7OaXl9W0eq1Uy7L7i2Y/anPvHmFmESd2CEw0t5YvZhcVCeo4MBevAmswRllX7Y2dEidA4ozGPunLSTQpw=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent source-informed runtime and subset declarations; no upstream runtime copied. Original tests and MIT license retain attribution. Not a clean-room claim.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "React 19 Tiptap popover, dropdown menu and tooltip APIs used by VentiMath. Not the entire upstream public surface."
+  },
+  "changes": [
+    "Merged-ref cleanup releases all refs despite a throwing cleanup and rethrows the first error.",
+    "Modal cleanup preserves existing aria-hidden values, including false.",
+    "Owned hover timers and cancellable focus work; VPM positioning and tabbable foundations."
+  ],
+  "verification": {
+    "runtime": "37 unchanged original tests plus nine focused integration/control scenarios on Node 24 and Bun.",
+    "browser": "Ten mounted Chrome checks for focus, ARIA, Escape, modal guards, menu navigation/typeahead and portal teardown.",
+    "types": "Packed npm/Bun installs, CJS/ESM identity, SSR, browser bundle and app-shaped TypeScript 7 NodeNext/bundler consumers.",
+    "limits": "No FloatingTree, safePolygon, transition, composite, virtual/grid navigation, editable-combobox typeahead or utils subpath. No React 16\u201318, Safari/Firefox, screen-reader or nested cross-shadow/iframe modal certification."
+  }
+}
