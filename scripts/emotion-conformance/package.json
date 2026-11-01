@@ -30,6 +30,8 @@
     "@emotion/use-insertion-effect-with-fallbacks": "1.2.0",
     "@emotion/utils": "1.4.2",
     "@emotion/weak-memoize": "0.4.0",
+    "@mui/styled-engine": "7.3.9",
+    "@mui/system": "7.2.0",
     "@testing-library/react": "13.0.0-alpha.5",
     "@types/react": "18.3.12",
     "babel-check-duplicated-nodes": "1.0.0",
@@ -54,6 +56,8 @@
     "react18": "npm:react@18.0.0-rc.0-next-aa8f2bdbc-20211215",
     "react18-dom": "npm:react-dom@18.0.0-rc.0-next-aa8f2bdbc-20211215",
     "react18-test-renderer": "npm:react-test-renderer@18.0.0-rc.0-next-aa8f2bdbc-20211215",
+    "react19": "npm:react@19.1.0",
+    "react19-dom": "npm:react-dom@19.1.0",
     "stylis": "4.2.0",
     "stylis-plugin-rtl": "2.1.1",
     "types-react-19": "npm:@types/react@19.2.14"

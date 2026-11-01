@@ -33,7 +33,7 @@ const sourceOnly = ['packages/react/__tests__/get-label-from-stack-trace.js'];
 // through the plugin in css.js, global.js, styled.js and vanilla-emotion.js.
 const macroOnly = ['css-macro', 'global-macro', 'styled-macro', 'vanilla-emotion-macro'].map(name => `packages/babel-plugin/__tests__/${name}/index.js`);
 
-const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'emotion-conformance-'));
+const temporary = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'emotion-conformance-')));
 try {
   (function copy(from, to) {
     for (const entry of fs.readdirSync(from, {withFileTypes: true})) {

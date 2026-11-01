@@ -1,0 +1,1611 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-01T09:11:18.846Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/emotion-conformance/consumer-tree.cjs": "a899cf30e83819705a572b15971f78255ae6f9836e51b18f124afef34932ba05",
+    "../../scripts/emotion-conformance/node_modules/@emotion": "341cc0004128d129a02fbb4113d74b2567df145f9a554974a3a34371e872c4c9",
+    "../../scripts/emotion-conformance/node_modules/react19": "b8be677a125f362347fb2b1f35507e0b5c1ab6f994d766dec3ae9b1a9b445483",
+    "../../scripts/emotion-conformance/node_modules/react19-dom": "01bbb25f7a4538e679ccd3f3d897aa2d41cf172c44b449f0b95363954ba4019d",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-babel-plugin/src/": "31538914c8f6834d1c48e1eda455f8655afa6b7e7aaf597c044a311bac473b74",
+    "../vemotion-cache/index.js": "971b86d32186e4d0910d7b3456996b39fa5f899dff7dc0008a579f2d0bc5cfa5",
+    "../vemotion-cache/src/": "12a697dc0aa071d96d90f50f525d326a12e6d56a64cba13504859d618dd93261",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-react/src/": "fa65466845ef9054ce522fafd9f1dcf6287592616b03e60b1c0bb94c90e8b3b1",
+    "../vemotion-react/types/": "bc1492c4c8952649f5e22c81cfc7691182a040b6ad39eaa95a2522bd073fcebe",
+    "../vemotion-serialize/index.js": "c0f0aedff3b921627f5b9ec2159ad491a2ada45060f4dcf8d8ce5a27030e65b4",
+    "../vemotion-serialize/src/": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-sheet/src/": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-styled/src/": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-use-insertion-effect-with-fallbacks/src/": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-utils/src/": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vstylis/index.js": "6e664cd39072108940d31e3d05b857bff8346e3b68215a7fc6b84331010e23fe",
+    "../vstylis/src/": "987d6d2032baef8529255824c6c7110349ecff70018142a377880e8c373d561e",
+    "base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "bench/compare.cjs": "2cba849ac85cdf3457ad04020aa9a8bfcf8f7b65fe2c1b4e2010916347bb2af0",
+    "index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "package.json": "d7b586fda599f30372a461d179282a23a4da4d9ac8e2e32a36830f8be3631d0e",
+    "src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 54337,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 81846,
+            "samples": [
+              103.00696429880485,
+              104.08369376634198,
+              104.39626860200876,
+              100.19274002394683,
+              101.82690662952409,
+              104.7709600957897,
+              112.20462820418813,
+              103.63518070522684,
+              103.5099455074165,
+              113.20345526965254,
+              106.90045939935962,
+              107.2222100041542
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 80461,
+            "samples": [
+              138.87991697841267,
+              140.11238985346975,
+              133.1245323821475,
+              136.0866382471008,
+              153.30925541566734,
+              132.9013435080357,
+              131.53837262773266,
+              126.80574439790652,
+              123.88092367730938,
+              128.35204633300685,
+              128.0677346789136,
+              124.00106884080519
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 6168,
+            "samples": [
+              1923.9218547341154,
+              1897.2924773022028,
+              1831.2459468223062,
+              1910.5599870298408,
+              1890.7600518806687,
+              1975.4714656290532,
+              1861.4758430609597,
+              1984.0304798962313,
+              2046.2939364461888,
+              2161.88391699091,
+              2199.261024643312,
+              2211.7853437094864
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 5156,
+            "samples": [
+              1725.3927463149696,
+              1853.3343677268974,
+              1767.374709076798,
+              1784.7329325057997,
+              2001.341543832395,
+              1724.0835919317246,
+              1771.8192397207317,
+              1871.678626842546,
+              1857.2133436772428,
+              1816.5568269976543,
+              1896.2858805275591,
+              1894.6293638479333
+            ]
+          }
+        ],
+        "checksum": 1019872
+      },
+      "vpm": {
+        "pid": 54340,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 81846,
+            "samples": [
+              93.41527991593972,
+              93.17244581286795,
+              94.99954793148093,
+              93.86021308310703,
+              89.60018815824839,
+              92.05245216626369,
+              93.01361092784025,
+              96.66425970725518,
+              94.29548175842456,
+              94.28480316692331,
+              90.02069740732615,
+              94.18450504606191
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 80461,
+            "samples": [
+              110.85236325673358,
+              117.22812294154883,
+              112.93099762617928,
+              110.6317470575815,
+              114.67409055318784,
+              118.96809634481237,
+              113.34736083319885,
+              112.38674637401915,
+              118.5874771628486,
+              114.48766483140834,
+              115.28877344303456,
+              110.52093560855512
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 6168,
+            "samples": [
+              1900.1433203631716,
+              2016.4559014267186,
+              2001.8510051880594,
+              2033.0807392996064,
+              1922.1587224383866,
+              1994.7511348897553,
+              1971.0400453955904,
+              2027.750648508428,
+              1877.6413748378852,
+              1990.0629053177743,
+              1926.5429636835313,
+              2036.5191309986985
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 5156,
+            "samples": [
+              1900.2053917765497,
+              1940.7971295577988,
+              1946.7447633824904,
+              1806.3987587276806,
+              1790.1311093871225,
+              1975.425135764137,
+              1761.0065942590918,
+              1879.3475562451588,
+              1927.0025213343818,
+              1878.8223429014408,
+              1686.0372381691063,
+              1857.4315360744945
+            ]
+          }
+        ],
+        "checksum": 204832
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 54341,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 79175,
+            "samples": [
+              99.06483107041362,
+              97.4313230186292,
+              93.57068519103316,
+              92.65761919797974,
+              95.46994632143975,
+              95.06473002841797,
+              96.8308556994001,
+              96.63508683296459,
+              95.22840543100746,
+              94.7405494158509,
+              96.01251657720229,
+              97.43237132933429
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 77910,
+            "samples": [
+              114.67450904890296,
+              115.19541778975739,
+              119.21983057373869,
+              111.98498267231385,
+              111.4507123604161,
+              111.72185855474268,
+              118.78235143113815,
+              119.91400333718357,
+              118.71550506995167,
+              120.6183416762933,
+              123.94856886150694,
+              120.26965729688159
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 5797,
+            "samples": [
+              1972.4498878730426,
+              1994.4728307745388,
+              1956.32792823874,
+              2016.6322235639166,
+              2003.076246334319,
+              1908.774711057439,
+              1966.7212351216099,
+              1997.3046403312144,
+              1966.3258582025314,
+              1995.0548559599808,
+              2012.348456097976,
+              2019.1980334655836
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 5835,
+            "samples": [
+              1740.895458440472,
+              1875.9782347900762,
+              1944.6443873179057,
+              1875.0428449014578,
+              1869.530077120811,
+              1802.4207369323185,
+              1823.5432733505015,
+              1916.5024850042564,
+              1859.9614395886567,
+              1915.1456726649408,
+              1861.9965724078763,
+              1774.1787489288852
+            ]
+          }
+        ],
+        "checksum": 1095328
+      },
+      "upstream": {
+        "pid": 54342,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 79175,
+            "samples": [
+              100.39575623618538,
+              102.12556994000593,
+              106.82875907799183,
+              105.05052099778933,
+              102.55498579096962,
+              99.92527944426908,
+              105.3099715819388,
+              108.93590148405431,
+              98.20492579728446,
+              105.8130723081787,
+              109.25323650142093,
+              118.27070413640662
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 77910,
+            "samples": [
+              134.0232319342826,
+              130.98553459119574,
+              131.0566679501996,
+              136.90101399050246,
+              131.3016044153505,
+              130.75395969708666,
+              138.04604030291253,
+              130.43522012578572,
+              138.61346425362666,
+              139.62531125657773,
+              140.31146194326723,
+              145.13006032601618
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 5797,
+            "samples": [
+              2077.453855442471,
+              2074.8663101604116,
+              2050.909953424191,
+              1980.852164912877,
+              1965.38433672589,
+              1995.7521131619867,
+              1958.1319648093945,
+              2010.9970674486938,
+              2145.8728652751383,
+              1933.5575297567752,
+              1950.1826806969302,
+              1995.6801794031312
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 5835,
+            "samples": [
+              1896.4724935732474,
+              1918.4591259640104,
+              1906.069751499561,
+              1889.22450728364,
+              1907.5693230505794,
+              1966.4952870608458,
+              1899.2930591259956,
+              1907.3907455012911,
+              1967.3449871465334,
+              1901.3352185090166,
+              1958.6831191088386,
+              1993.5304198800538
+            ]
+          }
+        ],
+        "checksum": 198432
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 54343,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 126002,
+            "samples": [
+              101.54965000555542,
+              102.42430278884457,
+              102.33535181981271,
+              103.93188203361838,
+              107.85079601911059,
+              106.6884493896925,
+              111.39075570229049,
+              105.76915445786548,
+              103.18189393819148,
+              107.14479135251807,
+              103.06979254297569,
+              105.28536848621448
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 76366,
+            "samples": [
+              132.48424691616714,
+              129.74742686535842,
+              128.14658355812733,
+              133.36268758348015,
+              130.60403844642886,
+              132.49078123772375,
+              128.68838226435955,
+              131.66309614226347,
+              132.7144933609208,
+              130.68751800539553,
+              130.09225309692772,
+              126.16599010030573
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 3922,
+            "samples": [
+              2058.771035186115,
+              1981.1216216216144,
+              2139.9691483936813,
+              1913.6070882203032,
+              2028.6101478837186,
+              1952.2034676185478,
+              2102.424273329943,
+              2007.7129015808162,
+              2036.2378888322326,
+              2130.067567567585,
+              2133.6371749107507,
+              2188.392401835813
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 3402,
+            "samples": [
+              1778.3045267489786,
+              1683.7278071722396,
+              1810.9688418577434,
+              1722.8221634332413,
+              1809.401528512599,
+              1886.35361552028,
+              1837.5708406819704,
+              1877.3395061728718,
+              1859.9473838918607,
+              1908.3012933568407,
+              1578.4588477366217,
+              1678.6816578483206
+            ]
+          }
+        ],
+        "checksum": 961248
+      },
+      "vpm": {
+        "pid": 54344,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 126002,
+            "samples": [
+              93.34772463929144,
+              91.69563181536799,
+              96.7891382676466,
+              88.50521420294922,
+              92.24555959429183,
+              95.5189838256538,
+              89.39639846986539,
+              89.54189616037812,
+              94.0252932493135,
+              96.35793082649498,
+              94.51602355518149,
+              99.31489182711374
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 76366,
+            "samples": [
+              114.01779587774679,
+              111.71639211167293,
+              113.9681402718477,
+              115.61700233088015,
+              112.69466778409247,
+              112.8272529659799,
+              110.7375402666096,
+              128.54432600895692,
+              119.30157399889876,
+              113.88576067883615,
+              113.14262891862771,
+              112.31002016604305
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 3922,
+            "samples": [
+              2095.2638959714427,
+              2096.103263640996,
+              2017.794747577753,
+              2093.35160632332,
+              2075.907445181028,
+              2172.775369709325,
+              2061.618052014294,
+              2250.456909739949,
+              2054.0221825599224,
+              2275.199898011236,
+              2107.5451300357045,
+              2243.1264660887355
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 3402,
+            "samples": [
+              1723.299823633154,
+              1771.7519106408422,
+              1682.9805996472696,
+              1820.1549088771094,
+              1773.7360376249057,
+              1576.609347442668,
+              1797.4232804233395,
+              1693.5258671369243,
+              1930.8251028806599,
+              1747.5382128159795,
+              1746.778659612028,
+              1870.5052910052677
+            ]
+          }
+        ],
+        "checksum": 232352
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 54345,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 113506,
+            "samples": [
+              100.43411802019284,
+              106.38644653146069,
+              100.76083202650082,
+              103.24049829964927,
+              100.24285940831341,
+              100.8026712244287,
+              99.23998731344615,
+              99.13499726886667,
+              103.45671594453196,
+              95.1179585220162,
+              97.14171057036621,
+              100.92528148291719
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 112633,
+            "samples": [
+              123.78218639297538,
+              132.6583594506046,
+              135.18240657711328,
+              128.92535935294282,
+              118.09668569602202,
+              116.41237470368412,
+              120.71173634725095,
+              123.5210107162202,
+              115.77867942787695,
+              119.83610487157458,
+              119.44731117878423,
+              121.46307032574813
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 6385,
+            "samples": [
+              2204.3135473766743,
+              2178.145497259186,
+              2149.00156617069,
+              2133.424588880161,
+              2228.321534847321,
+              2123.2184808144034,
+              2234.6187940485574,
+              2297.239624119044,
+              1883.9533281127472,
+              1910.0888018794062,
+              1942.8411902897747,
+              1900.8743931088604
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 5346,
+            "samples": [
+              1933.922558922581,
+              1875.4365881032277,
+              1866.3329592218383,
+              1833.489150766926,
+              1969.3462401795819,
+              1928.4590347923615,
+              1844.7203516647637,
+              1926.8767302656306,
+              2006.0091657313803,
+              1932.3636363636388,
+              1956.0652824541535,
+              1992.7048260381632
+            ]
+          }
+        ],
+        "checksum": 867552
+      },
+      "upstream": {
+        "pid": 54346,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 113506,
+            "samples": [
+              103.21774179338566,
+              99.74399591211056,
+              106.20143428541239,
+              102.1249273166176,
+              103.67917114513783,
+              107.66427325427703,
+              102.29451306538861,
+              200.20344298979833,
+              486.97609817983164,
+              359.90315049424726,
+              620.2678713019574,
+              971.3197980723487
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 112633,
+            "samples": [
+              388.10006836362294,
+              171.07257198156844,
+              231.95910612342766,
+              263.28873420755883,
+              228.0463274528774,
+              234.4949970257385,
+              180.58983601608762,
+              192.68220681327918,
+              200.87400672982272,
+              173.055774062663,
+              170.4325908037607,
+              177.03033746770538
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 6385,
+            "samples": [
+              2123.714487079098,
+              2171.5414252153414,
+              2180.1487862176814,
+              2121.463116679729,
+              2091.81018010962,
+              2338.4103367267016,
+              2205.1617854346177,
+              2128.706656225555,
+              2086.707126076741,
+              2029.9334377446844,
+              2116.3273296789503,
+              2131.2972592012734
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 5346,
+            "samples": [
+              1803.8331462776284,
+              1886.301346801343,
+              1845.6399176954585,
+              1844.3851477740425,
+              1844.5022446689193,
+              1878.16442199771,
+              1803.8565282454597,
+              1910.260007482237,
+              1886.2543958099598,
+              1902.2087542088016,
+              1921.7716049382855,
+              1791.3703703703575
+            ]
+          }
+        ],
+        "checksum": 169888
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 54349,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 115807,
+            "samples": [
+              108.63117082732458,
+              105.16024074537808,
+              105.54450076420274,
+              108.15048313141699,
+              111.6815045722628,
+              105.14584610602124,
+              103.58470558774515,
+              103.9865897570958,
+              103.16877218130188,
+              103.99378275924592,
+              104.94436433030788,
+              103.34184462079112
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 86699,
+            "samples": [
+              126.98627435149218,
+              135.42062768890142,
+              130.00005767079128,
+              124.71260337489467,
+              137.55348965962693,
+              125.29267926965716,
+              129.05088870690543,
+              131.12463811578004,
+              131.0054441227691,
+              130.5801335655551,
+              133.55017935616323,
+              140.50527687747334
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 6252,
+            "samples": [
+              1894.9069097888812,
+              1942.3718809980717,
+              1933.201375559817,
+              1909.5089571337235,
+              1921.2719129878462,
+              1990.1098848368588,
+              1890.6815419065977,
+              1968.5100767754384,
+              1985.1714651311586,
+              1976.5807741522676,
+              2007.6841010876751,
+              1892.3744401791314
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 2328,
+            "samples": [
+              1853.1645189003425,
+              1875.9484536082987,
+              1922.5730240550092,
+              1773.8402061855702,
+              1791.6847079037557,
+              1865.4604810996211,
+              1948.0416666666088,
+              1846.0588487972188,
+              1771.71005154645,
+              1834.210051546388,
+              1989.6013745705036,
+              1973.4213917526101
+            ]
+          }
+        ],
+        "checksum": 1025952
+      },
+      "vpm": {
+        "pid": 54350,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 115807,
+            "samples": [
+              97.66896647007556,
+              102.73666531384119,
+              103.35227576916746,
+              105.04725966478716,
+              109.19425423333614,
+              102.78128265130759,
+              103.32169039868101,
+              103.76388301225334,
+              112.32733772569864,
+              106.40296355142598,
+              104.82850777586863,
+              100.12204789002433
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 86699,
+            "samples": [
+              130.79639903574454,
+              124.99038051188607,
+              206.2072111558384,
+              158.0785245504559,
+              165.37484861417005,
+              160.1715014014002,
+              154.38135387951468,
+              142.2224247107814,
+              137.18151305090043,
+              145.91816514608078,
+              129.8183946758327,
+              137.8625012975928
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 6252,
+            "samples": [
+              2069.8376519513868,
+              2017.1279590530858,
+              1988.2570377479317,
+              2074.6428342929976,
+              2007.4041906589914,
+              2021.10652591172,
+              2043.4928023032528,
+              2762.1361164427353,
+              2670.0922904670433,
+              2097.8087012155925,
+              1984.7381637876097,
+              2056.7683941139053
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 2328,
+            "samples": [
+              1851.75042955322,
+              1828.4471649484472,
+              1866.0506872852607,
+              1792.2573024054443,
+              1566.2946735395294,
+              1722.275773195874,
+              1748.1207044672938,
+              1691.5090206185375,
+              1932.3990549827952,
+              1772.4621993127787,
+              1670.7298109965584,
+              1786.7981099656427
+            ]
+          }
+        ],
+        "checksum": 245408
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 54380,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 121814,
+            "samples": [
+              106.61986306992638,
+              103.2732280361864,
+              107.87519496937966,
+              108.82164611621019,
+              104.48066724678624,
+              109.77357282414177,
+              107.24308371779895,
+              105.16682811499493,
+              142.75452739422397,
+              124.3158996502865,
+              108.27060108033557,
+              112.36017206560791
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 76629,
+            "samples": [
+              133.4204413472709,
+              131.94960132586914,
+              136.0048676088688,
+              133.91362277988736,
+              128.9938013023795,
+              133.46012606193426,
+              132.8505918124991,
+              126.98250009787436,
+              132.28782836785123,
+              136.56927533962423,
+              129.69524592517288,
+              134.70693862636838
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 6750,
+            "samples": [
+              2139.0802962963016,
+              2235.4444444444434,
+              1935.8271111111242,
+              1895.9444444444503,
+              1898.0000000000036,
+              1830.6974814814669,
+              1984.8208888888958,
+              1879.0616296296153,
+              1960.407407407392,
+              2048.425925925922,
+              1885.2715555555428,
+              1995.3087407407618
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 5684,
+            "samples": [
+              1792.2457776214198,
+              1773.1644968332155,
+              1840.9203026037828,
+              1817.374736101343,
+              1863.7475369458057,
+              3761.574947220255,
+              2743.6298381421307,
+              1932.8597818437638,
+              1977.6199859253745,
+              2005.1386347642665,
+              1918.2721674876643,
+              2186.854855735392
+            ]
+          }
+        ],
+        "checksum": 1091296
+      },
+      "upstream": {
+        "pid": 54381,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct DOM styled component",
+            "iterations": 121814,
+            "samples": [
+              110.82195806721715,
+              101.46377263697121,
+              108.86714170784984,
+              113.19580672172336,
+              113.27583857356304,
+              116.10870671679771,
+              109.96135912128331,
+              117.0616677885957,
+              113.43694485034582,
+              112.27192276749837,
+              116.57765938233685,
+              115.46634212816235
+            ]
+          },
+          {
+            "case": "construct inherited styled component",
+            "iterations": 76629,
+            "samples": [
+              162.59945973456524,
+              149.801315428884,
+              141.93820877213565,
+              139.68438841691838,
+              131.81422176982545,
+              140.3684114369238,
+              136.28162967022942,
+              131.81585300604186,
+              131.03231152696796,
+              132.31880880606548,
+              128.11947174046415,
+              130.5239139229265
+            ]
+          },
+          {
+            "case": "server render cached static styles",
+            "iterations": 6750,
+            "samples": [
+              2342.209925925932,
+              2130.0678518518403,
+              2474.802518518505,
+              2307.777777777793,
+              2195.1851851852016,
+              2340.7900740740947,
+              2507.160444444438,
+              2319.160592592602,
+              2443.055555555542,
+              2877.4691851851994,
+              2354.8518518518567,
+              2507.0185185185333
+            ]
+          },
+          {
+            "case": "server render theme and prop interpolation",
+            "iterations": 5684,
+            "samples": [
+              1767.2193877550703,
+              1800.6393384940343,
+              2043.367346938799,
+              1885.0793455313344,
+              1953.1725897255353,
+              1870.7923997185353,
+              2056.870161857861,
+              2196.0547149894523,
+              1913.6465517241154,
+              1946.0033427163664,
+              1883.1368754398134,
+              1854.7751583391823
+            ]
+          }
+        ],
+        "checksum": 179552
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "construct DOM styled component",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 104.23998118417538,
+          "vpmNs": 93.63774649952337,
+          "changePct": -10.170986759791855
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 105.18024628986407,
+          "vpmNs": 95.74123144932102,
+          "changePct": -8.974132666061896
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 104.60862525991644,
+          "vpmNs": 93.68650894430247,
+          "changePct": -10.44093284705373
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 106.93285376984471,
+          "vpmNs": 100.59747502334683,
+          "changePct": -5.9246326298685865
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 105.04510521816457,
+          "vpmNs": 103.5580793907104,
+          "changePct": -1.4156069665176796
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 113.2358226476432,
+          "vpmNs": 108.07289802485761,
+          "changePct": -4.559444619262498
+        }
+      ]
+    },
+    {
+      "case": "construct inherited styled component",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 132.21985806788416,
+          "vpmNs": 113.9175128323036,
+          "changePct": -13.842357345584045
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 135.46212296239253,
+          "vpmNs": 118.7489282505449,
+          "changePct": -12.337909923711731
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 130.64577822591218,
+          "vpmNs": 113.51419479873192,
+          "changePct": -13.113001935321932
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 196.77810677155094,
+          "vpmNs": 121.08740333649953,
+          "changePct": -38.465002370880796
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 130.7927888441621,
+          "vpmNs": 144.0702949284311,
+          "changePct": 10.151558202561905
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 134.30021923814746,
+          "vpmNs": 133.135516579885,
+          "changePct": -0.8672380915455968
+        }
+      ]
+    },
+    {
+      "case": "server render cached static styles",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1949.6966601815843,
+          "vpmNs": 1992.4070201037648,
+          "changePct": 2.19061563752192
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1995.7161462825588,
+          "vpmNs": 1994.7638433672598,
+          "changePct": -0.047717352844633965
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2047.504462009174,
+          "vpmNs": 2095.6835798062193,
+          "changePct": 2.3530653383665
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2126.2105716523265,
+          "vpmNs": 2141.2130775254254,
+          "changePct": 0.7055983105868968
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1937.7866282789444,
+          "vpmNs": 2050.130598208579,
+          "changePct": 5.797540776169652
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2348.5308888888944,
+          "vpmNs": 1948.117259259258,
+          "changePct": -17.049536436758338
+        }
+      ]
+    },
+    {
+      "case": "server render theme and prop interpolation",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1834.9455973622757,
+          "vpmNs": 1879.0849495732998,
+          "changePct": 2.405485605375657
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1907.4800342759354,
+          "vpmNs": 1865.7633247643437,
+          "changePct": -2.187006351939458
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1810.1851851851711,
+          "vpmNs": 1759.6450617284108,
+          "changePct": -2.7919863597596684
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1861.9021698465842,
+          "vpmNs": 1930.411335578,
+          "changePct": 3.6795255325934084
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1859.3124999999818,
+          "vpmNs": 1779.6301546392106,
+          "changePct": -4.285581114566384
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1899.362948627725,
+          "vpmNs": 1925.565974665714,
+          "changePct": 1.3795691896022477
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "construct DOM styled component",
+      "upstream_ns": 105,
+      "vpm_ns": 95,
+      "change_pct": -9.6,
+      "upstream_first_pct": -10.3,
+      "vpm_first_pct": -7.4,
+      "process_range_pct": "-10.2, -9.0, -10.4, -5.9",
+      "control_max_abs_pct": 4.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "construct inherited styled component",
+      "upstream_ns": 134,
+      "vpm_ns": 116,
+      "change_pct": -13.5,
+      "upstream_first_pct": -13.5,
+      "vpm_first_pct": -25.4,
+      "process_range_pct": "-13.8, -12.3, -13.1, -38.5",
+      "control_max_abs_pct": 10.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "server render cached static styles",
+      "upstream_ns": 2022,
+      "vpm_ns": 2045,
+      "change_pct": 1.4,
+      "upstream_first_pct": 2.3,
+      "vpm_first_pct": 0.3,
+      "process_range_pct": "2.2, -0.0, 2.4, 0.7",
+      "control_max_abs_pct": 17,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "server render theme and prop interpolation",
+      "upstream_ns": 1848,
+      "vpm_ns": 1872,
+      "change_pct": 0.1,
+      "upstream_first_pct": -0.2,
+      "vpm_first_pct": 0.7,
+      "process_range_pct": "2.4, -2.2, -2.8, 3.7",
+      "control_max_abs_pct": 4.3,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

@@ -160,7 +160,7 @@ stylis 4.4.0, written for VPM against stylis's tests and a differential
 comparison rather than retained from the published build. Emotion 11.14 pins
 stylis 4.2.0; its suite passes with 4.4.0, the version VentiMath already
 installs.
-Emotion's own packages follow on it, each written for VPM: first the leaves
+Emotion's own packages follow on it: first the leaves
 `vemotion-hash`, `vemotion-memoize`, `vemotion-unitless` and
 `vemotion-weak-memoize`, then `vemotion-sheet`, `vemotion-utils`,
 `vemotion-serialize`, `vemotion-is-prop-valid` and
@@ -708,12 +708,21 @@ configuration, so that MUI and the application share one instance (React
 contexts). Its declarations build on `React.JSX` and compile in a TSX
 application with React 18.3 and 19 types.
 
-`vemotion-styled` targets @emotion/styled 11.14.1. The original read the theme
+`vemotion-styled` targets @emotion/styled 11.14.1. Its earlier close translation
+of upstream `createStyled` has been replaced by a source-informed component
+definition and shared rendering pipeline. MUI's mutable `__emotion_styles`
+facade, public declarations and diagnostic wording retain the upstream
+contract. Ten caller renders using MUI system 7.2.0 and React 19.1.0 produce
+identical HTML/CSS on Node 24 and Bun. Its
+[process-isolated measurements](packages/vemotion-styled/bench/results/README.md)
+cover complete-stack construction and server rendering. The original read the theme
 context only when a component's `theme` prop was null, so a component whose
 `theme` prop came and went called a different number of hooks, which React
 reports in development (reproduced with React 16.14); vemotion-styled reads it
-on every render. With it, all twelve of Emotion's packages are VPM's, and
-Emotion's suite passes in full with no original package loaded.
+on every render. The complete development fixture has 413 passing assertions
+under React 16 and 416 under React 18, plus two existing Babel-plugin
+differences. The production configuration runs only five assertions; it should
+not be described as the same 293-test coverage as development.
 
 `vemotion-babel-plugin` targets @emotion/babel-plugin 11.13.5 with its options
 and output, target class names included. The original minifies with stylis
