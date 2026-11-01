@@ -21,6 +21,7 @@ exports.createFirebaseTokenGenerator = createFirebaseTokenGenerator;
 const error_1 = require("./error");
 const validator = require("../utils/validator");
 const {UserDeletion, clientChanges} = require("./user-operations");
+const {verifyUserSession} = require("./token-policy");
 const auth_api_request_1 = require("./auth-api-request");
 const token_generator_1 = require("./token-generator");
 const token_verifier_1 = require("./token-verifier");
@@ -889,26 +890,7 @@ class BaseAuth {
      * @returns A promise that will be fulfilled after a successful verification.
      */
     verifyDecodedJWTNotRevokedOrDisabled(decodedIdToken, revocationErrorInfo) {
-        // Get tokens valid after time for the corresponding user.
-        return this.getUser(decodedIdToken.sub)
-            .then((user) => {
-            if (user.disabled) {
-                throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.USER_DISABLED, 'The user record is disabled.');
-            }
-            // If no tokens valid after time available, token is not revoked.
-            if (user.tokensValidAfterTime) {
-                // Get the ID token authentication time and convert to milliseconds UTC.
-                const authTimeUtc = decodedIdToken.auth_time * 1000;
-                // Get user tokens valid after time in milliseconds UTC.
-                const validSinceUtc = new Date(user.tokensValidAfterTime).getTime();
-                // Check if authentication time is older than valid since time.
-                if (authTimeUtc < validSinceUtc) {
-                    throw new error_1.FirebaseAuthError(revocationErrorInfo);
-                }
-            }
-            // All checks above passed. Return the decoded token.
-            return decodedIdToken;
-        });
+        return verifyUserSession(uid => this.getUser(uid), decodedIdToken, revocationErrorInfo);
     }
 }
 exports.BaseAuth = BaseAuth;

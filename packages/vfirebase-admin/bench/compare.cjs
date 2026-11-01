@@ -27,8 +27,12 @@ const syntheticCredential = 'const credential = new ApplicationDefaultCredential
 // The transport returns fixed JSON outside network I/O; these cases measure the
 // complete public operation's request planning and result projection, not HTTP.
 const syntheticAuth = 'const app = new FirebaseApp({projectId: "bench", credential: {getAccessToken: async () => ({access_token: "bench", expires_in: 3600})}}, "bench"); const auth = new Auth(app); ';
+const verificationAuth = syntheticAuth.replace('projectId: "bench"', 'projectId: "p"') +
+  'auth.idTokenVerifier.signatureVerifier.keyFetcher.fetchPublicKeys = async () => ({k1: publicKey}); ';
 const cases = [
   {name: 'auth / verify RS256 ID token signature', async: true, make: compiled('return () => jwt.verifyJwtSignature(token, publicKey, {algorithms: ["RS256"]}).then(() => true);'), validate: v => assert.equal(v, true)},
+  {name: 'auth / verify ID token with cached test key', async: true, make: compiled(verificationAuth + 'return () => auth.verifyIdToken(token).then(value => value.uid);'), validate: v => assert.equal(v, 'ada')},
+  {name: 'auth / verify ID token and synthetic revocation lookup', async: true, make: compiled(verificationAuth + 'auth.authRequestHandler.invokeRequestHandler = async () => ({users: [user]}); return () => auth.verifyIdToken(token, true).then(value => value.uid);'), validate: v => assert.equal(v, 'ada')},
   {name: 'auth / decode ID token', async: true, make: compiled('return () => jwt.decodeJwt(token).then(decoded => decoded.payload.sub);'), validate: v => assert.equal(v, 'ada')},
   {name: 'auth / project a user response', make: compiled('return () => new UserRecord(user);'), validate: v => {assert.equal(v.uid, 'ada'); assert.equal(v.providerData[0].providerId, 'google.com'); assert.equal(v.customClaims.classes.length, 2);}},
   {name: 'auth / serialize a user record', make: compiled('const record = new UserRecord(user); return () => record.toJSON();'), validate: v => {assert.equal(v.uid, 'ada'); assert.equal(v.metadata.lastSignInTime, 'Tue, 14 Nov 2023 22:13:20 GMT'); assert.deepEqual(v.customClaims.classes, ['math', 'science']);}},
