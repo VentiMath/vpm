@@ -1,5 +1,9 @@
 # vgrpc-js
 
+**Implementation status:** upstream-derived runtime with focused fixes. The
+independent implementation of the caller paths VentiMath needs is still pending.
+[Provenance](PROVENANCE.json) identifies the retained code and rewrite scope.
+
 A gRPC HTTP/2 client and server derived from **@grpc/grpc-js 1.14.7**, for Node.js
 24 and Bun. It uses `vgrpc-proto-loader` and `vordered-map`; its entire external
 runtime dependency tree consists of VPM packages.

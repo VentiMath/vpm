@@ -23,6 +23,15 @@ pending. Passing current-release tests and replacing dependency names establish
 compatibility, not independent implementation. Generated protocol schemas remain
 separately attributed inputs.
 
+The same boundary applies to retained foundations:
+[`vgrpc-js`](packages/vgrpc-js/README.md), [`vlong`](packages/vlong/README.md),
+[`vfunctional-red-black-tree`](packages/vfunctional-red-black-tree/README.md),
+[`vobject-hash`](packages/vobject-hash/README.md) and
+[`vordered-map`](packages/vordered-map/README.md). Their existing fixes and
+compatibility tests remain valid; their application-facing independent rewrites
+are pending. Transpiling upstream TypeScript does not change that classification.
+The gRPC diagnostics map may instead become unnecessary when its caller is rebuilt.
+
 ## Latest stable upgrade roadmap
 
 Latest stable upstream versions set the compatibility target. Backend and

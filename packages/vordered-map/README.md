@@ -1,5 +1,9 @@
 # vordered-map
 
+**Implementation status:** upstream-derived runtime with focused fixes. The
+independent implementation of the caller paths VentiMath needs is still pending.
+[Provenance](PROVENANCE.json) identifies the retained code and rewrite scope.
+
 An ordered key/value map based on **@js-sdsl/ordered-map 4.4.2**, with checked
 iterators, fewer iterator allocations and logarithmic indexed position lookup.
 Zero runtime dependencies, as upstream already has. Supports Node 24+ and Bun.
