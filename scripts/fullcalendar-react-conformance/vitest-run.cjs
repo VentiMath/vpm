@@ -9,7 +9,7 @@ const modules = path.join(__dirname, 'node_modules'), packages = path.resolve(__
 
 exports.runVitest = function runVitest({upstream, files, env = {}}) {
   const implementation = upstream ? path.join(modules, '@fullcalendar/react') : path.join(packages, 'vfullcalendar-react');
-  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'fullcalendar-react-vitest-'));
+  const temporary = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'fullcalendar-react-vitest-')));
   try {
     fs.mkdirSync(path.join(temporary, 'tests'));
     for (const [name, source] of Object.entries(files)) fs.copyFileSync(source, path.join(temporary, 'tests', name));
@@ -34,9 +34,14 @@ exports.runVitest = function runVitest({upstream, files, env = {}}) {
     // and on a day a local zone changes offset their expected counts are off.
     const result = spawnSync(process.execPath, [path.join(modules, 'vitest/vitest.mjs'), 'run', '--root', temporary, '--config', path.join(temporary, 'vitest.config.mjs'), '--reporter=json', '--outputFile=' + report],
       {cwd: temporary, encoding: 'utf8', timeout: 600000, env: {...process.env, TZ: 'UTC', ...env}});
-    try { return JSON.parse(fs.readFileSync(report, 'utf8')); } catch {
+    let stats;
+    try { stats = JSON.parse(fs.readFileSync(report, 'utf8')); } catch {
       throw new Error('Suite produced no report\n' + result.stdout.slice(-6000) + result.stderr.slice(-6000));
     }
+    if (!stats.numTotalTests || stats.testResults.some(suite => suite.status === 'failed' && !suite.assertionResults.length)) {
+      throw new Error('Calendar suite did not load: ' + JSON.stringify(stats.testResults) + '\n' + result.stderr.slice(-6000));
+    }
+    return stats;
   } finally {
     fs.rmSync(temporary, {recursive: true, force: true});
   }
