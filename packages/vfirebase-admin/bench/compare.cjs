@@ -4,6 +4,8 @@
 const assert = require('node:assert/strict'), path = require('node:path');
 const roots = {upstream: path.resolve(__dirname, '../../../scripts/firebase-admin-conformance/node_modules/firebase-admin'), vpm: path.resolve(__dirname, '..')};
 const library = root => ({jwt: require(path.join(root, 'lib/utils/jwt.js')), messaging: require(path.join(root, 'lib/messaging/messaging-internal.js')),
+  FirestoreService: require(path.join(root, 'lib/firestore/firestore-internal.js')).FirestoreService,
+  getFirestoreOptions: require(path.join(root, 'lib/firestore/firestore-internal.js')).getFirestoreOptions,
   HttpClient: require(path.join(root, 'lib/utils/api-request.js')).HttpClient,
   AuthorizedHttpClient: require(path.join(root, 'lib/utils/api-request.js')).AuthorizedHttpClient,
   Http2Client: require(path.join(root, 'lib/utils/api-request.js')).Http2Client,
@@ -66,7 +68,7 @@ const user = {localId: 'ada', email: 'ada@example.com', emailVerified: true, dis
   customAttributes: '{"role":"teacher","classes":["math","science"]}'};
 const env = {token, publicKey, message, library, certificate, user, noKid, syntheticHttp, syntheticHttp2, syntheticSessions};
 // A worker constructs only its selected SDK; both workers use the same fixed token.
-const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, HttpClient, AuthorizedHttpClient, Http2Client, Http2SessionHandler, RequestClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
+const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, FirestoreService, getFirestoreOptions, HttpClient, AuthorizedHttpClient, Http2Client, Http2SessionHandler, RequestClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
 const syntheticCredential = 'const credential = new ApplicationDefaultCredential(); const client = {credentials: {access_token: "bench", expiry_date: Date.now() + 3600000}, getAccessToken: async () => ({token: "bench"})}; credential.googleAuth.getClient = async () => client; ';
 // The transport returns fixed JSON outside network I/O; these cases measure the
 // complete public operation's request planning and result projection, not HTTP.
@@ -74,6 +76,9 @@ const syntheticAuth = 'const app = new FirebaseApp({projectId: "bench", credenti
 const verificationAuth = syntheticAuth.replace('projectId: "bench"', 'projectId: "p"') +
   'auth.idTokenVerifier.signatureVerifier.keyFetcher.fetchPublicKeys = async () => ({k1: publicKey}); ';
 const cases = [
+  {name: 'firestore / project client options', make: compiled('const app = new FirebaseApp({projectId: "bench", credential: new ApplicationDefaultCredential()}, "bench"); const settings = {preferRest: true}; return () => getFirestoreOptions(app, settings);'), validate: value => {assert.equal(value.projectId, 'bench'); assert.equal(value.preferRest, true);}},
+  {name: 'firestore / cached database client', make: compiled('const app = new FirebaseApp({projectId: "bench", credential: new ApplicationDefaultCredential()}, "bench"); const service = new FirestoreService(app); service.getDatabase("(default)"); return () => service.getDatabase("(default)");'), validate: value => assert.equal(value.databaseId, '(default)')},
+  {name: 'firestore / repeat initialized settings', make: compiled('const app = new FirebaseApp({projectId: "bench", credential: new ApplicationDefaultCredential()}, "bench"); const service = new FirestoreService(app), settings = {preferRest: true}; service.initializeDatabase("(default)", settings); return () => service.initializeDatabase("(default)", settings);'), validate: value => assert.equal(value.databaseId, '(default)')},
   {name: 'response / project JSON and consume data', make: compiled('const client = new RequestClient(null); const raw = {status: 200, headers: {"content-type": "application/json", "x-request-id": "bench", "set-cookie": ["one", "two"]}, data: JSON.stringify({users: [user]})}; return () => client.createRequestResponse(raw).data;'), validate: value => assert.equal(value.users[0].localId, 'ada')},
   {name: 'response / malformed JSON diagnostic', make: compiled('const client = new RequestClient(null); const raw = {status: 502, headers: {"content-type": "text/html"}, data: "<html>upstream failure</html>"}; return () => {const response = client.createRequestResponse(raw); try {return response.data;} catch (error) {return error;}};'), validate: value => {assert.equal(value.code, 'app/unable-to-parse-response'); assert.equal(value.httpResponse.status, 502); assert.ok(value.cause instanceof SyntaxError);}},
   {name: 'response / classify empty response', make: compiled('const client = new RequestClient(null); const raw = {status: 204, headers: {}, data: ""}; return () => client.createRequestResponse(raw).isJson();'), validate: value => assert.equal(value, false)},

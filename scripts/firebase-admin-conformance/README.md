@@ -208,3 +208,11 @@ compatible. Controls reproduce different body reads, aliased header records and
 arrays, mutation of exposed parsing state and erased error subclass prototypes.
 The adapter captures and owns response data; multipart/raw-HTTP helpers remain
 retained. The package test runs this control without changing upstream assertions.
+
+`firestore-facade.cjs` isolates the original and VPM client registries. Changing
+previously supplied settings can disguise a conflicting initialization upstream;
+the replacement retains the exact value used by its client. Getter controls also
+verify that project and credential come from one options snapshot and that
+settings are read once. Distinct database identity, cached reuse, and retry after
+a failed constructor remain compatible. Actual Firestore RPCs are verified by
+`callers.cjs`; this facade rewrite does not replace the underlying client runtime.

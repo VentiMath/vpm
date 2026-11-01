@@ -2,7 +2,8 @@
 
 **Implementation status:** VPM independently implements app and credential
 management, the Auth operations used by VentiMath, and HTTP/1 and HTTP/2 request,
-retry, authorization, session handling and JSON/text response projection. Multipart
+retry, authorization, session handling, JSON/text response projection and Firestore
+client configuration/registry ownership. Multipart
 and raw-HTTP helpers, endpoint schemas,
 other service APIs and Google Auth remain upstream-derived. This is a partial
 SDK rewrite; [provenance](PROVENANCE.json) maps the boundary.
@@ -41,6 +42,14 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 | `@fastify/busboy` | Omitted (see below) |
 
 ## Changes from 14.5.0
+
+- **Firestore client configuration.** Each database has one owned client/settings
+  record. Mutating the original `preferRest` option cannot disguise a conflicting
+  later initialization. Settings getters are captured once, and project identity
+  and credentials come from the same app-options snapshot. Failed construction
+  leaves no cached client. Database identity, project precedence and lazy client
+  loading remain compatible. Firestore operations still use the separately
+  tracked, upstream-derived `vgoogle-cloud-firestore` runtime.
 
 - **Owned HTTP response projection.** The raw body is read once, so text and JSON
   cannot describe different reads of a changing transport record. Header records
@@ -218,36 +227,38 @@ Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
 previous JWT improvements; they do not isolate the HTTP rewrite alone. The
-[full report](bench/results/README.md) includes all thirty-eight cases, process
+[full report](bench/results/README.md) includes all forty-one cases, process
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
-The response-only JSON case eagerly parses the body and consumes its value inside
-timing. It takes 915 ns versus 866 ns on Node (+6% median paired time) and 641 ns
-versus 599 ns on Bun (+7%). Malformed-JSON diagnostics take 7.5 µs versus 6.8 µs
-on Node (+10%); Bun's comparison is inconclusive. Empty-body classification is
-inconclusive on both runtimes. Detached headers and private parsing state are
-correctness changes, with their measured costs retained.
+Firestore option projection takes 141 ns versus 177 ns on Node (21% less median
+paired time), and repeated initialization takes 13 ns versus 19 ns (32% less).
+Node's cached lookup comparison is inconclusive. On Bun, option projection takes
+79 ns versus 75 ns (+7%) and cached lookup 10 ns versus 9 ns (+18% paired time);
+repeated initialization is inconclusive. These measure the Admin accessor and
+configuration work, not Firestore operations or RPC latency.
+
+The response-only JSON case eagerly parses and consumes the value inside timing.
+Node's comparison is inconclusive; Bun takes 644 ns versus 610 ns (+5%). Malformed
+JSON diagnostics take 9.5 µs versus 8.7 µs on Node (+9%), and empty-response
+classification costs about 6%. Both Bun error-path comparisons are inconclusive.
+Detached headers and private parsing state retain their measured costs.
 
 The HTTP cases serialize requests and consume synthetic response streams; they
 exclude sockets and network latency. HTTP/1 with Auth-style headers costs about
-24% on Node and 27% on Bun. HTTP/2's single-request comparison is inconclusive on
-Node and costs about 43% on Bun. A twenty-request synthetic HTTP/2 batch costs
-27% on Node (55.2 µs versus 43.4 µs) and 38% on Bun (65.0 µs versus 47.3 µs).
-Session setup is inconclusive on both. These are not real FCM batch latencies.
+19% on Node and 25% on Bun. HTTP/2 single requests cost about 58% and 53%,
+respectively. The twenty-request HTTP/2 batch is inconclusive on Node and costs
+34% on Bun (61.9 µs versus 46.3 µs). Session setup is inconclusive on both. These
+are not real FCM batch latencies. Authorized requests retain costs too: explicit
+headers cost 22% on Node, while Bun's default/explicit cases cost 40% and 52%.
+Node's default-header comparison is inconclusive.
 
-Authorized-request comparisons are inconclusive on Node in this recording;
-Bun retains about 41% and 61% costs for default and explicit metrics/header
-cases. Large control spreads remain visible in the full report. A one-pass
-owned header record avoids repeated deletion and copying, but these changes
-are not presented as a transport speedup.
-
-Custom retry-policy capture takes 114 ns versus 10 ns on Node and 363 ns versus
-11 ns on Bun; it copies and freezes caller settings instead of retaining them.
-Default construction takes 9 ns versus 14 ns and 4 ns versus 13 ns, respectively.
-Strict UTC HTTP-date parsing is inconclusive on Node in this recording and costs
-440 ns versus 45 ns on Bun. Setup/error-path regressions retain their full
-percentages and controls; ordinary request success does not parse retry dates.
+Custom retry-policy capture takes 114 ns versus 10 ns on Node and 362 ns versus
+12 ns on Bun; it copies and freezes caller settings instead of retaining them.
+Default construction takes 9 ns versus 14 ns and 4 ns versus 17 ns, respectively.
+Strict UTC HTTP-date parsing costs 466 ns versus 240 ns on Node and 429 ns versus
+42 ns on Bun. Setup/error-path regressions retain their full percentages and
+controls; ordinary request success does not parse retry dates.
 
 Token verification, record serialization and concurrent acquisition have separate
 cases. Record construction, cached-key reads, app/credential setup and cleanup
@@ -270,6 +281,9 @@ wire compatibility; these CPU timings do not establish application latency.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [Firestore configuration controls](../../scripts/firebase-admin-conformance/firestore-facade.cjs)
+  reproduce mutable settings and inconsistent option reads, and verify database
+  identity and retry after failed construction.
 - [Response controls](../../scripts/firebase-admin-conformance/http-response.cjs)
   compare 24 normal and real HTTP outcomes, then reproduce changing body reads,
   aliased headers, exposed parse-state mutation and erased error subclasses.

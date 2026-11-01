@@ -12,7 +12,7 @@
   "checked": "2026-10-31",
   "license": "Apache-2.0",
   "retainedEvidence": "../../scripts/firebase-admin-conformance/upstream",
-  "source": "Source-informed VPM app registry, service lifecycle, token lease, option snapshots, credential adapters, Auth response projections, user-management plans, token verification policy, key caching, signature adaptation, Auth request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy, authorization-header ownership and HTTP response projection, alongside retained Firebase Admin 14.5.0 service implementations. Upstream source and tests informed compatibility; diagnostics and public declarations remain attributed. Google Auth is a separately tracked upstream-derived dependency. This is not a clean-room claim.",
+  "source": "Source-informed VPM app registry, service lifecycle, token lease, option snapshots, credential adapters, Auth response projections, user-management plans, token verification policy, key caching, signature adaptation, Auth request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy, authorization-header ownership and HTTP response projection, plus Firestore client configuration and registry ownership, alongside retained Firebase Admin 14.5.0 service implementations. Upstream source and tests informed compatibility; diagnostics and public declarations remain attributed. Google Auth is a separately tracked upstream-derived dependency. This is not a clean-room claim.",
   "dependencyMap": {
     "google-auth-library": "vgoogle-auth-library",
     "jsonwebtoken": "vjsonwebtoken",
@@ -34,14 +34,14 @@
     "lib/auth/base-auth.js",
     "lib/auth/token-generator.d.ts",
     "lib/auth/user-import-builder.d.ts",
-    "lib/firestore/firestore-internal.js",
     "lib/security-rules/security-rules.d.ts",
     "lib/storage/storage.js",
     "lib/utils/api-request.js",
     "lib/utils/crypto-signer.d.ts",
     "lib/utils/validator.d.ts",
     "lib/auth/error.js",
-    "lib/utils/api-request.d.ts"
+    "lib/utils/api-request.d.ts",
+    "lib/firestore/firestore-internal.d.ts"
   ],
   "replaced": [
     "lib/database/index.d.ts",
@@ -53,7 +53,8 @@
     "lib/app/credential-factory.js",
     "lib/auth/user-record.js",
     "lib/auth/token-verifier.js",
-    "lib/utils/jwt.js"
+    "lib/utils/jwt.js",
+    "lib/firestore/firestore-internal.js"
   ],
   "removed": [
     "lib/database/database.d.ts",
@@ -345,10 +346,11 @@
     "HTTP/1 and HTTP/2 authorization captures transport options and detached header values before asynchronous token acquisition. The acquired bearer token overrides every casing of Authorization; explicit quota and metrics headers are recognized case-insensitively. Caller records and prototype-named header data are preserved, while app deletion is checked after token acquisition. Request body ownership remains with operation builders.",
     "HTTP/2 attempts reuse owned URL/header/body plans across retries and set method/scheme/path from that plan. Response-less closure, aborted/error streams and invalid compression settle instead of remaining pending. Wire Content-Length is enforced even when the runtime accepts a mismatch, with HEAD and 304 representation lengths exempt. Coding is case-insensitive and supports Brotli; failures destroy the individual stream, not its batch session.",
     "Each HTTP/2 session generation owns its error list. Old-session errors and GOAWAY events cannot enter a replacement session, observing the list cannot erase it, destroyed sessions are recreated and close is idempotent. Failed creation preserves prior diagnostics and allows retry.",
-    "HTTP response projection captures the low-level body once, detaches header records and arrays, and keeps JSON values and failures private. Valid scalar JSON, raw text, parse-error causes and HTTP diagnostic context retain their contracts. The parsed JSON object keeps its identity. Native RequestResponseError construction preserves subclasses; no obsolete prototype reset is needed on Node 24 or Bun. Multipart and raw-HTTP helpers remain retained."
+    "HTTP response projection captures the low-level body once, detaches header records and arrays, and keeps JSON values and failures private. Valid scalar JSON, raw text, parse-error causes and HTTP diagnostic context retain their contracts. The parsed JSON object keeps its identity. Native RequestResponseError construction preserves subclasses; no obsolete prototype reset is needed on Node 24 or Bun. Multipart and raw-HTTP helpers remain retained.",
+    "Firestore configuration projects the credential and project from one app-options snapshot. The per-database registry owns the preferRest value used for construction instead of retaining mutable settings. Repeated initialization compares that value; failed construction is never cached. Public getFirestore/initializeFirestore routing, export bindings and underlying Google Cloud Firestore operations remain source-derived and separately tracked."
   ],
   "implementation": {
-    "kind": "mixed: independent app, credential, used Auth, HTTP request/session/retry and authorization runtimes with independent JSON/text response projection and retained other helpers and service implementations",
+    "kind": "mixed: independent app, credential, used Auth, HTTP request/session/retry and authorization runtimes with independent JSON/text response projection, independent Firestore configuration/registry and retained other helpers and service implementations",
     "replacementStatus": "application-facing service rewrite pending",
     "targetScope": "App credentials, Auth, Firestore, Storage and messaging.",
     "independentComponents": {
@@ -373,12 +375,13 @@
       "lib/utils/authorized-request.js": "Own captured transport options and header values before token acquisition, with one canonical credential/quota/metrics assembly shared by HTTP/1 and HTTP/2. Preserves post-token app-lifecycle validation and configured agent fallback; operation builders retain responsibility for body ownership.",
       "lib/utils/http2-request.js": "Own per-attempt HTTP/2 stream lifecycle over the shared captured request plan. Wire bytes remain stable across retries, pseudo-headers belong to the plan, close/error/decoder failures settle once, declared wire lengths are checked, and failed streams do not destroy the batch session. Http2Client orchestration reuses the independent retry policy and shared diagnostic adaptation; the session owner is implemented independently in http2-session.js.",
       "lib/utils/http2-session.js": "Own per-generation session records, diagnostic ownership and idempotent close. Late errors stay with their connection, returned error arrays are detached, destroyed sessions are recreated and failed connection creation can be retried without erasing the prior diagnostics. Native HTTP/2 provides protocol and socket behavior; diagnostic text remains source-informed.",
-      "lib/utils/http-response.js": "Own JSON/text response projection with one body read, detached header records and array values, private eager JSON parsing state and native error subclass construction. The parsed JSON object and diagnostic request reference retain their identity contracts; diagnostic wording remains source-informed. Multipart and raw-HTTP parsing helpers are retained separately."
+      "lib/utils/http-response.js": "Own JSON/text response projection with one body read, detached header records and array values, private eager JSON parsing state and native error subclass construction. The parsed JSON object and diagnostic request reference retain their identity contracts; diagnostic wording remains source-informed. Multipart and raw-HTTP parsing helpers are retained separately.",
+      "lib/firestore/firestore-internal.js": "Own per-database client/configuration records and credential/project projection from one app-options snapshot. Settings getters are captured once, mutation cannot disguise conflicting initialization, and failed constructors leave no cached client. Lazy loading, project precedence, credential kinds, database identity and diagnostic text remain compatible; underlying Firestore operations and entry-point export routing remain retained."
     },
-    "remainingWork": "Multipart/raw-HTTP helpers, Auth endpoint schemas and other Auth methods, plus Firestore/Storage/messaging service facades remain upstream-derived. Google Auth and underlying service client runtimes are tracked separately."
+    "remainingWork": "Multipart/raw-HTTP helpers, Auth endpoint schemas and other Auth methods, plus Firestore entry-point routing, Storage/messaging service facades remain upstream-derived. Google Auth and underlying service client runtimes are tracked separately."
   },
   "verification": {
-    "applicationRuntime": "Twenty-one focused tests on Node 24 and Bun, including isolated original app/credential controls, deep/shared options, provider/cleanup recovery, file rotation and actual signed-JWT/refresh-token OAuth POSTs through a local HTTP server and a counting agent.",
+    "applicationRuntime": "Twenty-two focused tests on Node 24 and Bun, including isolated original app/credential controls, deep/shared options, provider/cleanup recovery, file rotation and actual signed-JWT/refresh-token OAuth POSTs through a local HTTP server and a counting agent.",
     "upstreamSuite": "6,062 retained upstream tests: Node 6,016 pass with 46 existing exact differences; Bun 6,001 pass with those 46 and 15 existing engine-wording differences.",
     "callers": "Identical 17 Auth/Storage/FCM requests, 25 Firestore RPCs and 17 results on Node 24 and Bun.",
     "credentialAdapters": "148 upstream app/credential tests pass on Node. Original controls reproduce agent-insensitive caches, omitted JSON-client agents, frozen-input mutation, validation/use identity drift, unsanitized parse errors and unbounded credential retention. Native local OAuth requests verify RSA signatures and both request bodies on Node and Bun.",
@@ -392,6 +395,7 @@
     "authorizedHeaders": "Both authorized clients preserve token authority, explicit case-insensitive quota/metrics headers, captured options and detached array-valued headers. Separate original controls reproduce overrides and mutations; actual HTTP/1 wire requests confirm canonical values. App deletion remains checked after token acquisition. The full suites, eighteen focused tests, actual callers and packed consumers pass on Node 24 and Bun with their existing documented differences.",
     "http2Transport": "88 unchanged upstream HTTP/2 and authorized-client tests run with the existing exact differences; actual wire controls separately check assertions that upstream scheme expectations would stop before reaching. Original-package controls reproduce mutable retry bytes, duplicate Content-Type casing, response-less closure and gzip hangs, pseudo-header overrides, deterministic aborted/error ordering and Bun content-length mismatches. Node HTTP/2 servers serve both client runtimes; only the already documented upstream scheme colon is normalized for these other wire comparisons. No upstream assertions or mocks are changed.",
     "http2Sessions": "Separate original/VPM process controls on Node 24 and Bun reproduce cross-generation diagnostics, mutable returned lists, reuse of destroyed sessions and lost diagnostics after failed recreation. The retained diagnostic messages and actual FCM caller protocol remain verified.",
-    "httpResponses": "Isolated original/VPM controls compare 24 JSON scalar/object, invalid/empty body and local HTTP success/error outcomes on Node 24 and Bun. They reproduce repeated body reads, header/array aliasing, public parse-state mutation and erased error subclasses. JSON object identity, request diagnostic references, parse-error causes and raw HTTP error context remain compatible. No upstream suite assertions change."
+    "httpResponses": "Isolated original/VPM controls compare 24 JSON scalar/object, invalid/empty body and local HTTP success/error outcomes on Node 24 and Bun. They reproduce repeated body reads, header/array aliasing, public parse-state mutation and erased error subclasses. JSON object identity, request diagnostic references, parse-error causes and raw HTTP error context remain compatible. No upstream suite assertions change.",
+    "firestoreFacade": "Original/VPM controls on Node 24 and Bun reproduce mutable initialization settings and mixed project/credential snapshots, then verify captured getters, database identity and constructor failure recovery. Complete Admin/Functions suites, actual Firestore wire callers and packed public declaration consumers retain their documented outcomes."
   }
 }
