@@ -257,30 +257,19 @@ previous JWT improvements; they do not isolate the HTTP rewrite alone. The
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
-Messaging response validation takes 13 ns versus 5 ns on Bun (145% more median
-paired time). It checks the JSON body, error envelope and message identifier
-before declaring a batch delivery successful. Its Node comparison, stale-device
-error projection and ten mixed response projections are inconclusive. The
-100-recipient send plan takes 79.6 µs versus 169.6 µs on Bun (50% less); all four
-Node send-plan comparisons and the other three Bun send-plan comparisons are
-inconclusive. Send-plan cases replace authentication, HTTP and network I/O with
-synthetic dispatch; these numbers do not measure FCM delivery latency. The
-retained copy/validation helper is measured separately and remains source-derived.
+The Messaging measurements cover response validation, stale-device errors,
+mixed response batches and single/multicast send planning. Send-plan cases
+replace authentication, HTTP and network I/O with synthetic dispatch; they do
+not measure FCM delivery latency. The retained copy/validation helper is measured
+separately and remains source-derived.
 
-The report also retains complete-stack gains and costs from earlier work. Node's
-full ID-token verification with a cached test key takes 34.2 µs versus 59.5 µs
-(41% less). Bun's Storage context construction takes 4.12 µs versus 4.74 µs with a
-service account (13% less), and 2.58 µs versus 3.21 µs with ADC (20% less).
-
-Costs remain visible. Synthetic HTTP/2 single requests cost 36% on Node and 49%
-on Bun; Bun's twenty-request batch costs 45%. Bun's eager JSON response projection
-costs 29%, and its two authorization-header cases cost 59–69%. Custom retry-policy
-capture takes 161 ns versus 13 ns on Node and 451 ns versus 14 ns on Bun; it copies
-and freezes caller settings. Strict UTC HTTP-date parsing takes 568 ns versus
-322 ns on Node and 509 ns versus 56 ns on Bun. The full report includes all other
-costs, raw samples and identical-source controls. These compare complete stacks
-and do not isolate this Messaging change alone. Local-server fixtures separately
-verify correctness and wire compatibility.
+The report compares complete stacks, including earlier Auth, HTTP, Firestore
+and Storage changes. It records costs as well as gains: response validation,
+header ownership, immutable retry-policy capture, date parsing and lifecycle
+management can require additional CPU work. Each row identifies whether its
+direction holds across process orders beyond identical-source control variation.
+Exact timings and all samples live in that dated report. Local-server fixtures
+separately verify correctness and wire compatibility.
 
 ## Evidence
 

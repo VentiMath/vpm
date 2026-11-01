@@ -11,6 +11,7 @@ npm --prefix scripts/storage-conformance ci --ignore-scripts --no-audit --no-fun
 node scripts/storage-conformance/run.cjs
 node scripts/storage-conformance/run.cjs --upstream
 node scripts/storage-conformance/regressions.cjs
+node scripts/storage-conformance/crc32c.cjs
 node scripts/storage-conformance/callers.cjs
 node scripts/storage-conformance/callers.cjs --upstream
 node scripts/storage-conformance/firebase.cjs
@@ -62,7 +63,7 @@ independently verifies a V2 signature with an ephemeral RSA key. Both client
 variants run through the same factory. This fixture models an existing caller;
 it does not claim every Firebase Admin method or Storage 7 API is covered.
 
-The package's nine root tests add independent V2/V4 signature verification,
+The package's ten root tests add independent V2/V4 signature verification,
 callback error cases, immutable inputs, asynchronous snapshotting and module
 identity checks. Broader retained SDK operations and real IAM/cloud integration
 remain outside this selected verification scope.
@@ -81,6 +82,18 @@ endpoint syntax. Broader Storage runtime paths remain upstream-derived.
 
 The benchmark now uses one selected SDK per fresh worker, balanced comparison
 order and identical-source controls. A separate Node 24 server serves both client
-runtimes. These ten CPU/localhost workloads include warm client construction,
-handles, real RSA signing, a known CRC32C vector, metadata/listing and integrity-
+runtimes. These thirteen CPU/localhost workloads include warm client construction,
+handles, real RSA signing, four independently known CRC32C workloads, metadata/listing and integrity-
 checked 64 KiB transfers. Historical shared-process recordings remain in Git history.
+
+## Independent CRC32C engine
+
+`crc32c.cjs` runs the original and VPM clients in separate processes and compares
+260 byte lengths, five chunkings, resumed checksums and real files with a simple
+bit-at-a-time reference. It checks known vectors, input preservation, cross-realm
+and sliced views, base64 compatibility, missing-file errors and the public
+validator interface. Original controls reproduce corruption after public table
+mutation and delayed serialization failures for accepted numeric seeds. VPM uses
+private derived slicing tables, normalizes signed/unsigned 32-bit seeds and rejects
+out-of-range seeds at construction. The broader bucket/file and signing runtime
+is still retained; this checksum rewrite does not imply those paths are rebuilt.

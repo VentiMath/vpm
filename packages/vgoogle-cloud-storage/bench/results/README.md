@@ -23,41 +23,47 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T17:12:53.427Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T18:15:31.173Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Storage construction | 950 | 1820 | 94.3% | 94.3% | 99.2% | 1.4% | higher time in every pair, beyond control spread |
-| custom endpoint construction | 1043 | 2333 | 123.7% | 122.2% | 123.7% | 1.4% | higher time in every pair, beyond control spread |
-| bucket + file handles | 17392 | 17282 | -0.8% | -2.4% | 36.8% | 4.2% | unestablished at this precision |
-| v2 signed URL / RSA fixture | 862447 | 877197 | 1.4% | 4.9% | 1.4% | 1% | unestablished at this precision |
-| v4 signed URL / RSA fixture | 891090 | 879520 | -1.9% | -1.1% | -16.1% | 0.8% | unestablished at this precision |
-| CRC32C / 64KiB | 343820 | 343874 | 1.5% | -2.4% | 9.9% | 0.4% | unestablished at this precision |
-| HTTP object metadata | 205219 | 178253 | -17.7% | -25% | -5.3% | 25.2% | unestablished at this precision |
-| HTTP automatic listing / one page | 191043 | 154447 | -16.7% | -19.5% | -7.9% | 13% | unestablished at this precision |
-| HTTP multipart upload / 64KiB + CRC32C | 802715 | 776002 | -8.1% | -50.8% | -3.9% | 8.8% | unestablished at this precision |
-| HTTP download / 64KiB + CRC32C | 378119 | 263557 | -29.7% | -47.3% | -28% | 10.3% | lower time in every pair, beyond control spread |
+| Storage construction | 979 | 1801 | 88.1% | 79.7% | 90.4% | 6.9% | higher time in every pair, beyond control spread |
+| custom endpoint construction | 1060 | 2233 | 112.5% | 101.8% | 114.1% | 8.8% | higher time in every pair, beyond control spread |
+| bucket + file handles | 18836 | 17442 | -1.8% | 1.4% | -1.8% | 3% | unestablished at this precision |
+| v2 signed URL / RSA fixture | 902532 | 942300 | 6% | 0.7% | 6% | 2.4% | unestablished at this precision |
+| v4 signed URL / RSA fixture | 931729 | 921271 | -1.8% | -1.8% | 15.5% | 1.2% | unestablished at this precision |
+| CRC32C / 64KiB | 340000 | 42205 | -87.6% | -88.1% | -87.4% | 2.2% | lower time in every pair, beyond control spread |
+| CRC32C / 64B | 925 | 157 | -82.2% | -81.2% | -83.4% | 8.3% | lower time in every pair, beyond control spread |
+| CRC32C / 64KiB in 1KiB chunks | 357344 | 44167 | -87.6% | -87.6% | -88% | 0.7% | lower time in every pair, beyond control spread |
+| CRC32C / resumed 32KiB | 178024 | 21352 | -87.5% | -82.5% | -87.9% | 0.5% | lower time in every pair, beyond control spread |
+| HTTP object metadata | 269952 | 212226 | 1.6% | 96.1% | 1.6% | 131.3% | unestablished at this precision |
+| HTTP automatic listing / one page | 285640 | 191320 | -13.9% | 27.7% | -13.9% | 22.9% | unestablished at this precision |
+| HTTP multipart upload / 64KiB + CRC32C | 953355 | 500313 | -47.2% | -37% | -56.9% | 30.5% | unestablished at this precision |
+| HTTP download / 64KiB + CRC32C | 488560 | 367964 | -16.4% | -9.1% | -34.2% | 7% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T17:13:37.523Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T18:17:08.683Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Storage construction | 990 | 906 | -7.6% | -7.6% | -11.1% | 9.5% | unestablished at this precision |
-| custom endpoint construction | 1129 | 1358 | 17.6% | 20.6% | 13.9% | 3.5% | higher time in every pair, beyond control spread |
-| bucket + file handles | 16338 | 16118 | -1.4% | -1.4% | 5.6% | 2.6% | unestablished at this precision |
-| v2 signed URL / RSA fixture | 694360 | 694843 | -0.1% | -0.4% | -0.1% | 5.2% | unestablished at this precision |
-| v4 signed URL / RSA fixture | 698833 | 701808 | 0.5% | 1.2% | 0.5% | 70.1% | unestablished at this precision |
-| CRC32C / 64KiB | 560363 | 548572 | -2.4% | -0.9% | -3.3% | 1% | unestablished at this precision |
-| HTTP object metadata | 99877 | 104691 | 6.6% | -1.7% | 6.6% | 5.7% | unestablished at this precision |
-| HTTP automatic listing / one page | 102378 | 118536 | 16.1% | -2.2% | 25.5% | 19.7% | unestablished at this precision |
-| HTTP multipart upload / 64KiB + CRC32C | 1015731 | 1047919 | 1.6% | -28.5% | 8.2% | 15.4% | unestablished at this precision |
-| HTTP download / 64KiB + CRC32C | 259123 | 261434 | -5.6% | -5.6% | 2.7% | 10.6% | unestablished at this precision |
+| Storage construction | 1001 | 881 | -12.5% | -7.8% | -16.3% | 41.5% | unestablished at this precision |
+| custom endpoint construction | 1276 | 1484 | 16.4% | 7.8% | 21.9% | 45.3% | unestablished at this precision |
+| bucket + file handles | 16949 | 17342 | 0.3% | -0.5% | 1% | 59.9% | unestablished at this precision |
+| v2 signed URL / RSA fixture | 716544 | 697651 | -1.5% | -2.7% | 22.2% | 68.1% | unestablished at this precision |
+| v4 signed URL / RSA fixture | 717131 | 714033 | -2% | 1.6% | -3.7% | 85.5% | unestablished at this precision |
+| CRC32C / 64KiB | 568878 | 46922 | -91.9% | -90.6% | -93.1% | 146.4% | unestablished at this precision |
+| CRC32C / 64B | 913 | 234 | -74.3% | -75% | -73.6% | 33.6% | lower time in every pair, beyond control spread |
+| CRC32C / 64KiB in 1KiB chunks | 578387 | 39137 | -93.2% | -93.3% | -93.2% | 52.9% | lower time in every pair, beyond control spread |
+| CRC32C / resumed 32KiB | 288362 | 19454 | -93.3% | -93.3% | -93.8% | 71.2% | lower time in every pair, beyond control spread |
+| HTTP object metadata | 94726 | 116753 | 21.2% | 14.3% | 21.2% | 538.1% | unestablished at this precision |
+| HTTP automatic listing / one page | 121481 | 137136 | 10.2% | 24.3% | -0.5% | 991.6% | unestablished at this precision |
+| HTTP multipart upload / 64KiB + CRC32C | 1094491 | 358645 | -67.2% | -65.1% | -67.6% | 11.2% | lower time in every pair, beyond control spread |
+| HTTP download / 64KiB + CRC32C | 272682 | 242693 | -13.3% | -7.6% | -13.3% | 8% | unestablished at this precision |
 
 ## Reproduce
 

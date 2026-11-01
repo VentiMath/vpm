@@ -259,7 +259,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
 | [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
 | [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Retained comparison package, no current VPM runtime consumers; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
-| [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, sliced CRC32C initialization, real HTTP and Firebase callers. |
+| [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; independent endpoint context and streaming CRC32C, private checksum tables and normalized seeds; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, real HTTP and Firebase callers. |
 | [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
 | [vfast-xml-parser](packages/vfast-xml-parser) | fast-xml-parser 5.11.2 | Reusable parser setup, exact depth limits, deterministic filters, safer callbacks and stricter XML syntax checks; all six helpers use VPM. |
 | [vfast-xml-builder](packages/vfast-xml-builder) | fast-xml-builder 1.3.1 | Bounded raw/ordinary traversal, deterministic filters, corrected array/text handling, readonly callback paths and faster serialization. |
@@ -1613,8 +1613,8 @@ for the replacement caller.
 ## vgoogle-cloud-storage
 
 The baseline is **@google-cloud/storage 8.4.0**, checked October 30, 2026.
-Endpoint configuration is independently implemented; the rest of the published
-SDK and declarations are retained with focused changes. All 13 direct library
+Endpoint configuration and CRC32C computation are independently implemented;
+the rest of the published SDK and declarations are retained with focused changes. All 13 direct library
 dependencies are VPM packages. Its unused `abort-controller` dependency
 is removed; Node 24/Bun provide the native controller used by resumable uploads.
 
@@ -1622,11 +1622,15 @@ Signed URLs reject malformed SHA-256 digests and caller query parameters that
 overwrite authentication fields. Canonical headers combine case variants,
 exclude undefined fields consistently, normalize spaces/tabs and preserve host
 ports. Invalid actions and header values settle both callback/promise APIs.
-CRC32C initialization now respects typed-array and DataView slice boundaries.
+CRC32C uses private, derived slicing tables and independently implemented streaming
+updates. Public table mutation cannot corrupt results; signed/unsigned 32-bit
+seeds normalize before serialization and out-of-range seeds fail at construction.
+Initialization respects typed-array and DataView slice boundaries. Independent
+bitwise controls cover 260 lengths, five chunkings, resumed checksums and files.
 Module exports ignore inherited properties.
 
 Verification covers 110 retained upstream tests on both runtimes and controls,
-nine focused tests, five paired regression probes, independent RSA signature
+ten focused tests, five paired regression probes, independent RSA signature
 verification, 25 real local HTTP requests per caller run and Firebase Admin
 12.7.0's actual Storage factory. HTTP coverage includes simple/resumable/local
 uploads, integrity-checked downloads, pagination, existence, deletion, transient
@@ -1644,7 +1648,7 @@ runtimes, including verified V4 form signatures.
 
 [Measurements](packages/vgoogle-cloud-storage/bench/results/README.md) use one
 selected SDK per fresh worker, four balanced comparison pairs and two identical-
-source controls. A separate Node 24 server serves both client runtimes. All ten
+source controls. A separate Node 24 server serves both client runtimes. All thirteen
 CPU/localhost workloads and their regressions/inconclusive results are retained;
 old shared-process percentages are historical and are not current evidence.
 [API, migration and verification scope](packages/vgoogle-cloud-storage/README.md).

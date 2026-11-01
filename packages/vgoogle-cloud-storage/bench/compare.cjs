@@ -22,6 +22,9 @@ const cases = [
         make: make('const file = new lib.Storage({projectId: "fixture-project", credentials: env.credentials}).bucket("fixture").file("nested/fixture.pdf"); return () => file.getSignedUrl({action: "read", version: ' + JSON.stringify(version) + ', expires: env.expires, accessibleAt: env.start});'),
         validate: value => assert.ok(new URL(value[0]).searchParams.has(version === 'v2' ? 'Signature' : 'X-Goog-Signature'))})),
     {name: 'CRC32C / 64KiB', make: make('return () => {const hash = new lib.CRC32C(); hash.update(env.body); return hash.toString();};'), validate: value => assert.equal(value, crc32c)},
+    {name: 'CRC32C / 64B', make: make('const bytes = env.body.subarray(0, 64); return () => {const hash = new lib.CRC32C(); hash.update(bytes); return hash.toString();};'), validate: value => assert.equal(value, 'N67uMw==')},
+    {name: 'CRC32C / 64KiB in 1KiB chunks', make: make('const chunks = Array.from({length: 64}, (_, i) => env.body.subarray(i * 1024, (i + 1) * 1024)); return () => {const hash = new lib.CRC32C(); for (const chunk of chunks) hash.update(chunk); return hash.toString();};'), validate: value => assert.equal(value, crc32c)},
+    {name: 'CRC32C / resumed 32KiB', make: make('const bytes = env.body.subarray(32768); return () => {const hash = lib.CRC32C.from("QEaKDQ=="); hash.update(bytes); return hash.toString();};'), validate: value => assert.equal(value, crc32c)},
     {name: 'HTTP object metadata', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return () => file.getMetadata();'), validate: value => assert.equal(value[0].name, 'fixture.pdf')},
     {name: 'HTTP automatic listing / one page', async: true, make: make(connection + 'const bucket = storage.bucket("fixture"); return () => bucket.getFiles({prefix: "fixture"});'), validate: value => {assert.equal(value[0].length, 1);assert.equal(value[0][0].name, 'fixture.pdf');}},
     {name: 'HTTP multipart upload / 64KiB + CRC32C', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return async () => {await file.save(env.body, {resumable: false}); return file.metadata;};'), validate: value => assert.equal(value.crc32c, crc32c)},
@@ -63,5 +66,5 @@ async function cleanup() {
         for (const dependency of Object.keys({...manifest.dependencies, ...manifest.optionalDependencies})) sources(dependency);
     }
     sources('vgoogle-cloud-storage');
-    await require('../../../scripts/bench-process.cjs').run({root, upstream: roots.upstream, vpm: roots.vpm, cases, files, cleanup});
+    await require('../../../scripts/bench-process.cjs').run({root, upstream: roots.upstream, vpm: roots.vpm, cases, files, cleanup, validationOnly: process.argv.includes('--validate')});
 })().catch(async error => {console.error(error);if (server && !server.killed) server.kill();process.exitCode = 1;});

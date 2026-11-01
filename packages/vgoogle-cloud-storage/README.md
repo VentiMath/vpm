@@ -1,8 +1,8 @@
 # vgoogle-cloud-storage
 
-**Implementation status:** endpoint selection and per-client emulator context
-have independent VPM implementations. Bucket/file operations, transport, signing
-and checksums retain upstream runtime code with focused changes. Rewriting those
+**Implementation status:** endpoint selection, per-client emulator context and
+CRC32C checksums have independent VPM implementations. Bucket/file operations,
+transport and signing retain upstream runtime code with focused changes. Rewriting those
 application-facing paths is still pending.
 [Provenance](PROVENANCE.json) records this boundary.
 
@@ -52,8 +52,12 @@ V4 signatures expire within seven days.
 - Header normalization merges case variants, omits undefined values consistently,
   trims values, collapses spaces/tabs and snapshots caller records before awaits.
   Nondefault host ports remain in the canonical request.
-- CRC32C initialization respects the offset and length of typed-array/DataView
-  slices instead of reading the entire backing buffer.
+- CRC32C uses an independently implemented streaming engine with private, derived
+  Castagnoli tables. Mutating exported inspection tables cannot corrupt checksums.
+  Signed or unsigned 32-bit seeds normalize before serialization; out-of-range
+  seeds fail immediately. Chunking and resumed checksums preserve the wire format.
+  Initialization respects typed-array/DataView offsets, including cross-realm
+  views; upstream base64 decoding remains compatible.
 - CJS and native ESM entry points share class identities. Export enumeration
   ignores inherited properties. Public declarations are
   self-contained and do not install ambient Node declarations.
@@ -71,7 +75,7 @@ part of your application contract.
 ## Verified scope
 
 The broader published SDK implementation and public declarations are retained;
-endpoint configuration is the independently implemented exception.
+endpoint configuration and CRC32C computation are independently implemented.
 Independent verification focuses on backend object uploads, signed URLs,
 listings, existence checks and deletion, plus local-file uploads and bucket
 creation. Retaining the broader API does not certify every SDK operation.
@@ -80,8 +84,11 @@ Checks on Node 24 and Bun cover:
 
 - 110 retained upstream signer, CRC32C and lazy-import tests, with documented
   fixture adaptations and original-upstream controls.
-- Nine focused tests, five paired regression probes, ordinary V2/V4 URL parity,
+- Ten focused tests, five paired regression probes, ordinary V2/V4 URL parity,
   and independently verified RSA signatures for corrected canonical requests.
+- CRC32C controls compare 260 lengths, five chunkings, resumed seeds and real
+  files against an independent bit-at-a-time oracle. Upstream controls reproduce
+  table-mutation and numeric-seed failures, alongside sliced-view regressions.
 - 25 real local HTTP requests per caller run: binary multipart and resumable
   uploads, download integrity, automatic/manual/streamed pagination, callbacks,
   cleanup, checksum failure deletion and transient retries.
@@ -109,14 +116,20 @@ CRC32C checks use a fixed known checksum. Warning thresholds are set equally to
 keep warning I/O outside timing. All comparisons, including costs and inconclusive
 results, remain in the report. They do not predict cloud request latency.
 
-Node client construction takes 1.82 µs versus 0.95 µs (+94% median paired time);
-custom-endpoint construction takes 2.33 µs versus 1.04 µs (+124%). On Bun,
-custom-endpoint construction costs 18% (1.36 versus 1.13 µs), while default
-construction is inconclusive. Node's checksum-verified download takes 264 µs
-versus 378 µs (30% less paired time). Every other transfer, signing, checksum
-and handle comparison is inconclusive on both runtimes. These are full-stack
-comparisons, so neither construction costs nor download gains isolate the
-endpoint rewrite alone.
+The checksum cases use 82% less paired time on Node for 64-byte inputs (157 vs
+925 ns), and about 88% less for 64 KiB, chunked and resumed inputs (42 vs 340 µs
+for the whole buffer). Bun's short, chunked and resumed cases use 74%, 93% and
+93% less paired time. Bun's whole-buffer comparison remains inconclusive under
+the control-spread rule: its identical-source controls varied by as much as 146%.
+That uncertainty is retained, rather than treating every large median difference
+as established. Private slicing tables use 8 KiB; module startup is not measured.
+
+Bun's integrity-checked 64 KiB upload takes 359 vs 1,094 µs (67% less paired
+time). Other transfer, signing and handle comparisons are inconclusive. Node
+client construction still costs 88% (1.80 vs 0.98 µs), and custom endpoints cost
+113% (2.23 vs 1.06 µs); both Bun construction cases are inconclusive. These are
+full-stack comparisons, so neither construction costs nor transfer gains isolate
+the checksum rewrite alone or predict cloud latency.
 
 ## Provenance
 
