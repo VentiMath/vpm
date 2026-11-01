@@ -23,39 +23,39 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T07:01:50.895Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:49:00.205Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| build / 1,000 sequential inserts | 160124 | 208983 | 16.8% | 49.1% | -15.5% | 132% | unestablished at this precision |
-| build / 1,000 shuffled inserts | 224925 | 255649 | 18.7% | 53.3% | -14.3% | 135.9% | unestablished at this precision |
-| lookup / 64 get in 10,000 | 2288 | 2432 | 0.4% | 12% | -20.3% | 17.4% | unestablished at this precision |
-| lookup / 64 find().index in 10,000 | 5859 | 7739 | 12.1% | 130.9% | -24.6% | 237% | unestablished at this precision |
-| position / 64 at() in 10,000 | 6480 | 5960 | -5% | 21.3% | -27.8% | 10.6% | unestablished at this precision |
-| traverse / keys of 1,000 | 10164 | 10186 | 3.2% | 26.1% | -4.7% | 341.9% | unestablished at this precision |
-| traverse / forEach range 250-750 | 3861 | 3171 | -14.5% | -28.5% | 249.6% | 3% | unestablished at this precision |
-| remove / 64 persistent removals from 1,000 | 9681 | 8802 | -4.5% | -4.5% | 314.4% | 45.7% | unestablished at this precision |
-| Firestore Watch / 100 document changes in 1,000 | 135200 | 130858 | -1.5% | -19% | 89.1% | 121.9% | unestablished at this precision |
+| build / 1,000 sequential inserts | 150976 | 151037 | 0.8% | 9.9% | -0.4% | 1.5% | unestablished at this precision |
+| build / 1,000 shuffled inserts | 176458 | 175364 | -1.2% | -2.5% | -1.2% | 2.2% | unestablished at this precision |
+| lookup / 64 get in 10,000 | 2165 | 2138 | 0.1% | -3.8% | 1.4% | 0.5% | unestablished at this precision |
+| lookup / 64 find().index in 10,000 | 5449 | 5531 | 2.8% | 1.2% | 3.6% | 34.3% | unestablished at this precision |
+| position / 64 at() in 10,000 | 3931 | 3177 | -20.1% | -18.5% | -21.2% | 29.8% | unestablished at this precision |
+| traverse / keys of 1,000 | 8425 | 6609 | -21% | -19.7% | -23.9% | 13.3% | lower time in every pair, beyond control spread |
+| traverse / forEach range 250-750 | 3375 | 2729 | -18.2% | -18.2% | -18.9% | 9.2% | lower time in every pair, beyond control spread |
+| remove / 64 persistent removals from 1,000 | 7304 | 7257 | -0.7% | -0.7% | -1.4% | 2.8% | unestablished at this precision |
+| Firestore Watch / 100 document changes in 1,000 | 101915 | 99429 | -1.4% | -1.4% | -3.9% | 2.3% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T07:02:34.973Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:49:36.183Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| build / 1,000 sequential inserts | 387009 | 394224 | -8% | -8% | -1.9% | 8.3% | unestablished at this precision |
-| build / 1,000 shuffled inserts | 464968 | 307933 | -21.8% | -50.2% | -2% | 154.5% | unestablished at this precision |
-| lookup / 64 get in 10,000 | 1261 | 1743 | 8.5% | -34.2% | 38.3% | 162.2% | unestablished at this precision |
-| lookup / 64 find().index in 10,000 | 7323 | 7056 | -8.3% | -17.3% | 153.3% | 69.7% | unestablished at this precision |
-| position / 64 at() in 10,000 | 4289 | 3771 | -11.6% | -48.9% | 94.6% | 712.6% | unestablished at this precision |
-| traverse / keys of 1,000 | 7952 | 13117 | 66.5% | 36.1% | 137.1% | 98.7% | unestablished at this precision |
-| traverse / forEach range 250-750 | 2849 | 3582 | 18.4% | 14.6% | 28.3% | 1405.3% | unestablished at this precision |
-| remove / 64 persistent removals from 1,000 | 16997 | 28052 | 61.5% | 61.5% | 53.7% | 376.5% | unestablished at this precision |
-| Firestore Watch / 100 document changes in 1,000 | 199265 | 176117 | -4.5% | -25.3% | -0.1% | 41% | unestablished at this precision |
+| build / 1,000 sequential inserts | 269199 | 294297 | 10.2% | -1.8% | 18.2% | 3.5% | unestablished at this precision |
+| build / 1,000 shuffled inserts | 232926 | 244932 | 1.6% | 0.9% | 7.9% | 8.6% | unestablished at this precision |
+| lookup / 64 get in 10,000 | 1064 | 1060 | 0.1% | 3.2% | -1.9% | 7.8% | unestablished at this precision |
+| lookup / 64 find().index in 10,000 | 4948 | 4935 | -0.1% | 3.4% | -1.8% | 6.1% | unestablished at this precision |
+| position / 64 at() in 10,000 | 3196 | 2915 | -10.9% | 2.2% | -13.2% | 9.9% | unestablished at this precision |
+| traverse / keys of 1,000 | 5332 | 7876 | 44.1% | 60.2% | -8.9% | 1.7% | unestablished at this precision |
+| traverse / forEach range 250-750 | 2378 | 2723 | 11.3% | 17.8% | -5.2% | 3.9% | unestablished at this precision |
+| remove / 64 persistent removals from 1,000 | 15916 | 17007 | 1.2% | 1.2% | 14.3% | 20.5% | unestablished at this precision |
+| Firestore Watch / 100 document changes in 1,000 | 160105 | 146074 | -8.1% | -12.3% | -7.6% | 16.7% | unestablished at this precision |
 
 ## Reproduce
 

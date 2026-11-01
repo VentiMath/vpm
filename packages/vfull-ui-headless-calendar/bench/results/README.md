@@ -23,33 +23,33 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T08:51:25.350Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:56:37.364Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| named zone / 200 timestamps to wall-clock markers | 1278058 | 252042 | -80.2% | -80.7% | -79.8% | 6.2% | lower time in every pair, beyond control spread |
-| named zone / 42 day cells to instants and offsets | 491177 | 112856 | -76.8% | -77.1% | -76.8% | 4.9% | lower time in every pair, beyond control spread |
-| named zone / format 42 day cells | 547982 | 224681 | -58.9% | -57% | -61.6% | 1.3% | lower time in every pair, beyond control spread |
-| named zone / parse 200 ISO strings | 1283379 | 357982 | -72% | -72% | -60.7% | 2.4% | lower time in every pair, beyond control spread |
-| local zone / 42 day cells to instants | 11887 | 12747 | 6.7% | 6.7% | 9.9% | 1.2% | higher time in every pair, beyond control spread |
-| UTC / parse 200 ISO strings and add a month | 112726 | 117264 | 3.6% | 3.6% | 3.3% | 2.2% | unestablished at this precision |
+| named zone / 200 timestamps to wall-clock markers | 1274749 | 251635 | -80.3% | -80.5% | -79.6% | 3.2% | lower time in every pair, beyond control spread |
+| named zone / 42 day cells to instants and offsets | 488824 | 112035 | -76.9% | -76.9% | -76.9% | 5.3% | lower time in every pair, beyond control spread |
+| named zone / format 42 day cells | 546971 | 224388 | -59.1% | -57.1% | -60.1% | 4.2% | lower time in every pair, beyond control spread |
+| named zone / parse 200 ISO strings | 1275136 | 346076 | -72.8% | -72.3% | -73.7% | 6% | lower time in every pair, beyond control spread |
+| local zone / 42 day cells to instants | 11962 | 12561 | 5.3% | 39.2% | 4.5% | 1.6% | higher time in every pair, beyond control spread |
+| UTC / parse 200 ISO strings and add a month | 112301 | 118215 | 5.3% | 9.1% | 4% | 5% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T08:51:49.979Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:57:01.936Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| named zone / 200 timestamps to wall-clock markers | 509568 | 245632 | -51.4% | -52.5% | -50.6% | 5.9% | lower time in every pair, beyond control spread |
-| named zone / 42 day cells to instants and offsets | 101292 | 111619 | 10.2% | 10.2% | 10.7% | 1.7% | higher time in every pair, beyond control spread |
-| named zone / format 42 day cells | 200116 | 206303 | 3.1% | -6.5% | 19.6% | 3.6% | unestablished at this precision |
-| named zone / parse 200 ISO strings | 514875 | 322380 | -37.6% | -35.4% | -38.4% | 5.7% | lower time in every pair, beyond control spread |
-| local zone / 42 day cells to instants | 4906 | 5304 | 7.6% | 6.6% | 8.8% | 1.3% | higher time in every pair, beyond control spread |
-| UTC / parse 200 ISO strings and add a month | 87751 | 97601 | 11.2% | 11.7% | 10.9% | 2.1% | higher time in every pair, beyond control spread |
+| named zone / 200 timestamps to wall-clock markers | 521579 | 248061 | -52.2% | -51.6% | -52.2% | 2% | lower time in every pair, beyond control spread |
+| named zone / 42 day cells to instants and offsets | 101340 | 112536 | 9.9% | 8.9% | 13% | 2.1% | higher time in every pair, beyond control spread |
+| named zone / format 42 day cells | 193911 | 208332 | 6.9% | 5.9% | 8.2% | 2.1% | higher time in every pair, beyond control spread |
+| named zone / parse 200 ISO strings | 512151 | 324503 | -37.2% | -36.9% | -37.2% | 0.2% | lower time in every pair, beyond control spread |
+| local zone / 42 day cells to instants | 4925 | 5285 | 8.5% | 8.5% | 7.8% | 6.1% | unestablished at this precision |
+| UTC / parse 200 ISO strings and add a month | 85996 | 95101 | 11% | 17.1% | 6.2% | 57.4% | unestablished at this precision |
 
 ## Reproduce
 

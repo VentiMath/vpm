@@ -8,8 +8,7 @@ const expected = require('./expected.json');
 const fixture = path.resolve(__dirname, '../../../scripts/headless-calendar-conformance');
 
 (async () => {
-  const upstream = await import(path.join(fixture, 'node_modules/@full-ui/headless-calendar/index.js'));
-  const vpm = await import(path.resolve(__dirname, '../index.js'));
+  const {upstream, vpm} = await require('../../../scripts/bench-library.cjs').load({upstream: () => import(path.join(fixture, 'node_modules/@full-ui/headless-calendar/index.js')), vpm: () => import(path.resolve(__dirname, '../index.js'))});
   const locale = {codes: ['en-US'], week: {dow: 0, doy: 1}, simpleNumberFormat: new Intl.NumberFormat('en-US'), options: {}};
   // A calendar's inputs: event timestamps spread over a year, the wall-clock
   // start of each day cell of a six-week month view, and ISO strings.
@@ -29,5 +28,5 @@ const fixture = path.resolve(__dirname, '../../../scripts/headless-calendar-conf
   ];
   for (const item of cases) item.validate = value => assert.equal(value, expected[item.name], item.name);
   await require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases,
-    files: ['package.json', 'PROVENANCE.json', 'index.js', 'markers.js', 'ranges.js', 'durations.js', 'environment.js', 'formatters.js', 'zones.js', 'bench/compare.cjs', 'bench/expected.json', '../../scripts/headless-calendar-conformance/package-lock.json']});
+    files: ['../../scripts/bench-library.cjs', 'package.json', 'index.js', 'markers.js', 'ranges.js', 'durations.js', 'environment.js', 'formatters.js', 'zones.js', 'bench/compare.cjs', 'bench/expected.json', '../../scripts/headless-calendar-conformance/package-lock.json']});
 })().catch(error => { console.error(error); process.exit(1); });

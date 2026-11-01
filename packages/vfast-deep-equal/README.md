@@ -68,9 +68,9 @@ Browser bundling and deployment are not certified by the Node/Bun checks.
   source hashes and regressions.
 
 The isolated Node 24 / Bun measurements preserve the large Buffer improvement.
-Several ordinary Node comparisons improve; nested Map equality is inconclusive.
-Bun retains regressions in some Firestore query comparisons; other caller results
-overlap control variation. The linked report gives every case, both process-order
+Several ordinary Node comparisons improve; nested Map equality takes 18.4%
+more time. Bun improves React-element equality and one Firestore query case;
+its other caller comparisons overlap the control variation. The linked report gives every case, both process-order
 groups and the controls instead of treating small differences as established.
 
 MIT licensing and the pinned source are recorded in [PROVENANCE.json](PROVENANCE.json).

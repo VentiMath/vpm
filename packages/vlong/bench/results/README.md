@@ -23,59 +23,59 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T07:16:39.605Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:54:53.298Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| small signed construction | 3 | 5 | 52.4% | 68.4% | -10.6% | 1.2% | unestablished at this precision |
-| small unsigned construction | 7 | 9 | 42% | 62% | 11% | 14.5% | unestablished at this precision |
-| short decimal parse | 67 | 37 | -44.9% | -34.8% | -51.3% | 3.9% | lower time in every pair, beyond control spread |
-| signed int64 decimal parse | 301 | 131 | -56.5% | -56.6% | -56.1% | 2.4% | lower time in every pair, beyond control spread |
-| unsigned int64 decimal parse | 285 | 116 | -59.2% | -58.8% | -59.6% | 4.5% | lower time in every pair, beyond control spread |
-| hexadecimal parse | 184 | 121 | -33.6% | -29.2% | -34.5% | 8.8% | lower time in every pair, beyond control spread |
-| base36 parse | 211 | 109 | -48.2% | -46.9% | -50.1% | 2.6% | lower time in every pair, beyond control spread |
-| short decimal format | 50 | 10 | -80.4% | -80.3% | -80.7% | 2.6% | lower time in every pair, beyond control spread |
-| signed int64 decimal format | 465 | 53 | -88.7% | -89% | -88.3% | 1.5% | lower time in every pair, beyond control spread |
-| unsigned int64 decimal format | 432 | 68 | -84.1% | -84.1% | -84.1% | 2.7% | lower time in every pair, beyond control spread |
-| hexadecimal format | 329 | 71 | -78.4% | -77.7% | -78.4% | 67.8% | lower time in every pair, beyond control spread |
-| multiply | 26 | 22 | -16.4% | -16.8% | -16.4% | 15.1% | unestablished at this precision |
-| divide | 38 | 33 | -12.9% | -13.3% | -12.3% | 6.9% | lower time in every pair, beyond control spread |
-| eight array bytes | 10 | 17 | 80.3% | 56.6% | 80.3% | 1.5% | higher time in every pair, beyond control spread |
-| eight Uint8Array bytes | 11 | 11 | -3.8% | -9.9% | -3.8% | 0.1% | lower time in every pair, beyond control spread |
-| protobuf 8 fromObject + encode | 3350 | 1995 | -40.8% | -41.3% | -39.9% | 4.8% | lower time in every pair, beyond control spread |
-| protobuf 8 decode + toObject | 4543 | 1460 | -68.1% | -72.7% | -66.8% | 4.3% | lower time in every pair, beyond control spread |
-| protobuf 7 fromObject + encode | 3324 | 1959 | -41.3% | -40.7% | -41.5% | 6.3% | lower time in every pair, beyond control spread |
-| protobuf 7 decode + toObject | 4039 | 1422 | -64.5% | -64.5% | -64.5% | 4.4% | lower time in every pair, beyond control spread |
+| small signed construction | 3 | 6 | 86.3% | 86.3% | 80.1% | 2.3% | higher time in every pair, beyond control spread |
+| small unsigned construction | 7 | 10 | 55.4% | 78% | 31.6% | 21.2% | higher time in every pair, beyond control spread |
+| short decimal parse | 68 | 39 | -44.3% | -42.7% | -44.3% | 19.4% | lower time in every pair, beyond control spread |
+| signed int64 decimal parse | 309 | 135 | -56.7% | -57.1% | -52.7% | 5.3% | lower time in every pair, beyond control spread |
+| unsigned int64 decimal parse | 293 | 120 | -59% | -57.3% | -60.1% | 2.5% | lower time in every pair, beyond control spread |
+| hexadecimal parse | 178 | 125 | -29.5% | -30.2% | -29.5% | 3.1% | lower time in every pair, beyond control spread |
+| base36 parse | 215 | 113 | -47.5% | -47.5% | -47.8% | 3.7% | lower time in every pair, beyond control spread |
+| short decimal format | 51 | 10 | -80.1% | -80.6% | -80% | 1.4% | lower time in every pair, beyond control spread |
+| signed int64 decimal format | 475 | 55 | -88.6% | -88.5% | -88.6% | 4.1% | lower time in every pair, beyond control spread |
+| unsigned int64 decimal format | 442 | 70 | -84.1% | -84.4% | -83.7% | 2.6% | lower time in every pair, beyond control spread |
+| hexadecimal format | 340 | 75 | -78.2% | -77.7% | -78.3% | 4% | lower time in every pair, beyond control spread |
+| multiply | 27 | 22 | -17.7% | -16.8% | -18.8% | 2.3% | lower time in every pair, beyond control spread |
+| divide | 39 | 34 | -13.4% | -13.5% | -3.1% | 4.4% | unestablished at this precision |
+| eight array bytes | 9 | 18 | 89.2% | 89.1% | 89.4% | 3.4% | higher time in every pair, beyond control spread |
+| eight Uint8Array bytes | 11 | 11 | 0.4% | 1% | -1% | 4.7% | unestablished at this precision |
+| protobuf 8 fromObject + encode | 3450 | 2070 | -40% | -41.7% | -39.4% | 4.4% | lower time in every pair, beyond control spread |
+| protobuf 8 decode + toObject | 4651 | 1511 | -67.4% | -68.8% | -66.8% | 1.5% | lower time in every pair, beyond control spread |
+| protobuf 7 fromObject + encode | 3432 | 2062 | -40% | 3.3% | -41.1% | 2.3% | unestablished at this precision |
+| protobuf 7 decode + toObject | 4183 | 1464 | -64.9% | -57.9% | -65% | 4.1% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T07:17:54.054Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:56:07.423Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| small signed construction | 6 | 4 | -24.3% | 12.4% | -25.3% | 1.1% | unestablished at this precision |
-| small unsigned construction | 3 | 4 | 56.9% | 67.2% | 56.9% | 79.2% | unestablished at this precision |
-| short decimal parse | 65 | 43 | -34.6% | -34.6% | -34% | 52.1% | unestablished at this precision |
-| signed int64 decimal parse | 189 | 157 | -17.1% | -12% | -19.9% | 7.8% | lower time in every pair, beyond control spread |
-| unsigned int64 decimal parse | 158 | 157 | -0.7% | -2.2% | -0.7% | 6.4% | unestablished at this precision |
-| hexadecimal parse | 117 | 115 | -2.2% | 2.9% | -3% | 4.3% | unestablished at this precision |
-| base36 parse | 125 | 89 | -27.8% | -25.1% | -27.8% | 3.3% | lower time in every pair, beyond control spread |
-| short decimal format | 57 | 8 | -86.3% | -97.1% | -75.8% | 2.3% | lower time in every pair, beyond control spread |
-| signed int64 decimal format | 237 | 143 | -40.4% | -20.6% | -40.4% | 1.5% | unestablished at this precision |
-| unsigned int64 decimal format | 224 | 147 | -32.9% | -31.6% | -32.9% | 1.3% | lower time in every pair, beyond control spread |
-| hexadecimal format | 222 | 87 | -61.1% | -56.4% | -61.1% | 1.6% | lower time in every pair, beyond control spread |
-| multiply | 16 | 22 | 40.1% | 88% | 15.3% | 6.7% | higher time in every pair, beyond control spread |
-| divide | 32 | 25 | -11.6% | 43.3% | -49.9% | 95.8% | unestablished at this precision |
-| eight array bytes | 11 | 29 | 165.6% | 199.4% | 164.5% | 10.4% | higher time in every pair, beyond control spread |
-| eight Uint8Array bytes | 15 | 23 | 52.3% | 71.2% | 52.3% | 5.5% | higher time in every pair, beyond control spread |
-| protobuf 8 fromObject + encode | 2840 | 2465 | -12.7% | -0.7% | -21.3% | 14.1% | unestablished at this precision |
-| protobuf 8 decode + toObject | 3278 | 2122 | -36% | -31.5% | -37.7% | 42.1% | unestablished at this precision |
-| protobuf 7 fromObject + encode | 2521 | 2297 | -10.8% | 2.5% | -18.4% | 1% | unestablished at this precision |
-| protobuf 7 decode + toObject | 2780 | 1904 | -31.4% | -28.6% | -33.5% | 14.2% | lower time in every pair, beyond control spread |
+| small signed construction | 5 | 4 | -19.4% | -12.7% | -26.8% | 1.5% | lower time in every pair, beyond control spread |
+| small unsigned construction | 3 | 4 | 73.2% | 73.2% | 77.3% | 3% | higher time in every pair, beyond control spread |
+| short decimal parse | 60 | 39 | -36% | -34.9% | -50.6% | 13.4% | lower time in every pair, beyond control spread |
+| signed int64 decimal parse | 180 | 140 | -22.1% | -22.3% | -22.1% | 6.1% | lower time in every pair, beyond control spread |
+| unsigned int64 decimal parse | 165 | 141 | -15.1% | -9.3% | -15.6% | 12.6% | unestablished at this precision |
+| hexadecimal parse | 109 | 104 | -8.2% | -8.4% | -5.5% | 13.5% | unestablished at this precision |
+| base36 parse | 116 | 80 | -31.1% | -30.6% | -31.4% | 15.9% | lower time in every pair, beyond control spread |
+| short decimal format | 58 | 6 | -88.8% | -97.7% | -79.1% | 14.3% | lower time in every pair, beyond control spread |
+| signed int64 decimal format | 227 | 124 | -45.6% | -66.5% | -45.6% | 11.6% | lower time in every pair, beyond control spread |
+| unsigned int64 decimal format | 208 | 131 | -36.8% | -36.1% | -37.9% | 13.9% | lower time in every pair, beyond control spread |
+| hexadecimal format | 213 | 78 | -62.9% | -61.9% | -63.1% | 12.8% | lower time in every pair, beyond control spread |
+| multiply | 15 | 20 | 36.3% | 62.1% | 10.4% | 4.5% | higher time in every pair, beyond control spread |
+| divide | 21 | 22 | 4.8% | 27% | -12.4% | 10.8% | unestablished at this precision |
+| eight array bytes | 10 | 26 | 152.8% | 166% | 152.8% | 16.8% | higher time in every pair, beyond control spread |
+| eight Uint8Array bytes | 14 | 21 | 51.7% | 57.5% | 40% | 6.3% | higher time in every pair, beyond control spread |
+| protobuf 8 fromObject + encode | 2450 | 2242 | -7.8% | -5.5% | -9.7% | 20.6% | unestablished at this precision |
+| protobuf 8 decode + toObject | 3131 | 1944 | -37.8% | -38.5% | -36.6% | 18.2% | lower time in every pair, beyond control spread |
+| protobuf 7 fromObject + encode | 2295 | 2164 | -3.1% | -16.9% | -3.1% | 199.2% | unestablished at this precision |
+| protobuf 7 decode + toObject | 2577 | 1838 | -29.3% | -28% | -29.9% | 9.2% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

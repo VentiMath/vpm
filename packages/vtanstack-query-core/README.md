@@ -68,9 +68,9 @@ records the comparison release and evidence; MIT attribution is retained.
 
 ## Measurements
 
-In the recorded run, cache reads took 10% less time on Node and 33% less on Bun;
-request deduplication took 44% and 31% less, respectively. Node's unchanged JSON
-update took 20% less time, but the same case remained **14% slower on Bun**.
-Node's fresh-cache fetch and Bun's construction/invalidation results are
-inconclusive at the control spread. These are seven local cache operations with
-no network; consult the raw samples and per-case evidence in the linked report.
+In the recorded run, cache reads took 11% less time on Node and 31% less on Bun;
+request deduplication took 43% and 32% less, respectively. Node's unchanged JSON
+update took 21% less time, but the same case was **30% slower on Bun**. All seven
+Node directions exceeded the measured control spread. Bun construction and
+invalidation remain inconclusive. These are local cache operations with no
+network; consult the raw samples and per-case evidence in the linked report.

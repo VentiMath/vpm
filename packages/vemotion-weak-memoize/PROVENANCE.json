@@ -15,7 +15,7 @@
   ],
   "verification": {
     "fixture": "scripts/emotion-conformance",
-    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds.",
+    "upstreamSuite": "The complete VPM Emotion stack is checked against the pinned upstream suite. React 16 development: 413 passing, two documented Babel-plugin differences, eight skipped (423 total). React 18 development: 416 passing, the same two differences, five skipped. Production: five passing and 418 skipped. See scripts/emotion-conformance/README.md for the configuration, adaptations and snapshot counts.",
     "runtimes": [
       "Node.js 24",
       "Bun"

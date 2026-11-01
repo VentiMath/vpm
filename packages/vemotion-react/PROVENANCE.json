@@ -19,7 +19,7 @@
   ],
   "verification": {
     "fixture": "scripts/emotion-conformance",
-    "upstreamSuite": "Emotion's 293 tests (49 of them in react's test files) pass with this package in place of the original, in development and production builds and with React 16 and React 18.",
+    "upstreamSuite": "The complete VPM Emotion stack is checked against the pinned upstream suite. React 16 development: 413 passing, two documented Babel-plugin differences, eight skipped (423 total). React 18 development: 416 passing, the same two differences, five skipped. Production: five passing and 418 skipped. See scripts/emotion-conformance/README.md for the configuration, adaptations and snapshot counts.",
     "declarations": "types.cjs compiles a TSX application (css prop through jsxImportSource, Global, ClassNames, theming, keyframes, and two expected errors) against the declarations with DOM and React 18.3 and 19 types under the configured TypeScript 7 compiler.",
     "runtimes": [
       "Node.js 24",

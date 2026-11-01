@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T07:15:03.978Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:48:10.444Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| bootstrap.css | 6664489 | 6125620 | -8.6% | -5.9% | -8.6% | 14.7% | unestablished at this precision |
-| component rule | 5601 | 5072 | -9.7% | 24.9% | -17.2% | 64.6% | unestablished at this precision |
+| bootstrap.css | 6764094 | 5935078 | -12% | -6.3% | -19.2% | 29.7% | unestablished at this precision |
+| component rule | 5816 | 5058 | -12.4% | -12.4% | -13.5% | 1.1% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T07:15:19.184Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:48:24.696Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| bootstrap.css | 6947266 | 7520464 | -0.9% | -12.4% | 9.7% | 10.4% | unestablished at this precision |
-| component rule | 5148 | 5673 | 8.7% | -0.1% | 14.5% | 8.9% | unestablished at this precision |
+| bootstrap.css | 7385547 | 6818250 | -7.1% | -9.6% | -4% | 14.2% | unestablished at this precision |
+| component rule | 5627 | 5283 | -5.1% | -9.6% | 1.6% | 11.7% | unestablished at this precision |
 
 ## Reproduce
 

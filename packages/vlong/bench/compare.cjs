@@ -1,7 +1,8 @@
 'use strict';
 const assert=require('node:assert/strict'),path=require('node:path');
 const {from,protobuf,roundtrip}=require('../../../scripts/long-conformance/consumers.cjs');
-const upstream=from('long'),vpm=require('..'),cases=[];
+(async () => {
+const {upstream,vpm}=await require('../../../scripts/bench-library.cjs').load({upstream:()=>from('long'),vpm:()=>require('..')}),cases=[];
 // Fixed upstream oracles keep the unselected constructor out of the worker's
 // case closures. Calling make(upstream) here would prime shared JIT feedback
 // before a VPM worker even reaches the harness.
@@ -33,4 +34,6 @@ for(const legacy of [false,true]){
  value('protobuf '+(legacy?'7':'8')+' decode + toObject',L=>{const r=roundtrip(protobuf(L,null,legacy)),bytes=r.encode();return()=>r.decode(bytes);});
 }
 const root=path.resolve(__dirname,'..');
-require('../../../scripts/bench-paired.cjs').run({root,upstream,vpm,cases,files:['bench/expected.json','index.js','package.json','PROVENANCE.json','bench/compare.cjs','../../scripts/long-conformance/package-lock.json','../../scripts/long-conformance/consumers.cjs','../../scripts/long-conformance/node_modules/long/umd/index.js',...['protobufjs','google-gax/node_modules/protobufjs'].flatMap(p=>['reader.js','writer.js','converter.js','util/minimal.js'].map(f=>'../../scripts/long-conformance/node_modules/'+p+'/src/'+f))]}).catch(error=>{console.error(error);process.exitCode=1;});
+require('../../../scripts/bench-paired.cjs').run({root,upstream,vpm,cases,files:['../../scripts/bench-library.cjs','bench/expected.json','index.js','package.json','PROVENANCE.json','bench/compare.cjs','../../scripts/long-conformance/package-lock.json','../../scripts/long-conformance/consumers.cjs','../../scripts/long-conformance/node_modules/long/umd/index.js',...['protobufjs','google-gax/node_modules/protobufjs'].flatMap(p=>['reader.js','writer.js','converter.js','util/minimal.js'].map(f=>'../../scripts/long-conformance/node_modules/'+p+'/src/'+f))]}).catch(error=>{console.error(error);process.exitCode=1;});
+
+})().catch(error => {console.error(error); process.exitCode = 1;});
