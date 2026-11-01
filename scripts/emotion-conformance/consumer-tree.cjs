@@ -36,6 +36,14 @@ module.exports = function consumerTree(library) {
     }
     fs.writeFileSync(path.join(alias, 'package.json'), JSON.stringify({name: '@emotion/' + name, type: 'module', exports}));
   }
-  if (library === 'vpm') for (const name of fs.readdirSync(packages).filter(name => name.startsWith('vemotion-') || name === 'vstylis')) link(path.join(packages, name), name);
+  if (library === 'vpm') for (const name of fs.readdirSync(packages).filter(name => name.startsWith('vemotion-') || name === 'vstylis')) {
+    // Copy the package contents without workspace installation artifacts.
+    // Bun's isolated linker can put a node_modules directory inside a package;
+    // a symlink would expose those dependencies and create duplicate contexts.
+    fs.cpSync(path.join(packages, name), path.join(modules, name), {
+      recursive: true,
+      filter: source => path.basename(source) !== 'node_modules',
+    });
+  }
   return {require: createRequire(path.join(directory, 'consumer.cjs')), cleanup: () => fs.rmSync(directory, {recursive: true, force: true})};
 };

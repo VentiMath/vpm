@@ -1,6 +1,6 @@
 # vemotion-styled measurements
 
-These records compare the complete Emotion stacks. Each timed
+These records compare each complete Emotion stack. Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
 balanced upstream-first / VPM-first order; two further pairs run identical
 upstream code in separate processes as controls. Warmup lasts at least 150 ms
@@ -23,29 +23,29 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T09:11:00.857Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:31:51.642Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| construct DOM styled component | 200 | 165 | -17.9% | -17.9% | -18.5% | 30.2% | unestablished at this precision |
-| construct inherited styled component | 163 | 178 | 9% | 7.9% | 10.3% | 37% | unestablished at this precision |
-| server render cached static styles | 2580 | 2495 | -2.5% | -2.1% | -6.1% | 4.6% | unestablished at this precision |
-| server render theme and prop interpolation | 2143 | 2092 | -1.9% | -3.3% | -0.8% | 2.8% | unestablished at this precision |
+| construct DOM styled component | 198 | 165 | -16.1% | -8.9% | -29.9% | 24% | unestablished at this precision |
+| construct inherited styled component | 165 | 176 | 6.7% | 7.4% | 5.9% | 3% | higher time in every pair, beyond control spread |
+| server render cached static styles | 2576 | 2476 | -3.7% | -3.7% | -4.1% | 3.1% | lower time in every pair, beyond control spread |
+| server render theme and prop interpolation | 2118 | 2093 | -1.4% | -1.7% | -1.1% | 2.8% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T09:11:18.846Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:32:09.291Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| construct DOM styled component | 105 | 95 | -9.6% | -10.3% | -7.4% | 4.6% | lower time in every pair, beyond control spread |
-| construct inherited styled component | 134 | 116 | -13.5% | -13.5% | -25.4% | 10.2% | lower time in every pair, beyond control spread |
-| server render cached static styles | 2022 | 2045 | 1.4% | 2.3% | 0.3% | 17% | unestablished at this precision |
-| server render theme and prop interpolation | 1848 | 1872 | 0.1% | -0.2% | 0.7% | 4.3% | unestablished at this precision |
+| construct DOM styled component | 105 | 92 | -12% | -13.8% | -10.8% | 1.3% | lower time in every pair, beyond control spread |
+| construct inherited styled component | 131 | 113 | -13.4% | -13.4% | -14.4% | 6.6% | lower time in every pair, beyond control spread |
+| server render cached static styles | 2006 | 2090 | 1.9% | 1.9% | 1.4% | 3.6% | unestablished at this precision |
+| server render theme and prop interpolation | 1749 | 1803 | 4.3% | 6.6% | 3.5% | 5.3% | unestablished at this precision |
 
 ## Reproduce
 

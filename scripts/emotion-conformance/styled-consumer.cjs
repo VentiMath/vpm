@@ -7,6 +7,11 @@ if (process.argv[2] === '--child') {
     const load = tree.require, React = load('react'), {renderToStaticMarkup} = load('react-dom/server');
     const styled = load('@emotion/styled').default;
     const {ThemeProvider, CacheProvider} = load('@emotion/react');
+    if (process.argv[3] === 'vpm') {
+      const styledLoad = require('node:module').createRequire(load.resolve('vemotion-styled'));
+      assert.equal(styledLoad('vemotion-react').ThemeContext, load('@emotion/react').ThemeContext);
+      assert.equal(styledLoad('react'), React);
+    }
     const createCache = load('@emotion/cache').default;
     const muiStyled = load('@mui/system/createStyled').default();
     const {internal_mutateStyles} = load('@mui/styled-engine');

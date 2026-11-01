@@ -64,8 +64,10 @@ and MUI's style-mutation API. See the
 server rendering using each complete Emotion stack. They do not isolate this
 package from the serializer/cache below it or predict browser frame times.
 
-In this recording, all Node comparisons were inconclusive: even identical-code
-controls varied by up to 37% in the construction cases. Bun construction took
-9.6% less time for DOM components and 13.5% less for inherited components, in
-every pair beyond the control spread. Both Bun server-render comparisons were
-inconclusive. These measurements support no general rendering speedup claim.
+In this recording, Node inherited-component construction took 6.7% more time
+(about 11 ns), while cached server rendering took 3.7% less. The other Node
+comparisons were inconclusive; the DOM-construction control varied by 24%.
+Bun construction took 12% less time for DOM components and 13.4% less for
+inherited components, in every pair beyond the control spread. Both Bun
+server-render comparisons were inconclusive. These measurements support no
+general rendering speedup claim.
