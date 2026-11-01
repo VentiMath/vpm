@@ -1,11 +1,7 @@
 # vfullcalendar-core
 
-**Implementation status:** the current package retains upstream implementation
-code with the changes documented below. Its tests verify that adapted build.
-An independently written implementation of the application-facing APIs is
-pending; this package is not yet a completed rewrite.
-
-FullCalendar 7's shared types and JSON feed request, targeting
+An independently implemented native-fetch feed request and the shared option
+contracts for FullCalendar 7, targeting
 **@fullcalendar/core 7.1.3**, the latest stable release checked November 1, 2026.
 Zero dependencies; an ES module for browsers, Node.js 24+ and Bun.
 
@@ -14,7 +10,7 @@ import {requestJson, JsonRequestError} from 'vfullcalendar-core/protected-api';
 
 try {
   const [events, response] = await requestJson('GET', '/api/events#week', {start: '2026-11-01', end: '2026-12-13'});
-  // fetched /api/events?start=2026-11-01&end=2026-12-13#week
+  // fetched /api/events?start=2026-11-01&end=2026-12-13
 } catch (error) {
   if (error instanceof JsonRequestError) console.warn(error.message, error.response.status);
 }
@@ -50,6 +46,9 @@ behaves exactly as this package's original.
   `/feed.php#calendar` received no `start` or `end`, in the original and in the
   copy `@fullcalendar/react` bundles. The query now goes ahead of the fragment,
   and no `?` or `&` is left dangling (`/feed?` became `/feed?&start=...`).
+  The fragment is then removed before fetch, including on POST and empty-parameter
+  requests. A recording server showed Bun 1.4.0 forwarding fragments literally;
+  stripping them here makes the wire target consistent across runtimes.
 - **Declarations without DOM types.** They named the DOM's `Response`, so a
   project compiled without DOM or Node types (a worker, or a server build with
   `"types": []`) could not import them. The response type is now the runtime's
@@ -70,6 +69,11 @@ behaves exactly as this package's original.
 - [Regressions](../../scripts/fullcalendar-core-conformance/regressions.cjs):
   each change above reproduced with the original, then checked here.
 - [Focused tests](test/core.test.cjs) and [type tests](test/types.ts).
+
+The request pipeline and declarations are written here; the former adapted
+build is no longer shipped. URL assembly, transport failure and JSON decoding
+have separate responsibilities. The implementation is informed by the public
+contract and inspected upstream behavior, not a clean-room claim.
 
 The upstream package has no tests of its own, and these are network-bound calls
 with no performance claim. MIT licensing, the pinned source and the changes are

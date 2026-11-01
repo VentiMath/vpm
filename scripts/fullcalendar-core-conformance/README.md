@@ -4,7 +4,7 @@ Baseline: **@fullcalendar/core 7.1.3**, the npm tarball recorded in the package
 [provenance](../../packages/vfullcalendar-core/PROVENANCE.json), checked
 November 1, 2026, with **@fullcalendar/react 7.1.3**, which bundles its own copy
 of the JSON feed request. The release has no tests of its own, so the fixture
-compares behavior directly.
+compares the independent request pipeline directly.
 
 ```sh
 npm --prefix scripts/fullcalendar-core-conformance ci --ignore-scripts --no-audit --no-fund
@@ -19,7 +19,8 @@ arrays, `undefined` and Unicode values, a 500 response, a body that is not
 JSON) and a refused connection through the original, React's copy and VPM, each
 in its own process, against a server that records every request. React's copy
 must match the original exactly; VPM must match apart from three URLs, which are
-asserted: a `#fragment` URL (the original sends no parameters), a call without
+asserted: a `#fragment` URL (the original either drops parameters or, with Bun
+1.4.0, sends the literal fragment in the request target), a call without
 parameters (the original's URL ends in `?`, which Bun's fetch sends and Node's
 drops) and a URL ending in `?` (the original adds `&`).
 
@@ -27,3 +28,7 @@ drops) and a URL ending in `?` (the original adds `&`).
 the fragment URL's missing range parameters, declarations that fail to compile
 without DOM types (TS2304 for `Response`) and compile with them, and the console
 message printed on importing the entry.
+
+VPM removes fragments before invoking fetch, rather than relying on the runtime
+to strip them. Its wire targets are asserted exactly on both runtimes; accepting
+the two observed upstream targets does not relax the VPM assertion.

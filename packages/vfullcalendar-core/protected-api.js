@@ -1,50 +1,43 @@
-class JsonRequestError extends Error {
-    constructor(message, response) {
-        super(message);
-        this.response = response;
-    }
-}
-// Adds a query string to a URL ahead of any #fragment, which the browser never
-// sends, with no separator left dangling when there is nothing to add.
-function appendQuery(url, query) {
-    if (!query) {
-        return url;
-    }
-    const hashIndex = url.indexOf('#');
-    const base = hashIndex === -1 ? url : url.slice(0, hashIndex);
-    const fragment = hashIndex === -1 ? '' : url.slice(hashIndex);
-    const separator = base.indexOf('?') === -1 ? '?' : /[?&]$/.test(base) ? '' : '&';
-    return base + separator + query + fragment;
-}
-function requestJson(method, url, params) {
-    method = method.toUpperCase();
-    const fetchOptions = {
-        method,
-    };
-    if (method === 'GET') {
-        url = appendQuery(url, String(new URLSearchParams(params)));
-    }
-    else {
-        fetchOptions.body = new URLSearchParams(params);
-        fetchOptions.headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        };
-    }
-    return fetch(url, fetchOptions).then((fetchRes) => {
-        if (fetchRes.ok) {
-            return fetchRes.json().then((parsedResponse) => {
-                return [parsedResponse, fetchRes];
-            }, () => {
-                throw new JsonRequestError('Failure parsing JSON', fetchRes);
-            });
-        }
-        else {
-            throw new JsonRequestError('Request failed', fetchRes);
-        }
-    });
-}
-function identity(raw) {
-    return raw;
+// The connector needs one operation: send form parameters and return JSON plus
+// its response. Keep URL construction separate from response/error ownership.
+export class JsonRequestError extends Error {
+  constructor(message, response) {
+    super(message);
+    this.response = response;
+  }
 }
 
-export { JsonRequestError, identity, requestJson };
+export const identity = value => value;
+
+const withoutFragment = url => url.split('#', 1)[0];
+
+function requestTarget(url, parameters) {
+  const address = withoutFragment(url);
+  const encoded = parameters.toString();
+  if (encoded.length === 0) return address;
+  const last = address.at(-1);
+  const join = !address.includes('?') ? '?' : last === '?' || last === '&' ? '' : '&';
+  return address + join + encoded;
+}
+
+async function receive(url, options) {
+  // Network failures retain their original identity. Only HTTP status and JSON
+  // decoding failures become JsonRequestError, each carrying the real response.
+  const response = await fetch(url, options);
+  if (!response.ok) throw new JsonRequestError('Request failed', response);
+  let value;
+  try { value = await response.json(); }
+  catch { throw new JsonRequestError('Failure parsing JSON', response); }
+  return [value, response];
+}
+
+export function requestJson(method, url, parameters) {
+  const verb = method.toUpperCase();
+  const form = new URLSearchParams(parameters);
+  if (verb === 'GET') return receive(requestTarget(url, form), {method: verb});
+  return receive(withoutFragment(url), {
+    method: verb,
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: form,
+  });
+}

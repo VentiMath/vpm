@@ -32,8 +32,8 @@ test('GET parameters join the query ahead of any fragment', async t => {
   const query = 'start=2026-11-01T00%3A00%3A00&end=2026-12-13';
   assert.deepEqual(calls.map(call => call.url), [
     '/feed?' + query, '/feed?calendar=7&' + query, '/feed?' + query, '/feed?calendar=7&' + query,
-    '/feed?' + query + '#week', '/feed?calendar=7&' + query + '#week', 'https://example.test/feed?' + query + '#a#b',
-    '/feed#week', '/feed',
+    '/feed?' + query, '/feed?calendar=7&' + query, 'https://example.test/feed?' + query,
+    '/feed', '/feed',
   ]);
   assert.deepEqual(calls[0].options, {method: 'GET'});
 });
@@ -43,7 +43,7 @@ test('other methods send form-encoded bodies', async t => {
   const [events, response] = await requestJson('post', '/feed#week', {start: 'a b', tags: ['x', 'y'], missing: undefined});
   assert.deepEqual(events, ['event']);
   assert.equal(response.status, 200);
-  assert.equal(calls[0].url, '/feed#week');
+  assert.equal(calls[0].url, '/feed');
   assert.equal(calls[0].options.method, 'POST');
   assert.equal(String(calls[0].options.body), 'start=a+b&tags=x%2Cy&missing=undefined');
   assert.deepEqual(calls[0].options.headers, {'Content-Type': 'application/x-www-form-urlencoded'});

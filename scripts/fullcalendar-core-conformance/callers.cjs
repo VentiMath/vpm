@@ -80,7 +80,8 @@ if (process.argv[2] === '--child') {
     // Upstream's URL for a call without parameters ends in "?"; Node's fetch drops
     // an empty query before sending, Bun's sends it.
     assert.ok(['/events?', '/events'].includes(core.requests[5].url));
-    assert.deepEqual(core.requests.slice(6, 8).map(r => r.url), ['/events', '/events?&start=2026-11-01T00%3A00%3A00']);
+    assert.ok(['/events', '/events#week?start=2026-11-01T00%3A00%3A00'].includes(core.requests[6].url), JSON.stringify(core.requests[6]));
+    assert.equal(core.requests[7].url, '/events?&start=2026-11-01T00%3A00%3A00');
     for (let i = 0; i < core.requests.length; i++) {
       assert.deepEqual(vpm.requests[i], fixed.has(i) ? {...core.requests[i], url: fixed.get(i)} : core.requests[i], `request ${i}`);
     }
