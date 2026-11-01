@@ -1,0 +1,32 @@
+{
+  "upstream": {
+    "name": "@floating-ui/core",
+    "version": "1.8.0",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "directory": "packages/core",
+    "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+    "integrity": "sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent source-informed runtime organized into an execution engine, geometry, movement, placement selection and visibility modules. No upstream runtime is included. Public declarations and original tests retain MIT attribution; this is not a clean-room claim.",
+  "scope": "Full core 1.8.0 exported API, focused on the offset/flip/shift/limitShift pipelines used by VentiMath Tiptap popovers, dropdowns and tooltips. DOM and React packages remain upstream callers, not VPM implementations.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "computePosition, detectOverflow and all published core middleware on vfloating-ui-utils."
+  },
+  "changes": [
+    "Capture middleware names and functions before asynchronous platform measurement; caller mutations cannot append or replace the active execution plan.",
+    "Retain inherited platform methods when adding the default overflow hook, and honor the custom platform.detectOverflow API added in core 1.8.",
+    "Store middleware data as own properties even for __proto__; names cannot replace the result dictionary prototype.",
+    "Use iterative bounding-box accumulation and linear placement ranking rather than argument spreading and sorting temporary candidate lists. The 150,000-rect control exceeds the upstream argument limit on Node; Bun can already handle that control.",
+    "Retain upstream reset limits, empty-inline handling and current placement/RTL/overflow/middleware contracts."
+  ],
+  "verification": {
+    "upstream": "27 unchanged upstream tests, TypeScript 7 transpilation, import resolution shims and strict Node assertions for the used matchers.",
+    "parity": "624 generated positioning cases compare all middleware against core 1.8.0 on Node 24/Bun, with custom overflow hooks, scales, resets and app-used configurations.",
+    "browser": "144 Chrome cases run real DOM 1.8.0 with upstream core/utils versus VPM core/utils, including app pipelines, arrows, automatic placement, sizing, hiding and inline positioning; overflow, shadow slots, iframe and modal checks also pass.",
+    "packaging": "Packed core/utils npm and Bun consumers, Node/Bun CJS/ESM, browser bundles and TypeScript 7 declarations."
+  }
+}

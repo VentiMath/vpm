@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/floating-ui/floating-ui",
+  "tag": "@floating-ui/core@1.8.0",
+  "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+  "files": {
+    "computeCoordsFromPlacement.test.ts.txt": "1160ecb40b9c9ea19de5c2d7704d6cb5ac334e9b61286a18de332f840f103fb4",
+    "LICENSE": "0e4c9a9b6c71019cbbea3bdc20b01223110a9035700f9c960c8fcbf78c2325ce",
+    "computePosition.test.ts.txt": "8c003d3f769e760d12af5e055f5d9a2f2a6484bbd0adc470e591d2ecb21e8496",
+    "middleware/inline.test.ts.txt": "3d6340a26b75738a7ddd4a7f316b73880c638efa2c0db25ea3f25e271ca04903",
+    "middleware/autoPlacement.test.ts.txt": "e6e75e8931107cafffca7e46ef373bca1cbdcb6f8393501be050a0caf31340b4"
+  }
+}
