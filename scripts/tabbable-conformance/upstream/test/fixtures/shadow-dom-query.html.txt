@@ -1,0 +1,308 @@
+<div id="shadow-input">
+    <h2>shadow input</h2>
+    <input id="light-before"></input>
+    <test-shadow>
+        <template shadowroot="open">
+            <div>
+                <input id="shadow-input"></input>
+            </div>
+        </template>
+    </test-shadow>
+    <input id="light-after"></input>
+</div>
+
+<div id="inert-shadow-input">
+    <h2>inert shadow input</h2>
+    <input id="light-before"></input>
+    <test-shadow>
+        <template shadowroot="open">
+            <div>
+                <input inert id="inert-shadow-input"></input>
+            </div>
+        </template>
+    </test-shadow>
+    <input id="light-after"></input>
+</div>
+
+<div id="tabbable-host">
+    <h2>tabbable host</h2>
+    <input id="light-before"></input>
+    <test-shadow tabindex="0" id="tabbable-host">
+        <template shadowroot="open">
+            <div>
+                <input id="shadow-input"></input>
+            </div>
+        </template>
+    </test-shadow>
+    <input id="light-after"></input>
+</div>
+
+<div id="inert-tabbable-host">
+    <h2>inert tabbable host</h2>
+    <input id="light-before"></input>
+    <test-shadow inert tabindex="0" id="inert-tabbable-host">
+        <template shadowroot="open">
+            <div>
+                <input id="shadow-input"></input>
+            </div>
+        </template>
+    </test-shadow>
+    <input id="light-after"></input>
+</div>
+
+<div id="light-shadow-with-slots">
+    <h2>light shadow and slots</h2>
+    <input id="light-before"></input>
+    <test-shadow>
+        <template shadowroot="open">
+            <div>
+                <slot name="before"></slot>
+                <input id="shadow-input"></input>
+                <slot name="after"></slot>
+                <slot>
+                    <input id="default-slot-input-overridden"></input>
+                </slot>
+                <slot name="default-content">
+                    <input id="default-slot-input"></input>
+                </slot>
+            </div>
+        </template>
+        <input id="light-slotter-before" slot="before"></input>
+        <input id="light-slotter-after" slot="after"></input>
+        <input id="light-slotter-default"></input>
+    </test-shadow>
+    <input id="light-after"></input>
+</div>
+
+<div id="light-shadow-with-inert-slots">
+    <h2>light shadow and inert slots</h2>
+    <input id="light-before"></input>
+    <test-shadow>
+        <template shadowroot="open">
+            <div>
+                <slot inert name="before"></slot>
+                <input id="shadow-input"></input>
+                <slot inert name="after"></slot>
+                <slot inert>
+                    <input id="default-slot-input-overridden"></input>
+                </slot>
+                <slot inert name="default-content">
+                    <input id="default-slot-input"></input>
+                </slot>
+            </div>
+        </template>
+        <input id="light-slotter-before" slot="before"></input>
+        <input id="light-slotter-after" slot="after"></input>
+        <input id="light-slotter-default"></input>
+    </test-shadow>
+    <input id="light-after"></input>
+</div>
+
+<div id="light-shadow-tab-index">
+    <h2>light shadow tab index</h2>
+    <input id="light-last"></input>
+    <test-shadow>
+        <template shadowroot="open">
+            <div>
+                <input id="shadow-middle" tabindex="2"></input>
+                <input id="shadow-last"></input>
+                <input id="shadow-first" tabindex="1"></input>
+            </div>
+        </template>
+    </test-shadow>
+    <input id="light-middle" tabindex="10"></input>
+    <input id="light-first" tabindex="5"></input>
+</div>
+
+<div id="slots-tab-index">
+    <h2>slots with tab index</h2>
+    <test-shadow>
+        <template shadowroot="open">
+            <input id="shadow-3"></input>
+            <slot name="slot-last"></slot>
+            <slot name="slot-middle" tabindex="3"></slot>
+            <slot name="slot-first" tabindex="1"></slot>
+            <input id="shadow-2" tabindex="2"></input>
+            <input id="shadow-1" tabindex="1"></input>
+        </template>
+        <input id="light-2" slot="slot-middle"></input>
+        <input id="light-3" slot="slot-last"></input>
+        <input id="light-1" slot="slot-first"></input>
+    </test-shadow>
+</div>
+
+<div id="slots-nested-tab-index">
+    <h2>slots with tab index</h2>
+    <test-shadow>
+        <template shadowroot="open">
+            <slot></slot>
+            <input id="shadow-between" tabindex="2"></input>
+            <slot name="first" tabindex="1"></slot>
+        </template>
+        <input id="light-6"></input>
+        <input id="light-5" tabindex="2"></input>
+        <input id="light-4" tabindex="1"></input>
+        <input id="light-3" slot="first"></input>
+        <input id="light-2" slot="first" tabindex="2"></input>
+        <input id="light-1" slot="first" tabindex="1"></input>
+    </test-shadow>
+</div>
+
+<div id="slotted-through-multiple-shadows">
+    <h2>slotted through multiple nested shadow roots</h2>
+    <test-shadow>
+        <template shadowroot="open">
+            <input id="shadow-outter-before"></input>
+            <test-shadow>
+                <template shadowroot="open">
+                    <input id="shadow-inner"></input>
+                    <slot></slot>
+                </template>
+                <slot></slot>
+            </test-shadow>
+            <input id="shadow-outter-after"></input>
+        </template>
+        <input id="light-slotted-input"></input>
+    </test-shadow>
+</div>
+
+<div id="inert-slotted-through-multiple-shadows">
+    <h2>inert slotted through multiple nested shadow roots</h2>
+    <test-shadow>
+        <template shadowroot="open">
+            <input id="shadow-outter-before"></input>
+            <test-shadow>
+                <template shadowroot="open">
+                    <input id="shadow-inner"></input>
+                    <slot inert></slot>
+                </template>
+                <slot inert></slot>
+            </test-shadow>
+            <input id="shadow-outter-after"></input>
+        </template>
+        <input id="light-slotted-input"></input>
+    </test-shadow>
+</div>
+
+<div id="filter-conditions">
+    <h2>different conditions for filtering elements</h2>
+    <test-shadow>
+        <template shadowroot="open">
+            <input id="shadow-disabled" disabled></input>
+            <input id="shadow-type-hidden" type="hidden"></input>
+            <input id="shadow-visibility-hidden" style="visibility: hidden;"></input>
+            <input id="shadow-display-hidden" style="display: none;"></input>
+            <details>
+                <summary id="shadow-summary">un-opened details</summary>
+                <input id="shadow-unopned-details-hidden"></input>
+            </details>
+            <details id="shadow-details-without-summary"></details>
+            <input id="shadow-radio-unchecked" type="radio" name="group-a"></input>
+            <input id="shadow-radio-checked" type="radio" name="group-a" checked></input>
+            <input id="shadow-negative-tabindex" tabindex="-1"></input>
+            <input id="shadow-inert" inert></input>
+        </template>
+    </test-shadow>
+</div>
+
+<div id="closed-shadow-input">
+    <h2>closed shadow input</h2>
+    <input id="light-before"></input>
+    <test-shadow>
+        <template shadowroot="closed">
+            <div>
+                <input id="shadow-input"></input>
+                <slot></slot>
+            </div>
+        </template>
+        <input id="light-slotted" tabindex="1"></input>
+    </test-shadow>
+    <input id="light-after"></input>
+</div>
+
+<div id="closed-inert-shadow-input">
+    <h2>closed inert shadow input</h2>
+    <input id="light-before"></input>
+    <test-shadow>
+        <template shadowroot="closed">
+            <div>
+                <input inert id="inert-shadow-input"></input>
+                <slot></slot>
+            </div>
+        </template>
+        <input id="light-slotted" tabindex="1"></input>
+    </test-shadow>
+    <input id="light-after"></input>
+</div>
+
+<div id="query-slot-display-none-closed-shadow">
+    <h2>"display=none" slot (mode=closed)</h2>
+    <test-shadow>
+        <template shadowroot="closed">
+            <div style="display:none;">
+                <slot></slot>
+            </div>
+        </template>
+        <input id="query-light-input-slotted"></input>
+    </test-shadow>
+</div>
+
+<div id="table-with-tabbable-scoped-headers">
+    <h2>table with tabbable scoped headers</h2>
+    <table>
+        <tr>
+            <th scope="col" tabindex="0" id="header-athlete-col">Athlete</th>
+            <th scope="col" tabindex="0" id="header-swim-col">Swim</th>
+            <th scope="col" tabindex="0" id="header-bike-col">Bike</th>
+            <th scope="col" tabindex="0" id="header-run-col">Run</th>
+        </tr>
+        <tr>
+            <th scope="row" id="header-athlete-row">John</th>
+            <td>7</td>
+            <td>12</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <th scope="row">Lisa</th>
+            <td>3</td>
+            <td>15</td>
+            <td>9</td>
+        </tr>
+        <tr>
+            <th scope="row">Paul</th>
+            <td>9</td>
+            <td>8</td>
+            <td>12</td>
+        </tr>
+    </table>
+</div>
+
+<div id="table-with-inert-tabbable-scoped-headers">
+    <h2>table with inert tabbable scoped headers</h2>
+    <table>
+        <tr>
+            <th scope="col" inert tabindex="0" id="header-athlete-col">Athlete</th>
+            <th scope="col" inert tabindex="0" id="header-swim-col">Swim</th>
+            <th scope="col" inert tabindex="0" id="header-bike-col">Bike</th>
+            <th scope="col" inert tabindex="0" id="header-run-col">Run</th>
+        </tr>
+        <tr>
+            <th scope="row" id="header-athlete-row">John</th>
+            <td>7</td>
+            <td>12</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <th scope="row">Lisa</th>
+            <td>3</td>
+            <td>15</td>
+            <td>9</td>
+        </tr>
+        <tr>
+            <th scope="row">Paul</th>
+            <td>9</td>
+            <td>8</td>
+            <td>12</td>
+        </tr>
+    </table>
+</div>

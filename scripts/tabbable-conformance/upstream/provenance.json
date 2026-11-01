@@ -1,0 +1,26 @@
+{
+  "commit": "c31b0b8850c7bc720b4d1d397453ce96a552d9db",
+  "files": {
+    "test/unit/unit.test.js.txt": "cae011494ed5af67405a811b44c783caada938acb40889e87203a35151cab800",
+    "test/unit/node.test.js.txt": "c7ea09aebc68baffb33b985efd0250c9f4cf16eb67d5e9b00cc7d5b4978cd22b",
+    "test/shadow-root-utils.js.txt": "4bc5dc88980c0e129e220651d861cd4a61b579003c284094cc1b32f9a5227eba",
+    "test/fixtures/area.html.txt": "375902d620ab53a33ed14428f46fba48ae53215bc571c692e0729c853ec6368f",
+    "test/fixtures/basic.html.txt": "f84245941e9c91642a3b84c301b45435f30a2b86ad20cb4549bfcdeb2d976af5",
+    "test/fixtures/changing-content.html.txt": "523d44deaeab858b99423c6842b7b26be4bdd81e18af2b88bc396091d263243d",
+    "test/fixtures/details.html.txt": "29b700b0000494431f0544273c81e05dd8d5e273a1b9b6235dc400f78e6a0dc6",
+    "test/fixtures/displayed.html.txt": "cf379adb5b7337161ef16fa7d6d2685a691dc599a5ceeb7141b6cd87cb95d1f2",
+    "test/fixtures/fieldset.html.txt": "da5443507053aa1c007be7d63192f866b9d09819dfc09c3de1796bb0c6c82dc5",
+    "test/fixtures/inert.html.txt": "a2647c2dbd47c45c8dd2e2b39aea5625efc9b974c8f2c24099061e62cc6d62b0",
+    "test/fixtures/jqueryui.html.txt": "bd290e71229afcb6ba4c0bfbb2544b350c310f58c2e67f38de7b5ba3608a8bfa",
+    "test/fixtures/nested.html.txt": "1c4ca5a27e25251fb9d7b1bb00be3f724f5fdbfbc260940bea5b38d2802680c3",
+    "test/fixtures/non-linear.html.txt": "fb5c22b3df04b0bc5be6cc48ef98f270d4a9808b0bb1deb397929a8c3297edc9",
+    "test/fixtures/radio.html.txt": "f436a06e47f11aa22c8f1e6207394c2163f1d00e26403ae043e5045d75cffa97",
+    "test/fixtures/shadow-dom-display.html.txt": "c15a83ad657bdbc1a1f5a85089a07d93267a475339833c6033b1b4cfcf4056f8",
+    "test/fixtures/shadow-dom-query.html.txt": "c55159d128d70c1f53154dc1155aca99311905b2488ac04edc8a8510fd183ae6",
+    "test/fixtures/shadow-dom-radio.html.txt": "e1131e916e1c8b0f8cf42824752f808d486256f291d633a663277bf6faf1d59e",
+    "test/fixtures/shadow-dom-untabbable.html.txt": "62941e4b8bcf53eceb6eaf5de34834b998da034be6c0b884dded54fab7bc629f",
+    "test/fixtures/shadow-dom.html.txt": "649f70cc0b633600a000f9c36a6e7b210527c6b9c90ca240c645de53ed534e2b",
+    "test/fixtures/svg.html.txt": "2d59339dd104b4ac8f909205887bb07accfbc50fe6e4d1465899d5e5fee470e8",
+    "test/fixtures/tabindex.html.txt": "a269edbdcc63034afec7be8be18efb9e20608c9e6cd108e79ade6e19db700e44"
+  }
+}

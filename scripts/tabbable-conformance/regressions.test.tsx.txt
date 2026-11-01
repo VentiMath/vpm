@@ -1,0 +1,35 @@
+import * as React from 'react';
+import * as api from 'tabbable';
+import {test,expect,vi,afterEach} from 'vitest';
+import {render,act,fireEvent,screen,cleanup,waitFor} from '@testing-library/react';
+import {useFloating,useClick,useDismiss,useInteractions,FloatingFocusManager} from '@floating-ui/react';
+const original=process.env.VPM_ORIGINAL==='1';
+const options={displayCheck:'none'} as const;
+afterEach(()=>{cleanup();document.body.innerHTML='';});
+const mount=html=>{const host=document.createElement('div');host.innerHTML=html;document.body.append(host);return host;};
+test('radio names are data even without CSS.escape (paired control)',()=>{
+ const host=mount(`<input type="radio" name='a"b' id="one"><input type="radio" name='a"b' id="two" checked>`);
+ const spy=vi.spyOn(console,'error').mockImplementation(()=>{});
+ try{expect(api.tabbable(host,options).map(n=>n.id)).toEqual(original?[]:['two']);}finally{spy.mockRestore();}
+});
+test('external form-associated radios share their real group (paired control)',()=>{
+ const host=mount('<form id="group"><input type="radio" name="a" id="inside"></form><input form="group" type="radio" name="a" id="outside" checked>');
+ expect(api.tabbable(host,options).map(n=>n.id)).toEqual(original?['inside','outside']:['outside']);
+});
+test('inert inheritance crosses shadow roots (paired control)',()=>{
+ const host=mount('<div inert><div id="host"></div></div>'),shadow=host.querySelector('#host').attachShadow({mode:'open'});shadow.innerHTML='<button>Button</button>';
+ expect(api.isFocusable(shadow.firstElementChild,options)).toBe(original);
+});
+test('nested first-legend exemptions follow actual disabled ancestors',()=>{
+ const host=mount('<fieldset disabled><legend><fieldset disabled><legend><button id="allowed">Allowed</button></legend></fieldset></legend></fieldset>');
+ expect(api.tabbable(host,options).map(n=>n.id)).toEqual(original?[]:['allowed']);
+});
+test('radio cache lasts only for one traversal',()=>{
+ const host=mount('<input type="radio" name="a" id="a" checked><input type="radio" name="a" id="b">');
+ expect(api.tabbable(host,options).map(n=>n.id)).toEqual(['a']);host.querySelector('#b').checked=true;expect(api.tabbable(host,options).map(n=>n.id)).toEqual(['b']);
+});
+test('Floating UI focus manager uses this implementation and restores focus',async()=>{
+ const called=vi.spyOn(api,'tabbable');
+ function App(){const [open,setOpen]=React.useState(false);const f=useFloating({open,onOpenChange:setOpen});const {getReferenceProps,getFloatingProps}=useInteractions([useClick(f.context),useDismiss(f.context)]);return <><button ref={f.refs.setReference} {...getReferenceProps()}>Open</button>{open&&<FloatingFocusManager context={f.context}><div ref={f.refs.setFloating} {...getFloatingProps()}><button>First</button><button>Second</button></div></FloatingFocusManager>}</>;}
+ render(<App/>);const trigger=screen.getByText('Open');trigger.focus();fireEvent.click(trigger);await act(async()=>{});expect(called).toHaveBeenCalled();await waitFor(()=>expect(document.activeElement).toBe(screen.getByText('First')));fireEvent.keyDown(document,{key:'Escape'});await act(async()=>{});await waitFor(()=>expect(document.activeElement).toBe(trigger));called.mockRestore();
+});

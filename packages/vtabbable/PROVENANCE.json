@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "tabbable",
+    "version": "6.5.1",
+    "repository": "https://github.com/focus-trap/tabbable",
+    "commit": "c31b0b8850c7bc720b4d1d397453ce96a552d9db",
+    "integrity": "sha512-dMCuwDUY6Noz3zVKLefBC4wq+aJV20yc7vWmM7uTNGwtQSFF5kX7OUIUsxuVajz/bdt5Xqdah3/0NLjth+cM5A=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent source-informed focus eligibility, composed-tree traversal and ordering implementation. Declarations and selected tests/HTML fixtures retain MIT attribution. No upstream runtime is included; this is not a clean-room claim.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "Focus candidate and tab ordering APIs used by Floating UI's popover, dropdown and tooltip interaction layer."
+  },
+  "changes": [
+    "Radio groups compare names as data and share one traversal-local lookup by root and actual form owner, including externally associated radios.",
+    "Inert inheritance crosses shadow roots and assigned slots; boolean attribute presence is respected.",
+    "Nested disabled-fieldset first-legend exemptions are evaluated per ancestor.",
+    "No DOM globals are captured at module import; traversal and ordering use explicit frames."
+  ],
+  "verification": {
+    "runtime": "Ten unchanged upstream unit tests, six focused controls including actual Floating UI 0.27.20 focus-manager consumption, and an SSR/module regression pass on Node 24 and Bun.",
+    "browser": "1,080 Chrome fixture comparisons and six focused checks. The original inert-shadow fixture differences are explicitly isolated and checked against native focus behavior.",
+    "distribution": "Packed npm/Bun installation, CJS/ESM, browser bundling and TypeScript 7 consumers.",
+    "limits": "Not the full Cypress suite or Safari/Firefox certification. Benchmarks use jsdom with fixed visible styles on both runtimes, excluding CSS resolution, layout and rendering. The original jsdom style workload stalled on Bun with both implementations; Chrome tests cover actual style behavior."
+  }
+}

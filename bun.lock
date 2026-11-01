@@ -816,6 +816,10 @@
       "name": "vstylis",
       "version": "0.1.0",
     },
+    "packages/vtabbable": {
+      "name": "vtabbable",
+      "version": "6.5.1",
+    },
     "packages/vtanstack-query-core": {
       "name": "vtanstack-query-core",
       "version": "0.1.0",
@@ -1166,6 +1170,8 @@
     "vstrnum": ["vstrnum@workspace:packages/vstrnum"],
 
     "vstylis": ["vstylis@workspace:packages/vstylis"],
+
+    "vtabbable": ["vtabbable@workspace:packages/vtabbable"],
 
     "vtanstack-query-core": ["vtanstack-query-core@workspace:packages/vtanstack-query-core"],
 

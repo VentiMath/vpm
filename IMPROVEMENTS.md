@@ -221,6 +221,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
 | [vfloating-ui-react-dom](packages/vfloating-ui-react-dom) | @floating-ui/react-dom 2.1.9 | Independent React 19 positioning hook; stale-measurement protection, retained-element reopening and cycle-safe middleware comparison. |
 | [vfloating-ui-dom](packages/vfloating-ui-dom) | @floating-ui/dom 1.8.0 | Independent browser geometry and lifecycle updates; owned subscriptions, complete cleanup, inherited platform overrides and real-browser conformance. |
 | [vfloating-ui-core](packages/vfloating-ui-core) | @floating-ui/core 1.8.0 | Independent positioning and all middleware on VPM utils; stable async execution plans, inherited platform support, safe data keys and bounded inline geometry, verified with actual DOM callers. |
@@ -353,11 +354,11 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 111 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **126 packages**, including two declaration-only packages and
-thirteen browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
+compiler in NodeNext and bundler resolution modes. The catalog covers **127 packages**, including two declaration-only packages and
+fourteen browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom` and `vfloating-ui-react-dom`, whose declarations are checked with DOM
+`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom` and `vtabbable`, whose declarations are checked with DOM
 (and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
@@ -666,6 +667,26 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vtabbable
+
+An independent implementation of **tabbable 6.5.1** supplies focus candidate and
+keyboard tab ordering for Floating UI's interaction layer. It keeps the five
+public APIs, display modes, slots and shadow-root traversal. Radio names are
+data rather than CSS selectors; form ownership includes associated controls
+outside the form. A lookup shared within each traversal avoids repeated group
+queries while observing later checked-state changes. Inertness crosses shadow
+hosts and assigned slots, and nested first-legend exemptions follow each fieldset.
+
+Ten unchanged upstream unit tests and six focused controls pass on Node 24/Bun,
+including Floating UI 0.27.20's actual focus manager. Chrome checks 1,080 fixture
+comparisons and six focused cases, with native focus controls for intentional
+inert/legend differences. Packed npm/Bun consumers, SSR imports, CJS/ESM and
+TypeScript 7 declarations pass. [API and scope](packages/vtabbable/README.md).
+[Isolated measurements](packages/vtabbable/bench/results/README.md) use jsdom with fixed visible styles on both runtimes;
+they do not establish CSS resolution, browser layout or application latency improvements.
+The 120-radio model takes 84%/88% less paired time on Node/Bun; small four-control
+forms remain inconclusive. All comparisons are retained.
 
 ## vfloating-ui-react-dom
 
