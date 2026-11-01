@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/floating-ui/floating-ui",
+  "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+  "directory": "packages/dom/test/unit",
+  "files": {
+    "LICENSE": "0e4c9a9b6c71019cbbea3bdc20b01223110a9035700f9c960c8fcbf78c2325ce",
+    "getOffsetParent.test.ts.txt": "55f6f5081591a1d028e8fd2ee2621f348092bc9a7ff293ff95d2b0662e8745af",
+    "autoUpdate.test.ts.txt": "620add65c5de347ce462b3d0436372a74a60fd6b0c7f6b3262d4f28c12a37eb4",
+    "getClientRects.test.ts.txt": "aabd9f58498b84c0e611e6f6da08a266ef78781671b3e68a121a0bf819914107"
+  }
+}

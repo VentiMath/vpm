@@ -10,7 +10,7 @@
   "checked": "2026-11-01",
   "license": "MIT",
   "source": "Independent source-informed runtime organized into an execution engine, geometry, movement, placement selection and visibility modules. No upstream runtime is included. Public declarations and original tests retain MIT attribution; this is not a clean-room claim.",
-  "scope": "Full core 1.8.0 exported API, focused on the offset/flip/shift/limitShift pipelines used by VentiMath Tiptap popovers, dropdowns and tooltips. DOM and React packages remain upstream callers, not VPM implementations.",
+  "scope": "Full core 1.8.0 exported API, focused on the offset/flip/shift/limitShift pipelines used by VentiMath Tiptap popovers, dropdowns and tooltips. The DOM adapter is now independently implemented in vfloating-ui-dom; the React caller remains separate.",
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "application-facing independent rewrite complete",

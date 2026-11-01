@@ -328,6 +328,14 @@
         "vfloating-ui-utils": "workspace:*",
       },
     },
+    "packages/vfloating-ui-dom": {
+      "name": "vfloating-ui-dom",
+      "version": "0.1.0",
+      "dependencies": {
+        "vfloating-ui-core": "workspace:*",
+        "vfloating-ui-utils": "workspace:*",
+      },
+    },
     "packages/vfloating-ui-utils": {
       "name": "vfloating-ui-utils",
       "version": "0.1.0",
@@ -995,6 +1003,8 @@
     "vfirebase-functions": ["vfirebase-functions@workspace:packages/vfirebase-functions"],
 
     "vfloating-ui-core": ["vfloating-ui-core@workspace:packages/vfloating-ui-core"],
+
+    "vfloating-ui-dom": ["vfloating-ui-dom@workspace:packages/vfloating-ui-dom"],
 
     "vfloating-ui-utils": ["vfloating-ui-utils@workspace:packages/vfloating-ui-utils"],
 

@@ -1,0 +1,48 @@
+{
+  "name": "vfloating-ui-dom",
+  "version": "0.1.0",
+  "description": "Independent browser geometry and lifecycle updates on VPM Floating UI",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./runtime.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./runtime.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.mjs",
+    "*.cjs",
+    "*.cts",
+    "*.mts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vfloating-ui-dom"
+  },
+  "dependencies": {
+    "vfloating-ui-core": "workspace:*",
+    "vfloating-ui-utils": "workspace:*"
+  }
+}

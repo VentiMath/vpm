@@ -222,6 +222,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfloating-ui-dom](packages/vfloating-ui-dom) | @floating-ui/dom 1.8.0 | Independent browser geometry and lifecycle updates; owned subscriptions, complete cleanup, inherited platform overrides and real-browser conformance. |
 | [vfloating-ui-core](packages/vfloating-ui-core) | @floating-ui/core 1.8.0 | Independent positioning and all middleware on VPM utils; stable async execution plans, inherited platform support, safe data keys and bounded inline geometry, verified with actual DOM callers. |
 | [vfloating-ui-utils](packages/vfloating-ui-utils) | @floating-ui/utils 0.2.12 | Independent zero-dependency placement and DOM helpers; owned fallback arrays, iterative ancestry and browser-tested Floating UI core/dom callers. |
 | [vreact-is](packages/vreact-is) | react-is 19.3.1 | Independent zero-dependency React classification; single discriminator reads, direct predicates, browser ESM and verified React 19.1/MUI callers. |
@@ -352,11 +353,11 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 111 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **124 packages**, including two declaration-only packages and
-eleven browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
+compiler in NodeNext and bundler resolution modes. The catalog covers **125 packages**, including two declaration-only packages and
+twelve browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils` and `vfloating-ui-core`, whose declarations are checked with DOM
+`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core` and `vfloating-ui-dom`, whose declarations are checked with DOM
 (and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
@@ -665,6 +666,23 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfloating-ui-dom
+
+Targets **@floating-ui/dom 1.8.0** with independently implemented browser geometry
+and update subscriptions on `vfloating-ui-core`/`vfloating-ui-utils`. Subscriptions
+own distinct callbacks, cleanup suppresses late observer work and cancels pending
+frames/timers, and failed setup releases registered resources. Direct clipping
+calls work without private cache setup; inherited platform overrides are retained.
+
+Chrome compares 144 app positioning and 319 geometry/viewport cases and runs six
+unchanged upstream tests. Seven Node 24/Bun groups include original/VPM lifecycle
+fault controls; packed npm/Bun, browser bundles and TypeScript 7 consumers pass.
+[Controlled-DOM measurements](packages/vfloating-ui-dom/bench/results/README.md)
+record JavaScript costs, not browser layout, frame rate or application latency.
+Bun simulated popover positioning costs 16% more paired time (7.41 vs 6.32 µs);
+all other comparisons, including every Node case, are inconclusive. No speedup
+is established. [API and limitations](packages/vfloating-ui-dom/README.md).
 
 ## vfloating-ui-core
 

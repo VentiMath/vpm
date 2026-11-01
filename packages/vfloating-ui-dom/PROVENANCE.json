@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "@floating-ui/dom",
+    "version": "1.8.0",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "directory": "packages/dom",
+    "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+    "integrity": "sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent source-informed geometry and subscription-lifecycle implementation. Public declarations and selected original tests retain MIT attribution; no upstream runtime is included. This is not a clean-room claim.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "DOM positioning platform, middleware reexports and autoUpdate, focused on the popover, tooltip and dropdown callers."
+  },
+  "changes": [
+    "Each autoUpdate subscription owns its listener even when callers share the same callback.",
+    "Cleanup is idempotent, cancels pending frames/timers and suppresses queued observer notifications; setup exceptions roll back resources.",
+    "Direct platform clipping calls do not require private cache setup, and inherited custom platform methods remain usable.",
+    "Geometry shares offset-parent coordinate handling, uses a Set for ancestor filtering and delegates middleware to VPM core."
+  ],
+  "verification": {
+    "browser": "144 app middleware scenarios, 319 platform/viewport geometry cases and six unchanged upstream tests in Chrome. Includes scale, RTL, scrolling, fixed positioning, tables, SVG, shadow DOM, virtual references, iframes and top layers.",
+    "runtime": "Seven Node 24/Bun groups include original/VPM lifecycle fault controls, ordinary geometry, module identity and custom platforms.",
+    "limits": "Chrome verification is not certification of Safari/Firefox, every React interaction or browser frame rate. Controlled DOM benchmarks measure JavaScript work, not layout or rendering."
+  }
+}
