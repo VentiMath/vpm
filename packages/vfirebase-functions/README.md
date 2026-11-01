@@ -3,9 +3,10 @@
 **Implementation status:** the current package retains upstream implementation
 code with the changes documented below. Logging, initialization, option
 projection, manifest serialization, HTTP/callable factories and the scheduler
-adapter now have independent implementations. Callable token verification,
-payload encoding/streaming, Firestore providers, secret parameters and most
-other SDK services still retain upstream code. Tests verify this mixed
+adapter now have independent implementations. Callable request validation,
+verification orchestration, payload conversion and response streaming are also
+independently implemented. The underlying Admin SDK verifiers, Firestore
+providers, secret parameters and most other SDK services still retain upstream code. Tests verify this mixed
 implementation.
 An independently written implementation of the application-facing APIs is
 pending; this package is not yet a completed rewrite.
@@ -67,6 +68,18 @@ Connect GraphQL server, as upstream.
   frozen declarations, and handles deeply nested declarations iteratively.
   HTTP CORS completion removes its listener after preflight or handler completion.
   These factories and metadata helpers share CJS/ESM identity.
+- **Independent callable transport.** Request validation, authentication
+  orchestration and response lifecycle are separate from deployment definitions.
+  Production tokens still go through the Admin SDK; the existing explicit debug
+  feature controls emulator-only decoding. Authorization policies, App Check
+  enforcement and consumption, error envelopes and streaming remain compatible.
+  Payload conversion preserves own `__proto__` keys, ignores inherited type
+  markers, detects cycles, and switches from bounded recursion to an explicit
+  worklist for deep data. Error codes must be canonical own names. Synchronous
+  stream callbacks work, pending chunks resolve `false` on disconnect, and
+  heartbeat/response listeners are cleaned up. Calls to `sendChunk` after
+  completion return `false`. Upstream source and tests informed this redesign;
+  it is not a clean-room implementation.
 - **The bin's directory argument.** `firebase-functions [functionsDir]` read the
   directory only when two or more arguments were given, so a single directory
   argument was ignored and `-h` printed nothing. The Firebase CLI runs the bin
@@ -92,13 +105,17 @@ Connect GraphQL server, as upstream.
   replaces with a serialization-error placeholder.
   The bin writes an identical deploy manifest.
 - [Regressions](../../scripts/firebase-functions-conformance/regressions.cjs):
-  each change above reproduced with the original, then checked here.
+  import loading, concurrent initialization and the bin argument are reproduced
+  with the original, then checked here; additional fixes have focused tests below.
 - [Package tests](test/firebase-functions.test.cjs), [logging and initialization
   regressions](test/logging-init.test.cjs), [deployment regressions](test/deployment.test.cjs),
-  and [type tests](test/types.ts).
+  [callable regressions](test/callable.test.cjs), and [type tests](test/types.ts).
 - [Measurements](bench/results/README.md): isolated logging, initialization,
   endpoint construction, fresh manifest serialization and initialized HTTP
-  invocation comparisons on Node 24 and Bun. Console and network I/O are excluded.
+  invocation, callable payload conversion and callable request comparisons on
+  Node 24 and Bun. Console and network I/O are excluded. The callable request
+  case has no token headers and therefore does not measure cryptographic
+  verification or the Admin SDK.
 
 The measurements distinguish function-definition and deployment costs from
 per-request execution. Manifest serialization now copies its input to preserve
@@ -106,13 +123,14 @@ frozen/reusable declarations; the benchmark includes construction of a fresh
 64-endpoint input for both libraries. The report retains every sample and the
 identical-code controls, including inconclusive results.
 
-In this run, HTTP endpoint construction is 16.1% faster on Node and 19.7%
-slower on Bun (about 80 ns extra). Serializing 64 fresh endpoints costs 11.8%
-more on Node and 56.9% more on Bun, about 6 and 22 microseconds respectively,
-in return for preserving the input. Both initialized HTTP-invocation
-comparisons are inconclusive. These deployment-time costs do not recur per
-request. Nested logging remains faster; the initialized callback itself still
-has a roughly 6 ns Node cost for its stronger registration semantics.
+In the callable recording, structured payload encoding took 40.4% more time
+on Node (846 to 1,187 ns); Node decoding was inconclusive because one process
+pair reversed direction. Bun decoding took 35.4% less time; its encoding result
+was inconclusive at the control spread. The request without token headers took
+18.9% more time on Node (2,048 to 2,468 ns) and 12.1% more on Bun (1,727 to
+1,986 ns). These are explicit costs of the current implementation, not a claim
+of a general speedup. The complete report also retains the logging, declaration,
+manifest and HTTP measurements, including inconclusive controls.
 
 MIT licensing, the pinned source and the files changed from it are recorded in
 [PROVENANCE.json](PROVENANCE.json).
