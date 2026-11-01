@@ -314,7 +314,9 @@
     "Structured logging preserves null-prototype query objects and shadowed property names, handles BigInt and cyclic toJSON results, bounds nesting, and does not mutate frozen entries when adding trace context.",
     "CommonJS and ESM logger, trace context and initialization share identity and state. A previous initializer finishing cannot mark a newer registration complete.",
     "Deployment serialization returns a new wire representation without modifying frozen or reusable endpoint declarations. An explicit worklist handles deeply nested declarations without recursive stack overflow.",
-    "HTTP CORS completion removes its finish listener when either preflight or the handler finishes. HTTP/callable/scheduler factories, options and manifest helpers share CJS/ESM module identity."
+    "HTTP CORS completion removes its finish listener when either preflight or the handler finishes. HTTP/callable/scheduler factories, options and manifest helpers share CJS/ESM module identity.",
+    "Callable payloads preserve own __proto__ keys, ignore inherited type markers and reject cycles deliberately. Deep payloads avoid unbounded recursion. Request data must be an own property.",
+    "Callable status names cannot resolve through Object.prototype. Stream writes tolerate synchronous callbacks, pending writes resolve false on disconnect, and response listeners are removed at completion. CommonJS and ESM callable helpers share identity."
   ],
   "implementation": {
     "kind": "upstream-fork-with-independent-components",
@@ -326,8 +328,13 @@
       "lib/runtime/manifest.js": "Independent table-driven reset defaults and iterative, non-mutating manifest serialization; frozen inputs and 15,000-level declarations are supported. ESM forwards to the same module.",
       "lib/v2/options.js": "Independent option projection tables, timeout validation and network configuration assembly, preserving the existing deployment protocol and shared global-options registry.",
       "lib/runtime/definition.js": "Own shared function-definition builder separates HTTP/callable/scheduler trigger metadata from invocation pipelines.",
-      "lib/v2/providers/https.js": "Own HTTP/callable factories and CORS completion lifecycle. Callable token verification, payload encoding and streaming still use the retained common/providers/https implementation; this is not a claim that callable transport has been rewritten.",
-      "lib/v2/providers/scheduler.js": "Own schedule factory and invocation adapter; shares the deployment builder and CJS/ESM identity."
+      "lib/v2/providers/https.js": "Own HTTP/callable factories and CORS completion lifecycle, using the independent callable transport and shared function-definition builder.",
+      "lib/v2/providers/scheduler.js": "Own schedule factory and invocation adapter; shares the deployment builder and CJS/ESM identity.",
+      "lib/common/providers/https.js": "Source-informed independent request validation, emulator-context adapter, CORS lifecycle and invocation composition. Upstream protocol, diagnostics and tests informed the rewrite; this is not a clean-room claim. ESM forwards to this implementation.",
+      "lib/runtime/callable-auth.js": "Own verification orchestration. Production tokens are still verified by the retained Admin SDK; authentication policy and App Check enforcement are preserved. Unsafe decoding remains restricted to the existing explicit debug feature.",
+      "lib/runtime/callable-codec.js": "Own bounded-recursion traversal with a deep-data worklist, ancestor cycle detection and safe own-property copying. Firebase numeric wrapper conversion remains compatible.",
+      "lib/runtime/callable-error.js": "Own error class using canonical Google RPC status data; rejects inherited property names and protects the shared status records.",
+      "lib/runtime/callable-response.js": "Own request-scoped response lifecycle: cancellation, heartbeat scheduling, SSE output, pending-write cancellation and listener disposal. Handles synchronous write callbacks and rejects writes after completion."
     }
   }
 }
