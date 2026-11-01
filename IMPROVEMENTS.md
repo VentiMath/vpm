@@ -959,8 +959,8 @@ See the [package contract](packages/vfirebase-functions/README.md),
 ## vfirebase-admin
 
 Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
-service lifecycle, token lease and option snapshots have source-informed VPM
-implementations. Credential adapters and service APIs remain upstream-derived.
+service lifecycle, token lease, option snapshots and credential adapters have
+source-informed VPM implementations. Service APIs and Google Auth remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
 internal, leaving three direct and two optional dependencies.
@@ -971,6 +971,15 @@ Token refreshes share a pending acquisition even when forced, recover after
 synchronous provider errors and reject invalid expiry without printing tokens.
 Iterative option snapshots avoid prototype setters, detach null-prototype
 records, support deep values and reject cycles explicitly.
+
+Credential documents preserve the validated identity through first use, including
+frozen objects and files. Factories observe file rotation, honor HTTP agent
+identity and limit certificate/refresh caches to 64 entries per agent and kind.
+JSON auth clients receive their configured agent. Client discovery and token
+acquisition share pending work; token results omit refresh credentials, and
+malformed JSON errors omit credential excerpts. Two local OAuth request controls
+verify the signed JWT, refresh-token body and actual agent calls on both runtimes.
+
 
 While public keys are missing or expired, upstream starts one key request per
 concurrent token verification (ID tokens and session cookies, App Check and
@@ -989,7 +998,7 @@ scheme or multipart parsing, each required to fail on exactly that. VentiMath's
 Admin calls (`verifyIdToken` with revocation checks, `getUser`, `updateUser`,
 `revokeRefreshTokens`, `deleteUsers`, a Firestore scenario, Storage `save`,
 `exists`, `delete` and signed URLs, and `sendEachForMulticast`) produce
-identical requests and results against local servers. Existing regression probes plus isolated app-lifecycle controls and eight
+identical requests and results against local servers. Existing regression probes plus isolated app-lifecycle controls and ten
 focused tests cover the changes.
 
 See the [package contract](packages/vfirebase-admin/README.md),

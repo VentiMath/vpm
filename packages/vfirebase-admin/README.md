@@ -1,8 +1,8 @@
 # vfirebase-admin
 
 **Implementation status:** app registration, service lifetime, token refresh
-ownership and option snapshots now use a VPM redesign. Credential provider
-adapters, Auth and the other service implementations remain upstream-derived;
+ownership, option snapshots and credential adapters now use a VPM redesign.
+Google Auth, Auth service methods and the other service implementations remain upstream-derived;
 this is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
 the boundary.
 
@@ -40,6 +40,28 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 | `@fastify/busboy` | Omitted (see below) |
 
 ## Changes from 14.5.0
+
+- **Credential transport and identity.** Factories distinguish HTTP agents and
+  pass them through to JSON auth clients. Validated credential data is detached
+  before use: frozen camel-case objects work, and changing a file/object after
+  construction cannot silently change the authentication identity. A new factory
+  call observes rotated file contents.
+- **Bounded credential storage.** Certificate and refresh-token factories retain
+  at most 64 entries per agent and credential kind, using digest keys. Agents
+  are weakly held. An evicted credential can be recreated by a later factory
+  call; object identity is not permanent across eviction. ADC remains cached
+  per agent.
+- **Credential acquisition.** Concurrent calls share client discovery and token
+  acquisition; failures can be retried. Project/email lookup memoization also
+  retains an absent email. Token results expose only `access_token` and
+  `expires_in`, with nonempty tokens and finite positive expiry. Malformed-file
+  errors keep a sanitized SyntaxError without quoting credential contents.
+
+Credential inputs are plain, acyclic JSON records with up to 64 nested
+containers. Functions and conflicting snake/camel aliases are rejected. Explicit
+constructors validate their credential kind; the legacy `refreshToken` tag is
+normalized to `authorized_user`. Google Auth's underlying providers are still
+upstream-derived and tracked separately.
 
 - **Owned app and service lifetimes.** Registries cannot delete a different
   instance with the same name. Prototype-named services work. Concurrent app
@@ -87,14 +109,17 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 
 Missing-dependency errors name the VPM packages.
 
-The isolated measurements include the redesigned app layer. Setup and teardown
-still cost more: Node context creation/read takes about 338 ns versus 195 ns,
-repeated initialization 849 ns versus 575 ns, and disposal of three services
-1.16 µs versus 0.48 µs. The service-lookup case rotates through three services
-so it cannot collapse to one constant result. Concurrent forced refreshes use
-one credential acquisition instead of twenty; the benchmark uses a synthetic
-provider and does not measure network latency. Full results and controls are
-linked below.
+The isolated measurements include the redesigned app and credential layers.
+Setup and teardown still cost more: Node context creation/read takes about
+343 ns versus 201 ns, repeated initialization 878 ns versus 599 ns, and disposal
+of three services 1.21 µs versus 0.49 µs. A direct credential acquisition from a
+cached Google client takes 367 ns versus 190 ns on Node and 249 ns versus
+169 ns on Bun; it now coordinates concurrent calls and validates the returned
+expiry. Twenty concurrent acquisitions take about 54% less CPU on Node and 58%
+less on Bun in the synthetic-provider case. Service-account factory reuse has
+no established difference on Node and costs more on Bun (5.0 µs versus 2.1 µs).
+These cases measure CPU work, excluding network latency. The report retains
+all thirteen cases and their identical-source controls.
 
 ## Evidence
 
@@ -110,6 +135,10 @@ linked below.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [Credential controls](../../scripts/firebase-admin-conformance/credentials.cjs)
+  and [local OAuth transport](../../scripts/firebase-admin-conformance/credential-transport.cjs)
+  verify the credential changes against the original, including actual signed
+  JWT and refresh-token POSTs through the configured agent.
 - [App lifecycle controls](../../scripts/firebase-admin-conformance/app-lifecycle.cjs)
   reproduce the original token, ownership, cleanup and option-copy defects in
   isolated processes.
