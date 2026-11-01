@@ -1,103 +1,38 @@
-const require_rolldown_runtime = require('../../_virtual/rolldown_runtime.js');
-const require_logger_index = require('../../logger/index.js');
-const require_runtime_manifest = require('../../runtime/manifest.js');
-const require_common_encoding = require('../../common/encoding.js');
-const require_common_onInit = require('../../common/onInit.js');
-const require_v2_trace = require('../trace.js');
-const require_v2_options = require('../options.js');
+'use strict';
+const logger = require('../../logger/index.js');
+const {withInit} = require('../../common/onInit.js');
+const {wrapTraceContext} = require('../trace.js');
+const {getGlobalOptions} = require('../options.js');
+const {initV2ScheduleTrigger} = require('../../runtime/manifest.js');
+const {FunctionDefinition} = require('../../runtime/definition.js');
+const retryFields = ['retryCount', 'maxRetrySeconds', 'minBackoffSeconds', 'maxBackoffSeconds', 'maxDoublings'];
 
-//#region src/v2/providers/scheduler.ts
-var scheduler_exports = /* @__PURE__ */ require_rolldown_runtime.__export({
-	getOpts: () => getOpts,
-	onSchedule: () => onSchedule
-});
-/** @internal */
-function getOpts(args) {
-	if (typeof args === "string") {
-		return {
-			schedule: args,
-			opts: {}
-		};
-	}
-	return {
-		schedule: args.schedule,
-		timeZone: args.timeZone,
-		retryConfig: {
-			retryCount: args.retryCount,
-			maxRetrySeconds: args.maxRetrySeconds,
-			minBackoffSeconds: args.minBackoffSeconds,
-			maxBackoffSeconds: args.maxBackoffSeconds,
-			maxDoublings: args.maxDoublings
-		},
-		opts: args
-	};
+function getOpts(input) {
+  if (typeof input === 'string') return {schedule: input, opts: {}};
+  return {schedule: input.schedule, timeZone: input.timeZone,
+    retryConfig: Object.fromEntries(retryFields.map(key => [key, input[key]])), opts: input};
 }
-/**
-* Handler for scheduled functions. Triggered whenever the associated
-* scheduler job sends a http request.
-* @param args - Either a schedule or an object containing function options.
-* @param handler - A function to execute when triggered.
-* @returns A function that you can export and deploy.
-*/
-function onSchedule(args, handler) {
-	const separatedOpts = getOpts(args);
-	const httpFunc = async (req, res) => {
-		const event = {
-			jobName: req.header("X-CloudScheduler-JobName") || undefined,
-			scheduleTime: req.header("X-CloudScheduler-ScheduleTime") || new Date().toISOString()
-		};
-		const jobName = event.jobName || "unknown-job";
-		const v1Context = {
-			eventId: jobName,
-			timestamp: event.scheduleTime,
-			eventType: "google.pubsub.topic.publish",
-			resource: {
-				service: "pubsub.googleapis.com",
-				name: `projects/${process.env.GCLOUD_PROJECT}/topics/${jobName}`
-			},
-			params: {}
-		};
-		Object.defineProperty(event, "context", { get: () => v1Context });
-		try {
-			await handler(event);
-			res.status(200).send();
-		} catch (err) {
-			require_logger_index.error(err.message);
-			res.status(500).send();
-		}
-	};
-	const func = require_v2_trace.wrapTraceContext(require_common_onInit.withInit(httpFunc));
-	func.run = handler;
-	const globalOpts = require_v2_options.getGlobalOptions();
-	const baseOptsEndpoint = require_v2_options.optionsToEndpoint(globalOpts);
-	const specificOptsEndpoint = require_v2_options.optionsToEndpoint(separatedOpts.opts, "scheduledOrTask");
-	const ep = {
-		...require_runtime_manifest.initV2Endpoint(globalOpts, separatedOpts.opts),
-		platform: "gcfv2",
-		...baseOptsEndpoint,
-		...specificOptsEndpoint,
-		labels: {
-			...baseOptsEndpoint?.labels,
-			...specificOptsEndpoint?.labels
-		},
-		scheduleTrigger: require_runtime_manifest.initV2ScheduleTrigger(separatedOpts.schedule, globalOpts, separatedOpts.opts)
-	};
-	require_common_encoding.copyIfPresent(ep.scheduleTrigger, separatedOpts, "timeZone");
-	require_common_encoding.copyIfPresent(ep.scheduleTrigger.retryConfig, separatedOpts.retryConfig, "retryCount", "maxRetrySeconds", "minBackoffSeconds", "maxBackoffSeconds", "maxDoublings");
-	func.__endpoint = ep;
-	func.__requiredAPIs = [{
-		api: "cloudscheduler.googleapis.com",
-		reason: "Needed for scheduled functions."
-	}];
-	return func;
+function onSchedule(input, handler) {
+  const config = getOpts(input);
+  const definition = new FunctionDefinition(config.opts, 'scheduledOrTask');
+  const scheduleTrigger = initV2ScheduleTrigger(config.schedule, getGlobalOptions(), config.opts);
+  if (Object.hasOwn(config, 'timeZone')) scheduleTrigger.timeZone = config.timeZone;
+  if (config.retryConfig) Object.assign(scheduleTrigger.retryConfig, config.retryConfig);
+  const invoke = async (request, response) => {
+    const event = {jobName: request.header('X-CloudScheduler-JobName') || undefined,
+      scheduleTime: request.header('X-CloudScheduler-ScheduleTime') || new Date().toISOString()};
+    const job = event.jobName || 'unknown-job';
+    const context = {eventId: job, timestamp: event.scheduleTime, eventType: 'google.pubsub.topic.publish',
+      resource: {service: 'pubsub.googleapis.com', name: `projects/${process.env.GCLOUD_PROJECT}/topics/${job}`}, params: {}};
+    Object.defineProperty(event, 'context', {get: () => context});
+    try {await handler(event); response.status(200).send();}
+    catch (error) {logger.error(error.message); response.status(500).send();}
+  };
+  const fn = definition.attach(wrapTraceContext(withInit(invoke)), {scheduleTrigger});
+  fn.run = handler;
+  fn.__requiredAPIs = [{api: 'cloudscheduler.googleapis.com', reason: 'Needed for scheduled functions.'}];
+  return fn;
 }
-
-//#endregion
 exports.getOpts = getOpts;
 exports.onSchedule = onSchedule;
-Object.defineProperty(exports, 'scheduler_exports', {
-  enumerable: true,
-  get: function () {
-    return scheduler_exports;
-  }
-});
+exports.scheduler_exports = {getOpts, onSchedule};

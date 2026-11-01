@@ -1,160 +1,60 @@
-const require_common_options = require('../common/options.js');
-const require_params_types = require('../params/types.js');
+'use strict';
+const {RESET_VALUE, ResetValue} = require('../common/options.js');
+const {Expression} = require('../params/types.js');
 
-//#region src/runtime/manifest.ts
-const GLOBAL_MANIFEST_SYMBOL = Symbol.for("firebase-functions:manifest");
-const globalSymbols = globalThis;
-if (!globalSymbols[GLOBAL_MANIFEST_SYMBOL]) {
-	globalSymbols[GLOBAL_MANIFEST_SYMBOL] = {};
+// These are fields of the Firebase deployment protocol, not a runtime SDK.
+const endpointFields = ['availableMemoryMb', 'timeoutSeconds', 'minInstances', 'maxInstances', 'ingressSettings', 'concurrency', 'serviceAccountEmail', 'vpc'];
+const retries = ['maxAttempts', 'maxDoublings', 'maxBackoffSeconds', 'maxRetrySeconds', 'minBackoffSeconds'];
+const rates = ['maxConcurrentDispatches', 'maxDispatchesPerSecond'];
+const scheduledV1 = ['retryCount', 'maxDoublings', 'maxRetryDuration', 'maxBackoffDuration', 'minBackoffDuration'];
+const scheduledV2 = ['retryCount', 'maxDoublings', 'maxRetrySeconds', 'minBackoffSeconds', 'maxBackoffSeconds'];
+const manifestKey = Symbol.for('firebase-functions:manifest');
+const globalManifest = globalThis[manifestKey] ??= {};
+const preserve = options => options.some(option => option?.preserveExternalChanges);
+function resetFields(fields, options) {
+  const result = {};
+  if (!preserve(options)) for (const field of fields) result[field] = RESET_VALUE;
+  return result;
 }
-/**
-* Shared global manifest object on globalThis.
-* Contains all global stack/manifest declarations (requiredRoles, requiredAPIs, params, lifecycleHooks, etc.)
-* so that they can be directly destructured into the final ManifestStack.
-* @internal
-*/
-const globalManifest = globalSymbols[GLOBAL_MANIFEST_SYMBOL];
-/**
-* Clears all entries from the shared global manifest.
-* @internal
-*/
-function clearGlobalManifest() {
-	for (const key of Object.keys(globalManifest)) {
-		delete globalManifest[key];
-	}
+function schedule(version, expression, options) {
+  const value = {schedule: expression, retryConfig: resetFields(version === 1 ? scheduledV1 : scheduledV2, options)};
+  if (!preserve(options)) value.timeZone = RESET_VALUE;
+  return value;
 }
-/**
-* Returns the JSON representation of a ManifestStack, which has CEL
-* expressions in its options as object types, with its expressions
-* transformed into the actual CEL strings.
-* @alpha
-*/
+
 function stackToWire(stack) {
-	const wireStack = stack;
-	const traverse = function traverse$1(obj) {
-		for (const [key, val] of Object.entries(obj)) {
-			if (val instanceof require_params_types.Expression) {
-				obj[key] = val.toCEL();
-			} else if (val instanceof require_common_options.ResetValue) {
-				obj[key] = val.toJSON();
-			} else if (typeof val === "object" && val !== null) {
-				traverse$1(val);
-			}
-		}
-	};
-	traverse(wireStack.endpoints);
-	return wireStack;
-}
-const RESETTABLE_OPTIONS = {
-	availableMemoryMb: null,
-	timeoutSeconds: null,
-	minInstances: null,
-	maxInstances: null,
-	ingressSettings: null,
-	concurrency: null,
-	serviceAccountEmail: null,
-	vpc: null
-};
-function initEndpoint(resetOptions, ...opts) {
-	const endpoint = {};
-	if (opts.every((opt) => !opt?.preserveExternalChanges)) {
-		for (const key of Object.keys(resetOptions)) {
-			endpoint[key] = require_common_options.RESET_VALUE;
-		}
-	}
-	return endpoint;
-}
-/**
-* @internal
-*/
-function initV1Endpoint(...opts) {
-	const { concurrency,...resetOpts } = RESETTABLE_OPTIONS;
-	return initEndpoint({ ...resetOpts }, ...opts);
-}
-/**
-* @internal
-*/
-function initV2Endpoint(...opts) {
-	return initEndpoint(RESETTABLE_OPTIONS, ...opts);
-}
-const RESETTABLE_RETRY_CONFIG_OPTIONS = {
-	maxAttempts: null,
-	maxDoublings: null,
-	maxBackoffSeconds: null,
-	maxRetrySeconds: null,
-	minBackoffSeconds: null
-};
-const RESETTABLE_RATE_LIMITS_OPTIONS = {
-	maxConcurrentDispatches: null,
-	maxDispatchesPerSecond: null
-};
-/**
-* @internal
-*/
-function initTaskQueueTrigger(...opts) {
-	const taskQueueTrigger = {
-		retryConfig: {},
-		rateLimits: {}
-	};
-	if (opts.every((opt) => !opt?.preserveExternalChanges)) {
-		for (const key of Object.keys(RESETTABLE_RETRY_CONFIG_OPTIONS)) {
-			taskQueueTrigger.retryConfig[key] = require_common_options.RESET_VALUE;
-		}
-		for (const key of Object.keys(RESETTABLE_RATE_LIMITS_OPTIONS)) {
-			taskQueueTrigger.rateLimits[key] = require_common_options.RESET_VALUE;
-		}
-	}
-	return taskQueueTrigger;
-}
-const RESETTABLE_V1_SCHEDULE_OPTIONS = {
-	retryCount: null,
-	maxDoublings: null,
-	maxRetryDuration: null,
-	maxBackoffDuration: null,
-	minBackoffDuration: null
-};
-const RESETTABLE_V2_SCHEDULE_OPTIONS = {
-	retryCount: null,
-	maxDoublings: null,
-	maxRetrySeconds: null,
-	minBackoffSeconds: null,
-	maxBackoffSeconds: null
-};
-function initScheduleTrigger(resetOptions, schedule, ...opts) {
-	let scheduleTrigger = {
-		schedule,
-		retryConfig: {}
-	};
-	if (opts.every((opt) => !opt?.preserveExternalChanges)) {
-		for (const key of Object.keys(resetOptions)) {
-			scheduleTrigger.retryConfig[key] = require_common_options.RESET_VALUE;
-		}
-		scheduleTrigger = {
-			...scheduleTrigger,
-			timeZone: require_common_options.RESET_VALUE
-		};
-	}
-	return scheduleTrigger;
-}
-/**
-* @internal
-*/
-function initV1ScheduleTrigger(schedule, ...opts) {
-	return initScheduleTrigger(RESETTABLE_V1_SCHEDULE_OPTIONS, schedule, ...opts);
-}
-/**
-* @internal
-*/
-function initV2ScheduleTrigger(schedule, ...opts) {
-	return initScheduleTrigger(RESETTABLE_V2_SCHEDULE_OPTIONS, schedule, ...opts);
+  // Copy rather than modifying exported endpoint definitions. The CLI can
+  // inspect frozen declarations and repeat discovery without destroying CEL
+  // expressions used by a later caller. An explicit worklist avoids recursion
+  // on deeply nested labels/options, and preserves shared object identity.
+  const copies = new WeakMap(), work = [];
+  function value(input) {
+    if (input instanceof Expression) return input.toCEL();
+    if (input instanceof ResetValue) return null;
+    if (input === null || typeof input !== 'object' || input instanceof Date) return input;
+    if (copies.has(input)) return copies.get(input);
+    const output = Array.isArray(input) ? new Array(input.length) : {};
+    copies.set(input, output);
+    work.push([input, output]);
+    return output;
+  }
+  const endpoints = value(stack.endpoints);
+  while (work.length) {
+    const [input, output] = work.pop();
+    for (const key of Object.keys(input)) {
+      const converted = value(input[key]);
+      if (key === '__proto__') Object.defineProperty(output, key, {value: converted, enumerable: true, configurable: true, writable: true});
+      else output[key] = converted;
+    }
+  }
+  return {...stack, endpoints};
 }
 
-//#endregion
-exports.clearGlobalManifest = clearGlobalManifest;
 exports.globalManifest = globalManifest;
-exports.initTaskQueueTrigger = initTaskQueueTrigger;
-exports.initV1Endpoint = initV1Endpoint;
-exports.initV1ScheduleTrigger = initV1ScheduleTrigger;
-exports.initV2Endpoint = initV2Endpoint;
-exports.initV2ScheduleTrigger = initV2ScheduleTrigger;
+exports.clearGlobalManifest = () => {for (const key of Object.keys(globalManifest)) delete globalManifest[key];};
+exports.initV1Endpoint = (...options) => resetFields(endpointFields.filter(field => field !== 'concurrency'), options);
+exports.initV2Endpoint = (...options) => resetFields(endpointFields, options);
+exports.initTaskQueueTrigger = (...options) => ({retryConfig: resetFields(retries, options), rateLimits: resetFields(rates, options)});
+exports.initV1ScheduleTrigger = (expression, ...options) => schedule(1, expression, options);
+exports.initV2ScheduleTrigger = (expression, ...options) => schedule(2, expression, options);
 exports.stackToWire = stackToWire;

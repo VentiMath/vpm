@@ -1,9 +1,12 @@
 # vfirebase-functions
 
 **Implementation status:** the current package retains upstream implementation
-code with the changes documented below. Logging and initialization are now
-independent implementations; the providers and deployment machinery remain
-adapted upstream code. Its tests verify this mixed implementation.
+code with the changes documented below. Logging, initialization, option
+projection, manifest serialization, HTTP/callable factories and the scheduler
+adapter now have independent implementations. Callable token verification,
+payload encoding/streaming, Firestore providers, secret parameters and most
+other SDK services still retain upstream code. Tests verify this mixed
+implementation.
 An independently written implementation of the application-facing APIs is
 pending; this package is not yet a completed rewrite.
 
@@ -58,6 +61,12 @@ Connect GraphQL server, as upstream.
   callback; a failed run can be retried. Each registration owns its completion,
   so an older callback cannot mark its replacement initialized. CommonJS and
   ESM share the same logger, trace context and initializer state.
+- **Independent deployment definitions.** Shared option tables and a function
+  definition builder assemble the HTTP, callable and scheduler metadata.
+  Serialization returns a new wire representation, preserving reusable and
+  frozen declarations, and handles deeply nested declarations iteratively.
+  HTTP CORS completion removes its listener after preflight or handler completion.
+  These factories and metadata helpers share CJS/ESM identity.
 - **The bin's directory argument.** `firebase-functions [functionsDir]` read the
   directory only when two or more arguments were given, so a single directory
   argument was ignored and `-h` printed nothing. The Firebase CLI runs the bin
@@ -85,16 +94,25 @@ Connect GraphQL server, as upstream.
 - [Regressions](../../scripts/firebase-functions-conformance/regressions.cjs):
   each change above reproduced with the original, then checked here.
 - [Package tests](test/firebase-functions.test.cjs), [logging and initialization
-  regressions](test/logging-init.test.cjs), and [type tests](test/types.ts).
-- [Measurements](bench/results/README.md): isolated logging and initialization
-  CPU comparisons on Node 24 and Bun. Console I/O is excluded.
+  regressions](test/logging-init.test.cjs), [deployment regressions](test/deployment.test.cjs),
+  and [type tests](test/types.ts).
+- [Measurements](bench/results/README.md): isolated logging, initialization,
+  endpoint construction, fresh manifest serialization and initialized HTTP
+  invocation comparisons on Node 24 and Bun. Console and network I/O are excluded.
 
-The isolated run records nested logging about 34% lower in CPU time on Node 24
-and 46% lower on Bun. Short structured requests are inconclusive. The initialized
-handler costs about 11% more on Node (51 ns to 57 ns in this run); the Bun result
-is inconclusive. These measurements exclude console I/O and do not predict
-request latency. Provider and cold-start scripts remain available for later
-remeasurement; their earlier numbers are not current claims.
+The measurements distinguish function-definition and deployment costs from
+per-request execution. Manifest serialization now copies its input to preserve
+frozen/reusable declarations; the benchmark includes construction of a fresh
+64-endpoint input for both libraries. The report retains every sample and the
+identical-code controls, including inconclusive results.
+
+In this run, HTTP endpoint construction is 16.1% faster on Node and 19.7%
+slower on Bun (about 80 ns extra). Serializing 64 fresh endpoints costs 11.8%
+more on Node and 56.9% more on Bun, about 6 and 22 microseconds respectively,
+in return for preserving the input. Both initialized HTTP-invocation
+comparisons are inconclusive. These deployment-time costs do not recur per
+request. Nested logging remains faster; the initialized callback itself still
+has a roughly 6 ns Node cost for its stronger registration semantics.
 
 MIT licensing, the pinned source and the files changed from it are recorded in
 [PROVENANCE.json](PROVENANCE.json).

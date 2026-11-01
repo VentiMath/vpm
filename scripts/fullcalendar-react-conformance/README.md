@@ -51,6 +51,14 @@ delegated listeners on the calendar's container against a baseline measured with
 Preact's `createRoot` (the suite's `lib/vdom-misc` imports Preact directly), and
 one scroll spec trips Chromium's "ResizeObserver loop completed" error.
 
+One timing adaptation is applied only to the temporary compiled input, after
+verifying the retained upstream sources. The promise-like event-source test
+originally resolved a jQuery Deferred at 100 ms and checked the calendar at
+101 ms, racing jQuery's additional callback timer. Both implementations now
+run the same event-count assertion after a nonempty `eventsSet` callback, with the existing
+Jasmine timeout. The comparison also prints every failed assertion so CI
+reports retain the reason for any new failure.
+
 `regressions.cjs` mounts a calendar with each library under vitest and jsdom
 and observes the two fixes that come from the packages below it: a
 `timeZone: 'Africa/Casablanca'` calendar during Ramadan 2020 (where the runtime

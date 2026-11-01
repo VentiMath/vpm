@@ -27,10 +27,26 @@ const cases = [
     await handler(41);
     return () => handler(41);
   }, validate: output => assert.equal(output, 42)},
+  {name: 'declaration / HTTP endpoint', make: root => {
+    const {onRequest} = require(path.join(root, 'lib/v2/providers/https.js'));
+    const options = {cors: true, memory: '1GiB', timeoutSeconds: 540, secrets: ['API_KEY']};
+    return () => onRequest(options, () => {}).__endpoint;
+  }, validate: endpoint => {assert.equal(endpoint.availableMemoryMb, 1024); assert.equal(endpoint.timeoutSeconds, 540); assert.deepEqual(endpoint.secretEnvironmentVariables, [{key: 'API_KEY'}]);}},
+  {name: 'declaration / serialize 64 fresh endpoints', make: root => {
+    const {stackToWire} = require(path.join(root, 'lib/runtime/manifest.js'));
+    const {RESET_VALUE} = require(path.join(root, 'lib/common/options.js'));
+    return () => stackToWire({specVersion: 'v1alpha1', endpoints: Object.fromEntries(Array.from({length: 64}, (_, i) => ['api' + i,
+      {platform: 'gcfv2', minInstances: RESET_VALUE, maxInstances: RESET_VALUE, labels: {service: 'api'}, httpsTrigger: {}}]))});
+  }, validate: manifest => {assert.equal(Object.keys(manifest.endpoints).length, 64); assert.equal(manifest.endpoints.api63.minInstances, null);}},
+  {name: 'request / initialized HTTP handler', async: true, make: root => {
+    const {onRequest} = require(path.join(root, 'lib/v2/providers/https.js'));
+    const request = {headers: {}}, response = {value: 0};
+    const handler = onRequest((request, response) => {response.value = 42;});
+    return async () => {await handler(request, response); return response.value;};
+  }, validate: output => assert.equal(output, 42)},
 ];
 require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream: roots.upstream, vpm: roots.vpm, cases,
-  files: ['package.json', 'PROVENANCE.json', 'lib/logger', 'lib/common/onInit.js', 'lib/common/trace.js', 'bench/compare.cjs',
-    '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/lib/logger',
-    '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/lib/common/onInit.js',
-    '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/lib/common/trace.js']
+  files: ['package.json', 'lib', 'bench/compare.cjs', '../vcors/index.js',
+    '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/lib',
+    '../../scripts/firebase-functions-conformance/node_modules/cors/lib']
 }).catch(error => {console.error(error); process.exitCode = 1;});

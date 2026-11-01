@@ -58,3 +58,9 @@ null-prototype Express query object lost by upstream),
 handler results and endpoint definitions must be identical, and each library's
 bin, run from a functions directory as the Firebase CLI does, must write the
 same deploy manifest.
+
+Filtered runs (`--grep`) fail on every unexpected assertion failure, just as
+the full gate does. The full gate additionally requires the exact upstream test
+count and known exception set. Deployment regressions cover frozen endpoint
+definitions, a 15,000-level structure, shared references, prototype-named own
+fields, CJS/ESM identities and CORS finish-listener cleanup.
