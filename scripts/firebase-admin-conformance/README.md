@@ -61,3 +61,12 @@ validation, `exists`, `delete`, v2 signed URLs) and FCM over HTTP/2
 HTTP/2 server, so the original's `:scheme` value is normalized in transit for
 both libraries. Request logs (with the current time in `validSince` and the
 emulator port normalized) and results must be identical.
+
+The percent-condition distribution cases use the same 100,000 deterministic
+IDs (`vpm-percent-condition-0` through `vpm-percent-condition-99999`) for
+upstream and VPM. The retained source still uses random UUIDs; the runner
+changes only that expression in its temporary compiled test copy. Hashing,
+sample sizes and all original tolerances remain unchanged. This avoids a
+correct upstream control randomly falling outside its three-standard-deviation
+bound and makes differences reproducible. Filtered runs also fail on unexpected
+assertion failures.

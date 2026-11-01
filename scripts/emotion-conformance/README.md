@@ -44,6 +44,7 @@ node scripts/emotion-conformance/run.cjs --mode=production
 node scripts/emotion-conformance/run.cjs --upstream --react=18
 node scripts/emotion-conformance/run.cjs --react=18
 node scripts/emotion-conformance/regressions.cjs
+node scripts/emotion-conformance/styled-consumer.cjs
 node scripts/emotion-conformance/compare-serialize.cjs
 node scripts/emotion-conformance/compare-cache.cjs
 node scripts/emotion-conformance/types.cjs
@@ -69,7 +70,7 @@ run through the plugin itself in `css.js`, `global.js`, `styled.js` and
 
 In development, 415 tests pass (130 of them the Babel plugin's) and 8 are
 gated to production (435 snapshots); in production, 5 pass; under React 18,
-418 pass (441 snapshots). The same holds with VPM's packages: currently vemotion-hash,
+418 pass (441 snapshots). With the two exceptions below, the same holds with VPM's packages: vemotion-hash,
 vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet,
 vemotion-utils, vemotion-serialize, vemotion-is-prop-valid,
 vemotion-use-insertion-effect-with-fallbacks, vemotion-cache, vemotion-react,
@@ -81,7 +82,7 @@ design and are pinned by name: `css-prop-complex-array` imports
 `@emotion/react/macro`, whose macro VPM does not build, and
 `two-consecutive-interpolations` records stylis 4.2.0 dropping the space that a
 comment separates two words with. All
-435, 11 and 441 snapshots match.
+434, 11 and 440 snapshots match; one development snapshot differs as described above.
 
 `compare-serialize.cjs` runs 20,000 generated style arguments (objects with
 nested selectors and at-rules, fallback arrays, numbers, booleans, null, custom
@@ -138,3 +139,22 @@ plugin minifies `border: 1px /* thin */ solid red` to `border:1pxsolid red`,
 and @emotion/utils's
 declarations, installed with only its declared dependencies, fail to compile
 because they import the undeclared `@emotion/sheet`.
+
+## Styled-component application consumer
+
+`styled-consumer.cjs` runs ten identical render scenarios against the published
+Emotion stack and the VPM stack, using React 19.1.0, MUI system 7.2.0 and
+styled-engine 7.3.9 (the versions inspected in VentiMath). The fixture pins them
+only as development controls. It compares full HTML/CSS for theme and prop
+interpolation, `as`, retargeting, template literals, MUI style-facade mutation,
+`ownerState`, `sx`, theme overrides and variants. Run on Node 24 and Bun.
+
+`consumer-tree.cjs` gives each worker one consistent module identity for both
+`@emotion/react` and `vemotion-react`. Aliases re-export the same contexts;
+separate symlink paths under `--preserve-symlinks` would incorrectly create two.
+
+The complete fixture currently runs 413 passing assertions plus two documented
+Babel-plugin differences and eight skips with React 16 in development; React 18
+runs 416 passing assertions, the same two differences and five skips. Production
+runs five assertions and skips 418. Its narrower coverage is intentional in
+upstream's configuration and is not equivalent to development coverage.

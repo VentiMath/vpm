@@ -8,9 +8,9 @@
     "tarballSha256": "563dfb8af1c46ba714fd543219a5df59023ac3141c0d5f7cd6fd773dbe4c1653",
     "integrity": "sha512-qEEJt42DuToa3gurlH4Qqc1kVpNq8wO8cJtDzU46TjlzWjDlsVyevtYCRijVq3SrHsROS+gVQ8Fnea108GnKzw=="
   },
-  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "source": "Source-informed VPM redesign of the component definition and rendering pipeline. Upstream sources and tests were inspected; this is not a clean-room claim. Public declarations, HTML/SVG shorthand names, compatibility fields and diagnostic wording retain the upstream contract and attribution.",
   "changes": [
-    "Written for VPM in plain JavaScript: createStyled (styles from templates and interpolations, the as prop, prop forwarding, labels and targets, withComponent, styling styled components) and the element shorthands.",
+    "StyleDefinition handles template collection, predicate composition, inheritance and retargeting; one shared renderer handles theme lookup, registered classes, serialization and insertion. Emotion-facing metadata remains an explicit compatibility facade for MUI.",
     "The theme context is read on every render: the original read it only when the theme prop was null, so a component whose theme prop came and went changed the order of its hooks (React warns in development).",
     "On vemotion-is-prop-valid (so current HTML attributes such as command and commandFor reach DOM elements), vemotion-serialize, vemotion-utils and vemotion-use-insertion-effect-with-fallbacks; vemotion-react is a peer, as @emotion/react is.",
     "No macro entry, so no run-time dependency on @emotion/babel-plugin or @babel/runtime: 4 direct dependencies instead of 6.",
@@ -19,12 +19,22 @@
   ],
   "verification": {
     "fixture": "scripts/emotion-conformance",
-    "upstreamSuite": "Emotion's 293 tests pass with this package and the other eleven VPM Emotion packages in place of every original, in development and production builds and with React 16 and React 18.",
+    "upstreamSuite": "Current complete fixture: React 16 development 413 pass, 2 pre-existing Babel-plugin differences, 8 skipped; React 18 development 416 pass, the same 2 differences, 5 skipped; production 5 pass and 418 skipped. All original styled assertions execute in development; the production suite is explicitly much smaller.",
     "regression": "hook-order.cjs renders a styled component whose theme prop comes and goes with React 16.14: React reports a change in the order of hooks for the original and nothing for VPM.",
     "declarations": "types.cjs compiles a TSX application (shorthands with props, shouldForwardProp, styled components, withComponent, an augmented Theme, and two expected errors) with React 18.3 and 19 types under TypeScript 7.1, 5.8 and 5.9.",
     "runtimes": [
       "Node.js 24",
       "Bun"
+    ],
+    "application": "styled-consumer.cjs compares ten identical HTML/CSS renders against upstream with the installed VentiMath consumer versions: MUI system 7.2.0, styled-engine 7.3.9, React 19.1.0; Node 24 and Bun.",
+    "benchmark": "bench/compare.cjs: fresh process per implementation, balanced order, identical-source controls; component construction and server rendering with the full corresponding Emotion stack."
+  },
+  "implementation": {
+    "kind": "source-informed application-facing redesign",
+    "basis": "Replaces the former close translation of upstream createStyled with StyleDefinition and a shared rendering/insertion pipeline. Existing hook-order and current-attribute fixes are retained.",
+    "scope": "Template and object styles, theme and props, explicit prop predicates, as, targets, labels, inherited styles and withComponent; MUI can replace __emotion_styles before extending a component.",
+    "unsupported": [
+      "macro entry"
     ]
   }
 }
