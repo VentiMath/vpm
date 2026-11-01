@@ -1,8 +1,9 @@
 # vfirebase-admin
 
 **Implementation status:** app registration, service lifetime, token refresh
-ownership, option snapshots, credential adapters and Auth response records use VPM redesigns.
-Google Auth, Auth service methods and the other service implementations remain upstream-derived;
+ownership, option snapshots, credential adapters, Auth response records and
+user-management plans use VPM redesigns. Google Auth, Auth transport and token
+verification, and the other service implementations remain upstream-derived;
 this is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
 the boundary.
 
@@ -41,14 +42,24 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 
 ## Changes from 14.5.0
 
+- **Auth user-management plans.** `getUser`, `updateUser`,
+  `revokeRefreshTokens` and `deleteUsers` use owned request plans. Update inputs
+  are detached before normalization, including structural class instances and
+  records with own `constructor` or `__proto__` keys. Frozen inputs remain usable.
+  Deletion counts belong to the submitted batch, so changing the caller's array
+  cannot change the result. Oversized batches are rejected before copying;
+  sparse lists reject invalid UIDs rather than reporting unsent users as deleted.
+  Error indices must be unique integers within the batch. Linking a provider
+  also validates any unlink list. Auth transport, endpoint schema validation,
+  MFA conversion and token verification remain upstream-derived.
+
 - **Auth response records.** User, provider, timestamp and MFA records use
   explicit field projections. Serializing JSON-shaped claims preserves own
   `__proto__` and `constructor` keys without changing `Object.prototype` or
   returning aliases to the original claims. Nested JSON data in TOTP output is detached too;
   its public getter retains upstream's identity contract. A bounded shallow walk with an iterative
   fallback handles deeply nested records and reports cycles explicitly.
-  Malformed MFA collections must be arrays. Auth request and token-verification
-  implementations remain upstream-derived.
+  Malformed MFA collections must be arrays.
 
 - **Credential transport and identity.** Factories distinguish HTTP agents and
   pass them through to JSON auth clients. Validated credential data is detached
@@ -119,15 +130,20 @@ upstream-derived and tracked separately.
 Missing-dependency errors name the VPM packages.
 
 The isolated measurements include the redesigned app, credential and Auth record
-layers. User-record serialization takes about 218 ns versus 317 ns on Node
-(31% less time) and 267 ns versus 479 ns on Bun (44% less time), beyond the
-observed identical-source control spread in every comparison pair. Bun record
-construction still costs more: 1.31 µs versus 1.19 µs. The Node construction
-comparison has no established direction at the recorded precision.
+layers, plus user-management plans with synthetic transport. Neither updating a
+user nor deleting a 100-user batch has an established timing difference on Node
+or Bun at the recorded precision. These cases bypass HTTP and endpoint schema
+validation to measure request planning and result projection.
+
+User-record serialization takes about 213 ns versus 334 ns on Node and 283 ns
+versus 509 ns on Bun (median paired changes of -37% and -44%). Both are beyond
+the observed identical-source control spread in every comparison pair. Record
+construction has higher median times on both runtimes, but its direction is
+unestablished under the report's control-spread criterion.
 
 App/credential setup, some cached acquisitions and service cleanup also retain
 regressions; concurrent acquisition benefits from sharing pending work. The
-[full report](bench/results/README.md) includes all fifteen cases, process orders,
+[full report](bench/results/README.md) includes all seventeen cases, process orders,
 controls and raw samples. These measure local CPU work, excluding network latency.
 
 ## Evidence
@@ -144,6 +160,9 @@ controls and raw samples. These measure local CPU work, excluding network latenc
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [User-operation controls](../../scripts/firebase-admin-conformance/user-operations.cjs)
+  compare normal and partial-failure HTTP requests/results, then reproduce batch
+  mutation, sparse-input, invalid-index and input-ownership defects.
 - [User-record controls](../../scripts/firebase-admin-conformance/user-records.cjs)
   compare 160 generated responses and isolate prototype, aliasing and deep-data
   cases against the original on both runtimes.

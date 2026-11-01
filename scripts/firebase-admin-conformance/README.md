@@ -93,3 +93,12 @@ aliasing. VPM preserves those claim keys, detaches nested outputs and supports
 20,000-level claim data on Node and Bun; Node's original serializer overflows
 its stack on that case. Cycles report an explicit error. The unchanged upstream
 record suites also run within the full Admin gate.
+
+`user-operations.cjs` compares lookup, updates, revocation and batch deletion
+through local Auth HTTP servers, including partial deletion failures. Separate
+controls reproduce changed-array counts, sparse-list successes for unsent UIDs,
+invalid/duplicate response indices, constructor-key mutation, frozen structural
+inputs, prototype writes and linking/unlinking validation. Oversized arrays are
+rejected before copying; custom iterators cannot substitute different UIDs.
+The package tests run these controls on Node 24 and Bun. The 166 unchanged
+upstream user-management tests also run as part of the complete Admin suite.

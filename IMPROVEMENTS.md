@@ -233,7 +233,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Mixed implementation on VPM dependencies: independent logging, initialization, declaration assembly and HTTP/scheduler factories; non-mutating manifest serialization and shared CJS/ESM state. Callable request validation, verification orchestration, payload conversion and response lifecycle are independently implemented, with prototype-safe data and cancellation cleanup. Firestore event adapters, secret accessors and registration are independently implemented; changed protobuf events decode once, field masks preserve sibling changes, and JSON secret errors omit credential excerpts. Trace propagation, configuration and iterative deployment discovery are independently implemented. Admin/Firestore clients, generic parameter expressions and other SDK services remain adapted upstream code; a complete package-wide rewrite remains pending. |
-| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, redesigned app/token/service lifetimes, credential identity/transport and prototype-safe Auth record serialization; isolated CPU measurements and identical Auth, Firestore, Storage and FCM caller behavior. |
+| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, redesigned app/token/service lifetimes, credential identity/transport, prototype-safe Auth record serialization and owned user-management plans; isolated CPU measurements and identical Auth, Firestore, Storage and FCM caller behavior. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | All six dependencies are VPM with one gax stack, 65 modules and about 50 ms at import instead of 404 and 270 ms, reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Same persistent trees and node layout; `at()` no longer throws on empty trees or selects the first entry for `NaN`; non-function comparators fail at construction; iterative, range-pruned traversal. Actual Firestore listener paths verified. |
@@ -959,8 +959,9 @@ See the [package contract](packages/vfirebase-functions/README.md),
 ## vfirebase-admin
 
 Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
-service lifecycle, token lease, option snapshots, credential adapters and Auth response records have
-source-informed VPM implementations. Service APIs and Google Auth remain upstream-derived.
+service lifecycle, token lease, option snapshots, credential adapters, Auth response records
+and user-management plans have source-informed VPM implementations. Auth transport,
+token verification, other service APIs and Google Auth remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
 internal, leaving three direct and two optional dependencies.
@@ -986,6 +987,15 @@ or claim aliases. The iterative snapshot walker handles deep records and rejects
 cycles; TOTP serialization detaches nested output. The unchanged record tests
 and 160 generated response comparisons cover the existing public fields.
 
+User-management plans own update inputs and deletion batches. Caller mutations
+cannot change completed deletion counts; sparse lists reject unsent UIDs and
+invalid or duplicate response indices cannot produce impossible totals. Update
+normalization handles frozen structural inputs and own prototype-named keys
+without modifying caller data or prototypes. Provider linking also validates
+unlink lists. Local HTTP controls compare normal and partial-failure requests
+and reproduce the original defects. Existing transport, endpoint schemas and
+MFA conversion remain retained.
+
 While public keys are missing or expired, upstream starts one key request per
 concurrent token verification (ID tokens and session cookies, App Check and
 phone-number verification); here concurrent callers share the request. Upstream
@@ -1003,7 +1013,7 @@ scheme or multipart parsing, each required to fail on exactly that. VentiMath's
 Admin calls (`verifyIdToken` with revocation checks, `getUser`, `updateUser`,
 `revokeRefreshTokens`, `deleteUsers`, a Firestore scenario, Storage `save`,
 `exists`, `delete` and signed URLs, and `sendEachForMulticast`) produce
-identical requests and results against local servers. Existing regression probes plus isolated app-lifecycle and user-record controls and eleven
+identical requests and results against local servers. Existing regression probes plus isolated app-lifecycle, user-record and user-operation controls and twelve
 focused tests cover the changes.
 
 See the [package contract](packages/vfirebase-admin/README.md),
