@@ -20,6 +20,16 @@ node scripts/firebase-admin-conformance/callers.cjs
 
 Repeat with Bun.
 
+`messaging-send.cjs` runs each implementation in a separate process. Twenty-four
+normal send/multicast outcomes match, including token/FID recipients, dry-run
+requests, APNs/data payloads and ordered partial failures. Additional controls
+reproduce own-constructor/null-prototype payload aliases, prototype writes,
+sparse-batch aggregation crashes, duplicate project lookups and unused HTTP/2
+sessions. They verify encoded project identity, lookup recovery, result order and
+session closure. Dispatch is synthetic in these ownership controls; `callers.cjs`
+separately exercises the real local FCM HTTP/2 exchange. No assertion in the
+retained 511-test Messaging suite is edited or newly exempted.
+
 `run.cjs` compiles the tests with the workspace TypeScript 7 compiler (no type
 checking) into upstream's layout, with `src` linked to the implementation's
 `lib` and its `package.json` beside them, and runs `test/unit/index.spec`, the

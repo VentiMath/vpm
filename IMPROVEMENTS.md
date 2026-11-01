@@ -972,7 +972,8 @@ service lifecycle, token lease, option snapshots, credential adapters, Auth resp
 user-management plans, token policy, key caches, signature adaptation, Auth
 request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy and authorization
 headers, JSON/text response projection, Firestore client configuration/registry
-and Storage contexts have source-informed VPM implementations. Multipart/raw-HTTP helpers, other service APIs and Google Auth
+and Storage contexts, plus Messaging send plans and batch/project lifecycles,
+have source-informed VPM implementations. Multipart/raw-HTTP helpers, other service APIs and Google Auth
 remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
@@ -984,6 +985,16 @@ Token refreshes share a pending acquisition even when forced, recover after
 synchronous provider errors and reject invalid expiry without printing tokens.
 Iterative option snapshots avoid prototype setters, detach null-prototype
 records, support deep values and reject cycles explicitly.
+
+Messaging's send APIs capture JSON-shaped payloads before project discovery,
+including records with own constructor/prototype-named keys or null prototypes.
+Sparse batch slots yield ordered validation failures. Project discovery shares
+pending work and recovers from failure; encoded identifiers cannot change the
+resource path. Batch sessions open only when discovery succeeds and at least one
+message validates, and close after all results settle. Twenty-four normal
+original/VPM outcomes, 511 unchanged Messaging tests and real local FCM exchanges
+cover this orchestration. Schema validators, server-error mapping and topic
+management remain upstream-derived.
 
 Credential documents preserve the validated identity through first use, including
 frozen objects and files. Factories observe file rotation, honor HTTP agent

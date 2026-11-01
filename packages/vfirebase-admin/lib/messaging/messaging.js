@@ -18,20 +18,16 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Messaging = void 0;
-const deep_copy_1 = require("../utils/deep-copy");
-const error_1 = require("./error");
-const utils = require("../utils");
-const validator = require("../utils/validator");
-const messaging_internal_1 = require("./messaging-internal");
-const messaging_api_request_internal_1 = require("./messaging-api-request-internal");
+const messageSend = require("./message-send");
 const api_request_1 = require("../utils/api-request");
+const error_1 = require("./error");
+const validator = require("../utils/validator");
+const messaging_api_request_internal_1 = require("./messaging-api-request-internal");
 // FCM endpoints
 const FCM_SEND_HOST = 'fcm.googleapis.com';
 const FCM_TOPIC_MANAGEMENT_HOST = 'iid.googleapis.com';
 const FCM_TOPIC_MANAGEMENT_ADD_PATH = '/iid/v1:batchAdd';
 const FCM_TOPIC_MANAGEMENT_REMOVE_PATH = '/iid/v1:batchRemove';
-// Maximum messages that can be included in a batch request.
-const FCM_MAX_BATCH_SIZE = 500;
 /**
  * Maps a raw FCM server response to a `MessagingTopicManagementResponse` object.
  *
@@ -147,144 +143,11 @@ class Messaging {
      *   string after the message has been successfully handed off to the FCM
      *   service for delivery.
      */
-    send(message, dryRun) {
-        const copy = (0, deep_copy_1.deepCopy)(message);
-        (0, messaging_internal_1.validateMessage)(copy);
-        if (typeof dryRun !== 'undefined' && !validator.isBoolean(dryRun)) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, 'dryRun must be a boolean');
-        }
-        return this.getUrlPath()
-            .then((urlPath) => {
-            const request = { message: copy };
-            if (dryRun) {
-                request.validate_only = true;
-            }
-            return this.messagingRequestHandler.invokeRequestHandler(FCM_SEND_HOST, urlPath, request);
-        })
-            .then((response) => {
-            return response.name;
-        });
-    }
-    /**
-    * Sends each message in the given array via Firebase Cloud Messaging.
-    *
-    * This method makes a single RPC call for each message
-    * in the given array.
-    *
-    * The responses list obtained from the return value corresponds to the order of `messages`.
-    * An error from this method or a `BatchResponse` with all failures indicates a total failure,
-    * meaning that none of the messages in the list could be sent. Partial failures or no
-    * failures are only indicated by a `BatchResponse` return value.
-    *
-    * @param messages - A non-empty array
-    *   containing up to 500 messages.
-    * @param dryRun - Whether to send the messages in the dry-run
-    *   (validation only) mode.
-    * @returns A Promise fulfilled with an object representing the result of the
-    *   send operation.
-    */
-    sendEach(messages, dryRun) {
-        if (validator.isArray(messages) && messages.constructor !== Array) {
-            // In more recent JS specs, an array-like object might have a constructor that is not of
-            // Array type. Our deepCopy() method doesn't handle them properly. Convert such objects to
-            // a regular array here before calling deepCopy(). See issue #566 for details.
-            messages = Array.from(messages);
-        }
-        const copy = (0, deep_copy_1.deepCopy)(messages);
-        if (!validator.isNonEmptyArray(copy)) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, 'messages must be a non-empty array');
-        }
-        if (copy.length > FCM_MAX_BATCH_SIZE) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, `messages list must not contain more than ${FCM_MAX_BATCH_SIZE} items`);
-        }
-        if (typeof dryRun !== 'undefined' && !validator.isBoolean(dryRun)) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, 'dryRun must be a boolean');
-        }
-        const http2SessionHandler = this.useLegacyTransport ? undefined : new api_request_1.Http2SessionHandler(`https://${FCM_SEND_HOST}`);
-        return this.getUrlPath()
-            .then((urlPath) => {
-            const requests = copy.map(async (message) => {
-                (0, messaging_internal_1.validateMessage)(message);
-                const request = { message };
-                if (dryRun) {
-                    request.validate_only = true;
-                }
-                if (http2SessionHandler) {
-                    return this.messagingRequestHandler.invokeHttp2RequestHandlerForSendResponse(FCM_SEND_HOST, urlPath, request, http2SessionHandler);
-                }
-                else {
-                    return this.messagingRequestHandler.invokeHttpRequestHandlerForSendResponse(FCM_SEND_HOST, urlPath, request);
-                }
-            });
-            return Promise.allSettled(requests);
-        })
-            .then((results) => {
-            const sessionErrors = http2SessionHandler ? http2SessionHandler.getErrors() : [];
-            return this.parseSendResponses(results, sessionErrors);
-        })
-            .finally(() => {
-            http2SessionHandler?.close();
-        });
-    }
-    parseSendResponses(results, sessionErrors = []) {
-        const responses = [];
-        results.forEach(result => {
-            if (result.status === 'fulfilled') {
-                responses.push(result.value);
-            }
-            else { // rejected
-                const error = sessionErrors.length > 0
-                    ? this.createSessionError(result.reason, sessionErrors)
-                    : result.reason;
-                responses.push({ success: false, error });
-            }
-        });
-        const successCount = responses.filter((resp) => resp.success).length;
-        return {
-            responses,
-            successCount,
-            failureCount: responses.length - successCount,
-        };
-    }
-    createSessionError(streamReason, sessionErrors) {
-        // Combine the original stream error and all session errors
-        const allErrors = [streamReason, ...sessionErrors];
-        const cause = new AggregateError(allErrors, 'Stream failure and session failures occurred');
-        const streamMessage = streamReason?.message || 'Unknown stream error';
-        const sessionMessage = `. Session failures: ${sessionErrors.map(e => e.message).join(', ')}`;
-        return new error_1.FirebaseMessagingError({
-            code: error_1.messagingClientErrorCode.UNKNOWN_ERROR.code,
-            message: `${streamMessage}${sessionMessage}`,
-            cause: cause,
-        });
-    }
-    sendEachForMulticast(message, dryRun) {
-        const copy = (0, deep_copy_1.deepCopy)(message);
-        if (!validator.isNonNullObject(copy)) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, 'MulticastMessage must be a non-null object');
-        }
-        const { tokens, fids, ...baseMessage } = copy;
-        if (tokens !== undefined && !validator.isArray(tokens)) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, 'tokens must be a valid array');
-        }
-        if (fids !== undefined && !validator.isArray(fids)) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, 'fids must be a valid array');
-        }
-        const tokenList = tokens || [];
-        const fidList = fids || [];
-        if (tokenList.length === 0 && fidList.length === 0) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, 'Either tokens or fids must be a non-empty array');
-        }
-        const totalLength = tokenList.length + fidList.length;
-        if (totalLength > FCM_MAX_BATCH_SIZE) {
-            throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, `The total number of tokens and fids must not exceed ${FCM_MAX_BATCH_SIZE}.`);
-        }
-        const messages = [
-            ...tokenList.map((token) => ({ ...baseMessage, token })),
-            ...fidList.map((fid) => ({ ...baseMessage, fid })),
-        ];
-        return this.sendEach(messages, dryRun);
-    }
+    send(message, dryRun) {return messageSend.send(this, message, dryRun);}
+    sendEach(messages, dryRun) {return messageSend.sendEach(this, messages, dryRun);}
+    sendEachForMulticast(message, dryRun) {return messageSend.multicast(this, message, dryRun);}
+    parseSendResponses(results, errors = []) {return messageSend.collect(results, errors);}
+    createSessionError(reason, errors) {return messageSend.sessionError(reason, errors);}
     /**
      * Subscribes a device to an FCM topic.
      *
@@ -353,32 +216,8 @@ class Messaging {
     unsubscribeFromTopicLegacy(registrationTokenOrTokens, topic) {
         return this.sendTopicManagementRequest(registrationTokenOrTokens, topic, 'unsubscribeFromTopicLegacy', FCM_TOPIC_MANAGEMENT_REMOVE_PATH);
     }
-    getProjectId() {
-        if (this.projectId) {
-            return Promise.resolve(this.projectId);
-        }
-        return utils.findProjectId(this.app)
-            .then((projectId) => {
-            if (!validator.isNonEmptyString(projectId)) {
-                // Assert for an explicit project ID (either via AppOptions or the cert itself).
-                throw new error_1.FirebaseMessagingError(error_1.messagingClientErrorCode.INVALID_ARGUMENT, 'Failed to determine project ID for Messaging. Initialize the '
-                    + 'SDK with service account credentials or set project ID as an app option. '
-                    + 'Alternatively set the GOOGLE_CLOUD_PROJECT environment variable.');
-            }
-            this.projectId = projectId;
-            return this.projectId;
-        });
-    }
-    getUrlPath() {
-        if (this.urlPath) {
-            return Promise.resolve(this.urlPath);
-        }
-        return this.getProjectId()
-            .then((projectId) => {
-            this.urlPath = `/v1/projects/${projectId}/messages:send`;
-            return this.urlPath;
-        });
-    }
+    getProjectId() {return messageSend.projectId(this);}
+    getUrlPath() {return messageSend.urlPath(this);}
     /**
      * Helper method which sends and handles topic subscription management requests via FCM v1 API.
      *
