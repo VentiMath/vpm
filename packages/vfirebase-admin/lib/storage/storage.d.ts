@@ -23,8 +23,7 @@ import { Bucket } from 'vgoogle-cloud-storage';
  * app.
  */
 export declare class Storage {
-    private readonly appInternal;
-    private readonly storageClient;
+    #private;
     /**
      * Gets a reference to a Cloud Storage bucket.
      *

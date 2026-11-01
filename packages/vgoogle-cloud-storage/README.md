@@ -1,8 +1,9 @@
 # vgoogle-cloud-storage
 
-**Implementation status:** this package retains upstream runtime code with
-focused VPM changes. Its tests establish compatibility and the documented fixes;
-an independent rewrite of the application-facing paths is still pending.
+**Implementation status:** endpoint selection and per-client emulator context
+have independent VPM implementations. Bucket/file operations, transport, signing
+and checksums retain upstream runtime code with focused changes. Rewriting those
+application-facing paths is still pending.
 [Provenance](PROVENANCE.json) records this boundary.
 
 Google Cloud Storage client built on VPM packages. The API starts from
@@ -28,6 +29,18 @@ capable of signing. V2 remains the default signing version for compatibility;
 V4 signatures expire within seven days.
 
 ## Changes
+
+- Endpoint configuration belongs to each client. `apiEndpoint` overrides an ambient
+  emulator for both metadata and uploads; the two routes cannot silently select
+  different servers. `emulatorHost` is an optional VPM-specific constructor option
+  for a client-local emulator, mutually exclusive with `apiEndpoint`.
+- Emulator clients retain their endpoint and signed-form bucket routing when
+  environment variables change. The captured `emulatorHost` property is read-only.
+  `STORAGE_EMULATOR_HOST` remains a default when neither explicit option is set;
+  client construction does not write that variable.
+- Endpoint normalization recognizes the default Google endpoint despite casing or
+  trailing slashes, preserving authentication. Only HTTP(S) endpoints without
+  credentials, query strings or fragments are accepted; bare hosts default to HTTPS.
 
 - All 13 production dependencies are VPM packages. The unused `abort-controller`
   dependency is removed; resumable uploads use the runtime's `AbortController`.
@@ -57,7 +70,8 @@ part of your application contract.
 
 ## Verified scope
 
-The complete published SDK implementation and public declarations are retained.
+The broader published SDK implementation and public declarations are retained;
+endpoint configuration is the independently implemented exception.
 Independent verification focuses on backend object uploads, signed URLs,
 listings, existence checks and deletion, plus local-file uploads and bucket
 creation. Retaining the broader API does not certify every SDK operation.
@@ -74,6 +88,9 @@ Checks on Node 24 and Bun cover:
 - Firebase Admin 12.7.0's actual Storage factory and signed-URL path using this
   client. This is selected caller coverage, not a claim of complete compatibility
   with every version of Firebase Admin or Storage 7.
+- Firebase Admin 14.5.0 context controls against two real servers: metadata,
+  uploads, download URLs, V2/V4 signatures, independently verified V4 signed forms,
+  explicit/ambient endpoint precedence and client isolation.
 - Packed npm/Bun installations, both module systems, and public type consumers.
 
 These checks require no cloud credentials and perform no live cloud operations.
@@ -84,7 +101,22 @@ have not been independently verified. [Fixtures and commands](../../scripts/stor
 
 [Measurements and methodology](bench/results/README.md) compare the full client
 against Storage 8.4.0, including actual RSA signing and localhost transfers with
-checksum validation. They do not predict cloud request latency.
+checksum validation. Each worker loads only its selected implementation; four
+comparison pairs balance order and two additional pairs use identical upstream
+code. Both client runtimes talk to the same separate Node 24 server. Signing
+uses one retained public test key and the same start/expiry values across workers;
+CRC32C checks use a fixed known checksum. Warning thresholds are set equally to
+keep warning I/O outside timing. All comparisons, including costs and inconclusive
+results, remain in the report. They do not predict cloud request latency.
+
+Node client construction takes 1.82 µs versus 0.95 µs (+94% median paired time);
+custom-endpoint construction takes 2.33 µs versus 1.04 µs (+124%). On Bun,
+custom-endpoint construction costs 18% (1.36 versus 1.13 µs), while default
+construction is inconclusive. Node's checksum-verified download takes 264 µs
+versus 378 µs (30% less paired time). Every other transfer, signing, checksum
+and handle comparison is inconclusive on both runtimes. These are full-stack
+comparisons, so neither construction costs nor download gains isolate the
+endpoint rewrite alone.
 
 ## Provenance
 

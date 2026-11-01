@@ -66,3 +66,21 @@ The package's nine root tests add independent V2/V4 signature verification,
 callback error cases, immutable inputs, asynchronous snapshotting and module
 identity checks. Broader retained SDK operations and real IAM/cloud integration
 remain outside this selected verification scope.
+
+## Per-client endpoint configuration
+
+The Firebase Admin `storage-context.cjs` control also exercises the underlying
+Storage 8.4.0/VPM clients in isolated processes. Two real servers reproduce the
+original split between metadata and upload endpoints when both an explicit API
+endpoint and ambient emulator are set. Metadata, uploads, Firebase download URLs,
+V2/V4 signed URLs and independently verified V4 forms retain per-client routing.
+The original global-mutation assertion in Admin's suite is unchanged and tracked
+as an exact intentional difference. Lower-level endpoint controls cover explicit
+per-client emulators, canonical default authentication classification and invalid
+endpoint syntax. Broader Storage runtime paths remain upstream-derived.
+
+The benchmark now uses one selected SDK per fresh worker, balanced comparison
+order and identical-source controls. A separate Node 24 server serves both client
+runtimes. These ten CPU/localhost workloads include warm client construction,
+handles, real RSA signing, a known CRC32C vector, metadata/listing and integrity-
+checked 64 KiB transfers. Historical shared-process recordings remain in Git history.

@@ -1,34 +1,67 @@
 'use strict';
-const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http'),{generateKeyPairSync,createHash}=require('node:crypto');
-const root=path.resolve(__dirname,'..'),upstream=require('../../../scripts/storage-conformance/node_modules/@google-cloud/storage'),vpm=require('..');
-const {privateKey}=generateKeyPairSync('rsa',{modulusLength:2048,privateKeyEncoding:{type:'pkcs8',format:'pem'},publicKeyEncoding:{type:'spki',format:'pem'}});
-const credentials={client_email:'fixture@example.iam.gserviceaccount.com',private_key:privateKey},start=new Date(Math.floor(Date.now()/1000)*1000),expires=new Date(+start+3600000),body=Buffer.alloc(64*1024,97),crc=new upstream.CRC32C();crc.update(body);
-const metadata={name:'fixture.pdf',bucket:'fixture',size:String(body.length),crc32c:crc.toString(),md5Hash:createHash('md5').update(body).digest('base64'),contentType:'application/pdf'};
-// Upstream's short-lived download pipelines exceed the default ten listeners.
-// Apply the same threshold to both variants to exclude warning I/O from timing.
-require('node:events').defaultMaxListeners=32;
-const cases=[],add=(name,make,validate,async=false)=>cases.push({name,make,validate,async});
-add('Storage construction',lib=>()=>new lib.Storage({projectId:'fixture-project'}),v=>assert.equal(v.projectId,'fixture-project'));
-add('bucket + file handles',lib=>{const storage=new lib.Storage({projectId:'fixture-project'});return()=>storage.bucket('fixture').file('nested/fixture.pdf');},v=>assert.equal(v.name,'nested/fixture.pdf'));
-for(const version of ['v2','v4'])add(version+' signed URL / RSA2048',lib=>{const file=new lib.Storage({projectId:'fixture-project',credentials}).bucket('fixture').file('nested/fixture.pdf');return()=>file.getSignedUrl({action:'read',version,expires,accessibleAt:start});},v=>assert(new URL(v[0]).searchParams.has(version==='v2'?'Signature':'X-Goog-Signature')),true);
-add('CRC32C / 64KiB',lib=>()=>{const hash=new lib.CRC32C();hash.update(body);return hash.toString();},v=>assert.equal(v,metadata.crc32c));
-const env={};for(const key of ['HTTP_PROXY','HTTPS_PROXY','ALL_PROXY','http_proxy','https_proxy','all_proxy','GOOGLE_SDK_NODE_LOGGING']){env[key]=process.env[key];delete process.env[key];}
-let server;
-(async()=>{
- server=http.createServer(async(req,res)=>{try{
-  const u=new URL(req.url,'http://fixture');res.setHeader('content-type','application/json');
-  if(req.method==='POST'){const chunks=[];for await(const c of req)chunks.push(c);const uploaded=Buffer.concat(chunks);assert(uploaded.includes(body));return res.end(JSON.stringify(metadata));}
-  if(u.searchParams.get('alt')==='media'){res.setHeader('content-type','application/pdf');res.setHeader('x-goog-hash','crc32c='+metadata.crc32c+',md5='+metadata.md5Hash);return res.end(body);}
-  res.end(JSON.stringify(u.pathname.endsWith('/o')?{items:[metadata]}:metadata));
- }catch(error){res.statusCode=500;res.end(JSON.stringify({error:{message:error.message}}));}});
- await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const apiEndpoint='http://127.0.0.1:'+server.address().port;
- const bucket=lib=>new lib.Storage({projectId:'fixture-project',apiEndpoint,useAuthWithCustomEndpoint:false,retryOptions:{autoRetry:false}}).bucket('fixture');
- add('HTTP object metadata',lib=>{const file=bucket(lib).file('fixture.pdf');return()=>file.getMetadata();},v=>assert.equal(v[0].name,metadata.name),true);
- add('HTTP automatic listing / one page',lib=>{const b=bucket(lib);return()=>b.getFiles({prefix:'fixture'});},v=>{assert.equal(v[0].length,1);assert.equal(v[0][0].name,metadata.name);},true);
- add('HTTP multipart upload / 64KiB + CRC32C',lib=>{const file=bucket(lib).file('fixture.pdf');return async()=>{await file.save(body,{resumable:false});return file.metadata;};},v=>assert.equal(v.crc32c,metadata.crc32c),true);
- add('HTTP download / 64KiB + CRC32C',lib=>{const file=bucket(lib).file('fixture.pdf');return()=>file.download();},v=>assert.deepEqual(v[0],body),true);
- const files=['bench/compare.cjs','PROVENANCE.json','../../scripts/storage-conformance/package-lock.json'],seen=new Set();
- function sources(name){if(seen.has(name))return;seen.add(name);const dir=path.resolve(root,'..',name);for(const f of fs.readdirSync(dir,{recursive:true}))if(!/^(?:test|bench|node_modules)\//.test(f)&&(/\.(?:js|cjs|mjs)$/.test(f)||f==='package.json'))files.push(path.relative(root,path.join(dir,f)));for(const dep of Object.keys(require(path.join(dir,'package.json')).dependencies||{}))sources(dep);}
- sources('vgoogle-cloud-storage');
- await require('../../../scripts/bench-paired.cjs').run({root,upstream,vpm,cases,files,cleanup:async()=>{require('vteeny-request').teenyRequest.close();const pool=require('../../../scripts/storage-conformance/node_modules/teeny-request/build/src/agents').pool;for(const agent of pool.values())agent.destroy();pool.clear();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));for(const[k,v]of Object.entries(env))if(v===undefined)delete process.env[k];else process.env[k]=v;}});
-})().catch(error=>{server?.closeAllConnections();server?.close();console.error(error);process.exitCode=1;});
+const assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path');
+const {spawn} = require('node:child_process'), {once} = require('node:events'), readline = require('node:readline');
+const root = path.resolve(__dirname, '..');
+const roots = {upstream: path.resolve(root, '../../scripts/storage-conformance/node_modules/@google-cloud/storage'), vpm: root};
+const certificate = require('../../../scripts/firebase-admin-conformance/upstream/test/resources/mock.key.json');
+const credentials = {client_email: certificate.client_email, private_key: certificate.private_key};
+const body = Buffer.alloc(64 * 1024, 97), crc32c = 'TpXtPw==';
+let selectedRoot, server;
+const library = directory => {selectedRoot = directory;return require(directory);};
+const make = source => directory => new Function('lib', 'env', source)(library(directory), {
+    credentials, body, crc32c, endpoint: process.env.VPM_STORAGE_BENCH_ORIGIN,
+    start: new Date(Number(process.env.VPM_STORAGE_BENCH_START)),
+    expires: new Date(Number(process.env.VPM_STORAGE_BENCH_START) + 3600000),
+});
+const connection = 'const storage = new lib.Storage({projectId: "fixture-project", apiEndpoint: env.endpoint, useAuthWithCustomEndpoint: false, retryOptions: {autoRetry: false}}); ';
+const cases = [
+    {name: 'Storage construction', make: make('return () => new lib.Storage({projectId: "fixture-project"});'), validate: value => assert.equal(value.projectId, 'fixture-project')},
+    {name: 'custom endpoint construction', make: make('return () => new lib.Storage({projectId: "fixture-project", apiEndpoint: "http://127.0.0.1:9199"});'), validate: value => assert.equal(value.apiEndpoint, 'http://127.0.0.1:9199')},
+    {name: 'bucket + file handles', make: make('const storage = new lib.Storage({projectId: "fixture-project"}); return () => storage.bucket("fixture").file("nested/fixture.pdf");'), validate: value => assert.equal(value.name, 'nested/fixture.pdf')},
+    ...['v2', 'v4'].map(version => ({name: version + ' signed URL / RSA fixture', async: true,
+        make: make('const file = new lib.Storage({projectId: "fixture-project", credentials: env.credentials}).bucket("fixture").file("nested/fixture.pdf"); return () => file.getSignedUrl({action: "read", version: ' + JSON.stringify(version) + ', expires: env.expires, accessibleAt: env.start});'),
+        validate: value => assert.ok(new URL(value[0]).searchParams.has(version === 'v2' ? 'Signature' : 'X-Goog-Signature'))})),
+    {name: 'CRC32C / 64KiB', make: make('return () => {const hash = new lib.CRC32C(); hash.update(env.body); return hash.toString();};'), validate: value => assert.equal(value, crc32c)},
+    {name: 'HTTP object metadata', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return () => file.getMetadata();'), validate: value => assert.equal(value[0].name, 'fixture.pdf')},
+    {name: 'HTTP automatic listing / one page', async: true, make: make(connection + 'const bucket = storage.bucket("fixture"); return () => bucket.getFiles({prefix: "fixture"});'), validate: value => {assert.equal(value[0].length, 1);assert.equal(value[0][0].name, 'fixture.pdf');}},
+    {name: 'HTTP multipart upload / 64KiB + CRC32C', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return async () => {await file.save(env.body, {resumable: false}); return file.metadata;};'), validate: value => assert.equal(value.crc32c, crc32c)},
+    {name: 'HTTP download / 64KiB + CRC32C', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return () => file.download();'), validate: value => assert.deepEqual(value[0], body)},
+];
+const envNames = ['HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'http_proxy', 'https_proxy', 'all_proxy', 'GOOGLE_SDK_NODE_LOGGING', 'STORAGE_EMULATOR_HOST'];
+const saved = Object.fromEntries(envNames.map(name => [name, process.env[name]]));
+for (const name of envNames) delete process.env[name];
+// Keep warning I/O outside timing for both implementations' download pipelines.
+require('node:events').defaultMaxListeners = 32;
+async function cleanup() {
+    if (selectedRoot === roots.vpm) require('vteeny-request').teenyRequest.close();
+    else if (selectedRoot) {
+        const {pool} = require('../../../scripts/storage-conformance/node_modules/teeny-request/build/src/agents');
+        for (const agent of pool.values()) agent.destroy();pool.clear();
+    }
+    if (server) {const ended = once(server, 'exit');server.stdin.end();await ended;}
+    for (const name of envNames) if (saved[name] === undefined) delete process.env[name]; else process.env[name] = saved[name];
+}
+(async () => {
+    if (!process.env.VPM_BENCH_WORKER) {
+        server = spawn('node', [path.join(__dirname, 'http-server.cjs')], {stdio: ['pipe', 'pipe', 'inherit']});
+        const lines = readline.createInterface({input: server.stdout});
+        const [line] = await once(lines, 'line');lines.close();
+        const address = JSON.parse(line);assert.equal(address.node.split('.')[0], '24');
+        process.env.VPM_STORAGE_BENCH_ORIGIN = 'http://127.0.0.1:' + address.port;
+        process.env.VPM_STORAGE_BENCH_START = String(Math.floor(Date.now() / 1000) * 1000);
+    }
+    const files = ['bench/compare.cjs', 'bench/http-server.cjs', '../../scripts/storage-conformance/package-lock.json',
+        '../../scripts/storage-conformance/node_modules/@google-cloud/storage/package.json',
+        '../../scripts/storage-conformance/node_modules/@google-cloud/storage/build/cjs/src',
+        '../../scripts/firebase-admin-conformance/upstream/test/resources/mock.key.json'];
+    const seen = new Set();
+    function sources(name) {
+        if (seen.has(name)) return;seen.add(name);
+        const directory = path.resolve(root, '..', name), manifest = require(path.join(directory, 'package.json'));
+        for (const file of fs.readdirSync(directory, {recursive: true}))
+            if (!/^(?:test|bench|node_modules)\//.test(file) && (/\.(?:js|cjs|mjs)$/.test(file) || file === 'package.json')) files.push(path.relative(root, path.join(directory, file)));
+        for (const dependency of Object.keys({...manifest.dependencies, ...manifest.optionalDependencies})) sources(dependency);
+    }
+    sources('vgoogle-cloud-storage');
+    await require('../../../scripts/bench-process.cjs').run({root, upstream: roots.upstream, vpm: roots.vpm, cases, files, cleanup});
+})().catch(async error => {console.error(error);if (server && !server.killed) server.kill();process.exitCode = 1;});

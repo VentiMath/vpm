@@ -2273,8 +2273,7 @@ class File extends index_js_1.ServiceObject {
                 fields['policy'] = policyBase64;
                 fields['x-goog-signature'] = signatureHex;
                 let url;
-                const EMULATOR_HOST = process.env.STORAGE_EMULATOR_HOST;
-                if (this.storage.customEndpoint && typeof EMULATOR_HOST === 'string') {
+                if (this.storage.emulatorHost !== undefined) {
                     url = `${this.storage.apiEndpoint}/${this.bucket.name}`;
                 }
                 else if (this.storage.customEndpoint) {

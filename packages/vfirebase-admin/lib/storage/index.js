@@ -23,6 +23,7 @@ const app_1 = require("../app");
 const storage_1 = require("./storage");
 const error_1 = require("./error");
 const utils_1 = require("./utils");
+const {downloadEndpoint} = require("./storage-context");
 var storage_2 = require("./storage");
 Object.defineProperty(exports, "Storage", { enumerable: true, get: function () { return storage_2.Storage; } });
 /**
@@ -63,8 +64,7 @@ function getStorage(app) {
  * ```
  */
 async function getDownloadURL(file) {
-    const endpoint = (process.env.STORAGE_EMULATOR_HOST ||
-        'https://firebasestorage.googleapis.com') + '/v0';
+    const endpoint = downloadEndpoint(file) + '/v0';
     const { downloadTokens } = await (0, utils_1.getFirebaseMetadata)(endpoint, file);
     if (!downloadTokens) {
         throw new error_1.FirebaseStorageError({

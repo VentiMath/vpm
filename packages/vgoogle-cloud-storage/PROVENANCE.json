@@ -9,13 +9,25 @@
   },
   "checked": "2026-10-30",
   "license": "Apache-2.0",
-  "source": "Published CJS implementation and declarations retained under lib, with VPM dependency imports, local package metadata, self-contained structural platform types and focused signing/checksum corrections. Original published files and selected source/tests are retained in the comparison fixture.",
+  "source": "Source-informed VPM endpoint selection and per-client emulator context in lib/storage-endpoint.js. Remaining published CJS runtime and declarations are retained with VPM imports, structural platform types and focused signing/checksum corrections. Source, diagnostic contracts and licenses retain attribution; this is a partial runtime rewrite.",
   "scope": "Actual VentiMath backend save, signing, listing, exists and delete paths; local file uploads and bucket creation; selected upstream signing, checksum and helper tests. Other upstream APIs remain available but are not all independently verified.",
   "implementation": {
-    "kind": "upstream-derived with focused modifications",
+    "kind": "mixed: independent endpoint configuration with retained SDK operations",
     "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "The Storage runtime retains the published upstream CJS implementation, with VPM imports and focused signing/checksum fixes.",
+    "basis": "Endpoint selection is independently implemented; bucket/file operations, transport, signing and checksums still retain upstream code with focused corrections.",
     "targetScope": "Bucket/file metadata, save/upload, existence, deletion, listing and signing paths used by VentiMath and Firebase Admin.",
-    "remainingWork": "Independently implement the application-facing runtime paths; retain current conformance and correctness fixes as requirements."
+    "remainingWork": "Independently implement the bucket/file, upload/download, existence, deletion, listing and signing paths used by callers, retaining existing correctness fixes and wire contracts.",
+    "independentComponents": {
+      "lib/storage-endpoint.js": "Own per-client endpoint selection, HTTP(S) validation and normalization, explicit-over-ambient precedence and captured emulator identity. Metadata and upload hosts cannot diverge when an explicit API endpoint overrides an ambient emulator. Canonical default endpoints keep normal authentication; V4 form routes use the captured client identity rather than reading global state later."
+    }
+  },
+  "changes": [
+    "VPM-specific emulatorHost is an optional per-client endpoint, mutually exclusive with apiEndpoint. Ambient STORAGE_EMULATOR_HOST remains supported when neither explicit option is set; construction does not mutate it.",
+    "Explicit apiEndpoint selects both metadata and upload hosts. Canonical default endpoints keep authentication rather than being classified as custom by casing or trailing slash. Endpoints reject non-HTTP schemes, credentials, query strings and fragments.",
+    "Storage captures emulatorHost as a read-only property. Signed V4 form routing uses this per-client context; later environment changes cannot add or remove the bucket route."
+  ],
+  "verification": {
+    "endpointContext": "Original/VPM controls under scripts/firebase-admin-conformance/storage-context.cjs use two local servers, metadata/upload/download requests, V2/V4 URLs, independently verified V4 form signatures, explicit-versus-ambient configuration and canonical default authentication classification on Node 24 and Bun.",
+    "retainedScope": "110 retained signing/checksum/helper tests, existing focused tests, 25-request HTTP scenarios, Firebase callers and packed type consumers remain verified. This does not establish an independent implementation of the remaining SDK."
   }
 }
