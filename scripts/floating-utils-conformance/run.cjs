@@ -8,7 +8,7 @@ globalThis.describe=(_name,fn)=>fn();globalThis.test=(_name,fn)=>{fn();count++;}
 globalThis.expect=value=>({toEqual:expected=>assert.deepEqual(value,expected),not:{toBeNull:()=>assert.notEqual(value,null)}});
 try {
  for(const [file,hash]of Object.entries(require('./upstream/provenance.json').files))assert.equal(createHash('sha256').update(fs.readFileSync(path.join(__dirname,'upstream',file))).digest('hex'),hash);
- for(const file of ['getOppositeAxisPlacements.test.ts','getOverflowAncestors.test.ts']) {
+ for(const file of ['getOppositeAxisPlacements.test.ts.txt','getOverflowAncestors.test.ts.txt']) {
   const original=fs.readFileSync(path.join(__dirname,'upstream',file),'utf8');
   const executable=original.replace(/^import \{(\w+)\} from '\.\.\/src(\/dom)?';/m,'const {$1} = api;');
   assert.notEqual(executable,original);

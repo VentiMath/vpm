@@ -3,7 +3,9 @@
 The fixture pins utils 0.2.12, core 1.7.5, dom 1.7.6 and JSDOM 27.4.0.
 Production `vfloating-ui-utils` has no dependencies. The pinned test sources come
 from Floating UI commit `12d94738472e922e1b3fa31b02b2b61b9ed77e6a`; hashes and MIT
-attribution are under `upstream/`.
+attribution are under `upstream/`. Test snapshots use `.ts.txt` filenames so Bun
+executes them only through the harness, rather than discovering their original
+relative imports as standalone tests.
 
 `run.cjs` executes 21 original tests. Only their two imports are redirected.
 The used `test`/`describe` callbacks run synchronously; `toEqual` and `not.toBeNull`
