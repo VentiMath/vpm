@@ -56,22 +56,26 @@ const both = body => ({upstream: run('upstream', body), vpm: run('vpm', body)});
 }
 
 // HTTP/2 requests (FCM sends) carry ':scheme: https:' with the URL parser's
-// colon. RFC 9113 requires the bare scheme; Node's HTTP/2 server rejects the
+// colon. Both clients use Node's server because some Bun server builds accept
+// the malformed value. RFC 9113 requires the bare scheme; Node rejects the
 // stream with PROTOCOL_ERROR before any handler runs.
 {
   const {upstream, vpm} = both(`
-    const http2 = require('node:http2');
+    const {spawn} = require('node:child_process'), {createInterface} = require('node:readline');
     const {Http2Client, Http2SessionHandler} = require(root + '/lib/utils/api-request.js');
-    const server = http2.createServer();
-    const seen = [];
-    server.on('stream', (stream, headers) => { seen.push(headers[':scheme']); stream.respond({':status': 200, 'content-type': 'application/json'}); stream.end('{"ok":true}'); });
-    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-    const url = 'http://127.0.0.1:' + server.address().port;
-    const session = new Http2SessionHandler(url);
-    const outcome = await new Http2Client().send({method: 'GET', url: url + '/v1/check', http2SessionHandler: session})
-      .then(response => 'status ' + response.status, error => 'rejected: ' + error.message);
-    session.close(); server.close();
-    return {outcome, seen};`);
+    const server = spawn(process.versions.bun ? 'node' : process.execPath, [${JSON.stringify(path.join(__dirname, 'http2-server.cjs'))}], {stdio: ['pipe', 'pipe', 'inherit']});
+    const exited = new Promise((resolve, reject) => {server.once('error', reject); server.once('exit', code => code === 0 ? resolve() : reject(Error('HTTP/2 server exit ' + code)));});
+    const lines = createInterface({input: server.stdout})[Symbol.asyncIterator]();
+    const {port} = JSON.parse((await lines.next()).value);
+    const url = 'http://127.0.0.1:' + port, session = new Http2SessionHandler(url);
+    try {
+      const outcome = await new Http2Client().send({method: 'GET', url: url + '/v1/check', http2SessionHandler: session})
+        .then(response => 'status ' + response.status, error => 'rejected: ' + error.message);
+      session.close(); server.stdin.end('close');
+      const {seen} = JSON.parse((await lines.next()).value);
+      await exited;
+      return {outcome, seen};
+    } finally {session.close(); server.kill();}`);
   assert.match(upstream.outcome, /^rejected: .*NGHTTP2_PROTOCOL_ERROR/);
   assert.deepEqual(upstream.seen, []);
   assert.deepEqual(vpm, {outcome: 'status 200', seen: ['http']});

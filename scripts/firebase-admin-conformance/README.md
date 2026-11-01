@@ -47,8 +47,8 @@ readonly property".
 
 `regressions.cjs` runs each case in a fresh process per library: concurrent
 public-key fetches for ID-token certificates and JWKS (20 requests upstream, 1
-here), an HTTP/2 request to the runtime's HTTP/2 server (rejected with
-`PROTOCOL_ERROR` upstream on Node and Bun), and the modules loaded by an app
+here), an HTTP/2 request from each runtime to a Node HTTP/2 server (rejected with
+`PROTOCOL_ERROR` upstream), and the modules loaded by an app
 with Auth, Firestore, Messaging and Storage.
 
 `callers.cjs` drives the Admin APIs VentiMath's backend calls, through each
@@ -114,3 +114,18 @@ normal UserRecord projection still follows its existing date-normalization contr
 No live token service or credentials are involved; accepting a locally
 signed malformed token is not evidence of signature forgery. The 228 unchanged
 upstream verifier/verification tests run within the complete Admin gate.
+
+`key-verification.cjs` serves actual certificate and JWKS responses locally.
+Controls reproduce mutable cached keys, quoted/malformed max-age producing NaN
+expiry, ignored age/no-cache/no-store, and lost `__proto__` key IDs. The new cache
+keeps immutable snapshots, retries failures and does not retain noncacheable
+results. Signed no-key-ID tokens verify normally with RS256; RS512 is rejected
+by the same allowlist as the ordinary path, where upstream's fallback accepts it.
+A counting fetcher verifies one acquisition instead of two. The unchanged 110
+upstream JWT/key-fetch tests also run within the complete gate.
+
+The HTTP/2 regression control uses `http2-server.cjs` under Node 24 for both
+client runtimes, as the caller fixture does. Bun 1.4 on macOS accepts the
+original malformed `:scheme: http:` value; using that server cannot establish
+protocol rejection. The shared Node server rejects upstream and observes VPM's
+correct `http` value. The client implementation under test remains unchanged.

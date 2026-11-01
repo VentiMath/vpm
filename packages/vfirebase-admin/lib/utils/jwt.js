@@ -15,330 +15,122 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.JwtErrorCode = exports.JwtError = exports.EmulatorSignatureVerifier = exports.PublicKeySignatureVerifier = exports.UrlKeyFetcher = exports.JwksFetcher = exports.ALGORITHM_ES256 = exports.ALGORITHM_RS256 = void 0;
-exports.verifyJwtSignature = verifyJwtSignature;
-exports.decodeJwt = decodeJwt;
-const validator = require("./validator");
-const jwt = require("vjsonwebtoken");
-const jwks = require("vjwks-rsa");
-const api_request_1 = require("../utils/api-request");
-exports.ALGORITHM_RS256 = 'RS256';
-exports.ALGORITHM_ES256 = 'ES256';
-// `jsonwebtoken` converts errors from the `getKey` callback to its own `JsonWebTokenError` type
-// and prefixes the error message with the following. Use the prefix to identify errors thrown
-// from the key provider callback.
-// https://github.com/auth0/node-jsonwebtoken/blob/d71e383862fc735991fd2e759181480f066bf138/verify.js#L96
-const JWT_CALLBACK_ERROR_PREFIX = 'error in secret or public key callback: ';
-const NO_MATCHING_KID_ERROR_MESSAGE = 'no-matching-kid-error';
-const NO_KID_IN_HEADER_ERROR_MESSAGE = 'no-kid-in-header-error';
-const HOUR_IN_SECONDS = 3600;
-class JwksFetcher {
-    constructor(jwksUrl, httpAgent) {
-        this.publicKeysExpireAt = 0;
-        if (!validator.isURL(jwksUrl)) {
-            throw new Error('The provided JWKS URL is not a valid URL.');
-        }
-        this.client = jwks({
-            jwksUri: jwksUrl,
-            cache: false, // disable jwks-rsa LRU cache as the keys are always cached for 6 hours.
-            requestAgent: httpAgent,
-        });
-    }
-    fetchPublicKeys() {
-        if (this.shouldRefresh()) {
-            // Upstream starts one key request per concurrent caller while the
-            // keys are missing or expired; share the request in flight.
-            if (!this.refreshing) {
-                this.refreshing = this.refresh().finally(() => {
-                    this.refreshing = undefined;
-                });
-            }
-            return this.refreshing;
-        }
-        return Promise.resolve(this.publicKeys);
-    }
-    shouldRefresh() {
-        return !this.publicKeys || this.publicKeysExpireAt <= Date.now();
-    }
-    refresh() {
-        return this.client.getSigningKeys()
-            .then((signingKeys) => {
-            // reset expire at from previous set of keys.
-            this.publicKeysExpireAt = 0;
-            const newKeys = signingKeys.reduce((map, signingKey) => {
-                map[signingKey.kid] = signingKey.getPublicKey();
-                return map;
-            }, {});
-            this.publicKeysExpireAt = Date.now() + (HOUR_IN_SECONDS * 6 * 1000);
-            this.publicKeys = newKeys;
-            return newKeys;
-        }).catch((err) => {
-            throw new Error(`Error fetching Json Web Keys: ${err.message}`);
-        });
-    }
-}
-exports.JwksFetcher = JwksFetcher;
-/**
- * Class to fetch public keys from a client certificates URL.
- */
+// VPM key ownership and verification adapter. Diagnostic text, error codes
+// and protocol defaults retain the source-informed Firebase contract.
+Object.defineProperty(exports, "__esModule", {value: true});
+const jwt = require('vjsonwebtoken'), jwks = require('vjwks-rsa');
+const validator = require('./validator');
+const {HttpClient, RequestResponseError} = require('./api-request');
+const {KeyCache, certificateLifetime} = require('./key-cache');
+const ALGORITHM_RS256 = 'RS256', ALGORITHM_ES256 = 'ES256';
+const algorithms = [ALGORITHM_RS256, ALGORITHM_ES256];
+const callbackPrefix = 'error in secret or public key callback: ';
+const noKid = 'no-kid-in-header-error', noMatch = 'no-matching-kid-error';
+const JwtErrorCode = Object.freeze({INVALID_ARGUMENT: 'invalid-argument', INVALID_CREDENTIAL: 'invalid-credential',
+  TOKEN_EXPIRED: 'token-expired', INVALID_SIGNATURE: 'invalid-token', NO_MATCHING_KID: 'no-matching-kid-error',
+  NO_KID_IN_HEADER: 'no-kid-error', KEY_FETCH_ERROR: 'key-fetch-error'});
+class JwtError extends Error {constructor(code, message) {super(message); this.code = code;}}
+const invalidToken = () => new JwtError(JwtErrorCode.INVALID_ARGUMENT, 'The provided token must be a string.');
+
 class UrlKeyFetcher {
-    constructor(clientCertUrl, httpAgent) {
-        this.clientCertUrl = clientCertUrl;
-        this.httpAgent = httpAgent;
-        this.publicKeysExpireAt = 0;
-        if (!validator.isURL(clientCertUrl)) {
-            throw new Error('The provided public client certificate URL is not a valid URL.');
-        }
+  #cache;
+  constructor(clientCertUrl, httpAgent) {
+    if (!validator.isURL(clientCertUrl)) throw new Error('The provided public client certificate URL is not a valid URL.');
+    this.clientCertUrl = clientCertUrl; this.httpAgent = httpAgent;
+    this.#cache = new KeyCache(() => this.#load());
+  }
+  get publicKeys() {return this.#cache.keys;}
+  get publicKeysExpireAt() {return this.#cache.expires;}
+  shouldRefresh() {return this.#cache.stale();}
+  fetchPublicKeys() {return this.#cache.read();}
+  refresh() {return this.#cache.read(true);}
+  async #load() {
+    const started = Date.now();
+    try {
+      const response = await new HttpClient().send({method: 'GET', url: this.clientCertUrl, httpAgent: this.httpAgent});
+      if (!response.isJson() || response.data?.error) throw new RequestResponseError(response);
+      return {keys: response.data, lifetime: certificateLifetime(response.headers, started, Date.now())};
+    } catch (failure) {
+      if (!(failure instanceof RequestResponseError)) throw failure;
+      const response = failure.response;
+      const detail = response.isJson() && response.data?.error ? String(response.data.error) +
+        (response.data.error_description ? ` (${response.data.error_description})` : '') : response.text;
+      throw new Error('Error fetching public keys for Google certs: ' + detail);
     }
-    /**
-     * Fetches the public keys for the Google certs.
-     *
-     * @returns A promise fulfilled with public keys for the Google certs.
-     */
-    fetchPublicKeys() {
-        if (this.shouldRefresh()) {
-            // Upstream starts one key request per concurrent caller while the
-            // keys are missing or expired; share the request in flight.
-            if (!this.refreshing) {
-                this.refreshing = this.refresh().finally(() => {
-                    this.refreshing = undefined;
-                });
-            }
-            return this.refreshing;
-        }
-        return Promise.resolve(this.publicKeys);
-    }
-    /**
-     * Checks if the cached public keys need to be refreshed.
-     *
-     * @returns Whether the keys should be fetched from the client certs url or not.
-     */
-    shouldRefresh() {
-        return !this.publicKeys || this.publicKeysExpireAt <= Date.now();
-    }
-    refresh() {
-        const client = new api_request_1.HttpClient();
-        const request = {
-            method: 'GET',
-            url: this.clientCertUrl,
-            httpAgent: this.httpAgent,
-        };
-        return client.send(request).then((resp) => {
-            if (!resp.isJson() || resp.data.error) {
-                // Treat all non-json messages and messages with an 'error' field as
-                // error responses.
-                throw new api_request_1.RequestResponseError(resp);
-            }
-            // reset expire at from previous set of keys.
-            this.publicKeysExpireAt = 0;
-            if (Object.prototype.hasOwnProperty.call(resp.headers, 'cache-control')) {
-                const cacheControlHeader = resp.headers['cache-control'];
-                const parts = cacheControlHeader.split(',');
-                parts.forEach((part) => {
-                    const subParts = part.trim().split('=');
-                    if (subParts[0] === 'max-age') {
-                        const maxAge = +subParts[1];
-                        this.publicKeysExpireAt = Date.now() + (maxAge * 1000);
-                    }
-                });
-            }
-            this.publicKeys = resp.data;
-            return resp.data;
-        }).catch((err) => {
-            if (err instanceof api_request_1.RequestResponseError) {
-                let errorMessage = 'Error fetching public keys for Google certs: ';
-                const resp = err.response;
-                if (resp.isJson() && resp.data.error) {
-                    errorMessage += `${resp.data.error}`;
-                    if (resp.data.error_description) {
-                        errorMessage += ' (' + resp.data.error_description + ')';
-                    }
-                }
-                else {
-                    errorMessage += `${resp.text}`;
-                }
-                throw new Error(errorMessage);
-            }
-            throw err;
-        });
-    }
+  }
 }
-exports.UrlKeyFetcher = UrlKeyFetcher;
-/**
- * Class for verifying JWT signature with a public key.
- */
+class JwksFetcher {
+  #cache;
+  constructor(url, httpAgent) {
+    if (!validator.isURL(url)) throw new Error('The provided JWKS URL is not a valid URL.');
+    this.client = jwks({jwksUri: url, cache: false, requestAgent: httpAgent});
+    this.#cache = new KeyCache(() => this.#load());
+  }
+  get publicKeys() {return this.#cache.keys;}
+  get publicKeysExpireAt() {return this.#cache.expires;}
+  shouldRefresh() {return this.#cache.stale();}
+  fetchPublicKeys() {return this.#cache.read();}
+  refresh() {return this.#cache.read(true);}
+  async #load() {
+    try {
+      const keys = await this.client.getSigningKeys();
+      return {keys: Object.fromEntries(keys.map(key => [key.kid, key.getPublicKey()])), lifetime: 6 * 3600000};
+    } catch (failure) {throw new Error('Error fetching Json Web Keys: ' + failure.message);}
+  }
+}
+function keyCallback(fetcher) {
+  return (header, done) => {
+    if (!header.kid) return done(new Error(noKid));
+    if (typeof header.kid !== 'string') return done(new Error(noMatch));
+    Promise.resolve().then(() => fetcher.fetchPublicKeys()).then(keys => {
+      if (!keys || !Object.hasOwn(keys, header.kid)) return done(new Error(noMatch));
+      done(null, keys[header.kid]);
+    }, done);
+  };
+}
 class PublicKeySignatureVerifier {
-    constructor(keyFetcher) {
-        this.keyFetcher = keyFetcher;
-        if (!validator.isNonNullObject(keyFetcher)) {
-            throw new Error('The provided key fetcher is not an object or null.');
-        }
+  constructor(keyFetcher) {
+    if (!validator.isNonNullObject(keyFetcher)) throw new Error('The provided key fetcher is not an object or null.');
+    this.keyFetcher = keyFetcher;
+  }
+  static withCertificateUrl(url, agent) {return new PublicKeySignatureVerifier(new UrlKeyFetcher(url, agent));}
+  static withJwksUrl(url, agent) {return new PublicKeySignatureVerifier(new JwksFetcher(url, agent));}
+  async verify(token) {
+    if (!validator.isString(token)) throw invalidToken();
+    try {await verifyJwtSignature(token, keyCallback(this.keyFetcher), {algorithms});}
+    catch (failure) {
+      if (failure.code !== JwtErrorCode.NO_KID_IN_HEADER) throw failure;
+      await this.verifyWithoutKid(token);
     }
-    static withCertificateUrl(clientCertUrl, httpAgent) {
-        return new PublicKeySignatureVerifier(new UrlKeyFetcher(clientCertUrl, httpAgent));
+  }
+  async verifyWithoutKid(token) {return this.verifyWithAllKeys(token, await this.keyFetcher.fetchPublicKeys());}
+  async verifyWithAllKeys(token, keys) {
+    for (const key of Object.values(keys)) {
+      try {await verifyJwtSignature(token, key, {algorithms}); return;}
+      catch (failure) {if (failure.code === JwtErrorCode.TOKEN_EXPIRED) throw failure;}
     }
-    static withJwksUrl(jwksUrl, httpAgent) {
-        return new PublicKeySignatureVerifier(new JwksFetcher(jwksUrl, httpAgent));
-    }
-    verify(token) {
-        if (!validator.isString(token)) {
-            return Promise.reject(new JwtError(JwtErrorCode.INVALID_ARGUMENT, 'The provided token must be a string.'));
-        }
-        return verifyJwtSignature(token, getKeyCallback(this.keyFetcher), { algorithms: [exports.ALGORITHM_RS256, exports.ALGORITHM_ES256] })
-            .catch((error) => {
-            if (error.code === JwtErrorCode.NO_KID_IN_HEADER) {
-                // No kid in JWT header. Try with all the public keys.
-                return this.verifyWithoutKid(token);
-            }
-            throw error;
-        });
-    }
-    verifyWithoutKid(token) {
-        return this.keyFetcher.fetchPublicKeys()
-            .then(publicKeys => this.verifyWithAllKeys(token, publicKeys));
-    }
-    verifyWithAllKeys(token, keys) {
-        const promises = [];
-        Object.values(keys).forEach((key) => {
-            const result = verifyJwtSignature(token, key)
-                .then(() => true)
-                .catch((error) => {
-                if (error.code === JwtErrorCode.TOKEN_EXPIRED) {
-                    throw error;
-                }
-                return false;
-            });
-            promises.push(result);
-        });
-        return Promise.all(promises)
-            .then((result) => {
-            if (result.every((r) => r === false)) {
-                throw new JwtError(JwtErrorCode.INVALID_SIGNATURE, 'Invalid token signature.');
-            }
-        });
-    }
+    throw new JwtError(JwtErrorCode.INVALID_SIGNATURE, 'Invalid token signature.');
+  }
 }
-exports.PublicKeySignatureVerifier = PublicKeySignatureVerifier;
-/**
- * Class for verifying unsigned (emulator) JWTs.
- */
-class EmulatorSignatureVerifier {
-    verify(token) {
-        // Signature checks skipped for emulator; no need to fetch public keys.
-        return verifyJwtSignature(token, undefined, { algorithms: ['none'] });
-    }
+class EmulatorSignatureVerifier {verify(token) {return verifyJwtSignature(token, undefined, {algorithms: ['none']});}}
+function signatureError(failure) {
+  if (failure.name === 'TokenExpiredError') return new JwtError(JwtErrorCode.TOKEN_EXPIRED,
+    'The provided token has expired. Get a fresh token from your client app and try again.');
+  if (failure.name === 'JsonWebTokenError' && failure.message?.includes(callbackPrefix)) {
+    const detail = failure.message.split(callbackPrefix).pop() || 'Error fetching public keys.';
+    return new JwtError(detail === noMatch ? JwtErrorCode.NO_MATCHING_KID : detail === noKid ? JwtErrorCode.NO_KID_IN_HEADER : JwtErrorCode.KEY_FETCH_ERROR, detail);
+  }
+  return new JwtError(JwtErrorCode.INVALID_SIGNATURE, failure.message);
 }
-exports.EmulatorSignatureVerifier = EmulatorSignatureVerifier;
-/**
- * Provides a callback to fetch public keys.
- *
- * @param fetcher - KeyFetcher to fetch the keys from.
- * @returns A callback function that can be used to get keys in `jsonwebtoken`.
- */
-function getKeyCallback(fetcher) {
-    return (header, callback) => {
-        if (!header.kid) {
-            callback(new Error(NO_KID_IN_HEADER_ERROR_MESSAGE));
-        }
-        const kid = header.kid || '';
-        fetcher.fetchPublicKeys().then((publicKeys) => {
-            if (!Object.prototype.hasOwnProperty.call(publicKeys, kid)) {
-                callback(new Error(NO_MATCHING_KID_ERROR_MESSAGE));
-            }
-            else {
-                callback(null, publicKeys[kid]);
-            }
-        })
-            .catch(error => {
-            callback(error);
-        });
-    };
+function verifyJwtSignature(token, key, options) {
+  if (!validator.isString(token)) return Promise.reject(invalidToken());
+  return new Promise((resolve, reject) => jwt.verify(token, key, options, failure => failure ? reject(signatureError(failure)) : resolve()));
 }
-/**
- * Verifies the signature of a JWT using the provided secret or a function to fetch
- * the secret or public key.
- *
- * @param token - The JWT to be verified.
- * @param secretOrPublicKey - The secret or a function to fetch the secret or public key.
- * @param options - JWT verification options.
- * @returns A Promise resolving for a token with a valid signature.
- */
-function verifyJwtSignature(token, secretOrPublicKey, options) {
-    if (!validator.isString(token)) {
-        return Promise.reject(new JwtError(JwtErrorCode.INVALID_ARGUMENT, 'The provided token must be a string.'));
-    }
-    return new Promise((resolve, reject) => {
-        jwt.verify(token, secretOrPublicKey, options, (error) => {
-            if (!error) {
-                return resolve();
-            }
-            if (error.name === 'TokenExpiredError') {
-                return reject(new JwtError(JwtErrorCode.TOKEN_EXPIRED, 'The provided token has expired. Get a fresh token from your ' +
-                    'client app and try again.'));
-            }
-            else if (error.name === 'JsonWebTokenError') {
-                if (error.message && error.message.includes(JWT_CALLBACK_ERROR_PREFIX)) {
-                    const message = error.message.split(JWT_CALLBACK_ERROR_PREFIX).pop() || 'Error fetching public keys.';
-                    let code = JwtErrorCode.KEY_FETCH_ERROR;
-                    if (message === NO_MATCHING_KID_ERROR_MESSAGE) {
-                        code = JwtErrorCode.NO_MATCHING_KID;
-                    }
-                    else if (message === NO_KID_IN_HEADER_ERROR_MESSAGE) {
-                        code = JwtErrorCode.NO_KID_IN_HEADER;
-                    }
-                    return reject(new JwtError(code, message));
-                }
-            }
-            return reject(new JwtError(JwtErrorCode.INVALID_SIGNATURE, error.message));
-        });
-    });
+function decodeJwt(token) {
+  if (!validator.isString(token)) return Promise.reject(invalidToken());
+  const result = jwt.decode(token, {complete: true});
+  if (!result) return Promise.reject(new JwtError(JwtErrorCode.INVALID_ARGUMENT, 'Decoding token failed.'));
+  return Promise.resolve({header: result.header, payload: result.payload});
 }
-/**
- * Decodes general purpose Firebase JWTs.
- *
- * @param jwtToken - JWT token to be decoded.
- * @returns Decoded token containing the header and payload.
- */
-function decodeJwt(jwtToken) {
-    if (!validator.isString(jwtToken)) {
-        return Promise.reject(new JwtError(JwtErrorCode.INVALID_ARGUMENT, 'The provided token must be a string.'));
-    }
-    const fullDecodedToken = jwt.decode(jwtToken, {
-        complete: true,
-    });
-    if (!fullDecodedToken) {
-        return Promise.reject(new JwtError(JwtErrorCode.INVALID_ARGUMENT, 'Decoding token failed.'));
-    }
-    const header = fullDecodedToken?.header;
-    const payload = fullDecodedToken?.payload;
-    return Promise.resolve({ header, payload });
-}
-/**
- * Jwt error code structure.
- *
- * @param code - The error code.
- * @param message - The error message.
- * @constructor
- */
-class JwtError extends Error {
-    constructor(code, message) {
-        super(message);
-        this.code = code;
-        this.message = message;
-    }
-}
-exports.JwtError = JwtError;
-/**
- * JWT error codes.
- */
-var JwtErrorCode;
-(function (JwtErrorCode) {
-    JwtErrorCode["INVALID_ARGUMENT"] = "invalid-argument";
-    JwtErrorCode["INVALID_CREDENTIAL"] = "invalid-credential";
-    JwtErrorCode["TOKEN_EXPIRED"] = "token-expired";
-    JwtErrorCode["INVALID_SIGNATURE"] = "invalid-token";
-    JwtErrorCode["NO_MATCHING_KID"] = "no-matching-kid-error";
-    JwtErrorCode["NO_KID_IN_HEADER"] = "no-kid-error";
-    JwtErrorCode["KEY_FETCH_ERROR"] = "key-fetch-error";
-})(JwtErrorCode || (exports.JwtErrorCode = JwtErrorCode = {}));
+Object.assign(exports, {ALGORITHM_RS256, ALGORITHM_ES256, JwtError, JwtErrorCode, UrlKeyFetcher, JwksFetcher,
+  PublicKeySignatureVerifier, EmulatorSignatureVerifier, verifyJwtSignature, decodeJwt});
