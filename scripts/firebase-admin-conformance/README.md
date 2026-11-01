@@ -149,3 +149,15 @@ keep-alive reuse after a complete 503 response. VPM handles case-insensitive
 coding and Brotli. The retained HTTP/1/authorized suite runs 93 tests: 89 pass,
 with the same four exact multipart differences. The new stream lifecycle follows
 [Node 24's response/error event contract](https://nodejs.org/docs/latest-v24.x/api/http.html#httprequestoptions-callback).
+
+
+The independent retry policy is covered by `http-retry.cjs` on Node 24 and Bun.
+Each process loads one implementation. Original controls reproduce mutable
+configuration, nonfinite/fractional limits, numeric-prefix parsing, ignored zero
+and mixed-case delays, local-time interpretation of obsolete asctime dates, and
+native timer overflow. The HTTP-date tests use an explicit non-UTC timezone;
+long timer tests record scheduled segments without actually waiting days. A
+local HTTP server verifies the complete retry path. Date/seconds grammar follows
+[RFC 9110 sections 5.6.7 and 10.2.3](https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after),
+including obsolete date formats and the two-digit-year rule. Response projection,
+authorized-header helpers and HTTP/2 transport remain separate retained code.

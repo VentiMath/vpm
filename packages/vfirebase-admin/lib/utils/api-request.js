@@ -18,6 +18,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Http2SessionHandler = exports.ExponentialBackoffPoller = exports.ApiSettings = exports.AuthorizedHttp2Client = exports.AuthorizedHttpClient = exports.Http2Client = exports.HttpClient = exports.RequestClient = exports.RequestResponseError = void 0;
+const {RetryPolicy, defaultRetryConfig} = require("./request-retry");
 exports.defaultRetryConfig = defaultRetryConfig;
 exports.parseHttpResponse = parseHttpResponse;
 const error_1 = require("./error");
@@ -100,138 +101,9 @@ class RequestResponseError extends Error {
     }
 }
 exports.RequestResponseError = RequestResponseError;
-/**
- * Default retry configuration for HTTP and HTTP/2 requests. Retries up to 4 times on connection reset and timeout
- * errors as well as 503 errors. Exposed as a function to ensure that every `RequestClient` gets its own `RetryConfig`
- * instance.
- */
-function defaultRetryConfig() {
-    return {
-        maxRetries: 4,
-        statusCodes: [503],
-        ioErrorCodes: ['ECONNRESET', 'ETIMEDOUT'],
-        backOffFactor: 0.5,
-        maxDelayInMillis: 60 * 1000,
-    };
-}
-/**
- * Ensures that the given `RetryConfig` object is valid.
- *
- * @param retry - The configuration to be validated.
- */
-function validateRetryConfig(retry) {
-    if (!validator.isNumber(retry.maxRetries) || retry.maxRetries < 0) {
-        throw new error_2.FirebaseAppError({
-            code: error_2.AppErrorCode.INVALID_ARGUMENT,
-            message: 'maxRetries must be a non-negative integer'
-        });
-    }
-    if (typeof retry.backOffFactor !== 'undefined') {
-        if (!validator.isNumber(retry.backOffFactor) || retry.backOffFactor < 0) {
-            throw new error_2.FirebaseAppError({
-                code: error_2.AppErrorCode.INVALID_ARGUMENT,
-                message: 'backOffFactor must be a non-negative number'
-            });
-        }
-    }
-    if (!validator.isNumber(retry.maxDelayInMillis) || retry.maxDelayInMillis < 0) {
-        throw new error_2.FirebaseAppError({
-            code: error_2.AppErrorCode.INVALID_ARGUMENT,
-            message: 'maxDelayInMillis must be a non-negative integer'
-        });
-    }
-    if (typeof retry.statusCodes !== 'undefined' && !validator.isArray(retry.statusCodes)) {
-        throw new error_2.FirebaseAppError({ code: error_2.AppErrorCode.INVALID_ARGUMENT, message: 'statusCodes must be an array' });
-    }
-    if (typeof retry.ioErrorCodes !== 'undefined' && !validator.isArray(retry.ioErrorCodes)) {
-        throw new error_2.FirebaseAppError({ code: error_2.AppErrorCode.INVALID_ARGUMENT, message: 'ioErrorCodes must be an array' });
-    }
-}
-class RequestClient {
-    constructor(retry = defaultRetryConfig()) {
-        if (retry) {
-            this.retry = retry;
-            validateRetryConfig(this.retry);
-        }
-    }
+class RequestClient extends RetryPolicy {
     createRequestResponse(resp) {
-        if (resp.multipart) {
-            return new MultipartRequestResponse(resp);
-        }
-        return new DefaultRequestResponse(resp);
-    }
-    waitForRetry(delayMillis) {
-        if (delayMillis > 0) {
-            return new Promise((resolve) => {
-                setTimeout(resolve, delayMillis);
-            });
-        }
-        return Promise.resolve();
-    }
-    /**
-     * Checks if a failed request is eligible for a retry, and if so returns the duration to wait before initiating
-     * the retry.
-     *
-     * @param retryAttempts - Number of retries completed up to now.
-     * @param err - The last encountered error.
-     * @returns A 2-tuple where the 1st element is the duration to wait before another retry, and the
-     *     2nd element is a boolean indicating whether the request is eligible for a retry or not.
-     */
-    getRetryDelayMillis(retryAttempts, err) {
-        if (!this.isRetryEligible(retryAttempts, err)) {
-            return [0, false];
-        }
-        const response = err.response;
-        if (response && response.headers['retry-after']) {
-            const delayMillis = this.parseRetryAfterIntoMillis(response.headers['retry-after']);
-            if (delayMillis > 0) {
-                return [delayMillis, true];
-            }
-        }
-        return [this.backOffDelayMillis(retryAttempts), true];
-    }
-    isRetryEligible(retryAttempts, err) {
-        if (!this.retry) {
-            return false;
-        }
-        if (retryAttempts >= this.retry.maxRetries) {
-            return false;
-        }
-        if (err.response) {
-            const statusCodes = this.retry.statusCodes || [];
-            return statusCodes.indexOf(err.response.status) !== -1;
-        }
-        if (err.code) {
-            const retryCodes = this.retry.ioErrorCodes || [];
-            return retryCodes.indexOf(err.code) !== -1;
-        }
-        return false;
-    }
-    /**???
-     * Parses the Retry-After header as a milliseconds value. Return value is negative if the Retry-After header
-     * contains an expired timestamp or otherwise malformed.
-     */
-    parseRetryAfterIntoMillis(retryAfter) {
-        const delaySeconds = parseInt(retryAfter, 10);
-        if (!isNaN(delaySeconds)) {
-            return delaySeconds * 1000;
-        }
-        const date = new Date(retryAfter);
-        if (!isNaN(date.getTime())) {
-            return date.getTime() - Date.now();
-        }
-        return -1;
-    }
-    backOffDelayMillis(retryAttempts) {
-        if (retryAttempts === 0) {
-            return 0;
-        }
-        if (!this.retry) {
-            throw new error_2.FirebaseAppError({ code: error_2.AppErrorCode.INTERNAL_ERROR, message: 'Expected this.retry to exist.' });
-        }
-        const backOffFactor = this.retry.backOffFactor || 0;
-        const delayInSeconds = (2 ** retryAttempts) * backOffFactor;
-        return Math.min(delayInSeconds * 1000, this.retry.maxDelayInMillis);
+        return resp.multipart ? new MultipartRequestResponse(resp) : new DefaultRequestResponse(resp);
     }
 }
 exports.RequestClient = RequestClient;

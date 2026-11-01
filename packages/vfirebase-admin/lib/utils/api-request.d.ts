@@ -148,7 +148,7 @@ export declare class RequestClient {
      */
     protected getRetryDelayMillis(retryAttempts: number, err: LowLevelError): [number, boolean];
     protected isRetryEligible(retryAttempts: number, err: LowLevelError): boolean;
-    /**???
+    /**
      * Parses the Retry-After header as a milliseconds value. Return value is negative if the Retry-After header
      * contains an expired timestamp or otherwise malformed.
      */

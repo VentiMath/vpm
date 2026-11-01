@@ -5,6 +5,7 @@ const assert = require('node:assert/strict'), path = require('node:path');
 const roots = {upstream: path.resolve(__dirname, '../../../scripts/firebase-admin-conformance/node_modules/firebase-admin'), vpm: path.resolve(__dirname, '..')};
 const library = root => ({jwt: require(path.join(root, 'lib/utils/jwt.js')), messaging: require(path.join(root, 'lib/messaging/messaging-internal.js')),
   HttpClient: require(path.join(root, 'lib/utils/api-request.js')).HttpClient,
+  RequestClient: require(path.join(root, 'lib/utils/api-request.js')).RequestClient,
   deepCopy: require(path.join(root, 'lib/utils/deep-copy.js')).deepCopy,
   UserRecord: require(path.join(root, 'lib/auth/user-record.js')).UserRecord,
   Auth: require(path.join(root, 'lib/auth/auth.js')).Auth,
@@ -39,7 +40,7 @@ const user = {localId: 'ada', email: 'ada@example.com', emailVerified: true, dis
   customAttributes: '{"role":"teacher","classes":["math","science"]}'};
 const env = {token, publicKey, message, library, certificate, user, noKid, syntheticHttp};
 // A worker constructs only its selected SDK; both workers use the same fixed token.
-const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, HttpClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
+const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, HttpClient, RequestClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
 const syntheticCredential = 'const credential = new ApplicationDefaultCredential(); const client = {credentials: {access_token: "bench", expiry_date: Date.now() + 3600000}, getAccessToken: async () => ({token: "bench"})}; credential.googleAuth.getClient = async () => client; ';
 // The transport returns fixed JSON outside network I/O; these cases measure the
 // complete public operation's request planning and result projection, not HTTP.
@@ -47,6 +48,12 @@ const syntheticAuth = 'const app = new FirebaseApp({projectId: "bench", credenti
 const verificationAuth = syntheticAuth.replace('projectId: "bench"', 'projectId: "p"') +
   'auth.idTokenVerifier.signatureVerifier.keyFetcher.fetchPublicKeys = async () => ({k1: publicKey}); ';
 const cases = [
+  {name: 'retry / construct owned default policy', make: compiled('return () => new RequestClient();'), validate: value => assert.equal(value.retry.maxRetries, 4)},
+  {name: 'retry / construct custom policy', make: compiled('const settings = {maxRetries: 3, maxDelayInMillis: 10000, statusCodes: [503], ioErrorCodes: ["ECONNRESET"], backOffFactor: 1}; return () => new RequestClient(settings);'), validate: value => assert.equal(value.retry.maxRetries, 3)},
+  {name: 'retry / eligible status and backoff', make: compiled('const policy = new RequestClient(); const error = {response: {status: 503, headers: {}}}; return () => policy.getRetryDelayMillis(2, error)[0];'), validate: value => assert.equal(value, 2000)},
+  {name: 'retry / Retry-After seconds', make: compiled('const policy = new RequestClient(); const error = {response: {status: 503, headers: {"retry-after": "30"}}}; return () => policy.getRetryDelayMillis(1, error)[0];'), validate: value => assert.equal(value, 30000)},
+  {name: 'retry / HTTP date parsing', make: compiled('const policy = new RequestClient(); const header = "Fri, 01 Jan 2100 00:00:30 GMT"; return () => policy.parseRetryAfterIntoMillis(header);'), validate: value => assert.ok(value > 0 && Number.isFinite(value))},
+
   {name: 'auth / cached certificate snapshot', async: true, make: compiled('const fetcher = new jwt.UrlKeyFetcher("https://example.test/certs"); const send = HttpClient.prototype.send; HttpClient.prototype.send = async () => ({isJson: () => true, data: {k1: publicKey}, headers: {"cache-control": "max-age=3600"}}); return fetcher.fetchPublicKeys().then(() => () => fetcher.fetchPublicKeys()).finally(() => {HttpClient.prototype.send = send;});'), validate: v => assert.equal(v.k1, publicKey)},
   {name: 'auth / no-kid RSA verification with cached key', async: true, make: compiled('const verifier = new jwt.PublicKeySignatureVerifier({fetchPublicKeys: async () => ({fixture: noKid.publicKey})}); return () => verifier.verify(noKid.token).then(() => true);'), validate: v => assert.equal(v, true)},
   {name: 'auth / verify RS256 ID token signature', async: true, make: compiled('return () => jwt.verifyJwtSignature(token, publicKey, {algorithms: ["RS256"]}).then(() => true);'), validate: v => assert.equal(v, true)},
