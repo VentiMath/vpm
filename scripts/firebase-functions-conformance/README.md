@@ -29,8 +29,12 @@ setup file. For VPM the tests' `firebase-admin` imports resolve to
 `vfirebase-admin`, so tests and implementation share one app registry, and the
 three optional GraphQL peers are exposed from the fixture.
 
-All **996 tests** pass for the original on Node. VPM passes 995; the remaining
-test reads `DataSnapshot#ref`, which needs the Realtime Database client
+All **996 tests** pass for the original on Node. VPM passes 991. Four trace
+assertions encode upstream's floating-point rounding of a 64-bit span ID. The
+runner leaves those tests unchanged and accepts only the exact conversion from
+`2450465917091935019` to `2201cdc4ba77732b`, with every other asserted field
+unchanged. Focused tests independently verify this and the unsigned 64-bit limit.
+The remaining test reads `DataSnapshot#ref`, which needs the Realtime Database client
 vfirebase-admin omits, and must fail with its explanation. On Bun both
 libraries also fail the same 25 logger tests, which capture output by replacing
 `process.stdout.write`; Bun's `console` does not call it (the logger's output

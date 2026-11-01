@@ -64,9 +64,56 @@ const cases = [
       return response.body;
     };
   }, validate: output => assert.deepEqual(output, {result: 42})},
+  {name: 'trace / portable header extraction', make: root => {
+    const {extractTraceContext} = require(path.join(root, 'lib/common/trace.js'));
+    const carrier = {traceparent: '00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01'};
+    return () => extractTraceContext(carrier);
+  }, validate: context => assert.deepEqual(context, {version: '00', traceId: '0af7651916cd43dd8448eb211c80319c', parentId: 'b7ad6b7169203331', sample: true})},
+  {name: 'trace / legacy decimal span extraction', make: root => {
+    const {extractTraceContext} = require(path.join(root, 'lib/common/trace.js'));
+    const carrier = {'x-cloud-trace-context': '0af7651916cd43dd8448eb211c80319c/42;o=1'};
+    return () => extractTraceContext(carrier);
+  }, validate: context => assert.deepEqual(context, {version: '00', traceId: '0af7651916cd43dd8448eb211c80319c', parentId: '2a', sample: true})},
+  {name: 'discovery / 64 grouped endpoints', make: root => {
+    const {extractStack} = require(path.join(root, 'lib/runtime/loader.js'));
+    const source = {api: Object.fromEntries(Array.from({length: 64}, (_, i) => ['fn' + i,
+      Object.assign(() => {}, {__endpoint: {platform: 'gcfv2', httpsTrigger: {}}})]))};
+    return () => {const endpoints = {}; extractStack(source, endpoints, [], {}); return endpoints;};
+  }, validate: endpoints => {assert.equal(Object.keys(endpoints).length, 64); assert.equal(endpoints['api-fn63'].entryPoint, 'api.fn63');}},
+  {name: 'secret / runtime string read', make: root => {
+    const {defineSecret} = require(path.join(root, 'lib/params/index.js'));
+    process.env.VPM_BENCH_SECRET = 'benchmark-fixture-value';
+    const parameter = defineSecret('VPM_BENCH_SECRET');
+    return () => parameter.value();
+  }, validate: output => assert.equal(output, 'benchmark-fixture-value')},
+  {name: 'declaration / Firestore written trigger', make: root => {
+    const {onDocumentWritten} = require(path.join(root, 'lib/v2/providers/firestore.js'));
+    const options = {document: 'problems/{problemId}', retry: true};
+    return () => onDocumentWritten(options, () => {}).__endpoint;
+  }, validate: endpoint => {assert.equal(endpoint.eventTrigger.eventFilterPathPatterns.document, 'problems/{problemId}'); assert.equal(endpoint.eventTrigger.retry, true);}},
+  {name: 'event / materialize changed protobuf documents', make: root => {
+    const load = require('node:module').createRequire(path.join(root, 'package.json'));
+    const admin = load(root === roots.vpm ? 'vfirebase-admin/app' : 'firebase-admin/app');
+    const app = admin.initializeApp({projectId: 'vpm-benchmark'}, 'vpm-benchmark');
+    require(path.join(root, 'lib/common/app.js')).setApp(app);
+    const {DocumentEventData} = require(path.join(root, 'protos/compiledFirestore.js')).google.events.cloud.firestore.v1;
+    const name = 'projects/vpm-benchmark/databases/(default)/documents/problems/one';
+    const document = title => ({name, createTime: {seconds: 1}, updateTime: {seconds: 2}, fields: {title: {stringValue: title}}});
+    const data = DocumentEventData.encode(DocumentEventData.create({oldValue: document('before'), value: document('after')})).finish();
+    const event = {project: 'vpm-benchmark', database: '(default)', document: 'problems/one', datacontenttype: 'application/protobuf', data};
+    const {makeChangedFirestoreEvent} = require(path.join(root, 'lib/v2/providers/firestore.js'));
+    return () => makeChangedFirestoreEvent(event, {problemId: 'one'});
+  }, validate: event => {assert.deepEqual(event.data.before.data(), {title: 'before'}); assert.deepEqual(event.data.after.data(), {title: 'after'}); assert.equal(event.data.after.ref.path, 'problems/one');}},
 ];
 require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream: roots.upstream, vpm: roots.vpm, cases,
-  files: ['package.json', 'lib', 'bench/compare.cjs', '../vcors/index.js',
+  files: ['package.json', 'lib', 'protos', 'bench/compare.cjs', '../vcors/index.js', '../vfirebase-admin/lib', '../vgoogle-cloud-firestore/build/src', '../vprotobufjs/src', '../vprotobufjs/minimal.js', '../vlong/index.js',
+    '../../scripts/firebase-functions-conformance/node_modules/protobufjs/src',
+    '../../scripts/firebase-functions-conformance/node_modules/protobufjs/minimal.js',
+    '../../scripts/firebase-functions-conformance/node_modules/long/index.js',
+    '../../scripts/firebase-functions-conformance/node_modules/long/dist' ,
     '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/lib',
+    '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/protos',
+    '../../scripts/firebase-functions-conformance/node_modules/firebase-admin/lib',
+    '../../scripts/firebase-functions-conformance/node_modules/@google-cloud/firestore/build/src',
     '../../scripts/firebase-functions-conformance/node_modules/cors/lib']
 }).catch(error => {console.error(error); process.exitCode = 1;});

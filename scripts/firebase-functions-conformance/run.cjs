@@ -104,12 +104,26 @@ try {
   // replacing process.stdout.write and process.stderr.write, which Bun's console
   // does not call. The logger's own output is identical.
   if (process.versions.bun) for (const title of BUN_RUNTIME_DIFFERENCES) expected[title] = /^(?:undefined is not an object \(evaluating 'last\.trim'\)|JSON Parse error: Unexpected EOF)/;
-  const unexpected = stats.failures.filter(failure => !expected[failure.fullTitle]?.test(failure.err.message || ''));
-  for (const failure of stats.failures) console.log(failure.fullTitle in expected ? 'EXPECTED' : 'FAIL', failure.fullTitle, '\n ', (failure.err.message || '').split('\n')[0]);
+  // These four original assertions encode parseInt's rounded 64-bit span ID.
+  // Keep the upstream tests untouched and accept only the exact corrected ID,
+  // with every other asserted field unchanged. Focused regressions verify the
+  // integer conversion independently, including the maximum unsigned value.
+  const preciseSpanCases = new Set(upstream ? [] : [
+    'extracts trace context with sampling on',
+    'extracts trace context with sampling on indicated w/ o=3',
+    'extracts trace context with sampling off',
+    'extracts trace context with no sampling info',
+  ].map(title => 'getTraceContext X-Cloud-Trace-Context ' + title));
+  const matchesExpected = failure => preciseSpanCases.has(failure.fullTitle)
+    ? typeof failure.err.expected === 'string' && failure.err.expected.includes('"parentId": "2201cdc4ba777400"') &&
+      failure.err.actual === failure.err.expected.replace('"parentId": "2201cdc4ba777400"', '"parentId": "2201cdc4ba77732b"')
+    : expected[failure.fullTitle]?.test(failure.err.message || '');
+  const unexpected = stats.failures.filter(failure => !matchesExpected(failure));
+  for (const failure of stats.failures) console.log(matchesExpected(failure) ? 'EXPECTED' : 'FAIL', failure.fullTitle, '\n ', (failure.err.message || '').split('\n')[0]);
   console.log(`${upstream ? 'Upstream' : 'VPM'} Firebase Functions suite: ${stats.stats.passes} passed, ${stats.stats.failures} failed (${stats.stats.failures - unexpected.length} expected), ${stats.stats.pending} pending of ${stats.stats.tests}.`);
   assert.equal(unexpected.length, 0);
   if (!only) {
-    assert.equal(stats.stats.failures, Object.keys(expected).length, 'an expected failure now passes; update the expectation');
+    assert.equal(stats.stats.failures, Object.keys(expected).length + preciseSpanCases.size, 'an expected failure now passes; update the expectation');
     assert.equal(stats.stats.tests, 996);
   }
 } finally {

@@ -5,11 +5,15 @@ code with the changes documented below. Logging, initialization, option
 projection, manifest serialization, HTTP/callable factories and the scheduler
 adapter now have independent implementations. Callable request validation,
 verification orchestration, payload conversion and response streaming are also
-independently implemented. The underlying Admin SDK verifiers, Firestore
-providers, secret parameters and most other SDK services still retain upstream code. Tests verify this mixed
+independently implemented. Firestore trigger adapters and secret accessors now
+use independent implementations as well. The underlying Admin/Firestore clients,
+generic parameter expressions and other SDK services still retain upstream code.
+Trace propagation, configuration, app selection and deployment discovery also
+have independent implementations. Tests verify this mixed
 implementation.
-An independently written implementation of the application-facing APIs is
-pending; this package is not yet a completed rewrite.
+The application-facing functions described here have independent runtime
+implementations; the package as a whole remains a mixed implementation, including
+retained providers outside VentiMath's current use.
 
 The Cloud Functions for Firebase SDK, targeting **firebase-functions 7.4.0**, the
 latest stable release checked October 31, 2026. Dependencies are VPM packages
@@ -80,6 +84,31 @@ Connect GraphQL server, as upstream.
   heartbeat/response listeners are cleaned up. Calls to `sendChunk` after
   completion return `false`. Upstream source and tests informed this redesign;
   it is not a clean-room implementation.
+- **Independent Firestore triggers and secrets.** A shared snapshot materializer
+  decodes changed protobuf events once for both documents; generated protocol
+  schemas and Admin/Firestore snapshot classes remain dependencies. Static
+  document patterns are prepared at declaration time, and prototype-named
+  captures remain own data. Nested field-mask changes accumulate across siblings
+  without changing inputs. Timestamp projection preserves fractional nanoseconds
+  with offsets and before the epoch, and rejects invalid timestamps. Secret
+  reads stay dynamic and unavailable during deployment; JSON errors omit parser
+  excerpts that could quote a credential. Parameter registration preserves its
+  public arrays and removes every duplicate name. Generic expression classes
+  remain upstream-derived.
+- **Independent runtime and discovery.** An explicit worklist discovers grouped
+  exports without recursive stack growth. Ancestor cycles and colliding endpoint
+  names are rejected; shared groups and prototype-named exports remain valid.
+  Manifest-file output and the small native HTTP discovery server avoid loading
+  Express. Configuration accepts leading JSON whitespace and works without
+  `PWD`. Selecting the same internal Admin app does not delete it, and unexpected
+  registry errors propagate. Runtime and discovery helpers share CJS/ESM identity.
+- **Exact trace context.** Decimal Google span IDs use integer conversion rather
+  than floating-point rounding. W3C `traceparent` identifiers and versions are
+  validated, sampling uses the low bit, and header names are case insensitive.
+  A valid `traceparent` takes precedence over the legacy Google header, following
+  [Google's guidance](https://docs.cloud.google.com/trace/docs/trace-context).
+  Request context stays isolated across async handlers, which retain their receiver.
+  [W3C Trace Context](https://www.w3.org/TR/trace-context/) defines the wire format.
 - **The bin's directory argument.** `firebase-functions [functionsDir]` read the
   directory only when two or more arguments were given, so a single directory
   argument was ignored and `-h` printed nothing. The Firebase CLI runs the bin
@@ -94,8 +123,10 @@ Connect GraphQL server, as upstream.
 ## Evidence
 
 - [Upstream suite](../../scripts/firebase-functions-conformance/README.md): the
-  release's 996 unit tests pass for the original on Node, and for VPM except
-  `DataSnapshot#ref`, which must fail with vfirebase-admin's explanation.
+  release's 996 unit tests pass for the original on Node. VPM passes 991;
+  four original assertions expect rounded span IDs and are checked for only the
+  exact integer correction. `DataSnapshot#ref` must fail with vfirebase-admin's
+  explanation. Bun has the same additional 25 console-capture failures as upstream.
 - [Callers](../../scripts/firebase-functions-conformance/callers.cjs): VentiMath's
   function shapes served by one shared host (HTTP with and without CORS,
   handler errors, callable with and without auth and with the wrong method,
@@ -109,10 +140,13 @@ Connect GraphQL server, as upstream.
   with the original, then checked here; additional fixes have focused tests below.
 - [Package tests](test/firebase-functions.test.cjs), [logging and initialization
   regressions](test/logging-init.test.cjs), [deployment regressions](test/deployment.test.cjs),
-  [callable regressions](test/callable.test.cjs), and [type tests](test/types.ts).
+  [callable regressions](test/callable.test.cjs), [event and secret regressions](test/events-secrets.test.cjs),
+  [runtime and discovery regressions](test/runtime.test.cjs),
+  and [type tests](test/types.ts).
 - [Measurements](bench/results/README.md): isolated logging, initialization,
   endpoint construction, fresh manifest serialization and initialized HTTP
-  invocation, callable payload conversion and callable request comparisons on
+  invocation, callable payload conversion, callable requests, secret reads and
+  Firestore event materialization, trace parsing and deployment discovery on
   Node 24 and Bun. Console and network I/O are excluded. The callable request
   case has no token headers and therefore does not measure cryptographic
   verification or the Admin SDK.
@@ -123,14 +157,18 @@ frozen/reusable declarations; the benchmark includes construction of a fresh
 64-endpoint input for both libraries. The report retains every sample and the
 identical-code controls, including inconclusive results.
 
-In the callable recording, structured payload encoding took 40.4% more time
-on Node (846 to 1,187 ns); Node decoding was inconclusive because one process
-pair reversed direction. Bun decoding took 35.4% less time; its encoding result
-was inconclusive at the control spread. The request without token headers took
-18.9% more time on Node (2,048 to 2,468 ns) and 12.1% more on Bun (1,727 to
-1,986 ns). These are explicit costs of the current implementation, not a claim
-of a general speedup. The complete report also retains the logging, declaration,
-manifest and HTTP measurements, including inconclusive controls.
+The current recording establishes lower Node trace-parsing time: 20.4% for
+`traceparent` and 13.6% for the legacy Google header. Bun trace results are
+inconclusive. Discovery of 64 grouped endpoints takes 93.5% more time on Node
+(12,072 to 23,283 ns); Bun discovery is inconclusive. This is deployment work,
+with explicit cycle and collision checks, rather than request processing.
+
+Changed protobuf-event materialization takes 36.9% less time on Bun; the Node
+result is inconclusive because one pair reverses direction. Trigger construction
+still costs more on both runtimes. Callable conversion and request costs remain
+mixed; the complete report retains all sixteen cases, including regressions,
+outliers and identical-code controls. These local CPU measurements do not imply
+a general speedup or application latency guarantee.
 
 MIT licensing, the pinned source and the files changed from it are recorded in
 [PROVENANCE.json](PROVENANCE.json).

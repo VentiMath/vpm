@@ -1,84 +1,51 @@
-const require_rolldown_runtime = require('../../_virtual/rolldown_runtime.js');
-const require_logger_index = require('../../logger/index.js');
-const require_common_app = require('../app.js');
-const require_common_utilities_encoder = require('../utilities/encoder.js');
-const firebase_admin_firestore = require('../../_virtual/lazy.js').lazy(() => require_rolldown_runtime.__toESM(require("vfirebase-admin/firestore")));
-let protos_compiledFirestore = require("../../../protos/compiledFirestore");
-protos_compiledFirestore = require_rolldown_runtime.__toESM(protos_compiledFirestore);
+'use strict';
+const logger = require('../../logger/index.js'), app = require('../app.js');
+const {dateToTimestampProto} = require('../utilities/encoder.js');
+let admin, eventSchema;
 
-//#region src/common/providers/firestore.ts
-/** static-complied protobufs */
-const DocumentEventData = protos_compiledFirestore.google.events.cloud.firestore.v1.DocumentEventData;
-/**
-* Helper to construct a value protobuf or return the document resource path.
-*
-* @param data - The Firestore event data payload.
-* @param resource - The slash-separated document resource path (e.g.
-* `projects/{project}/databases/{database}/documents/{document_path}`). This is used as the fallback
-* when the document name or data is not present in the payload (e.g., for non-existent/deleted snapshots).
-* @param valueFieldName - The key in `data` to extract the document fields from ('value' or 'oldValue').
-* @returns A protobuf-like object representing the document, or the fallback resource path string.
-* @hidden
-*/
-function _getValueProto(data, resource, valueFieldName) {
-	const value = data?.[valueFieldName];
-	if (typeof value === "undefined" || value === null || typeof value === "object" && !Object.keys(value).length) {
-		return resource;
-	}
-	const proto = {
-		fields: value?.fields || {},
-		createTime: require_common_utilities_encoder.dateToTimestampProto(value?.createTime),
-		updateTime: require_common_utilities_encoder.dateToTimestampProto(value?.updateTime),
-		name: value?.name || resource
-	};
-	return proto;
+// Generated protobuf descriptors are protocol data. Keep them lazy and decode
+// one event once when both its before and after snapshots are requested.
+class SnapshotMaterializer {
+  constructor(data, resource, database, format) {
+    this.resource = resource;
+    this.format = format;
+    admin ??= require('vfirebase-admin/firestore');
+    this.store = database ? admin.getFirestore(app.getApp(), database) : admin.getFirestore(app.getApp());
+    this.data = format === 'protobufJS'
+      ? (eventSchema ??= require('../../../protos/compiledFirestore.js').google.events.cloud.firestore.v1.DocumentEventData).decode(Buffer.from(data))
+      : data;
+  }
+  snapshot(field, createTime, updateTime) {
+    const document = this.data?.[field];
+    if (this.format === 'protobufJS') return this.store.snapshot_(document || this.resource, null, 'protobufJS');
+    const present = document != null && (typeof document !== 'object' || Object.keys(document).length !== 0);
+    const value = present ? {fields: document.fields || {}, createTime: dateToTimestampProto(document.createTime),
+      updateTime: dateToTimestampProto(document.updateTime), name: document.name || this.resource} : this.resource;
+    let time = createTime || updateTime;
+    if (!time && field === 'value') {
+      logger.warn('Snapshot has no readTime. Using now()');
+      time = new Date().toISOString();
+    }
+    return this.store.snapshot_(value, dateToTimestampProto(time), 'json');
+  }
 }
-/** @internal */
-function createSnapshotFromProtobuf(data, path, databaseId) {
-	const firestoreInstance = firebase_admin_firestore.getFirestore(require_common_app.getApp(), databaseId);
-	try {
-		const dataBuffer = Buffer.from(data);
-		const firestoreDecoded = DocumentEventData.decode(dataBuffer);
-		return firestoreInstance.snapshot_(firestoreDecoded.value || path, null, "protobufJS");
-	} catch (err) {
-		require_logger_index.error("Failed to decode protobuf and create a snapshot.");
-		throw err;
-	}
+function protobufSnapshot(field, data, resource, database) {
+  try {return new SnapshotMaterializer(data, resource, database, 'protobufJS').snapshot(field);}
+  catch (error) {
+    logger.error(`Failed to decode protobuf and create a ${field === 'oldValue' ? 'before snapshot' : 'snapshot'}.`);
+    throw error;
+  }
 }
-/** @internal */
-function createBeforeSnapshotFromProtobuf(data, path, databaseId) {
-	const firestoreInstance = firebase_admin_firestore.getFirestore(require_common_app.getApp(), databaseId);
-	try {
-		const dataBuffer = Buffer.from(data);
-		const firestoreDecoded = DocumentEventData.decode(dataBuffer);
-		return firestoreInstance.snapshot_(firestoreDecoded.oldValue || path, null, "protobufJS");
-	} catch (err) {
-		require_logger_index.error("Failed to decode protobuf and create a before snapshot.");
-		throw err;
-	}
+function createSnapshotPairFromProtobuf(data, resource, database) {
+  try {
+    const materializer = new SnapshotMaterializer(data, resource, database, 'protobufJS');
+    return {before: materializer.snapshot('oldValue'), after: materializer.snapshot('value')};
+  } catch (error) {logger.error('Failed to decode protobuf and create snapshots.'); throw error;}
 }
-/** @internal */
-function createSnapshotFromJson(data, path, createTime, updateTime, databaseId) {
-	const firestoreInstance = databaseId ? firebase_admin_firestore.getFirestore(require_common_app.getApp(), databaseId) : firebase_admin_firestore.getFirestore(require_common_app.getApp());
-	const valueProto = _getValueProto(data, path, "value");
-	let timeString = createTime || updateTime;
-	if (!timeString) {
-		require_logger_index.warn("Snapshot has no readTime. Using now()");
-		timeString = new Date().toISOString();
-	}
-	const readTime = require_common_utilities_encoder.dateToTimestampProto(timeString);
-	return firestoreInstance.snapshot_(valueProto, readTime, "json");
-}
-/** @internal */
-function createBeforeSnapshotFromJson(data, path, createTime, updateTime, databaseId) {
-	const firestoreInstance = databaseId ? firebase_admin_firestore.getFirestore(require_common_app.getApp(), databaseId) : firebase_admin_firestore.getFirestore(require_common_app.getApp());
-	const oldValueProto = _getValueProto(data, path, "oldValue");
-	const oldReadTime = require_common_utilities_encoder.dateToTimestampProto(createTime || updateTime);
-	return firestoreInstance.snapshot_(oldValueProto, oldReadTime, "json");
-}
-
-//#endregion
-exports.createBeforeSnapshotFromJson = createBeforeSnapshotFromJson;
-exports.createBeforeSnapshotFromProtobuf = createBeforeSnapshotFromProtobuf;
-exports.createSnapshotFromJson = createSnapshotFromJson;
-exports.createSnapshotFromProtobuf = createSnapshotFromProtobuf;
+module.exports = {
+  createSnapshotFromProtobuf: (data, path, database) => protobufSnapshot('value', data, path, database),
+  createBeforeSnapshotFromProtobuf: (data, path, database) => protobufSnapshot('oldValue', data, path, database),
+  createSnapshotFromJson: (data, path, created, updated, database) => new SnapshotMaterializer(data, path, database, 'json').snapshot('value', created, updated),
+  createBeforeSnapshotFromJson: (data, path, created, updated, database) => new SnapshotMaterializer(data, path, database, 'json').snapshot('oldValue', created, updated),
+  createSnapshotPairFromProtobuf,
+};

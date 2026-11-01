@@ -224,7 +224,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | The calendar unchanged on VPM's headless engine and core: no `temporal-polyfill`, correct named time zones where the polyfill is wrong, `#fragment` JSON feeds that keep their range, and an application bundle 8% smaller gzipped; identical results on FullCalendar's 1,542-spec browser suite. |
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
-| [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Mixed implementation on VPM dependencies: independent logging, initialization, declaration assembly and HTTP/scheduler factories; non-mutating manifest serialization and shared CJS/ESM state. Callable request validation, verification orchestration, payload conversion and response lifecycle are independently implemented, with prototype-safe data and cancellation cleanup. Admin verifiers, Firestore providers, parameters and other SDK services remain adapted upstream code; full rewrite pending. |
+| [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Mixed implementation on VPM dependencies: independent logging, initialization, declaration assembly and HTTP/scheduler factories; non-mutating manifest serialization and shared CJS/ESM state. Callable request validation, verification orchestration, payload conversion and response lifecycle are independently implemented, with prototype-safe data and cancellation cleanup. Firestore event adapters, secret accessors and registration are independently implemented; changed protobuf events decode once, field masks preserve sibling changes, and JSON secret errors omit credential excerpts. Trace propagation, configuration and iterative deployment discovery are independently implemented. Admin/Firestore clients, generic parameter expressions and other SDK services remain adapted upstream code; a complete package-wide rewrite remains pending. |
 | [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, 56% less CPU per ID-token signature check and half the cold-start modules; identical Auth, Firestore, Storage and FCM caller behavior. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | All six dependencies are VPM with one gax stack, 65 modules and about 50 ms at import instead of 404 and 270 ms, reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
@@ -877,9 +877,13 @@ See the [package contract](packages/vfull-ui-headless-calendar/README.md),
 Targets **firebase-functions 7.4.0** with `vfirebase-admin` as its peer.
 Logging, initialization, option projection, manifest serialization,
 HTTP/callable factories and the scheduler adapter have independent
-implementations. Callable token verification, payload encoding/streaming,
-Firestore providers, secret parameters and most other services still retain
-upstream code; the complete application-scoped rewrite remains pending.
+implementations. Callable request validation, verification orchestration, payload
+conversion and response streaming are independently implemented. Firestore event
+adapters, secret accessors and parameter registration also have independent
+implementations. Underlying Admin/Firestore clients, generic parameter expressions,
+and other SDK services retain upstream code. Trace propagation, configuration,
+Admin app selection, deployment discovery and CLI hosting are independently
+implemented. The package as a whole remains a mixed implementation.
 [PROVENANCE.json](packages/vfirebase-functions/PROVENANCE.json) identifies those
 boundaries.
 
@@ -897,19 +901,31 @@ reusable declarations instead of modifying them, and handles deep structures
 without recursive traversal. HTTP CORS completion removes its finish listener.
 These factories, options and manifest helpers also share CJS/ESM identity.
 
+Callable conversion preserves own prototype-named properties, detects cycles
+and handles deep data with bounded recursion and an explicit worklist. The
+response lifecycle handles synchronous stream callbacks, disconnects and
+heartbeat cleanup. Production authentication still uses the Admin SDK verifiers.
+Firestore changes decode their protobuf event once for both snapshots, and
+field-mask patches accumulate sibling edits without mutating inputs. Event
+timestamps preserve fractional nanoseconds. Secret values remain runtime-only;
+JSON parse errors identify the parameter without including credential excerpts.
+
 Earlier improvements remain: lazy provider/Admin loading, the bin's directory
 argument and VPM declaration dependencies. Earlier Node 22 and same-process
 performance claims are withdrawn as current evidence. New isolated Node 24 and
 Bun comparisons measure logging CPU with console I/O excluded, and an already
 initialized handler. The new report also measures endpoint construction, fresh
-64-endpoint serialization and initialized HTTP invocation. See its controls
+64-endpoint serialization, initialized HTTP/callable invocation, secret reads
+and Firestore event materialization. See its controls
 and remaining costs; deployment-time work is distinct from request latency.
 
 The original release's **996 unit tests** remain the compatibility gate: VPM
-passes 995 on Node; the remaining test needs the omitted Realtime Database
-client. Bun has the same 25 console-capture failures with upstream and VPM.
-Nineteen focused tests cover loading, discovery, initialization, logging,
-frozen and deep declarations, module identity and CORS listener cleanup.
+passes 991 on Node; four original assertions require the exact integer
+correction for span IDs and one needs the omitted Realtime Database client. Bun has the same 25 console-capture failures with upstream and VPM.
+Forty-four focused tests cover loading, discovery, initialization, logging,
+frozen and deep declarations, module identity, callable payloads and cancellation,
+secret access, timestamps, field masks, Firestore event materialization, trace
+precision, export cycles, endpoint collisions and native manifest serving.
 The actual HTTP/callable/scheduler/Firestore caller tests require matching
 responses, results, endpoint definitions and deployment manifests. Logs match
 except for the explicitly verified preservation of Express query data.

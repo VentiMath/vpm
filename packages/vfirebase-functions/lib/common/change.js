@@ -1,59 +1,29 @@
-
-//#region src/common/change.ts
-/** @internal */
+'use strict';
+const put = (object, key, value) => Object.defineProperty(object, key, {value, enumerable: true, configurable: true, writable: true});
 function applyFieldMask(sparseBefore, after, fieldMask) {
-	const before = { ...after };
-	const masks = fieldMask.split(",");
-	for (const mask of masks) {
-		const parts = mask.split(".");
-		const head = parts[0];
-		const tail = parts.slice(1).join(".");
-		if (parts.length > 1) {
-			before[head] = applyFieldMask(sparseBefore?.[head], after[head], tail);
-			continue;
-		}
-		const val = sparseBefore?.[head];
-		if (typeof val === "undefined") {
-			delete before[mask];
-		} else {
-			before[mask] = val;
-		}
-	}
-	return before;
+  const result = {...after};
+  for (const mask of fieldMask.split(',')) {
+    const parts = mask.split('.');
+    let target = result, source = sparseBefore;
+    for (let index = 0; index < parts.length - 1; index++) {
+      const key = parts[index];
+      const child = {...(Object.hasOwn(target, key) ? target[key] : undefined)};
+      put(target, key, child);
+      target = child;
+      source = source != null && Object.hasOwn(source, key) ? source[key] : undefined;
+    }
+    const key = parts[parts.length - 1];
+    const value = source != null && Object.hasOwn(source, key) ? source[key] : undefined;
+    if (value === undefined) delete target[key]; else put(target, key, value);
+  }
+  return result;
 }
-/**
-* The Cloud Functions interface for events that change state, such as
-* Realtime Database or Cloud Firestore `onWrite` and `onUpdate` events.
-*
-* For more information about the format used to construct `Change` objects, see
-* {@link ChangeJson} below.
-*
-*/
-var Change = class Change {
-	/**
-	* Factory method for creating a `Change` from a `before` object and an `after`
-	* object.
-	*/
-	static fromObjects(before, after) {
-		return new Change(before, after);
-	}
-	/**
-	* Factory method for creating a `Change` from JSON and an optional customizer
-	* function to be applied to both the `before` and the `after` fields.
-	*/
-	static fromJSON(json, customizer = (x) => x) {
-		let before = { ...json.before };
-		if (json.fieldMask) {
-			before = applyFieldMask(before, json.after, json.fieldMask);
-		}
-		return Change.fromObjects(customizer(before || {}), customizer(json.after || {}));
-	}
-	constructor(before, after) {
-		this.before = before;
-		this.after = after;
-	}
-};
-
-//#endregion
-exports.Change = Change;
-exports.applyFieldMask = applyFieldMask;
+class Change {
+  constructor(before, after) {this.before = before; this.after = after;}
+  static fromObjects(before, after) {return new Change(before, after);}
+  static fromJSON(json, customizer = value => value) {
+    const before = json.fieldMask ? applyFieldMask(json.before, json.after, json.fieldMask) : {...json.before};
+    return new Change(customizer(before), customizer(json.after || {}));
+  }
+}
+module.exports = {Change, applyFieldMask};

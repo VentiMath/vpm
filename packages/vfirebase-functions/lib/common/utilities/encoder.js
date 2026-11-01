@@ -1,22 +1,15 @@
-
-//#region src/common/utilities/encoder.ts
-function dateToTimestampProto(timeString) {
-	if (typeof timeString === "undefined") {
-		return;
-	}
-	const date = new Date(timeString);
-	const seconds = Math.floor(date.getTime() / 1e3);
-	let nanos = 0;
-	if (timeString.length > 20) {
-		const nanoString = timeString.substring(20, timeString.length - 1);
-		const trailingZeroes = 9 - nanoString.length;
-		nanos = parseInt(nanoString, 10) * Math.pow(10, trailingZeroes);
-	}
-	return {
-		seconds,
-		nanos
-	};
+'use strict';
+function dateToTimestampProto(value) {
+  if (value === undefined) return undefined;
+  if (value !== null && typeof value === 'object' && typeof value.seconds === 'number') {
+    const nanos = value.nanoseconds ?? value.nanos ?? 0;
+    if (!Number.isSafeInteger(value.seconds) || !Number.isInteger(nanos) || nanos < 0 || nanos >= 1000000000) throw new RangeError('Invalid event timestamp');
+    return {seconds: value.seconds, nanos};
+  }
+  const milliseconds = new Date(value).getTime();
+  if (!Number.isFinite(milliseconds)) throw new RangeError('Invalid event timestamp');
+  const fraction = typeof value === 'string' && /\.(\d+)(?:Z|[+-]\d\d:\d\d)$/i.exec(value);
+  return {seconds: Math.floor(milliseconds / 1000), nanos: fraction
+    ? Number(fraction[1].padEnd(9, '0').slice(0, 9)) : ((milliseconds % 1000 + 1000) % 1000) * 1000000};
 }
-
-//#endregion
 exports.dateToTimestampProto = dateToTimestampProto;
