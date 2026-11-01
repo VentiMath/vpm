@@ -18,7 +18,6 @@ const chrome =
   ].find((file) => fs.existsSync(file));
 assert.ok(chrome, "Chrome is required; set CHROME_BIN");
 let server, child, socket, timer;
-const pause = () => new Promise((resolve) => setTimeout(resolve, 20));
 (async () => {
   const built = spawnSync(
     "bun",
@@ -58,12 +57,8 @@ const pause = () => new Promise((resolve) => setTimeout(resolve, 20));
     { stdio: "ignore" },
   );
   const portFile = path.join(profile, "DevToolsActivePort");
-  for (let i = 0; !fs.existsSync(portFile) && i < 500; i++) await pause();
-  assert.ok(fs.existsSync(portFile), "Chrome debugging port did not start");
-  const port = fs.readFileSync(portFile, "utf8").split("\n")[0],
-    pages = await (
-      await fetch("http://127.0.0.1:" + port + "/json/list")
-    ).json();
+  const port = await require('./chrome-port.cjs')(portFile);
+  const pages = await (await fetch('http://127.0.0.1:' + port + '/json/list')).json();
   socket = new WebSocket(
     pages.find((p) => p.type === "page").webSocketDebuggerUrl,
   );
