@@ -1,26 +1,36 @@
 'use strict';
-// Per-event CPU work in Cloud Functions: decoding a Firestore trigger's
-// protobuf DocumentEventData into a snapshot and reading it, and parsing a
-// callable request. Each library runs on its own dependencies (firebase-admin
-// 14.5.0 and its Firestore upstream; vfirebase-admin and VPM's here).
+// Measure logging CPU with an output sink, not terminal or Cloud Logging I/O.
+// Only the selected implementation is loaded in a timed worker.
 const assert = require('node:assert/strict'), path = require('node:path');
-process.env.GCLOUD_PROJECT ||= 'p';
 const roots = {upstream: path.resolve(__dirname, '../../../scripts/firebase-functions-conformance/node_modules/firebase-functions'), vpm: path.resolve(__dirname, '..')};
-const {google} = require(path.join(roots.upstream, 'protos/compiledFirestore.js'));
-const event = Buffer.from(google.events.cloud.firestore.v1.DocumentEventData.encode({value: {name: 'projects/p/databases/(default)/documents/rooms/r1',
-  createTime: {seconds: 1700000000}, updateTime: {seconds: 1700000001}, fields: {
-    title: {stringValue: 'Number theory'}, seats: {integerValue: 12}, open: {booleanValue: true}, ratio: {doubleValue: 0.75},
-    tags: {arrayValue: {values: [{stringValue: 'primes'}, {stringValue: 'modular'}]}},
-    owner: {mapValue: {fields: {uid: {stringValue: 'ada'}, since: {timestampValue: {seconds: 1690000000}}}}},
-    members: {arrayValue: {values: Array.from({length: 10}, (_, i) => ({mapValue: {fields: {uid: {stringValue: 'u' + i}, score: {integerValue: i}}}}))}}}}}).finish());
-const library = root => ({firestore: require(path.join(root, 'lib/common/providers/firestore.js')), https: require(path.join(root, 'lib/common/providers/https.js'))});
-const env = {event, library};
-// Each variant gets freshly compiled case code (see docs/DEVELOPMENT.md).
-const compiled = body => async lib => new Function('lib', 'env', 'const {event} = env; const {firestore, https} = env.library(lib);\n' + body)(lib, env);
+function logging(root, call) {
+  const common = require(path.join(root, 'lib/logger/common.js'));
+  let line;
+  for (const key of Object.keys(common.UNPATCHED_CONSOLE)) common.UNPATCHED_CONSOLE[key] = output => {line = output;};
+  const logger = require(path.join(root, 'lib/logger/index.js'));
+  return () => {call(logger); return line;};
+}
 const cases = [
-  {name: 'firestore trigger / decode event into a snapshot', make: compiled('return () => firestore.createSnapshotFromProtobuf(event, "rooms/r1", "(default)").id;'), validate: v => assert.equal(v, 'r1')},
-  {name: 'firestore trigger / decode and read data()', make: compiled('return () => Object.keys(firestore.createSnapshotFromProtobuf(event, "rooms/r1", "(default)").data()).length;'), validate: v => assert.equal(v, 7)},
-  {name: 'callable / validate and decode a request body', make: compiled('const request = {method: "POST", header: name => ({"content-type": "application/json"})[name.toLowerCase()], body: {data: {answer: "42", attempts: [1, 2, 3], at: {"@type": "type.googleapis.com/google.protobuf.Int64Value", value: "7"}}}}; return () => https.isValidRequest(request) && https.decode(request.body.data).attempts.length;'), validate: v => assert.equal(v, 3)},
+  {name: 'logger / formatted status', make: root => logging(root, log => log.info('saved %d records', 3)), validate: output => assert.deepEqual(JSON.parse(output), {severity: 'INFO', message: 'saved 3 records'})},
+  {name: 'logger / structured request', make: root => {
+    const data = {path: '/api/rooms', method: 'GET', count: 12, elapsed: 1.25};
+    return logging(root, log => log.info('request', data));
+  }, validate: output => assert.deepEqual(JSON.parse(output), {path: '/api/rooms', method: 'GET', count: 12, elapsed: 1.25, severity: 'INFO', message: 'request'})},
+  {name: 'logger / nested data', make: root => {
+    const entry = {severity: 'INFO', message: 'rooms', rooms: Array.from({length: 10}, (_, id) => ({id, tags: ['math', 'practice'], open: true}))};
+    return logging(root, log => log.write(entry));
+  }, validate: output => {const data = JSON.parse(output); assert.equal(data.rooms.length, 10); assert.deepEqual(data.rooms[9], {id: 9, tags: ['math', 'practice'], open: true});}},
+  {name: 'initializer / already initialized handler', async: true, make: async root => {
+    const {onInit, withInit} = require(path.join(root, 'lib/common/onInit.js'));
+    onInit(() => {});
+    const handler = withInit(value => value + 1);
+    await handler(41);
+    return () => handler(41);
+  }, validate: output => assert.equal(output, 42)},
 ];
-require('../../../scripts/bench-paired.cjs').run({root: path.resolve(__dirname, '..'), upstream: roots.upstream, vpm: roots.vpm, cases,
-  files: ['package.json', 'lib/common/providers/firestore.js', 'lib/common/providers/https.js', 'bench/compare.cjs', '../vgoogle-cloud-firestore/package.json', '../../scripts/firebase-functions-conformance/package-lock.json']}).catch(e => {console.error(e); process.exitCode = 1;});
+require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream: roots.upstream, vpm: roots.vpm, cases,
+  files: ['package.json', 'PROVENANCE.json', 'lib/logger', 'lib/common/onInit.js', 'lib/common/trace.js', 'bench/compare.cjs',
+    '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/lib/logger',
+    '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/lib/common/onInit.js',
+    '../../scripts/firebase-functions-conformance/node_modules/firebase-functions/lib/common/trace.js']
+}).catch(error => {console.error(error); process.exitCode = 1;});

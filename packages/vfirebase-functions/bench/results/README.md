@@ -1,63 +1,63 @@
 # vfirebase-functions measurements
 
-Recorded October 31, 2026 on a shared Linux x64 VM (Intel Xeon @ 2.80 GHz) with
-Node 22.22.0 and Bun 1.4.0, against firebase-functions 7.4.0 on firebase-admin
-14.5.0. Node 24 was not available on this machine. Three fresh processes per
-runtime, 12 alternating paired rounds per case, 150 ms warmup per variant plus
-four full warmup blocks. Iterations use a 15 ms upstream pilot target capped at
-100,000. Outputs are retained and validated outside timing. One additional
-process per runtime compares identical upstream implementations. No trimming.
+These records supersede the earlier same-process comparison. Each timed
+implementation runs alone in a fresh process. Four comparison pairs use
+balanced upstream-first / VPM-first order; two further pairs run identical
+upstream code in separate processes as controls. Warmup lasts at least 150 ms
+per case, followed by recalibration on warmed code, four warmup blocks and 12
+recorded blocks. Both workers in a pair use the same iteration count, targeting
+10 ms blocks with a one-million-operation cap. Results are retained and checked
+outside timing. All samples are kept, including outliers.
 
-Each variant runs freshly compiled case code with its own measurement loop. The
-second process on each runtime sets up VPM first; the others set up upstream
-first. Values are pooled median nanoseconds per operation. Changes are medians
-of paired sample ratios. Negative means less time. Controls show
-identical-upstream drift. Inputs (a Firestore `DocumentEventData` with seven
-fields, including a map and a ten-element array of maps, and a callable request)
-are defined in [the benchmark](../compare.cjs).
+The comparison units are per-process medians. The change column is the median
+of four process-pair percentage changes; the two order columns expose order
+sensitivity. The nanosecond columns are medians of the four process medians.
+They need not produce exactly the percentage in the change column.
 
-## Cold start
+A direction is unestablished when it reverses across processes or any pair
+overlaps the largest absolute control difference (with a minimum 2% floor).
+This is a conservative descriptive check, not a confidence interval. Process
+isolation reduces shared JIT feedback; environmental noise and GC remain.
+Negative changes mean less time; these are local CPU measurements, not
+application throughput or latency guarantees.
 
-`node packages/vfirebase-functions/bench/import.cjs` (and the same with Bun)
-starts 15 fresh processes per library, alternating. Each imports the `v2`
-logger, then defines an HTTP, a callable, a scheduled, a task-queue and a
-Firestore-triggered function with a secret, as a functions codebase does before
-serving its first request. Medians from the same machine:
+## Node 24.22.1
 
-| Runtime | Library | `v2` (logger) import | Whole codebase | Modules |
-| --- | --- | ---: | ---: | ---: |
-| Node 22 | upstream | 477.4 ms | 481.4 ms | 663 |
-| Node 22 | VPM | 16.0 ms | 41.7 ms | 57 |
-| Bun 1.4.0 | upstream | 442.8 ms | 463.2 ms | 709 |
-| Bun 1.4.0 | VPM | 29.3 ms | 58.4 ms | 58 |
+Recorded 2026-11-01T08:34:49.545Z on Apple M1 Pro, darwin/arm64.
 
-Upstream's `v2` index loads every provider, and with them Firestore, a gax
-stack, Auth, App Check and the Realtime Database client. Here those load when a
-function first needs them; a Firestore trigger loads Firestore on its first
-event.
+[Raw samples, processes, controls and source hashes](node-isolated.json).
 
-## Node 22
-
-| Case | Upstream ns | VPM ns | Paired change | Per-process changes (2nd: VPM first) | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| firestore trigger / decode event into a snapshot | 14,382 | 12,157 | -13.9% | -15.3%, -11.1%, -13.5% | -5.0% |
-| firestore trigger / decode and read data() | 30,480 | 25,936 | -13.5% | -13.2%, -10.3%, -16.7% | -1.2% |
-| callable / validate and decode a request body | 609 | 629 | +1.3% | -0.8%, +2.3%, -3.4% | +1.7% |
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| logger / formatted status | 487 | 347 | -28.6% | -15.6% | -30.3% | 1.2% | lower time in every pair, beyond control spread |
+| logger / structured request | 594 | 633 | 6.5% | 10% | -0.5% | 5.1% | unestablished at this precision |
+| logger / nested data | 6515 | 4305 | -33.8% | -27.8% | -35.1% | 5% | lower time in every pair, beyond control spread |
+| initializer / already initialized handler | 51 | 57 | 10.8% | 12% | 10.8% | 2.6% | higher time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-| Case | Upstream ns | VPM ns | Paired change | Per-process changes (2nd: VPM first) | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| firestore trigger / decode event into a snapshot | 13,697 | 16,578 | -13.1% | -11.2%, -18.4%, -0.2% | +15.0% |
-| firestore trigger / decode and read data() | 27,635 | 21,053 | -21.1% | -27.3%, -22.4%, -21.1% | -5.8% |
-| callable / validate and decode a request body | 696 | 652 | -0.4% | -2.6%, -3.8%, -0.4% | +5.3% |
+Recorded 2026-11-01T08:35:05.561Z on Apple M1 Pro, darwin/arm64.
 
-Firestore trigger decoding runs through `vprotobufjs` and
-`vgoogle-cloud-firestore`. Decoding and reading a document takes about 14% less
-time on Node and 21% less on Bun, beyond the controls. Decoding alone takes 14%
-less on Node; on Bun its control drifts 15%, so that case is inconclusive there.
-Callable request handling is the SDK's own code and is at parity.
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
 
-`node packages/vfirebase-functions/bench/summarize.cjs --verify-current` checks
-that all eight reports cover the same cases and that the recorded source hashes
-match the current files.
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| logger / formatted status | 581 | 566 | -4% | 0.3% | -4% | 1.4% | unestablished at this precision |
+| logger / structured request | 249 | 261 | 5% | 3.7% | 5% | 6% | unestablished at this precision |
+| logger / nested data | 7216 | 3838 | -46.3% | -58.4% | -45.9% | 1.5% | lower time in every pair, beyond control spread |
+| initializer / already initialized handler | 66 | 72 | 9.9% | 9.9% | 9.6% | 8.7% | unestablished at this precision |
+
+## Reproduce
+
+Run these commands from the repository root after installing the pinned
+fixtures used by `bench/compare.cjs`:
+
+```sh
+OUTPUT=packages/vfirebase-functions/bench/results/node-isolated.json node packages/vfirebase-functions/bench/compare.cjs
+OUTPUT=packages/vfirebase-functions/bench/results/bun-isolated.json bun packages/vfirebase-functions/bench/compare.cjs
+node scripts/render-bench-report.cjs packages/vfirebase-functions
+```
+
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.

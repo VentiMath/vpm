@@ -53,7 +53,8 @@ from one shared `vexpress` host with the Functions Framework's body parsing:
 `onRequest` with a secret, with CORS (preflight and request) and with a throwing
 handler; `onCall` signed in, anonymous and with the wrong method; `onSchedule`;
 and `onTaskDispatched`. A protobuf `DocumentEventData` CloudEvent goes to an
-`onDocumentCreated` trigger. Responses, log entries (stack frames removed),
+`onDocumentCreated` trigger. Responses, log entries (stack frames removed, except that VPM preserves the
+null-prototype Express query object lost by upstream),
 handler results and endpoint definitions must be identical, and each library's
 bin, run from a functions directory as the Firebase CLI does, must write the
 same deploy manifest.

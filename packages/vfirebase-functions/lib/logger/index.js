@@ -1,158 +1,72 @@
-const require_rolldown_runtime = require('../_virtual/rolldown_runtime.js');
-const require_common_trace = require('../common/trace.js');
-const require_logger_common = require('./common.js');
-let util = require("util");
-util = require_rolldown_runtime.__toESM(util);
+'use strict';
+const {format} = require('node:util');
+const {traceContext} = require('../common/trace.js');
+const {CONSOLE_SEVERITY, UNPATCHED_CONSOLE} = require('./common.js');
 
-//#region src/logger/index.ts
-var logger_exports = /* @__PURE__ */ require_rolldown_runtime.__export({
-	debug: () => debug,
-	error: () => error,
-	info: () => info,
-	log: () => log,
-	logger: () => logger,
-	warn: () => warn,
-	write: () => write
-});
-/** @internal */
-function removeCircular(obj, refs = new Set()) {
-	if (typeof obj !== "object" || !obj) {
-		return obj;
-	}
-	if (obj.toJSON && typeof obj.toJSON === "function") {
-		return obj.toJSON();
-	}
-	if (refs.has(obj)) {
-		return "[Circular]";
-	} else {
-		refs.add(obj);
-	}
-	let returnObj;
-	if (Array.isArray(obj)) {
-		returnObj = new Array(obj.length);
-	} else {
-		returnObj = {};
-	}
-	for (const k in obj) {
-		if (obj.hasOwnProperty(k)) {
-			try {
-				if (refs.has(obj[k])) {
-					returnObj[k] = "[Circular]";
-				} else {
-					returnObj[k] = removeCircular(obj[k], refs);
-				}
-			} catch {
-				returnObj[k] = "[Error - cannot serialize]";
-			}
-		} else {
-			returnObj[k] = "[Error - defined in the prototype but missing in the object]";
-		}
-	}
-	refs.delete(obj);
-	return returnObj;
+// Build JSON data without invoking inherited fields or mutating the caller.
+// Track the current path rather than all previously visited objects: repeated
+// sibling references are legitimate data, while ancestor references are cycles.
+function jsonValue(value, parents = new Set(), depth = 0) {
+  if (typeof value === 'bigint') return value.toString();
+  if (typeof value === 'function') return undefined;
+  if (value === null || typeof value !== 'object') return value;
+  if (parents.has(value)) return '[Circular]';
+  if (depth >= 256) return '[MaxDepth]';
+  parents.add(value);
+  try {
+    const convert = value.toJSON;
+    if (typeof convert === 'function') {
+      const converted = convert.call(value);
+      if (converted !== value) return jsonValue(converted, parents, depth + 1);
+    }
+    const copy = Array.isArray(value) ? new Array(value.length) : {};
+    for (const key of Object.keys(value)) {
+      let item;
+      try {item = jsonValue(value[key], parents, depth + 1);}
+      catch {item = '[Error - cannot serialize]';}
+      if (key === '__proto__') Object.defineProperty(copy, key, {value: item, enumerable: true, writable: true, configurable: true});
+      else copy[key] = item;
+    }
+    return copy;
+  } finally {parents.delete(value);}
 }
-/**
-* Writes a `LogEntry` to `stdout`/`stderr` (depending on severity).
-* @param entry - The `LogEntry` including severity, message, and any additional structured metadata.
-* @public
-*/
+
 function write(entry) {
-	const ctx = require_common_trace.traceContext.getStore();
-	if (ctx?.traceId) {
-		entry["logging.googleapis.com/trace"] = `projects/${process.env.GCLOUD_PROJECT}/traces/${ctx.traceId}`;
-	}
-	require_logger_common.UNPATCHED_CONSOLE[require_logger_common.CONSOLE_SEVERITY[entry.severity]](JSON.stringify(removeCircular(entry)));
+  if (!entry || !Object.hasOwn(CONSOLE_SEVERITY, entry.severity)) throw new TypeError('A log entry needs a supported severity');
+  let data;
+  try {data = jsonValue(entry);}
+  catch {data = {severity: entry.severity, message: '[Error - cannot serialize]'};}
+  const trace = traceContext.getStore()?.traceId;
+  if (trace && data && typeof data === 'object') data['logging.googleapis.com/trace'] = `projects/${process.env.GCLOUD_PROJECT}/traces/${trace}`;
+  UNPATCHED_CONSOLE[CONSOLE_SEVERITY[entry.severity]](JSON.stringify(data));
 }
-/**
-* Writes a `DEBUG` severity log. If the last argument provided is a plain object,
-* it is added to the `jsonPayload` in the Cloud Logging entry.
-* @param args - Arguments, concatenated into the log message with space separators.
-* @public
-*/
-function debug(...args) {
-	write(entryFromArgs("DEBUG", args));
-}
-/**
-* Writes an `INFO` severity log. If the last argument provided is a plain object,
-* it is added to the `jsonPayload` in the Cloud Logging entry.
-* @param args - Arguments, concatenated into the log message with space separators.
-* @public
-*/
-function log(...args) {
-	write(entryFromArgs("INFO", args));
-}
-/**
-* Writes an `INFO` severity log. If the last argument provided is a plain object,
-* it is added to the `jsonPayload` in the Cloud Logging entry.
-* @param args - Arguments, concatenated into the log message with space separators.
-* @public
-*/
-function info(...args) {
-	write(entryFromArgs("INFO", args));
-}
-/**
-* Writes a `WARNING` severity log. If the last argument provided is a plain object,
-* it is added to the `jsonPayload` in the Cloud Logging entry.
-* @param args - Arguments, concatenated into the log message with space separators.
-* @public
-*/
-function warn(...args) {
-	write(entryFromArgs("WARNING", args));
-}
-/**
-* Writes an `ERROR` severity log. If the last argument provided is a plain object,
-* it is added to the `jsonPayload` in the Cloud Logging entry.
-* @param args - Arguments, concatenated into the log message with space separators.
-* @public
-*/
-function error(...args) {
-	write(entryFromArgs("ERROR", args));
-}
-/** @hidden */
-function entryFromArgs(severity, args) {
-	let entry = {};
-	const lastArg = args[args.length - 1];
-	if (lastArg && typeof lastArg === "object" && lastArg.constructor === Object) {
-		entry = args.pop();
-	}
-	let message = (0, util.format)(...args);
-	if (severity === "ERROR" && !args.find((arg) => arg instanceof Error)) {
-		message = new Error(message).stack || message;
-	}
-	const out = {
-		...entry,
-		severity
-	};
-	if (message) {
-		out.message = message;
-	}
-	return out;
-}
-/**
-* Logger object containing all logging methods.
-*
-* Mockable for testing purposes.
-*/
-const logger = {
-	write,
-	debug,
-	log,
-	info,
-	warn,
-	error
-};
 
-//#endregion
-exports.debug = debug;
-exports.error = error;
-exports.info = info;
-exports.log = log;
-exports.logger = logger;
-Object.defineProperty(exports, 'logger_exports', {
-  enumerable: true,
-  get: function () {
-    return logger_exports;
+function emit(severity, args) {
+  const last = args.at(-1);
+  const metadata = last && typeof last === 'object' &&
+    (Object.getPrototypeOf(last) === Object.prototype || Object.getPrototypeOf(last) === null) ? args.pop() : undefined;
+  const entry = {};
+  if (metadata) for (const key of Object.keys(metadata)) {
+    let value;
+    try {value = metadata[key];}
+    catch {value = '[Error - cannot serialize]';}
+    if (key === '__proto__') Object.defineProperty(entry, key, {value, enumerable: true, writable: true, configurable: true});
+    else entry[key] = value;
   }
-});
-exports.warn = warn;
-exports.write = write;
+  entry.severity = severity;
+  let message = format(...args);
+  if (severity === 'ERROR' && !args.some(value => value instanceof Error)) message = new Error(message).stack || message;
+  if (message) entry.message = message;
+  write(entry);
+}
+
+const debug = (...args) => emit('DEBUG', args);
+const info = (...args) => emit('INFO', args);
+const log = (...args) => emit('INFO', args);
+const warn = (...args) => emit('WARNING', args);
+const error = (...args) => emit('ERROR', args);
+const logger = {write, debug, info, log, warn, error};
+Object.assign(exports, logger, {logger});
+// Existing provider modules use this generated namespace name. It points to the
+// independently written public methods while those providers are replaced.
+exports.logger_exports = {...logger, logger};

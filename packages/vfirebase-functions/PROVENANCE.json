@@ -9,7 +9,7 @@
     "tarballSha256": "68db5e409ee61e38166a3e65a613141e5bbfc8fe0543747627276235cab1c31e",
     "integrity": "sha512-jR+c16q1E07dPVqU/sdbIEVEQJYSxjY6BFI+QR5/AvrnII8C6UkJv6fR8LJ+GKmcGUBe7SjO/MnEWLAeOiHWMw=="
   },
-  "checked": "2026-10-31",
+  "checked": "2026-11-01",
   "license": "MIT",
   "retainedEvidence": "../../scripts/firebase-functions-conformance/upstream",
   "source": "The published lib (CommonJS, ES module and declaration builds) and protos directories of 7.4.0, with dependency specifiers mapped to VPM packages. Files not listed under modified or added differ from the original only in those specifiers.",
@@ -40,6 +40,10 @@
     "lib/esm/common/providers/firestore.mjs",
     "lib/esm/common/providers/https.mjs",
     "lib/esm/common/providers/identity.mjs",
+    "lib/esm/common/trace.mjs",
+    "lib/esm/logger/common.mjs",
+    "lib/esm/logger/index.mjs",
+    "lib/logger/index.js",
     "lib/v1/index.js",
     "lib/v2/index.js",
     "lib/v2/providers/dataconnect/graphql.d.ts"
@@ -297,11 +301,17 @@
     "onInit callbacks run once for concurrent first invocations; a failed run is retried by the next invocation. Upstream ran the callback once per invocation that arrived before it finished.",
     "The firebase-functions bin reads its documented [functionsDir] argument. Upstream read it only when two or more arguments were given.",
     "Realtime Database snapshots read data as before; DataSnapshot#ref, which needs the Realtime Database client, throws vfirebase-admin's descriptive error.",
-    "Public declarations need no ambient Node types and use vcors and vexpress declarations instead of @types/cors and @types/express."
+    "Public declarations need no ambient Node types and use vcors and vexpress declarations instead of @types/cors and @types/express.",
+    "Structured logging preserves null-prototype query objects and shadowed property names, handles BigInt and cyclic toJSON results, bounds nesting, and does not mutate frozen entries when adding trace context.",
+    "CommonJS and ESM logger, trace context and initialization share identity and state. A previous initializer finishing cannot mark a newer registration complete."
   ],
   "implementation": {
-    "kind": "upstream-fork",
+    "kind": "upstream-fork-with-independent-components",
     "replacementStatus": "independent implementation pending",
-    "targetScope": "HTTP and callable handlers, logger, secret parameters, schedules and Firestore triggers."
+    "targetScope": "HTTP and callable handlers, logger, secret parameters, schedules and Firestore triggers.",
+    "independentComponents": {
+      "lib/logger/index.js": "Own structured logging implementation with bounded, path-aware serialization, non-mutating trace enrichment and standard formatting. ESM forwards to the same implementation.",
+      "lib/common/onInit.js": "Own registration state machine: concurrent calls share a pending run; failure retries, and each replacement registration owns its completion. ESM shares the same state."
+    }
   }
 }

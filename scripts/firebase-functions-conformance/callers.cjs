@@ -143,10 +143,18 @@ if (process.argv[2] === '--child') {
   assert.deepEqual(manifests.vpm, manifests.upstream);
   assert.equal(Object.keys(manifests.vpm.endpoints).length, 6);
   assert.deepEqual(results.vpm.out, results.upstream.out);
-  assert.deepEqual(results.vpm.logs, results.upstream.logs);
+  // Express query objects have a null prototype. Upstream loses that field;
+  // the independent serializer preserves it. Require exactly this difference.
+  const baselineLog = JSON.parse(results.upstream.logs[0][1]);
+  const actualLog = JSON.parse(results.vpm.logs[0][1]);
+  assert.equal(baselineLog.query, '[Error - cannot serialize]');
+  assert.deepEqual(actualLog.query, {term: '1'});
+  assert.deepEqual({...actualLog, query: baselineLog.query}, baselineLog);
+  assert.equal(results.vpm.logs[0][0], results.upstream.logs[0][0]);
+  assert.deepEqual(results.vpm.logs.slice(1), results.upstream.logs.slice(1));
   assert.deepEqual(results.vpm.endpoints, results.upstream.endpoints);
   const {out} = results.vpm;
   assert.equal(out.api.status, 201); assert.equal(out.gradeSignedIn.status, 200); assert.match(out.gradeSignedIn.body, /"correct":true/); assert.equal(out.task.status, 204); assert.equal(out.gradeAnonymous.status, 401);
   assert.equal(out.trigger.length, 1); assert.equal(out.trigger[0].data.title, 'Number theory');
-  console.log(`Firebase Functions callers, identical to 7.4.0: ${Object.keys(out).length} invocations (HTTP, CORS, errors, callable, scheduler, task queue, Firestore trigger), ${results.vpm.logs.length} log entries and ${Object.keys(results.vpm.endpoints).length} endpoint definitions, and the deploy manifest the bin writes for six functions.`);
+  console.log(`Firebase Functions callers match 7.4.0 except the preserved null-prototype query log: ${Object.keys(out).length} invocations (HTTP, CORS, errors, callable, scheduler, task queue, Firestore trigger), ${results.vpm.logs.length} log entries and ${Object.keys(results.vpm.endpoints).length} endpoint definitions, and the deploy manifest the bin writes for six functions.`);
 }
