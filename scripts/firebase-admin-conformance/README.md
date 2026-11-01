@@ -47,10 +47,9 @@ readonly property".
 
 `regressions.cjs` runs each case in a fresh process per library: concurrent
 public-key fetches for ID-token certificates and JWKS (20 requests upstream, 1
-here), an HTTP/2 request to Node's HTTP/2 server (rejected with
-`PROTOCOL_ERROR` upstream; under Bun, whose server accepts it, the malformed
-`http:` value arrives instead), and the modules loaded by an app with Auth,
-Firestore, Messaging and Storage.
+here), an HTTP/2 request to the runtime's HTTP/2 server (rejected with
+`PROTOCOL_ERROR` upstream on Node and Bun), and the modules loaded by an app
+with Auth, Firestore, Messaging and Storage.
 
 `callers.cjs` drives the Admin APIs VentiMath's backend calls, through each
 library in its own process, against local servers: the Auth emulator protocol

@@ -1,6 +1,6 @@
 # Developing VPM
 
-Use **Node.js 24**, **Bun 1.4.0**, and the workspace's **TypeScript 7.1** compiler.
+Use **Node.js 24**, **Bun 1.4.4**, and the workspace's **TypeScript 7.1** compiler.
 TypeScript 7.1.0 is due in November 2026; until it is released the workspace pins
 7.1.0-beta, and moves to 7.1.0 when it ships. 7.0.2 remains the declared minimum
 where packages state one.

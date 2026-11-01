@@ -61,9 +61,15 @@ class HttpsProxyAgent extends Agent{
       if(request.destroyed||socket.destroyed)throw failure('ECONNRESET','Request cancelled during CONNECT');
       debug('CONNECT completed with status %d',statusCode);
       if(statusCode>=200&&statusCode<300){
+        if(!options.secureEndpoint){
+          // Tunnel bytes the proxy sent with its response are returned to the
+          // socket once the request owns it: an HTTP agent destroys a socket
+          // with buffered data when it hands it to a queued request.
+          request.once('socket',value=>{if(head.length)value.unshift(head);value.resume();});
+          return socket;
+        }
         if(head.length)socket.unshift(head);
         request.once('socket',resume);
-        if(!options.secureEndpoint)return socket;
         const target={...options,host:destination.host};
         const secure=servername(target);delete secure.host;delete secure.port;delete secure.path;
         return tls.connect({...secure,socket});

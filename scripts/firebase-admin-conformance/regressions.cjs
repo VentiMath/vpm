@@ -72,13 +72,8 @@ const both = body => ({upstream: run('upstream', body), vpm: run('vpm', body)});
       .then(response => 'status ' + response.status, error => 'rejected: ' + error.message);
     session.close(); server.close();
     return {outcome, seen};`);
-  if (process.versions.bun) {
-    // Bun's HTTP/2 server accepts the malformed value; it arrives verbatim.
-    assert.deepEqual(upstream, {outcome: 'status 200', seen: ['http:']});
-  } else {
-    assert.match(upstream.outcome, /^rejected: .*NGHTTP2_PROTOCOL_ERROR/);
-    assert.deepEqual(upstream.seen, []);
-  }
+  assert.match(upstream.outcome, /^rejected: .*NGHTTP2_PROTOCOL_ERROR/);
+  assert.deepEqual(upstream.seen, []);
   assert.deepEqual(vpm, {outcome: 'status 200', seen: ['http']});
 }
 

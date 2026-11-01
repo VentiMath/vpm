@@ -42,7 +42,8 @@ and response header contents.
   `Proxy-Connection` is respected; otherwise it follows `keepAlive`.
 - `maxProxyHeaderSize` defaults to **16,384 bytes**, cumulatively across interim
   and final response headers. It is a positive safe integer at most 2,147,483,647.
-  Bytes belonging to the established tunnel do not consume this budget.
+  Bytes belonging to the established tunnel do not consume this budget; they
+  reach the request even when it waited in the agent's queue.
 - `connectTimeout` defaults to **30,000 ms**; `0` disables it. The deadline covers
   TCP connection, proxy TLS handshake, and CONNECT response headers. Cancellation,
   timeout, parse failure, or agent destruction closes the actual proxy socket.

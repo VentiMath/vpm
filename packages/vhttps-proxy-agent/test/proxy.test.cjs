@@ -71,9 +71,9 @@ test('agent destruction closes unfinished tunnels and queued requests',async t=>
 test('proxyConnect listener exceptions and cancellation close the tunnel',async t=>{
   for(const action of ['throw','destroy']){const p=await proxy(t),target=await origin(t),a=agent(t,p.url);a.on('proxyConnect',()=>{if(action==='throw')throw Error('listener');a.destroy();});await assert.rejects(request(target.url,{agent:a}));}
 });
-test('header size failures release the queue for subsequent requests',async t=>{
+test('header size failures release the queue, and a queued request keeps tunnel bytes sent with the CONNECT response',async t=>{
   let count=0;const server=await start(t,net.createServer(s=>s.once('data',()=>{if(count++===0)s.write('HTTP/1.1 200 OK\r\nX: '+'x'.repeat(1000));else s.write('HTTP/1.1 200 OK\r\n\r\nHTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nok');})));
-  const a=agent(t,'http://127.0.0.1:'+server.address().port,{maxSockets:1,maxProxyHeaderSize:128});const results=await Promise.allSettled([request('http://unused.test',{agent:a}),request('http://unused.test',{agent:a})]);assert.equal(results[0].reason.code,'ERR_PROXY_HEADER_SIZE');assert.equal(results[1].value.body,'ok');
+  const a=agent(t,'http://127.0.0.1:'+server.address().port,{maxSockets:1,maxProxyHeaderSize:128});const results=await Promise.allSettled([request('http://unused.test',{agent:a}),request('http://unused.test',{agent:a})]);assert.equal(results[0].reason.code,'ERR_PROXY_HEADER_SIZE');assert.equal(results[1].value.body,'ok');assert.equal(count,2);
 });
 test('parser handles every split boundary, duplicate fields and prototype names',()=>{
   const wire=Buffer.from('HTTP/1.1 200 OK\r\n__proto__: safe\r\nX: one\r\nx: two\r\n\r\ntail');

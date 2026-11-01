@@ -17,7 +17,7 @@ jobs:
           node-version: 24
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.4.0
+          bun-version: 1.4.4
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
@@ -248,7 +248,7 @@ jobs:
           node-version: 24
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.4.0
+          bun-version: 1.4.4
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund

@@ -1910,7 +1910,10 @@ responses. Fragmented input is scanned once and joined only at a complete header
 block, avoiding repeated prefix copying. Strict status/field validation preserves
 Latin-1 values in prototype-free maps. Informational responses are skipped, all
 successful 2xx responses establish a tunnel, and bytes coalesced after successful
-headers are returned to the tunnel.
+headers are returned to the tunnel. For plain-HTTP destinations they are returned
+once the request owns the socket: Bun 1.4.4's HTTP agent destroys a socket with
+buffered data when it assigns it to a queued request, so returning them earlier
+made a queued request open new tunnels without end.
 
 A configurable 30-second connection deadline closes the real pending socket.
 Request cancellation, agent destruction and parser errors also release it and
