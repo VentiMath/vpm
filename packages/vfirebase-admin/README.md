@@ -2,9 +2,10 @@
 
 **Implementation status:** app registration, service lifetime, token refresh
 ownership, option snapshots, credential adapters, Auth response records,
-user-management plans, token policy, key caching, signature adaptation and Auth
-request dispatch use VPM redesigns. Google Auth, the generic HTTP client and other service implementations
-remain upstream-derived. This is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
+user-management plans, token policy, key caching, signature adaptation, Auth
+request dispatch and HTTP/1 request plans use VPM redesigns. Google Auth, shared
+retry/authorization helpers, HTTP/2 and other service implementations remain
+upstream-derived. This is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
 the boundary.
 
 The Firebase Admin SDK, targeting **firebase-admin 14.5.0**, the latest stable
@@ -42,6 +43,15 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 
 ## Changes from 14.5.0
 
+- **HTTP/1 request lifecycle.** URL, headers and body bytes are prepared once,
+  so changing caller input cannot change a retry's request. Header names are
+  compared without case, preserving an explicit `Content-Type`. Truncated
+  responses and invalid compressed bodies reject instead of remaining pending;
+  failures destroy their streams and release buffered chunks. Completed error
+  responses keep connections reusable. Gzip/deflate coding is case-insensitive,
+  and Brotli responses are decoded. Common retry policy, response projection,
+  authorization headers and HTTP/2 still use retained implementations.
+
 - **Auth request ownership and resource identity.** JSON-shaped input is copied
   before project lookup, so asynchronous discovery and validation cannot mutate
   the caller's data or send later edits. Each request owns its headers. Resource
@@ -50,7 +60,7 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   Dot-segment identifiers and malformed Unicode are rejected. Concurrent project
   discovery shares one operation and failures allow retry. Malformed server
   codes and non-JSON error bodies produce Auth errors with response context.
-  Endpoint schemas and the generic authorized HTTP client remain upstream-derived.
+  Endpoint schemas and authorized-header assembly remain upstream-derived.
 
 - **Owned signing keys and freshness.** Certificate and JWKS caches publish
   immutable snapshots. Prototype-named key IDs remain own data. Concurrent
@@ -86,8 +96,8 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   cannot change the result. Oversized batches are rejected before copying;
   sparse lists reject invalid UIDs rather than reporting unsent users as deleted.
   Error indices must be unique integers within the batch. Linking a provider
-  also validates any unlink list. The generic HTTP client, endpoint schema
-  validation and MFA conversion remain upstream-derived.
+  also validates any unlink list. Endpoint schema validation, authorized-header assembly and MFA conversion
+  remain upstream-derived.
 
 - **Auth response records.** User, provider, timestamp and MFA records use
   explicit field projections. Serializing JSON-shaped claims preserves own
@@ -167,30 +177,24 @@ upstream-derived and tracked separately.
 Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
-previous JWT improvements; they do not isolate this request rewrite alone.
-On Node, ID-token verification takes about 28 µs versus 48 µs, with a median
-paired change of -42%; adding a synthetic revocation lookup gives -36%.
-No-key-ID verification also gives -36%. The complete update path, including
-resource construction, request snapshots and schema validation, takes about
-6.5 µs versus 7.0 µs (-7%). These directions hold beyond the observed control
-spread in every comparison pair. The complete lookup comparison is inconclusive.
+previous JWT improvements; they do not isolate the HTTP rewrite alone. The
+[full report](bench/results/README.md) includes all twenty-five cases, process
+orders, identical-source controls and raw samples, including regressions and
+inconclusive comparisons.
 
-Bun's signature/token comparisons and the complete lookup/update comparisons
-are inconclusive in this recording: some pairs reverse and identical-source
-controls show substantial variation. Those samples remain in the report; earlier
-recordings' speed claims are not substituted for these results.
+The HTTP cases serialize a request and consume a synthetic response stream;
+they exclude sockets and network latency. With Auth-style headers, the Bun case
+takes about 2.7 µs versus 2.3 µs (+16% median paired time). Both Node transport
+comparisons and Bun's headerless comparison remain inconclusive under the
+control checks. Request ownership, header normalization and response-failure
+handling have a CPU cost; these changes are not presented as a transport speedup.
 
-Cached certificate reads cost about 81 ns versus 70 ns on Node and 50 ns versus
-43 ns on Bun. Record construction retains a regression on both runtimes (median
-paired changes of +6% on Node and +24% on Bun, with wide Bun variation).
-User-record serialization still takes less time. Update planning and 100-user
-batch deletion, measured separately with dispatch bypassed, remain inconclusive.
-App/credential setup and service cleanup also retain regressions; concurrent
-acquisition benefits from sharing pending work.
-
-The [full report](bench/results/README.md) includes all twenty-three cases,
-process orders, controls and raw samples. These measure local CPU work;
-HTTP dispatch cases use synthetic responses and exclude network latency.
+Token verification, record serialization and concurrent acquisition have separate
+cases. Record construction, cached-key reads, app/credential setup and cleanup
+also retain costs or inconclusive differences, depending on runtime and case.
+The lookup/update dispatch cases stop before HTTP, and the planning-only cases
+bypass endpoint dispatch entirely. Local server fixtures verify correctness and
+wire compatibility; these CPU timings do not establish application latency.
 
 ## Evidence
 
@@ -206,6 +210,9 @@ HTTP dispatch cases use synthetic responses and exclude network latency.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [HTTP controls](../../scripts/firebase-admin-conformance/http-transport.cjs)
+  compare retry bytes, header casing, partial responses, compression failures,
+  timeouts and connection reuse against the original on local servers.
 - [Request controls](../../scripts/firebase-admin-conformance/auth-requests.cjs)
   reproduce URL substitution, request mutation and malformed error handling,
   including actual local HTTP requests and responses on both runtimes.

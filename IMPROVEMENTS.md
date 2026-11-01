@@ -969,9 +969,10 @@ See the [package contract](packages/vfirebase-functions/README.md),
 
 Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
 service lifecycle, token lease, option snapshots, credential adapters, Auth response records,
-user-management plans, token policy, key caches, signature adaptation and Auth
-request dispatch have source-informed VPM implementations. The generic HTTP client, other service APIs and
-Google Auth remain upstream-derived.
+user-management plans, token policy, key caches, signature adaptation, Auth
+request dispatch and HTTP/1 request plans have source-informed VPM implementations.
+Shared retry/authorization helpers, HTTP/2, other service APIs and Google Auth
+remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
 internal, leaving three direct and two optional dependencies.
@@ -1029,7 +1030,15 @@ invalid Unicode are rejected. Concurrent project discovery shares work and can
 retry after failure. Non-JSON responses, non-string error codes and prototype-named
 unknown codes return Auth errors with response context. The 296 unchanged upstream
 request-handler tests and real local HTTP controls verify the boundary; the generic
-HTTP client and endpoint schemas remain retained.
+HTTP authorization helpers and endpoint schemas remain retained.
+
+HTTP/1 request plans capture wire bytes once for retries. Explicit content types
+survive header casing, and completed errors preserve connection reuse. Truncated
+responses and malformed gzip settle as errors rather than leaving pending promises;
+failed streams are destroyed and buffered chunks released. Case-insensitive
+coding and Brotli are supported. Shared retry policy, response projection,
+authorization headers and HTTP/2 remain retained. Actual local HTTP controls
+verify the changes on Node and Bun.
 
 While public keys are missing or expired, upstream starts one key request per
 concurrent token verification (ID tokens and session cookies, App Check and
@@ -1051,7 +1060,7 @@ Admin calls (`verifyIdToken` with revocation checks, `getUser`, `updateUser`,
 `exists`, `delete` and signed URLs, and `sendEachForMulticast`) produce
 identical requests and results against local servers. Existing regression probes,
 isolated app-lifecycle, user-record, user-operation, token-policy, key/cache and
-request-dispatch controls, and fifteen focused tests cover the changes.
+request-dispatch and HTTP lifecycle controls, and sixteen focused tests cover the changes.
 
 See the [package contract](packages/vfirebase-admin/README.md),
 [conformance record](scripts/firebase-admin-conformance/README.md) and

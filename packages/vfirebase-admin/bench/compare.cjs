@@ -11,6 +11,21 @@ const library = root => ({jwt: require(path.join(root, 'lib/utils/jwt.js')), mes
   credentialFactory: require(path.join(root, 'lib/app/credential-factory.js')),
   ApplicationDefaultCredential: require(path.join(root, 'lib/app/credential-internal.js')).ApplicationDefaultCredential,
   ...require(path.join(root, 'lib/app/firebase-app.js')), ...require(path.join(root, 'lib/app/lifecycle.js'))});
+function syntheticHttp() {
+  const http = require('node:http'), {EventEmitter} = require('node:events'), {PassThrough} = require('node:stream');
+  http.request = (options, callback) => {
+    const request = new EventEmitter();
+    request.setTimeout = () => request;
+    request.destroy = () => {request.destroyed = true; return request;};
+    request.end = body => queueMicrotask(() => {
+      const response = new PassThrough();
+      response.statusCode = 200; response.headers = {'content-type': 'application/json'}; response.complete = true;
+      callback(response);
+      response.end(JSON.stringify({path: options.path, method: options.method, body: body.toString()}));
+    });
+    return request;
+  };
+}
 const {token, publicKey} = require('./token-fixture.json');
 const noKid = require('./no-kid-fixture.json');
 // Public test-only key already retained with the upstream conformance fixture.
@@ -22,7 +37,7 @@ const user = {localId: 'ada', email: 'ada@example.com', emailVerified: true, dis
   phoneNumber: '+15555550100', createdAt: '1600000000000', lastLoginAt: '1700000000000', validSince: '1600000000',
   providerUserInfo: [{rawId: 'ada-google', providerId: 'google.com', email: 'ada@example.com'}],
   customAttributes: '{"role":"teacher","classes":["math","science"]}'};
-const env = {token, publicKey, message, library, certificate, user, noKid};
+const env = {token, publicKey, message, library, certificate, user, noKid, syntheticHttp};
 // A worker constructs only its selected SDK; both workers use the same fixed token.
 const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, HttpClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
 const syntheticCredential = 'const credential = new ApplicationDefaultCredential(); const client = {credentials: {access_token: "bench", expiry_date: Date.now() + 3600000}, getAccessToken: async () => ({token: "bench"})}; credential.googleAuth.getClient = async () => client; ';
@@ -44,6 +59,8 @@ const cases = [
   {name: 'auth / delete 100 users with synthetic transport', async: true, make: compiled(syntheticAuth + 'const ids = Array.from({length: 100}, (_, i) => "user-" + i); const errors = [3, 27, 98].map(index => ({index, localId: ids[index], message: "FAIL"})); auth.authRequestHandler.invokeRequestHandler = async () => ({errors}); return () => auth.deleteUsers(ids);'), validate: v => {assert.equal(v.successCount, 97); assert.equal(v.failureCount, 3); assert.deepEqual(v.errors.map(e => e.index), [3, 27, 98]);}},
   {name: 'auth / get user through request dispatch', async: true, make: compiled(syntheticAuth + 'auth.authRequestHandler.httpClient.send = async () => ({data: {users: [user]}}); return () => auth.getUser("ada");'), validate: v => {assert.equal(v.uid, 'ada'); assert.equal(v.email, user.email);}},
   {name: 'auth / update disabled through request dispatch', async: true, make: compiled(syntheticAuth + 'auth.authRequestHandler.httpClient.send = async request => ({data: request.data.disableUser === undefined ? {users: [user]} : {localId: request.data.localId}}); const changes = {disabled: true}; return () => auth.updateUser("ada", changes);'), validate: v => {assert.equal(v.uid, 'ada'); assert.equal(v.email, user.email);}},
+  {name: 'http / JSON request with synthetic response stream', async: true, make: compiled('env.syntheticHttp(); const client = new HttpClient(null); const config = {url: "http://example.test/accounts:lookup", method: "POST", data: {localId: ["ada"]}}; return () => client.send(config).then(response => response.data);'), validate: v => assert.deepEqual(v, {path: '/accounts:lookup', method: 'POST', body: '{"localId":["ada"]}'})},
+  {name: 'http / JSON request with headers and synthetic stream', async: true, make: compiled('env.syntheticHttp(); const client = new HttpClient(null); const config = {url: "http://example.test/accounts:lookup", method: "POST", headers: {"X-Client-Version": "Node/Admin/14.5.0", Authorization: "Bearer fixture"}, data: {localId: ["ada"]}}; return () => client.send(config).then(response => response.data);'), validate: v => assert.deepEqual(v, {path: '/accounts:lookup', method: 'POST', body: '{"localId":["ada"]}'})},
   {name: 'messaging / copy and validate a message', make: compiled('return () => { const copy = deepCopy(message); messaging.validateMessage(copy); return copy.token; };'), validate: v => assert.equal(v, 'device-token')},
   {name: 'app / create context and read project', make: compiled('return () => new FirebaseApp({projectId: "bench", storageBucket: "bench.appspot.com"}, "bench").options.projectId;'), validate: v => assert.equal(v, 'bench')},
   {name: 'app / repeat initialization with equal options', make: compiled('const store = new AppStore(), options = {projectId: "bench", databaseAuthVariableOverride: {role: "admin"}}; const app = store.initializeApp(options); return () => store.initializeApp(options) === app;'), validate: v => assert.equal(v, true)},
