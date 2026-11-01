@@ -53,7 +53,20 @@ const load = async name => (await import(pathToFileURL(path.join(packages, name,
   assert.equal(vpmSerialize([{width: [100, '50%']}]).styles, 'width:100px;width:50%;');
   found.push('the fallback list width: [100, "50%"] serialized as width{100;50%;}');
 
-  // 6. @emotion/utils's declarations import @emotion/sheet, which it does not
+  // 6. @emotion/is-prop-valid rejects current HTML attributes, so styled
+  // elements drop them: invoker commands, dialog closedBy, shadow parts,
+  // declarative shadow roots, <link> image candidates, noModule, React 19's
+  // precedence.
+  {
+    const original = require('./node_modules/@emotion/is-prop-valid').default, isPropValid = await load('vemotion-is-prop-valid');
+    const attributes = ['command', 'commandFor', 'closedBy', 'part', 'exportParts', 'shadowRootMode', 'imageSrcSet', 'imageSizes', 'noModule', 'precedence', 'blocking', 'transformOrigin'];
+    assert.deepEqual(attributes.filter(original), []);
+    assert.deepEqual(attributes.filter(isPropValid), attributes);
+    assert.equal(isPropValid('as'), false);
+    found.push(`${attributes.length} current HTML and SVG attributes not forwarded by styled elements (command, commandFor, part, shadowRootMode...)`);
+  }
+
+  // 7. @emotion/utils's declarations import @emotion/sheet, which it does not
   // depend on: installed on its own (pnpm, or any isolated install), its types
   // fail to compile.
   {

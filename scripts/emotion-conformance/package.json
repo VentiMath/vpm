@@ -28,6 +28,7 @@
     "@emotion/utils": "1.4.2",
     "@emotion/weak-memoize": "0.4.0",
     "@testing-library/react": "13.0.0-alpha.5",
+    "@types/react": "18.3.12",
     "babel-jest": "29.7.0",
     "babel-plugin-add-basic-constructor-for-react-components": "0.1.0",
     "babel-plugin-codegen": "4.1.5",
@@ -45,6 +46,9 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "16.8.6",
+    "react18": "npm:react@18.0.0-rc.0-next-aa8f2bdbc-20211215",
+    "react18-dom": "npm:react-dom@18.0.0-rc.0-next-aa8f2bdbc-20211215",
+    "react18-test-renderer": "npm:react-test-renderer@18.0.0-rc.0-next-aa8f2bdbc-20211215",
     "stylis": "4.2.0"
   },
   "overrides": {

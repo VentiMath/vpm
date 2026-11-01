@@ -1,0 +1,35 @@
+{
+  "name": "vemotion-is-prop-valid",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "description": "Which props styled() forwards to DOM elements: React's DOM attributes and event handlers, with current HTML attributes",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vemotion-is-prop-valid"
+  },
+  "dependencies": {
+    "vemotion-memoize": "0.1.0"
+  }
+}

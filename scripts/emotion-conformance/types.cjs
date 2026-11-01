@@ -52,6 +52,16 @@ const serialized: SerializedStyles = serializeStyles<{ theme: Theme }>([card, th
 const wrong: CSSObject = { display: { nested: Symbol('x') } };
 export { serialized, wrong };
 `,
+  'is-prop-valid': `import isPropValid from '@emotion/is-prop-valid';
+const forward: boolean = isPropValid('onClick') && isPropValid('aria-label') && !isPropValid('variant');
+export { forward };
+`,
+  'use-insertion-effect-with-fallbacks': `import { useInsertionEffectAlwaysWithSyncFallback, useInsertionEffectWithLayoutFallback } from '@emotion/use-insertion-effect-with-fallbacks';
+export function useStyles(insert: () => string): void {
+  const inserted: string | undefined = useInsertionEffectAlwaysWithSyncFallback(insert);
+  useInsertionEffectWithLayoutFallback(() => () => void inserted, [inserted]);
+}
+`,
 };
 const available = Object.keys(consumers).filter(name => fs.existsSync(path.join(packages, 'vemotion-' + name)));
 
@@ -63,11 +73,14 @@ try {
     fs.mkdirSync(path.join(nodeModules, '@emotion'), {recursive: true});
     if (library === 'upstream') {
       fs.symlinkSync(path.join(modules, 'csstype'), path.join(nodeModules, 'csstype'), 'dir');
+      for (const name of ['react', '@types']) fs.symlinkSync(path.join(modules, name), path.join(nodeModules, name), 'dir');
       for (const name of fs.readdirSync(path.join(modules, '@emotion'))) fs.symlinkSync(path.join(modules, '@emotion', name), path.join(nodeModules, '@emotion', name), 'dir');
     } else {
       for (const name of fs.readdirSync(packages).filter(name => name.startsWith('vemotion-') || name === 'vstylis')) fs.symlinkSync(path.join(packages, name), path.join(nodeModules, name), 'dir');
       // Peer of vemotion-serialize (style property types), as an application installs it.
       fs.symlinkSync(path.join(modules, 'csstype'), path.join(nodeModules, 'csstype'), 'dir');
+      // React and its types, as an application installs them.
+      for (const name of ['react', '@types']) fs.symlinkSync(path.join(modules, name), path.join(nodeModules, name), 'dir');
     }
     const files = available.map(name => {
       const file = path.join(root, name + '.ts');
@@ -76,7 +89,7 @@ try {
     });
     for (const [version, tsc] of Object.entries(compilers)) {
       const result = compile({files, compilerOptions: {strict: true, noEmit: true, target: 'ES2022', lib: ['ES2022', 'DOM', 'DOM.Iterable'], module: 'ESNext',
-        moduleResolution: 'Bundler', types: [], preserveSymlinks: true, skipLibCheck: false}}, tsc);
+        moduleResolution: 'Bundler', types: [], typeRoots: [path.join(root, 'node_modules/@types')], preserveSymlinks: true, skipLibCheck: false}}, tsc);
       results[`${library} ${version}`] = result.output.split('\n').filter(line => /error TS/.test(line)).map(line => line.replace(directory, '').slice(0, 300));
     }
   }

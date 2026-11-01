@@ -12,6 +12,10 @@
 const assert = require('node:assert/strict'), fs = require('node:fs'), os = require('node:os'), path = require('node:path'), {spawnSync} = require('node:child_process'), {createHash} = require('node:crypto');
 const upstream = process.argv.includes('--upstream');
 const mode = process.argv.find(arg => arg.startsWith('--mode='))?.slice(7) ?? 'development';
+// --react=18: upstream's test:react18 configuration (jest-react18.config.js),
+// which maps react, react-dom and react-test-renderer to React 18.
+const react = process.argv.find(arg => arg.startsWith('--react='))?.slice(8) ?? '16';
+assert.ok(['16', '18'].includes(react), react);
 assert.ok(['development', 'production'].includes(mode), mode);
 const fixture = __dirname, retained = path.join(fixture, 'upstream'), packages = path.resolve(fixture, '../../packages');
 for (const [file, hash] of Object.entries(require('./upstream/SHA256.json'))) {
@@ -57,10 +61,11 @@ try {
     moduleNameMapper[`^@emotion/(${selected.join('|')})($|/.*)`] = 'vemotion-$1$2';
   }
   fs.writeFileSync(path.join(temporary, 'jest.harness.js'), `const config = require('./${mode === 'production' ? 'jest.prod.js' : 'jest.config.js'}')
+const react18 = ${react === '18'} ? require('./jest-react18.config.js').moduleNameMapper : {}
 module.exports = Object.assign({}, config, {
   transformIgnorePatterns: require('./jest.dist.js').transformIgnorePatterns,
   testPathIgnorePatterns: [...config.testPathIgnorePatterns, ${sourceOnly.map(file => JSON.stringify('<rootDir>/' + file)).join(', ')}],
-  moduleNameMapper: ${JSON.stringify(moduleNameMapper)},
+  moduleNameMapper: Object.assign({}, react18, ${JSON.stringify(moduleNameMapper)}),
   // Packages under test resolve React and their other dependencies from the
   // fixture, as an application's would.
   modulePaths: [${JSON.stringify(modules)}],
@@ -82,7 +87,7 @@ module.exports = Object.assign({}, config, {
     }
   }
   if (process.env.OUTPUT) fs.writeFileSync(process.env.OUTPUT, JSON.stringify(statuses));
-  console.log(`${selected.length ? 'VPM (' + selected.join(', ') + ')' : 'Upstream'} Emotion suite (${mode}): ${result.numPassedTests} passed, ${result.numFailedTests} failed, ${result.numPendingTests} skipped of ${result.numTotalTests} in ${result.numTotalTestSuites} files; ${result.snapshot.total} snapshots, ${result.snapshot.unmatched} unmatched.`);
+  console.log(`${selected.length ? 'VPM (' + selected.join(', ') + ')' : 'Upstream'} Emotion suite (${mode}, React ${react}): ${result.numPassedTests} passed, ${result.numFailedTests} failed, ${result.numPendingTests} skipped of ${result.numTotalTests} in ${result.numTotalTestSuites} files; ${result.snapshot.total} snapshots, ${result.snapshot.unmatched} unmatched.`);
   assert.equal(result.numFailedTests + result.numRuntimeErrorTestSuites, 0);
   assert.equal(result.snapshot.unmatched + result.snapshot.filesAdded + result.snapshot.added, 0);
 } finally {

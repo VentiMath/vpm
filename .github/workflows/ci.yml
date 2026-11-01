@@ -111,6 +111,8 @@ jobs:
           node scripts/emotion-conformance/run.cjs
           node scripts/emotion-conformance/run.cjs --upstream --mode=production
           node scripts/emotion-conformance/run.cjs --mode=production
+          node scripts/emotion-conformance/run.cjs --upstream --react=18
+          node scripts/emotion-conformance/run.cjs --react=18
           node scripts/emotion-conformance/regressions.cjs
           node scripts/emotion-conformance/compare-serialize.cjs
           node scripts/emotion-conformance/types.cjs

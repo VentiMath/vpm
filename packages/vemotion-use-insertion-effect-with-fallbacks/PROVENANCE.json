@@ -1,0 +1,26 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/use-insertion-effect-with-fallbacks",
+    "version": "1.2.0",
+    "tarball": "https://registry.npmjs.org/@emotion/use-insertion-effect-with-fallbacks/-/use-insertion-effect-with-fallbacks-1.2.0.tgz",
+    "tarballSha256": "3e8703d56928fb74e617b366abb36fd01634e0f632626c22285fe5872a9a8702",
+    "integrity": "sha512-yJMtVdH59sxi/aVJBpk9FQq+OR8ll5GT8oWd57UpeaKEVGab41JWaCFA7FRLoMLloOZF/c/wsPoe+bfGmRKgDg=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM with the original's behavior: useInsertionEffect on React 18 and later, useLayoutEffect or a synchronous call on React 16 and 17 and on the server.",
+    "The #is-browser condition chooses browser or server behavior, as in the original's conditional builds.",
+    "ES module with bundled declarations; React is a peer."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds and with React 16 and React 18.",
+    "declarations": "types.cjs compiles an application against the declarations with DOM and React types under TypeScript 7.1, 5.8 and 5.9.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

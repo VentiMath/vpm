@@ -97,6 +97,13 @@
       "name": "vemotion-hash",
       "version": "0.1.0",
     },
+    "packages/vemotion-is-prop-valid": {
+      "name": "vemotion-is-prop-valid",
+      "version": "0.1.0",
+      "dependencies": {
+        "vemotion-memoize": "0.1.0",
+      },
+    },
     "packages/vemotion-memoize": {
       "name": "vemotion-memoize",
       "version": "0.1.0",
@@ -121,6 +128,13 @@
     "packages/vemotion-unitless": {
       "name": "vemotion-unitless",
       "version": "0.1.0",
+    },
+    "packages/vemotion-use-insertion-effect-with-fallbacks": {
+      "name": "vemotion-use-insertion-effect-with-fallbacks",
+      "version": "0.1.0",
+      "peerDependencies": {
+        "react": ">=16.8.0",
+      },
     },
     "packages/vemotion-utils": {
       "name": "vemotion-utils",
@@ -870,6 +884,8 @@
 
     "vemotion-hash": ["vemotion-hash@workspace:packages/vemotion-hash"],
 
+    "vemotion-is-prop-valid": ["vemotion-is-prop-valid@workspace:packages/vemotion-is-prop-valid"],
+
     "vemotion-memoize": ["vemotion-memoize@workspace:packages/vemotion-memoize"],
 
     "vemotion-serialize": ["vemotion-serialize@workspace:packages/vemotion-serialize"],
@@ -877,6 +893,8 @@
     "vemotion-sheet": ["vemotion-sheet@workspace:packages/vemotion-sheet"],
 
     "vemotion-unitless": ["vemotion-unitless@workspace:packages/vemotion-unitless"],
+
+    "vemotion-use-insertion-effect-with-fallbacks": ["vemotion-use-insertion-effect-with-fallbacks@workspace:packages/vemotion-use-insertion-effect-with-fallbacks"],
 
     "vemotion-utils": ["vemotion-utils@workspace:packages/vemotion-utils"],
 

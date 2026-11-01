@@ -19,7 +19,10 @@ repository's lockfile: Jest 29.7.0 with jsdom, Babel 7.18.9 (presets and
 plugins at the lockfile's versions; `babel-preset-current-node-syntax` 1.0.1 and
 `cheerio` 1.0.0-rc.3 are overridden to the lockfile's, as later releases need a
 newer Babel and `TextDecoder`), React 16.14.0, react-test-renderer 16.8.6,
-Testing Library 13.0.0-alpha.5, Enzyme 3.11.0, and the packages the tests
+Testing Library 13.0.0-alpha.5, Enzyme 3.11.0, React 18 (the lockfile's
+`react18`, `react18-dom` and `react18-test-renderer` aliases of
+18.0.0-rc.0-next-aa8f2bdbc-20211215, installed without enforcing peers as Yarn
+does), @types/react 18.3.12, and the packages the tests
 import besides the ones under test: @emotion/css 11.13.5, @emotion/server
 11.11.0, @emotion/css-prettifier 1.2.0, @emotion/jest 11.13.0 and
 @emotion/babel-plugin 11.13.5.
@@ -30,6 +33,8 @@ node scripts/emotion-conformance/run.cjs --upstream
 node scripts/emotion-conformance/run.cjs
 node scripts/emotion-conformance/run.cjs --upstream --mode=production
 node scripts/emotion-conformance/run.cjs --mode=production
+node scripts/emotion-conformance/run.cjs --upstream --react=18
+node scripts/emotion-conformance/run.cjs --react=18
 node scripts/emotion-conformance/regressions.cjs
 node scripts/emotion-conformance/compare-serialize.cjs
 node scripts/emotion-conformance/types.cjs
@@ -41,7 +46,9 @@ Repeat the regressions and the serialize comparison with Bun; Jest runs on Node.
 packages (`jest.dist.js`), with upstream's Babel configuration (its Emotion
 Babel plugin for `*.test.js` files). `--mode=development` uses `jest.config.js`,
 which resolves the packages' development builds; `--mode=production` uses
-`jest.prod.js` and runs the tests gated to production builds. Without
+`jest.prod.js` and runs the tests gated to production builds. `--react=18`
+adds upstream's `test:react18` configuration (`jest-react18.config.js`), which
+maps React, React DOM and the test renderer to React 18. Without
 `--upstream`, every Emotion package VPM provides replaces the original for
 every importer (the tests, the remaining originals, @emotion/css and
 @emotion/server); `--vpm=hash,memoize` selects some. One test file,
@@ -49,9 +56,11 @@ every importer (the tests, the remaining originals, @emotion/css and
 that no package publishes, and is not run.
 
 In development, 285 tests pass and 8 are gated to production; in production, 5
-pass. The same holds with VPM's packages: currently vemotion-hash,
+pass; under React 18, 288 pass (311 snapshots). The same holds with VPM's packages: currently vemotion-hash,
 vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet,
-vemotion-utils and vemotion-serialize, with the original packages above them. 305 and 11 snapshots
+vemotion-utils, vemotion-serialize, vemotion-is-prop-valid and
+vemotion-use-insertion-effect-with-fallbacks, with the original packages above
+them. 305 and 11 snapshots
 match.
 
 `compare-serialize.cjs` runs 20,000 generated style arguments (objects with
@@ -73,6 +82,7 @@ differing by characters whose UTF-16 code units share a low byte get the same
 class name, `gridArea` and `lineClamp` numbers are serialized with `px`,
 `undefined` results are recomputed by memoize, unitless properties written in
 kebab-case are serialized with `px`, `width: [100, '50%']` becomes a selector
-block, and @emotion/utils's
+block, styled elements drop current HTML attributes such as `commandFor` and
+`shadowRootMode`, and @emotion/utils's
 declarations, installed with only its declared dependencies, fail to compile
 because they import the undeclared `@emotion/sheet`.

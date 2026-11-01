@@ -1,6 +1,7 @@
 {
   "LICENSE": "6e8d23763cf7cb707ad8f6677aa502ebeca1dda447e6d6e57f6549c1625b9c4a",
   "babel.config.js.txt": "22b6bf0c2a85c04961a5bfe89b7ff45475baec63bee17561a4f6e4b017b75801",
+  "jest-react18.config.js.txt": "044c13f18a51124ed25195c933df7de4957b20b354d311faeb7e263f396d80d8",
   "jest.config.js.txt": "f454650fec9d0c7e9401cc5d47ef16b4f5ef0a6a6a2bc3b063deed97a7e9235e",
   "jest.dist.js.txt": "e604ad305412e6c5da87b1cc743d08992d3b308eb3e36a136273a9b1ef4b7ade",
   "jest.prod.js.txt": "39ae40a55a07d53e5d9d6da42e41f673adc3bda02e6c6cb5bf74b3fb0747deaf",

@@ -1,0 +1,25 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/is-prop-valid",
+    "version": "1.4.0",
+    "tarball": "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-1.4.0.tgz",
+    "tarballSha256": "8f40654a22d34eb0069cfcb7ae1dd547f5d724f5aec6718e7b6c67e68571e9a3",
+    "integrity": "sha512-QgD4fyscGcbbKwJmqNvUMSE02OsHUa+lAWKdEUIJKgqe5IwRSKd7+KhibEWdaKwgjLj0DRSHA9biAIqGBk05lw=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM: a Set of attribute names (every name @emotion/is-prop-valid accepts) and checks for data-, aria- and x- attributes and event handlers, memoized with vemotion-memoize.",
+    "Adds 17 attributes of current HTML and SVG that React renders and the original rejected, so styled elements dropped them: command, commandFor, closedBy, part, exportParts, shadowRootMode, shadowRootDelegatesFocus, shadowRootClonable, shadowRootSerializable, imageSrcSet, imageSizes, noModule, blocking, precedence, transformOrigin, writingSuggestions and elementTiming. as stays excluded (styled's own prop).",
+    "ES module with bundled declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds and with React 16 and React 18.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

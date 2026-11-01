@@ -38,6 +38,11 @@ try {
         const sources = entries.filter(f => /\.(js|d\.ts)$/.test(f)).map(f => fs.readFileSync(path.join(extracted, 'package', f), 'utf8'));
         assert.ok(!sources.some(text => /['"](@full-ui\/headless-calendar|@fullcalendar\/core[^'"]*|temporal-polyfill[^'"]*)['"]/.test(text)), name + ': only VPM calendar packages are imported');
       }
+      if (name === 'vemotion-use-insertion-effect-with-fallbacks') {
+        assert.equal(metadata.dependencies, undefined);
+        assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0'});
+        assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
+      }
       if (name === 'vemotion-serialize') {
         assert.deepEqual(metadata.dependencies, {'vemotion-hash': '0.1.0', 'vemotion-memoize': '0.1.0', 'vemotion-unitless': '0.1.0', 'vemotion-utils': '0.1.0'});
         assert.deepEqual(metadata.peerDependencies, {csstype: '^3.1.3'});
@@ -90,8 +95,8 @@ try {
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','protected-api.js','protected-api.d.ts','package.json'].sort());
     }
-    if (['vemotion-hash','vemotion-memoize','vemotion-unitless','vemotion-weak-memoize','vstylis'].includes(name)) {
-      assert.equal(metadata.dependencies, undefined);
+    if (['vemotion-hash','vemotion-memoize','vemotion-unitless','vemotion-weak-memoize','vstylis','vemotion-is-prop-valid'].includes(name)) {
+      assert.deepEqual(metadata.dependencies, name === 'vemotion-is-prop-valid' ? {'vemotion-memoize': '0.1.0'} : undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const sources = name === 'vstylis' ? ['constants','element','middleware','parser','prefix','scanner','serializer','tokenize'].map(module => `src/${module}.js`) : [];
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json',...sources].sort());
