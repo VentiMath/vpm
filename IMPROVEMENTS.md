@@ -877,33 +877,34 @@ See the [package contract](packages/vfull-ui-headless-calendar/README.md),
 
 ## vfirebase-functions
 
-Targets **firebase-functions 7.4.0**, checked October 31, 2026, with
-`vfirebase-admin` as its peer. The published CommonJS, ES module and declaration
-builds are retained with `cors`, `express` and `protobufjs` mapped to VPM
-packages; VPM's own declarations replace `@types/cors` and `@types/express`.
-[PROVENANCE.json](packages/vfirebase-functions/PROVENANCE.json) lists the files
-changed beyond that.
+Targets **firebase-functions 7.4.0** with `vfirebase-admin` as its peer.
+The logger and initialization state machine are independently written. The
+providers, deployment machinery and most declarations still retain upstream
+code; the complete application-scoped rewrite remains pending.
+[PROVENANCE.json](packages/vfirebase-functions/PROVENANCE.json) identifies those
+boundaries.
 
-Upstream's provider indexes require every provider at import, and the providers
-require Firestore, Auth, App Check and the Realtime Database client: importing
-`firebase-functions/v2` for its logger loads 663 modules in about 480 ms on
-Node 22. Here providers and Admin services load on first use, and a codebase with
-HTTP, callable, scheduled, task-queue and Firestore functions loads 57 modules
-in about 42 ms (58 ms on Bun instead of 463 ms) before its first request. This
-also keeps `vfirebase-admin`'s omitted Realtime Database client from failing the
-import; only `DataSnapshot#ref` needs it. `onInit` callbacks ran once per
-invocation arriving before the first run finished; they now run once. The
-`firebase-functions` bin now reads its documented directory argument. Firestore
-trigger events decode about 14% faster on Node through VPM's protobuf and
-Firestore packages.
+The logger preserves null-prototype objects, including Express query data that
+upstream replaces with an error marker. It handles cycles, throwing getters,
+shadowed property names, BigInt and recursive `toJSON` output; limits nesting;
+and adds trace context without mutating caller entries. Initialization shares
+one pending callback among concurrent requests and retries failed runs. Each
+registration owns its completion, so an earlier callback cannot finish a newer
+registration. CommonJS and ESM share logging, trace and initialization state.
 
-The release's **996 unit tests** pass for the original; VPM passes 995, and the
-remaining `DataSnapshot#ref` test must fail with vfirebase-admin's explanation.
-VentiMath's function shapes served from one host (HTTP with and without CORS,
-handler errors, callable with and without auth, scheduler, task queue) and a
-protobuf Firestore trigger produce identical responses, logs, handler results
-and endpoint definitions, and the bin writes an identical deploy manifest.
-Three regression cases and six focused tests cover the changes.
+Earlier improvements remain: lazy provider/Admin loading, the bin's directory
+argument and VPM declaration dependencies. Earlier Node 22 and same-process
+performance claims are withdrawn as current evidence. New isolated Node 24 and
+Bun comparisons measure logging CPU with console I/O excluded, and an already
+initialized handler; see the complete controls and remaining costs below.
+
+The original release's **996 unit tests** remain the compatibility gate: VPM
+passes 995 on Node; the remaining test needs the omitted Realtime Database
+client. Bun has the same 25 console-capture failures with upstream and VPM.
+Fourteen focused tests cover loading, discovery, initialization and logging.
+The actual HTTP/callable/scheduler/Firestore caller tests require matching
+responses, results, endpoint definitions and deployment manifests. Logs match
+except for the explicitly verified preservation of Express query data.
 
 See the [package contract](packages/vfirebase-functions/README.md),
 [conformance record](scripts/firebase-functions-conformance/README.md) and
