@@ -21,6 +21,7 @@ exports.TenantAwareAuthRequestHandler = exports.AuthRequestHandler = exports.Abs
 exports.useEmulator = useEmulator;
 const validator = require("../utils/validator");
 const {UserRequests} = require("./user-operations");
+const {AuthResourceUrlBuilder, TenantAwareAuthResourceUrlBuilder, AuthHttpClient, dispatchAuth} = require("./auth-request");
 const deep_copy_1 = require("../utils/deep-copy");
 const error_1 = require("./error");
 const error_2 = require("../utils/error");
@@ -32,12 +33,6 @@ const tenant_1 = require("./tenant");
 const identifier_1 = require("./identifier");
 const auth_config_1 = require("./auth-config");
 const project_config_1 = require("./project-config");
-/** Firebase Auth request header. */
-const FIREBASE_AUTH_HEADERS = {
-    'X-Client-Version': `Node/Admin/${utils.getSdkVersion()}`,
-};
-/** Firebase Auth request timeout duration in milliseconds. */
-const FIREBASE_AUTH_TIMEOUT = 25000;
 /** List of reserved claims which cannot be provided when creating a custom token. */
 exports.RESERVED_CLAIMS = [
     'acr', 'amr', 'at_hash', 'aud', 'auth_time', 'azp', 'cnf', 'c_hash', 'exp', 'iat',
@@ -61,14 +56,6 @@ const MIN_SESSION_COOKIE_DURATION_SECS = 5 * 60;
 const MAX_SESSION_COOKIE_DURATION_SECS = 14 * 24 * 60 * 60;
 /** Maximum allowed number of provider configurations to batch download at one time. */
 const MAX_LIST_PROVIDER_CONFIGURATION_PAGE_SIZE = 100;
-/** The Firebase Auth backend base URL format. */
-const FIREBASE_AUTH_BASE_URL_FORMAT = 'https://identitytoolkit.googleapis.com/{version}/projects/{projectId}{api}';
-/** Firebase Auth base URlLformat when using the auth emultor. */
-const FIREBASE_AUTH_EMULATOR_BASE_URL_FORMAT = 'http://{host}/identitytoolkit.googleapis.com/{version}/projects/{projectId}{api}';
-/** The Firebase Auth backend multi-tenancy base URL format. */
-const FIREBASE_AUTH_TENANT_URL_FORMAT = FIREBASE_AUTH_BASE_URL_FORMAT.replace('projects/{projectId}', 'projects/{projectId}/tenants/{tenantId}');
-/** Firebase Auth base URL format when using the auth emultor with multi-tenancy. */
-const FIREBASE_AUTH_EMULATOR_TENANT_URL_FORMAT = FIREBASE_AUTH_EMULATOR_BASE_URL_FORMAT.replace('projects/{projectId}', 'projects/{projectId}/tenants/{tenantId}');
 /** Maximum allowed number of tenants to download at one time. */
 const MAX_LIST_TENANT_PAGE_SIZE = 1000;
 /**
@@ -80,121 +67,6 @@ var WriteOperationType;
     WriteOperationType["Update"] = "update";
     WriteOperationType["Upload"] = "upload";
 })(WriteOperationType || (WriteOperationType = {}));
-/** Defines a base utility to help with resource URL construction. */
-class AuthResourceUrlBuilder {
-    /**
-     * The resource URL builder constructor.
-     *
-     * @param app - The app for this URL builder.
-     * @param version - The endpoint API version.
-     * @param emulatorHost - Optional emulator host captured at init time.
-     * @constructor
-     */
-    constructor(app, version = 'v1', emHost) {
-        this.app = app;
-        this.version = version;
-        if (emHost) {
-            this.urlFormat = utils.formatString(FIREBASE_AUTH_EMULATOR_BASE_URL_FORMAT, {
-                host: emHost
-            });
-        }
-        else {
-            this.urlFormat = FIREBASE_AUTH_BASE_URL_FORMAT;
-        }
-    }
-    /**
-     * Returns the resource URL corresponding to the provided parameters.
-     *
-     * @param api - The backend API name.
-     * @param params - The optional additional parameters to substitute in the
-     *     URL path.
-     * @returns The corresponding resource URL.
-     */
-    getUrl(api, params) {
-        return this.getProjectId()
-            .then((projectId) => {
-            const baseParams = {
-                version: this.version,
-                projectId,
-                api: api || '',
-            };
-            const baseUrl = utils.formatString(this.urlFormat, baseParams);
-            // Substitute additional api related parameters.
-            return utils.formatString(baseUrl, params || {});
-        });
-    }
-    getProjectId() {
-        if (this.projectId) {
-            return Promise.resolve(this.projectId);
-        }
-        return utils.findProjectId(this.app)
-            .then((projectId) => {
-            if (!validator.isNonEmptyString(projectId)) {
-                throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_CREDENTIAL, 'Failed to determine project ID for Auth. Initialize the '
-                    + 'SDK with service account credentials or set project ID as an app option. '
-                    + 'Alternatively set the GOOGLE_CLOUD_PROJECT environment variable.');
-            }
-            this.projectId = projectId;
-            return projectId;
-        });
-    }
-}
-/** Tenant aware resource builder utility. */
-class TenantAwareAuthResourceUrlBuilder extends AuthResourceUrlBuilder {
-    /**
-     * The tenant aware resource URL builder constructor.
-     *
-     * @param app - The app for this URL builder.
-     * @param version - The endpoint API version.
-     * @param tenantId - The tenant ID.
-     * @param emHost - Optional emulator host captured at init time.
-     * @constructor
-     */
-    constructor(app, version, tenantId, emHost) {
-        super(app, version, emHost);
-        this.app = app;
-        this.version = version;
-        this.tenantId = tenantId;
-        if (emHost) {
-            this.urlFormat = utils.formatString(FIREBASE_AUTH_EMULATOR_TENANT_URL_FORMAT, {
-                host: emHost
-            });
-        }
-        else {
-            this.urlFormat = FIREBASE_AUTH_TENANT_URL_FORMAT;
-        }
-    }
-    /**
-     * Returns the resource URL corresponding to the provided parameters.
-     *
-     * @param api - The backend API name.
-     * @param params - The optional additional parameters to substitute in the
-     *     URL path.
-     * @returns The corresponding resource URL.
-     */
-    getUrl(api, params) {
-        return super.getUrl(api, params)
-            .then((url) => {
-            return utils.formatString(url, { tenantId: this.tenantId });
-        });
-    }
-}
-/**
- * Auth-specific HTTP client which uses the special "owner" token
- * when communicating with the Auth Emulator.
- */
-class AuthHttpClient extends api_request_1.AuthorizedHttpClient {
-    constructor(app, isEmulator) {
-        super(app);
-        this.isEmulator = isEmulator;
-    }
-    getToken() {
-        if (this.isEmulator) {
-            return Promise.resolve('owner');
-        }
-        return super.getToken();
-    }
-}
 /**
  * Validates an AuthFactorInfo object. All unsupported parameters
  * are removed from the original request. If an invalid field is passed
@@ -1533,47 +1405,7 @@ class AbstractAuthRequestHandler {
      * @returns A promise that resolves with the response.
      */
     invokeRequestHandler(urlBuilder, apiSettings, requestData, additionalResourceParams) {
-        return urlBuilder.getUrl(apiSettings.getEndpoint(), additionalResourceParams)
-            .then((url) => {
-            // Validate request.
-            if (requestData) {
-                const requestValidator = apiSettings.getRequestValidator();
-                requestValidator(requestData);
-            }
-            // Process request.
-            const req = {
-                method: apiSettings.getHttpMethod(),
-                url,
-                headers: FIREBASE_AUTH_HEADERS,
-                data: requestData,
-                timeout: FIREBASE_AUTH_TIMEOUT,
-            };
-            return this.httpClient.send(req);
-        })
-            .then((response) => {
-            const responseValidator = apiSettings.getResponseValidator();
-            if (responseValidator) {
-                responseValidator(response);
-            }
-            // Return entire response data.
-            return response.data;
-        })
-            .catch((err) => {
-            if (err instanceof api_request_1.RequestResponseError) {
-                const errorCode = AbstractAuthRequestHandler.getErrorCode(err.response.data);
-                if (!errorCode) {
-                    // Fallback for unexpected server error responses without a parseable error code.
-                    throw new error_1.FirebaseAuthError({
-                        ...error_1.authClientErrorCode.INTERNAL_ERROR,
-                        message: 'An internal error occurred while attempting to extract the errorcode from the error.',
-                        cause: err,
-                        httpResponse: (0, error_2.toHttpResponse)(err.response),
-                    });
-                }
-                throw error_1.FirebaseAuthError.fromServerError(errorCode, /* message */ undefined, err);
-            }
-            throw err;
-        });
+        return dispatchAuth(this.httpClient, urlBuilder, apiSettings, requestData, additionalResourceParams);
     }
     /**
      * @returns The current Auth user management resource URL builder.

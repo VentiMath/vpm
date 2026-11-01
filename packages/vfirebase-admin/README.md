@@ -2,8 +2,8 @@
 
 **Implementation status:** app registration, service lifetime, token refresh
 ownership, option snapshots, credential adapters, Auth response records,
-user-management plans, token policy, key caching and signature adaptation use VPM
-redesigns. Google Auth, Auth HTTP transport and other service implementations
+user-management plans, token policy, key caching, signature adaptation and Auth
+request dispatch use VPM redesigns. Google Auth, the generic HTTP client and other service implementations
 remain upstream-derived. This is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
 the boundary.
 
@@ -42,6 +42,16 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 
 ## Changes from 14.5.0
 
+- **Auth request ownership and resource identity.** JSON-shaped input is copied
+  before project lookup, so asynchronous discovery and validation cannot mutate
+  the caller's data or send later edits. Each request owns its headers. Resource
+  identifiers are encoded separately from endpoint templates; slashes, query
+  delimiters and replacement-string syntax cannot alter the resource structure.
+  Dot-segment identifiers and malformed Unicode are rejected. Concurrent project
+  discovery shares one operation and failures allow retry. Malformed server
+  codes and non-JSON error bodies produce Auth errors with response context.
+  Endpoint schemas and the generic authorized HTTP client remain upstream-derived.
+
 - **Owned signing keys and freshness.** Certificate and JWKS caches publish
   immutable snapshots. Prototype-named key IDs remain own data. Concurrent
   refreshes share pending work, and failures allow retry. Certificate freshness
@@ -76,8 +86,8 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   cannot change the result. Oversized batches are rejected before copying;
   sparse lists reject invalid UIDs rather than reporting unsent users as deleted.
   Error indices must be unique integers within the batch. Linking a provider
-  also validates any unlink list. Auth transport, endpoint schema validation,
-  MFA conversion remain upstream-derived.
+  also validates any unlink list. The generic HTTP client, endpoint schema
+  validation and MFA conversion remain upstream-derived.
 
 - **Auth response records.** User, provider, timestamp and MFA records use
   explicit field projections. Serializing JSON-shaped claims preserves own
@@ -157,24 +167,30 @@ upstream-derived and tracked separately.
 Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
-previous JWT improvements; they do not isolate this adapter rewrite alone.
-ID-token verification with a cached test key takes about 28 µs versus 48 µs on
-Node and 21 µs versus 28 µs on Bun (median paired changes of -41% and -25%).
-Adding a synthetic revocation lookup gives -35% on Node and -23% on Bun.
-No-key-ID verification gives -36% on Node and -43% on Bun. These directions
-hold beyond the observed control spread in every comparison pair.
+previous JWT improvements; they do not isolate this request rewrite alone.
+On Node, ID-token verification takes about 28 µs versus 48 µs, with a median
+paired change of -42%; adding a synthetic revocation lookup gives -36%.
+No-key-ID verification also gives -36%. The complete update path, including
+resource construction, request snapshots and schema validation, takes about
+6.5 µs versus 7.0 µs (-7%). These directions hold beyond the observed control
+spread in every comparison pair. The complete lookup comparison is inconclusive.
 
-Cached certificate reads cost about 83 ns versus 66 ns on Node and 49 ns versus
-43 ns on Bun. Record construction costs about 7% more on Node and 14% more on
-Bun. Updating a user costs about 10% more on Node; its Bun difference and the
-100-user deletion comparisons remain unestablished. The update/delete cases
-bypass HTTP and endpoint schema validation to measure request planning and
-result projection. User-record serialization still takes less time.
+Bun's signature/token comparisons and the complete lookup/update comparisons
+are inconclusive in this recording: some pairs reverse and identical-source
+controls show substantial variation. Those samples remain in the report; earlier
+recordings' speed claims are not substituted for these results.
 
-App/credential setup, some cached acquisitions and service cleanup also retain
-regressions; concurrent acquisition benefits from sharing pending work. The
-[full report](bench/results/README.md) includes all twenty-one cases, process orders,
-controls and raw samples. These measure local CPU work, excluding network latency.
+Cached certificate reads cost about 81 ns versus 70 ns on Node and 50 ns versus
+43 ns on Bun. Record construction retains a regression on both runtimes (median
+paired changes of +6% on Node and +24% on Bun, with wide Bun variation).
+User-record serialization still takes less time. Update planning and 100-user
+batch deletion, measured separately with dispatch bypassed, remain inconclusive.
+App/credential setup and service cleanup also retain regressions; concurrent
+acquisition benefits from sharing pending work.
+
+The [full report](bench/results/README.md) includes all twenty-three cases,
+process orders, controls and raw samples. These measure local CPU work;
+HTTP dispatch cases use synthetic responses and exclude network latency.
 
 ## Evidence
 
@@ -190,6 +206,9 @@ controls and raw samples. These measure local CPU work, excluding network latenc
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [Request controls](../../scripts/firebase-admin-conformance/auth-requests.cjs)
+  reproduce URL substitution, request mutation and malformed error handling,
+  including actual local HTTP requests and responses on both runtimes.
 - [Key/cache controls](../../scripts/firebase-admin-conformance/key-verification.cjs)
   exercise actual HTTP certificate/JWKS responses, expiry, immutable key maps,
   prototype-named IDs, and signed no-key-ID verification against the original.

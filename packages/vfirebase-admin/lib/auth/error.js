@@ -663,7 +663,8 @@ class FirebaseAuthError extends error_1.FirebaseError {
             serverErrorCode = serverErrorCode.substring(0, colonSeparator).trim();
         }
         // If not found, default to internal error.
-        const clientCodeKey = AUTH_SERVER_TO_CLIENT_CODE[serverErrorCode] || 'INTERNAL_ERROR';
+        const clientCodeKey = Object.hasOwn(AUTH_SERVER_TO_CLIENT_CODE, serverErrorCode)
+            ? AUTH_SERVER_TO_CLIENT_CODE[serverErrorCode] : 'INTERNAL_ERROR';
         const error = (0, deep_copy_1.deepCopy)(exports.authClientErrorCode[clientCodeKey]);
         // Server detailed message should have highest priority.
         error.message = customMessage || message || error.message;

@@ -129,3 +129,13 @@ client runtimes, as the caller fixture does. Bun 1.4 on macOS accepts the
 original malformed `:scheme: http:` value; using that server cannot establish
 protocol rejection. The shared Node server rejects upstream and observes VPM's
 correct `http` value. The client implementation under test remains unchanged.
+
+`auth-requests.cjs` checks normal and tenant URLs, endpoint query masks, real
+Auth emulator requests and response errors on Node 24 and Bun. Original controls
+reproduce resource structure changes from unencoded names, replacement-string
+substitution, input/header mutation, repeated concurrent project discovery and
+malformed error-code TypeErrors. VPM snapshots JSON-shaped input, encodes resource
+identity once, owns each header record and returns Auth errors with the original
+response context. Lookup failures allow retry. The 296 unchanged upstream
+request-handler tests run within the full Admin suite. Tenant/provider controls
+exercise the shared builder; they do not expand VentiMath's application scope.
