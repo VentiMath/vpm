@@ -21,8 +21,6 @@ import { BatchResponse, FidMulticastMessage, Message, MessagingTopicManagementRe
  * Messaging service bound to the provided app.
  */
 export declare class Messaging {
-    private urlPath;
-    private projectId?;
     private readonly appInternal;
     private readonly messagingRequestHandler;
     private useLegacyTransport;
