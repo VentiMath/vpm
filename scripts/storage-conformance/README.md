@@ -101,7 +101,7 @@ is still retained; this checksum rewrite does not imply those paths are rebuilt.
 ## Independent save orchestration
 
 `lib/save.js` owns option/byte snapshots, per-upload retries, callback settlement
-and stream completion. Multipart/resumable transport remains retained SDK code.
+and stream completion. Multipart orchestration is independently implemented; authenticated dispatch and resumable protocol remain retained.
 Seven tests include original/VPM controls for shared retry state, mutable payloads
 and duplicate callbacks, plus factories, progress and premature closure. The HTTP
 control holds a non-idempotent upload open while a conditional upload receives
@@ -122,7 +122,7 @@ Firebase consumer reports are historical after this source change.
 
 `lib/upload-stream.js` now owns `File.createWriteStream()` option snapshots,
 lazy setup, gzip/hash pipelines, cancellation and response-metadata completion.
-The lower multipart/resumable HTTP transport is still retained. Eight focused
+Multipart orchestration is independently implemented; authentication dispatch and resumable protocol remain retained. Eight focused
 groups preserve normal/empty/gzip/partial/resumed uploads, checksums and deletion
 errors, prove backpressure with a slow sink, and reproduce original frozen-option,
 post-cancellation upload and missing-metadata hang failures.
@@ -136,3 +136,25 @@ The existing 25-request HTTP callers, concurrent-save control and 110 original
 signing/checksum/helper tests pass on Node 24 and Bun. [Stream measurements](../../packages/vgoogle-cloud-storage/bench/stream-results/README.md)
 cover construction, pipeline overhead and real local multipart uploads. The earlier
 save report predates this pipeline change; its raw source hashes remain available.
+
+## Independent multipart upload adapter
+
+`lib/simple-upload.js` replaces request planning, progress and settlement beneath
+`startSimpleUpload_`. Five groups and a real HTTP control compare original/VPM
+query precedence, frozen inputs, binary progress, duplicate/late replies and
+cancellation across authentication. The original opens a late HTTP request on
+both runtimes; VPM's abort signal prevents it. Auth, customer-supplied encryption
+headers and request interceptors remain supported. VPM teeny-request streams MIME
+framing; authenticated dispatch and resumable protocol are retained.
+
+```sh
+node --test packages/vgoogle-cloud-storage/test/simple-upload.test.cjs
+bun test packages/vgoogle-cloud-storage/test/simple-upload.test.cjs
+node scripts/storage-conformance/multipart.cjs
+bun scripts/storage-conformance/multipart.cjs
+```
+
+The existing 25-request HTTP suite, concurrent-save control and 110 original tests
+also pass. [Multipart measurements](../../packages/vgoogle-cloud-storage/bench/multipart-results/README.md)
+retain request-planning costs and whole-stack local upload comparisons. The stream
+report now predates this adapter and is historical.

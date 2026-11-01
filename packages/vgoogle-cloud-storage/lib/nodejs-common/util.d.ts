@@ -113,28 +113,6 @@ export interface GoogleInnerError {
     reason?: string;
     message?: string;
 }
-export interface MakeWritableStreamOptions {
-    /**
-     * A connection instance used to get a token with and send the request
-     * through.
-     */
-    connection?: {};
-    /**
-     * Metadata to send at the head of the request.
-     */
-    metadata?: {
-        contentType?: string;
-    };
-    /**
-     * Request object, in the format of a standard Node.js http.request() object.
-     */
-    request?: Options;
-    makeAuthenticatedRequest(reqOpts: OptionsWithUri & {
-        [GCCL_GCS_CMD_KEY]?: string;
-    }, fnobj: {
-        onAuthenticated(err: Error | null, authenticatedReqOpts?: Options): void;
-    }): void;
-}
 export interface DecorateRequestOptions extends CoreOptions {
     autoPaginate?: boolean;
     autoPaginateVal?: boolean;
@@ -252,21 +230,6 @@ export declare class Util {
      * be returned here, otherwise the original value and an error will be returned.
      */
     parseHttpRespBody(body: ResponseBody): ParsedHttpResponseBody;
-    /**
-     * Take a Duplexify stream, fetch an authenticated connection header, and
-     * create an outgoing writable stream.
-     *
-     * @param {Duplexify} dup - Duplexify stream.
-     * @param {object} options - Configuration object.
-     * @param {module:common/connection} options.connection - A connection instance used to get a token with and send the request through.
-     * @param {object} options.metadata - Metadata to send at the head of the request.
-     * @param {object} options.request - Request object, in the format of a standard Node.js http.request() object.
-     * @param {string=} options.request.method - Default: "POST".
-     * @param {string=} options.request.qs.uploadType - Default: "multipart".
-     * @param {string=} options.streamContentType - Default: "application/octet-stream".
-     * @param {function} onComplete - Callback, executed after the writable Request stream has completed.
-     */
-    makeWritableStream(dup: Duplexify, options: MakeWritableStreamOptions, onComplete?: Function): void;
     /**
      * Returns true if the API request should be retried, given the error that was
      * given the first time the request was attempted. This is used for rate limit

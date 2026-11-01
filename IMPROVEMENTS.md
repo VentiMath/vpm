@@ -1104,8 +1104,8 @@ except for the explicitly verified preservation of Express query data.
 See the [package contract](packages/vfirebase-functions/README.md),
 [conformance record](scripts/firebase-functions-conformance/README.md) and
 [measurements](packages/vfirebase-functions/bench/results/README.md). The saved recordings precede the Storage hash-stream
-URL-signing, save and upload-stream rewrites and are historical for those transitive components. Earlier
-signing/checksum samples remain in the [historical Storage report](packages/vgoogle-cloud-storage/bench/results/README.md); current uploads are in the [stream report](packages/vgoogle-cloud-storage/bench/stream-results/README.md).
+URL-signing, save, upload-stream and multipart rewrites and are historical for those transitive components. Earlier
+signing/checksum samples remain in the [historical Storage report](packages/vgoogle-cloud-storage/bench/results/README.md); current uploads are in the [multipart report](packages/vgoogle-cloud-storage/bench/multipart-results/README.md).
 
 ## vfirebase-admin
 
@@ -1222,8 +1222,8 @@ request-dispatch, HTTP lifecycle and retry/authorization controls, HTTP/2 wire/s
 See the [package contract](packages/vfirebase-admin/README.md),
 [conformance record](scripts/firebase-admin-conformance/README.md) and
 [measurements](packages/vfirebase-admin/bench/results/README.md). The saved recordings precede the Storage hash-stream
-URL-signing, save and upload-stream rewrites and are historical for those transitive components. Earlier
-signing/checksum samples remain in the [historical Storage report](packages/vgoogle-cloud-storage/bench/results/README.md); current uploads are in the [stream report](packages/vgoogle-cloud-storage/bench/stream-results/README.md).
+URL-signing, save, upload-stream and multipart rewrites and are historical for those transitive components. Earlier
+signing/checksum samples remain in the [historical Storage report](packages/vgoogle-cloud-storage/bench/results/README.md); current uploads are in the [multipart report](packages/vgoogle-cloud-storage/bench/multipart-results/README.md).
 
 The HTTP/1 and HTTP/2 clients now share an independently implemented retry
 policy. It owns validated settings and arrays, parses complete Retry-After
@@ -1755,7 +1755,7 @@ for the replacement caller.
 ## vgoogle-cloud-storage
 
 The baseline is **@google-cloud/storage 8.4.0**, checked October 30, 2026.
-Endpoint configuration, CRC32C, hash-stream validation, V2/V4 URL signing, File.save and createWriteStream orchestration are independently implemented;
+Endpoint configuration, CRC32C, hash-stream validation, V2/V4 URL signing, File.save, createWriteStream and multipart orchestration are independently implemented;
 the rest of the published SDK and declarations are retained with focused changes. All 13 direct library
 dependencies are VPM packages. Its unused `abort-controller` dependency
 is removed; Node 24/Bun provide the native controller used by resumable uploads.
@@ -1789,7 +1789,7 @@ concurrent conditional write's retries. Invalid contexts settle once before
 upload setup, and premature closure rejects. One-shot streams are not replayed;
 caller source factories remain responsible for producing fresh retry streams.
 An HTTP control reproduces the original concurrency failure and verifies its fix.
-The multipart/resumable transport itself remains retained upstream code.
+Multipart orchestration is now independently implemented; authenticated request dispatch and resumable protocol remain retained.
 
 File.createWriteStream now owns lazy setup, options/metadata, gzip/checksum pipelines,
 backpressure and response completion. Frozen options work without mutation;
@@ -1799,8 +1799,16 @@ Eight focused groups preserve checksum/deletion errors, normal/empty/compressed
 and partial/resumed uploads, and cancellation cleanup on Node 24 and Bun.
 
 
+The multipart adapter owns request planning, progress and response settlement.
+Cancellation propagates through pending authentication, preventing the late HTTP
+upload reproduced by the original on both runtimes. Duplicate/late callbacks
+cannot overwrite metadata or report success after cancellation. Auth, encryption
+headers, interceptors and precondition/billing query precedence remain covered.
+The old unused multipart helper and progress class are removed. MIME framing and
+HTTP streaming use the existing VPM teeny-request implementation.
+
 Verification covers 110 retained upstream tests on both runtimes and controls,
-thirty-six focused tests, five paired regression probes, independent RSA signature
+forty-one focused tests, five paired regression probes, independent RSA signature
 verification, 25 real local HTTP requests per caller run and Firebase Admin
 12.7.0's actual Storage factory. HTTP coverage includes simple/resumable/local
 uploads, integrity-checked downloads, pagination, existence, deletion, transient
@@ -1816,17 +1824,18 @@ Canonical default endpoints preserve normal authentication, and endpoint syntax
 is checked. Two-server original/VPM controls exercise those boundaries on both
 runtimes, including verified V4 form signatures.
 
-[Focused stream measurements](packages/vgoogle-cloud-storage/bench/stream-results/README.md)
-use balanced separate processes and identical-source controls. The Node localhost
-64 KiB CRC32C upload uses 43% less paired time; this includes the entire VPM stack.
-Bun's observed 57% reduction overlaps its noisy controls, so it is inconclusive.
-Stream construction/destruction costs more: process medians are 4.69 versus
-1.87 µs on Node and 1.42 versus 0.81 µs on Bun, including option ownership and
-lifecycle setup. Node construction has strong order sensitivity. Synthetic
-pipeline comparisons are also inconclusive; every sample remains visible.
-[Previous save](packages/vgoogle-cloud-storage/bench/save-results/README.md) and
+[Focused multipart measurements](packages/vgoogle-cloud-storage/bench/multipart-results/README.md)
+separate request planning from a real integrity-checked 64 KiB local upload, using
+four balanced process pairs and two identical-source controls. HTTP timing covers
+the entire client dependency stack: local uploads use 49%/56% less paired time on
+Node/Bun. Planning/cancellation costs 2.28 versus 0.96 µs on Node and 1.22 versus
+0.56 µs on Bun, with substantial Node process-order sensitivity. The abort signal,
+owned options and response guards are retained; local comparisons do not establish
+cloud latency.
+[Previous stream](packages/vgoogle-cloud-storage/bench/stream-results/README.md),
+[save](packages/vgoogle-cloud-storage/bench/save-results/README.md) and
 [earlier client](packages/vgoogle-cloud-storage/bench/results/README.md) reports
-predate the new pipeline and are historical, not current cloud-latency evidence.
+predate this adapter and remain historical evidence.
 [API, migration and verification scope](packages/vgoogle-cloud-storage/README.md).
 
 ## vmime

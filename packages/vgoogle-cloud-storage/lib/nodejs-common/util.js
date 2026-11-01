@@ -61,7 +61,6 @@ const htmlEntities = __importStar(require("vhtml-entities"));
 const google_auth_library_1 = require("vgoogle-auth-library");
 const teeny_request_1 = require("vteeny-request");
 const retry_request_1 = __importDefault(require("vretry-request"));
-const stream_1 = require("stream");
 const crypto = __importStar(require("crypto"));
 const service_js_1 = require("./service.js");
 const util_js_1 = require("../util.js");
@@ -264,74 +263,6 @@ class Util {
             parsedHttpRespBody.err = new ApiError(parsedHttpRespBody.body.error);
         }
         return parsedHttpRespBody;
-    }
-    /**
-     * Take a Duplexify stream, fetch an authenticated connection header, and
-     * create an outgoing writable stream.
-     *
-     * @param {Duplexify} dup - Duplexify stream.
-     * @param {object} options - Configuration object.
-     * @param {module:common/connection} options.connection - A connection instance used to get a token with and send the request through.
-     * @param {object} options.metadata - Metadata to send at the head of the request.
-     * @param {object} options.request - Request object, in the format of a standard Node.js http.request() object.
-     * @param {string=} options.request.method - Default: "POST".
-     * @param {string=} options.request.qs.uploadType - Default: "multipart".
-     * @param {string=} options.streamContentType - Default: "application/octet-stream".
-     * @param {function} onComplete - Callback, executed after the writable Request stream has completed.
-     */
-    makeWritableStream(dup, options, onComplete) {
-        var _a;
-        onComplete = onComplete || util.noop;
-        const writeStream = new ProgressStream();
-        writeStream.on('progress', evt => dup.emit('progress', evt));
-        dup.setWritable(writeStream);
-        const defaultReqOpts = {
-            method: 'POST',
-            qs: {
-                uploadType: 'multipart',
-            },
-            timeout: 0,
-            maxRetries: 0,
-        };
-        const metadata = options.metadata || {};
-        const reqOpts = {
-            ...defaultReqOpts,
-            ...options.request,
-            qs: {
-                ...defaultReqOpts.qs,
-                ...(_a = options.request) === null || _a === void 0 ? void 0 : _a.qs,
-            },
-            multipart: [
-                {
-                    'Content-Type': 'application/json',
-                    body: JSON.stringify(metadata),
-                },
-                {
-                    'Content-Type': metadata.contentType || 'application/octet-stream',
-                    body: writeStream,
-                },
-            ],
-        };
-        options.makeAuthenticatedRequest(reqOpts, {
-            onAuthenticated(err, authenticatedReqOpts) {
-                if (err) {
-                    dup.destroy(err);
-                    return;
-                }
-                requestDefaults.headers = util._getDefaultHeaders(reqOpts[exports.GCCL_GCS_CMD_KEY]);
-                const request = teeny_request_1.teenyRequest.defaults(requestDefaults);
-                request(authenticatedReqOpts, (err, resp, body) => {
-                    util.handleResp(err, resp, body, (err, data) => {
-                        if (err) {
-                            dup.destroy(err);
-                            return;
-                        }
-                        dup.emit('response', resp);
-                        onComplete(data);
-                    });
-                });
-            },
-        });
     }
     /**
      * Returns true if the API request should be retried, given the error that was
@@ -749,23 +680,6 @@ function decorateHeaders(headers, options) {
         headers: sanitizedHeaders,
         idempotencyToken,
     };
-}
-/**
- * Basic Passthrough Stream that records the number of bytes read
- * every time the cursor is moved.
- */
-class ProgressStream extends stream_1.Transform {
-    constructor() {
-        super(...arguments);
-        this.bytesRead = 0;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    _transform(chunk, encoding, callback) {
-        this.bytesRead += chunk.length;
-        this.emit('progress', { bytesWritten: this.bytesRead, contentLength: '*' });
-        this.push(chunk);
-        callback();
-    }
 }
 const util = new Util();
 exports.util = util;

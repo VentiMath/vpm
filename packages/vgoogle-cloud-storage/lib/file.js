@@ -69,6 +69,7 @@ const hash_stream_validator_js_1 = require("./hash-stream-validator.js");
 const async_retry_1 = __importDefault(require("vasync-retry"));
 const saveOperation = require("./save.js");
 const uploadStream = require("./upload-stream.js");
+const simpleUpload = require("./simple-upload.js");
 var ActionToHTTPMethod;
 (function (ActionToHTTPMethod) {
     ActionToHTTPMethod["read"] = "GET";
@@ -3339,56 +3340,7 @@ class File extends index_js_1.ServiceObject {
      * @private
      */
     startSimpleUpload_(dup, options = {}) {
-        var _a;
-        (_a = options.metadata) !== null && _a !== void 0 ? _a : (options.metadata = {});
-        const apiEndpoint = this.storage.apiEndpoint;
-        const bucketName = this.bucket.name;
-        const uri = `${apiEndpoint}/upload/storage/v1/b/${bucketName}/o`;
-        const reqOpts = {
-            qs: {
-                name: this.name,
-            },
-            uri: uri,
-            [util_js_1.GCCL_GCS_CMD_KEY]: options[util_js_1.GCCL_GCS_CMD_KEY],
-        };
-        if (this.generation !== undefined) {
-            reqOpts.qs.ifGenerationMatch = this.generation;
-        }
-        if (this.kmsKeyName !== undefined) {
-            reqOpts.qs.kmsKeyName = this.kmsKeyName;
-        }
-        if (typeof options.timeout === 'number') {
-            reqOpts.timeout = options.timeout;
-        }
-        if (options.userProject || this.userProject) {
-            reqOpts.qs.userProject = options.userProject || this.userProject;
-        }
-        if (options.predefinedAcl) {
-            reqOpts.qs.predefinedAcl = options.predefinedAcl;
-        }
-        else if (options.private) {
-            reqOpts.qs.predefinedAcl = 'private';
-        }
-        else if (options.public) {
-            reqOpts.qs.predefinedAcl = 'publicRead';
-        }
-        Object.assign(reqOpts.qs, this.instancePreconditionOpts, options.preconditionOpts);
-        index_js_1.util.makeWritableStream(dup, {
-            makeAuthenticatedRequest: (reqOpts) => {
-                this.request(reqOpts, (err, body, resp) => {
-                    if (err) {
-                        dup.destroy(err);
-                        return;
-                    }
-                    this.metadata = body;
-                    dup.emit('metadata', body);
-                    dup.emit('response', resp);
-                    dup.emit('complete');
-                });
-            },
-            metadata: options.metadata,
-            request: reqOpts,
-        });
+        return simpleUpload.startSimpleUpload(this, dup, options);
     }
     disableAutoRetryConditionallyIdempotent_(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

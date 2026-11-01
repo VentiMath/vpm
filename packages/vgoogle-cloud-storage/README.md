@@ -1,7 +1,7 @@
 # vgoogle-cloud-storage
 
 **Implementation status:** endpoint selection, per-client emulator context,
-CRC32C, hash-stream validation, V2/V4 URL signing, File.save and createWriteStream orchestration have
+CRC32C, hash-stream validation, V2/V4 URL signing, File.save, createWriteStream and multipart orchestration have
 independent VPM implementations. Remaining bucket/file operations, upload/download
 transport and signed POST policies
 retain upstream runtime code with focused changes. Rewriting those
@@ -42,9 +42,8 @@ V4 signatures expire within seven days.
   once without starting an upload; premature stream closure rejects instead of
   leaving the operation pending. Promise/callback/progress APIs are preserved.
   One-shot streams are not replayed, and uploads with retries disabled avoid
-  allocating a retry operation. The existing multipart/resumable transport and
-  direct `createWriteStream` API remain retained code; this rewrite does not claim
-  per-operation isolation for every SDK method.
+  allocating a retry operation. Authenticated request dispatch and the resumable protocol remain retained;
+  this does not claim per-operation isolation for every SDK method.
 
 - Endpoint configuration belongs to each client. `apiEndpoint` overrides an ambient
   emulator for both metadata and uploads; the two routes cannot silently select
@@ -102,7 +101,7 @@ part of your application contract.
 ## Verified scope
 
 The broader published SDK implementation and public declarations are retained;
-endpoint configuration, CRC32C, hash streams, V2/V4 URL signing, File.save and createWriteStream
+endpoint configuration, CRC32C, hash streams, V2/V4 URL signing, File.save, createWriteStream and multipart
 orchestration are independently implemented.
 Independent verification focuses on backend object uploads, signed URLs,
 listings, existence checks and deletion, plus local-file uploads and bucket
@@ -112,7 +111,7 @@ Checks on Node 24 and Bun cover:
 
 - 110 retained upstream signer, CRC32C and lazy-import tests, with documented
   fixture adaptations and original-upstream controls.
-- Thirty-six focused tests, five paired regression probes, ordinary V2/V4 URL parity,
+- Forty-one focused tests, five paired regression probes, ordinary V2/V4 URL parity,
   and independently verified RSA signatures for corrected canonical requests.
 - CRC32C controls compare 260 lengths, five chunkings, resumed seeds and real
   files against an independent bit-at-a-time oracle. Upstream controls reproduce
@@ -155,28 +154,43 @@ Partial/resumed uploads and existing checksum/deletion failure codes remain cove
 Eight focused groups reproduce the original failures and verify normal/empty,
 compressed, partial and resumed uploads, slow-sink backpressure and error identity
 on Node 24 and Bun. The existing 25-request HTTP suite and concurrent-save control
-also pass. Lower multipart/resumable transport and other SDK operations remain
+also pass. Resumable transport, authenticated request dispatch and other SDK operations remain
 retained upstream code; this is still a partial independent rewrite.
+
+## Multipart upload ownership
+
+`startSimpleUpload_` delegates to an independent request adapter. It owns query
+precedence, metadata serialization, the progress stream and response settlement.
+A per-attempt abort signal prevents a cancelled upload from opening HTTP after
+pending authentication resolves. Late or duplicate callbacks cannot overwrite
+file metadata or emit success after cancellation. Five focused groups and an
+original/VPM HTTP control verify these behaviors alongside authorization,
+encryption headers, interceptors, binary payloads and precondition/billing fields.
+
+The multipart body is streamed by VPM's existing `vteeny-request`; it is not
+buffered into one upload-sized allocation. Each attempt has zero HTTP retries;
+`File.save` owns retries with fresh streams. SDK authentication/interceptor
+dispatch and the resumable upload protocol are still retained implementations.
 
 ## Performance
 
-[Current upload-stream measurements](bench/stream-results/README.md) separate stream
-construction, in-memory pipeline completion and real localhost multipart uploads
-with CRC32C. Four balanced process pairs and two identical-source controls retain
-all samples. Both runtimes use the same separate Node 24 HTTP server. The local
-HTTP case includes the entire VPM client dependency stack; it does not isolate
-this component or establish cloud latency or production throughput.
+[Current multipart measurements](bench/multipart-results/README.md) separate request
+planning from a real 64 KiB localhost multipart upload with CRC32C. Each timed
+implementation runs in its own process, with four balanced comparison pairs and
+two identical-source controls. The HTTP case measures the whole VPM dependency
+stack and cannot attribute its result solely to this adapter.
 
-Node's 64 KiB local upload uses 43% less paired time. Bun's observed 57%
-reduction is inconclusive against its noisy identical-source controls. Construction
-and immediate destruction are slower: 4.69 versus 1.87 µs on Node and 1.42 versus
-0.81 µs on Bun, including option snapshots and lifecycle ownership. Node's
-construction result is strongly order-sensitive, and synthetic pipeline results
-are inconclusive. These costs and all raw samples are retained.
+In this recording, the local upload uses 49% less paired time on Node and 56%
+less on Bun versus the upstream client. Planning and immediate cancellation still
+cost more: 2.28 versus 0.96 µs on Node and 1.22 versus 0.56 µs on Bun. Node's
+planning result has substantial process-order sensitivity. Cancellation avoids
+allocating an unused default error stack, but retains the signal, option ownership
+and response guards. All timings and costs remain in the report.
 
-[Previous save measurements](bench/save-results/README.md) and
-[earlier client measurements](bench/results/README.md) predate the new upload
-pipeline. Their raw samples and source hashes remain historical evidence.
+[Previous stream](bench/stream-results/README.md), [save](bench/save-results/README.md)
+and [earlier client](bench/results/README.md) reports predate this adapter. Their
+source hashes and raw samples remain historical evidence. No local measurement
+establishes cloud latency or production throughput.
 
 ## Provenance
 
