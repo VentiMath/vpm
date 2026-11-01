@@ -25,7 +25,8 @@ Testing Library 13.0.0-alpha.5, Enzyme 3.11.0, React 18 (the lockfile's
 does), @types/react 18.3.12, and the packages the tests
 import besides the ones under test: @emotion/css 11.13.5, @emotion/server
 11.11.0, @emotion/css-prettifier 1.2.0, @emotion/jest 11.13.0 and
-@emotion/babel-plugin 11.13.5, and stylis-plugin-rtl 2.1.1 (with cssjanus
+@emotion/babel-plugin 11.13.5, @types/react 19.2.14 (as `types-react-19`),
+and stylis-plugin-rtl 2.1.1 (with cssjanus
 2.3.0, overridden to the version VentiMath installs) for VentiMath's cache
 configuration.
 
@@ -62,8 +63,8 @@ In development, 285 tests pass and 8 are gated to production; in production, 5
 pass; under React 18, 288 pass (311 snapshots). The same holds with VPM's packages: currently vemotion-hash,
 vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet,
 vemotion-utils, vemotion-serialize, vemotion-is-prop-valid,
-vemotion-use-insertion-effect-with-fallbacks and vemotion-cache, with the
-original packages above them. 305 and 11 snapshots
+vemotion-use-insertion-effect-with-fallbacks, vemotion-cache and
+vemotion-react, with the original packages above them. 305 and 11 snapshots
 match.
 
 `compare-serialize.cjs` runs 20,000 generated style arguments (objects with
@@ -89,9 +90,12 @@ must be the same in production and development; the declarations whose
 prefixes VPM changes are left out (see below). There are no differences.
 
 `types.cjs` compiles an application using each VPM package's API (subclassing
-`StyleSheet` as MUI does, the cache and serialized style types) against the
-originals' and VPM's declarations with DOM types, under TypeScript 7.1, 5.8 and
-5.9.
+`StyleSheet` as MUI does, the cache and style types, VentiMath's cache plugin,
+and a TSX component using the `css` prop through `jsxImportSource`, `Global`,
+`ClassNames`, theming and `keyframes`, with two expected type errors) against
+the originals' and VPM's declarations with DOM types and React 18.3 and 19
+types (`@types/react` 18.3.12, the lockfile's, and 19.2.14), under TypeScript
+7.1, 5.8 and 5.9.
 
 `regressions.cjs` reproduces each change with the originals: two styles
 differing by characters whose UTF-16 code units share a low byte get the same

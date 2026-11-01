@@ -1,0 +1,82 @@
+{
+  "name": "vemotion-react",
+  "version": "0.1.0",
+  "description": "Emotion for React: the css prop, Global, ClassNames, keyframes and theming, on VPM's Emotion packages",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./jsx-runtime": {
+      "types": "./jsx-runtime.d.ts",
+      "default": "./jsx-runtime.js"
+    },
+    "./jsx-dev-runtime": {
+      "types": "./jsx-dev-runtime.d.ts",
+      "default": "./jsx-dev-runtime.js"
+    },
+    "./_isolated-hnrs": {
+      "types": "./_isolated-hnrs.d.ts",
+      "default": "./_isolated-hnrs.js"
+    },
+    "./types/css-prop": {
+      "types": "./types/css-prop.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#is-development": {
+      "development": "./src/conditions/true.js",
+      "default": "./src/conditions/false.js"
+    },
+    "#is-browser": {
+      "edge-light": "./src/conditions/false.js",
+      "workerd": "./src/conditions/false.js",
+      "worker": "./src/conditions/false.js",
+      "browser": "./src/conditions/true.js",
+      "default": "./src/conditions/is-browser.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "jsx-runtime.js",
+    "jsx-runtime.d.ts",
+    "jsx-dev-runtime.js",
+    "jsx-dev-runtime.d.ts",
+    "_isolated-hnrs.js",
+    "_isolated-hnrs.d.ts",
+    "jsx-namespace.d.ts",
+    "types/",
+    "src/",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vemotion-react"
+  },
+  "dependencies": {
+    "vemotion-cache": "0.1.0",
+    "vemotion-serialize": "0.1.0",
+    "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
+    "vemotion-utils": "0.1.0",
+    "vemotion-weak-memoize": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

@@ -43,6 +43,12 @@ try {
         assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0'});
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
       }
+      if (name === 'vemotion-react') {
+        assert.deepEqual(metadata.dependencies, {'vemotion-cache': '0.1.0', 'vemotion-serialize': '0.1.0', 'vemotion-use-insertion-effect-with-fallbacks': '0.1.0', 'vemotion-utils': '0.1.0', 'vemotion-weak-memoize': '0.1.0'});
+        assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0'});
+        for (const file of ['index.js', 'index.d.ts', 'jsx-runtime.js', 'jsx-runtime.d.ts', 'jsx-dev-runtime.js', 'jsx-dev-runtime.d.ts', '_isolated-hnrs.js', 'jsx-namespace.d.ts', 'types/css-prop.d.ts', 'src/element.js', 'src/global.js', 'src/class-names.js', 'src/hoist-statics.js']) assert.ok(entries.includes(file), name + ': ' + file);
+        assert.ok(!entries.some(file => /macro/.test(file)), name + ': no macro entry');
+      }
       if (name === 'vemotion-cache') {
         assert.deepEqual(metadata.dependencies, {'vemotion-memoize': '0.1.0', 'vemotion-sheet': '0.1.0', 'vemotion-utils': '0.1.0', 'vemotion-weak-memoize': '0.1.0', vstylis: '0.1.0'});
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/plugins.js', 'src/prefixer.js', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());

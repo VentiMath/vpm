@@ -1,0 +1,29 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/react",
+    "version": "11.14.0",
+    "tarball": "https://registry.npmjs.org/@emotion/react/-/react-11.14.0.tgz",
+    "tarballSha256": "56ab452022e865baa9fc02d12ad5a57b2c0d8884c5cc1b0bff5308a26d92b1f4",
+    "integrity": "sha512-O000MLDBDdk/EohJPFUqvnp4qnHeYkVP5B0xEG0D/L7cOKP9kefu2DXn8dj74cQfsEzUqh+sr1RzFqiL1o+PpA=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM in plain JavaScript (React.createElement): the css prop element and createEmotionProps, jsx, the automatic runtimes, Global, ClassNames, css, keyframes, the cache context, ThemeProvider, useTheme and withTheme, with the original's behavior.",
+    "On vemotion-cache, vemotion-serialize, vemotion-utils, vemotion-weak-memoize and vemotion-use-insertion-effect-with-fallbacks; hoist-non-react-statics (and react-is) is replaced by a small internal function (also the _isolated-hnrs entry).",
+    "No macro entry, so no runtime dependency on @emotion/babel-plugin (with babel-plugin-macros, cosmiconfig and @babel/runtime); 5 direct dependencies instead of 8.",
+    "Declarations on React's React.JSX namespace (@types/react 18.2.7 and later), checked with React 18.3 and 19 types.",
+    "The #is-development and #is-browser conditions choose development or production and browser or server behavior, as in the original's conditional builds.",
+    "ES modules with bundled declarations; React is a peer."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests (49 of them in react's test files) pass with this package in place of the original, in development and production builds and with React 16 and React 18.",
+    "declarations": "types.cjs compiles a TSX application (css prop through jsxImportSource, Global, ClassNames, theming, keyframes, and two expected errors) against the declarations with DOM and React 18.3 and 19 types under TypeScript 7.1, 5.8 and 5.9.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

@@ -50,7 +50,8 @@
     "react18-dom": "npm:react-dom@18.0.0-rc.0-next-aa8f2bdbc-20211215",
     "react18-test-renderer": "npm:react-test-renderer@18.0.0-rc.0-next-aa8f2bdbc-20211215",
     "stylis": "4.2.0",
-    "stylis-plugin-rtl": "2.1.1"
+    "stylis-plugin-rtl": "2.1.1",
+    "types-react-19": "npm:@types/react@19.2.14"
   },
   "overrides": {
     "babel-preset-current-node-syntax": "1.0.1",

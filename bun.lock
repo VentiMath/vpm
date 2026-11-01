@@ -119,6 +119,20 @@
       "name": "vemotion-memoize",
       "version": "0.1.0",
     },
+    "packages/vemotion-react": {
+      "name": "vemotion-react",
+      "version": "0.1.0",
+      "dependencies": {
+        "vemotion-cache": "0.1.0",
+        "vemotion-serialize": "0.1.0",
+        "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
+        "vemotion-utils": "0.1.0",
+        "vemotion-weak-memoize": "0.1.0",
+      },
+      "peerDependencies": {
+        "react": ">=16.8.0",
+      },
+    },
     "packages/vemotion-serialize": {
       "name": "vemotion-serialize",
       "version": "0.1.0",
@@ -900,6 +914,8 @@
     "vemotion-is-prop-valid": ["vemotion-is-prop-valid@workspace:packages/vemotion-is-prop-valid"],
 
     "vemotion-memoize": ["vemotion-memoize@workspace:packages/vemotion-memoize"],
+
+    "vemotion-react": ["vemotion-react@workspace:packages/vemotion-react"],
 
     "vemotion-serialize": ["vemotion-serialize@workspace:packages/vemotion-serialize"],
 
