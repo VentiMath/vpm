@@ -15,5 +15,12 @@
     "Remove mutable small-integer caches and freeze shared constants.",
     "Require exactly eight valid bytes; include Uint8Array declarations.",
     "Self-contained declarations and common CommonJS/native ESM default entry."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "The package retains upstream two-word arithmetic and optional WebAssembly acceleration, with parsing and validation changes. The arithmetic runtime is not independently rewritten.",
+    "targetScope": "64-bit values, conversions and operations reached by protobufjs, proto-loader and Firestore message types.",
+    "remainingWork": "Independently implement the required 64-bit value operations and conversions, preserving wire compatibility and existing strict input/caching fixes."
+  }
 }

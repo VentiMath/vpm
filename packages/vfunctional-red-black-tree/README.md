@@ -1,5 +1,9 @@
 # vfunctional-red-black-tree
 
+**Implementation status:** upstream-derived runtime with focused fixes. The
+independent implementation of the caller paths VentiMath needs is still pending.
+[Provenance](PROVENANCE.json) identifies the retained code and rewrite scope.
+
 Persistent red-black trees targeting **functional-red-black-tree 1.0.1**, the
 latest stable release checked October 31, 2026. Zero runtime dependencies;
 Node.js 24+ and Bun.

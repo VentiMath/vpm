@@ -8,5 +8,12 @@
   },
   "checked": "2026-10-30",
   "license": "MIT",
-  "source": "Derived from the upstream serializer. Primitive string fast path, cached algorithms, own validated options, binary-safe unordered serialization, framed buffers, sparse holes, ordered map pairs, DataView bytes, file timestamps and bigint typed arrays. Synchronous Node 24/Bun API; no browser crypto bundle."
+  "source": "Derived from the upstream serializer. Primitive string fast path, cached algorithms, own validated options, binary-safe unordered serialization, framed buffers, sparse holes, ordered map pairs, DataView bytes, file timestamps and bigint typed arrays. Synchronous Node 24/Bun API; no browser crypto bundle.",
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "The object serializer is upstream-derived, with primitive fast paths and focused binary/collection corrections. The complete serializer is not an independent implementation.",
+    "targetScope": "GAX client and stub cache-key hashing reached by Firestore callers.",
+    "remainingWork": "Independently implement the cache-key/value serialization actually required by callers, preserving deterministic distinctions and the existing corrected binary/collection behavior."
+  }
 }

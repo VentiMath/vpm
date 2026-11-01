@@ -359,5 +359,12 @@
     "Namespace construction does not traverse inherited Object members.",
     "Explicit structural platform declarations and Node 24 runtime baseline."
   ],
-  "scope": "Retains upstream HTTP/2 client/server, retries, resolvers, load balancing, credentials and experimental exports. Verification scope is documented separately; not an application deployment."
+  "scope": "Retains upstream HTTP/2 client/server, retries, resolvers, load balancing, credentials and experimental exports. Verification scope is documented separately; not an application deployment.",
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "The HTTP/2 client/server, retry, resolver, load-balancing and credential runtime is retained from grpc-js. Focused framing/metadata fixes and VPM dependency names do not constitute an independent client implementation.",
+    "targetScope": "The client-side unary and streaming HTTP/2 paths reached through gax and Firestore.",
+    "remainingWork": "Independently implement the client paths the application uses. Retain protocol/declaration provenance and existing conformance controls; evaluate which server/experimental/diagnostic surfaces are unnecessary."
+  }
 }

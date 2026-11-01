@@ -28,5 +28,12 @@
     "Index access without enableIndex throws RangeError instead of returning inconsistent values.",
     "Array constructor overload contextually types tuple literals and permits readonly input pairs."
   ],
-  "scope": "The complete OrderedMap runtime method surface is retained. Iterator pair identity is now stable; deletion still swaps node payloads as upstream does, so callers must not rely on unrelated iterators retaining a particular key across erase. No runtime dependencies."
+  "scope": "The complete OrderedMap runtime method surface is retained. Iterator pair identity is now stable; deletion still swaps node payloads as upstream does, so callers must not rely on unrelated iterators retaining a particular key across erase. No runtime dependencies.",
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "The runtime was transpiled from js-sdsl TypeScript sources and then modified. Transpilation and iterator/index fixes do not constitute an independent map implementation.",
+    "targetScope": "Ordered registry operations used by gRPC Channelz diagnostics.",
+    "remainingWork": "Determine whether the rewritten gRPC client needs this runtime; otherwise eliminate it. If retained, independently implement the required registry ordering and iteration contracts."
+  }
 }

@@ -16,5 +16,12 @@
     "A truthy non-function comparator throws at construction instead of on the second insert.",
     "Iterative keys, values and forEach traversal with range pruning; the four range lookups share one search routine.",
     "Self-contained declarations, with nullable nodes; CommonJS and native ESM default entries."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "Persistent path-copying insertion, removal and node layout remain derived from upstream. Traversal/index fixes do not establish an independent tree runtime.",
+    "targetScope": "Persistent ordering and iterators used by Firestore snapshot and query listeners.",
+    "remainingWork": "Independently implement the required persistent ordered operations and iterator semantics; preserve snapshot isolation, ordering, existing edge-case fixes and caller conformance."
+  }
 }
