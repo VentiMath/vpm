@@ -1,0 +1,12 @@
+{
+  "name": "test-utils",
+  "main": "src/index",
+  "version": "0.3.2",
+  "private": true,
+  "imports": {
+    "#is-development": {
+      "development": "./resolved-conditions/true.js",
+      "default": "./resolved-conditions/false.js"
+    }
+  }
+}

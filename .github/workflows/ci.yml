@@ -44,6 +44,7 @@ jobs:
       - run: npm --prefix scripts/fullcalendar-react-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -106,6 +107,11 @@ jobs:
           node scripts/stylis-conformance/run.cjs
           node scripts/stylis-conformance/compare.cjs
           node scripts/stylis-conformance/regressions.cjs
+          node scripts/emotion-conformance/run.cjs --upstream
+          node scripts/emotion-conformance/run.cjs
+          node scripts/emotion-conformance/run.cjs --upstream --mode=production
+          node scripts/emotion-conformance/run.cjs --mode=production
+          node scripts/emotion-conformance/regressions.cjs
           node scripts/gax-conformance/run.cjs --upstream
           node scripts/gax-conformance/run.cjs
           node scripts/gax-conformance/regressions.cjs
@@ -299,6 +305,7 @@ jobs:
       - run: npm --prefix scripts/fullcalendar-react-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -369,6 +376,7 @@ jobs:
           bun scripts/stylis-conformance/run.cjs
           bun scripts/stylis-conformance/compare.cjs
           bun scripts/stylis-conformance/regressions.cjs
+          bun scripts/emotion-conformance/regressions.cjs
           bun scripts/gax-conformance/run.cjs --upstream
           bun scripts/gax-conformance/run.cjs
           bun scripts/gax-conformance/regressions.cjs

@@ -93,6 +93,22 @@
       "name": "vee-first",
       "version": "0.1.0",
     },
+    "packages/vemotion-hash": {
+      "name": "vemotion-hash",
+      "version": "0.1.0",
+    },
+    "packages/vemotion-memoize": {
+      "name": "vemotion-memoize",
+      "version": "0.1.0",
+    },
+    "packages/vemotion-unitless": {
+      "name": "vemotion-unitless",
+      "version": "0.1.0",
+    },
+    "packages/vemotion-weak-memoize": {
+      "name": "vemotion-weak-memoize",
+      "version": "0.1.0",
+    },
     "packages/vencodeurl": {
       "name": "vencodeurl",
       "version": "0.1.0",
@@ -825,6 +841,14 @@
     "vduplexify": ["vduplexify@workspace:packages/vduplexify"],
 
     "vee-first": ["vee-first@workspace:packages/vee-first"],
+
+    "vemotion-hash": ["vemotion-hash@workspace:packages/vemotion-hash"],
+
+    "vemotion-memoize": ["vemotion-memoize@workspace:packages/vemotion-memoize"],
+
+    "vemotion-unitless": ["vemotion-unitless@workspace:packages/vemotion-unitless"],
+
+    "vemotion-weak-memoize": ["vemotion-weak-memoize@workspace:packages/vemotion-weak-memoize"],
 
     "vencodeurl": ["vencodeurl@workspace:packages/vencodeurl"],
 

@@ -1,0 +1,25 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/memoize",
+    "version": "0.9.0",
+    "tarball": "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.9.0.tgz",
+    "tarballSha256": "4ce80745ae8e56553e0140479c86f307474c976c0747dd096ff6ed9d7bf14e15",
+    "integrity": "sha512-30FAj7/EoJ5mwVPOWhAyCX+FPfMDrVecJAM+Iw9NRoSl4BBAQeqj4cApHHUXOVvIPgLVDsCFoz/hGD+5QQD1GQ=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM over a Map.",
+    "Results that are undefined are cached too (@emotion/memoize recomputed them on every call).",
+    "ES module with bundled declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

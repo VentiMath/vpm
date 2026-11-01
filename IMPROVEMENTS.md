@@ -32,6 +32,10 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Suite verified | vemotion-hash | @emotion/hash 0.9.2; Emotion's 293-test suite with it in place of the original | [@emotion/hash 0.9.2](https://www.npmjs.com/package/@emotion/hash), checked November 1, 2026 |
+| Suite verified | vemotion-memoize | @emotion/memoize 0.9.0; Emotion's 293-test suite with it in place of the original | [@emotion/memoize 0.9.0](https://www.npmjs.com/package/@emotion/memoize), checked November 1, 2026 |
+| Suite verified | vemotion-unitless | @emotion/unitless 0.10.0; Emotion's 293-test suite with it in place of the original | [@emotion/unitless 0.10.0](https://www.npmjs.com/package/@emotion/unitless), checked November 1, 2026 |
+| Suite verified | vemotion-weak-memoize | @emotion/weak-memoize 0.4.0; Emotion's 293-test suite with it in place of the original | [@emotion/weak-memoize 0.4.0](https://www.npmjs.com/package/@emotion/weak-memoize), checked November 1, 2026 |
 | Suite and differential verified | vstylis | stylis 4.4.0; its 113 tests, and identical trees and output over 12 stylesheets and 20,000 generated inputs | [stylis 4.4.0](https://www.npmjs.com/package/stylis), checked November 1, 2026 |
 | Suites verified | vtanstack-react-query | @tanstack/react-query 5.105.0; its 609 tests (hooks, suspense, SSR hydration, type tests) | [@tanstack/react-query 5.105.0](https://www.npmjs.com/package/@tanstack/react-query), checked November 1, 2026 |
 | Suites verified | vtanstack-query-core | @tanstack/query-core 5.105.0; its 1,608 tests, and long timers on a simulated clock | [@tanstack/query-core 5.105.0](https://www.npmjs.com/package/@tanstack/query-core), checked November 1, 2026 |
@@ -134,6 +138,9 @@ stylis 4.4.0, written for VPM against stylis's tests and a differential
 comparison rather than retained from the published build. Emotion 11.14 pins
 stylis 4.2.0; its suite passes with 4.4.0, the version VentiMath already
 installs.
+Emotion's own packages follow on it, each written for VPM: first the leaves
+`vemotion-hash`, `vemotion-memoize`, `vemotion-unitless` and
+`vemotion-weak-memoize`.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -172,6 +179,10 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vemotion-hash](packages/vemotion-hash) | @emotion/hash 0.9.2 | Hashes UTF-8 bytes: the original kept each code unit's low byte, so styles differing by characters such as 中 and 伭 shared a class name and rendered alike; identical hashes for ASCII. |
+| [vemotion-memoize](packages/vemotion-memoize) | @emotion/memoize 0.9.0 | Caches `undefined` results too. |
+| [vemotion-unitless](packages/vemotion-unitless) | @emotion/unitless 0.10.0 | Adds `gridArea` and `lineClamp`, which were serialized with `px`. |
+| [vemotion-weak-memoize](packages/vemotion-weak-memoize) | @emotion/weak-memoize 0.4.0 | The same behavior, written for VPM. |
 | [vstylis](packages/vstylis) | stylis 4.4.0 | Vendor prefixes chosen by property name (stylis's hash gave more than 50 unprefixed properties, `flex-wrap` and `grid-gap` among them, invented declarations), IE grid spans on the right axis, `mask-composite: subtract` converted, the same `namespace` result on JavaScriptCore, and bundled declarations; otherwise identical trees and output, and all 113 upstream tests pass. |
 | [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.0 | `gcTime`, `staleTime` and `refetchInterval` beyond about 24.8 days last as asked (30-day `gcTime` collected at once, 30-day `refetchInterval` fetched every millisecond), declarations that compile without DOM types, and the modern build only (1.7 MB instead of 3.9 MB unpacked); all 1,608 upstream tests pass. |
 | [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.0 | On vtanstack-query-core with its fixes; modern build only, without codemods (0.8 MB instead of 1.8 MB unpacked); all 609 upstream tests pass. |
@@ -282,12 +293,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,816 tests**: all pass on Node 24, and Bun passes
-2,813 with three documented runtime-specific skips. All 103 Node runtime packages'
+The root suite contains **2,824 tests**: all pass on Node 24, and Bun passes
+2,821 with three documented runtime-specific skips. All 107 Node runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **107 packages**, including two declaration-only packages and
+catalog covers **111 packages**, including two declaration-only packages and
 two browser packages, `vfullcalendar-react` and `vtanstack-react-query`, whose
 declarations are checked with DOM and React types.
 
@@ -413,6 +424,10 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vemotion-hash` | 0 | 0 |
+| `vemotion-memoize` | 0 | 0 |
+| `vemotion-unitless` | 0 | 0 |
+| `vemotion-weak-memoize` | 0 | 0 |
 | `vstylis` | 0 | 0 |
 | `vtanstack-query-core` | 0 | 0 |
 | `vtanstack-react-query` | 1 (`@tanstack/query-core`; React peer) | 1 (`vtanstack-query-core`; React peer) |
@@ -584,6 +599,27 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## Emotion's leaf packages
+
+`vemotion-hash`, `vemotion-memoize`, `vemotion-unitless` and
+`vemotion-weak-memoize` target @emotion/hash 0.9.2, @emotion/memoize 0.9.0,
+@emotion/unitless 0.10.0 and @emotion/weak-memoize 0.4.0, checked November 1,
+2026, written for VPM. Emotion's suite (293 tests across hash, weak-memoize,
+sheet, cache, react and styled, with 305 snapshots, in development and
+production builds) runs against the published packages and passes in full with
+these four in place of the originals.
+
+@emotion/hash keeps only the low byte of each UTF-16 code unit, so two styles
+differing by characters whose code units share it (`content: "中"` and
+`content: "伭"`) get the same class name, and the second component renders
+with the first's styles. vemotion-hash hashes UTF-8 bytes, identical for ASCII,
+without needing `TextEncoder` (absent in jsdom). @emotion/unitless lacks
+`gridArea` and `lineClamp`, so `gridArea: 2` became `grid-area:2px`; memoize
+recomputed `undefined` results. Three regression cases reproduce these with the
+originals.
+
+See the [conformance record](scripts/emotion-conformance/README.md).
 
 ## vstylis
 

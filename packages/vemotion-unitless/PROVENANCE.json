@@ -1,0 +1,24 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/unitless",
+    "version": "0.10.0",
+    "tarball": "https://registry.npmjs.org/@emotion/unitless/-/unitless-0.10.0.tgz",
+    "tarballSha256": "99976f55e420f3608fbf476c76ee2c54eefcba710f123587998baf09162d497d",
+    "integrity": "sha512-dFoMUuQA20zvtVTuxZww6OHoJYgrzfKM1t52mVySDJnMSEa08ruEvdYQbhvyu6soU+NeLVd3yKfTfT0NeV6qGg=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "The 47 keys of @emotion/unitless 0.10.0 plus gridArea and lineClamp, which React 19 also treats as unitless (gridArea: 2 became grid-area:2px, lineClamp: 3 line-clamp:3px).",
+    "ES module with bundled declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}
