@@ -19,8 +19,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BaseAuth = void 0;
 exports.createFirebaseTokenGenerator = createFirebaseTokenGenerator;
 const error_1 = require("./error");
-const deep_copy_1 = require("../utils/deep-copy");
 const validator = require("../utils/validator");
+const {UserDeletion, clientChanges} = require("./user-operations");
 const auth_api_request_1 = require("./auth-api-request");
 const token_generator_1 = require("./token-generator");
 const token_verifier_1 = require("./token-verifier");
@@ -365,39 +365,8 @@ class BaseAuth {
      *     failed deletions.
      */
     deleteUsers(uids) {
-        if (!validator.isArray(uids)) {
-            throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, '`uids` parameter must be an array');
-        }
-        return this.authRequestHandler.deleteAccounts(uids, /*force=*/ true)
-            .then((batchDeleteAccountsResponse) => {
-            const result = {
-                failureCount: 0,
-                successCount: uids.length,
-                errors: [],
-            };
-            if (!validator.isNonEmptyArray(batchDeleteAccountsResponse.errors)) {
-                return result;
-            }
-            result.failureCount = batchDeleteAccountsResponse.errors.length;
-            result.successCount = uids.length - batchDeleteAccountsResponse.errors.length;
-            result.errors = batchDeleteAccountsResponse.errors.map((batchDeleteErrorInfo) => {
-                if (batchDeleteErrorInfo.index === undefined) {
-                    throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INTERNAL_ERROR, 'Corrupt BatchDeleteAccountsResponse detected');
-                }
-                const errMsgToError = (msg) => {
-                    // We unconditionally set force=true, so the 'NOT_DISABLED' error
-                    // should not be possible.
-                    const code = msg && msg.startsWith('NOT_DISABLED') ?
-                        error_1.authClientErrorCode.USER_NOT_DISABLED : error_1.authClientErrorCode.INTERNAL_ERROR;
-                    return new error_1.FirebaseAuthError(code, batchDeleteErrorInfo.message);
-                };
-                return {
-                    index: batchDeleteErrorInfo.index,
-                    error: errMsgToError(batchDeleteErrorInfo.message),
-                };
-            });
-            return result;
-        });
+        const operation = new UserDeletion(uids);
+        return this.authRequestHandler.deleteAccounts(operation.uids, true).then(response => operation.complete(response));
     }
     /**
      * Updates an existing user.
@@ -413,48 +382,8 @@ class BaseAuth {
      *   updated user data.
      */
     updateUser(uid, properties) {
-        // Although we don't really advertise it, we want to also handle linking of
-        // non-federated idps with this call. So if we detect one of them, we'll
-        // adjust the properties parameter appropriately. This *does* imply that a
-        // conflict could arise, e.g. if the user provides a phoneNumber property,
-        // but also provides a providerToLink with a 'phone' provider id. In that
-        // case, we'll throw an error.
-        properties = (0, deep_copy_1.deepCopy)(properties);
-        if (properties?.providerToLink) {
-            if (properties.providerToLink.providerId === 'email') {
-                if (typeof properties.email !== 'undefined') {
-                    throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, "Both UpdateRequest.email and UpdateRequest.providerToLink.providerId='email' were set. To "
-                        + 'link to the email/password provider, only specify the UpdateRequest.email field.');
-                }
-                properties.email = properties.providerToLink.uid;
-                delete properties.providerToLink;
-            }
-            else if (properties.providerToLink.providerId === 'phone') {
-                if (typeof properties.phoneNumber !== 'undefined') {
-                    throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, "Both UpdateRequest.phoneNumber and UpdateRequest.providerToLink.providerId='phone' were set. To "
-                        + 'link to a phone provider, only specify the UpdateRequest.phoneNumber field.');
-                }
-                properties.phoneNumber = properties.providerToLink.uid;
-                delete properties.providerToLink;
-            }
-        }
-        if (properties?.providersToUnlink) {
-            if (properties.providersToUnlink.indexOf('phone') !== -1) {
-                // If we've been told to unlink the phone provider both via setting
-                // phoneNumber to null *and* by setting providersToUnlink to include
-                // 'phone', then we'll reject that. Though it might also be reasonable
-                // to relax this restriction and just unlink it.
-                if (properties.phoneNumber === null) {
-                    throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, "Both UpdateRequest.phoneNumber=null and UpdateRequest.providersToUnlink=['phone'] were set. To "
-                        + 'unlink from a phone provider, only specify the UpdateRequest.phoneNumber=null field.');
-                }
-            }
-        }
-        return this.authRequestHandler.updateExistingAccount(uid, properties)
-            .then((existingUid) => {
-            // Return the corresponding user record.
-            return this.getUser(existingUid);
-        });
+        const changes = clientChanges(properties);
+        return this.authRequestHandler.updateExistingAccount(uid, changes).then(existingUid => this.getUser(existingUid));
     }
     /**
      * Sets additional developer claims on an existing user identified by the

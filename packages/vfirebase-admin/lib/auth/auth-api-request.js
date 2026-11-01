@@ -20,6 +20,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TenantAwareAuthRequestHandler = exports.AuthRequestHandler = exports.AbstractAuthRequestHandler = exports.FIREBASE_AUTH_SIGN_UP_NEW_USER = exports.FIREBASE_AUTH_SET_ACCOUNT_INFO = exports.FIREBASE_AUTH_BATCH_DELETE_ACCOUNTS = exports.FIREBASE_AUTH_DELETE_ACCOUNT = exports.FIREBASE_AUTH_GET_ACCOUNTS_INFO = exports.FIREBASE_AUTH_GET_ACCOUNT_INFO = exports.FIREBASE_AUTH_DOWNLOAD_ACCOUNT = exports.FIREBASE_AUTH_UPLOAD_ACCOUNT = exports.FIREBASE_AUTH_CREATE_SESSION_COOKIE = exports.EMAIL_ACTION_REQUEST_TYPES = exports.RESERVED_CLAIMS = void 0;
 exports.useEmulator = useEmulator;
 const validator = require("../utils/validator");
+const {UserRequests} = require("./user-operations");
 const deep_copy_1 = require("../utils/deep-copy");
 const error_1 = require("./error");
 const error_2 = require("../utils/error");
@@ -54,8 +55,6 @@ const MAX_DOWNLOAD_ACCOUNT_PAGE_SIZE = 1000;
 const MAX_UPLOAD_ACCOUNT_BATCH_SIZE = 1000;
 /** Maximum allowed number of users to batch get at one time. */
 const MAX_GET_ACCOUNTS_BATCH_SIZE = 100;
-/** Maximum allowed number of users to batch delete at one time. */
-const MAX_DELETE_ACCOUNTS_BATCH_SIZE = 1000;
 /** Minimum allowed session cookie duration in seconds (5 minutes). */
 const MIN_SESSION_COOKIE_DURATION_SECS = 5 * 60;
 /** Maximum allowed session cookie duration in seconds (2 weeks). */
@@ -881,6 +880,19 @@ const LIST_INBOUND_SAML_CONFIGS = new api_request_1.ApiSettings('/inboundSamlCon
  * @internal
  */
 class AbstractAuthRequestHandler {
+    #userRequests;
+    #users() {
+        if (!this.#userRequests) {
+            const settings = {
+                lookup: exports.FIREBASE_AUTH_GET_ACCOUNT_INFO,
+                update: exports.FIREBASE_AUTH_SET_ACCOUNT_INFO,
+                delete: exports.FIREBASE_AUTH_BATCH_DELETE_ACCOUNTS,
+            };
+            this.#userRequests = new UserRequests((operation, body) =>
+                this.invokeRequestHandler(this.getAuthUrlBuilder(), settings[operation], body));
+        }
+        return this.#userRequests;
+    }
     /**
      * @param response - The response to check for errors.
      * @returns The error code if present; null otherwise.
@@ -939,6 +951,7 @@ class AbstractAuthRequestHandler {
         }
         this.emulatorHostValue = emHost !== undefined ? (emHost || undefined) : emulatorHost();
         this.httpClient = new AuthHttpClient(app, !!this.emulatorHostValue);
+
     }
     /**
      * Creates a new Firebase session cookie with the specified duration that can be used for
@@ -966,13 +979,7 @@ class AbstractAuthRequestHandler {
      * @returns A promise that resolves with the user information.
      */
     getAccountInfoByUid(uid) {
-        if (!validator.isUid(uid)) {
-            return Promise.reject(new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_UID));
-        }
-        const request = {
-            localId: [uid],
-        };
-        return this.invokeRequestHandler(this.getAuthUrlBuilder(), exports.FIREBASE_AUTH_GET_ACCOUNT_INFO, request);
+        return this.#users().lookup(uid);
     }
     /**
      * Looks up a user by email.
@@ -1139,23 +1146,7 @@ class AbstractAuthRequestHandler {
         return this.invokeRequestHandler(this.getAuthUrlBuilder(), exports.FIREBASE_AUTH_DELETE_ACCOUNT, request);
     }
     deleteAccounts(uids, force) {
-        if (uids.length === 0) {
-            return Promise.resolve({});
-        }
-        else if (uids.length > MAX_DELETE_ACCOUNTS_BATCH_SIZE) {
-            throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.MAXIMUM_USER_COUNT_EXCEEDED, '`uids` parameter must have <= ' + MAX_DELETE_ACCOUNTS_BATCH_SIZE + ' entries.');
-        }
-        const request = {
-            localIds: [],
-            force,
-        };
-        uids.forEach((uid) => {
-            if (!validator.isUid(uid)) {
-                throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_UID);
-            }
-            request.localIds.push(uid);
-        });
-        return this.invokeRequestHandler(this.getAuthUrlBuilder(), exports.FIREBASE_AUTH_BATCH_DELETE_ACCOUNTS, request);
+        return this.#users().delete(uids, force);
     }
     /**
      * Sets additional developer claims on an existing user identified by provided UID.
@@ -1196,117 +1187,7 @@ class AbstractAuthRequestHandler {
      *     with the user id that was edited.
      */
     updateExistingAccount(uid, properties) {
-        if (!validator.isUid(uid)) {
-            return Promise.reject(new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_UID));
-        }
-        else if (!validator.isNonNullObject(properties)) {
-            return Promise.reject(new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, 'Properties argument must be a non-null object.'));
-        }
-        else if (validator.isNonNullObject(properties.providerToLink)) {
-            // TODO(rsgowman): These checks overlap somewhat with
-            // validateProviderUserInfo. It may be possible to refactor a bit.
-            if (!validator.isNonEmptyString(properties.providerToLink.providerId)) {
-                throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, 'providerToLink.providerId of properties argument must be a non-empty string.');
-            }
-            if (!validator.isNonEmptyString(properties.providerToLink.uid)) {
-                throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, 'providerToLink.uid of properties argument must be a non-empty string.');
-            }
-        }
-        else if (typeof properties.providersToUnlink !== 'undefined') {
-            if (!validator.isArray(properties.providersToUnlink)) {
-                throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, 'providersToUnlink of properties argument must be an array of strings.');
-            }
-            properties.providersToUnlink.forEach((providerId) => {
-                if (!validator.isNonEmptyString(providerId)) {
-                    throw new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_ARGUMENT, 'providersToUnlink of properties argument must be an array of strings.');
-                }
-            });
-        }
-        // Build the setAccountInfo request.
-        const request = (0, deep_copy_1.deepCopy)(properties);
-        request.localId = uid;
-        // For deleting displayName or photoURL, these values must be passed as null.
-        // They will be removed from the backend request and an additional parameter
-        // deleteAttribute: ['PHOTO_URL', 'DISPLAY_NAME']
-        // with an array of the parameter names to delete will be passed.
-        // Parameters that are deletable and their deleteAttribute names.
-        // Use client facing names, photoURL instead of photoUrl.
-        const deletableParams = {
-            displayName: 'DISPLAY_NAME',
-            photoURL: 'PHOTO_URL',
-        };
-        // Properties to delete if available.
-        request.deleteAttribute = [];
-        for (const key in deletableParams) {
-            if (request[key] === null) {
-                // Add property identifier to list of attributes to delete.
-                request.deleteAttribute.push(deletableParams[key]);
-                // Remove property from request.
-                delete request[key];
-            }
-        }
-        if (request.deleteAttribute.length === 0) {
-            delete request.deleteAttribute;
-        }
-        // For deleting phoneNumber, this value must be passed as null.
-        // It will be removed from the backend request and an additional parameter
-        // deleteProvider: ['phone'] with an array of providerIds (phone in this case),
-        // will be passed.
-        if (request.phoneNumber === null) {
-            request.deleteProvider ? request.deleteProvider.push('phone') : request.deleteProvider = ['phone'];
-            delete request.phoneNumber;
-        }
-        if (typeof (request.providerToLink) !== 'undefined') {
-            request.linkProviderUserInfo = (0, deep_copy_1.deepCopy)(request.providerToLink);
-            delete request.providerToLink;
-            request.linkProviderUserInfo.rawId = request.linkProviderUserInfo.uid;
-            delete request.linkProviderUserInfo.uid;
-        }
-        if (typeof (request.providersToUnlink) !== 'undefined') {
-            if (!validator.isArray(request.deleteProvider)) {
-                request.deleteProvider = [];
-            }
-            request.deleteProvider = request.deleteProvider.concat(request.providersToUnlink);
-            delete request.providersToUnlink;
-        }
-        // Rewrite photoURL to photoUrl.
-        if (typeof request.photoURL !== 'undefined') {
-            request.photoUrl = request.photoURL;
-            delete request.photoURL;
-        }
-        // Rewrite disabled to disableUser.
-        if (typeof request.disabled !== 'undefined') {
-            request.disableUser = request.disabled;
-            delete request.disabled;
-        }
-        // Construct mfa related user data.
-        if (validator.isNonNullObject(request.multiFactor)) {
-            if (request.multiFactor.enrolledFactors === null) {
-                // Remove all second factors.
-                request.mfa = {};
-            }
-            else if (validator.isArray(request.multiFactor.enrolledFactors)) {
-                request.mfa = {
-                    enrollments: [],
-                };
-                try {
-                    request.multiFactor.enrolledFactors.forEach((multiFactorInfo) => {
-                        request.mfa.enrollments.push((0, user_import_builder_1.convertMultiFactorInfoToServerFormat)(multiFactorInfo));
-                    });
-                }
-                catch (e) {
-                    return Promise.reject(e);
-                }
-                if (request.mfa.enrollments.length === 0) {
-                    delete request.mfa.enrollments;
-                }
-            }
-            delete request.multiFactor;
-        }
-        return this.invokeRequestHandler(this.getAuthUrlBuilder(), exports.FIREBASE_AUTH_SET_ACCOUNT_INFO, request)
-            .then((response) => {
-            return response.localId;
-        });
+        return this.#users().update(uid, properties);
     }
     /**
      * Revokes all refresh tokens for the specified user identified by the uid provided.
@@ -1322,19 +1203,7 @@ class AbstractAuthRequestHandler {
      *     successfully with the user id of the corresponding user.
      */
     revokeRefreshTokens(uid) {
-        // Validate user UID.
-        if (!validator.isUid(uid)) {
-            return Promise.reject(new error_1.FirebaseAuthError(error_1.authClientErrorCode.INVALID_UID));
-        }
-        const request = {
-            localId: uid,
-            // validSince is in UTC seconds.
-            validSince: Math.floor(new Date().getTime() / 1000),
-        };
-        return this.invokeRequestHandler(this.getAuthUrlBuilder(), exports.FIREBASE_AUTH_SET_ACCOUNT_INFO, request)
-            .then((response) => {
-            return response.localId;
-        });
+        return this.#users().revoke(uid);
     }
     /**
      * Create a new user with the properties supplied.
