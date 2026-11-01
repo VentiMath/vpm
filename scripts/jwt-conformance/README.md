@@ -23,6 +23,14 @@ unchanged, and selects upstream or VPM through module entry shims. Independent
 upstream `jws` constructs the suite's tokens. The internal asymmetric validation
 tests are routed to VPM's key validator as well as testing the public JWT API.
 
+One upstream test compares asynchronous and synchronous tokens byte-for-byte
+without fixing their issue time. Crossing a second boundary between calls makes
+that comparison fail on either implementation. [The shared clock hook](comparison-clock.cjs)
+fixes only `Date.now` for that named test on both sides, restoring it afterward;
+payloads, signing operations and assertions remain unchanged. Timers and the
+other 511 tests retain their clocks. A deterministic boundary control verifies
+both the original failure and the corrected comparison on Node and Bun.
+
 [Explicit adaptations](adapt.cjs) change eleven VPM expectations: nine upstream
 TODOs accepting non-finite NumericDates now require rejection; object JSON uses
 UTF-8 even with a binary encoding option; and signing `none` with a supplied
