@@ -23,29 +23,29 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T10:48:53.937Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T11:09:44.581Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| construct DOM styled component | 206 | 166 | -19.8% | -17.7% | -21.4% | 21.5% | unestablished at this precision |
-| construct inherited styled component | 164 | 179 | 9.8% | 10.2% | 8.3% | 3.6% | higher time in every pair, beyond control spread |
-| server render cached static styles | 2620 | 2527 | -2.8% | -3.6% | -2.5% | 2.8% | unestablished at this precision |
-| server render theme and prop interpolation | 2162 | 2127 | -0.5% | -1.9% | -0.4% | 4.8% | unestablished at this precision |
+| construct DOM styled component | 212 | 170 | -20.1% | -18.3% | -20.4% | 6.1% | lower time in every pair, beyond control spread |
+| construct inherited styled component | 163 | 178 | 8.9% | 9.1% | 8.9% | 1% | higher time in every pair, beyond control spread |
+| server render cached static styles | 2553 | 2500 | -2% | -1.9% | -2.3% | 1.5% | unestablished at this precision |
+| server render theme and prop interpolation | 2117 | 2127 | 0.9% | 0.4% | 0.9% | 1.1% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T10:49:11.906Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T11:10:02.362Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| construct DOM styled component | 112 | 94 | -16.2% | -14.1% | -16.2% | 7.1% | lower time in every pair, beyond control spread |
-| construct inherited styled component | 135 | 116 | -14.5% | -11.4% | -16.9% | 4.5% | lower time in every pair, beyond control spread |
-| server render cached static styles | 2030 | 1922 | -3.8% | 0.1% | -10.2% | 2.2% | unestablished at this precision |
-| server render theme and prop interpolation | 1854 | 1858 | -1.1% | 0.1% | -5.6% | 67.3% | unestablished at this precision |
+| construct DOM styled component | 104 | 94 | -9.3% | -9.5% | -9.1% | 11.4% | unestablished at this precision |
+| construct inherited styled component | 130 | 115 | -11.5% | -11.9% | -11.2% | 10.1% | lower time in every pair, beyond control spread |
+| server render cached static styles | 1932 | 1897 | -2.6% | 1.6% | -2.6% | 21% | unestablished at this precision |
+| server render theme and prop interpolation | 1804 | 1829 | 1.8% | 1.4% | 1.8% | 8.5% | unestablished at this precision |
 
 ## Reproduce
 

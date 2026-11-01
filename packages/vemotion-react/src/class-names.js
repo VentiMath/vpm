@@ -1,74 +1,59 @@
 import * as React from 'react';
 import {serializeStyles} from 'vemotion-serialize';
-import {useInsertionEffectAlwaysWithSyncFallback} from 'vemotion-use-insertion-effect-with-fallbacks';
-import {getRegisteredStyles, insertStyles, registerStyles} from 'vemotion-utils';
-import isBrowser from '#is-browser';
+import {getRegisteredStyles} from 'vemotion-utils';
 import isDevelopment from '#is-development';
 import {withEmotionCache} from './context.js';
-import {ThemeContext} from './theming.js';
+import {useTheme} from './theming.js';
+import {StyleBatch, StyleInsertion} from './style-batch.js';
 
-/** Joins class names: strings, arrays, and objects' keys with truthy values. */
-function classnames(args) {
-  let className = '';
-  for (const arg of args) {
-    if (arg == null || typeof arg === 'boolean') continue;
-    let add;
-    if (Array.isArray(arg)) {
-      add = classnames(arg);
-    } else if (typeof arg === 'object') {
-      if (isDevelopment && arg.styles !== undefined && arg.name !== undefined) {
-        console.error(
-          'You have passed styles created with `css` from `@emotion/react` package to the `cx`.\n' +
-            '`cx` is meant to compose class names (strings) so you should convert those styles to a class name by passing them to the `css` received from <ClassNames/> component.',
-        );
-      }
-      add = Object.keys(arg).filter(key => arg[key] && key).join(' ');
-    } else {
-      add = arg;
-    }
-    if (add) className += (className ? ' ' : '') + add;
+// Iterative traversal preserves left-to-right class order without a depth
+// limit imposed by the JS call stack. Shared arrays are valid; cycles are not.
+function classTokens(values) {
+  const tokens = [], frames = [{values, index: 0}], ancestors = new Set([values]);
+  while (frames.length) {
+    const frame = frames.at(-1);
+    if (frame.index === frame.values.length) {ancestors.delete(frame.values); frames.pop(); continue;}
+    const value = frame.values[frame.index++];
+    if (!value || typeof value === 'boolean') continue;
+    if (Array.isArray(value)) {
+      if (ancestors.has(value)) throw new TypeError('Class name arrays must not contain cycles');
+      ancestors.add(value); frames.push({values: value, index: 0});
+    } else if (typeof value === 'object') {
+      if (isDevelopment && value.styles !== undefined && value.name !== undefined) console.error(
+        'You have passed styles created with `css` from `@emotion/react` package to the `cx`.\n' +
+        '`cx` is meant to compose class names (strings) so you should convert those styles to a class name by passing them to the `css` received from <ClassNames/> component.');
+      for (const key of Object.keys(value)) if (key && value[key]) tokens.push(key);
+    } else tokens.push('' + value);
   }
-  return className;
+  return tokens.join(' ');
 }
 
-/** Merges two or more Emotion classes into one, in order; keeps other classes. */
-function merge(registered, css, className) {
-  const registeredStyles = [];
-  const rawClassName = getRegisteredStyles(registered, registeredStyles, className);
-  return registeredStyles.length < 2 ? className : rawClassName + css(registeredStyles);
+class ClassNameSession {
+  constructor(cache) {
+    this.cache = cache;
+    this.batch = new StyleBatch(cache);
+    this.closed = false;
+    this.css = (...styles) => {
+      this.check('css');
+      return this.batch.add(serializeStyles(styles, cache.registered));
+    };
+    this.cx = (...names) => {
+      this.check('cx');
+      const joined = classTokens(names), registered = [];
+      const plain = getRegisteredStyles(cache.registered, registered, joined);
+      return registered.length < 2 ? joined : plain + this.css(registered);
+    };
+  }
+  check(operation) {
+    if (isDevelopment && this.closed) throw new Error(`${operation} can only be used during render`);
+  }
 }
 
-function Insertion({cache, serializedArr}) {
-  const rules = useInsertionEffectAlwaysWithSyncFallback(() => {
-    let css = '';
-    for (const serialized of serializedArr) {
-      const output = insertStyles(cache, serialized, false);
-      if (!isBrowser && output !== undefined) css += output;
-    }
-    return isBrowser ? undefined : css;
-  });
-  if (isBrowser || rules.length === 0) return null;
-  return React.createElement('style', {'data-emotion': `${cache.key} ${serializedArr.map(serialized => serialized.name).join(' ')}`, dangerouslySetInnerHTML: {__html: rules}, nonce: cache.sheet.nonce});
-}
-
-/** Render-prop access to css (styles to a class name) and cx (merging class names). */
-export const ClassNames = withEmotionCache((props, cache) => {
-  let hasRendered = false;
-  const serializedArr = [];
-  const css = (...args) => {
-    if (hasRendered && isDevelopment) throw new Error('css can only be used during render');
-    const serialized = serializeStyles(args, cache.registered);
-    serializedArr.push(serialized);
-    // Registered now: cx may compose it.
-    registerStyles(cache, serialized, false);
-    return `${cache.key}-${serialized.name}`;
-  };
-  const cx = (...args) => {
-    if (hasRendered && isDevelopment) throw new Error('cx can only be used during render');
-    return merge(cache.registered, css, classnames(args));
-  };
-  const element = props.children({css, cx, theme: React.useContext(ThemeContext)});
-  hasRendered = true;
-  return React.createElement(React.Fragment, null, React.createElement(Insertion, {cache, serializedArr}), element);
+export const ClassNames = withEmotionCache(({children}, cache) => {
+  const theme = useTheme(), session = new ClassNameSession(cache);
+  let child;
+  try {child = children({css: session.css, cx: session.cx, theme});}
+  finally {session.closed = true;}
+  return React.createElement(React.Fragment, null, React.createElement(StyleInsertion, {batch: session.batch}), child);
 });
 if (isDevelopment) ClassNames.displayName = 'EmotionClassNames';

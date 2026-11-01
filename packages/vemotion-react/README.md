@@ -7,10 +7,12 @@ checked November 1, 2026: the `css` prop, `Global`, `ClassNames`, `css`,
 and others); React 16.8 or later is a peer. ES modules for browsers and server
 rendering.
 
-The current React integration is an upstream-derived port. Its control flow
-closely follows Emotion; dependency reductions and passing tests do not make
-it an independent implementation. An application-focused rewrite remains
-pending. [Provenance](PROVENANCE.json) records that boundary.
+Cache and theme ownership, global-sheet lifecycle and CSS-prop/ClassNames
+rendering now use a source-informed VPM redesign. Shared rendering plans handle
+registration and insertion; a mounted Global owns its sheet and cleanup.
+JSX adapters, diagnostic wording and declarations retain their existing
+contract and attribution. This is not a clean-room claim.
+[Provenance](PROVENANCE.json) records the boundary.
 
 ```jsx
 // tsconfig/babel: jsxImportSource 'vemotion-react' (or alias @emotion/react)
@@ -28,7 +30,7 @@ export const App = () => (
 Entries: `vemotion-react`, `vemotion-react/jsx-runtime` and
 `/jsx-dev-runtime` (the automatic JSX runtime with the `css` prop),
 `/types/css-prop` (the `css` prop on every element for the classic runtime) and
-`/_isolated-hnrs`. The behavior is the original's: server rendering inserts
+`/_isolated-hnrs`. Server rendering inserts
 `<style data-emotion>` elements, `Global` keeps a sheet of its own before the
 cache's elements, and in development `globalThis.EMOTION_RUNTIME_AUTO_LABEL`
 labels styles from the stack.
@@ -49,8 +51,27 @@ vemotion-react's `Theme`.
 
 | @emotion/react | vemotion-react |
 | --- | --- |
-| Depends on @emotion/babel-plugin (for the `macro` entry), with babel-plugin-macros, cosmiconfig and @babel/runtime, and on hoist-non-react-statics and react-is | No macro entry; statics are hoisted by a small internal function: 5 direct dependencies, all VPM packages |
+| Depends on @emotion/babel-plugin (for the `macro` entry), with babel-plugin-macros, cosmiconfig and @babel/runtime, and on hoist-non-react-statics and react-is | No macro entry; statics are hoisted by a small internal function: 4 direct dependencies, all VPM packages |
+| A shared memoizer reuses a function theme across independent providers/renders | Each provider memoizes its own result; independent mounts evaluate their own declaration |
+| Global hydration searches the global document | The mounted sheet searches its container document and releases its own hydrated styles on unmount |
+| Deep or cyclic class arrays recurse until the call stack overflows | Iterative traversal supports deep/shared arrays; ancestor cycles throw a specific TypeError |
 | JSX types branch on the `@types/react` version | React's `React.JSX` namespace (`@types/react` 18.2.7 and later) |
 
-Emotion's suite passes with this package in place of the original, under React
-16 and 18; see the [conformance record](../../scripts/emotion-conformance/README.md).
+The complete Emotion fixture runs on Node 24 under React 16 and 18, retaining
+two documented Babel-plugin differences. Focused lifecycle controls and ten
+MUI/React 19 caller renders pass on Node 24 and Bun. See the
+[conformance record](../../scripts/emotion-conformance/README.md).
+
+Theme functions are memoized within a provider while their identity and parent
+theme are unchanged. Recomputing independent mounts does not make mutable
+closures reactive within one mount. Cache keys should remain unique within a
+document; iframe documents can hydrate their own matching keys.
+
+[Isolated-process measurements](bench/results/README.md) compare five server
+rendering paths using each complete Emotion stack. The
+[styled caller](../vemotion-styled/bench/results/README.md) is also remeasured
+after changes. Fresh CSS-prop rendering takes about 14% more time on Node and
+10% on Bun; Node ClassNames rendering takes about 8% more. Most other React
+cases have no established direction beyond the control variation. These CPU
+measurements do not establish browser rendering or application throughput
+improvements.

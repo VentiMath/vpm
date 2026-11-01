@@ -26,3 +26,9 @@ test('labels come from the first component name in a stack trace', async () => {
   assert.equal(getLabelFromStackTrace('Error\n    at renderWithHooks (react.js:1:1)\n    at Later (app.js:2:2)'), undefined);
   assert.equal(getLabelFromStackTrace(undefined), undefined);
 });
+
+test('application rendering owns themes, global sheets and class-name traversal', () => {
+  const {spawnSync} = require('node:child_process');
+  const result = spawnSync(process.execPath, [path.resolve(__dirname, '../../../scripts/emotion-conformance/react-lifecycle.cjs')], {encoding: 'utf8', timeout: 120000});
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+});

@@ -8,28 +8,38 @@
     "tarballSha256": "56ab452022e865baa9fc02d12ad5a57b2c0d8884c5cc1b0bff5308a26d92b1f4",
     "integrity": "sha512-O000MLDBDdk/EohJPFUqvnp4qnHeYkVP5B0xEG0D/L7cOKP9kefu2DXn8dj74cQfsEzUqh+sr1RzFqiL1o+PpA=="
   },
-  "source": "Source-informed plain-JavaScript port of upstream React integration. Global, css-prop insertion, cache context and theming closely follow upstream control flow; changed syntax and dependency names do not make these independent implementations. Existing attribution and conformance tests are retained.",
+  "source": "Source-informed VPM redesign of cache ownership, theme resolution, global stylesheet lifecycle and CSS-prop/ClassNames rendering. Upstream sources and tests informed the behavior; this is not a clean-room claim. JSX export adapters, labels, static hoisting, diagnostic wording and public declarations retain their existing source-informed implementations and attribution.",
   "changes": [
-    "Plain-JavaScript port (React.createElement) of the css prop element, JSX runtimes, Global, ClassNames, css, keyframes, cache context and theming.",
-    "On vemotion-cache, vemotion-serialize, vemotion-utils, vemotion-weak-memoize and vemotion-use-insertion-effect-with-fallbacks; hoist-non-react-statics (and react-is) is replaced by a small internal function (also the _isolated-hnrs entry).",
-    "No macro entry, so no runtime dependency on @emotion/babel-plugin (with babel-plugin-macros, cosmiconfig and @babel/runtime); 5 direct dependencies instead of 8.",
+    "Shared StyleBatch rendering plans serve CSS-prop and ClassNames insertion; GlobalSheet owns mount, hydration, replacement and disposal. A common cache provider path and component-local theme memoization replace the former close translations.",
+    "On vemotion-cache, vemotion-serialize, vemotion-utils and vemotion-use-insertion-effect-with-fallbacks. ThemeProvider no longer needs vemotion-weak-memoize; four direct dependencies remain.",
+    "No macro entry or dependency on @emotion/babel-plugin, babel-plugin-macros, cosmiconfig or @babel/runtime. Static hoisting remains internal.",
     "Declarations on React's React.JSX namespace (@types/react 18.2.7 and later), checked with React 18.3 and 19 types.",
     "The #is-development and #is-browser conditions choose development or production and browser or server behavior, as in the original's conditional builds.",
     "ES modules with bundled declarations; React is a peer."
   ],
   "verification": {
     "fixture": "scripts/emotion-conformance",
-    "upstreamSuite": "Complete fixture: React 16 development 413 pass, 2 existing Babel-plugin differences, 8 skipped; React 18 development 416 pass, the same 2 differences, 5 skipped; production 5 pass and 418 skipped.",
+    "upstreamSuite": "Node 24 complete fixture: React 16 development 413 pass, 2 existing Babel-plugin differences, 8 skipped; React 18 development 416 pass, the same 2 differences, 5 skipped; production 5 pass and 418 skipped. The retained Jest runner does not load VPM ES modules under Bun; Bun coverage uses the focused, differential and caller probes.",
     "declarations": "types.cjs compiles a TSX application (css prop through jsxImportSource, Global, ClassNames, theming, keyframes, and two expected errors) against the declarations with DOM and React 18.3 and 19 types under the configured TypeScript 7 compiler.",
     "runtimes": [
       "Node.js 24",
       "Bun"
-    ]
+    ],
+    "application": "Ten identical MUI system 7.2.0 / React 19.1.0 HTML/CSS renders against upstream on Node 24 and Bun. RootThemeProvider uses the cache provider and MUI supplies theming/GlobalStyles; FramedDemo supplies an iframe cache.",
+    "regressions": "react-lifecycle.cjs reproduces shared theme-function results across independent upstream renders and wrong-document Global hydration, then checks VPM updates and cleanup. Exercises 20,000 nested class arrays, shared arrays and explicit cycle rejection. Original Node overflows on the deep array; Bun tolerates that depth. Three package tests run on both runtimes.",
+    "benchmark": "Five server rendering cases and the full styled caller run in selected-implementation processes with balanced order, identical-source controls, output validation and recursive source hashes."
   },
   "implementation": {
-    "kind": "upstream-derived port",
-    "replacementStatus": "independent application-facing rewrite pending",
-    "basis": "Manual source comparison finds closely retained control flow in Global, element insertion, context and theming. Functional fixes and dependency reductions remain valid but do not establish independent architecture.",
-    "targetScope": "VentiMath and MUI cache/theme providers, Global styles, css-prop rendering and ClassNames."
+    "kind": "source-informed application-facing redesign",
+    "basis": "Replaces the close translations of context, theming, Global, css-prop insertion and ClassNames with component-owned state and shared rendering plans. Upstream source inspection is acknowledged; matching diagnostic text and protocol fields are retained.",
+    "scope": "VentiMath/MUI cache and theme providers, Global styles including iframe hydration, CSS-prop rendering, ClassNames, JSX runtimes and server rendering.",
+    "retainedComponents": [
+      "JSX adapters and css/keyframes serialization wrappers",
+      "label and static-hoisting helpers",
+      "upstream-compatible public declarations and diagnostic text"
+    ],
+    "unsupported": [
+      "macro entry"
+    ]
   }
 }
