@@ -316,7 +316,9 @@
     "Deployment serialization returns a new wire representation without modifying frozen or reusable endpoint declarations. An explicit worklist handles deeply nested declarations without recursive stack overflow.",
     "HTTP CORS completion removes its finish listener when either preflight or the handler finishes. HTTP/callable/scheduler factories, options and manifest helpers share CJS/ESM module identity.",
     "Callable payloads preserve own __proto__ keys, ignore inherited type markers and reject cycles deliberately. Deep payloads avoid unbounded recursion. Request data must be an own property.",
-    "Callable status names cannot resolve through Object.prototype. Stream writes tolerate synchronous callbacks, pending writes resolve false on disconnect, and response listeners are removed at completion. CommonJS and ESM callable helpers share identity."
+    "Callable status names cannot resolve through Object.prototype. Stream writes tolerate synchronous callbacks, pending writes resolve false on disconnect, and response listeners are removed at completion. CommonJS and ESM callable helpers share identity.",
+    "Secret JSON parse errors no longer include the parser diagnostic, which can quote secret contents. CJS/ESM parameter identities and registration lists are shared; duplicate names are fully replaced.",
+    "Firestore changed events decode protobuf once, static path patterns are compiled at definition time, and own prototype-named captures are preserved. Field-mask sibling changes accumulate safely. Timestamp conversion handles timezone offsets and pre-epoch nanoseconds."
   ],
   "implementation": {
     "kind": "upstream-fork-with-independent-components",
@@ -334,7 +336,14 @@
       "lib/runtime/callable-auth.js": "Own verification orchestration. Production tokens are still verified by the retained Admin SDK; authentication policy and App Check enforcement are preserved. Unsafe decoding remains restricted to the existing explicit debug feature.",
       "lib/runtime/callable-codec.js": "Own bounded-recursion traversal with a deep-data worklist, ancestor cycle detection and safe own-property copying. Firebase numeric wrapper conversion remains compatible.",
       "lib/runtime/callable-error.js": "Own error class using canonical Google RPC status data; rejects inherited property names and protects the shared status records.",
-      "lib/runtime/callable-response.js": "Own request-scoped response lifecycle: cancellation, heartbeat scheduling, SSE output, pending-write cancellation and listener disposal. Handles synchronous write callbacks and rejects writes after completion."
+      "lib/runtime/callable-response.js": "Own request-scoped response lifecycle: cancellation, heartbeat scheduling, SSE output, pending-write cancellation and listener disposal. Handles synchronous write callbacks and rejects writes after completion.",
+      "lib/params/index.js": "Own parameter registration facade, preserving shared array identities, declaration order and manifest projection while removing all duplicate names. CJS/ESM share identity. Generic expression classes still retain upstream implementations.",
+      "lib/runtime/secret-parameter.js": "Own string and JSON secret accessors with runtime-only access guards, dynamic environment reads and JSON diagnostics that omit parser excerpts of secret contents.",
+      "lib/v2/providers/firestore.js": "Own table-driven Firestore trigger factories, document-pattern extraction, event envelopes and invocation composition. Shared declaration builder and cached static document patterns.",
+      "lib/common/providers/firestore.js": "Own snapshot materializer. Written/updated protobuf events decode once for both snapshots. Generated event schemas and underlying Admin/Firestore snapshot implementations remain retained dependencies.",
+      "lib/runtime/document-pattern.js": "Own document-pattern extraction for event parameters, including decoded segment/multi-segment values and safe own prototype-named captures.",
+      "lib/common/change.js": "Own Change container and iterative field-mask patcher. Multiple nested sibling masks accumulate without mutating inputs; prototype-named fields are copied safely.",
+      "lib/common/utilities/encoder.js": "Own timestamp projection preserving fractional nanoseconds with timezone offsets and pre-epoch values; invalid timestamps are rejected instead of producing NaN."
     }
   }
 }

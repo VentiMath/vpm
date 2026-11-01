@@ -5,8 +5,10 @@ code with the changes documented below. Logging, initialization, option
 projection, manifest serialization, HTTP/callable factories and the scheduler
 adapter now have independent implementations. Callable request validation,
 verification orchestration, payload conversion and response streaming are also
-independently implemented. The underlying Admin SDK verifiers, Firestore
-providers, secret parameters and most other SDK services still retain upstream code. Tests verify this mixed
+independently implemented. Firestore trigger adapters and secret accessors now
+use independent implementations as well. The underlying Admin/Firestore clients,
+generic parameter expressions, deployment discovery and other SDK services
+still retain upstream code. Tests verify this mixed
 implementation.
 An independently written implementation of the application-facing APIs is
 pending; this package is not yet a completed rewrite.
@@ -80,6 +82,17 @@ Connect GraphQL server, as upstream.
   heartbeat/response listeners are cleaned up. Calls to `sendChunk` after
   completion return `false`. Upstream source and tests informed this redesign;
   it is not a clean-room implementation.
+- **Independent Firestore triggers and secrets.** A shared snapshot materializer
+  decodes changed protobuf events once for both documents; generated protocol
+  schemas and Admin/Firestore snapshot classes remain dependencies. Static
+  document patterns are prepared at declaration time, and prototype-named
+  captures remain own data. Nested field-mask changes accumulate across siblings
+  without changing inputs. Timestamp projection preserves fractional nanoseconds
+  with offsets and before the epoch, and rejects invalid timestamps. Secret
+  reads stay dynamic and unavailable during deployment; JSON errors omit parser
+  excerpts that could quote a credential. Parameter registration preserves its
+  public arrays and removes every duplicate name. Generic expression classes
+  remain upstream-derived.
 - **The bin's directory argument.** `firebase-functions [functionsDir]` read the
   directory only when two or more arguments were given, so a single directory
   argument was ignored and `-h` printed nothing. The Firebase CLI runs the bin
@@ -109,10 +122,12 @@ Connect GraphQL server, as upstream.
   with the original, then checked here; additional fixes have focused tests below.
 - [Package tests](test/firebase-functions.test.cjs), [logging and initialization
   regressions](test/logging-init.test.cjs), [deployment regressions](test/deployment.test.cjs),
-  [callable regressions](test/callable.test.cjs), and [type tests](test/types.ts).
+  [callable regressions](test/callable.test.cjs), [event and secret regressions](test/events-secrets.test.cjs),
+  and [type tests](test/types.ts).
 - [Measurements](bench/results/README.md): isolated logging, initialization,
   endpoint construction, fresh manifest serialization and initialized HTTP
-  invocation, callable payload conversion and callable request comparisons on
+  invocation, callable payload conversion, callable requests, secret reads and
+  Firestore event materialization on
   Node 24 and Bun. Console and network I/O are excluded. The callable request
   case has no token headers and therefore does not measure cryptographic
   verification or the Admin SDK.
@@ -123,14 +138,17 @@ frozen/reusable declarations; the benchmark includes construction of a fresh
 64-endpoint input for both libraries. The report retains every sample and the
 identical-code controls, including inconclusive results.
 
-In the callable recording, structured payload encoding took 40.4% more time
-on Node (846 to 1,187 ns); Node decoding was inconclusive because one process
-pair reversed direction. Bun decoding took 35.4% less time; its encoding result
-was inconclusive at the control spread. The request without token headers took
-18.9% more time on Node (2,048 to 2,468 ns) and 12.1% more on Bun (1,727 to
-1,986 ns). These are explicit costs of the current implementation, not a claim
-of a general speedup. The complete report also retains the logging, declaration,
-manifest and HTTP measurements, including inconclusive controls.
+The event recording shows 45.1% lower time for changed protobuf documents on
+Node (3,295 to 1,810 ns). Bun's event result is inconclusive because process
+pairs reverse direction. Firestore trigger construction is inconclusive on Node
+and takes 51.2% more time on Bun (564 to 871 ns); it prepares the document pattern
+once for subsequent invocations. Secret reads are inconclusive on both runtimes.
+
+The same recording retains the callable costs: Node structured encoding and
+decoding take 46.5% and 16.3% more time. The request without token headers takes
+15.3% more time on Node and 18.6% more on Bun. Bun decoding takes 33.1% less time.
+These are local CPU measurements, not a general speedup or an application latency
+claim. The complete report includes every case and its controls.
 
 MIT licensing, the pinned source and the files changed from it are recorded in
 [PROVENANCE.json](PROVENANCE.json).
