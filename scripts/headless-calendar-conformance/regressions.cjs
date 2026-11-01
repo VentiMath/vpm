@@ -94,6 +94,6 @@ if (process.argv[2] === '--child') {
   assert.deepEqual(vpm.offsetRounding, {denver: '1880-01-01T00:00:00-07:00', format: ['-07:00', 'GMT+1']});
   assert.deepEqual(upstream.localMilliseconds, {toDate: '2024-06-01T12:00:00.000Z', formatted: '8:00:00.000AM', iso: '2024-06-01T08:00:00.750-04:00'});
   assert.deepEqual(vpm.localMilliseconds, {toDate: '2024-06-01T12:00:00.750Z', formatted: '8:00:00.750AM', iso: '2024-06-01T08:00:00.750-04:00'});
-  assert(upstream.graph.modules > 1 && vpm.graph.modules === 1, JSON.stringify(results));
+  assert(upstream.graph.modules > vpm.graph.modules && vpm.graph.bytes < upstream.graph.bytes / 2, JSON.stringify(results));
   console.log(`Reproduced and fixed: Casablanca an hour off during Morocco's Ramadan suspensions (${upstream.nativeTemporal ? 'not on this runtime, whose native Temporal the polyfill uses' : 'the polyfill\'s own implementation'}), years 0-99 read as 1900-1999, offsets printed as ":60", and local-time milliseconds dropped. Named time zones need ${upstream.graph.modules} modules (${(upstream.graph.bytes / 1024).toFixed(0)} KiB) upstream and ${vpm.graph.modules} (${(vpm.graph.bytes / 1024).toFixed(0)} KiB) here.`);
 }

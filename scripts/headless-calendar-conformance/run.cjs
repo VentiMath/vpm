@@ -13,7 +13,7 @@ const original = path.join(__dirname, 'node_modules/@full-ui/headless-calendar')
 assert.equal(require(path.join(original, 'package.json')).version, '7.1.3');
 const entry = upstream ? path.join(original, 'index.js') : path.resolve(__dirname, '../../packages/vfull-ui-headless-calendar/index.js');
 const modules = ['calendar-system', 'env', 'formatting-cmd', 'formatting-func', 'formatting-interface', 'formatting-native', 'formatting-utils', 'locale'];
-const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'headless-calendar-conformance-'));
+const temporary = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'headless-calendar-conformance-')));
 try {
   fs.mkdirSync(path.join(temporary, 'tests')); fs.mkdirSync(path.join(temporary, 'src'));
   for (const file of fs.readdirSync(path.join(__dirname, 'upstream/tests'))) {

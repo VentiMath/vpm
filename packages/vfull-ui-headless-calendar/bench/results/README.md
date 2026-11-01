@@ -1,56 +1,67 @@
 # vfull-ui-headless-calendar measurements
 
-Recorded November 1, 2026 on a shared Linux x64 VM (Intel Xeon @ 2.80 GHz) with
-Node 22.22.0 and Bun 1.4.4, against @full-ui/headless-calendar 7.1.3 on
-temporal-polyfill 1.0.1, with `TZ=America/New_York`. Node 24 was not available
-on this machine. Three fresh processes per runtime, 12 alternating paired rounds
-per case, 150 ms warmup per variant plus four full warmup blocks. Iterations use
-a 15 ms upstream pilot target capped at 100,000. Outputs are retained and
-validated outside timing. One additional process per runtime compares identical
-upstream implementations. No trimming.
+These records supersede the earlier same-process comparison. Each timed
+implementation runs alone in a fresh process. Four comparison pairs use
+balanced upstream-first / VPM-first order; two further pairs run identical
+upstream code in separate processes as controls. Warmup lasts at least 150 ms
+per case, followed by recalibration on warmed code, four warmup blocks and 12
+recorded blocks. Both workers in a pair use the same iteration count, targeting
+10 ms blocks with a one-million-operation cap. Results are retained and checked
+outside timing. All samples are kept, including outliers.
 
-Each variant runs freshly compiled case code with its own measurement loop. The
-second process on each runtime sets up VPM first; the others set up upstream
-first. Values are pooled median nanoseconds per operation (one operation is the
-whole batch named in the case). Changes are medians of paired sample ratios.
-Negative means less time. Controls show identical-upstream drift. Inputs are
-defined in [the benchmark](../compare.cjs).
+The comparison units are per-process medians. The change column is the median
+of four process-pair percentage changes; the two order columns expose order
+sensitivity. The nanosecond columns are medians of the four process medians.
+They need not produce exactly the percentage in the change column.
 
-The original's named time zones run on temporal-polyfill's own implementation
-on Node, and on Bun's native `Temporal`, which the polyfill uses when a runtime
-has one.
+A direction is unestablished when it reverses across processes or any pair
+overlaps the largest absolute control difference (with a minimum 2% floor).
+This is a conservative descriptive check, not a confidence interval. Process
+isolation reduces shared JIT feedback; environmental noise and GC remain.
+Negative changes mean less time; these are local CPU measurements, not
+application throughput or latency guarantees.
 
-## Node 22
+## Node 24.22.1
 
-| Case | Upstream ns | VPM ns | Paired change | Per-process changes (2nd: VPM first) | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| named zone / 200 timestamps to wall-clock markers | 3,042,095 | 460,661 | -84.1% | -83.4%, -83.2%, -85.2% | -0.4% |
-| named zone / 42 day cells to instants and offsets | 1,136,807 | 383,565 | -66.0% | -66.6%, -66.5%, -65.4% | -2.7% |
-| named zone / format 42 day cells | 1,241,585 | 387,241 | -69.0% | -70.6%, -69.1%, -68.4% | -7.0% |
-| named zone / parse 200 ISO strings | 3,075,490 | 727,398 | -76.4% | -74.7%, -77.3%, -76.6% | +7.3% |
-| local zone / 42 day cells to instants | 13,844 | 14,241 | +2.3% | +2.6%, +1.3%, +3.4% | +0.1% |
-| UTC / parse 200 ISO strings and add a month | 197,360 | 198,017 | +0.3% | -1.2%, +0.2%, +6.2% | -0.8% |
+Recorded 2026-11-01T08:51:25.350Z on Apple M1 Pro, darwin/arm64.
 
-## Bun 1.4.4
+[Raw samples, processes, controls and source hashes](node-isolated.json).
 
-| Case | Upstream ns | VPM ns | Paired change | Per-process changes (2nd: VPM first) | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| named zone / 200 timestamps to wall-clock markers | 773,079 | 430,334 | -43.7% | -46.9%, -42.8%, -46.3% | -1.7% |
-| named zone / 42 day cells to instants and offsets | 191,402 | 357,745 | +88.8% | +87.5%, +91.5%, +88.0% | -2.2% |
-| named zone / format 42 day cells | 352,505 | 366,630 | +1.1% | +1.4%, +1.8%, -3.6% | -2.2% |
-| named zone / parse 200 ISO strings | 1,023,616 | 665,467 | -32.4% | -34.1%, -30.4%, -37.2% | +3.8% |
-| local zone / 42 day cells to instants | 8,152 | 8,520 | +5.6% | +7.4%, +7.5%, +0.8% | -1.2% |
-| UTC / parse 200 ISO strings and add a month | 219,421 | 233,812 | +8.5% | +8.5%, +12.1%, +4.1% | -1.6% |
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| named zone / 200 timestamps to wall-clock markers | 1278058 | 252042 | -80.2% | -80.7% | -79.8% | 6.2% | lower time in every pair, beyond control spread |
+| named zone / 42 day cells to instants and offsets | 491177 | 112856 | -76.8% | -77.1% | -76.8% | 4.9% | lower time in every pair, beyond control spread |
+| named zone / format 42 day cells | 547982 | 224681 | -58.9% | -57% | -61.6% | 1.3% | lower time in every pair, beyond control spread |
+| named zone / parse 200 ISO strings | 1283379 | 357982 | -72% | -72% | -60.7% | 2.4% | lower time in every pair, beyond control spread |
+| local zone / 42 day cells to instants | 11887 | 12747 | 6.7% | 6.7% | 9.9% | 1.2% | higher time in every pair, beyond control spread |
+| UTC / parse 200 ISO strings and add a month | 112726 | 117264 | 3.6% | 3.6% | 3.3% | 2.2% | unestablished at this precision |
 
-Where the polyfill runs its own implementation (Node here; browsers without
-`Temporal`), every named-zone case takes 66-84% less time. Against a native
-`Temporal` (Bun), reading instants takes 44% less time, while resolving
-wall-clock day cells to instants takes 89% more, about 8.5 µs per cell instead
-of 4.6 µs, since each takes two Intl readings; formatting a month of cells is at
-parity. The `'local'` and `'UTC'` cases, which never used the polyfill, are
-within 2-9%: the local zone now carries milliseconds, and arrays check for years
-0-99.
+## Bun 1.4.0
 
-`node packages/vfull-ui-headless-calendar/bench/summarize.cjs --verify-current`
-checks that all eight reports cover the same cases and that the recorded source
-hashes match the current files.
+Recorded 2026-11-01T08:51:49.979Z on Apple M1 Pro, darwin/arm64.
+
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
+
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| named zone / 200 timestamps to wall-clock markers | 509568 | 245632 | -51.4% | -52.5% | -50.6% | 5.9% | lower time in every pair, beyond control spread |
+| named zone / 42 day cells to instants and offsets | 101292 | 111619 | 10.2% | 10.2% | 10.7% | 1.7% | higher time in every pair, beyond control spread |
+| named zone / format 42 day cells | 200116 | 206303 | 3.1% | -6.5% | 19.6% | 3.6% | unestablished at this precision |
+| named zone / parse 200 ISO strings | 514875 | 322380 | -37.6% | -35.4% | -38.4% | 5.7% | lower time in every pair, beyond control spread |
+| local zone / 42 day cells to instants | 4906 | 5304 | 7.6% | 6.6% | 8.8% | 1.3% | higher time in every pair, beyond control spread |
+| UTC / parse 200 ISO strings and add a month | 87751 | 97601 | 11.2% | 11.7% | 10.9% | 2.1% | higher time in every pair, beyond control spread |
+
+## Reproduce
+
+Run these commands from the repository root after installing the pinned
+fixtures used by `bench/compare.cjs`:
+
+```sh
+OUTPUT=packages/vfull-ui-headless-calendar/bench/results/node-isolated.json node packages/vfull-ui-headless-calendar/bench/compare.cjs
+OUTPUT=packages/vfull-ui-headless-calendar/bench/results/bun-isolated.json bun packages/vfull-ui-headless-calendar/bench/compare.cjs
+node scripts/render-bench-report.cjs packages/vfull-ui-headless-calendar
+```
+
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.

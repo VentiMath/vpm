@@ -14,6 +14,7 @@ release's lockfile.
 npm --prefix scripts/headless-calendar-conformance ci --ignore-scripts --no-audit --no-fund
 node scripts/headless-calendar-conformance/run.cjs --upstream
 node scripts/headless-calendar-conformance/run.cjs
+node scripts/headless-calendar-conformance/arithmetic.cjs
 node scripts/headless-calendar-conformance/regressions.cjs
 node scripts/headless-calendar-conformance/zones.cjs
 ```
@@ -23,7 +24,7 @@ Repeat with Bun.
 `run.cjs` runs the release's 75 tests with its own runner and configuration. The
 tests import the package's TypeScript modules from `../src`; each becomes a
 re-export of the published entry under test, the original's or VPM's. All 75
-pass for both libraries on Bun. ICU 77 (Node 22) renders UTC's short offset as
+pass for both libraries on Node 24 and Bun. Some older ICU versions render UTC's short offset as
 "GMT" where the tests expect "GMT+0", as current ICU renders it, so on such a
 runtime both libraries fail exactly those two tests; `run.cjs` requires that set
 only where the runtime renders "GMT".
@@ -46,3 +47,11 @@ wall-clock times it skips or repeats, and instants across the whole Date range.
 VPM's markers, offsets, instants and ISO strings must match the reference
 everywhere. The checks where the original differs are counted and listed by zone
 and year.
+
+The runtime under test is now independently implemented. `arithmetic.cjs` adds
+107,500 deterministic comparisons of valid dates, week numbers, durations,
+ranges and parsing per runtime. Focused tests explicitly cover the deliberate
+differences: complete duration parsing, finite units, clipped/nonmutating range
+inversion, epoch-zero ranges, mutable formatting contexts and extended years.
+The FullCalendar React fixture also runs its mounted and browser suites with
+this engine, so the callers exercise the rewrite.

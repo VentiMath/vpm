@@ -90,6 +90,7 @@ jobs:
           node scripts/firebase-functions-conformance/callers.cjs
           node scripts/headless-calendar-conformance/run.cjs --upstream
           node scripts/headless-calendar-conformance/run.cjs
+          node scripts/headless-calendar-conformance/arithmetic.cjs
           node scripts/headless-calendar-conformance/regressions.cjs
           node scripts/headless-calendar-conformance/zones.cjs
           node scripts/fullcalendar-core-conformance/callers.cjs
@@ -371,6 +372,7 @@ jobs:
           bun scripts/firebase-functions-conformance/callers.cjs
           bun scripts/headless-calendar-conformance/run.cjs --upstream
           bun scripts/headless-calendar-conformance/run.cjs
+          bun scripts/headless-calendar-conformance/arithmetic.cjs
           bun scripts/headless-calendar-conformance/regressions.cjs
           bun scripts/headless-calendar-conformance/zones.cjs
           bun scripts/fullcalendar-core-conformance/callers.cjs
