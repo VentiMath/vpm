@@ -57,6 +57,7 @@ try {
   // tokens; tests must not accidentally exercise VPM on both sides.
   fs.writeFileSync(path.join(temporary, 'setup.cjs'), `
 // Runtime dependencies are pinned in scripts/consumers; test tools live separately.
+module.exports = require(${JSON.stringify(path.join(__dirname, 'comparison-clock.cjs'))});
 `);
   if (!upstream) {
     fs.writeFileSync(path.join(temporary, 'lib/validateAsymmetricKey.js'), 'module.exports = (alg, key) => { if (alg && key) return require(' + JSON.stringify(path.join(target, 'lib/keys')) + ').validate(alg, key, key.type === "private", true); };\n');
