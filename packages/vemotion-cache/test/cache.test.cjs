@@ -36,3 +36,76 @@ test('custom plugins, compat mode and shared server rules', async () => {
   assert.equal(compat.insert('.compat-a', {name, styles: 'width:0;'}, compat.sheet, true), undefined);
   assert.equal(compat.inserted[name], '.compat-a{width:0;}');
 });
+
+test('server compilation keys include the actual selector and styles, not only a supplied name', async () => {
+  const {default: createCache} = await load();
+  const cache = createCache({key: 'collision'});
+  assert.equal(cache.insert('.first', {name: 'same', styles: 'color:red;'}, cache.sheet, false), '.first{color:red;}');
+  assert.equal(cache.insert('.second', {name: 'same', styles: 'color:blue;'}, cache.sheet, false), '.second{color:blue;}');
+  assert.equal(cache.insert('.third', {name: '__proto__', styles: 'width:0;'}, cache.sheet, true), '.third{width:0;}');
+  assert.equal(cache.inserted.__proto__, true);
+  assert.equal(cache.registered.toString, undefined);
+  assert.equal(cache.inserted.hasOwnProperty('__proto__'), true);
+  assert.equal(cache.inserted.hasOwnProperty('toString'), false);
+});
+
+test('compiled custom-plugin rules are bounded without dropping inserted CSS', async () => {
+  const {default: createCache} = await load();
+  let compilations = 0;
+  const cache = createCache({key: 'bounded', stylisPlugins: [element => {if (element.type === 'decl') compilations++;}]});
+  cache.compat = true;
+  const first = {name: 'first', styles: 'width:0;'};
+  cache.insert('.first', first, cache.sheet, true);
+  cache.insert('.first', first, cache.sheet, false);
+  assert.equal(compilations, 1);
+  for (let i = 0; i < 1024; i++) cache.insert('.other', {name: 'other' + i, styles: `height:${i}px;`}, cache.sheet, false);
+  assert.equal(cache.insert('.first', first, cache.sheet, false), '.first{width:0;}');
+  assert.equal(compilations, 1026, 'the oldest compiled entry was evicted and recompiled');
+  assert.equal(cache.inserted.first, '.first{width:0;}', 'legacy renderer still has already-inserted CSS');
+});
+
+test('custom-plugin compilation does not leak across request caches', async () => {
+  const {default: createCache} = await load();
+  let color = 'red';
+  const plugins = [element => {if (element.type === 'decl') element.return = 'color:' + color + ';';}];
+  const first = createCache({key: 'request', stylisPlugins: plugins});
+  assert.equal(first.insert('.x', {name: 'same', styles: 'color:inherit;'}, first.sheet, false), '.x{color:red;}');
+  color = 'blue';
+  const second = createCache({key: 'request', stylisPlugins: plugins});
+  assert.equal(second.insert('.x', {name: 'same', styles: 'color:inherit;'}, second.sheet, false), '.x{color:blue;}');
+});
+
+test('nested browser insertions keep their sheet, and hydration uses the container document', () => {
+  const {spawnSync} = require('node:child_process');
+  const fixture = path.resolve(__dirname, '../../../scripts/emotion-conformance/node_modules');
+  const source = `
+    const {JSDOM} = require(${JSON.stringify(path.join(fixture, 'jsdom'))});
+    const dom = new JSDOM('<!doctype html><head></head><body></body>');
+    global.document = dom.window.document; global.HTMLElement = dom.window.HTMLElement;
+    const createCache = require(process.argv[1]).default;
+    const outer = [], inner = [];
+    let nested = false, cache;
+    const plugin = element => {
+      if (element.type === 'decl' && !nested) {
+        nested = true;
+        cache.insert('.inner', {name: 'inner', styles: 'width:1px;'}, {insert: value => inner.push(value)}, false);
+      }
+    };
+    cache = createCache({key: 'app', stylisPlugins: [plugin]});
+    cache.insert('.outer', {name: 'outer', styles: 'color:red;background:blue;'}, {insert: value => outer.push(value)}, false);
+    const frame = new JSDOM('<!doctype html><head><style data-emotion="frame existing">body{color:red;}</style></head><body></body>');
+    const scoped = createCache({key: 'frame', container: frame.window.document.head});
+    process.stdout.write(JSON.stringify({outer, inner, hydrated: scoped.inserted.existing === true, tags: scoped.sheet.tags.length}));
+    dom.window.close(); frame.window.close();
+  `;
+  const run = root => {
+    const result = spawnSync(process.execPath, ['-e', source, root], {encoding: 'utf8'});
+    assert.equal(result.status, 0, result.stderr); return JSON.parse(result.stdout);
+  };
+  const original = run(path.join(fixture, '@emotion/cache'));
+  assert.equal(original.outer.length, 0, 'control reproduces shared insertion destination');
+  assert.equal(original.inner.length, 2);
+  assert.equal(original.hydrated, false);
+  const actual = run(path.resolve(__dirname, '..'));
+  assert.deepEqual(actual, {outer: ['.outer{color:red;background:blue;}'], inner: ['.inner{width:1px;}'], hydrated: true, tags: 1});
+});

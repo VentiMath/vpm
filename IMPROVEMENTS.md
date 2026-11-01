@@ -46,7 +46,7 @@ now have current comparison targets:
 | Suite verified | vemotion-babel-plugin | @emotion/babel-plugin 11.13.5; its 130 tests (two pinned by name) and Emotion's runtime suite compiled with it | [@emotion/babel-plugin 11.13.5](https://www.npmjs.com/package/@emotion/babel-plugin), checked November 1, 2026 |
 | Suite verified | vemotion-styled | @emotion/styled 11.14.1; Emotion's suite under React 16 and 18 with all twelve VPM Emotion packages in place of the originals, and its declarations with React 18.3 and 19 types under the configured TypeScript 7 compiler | [@emotion/styled 11.14.1](https://www.npmjs.com/package/@emotion/styled), checked November 1, 2026 |
 | Suite verified | vemotion-react | @emotion/react 11.14.0; Emotion's suite under React 16 and 18 with it in place of the original, and its declarations with React 18.3 and 19 types under the configured TypeScript 7 compiler | [@emotion/react 11.14.0](https://www.npmjs.com/package/@emotion/react), checked November 1, 2026 |
-| Suite and differential verified | vemotion-cache | @emotion/cache 11.14.0; Emotion's suite under React 16 and 18, 10,000 generated styles with identical CSS in development and production (including VentiMath's RTL and `@layer` configurations), and its declarations under the configured TypeScript 7 compiler | [@emotion/cache 11.14.0](https://www.npmjs.com/package/@emotion/cache), checked November 1, 2026 |
+| Suite and differential verified | vemotion-cache | @emotion/cache 11.14.0; Emotion's suite under React 16 and 18, 10,000 generated styles with matching CSS/state/distinct warning text in development and production (including VentiMath's RTL and `@layer` configurations), and its declarations under the configured TypeScript 7 compiler | [@emotion/cache 11.14.0](https://www.npmjs.com/package/@emotion/cache), checked November 1, 2026 |
 | Suite verified | vemotion-is-prop-valid | @emotion/is-prop-valid 1.4.0; Emotion's 293-test suite with it in place of the original | [@emotion/is-prop-valid 1.4.0](https://www.npmjs.com/package/@emotion/is-prop-valid), checked November 1, 2026 |
 | Suite verified | vemotion-use-insertion-effect-with-fallbacks | @emotion/use-insertion-effect-with-fallbacks 1.2.0; Emotion's suite under React 16 and React 18, and its declarations under the configured TypeScript 7 compiler | [@emotion/use-insertion-effect-with-fallbacks 1.2.0](https://www.npmjs.com/package/@emotion/use-insertion-effect-with-fallbacks), checked November 1, 2026 |
 | Suite and differential verified | vemotion-serialize | @emotion/serialize 1.3.3; Emotion's 293-test suite with it in place of the original, 20,000 generated style arguments with identical results in development and production, and its declarations under the configured TypeScript 7 compiler | [@emotion/serialize 1.3.3](https://www.npmjs.com/package/@emotion/serialize), checked November 1, 2026 |
@@ -208,7 +208,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vemotion-babel-plugin](packages/vemotion-babel-plugin) | @emotion/babel-plugin 11.13.5 | Minifies with vstylis (the original's stylis 4.2.0 turned `border: 1px /* thin */ solid red` into `border:1pxsolid red`), its own source maps and imports, no macros: 3 dependencies instead of 11, all VPM; otherwise the original's output, target class names included. |
 | [vemotion-styled](packages/vemotion-styled) | @emotion/styled 11.14.1 | Reads the theme context on every render (the original's conditional read changed the order of hooks when a `theme` prop came and went), forwards current HTML attributes through vemotion-is-prop-valid, and has no macro entry: 4 direct dependencies, all VPM. |
 | [vemotion-react](packages/vemotion-react) | @emotion/react 11.14.0 | Without the macro entry and its runtime dependency on the Babel plugin (with babel-plugin-macros, cosmiconfig and @babel/runtime) and hoist-non-react-statics: 5 direct dependencies, all VPM; JSX types on `React.JSX`, checked with React 18.3 and 19 types. |
-| [vemotion-cache](packages/vemotion-cache) | @emotion/cache 11.14.0 | On vstylis (stylis 4.4.0); Emotion's prefixer by property name (the original's copy of stylis 4.0.13's invented `-webkit-box-flex-wrap` and others), a valid `-ms-flex-item-align`, and `-ms-flex-pack` kept for `space-between`; otherwise identical CSS over 10,000 generated styles, VentiMath's RTL configuration included. |
+| [vemotion-cache](packages/vemotion-cache) | @emotion/cache 11.14.0 | Redesigned cache/compiler/hydration: per-insertion destinations, container-document hydration, full-CSS compilation keys, bounded storage and custom-plugin isolation. On vstylis (stylis 4.4.0); Emotion's prefixer by property name (the original's copy of stylis 4.0.13's invented `-webkit-box-flex-wrap` and others), a valid `-ms-flex-item-align`, and `-ms-flex-pack` kept for `space-between`; otherwise identical CSS over 10,000 generated styles, VentiMath's RTL configuration included. |
 | [vemotion-is-prop-valid](packages/vemotion-is-prop-valid) | @emotion/is-prop-valid 1.4.0 | Forwards 17 current HTML and SVG attributes the original rejected (`command`, `commandFor`, `closedBy`, `part`, `shadowRootMode`, `imageSrcSet`, `noModule`, `precedence`...), which styled elements dropped. |
 | [vemotion-use-insertion-effect-with-fallbacks](packages/vemotion-use-insertion-effect-with-fallbacks) | @emotion/use-insertion-effect-with-fallbacks 1.2.0 | The same behavior, written for VPM. |
 | [vemotion-serialize](packages/vemotion-serialize) | @emotion/serialize 1.3.3 | Unitless properties written in kebab-case (`'font-weight': 600`) no longer get `px`, numeric fallback lists stay declarations (the original wrote `width{100;50%;}`), custom properties detected by `--`, and each call keeps its own state; otherwise identical output over 20,000 generated inputs. |
@@ -465,7 +465,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | `vemotion-babel-plugin` | 11 (Babel helpers and runtime, babel-plugin-macros, source-map, convert-source-map, find-root, escape-string-regexp, stylis, three Emotion packages) | 3 (`vemotion-hash`, `vemotion-serialize`, `vstylis`) |
 | `vemotion-styled` | 6 (four Emotion packages, `@emotion/babel-plugin`, `@babel/runtime`; React and `@emotion/react` peers) | 4 (VPM Emotion packages; React and `vemotion-react` peers) |
 | `vemotion-react` | 8 (five Emotion packages, `@emotion/babel-plugin`, `@babel/runtime`, `hoist-non-react-statics`; React peer) | 5 (VPM Emotion packages; React peer) |
-| `vemotion-cache` | 5 (four Emotion packages, `stylis`) | 5 (four VPM Emotion packages, `vstylis`) |
+| `vemotion-cache` | 5 (four Emotion packages, `stylis`) | 3 (`vemotion-sheet`, `vemotion-utils` declarations, `vstylis`) |
 | `vemotion-is-prop-valid` | 1 (`@emotion/memoize`) | 1 (`vemotion-memoize`) |
 | `vemotion-use-insertion-effect-with-fallbacks` | 0 (React peer) | 0 (React peer) |
 | `vemotion-serialize` | 5 (four Emotion packages, `csstype`) | 4 (VPM Emotion packages; `csstype` peer, types only) |
@@ -696,10 +696,21 @@ and `color-scheme` gained `-webkit-print-color-scheme`; it gave IE
 `justify-content: space-between`. Properties are now selected by name with
 Emotion's rule set. Over 10,000 generated styles, with the default prefixer,
 without plugins, and in VentiMath's own configurations (stylis-plugin-rtl and
-its `@layer mui` plugin), its CSS is otherwise identical to the original's
-running on stylis 4.4.0, in development and production, on Node and Bun.
+its `@layer mui` plugin), its CSS and inserted state otherwise match the
+original running on stylis 4.4.0 in development and production, on Node 24
+and Bun. The cache factory, compiler storage and hydration now use a
+source-informed redesign: browser insertions retain their own destination,
+hydration uses the container document, compiled keys include full CSS and
+custom-plugin results stay with their cache. Compiled storage is bounded to
+1,024 entries per map. Development diagnostic text matches, with repetitions
+across isolated caches reported separately. Seven focused regression tests
+and the complete Emotion/MUI fixture cover this change. Server microbenchmarks
+and full-stack styled measurements use the isolated-process harness.
 
-`vemotion-react` targets @emotion/react 11.14.0 with the original's behavior.
+`vemotion-react` currently remains an upstream-derived port of @emotion/react
+11.14.0. Its Global, css-prop insertion, context and theming control flow
+closely follows upstream; an independent application-facing rewrite remains
+pending. Passing conformance tests is not evidence of independent design.
 Without the `macro` entry it no longer depends at run time on the Babel plugin
 (and through it babel-plugin-macros, cosmiconfig and @babel/runtime);
 hoist-non-react-statics is a small internal function. Applications alias the
