@@ -7,6 +7,11 @@ checked November 1, 2026: the `css` prop, `Global`, `ClassNames`, `css`,
 and others); React 16.8 or later is a peer. ES modules for browsers and server
 rendering.
 
+The current React integration is an upstream-derived port. Its control flow
+closely follows Emotion; dependency reductions and passing tests do not make
+it an independent implementation. An application-focused rewrite remains
+pending. [Provenance](PROVENANCE.json) records that boundary.
+
 ```jsx
 // tsconfig/babel: jsxImportSource 'vemotion-react' (or alias @emotion/react)
 import {css, Global, ThemeProvider} from 'vemotion-react';
