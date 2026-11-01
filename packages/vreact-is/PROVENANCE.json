@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "react-is",
+    "version": "19.3.1",
+    "repository": "https://github.com/react/react",
+    "commit": "61aa00df822d0eb76d0362eb8b6fdd3527693efe",
+    "integrity": "sha512-RRieF6IyxQBkcK6pP8xOHprLTPW6QjRkbGdImtqNme+/hYVwCZkLQLdlZGOhUqXwkS9IEynaGvPJtv6XB/cz0Q=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent classification implementation informed by the published React wire tags, API and upstream tests. No upstream runtime is included; the upstream tests and MIT license retain attribution. This is source-informed work, not a clean-room claim.",
+  "scope": "React 19.3.1 classification API, including current element tags, client references and ViewTransition types; actual React 19.1/MUI 7 callers.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "All published react-is symbols and predicates used by MUI and other React 19 callers."
+  },
+  "changes": [
+    "isValidElementType captures the type discriminator once instead of rereading getters.",
+    "Direct built-in predicates and isPortal avoid inspecting unrelated nested type metadata. Getter failures for required fields still propagate.",
+    "Native browser ESM, CommonJS and ESM share function identities; standalone boolean declarations do not import React or platform types."
+  ]
+}

@@ -1,0 +1,7 @@
+'use strict';
+const assert=require('node:assert/strict'),path=require('node:path');
+const root=path.resolve(__dirname,'..'),element=Symbol.for('react.transitional.element'),fragment=Symbol.for('react.fragment'),memo=Symbol.for('react.memo');
+const host={$$typeof:element,type:'div'},wrapped={$$typeof:element,type:{$$typeof:memo}},frag={$$typeof:element,type:fragment};
+const fixtures=[['isFragment / ordinary child','isFragment',host,false],['isFragment / fragment','isFragment',frag,true],['isElement / element','isElement',host,true],['isValidElementType / host','isValidElementType','div',true],['isValidElementType / memo','isValidElementType',wrapped.type,true],['typeOf / host','typeOf',host,element],['typeOf / memo','typeOf',wrapped,memo],['isMemo / memo element','isMemo',wrapped,true],['isPortal / ordinary child','isPortal',host,false]];
+const cases=fixtures.map(([name,key,value,expected])=>({name,make:directory=>{const fn=require(directory)[key];return()=>fn(value);},validate:value=>assert.equal(value,expected)}));
+require('../../../scripts/bench-process.cjs').run({root,upstream:path.resolve(__dirname,'../../../scripts/react-is-conformance/node_modules/react-is'),vpm:root,cases,validationOnly:process.argv.includes('--validate'),files:['package.json','index.cjs','runtime.mjs','bench/compare.cjs','../../scripts/react-is-conformance/package-lock.json','../../scripts/react-is-conformance/node_modules/react-is']}).catch(error=>{console.error(error);process.exitCode=1;});

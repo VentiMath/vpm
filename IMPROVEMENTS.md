@@ -41,10 +41,10 @@ record verified coverage, including older application compatibility; they do not
 establish parity with every upstream API. The roadmap records known gaps, not a
 completed freshness audit of the entire catalog.
 
-Work follows the backend's request path (static files and body parsing, routing,
-Express, CORS, the Functions Framework, token verification, then Firebase Admin
-and Firebase Functions), building each package after its dependencies. Two rules
-decide what is built at all:
+Work follows the application's backend and frontend dependency paths, building
+foundations before their callers. Backend coverage reaches HTTP handling and
+Firebase services; frontend work includes shared rendering and styling helpers.
+Two rules decide what is built at all:
 
 - **One version per package family.** Only the latest stable version is built;
   callers move up to it. A built newer replacement also completes older versions
@@ -222,6 +222,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vreact-is](packages/vreact-is) | react-is 19.3.1 | Independent zero-dependency React classification; single discriminator reads, direct predicates, browser ESM and verified React 19.1/MUI callers. |
 | [vclsx](packages/vclsx) | clsx 2.1.1 | Independent zero-dependency class names; own dictionary fields, stack-safe deep arrays, explicit cycle errors and shared CJS/ESM identities. |
 | [vemotion-babel-plugin](packages/vemotion-babel-plugin) | @emotion/babel-plugin 11.13.5 | Minifies with vstylis (the original's stylis 4.2.0 turned `border: 1px /* thin */ solid red` into `border:1pxsolid red`), its own source maps and imports, no macros: 3 dependencies instead of 11, all VPM; otherwise the original's output, target class names included. |
 | [vemotion-styled](packages/vemotion-styled) | @emotion/styled 11.14.1 | Reads the theme context on every render (the original's conditional read changed the order of hooks when a `theme` prop came and went), forwards current HTML attributes through vemotion-is-prop-valid, and has no macro entry: 4 direct dependencies, all VPM. |
@@ -347,9 +348,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 110 Node runtime packages' public declarations compile
+recorded by the tests. All 111 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **121 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **122 packages**, including two declaration-only packages and
 nine browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

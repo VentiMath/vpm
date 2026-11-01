@@ -715,6 +715,10 @@
         "viconv-lite": "workspace:*",
       },
     },
+    "packages/vreact-is": {
+      "name": "vreact-is",
+      "version": "0.1.0",
+    },
     "packages/vread-package-up": {
       "name": "vread-package-up",
       "version": "0.1.0",
@@ -1102,6 +1106,8 @@
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
 
     "vraw-body": ["vraw-body@workspace:packages/vraw-body"],
+
+    "vreact-is": ["vreact-is@workspace:packages/vreact-is"],
 
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
 
