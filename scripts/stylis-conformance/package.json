@@ -1,0 +1,14 @@
+{
+  "name": "stylis-conformance",
+  "private": true,
+  "description": "Pinned stylis 4.4.0 control, the release's test tools, and stylesheets for the differential comparison",
+  "dependencies": {
+    "animate.css": "4.1.1",
+    "bootstrap": "5.3.8",
+    "bulma": "1.0.4",
+    "chai": "4.3.4",
+    "mocha": "9.1.1",
+    "normalize.css": "8.0.1",
+    "stylis": "4.4.0"
+  }
+}

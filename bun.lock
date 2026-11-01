@@ -677,6 +677,10 @@
         "vanynum": "0.1.0",
       },
     },
+    "packages/vstylis": {
+      "name": "vstylis",
+      "version": "0.1.0",
+    },
     "packages/vtanstack-query-core": {
       "name": "vtanstack-query-core",
       "version": "0.1.0",
@@ -985,6 +989,8 @@
     "vstream-events": ["vstream-events@workspace:packages/vstream-events"],
 
     "vstrnum": ["vstrnum@workspace:packages/vstrnum"],
+
+    "vstylis": ["vstylis@workspace:packages/vstylis"],
 
     "vtanstack-query-core": ["vtanstack-query-core@workspace:packages/vtanstack-query-core"],
 

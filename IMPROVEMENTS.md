@@ -32,6 +32,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Suite and differential verified | vstylis | stylis 4.4.0; its 113 tests, and identical trees and output over 12 stylesheets and 20,000 generated inputs | [stylis 4.4.0](https://www.npmjs.com/package/stylis), checked November 1, 2026 |
 | Suites verified | vtanstack-react-query | @tanstack/react-query 5.105.0; its 609 tests (hooks, suspense, SSR hydration, type tests) | [@tanstack/react-query 5.105.0](https://www.npmjs.com/package/@tanstack/react-query), checked November 1, 2026 |
 | Suites verified | vtanstack-query-core | @tanstack/query-core 5.105.0; its 1,608 tests, and long timers on a simulated clock | [@tanstack/query-core 5.105.0](https://www.npmjs.com/package/@tanstack/query-core), checked November 1, 2026 |
 | Suites verified | vfullcalendar-react | @fullcalendar/react 7.1.3; its React suite, FullCalendar's 1,542-spec browser suite on the React build (identical per spec), a mounted calendar's time zone and JSON feed behavior, and declarations under TypeScript 7.1, 5.8 and 5.9 | [@fullcalendar/react 7.1.3](https://www.npmjs.com/package/@fullcalendar/react), checked November 1, 2026 |
@@ -128,6 +129,11 @@ extend and the JSON feed request. `vfullcalendar-react` covers
 VentiMath's six calendar files move to the 7.x API when it adopts them.
 TanStack Query follows: `vtanstack-query-core` and `vtanstack-react-query` cover
 5.105.0, the same major version as VentiMath's 5.90, so no migration is needed.
+Emotion, MUI's styling engine, comes next, deepest first: `vstylis` covers
+stylis 4.4.0, written for VPM against stylis's tests and a differential
+comparison rather than retained from the published build. Emotion 11.14 pins
+stylis 4.2.0; its suite passes with 4.4.0, the version VentiMath already
+installs.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -166,6 +172,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vstylis](packages/vstylis) | stylis 4.4.0 | Vendor prefixes chosen by property name (stylis's hash gave more than 50 unprefixed properties, `flex-wrap` and `grid-gap` among them, invented declarations), IE grid spans on the right axis, `mask-composite: subtract` converted, the same `namespace` result on JavaScriptCore, and bundled declarations; otherwise identical trees and output, and all 113 upstream tests pass. |
 | [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.0 | `gcTime`, `staleTime` and `refetchInterval` beyond about 24.8 days last as asked (30-day `gcTime` collected at once, 30-day `refetchInterval` fetched every millisecond), declarations that compile without DOM types, and the modern build only (1.7 MB instead of 3.9 MB unpacked); all 1,608 upstream tests pass. |
 | [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.0 | On vtanstack-query-core with its fixes; modern build only, without codemods (0.8 MB instead of 1.8 MB unpacked); all 609 upstream tests pass. |
 | [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | The calendar unchanged on VPM's headless engine and core: no `temporal-polyfill`, correct named time zones where the polyfill is wrong, `#fragment` JSON feeds that keep their range, and an application bundle 8% smaller gzipped; identical results on FullCalendar's 1,542-spec browser suite. |
@@ -275,12 +282,12 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,808 tests**: all pass on Node 24, and Bun passes
-2,805 with three documented runtime-specific skips. All 102 Node runtime packages'
+The root suite contains **2,816 tests**: all pass on Node 24, and Bun passes
+2,813 with three documented runtime-specific skips. All 103 Node runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **106 packages**, including two declaration-only packages and
+catalog covers **107 packages**, including two declaration-only packages and
 two browser packages, `vfullcalendar-react` and `vtanstack-react-query`, whose
 declarations are checked with DOM and React types.
 
@@ -406,6 +413,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vstylis` | 0 | 0 |
 | `vtanstack-query-core` | 0 | 0 |
 | `vtanstack-react-query` | 1 (`@tanstack/query-core`; React peer) | 1 (`vtanstack-query-core`; React peer) |
 | `vfullcalendar-react` | 3 (`@full-ui/headless-calendar`, `@fullcalendar/core`; `temporal-polyfill` peer) | 2 (`vfull-ui-headless-calendar`, `vfullcalendar-core`; React peers) |
@@ -576,6 +584,34 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vstylis
+
+Target **stylis 4.4.0**, checked November 1, 2026. Written for VPM to stylis's
+API, element tree and output, with stylis's tests and a differential comparison
+as the evidence: vstylis passes all 113 upstream tests, and its element trees
+and `stringify`, `prefixer`, `rulesheet` and `namespace` output are identical
+to stylis 4.4.0's, with the changes below applied to stylis's sources, over 12
+stylesheets and 20,000 generated nested inputs.
+
+stylis's prefixer selects properties by a hash of the name's length and first
+four characters, so properties sharing a hash with a prefixed one get invented
+declarations: `flex-wrap: wrap` gains `-webkit-box-flex-wrap`,
+`-webkit-flex-wrap` and `-ms-flex-wrap`, `grid-gap` gains `-ms-grid-gap`,
+`scroll-padding-top` gains `scroll-snap-padding-top`, and `grid-auto-rows`
+beside `grid-row-end: 3` gains `-ms-grid-row-span: -97`. vstylis selects
+properties by name. IE grid spans now pair lines of the same axis,
+`mask-composite: subtract` is converted for `-webkit-`, a declaration's property
+ends at its first colon, and a comment at the end of the input keeps its text.
+stylis's `namespace` assigns its switched variable in a case label, which
+JavaScriptCore (Safari, Bun) evaluates differently from V8, scoping
+`a:not([href])` as `a.scope:not.scope([href])`; stylis fails its own namespace
+test under Bun. vstylis gives one result everywhere. Performance is on par with
+stylis on Node and Bun. Six regression cases and eight focused tests cover the
+changes.
+
+See the [package contract](packages/vstylis/README.md) and the
+[conformance record](scripts/stylis-conformance/README.md).
 
 ## vtanstack-query-core and vtanstack-react-query
 

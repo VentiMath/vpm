@@ -1,0 +1,32 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "stylis",
+    "version": "4.4.0",
+    "tag": "v4.4.0",
+    "commit": "6ff0e46fa370c714d7c46e1e48076cb65891f1b8",
+    "tarball": "https://registry.npmjs.org/stylis/-/stylis-4.4.0.tgz",
+    "tarballSha256": "95a1c7a5b16c5e7ce8898c1d7d9414255a3b26fd96b7b0cee4c863011df67f0c"
+  },
+  "source": "Written for VPM to stylis 4.4.0's API, element tree and output. stylis's tests are retained in scripts/stylis-conformance/upstream; the prefix rules follow stylis's (src/Prefixer.js), keyed by property name.",
+  "changes": [
+    "Vendor prefixes are chosen by property name, not by a hash of the name's length and first four characters, which gave more than 50 unprefixed properties invented declarations (-webkit-box-flex-wrap, -ms-grid-gap, scroll-snap-padding-top, -ms-grid-row-span:-97...). backdrop-filter keeps its -webkit- form.",
+    "IE grid spans pair start and end lines of the same axis and are written for that axis.",
+    "mask-composite converts every layer's keyword for -webkit-mask-composite, including subtract.",
+    "A declaration's property ends at its first colon.",
+    "A comment at the end of the input keeps its text.",
+    "namespace gives the same result on every engine (stylis's case-label assignment scopes a:not(...) as a.scope:not.scope(...) on JavaScriptCore).",
+    "Each compile() and tokenize() call has its own cursor.",
+    "ES module sources only (no UMD or minified bundle) and bundled declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/stylis-conformance",
+    "upstreamTests": 113,
+    "upstreamTestAdaptations": "Ten prefix() calls pass a length other than the property name's and one assertion depends on that; see the fixture README.",
+    "differential": "Element trees and stringify, prefixer, rulesheet and namespace output identical to stylis 4.4.0 with the changes above applied, over 12 stylesheets and 20,000 generated inputs.",
+    "regressions": 6,
+    "focusedTests": 8,
+    "runtimes": ["Node.js 24", "Bun"]
+  }
+}

@@ -43,6 +43,7 @@ jobs:
       - run: npm --prefix scripts/fullcalendar-core-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/fullcalendar-react-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -101,6 +102,10 @@ jobs:
           node scripts/tanstack-query-conformance/run.cjs --package=react --upstream
           node scripts/tanstack-query-conformance/run.cjs --package=react
           node scripts/tanstack-query-conformance/regressions.cjs
+          node scripts/stylis-conformance/run.cjs --upstream
+          node scripts/stylis-conformance/run.cjs
+          node scripts/stylis-conformance/compare.cjs
+          node scripts/stylis-conformance/regressions.cjs
           node scripts/gax-conformance/run.cjs --upstream
           node scripts/gax-conformance/run.cjs
           node scripts/gax-conformance/regressions.cjs
@@ -293,6 +298,7 @@ jobs:
       - run: npm --prefix scripts/fullcalendar-core-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/fullcalendar-react-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/ordered-map-conformance ci --ignore-scripts --no-audit --no-fund
@@ -359,6 +365,10 @@ jobs:
           bun scripts/tanstack-query-conformance/run.cjs --package=core --upstream
           bun scripts/tanstack-query-conformance/run.cjs --package=core
           bun scripts/tanstack-query-conformance/regressions.cjs
+          bun scripts/stylis-conformance/run.cjs --upstream
+          bun scripts/stylis-conformance/run.cjs
+          bun scripts/stylis-conformance/compare.cjs
+          bun scripts/stylis-conformance/regressions.cjs
           bun scripts/gax-conformance/run.cjs --upstream
           bun scripts/gax-conformance/run.cjs
           bun scripts/gax-conformance/regressions.cjs
