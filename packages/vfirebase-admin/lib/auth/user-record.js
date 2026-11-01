@@ -102,7 +102,8 @@ class MultiFactorSettings {
 class UserRecord {
   constructor(response) {
     if (!response?.localId) throw invalid('user');
-    const providers = Array.from(response.providerUserInfo || [], entry => new UserInfo(entry));
+    const providers = [];
+    for (const entry of response.providerUserInfo || []) providers.push(new UserInfo(entry));
     readonly(this, {uid: response.localId, email: response.email, emailVerified: !!response.emailVerified,
       displayName: response.displayName, photoURL: response.photoUrl, phoneNumber: response.phoneNumber,
       disabled: response.disabled || false, metadata: new UserMetadata(response), providerData: providers,

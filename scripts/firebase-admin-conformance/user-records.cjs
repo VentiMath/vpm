@@ -34,6 +34,11 @@ if (!variant) {
     assert.deepEqual(new MultiFactorSettings({mfaInfo}).toJSON(), {enrolledFactors: []});
   }
   assert.throws(() => new UserInfo({rawId: 'no-provider'}), /Invalid user info response/);
+  for (const providerUserInfo of [{}, {length: 0}]) {
+    assert.throws(() => new UserRecord({localId: 'bad-providers', providerUserInfo}), TypeError);
+  }
+  assert.equal(new UserRecord({localId: 'iterable', providerUserInfo:
+    new Set([{rawId: 'p', providerId: 'google.com'}])}).providerData[0].providerId, 'google.com');
 
   // Each original control runs in a separate process. The marker is benign,
   // and cleanup occurs before any other operation can observe the prototype.

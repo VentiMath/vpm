@@ -42,9 +42,9 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 ## Changes from 14.5.0
 
 - **Auth response records.** User, provider, timestamp and MFA records use
-  explicit field projections. Serializing custom claims preserves own
+  explicit field projections. Serializing JSON-shaped claims preserves own
   `__proto__` and `constructor` keys without changing `Object.prototype` or
-  returning aliases to the original claims. Nested TOTP output is detached too;
+  returning aliases to the original claims. Nested JSON data in TOTP output is detached too;
   its public getter retains upstream's identity contract. A bounded shallow walk with an iterative
   fallback handles deeply nested records and reports cycles explicitly.
   Malformed MFA collections must be arrays. Auth request and token-verification
@@ -119,10 +119,10 @@ upstream-derived and tracked separately.
 Missing-dependency errors name the VPM packages.
 
 The isolated measurements include the redesigned app, credential and Auth record
-layers. User-record serialization takes about 213 ns versus 319 ns on Node
-(33% less time) and 266 ns versus 489 ns on Bun (45% less time), beyond the
-observed identical-source control spread in every comparison pair. Node record
-construction still costs more: 4.79 µs versus 4.31 µs. The Bun construction
+layers. User-record serialization takes about 218 ns versus 317 ns on Node
+(31% less time) and 267 ns versus 479 ns on Bun (44% less time), beyond the
+observed identical-source control spread in every comparison pair. Bun record
+construction still costs more: 1.31 µs versus 1.19 µs. The Node construction
 comparison has no established direction at the recorded precision.
 
 App/credential setup, some cached acquisitions and service cleanup also retain
