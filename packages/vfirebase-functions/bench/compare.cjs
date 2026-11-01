@@ -44,6 +44,26 @@ const cases = [
     const handler = onRequest((request, response) => {response.value = 42;});
     return async () => {await handler(request, response); return response.value;};
   }, validate: output => assert.equal(output, 42)},
+  ...['encode', 'decode'].map(operation => ({name: `callable / ${operation} structured payload`, make: root => {
+    const convert = require(path.join(root, 'lib/common/providers/https.js'))[operation];
+    const data = {calendarId: 'fall', events: Array.from({length: 8}, (_, id) => ({id, title: 'Practice', tags: ['math', 'club']}))};
+    return () => convert(data);
+  }, validate: output => {assert.equal(output.calendarId, 'fall'); assert.equal(output.events.length, 8); assert.deepEqual(output.events[7], {id: 7, title: 'Practice', tags: ['math', 'club']});}})),
+  {name: 'request / callable without token headers', async: true, make: root => {
+    const {EventEmitter} = require('node:events');
+    const common = require(path.join(root, 'lib/logger/common.js'));
+    for (const name of Object.keys(common.UNPATCHED_CONSOLE)) common.UNPATCHED_CONSOLE[name] = () => {};
+    const {onCallHandler} = require(path.join(root, 'lib/common/providers/https.js'));
+    const handler = onCallHandler({cors: {origin: false}}, request => request.data.value + 1, 'gcfv2');
+    const request = {method: 'POST', headers: {}, body: {data: {value: 41}}, header: name => name.toLowerCase() === 'content-type' ? 'application/json' : undefined};
+    return async () => {
+      const response = new EventEmitter();
+      response.status = () => response;
+      response.send = body => {response.body = body; response.emit('finish');};
+      await handler(request, response);
+      return response.body;
+    };
+  }, validate: output => assert.deepEqual(output, {result: 42})},
 ];
 require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream: roots.upstream, vpm: roots.vpm, cases,
   files: ['package.json', 'lib', 'bench/compare.cjs', '../vcors/index.js',
