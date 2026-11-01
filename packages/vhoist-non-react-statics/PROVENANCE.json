@@ -1,0 +1,30 @@
+{
+  "upstream": {
+    "name": "hoist-non-react-statics",
+    "version": "3.3.2",
+    "repository": "https://github.com/mridgway/hoist-non-react-statics",
+    "commit": "1b5fb0b06856f196544ff2dda54c9a15e451522e",
+    "integrity": "sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw=="
+  },
+  "checked": "2026-11-01",
+  "license": "BSD-3-Clause",
+  "source": "Independent source-informed runtime and declarations. Contract field names and original tests retain attribution; no upstream runtime copied and no clean-room claim.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "Custom static metadata on React function/class, memo and forward-ref wrappers; Emotion withTheme caller."
+  },
+  "changes": [
+    "Zero runtime dependencies; the two React wrapper tags are compared directly.",
+    "Own prototype-named custom statics are preserved safely.",
+    "Nearest descriptors are resolved before definition, preventing nonconfigurable ancestors from hiding child overrides.",
+    "Iterative traversal rejects proxy cycles; classification does not evaluate $$typeof accessors and never hoists that identity field.",
+    "Native Object/Function prototypes are not copied."
+  ],
+  "verification": {
+    "runtime": "12 unchanged original tests and seven focused groups on Node24/Bun; the 12000-level original overflow is Node-specific.",
+    "callers": "Actual Emotion 11.14.0 withTheme and React 19.1.0 function/memo/forwardRef server renders.",
+    "archives": "Packed npm/Bun installations, CJS/ESM identity, browser bundle execution and TypeScript7 consumers without platform types.",
+    "limits": "Not a clone of arbitrary object graphs or hostile proxy traps. Unusual identity accessors and builtin-prototype copying intentionally differ; no browser frame-rate claim."
+  }
+}

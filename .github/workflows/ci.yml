@@ -70,6 +70,11 @@ jobs:
       - run: npm --prefix scripts/floating-utils-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-utils-conformance/archives.cjs
       - run: node scripts/floating-utils-conformance/browser.cjs
+      - run: npm --prefix scripts/hoist-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/hoist-conformance/run.cjs
+      - run: node scripts/hoist-conformance/callers.cjs --upstream
+      - run: node scripts/hoist-conformance/callers.cjs
+      - run: node scripts/hoist-conformance/archives.cjs
       - run: npm --prefix scripts/react-is-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/react-is-conformance/archives.cjs
       - run: npm --prefix scripts/clsx-conformance ci --ignore-scripts --no-audit --no-fund
@@ -362,6 +367,11 @@ jobs:
       - run: node scripts/floating-core-conformance/archives.cjs
       - run: npm --prefix scripts/floating-utils-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-utils-conformance/archives.cjs
+      - run: npm --prefix scripts/hoist-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/hoist-conformance/run.cjs
+      - run: bun scripts/hoist-conformance/callers.cjs --upstream
+      - run: bun scripts/hoist-conformance/callers.cjs
+      - run: node scripts/hoist-conformance/archives.cjs
       - run: npm --prefix scripts/react-is-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/react-is-conformance/archives.cjs
       - run: npm --prefix scripts/clsx-conformance ci --ignore-scripts --no-audit --no-fund

@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/mridgway/hoist-non-react-statics",
+  "commit": "1b5fb0b06856f196544ff2dda54c9a15e451522e",
+  "sha256": {
+    "index.jsx.txt": "0a91c043810ff9f5be05c927ef9f87897dc15b70011adc17ca2eac0b300eb44c",
+    "LICENSE": "eb32ff0ec52b6ea86e3d3e06c6ad1b68ee03798b6729af13919f6d5c14b368f3"
+  }
+}

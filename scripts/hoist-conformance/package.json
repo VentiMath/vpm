@@ -1,0 +1,1 @@
+{"name":"vpm-hoist-conformance","private":true,"dependencies":{"hoist-non-react-statics":"3.3.2","react":"19.1.0","react-dom":"19.1.0","create-react-class":"15.7.0","prop-types":"15.8.1","chai":"4.5.0","mocha":"11.7.5","esbuild":"0.25.12","@emotion/react":"11.14.0"}}

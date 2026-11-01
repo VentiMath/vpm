@@ -222,6 +222,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
 | [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
+| [vhoist-non-react-statics](packages/vhoist-non-react-statics) | hoist-non-react-statics 3.3.2 | Independent zero-dependency static hoisting; safe prototype-named fields, nearest inherited descriptors, iterative traversal and no classification getter execution. |
 | [vfloating-ui-react](packages/vfloating-ui-react) | @floating-ui/react 0.27.20 | Independent app-used popover, menu and tooltip interactions on VPM positioning/tabbable; complete ref cleanup and restoration of existing accessibility attributes. Explicit public subset. |
 | [vfloating-ui-react-dom](packages/vfloating-ui-react-dom) | @floating-ui/react-dom 2.1.9 | Independent React 19 positioning hook; stale-measurement protection, retained-element reopening and cycle-safe middleware comparison. |
 | [vfloating-ui-dom](packages/vfloating-ui-dom) | @floating-ui/dom 1.8.0 | Independent browser geometry and lifecycle updates; owned subscriptions, complete cleanup, inherited platform overrides and real-browser conformance. |
@@ -353,9 +354,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 111 Node runtime packages' public declarations compile
+recorded by the tests. All 112 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **128 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **129 packages**, including two declaration-only packages and
 fifteen browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -688,6 +689,21 @@ TypeScript 7 declarations pass. [API and scope](packages/vtabbable/README.md).
 they do not establish CSS resolution, browser layout or application latency improvements.
 The 120-radio model takes 84%/88% less paired time on Node/Bun; small four-control
 forms remain inconclusive. All comparisons are retained.
+
+## vhoist-non-react-statics
+
+An independent **3.3.2** implementation with zero dependencies. It preserves custom
+prototype-named statics and resolves inherited descriptors before nonconfigurable
+ancestor values can hide child overrides. Traversal is iterative with cycle
+rejection; React identity getters are not evaluated. Builtin prototypes and
+`$$typeof` are intentionally excluded.
+
+All 12 original tests, seven focused groups and Emotion's actual `withTheme`
+caller pass on Node24/Bun. Original recursion overflows at depth12,000 on Node;
+Bun's original handles that depth. Packed installs, CJS/ESM, browser bundling and
+TypeScript7 consumers pass. [Scope](packages/vhoist-non-react-statics/README.md) and
+[isolated measurements](packages/vhoist-non-react-statics/bench/results/README.md)
+retain the behavior differences and performance limits.
 
 ## vfloating-ui-react
 
