@@ -11,7 +11,9 @@ const modules = path.join(__dirname, 'legacy-typescript/node_modules');
 const files = fs.readdirSync(path.join(root, 'packages')).flatMap(name => {
   const directory = path.join(root, 'packages', name);
   const metadata = require(path.join(directory, 'package.json'));
-  return metadata.vpm?.kind === 'types' ? [] : [path.join(directory, metadata.types)];
+  // Browser packages (vpm.platform "browser") declare DOM and React APIs; their
+  // fixtures check them with those types.
+  return metadata.vpm?.kind === 'types' || metadata.vpm?.platform === 'browser' ? [] : [path.join(directory, metadata.types)];
 });
 const resolutions = {
   NodeNext: { module: 'NodeNext', moduleResolution: 'NodeNext' },

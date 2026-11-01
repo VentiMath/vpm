@@ -1,0 +1,164 @@
+{
+  "name": "vfullcalendar-react",
+  "version": "0.1.0",
+  "description": "FullCalendar 7 for React on VPM's headless calendar engine, without temporal-polyfill",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "style": "./skeleton.css",
+  "exports": {
+    "./package.json": "./package.json",
+    "./skeleton.css": "./skeleton.css",
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./all": {
+      "types": "./all.d.ts",
+      "default": "./all.js"
+    },
+    "./public-components": {
+      "types": "./public-components.d.ts",
+      "default": "./public-components.js"
+    },
+    "./public-api": {
+      "types": "./public-api.d.ts",
+      "default": "./public-api.js"
+    },
+    "./protected-api": {
+      "types": "./protected-api.d.ts",
+      "default": "./protected-api.js"
+    },
+    "./protected-styles": {
+      "types": "./protected-styles.d.ts",
+      "default": "./protected-styles.js"
+    },
+    "./locales-all": {
+      "types": "./locales-all.d.ts",
+      "default": "./locales-all.js"
+    },
+    "./locales/*": {
+      "types": "./locales/*.d.ts",
+      "default": "./locales/*.js"
+    },
+    "./interaction": {
+      "types": "./interaction.d.ts",
+      "default": "./interaction.js"
+    },
+    "./daygrid": {
+      "types": "./daygrid.d.ts",
+      "default": "./daygrid.js"
+    },
+    "./timegrid": {
+      "types": "./timegrid.d.ts",
+      "default": "./timegrid.js"
+    },
+    "./multimonth": {
+      "types": "./multimonth.d.ts",
+      "default": "./multimonth.js"
+    },
+    "./list": {
+      "types": "./list.d.ts",
+      "default": "./list.js"
+    },
+    "./themes/classic": {
+      "types": "./themes/classic/index.d.ts",
+      "default": "./themes/classic/index.js"
+    },
+    "./themes/classic/theme.css": "./themes/classic/theme.css",
+    "./themes/classic/palette.css": "./themes/classic/palette.css",
+    "./themes/monarch": {
+      "types": "./themes/monarch/index.d.ts",
+      "default": "./themes/monarch/index.js"
+    },
+    "./themes/monarch/theme.css": "./themes/monarch/theme.css",
+    "./themes/monarch/palettes/blue.css": "./themes/monarch/palettes/blue.css",
+    "./themes/monarch/palettes/green.css": "./themes/monarch/palettes/green.css",
+    "./themes/monarch/palettes/purple.css": "./themes/monarch/palettes/purple.css",
+    "./themes/monarch/palettes/red.css": "./themes/monarch/palettes/red.css",
+    "./themes/monarch/palettes/yellow.css": "./themes/monarch/palettes/yellow.css",
+    "./themes/breezy": {
+      "types": "./themes/breezy/index.d.ts",
+      "default": "./themes/breezy/index.js"
+    },
+    "./themes/breezy/theme.css": "./themes/breezy/theme.css",
+    "./themes/breezy/palettes/amber.css": "./themes/breezy/palettes/amber.css",
+    "./themes/breezy/palettes/emerald.css": "./themes/breezy/palettes/emerald.css",
+    "./themes/breezy/palettes/indigo.css": "./themes/breezy/palettes/indigo.css",
+    "./themes/breezy/palettes/rose.css": "./themes/breezy/palettes/rose.css",
+    "./themes/forma": {
+      "types": "./themes/forma/index.d.ts",
+      "default": "./themes/forma/index.js"
+    },
+    "./themes/forma/theme.css": "./themes/forma/theme.css",
+    "./themes/forma/palettes/blue.css": "./themes/forma/palettes/blue.css",
+    "./themes/forma/palettes/green.css": "./themes/forma/palettes/green.css",
+    "./themes/forma/palettes/purple.css": "./themes/forma/palettes/purple.css",
+    "./themes/forma/palettes/red.css": "./themes/forma/palettes/red.css",
+    "./themes/pulse": {
+      "types": "./themes/pulse/index.d.ts",
+      "default": "./themes/pulse/index.js"
+    },
+    "./themes/pulse/theme.css": "./themes/pulse/theme.css",
+    "./themes/pulse/palettes/blue.css": "./themes/pulse/palettes/blue.css",
+    "./themes/pulse/palettes/green.css": "./themes/pulse/palettes/green.css",
+    "./themes/pulse/palettes/purple.css": "./themes/pulse/palettes/purple.css",
+    "./themes/pulse/palettes/red.css": "./themes/pulse/palettes/red.css"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "all.js",
+    "all.d.ts",
+    "daygrid.js",
+    "daygrid.d.ts",
+    "interaction.js",
+    "interaction.d.ts",
+    "list.js",
+    "list.d.ts",
+    "locales-all.js",
+    "locales-all.d.ts",
+    "multimonth.js",
+    "multimonth.d.ts",
+    "protected-api.js",
+    "protected-api.d.ts",
+    "protected-styles.js",
+    "protected-styles.d.ts",
+    "public-api.js",
+    "public-api.d.ts",
+    "public-components.js",
+    "public-components.d.ts",
+    "timegrid.js",
+    "timegrid.d.ts",
+    "skeleton.css",
+    "chunks",
+    "locales",
+    "themes",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "dependencies": {
+    "vfull-ui-headless-calendar": "0.1.0",
+    "vfullcalendar-core": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": "^17 || ^18 || ^19",
+    "react-dom": "^17 || ^18 || ^19"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vfullcalendar-react"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

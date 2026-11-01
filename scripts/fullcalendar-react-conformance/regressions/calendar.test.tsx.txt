@@ -1,0 +1,29 @@
+// Copied as tests/calendar.test.tsx by ../regressions.cjs. Records what a mounted FullCalendar does in two cases fixed below it; the
+// assertions are in ../regressions.cjs. Runs under vitest with jsdom.
+import React, { createRef } from 'react'
+import { render, act } from '@testing-library/react'
+import { writeFileSync } from 'node:fs'
+import FullCalendar from '../dist/index'
+import dayGridPlugin from '../dist/daygrid'
+import timeGridPlugin from '../dist/timegrid'
+
+const observed: Record<string, unknown> = {}
+
+it('a Casablanca calendar during Ramadan 2020', async () => {
+  const ref = createRef<any>()
+  render(<FullCalendar ref={ref} plugins={[timeGridPlugin]} initialView="timeGridDay" initialDate="2020-05-17"
+    timeZone="Africa/Casablanca" events={[{ title: 'Seminar', start: '2020-05-17T15:00:00Z' }]} />)
+  const api = ref.current.getApi()
+  const [event] = api.getEvents()
+  observed.casablanca = { startStr: event.startStr, now: api.formatIso(new Date('2020-05-17T15:00:00Z')) }
+})
+
+it('a JSON feed whose URL has a #fragment', async () => {
+  const urls: string[] = []
+  vi.stubGlobal('fetch', async (url: string) => { urls.push(String(url)); return new Response('[]', { headers: { 'content-type': 'application/json' } }) })
+  render(<FullCalendar plugins={[dayGridPlugin]} initialView="dayGridMonth" initialDate="2026-11-01" timeZone="UTC"
+    events={{ url: '/api/events.php#calendar' }} />)
+  await act(async () => { await new Promise((resolve) => setTimeout(resolve, 50)) })
+  observed.feed = urls
+  writeFileSync(process.env.OBSERVED_OUTPUT!, JSON.stringify(observed))
+})

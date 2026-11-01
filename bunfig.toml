@@ -1,0 +1,4 @@
+# The workspace installs no peers of its packages: vfullcalendar-react's React
+# peers belong to applications (its conformance fixture installs them).
+[install]
+peer = false

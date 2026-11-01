@@ -21,8 +21,9 @@ function configuration(files, { baseline = false, dom = false } = {}) {
 function runtimeTypeTests() {
   return fs.readdirSync(path.join(root, 'packages')).flatMap(name => {
     const directory = path.join(root, 'packages', name);
-    return require(path.join(directory, 'package.json')).vpm?.kind === 'types'
-      ? [] : [path.join(directory, 'test/types.ts')];
+    const {vpm} = require(path.join(directory, 'package.json'));
+    // Browser packages' type tests need DOM and React types; their fixtures run them.
+    return vpm?.kind === 'types' || vpm?.platform === 'browser' ? [] : [path.join(directory, 'test/types.ts')];
   });
 }
 function compiler() {

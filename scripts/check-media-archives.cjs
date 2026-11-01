@@ -20,8 +20,27 @@ try {
     const archive = name + '-' + version + '.tgz';
     assert.ok(fs.existsSync(path.join(directory, archive)), name);
     const packed = path.join(directory, archive);
-    dependencies[name] = 'file:' + packed;
     const metadata = JSON.parse(run('tar', ['-xOf', packed, 'package/package.json']));
+    // Browser packages are packed and checked here, but not installed into the
+    // Node consumers below: their React peers would be fetched for nothing.
+    if (metadata.vpm?.platform === 'browser') {
+      assert.equal(metadata.engines?.node, '>=24', name + ': packed runtime baseline');
+      for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
+      const entries = run('tar', ['-tzf', packed]).trim().split('\n').filter(f => !f.endsWith('/')).map(f => f.replace(/^package\//, ''));
+      assert.ok(!entries.some(f => /^(test|bench|node_modules)\//.test(f)), name + ': no test, bench or node_modules files');
+      if (name === 'vfullcalendar-react') {
+        assert.deepEqual(metadata.dependencies, {'vfull-ui-headless-calendar': '0.1.0', 'vfullcalendar-core': '0.1.0'});
+        assert.deepEqual(Object.keys(metadata.peerDependencies).sort(), ['react', 'react-dom']);
+        for (const file of ['index.js', 'index.d.ts', 'daygrid.js', 'timegrid.js', 'interaction.js', 'skeleton.css', 'themes/classic/theme.css', 'locales/fr.js', 'chunks/cb8ba596.js', 'LICENSE', 'PROVENANCE.json', 'README.md']) assert.ok(entries.includes(file), name + ': ' + file);
+        const extracted = path.join(directory, name + '-extracted');
+        fs.mkdirSync(extracted);
+        run('tar', ['-xzf', packed, '-C', extracted]);
+        const sources = entries.filter(f => /\.(js|d\.ts)$/.test(f)).map(f => fs.readFileSync(path.join(extracted, 'package', f), 'utf8'));
+        assert.ok(!sources.some(text => /['"](@full-ui\/headless-calendar|@fullcalendar\/core[^'"]*|temporal-polyfill[^'"]*)['"]/.test(text)), name + ': only VPM calendar packages are imported');
+      }
+      continue;
+    }
+    dependencies[name] = 'file:' + packed;
     assert.equal(metadata.engines?.node, '>=24', name + ': packed runtime baseline');
     for (const version of Object.values(metadata.dependencies || {})) assert.equal(version, '0.1.0');
     if (name === 'vnode-fetch' || name === 'vgaxios') {
