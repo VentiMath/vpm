@@ -44,9 +44,10 @@ Otherwise the element trees and output are identical: the
 [conformance fixture](../../scripts/stylis-conformance/README.md) runs stylis's
 113 tests and compares vstylis with stylis 4.4.0 (with the changes above
 applied to its sources) over 12 stylesheets and 20,000 generated nested inputs.
-`bench/compare.cjs` times compile, prefixer and stringify:
-[Node](bench/results/node.json) and [Bun](bench/results/bun.json) results are
-on par with stylis.
+[Process-isolated benchmarks](bench/results/README.md) time compile, prefixer
+and stringify on Node 24 and Bun. These samples do not establish a consistent
+speedup or regression beyond the control variation; no parity claim follows
+from an inconclusive measurement.
 
 | Upstream | Here |
 | --- | --- |

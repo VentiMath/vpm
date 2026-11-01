@@ -1,103 +1,89 @@
 # vfast-deep-equal measurements
 
-Recorded October 30, 2026 on Apple M1 Pro / macOS arm64 with Node 24.22.1 and
-Bun 1.4.0, against fast-deep-equal 3.1.3. Three fresh processes per runtime,
-12 alternating paired rounds per case, 150 ms warmup per variant plus four full
-warmup blocks. Iterations use a 15 ms upstream pilot target capped at 100,000.
-Outputs are retained and validated outside timing. One additional process per
-runtime compares identical upstream implementations. No trimming; no other test
-suites ran during these measurements.
+These records supersede the earlier same-process comparison. Each timed
+implementation runs alone in a fresh process. Four comparison pairs use
+balanced upstream-first / VPM-first order; two further pairs run identical
+upstream code in separate processes as controls. Warmup lasts at least 150 ms
+per case, followed by recalibration on warmed code, four warmup blocks and 12
+recorded blocks. Both workers in a pair use the same iteration count, targeting
+10 ms blocks with a one-million-operation cap. Results are retained and checked
+outside timing. All samples are kept, including outliers.
 
-Values are pooled median nanoseconds per operation. Changes are medians of paired
-sample ratios, so they need not match the ratio of the displayed medians. Negative
-means less time. Controls show identical-upstream drift. Map and Set cases use the
-upstream ES6 entry point; the React case uses its React entry point; remaining
-cases use the default comparator. Inputs and seven actual Firestore 9.4.0 SDK
-comparison paths are defined in [the benchmark](../compare.cjs).
+The comparison units are per-process medians. The change column is the median
+of four process-pair percentage changes; the two order columns expose order
+sensitivity. The nanosecond columns are medians of the four process medians.
+They need not produce exactly the percentage in the change column.
 
-## Node 24
+A direction is unestablished when it reverses across processes or any pair
+overlaps the largest absolute control difference (with a minimum 2% floor).
+This is a conservative descriptive check, not a confidence interval. Process
+isolation reduces shared JIT feedback; environmental noise and GC remain.
+Negative changes mean less time; these are local CPU measurements, not
+application throughput or latency guarantees.
 
-| Case | Upstream ns | VPM ns | Paired change | Per-process changes | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| primitive / equal | 8 | 8 | -0.1% | -0.4%, +0.9%, -0.5% | +0.0% |
-| record / small equal | 122 | 105 | -13.8% | -13.9%, -11.3%, -14.1% | -0.2% |
-| record / changed value | 73 | 58 | -20.9% | -21.0%, -20.0%, -21.0% | -0.6% |
-| record / missing key | 33 | 34 | +2.1% | +2.2%, +1.5%, +2.6% | -2.1% |
-| record / nested 64 fields | 15,413 | 14,426 | -6.2% | -7.2%, -5.4%, -5.2% | -0.1% |
-| array / 32 records | 2,813 | 2,581 | -7.9% | -7.3%, -8.9%, -7.4% | -0.1% |
-| Buffer / equal 1KiB | 326 | 113 | -65.2% | -65.1%, -65.6%, -65.2% | +0.2% |
-| Map / nested 32 entries | 4,533 | 5,432 | +19.5% | +19.1%, +20.0%, +19.5% | -0.6% |
-| Set / 32 primitives | 434 | 354 | -18.0% | -19.1%, -18.6%, -17.9% | +0.1% |
-| React / equal element | 191 | 180 | -5.6% | -5.7%, -5.4%, -5.9% | +0.5% |
-| Firestore / equal document | 1,240 | 1,156 | -7.4% | -7.7%, -7.4%, -6.7% | +0.3% |
-| Firestore / changed document | 1,104 | 1,027 | -6.7% | -7.7%, -6.3%, -6.7% | -0.1% |
-| Firestore / equal query | 1,345 | 1,245 | -7.7% | -8.1%, -6.4%, -7.8% | -0.3% |
-| Firestore / changed filter | 213 | 206 | -3.6% | -3.0%, -5.5%, -3.1% | +0.6% |
-| Firestore / arrayUnion | 126 | 115 | -9.3% | -9.9%, -7.7%, -11.1% | +0.1% |
-| Firestore / arrayRemove | 119 | 114 | -3.7% | -5.1%, -2.9%, -3.9% | -0.1% |
-| Firestore / aggregate query | 1,791 | 1,621 | -9.4% | -9.3%, -9.7%, -8.8% | -0.4% |
+## Node 24.22.1
+
+Recorded 2026-11-01T07:03:42.813Z on Apple M1 Pro, darwin/arm64.
+
+[Raw samples, processes, controls and source hashes](node-isolated.json).
+
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| primitive / equal | 1 | 1 | -0.1% | -1% | -0.1% | 0.6% | unestablished at this precision |
+| record / small equal | 107 | 94 | -11.7% | -12.5% | -3.5% | 3% | unestablished at this precision |
+| record / changed value | 67 | 52 | -22.6% | -22.6% | -8.9% | 0.6% | unestablished at this precision |
+| record / missing key | 32 | 32 | 2.2% | 3.4% | 1.2% | 1.8% | unestablished at this precision |
+| record / nested 64 fields | 15134 | 14205 | -6.1% | -46.7% | -5.3% | 7.7% | unestablished at this precision |
+| array / 32 records | 2833 | 2553 | -9.6% | -9.4% | -9.6% | 1.1% | lower time in every pair, beyond control spread |
+| Buffer / equal 1KiB | 302 | 107 | -64.9% | -64.6% | -65% | 1.9% | lower time in every pair, beyond control spread |
+| Map / nested 32 entries | 5231 | 5395 | 5.2% | -8.5% | 20.3% | 3.3% | unestablished at this precision |
+| Set / 32 primitives | 425 | 346 | -18.5% | -19.1% | -18.5% | 4.9% | lower time in every pair, beyond control spread |
+| React / equal element | 192 | 180 | -6.3% | -8.9% | -6.2% | 1.9% | lower time in every pair, beyond control spread |
+| Firestore / equal document | 1221 | 1145 | -6.2% | -11% | -5.4% | 2.5% | lower time in every pair, beyond control spread |
+| Firestore / changed document | 1097 | 1021 | -7.4% | -7.9% | -5% | 2.3% | lower time in every pair, beyond control spread |
+| Firestore / equal query | 1333 | 1216 | -8.5% | -8% | -10.8% | 0.6% | lower time in every pair, beyond control spread |
+| Firestore / changed filter | 206 | 201 | -2.6% | -4.1% | -0.8% | 125.9% | unestablished at this precision |
+| Firestore / arrayUnion | 123 | 114 | -7.6% | -8.7% | -6.5% | 33.4% | unestablished at this precision |
+| Firestore / arrayRemove | 114 | 114 | -0.4% | -1.5% | 0% | 20.6% | unestablished at this precision |
+| Firestore / aggregate query | 1735 | 1603 | -7.8% | -9% | -7.8% | 3% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-| Case | Upstream ns | VPM ns | Paired change | Per-process changes | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| primitive / equal | 10 | 10 | +2.4% | +2.5%, +2.5%, +1.1% | -0.1% |
-| record / small equal | 51 | 44 | -14.4% | -15.1%, -15.4%, -9.4% | +0.1% |
-| record / changed value | 38 | 35 | -9.6% | -9.3%, -8.8%, -10.0% | +0.6% |
-| record / missing key | 29 | 30 | +3.7% | +4.7%, +3.4%, +2.0% | +0.9% |
-| record / nested 64 fields | 4,806 | 4,624 | -3.4% | -3.1%, -1.4%, -4.8% | -0.3% |
-| array / 32 records | 1,260 | 1,192 | -6.2% | -5.0%, -6.0%, -6.2% | +0.3% |
-| Buffer / equal 1KiB | 437 | 53 | -87.8% | -87.8%, -87.9%, -87.6% | -2.1% |
-| Map / nested 32 entries | 3,026 | 2,612 | -12.5% | -2.5%, -11.8%, -14.7% | +0.2% |
-| Set / 32 primitives | 304 | 241 | -20.2% | -20.0%, -20.0%, -20.3% | +1.9% |
-| React / equal element | 86 | 55 | -34.6% | -41.1%, -34.6%, -33.6% | -1.2% |
-| Firestore / equal document | 658 | 711 | +8.5% | +7.1%, +9.0%, +7.6% | +0.8% |
-| Firestore / changed document | 614 | 668 | +9.0% | +8.3%, +9.1%, +9.4% | +0.7% |
-| Firestore / equal query | 687 | 865 | +25.2% | +67.8%, +14.7%, +79.3% | +0.2% |
-| Firestore / changed filter | 135 | 151 | +11.8% | +17.8%, +11.8%, +1.5% | -0.3% |
-| Firestore / arrayUnion | 84 | 84 | +1.0% | +2.0%, +1.7%, -1.3% | -0.5% |
-| Firestore / arrayRemove | 82 | 88 | +7.0% | +9.5%, +7.0%, +4.9% | +0.2% |
-| Firestore / aggregate query | 914 | 996 | +10.1% | +10.2%, +10.8%, +7.7% | -0.5% |
+Recorded 2026-11-01T07:04:51.460Z on Apple M1 Pro, darwin/arm64.
 
-## Interpretation and limits
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
 
-The byte comparator fixes real false positives and avoids UTF-8 allocations.
-The 1 KiB Buffer case takes **65% less time on Node and 88% less on Bun**.
-Small equal records improve 14% on each runtime. The seven measured Firestore
-comparisons take **4–9% less time on Node**. On Bun, array-union equality is
-approximately level, while other callers remain **7–25% slower** in pooled
-results. The query case is especially unstable: per-process changes range from
-**+15% to +79%**. These are retained regressions, not equivalent control noise.
-The nested Map case is **20% slower on Node** (4.53 → 5.43 µs), but 13% faster
-on Bun. Missing-key rejection adds about 1 ns on either runtime.
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| primitive / equal | 1 | 1 | -0.2% | -0.1% | -1.3% | 1.8% | unestablished at this precision |
+| record / small equal | 48 | 43 | -10.9% | -6.6% | -14.4% | 5.4% | unestablished at this precision |
+| record / changed value | 39 | 34 | -12% | 1% | -24.8% | 14% | unestablished at this precision |
+| record / missing key | 33 | 35 | 7.6% | 39.2% | -22.6% | 41.7% | unestablished at this precision |
+| record / nested 64 fields | 4779 | 4588 | -3.9% | -2.7% | -5.2% | 1.3% | lower time in every pair, beyond control spread |
+| array / 32 records | 1245 | 1191 | -4.4% | -4.3% | -4.7% | 184.1% | unestablished at this precision |
+| Buffer / equal 1KiB | 427 | 57 | -86.6% | -86.3% | -87.7% | 25.4% | lower time in every pair, beyond control spread |
+| Map / nested 32 entries | 3001 | 2756 | -7.7% | -8.2% | -4.5% | 1.8% | unestablished at this precision |
+| Set / 32 primitives | 293 | 245 | -16.5% | -17.2% | -15.1% | 0.4% | lower time in every pair, beyond control spread |
+| React / equal element | 84 | 56 | -32.9% | -32.9% | -33.8% | 8.8% | lower time in every pair, beyond control spread |
+| Firestore / equal document | 657 | 696 | 6.1% | 6.1% | 2.6% | 0.8% | unestablished at this precision |
+| Firestore / changed document | 606 | 667 | 10.2% | 8.8% | 12.5% | 1.9% | higher time in every pair, beyond control spread |
+| Firestore / equal query | 678 | 766 | 13.1% | 13.4% | 11.6% | 1.6% | higher time in every pair, beyond control spread |
+| Firestore / changed filter | 134 | 149 | 13.1% | 13.6% | 10.1% | 9.4% | unestablished at this precision |
+| Firestore / arrayUnion | 80 | 83 | 5.1% | 12.3% | -4.3% | 9.3% | unestablished at this precision |
+| Firestore / arrayRemove | 80 | 88 | 10.4% | 10.8% | 9.6% | 2.6% | higher time in every pair, beyond control spread |
+| Firestore / aggregate query | 896 | 990 | 10.5% | 11.5% | 0.9% | 1.3% | unestablished at this precision |
 
-These results measure equality CPU time, not Firestore network requests. Ordinary
-records, containers and SDK callers must be considered separately; a faster
-standalone helper does not establish faster application requests. In particular,
-remaining positive changes in the caller table are regressions, not hidden by the
-buffer improvement. Percentages on operations lasting only tens of nanoseconds
-should also be read alongside their absolute times and control drift.
+## Reproduce
 
-The [first complete paired run](before-caller-tuning/) exposed Bun caller
-regressions and is retained with its original hashes. Subsequent tuning moved
-uncommon type handling out of the ordinary recursion path. The tables above use
-the final code, with fresh samples and controls; the earlier hashes deliberately
-do not match today's implementation. The intermediate exploratory timing runs
-were diagnostics, not substituted for samples in either complete report.
-
-Every raw report records runtime, CPU, all samples and source hashes. The hashes
-cover the comparator, generator, benchmark, caller loader, shared timing harness
-and locked upstream/Firestore fixtures. Upstream cannot correctly compare all of
-the fixed inputs: differing invalid UTF-8 bytes return a wrong answer and ES6
-DataView comparison hangs. Those are covered by regression tests, not presented
-as meaningful speed ratios.
+Run these commands from the repository root after installing the pinned
+fixtures used by `bench/compare.cjs`:
 
 ```sh
-for runtime in node bun; do
-  for sample in 1 2 3; do
-    OUTPUT="packages/vfast-deep-equal/bench/results/$runtime-$sample.json" "$runtime" packages/vfast-deep-equal/bench/compare.cjs
-  done
-  CALIBRATION=1 OUTPUT="packages/vfast-deep-equal/bench/results/$runtime-control.json" "$runtime" packages/vfast-deep-equal/bench/compare.cjs
-done
-node packages/vfast-deep-equal/bench/summarize.cjs --verify-current
+OUTPUT=packages/vfast-deep-equal/bench/results/node-isolated.json node packages/vfast-deep-equal/bench/compare.cjs
+OUTPUT=packages/vfast-deep-equal/bench/results/bun-isolated.json bun packages/vfast-deep-equal/bench/compare.cjs
+node scripts/render-bench-report.cjs packages/vfast-deep-equal
 ```
+
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.

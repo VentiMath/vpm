@@ -73,8 +73,9 @@ All checks run on Node 24 and Bun.
 
 See [paired benchmarks](bench/results/README.md) for raw results and controls,
 and the [conformance fixture](../../scripts/numbers-conformance) for caller scope.
-All measured parsing cases improve on both runtimes; parsing with the XML defaults
-takes about 56% less time on Node and 66% less on Bun in these local microbenchmarks.
+The process-isolated Node 24 / Bun reports retain the large parsing gains and
+identify cases whose process variation prevents a firm conclusion. See the
+per-order values and controls before interpreting any individual percentage.
 The XML parser's distributed CommonJS bundle embeds strnum, so the fixture replaces
 only the strnum import in its unbundled source before supplying it to Storage.
 This does not change the installed application or claim a deployed migration.

@@ -86,16 +86,39 @@ metadata and source hashes recorded when measured. An engine-only metadata chang
 does not alter those samples; `--verify-current` can report a manifest mismatch
 until a fresh measurement is recorded. Do not rewrite old hashes to imply a rerun.
 
-Paired measurements in one process are sensitive to which variant runs first:
-shared closures and call sites see that variant's object shapes first. Two
-identical copies of a package measured 10-24% apart that way, and an
-identical-upstream control cannot detect it because it passes the same module
-twice. The shared harnesses compile a separate measurement loop per variant, and
-`scripts/bench-paired.cjs` sets up VPM first in the `-2.json` process (or with
-`BENCH_FIRST=vpm`), so order effects appear as per-process spread. Keep case
-closures and comparators per variant where practical, and treat differences
-within the per-process spread as unestablished. Reports recorded before this
-change set up upstream first in every process.
+Measurements use `scripts/bench-process.cjs`, through the compatible
+`bench-paired.cjs` entry. Each timed variant runs in a separate fresh process;
+four comparison pairs balance upstream-first and VPM-first order. Two additional
+pairs compare identical upstream source in separate processes. Raw samples,
+per-process medians, both order groups, controls and source hashes are retained.
+Node measurements require Node 24; Bun records its actual version. Results are
+validated outside timing and no samples are trimmed. Case factories must construct only
+that worker's selected variant: do not call `make(upstream)` at module scope to
+compute expected values. Use pinned output fixtures or a separate oracle call
+site instead. A factory shared with setup can reintroduce JIT feedback even
+when timed workers are isolated. Process isolation limits
+shared JIT feedback; machine load, GC and runtime variation can still matter.
+
+Run one recording per runtime, with `OUTPUT` set to a JSON path. Each recording
+already includes its controls. `CALIBRATION=1` records only control pairs.
+`BENCH_FIRST=vpm` reverses the starting order without changing the balance.
+The second worker in each pair uses the first worker's iteration counts.
+A reported direction is unestablished if it reverses across processes or any
+pair overlaps the observed control spread (with a minimum 2% precision floor).
+This is a conservative descriptive check, not a statistical confidence interval.
+
+Older same-process reports remain historical evidence. Shared call sites and
+warmup order could favor one implementation, and their same-instance control
+could miss that effect. Small gains and regressions in those reports are
+provisional until remeasured; there is no universal 15% correction. Never relabel
+a Node 22 report as Node 24 or change old hashes to imply a rerun.
+
+Package replacements implement the APIs required by real consumers. Changing
+imports and retaining an upstream build is a fork, not a new implementation.
+Record the implementation approach explicitly, keep independent caller and
+upstream behavioral checks, and distinguish generated schemas and contract data
+from executable implementation. A compatibility test passing does not establish
+that a package has been independently implemented.
 
 A package README identifies the upstream version, explains specific fixes and
 intentional differences, and links to the supporting tests and benchmarks.
