@@ -1,7 +1,8 @@
 # vobject-hash
 
 **Implementation status:** upstream-derived runtime with focused fixes. The
-independent implementation of the caller paths VentiMath needs is still pending.
+general serializer has not been independently rewritten. No VPM runtime package
+currently depends on it: `vgoogle-gax` owns its JSON cache and uses native SHA-256.
 [Provenance](PROVENANCE.json) identifies the retained code and rewrite scope.
 
 Deterministic object fingerprints based on **object-hash 3.0.0**, with faster
@@ -42,11 +43,12 @@ Node, Undici or DOM declarations.
 ## Compatibility and migration
 
 Ordinary primitive/string, record, function, dense-array and text-collection
-hashes preserve the 3.0.0 format. The actual google-gax 6.14.0 gRPC and fallback
-protobuf-cache paths produce **identical cache keys**, because they hash
-`JSON.stringify(...)` strings. Their insertion-order behavior remains unchanged.
-When building a VPM gax caller, this string-only operation is a candidate for
-inlining; changing its framing would require an explicit cache migration.
+hashes preserve the 3.0.0 format. The comparison fixture confirms the old
+upstream google-gax 6.14.0 cache keys. Current `vgoogle-gax` no longer uses this
+serializer or its digest format: its keys belong to a private in-memory cache,
+which is newly created when the process loads the module. This package remains
+available with its focused corrections and attribution, not as a required
+application runtime dependency or an independently rewritten serializer.
 
 Corrected cases intentionally change digests:
 
@@ -99,13 +101,13 @@ On Node 24 and Bun:
 - Eighteen focused tests cover nine upstream-failing regression probes,
   generated differential inputs across twelve option configurations, exact
   crypto framing, cycles, binary streaming, native files and module identity.
-- Actual google-gax 6.14.0 methods execute twelve instrumented hash calls per
+- Original upstream google-gax 6.14.0 methods execute twelve instrumented hash calls per
   run, checking hits/misses, forced reload, clear, exact cache keys, unchanged
   inputs and real protobuf encode/decode round trips.
 - Packed npm/Bun installations and CJS/ESM type consumers are checked.
 
 [Benchmark results](bench/results/README.md) include ordinary values and actual
-cache callers, three fresh processes and identical-upstream controls per runtime.
+upstream cache callers, three fresh processes and identical-upstream controls per runtime.
 These are local CPU measurements, not application or network speedups.
 
 ## Provenance

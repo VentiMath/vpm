@@ -49,7 +49,6 @@
     "vduplexify": "workspace:*",
     "vgoogle-auth-library": "workspace:*",
     "vgoogle-logging-utils": "workspace:*",
-    "vobject-hash": "workspace:*",
     "vproto3-json-serializer": "workspace:*",
     "vprotobufjs": "workspace:*",
     "vretry-request": "workspace:*"

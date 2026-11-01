@@ -26,7 +26,7 @@ const lines = [`# ${name} measurements`, '',
   'overlaps the largest absolute control difference (with a minimum 2% floor).',
   'This is a conservative descriptive check, not a confidence interval. Process',
   'isolation reduces shared JIT feedback; environmental noise and GC remain.',
-  'Negative changes mean less time; these are local CPU measurements, not',
+  'Negative changes mean less time; these are local workload measurements, not',
   'application throughput or latency guarantees.', ''];
 for (const {file, report} of reports) {
   const runtime = report.runtime.bun ? `Bun ${report.runtime.bun}` : `Node ${report.runtime.node}`;

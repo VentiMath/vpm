@@ -169,7 +169,7 @@ try {
       assert.doesNotMatch(entries.join('\n'),/(?:test|bench|node_modules)\/|\.map$/);
     }
     if (name === 'vgoogle-gax') {
-      assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vduplexify','vgoogle-auth-library','vgoogle-logging-utils','vgrpc-js','vgrpc-proto-loader','vobject-hash','vopentelemetry-api','vproto3-json-serializer','vprotobufjs','vretry-request']);
+      assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vduplexify','vgoogle-auth-library','vgoogle-logging-utils','vgrpc-js','vgrpc-proto-loader','vopentelemetry-api','vproto3-json-serializer','vprotobufjs','vretry-request']);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const library=fs.readdirSync(path.join(root,'packages/vgoogle-gax/build'),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vgoogle-gax/build',f)).isFile()).map(f=>'build/'+f);
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json','index.mjs','fallback.mjs',...library].sort());

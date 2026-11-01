@@ -61,7 +61,8 @@ const os = __importStar(require("os"));
 const path_1 = require("path");
 const path = __importStar(require("path"));
 const protobuf = __importStar(require("vprotobufjs"));
-const object_hash_1 = __importDefault(require("vobject-hash"));
+const {JsonProtoCache} = require("./jsonProtoCache");
+const jsonProtoCache = new JsonProtoCache();
 const gax = __importStar(require("./gax"));
 const googleProtoFilesDir = path.join(__dirname, '..', '..', 'build', 'protos');
 // INCLUDE_DIRS is passed to @grpc/proto-loader
@@ -143,6 +144,7 @@ class GrpcClient {
      */
     static clearProtoCache() {
         GrpcClient.protoCache.clear();
+        jsonProtoCache.clear();
     }
     /**
      * A class which keeps the context of gRPC and auth for the gRPC.
@@ -285,17 +287,10 @@ class GrpcClient {
         throw new Error(filename + ' could not be found in ' + protoPath);
     }
     loadProtoJSON(json, ignoreCache = false) {
-        const hash = (0, object_hash_1.default)(JSON.stringify(json)).toString();
-        const cached = GrpcClient.protoCache.get(hash);
-        if (cached && !ignoreCache) {
-            return cached;
-        }
-        const options = GrpcClient.defaultOptions();
-        const packageDefinition = grpcProtoLoader.fromJSON(json, options);
-        const grpcPackage = this.grpc.loadPackageDefinition(packageDefinition);
-        GrpcClient.protoCache.set(hash, grpcPackage);
-        return grpcPackage;
+        return jsonProtoCache.load(this.grpc, json, ignoreCache, snapshot =>
+            this.grpc.loadPackageDefinition(grpcProtoLoader.fromJSON(snapshot, GrpcClient.defaultOptions())));
     }
+
     metadataBuilder(headers) {
         const Metadata = this.grpc.Metadata;
         const baseMetadata = new Metadata();

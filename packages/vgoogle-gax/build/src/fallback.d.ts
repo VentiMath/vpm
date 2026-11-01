@@ -63,7 +63,6 @@ export declare class GrpcClient {
     authClient?: AuthClient;
     fallback: boolean;
     grpcVersion: string;
-    private static protoCache;
     httpRules?: Array<google.api.IHttpRule>;
     numericEnums: boolean;
     minifyJson: boolean;

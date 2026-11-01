@@ -54,7 +54,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.fallback = exports.GoogleError = exports.operation = exports.Operation = exports.warn = exports.protobufMinimal = exports.protobuf = exports.LocationProtos = exports.IamProtos = exports.operationsProtos = exports.protobufFromJSON = exports.GrpcClient = exports.defaultToObjectOptions = exports.makeUUID = exports.LocationsClient = exports.IamClient = exports.OperationsClient = exports.StreamType = exports.resumableSourceFromFile = exports.resumableUploadStub = exports.ResumableUploadState = exports.ResumableUploadSession = exports.ResumableUploadDescriptor = exports.StreamDescriptor = exports.PageDescriptor = exports.LongrunningDescriptor = exports.BundleDescriptor = exports.version = exports.createDefaultBackoffSettings = exports.RetryOptions = exports.constructSettings = exports.CallSettings = exports.routingHeader = exports.PathTemplate = void 0;
 exports.lro = lro;
 exports.createApiCall = createApiCall;
-const object_hash_1 = __importDefault(require("vobject-hash"));
+const {JsonProtoCache} = require("./jsonProtoCache");
+const jsonProtoCache = new JsonProtoCache();
 const protobuf = __importStar(require("vprotobufjs"));
 exports.protobuf = protobuf;
 const gax = __importStar(require("./gax"));
@@ -121,7 +122,6 @@ class GrpcClient {
     authClient;
     fallback;
     grpcVersion;
-    static protoCache = new Map();
     httpRules;
     numericEnums;
     minifyJson;
@@ -134,7 +134,7 @@ class GrpcClient {
      * This method will delete the proto cache content.
      */
     static clearProtoCache() {
-        GrpcClient.protoCache.clear();
+        jsonProtoCache.clear();
     }
     /**
      * gRPC-fallback version of GrpcClient
@@ -188,15 +188,9 @@ class GrpcClient {
      * @returns {Object} Root namespace of proto JSON
      */
     static protobufFromJSON(json, ignoreCache = false) {
-        const hash = (0, object_hash_1.default)(JSON.stringify(json)).toString();
-        const cached = GrpcClient.protoCache.get(hash);
-        if (cached && !ignoreCache) {
-            return cached;
-        }
-        const root = protobuf.Root.fromJSON(json);
-        GrpcClient.protoCache.set(hash, root);
-        return root;
+        return jsonProtoCache.load(protobuf.Root, json, ignoreCache, snapshot => protobuf.Root.fromJSON(snapshot));
     }
+
     static getServiceMethods(service) {
         const methods = {};
         for (const [methodName, methodObject] of Object.entries(service.methods)) {

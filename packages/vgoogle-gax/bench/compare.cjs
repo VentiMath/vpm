@@ -1,9 +1,9 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
-const upstream=require('../../../scripts/gax-conformance/node_modules/google-gax'),vpm=require('..');
 const original=path.resolve(__dirname,'../../../scripts/gax-conformance/node_modules/google-gax'),root=path.resolve(__dirname,'..');
-const directory=lib=>lib===upstream?original:root;
-const cases=[],add=(name,make,validate,async=false)=>cases.push({name,make,validate,async});
+const roots = new WeakMap();
+const directory=lib=>roots.get(lib);
+const cases=[],add=(name,make,validate,async=false)=>cases.push({name,make: selected => {const lib=require(selected);roots.set(lib,selected);return make(lib);},validate,async});
 const template='projects/{project}/databases/{database}/documents/{collection}/{document}',bindings={project:'fixture',database:'default',collection:'items',document:'one'},name='projects/fixture/databases/default/documents/items/one';
 add('path / construct',lib=>()=>new lib.PathTemplate(template),x=>assert.equal(x.size,7));
 add('path / construct and render',lib=>()=>new lib.PathTemplate(template).render(bindings),x=>assert.equal(x,name));
@@ -17,10 +17,25 @@ for(const [label,count,width,chunkSize]of [['one small message',1,64,4096],['32 
   return()=>new Promise((resolve,reject)=>{let sum=0;const parser=new Parser(rpc);parser.on('data',x=>{sum+=x.text.length;});parser.on('error',reject);parser.on('end',()=>resolve(sum));for(const chunk of chunks)parser.write(chunk);parser.end();});
  },x=>assert.equal(x,count*width),true);
 }
-const grpc=require('../../../scripts/gax-conformance/node_modules/@grpc/grpc-js'),loader=require('../../../scripts/gax-conformance/node_modules/@grpc/proto-loader');
-const {consumer,firestoreSchema}=require('../../../scripts/gax-conformance/consumers.cjs'),{bind,collect}=require('../../../scripts/grpc-conformance/consumers.cjs');
+for (const fallback of [false,true]) for (const refresh of [false,true]) {
+ add(`proto cache / ${fallback?'REST':'gRPC'} ${refresh?'refresh':'hit'} small schema`, lib=>{
+  const Client=fallback?require(path.join(directory(lib),'build/src/fallback.js')).GrpcClient:lib.GrpcClient;
+  const client=new Client({auth:{}}),schema={nested:{Message:{fields:{text:{type:'string',id:1}}}}};
+  Client.clearProtoCache();client.loadProtoJSON(schema);
+  return()=>client.loadProtoJSON(schema,refresh);
+ },result=>assert.ok(fallback?result.lookupType('Message'):result.Message));
+}
+for (const fallback of [false,true]) for (const refresh of [false,true]) add(`proto cache / ${fallback?'REST':'gRPC'} Firestore schema ${refresh?'refresh':'hit'}`,lib=>{
+ const {firestoreSchema}=require('../../../scripts/gax-conformance/consumers.cjs');
+ const Client=fallback?require(path.join(directory(lib),'build/src/fallback.js')).GrpcClient:lib.GrpcClient;
+ const client=new Client({auth:{}}),schema=JSON.parse(fs.readFileSync(firestoreSchema));
+ Client.clearProtoCache();client.loadProtoJSON(schema);
+ return()=>client.loadProtoJSON(schema,refresh);
+},result=>assert.ok(fallback?result.lookupType('google.firestore.v1.Document'):result.google.firestore.v1.Document));
 const resources=[];
 for(const streaming of [false,true])add(streaming?'Firestore SDK / batch read stream':'Firestore SDK / unary document',async lib=>{
+ const grpc=require('../../../scripts/gax-conformance/node_modules/@grpc/grpc-js'),loader=require('../../../scripts/gax-conformance/node_modules/@grpc/proto-loader');
+ const {consumer,firestoreSchema}=require('../../../scripts/gax-conformance/consumers.cjs'),{bind,collect}=require('../../../scripts/grpc-conformance/consumers.cjs');
  const documentName='projects/fixture/databases/(default)/documents/items/one',document={name:documentName,fields:{text:{stringValue:'hello é漢'},count:{integerValue:'9007199254740993'}}};
  const server=new grpc.Server({'grpc.enable_channelz':0});server.addService(loader.fromJSON(JSON.parse(fs.readFileSync(firestoreSchema)),{longs:String})['google.firestore.v1.Firestore'],{getDocument:(call,done)=>done(null,document),batchGetDocuments:call=>{call.write({found:document});call.end();}});
  const port=await bind(server,grpc.ServerCredentials.createInsecure()),{FirestoreClient}=consumer(directory(lib)).generated();
@@ -33,4 +48,4 @@ sources(root);sources(original);
 // Retain hashes for every reachable VPM runtime module used by this stack.
 function dependencies(dir){for(const dependency of Object.keys(require(path.join(dir,'package.json')).dependencies||{})){if(!dependency.startsWith('v'))continue;const target=path.resolve(root,'..',dependency);if(seen.has(target))continue;seen.add(target);for(const f of fs.readdirSync(target,{recursive:true}).filter(f=>!f.startsWith('test/')&&!f.startsWith('bench/')&&/\.(js|cjs|json)$/.test(f)))files.push(path.relative(root,path.join(target,f)));dependencies(target);}}
 dependencies(root);
-require('../../../scripts/bench-paired.cjs').run({root,upstream,vpm,cases,files,cleanup:async()=>{for(const{server,sdk}of resources){await sdk.close();server.forceShutdown();}}}).catch(error=>{console.error(error);process.exitCode=1;});
+require('../../../scripts/bench-process.cjs').run({root,upstream:original,vpm:root,cases,files,validationOnly:process.argv.includes('--validate'),cleanup:async()=>{for(const{server,sdk}of resources){await sdk.close();server.forceShutdown();}}}).catch(error=>{console.error(error);process.exitCode=1;});

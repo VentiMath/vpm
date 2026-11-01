@@ -1,77 +1,93 @@
 # vgoogle-gax measurements
 
-Recorded October 30, 2026 on Apple M1 Pro / macOS arm64, using
-Node 24.22.1 and Bun 1.4.0. Compared with google-gax 6.14.0.
+Each timed
+implementation runs alone in a fresh process. Four comparison pairs use
+balanced upstream-first / VPM-first order; two further pairs run identical
+upstream code in separate processes as controls. Warmup lasts at least 150 ms
+per case, followed by recalibration on warmed code, four warmup blocks and 12
+recorded blocks. Both workers in a pair use the same iteration count, targeting
+10 ms blocks with a one-million-operation cap. Results are retained and checked
+outside timing. All samples are kept, including outliers.
 
-Three fresh processes per runtime, 12 alternating paired rounds per case, 150 ms
-warmup per variant plus four full warmup blocks. Iterations use a 15 ms upstream
-pilot target capped at 100,000. Outputs are retained and validated outside timing.
-An additional process compares identical upstream implementations. No trimming;
-no other test suites ran during these measurements.
+The comparison units are per-process medians. The change column is the median
+of four process-pair percentage changes; the two order columns expose order
+sensitivity. The nanosecond columns are medians of the four process medians.
+They need not produce exactly the percentage in the change column.
 
-Values below are pooled median nanoseconds per operation. Change percentages are
-medians of paired sample ratios, so they need not equal the ratio of the displayed
-medians. Negative means less time. The control column is identical-upstream drift.
+A direction is unestablished when it reverses across processes or any pair
+overlaps the largest absolute control difference (with a minimum 2% floor).
+This is a conservative descriptive check, not a confidence interval. Process
+isolation reduces shared JIT feedback; environmental noise and GC remain.
+Negative changes mean less time; these are local workload measurements, not
+application throughput or latency guarantees.
 
-## Node 24
+## Node 24.22.1
 
-| Case | Upstream ns | VPM ns | Paired change | Per-process changes | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| path / construct | 1,571 | 1,727 | +10.0% | +10.4%, +9.7%, +8.4% | +0.2% |
-| path / construct and render | 2,399 | 2,312 | -3.6% | -2.0%, -3.7%, -4.2% | -0.8% |
-| path / repeated render | 790 | 425 | -46.3% | -45.2%, -46.6%, -47.1% | +0.2% |
-| path / repeated match | 1,130 | 247 | -78.0% | -77.9%, -77.8%, -78.9% | +0.1% |
-| path / compound match | 959 | 197 | -79.7% | -80.6%, -78.9%, -80.1% | +0.0% |
-| deadline / snapshot call options | 103 | 100 | -3.3% | -2.2%, -7.2%, -2.0% | -0.2% |
-| REST parser / one small message | 2,005 | 1,726 | -13.9% | -13.9%, -7.6%, -20.5% | +5.1% |
-| REST parser / 32 messages | 32,727 | 27,039 | -17.3% | -15.1%, -18.5%, -19.3% | -4.0% |
-| REST parser / fragmented 64KiB message | 1,119,669 | 293,368 | -71.4% | -70.9%, -70.1%, -74.5% | -6.2% |
-| Firestore SDK / unary document | 219,214 | 220,688 | +0.8% | +0.8%, +2.5%, -0.5% | -5.7% |
-| Firestore SDK / batch read stream | 228,646 | 224,765 | -0.3% | -0.3%, +1.7%, -1.0% | +0.7% |
+Recorded 2026-11-01T14:59:33.301Z on Apple M1 Pro, darwin/arm64.
+
+[Raw samples, processes, controls and source hashes](node-isolated.json).
+
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| path / construct | 1398 | 1488 | 6.1% | 6.6% | 6.1% | 5.2% | unestablished at this precision |
+| path / construct and render | 2083 | 1940 | -6.3% | -6.3% | -5.6% | 34% | unestablished at this precision |
+| path / repeated render | 687 | 365 | -47% | -46.4% | -47.5% | 4.8% | lower time in every pair, beyond control spread |
+| path / repeated match | 982 | 206 | -78.9% | -79% | -78.8% | 3.1% | lower time in every pair, beyond control spread |
+| path / compound match | 836 | 169 | -79.8% | -79.8% | -79.9% | 0.5% | lower time in every pair, beyond control spread |
+| deadline / snapshot call options | 84 | 83 | -0.9% | 0.8% | -10.6% | 2.1% | unestablished at this precision |
+| REST parser / one small message | 1954 | 1555 | -20.1% | -21.7% | -18.8% | 69.6% | unestablished at this precision |
+| REST parser / 32 messages | 29175 | 24389 | -16.8% | -18.5% | -15.9% | 3.2% | lower time in every pair, beyond control spread |
+| REST parser / fragmented 64KiB message | 965205 | 233823 | -75.7% | -77.5% | -75.2% | 34.7% | lower time in every pair, beyond control spread |
+| proto cache / gRPC hit small schema | 2644 | 827 | -68.7% | -42.5% | -69.9% | 13.6% | lower time in every pair, beyond control spread |
+| proto cache / gRPC refresh small schema | 13672 | 6586 | -50.7% | -51.1% | -50.7% | 31.4% | lower time in every pair, beyond control spread |
+| proto cache / REST hit small schema | 2674 | 828 | -69% | -68.8% | -69% | 2.7% | lower time in every pair, beyond control spread |
+| proto cache / REST refresh small schema | 9577 | 3944 | -58.8% | -53.6% | -58.8% | 5.8% | lower time in every pair, beyond control spread |
+| proto cache / gRPC Firestore schema hit | 130416 | 130982 | 0.3% | 2.1% | -3% | 13.9% | unestablished at this precision |
+| proto cache / gRPC Firestore schema refresh | 5738427 | 4427028 | -23.1% | -19.5% | -23.1% | 15.4% | unestablished at this precision |
+| proto cache / REST Firestore schema hit | 133512 | 131028 | -0.2% | -3.2% | 37.3% | 15.8% | unestablished at this precision |
+| proto cache / REST Firestore schema refresh | 2752510 | 2224233 | -18.3% | -10.4% | -30.3% | 2.4% | lower time in every pair, beyond control spread |
+| Firestore SDK / unary document | 196841 | 239509 | 18.2% | 27.1% | 18.2% | 43.4% | unestablished at this precision |
+| Firestore SDK / batch read stream | 249222 | 246159 | 1% | -12.7% | 6.4% | 64.7% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-| Case | Upstream ns | VPM ns | Paired change | Per-process changes | Control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| path / construct | 2,003 | 1,689 | -14.2% | -4.3%, -21.7%, -16.8% | -2.0% |
-| path / construct and render | 2,838 | 2,162 | -24.4% | -24.4%, -16.4%, -28.5% | +1.9% |
-| path / repeated render | 699 | 283 | -62.4% | -63.0%, -62.9%, -56.9% | +0.3% |
-| path / repeated match | 1,040 | 140 | -86.6% | -86.6%, -86.3%, -86.7% | -1.1% |
-| path / compound match | 923 | 127 | -85.9% | -85.0%, -86.7%, -85.9% | +0.5% |
-| deadline / snapshot call options | 68 | 60 | -11.1% | -10.9%, -11.4%, -11.1% | +1.9% |
-| REST parser / one small message | 1,893 | 1,651 | -14.1% | -20.1%, -11.0%, -11.8% | -9.1% |
-| REST parser / 32 messages | 21,440 | 16,594 | -23.5% | -23.2%, -23.0%, -24.8% | +0.7% |
-| REST parser / fragmented 64KiB message | 797,470 | 194,790 | -75.5% | -75.0%, -75.5%, -75.8% | +1.8% |
-| Firestore SDK / unary document | 120,535 | 125,726 | +5.9% | +5.6%, +3.8%, +7.3% | -5.9% |
-| Firestore SDK / batch read stream | 146,727 | 146,056 | -0.3% | +0.4%, +2.8%, -3.7% | +10.5% |
+Recorded 2026-11-01T15:01:05.624Z on Apple M1 Pro, darwin/arm64.
 
-## Interpretation and limits
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
 
-Repeated rendering/matching improves substantially on both runtimes. Bare
-construction on Node is **10% slower** (1.57 → 1.73 µs) because it builds reusable
-structures; construction plus first render is 3.6% faster. On Bun those cases
-improve 14% and 24%. The large fragmented JSON case improves **71% on Node and
-75% on Bun**; the parser also performs the framing/validation checks described
-in the package README. Small-message gains have more run-to-run noise.
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| path / construct | 1755 | 1438 | -17.7% | -18.1% | -12.1% | 7.1% | unestablished at this precision |
+| path / construct and render | 2497 | 1823 | -27.4% | 72.9% | -27.5% | 1.6% | unestablished at this precision |
+| path / repeated render | 632 | 226 | -64.4% | -61.3% | -64.4% | 26.5% | lower time in every pair, beyond control spread |
+| path / repeated match | 958 | 115 | -88.3% | -88.4% | -87.4% | 49% | lower time in every pair, beyond control spread |
+| path / compound match | 725 | 120 | -83.6% | -76.6% | -83.6% | 4.2% | lower time in every pair, beyond control spread |
+| deadline / snapshot call options | 60 | 52 | -12.7% | -10.7% | -24.2% | 9.1% | lower time in every pair, beyond control spread |
+| REST parser / one small message | 1626 | 1403 | -15.2% | -18.5% | -11.9% | 1.2% | lower time in every pair, beyond control spread |
+| REST parser / 32 messages | 19769 | 15306 | -23.2% | -24.6% | -23.2% | 1.7% | lower time in every pair, beyond control spread |
+| REST parser / fragmented 64KiB message | 957605 | 178373 | -80.5% | -81% | -66.9% | 4.9% | lower time in every pair, beyond control spread |
+| proto cache / gRPC hit small schema | 1295 | 593 | -56.1% | -56.4% | -53.8% | 4.1% | lower time in every pair, beyond control spread |
+| proto cache / gRPC refresh small schema | 7548 | 5032 | -31.8% | -31.8% | -33.3% | 10.9% | lower time in every pair, beyond control spread |
+| proto cache / REST hit small schema | 1340 | 608 | -55.1% | -60% | -49.6% | 4.4% | lower time in every pair, beyond control spread |
+| proto cache / REST refresh small schema | 4351 | 2166 | -50% | -53.3% | -48.9% | 5.5% | lower time in every pair, beyond control spread |
+| proto cache / gRPC Firestore schema hit | 75484 | 73088 | -3.7% | -0.6% | -3.7% | 51.5% | unestablished at this precision |
+| proto cache / gRPC Firestore schema refresh | 4353917 | 3348281 | -25.4% | -18.2% | -28.5% | 2.7% | lower time in every pair, beyond control spread |
+| proto cache / REST Firestore schema hit | 71651 | 69780 | -4.3% | -21.6% | -0.4% | 8.8% | unestablished at this precision |
+| proto cache / REST Firestore schema refresh | 1983096 | 1641445 | -12.6% | 154.3% | -12.6% | 8.8% | unestablished at this precision |
+| Firestore SDK / unary document | 128313 | 148648 | 9.8% | 37.7% | 6.4% | 24.7% | unestablished at this precision |
+| Firestore SDK / batch read stream | 142622 | 163659 | 14.8% | 42.1% | -0.2% | 6.3% | unestablished at this precision |
 
-The actual Firestore 9.4.0 SDK benchmarks send unary and batch-read RPCs to local
-gRPC servers using the full selected gax/dependency stack. Node unary and both
-batch-stream results are effectively level. Bun unary measured **5.9% slower**
-(about 5 µs); the identical-upstream control drifted −5.9%, so this small result
-needs more evidence before attributing it to the implementation. This is not a
-claim of faster production Firestore requests, whose network and service latency
-are absent from these local measurements.
+## Reproduce
 
-The raw reports contain every sample, runtime, CPU and source hash. Hashes cover
-the benchmark, pinned fixture locks, selected gax builds and reachable VPM runtime
-modules. Earlier exploratory runs are not included in these final measurements.
+Run these commands from the repository root after installing the pinned
+fixtures used by `bench/compare.cjs`:
 
 ```sh
-for runtime in node bun; do
-  for sample in 1 2 3; do
-    OUTPUT="packages/vgoogle-gax/bench/results/$runtime-$sample.json" "$runtime" packages/vgoogle-gax/bench/compare.cjs
-  done
-  CALIBRATION=1 OUTPUT="packages/vgoogle-gax/bench/results/$runtime-control.json" "$runtime" packages/vgoogle-gax/bench/compare.cjs
-done
-node packages/vgoogle-gax/bench/summarize.cjs --verify-current
+OUTPUT=packages/vgoogle-gax/bench/results/node-isolated.json node packages/vgoogle-gax/bench/compare.cjs
+OUTPUT=packages/vgoogle-gax/bench/results/bun-isolated.json bun packages/vgoogle-gax/bench/compare.cjs
+node scripts/render-bench-report.cjs packages/vgoogle-gax
 ```
+
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.
