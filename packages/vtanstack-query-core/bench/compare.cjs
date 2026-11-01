@@ -1,8 +1,7 @@
 'use strict';
 const assert = require('node:assert/strict'), path = require('node:path');
 (async () => {
-  const upstream = await import('../../../scripts/tanstack-query-conformance/node_modules/@tanstack/query-core/build/modern/index.js');
-  const vpm = await import('../query-client.js');
+  const {upstream, vpm} = await require('../../../scripts/bench-library.cjs').load({upstream: () => import('../../../scripts/tanstack-query-conformance/node_modules/@tanstack/query-core/build/modern/index.js'), vpm: () => import('../query-client.js')});
   const options = {defaultOptions: {queries: {gcTime: Infinity}, mutations: {gcTime: Infinity}}};
   const cases = [
     {name: 'client construction', make: ({QueryClient}) => () => new QueryClient(options), validate: client => assert.equal(client.getQueryCache().getAll().length, 0)},
@@ -13,7 +12,7 @@ const assert = require('node:assert/strict'), path = require('node:path');
     {name: 'active invalidation and refresh', async: true, make: ({QueryClient, QueryObserver}) => {const client = new QueryClient(options); client.setQueryData(['record'], 42); const observer = new QueryObserver(client, {queryKey: ['record'], staleTime: Infinity, queryFn: async () => 42}); observer.subscribe(() => {}); return async () => {await client.invalidateQueries({queryKey: ['record']}); return observer.getCurrentResult().data;};}, validate: value => assert.equal(value, 42)},
     {name: 'mutation and completed-entry cleanup', async: true, make: ({QueryClient, MutationObserver}) => {const client = new QueryClient(options), observer = new MutationObserver(client, {mutationFn: async value => value + 1}); return async () => {const value = await observer.mutate(41); observer.reset(); client.getMutationCache().clear(); return value;};}, validate: value => assert.equal(value, 42)},
   ];
-  await require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases, files: [
+  await require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases, files: ['../../scripts/bench-library.cjs', 
     'query-client.js','runtime.js','cache.js','observer.js','mutation.js','package.json','bench/compare.cjs',
     '../../scripts/tanstack-query-conformance/package-lock.json', '../../scripts/tanstack-query-conformance/node_modules/@tanstack/query-core/build/modern',
   ]});

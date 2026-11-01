@@ -44,18 +44,18 @@ now have current comparison targets:
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
 | Suite verified | vemotion-babel-plugin | @emotion/babel-plugin 11.13.5; its 130 tests (two pinned by name) and Emotion's runtime suite compiled with it | [@emotion/babel-plugin 11.13.5](https://www.npmjs.com/package/@emotion/babel-plugin), checked November 1, 2026 |
-| Suite verified | vemotion-styled | @emotion/styled 11.14.1; Emotion's suite under React 16 and 18 with all twelve VPM Emotion packages in place of the originals, and its declarations with React 18.3 and 19 types under the configured TypeScript 7 compiler | [@emotion/styled 11.14.1](https://www.npmjs.com/package/@emotion/styled), checked November 1, 2026 |
+| Suite verified | vemotion-styled | @emotion/styled 11.14.1; Emotion's suite under React 16 and 18 with the complete VPM Emotion stack in place of the originals, and its declarations with React 18.3 and 19 types under the configured TypeScript 7 compiler | [@emotion/styled 11.14.1](https://www.npmjs.com/package/@emotion/styled), checked November 1, 2026 |
 | Suite verified | vemotion-react | @emotion/react 11.14.0; Emotion's suite under React 16 and 18 with it in place of the original, and its declarations with React 18.3 and 19 types under the configured TypeScript 7 compiler | [@emotion/react 11.14.0](https://www.npmjs.com/package/@emotion/react), checked November 1, 2026 |
 | Suite and differential verified | vemotion-cache | @emotion/cache 11.14.0; Emotion's suite under React 16 and 18, 10,000 generated styles with identical CSS in development and production (including VentiMath's RTL and `@layer` configurations), and its declarations under the configured TypeScript 7 compiler | [@emotion/cache 11.14.0](https://www.npmjs.com/package/@emotion/cache), checked November 1, 2026 |
-| Suite verified | vemotion-is-prop-valid | @emotion/is-prop-valid 1.4.0; Emotion's 293-test suite with it in place of the original | [@emotion/is-prop-valid 1.4.0](https://www.npmjs.com/package/@emotion/is-prop-valid), checked November 1, 2026 |
+| Suite verified | vemotion-is-prop-valid | @emotion/is-prop-valid 1.4.0; Emotion's development suite with the complete VPM stack and documented exceptions | [@emotion/is-prop-valid 1.4.0](https://www.npmjs.com/package/@emotion/is-prop-valid), checked November 1, 2026 |
 | Suite verified | vemotion-use-insertion-effect-with-fallbacks | @emotion/use-insertion-effect-with-fallbacks 1.2.0; Emotion's suite under React 16 and React 18, and its declarations under the configured TypeScript 7 compiler | [@emotion/use-insertion-effect-with-fallbacks 1.2.0](https://www.npmjs.com/package/@emotion/use-insertion-effect-with-fallbacks), checked November 1, 2026 |
-| Suite and differential verified | vemotion-serialize | @emotion/serialize 1.3.3; Emotion's 293-test suite with it in place of the original, 20,000 generated style arguments with identical results in development and production, and its declarations under the configured TypeScript 7 compiler | [@emotion/serialize 1.3.3](https://www.npmjs.com/package/@emotion/serialize), checked November 1, 2026 |
-| Suite verified | vemotion-utils | @emotion/utils 1.4.2; Emotion's 293-test suite with it in place of the original, and its declarations under the configured TypeScript 7 compiler | [@emotion/utils 1.4.2](https://www.npmjs.com/package/@emotion/utils), checked November 1, 2026 |
-| Suite verified | vemotion-sheet | @emotion/sheet 1.4.0; Emotion's 293-test suite with it in place of the original, and its declarations under the configured TypeScript 7 compiler | [@emotion/sheet 1.4.0](https://www.npmjs.com/package/@emotion/sheet), checked November 1, 2026 |
-| Suite verified | vemotion-hash | @emotion/hash 0.9.2; Emotion's 293-test suite with it in place of the original | [@emotion/hash 0.9.2](https://www.npmjs.com/package/@emotion/hash), checked November 1, 2026 |
-| Suite verified | vemotion-memoize | @emotion/memoize 0.9.0; Emotion's 293-test suite with it in place of the original | [@emotion/memoize 0.9.0](https://www.npmjs.com/package/@emotion/memoize), checked November 1, 2026 |
-| Suite verified | vemotion-unitless | @emotion/unitless 0.10.0; Emotion's 293-test suite with it in place of the original | [@emotion/unitless 0.10.0](https://www.npmjs.com/package/@emotion/unitless), checked November 1, 2026 |
-| Suite verified | vemotion-weak-memoize | @emotion/weak-memoize 0.4.0; Emotion's 293-test suite with it in place of the original | [@emotion/weak-memoize 0.4.0](https://www.npmjs.com/package/@emotion/weak-memoize), checked November 1, 2026 |
+| Suite and differential verified | vemotion-serialize | @emotion/serialize 1.3.3; Emotion's development suite with the complete VPM stack and documented exceptions, 20,000 generated style arguments with identical results in development and production, and its declarations under the configured TypeScript 7 compiler | [@emotion/serialize 1.3.3](https://www.npmjs.com/package/@emotion/serialize), checked November 1, 2026 |
+| Suite verified | vemotion-utils | @emotion/utils 1.4.2; Emotion's development suite with the complete VPM stack and documented exceptions, and its declarations under the configured TypeScript 7 compiler | [@emotion/utils 1.4.2](https://www.npmjs.com/package/@emotion/utils), checked November 1, 2026 |
+| Suite verified | vemotion-sheet | @emotion/sheet 1.4.0; Emotion's development suite with the complete VPM stack and documented exceptions, and its declarations under the configured TypeScript 7 compiler | [@emotion/sheet 1.4.0](https://www.npmjs.com/package/@emotion/sheet), checked November 1, 2026 |
+| Suite verified | vemotion-hash | @emotion/hash 0.9.2; Emotion's development suite with the complete VPM stack and documented exceptions | [@emotion/hash 0.9.2](https://www.npmjs.com/package/@emotion/hash), checked November 1, 2026 |
+| Suite verified | vemotion-memoize | @emotion/memoize 0.9.0; Emotion's development suite with the complete VPM stack and documented exceptions | [@emotion/memoize 0.9.0](https://www.npmjs.com/package/@emotion/memoize), checked November 1, 2026 |
+| Suite verified | vemotion-unitless | @emotion/unitless 0.10.0; Emotion's development suite with the complete VPM stack and documented exceptions | [@emotion/unitless 0.10.0](https://www.npmjs.com/package/@emotion/unitless), checked November 1, 2026 |
+| Suite verified | vemotion-weak-memoize | @emotion/weak-memoize 0.4.0; Emotion's development suite with the complete VPM stack and documented exceptions | [@emotion/weak-memoize 0.4.0](https://www.npmjs.com/package/@emotion/weak-memoize), checked November 1, 2026 |
 | Suite and differential verified | vstylis | stylis 4.4.0; its 113 tests, and identical trees and output over 12 stylesheets and 20,000 generated inputs | [stylis 4.4.0](https://www.npmjs.com/package/stylis), checked November 1, 2026 |
 | Application scope | vtanstack-react-query | Independent hooks; mounted public-API comparisons with 5.105.0 | [Contract and evidence](packages/vtanstack-react-query/README.md) |
 | Application scope | vtanstack-query-core | Independent cache, requests and mutations; long-timer regressions retained | [Contract and evidence](packages/vtanstack-query-core/README.md) |
@@ -653,10 +653,13 @@ parser-specific limits are also checked in a direct application.
 `vemotion-weak-memoize`, `vemotion-sheet` and `vemotion-utils` target
 @emotion/hash 0.9.2, @emotion/memoize 0.9.0, @emotion/unitless 0.10.0,
 @emotion/weak-memoize 0.4.0, @emotion/sheet 1.4.0 and @emotion/utils 1.4.2,
-checked November 1, 2026, written for VPM. Emotion's suite (293 tests across
-hash, weak-memoize, sheet, cache, react and styled, with 305 snapshots, in
-development and production builds) runs against the published packages and
-passes in full with these in place of the originals. The sheet keeps the
+checked November 1, 2026. The current complete-stack fixture runs 423 tests:
+React 16 development has 413 passing tests, two documented Babel-plugin
+differences and eight skipped; React 18 has 416 passing, the same two differences
+and five skipped. Production runs five tests and skips 418. The
+[conformance record](scripts/emotion-conformance/README.md) identifies the
+configuration and snapshots. Passing tests establish behavior, not implementation
+provenance. The sheet keeps the
 original's public fields, which MUI's `StyledEngineProvider` relies on when it
 subclasses `StyleSheet`.
 
@@ -722,7 +725,7 @@ reports in development (reproduced with React 16.14); vemotion-styled reads it
 on every render. The complete development fixture has 413 passing assertions
 under React 16 and 416 under React 18, plus two existing Babel-plugin
 differences. The production configuration runs only five assertions; it should
-not be described as the same 293-test coverage as development.
+not be described as providing the same coverage as development.
 
 `vemotion-babel-plugin` targets @emotion/babel-plugin 11.13.5 with its options
 and output, target class names included. The original minifies with stylis

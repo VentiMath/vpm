@@ -23,43 +23,43 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T07:05:36.175Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:52:43.658Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| short integers | 327 | 153 | -53.4% | -53.4% | -53.2% | 2.2% | lower time in every pair, beyond control spread |
-| XML default options | 346 | 152 | -56% | -56.8% | -56% | 0.7% | lower time in every pair, beyond control spread |
-| non-numeric XML values | 199 | 67 | -66.5% | -66.4% | -66.5% | 1.6% | lower time in every pair, beyond control spread |
-| decimal with trailing zeros | 484 | 319 | -33.8% | -34.8% | -33.8% | 0.2% | lower time in every pair, beyond control spread |
-| scientific notation | 315 | 185 | -41.3% | -42.4% | -40.2% | 3.1% | lower time in every pair, beyond control spread |
-| hex binary octal | 221 | 102 | -53.8% | -54% | -52.7% | 2.3% | lower time in every pair, beyond control spread |
-| precision-preserving rejection | 383 | 269 | -29.6% | -28.8% | -29.6% | 4.7% | lower time in every pair, beyond control spread |
-| Unicode normalization | 624 | 404 | -35.1% | -36% | -34.2% | 2% | lower time in every pair, beyond control spread |
-| skip pattern | 150 | 49 | -67.1% | -66.4% | -67.1% | 2.7% | lower time in every pair, beyond control spread |
-| overflow handling | 234 | 171 | -26.8% | -27.2% | -26.4% | 1.8% | lower time in every pair, beyond control spread |
-| long decimal 4KiB | 10303 | 5879 | -42.7% | -43.1% | -42.2% | 0.4% | lower time in every pair, beyond control spread |
+| short integers | 280 | 134 | -52.1% | -52.4% | -51.8% | 4.8% | lower time in every pair, beyond control spread |
+| XML default options | 299 | 133 | -56.4% | -58.4% | -55.5% | 1.3% | lower time in every pair, beyond control spread |
+| non-numeric XML values | 173 | 60 | -65.4% | -66.5% | -65.4% | 1.1% | lower time in every pair, beyond control spread |
+| decimal with trailing zeros | 431 | 282 | -34.6% | -35.7% | -25.4% | 2.9% | lower time in every pair, beyond control spread |
+| scientific notation | 273 | 158 | -42.1% | -47.2% | -41.5% | 1.3% | lower time in every pair, beyond control spread |
+| hex binary octal | 195 | 89 | -54% | -54% | -60.5% | 1.9% | lower time in every pair, beyond control spread |
+| precision-preserving rejection | 372 | 296 | -21.3% | -21.3% | -21% | 1.2% | lower time in every pair, beyond control spread |
+| Unicode normalization | 556 | 354 | -36.5% | -39% | -36.3% | 1.1% | lower time in every pair, beyond control spread |
+| skip pattern | 133 | 43 | -67.8% | -66.8% | -68.3% | 2.5% | lower time in every pair, beyond control spread |
+| overflow handling | 206 | 153 | -26.3% | -25.8% | -26.3% | 2.3% | lower time in every pair, beyond control spread |
+| long decimal 4KiB | 9113 | 5084 | -43.8% | -43.7% | -44.4% | 0.5% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T07:06:21.969Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:53:32.154Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| short integers | 256 | 90 | -64.9% | -76.1% | -64.8% | 1.9% | lower time in every pair, beyond control spread |
-| XML default options | 277 | 93 | -65.6% | -67.5% | -64.1% | 7.6% | lower time in every pair, beyond control spread |
-| non-numeric XML values | 151 | 42 | -71.9% | -78.1% | -71.3% | 1.4% | lower time in every pair, beyond control spread |
-| decimal with trailing zeros | 422 | 191 | -55.4% | -55.4% | -55.4% | 1.8% | lower time in every pair, beyond control spread |
-| scientific notation | 232 | 111 | -52.6% | 2.2% | -52.7% | 3.2% | unestablished at this precision |
-| hex binary octal | 221 | 52 | -76.1% | -76.3% | -76.1% | 8.6% | lower time in every pair, beyond control spread |
-| precision-preserving rejection | 324 | 188 | -42% | -42.2% | -42% | 3.4% | lower time in every pair, beyond control spread |
-| Unicode normalization | 471 | 272 | -42.5% | -42.5% | -41.7% | 4.4% | lower time in every pair, beyond control spread |
-| skip pattern | 144 | 36 | -75.1% | -75.1% | -70.7% | 2.4% | lower time in every pair, beyond control spread |
-| overflow handling | 185 | 106 | -42.9% | -36.6% | -43% | 3.6% | lower time in every pair, beyond control spread |
-| long decimal 4KiB | 9230 | 5390 | -41.9% | -41.6% | -41.9% | 1.4% | lower time in every pair, beyond control spread |
+| short integers | 234 | 79 | -66.1% | -68.1% | -64.4% | 5% | lower time in every pair, beyond control spread |
+| XML default options | 259 | 81 | -68.9% | -70.3% | -67.4% | 96.1% | unestablished at this precision |
+| non-numeric XML values | 147 | 36 | -75.1% | -75.1% | -82.2% | 4.7% | lower time in every pair, beyond control spread |
+| decimal with trailing zeros | 420 | 168 | -60% | -59.7% | -60.4% | 1.6% | lower time in every pair, beyond control spread |
+| scientific notation | 220 | 93 | -56.7% | -55.9% | -59% | 6.5% | lower time in every pair, beyond control spread |
+| hex binary octal | 203 | 44 | -78.1% | -78.7% | -77.7% | 5.8% | lower time in every pair, beyond control spread |
+| precision-preserving rejection | 293 | 163 | -44.2% | -43.2% | -49.9% | 2.4% | lower time in every pair, beyond control spread |
+| Unicode normalization | 450 | 236 | -47.7% | -47.7% | -45.5% | 9.5% | lower time in every pair, beyond control spread |
+| skip pattern | 136 | 30 | -77.7% | -77.7% | -78% | 2.5% | lower time in every pair, beyond control spread |
+| overflow handling | 175 | 94 | -46.2% | -46.5% | -44.8% | 3.7% | lower time in every pair, beyond control spread |
+| long decimal 4KiB | 8054 | 4595 | -42.3% | -56.1% | -41.6% | 3% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

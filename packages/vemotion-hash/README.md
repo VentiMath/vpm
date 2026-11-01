@@ -18,10 +18,10 @@ name, the second rendering with the first's styles. Encoding needs no
 
 [Process-isolated measurements](bench/results/README.md) on Node 24 and Bun
 include raw samples, balanced process order and independent controls. The ASCII
-case is slower on Node and faster on Bun. The Unicode case hashes different
+case is inconclusive on Node and faster on Bun. The Unicode case hashes different
 bytes by design and has a substantial Node cost; it is not a comparison of
 identical hash semantics. The report includes these costs and inconclusive cases.
 
 
-Emotion's suite passes with this package in place of the original; see the
+The complete-stack Emotion suite runs with documented exceptions; see the
 [conformance record](../../scripts/emotion-conformance/README.md).

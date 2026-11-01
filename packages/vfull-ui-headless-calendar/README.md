@@ -68,10 +68,11 @@ this package does not ship its own database.
 The recorded Node 24 named-zone cases take 59–80% less CPU time than the
 polyfill. Bun's native Temporal comparison is mixed: converting timestamps
 and parsing named-zone inputs improve, while resolving paired instants/offsets
-costs about 10% more. Local conversion costs about 7–8% more on both runtimes;
-UTC parsing plus month addition costs about 11% more on Bun and is inconclusive
-on Node. The report retains those regressions and all controls. The conversion
-cache holds only the last marker/zone pair and observes mutations to either.
+costs about 10% more and named-zone formatting about 7% more. Local conversion
+costs about 5% more on Node; Bun local conversion and both UTC parsing/month
+addition comparisons are inconclusive. The report retains those regressions
+and all controls. The conversion cache holds only the last marker/zone pair
+and observes mutations to either.
 
 [PROVENANCE.json](PROVENANCE.json) records the source references and retained
 contracts. MIT attribution is preserved. This implementation was informed by

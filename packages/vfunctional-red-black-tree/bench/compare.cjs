@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('node:assert/strict'), path = require('node:path');
-const upstream = require('../../../scripts/rbtree-conformance/node_modules/functional-red-black-tree');
-const vpm = require('..');
+(async () => {
+const {upstream, vpm} = await require('../../../scripts/bench-library.cjs').load({upstream: () => require('../../../scripts/rbtree-conformance/node_modules/functional-red-black-tree'), vpm: () => require('..')});
 let seed = 7;
 const random = n => (seed = (Math.imul(seed, 1103515245) + 12345) >>> 0) % n;
 const shuffled = Array.from({length: 1000}, (_, i) => i).sort(() => random(3) - 1);
@@ -30,4 +30,6 @@ const cases = [
   {name: 'remove / 64 persistent removals from 1,000', make: compiled('const tree = build(shuffled); return () => { let sum = 0; for (const key of probes) sum += tree.remove(key % 1000).length; return sum; };'), validate: v => assert.equal(v, 64 * 999)},
   {name: 'Firestore Watch / 100 document changes in 1,000', make: compiled('const tree = build(docs, byPath); return () => { let t = tree, sum = 0; for (const [from, to] of changes) { const found = t.find(from); if (found.valid) t = found.remove(); t = t.insert(to, null); sum += t.find(to).index; } return sum + t.length; };'), validate: v => assert.ok(v > 0)},
 ];
-require('../../../scripts/bench-paired.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases, files: ['../../scripts/rbtree-conformance/node_modules/functional-red-black-tree/rbtree.js', 'package.json', 'index.js', 'bench/compare.cjs', '../../scripts/rbtree-conformance/package-lock.json']}).catch(e => {console.error(e); process.exitCode = 1;});
+require('../../../scripts/bench-paired.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases, files: ['../../scripts/bench-library.cjs', '../../scripts/rbtree-conformance/node_modules/functional-red-black-tree/rbtree.js', 'package.json', 'index.js', 'bench/compare.cjs', '../../scripts/rbtree-conformance/package-lock.json']}).catch(e => {console.error(e); process.exitCode = 1;});
+
+})().catch(error => {console.error(error); process.exitCode = 1;});

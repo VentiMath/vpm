@@ -93,9 +93,12 @@ per-process medians, both order groups, controls and source hashes are retained.
 Node measurements require Node 24; Bun records its actual version. Results are
 validated outside timing and no samples are trimmed. Case factories must construct only
 that worker's selected variant: do not call `make(upstream)` at module scope to
-compute expected values. Use pinned output fixtures or a separate oracle call
-site instead. A factory shared with setup can reintroduce JIT feedback even
-when timed workers are isolated. Process isolation limits
+compute expected values. Use pinned output fixtures generated outside the
+benchmark run. `scripts/bench-library.cjs` loads neither implementation in the
+coordinator and only the selected library in each timed worker. Keep SDK caller
+setup inside the selected factory too. Loading both libraries or executing an
+oracle in a timed worker can reintroduce setup bias even when its timer covers
+only one implementation. Process isolation limits
 shared JIT feedback; machine load, GC and runtime variation can still matter.
 
 Run one recording per runtime, with `OUTPUT` set to a JSON path. Each recording

@@ -11,13 +11,13 @@
   "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
   "changes": [
     "Written for VPM: MurmurHash2 with Math.imul, one pass over the string.",
-    "Characters beyond ASCII are hashed as their UTF-8 bytes (lone surrogates as their own code points); @emotion/hash kept only each code unit's low byte, so characters with the same low byte (中 and 伭, Ā and NUL) hashed alike and two styles differing only by them got the same class name. ASCII strings hash exactly as before.",
+    "Characters beyond ASCII are hashed as their UTF-8 bytes (lone surrogates as their own code points); @emotion/hash kept only each code unit's low byte, so characters with the same low byte (\u4e2d and \u4f2d, \u0100 and NUL) hashed alike and two styles differing only by them got the same class name. ASCII strings hash exactly as before.",
     "UTF-8 is encoded without TextEncoder, which jsdom test environments lack.",
     "ES module with bundled declarations."
   ],
   "verification": {
     "fixture": "scripts/emotion-conformance",
-    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds.",
+    "upstreamSuite": "The complete VPM Emotion stack is checked against the pinned upstream suite. React 16 development: 413 passing, two documented Babel-plugin differences, eight skipped (423 total). React 18 development: 416 passing, the same two differences, five skipped. Production: five passing and 418 skipped. See scripts/emotion-conformance/README.md for the configuration, adaptations and snapshot counts.",
     "runtimes": [
       "Node.js 24",
       "Bun"

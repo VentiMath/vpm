@@ -23,35 +23,35 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T07:44:58.921Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:57:30.879Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| client construction | 160 | 118 | -26.2% | -24.8% | -27.2% | 3% | lower time in every pair, beyond control spread |
-| cached query read | 630 | 565 | -10.4% | -9.3% | -11.3% | 1.8% | lower time in every pair, beyond control spread |
-| unchanged JSON update, 16 records | 5617 | 4461 | -20.5% | -20.5% | -21.8% | 0.3% | lower time in every pair, beyond control spread |
-| fresh fetchQuery cache hit | 633 | 517 | -18.4% | -18.4% | 51.1% | 2.6% | unestablished at this precision |
-| deduplicated concurrent requests | 4027 | 2237 | -44.1% | -42.3% | -47.9% | 1.7% | lower time in every pair, beyond control spread |
-| active invalidation and refresh | 3510 | 3078 | -12.8% | -13.8% | -12.8% | 4.9% | lower time in every pair, beyond control spread |
-| mutation and completed-entry cleanup | 1210 | 945 | -22.1% | -25.9% | -22.1% | 11.6% | lower time in every pair, beyond control spread |
+| client construction | 133 | 100 | -25% | -24.1% | -27.4% | 2.7% | lower time in every pair, beyond control spread |
+| cached query read | 531 | 472 | -11.1% | -10.1% | -11.6% | 1.7% | lower time in every pair, beyond control spread |
+| unchanged JSON update, 16 records | 4705 | 3729 | -20.8% | -19.6% | -22.9% | 3.9% | lower time in every pair, beyond control spread |
+| fresh fetchQuery cache hit | 532 | 427 | -19.9% | -19.1% | -20.4% | 3.9% | lower time in every pair, beyond control spread |
+| deduplicated concurrent requests | 3454 | 2025 | -42.5% | -46.8% | -38.8% | 6.2% | lower time in every pair, beyond control spread |
+| active invalidation and refresh | 2884 | 2538 | -12% | -11% | -33.9% | 4.9% | lower time in every pair, beyond control spread |
+| mutation and completed-entry cleanup | 1012 | 794 | -21.6% | -21.2% | -21.7% | 6.5% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T07:45:27.663Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:58:00.070Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| client construction | 77 | 75 | -2.9% | -4.1% | -1.1% | 1.8% | unestablished at this precision |
-| cached query read | 618 | 412 | -33.3% | -33.8% | -33% | 4.6% | lower time in every pair, beyond control spread |
-| unchanged JSON update, 16 records | 3055 | 3488 | 13.6% | 13.6% | 14.5% | 1.6% | higher time in every pair, beyond control spread |
-| fresh fetchQuery cache hit | 513 | 378 | -26.3% | -26.8% | -25.3% | 0.2% | lower time in every pair, beyond control spread |
-| deduplicated concurrent requests | 2692 | 1865 | -31.1% | -33.1% | -29.4% | 2.7% | lower time in every pair, beyond control spread |
-| active invalidation and refresh | 2763 | 2597 | -5.5% | -7.9% | -4.8% | 5.1% | unestablished at this precision |
-| mutation and completed-entry cleanup | 2069 | 1135 | -45.2% | -46.1% | -44.4% | 2.3% | lower time in every pair, beyond control spread |
+| client construction | 64 | 62 | -2.9% | -2.9% | -13.1% | 9.8% | unestablished at this precision |
+| cached query read | 511 | 353 | -31.3% | -32.3% | -31.3% | 2.6% | lower time in every pair, beyond control spread |
+| unchanged JSON update, 16 records | 2570 | 3460 | 30.2% | 38.8% | 18.6% | 1.2% | higher time in every pair, beyond control spread |
+| fresh fetchQuery cache hit | 437 | 318 | -27.1% | -29.5% | -24.7% | 2.2% | lower time in every pair, beyond control spread |
+| deduplicated concurrent requests | 2353 | 1596 | -32.4% | -34.7% | -31.7% | 4.3% | lower time in every pair, beyond control spread |
+| active invalidation and refresh | 2396 | 2214 | -7.6% | -7.9% | -7.6% | 20% | unestablished at this precision |
+| mutation and completed-entry cleanup | 1746 | 954 | -46.6% | -45.7% | -46.6% | 10.8% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

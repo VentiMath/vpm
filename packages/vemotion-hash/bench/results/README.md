@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T08:16:50.462Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:47:48.139Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| ascii | 196 | 204 | 3.6% | -4.7% | 3.6% | 23.2% | unestablished at this precision |
-| non-ASCII (different hash semantics) | 131 | 454 | 274.7% | 155.6% | 280.2% | 30.6% | higher time in every pair, beyond control spread |
+| ascii | 158 | 156 | -1.3% | 0.7% | -2.4% | 1.4% | unestablished at this precision |
+| non-ASCII (different hash semantics) | 115 | 392 | 240.7% | 241.1% | 240% | 0.9% | higher time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T08:16:58.861Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:47:56.166Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| ascii | 138 | 90 | -33.9% | -33.9% | -13.8% | 1.1% | unestablished at this precision |
-| non-ASCII (different hash semantics) | 94 | 97 | 4.3% | 4.3% | -1% | 2% | unestablished at this precision |
+| ascii | 132 | 86 | -35.6% | -35.3% | -35.7% | 0.7% | lower time in every pair, beyond control spread |
+| non-ASCII (different hash semantics) | 94 | 93 | -1.7% | -0.3% | -1.8% | 1.2% | unestablished at this precision |
 
 ## Reproduce
 

@@ -45,9 +45,9 @@ Otherwise the element trees and output are identical: the
 113 tests and compares vstylis with stylis 4.4.0 (with the changes above
 applied to its sources) over 12 stylesheets and 20,000 generated nested inputs.
 [Process-isolated benchmarks](bench/results/README.md) time compile, prefixer
-and stringify on Node 24 and Bun. These samples do not establish a consistent
-speedup or regression beyond the control variation; no parity claim follows
-from an inconclusive measurement.
+and stringify on Node 24 and Bun. The Node component rule takes 12.4% less
+time beyond the control spread. The Bootstrap case and both Bun comparisons
+are inconclusive; that does not establish parity.
 
 | Upstream | Here |
 | --- | --- |
