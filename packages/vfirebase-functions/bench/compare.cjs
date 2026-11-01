@@ -64,6 +64,22 @@ const cases = [
       return response.body;
     };
   }, validate: output => assert.deepEqual(output, {result: 42})},
+  {name: 'trace / portable header extraction', make: root => {
+    const {extractTraceContext} = require(path.join(root, 'lib/common/trace.js'));
+    const carrier = {traceparent: '00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01'};
+    return () => extractTraceContext(carrier);
+  }, validate: context => assert.deepEqual(context, {version: '00', traceId: '0af7651916cd43dd8448eb211c80319c', parentId: 'b7ad6b7169203331', sample: true})},
+  {name: 'trace / legacy decimal span extraction', make: root => {
+    const {extractTraceContext} = require(path.join(root, 'lib/common/trace.js'));
+    const carrier = {'x-cloud-trace-context': '0af7651916cd43dd8448eb211c80319c/42;o=1'};
+    return () => extractTraceContext(carrier);
+  }, validate: context => assert.deepEqual(context, {version: '00', traceId: '0af7651916cd43dd8448eb211c80319c', parentId: '2a', sample: true})},
+  {name: 'discovery / 64 grouped endpoints', make: root => {
+    const {extractStack} = require(path.join(root, 'lib/runtime/loader.js'));
+    const source = {api: Object.fromEntries(Array.from({length: 64}, (_, i) => ['fn' + i,
+      Object.assign(() => {}, {__endpoint: {platform: 'gcfv2', httpsTrigger: {}}})]))};
+    return () => {const endpoints = {}; extractStack(source, endpoints, [], {}); return endpoints;};
+  }, validate: endpoints => {assert.equal(Object.keys(endpoints).length, 64); assert.equal(endpoints['api-fn63'].entryPoint, 'api.fn63');}},
   {name: 'secret / runtime string read', make: root => {
     const {defineSecret} = require(path.join(root, 'lib/params/index.js'));
     process.env.VPM_BENCH_SECRET = 'benchmark-fixture-value';

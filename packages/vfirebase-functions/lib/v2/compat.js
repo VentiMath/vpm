@@ -1,38 +1,15 @@
-
-//#region src/v2/compat.ts
-const V1_COMPAT_PATCHED = Symbol.for("firebase.functions.v2.compat");
-/**
-* Patches a CloudEvent with V1 compatibility properties via getters.
-* This function ensures idempotency by using a Symbol to mark already patched events.
-* @param event The CloudEvent to patch.
-* @param getters A map of getters to attach to the event object.
-* @returns The patched CloudEvent with V1 compatibility properties.
-*/
+'use strict';
+const patched = Symbol.for('firebase.functions.v2.compat');
 function addV1Compat(event, getters) {
-	if (event[V1_COMPAT_PATCHED]) {
-		return event;
-	}
-	Object.defineProperty(event, V1_COMPAT_PATCHED, {
-		value: true,
-		enumerable: false,
-		writable: false,
-		configurable: false
-	});
-	const memo = {};
-	for (const [key, getter] of Object.entries(getters)) {
-		Object.defineProperty(event, key, {
-			get: () => {
-				if (!Object.prototype.hasOwnProperty.call(memo, key)) {
-					memo[key] = getter();
-				}
-				return memo[key];
-			},
-			configurable: true,
-			enumerable: true
-		});
-	}
-	return event;
+  if (Object.hasOwn(event, patched)) return event;
+  for (const key of Object.keys(getters)) {
+    let initialized = false, value;
+    Object.defineProperty(event, key, {enumerable: true, configurable: true, get() {
+      if (!initialized) {value = getters[key](); initialized = true;}
+      return value;
+    }});
+  }
+  Object.defineProperty(event, patched, {value: true});
+  return event;
 }
-
-//#endregion
 exports.addV1Compat = addV1Compat;

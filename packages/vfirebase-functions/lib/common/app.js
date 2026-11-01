@@ -1,41 +1,20 @@
-const require_rolldown_runtime = require('../_virtual/rolldown_runtime.js');
-const require_common_config = require('./config.js');
-const firebase_admin_app = require('../_virtual/lazy.js').lazy(() => require_rolldown_runtime.__toESM(require("vfirebase-admin/app")));
-
-//#region src/common/app.ts
-const APP_NAME = "__FIREBASE_FUNCTIONS_SDK__";
-let cache;
+'use strict';
+const configuration = require('./config.js');
+const serviceName = '__FIREBASE_FUNCTIONS_SDK__';
+let selected, admin;
+const api = () => admin ??= require('vfirebase-admin/app');
 function getApp() {
-	if (typeof cache === "undefined") {
-		try {
-			cache = (0, firebase_admin_app.getApp)();
-		} catch {
-			cache = (0, firebase_admin_app.initializeApp)({
-				...require_common_config.firebaseConfig(),
-				credential: (0, firebase_admin_app.applicationDefault)()
-			}, APP_NAME);
-		}
-	}
-	return cache;
+  if (selected !== undefined) return selected;
+  try {selected = api().getApp();}
+  catch (error) {
+    if (error?.code !== 'app/no-app') throw error;
+    selected = api().initializeApp({...configuration.firebaseConfig(), credential: api().applicationDefault()}, serviceName);
+  }
+  return selected;
 }
-/**
-* This function allows the Firebase Emulator Suite to override the FirebaseApp instance
-* used by the Firebase Functions SDK. Developers should never call this function for
-* other purposes.
-* N.B. For clarity for use in testing this name has no mention of emulation, but
-* it must be exported from index as app.setEmulatedAdminApp or we break the emulator.
-* We can remove this export when:
-* A) We complete the new emulator and no longer depend on monkeypatching
-* B) We tweak the CLI to look for different APIs to monkeypatch depending on versions.
-* @alpha
-*/
-function setApp(app) {
-	if (cache?.name === APP_NAME) {
-		void (0, firebase_admin_app.deleteApp)(cache);
-	}
-	cache = app;
+function setApp(value) {
+  const previous = selected;
+  selected = value;
+  if (previous?.name === serviceName && previous !== value) void api().deleteApp(previous);
 }
-
-//#endregion
-exports.getApp = getApp;
-exports.setApp = setApp;
+module.exports = {getApp, setApp};
