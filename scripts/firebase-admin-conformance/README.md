@@ -159,7 +159,7 @@ native timer overflow. The HTTP-date tests use an explicit non-UTC timezone;
 long timer tests record scheduled segments without actually waiting days. A
 local HTTP server verifies the complete retry path. Date/seconds grammar follows
 [RFC 9110 sections 5.6.7 and 10.2.3](https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after),
-including obsolete date formats and the two-digit-year rule. Response projection remains separate retained code.
+including obsolete date formats and the two-digit-year rule. JSON/text response projection uses the independent response adapter.
 
 
 `authorized-headers.cjs` compares captured request options and header values
@@ -200,3 +200,11 @@ errors entering a new session, erased error arrays, destroyed-session reuse,
 repeated close and lost diagnostics after failed connection creation. The
 replacement uses one record per native connection and returns detached error
 arrays. Actual FCM caller tests also exercise its normal native lifecycle.
+
+`http-response.cjs` compares 24 normal and real HTTP outcomes in isolated original
+and VPM processes on Node 24 and Bun. Object/scalar JSON, invalid/empty text,
+HTTP error context, original parse-error causes and parsed-object identity remain
+compatible. Controls reproduce different body reads, aliased header records and
+arrays, mutation of exposed parsing state and erased error subclass prototypes.
+The adapter captures and owns response data; multipart/raw-HTTP helpers remain
+retained. The package test runs this control without changing upstream assertions.
