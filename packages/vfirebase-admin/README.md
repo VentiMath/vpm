@@ -2,7 +2,8 @@
 
 **Implementation status:** VPM independently implements app and credential
 management, the Auth operations used by VentiMath, and HTTP/1 and HTTP/2 request,
-retry, authorization and session handling. Response helpers, endpoint schemas,
+retry, authorization, session handling and JSON/text response projection. Multipart
+and raw-HTTP helpers, endpoint schemas,
 other service APIs and Google Auth remain upstream-derived. This is a partial
 SDK rewrite; [provenance](PROVENANCE.json) maps the boundary.
 
@@ -41,14 +42,23 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 
 ## Changes from 14.5.0
 
+- **Owned HTTP response projection.** The raw body is read once, so text and JSON
+  cannot describe different reads of a changing transport record. Header records
+  and array values are detached. Parsed values and failures are private: setting
+  an unrelated property cannot replace the JSON result or disguise a parse error.
+  JSON scalar values, parsed-object identity, raw text and diagnostic causes remain
+  compatible. Native error construction preserves `RequestResponseError`
+  subclasses. Diagnostic request references retain identity; this is not a deep
+  freeze of returned JSON or headers. Multipart and raw-HTTP helpers remain retained.
+
 - **HTTP/1 request lifecycle.** URL, headers and body bytes are prepared once,
   so changing caller input cannot change a retry's request. Header names are
   compared without case, preserving an explicit `Content-Type`. Truncated
   responses and invalid compressed bodies reject instead of remaining pending;
   failures destroy their streams and release buffered chunks. Completed error
   responses keep connections reusable. Gzip/deflate coding is case-insensitive,
-  and Brotli responses are decoded. Response projection remains retained; the
-  retry policy is independently implemented.
+  and Brotli responses are decoded. Response projection and the
+  retry policy are independently implemented.
 
 - **HTTP/2 request lifecycle.** Requests reuse the captured URL, header and
   payload plan across attempts. Caller pseudo-headers cannot override the planned
@@ -59,7 +69,7 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   Gzip/deflate coding is case-insensitive and Brotli is decoded. Wire byte counts
   enforce `Content-Length` even on Bun, where the original accepts mismatched
   bodies; HEAD and 304 representation lengths are handled separately. Common
-  response projection remains retained. Session generations own their
+  JSON/text response projection is independently implemented. Session generations own their
   diagnostics: late events cannot contaminate a later batch, destroyed sessions
   are recreated, repeated close calls are coalesced, and reading errors cannot
   erase the stored list. A failed connection creation allows another attempt.
@@ -208,37 +218,36 @@ Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
 previous JWT improvements; they do not isolate the HTTP rewrite alone. The
-[full report](bench/results/README.md) includes all thirty-five cases, process
+[full report](bench/results/README.md) includes all thirty-eight cases, process
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
-The HTTP cases serialize a request and consume a synthetic response stream;
-they exclude sockets and network latency. The HTTP/1 comparisons are inconclusive
-under the control checks except for Bun's headerless request, which takes about
-3.1 µs versus 2.3 µs (+38% median paired time).
+The response-only JSON case eagerly parses the body and consumes its value inside
+timing. It takes 915 ns versus 866 ns on Node (+6% median paired time) and 641 ns
+versus 599 ns on Bun (+7%). Malformed-JSON diagnostics take 7.5 µs versus 6.8 µs
+on Node (+10%); Bun's comparison is inconclusive. Empty-body classification is
+inconclusive on both runtimes. Detached headers and private parsing state are
+correctness changes, with their measured costs retained.
 
-For HTTP/2, the single-request comparison is inconclusive on Node (3.1 µs versus
-2.9 µs); Bun takes 3.8 µs versus 2.7 µs (+44%). A twenty-request synthetic batch
-takes 54.4 µs versus 42.5 µs on Node (+28%) and 61.6 µs versus 44.5 µs on Bun
-(+37%). Session creation/close is inconclusive on both runtimes. Reusing the
-already owned header record removes a redundant copy, but request ownership and
-stream checks retain CPU costs. These are not real FCM batch latency measurements.
+The HTTP cases serialize requests and consume synthetic response streams; they
+exclude sockets and network latency. HTTP/1 with Auth-style headers costs about
+24% on Node and 27% on Bun. HTTP/2's single-request comparison is inconclusive on
+Node and costs about 43% on Bun. A twenty-request synthetic HTTP/2 batch costs
+27% on Node (55.2 µs versus 43.4 µs) and 38% on Bun (65.0 µs versus 47.3 µs).
+Session setup is inconclusive on both. These are not real FCM batch latencies.
 
-The two authorized-request cases additionally capture headers before a synthetic
-token acquisition. With default metrics headers they take 3.7 µs versus 2.5 µs
-on Node (+48%) and 3.2 µs versus 2.2 µs on Bun (+44%). With explicit metrics and
-request headers they take 3.1 µs versus 2.5 µs (+28%) and 3.5 µs versus 2.2 µs
-(+56%), respectively. The one-pass owned header record avoids repeated deletion
-and copying, but ownership and protected-header normalization retain measurable
-CPU costs. These changes are not presented as a transport speedup.
+Authorized-request comparisons are inconclusive on Node in this recording;
+Bun retains about 41% and 61% costs for default and explicit metrics/header
+cases. Large control spreads remain visible in the full report. A one-pass
+owned header record avoids repeated deletion and copying, but these changes
+are not presented as a transport speedup.
 
-The retry cases expose their costs separately. Custom policy capture takes about
-113 ns versus 10 ns on Node and 382 ns versus 14 ns on Bun; it copies and freezes
-caller settings instead of retaining them. Default-policy construction is
-inconclusive on Node and takes 7 ns versus 14 ns on Bun. Strict UTC HTTP-date
-parsing takes 464 ns versus 242 ns on Node and 428 ns versus 50 ns on Bun. These
-setup/error-path regressions are retained with their full percentages and
-controls; ordinary request success does not execute the retry-date parser.
+Custom retry-policy capture takes 114 ns versus 10 ns on Node and 363 ns versus
+11 ns on Bun; it copies and freezes caller settings instead of retaining them.
+Default construction takes 9 ns versus 14 ns and 4 ns versus 13 ns, respectively.
+Strict UTC HTTP-date parsing is inconclusive on Node in this recording and costs
+440 ns versus 45 ns on Bun. Setup/error-path regressions retain their full
+percentages and controls; ordinary request success does not parse retry dates.
 
 Token verification, record serialization and concurrent acquisition have separate
 cases. Record construction, cached-key reads, app/credential setup and cleanup
@@ -261,6 +270,9 @@ wire compatibility; these CPU timings do not establish application latency.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [Response controls](../../scripts/firebase-admin-conformance/http-response.cjs)
+  compare 24 normal and real HTTP outcomes, then reproduce changing body reads,
+  aliased headers, exposed parse-state mutation and erased error subclasses.
 - [HTTP/2 controls](../../scripts/firebase-admin-conformance/http2-transport.cjs)
   compare retry bytes, actual wire headers, compressed bodies, no-header closures,
   peer resets, content-length mismatches, timeouts and usable batch sessions.

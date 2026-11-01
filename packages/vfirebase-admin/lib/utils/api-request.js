@@ -21,7 +21,7 @@ exports.Http2SessionHandler = exports.ExponentialBackoffPoller = exports.ApiSett
 const {RetryPolicy, defaultRetryConfig} = require("./request-retry");
 exports.defaultRetryConfig = defaultRetryConfig;
 exports.parseHttpResponse = parseHttpResponse;
-const error_1 = require("./error");
+const {HttpResponse, RequestResponseError} = require("./http-response");
 const error_2 = require("../app/error");
 const validator = require("./validator");
 const {HttpRequestPlan} = require("./http-request");
@@ -29,41 +29,6 @@ const {Http2RequestPlan} = require("./http2-request");
 const {Http2SessionHandler} = require("./http2-session");
 const events_1 = require("events");
 const {captureRequest, authorizeRequest} = require("./authorized-request");
-class DefaultRequestResponse {
-    /**
-     * Constructs a new `RequestResponse` from the given `LowLevelResponse`.
-     */
-    constructor(resp) {
-        this.status = resp.status;
-        this.headers = resp.headers;
-        this.text = resp.data;
-        this.config = resp.config;
-        try {
-            if (!resp.data) {
-                throw new error_2.FirebaseAppError({ code: error_2.AppErrorCode.INTERNAL_ERROR, message: 'HTTP response missing data.' });
-            }
-            this.parsedData = JSON.parse(resp.data);
-        }
-        catch (err) {
-            this.parsedData = undefined;
-            this.parseError = err;
-        }
-    }
-    get data() {
-        if (this.isJson()) {
-            return this.parsedData;
-        }
-        throw new error_2.FirebaseAppError({
-            code: error_2.AppErrorCode.UNABLE_TO_PARSE_RESPONSE,
-            message: 'Error while parsing response data',
-            cause: this.parseError,
-            httpResponse: (0, error_1.toHttpResponse)(this)
-        });
-    }
-    isJson() {
-        return typeof this.parsedData !== 'undefined';
-    }
-}
 /**
  * Represents a multipart HTTP or HTTP/2 response. Parts that constitute the response body can be accessed
  * via the multipart getter. Getters for text and data throw errors.
@@ -91,19 +56,10 @@ class MultipartRequestResponse {
         return false;
     }
 }
-class RequestResponseError extends Error {
-    constructor(response) {
-        super(`Server responded with status ${response.status}.`);
-        this.response = response;
-        // Set the prototype so that instanceof checks will work correctly.
-        // See: https://github.com/Microsoft/TypeScript/issues/13965
-        Object.setPrototypeOf(this, RequestResponseError.prototype);
-    }
-}
 exports.RequestResponseError = RequestResponseError;
 class RequestClient extends RetryPolicy {
     createRequestResponse(resp) {
-        return resp.multipart ? new MultipartRequestResponse(resp) : new DefaultRequestResponse(resp);
+        return resp.multipart ? new MultipartRequestResponse(resp) : new HttpResponse(resp);
     }
     requestFailure(error) {
         if (error.response) return new RequestResponseError(this.createRequestResponse(error.response));
@@ -193,7 +149,7 @@ function parseHttpResponse(response, config) {
     if (!validator.isNumber(lowLevelResponse.status)) {
         throw new error_2.FirebaseAppError({ code: error_2.AppErrorCode.INTERNAL_ERROR, message: 'Malformed HTTP status line.' });
     }
-    return new DefaultRequestResponse(lowLevelResponse);
+    return new HttpResponse(lowLevelResponse);
 }
 class AuthorizedHttpClient extends HttpClient {
     constructor(app) {

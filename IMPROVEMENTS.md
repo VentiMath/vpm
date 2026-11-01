@@ -971,7 +971,7 @@ Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
 service lifecycle, token lease, option snapshots, credential adapters, Auth response records,
 user-management plans, token policy, key caches, signature adaptation, Auth
 request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy and authorization
-headers have source-informed VPM implementations. Response helpers, other service APIs and Google Auth
+headers and JSON/text response projection have source-informed VPM implementations. Multipart/raw-HTTP helpers, other service APIs and Google Auth
 remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
@@ -1036,7 +1036,7 @@ HTTP/1 request plans capture wire bytes once for retries. Explicit content types
 survive header casing, and completed errors preserve connection reuse. Truncated
 responses and malformed gzip settle as errors rather than leaving pending promises;
 failed streams are destroyed and buffered chunks released. Case-insensitive
-coding and Brotli are supported. Response projection remains retained. Actual local HTTP controls
+coding and Brotli are supported. JSON/text response projection has its own implementation. Actual local HTTP controls
 verify the changes on Node and Bun.
 
 While public keys are missing or expired, upstream starts one key request per
@@ -1070,7 +1070,7 @@ policy. It owns validated settings and arrays, parses complete Retry-After
 values, treats HTTP dates as UTC, honors explicit zero delays, rejects invalid
 limits and splits long native timer waits. Normal upstream retry behavior and
 actual request callers remain verified; focused controls reproduce each fixed
-boundary. Response projection remains retained.
+boundary. JSON/text response projection has an independent implementation.
 
 One independent authorization adapter now serves HTTP/1 and HTTP/2. It captures
 transport options and header values before token acquisition, canonicalizes
@@ -1089,8 +1089,15 @@ Actual Node-server controls run with both client runtimes. The 88 unchanged
 upstream HTTP/2 tests retain their exact existing differences; wire controls
 check the fields hidden by their early scheme assertions. Session generations independently own diagnostics and close state; old events
 cannot contaminate a new batch, returned arrays are detached, destroyed sessions
-are recreated and failed creation allows retry. Common response projection
-remains retained.
+are recreated and failed creation allows retry.
+
+JSON/text response projection captures the raw body once, owns header records
+and array values, and keeps parse state private. Text and JSON cannot reflect
+different reads, and public-property mutation cannot turn malformed text into
+valid JSON. Normal scalar values, parsed-object identity, raw text and diagnostic
+causes remain compatible. Native error construction preserves subclasses on Node
+24 and Bun. Twenty-four original/VPM outcomes, including actual HTTP requests,
+match on both runtimes. Multipart and raw-HTTP helpers remain retained.
 
 ## vgoogle-cloud-firestore
 
