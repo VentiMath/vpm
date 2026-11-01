@@ -128,7 +128,7 @@ Connect GraphQL server, as upstream.
   exact integer correction. `DataSnapshot#ref` must fail with vfirebase-admin's
   explanation. Bun has the same additional 25 console-capture failures as upstream.
 - [Callers](../../scripts/firebase-functions-conformance/callers.cjs): VentiMath's
-  function shapes served by one shared host (HTTP with and without CORS,
+  function shapes and an additional task-queue compatibility case, served by one shared host (HTTP with and without CORS,
   handler errors, callable with and without auth and with the wrong method,
   scheduler, task queue) and a protobuf Firestore trigger event produce
   identical responses, handler results and endpoint definitions. The one
@@ -157,18 +157,18 @@ frozen/reusable declarations; the benchmark includes construction of a fresh
 64-endpoint input for both libraries. The report retains every sample and the
 identical-code controls, including inconclusive results.
 
-The current recording establishes lower Node trace-parsing time: 20.4% for
-`traceparent` and 13.6% for the legacy Google header. Bun trace results are
-inconclusive. Discovery of 64 grouped endpoints takes 93.5% more time on Node
-(12,072 to 23,283 ns); Bun discovery is inconclusive. This is deployment work,
-with explicit cycle and collision checks, rather than request processing.
+The current recording establishes lower legacy trace-parsing time: about 11%
+on both runtimes. Portable-header results are inconclusive. Discovery of 64
+grouped endpoints takes 96% more time on Node (11,781 to 23,148 ns); Bun
+has no established direction. This is deployment work with cycle and collision
+checks, separate from request processing.
 
-Changed protobuf-event materialization takes 36.9% less time on Bun; the Node
-result is inconclusive because one pair reverses direction. Trigger construction
-still costs more on both runtimes. Callable conversion and request costs remain
-mixed; the complete report retains all sixteen cases, including regressions,
-outliers and identical-code controls. These local CPU measurements do not imply
-a general speedup or application latency guarantee.
+Changed protobuf-event materialization takes 44% less time on Node and 38% less
+on Bun. Trigger construction still costs more on both runtimes. Node callable
+encoding/decoding costs more; Bun decoding costs less, while its encoding result
+is inconclusive. The complete report retains all sixteen cases, including
+regressions, outliers and identical-code controls. These local CPU measurements
+do not imply a general speedup or application latency guarantee.
 
 MIT licensing, the pinned source and the files changed from it are recorded in
 [PROVENANCE.json](PROVENANCE.json).

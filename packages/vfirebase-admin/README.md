@@ -1,9 +1,10 @@
 # vfirebase-admin
 
-**Implementation status:** the current package retains upstream implementation
-code with the changes documented below. Its tests verify that adapted build.
-An independently written implementation of the application-facing APIs is
-pending; this package is not yet a completed rewrite.
+**Implementation status:** app registration, service lifetime, token refresh
+ownership and option snapshots now use a VPM redesign. Credential provider
+adapters, Auth and the other service implementations remain upstream-derived;
+this is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
+the boundary.
 
 The Firebase Admin SDK, targeting **firebase-admin 14.5.0**, the latest stable
 release checked October 31, 2026. All dependencies are VPM packages; Node.js 24+
@@ -21,7 +22,7 @@ await getFirestore(app).doc(`users/${uid}`).set({seen: FieldValue.serverTimestam
 await getMessaging(app).sendEachForMulticast({tokens, notification: {title: 'Practice set ready'}});
 ```
 
-This is 14.5.0's implementation with the same entry points (`/app`, `/auth`,
+The package targets 14.5.0's entry points (`/app`, `/auth`,
 `/firestore`, `/storage`, `/messaging`, `/app-check`, `/functions`,
 `/remote-config`, `/security-rules` and the rest), options, environment
 variables and emulator support, in CommonJS, native ES modules and TypeScript.
@@ -33,11 +34,26 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 | --- | --- |
 | `@google-cloud/firestore` ^9 (optional) | [`vgoogle-cloud-firestore`](../vgoogle-cloud-firestore/README.md) |
 | `@google-cloud/storage` ^8 (optional) | [`vgoogle-cloud-storage`](../vgoogle-cloud-storage/README.md) |
-| `google-auth-library` ^11, `jsonwebtoken` ^9, `jwks-rsa` ^4, `fast-deep-equal` ^3 | `vgoogle-auth-library`, `vjsonwebtoken`, `vjwks-rsa`, `vfast-deep-equal` |
+| `google-auth-library` ^11, `jsonwebtoken` ^9, `jwks-rsa` ^4 | `vgoogle-auth-library`, `vjsonwebtoken`, `vjwks-rsa` |
+| `fast-deep-equal` | App-option comparison is internal |
 | `@firebase/database-compat`, `@firebase/database-types` | Omitted (see below) |
 | `@fastify/busboy` | Omitted (see below) |
 
 ## Changes from 14.5.0
+
+- **Owned app and service lifetimes.** Registries cannot delete a different
+  instance with the same name. Prototype-named services work. Concurrent app
+  deletion shares cleanup; every existing service is visited even when another
+  cleanup fails, and no service can be created after closing begins.
+- **Recoverable token refresh.** Forced refreshes share one pending acquisition.
+  Synchronous credential errors reject normally and can be retried. Expiry must
+  be finite and positive, tokens non-empty, and malformed-token errors omit the
+  response contents. Provider errors retain their existing message and cause.
+- **Detached configuration.** Iterative snapshots preserve own `__proto__` keys
+  without modifying prototypes, copy null-prototype records and support deep
+  options. Cycles are rejected explicitly. Credential/agent class instances
+  retain identity; custom conversion hooks are not used for option equality.
+  Environment JSON can start with whitespace.
 
 - **No Realtime Database.** `vfirebase-admin/database` throws a descriptive
   error on import. Upstream's entry point wraps `@firebase/database-compat`;
@@ -61,17 +77,24 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   Node's reject the stream. Google's front end accepts both; here the value is
   `https`.
 - **Token verification dependencies.** Signature verification and decoding use
-  `vjsonwebtoken`. Current CPU comparisons use isolated Node 24 and Bun
-  workers. Earlier Node 22 startup and same-process timing figures are
-  historical, not current performance claims. The new signature-only case takes
-  46.2% less time on Node and 26.8% less on Bun; decoding takes 27.1% and
-  35.5% less. These do not measure claim validation, revocation, certificate
-  fetching or application request latency. Message validation is inconclusive.
+  `vjsonwebtoken`. Current CPU comparisons use isolated Node 24 and Bun workers
+  with identical-source controls. The measurements cover local CPU work and
+  synthetic credential providers, excluding certificate retrieval, claim and
+  revocation checks, and application request latency.
 - **Declarations without Node types.** Public declarations compile without
   ambient Node types; `Buffer` is Node's `Buffer` where Node types are loaded,
   and `httpAgent` accepts any Node `http` or `https` `Agent`.
 
 Missing-dependency errors name the VPM packages.
+
+The isolated measurements include the redesigned app layer. Setup and teardown
+still cost more: Node context creation/read takes about 338 ns versus 195 ns,
+repeated initialization 849 ns versus 575 ns, and disposal of three services
+1.16 µs versus 0.48 µs. The service-lookup case rotates through three services
+so it cannot collapse to one constant result. Concurrent forced refreshes use
+one credential acquisition instead of twenty; the benchmark uses a synthetic
+provider and does not measure network latency. Full results and controls are
+linked below.
 
 ## Evidence
 
@@ -87,6 +110,9 @@ Missing-dependency errors name the VPM packages.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [App lifecycle controls](../../scripts/firebase-admin-conformance/app-lifecycle.cjs)
+  reproduce the original token, ownership, cleanup and option-copy defects in
+  isolated processes.
 - [Focused tests](test/firebase-admin.test.cjs) and [type tests](test/types.ts).
 - [Measurements](bench/results/README.md), with controls and source hashes.
 

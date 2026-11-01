@@ -70,3 +70,10 @@ sample sizes and all original tolerances remain unchanged. This avoids a
 correct upstream control randomly falling outside its three-standard-deviation
 bound and makes differences reproducible. Filtered runs also fail on unexpected
 assertion failures.
+
+`app-lifecycle.cjs` runs original and VPM controls in disposable processes. It
+covers forced-refresh coalescing, synchronous credential failure/retry, invalid
+expiry and token redaction, local registry ownership, same-name imposters,
+prototype-named services, concurrent/failed cleanup and app-option prototype
+pollution. VPM also checks deep/null-prototype options, cycle rejection and
+initializer recovery. Run it with Node 24 or Bun; the package test invokes it.
