@@ -6,6 +6,8 @@ const roots = {upstream: path.resolve(__dirname, '../../../scripts/firebase-admi
 const library = root => ({jwt: require(path.join(root, 'lib/utils/jwt.js')), messaging: require(path.join(root, 'lib/messaging/messaging-internal.js')),
   HttpClient: require(path.join(root, 'lib/utils/api-request.js')).HttpClient,
   AuthorizedHttpClient: require(path.join(root, 'lib/utils/api-request.js')).AuthorizedHttpClient,
+  Http2Client: require(path.join(root, 'lib/utils/api-request.js')).Http2Client,
+  Http2SessionHandler: require(path.join(root, 'lib/utils/api-request.js')).Http2SessionHandler,
   RequestClient: require(path.join(root, 'lib/utils/api-request.js')).RequestClient,
   deepCopy: require(path.join(root, 'lib/utils/deep-copy.js')).deepCopy,
   UserRecord: require(path.join(root, 'lib/auth/user-record.js')).UserRecord,
@@ -28,6 +30,29 @@ function syntheticHttp() {
     return request;
   };
 }
+function syntheticSessions() {
+  const {EventEmitter} = require('node:events');
+  require('node:http2').connect = () => {
+    const session = new EventEmitter(); session.closed = false;
+    session.close = () => {session.closed = true;};
+    return session;
+  };
+}
+function syntheticHttp2() {
+  const {PassThrough} = require('node:stream');
+  return {session: {request(headers) {
+    const stream = new PassThrough(), end = stream.end.bind(stream);
+    stream.setTimeout = () => stream;
+    stream.end = body => {
+      queueMicrotask(() => {
+        stream.emit('response', {':status': 200, 'content-type': 'application/json'});
+        end(JSON.stringify({path: headers[':path'], method: headers[':method'], body: body.toString()}));
+      });
+      return stream;
+    };
+    return stream;
+  }}};
+}
 const {token, publicKey} = require('./token-fixture.json');
 const noKid = require('./no-kid-fixture.json');
 // Public test-only key already retained with the upstream conformance fixture.
@@ -39,9 +64,9 @@ const user = {localId: 'ada', email: 'ada@example.com', emailVerified: true, dis
   phoneNumber: '+15555550100', createdAt: '1600000000000', lastLoginAt: '1700000000000', validSince: '1600000000',
   providerUserInfo: [{rawId: 'ada-google', providerId: 'google.com', email: 'ada@example.com'}],
   customAttributes: '{"role":"teacher","classes":["math","science"]}'};
-const env = {token, publicKey, message, library, certificate, user, noKid, syntheticHttp};
+const env = {token, publicKey, message, library, certificate, user, noKid, syntheticHttp, syntheticHttp2, syntheticSessions};
 // A worker constructs only its selected SDK; both workers use the same fixed token.
-const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, HttpClient, AuthorizedHttpClient, RequestClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
+const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, HttpClient, AuthorizedHttpClient, Http2Client, Http2SessionHandler, RequestClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
 const syntheticCredential = 'const credential = new ApplicationDefaultCredential(); const client = {credentials: {access_token: "bench", expiry_date: Date.now() + 3600000}, getAccessToken: async () => ({token: "bench"})}; credential.googleAuth.getClient = async () => client; ';
 // The transport returns fixed JSON outside network I/O; these cases measure the
 // complete public operation's request planning and result projection, not HTTP.
@@ -51,6 +76,9 @@ const verificationAuth = syntheticAuth.replace('projectId: "bench"', 'projectId:
 const cases = [
   {name: 'authorization / JSON request and synthetic stream', async: true, make: compiled('env.syntheticHttp(); const client = new AuthorizedHttpClient({options: {}}); client.getToken = async () => "bench"; const config = {method: "POST", url: "http://example.test/auth", headers: {"x-goog-user-project": "bench"}, data: {value: 1}}; return () => client.send(config);'), validate: value => assert.equal(value.data.body, '{"value":1}')},
   {name: 'authorization / explicit headers and synthetic stream', async: true, make: compiled('env.syntheticHttp(); const client = new AuthorizedHttpClient({options: {}}); client.getToken = async () => "bench"; const config = {method: "POST", url: "http://example.test/auth", headers: {Authorization: "replace", "X-Goog-Api-Client": "bench", "x-goog-user-project": "bench", "X-Request-Id": "r"}, data: {value: 1}}; return () => client.send(config);'), validate: value => assert.equal(value.data.body, '{"value":1}')},
+  {name: 'http2 / JSON request and synthetic stream', async: true, make: compiled('const client = new Http2Client(null), http2SessionHandler = env.syntheticHttp2(); const config = {method: "POST", url: "https://example.test/messages:send", http2SessionHandler, headers: {Authorization: "Bearer fixture", "X-Client-Version": "bench"}, data: {message: {token: "device", notification: {title: "Practice"}}}}; return () => client.send(config).then(response => response.data);'), validate: value => {assert.equal(value.path, '/messages:send'); assert.equal(JSON.parse(value.body).message.token, 'device');}},
+  {name: 'http2 / twenty requests on a synthetic session', async: true, make: compiled('const client = new Http2Client(null), http2SessionHandler = env.syntheticHttp2(); const configs = Array.from({length: 20}, (_, i) => ({method: "POST", url: "https://example.test/messages:send", http2SessionHandler, headers: {Authorization: "Bearer fixture"}, data: {message: {token: "device-" + i}}})); return () => Promise.all(configs.map(config => client.send(config).then(response => response.data)));'), validate: values => {assert.equal(values.length, 20); assert.equal(JSON.parse(values[19].body).message.token, 'device-19');}},
+  {name: 'http2 / create and close synthetic batch session', make: compiled('env.syntheticSessions(); return () => {const owner = new Http2SessionHandler("https://example.test"); owner.close(); return owner.isCurrentSessionClosed;};'), validate: value => assert.equal(value, true)},
   {name: 'retry / construct owned default policy', make: compiled('return () => new RequestClient();'), validate: value => assert.equal(value.retry.maxRetries, 4)},
   {name: 'retry / construct custom policy', make: compiled('const settings = {maxRetries: 3, maxDelayInMillis: 10000, statusCodes: [503], ioErrorCodes: ["ECONNRESET"], backOffFactor: 1}; return () => new RequestClient(settings);'), validate: value => assert.equal(value.retry.maxRetries, 3)},
   {name: 'retry / eligible status and backoff', make: compiled('const policy = new RequestClient(); const error = {response: {status: 503, headers: {}}}; return () => policy.getRetryDelayMillis(2, error)[0];'), validate: value => assert.equal(value, 2000)},

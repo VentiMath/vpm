@@ -159,8 +159,7 @@ native timer overflow. The HTTP-date tests use an explicit non-UTC timezone;
 long timer tests record scheduled segments without actually waiting days. A
 local HTTP server verifies the complete retry path. Date/seconds grammar follows
 [RFC 9110 sections 5.6.7 and 10.2.3](https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after),
-including obsolete date formats and the two-digit-year rule. Response projection and
-HTTP/2 transport remain separate retained code.
+including obsolete date formats and the two-digit-year rule. Response projection remains separate retained code.
 
 
 `authorized-headers.cjs` compares captured request options and header values
@@ -173,3 +172,31 @@ header boundary is inspected before transport because upstream's malformed
 caller verifies the corrected VPM HTTP/2 transport. App deletion after token
 acquisition still rejects. These controls concern authorization/options/headers;
 Auth and message operation builders own request bodies.
+
+
+`http2-transport.cjs` runs original and replacement clients separately against
+one Node HTTP/2 server implementation. For these comparisons only, the original
+request's known scheme colon is normalized; `regressions.cjs` still checks it
+without adaptation. Controls cover stable JSON/Buffer retry payloads and array
+headers, exact wire fields, content-type casing, gzip/deflate/Brotli, closes before
+headers, invalid gzip, genuine peer destruction, truncated/excess bodies, HEAD/304,
+timeouts and reusable sessions. Connection-fatal malformed data is checked last,
+without promising reuse after the peer violates the protocol. Bun's original
+client accepts content-length mismatches; the replacement validates wire bytes.
+A synthetic stream deterministically exercises aborted/error ordering and inspects
+pseudo-header precedence before native normalization. Request option getters are
+read once and prototype-named header data is preserved.
+
+All 88 unchanged upstream HTTP/2/authorized-client tests still run. Their 39
+scheme assertions stop before later fields, so their exact expected failures do
+not establish those later assertions; the actual wire controls supply that
+coverage. No upstream assertions or mock events are changed. The lifecycle uses
+[Node 24's HTTP/2 stream contract](https://r2.nodejs.org/docs/latest-v24.x/api/http2.html#class-http2stream)
+and [RFC 9113 request control fields](https://www.rfc-editor.org/rfc/rfc9113.html#section-8.3.1).
+
+`http2-session.cjs` supplies deterministic session test doubles to each SDK
+in separate processes. It checks ordinary diagnostic text and reproduces late
+errors entering a new session, erased error arrays, destroyed-session reuse,
+repeated close and lost diagnostics after failed connection creation. The
+replacement uses one record per native connection and returns detached error
+arrays. Actual FCM caller tests also exercise its normal native lifecycle.
