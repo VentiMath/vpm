@@ -1,108 +1,93 @@
 # vlong measurements
 
-Recorded October 30, 2026 on Apple M1 Pro (darwin arm64),
-Node 24.22.1 and Bun 1.4.0, against long 5.3.2.
+These records supersede the earlier same-process comparison. Each timed
+implementation runs alone in a fresh process. Four comparison pairs use
+balanced upstream-first / VPM-first order; two further pairs run identical
+upstream code in separate processes as controls. Warmup lasts at least 150 ms
+per case, followed by recalibration on warmed code, four warmup blocks and 12
+recorded blocks. Both workers in a pair use the same iteration count, targeting
+10 ms blocks with a one-million-operation cap. Results are retained and checked
+outside timing. All samples are kept, including outliers.
 
-Three fresh processes per runtime, twelve alternating paired rounds after
-150 ms of warmup per variant and four full warmup blocks. Each case calibrates
-to a 15 ms upstream pilot, capped at 100,000 operations. Results are retained
-and checked outside timing. One additional process compares upstream with itself.
-All raw samples, runtime versions and source/fixture hashes are retained here.
-No samples are trimmed. Positive percentages mean VPM takes more time.
+The comparison units are per-process medians. The change column is the median
+of four process-pair percentage changes; the two order columns expose order
+sensitivity. The nanosecond columns are medians of the four process medians.
+They need not produce exactly the percentage in the change column.
 
-## Findings
+A direction is unestablished when it reverses across processes or any pair
+overlaps the largest absolute control difference (with a minimum 2% floor).
+This is a conservative descriptive check, not a confidence interval. Process
+isolation reduces shared JIT feedback; environmental noise and GC remain.
+Negative changes mean less time; these are local CPU measurements, not
+application throughput or latency guarantees.
 
-On Node, protobuf 8/7 conversion plus encoding takes **36.2% / 28.2% less time**;
-decoding plus conversion to ordinary objects takes **65.5% / 63.7% less**.
-Bun decoding takes **34.7% / 37.1% less**. These use the actual protobuf modules
-and exact signed/unsigned 64-bit values, arrays, map keys and a timestamp.
-They are local conversion/serialization measurements, not RPC throughput.
+## Node 24.22.1
 
-Decimal parsing takes 52–62% less time on Node and 6–30% less on Bun. Tested
-formatting cases take 81–91% less on Node and 45–70% less on Bun.
+Recorded 2026-11-01T07:16:39.605Z on Apple M1 Pro, darwin/arm64.
 
-Remaining costs and uncertainty are explicit:
+[Raw samples, processes, controls and source hashes](node-isolated.json).
 
-- Node's independent small integer construction takes about **3–4 ns more**
-  (22–32%): each call now allocates a mutable value instead of sharing a cache.
-- Checked ordinary byte arrays take about **3 ns more** on each runtime
-  (17–19%). Indexed values are read once, validated, then assembled; custom
-  iterators cannot bypass validation. Typed byte arrays avoid element checks.
-- Bun's signed construction varies from 17% slower to 11% faster; its aggregate
-  does not establish a reliable improvement.
-- Bun encoding gains are modest: 8% for protobuf 8 and 14% for protobuf 7. The
-  protobuf 7 identical-code control differs by **12.4%**, nearly as much as the
-  measured gain, so that encoding result is inconclusive. Small arithmetic and
-  typed-array differences also warrant less weight than the conversion gains.
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| small signed construction | 3 | 5 | 52.4% | 68.4% | -10.6% | 1.2% | unestablished at this precision |
+| small unsigned construction | 7 | 9 | 42% | 62% | 11% | 14.5% | unestablished at this precision |
+| short decimal parse | 67 | 37 | -44.9% | -34.8% | -51.3% | 3.9% | lower time in every pair, beyond control spread |
+| signed int64 decimal parse | 301 | 131 | -56.5% | -56.6% | -56.1% | 2.4% | lower time in every pair, beyond control spread |
+| unsigned int64 decimal parse | 285 | 116 | -59.2% | -58.8% | -59.6% | 4.5% | lower time in every pair, beyond control spread |
+| hexadecimal parse | 184 | 121 | -33.6% | -29.2% | -34.5% | 8.8% | lower time in every pair, beyond control spread |
+| base36 parse | 211 | 109 | -48.2% | -46.9% | -50.1% | 2.6% | lower time in every pair, beyond control spread |
+| short decimal format | 50 | 10 | -80.4% | -80.3% | -80.7% | 2.6% | lower time in every pair, beyond control spread |
+| signed int64 decimal format | 465 | 53 | -88.7% | -89% | -88.3% | 1.5% | lower time in every pair, beyond control spread |
+| unsigned int64 decimal format | 432 | 68 | -84.1% | -84.1% | -84.1% | 2.7% | lower time in every pair, beyond control spread |
+| hexadecimal format | 329 | 71 | -78.4% | -77.7% | -78.4% | 67.8% | lower time in every pair, beyond control spread |
+| multiply | 26 | 22 | -16.4% | -16.8% | -16.4% | 15.1% | unestablished at this precision |
+| divide | 38 | 33 | -12.9% | -13.3% | -12.3% | 6.9% | lower time in every pair, beyond control spread |
+| eight array bytes | 10 | 17 | 80.3% | 56.6% | 80.3% | 1.5% | higher time in every pair, beyond control spread |
+| eight Uint8Array bytes | 11 | 11 | -3.8% | -9.9% | -3.8% | 0.1% | lower time in every pair, beyond control spread |
+| protobuf 8 fromObject + encode | 3350 | 1995 | -40.8% | -41.3% | -39.9% | 4.8% | lower time in every pair, beyond control spread |
+| protobuf 8 decode + toObject | 4543 | 1460 | -68.1% | -72.7% | -66.8% | 4.3% | lower time in every pair, beyond control spread |
+| protobuf 7 fromObject + encode | 3324 | 1959 | -41.3% | -40.7% | -41.5% | 6.3% | lower time in every pair, beyond control spread |
+| protobuf 7 decode + toObject | 4039 | 1422 | -64.5% | -64.5% | -64.5% | 4.4% | lower time in every pair, beyond control spread |
 
-Nanoseconds below are pooled medians; change percentages are medians of the
-paired ratios, so they need not equal the ratio of rounded pooled medians.
-Process values give each fresh process's paired-ratio median. Controls measure
-order/JIT/timing variation, not another package.
+## Bun 1.4.0
 
-## Node
+Recorded 2026-11-01T07:17:54.054Z on Apple M1 Pro, darwin/arm64.
 
-| Case | Upstream ns | VPM ns | Change | Three processes | Identical-code control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| small signed construction | 14 | 17 | +21.6% | +20.9%, +23.9%, +22.3% | +1.6% |
-| small unsigned construction | 10 | 14 | +31.6% | +32.4%, +25.6%, +35.8% | -0.3% |
-| short decimal parse | 87 | 42 | -52.4% | -51.2%, -51.5%, -54.7% | +0.6% |
-| signed int64 decimal parse | 343 | 132 | -60.9% | -61.0%, -60.4%, -62.5% | -0.7% |
-| unsigned int64 decimal parse | 304 | 118 | -61.5% | -62.1%, -60.5%, -61.4% | +0.5% |
-| hexadecimal parse | 202 | 128 | -35.9% | -35.3%, -36.1%, -39.4% | +0.1% |
-| base36 parse | 222 | 108 | -50.9% | -51.9%, -50.1%, -50.9% | -1.6% |
-| short decimal format | 105 | 15 | -86.3% | -86.3%, -86.9%, -86.1% | +1.1% |
-| signed int64 decimal format | 605 | 56 | -90.7% | -90.5%, -91.0%, -90.7% | -1.8% |
-| unsigned int64 decimal format | 540 | 71 | -87.0% | -87.2%, -87.2%, -86.6% | -0.5% |
-| hexadecimal format | 402 | 78 | -80.9% | -80.6%, -80.7%, -81.1% | -1.1% |
-| multiply | 36 | 25 | -31.2% | -32.3%, -31.2%, -29.6% | +0.8% |
-| divide | 43 | 33 | -22.3% | -22.3%, -22.0%, -23.8% | +1.4% |
-| eight array bytes | 17 | 20 | +16.8% | +19.2%, +9.2%, +25.6% | -3.2% |
-| eight Uint8Array bytes | 22 | 20 | -7.7% | -6.5%, -7.7%, -12.3% | +5.7% |
-| protobuf 8 fromObject + encode | 4782 | 3045 | -36.2% | -35.5%, -36.8%, -35.5% | -1.5% |
-| protobuf 8 decode + toObject | 6275 | 2160 | -65.5% | -65.6%, -65.1%, -65.8% | +0.8% |
-| protobuf 7 fromObject + encode | 6522 | 4620 | -28.2% | -28.4%, -28.1%, -29.2% | -0.6% |
-| protobuf 7 decode + toObject | 5662 | 2037 | -63.7% | -63.5%, -64.2%, -63.6% | -1.1% |
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
 
-## Bun
-
-| Case | Upstream ns | VPM ns | Change | Three processes | Identical-code control |
-| --- | ---: | ---: | ---: | --- | ---: |
-| small signed construction | 10 | 10 | -4.5% | +17.3%, -10.7%, -9.6% | -0.6% |
-| small unsigned construction | 12 | 4 | -70.9% | -71.8%, -70.0%, -70.8% | +0.2% |
-| short decimal parse | 60 | 42 | -29.7% | -28.6%, -29.2%, -30.3% | -0.8% |
-| signed int64 decimal parse | 167 | 137 | -17.2% | -14.8%, -20.5%, -18.0% | -1.7% |
-| unsigned int64 decimal parse | 146 | 142 | -5.6% | -0.4%, -7.0%, -8.6% | -0.1% |
-| hexadecimal parse | 113 | 99 | -13.7% | -10.6%, -17.7%, -17.1% | +0.8% |
-| base36 parse | 121 | 77 | -36.1% | -34.9%, -38.5%, -38.8% | +3.5% |
-| short decimal format | 65 | 21 | -69.6% | -71.3%, -68.6%, -68.9% | -0.8% |
-| signed int64 decimal format | 301 | 132 | -53.4% | -53.8%, -52.9%, -53.4% | -0.5% |
-| unsigned int64 decimal format | 242 | 130 | -45.4% | -45.0%, -47.2%, -43.7% | +0.7% |
-| hexadecimal format | 236 | 75 | -68.9% | -65.5%, -68.5%, -71.4% | -1.5% |
-| multiply | 24 | 24 | -2.8% | -9.8%, -2.0%, -0.3% | -1.4% |
-| divide | 29 | 25 | -12.8% | -12.4%, -13.3%, -12.3% | -3.6% |
-| eight array bytes | 19 | 22 | +19.1% | +16.5%, +24.8%, +23.5% | +3.2% |
-| eight Uint8Array bytes | 20 | 19 | -11.9% | -15.1%, -11.2%, -11.6% | +0.1% |
-| protobuf 8 fromObject + encode | 2537 | 2274 | -8.0% | -5.1%, -10.0%, -7.8% | -4.4% |
-| protobuf 8 decode + toObject | 2920 | 1936 | -34.7% | -32.0%, -38.6%, -32.7% | -0.0% |
-| protobuf 7 fromObject + encode | 2549 | 2228 | -13.8% | -14.0%, -13.8%, -19.5% | -12.4% |
-| protobuf 7 decode + toObject | 2751 | 1743 | -37.1% | -36.3%, -31.3%, -38.8% | +0.9% |
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| small signed construction | 6 | 4 | -24.3% | 12.4% | -25.3% | 1.1% | unestablished at this precision |
+| small unsigned construction | 3 | 4 | 56.9% | 67.2% | 56.9% | 79.2% | unestablished at this precision |
+| short decimal parse | 65 | 43 | -34.6% | -34.6% | -34% | 52.1% | unestablished at this precision |
+| signed int64 decimal parse | 189 | 157 | -17.1% | -12% | -19.9% | 7.8% | lower time in every pair, beyond control spread |
+| unsigned int64 decimal parse | 158 | 157 | -0.7% | -2.2% | -0.7% | 6.4% | unestablished at this precision |
+| hexadecimal parse | 117 | 115 | -2.2% | 2.9% | -3% | 4.3% | unestablished at this precision |
+| base36 parse | 125 | 89 | -27.8% | -25.1% | -27.8% | 3.3% | lower time in every pair, beyond control spread |
+| short decimal format | 57 | 8 | -86.3% | -97.1% | -75.8% | 2.3% | lower time in every pair, beyond control spread |
+| signed int64 decimal format | 237 | 143 | -40.4% | -20.6% | -40.4% | 1.5% | unestablished at this precision |
+| unsigned int64 decimal format | 224 | 147 | -32.9% | -31.6% | -32.9% | 1.3% | lower time in every pair, beyond control spread |
+| hexadecimal format | 222 | 87 | -61.1% | -56.4% | -61.1% | 1.6% | lower time in every pair, beyond control spread |
+| multiply | 16 | 22 | 40.1% | 88% | 15.3% | 6.7% | higher time in every pair, beyond control spread |
+| divide | 32 | 25 | -11.6% | 43.3% | -49.9% | 95.8% | unestablished at this precision |
+| eight array bytes | 11 | 29 | 165.6% | 199.4% | 164.5% | 10.4% | higher time in every pair, beyond control spread |
+| eight Uint8Array bytes | 15 | 23 | 52.3% | 71.2% | 52.3% | 5.5% | higher time in every pair, beyond control spread |
+| protobuf 8 fromObject + encode | 2840 | 2465 | -12.7% | -0.7% | -21.3% | 14.1% | unestablished at this precision |
+| protobuf 8 decode + toObject | 3278 | 2122 | -36% | -31.5% | -37.7% | 42.1% | unestablished at this precision |
+| protobuf 7 fromObject + encode | 2521 | 2297 | -10.8% | 2.5% | -18.4% | 1% | unestablished at this precision |
+| protobuf 7 decode + toObject | 2780 | 1904 | -31.4% | -28.6% | -33.5% | 14.2% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 
-Install the pinned [comparison fixture](../../../../scripts/long-conformance/README.md),
-then from the repository root:
+Run these commands from the repository root after installing the pinned
+fixtures used by `bench/compare.cjs`:
 
 ```sh
-for runtime in node bun; do
-  for run in 1 2 3; do
-    OUTPUT="packages/vlong/bench/results/$runtime-$run.json" "$runtime" packages/vlong/bench/compare.cjs
-  done
-  CALIBRATION=1 OUTPUT="packages/vlong/bench/results/$runtime-control.json" "$runtime" packages/vlong/bench/compare.cjs
-done
-node -e "require('./scripts/bench-paired.cjs').summarize(require('node:path').resolve('packages/vlong'))" -- --verify-current
+OUTPUT=packages/vlong/bench/results/node-isolated.json node packages/vlong/bench/compare.cjs
+OUTPUT=packages/vlong/bench/results/bun-isolated.json bun packages/vlong/bench/compare.cjs
+node scripts/render-bench-report.cjs packages/vlong
 ```
 
-Run serially without other CPU-heavy checks. No cloud calls or credentials are
-used. The input corpus is intentionally fixed; different message shapes, engines
-and machines can change these results. No overall application speedup is claimed.
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.

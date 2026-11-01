@@ -76,9 +76,10 @@ can differ in number and order from upstream; comparators should be pure.
   original tree.
 - [Paired measurements](bench/results/README.md), with controls and source hashes.
 
-The Firestore Watch change pattern is at parity (+0.5% on Node 22, −1.4% on Bun),
-as are lookups and removal. Range `forEach` takes about 8% less time on both
-runtimes and `keys` 6% less on Node; remaining differences are within this VM's
-±6% control drift. These are tree CPU measurements, not listener latency.
+The latest isolated Node 24 / Bun recording is too variable to establish a
+per-case performance difference, including the Firestore Watch pattern. Raw
+samples include slower Bun traversals; they remain in the report alongside both
+process orders and the controls. Inconclusive results do not establish parity.
+These are tree CPU measurements, not listener latency.
 
 MIT licensing and the pinned source are recorded in [PROVENANCE.json](PROVENANCE.json).

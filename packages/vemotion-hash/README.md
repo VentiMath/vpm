@@ -14,11 +14,14 @@ their UTF-8 bytes: @emotion/hash keeps only the low byte of each UTF-16 code
 unit, so `中` (U+4E2D) and `伭` (U+4F2D) hash alike, and two styles that differ
 only by such characters (`content: "中"` and `content: "伭"`) get the same class
 name, the second rendering with the first's styles. Encoding needs no
-`TextEncoder`, which jsdom test environments lack. `bench/compare.cjs` times
-both: on par for ASCII styles on Node and faster on Bun; a style with
-non-ASCII text, which now hashes all of its UTF-8 bytes, takes about 0.4 µs
-instead of 0.2 µs on Node ([Node](bench/results/node.json),
-[Bun](bench/results/bun.json)).
+`TextEncoder`, which jsdom test environments lack.
+
+[Process-isolated measurements](bench/results/README.md) on Node 24 and Bun
+include raw samples, balanced process order and independent controls. The ASCII
+case is slower on Node and faster on Bun. The Unicode case hashes different
+bytes by design and has a substantial Node cost; it is not a comparison of
+identical hash semantics. The report includes these costs and inconclusive cases.
+
 
 Emotion's suite passes with this package in place of the original; see the
 [conformance record](../../scripts/emotion-conformance/README.md).
