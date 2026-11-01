@@ -2,9 +2,9 @@
 
 **Implementation status:** app registration, service lifetime, token refresh
 ownership, option snapshots, credential adapters, Auth response records,
-user-management plans and token-verification policy use VPM redesigns. Google Auth,
-Auth transport and key-fetch/JWT adapters, and other service implementations remain
-upstream-derived. This is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
+user-management plans, token policy, key caching and signature adaptation use VPM
+redesigns. Google Auth, Auth HTTP transport and other service implementations
+remain upstream-derived. This is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
 the boundary.
 
 The Firebase Admin SDK, targeting **firebase-admin 14.5.0**, the latest stable
@@ -42,6 +42,19 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 
 ## Changes from 14.5.0
 
+- **Owned signing keys and freshness.** Certificate and JWKS caches publish
+  immutable snapshots. Prototype-named key IDs remain own data. Concurrent
+  refreshes share pending work, and failures allow retry. Certificate freshness
+  handles quoted and case-insensitive `max-age`, subtracts response age, and
+  honors `no-cache`/`no-store`. Malformed or duplicate directives cannot produce
+  `NaN` or infinite cache lifetimes. Noncacheable snapshots are not retained.
+  The cache uses explicit response freshness only, without heuristic freshness
+  or conditional revalidation; JWKS retains the six-hour SDK policy.
+- **Consistent signature routing.** Tokens without a key ID use one key fetch
+  and stop at the first valid signature. Every public-key path enforces RS256
+  or ES256; upstream's no-ID fallback also accepts other RSA algorithms.
+  Emulator verification remains a separate unsigned-token path.
+
 - **Auth verification policy.** Token-kind checks, per-call project resolution
   and signature verification form separate stages. A blocking-event claim cannot
   exempt ID tokens or session cookies from their required user subject. Malformed
@@ -52,8 +65,8 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   These changes follow the [ID-token contract](https://firebase.google.com/docs/auth/admin/verify-id-tokens)
   and [revocation model](https://firebase.google.com/docs/auth/admin/manage-sessions).
   The controls use locally signed fixture tokens; they do not demonstrate an
-  ability to forge Google's signatures. Crypto and key retrieval remain in the
-  attributed JWT adapter.
+  ability to forge Google's signatures. Crypto and key retrieval use the
+  VPM JWT adapter over `vjsonwebtoken` and `vjwks-rsa`.
 
 - **Auth user-management plans.** `getUser`, `updateUser`,
   `revokeRefreshTokens` and `deleteUsers` use owned request plans. Update inputs
@@ -64,7 +77,7 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   sparse lists reject invalid UIDs rather than reporting unsent users as deleted.
   Error indices must be unique integers within the batch. Linking a provider
   also validates any unlink list. Auth transport, endpoint schema validation,
-  MFA conversion and JWT/key-fetch adapters remain upstream-derived.
+  MFA conversion remain upstream-derived.
 
 - **Auth response records.** User, provider, timestamp and MFA records use
   explicit field projections. Serializing JSON-shaped claims preserves own
@@ -144,21 +157,23 @@ upstream-derived and tracked separately.
 Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
-previous JWT improvements; they do not isolate this policy rewrite alone.
-ID-token verification with a cached test key takes about 29 µs versus 49 µs on
+previous JWT improvements; they do not isolate this adapter rewrite alone.
+ID-token verification with a cached test key takes about 28 µs versus 48 µs on
 Node and 21 µs versus 28 µs on Bun (median paired changes of -41% and -25%).
-Adding a synthetic revocation lookup gives -35% on Node and -23% on Bun. These
-four directions hold beyond the observed control spread in every pair.
+Adding a synthetic revocation lookup gives -35% on Node and -23% on Bun.
+No-key-ID verification gives -36% on Node and -43% on Bun. These directions
+hold beyond the observed control spread in every comparison pair.
 
-User-record serialization also takes less time, while record construction costs
-about 10% more on both runtimes. Updating a user costs about 7% more on Node;
-its Bun difference and the 100-user deletion comparisons remain unestablished.
-The update/delete cases bypass HTTP and endpoint schema validation to measure
-request planning and result projection.
+Cached certificate reads cost about 83 ns versus 66 ns on Node and 49 ns versus
+43 ns on Bun. Record construction costs about 7% more on Node and 14% more on
+Bun. Updating a user costs about 10% more on Node; its Bun difference and the
+100-user deletion comparisons remain unestablished. The update/delete cases
+bypass HTTP and endpoint schema validation to measure request planning and
+result projection. User-record serialization still takes less time.
 
 App/credential setup, some cached acquisitions and service cleanup also retain
 regressions; concurrent acquisition benefits from sharing pending work. The
-[full report](bench/results/README.md) includes all nineteen cases, process orders,
+[full report](bench/results/README.md) includes all twenty-one cases, process orders,
 controls and raw samples. These measure local CPU work, excluding network latency.
 
 ## Evidence
@@ -175,6 +190,9 @@ controls and raw samples. These measure local CPU work, excluding network latenc
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [Key/cache controls](../../scripts/firebase-admin-conformance/key-verification.cjs)
+  exercise actual HTTP certificate/JWKS responses, expiry, immutable key maps,
+  prototype-named IDs, and signed no-key-ID verification against the original.
 - [Token-policy controls](../../scripts/firebase-admin-conformance/token-verification.cjs)
   compare twelve locally signed outcomes and exercise ID/session/blocking subject
   handling, malformed claims, signature failures and revocation input ownership.

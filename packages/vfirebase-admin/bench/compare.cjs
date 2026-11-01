@@ -4,6 +4,7 @@
 const assert = require('node:assert/strict'), path = require('node:path');
 const roots = {upstream: path.resolve(__dirname, '../../../scripts/firebase-admin-conformance/node_modules/firebase-admin'), vpm: path.resolve(__dirname, '..')};
 const library = root => ({jwt: require(path.join(root, 'lib/utils/jwt.js')), messaging: require(path.join(root, 'lib/messaging/messaging-internal.js')),
+  HttpClient: require(path.join(root, 'lib/utils/api-request.js')).HttpClient,
   deepCopy: require(path.join(root, 'lib/utils/deep-copy.js')).deepCopy,
   UserRecord: require(path.join(root, 'lib/auth/user-record.js')).UserRecord,
   Auth: require(path.join(root, 'lib/auth/auth.js')).Auth,
@@ -11,6 +12,7 @@ const library = root => ({jwt: require(path.join(root, 'lib/utils/jwt.js')), mes
   ApplicationDefaultCredential: require(path.join(root, 'lib/app/credential-internal.js')).ApplicationDefaultCredential,
   ...require(path.join(root, 'lib/app/firebase-app.js')), ...require(path.join(root, 'lib/app/lifecycle.js'))});
 const {token, publicKey} = require('./token-fixture.json');
+const noKid = require('./no-kid-fixture.json');
 // Public test-only key already retained with the upstream conformance fixture.
 const certificate = require('../../../scripts/firebase-admin-conformance/upstream/test/resources/mock.key.json');
 const message = {token: 'device-token', notification: {title: 'Practice set ready', body: 'Ten problems on modular arithmetic'}, data: {set: '42', topic: 'number-theory'},
@@ -20,9 +22,9 @@ const user = {localId: 'ada', email: 'ada@example.com', emailVerified: true, dis
   phoneNumber: '+15555550100', createdAt: '1600000000000', lastLoginAt: '1700000000000', validSince: '1600000000',
   providerUserInfo: [{rawId: 'ada-google', providerId: 'google.com', email: 'ada@example.com'}],
   customAttributes: '{"role":"teacher","classes":["math","science"]}'};
-const env = {token, publicKey, message, library, certificate, user};
+const env = {token, publicKey, message, library, certificate, user, noKid};
 // A worker constructs only its selected SDK; both workers use the same fixed token.
-const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user} = env; const {jwt, messaging, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
+const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user, noKid} = env; const {jwt, messaging, HttpClient, deepCopy, UserRecord, Auth, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
 const syntheticCredential = 'const credential = new ApplicationDefaultCredential(); const client = {credentials: {access_token: "bench", expiry_date: Date.now() + 3600000}, getAccessToken: async () => ({token: "bench"})}; credential.googleAuth.getClient = async () => client; ';
 // The transport returns fixed JSON outside network I/O; these cases measure the
 // complete public operation's request planning and result projection, not HTTP.
@@ -30,6 +32,8 @@ const syntheticAuth = 'const app = new FirebaseApp({projectId: "bench", credenti
 const verificationAuth = syntheticAuth.replace('projectId: "bench"', 'projectId: "p"') +
   'auth.idTokenVerifier.signatureVerifier.keyFetcher.fetchPublicKeys = async () => ({k1: publicKey}); ';
 const cases = [
+  {name: 'auth / cached certificate snapshot', async: true, make: compiled('const fetcher = new jwt.UrlKeyFetcher("https://example.test/certs"); const send = HttpClient.prototype.send; HttpClient.prototype.send = async () => ({isJson: () => true, data: {k1: publicKey}, headers: {"cache-control": "max-age=3600"}}); return fetcher.fetchPublicKeys().then(() => () => fetcher.fetchPublicKeys()).finally(() => {HttpClient.prototype.send = send;});'), validate: v => assert.equal(v.k1, publicKey)},
+  {name: 'auth / no-kid RSA verification with cached key', async: true, make: compiled('const verifier = new jwt.PublicKeySignatureVerifier({fetchPublicKeys: async () => ({fixture: noKid.publicKey})}); return () => verifier.verify(noKid.token).then(() => true);'), validate: v => assert.equal(v, true)},
   {name: 'auth / verify RS256 ID token signature', async: true, make: compiled('return () => jwt.verifyJwtSignature(token, publicKey, {algorithms: ["RS256"]}).then(() => true);'), validate: v => assert.equal(v, true)},
   {name: 'auth / verify ID token with cached test key', async: true, make: compiled(verificationAuth + 'return () => auth.verifyIdToken(token).then(value => value.uid);'), validate: v => assert.equal(v, 'ada')},
   {name: 'auth / verify ID token and synthetic revocation lookup', async: true, make: compiled(verificationAuth + 'auth.authRequestHandler.invokeRequestHandler = async () => ({users: [user]}); return () => auth.verifyIdToken(token, true).then(value => value.uid);'), validate: v => assert.equal(v, 'ada')},
@@ -51,7 +55,7 @@ const cases = [
   {name: 'credential / twenty concurrent acquisitions', async: true, make: compiled(syntheticCredential + 'return () => Promise.all(Array.from({length: 20}, () => credential.getAccessToken())).then(tokens => tokens.every(token => token.access_token === "bench"));'), validate: v => assert.equal(v, true)},
 ];
 require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream: roots.upstream, vpm: roots.vpm, cases,
-  files: ['package.json', 'lib', 'bench/compare.cjs', 'bench/token-fixture.json', '../vjsonwebtoken/index.js', '../vjsonwebtoken/lib', '../vjws/index.js', '../vjws/lib', '../vjwa/index.js',
+  files: ['package.json', 'lib', 'bench/compare.cjs', 'bench/token-fixture.json', 'bench/no-kid-fixture.json', '../vjsonwebtoken/index.js', '../vjsonwebtoken/lib', '../vjws/index.js', '../vjws/lib', '../vjwa/index.js',
     '../vgoogle-auth-library/lib', '../../scripts/firebase-admin-conformance/upstream/test/resources/mock.key.json',
     '../../scripts/firebase-admin-conformance/package-lock.json', '../../scripts/firebase-admin-conformance/node_modules/firebase-admin/lib',
     '../../scripts/firebase-admin-conformance/node_modules/google-auth-library/build/src',

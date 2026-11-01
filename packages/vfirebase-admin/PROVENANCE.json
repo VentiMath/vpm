@@ -12,7 +12,7 @@
   "checked": "2026-10-31",
   "license": "Apache-2.0",
   "retainedEvidence": "../../scripts/firebase-admin-conformance/upstream",
-  "source": "Source-informed VPM app registry, service lifecycle, token lease, option snapshots, credential adapters, Auth response projections, user-management plans and token verification policy, alongside retained Firebase Admin 14.5.0 service implementations. Upstream source and tests informed compatibility; diagnostics and public declarations remain attributed. Google Auth is a separately tracked upstream-derived dependency. This is not a clean-room claim.",
+  "source": "Source-informed VPM app registry, service lifecycle, token lease, option snapshots, credential adapters, Auth response projections, user-management plans, token verification policy, key caching and signature adaptation, alongside retained Firebase Admin 14.5.0 service implementations. Upstream source and tests informed compatibility; diagnostics and public declarations remain attributed. Google Auth is a separately tracked upstream-derived dependency. This is not a clean-room claim.",
   "dependencyMap": {
     "google-auth-library": "vgoogle-auth-library",
     "jsonwebtoken": "vjsonwebtoken",
@@ -39,7 +39,6 @@
     "lib/storage/storage.js",
     "lib/utils/api-request.js",
     "lib/utils/crypto-signer.d.ts",
-    "lib/utils/jwt.js",
     "lib/utils/validator.d.ts"
   ],
   "replaced": [
@@ -51,7 +50,8 @@
     "lib/app/credential-internal.js",
     "lib/app/credential-factory.js",
     "lib/auth/user-record.js",
-    "lib/auth/token-verifier.js"
+    "lib/auth/token-verifier.js",
+    "lib/utils/jwt.js"
   ],
   "removed": [
     "lib/database/database.d.ts",
@@ -67,7 +67,8 @@
     "lib/app/credential-session.js",
     "lib/auth/claim-snapshot.js",
     "lib/auth/user-operations.js",
-    "lib/auth/token-policy.js"
+    "lib/auth/token-policy.js",
+    "lib/utils/key-cache.js"
   ],
   "sourceSHA256": {
     "lib/app-check/app-check-api-client-internal.d.ts": "81914798466ebfeadc6bb52dec1e6b7dded7a3cf760d2d7470c91e6510de1cbe",
@@ -328,10 +329,11 @@
     "Credential inputs must be plain acyclic JSON data with at most 64 nested containers; conflicting aliases and mismatched credential kinds are rejected. The legacy refreshToken tag is normalized to authorized_user. Generated key/protocol material and Google Auth provider implementations are retained dependencies.",
     "Auth user, provider, timestamp and MFA records use explicit VPM projections. Serialization preserves own __proto__ and constructor claim names without writing Object.prototype or aliasing claim data. A bounded shallow walk and iterative fallback handle deep values and reports cycles; TOTP serialization detaches nested data while its public getter keeps the existing identity contract.",
     "User-management plans detach update inputs, preserve prototype-named own keys without prototype writes, and snapshot deletion batches before asynchronous work. Oversized and sparse batches are rejected, and response error indices must be unique integers within the submitted batch. Provider linking cannot bypass unlink-array validation. Existing Auth transport, endpoint schemas and MFA conversion remain retained.",
-    "Auth token verification separates token-kind policy, per-call project identity and signature verification. The subject exemption for beforeSendSms/beforeSendEmail applies only to blocking-event tokens, not ID tokens or session cookies. Malformed legacy-token and audience shapes produce FirebaseAuthError diagnostics. Revocation captures auth_time before lookup, requires a finite numeric time when comparing against a revocation timestamp, and rejects invalid revocation timestamps. Crypto and key-fetch adapters remain retained implementations."
+    "Auth token verification separates token-kind policy, per-call project identity and signature verification. The subject exemption for beforeSendSms/beforeSendEmail applies only to blocking-event tokens, not ID tokens or session cookies. Malformed legacy-token and audience shapes produce FirebaseAuthError diagnostics. Revocation captures auth_time before lookup, requires a finite numeric time when comparing against a revocation timestamp, and rejects invalid revocation timestamps. Crypto and key retrieval use the independently implemented JWT adapter over VPM dependencies.",
+    "Certificate/JWKS fetchers own immutable key snapshots and shared pending refreshes. Certificate freshness recognizes case-insensitive and quoted max-age, subtracts response age, respects no-cache/no-store, and prevents malformed or duplicate directives from creating an unbounded cache lifetime. Prototype-named JWKS key IDs remain own data. Verification without kid fetches keys once, retains the RS256/ES256 allowlist, and stops at the first verified key. Failed refreshes retry normally; noncacheable snapshots are not retained."
   ],
   "implementation": {
-    "kind": "mixed: independent app, credential, Auth record, user-management and token-policy runtimes with retained service implementations",
+    "kind": "mixed: independent app, credential and used Auth runtimes with retained HTTP transport and service implementations",
     "replacementStatus": "application-facing service rewrite pending",
     "targetScope": "App credentials, Auth, Firestore, Storage and messaging.",
     "independentComponents": {
@@ -346,18 +348,21 @@
       "lib/auth/user-record.js": "Own explicit read-only user/provider/metadata/factor projections and detached serialization, reusing the iterative snapshot walker. Diagnostic text and public response contracts are retained with attribution.",
       "lib/auth/claim-snapshot.js": "Own bounded shallow claim-copy path with iterative fallback, preserving own prototype-named keys, detached output and explicit cycle errors without unbounded recursion.",
       "lib/auth/user-operations.js": "Own operation plans for getUser, updateUser, revokeRefreshTokens and deleteUsers: detached request data, batch ownership and validated result accounting. Public diagnostics and wire fields remain source-informed; existing transport and endpoint schema validators are reused.",
-      "lib/auth/token-verifier.js": "Own decode/policy/signature pipeline and per-call project resolution, preserving source-informed diagnostic contracts and token metadata. Cryptographic verification and certificate/JWKS retrieval still use the separately tracked utils/jwt adapter.",
-      "lib/auth/token-policy.js": "Own token-kind claim checks and revocation comparison. Blocking-event subject exemptions cannot apply to ID/session tokens; authentication time is captured before asynchronous lookup and invalid comparison inputs are rejected."
+      "lib/auth/token-verifier.js": "Own decode/policy/signature pipeline and per-call project resolution, preserving source-informed diagnostic contracts and token metadata. Cryptographic verification and certificate/JWKS retrieval use the independent utils/jwt adapter over VPM dependencies.",
+      "lib/auth/token-policy.js": "Own token-kind claim checks and revocation comparison. Blocking-event subject exemptions cannot apply to ID/session tokens; authentication time is captured before asynchronous lookup and invalid comparison inputs are rejected.",
+      "lib/utils/jwt.js": "Own certificate/JWKS fetchers, key routing, sequential no-kid verification and diagnostic adaptation over vjsonwebtoken/vjwks-rsa. Every signature path has the same RS256/ES256 policy; key acquisition callbacks settle once.",
+      "lib/utils/key-cache.js": "Own immutable key snapshot and pending-refresh state, explicit freshness parsing, age accounting and retry. Malformed freshness directives do not produce NaN/Infinity lifetimes; noncacheable snapshots are not retained."
     },
-    "remainingWork": "Auth HTTP transport, endpoint schemas, JWT/key-fetch adapters and other Auth methods, plus Firestore/Storage/messaging service facades remain upstream-derived. Google Auth and underlying service client runtimes are tracked separately."
+    "remainingWork": "Auth HTTP transport, endpoint schemas and other Auth methods, plus Firestore/Storage/messaging service facades remain upstream-derived. Google Auth and underlying service client runtimes are tracked separately."
   },
   "verification": {
-    "applicationRuntime": "Thirteen focused tests on Node 24 and Bun, including isolated original app/credential controls, deep/shared options, provider/cleanup recovery, file rotation and actual signed-JWT/refresh-token OAuth POSTs through a local HTTP server and a counting agent.",
+    "applicationRuntime": "Fourteen focused tests on Node 24 and Bun, including isolated original app/credential controls, deep/shared options, provider/cleanup recovery, file rotation and actual signed-JWT/refresh-token OAuth POSTs through a local HTTP server and a counting agent.",
     "upstreamSuite": "6,062 retained upstream tests: Node 6,016 pass with 46 existing exact differences; Bun 6,001 pass with those 46 and 15 existing engine-wording differences.",
     "callers": "Identical 17 Auth/Storage/FCM requests, 25 Firestore RPCs and 17 results on Node 24 and Bun.",
     "credentialAdapters": "148 upstream app/credential tests pass on Node. Original controls reproduce agent-insensitive caches, omitted JSON-client agents, frozen-input mutation, validation/use identity drift, unsanitized parse errors and unbounded credential retention. Native local OAuth requests verify RSA signatures and both request bodies on Node and Bun.",
     "userRecords": "222 unchanged upstream record tests pass on Node; the complete 6,062-test suite retains the same existing differences on Node and Bun. 160 generated caller projections match upstream on both runtimes. Isolated controls reproduce prototype writes and constructor-claim aliasing in upstream serialization; VPM preserves keys and handles 20,000-level data without recursive traversal.",
     "userOperations": "166 unchanged upstream user-management tests pass on Node; the full suite retains only the existing exact differences on both runtimes. Local HTTP comparisons preserve normal requests and results, including partial deletion failures. Original controls reproduce batch mutation/sparse-list miscounts, invalid result indices, input mutation/prototype writes and provider-validation bypass.",
-    "tokenPolicy": "228 unchanged upstream verifier and Auth verification tests pass on Node; the complete suite and real caller comparisons retain existing results on Node and Bun. Twelve locally signed token outcomes match. Isolated original controls reproduce ID/session subject exemptions, malformed-claim TypeErrors and nonnumeric/mutated revocation-time bypasses; VPM rejects them. No live credentials or live token service are used."
+    "tokenPolicy": "228 unchanged upstream verifier and Auth verification tests pass on Node; the complete suite and real caller comparisons retain existing results on Node and Bun. Twelve locally signed token outcomes match. Isolated original controls reproduce ID/session subject exemptions, malformed-claim TypeErrors and nonnumeric/mutated revocation-time bypasses; VPM rejects them. No live credentials or live token service are used.",
+    "keyVerification": "110 unchanged upstream JWT/key-fetch tests pass on Node. The full suite, fourteen focused tests and actual callers retain the existing results on Node and Bun. HTTP controls reproduce mutable keys, NaN/Infinity freshness, ignored age/directives and lost prototype-named JWKS IDs. Signed no-kid controls reproduce an unnecessary key fetch and acceptance of RS512 outside the normal allowlist; VPM fixes both."
   }
 }
