@@ -25,7 +25,8 @@ const error_1 = require("./error");
 const error_2 = require("../app/error");
 const validator = require("./validator");
 const {HttpRequestPlan} = require("./http-request");
-const http2 = require("http2");
+const {Http2RequestPlan} = require("./http2-request");
+const {Http2SessionHandler} = require("./http2-session");
 const events_1 = require("events");
 const {captureRequest, authorizeRequest} = require("./authorized-request");
 class DefaultRequestResponse {
@@ -104,6 +105,16 @@ class RequestClient extends RetryPolicy {
     createRequestResponse(resp) {
         return resp.multipart ? new MultipartRequestResponse(resp) : new DefaultRequestResponse(resp);
     }
+    requestFailure(error) {
+        if (error.response) return new RequestResponseError(this.createRequestResponse(error.response));
+        const timedOut = error.code === 'ETIMEDOUT';
+        return new error_2.FirebaseAppError({
+            code: timedOut ? error_2.AppErrorCode.NETWORK_TIMEOUT : error_2.AppErrorCode.NETWORK_ERROR,
+            message: timedOut ? `Error while making request: ${error.message}.`
+                : `Error while making request: ${error.message}. Error code: ${error.code}`,
+            cause: error,
+        });
+    }
 }
 exports.RequestClient = RequestClient;
 class HttpClient extends RequestClient {
@@ -123,76 +134,24 @@ class HttpClient extends RequestClient {
             }
         }
     }
-    requestFailure(error) {
-        if (error.response) return new RequestResponseError(this.createRequestResponse(error.response));
-        const timedOut = error.code === 'ETIMEDOUT';
-        return new error_2.FirebaseAppError({
-            code: timedOut ? error_2.AppErrorCode.NETWORK_TIMEOUT : error_2.AppErrorCode.NETWORK_ERROR,
-            message: timedOut ? `Error while making request: ${error.message}.`
-                : `Error while making request: ${error.message}. Error code: ${error.code}`,
-            cause: error,
-        });
-    }
 }
 exports.HttpClient = HttpClient;
 class Http2Client extends RequestClient {
-    constructor(retry = defaultRetryConfig()) {
-        super(retry);
-    }
-    /**
-     * Sends an HTTP/2 request to a remote server. If the server responds with a successful response (2xx), the returned
-     * promise resolves with an `RequestResponse`. If the server responds with an error (3xx, 4xx, 5xx), the promise
-     * rejects with an `RequestResponseError`. In case of all other errors, the promise rejects with a `FirebaseAppError`.
-     * If a request fails due to a low-level network error, the client transparently retries the request once before
-     * rejecting the promise.
-     *
-     * If the request data is specified as an object, it will be serialized into a JSON string. The application/json
-     * content-type header will also be automatically set in this case. For all other payload types, the content-type
-     * header should be explicitly set by the caller. To send a JSON leaf value (e.g. "foo", 5), parse it into JSON,
-     * and pass as a string or a Buffer along with the appropriate content-type header.
-     *
-     * @param config - HTTP/2 request to be sent.
-     * @returns A promise that resolves with the response details.
-     */
-    send(config) {
-        return this.sendWithRetry(config);
-    }
-    /**
-     * Sends an HTTP/2 request. In the event of an error, retries the HTTP/2 request according to the
-     * `RetryConfig` set on the `Http2Client`.
-     *
-     * @param config - HTTP/2 request to be sent.
-     * @param retryAttempts - Number of retries performed up to now.
-     * @returns A promise that resolves with the response details.
-     */
-    sendWithRetry(config, retryAttempts = 0) {
-        return AsyncHttp2Call.invoke(config)
-            .then((resp) => {
-            return this.createRequestResponse(resp);
-        })
-            .catch((err) => {
-            const [delayMillis, canRetry] = this.getRetryDelayMillis(retryAttempts, err);
-            if (canRetry && this.retry && delayMillis <= this.retry.maxDelayInMillis) {
-                return this.waitForRetry(delayMillis).then(() => {
-                    return this.sendWithRetry(config, retryAttempts + 1);
-                });
+    send(config) { return this.sendWithRetry(config); }
+    async sendWithRetry(config, retryAttempts = 0) {
+        let plan;
+        try { plan = new Http2RequestPlan(config); }
+        catch (error) { throw this.requestFailure(error); }
+        for (;;) {
+            try { return this.createRequestResponse(await plan.send()); }
+            catch (error) {
+                const [delay, eligible] = this.getRetryDelayMillis(retryAttempts, error);
+                if (!eligible || !this.retry || delay > this.retry.maxDelayInMillis)
+                    throw this.requestFailure(error);
+                await this.waitForRetry(delay);
+                retryAttempts++;
             }
-            if (err.response) {
-                throw new RequestResponseError(this.createRequestResponse(err.response));
-            }
-            if (err.code === 'ETIMEDOUT') {
-                throw new error_2.FirebaseAppError({
-                    code: error_2.AppErrorCode.NETWORK_TIMEOUT,
-                    message: `Error while making request: ${err.message}.`,
-                    cause: err
-                });
-            }
-            throw new error_2.FirebaseAppError({
-                code: error_2.AppErrorCode.NETWORK_ERROR,
-                message: `Error while making request: ${err.message}. Error code: ${err.code}`,
-                cause: err
-            });
-        });
+        }
     }
 }
 exports.Http2Client = Http2Client;
@@ -235,316 +194,6 @@ function parseHttpResponse(response, config) {
         throw new error_2.FirebaseAppError({ code: error_2.AppErrorCode.INTERNAL_ERROR, message: 'Malformed HTTP status line.' });
     }
     return new DefaultRequestResponse(lowLevelResponse);
-}
-/**
- * A helper class for common functionality needed to send requests over the wire.
- * It also wraps the callback API of the Node.js standard library in a more flexible Promise API.
- */
-class AsyncRequestCall {
-    constructor(configImpl) {
-        this.configImpl = configImpl;
-    }
-    /**
-     * Extracts multipart boundary from the HTTP header. The content-type header of a multipart
-     * response has the form 'multipart/subtype; boundary=string'.
-     *
-     * If the content-type header does not exist, or does not start with
-     * 'multipart/', then null will be returned.
-     */
-    getMultipartBoundary(headers) {
-        const contentType = headers['content-type'];
-        if (!contentType || !contentType.startsWith('multipart/')) {
-            return null;
-        }
-        const segments = contentType.split(';');
-        const emptyObject = {};
-        const headerParams = segments.slice(1)
-            .map((segment) => segment.trim().split('='))
-            .reduce((curr, params) => {
-            // Parse key=value pairs in the content-type header into properties of an object.
-            if (params.length === 2) {
-                const keyValuePair = {};
-                keyValuePair[params[0]] = params[1];
-                return Object.assign(curr, keyValuePair);
-            }
-            return curr;
-        }, emptyObject);
-        return headerParams.boundary;
-    }
-    handleMultipartResponse(response, respStream) {
-        // Upstream parses multipart bodies with @fastify/busboy into a
-        // MultipartHttpResponse, whose text and data getters throw; no Admin API
-        // reads its parts. Discard the body and fail the request directly.
-        respStream.on('error', () => { });
-        respStream.resume();
-        if (response.status >= 200 && response.status < 300) {
-            // Without the response attached, the client reports this message
-            // instead of a generic "Server responded with status 200".
-            this.rejectWithError('Received a multipart response, which no Firebase Admin API reads and vfirebase-admin does not parse', 'ERR_UNSUPPORTED_MULTIPART_RESPONSE', response.request);
-        }
-        else {
-            this.finalizeResponse(response);
-        }
-    }
-    handleRegularResponse(response, respStream) {
-        const responseBuffer = [];
-        respStream.on('data', (chunk) => {
-            responseBuffer.push(chunk);
-        });
-        respStream.on('error', (err) => {
-            const req = response.request;
-            if (req && req.destroyed) {
-                return;
-            }
-            this.enhanceAndReject(err, null, req);
-        });
-        respStream.on('end', () => {
-            response.data = Buffer.concat(responseBuffer).toString();
-            this.finalizeResponse(response);
-        });
-    }
-    /**
-     * Finalizes the current request call in-flight by either resolving or rejecting the associated
-     * promise. In the event of an error, adds additional useful information to the returned error.
-     */
-    finalizeResponse(response) {
-        if (response.status >= 200 && response.status < 300) {
-            this.resolve(response);
-        }
-        else {
-            this.rejectWithError('Request failed with status code ' + response.status, null, response.request, response);
-        }
-    }
-    /**
-     * Creates a new error from the given message, and enhances it with other information available.
-     * Then the promise associated with this request call is rejected with the resulting error.
-     */
-    rejectWithError(message, code, request, response) {
-        const error = new Error(message);
-        this.enhanceAndReject(error, code, request, response);
-    }
-    enhanceAndReject(error, code, request, response) {
-        this.reject(this.enhanceError(error, code, request, response));
-    }
-    /**
-     * Enhances the given error by adding more information to it. Specifically, the request config,
-     * the underlying request and response will be attached to the error.
-     */
-    enhanceError(error, code, request, response) {
-        error.config = this.configImpl;
-        if (code) {
-            error.code = code;
-        }
-        error.request = request;
-        error.response = response;
-        return error;
-    }
-}
-/**
- * A helper class for sending HTTP/2 requests over the wire, providing content
- * processing, timeouts and error handling.
- * It also wraps the callback API of the Node.js standard library in a more flexible Promise API.
- */
-class AsyncHttp2Call extends AsyncRequestCall {
-    /**
-     * Sends an HTTP2 request based on the provided configuration.
-     */
-    static invoke(config) {
-        return new AsyncHttp2Call(config).promise;
-    }
-    constructor(config) {
-        const http2ConfigImpl = new Http2RequestConfigImpl(config);
-        super(http2ConfigImpl);
-        try {
-            this.http2ConfigImpl = http2ConfigImpl;
-            this.options = this.http2ConfigImpl.buildRequestOptions();
-            if (!validator.isNonNullObject(this.options.headers)) {
-                this.options.headers = {};
-            }
-            this.entity = this.http2ConfigImpl.buildEntity(this.options.headers);
-            this.promise = new Promise((resolve, reject) => {
-                this.resolve = resolve;
-                this.reject = reject;
-                this.execute();
-            });
-        }
-        catch (err) {
-            this.promise = Promise.reject(this.enhanceError(err, null));
-        }
-    }
-    execute() {
-        const req = this.http2ConfigImpl.http2SessionHandler.session.request({
-            ':method': this.options.method,
-            // URL protocols end in ':'; the HTTP/2 :scheme pseudo-header is the bare
-            // scheme (RFC 9113 section 8.3.1). Upstream sends 'https:', which
-            // conforming servers such as Node's reject with PROTOCOL_ERROR.
-            ':scheme': this.options.protocol.replace(/:$/, ''),
-            ':path': this.options.path,
-            ...this.options.headers
-        });
-        req.on('response', (headers) => {
-            this.handleHttp2Response(headers, req);
-        });
-        // Handle errors
-        req.on('error', (err) => {
-            if (req.aborted) {
-                return;
-            }
-            this.enhanceAndReject(err, null, req);
-        });
-        const timeout = this.http2ConfigImpl.timeout;
-        const timeoutCallback = () => {
-            req.destroy();
-            this.rejectWithError(`timeout of ${timeout}ms exceeded`, 'ETIMEDOUT', req);
-        };
-        if (timeout) {
-            // Listen to timeouts and throw an error.
-            req.setTimeout(timeout, timeoutCallback);
-        }
-        req.end(this.entity);
-    }
-    handleHttp2Response(headers, stream) {
-        if (stream.aborted) {
-            return;
-        }
-        if (!headers[':status']) {
-            throw new error_2.FirebaseAppError({
-                code: error_2.AppErrorCode.INTERNAL_ERROR,
-                message: 'Expected a statusCode on the response from a ClientRequest'
-            });
-        }
-        const response = {
-            status: headers[':status'],
-            headers: headers,
-            request: stream,
-            data: undefined,
-            config: this.http2ConfigImpl,
-        };
-        const boundary = this.getMultipartBoundary(headers);
-        const respStream = this.uncompressResponse(headers, stream);
-        if (boundary) {
-            this.handleMultipartResponse(response, respStream, boundary);
-        }
-        else {
-            this.handleRegularResponse(response, respStream);
-        }
-    }
-    uncompressResponse(headers, stream) {
-        // Uncompress the response body transparently if required.
-        let respStream = stream;
-        const encodings = ['gzip', 'compress', 'deflate'];
-        if (headers['content-encoding'] && encodings.indexOf(headers['content-encoding']) !== -1) {
-            // Add the unzipper to the body stream processing pipeline.
-            const zlib = require('zlib');
-            respStream = respStream.pipe(zlib.createUnzip());
-            // Remove the content-encoding in order to not confuse downstream operations.
-            delete headers['content-encoding'];
-        }
-        return respStream;
-    }
-}
-/**
- * An adapter class with common functionality needed to extract options and entity data from a `RequestConfig`.
- */
-class BaseRequestConfigImpl {
-    constructor(config) {
-        this.config = config;
-        this.config = config;
-    }
-    get method() {
-        return this.config.method;
-    }
-    get url() {
-        return this.config.url;
-    }
-    get headers() {
-        return this.config.headers;
-    }
-    get data() {
-        return this.config.data;
-    }
-    get timeout() {
-        return this.config.timeout;
-    }
-    buildEntity(headers) {
-        let data;
-        if (!this.hasEntity() || !this.isEntityEnclosingRequest()) {
-            return data;
-        }
-        if (validator.isBuffer(this.data)) {
-            data = this.data;
-        }
-        else if (validator.isObject(this.data)) {
-            data = Buffer.from(JSON.stringify(this.data), 'utf-8');
-            if (typeof headers['content-type'] === 'undefined') {
-                headers['content-type'] = 'application/json;charset=utf-8';
-            }
-        }
-        else if (validator.isString(this.data)) {
-            data = Buffer.from(this.data, 'utf-8');
-        }
-        else {
-            throw new Error('Request data must be a string, a Buffer or a json serializable object');
-        }
-        // Add Content-Length header if data exists.
-        headers['Content-Length'] = data.length.toString();
-        return data;
-    }
-    buildUrl() {
-        const fullUrl = this.urlWithProtocol();
-        const parsedUrl = new URL(fullUrl);
-        if (!this.hasEntity() || this.isEntityEnclosingRequest()) {
-            return parsedUrl;
-        }
-        if (!validator.isObject(this.data)) {
-            throw new Error(`${this.method} requests cannot have a body`);
-        }
-        // Append data to query string.
-        const dataObj = this.data;
-        for (const key in dataObj) {
-            if (Object.prototype.hasOwnProperty.call(dataObj, key)) {
-                parsedUrl.searchParams.append(key, dataObj[key]);
-            }
-        }
-        return parsedUrl;
-    }
-    urlWithProtocol() {
-        const fullUrl = this.url;
-        if (fullUrl.startsWith('http://') || fullUrl.startsWith('https://')) {
-            return fullUrl;
-        }
-        return `https://${fullUrl}`;
-    }
-    hasEntity() {
-        return !!this.data;
-    }
-    isEntityEnclosingRequest() {
-        // GET and HEAD requests do not support entity (body) in request.
-        return this.method !== 'GET' && this.method !== 'HEAD';
-    }
-}
-/**
- * An adapter class for extracting options and entity data from an `Http2RequestConfig`.
- */
-class Http2RequestConfigImpl extends BaseRequestConfigImpl {
-    constructor(http2Config) {
-        super(http2Config);
-        this.http2Config = http2Config;
-    }
-    get http2SessionHandler() {
-        return this.http2Config.http2SessionHandler;
-    }
-    buildRequestOptions() {
-        const parsed = this.buildUrl();
-        // TODO(b/401051826)
-        const protocol = parsed.protocol;
-        return {
-            protocol,
-            path: `${parsed.pathname}${parsed.search}`,
-            method: this.method,
-            headers: Object.assign({}, this.headers),
-        };
-    }
 }
 class AuthorizedHttpClient extends HttpClient {
     constructor(app) {
@@ -727,58 +376,4 @@ class ExponentialBackoffPoller extends events_1.EventEmitter {
     }
 }
 exports.ExponentialBackoffPoller = ExponentialBackoffPoller;
-class Http2SessionHandler {
-    constructor(url) {
-        this.sessionErrors = [];
-        this.createSession(url);
-    }
-    createSession(url) {
-        if (!this.http2Session || this.isCurrentSessionClosed) {
-            this.sessionErrors = [];
-            const opts = {
-                // Set local max concurrent stream limit to respect backend limit
-                peerMaxConcurrentStreams: 100,
-                ALPNProtocols: ['h2']
-            };
-            this.http2Session = http2.connect(url, opts);
-            this.http2Session.on('goaway', (errorCode, _, opaqueData) => {
-                const error = new error_2.FirebaseAppError({
-                    code: error_2.AppErrorCode.NETWORK_ERROR,
-                    message: `Error while making requests: GOAWAY - ${opaqueData?.toString()}, Error code: ${errorCode}`
-                });
-                this.sessionErrors.push(error);
-            });
-            this.http2Session.on('error', (error) => {
-                const codePart = error?.code ? `${error.code} - ` : '';
-                let errorMessage;
-                if ((error instanceof AggregateError || error?.name === 'AggregateError') && Array.isArray(error.errors)) {
-                    errorMessage = `Session error while making requests: ${codePart}${error.name}: ` +
-                        `[${error.errors.map((e) => e.message).join(', ')}]`;
-                }
-                else {
-                    errorMessage = `Session error while making requests: ${codePart}${error?.message || 'Unknown error'}`;
-                }
-                const appError = new error_2.FirebaseAppError({
-                    code: error_2.AppErrorCode.NETWORK_ERROR,
-                    message: errorMessage,
-                    cause: error,
-                });
-                this.sessionErrors.push(appError);
-            });
-        }
-        return this.http2Session;
-    }
-    getErrors() {
-        return this.sessionErrors;
-    }
-    get session() {
-        return this.http2Session;
-    }
-    get isCurrentSessionClosed() {
-        return !!this.http2Session?.closed;
-    }
-    close() {
-        this.http2Session?.close();
-    }
-}
 exports.Http2SessionHandler = Http2SessionHandler;

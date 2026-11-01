@@ -970,8 +970,8 @@ See the [package contract](packages/vfirebase-functions/README.md),
 Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
 service lifecycle, token lease, option snapshots, credential adapters, Auth response records,
 user-management plans, token policy, key caches, signature adaptation, Auth
-request dispatch, HTTP/1 request plans, retry policy and authorization headers
-have source-informed VPM implementations. Response helpers, HTTP/2, other service APIs and Google Auth
+request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy and authorization
+headers have source-informed VPM implementations. Response helpers, other service APIs and Google Auth
 remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
@@ -1036,7 +1036,7 @@ HTTP/1 request plans capture wire bytes once for retries. Explicit content types
 survive header casing, and completed errors preserve connection reuse. Truncated
 responses and malformed gzip settle as errors rather than leaving pending promises;
 failed streams are destroyed and buffered chunks released. Case-insensitive
-coding and Brotli are supported. Response projection and HTTP/2 transport remain retained. Actual local HTTP controls
+coding and Brotli are supported. Response projection remains retained. Actual local HTTP controls
 verify the changes on Node and Bun.
 
 While public keys are missing or expired, upstream starts one key request per
@@ -1059,7 +1059,7 @@ Admin calls (`verifyIdToken` with revocation checks, `getUser`, `updateUser`,
 `exists`, `delete` and signed URLs, and `sendEachForMulticast`) produce
 identical requests and results against local servers. Existing regression probes,
 isolated app-lifecycle, user-record, user-operation, token-policy, key/cache and
-request-dispatch, HTTP lifecycle and retry/authorization controls, and eighteen focused tests cover the changes.
+request-dispatch, HTTP lifecycle and retry/authorization controls, HTTP/2 wire/session controls and twenty focused tests cover the changes.
 
 See the [package contract](packages/vfirebase-admin/README.md),
 [conformance record](scripts/firebase-admin-conformance/README.md) and
@@ -1078,6 +1078,19 @@ protected headers and checks app lifetime after acquisition. Header casing can
 no longer let stale caller Authorization override the acquired bearer token or
 replace explicit quota/metrics values. Original controls reproduce the old wire
 behavior; the operation builders remain responsible for request body ownership.
+
+HTTP/2 requests now share captured URL/header/body plans and the independent retry
+policy. Control pseudo-headers cannot override request identity; mixed-case content
+types do not produce duplicate fields. No-header closure, aborted/error streams
+and invalid compressed bodies settle normally. Wire lengths are verified even on
+Bun, with HEAD/304 representation lengths treated separately. Failures destroy
+only their stream; native connection errors can still close a batch session.
+Actual Node-server controls run with both client runtimes. The 88 unchanged
+upstream HTTP/2 tests retain their exact existing differences; wire controls
+check the fields hidden by their early scheme assertions. Session generations independently own diagnostics and close state; old events
+cannot contaminate a new batch, returned arrays are detached, destroyed sessions
+are recreated and failed creation allows retry. Common response projection
+remains retained.
 
 ## vgoogle-cloud-firestore
 

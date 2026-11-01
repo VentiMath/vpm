@@ -1,12 +1,10 @@
 # vfirebase-admin
 
-**Implementation status:** app registration, service lifetime, token refresh
-ownership, option snapshots, credential adapters, Auth response records,
-user-management plans, token policy, key caching, signature adaptation, Auth
-request dispatch, HTTP/1 request plans, retry policy and authorization headers use
-VPM redesigns. Google Auth, response helpers, HTTP/2 and other service implementations remain
-upstream-derived. This is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
-the boundary.
+**Implementation status:** VPM independently implements app and credential
+management, the Auth operations used by VentiMath, and HTTP/1 and HTTP/2 request,
+retry, authorization and session handling. Response helpers, endpoint schemas,
+other service APIs and Google Auth remain upstream-derived. This is a partial
+SDK rewrite; [provenance](PROVENANCE.json) maps the boundary.
 
 The Firebase Admin SDK, targeting **firebase-admin 14.5.0**, the latest stable
 release checked October 31, 2026. All dependencies are VPM packages; Node.js 24+
@@ -49,8 +47,22 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   responses and invalid compressed bodies reject instead of remaining pending;
   failures destroy their streams and release buffered chunks. Completed error
   responses keep connections reusable. Gzip/deflate coding is case-insensitive,
-  and Brotli responses are decoded. Response projection and HTTP/2 transport
-  still use retained implementations. The retry policy is independently implemented.
+  and Brotli responses are decoded. Response projection remains retained; the
+  retry policy is independently implemented.
+
+- **HTTP/2 request lifecycle.** Requests reuse the captured URL, header and
+  payload plan across attempts. Caller pseudo-headers cannot override the planned
+  method, scheme or path; mixed-case content types do not create duplicate fields.
+  A close before response headers, aborted/error streams and invalid compressed
+  responses settle as errors. Only the failed stream is destroyed, leaving its
+  batch session available unless the peer violates the connection protocol.
+  Gzip/deflate coding is case-insensitive and Brotli is decoded. Wire byte counts
+  enforce `Content-Length` even on Bun, where the original accepts mismatched
+  bodies; HEAD and 304 representation lengths are handled separately. Common
+  response projection remains retained. Session generations own their
+  diagnostics: late events cannot contaminate a later batch, destroyed sessions
+  are recreated, repeated close calls are coalesced, and reading errors cannot
+  erase the stored list. A failed connection creation allows another attempt.
 
 - **Authorization header ownership.** HTTP/1 and HTTP/2 share one preparation
   path. Transport options and header values are captured before token acquisition,
@@ -196,29 +208,35 @@ Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
 previous JWT improvements; they do not isolate the HTTP rewrite alone. The
-[full report](bench/results/README.md) includes all thirty-two cases, process
+[full report](bench/results/README.md) includes all thirty-five cases, process
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
 The HTTP cases serialize a request and consume a synthetic response stream;
-they exclude sockets and network latency. With Auth-style headers, Node takes
-about 2.8 µs versus 2.2 µs (+25% median paired time), and Bun takes 3.2 µs versus
-2.3 µs (+39%). Bun's headerless comparison also retains a cost; Node's is
-inconclusive under the control checks.
+they exclude sockets and network latency. The HTTP/1 comparisons are inconclusive
+under the control checks except for Bun's headerless request, which takes about
+3.1 µs versus 2.3 µs (+38% median paired time).
+
+For HTTP/2, the single-request comparison is inconclusive on Node (3.1 µs versus
+2.9 µs); Bun takes 3.8 µs versus 2.7 µs (+44%). A twenty-request synthetic batch
+takes 54.4 µs versus 42.5 µs on Node (+28%) and 61.6 µs versus 44.5 µs on Bun
+(+37%). Session creation/close is inconclusive on both runtimes. Reusing the
+already owned header record removes a redundant copy, but request ownership and
+stream checks retain CPU costs. These are not real FCM batch latency measurements.
 
 The two authorized-request cases additionally capture headers before a synthetic
 token acquisition. With default metrics headers they take 3.7 µs versus 2.5 µs
-on Node (+50%) and 3.2 µs versus 2.2 µs on Bun (+42%). With explicit metrics and
-request headers they take 3.2 µs versus 2.5 µs (+29%) and 3.5 µs versus 2.2 µs
-(+54%), respectively. The one-pass owned header record avoids repeated deletion
+on Node (+48%) and 3.2 µs versus 2.2 µs on Bun (+44%). With explicit metrics and
+request headers they take 3.1 µs versus 2.5 µs (+28%) and 3.5 µs versus 2.2 µs
+(+56%), respectively. The one-pass owned header record avoids repeated deletion
 and copying, but ownership and protected-header normalization retain measurable
 CPU costs. These changes are not presented as a transport speedup.
 
 The retry cases expose their costs separately. Custom policy capture takes about
-112 ns versus 10 ns on Node and 373 ns versus 3 ns on Bun; it copies and freezes
+113 ns versus 10 ns on Node and 382 ns versus 14 ns on Bun; it copies and freezes
 caller settings instead of retaining them. Default-policy construction is
-inconclusive on Node and takes 7 ns versus 11 ns on Bun. Strict UTC HTTP-date
-parsing takes 466 ns versus 241 ns on Node and 437 ns versus 47 ns on Bun. These
+inconclusive on Node and takes 7 ns versus 14 ns on Bun. Strict UTC HTTP-date
+parsing takes 464 ns versus 242 ns on Node and 428 ns versus 50 ns on Bun. These
 setup/error-path regressions are retained with their full percentages and
 controls; ordinary request success does not execute the retry-date parser.
 
@@ -243,6 +261,12 @@ wire compatibility; these CPU timings do not establish application latency.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [HTTP/2 controls](../../scripts/firebase-admin-conformance/http2-transport.cjs)
+  compare retry bytes, actual wire headers, compressed bodies, no-header closures,
+  peer resets, content-length mismatches, timeouts and usable batch sessions.
+  Synthetic controls inspect pseudo-header overrides and aborted/error ordering.
+  [Session controls](../../scripts/firebase-admin-conformance/http2-session.cjs)
+  reproduce diagnostics crossing generations, error-array mutation and recovery.
 - [Authorization controls](../../scripts/firebase-admin-conformance/authorized-headers.cjs)
   reproduce duplicate-casing overrides and pending option/header mutations for
   both clients, then verify the HTTP/1 wire result and retained deletion checks.
