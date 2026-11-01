@@ -1,216 +1,81 @@
-const require_rolldown_runtime = require('../../_virtual/rolldown_runtime.js');
-const require_logger_index = require('../../logger/index.js');
-const require_params_types = require('../../params/types.js');
-const require_runtime_manifest = require('../../runtime/manifest.js');
-const require_common_debug = require('../../common/debug.js');
-require('../../params/index.js');
-const require_common_encoding = require('../../common/encoding.js');
-const require_common_onInit = require('../../common/onInit.js');
-const require_common_providers_https = require('../../common/providers/https.js');
-const require_v2_trace = require('../trace.js');
-const require_v2_options = require('../options.js');
-let cors = require("vcors");
-cors = require_rolldown_runtime.__toESM(cors);
+'use strict';
+const cors = require('vcors');
+const common = require('../../common/providers/https.js');
+const {Expression} = require('../../params/types.js');
+const debug = require('../../common/debug.js');
+const {withInit} = require('../../common/onInit.js');
+const {wrapTraceContext} = require('../trace.js');
+const {getGlobalOptions} = require('../options.js');
+const {FunctionDefinition} = require('../../runtime/definition.js');
+const logger = require('../../logger/index.js');
+const decorateInvocation = handler => wrapTraceContext(withInit(handler));
+const resolved = value => value instanceof Expression ? value.value() : value;
 
-//#region src/v2/providers/https.ts
-var https_exports = /* @__PURE__ */ require_rolldown_runtime.__export({
-	HttpsError: () => require_common_providers_https.HttpsError,
-	hasClaim: () => hasClaim,
-	isSignedIn: () => isSignedIn,
-	onCall: () => onCall,
-	onCallGenkit: () => onCallGenkit,
-	onRequest: () => onRequest
-});
-/**
-* @deprecated
-*
-* An auth policy that requires a user to be signed in.
-*/
-const isSignedIn = () => (auth) => !!auth;
-/**
-* @deprecated
-*
-* An auth policy that requires a user to be both signed in and have a specific claim (optionally with a specific value)
-*/
-const hasClaim = (claim, value) => (auth) => {
-	if (!auth) {
-		return false;
-	}
-	if (!(claim in auth.token)) {
-		return false;
-	}
-	return !value || auth.token[claim] === value;
+function withCors(options, next) {
+  return (request, response) => new Promise((resolve, reject) => {
+    let settled = false;
+    const settle = (complete, value) => {
+      if (settled) return;
+      settled = true;
+      response.removeListener?.('finish', finished);
+      complete(value);
+    };
+    const finished = () => settle(resolve);
+    response.on('finish', finished);
+    try {
+      const middleware = cors({origin: common.resolveCorsOrigin(options.cors)});
+      middleware(request, response, error => {
+        if (error) return settle(reject, error);
+        Promise.resolve(next(request, response)).then(value => settle(resolve, value), error => settle(reject, error));
+      });
+    } catch (error) {settle(reject, error);}
+  });
+}
+
+function onRequest(options, handler) {
+  if (arguments.length === 1) [options, handler] = [{}, options];
+  const definition = new FunctionDefinition(options, 'https');
+  let invoke = common.withErrorHandler(handler);
+  if ('cors' in options || debug.isDebugFeatureEnabled('enableCors')) invoke = withCors(options, invoke);
+  return definition.attach(decorateInvocation(invoke), {httpsTrigger: definition.httpTrigger()},
+    () => definition.annotations({httpsTrigger: definition.httpTrigger(true)}));
+}
+
+function onCall(options, handler) {
+  if (arguments.length === 1) [options, handler] = [{}, options];
+  const definition = new FunctionDefinition(options, 'https');
+  const invoke = common.onCallHandler({
+    cors: {origin: 'cors' in options ? options.cors : true, methods: 'POST'},
+    enforceAppCheck: resolved(options.enforceAppCheck ?? getGlobalOptions().enforceAppCheck),
+    consumeAppCheckToken: resolved(options.consumeAppCheckToken),
+    heartbeatSeconds: options.heartbeatSeconds, authPolicy: options.authPolicy,
+  }, (request, response) => handler(request, response), 'gcfv2');
+  const fn = definition.attach(decorateInvocation(invoke), {callableTrigger: {}},
+    () => definition.annotations({httpsTrigger: {allowInsecure: false}}, {'deployment-callable': 'true'}));
+  fn.run = withInit(handler);
+  // Kept as the upstream placeholder rather than claiming a working stream API.
+  fn.stream = () => ({stream: {next: () => Promise.reject('Coming soon')}, output: Promise.reject('Coming soon')});
+  return fn;
+}
+
+function onCallGenkit(options, action) {
+  if (arguments.length === 1) [options, action] = [{}, options];
+  if (!options.secrets?.length) logger.debug(`Genkit function for ${action.__action.name} is not bound to any secret. This may mean that you are not storing API keys as a secret or that you are not binding your secret to this function. See https://firebase.google.com/docs/functions/config-env?gen=2nd#secret_parameters for more information.`);
+  const fn = onCall(options, async (request, response) => {
+    const context = {};
+    for (const key of ['auth', 'app', 'instanceIdToken']) if (Object.hasOwn(request, key)) context[key] = request[key];
+    if (!request.acceptsStreaming) return (await action.run(request.data, {context})).result;
+    const {stream, output} = action.stream(request.data, {context});
+    for await (const chunk of stream) await response.sendChunk(chunk);
+    return output;
+  });
+  fn.__endpoint.callableTrigger.genkitAction = action.__action.name;
+  return fn;
+}
+
+const api = {
+  HttpsError: common.HttpsError, onCall, onRequest, onCallGenkit,
+  isSignedIn: () => auth => !!auth,
+  hasClaim: (claim, value) => auth => !!auth && claim in auth.token && (!value || auth.token[claim] === value),
 };
-function onRequest(optsOrHandler, handler) {
-	let opts;
-	if (arguments.length === 1) {
-		opts = {};
-		handler = optsOrHandler;
-	} else {
-		opts = optsOrHandler;
-	}
-	handler = require_common_providers_https.withErrorHandler(handler);
-	if (require_common_debug.isDebugFeatureEnabled("enableCors") || "cors" in opts) {
-		const userProvidedHandler = handler;
-		handler = (req, res) => {
-			return new Promise((resolve) => {
-				res.on("finish", resolve);
-				const origin = require_common_providers_https.resolveCorsOrigin(opts.cors);
-				const middleware = (0, cors.default)({ origin });
-				middleware(req, res, () => {
-					resolve(userProvidedHandler(req, res));
-				});
-			});
-		};
-	}
-	handler = require_v2_trace.wrapTraceContext(require_common_onInit.withInit(handler));
-	Object.defineProperty(handler, "__trigger", { get: () => {
-		const baseOpts$1 = require_v2_options.optionsToTriggerAnnotations(require_v2_options.getGlobalOptions());
-		const specificOpts$1 = require_v2_options.optionsToTriggerAnnotations(opts, "https");
-		const trigger = {
-			platform: "gcfv2",
-			...baseOpts$1,
-			...specificOpts$1,
-			labels: {
-				...baseOpts$1?.labels,
-				...specificOpts$1?.labels
-			},
-			httpsTrigger: { allowInsecure: false }
-		};
-		require_common_encoding.convertIfPresent(trigger.httpsTrigger, require_v2_options.getGlobalOptions(), "invoker", "invoker", require_common_encoding.convertInvoker);
-		require_common_encoding.convertIfPresent(trigger.httpsTrigger, opts, "invoker", "invoker", require_common_encoding.convertInvoker);
-		return trigger;
-	} });
-	const globalOpts = require_v2_options.getGlobalOptions();
-	const baseOpts = require_v2_options.optionsToEndpoint(globalOpts);
-	const specificOpts = require_v2_options.optionsToEndpoint(opts, "https");
-	const endpoint = {
-		...require_runtime_manifest.initV2Endpoint(globalOpts, opts),
-		platform: "gcfv2",
-		...baseOpts,
-		...specificOpts,
-		labels: {
-			...baseOpts?.labels,
-			...specificOpts?.labels
-		},
-		httpsTrigger: {}
-	};
-	require_common_encoding.convertIfPresent(endpoint.httpsTrigger, globalOpts, "invoker", "invoker", require_common_encoding.convertInvoker);
-	require_common_encoding.convertIfPresent(endpoint.httpsTrigger, opts, "invoker", "invoker", require_common_encoding.convertInvoker);
-	handler.__endpoint = endpoint;
-	return handler;
-}
-function onCall(optsOrHandler, handler) {
-	let opts;
-	if (arguments.length === 1) {
-		opts = {};
-		handler = optsOrHandler;
-	} else {
-		opts = optsOrHandler;
-	}
-	let cors$2;
-	if ("cors" in opts) {
-		cors$2 = opts.cors;
-	} else {
-		cors$2 = true;
-	}
-	const fixedLen = (req, resp) => handler(req, resp);
-	let enforceAppCheck = opts.enforceAppCheck ?? require_v2_options.getGlobalOptions().enforceAppCheck;
-	if (enforceAppCheck instanceof require_params_types.Expression) {
-		enforceAppCheck = enforceAppCheck.value();
-	}
-	let consumeAppCheckToken = opts.consumeAppCheckToken;
-	if (consumeAppCheckToken instanceof require_params_types.Expression) {
-		consumeAppCheckToken = consumeAppCheckToken.value();
-	}
-	let func = require_common_providers_https.onCallHandler({
-		cors: {
-			origin: cors$2,
-			methods: "POST"
-		},
-		enforceAppCheck,
-		consumeAppCheckToken,
-		heartbeatSeconds: opts.heartbeatSeconds,
-		authPolicy: opts.authPolicy
-	}, fixedLen, "gcfv2");
-	func = require_v2_trace.wrapTraceContext(require_common_onInit.withInit(func));
-	Object.defineProperty(func, "__trigger", { get: () => {
-		const baseOpts$1 = require_v2_options.optionsToTriggerAnnotations(require_v2_options.getGlobalOptions());
-		const specificOpts$1 = require_v2_options.optionsToTriggerAnnotations(opts, "https");
-		return {
-			platform: "gcfv2",
-			...baseOpts$1,
-			...specificOpts$1,
-			labels: {
-				...baseOpts$1?.labels,
-				...specificOpts$1?.labels,
-				"deployment-callable": "true"
-			},
-			httpsTrigger: { allowInsecure: false }
-		};
-	} });
-	const baseOpts = require_v2_options.optionsToEndpoint(require_v2_options.getGlobalOptions());
-	const specificOpts = require_v2_options.optionsToEndpoint(opts, "https");
-	func.__endpoint = {
-		...require_runtime_manifest.initV2Endpoint(require_v2_options.getGlobalOptions(), opts),
-		platform: "gcfv2",
-		...baseOpts,
-		...specificOpts,
-		labels: {
-			...baseOpts?.labels,
-			...specificOpts?.labels
-		},
-		callableTrigger: {}
-	};
-	func.run = require_common_onInit.withInit(handler);
-	func.stream = () => {
-		return {
-			stream: { next() {
-				return Promise.reject("Coming soon");
-			} },
-			output: Promise.reject("Coming soon")
-		};
-	};
-	return func;
-}
-function onCallGenkit(optsOrAction, action) {
-	let opts;
-	if (arguments.length === 2) {
-		opts = optsOrAction;
-	} else {
-		opts = {};
-		action = optsOrAction;
-	}
-	if (!opts.secrets?.length) {
-		require_logger_index.debug(`Genkit function for ${action.__action.name} is not bound to any secret. This may mean that you are not storing API keys as a secret or that you are not binding your secret to this function. See https://firebase.google.com/docs/functions/config-env?gen=2nd#secret_parameters for more information.`);
-	}
-	const cloudFunction = onCall(opts, async (req, res) => {
-		const context = {};
-		require_common_encoding.copyIfPresent(context, req, "auth", "app", "instanceIdToken");
-		if (!req.acceptsStreaming) {
-			const { result } = await action.run(req.data, { context });
-			return result;
-		}
-		const { stream, output } = action.stream(req.data, { context });
-		for await (const chunk of stream) {
-			await res.sendChunk(chunk);
-		}
-		return output;
-	});
-	cloudFunction.__endpoint.callableTrigger.genkitAction = action.__action.name;
-	return cloudFunction;
-}
-
-//#endregion
-exports.HttpsError = require_common_providers_https.HttpsError;
-exports.hasClaim = hasClaim;
-Object.defineProperty(exports, 'https_exports', {
-  enumerable: true,
-  get: function () {
-    return https_exports;
-  }
-});
-exports.isSignedIn = isSignedIn;
-exports.onCall = onCall;
-exports.onCallGenkit = onCallGenkit;
-exports.onRequest = onRequest;
+Object.assign(exports, api, {https_exports: api});

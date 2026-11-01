@@ -1,229 +1,94 @@
-const require_common_options = require('../common/options.js');
-const require_logger_index = require('../logger/index.js');
-const require_params_types = require('../params/types.js');
-const require_params_index = require('../params/index.js');
-const require_common_encoding = require('../common/encoding.js');
-const require_common_utilities_assertions = require('../common/utilities/assertions.js');
-const require_v2_security = require('./security.js');
+'use strict';
+const {RESET_VALUE, ResetValue} = require('../common/options.js');
+const {Expression} = require('../params/types.js');
+const params = require('../params/index.js');
+const logger = require('../logger/index.js');
+const {serviceAccountFromShorthand} = require('../common/encoding.js');
+const {requiresRole} = require('./security.js');
 
-//#region src/v2/options.ts
-/**
-* Maximum timeout in seconds for event-handling functions (e.g. Firestore,
-* Realtime Database, Pub/Sub, Storage, Eventarc, alerts).
-* See https://firebase.google.com/docs/functions/manage-functions
-* @internal
-*/
-const MAX_EVENT_TIMEOUT_SECONDS = 540;
-/**
-* Maximum timeout in seconds for HTTPS and callable functions.
-* @internal
-*/
-const MAX_HTTPS_TIMEOUT_SECONDS = 3600;
-/**
-* Maximum timeout in seconds for scheduled and Task Queue functions.
-* @internal
-*/
-const MAX_SCHEDULED_OR_TASK_TIMEOUT_SECONDS = 1800;
-/**
-* Maximum timeout in seconds for Identity blocking functions.
-* @internal
-*/
-const MAX_IDENTITY_TIMEOUT_SECONDS = 7;
-const MemoryOptionToMB = {
-	"128MiB": 128,
-	"256MiB": 256,
-	"512MiB": 512,
-	"1GiB": 1024,
-	"2GiB": 2048,
-	"4GiB": 4096,
-	"8GiB": 8192,
-	"16GiB": 16384,
-	"32GiB": 32768
+const limits = {
+  event: [540, 'event-handling'], https: [3600, 'HTTPS and callable'],
+  scheduledOrTask: [1800, 'scheduled or task queue'], identity: [7, 'blocking'],
 };
-const GLOBAL_OPTIONS_SYMBOL = Symbol.for("firebase-functions:v2:globalOptions");
-const globalOptionSymbols = globalThis;
-if (!globalOptionSymbols[GLOBAL_OPTIONS_SYMBOL]) {
-	globalOptionSymbols[GLOBAL_OPTIONS_SYMBOL] = {};
-}
-/**
-* Sets default options for all functions written using the 2nd gen SDK.
-* @param options Options to set as default
-*/
+const memory = Object.freeze(Object.fromEntries([
+  ['128MiB', 128], ['256MiB', 256], ['512MiB', 512],
+  ...[1, 2, 4, 8, 16, 32].map(gib => [`${gib}GiB`, gib * 1024]),
+]));
+const state = globalThis[Symbol.for('firebase-functions:v2:globalOptions')] ??= {};
+const endpointFields = ['omit', 'concurrency', 'minInstances', 'maxInstances', 'ingressSettings', 'labels', 'timeoutSeconds', 'cpu'];
+const annotationFields = ['concurrency', 'minInstances', 'maxInstances', 'ingressSettings', 'labels', 'vpcConnector', 'secrets'];
+const list = value => typeof value === 'string' ? [value] : value;
+const reset = value => value === null || value instanceof ResetValue;
+const getGlobalOptions = () => state.value || {};
+
 function setGlobalOptions(options) {
-	if (globalOptionSymbols[GLOBAL_OPTIONS_SYMBOL].value) {
-		require_logger_index.warn("Calling setGlobalOptions twice leads to undefined behavior");
-	}
-	globalOptionSymbols[GLOBAL_OPTIONS_SYMBOL].value = options;
+  if (state.value) logger.warn('Calling setGlobalOptions twice leads to undefined behavior');
+  state.value = options;
 }
-/**
-* Get the currently set default options.
-* Used only for trigger generation.
-* @internal
-*/
-function getGlobalOptions() {
-	return globalOptionSymbols[GLOBAL_OPTIONS_SYMBOL].value || {};
+function assertTimeoutSecondsValid(options, kind) {
+  const value = options.timeoutSeconds === undefined ? getGlobalOptions().timeoutSeconds : options.timeoutSeconds;
+  if (value === undefined || value instanceof Expression || value instanceof ResetValue) return;
+  if (typeof value !== 'number') throw new Error(`timeoutSeconds must be a number, Expression, or RESET_VALUE. Got ${typeof value}.`);
+  if (!Number.isFinite(value)) throw new Error(`timeoutSeconds must be a finite number. Got ${value}.`);
+  if (!Object.hasOwn(limits, kind)) throw new Error(`Unknown function kind: ${kind}`);
+  const [max, label] = limits[kind];
+  if (value < 0 || value > max) throw new Error(`timeoutSeconds must be between 0 and ${max} for ${label} functions. Got ${value}.`);
 }
-/**
-* Reset global options for testing.
-* @internal
-*/
-function clearGlobalOptions() {
-	delete globalOptionSymbols[GLOBAL_OPTIONS_SYMBOL].value;
+function project(options, names, transforms) {
+  const result = {};
+  for (const name of names) if (Object.hasOwn(options, name)) result[name] = options[name];
+  for (const [input, output, convert] of transforms) {
+    if (Object.hasOwn(options, input)) result[output] = convert ? convert(options[input]) : options[input];
+  }
+  return result;
 }
-/**
-* Validate that `timeoutSeconds` (resolved with global option fallback) is
-* finite and within the accepted range for the given function kind. Throws a
-* plain `Error` matching the v1 `assertRuntimeOptionsValid` shape so the
-* problem surfaces at function-definition time instead of at deploy time.
-* `Expression`, `RESET_VALUE`, and `undefined` are skipped. Literal numbers
-* are range checked, and other types are rejected.
-* @internal
-*/
-function assertTimeoutSecondsValid(opts, kind) {
-	const timeoutSeconds = opts.timeoutSeconds === undefined ? getGlobalOptions().timeoutSeconds : opts.timeoutSeconds;
-	if (typeof timeoutSeconds !== "number") {
-		if (timeoutSeconds === undefined || timeoutSeconds instanceof require_params_types.Expression || timeoutSeconds instanceof require_common_options.ResetValue) {
-			return;
-		}
-		throw new Error(`timeoutSeconds must be a number, Expression, or RESET_VALUE. Got ${typeof timeoutSeconds}.`);
-	}
-	if (!Number.isFinite(timeoutSeconds)) {
-		throw new Error(`timeoutSeconds must be a finite number. Got ${timeoutSeconds}.`);
-	}
-	let max;
-	let label;
-	switch (kind) {
-		case "event":
-			max = MAX_EVENT_TIMEOUT_SECONDS;
-			label = "event-handling";
-			break;
-		case "https":
-			max = MAX_HTTPS_TIMEOUT_SECONDS;
-			label = "HTTPS and callable";
-			break;
-		case "scheduledOrTask":
-			max = MAX_SCHEDULED_OR_TASK_TIMEOUT_SECONDS;
-			label = "scheduled or task queue";
-			break;
-		case "identity":
-			max = MAX_IDENTITY_TIMEOUT_SECONDS;
-			label = "blocking";
-			break;
-		default: require_common_utilities_assertions.assertNever(kind);
-	}
-	if (timeoutSeconds < 0 || timeoutSeconds > max) {
-		throw new Error(`timeoutSeconds must be between 0 and ${max} for ${label} functions. Got ${timeoutSeconds}.`);
-	}
-}
-/**
-* Apply GlobalOptions to trigger definitions.
-* @internal
-*/
-function optionsToTriggerAnnotations(opts, kind) {
-	if (kind !== undefined) {
-		assertTimeoutSecondsValid(opts, kind);
-	}
-	const annotation = {};
-	require_common_encoding.copyIfPresent(annotation, opts, "concurrency", "minInstances", "maxInstances", "ingressSettings", "labels", "vpcConnector", "secrets");
-	const vpcEgress = opts.vpcEgress ?? opts.vpcConnectorEgressSettings;
-	if (vpcEgress !== undefined) {
-		if (vpcEgress === null || vpcEgress instanceof require_common_options.ResetValue) {
-			annotation.vpcConnectorEgressSettings = null;
-		} else {
-			annotation.vpcConnectorEgressSettings = vpcEgress;
-		}
-	}
-	require_common_encoding.convertIfPresent(annotation, opts, "availableMemoryMb", "memory", (mem) => {
-		return MemoryOptionToMB[mem];
-	});
-	require_common_encoding.convertIfPresent(annotation, opts, "regions", "region", (region) => {
-		if (typeof region === "string") {
-			return [region];
-		}
-		return region;
-	});
-	require_common_encoding.convertIfPresent(annotation, opts, "serviceAccountEmail", "serviceAccount", require_common_encoding.serviceAccountFromShorthand);
-	require_common_encoding.convertIfPresent(annotation, opts, "timeout", "timeoutSeconds", require_common_encoding.durationFromSeconds);
-	require_common_encoding.convertIfPresent(annotation, opts, "failurePolicy", "retry", (retry) => {
-		return retry ? { retry: true } : null;
-	});
-	return annotation;
-}
-/**
-* Apply GlobalOptions to endpoint manifest.
-* @internal
-*/
-function optionsToEndpoint(opts, kind) {
-	if (kind !== undefined) {
-		assertTimeoutSecondsValid(opts, kind);
-	}
-	const endpoint = {};
-	require_common_encoding.copyIfPresent(endpoint, opts, "omit", "concurrency", "minInstances", "maxInstances", "ingressSettings", "labels", "timeoutSeconds", "cpu");
-	require_common_encoding.convertIfPresent(endpoint, opts, "serviceAccountEmail", "serviceAccount");
-	if (opts.vpcEgress && opts.vpcConnectorEgressSettings) {
-		require_logger_index.warn("vpcEgress and vpcConnectorEgressSettings are both set. Using vpcEgress");
-	}
-	const vpcEgress = opts.vpcEgress ?? opts.vpcConnectorEgressSettings;
-	const connector = opts.vpcConnector;
-	const networkInterface = opts.networkInterface;
-	if (connector !== undefined || vpcEgress !== undefined || networkInterface !== undefined) {
-		const resetConnector = connector === null || connector instanceof require_common_options.ResetValue;
-		const hasConnector = !!connector;
-		const resetNetwork = networkInterface === null || networkInterface instanceof require_common_options.ResetValue;
-		const hasNetwork = !!networkInterface && !resetNetwork;
-		if (hasNetwork) {
-			if (!networkInterface.network && !networkInterface.subnetwork) {
-				throw new Error("At least one of network or subnetwork must be specified in networkInterface.");
-			}
-		}
-		if (hasNetwork && hasConnector) {
-			throw new Error("Cannot set both vpcConnector and networkInterface");
-		} else if (resetConnector && !hasNetwork || resetNetwork && !hasConnector) {
-			endpoint.vpc = require_common_options.RESET_VALUE;
-		} else {
-			const vpc = {};
-			require_common_encoding.convertIfPresent(vpc, opts, "connector", "vpcConnector");
-			if (vpcEgress !== undefined) {
-				vpc.egressSettings = vpcEgress;
-			}
-			require_common_encoding.convertIfPresent(vpc, opts, "networkInterfaces", "networkInterface", (a) => [a]);
-			endpoint.vpc = vpc;
-		}
-	}
-	require_common_encoding.convertIfPresent(endpoint, opts, "availableMemoryMb", "memory", (mem) => {
-		return typeof mem === "object" ? mem : MemoryOptionToMB[mem];
-	});
-	require_common_encoding.convertIfPresent(endpoint, opts, "region", "region", (region) => {
-		if (typeof region === "string") {
-			return [region];
-		}
-		return region;
-	});
-	require_common_encoding.convertIfPresent(endpoint, opts, "secretEnvironmentVariables", "secrets", (secrets) => secrets.map((secret) => ({ key: typeof secret === "string" ? secret : secret.name })));
-	return endpoint;
-}
-/**
-* @hidden
-* @alpha
-*/
-function __getSpec() {
-	return {
-		globalOptions: getGlobalOptions(),
-		params: require_params_index.declaredParams.map((p) => p.toSpec())
-	};
+function network(options) {
+  const {vpcConnector: connector, networkInterface: nic} = options;
+  if (options.vpcEgress && options.vpcConnectorEgressSettings) logger.warn('vpcEgress and vpcConnectorEgressSettings are both set. Using vpcEgress');
+  const egress = options.vpcEgress ?? options.vpcConnectorEgressSettings;
+  if (connector === undefined && nic === undefined && egress === undefined) return;
+  const liveNetwork = !!nic && !reset(nic);
+  if (liveNetwork && !nic.network && !nic.subnetwork) throw new Error('At least one of network or subnetwork must be specified in networkInterface.');
+  if (liveNetwork && connector) throw new Error('Cannot set both vpcConnector and networkInterface');
+  if (reset(connector) && !liveNetwork || reset(nic) && !connector) return RESET_VALUE;
+  const result = project(options, [], [['vpcConnector', 'connector'], ['networkInterface', 'networkInterfaces', value => [value]]]);
+  if (egress !== undefined) result.egressSettings = egress;
+  return result;
 }
 
-//#endregion
-exports.MAX_EVENT_TIMEOUT_SECONDS = MAX_EVENT_TIMEOUT_SECONDS;
-exports.MAX_HTTPS_TIMEOUT_SECONDS = MAX_HTTPS_TIMEOUT_SECONDS;
-exports.MAX_IDENTITY_TIMEOUT_SECONDS = MAX_IDENTITY_TIMEOUT_SECONDS;
-exports.MAX_SCHEDULED_OR_TASK_TIMEOUT_SECONDS = MAX_SCHEDULED_OR_TASK_TIMEOUT_SECONDS;
-exports.RESET_VALUE = require_common_options.RESET_VALUE;
-exports.__getSpec = __getSpec;
-exports.assertTimeoutSecondsValid = assertTimeoutSecondsValid;
-exports.clearGlobalOptions = clearGlobalOptions;
-exports.getGlobalOptions = getGlobalOptions;
-exports.optionsToEndpoint = optionsToEndpoint;
-exports.optionsToTriggerAnnotations = optionsToTriggerAnnotations;
-exports.requiresRole = require_v2_security.requiresRole;
-exports.setGlobalOptions = setGlobalOptions;
+const endpointTransforms = [
+  ['serviceAccount', 'serviceAccountEmail'],
+  ['memory', 'availableMemoryMb', value => typeof value === 'object' ? value : memory[value]],
+  ['region', 'region', list],
+  ['secrets', 'secretEnvironmentVariables', values => values.map(value => ({key: typeof value === 'string' ? value : value.name}))],
+];
+const annotationTransforms = [
+  ['memory', 'availableMemoryMb', value => memory[value]],
+  ['region', 'regions', list],
+  ['serviceAccount', 'serviceAccountEmail', serviceAccountFromShorthand],
+  ['timeoutSeconds', 'timeout', value => `${value}s`],
+  ['retry', 'failurePolicy', value => value ? {retry: true} : null],
+];
+function optionsToEndpoint(options, kind) {
+  if (kind !== undefined) assertTimeoutSecondsValid(options, kind);
+  const result = project(options, endpointFields, endpointTransforms);
+  const vpc = network(options);
+  if (vpc !== undefined) result.vpc = vpc;
+  return result;
+}
+function optionsToTriggerAnnotations(options, kind) {
+  if (kind !== undefined) assertTimeoutSecondsValid(options, kind);
+  const result = project(options, annotationFields, annotationTransforms);
+  const egress = options.vpcEgress ?? options.vpcConnectorEgressSettings;
+  if (egress !== undefined) result.vpcConnectorEgressSettings = reset(egress) ? null : egress;
+  return result;
+}
+
+Object.assign(exports, {
+  MAX_EVENT_TIMEOUT_SECONDS: limits.event[0], MAX_HTTPS_TIMEOUT_SECONDS: limits.https[0],
+  MAX_SCHEDULED_OR_TASK_TIMEOUT_SECONDS: limits.scheduledOrTask[0], MAX_IDENTITY_TIMEOUT_SECONDS: limits.identity[0],
+  RESET_VALUE, requiresRole, getGlobalOptions, setGlobalOptions,
+  clearGlobalOptions: () => {delete state.value;},
+  assertTimeoutSecondsValid, optionsToEndpoint, optionsToTriggerAnnotations,
+  __getSpec: () => ({globalOptions: getGlobalOptions(), params: params.declaredParams.map(parameter => parameter.toSpec())}),
+});

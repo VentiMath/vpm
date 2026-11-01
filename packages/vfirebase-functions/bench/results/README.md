@@ -23,29 +23,35 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T08:34:49.545Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:24:23.486Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| logger / formatted status | 487 | 347 | -28.6% | -15.6% | -30.3% | 1.2% | lower time in every pair, beyond control spread |
-| logger / structured request | 594 | 633 | 6.5% | 10% | -0.5% | 5.1% | unestablished at this precision |
-| logger / nested data | 6515 | 4305 | -33.8% | -27.8% | -35.1% | 5% | lower time in every pair, beyond control spread |
-| initializer / already initialized handler | 51 | 57 | 10.8% | 12% | 10.8% | 2.6% | higher time in every pair, beyond control spread |
+| logger / formatted status | 475 | 341 | -27.9% | -26.3% | -27.9% | 1.3% | lower time in every pair, beyond control spread |
+| logger / structured request | 562 | 585 | 4.8% | 7% | -23.3% | 5.6% | unestablished at this precision |
+| logger / nested data | 6453 | 4167 | -35.4% | -34.3% | -36.4% | 2.3% | lower time in every pair, beyond control spread |
+| initializer / already initialized handler | 49 | 55 | 14.1% | 16.4% | 10% | 1.7% | higher time in every pair, beyond control spread |
+| declaration / HTTP endpoint | 932 | 788 | -16.1% | -13.7% | -17.6% | 2.8% | lower time in every pair, beyond control spread |
+| declaration / serialize 64 fresh endpoints | 46880 | 52788 | 11.8% | 11.7% | 11.8% | 2.5% | higher time in every pair, beyond control spread |
+| request / initialized HTTP handler | 224 | 223 | -0.8% | 6% | -6.2% | 3.7% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T08:35:05.561Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T09:24:51.832Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| logger / formatted status | 581 | 566 | -4% | 0.3% | -4% | 1.4% | unestablished at this precision |
-| logger / structured request | 249 | 261 | 5% | 3.7% | 5% | 6% | unestablished at this precision |
-| logger / nested data | 7216 | 3838 | -46.3% | -58.4% | -45.9% | 1.5% | lower time in every pair, beyond control spread |
-| initializer / already initialized handler | 66 | 72 | 9.9% | 9.9% | 9.6% | 8.7% | unestablished at this precision |
+| logger / formatted status | 569 | 544 | -5.1% | -5.2% | -4.9% | 22.3% | unestablished at this precision |
+| logger / structured request | 239 | 241 | 0.5% | 2.4% | 0.5% | 6.1% | unestablished at this precision |
+| logger / nested data | 7055 | 3648 | -48.6% | -48.7% | -47.5% | 6.2% | lower time in every pair, beyond control spread |
+| initializer / already initialized handler | 61 | 67 | 10.3% | 8.1% | 12.4% | 7.3% | unestablished at this precision |
+| declaration / HTTP endpoint | 388 | 468 | 19.7% | 19.7% | 21.3% | 6.7% | higher time in every pair, beyond control spread |
+| declaration / serialize 64 fresh endpoints | 37514 | 59101 | 56.9% | 57.1% | 56.9% | 3.1% | higher time in every pair, beyond control spread |
+| request / initialized HTTP handler | 251 | 270 | 5.7% | 5.5% | 7.6% | 5.1% | unestablished at this precision |
 
 ## Reproduce
 
