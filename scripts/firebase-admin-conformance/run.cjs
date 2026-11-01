@@ -55,6 +55,14 @@ try {
     // The tests stub members of namespace imports; keep CommonJS namespaces
     // mutable as their original compiler emitted them.
     let text = fs.readFileSync(filename, 'utf8').replace(/__importStar\((require\([^\n]+?\))\)/g, '$1');
+    if (file === 'unit/remote-config/condition-evaluator.spec.js') {
+      // Upstream samples random UUIDs against a three-standard-deviation
+      // bound, so a correct control occasionally fails. Both implementations
+      // now receive the same 100,000 distinct IDs. Only this test input changes;
+      // hashing, sample sizes, assertions and tolerances remain untouched.
+      assert.equal(text.split('crypto.randomUUID()').length - 1, 1);
+      text = text.replace('crypto.randomUUID()', "'vpm-percent-condition-' + i");
+    }
     for (const [from, to] of Object.entries(redirects)) text = text.replaceAll(`require("${from}")`, `require(${JSON.stringify(to)})`);
     fs.writeFileSync(filename, text);
   }
@@ -101,8 +109,8 @@ try {
   const unexpected = stats.failures.filter(failure => !expected.get(failure.fullTitle)?.test(failure.err.message || ''));
   for (const failure of stats.failures) console.log(expected.has(failure.fullTitle) ? 'EXPECTED' : 'FAIL', failure.fullTitle, '\n ', (failure.err.message || '').split('\n')[0]);
   console.log(`${upstream ? 'Upstream' : 'VPM'} Firebase Admin suite: ${stats.stats.passes} passed, ${stats.stats.failures} failed (${stats.stats.failures - unexpected.length} expected), ${stats.stats.pending} pending of ${stats.stats.tests}.`);
+  assert.equal(unexpected.length, 0);
   if (!only) {
-    assert.equal(unexpected.length, 0);
     assert.equal(stats.stats.failures, [...expected.keys()].filter(title => !(title in unavailable) || !upstream).length, 'an expected failure now passes; update the expectation');
     assert.equal(schemeFailures, upstream ? 0 : SCHEME_TESTS, ':scheme assertions');
     assert.equal(stats.stats.tests, upstream ? 6146 : 6146 - 84);
