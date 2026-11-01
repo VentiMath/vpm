@@ -1,0 +1,1320 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-01T10:28:42.031Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/firebase-admin-conformance/node_modules/firebase-admin/lib": "95fca21050c595c5a7de65897066e96a751e2458431240303cf1463f07bb4eb9",
+    "../../scripts/firebase-admin-conformance/node_modules/jsonwebtoken/index.js": "aae460b3f08f3f8b1cb229ee226fb084540fec04b6ddc8fc01463068ebf4b7de",
+    "../../scripts/firebase-admin-conformance/node_modules/jsonwebtoken/lib": "2f94df5120f9fa209047d1c31b2576605e9051c48be6860180d54732a81edc7d",
+    "../../scripts/firebase-admin-conformance/node_modules/jwa/index.js": "44700c7211635c48bafc0048c080d5c3d44eb3186a57db987e5f00370b3f68b4",
+    "../../scripts/firebase-admin-conformance/node_modules/jws/index.js": "52b3ac7e9675ed8ef5a1ca48679f0d0da7e1f4639e297a503c9b541846704c52",
+    "../../scripts/firebase-admin-conformance/node_modules/jws/lib": "f8b590a061a71e3346793787e3de10e2a8bf6d56e3065c135fe37eeec26df738",
+    "../../scripts/firebase-admin-conformance/package-lock.json": "1b27b6f0e873a29b247c90dd5832c22de55276d178c86fffb896aeecb66d458b",
+    "../vjsonwebtoken/index.js": "a2159e877e2aa8fcce03f82961d430b1c699e40308a57915d7bf89ff4743b677",
+    "../vjsonwebtoken/lib": "7c252e9731566eec86ec0be295d96aa99134ab10c07b719f134d6c0802964497",
+    "../vjwa/index.js": "0a5e022a0b8d0cbd23e0b1498298a5343686108b0c37ec231ceee046ee29ec06",
+    "../vjws/index.js": "e0af233255cd436ad872535635cb55767f0773e812759f0f8813edd6ab028e33",
+    "../vjws/lib": "12662798e978591708f4ec1656f8078422761153a9064db0f37fce958945b513",
+    "bench/compare.cjs": "990a9e6808d5ec5e6f3f45a8f8ae53912509e4cab76cf8b6f5c679166ebb391d",
+    "bench/token-fixture.json": "5141e3c137565adbc32b56ef0e3d1dae1d55d2797931d89fc221acee036b9ef3",
+    "lib": "752e7c32e1cfe3de5123cbdd4c8a6b1a4c12ef533b8f63f96cd577f7e03a3274",
+    "package.json": "ac40978ff25b8f69b1913c01bd29fd8d1a2e723381e02ec1ff36f4bf078744d6"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 81941,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 391,
+            "samples": [
+              23648.65728900254,
+              28659.419437340115,
+              22978.36828644495,
+              22273.976982097258,
+              24431.05115089519,
+              21845.69565217396,
+              23808.716112531856,
+              23672.314578005124,
+              26846.759590792775,
+              23084.823529411737,
+              23639.813299232806,
+              26675.406649616427
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 4610,
+            "samples": [
+              2568.121691973959,
+              2363.286334056384,
+              2354.727114967454,
+              2389.8861171366625,
+              2240.2297180043333,
+              1959.6529284164842,
+              2428.8865509761463,
+              2371.5835140997815,
+              2392.335574837319,
+              2369.5952277657143,
+              2368.78177874186,
+              2618.7906724511968
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 7860,
+            "samples": [
+              638.6078880407107,
+              635.2681933842216,
+              781.0273536895799,
+              559.891857506349,
+              598.6376590330916,
+              619.9003816793945,
+              572.9961832061173,
+              586.609414758262,
+              585.4272264631018,
+              714.1167938931214,
+              623.3301526717655,
+              675.1908396946586
+            ]
+          }
+        ],
+        "checksum": 290752
+      },
+      "vpm": {
+        "pid": 81960,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 391,
+            "samples": [
+              18445.971867007695,
+              16900.790281329893,
+              18056.265984654736,
+              18736.465473145672,
+              21093.5626598466,
+              17231.882352941295,
+              18928.81329923271,
+              16951.83375959084,
+              15918.478260869604,
+              17514.598465473147,
+              17891.199488491147,
+              17833.867007672543
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 4610,
+            "samples": [
+              1715.898481561828,
+              1417.1004338394755,
+              1550.1355748373066,
+              1728.1813449023794,
+              1590.1663774403605,
+              2294.8932754880793,
+              1518.700216919744,
+              1568.0947939262278,
+              1777.2143167028148,
+              1449.9728850325478,
+              1725.8859002169133,
+              1554.4288503253872
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 7860,
+            "samples": [
+              750.0954198473308,
+              608.7416030534378,
+              628.6366412213655,
+              627.9367684478455,
+              645.5788804071256,
+              601.4949109414778,
+              559.0543256997504,
+              579.309796437654,
+              563.7881679389317,
+              560.3477099236724,
+              605.2534351145047,
+              623.0120865139977
+            ]
+          }
+        ],
+        "checksum": 44288
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 81996,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 604,
+            "samples": [
+              18508.278145695414,
+              16331.814569536433,
+              17670.460264900652,
+              19928.048013245032,
+              17318.915562913895,
+              17534.491721854265,
+              18425.980132450273,
+              19007.5198675496,
+              17364.10099337745,
+              17513.10761589406,
+              17360.445364238385,
+              18684.188741721886
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 6781,
+            "samples": [
+              1775.7889691785972,
+              1486.94263382983,
+              1625.5714496387,
+              1606.541660522046,
+              1577.9445509511952,
+              1836.3257631617792,
+              1615.7155286830925,
+              1634.9604778056216,
+              1637.9713906503446,
+              1749.0598731750445,
+              1465.080224155729,
+              1586.639138770095
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 21550,
+            "samples": [
+              609.9303944315548,
+              557.5908584686766,
+              541.8213457076611,
+              570.3480278422298,
+              562.3143851508132,
+              572.3878422273795,
+              553.4706264501144,
+              555.0850580046407,
+              595.2745707656616,
+              575.1140603248289,
+              555.7385614849152,
+              564.3561484918798
+            ]
+          }
+        ],
+        "checksum": 263168
+      },
+      "upstream": {
+        "pid": 82001,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 604,
+            "samples": [
+              26148.455298013196,
+              23364.721854304677,
+              26319.811258278096,
+              24161.077814569573,
+              23767.314569536422,
+              25724.819536423885,
+              23159.35430463575,
+              26310.706953642453,
+              25337.74834437082,
+              27638.382450331108,
+              23012.210264900696,
+              23099.682119205274
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 6781,
+            "samples": [
+              2494.4698422061756,
+              2473.0927591800605,
+              2624.293319569372,
+              2487.6002064592276,
+              2440.1452588113775,
+              2258.325910632653,
+              2627.2182568942767,
+              2354.089957233444,
+              2514.9682937619946,
+              2755.6838224450644,
+              2429.613331367048,
+              2493.824657130214
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 21550,
+            "samples": [
+              596.2219489559147,
+              864.288491879349,
+              1887.6547099767913,
+              3285.910672853828,
+              1722.1055684454736,
+              593.1980046403758,
+              756.212296983754,
+              670.0116009280755,
+              574.3039443155466,
+              552.8557772621859,
+              600.1895127610202,
+              576.5564733178666
+            ]
+          }
+        ],
+        "checksum": 27648
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 82015,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 404,
+            "samples": [
+              32907.07673267317,
+              24182.24009900995,
+              25885.41831683174,
+              25287.643564356422,
+              28847.566831683227,
+              27091.688118811882,
+              22900.579207920728,
+              27029.084158415753,
+              22551.051980198088,
+              23590.965346534544,
+              22898.41089108903,
+              25582.40346534649
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 4398,
+            "samples": [
+              2597.8190086402906,
+              2876.819008640287,
+              2382.673942701237,
+              2595.933606184633,
+              2379.2917235106793,
+              2348.122328331061,
+              2498.607321509779,
+              2900.4852205547804,
+              2454.6668940427403,
+              2281.595725329689,
+              2434.4779445202266,
+              2511.9279217826293
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 20237,
+            "samples": [
+              607.5526016702064,
+              608.5243860255965,
+              611.0116123931421,
+              610.2333349804809,
+              598.7176953105716,
+              542.4881652418846,
+              548.0205564065809,
+              633.6948658397915,
+              606.926668972674,
+              609.6156544942462,
+              594.9787023768384,
+              596.8687552502857
+            ]
+          }
+        ],
+        "checksum": 329664
+      },
+      "vpm": {
+        "pid": 82022,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 404,
+            "samples": [
+              16426.670792079243,
+              17867.470297029697,
+              17862.4183168317,
+              19067.655940594024,
+              15758.35396039605,
+              16771.762376237544,
+              15918.212871287069,
+              15642.945544554454,
+              17785.78712871297,
+              18926.566831683234,
+              18816.108910891024,
+              16591.06930693066
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 4398,
+            "samples": [
+              1565.7874033651742,
+              1348.7664847658004,
+              1764.8742610277488,
+              1446.3392451114119,
+              1904.7105502500988,
+              1517.4035925420646,
+              1705.6805366075448,
+              1599.6191450659376,
+              1439.52751250569,
+              1767.0816280127526,
+              1413.7867212369347,
+              1860.7605729877232
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 20237,
+            "samples": [
+              589.7468992439591,
+              635.6817215990502,
+              641.9718337698326,
+              571.576814745269,
+              586.5123289025036,
+              559.9438157829729,
+              537.2770173444692,
+              560.73652221179,
+              561.5950980876617,
+              546.6245490932462,
+              606.9390225824012,
+              588.5980629539969
+            ]
+          }
+        ],
+        "checksum": 31616
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 82032,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 592,
+            "samples": [
+              19137.24662162167,
+              17673.353040540544,
+              17963.613175675662,
+              18204.956081081076,
+              18698.47972972974,
+              17744.369932432503,
+              17466.49662162164,
+              16900.40878378379,
+              18668.847972972995,
+              17425.395270270357,
+              17394.918918918946,
+              17795.467905405418
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 6889,
+            "samples": [
+              1628.6773116562665,
+              1618.2682537378373,
+              1562.5453621715903,
+              1552.9043402525724,
+              1695.396138771952,
+              1717.2425606038528,
+              1524.8825664102162,
+              1650.0095804906293,
+              1587.3433009144997,
+              1492.7118594861317,
+              1656.4391058208716,
+              1861.9840325156106
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 20173,
+            "samples": [
+              624.9793783770386,
+              574.6294552124119,
+              577.2175184652776,
+              602.9222227730115,
+              602.3149754622498,
+              632.9644078719062,
+              590.9383829871579,
+              618.1447479304016,
+              564.2009121102457,
+              550.1763743617644,
+              551.6676746145827,
+              560.8589699102765
+            ]
+          }
+        ],
+        "checksum": 302208
+      },
+      "upstream": {
+        "pid": 82037,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 592,
+            "samples": [
+              22123.66385135129,
+              21589.03378378379,
+              23717.060810810828,
+              23617.258445945885,
+              26752.744932432437,
+              23571.71959459467,
+              25874.36655405409,
+              23353.60304054054,
+              22480.152027027005,
+              24807.15033783784,
+              22977.47635135135,
+              27056.869932432368
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 6889,
+            "samples": [
+              2340.5550878211698,
+              2723.641457395842,
+              2304.1079982580995,
+              2373.046450863687,
+              2813.374074611705,
+              2680.9769197270994,
+              3391.7416170706983,
+              2479.5386848599237,
+              4397.312091740459,
+              2730.6575700391963,
+              2740.8973726230324,
+              6392.146900856447
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 20173,
+            "samples": [
+              595.436970207698,
+              622.1476230605186,
+              548.6520596837402,
+              552.5413176027386,
+              603.9033361423692,
+              703.194467853068,
+              628.1683933971167,
+              582.9367967084783,
+              613.7638427601169,
+              600.8918356218722,
+              538.5230258265977,
+              549.6744658702324
+            ]
+          }
+        ],
+        "checksum": 24640
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 82050,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 414,
+            "samples": [
+              31226.0483091788,
+              24156.601449275364,
+              24086.654589372007,
+              23649.557971014445,
+              31382.144927536247,
+              23650.66425120777,
+              23104.36714975842,
+              25052.93961352656,
+              23597.927536231888,
+              23674.31642512082,
+              26197.062801932305,
+              22672.50483091786
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 4565,
+            "samples": [
+              2395.892661555301,
+              2132.1651697699917,
+              2228.6418400876073,
+              2433.5342825848966,
+              2517.8258488499455,
+              2709.2278203723936,
+              2255.5951807229126,
+              2269.9982475355887,
+              2268.537787513684,
+              2066.6665936473,
+              2237.6871851040364,
+              2780.859802847749
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 19567,
+            "samples": [
+              636.9035110134378,
+              605.2771503040805,
+              608.2690243777753,
+              626.2307967496306,
+              629.5718812285954,
+              584.562017682834,
+              562.4286298359427,
+              538.4576071957918,
+              605.6860530484989,
+              641.2667756937609,
+              606.859303930092,
+              620.790105790358
+            ]
+          }
+        ],
+        "checksum": 283008
+      },
+      "vpm": {
+        "pid": 82058,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 414,
+            "samples": [
+              23175.2222222222,
+              30938.002415458945,
+              24255.23188405802,
+              24936.091787439556,
+              24074.980676328483,
+              26527.07487922708,
+              23827.49516908208,
+              22625.20048309175,
+              26261.27294685988,
+              23189.514492753624,
+              24139.492753623133,
+              26579.106280193297
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 4565,
+            "samples": [
+              2289.3664841182945,
+              2603.9064622124915,
+              2318.6199342825707,
+              2395.2354874041416,
+              2549.014238773279,
+              2438.8462212486293,
+              2747.3439211390914,
+              2545.600657174157,
+              2265.1787513690942,
+              2472.7090909090894,
+              2279.819277108434,
+              2453.7513691128365
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 19567,
+            "samples": [
+              590.5244544385966,
+              647.7998671232148,
+              601.0182961107996,
+              553.4637399703564,
+              610.9861501507621,
+              584.6833955128554,
+              605.2090253999085,
+              604.5936525783177,
+              583.935963612211,
+              594.8642101497499,
+              573.5251699289569,
+              572.5967189656029
+            ]
+          }
+        ],
+        "checksum": 29696
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 82065,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 377,
+            "samples": [
+              23901.63660477455,
+              25696.506631299784,
+              30742.151193633927,
+              23416.88594164459,
+              23906.1671087532,
+              23554.045092838267,
+              26989.389920424434,
+              24198.38726790452,
+              24189.766578249248,
+              25640.251989389966,
+              27585.763925729447,
+              24305.03978779844
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 3589,
+            "samples": [
+              2348.205349679559,
+              2611.6606297018625,
+              2771.001671774889,
+              2350.120646419609,
+              3097.3460573975894,
+              2665.5057118974696,
+              2235.870994706046,
+              2376.660072443561,
+              2807.9896907216353,
+              2727.1638339370534,
+              2313.6088046809678,
+              2857.504318751742
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 18926,
+            "samples": [
+              651.0664694071597,
+              631.7367642396679,
+              740.9956144985683,
+              704.5994927612854,
+              632.6701891577741,
+              594.3697558913681,
+              640.3911021874677,
+              634.2773961745731,
+              724.2792454824063,
+              638.7179012997954,
+              748.6041952869022,
+              632.5623480925688
+            ]
+          }
+        ],
+        "checksum": 242432
+      },
+      "upstream": {
+        "pid": 82069,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "auth / verify RS256 ID token signature",
+            "iterations": 377,
+            "samples": [
+              24187.11405835541,
+              30773.652519893953,
+              25659.26259946949,
+              24768.12732095489,
+              23684.681697612734,
+              24567.970822281084,
+              23795.424403182966,
+              24298.29973474802,
+              24483.641909814403,
+              26750.88594164455,
+              24393.013262599485,
+              24283.488063660487
+            ]
+          },
+          {
+            "case": "auth / decode ID token",
+            "iterations": 3589,
+            "samples": [
+              2676.0239621064306,
+              2343.445249373111,
+              2975.6433546948947,
+              3292.4098634717216,
+              2286.500417943704,
+              2622.213708553938,
+              2560.137364168308,
+              2256.3039843967804,
+              2653.129841181406,
+              2525.1579827250093,
+              3024.4731122875405,
+              2175.013931457217
+            ]
+          },
+          {
+            "case": "messaging / copy and validate a message",
+            "iterations": 18926,
+            "samples": [
+              591.3601923280156,
+              603.2376096375359,
+              620.4075346084774,
+              601.9980978548031,
+              601.5974321039865,
+              577.1007080207099,
+              554.3476170347725,
+              533.9105991757358,
+              549.9048927401473,
+              573.5430096164004,
+              598.0815808940032,
+              628.5885554263965
+            ]
+          }
+        ],
+        "checksum": 30400
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "auth / verify RS256 ID token signature",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 23660.485933503835,
+          "vpmNs": 17862.533248081847,
+          "changePct": -24.504791244426404
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 24749.413079470196,
+          "vpmNs": 17602.47599337746,
+          "changePct": -28.87719827191041
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 25435.023514851455,
+          "vpmNs": 17278.774752475256,
+          "changePct": -32.06699910308234
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 23594.489020270277,
+          "vpmNs": 17769.91891891896,
+          "changePct": -24.6861463977769
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 23880.485507246412,
+          "vpmNs": 24197.362318840576,
+          "changePct": 1.326927844486292
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 24438.327586206942,
+          "vpmNs": 24251.71352785148,
+          "changePct": -0.7636122304080617
+        }
+      ]
+    },
+    {
+      "case": "auth / decode ID token",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2370.589370932748,
+          "vpmNs": 1579.1305856832942,
+          "changePct": -33.38658288753067
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2490.712431794721,
+          "vpmNs": 1620.6434891608963,
+          "changePct": -34.932533018550174
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2476.6371077762597,
+          "vpmNs": 1582.703274215556,
+          "changePct": -36.09466363698941
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2727.149513717519,
+          "vpmNs": 1623.472782697052,
+          "changePct": -40.46997516890769
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2269.2680175246364,
+          "vpmNs": 2446.2987951807327,
+          "changePct": 7.80122825020928
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2591.175536361123,
+          "vpmNs": 2638.583170799666,
+          "changePct": 1.8295801952931123
+        }
+      ]
+    },
+    {
+      "case": "messaging / copy and validate a message",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 621.61526717558,
+          "vpmNs": 606.9975190839712,
+          "changePct": -2.3515748186216823
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 635.1005568445478,
+          "vpmNs": 563.3352668213465,
+          "changePct": -11.299831066085353
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 607.2396353214401,
+          "vpmNs": 579.0445718238863,
+          "changePct": -4.643152695826402
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 598.1644029147851,
+          "vpmNs": 584.0779507262178,
+          "changePct": -2.354946586578155
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 607.5641641539337,
+          "vpmNs": 592.6943322941733,
+          "changePct": -2.447450448376509
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 594.7208866110094,
+          "vpmNs": 639.5545017436316,
+          "changePct": 7.538597708936123
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "auth / verify RS256 ID token signature",
+      "upstream_ns": 24205,
+      "vpm_ns": 17686,
+      "change_pct": -26.8,
+      "upstream_first_pct": -28.3,
+      "vpm_first_pct": -26.8,
+      "process_range_pct": "-24.5, -28.9, -32.1, -24.7",
+      "control_max_abs_pct": 1.3,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "auth / decode ID token",
+      "upstream_ns": 2484,
+      "vpm_ns": 1602,
+      "change_pct": -35.5,
+      "upstream_first_pct": -34.7,
+      "vpm_first_pct": -37.7,
+      "process_range_pct": "-33.4, -34.9, -36.1, -40.5",
+      "control_max_abs_pct": 7.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "messaging / copy and validate a message",
+      "upstream_ns": 614,
+      "vpm_ns": 582,
+      "change_pct": -3.5,
+      "upstream_first_pct": -3.5,
+      "vpm_first_pct": -6.8,
+      "process_range_pct": "-2.4, -11.3, -4.6, -2.4",
+      "control_max_abs_pct": 7.5,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

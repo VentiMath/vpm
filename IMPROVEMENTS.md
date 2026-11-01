@@ -328,12 +328,10 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,846 tests**: all pass on Node 24, and Bun passes
-2,843 with three documented runtime-specific skips. All 109 Node runtime packages'
-public declarations compile without ambient Node, Undici or DOM types, under
-TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
-applications use. The
-catalog covers **120 packages**, including two declaration-only packages and
+CI runs the package tests on Node 24 and Bun, with runtime-specific skips
+recorded by the tests. All 109 Node runtime packages' public declarations compile
+without ambient Node, Undici or DOM types using the configured TypeScript 7
+compiler in NodeNext and bundler resolution modes. The catalog covers **120 packages**, including two declaration-only packages and
 nine browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -760,9 +758,9 @@ ends at its first colon, and a comment at the end of the input keeps its text.
 stylis's `namespace` assigns its switched variable in a case label, which
 JavaScriptCore (Safari, Bun) evaluates differently from V8, scoping
 `a:not([href])` as `a.scope:not.scope([href])`; stylis fails its own namespace
-test under Bun. vstylis gives one result everywhere. The process-isolated Node
-24 / Bun measurements do not establish a performance difference beyond control
-variation. Six regression cases and eight focused tests cover the changes.
+test under Bun. vstylis gives one result everywhere. The selected-library
+recording establishes 12.4% lower Node component-style time; Bootstrap and
+both Bun cases remain inconclusive. Six regression cases and eight focused tests cover the changes.
 
 See the [package contract](packages/vstylis/README.md) and the
 [conformance record](scripts/stylis-conformance/README.md).
@@ -809,9 +807,9 @@ The release's **27 React tests** pass for both libraries on Node and Bun.
 FullCalendar's browser suite, run as upstream runs it on the React build in
 headless Chromium, gives the same status for all **1,542 specs** with each
 library; the five that fail in this configuration fail for both and are pinned.
-An application's types compile against the declarations under TypeScript 7.1,
-5.8 and 5.9, and five focused tests check the derivation against the recorded
-hashes.
+An application's types compile against the declarations under the configured
+TypeScript 7 compiler, and five focused tests check the derivation against the
+recorded hashes.
 
 See the [package contract](packages/vfullcalendar-react/README.md),
 [conformance record](scripts/fullcalendar-react-conformance/README.md) and
@@ -823,9 +821,9 @@ Independently implements **@fullcalendar/core 7.1.3**, checked November 1, 2026.
 7 the connectors are self-contained, and `@fullcalendar/core` keeps only the
 option interfaces they extend through `declare module` and the JSON feed request
 (`requestJson`, `JsonRequestError`, `identity`); `@fullcalendar/react` 7.1.3
-bundles its own copy of the request. The published files are retained;
-[PROVENANCE.json](packages/vfullcalendar-core/PROVENANCE.json) records the
-changes.
+bundles its own copy of the request. VPM independently implements the request
+pipeline and option contracts; [PROVENANCE.json](packages/vfullcalendar-core/PROVENANCE.json)
+records the contract baseline and implementation approach.
 
 A JSON feed URL with a `#fragment` had its parameters appended after the
 fragment, which fetch never sends, so the server received no `start` or `end`;
@@ -865,8 +863,9 @@ Validation includes 75 upstream formatting tests, 107,500 deterministic
 arithmetic/parsing comparisons per runtime, focused regressions, the IANA
 transition sweep, and the mounted/browser calendar caller suites. Current
 measurements use isolated Node 24 and Bun processes; older same-process timing
-claims are superseded. Local conversion still costs about 7–8% more; Bun also
-retains an 11% UTC parse/add cost and a 10% named-wall conversion cost.
+claims are superseded. Named-zone operations improve on Node; local conversion
+costs 5.3% more. Bun retains a 9.9% named-wall conversion cost and a 6.9%
+formatting cost; its local and UTC differences are inconclusive.
 
 See the [package contract](packages/vfull-ui-headless-calendar/README.md),
 [provenance](packages/vfull-ui-headless-calendar/PROVENANCE.json),
@@ -933,11 +932,13 @@ While public keys are missing or expired, upstream starts one key request per
 concurrent token verification (ID tokens and session cookies, App Check and
 phone-number verification); here concurrent callers share the request. Upstream
 sends FCM's HTTP/2 requests with `:scheme: https:`, which RFC 9113 forbids and
-Node's HTTP/2 server rejects; here it is `https`. Through `vjsonwebtoken`,
-`verifyIdToken`'s signature check takes **56% less time** on Node 22 (33% on
-Bun), and an app with Auth, Firestore, Messaging and Storage loads 335 modules
-in about 180 ms instead of 653 in about 380 ms. Public declarations need no
-ambient Node types.
+Node's HTTP/2 server rejects; here it is `https`. Signature verification and
+decoding use `vjsonwebtoken`. Earlier Node 22 and same-process timing claims
+are historical; current signature, decoding and messaging CPU comparisons use
+isolated Node 24 and Bun workers. Signature-only verification takes 46.2%
+less time on Node and 26.8% less on Bun; decoding takes 27.1% and 35.5% less.
+Message validation is inconclusive. These exclude claim/revocation checks and
+key fetching. Public declarations need no ambient Node types.
 
 The original passes its **6,146 unit tests**. VPM runs the 6,062 that do not
 need the Realtime Database client; all pass except 46 that assert the `https:`
@@ -962,11 +963,10 @@ its dependencies mapped to `vgoogle-cloud-firestore-api`, `vgoogle-gax`,
 lists the six files changed beyond that.
 
 9.4.0 pins `@google-cloud/firestore-api` ^0.2.0, which installs a second, older
-google-gax stack, and loads it at import: 404 modules and about 270 ms, though
-its own lazy-load tests forbid loading gax or protobufjs at import (they never
-run because other tests load gax first). Here there is one stack, and import
-loads 65 modules in about 50 ms; import, a client and a first encode take about
-70 ms instead of 270 ms on Node 22. After `terminate()`, upstream's queries,
+google-gax stack, and loads it at import, though its own lazy-load tests forbid
+loading gax or protobufjs at import (they never run because other tests load gax
+first). Here there is one stack and those dependencies load on first use. Earlier
+Node 22 startup measurements are historical. After `terminate()`, upstream's queries,
 document gets, `getAll`, aggregates and listeners wait forever while their
 rejection goes unhandled, which ends a Node process by default; here they
 reject at once. `terminate()` rejects with an Error instead of a string, a
@@ -982,7 +982,9 @@ requests from both libraries, directly and through Firebase Admin 14.5.0, for
 writes with every transform, gets, queries, aggregates, streams, transactions,
 batches, BulkWriter and a listener, with identical results. Four regression
 cases reproduce the behavioral defects with the original; six focused tests and
-a type test cover the package. Per-operation CPU is at parity.
+a type test cover the package. Current per-operation comparisons use isolated
+Node 24 and Bun workers. All Node cases are inconclusive; Bun query construction
+costs 11.3% more, with its other cases inconclusive. These do not establish parity.
 
 See the [package contract](packages/vgoogle-cloud-firestore/README.md),
 [conformance record](scripts/firestore-conformance/README.md) and
@@ -1049,10 +1051,10 @@ layout exactly, iterators, bounds, the fixes and enumerability. An actual Firest
 9.4.0 `onSnapshot` query over a local gRPC Listen stream produces the same ordering,
 change indexes and retained snapshot with either tree.
 
-The latest process-isolated Node 24 / Bun recording is too variable to establish
-per-case differences, including the Firestore Watch pattern. Raw data includes
-slower Bun traversals and is preserved alongside the controls. Inconclusive
-results do not establish parity or erase possible regressions. These are tree
+The selected-library recording establishes 21% lower Node key-traversal time
+and 18.2% lower Node range-traversal time. Other Node cases and all Bun cases,
+including Firestore Watch, remain inconclusive. Raw samples and controls retain
+the slower observations; inconclusive results do not establish parity. These are tree
 CPU measurements, not listener latency.
 
 See the [package contract](packages/vfunctional-red-black-tree/README.md),
@@ -1078,9 +1080,9 @@ measurements. All four module entry points have self-contained declarations and
 isolated archive checks.
 
 The process-isolated Node 24 / Bun measurements preserve the large Buffer
-improvement. Some Node array and caller cases improve; nested Map comparison is
-inconclusive. Some Bun Firestore query comparisons regress; others are
-inconclusive. The report includes raw samples, balanced process order and separate
+improvement: 67% on Node and 88.8% on Bun. Node nested Map comparison costs
+18.4% more, while small records, Sets and two Firestore caller cases improve.
+Bun React and equal-query comparisons improve; its other cases are inconclusive. The report includes raw samples, balanced process order and separate
 identical-source controls. These are equality CPU measurements, not request latency.
 
 See the [package contract](packages/vfast-deep-equal/README.md),
@@ -1386,7 +1388,7 @@ that the entire SDK is replaced or verified.
 [Process-isolated measurements](packages/vlong/bench/results/README.md) cover
 construction, parsing, formatting, arithmetic, bytes and actual protobuf
 conversions on Node 24 and Bun. Several protobuf conversion paths improve;
-validated byte arrays cost more, and small-integer construction is inconclusive. Each case
+validated byte arrays and several small-integer construction cases cost more. Each case
 shows both process orders and independent controls; local CPU measurements do
 not establish application or network throughput gains.
 

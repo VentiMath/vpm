@@ -60,10 +60,13 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   RFC 9113 requires the bare scheme, and conforming HTTP/2 servers such as
   Node's reject the stream. Google's front end accepts both; here the value is
   `https`.
-- **Faster token verification and cold start.** `verifyIdToken`'s signature
-  check takes 56% less CPU time on Node 22 through `vjsonwebtoken`, and
-  initializing an app with Auth, Firestore, Messaging and Storage loads 335
-  modules in about 180 ms instead of 653 in about 380 ms.
+- **Token verification dependencies.** Signature verification and decoding use
+  `vjsonwebtoken`. Current CPU comparisons use isolated Node 24 and Bun
+  workers. Earlier Node 22 startup and same-process timing figures are
+  historical, not current performance claims. The new signature-only case takes
+  46.2% less time on Node and 26.8% less on Bun; decoding takes 27.1% and
+  35.5% less. These do not measure claim validation, revocation, certificate
+  fetching or application request latency. Message validation is inconclusive.
 - **Declarations without Node types.** Public declarations compile without
   ambient Node types; `Buffer` is Node's `Buffer` where Node types are loaded,
   and `httpAgent` accepts any Node `http` or `https` `Agent`.
