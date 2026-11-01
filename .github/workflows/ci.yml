@@ -115,7 +115,6 @@ jobs:
           node scripts/emotion-conformance/run.cjs --react=18
           node scripts/emotion-conformance/regressions.cjs
           node scripts/emotion-conformance/compare-serialize.cjs
-          node scripts/emotion-conformance/types.cjs
           node scripts/gax-conformance/run.cjs --upstream
           node scripts/gax-conformance/run.cjs
           node scripts/gax-conformance/regressions.cjs
@@ -336,6 +335,7 @@ jobs:
       - run: npm --prefix scripts/legacy-typescript ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/check-legacy-types.cjs
       - run: node scripts/fullcalendar-react-conformance/types.cjs
+      - run: node scripts/emotion-conformance/types.cjs
       - run: node scripts/check-type-archives.cjs
       - run: node scripts/check-media-archives.cjs
       - run: bun scripts/integration.cjs
