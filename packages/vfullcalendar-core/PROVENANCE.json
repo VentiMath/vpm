@@ -37,5 +37,10 @@
     "Declarations type the response as the runtime's fetch Response, with a structural fallback, so they compile without DOM or Node types; FetchResponse is exported.",
     "The entry exports nothing and no longer writes to the console on import; its declaration is a module.",
     "The unused @full-ui/headless-calendar and temporal-polyfill peers are removed."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-fork",
+    "replacementStatus": "independent implementation pending",
+    "targetScope": "Calendar option contracts and the JSON event-feed request."
+  }
 }

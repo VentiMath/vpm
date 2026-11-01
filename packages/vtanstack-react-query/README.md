@@ -1,5 +1,10 @@
 # vtanstack-react-query
 
+**Implementation status:** the current package retains upstream implementation
+code with the changes documented below. Its tests verify that adapted build.
+An independently written implementation of the application-facing APIs is
+pending; this package is not yet a completed rewrite.
+
 TanStack Query for React, targeting **@tanstack/react-query 5.105.0**, the latest
 stable release checked November 1, 2026, on
 [`vtanstack-query-core`](../vtanstack-query-core/README.md). React 18 or 19 is a

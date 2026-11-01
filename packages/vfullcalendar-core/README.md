@@ -1,5 +1,10 @@
 # vfullcalendar-core
 
+**Implementation status:** the current package retains upstream implementation
+code with the changes documented below. Its tests verify that adapted build.
+An independently written implementation of the application-facing APIs is
+pending; this package is not yet a completed rewrite.
+
 FullCalendar 7's shared types and JSON feed request, targeting
 **@fullcalendar/core 7.1.3**, the latest stable release checked November 1, 2026.
 Zero dependencies; an ES module for browsers, Node.js 24+ and Bun.

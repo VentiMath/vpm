@@ -1,5 +1,10 @@
 # vfullcalendar-react
 
+**Implementation status:** the current package retains upstream implementation
+code with the changes documented below. Its tests verify that adapted build.
+An independently written implementation of the application-facing APIs is
+pending; this package is not yet a completed rewrite.
+
 FullCalendar 7 for React, targeting **@fullcalendar/react 7.1.3**, the latest
 stable release checked November 1, 2026. Its dates and time zones come from
 [`vfull-ui-headless-calendar`](../vfull-ui-headless-calendar/README.md) and its

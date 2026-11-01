@@ -1,5 +1,10 @@
 # vfirebase-functions
 
+**Implementation status:** the current package retains upstream implementation
+code with the changes documented below. Its tests verify that adapted build.
+An independently written implementation of the application-facing APIs is
+pending; this package is not yet a completed rewrite.
+
 The Cloud Functions for Firebase SDK, targeting **firebase-functions 7.4.0**, the
 latest stable release checked October 31, 2026. Dependencies are VPM packages
 (`vcors`, `vexpress`, `vprotobufjs`), with `vfirebase-admin` as the peer;

@@ -31,5 +31,10 @@
     "Years 0-99 in date arrays and ISO strings are no longer read as 1900-1999.",
     "Time zone offsets are rounded as a whole, so a fractional minute never prints as ':60'.",
     "The local time zone keeps milliseconds when converting a marker to a Date."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-fork-with-rewritten-timezone-layer",
+    "replacementStatus": "independent implementation pending",
+    "targetScope": "Date arithmetic, time zones, visible calendar ranges and event placement used by the calendar component."
+  }
 }

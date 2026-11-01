@@ -1,5 +1,10 @@
 # vgoogle-cloud-firestore
 
+**Implementation status:** the current package retains upstream implementation
+code with the changes documented below. Its tests verify that adapted build.
+An independently written implementation of the application-facing APIs is
+pending; this package is not yet a completed rewrite.
+
 The Cloud Firestore server client, targeting **@google-cloud/firestore 9.4.0**,
 the latest stable release checked October 31, 2026, and the version Firebase
 Admin 14 uses. All six runtime dependencies are VPM packages; Node.js 24+ and

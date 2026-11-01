@@ -1,5 +1,10 @@
 # vtanstack-query-core
 
+**Implementation status:** the current package retains upstream implementation
+code with the changes documented below. Its tests verify that adapted build.
+An independently written implementation of the application-facing APIs is
+pending; this package is not yet a completed rewrite.
+
 TanStack Query's framework-agnostic core, targeting **@tanstack/query-core
 5.105.0**, the latest stable release checked November 1, 2026. Zero
 dependencies; ES module and CommonJS builds for browsers, Node.js 24+ and Bun.
