@@ -3,7 +3,7 @@
 **Implementation status:** VPM independently implements app and credential
 management and the Auth operations used by VentiMath. It also owns HTTP transport,
 responses, retries, authorization, Firestore client configuration, Storage
-contexts and Messaging send orchestration. Endpoint schemas, remaining service APIs and Google Auth remain
+contexts and Messaging send/response orchestration. Endpoint schemas, remaining service APIs and Google Auth remain
 upstream-derived. This is a partial SDK rewrite;
 [provenance](PROVENANCE.json) maps the boundary.
 
@@ -51,7 +51,14 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   pending and can retry after failure; encoded identifiers cannot introduce path
   segments or query strings. HTTP/2 sessions open after project discovery and only
   when at least one message validates, then close once the batch settles. Message
-  schema validation, server-error mapping and topic management remain retained.
+  schema validation and topic-management orchestration remain retained.
+
+- **Reliable Messaging delivery results.** Batch success requires a real message
+  name and no error envelope, even when the HTTP status is 200. Malformed FCM
+  details and prototype-named remote codes produce `FirebaseMessagingError`
+  rather than `TypeError`, preserving the cause and HTTP response. Token/FID
+  distinctions and normal error codes remain compatible. Single-send empty-name
+  behavior and legacy topic result semantics remain unchanged.
 
 - **Per-client Storage context.** Credential and project come from one app-options
   snapshot, including an explicit project with application-default credentials.
@@ -246,41 +253,34 @@ Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
 previous JWT improvements; they do not isolate the HTTP rewrite alone. The
-[full report](bench/results/README.md) includes all forty-nine cases, process
+[full report](bench/results/README.md) includes all fifty-two cases, process
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
-Messaging's 100-recipient plan takes 100.2 µs versus 105.6 µs on Node (6% less
-median paired time). Node's single-send, three-recipient and mixed-validation
-comparisons are inconclusive, as are all four Bun send comparisons. These cases
-include payload capture, validation, result collection and synthetic session
-setup, with synthetic dispatch replacing authentication, HTTP and network I/O.
-They do not measure real FCM delivery latency. The retained copy/validation
-helper has a separate case; that helper itself has not been independently rewritten.
+Messaging response validation takes 13 ns versus 5 ns on Bun (145% more median
+paired time). It checks the JSON body, error envelope and message identifier
+before declaring a batch delivery successful. Its Node comparison, stale-device
+error projection and ten mixed response projections are inconclusive. The
+100-recipient send plan takes 79.6 µs versus 169.6 µs on Bun (50% less); all four
+Node send-plan comparisons and the other three Bun send-plan comparisons are
+inconclusive. Send-plan cases replace authentication, HTTP and network I/O with
+synthetic dispatch; these numbers do not measure FCM delivery latency. The
+retained copy/validation helper is measured separately and remains source-derived.
 
-Firestore option projection takes 142 ns versus 186 ns on Node (23% less), and
-repeated initialization takes 14 ns versus 19 ns (27% less). On Bun, repeated
-initialization takes 9 ns versus 18 ns (46% less), while cached lookup costs 17%
-(10 versus 9 ns). Other Firestore accessor comparisons are inconclusive. Storage
-service-account setup takes 3.65 µs versus 4.63 µs on Bun (22% less), and ADC setup
-2.31 µs versus 2.83 µs (19% less). Bucket access and all Node Storage comparisons
-are inconclusive. These include underlying client setup, not cloud operations.
+The report also retains complete-stack gains and costs from earlier work. Node's
+full ID-token verification with a cached test key takes 34.2 µs versus 59.5 µs
+(41% less). Bun's Storage context construction takes 4.12 µs versus 4.74 µs with a
+service account (13% less), and 2.58 µs versus 3.21 µs with ADC (20% less).
 
-Costs remain visible. Bun's eager JSON response projection costs 11% (692 versus
-617 ns); its error-path comparisons and all three Node response cases are
-inconclusive. Synthetic HTTP/1 with headers costs 58% on Bun, and HTTP/2 single
-requests and twenty-request batches cost 35% and 43% (4.37 versus 3.00 µs, and
-63.6 versus 44.8 µs). Their Node comparisons are inconclusive. Node's synthetic
-session setup costs 87% (209 versus 112 ns); Bun's is inconclusive. All four
-authorization-header comparisons are inconclusive in this recording.
-
-Custom retry-policy capture takes 119 ns versus 10 ns on Node and 378 ns versus
-12 ns on Bun; it copies and freezes caller settings. Strict UTC HTTP-date parsing
-takes 492 ns versus 249 ns on Node and 454 ns versus 42 ns on Bun. Default policy
-construction is faster on both. The full report retains every percentage, raw
-sample and control, including costs in user-record, app and credential paths.
-These compare complete stacks and do not isolate the Messaging rewrite alone.
-Local-server fixtures separately verify correctness and wire compatibility.
+Costs remain visible. Synthetic HTTP/2 single requests cost 36% on Node and 49%
+on Bun; Bun's twenty-request batch costs 45%. Bun's eager JSON response projection
+costs 29%, and its two authorization-header cases cost 59–69%. Custom retry-policy
+capture takes 161 ns versus 13 ns on Node and 451 ns versus 14 ns on Bun; it copies
+and freezes caller settings. Strict UTC HTTP-date parsing takes 568 ns versus
+322 ns on Node and 509 ns versus 56 ns on Bun. The full report includes all other
+costs, raw samples and identical-source controls. These compare complete stacks
+and do not isolate this Messaging change alone. Local-server fixtures separately
+verify correctness and wire compatibility.
 
 ## Evidence
 
@@ -302,6 +302,12 @@ Local-server fixtures separately verify correctness and wire compatibility.
   sparse batches, shared/recoverable project lookup and batch session lifetime.
   The unchanged 511-test Messaging suite retains only Bun's existing diagnostic
   wording difference; actual local FCM HTTP/2 requests and results match.
+- [Messaging response controls](../../scripts/firebase-admin-conformance/messaging-response.cjs)
+  compare 63 normal projections, then exercise malformed/prototype-named error
+  envelopes and ordered HTTP/1 and HTTP/2 batches against a separate local server.
+  Malformed successful-status bodies become batch failures. Single-send empty-name
+  output and legacy topic operations retain their existing contracts. All 519
+  selected upstream Messaging/error tests keep their existing results.
 - [Storage context controls](../../scripts/firebase-admin-conformance/storage-context.cjs)
   compare two real server destinations, metadata/uploads/download URLs, V2/V4
   signatures, ADC projects, captured options and deleted-app access.

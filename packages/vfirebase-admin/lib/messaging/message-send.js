@@ -1,7 +1,7 @@
 'use strict';
 
 // Message ownership, project discovery and batch lifetime are separate from
-// the retained FCM schema validators and server-error mapping.
+// the retained FCM schema validators and the response/error adapters.
 const {snapshotJson} = require('../utils/json-snapshot');
 const {validateMessage} = require('./messaging-internal');
 const {FirebaseMessagingError, messagingClientErrorCode: codes} = require('./error');

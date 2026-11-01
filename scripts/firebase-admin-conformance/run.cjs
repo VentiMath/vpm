@@ -115,6 +115,7 @@ try {
   for (const failure of stats.failures) console.log(expected.has(failure.fullTitle) ? 'EXPECTED' : 'FAIL', failure.fullTitle, '\n ', (failure.err.message || '').split('\n')[0]);
   console.log(`${upstream ? 'Upstream' : 'VPM'} Firebase Admin suite: ${stats.stats.passes} passed, ${stats.stats.failures} failed (${stats.stats.failures - unexpected.length} expected), ${stats.stats.pending} pending of ${stats.stats.tests}.`);
   assert.equal(unexpected.length, 0);
+  assert.ok(stats.stats.tests > 0, 'suite filter matched no tests');
   if (!only) {
     assert.equal(stats.stats.failures, [...expected.keys()].filter(title => !(title in unavailable) || !upstream).length, 'an expected failure now passes; update the expectation');
     assert.equal(schemeFailures, upstream ? 0 : SCHEME_TESTS, ':scheme assertions');
