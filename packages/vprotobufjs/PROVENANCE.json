@@ -14,5 +14,12 @@
     "Validate explicit decode/skip lengths and bound skipped varints to ten bytes.",
     "Correct unknown group skipping for empty message types.",
     "Protect the shared LongBits zero value against mutation."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "The full/light/minimal protobuf runtimes are derived from upstream, with focused bounds and unknown-field corrections. Generated protocol schemas are a separate retained input, not an independent-runtime claim.",
+    "targetScope": "The protobuf reader/writer and message encoding/decoding paths used by Firestore, gax and Firebase event schemas.",
+    "remainingWork": "Independently implement the application-facing runtime paths; retain current conformance and correctness fixes as requirements."
+  }
 }

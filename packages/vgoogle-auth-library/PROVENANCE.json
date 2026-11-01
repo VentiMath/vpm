@@ -122,5 +122,12 @@
     "Reuse parsed immutable private keys only per owning credential object; bound self-signed JWT cache to 500 entries.",
     "Supply key-file issuer before signing; return revocation promises, use POST form bodies and preserve newer tokens.",
     "Preserve transport errors instead of copying untrusted token response text into their messages."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-derived with focused modifications",
+    "replacementStatus": "application-facing independent rewrite pending",
+    "basis": "The Google Auth runtime is upstream-derived, with VPM dependency integration and focused fixes. Its current-release conformance is not evidence of an independently written SDK.",
+    "targetScope": "GoogleAuth and the application-default/service-account token flows used by Firebase Admin, Storage and Firestore.",
+    "remainingWork": "Independently implement the application-facing runtime paths; retain current conformance and correctness fixes as requirements."
+  }
 }

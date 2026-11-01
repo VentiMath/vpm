@@ -16,6 +16,13 @@ Their compatibility evidence describes those forks, not independent VPM
 implementations. Replacement work is scoped to the APIs used by applications;
 that work must be verified before the implementation status changes.
 
+The implementation audit also covers earlier SDK work: Google Auth, Cloud
+Storage, gax and protobuf retain upstream runtime code with focused changes.
+Their package provenance marks the application-facing independent rewrites as
+pending. Passing current-release tests and replacing dependency names establish
+compatibility, not independent implementation. Generated protocol schemas remain
+separately attributed inputs.
+
 ## Latest stable upgrade roadmap
 
 Latest stable upstream versions set the compatibility target. Backend and

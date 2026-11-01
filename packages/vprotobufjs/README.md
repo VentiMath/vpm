@@ -1,5 +1,10 @@
 # vprotobufjs
 
+**Implementation status:** this package retains upstream runtime code with
+focused VPM changes. Its tests establish compatibility and the documented fixes;
+an independent rewrite of the application-facing paths is still pending.
+[Provenance](PROVENANCE.json) records this boundary.
+
 Protocol Buffers based on **protobuf.js 8.8.1**, with VPM 64-bit integers,
 restored reader bounds after decoding errors, validated lengths and protected
 shared zero values. Supports Node 24+, Bun and browser bundling.
