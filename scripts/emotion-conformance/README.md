@@ -25,7 +25,9 @@ Testing Library 13.0.0-alpha.5, Enzyme 3.11.0, React 18 (the lockfile's
 does), @types/react 18.3.12, and the packages the tests
 import besides the ones under test: @emotion/css 11.13.5, @emotion/server
 11.11.0, @emotion/css-prettifier 1.2.0, @emotion/jest 11.13.0 and
-@emotion/babel-plugin 11.13.5.
+@emotion/babel-plugin 11.13.5, and stylis-plugin-rtl 2.1.1 (with cssjanus
+2.3.0, overridden to the version VentiMath installs) for VentiMath's cache
+configuration.
 
 ```sh
 npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
@@ -37,10 +39,11 @@ node scripts/emotion-conformance/run.cjs --upstream --react=18
 node scripts/emotion-conformance/run.cjs --react=18
 node scripts/emotion-conformance/regressions.cjs
 node scripts/emotion-conformance/compare-serialize.cjs
+node scripts/emotion-conformance/compare-cache.cjs
 node scripts/emotion-conformance/types.cjs
 ```
 
-Repeat the regressions and the serialize comparison with Bun; Jest runs on Node.
+Repeat the regressions and the comparisons with Bun; Jest runs on Node.
 
 `run.cjs` runs the suite the way upstream's `test:dist` does, against built
 packages (`jest.dist.js`), with upstream's Babel configuration (its Emotion
@@ -58,9 +61,9 @@ that no package publishes, and is not run.
 In development, 285 tests pass and 8 are gated to production; in production, 5
 pass; under React 18, 288 pass (311 snapshots). The same holds with VPM's packages: currently vemotion-hash,
 vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet,
-vemotion-utils, vemotion-serialize, vemotion-is-prop-valid and
-vemotion-use-insertion-effect-with-fallbacks, with the original packages above
-them. 305 and 11 snapshots
+vemotion-utils, vemotion-serialize, vemotion-is-prop-valid,
+vemotion-use-insertion-effect-with-fallbacks and vemotion-cache, with the
+original packages above them. 305 and 11 snapshots
 match.
 
 `compare-serialize.cjs` runs 20,000 generated style arguments (objects with
@@ -71,6 +74,19 @@ serialized styles; keyframes; labels; registered class names) through
 `development` condition, and requires the same name, styles, keyframes,
 messages and errors. The inputs leave out what VPM changes (below). There are
 no differences.
+
+`compare-cache.cjs` inserts 10,000 generated styles (nesting, selectors
+starting with `:`, `&`, commas, at-rules, keyframes, placeholders, labels,
+comments, `@import`, unsafe pseudo-classes, vendor and directional properties)
+into @emotion/cache and vemotion-cache on the server, where `insert` returns
+the CSS, as a class and as global styles, in regular and compat mode, with no
+plugins, the default prefixer, and VentiMath's two configurations from its
+`RootThemeProvider` (its `wrapInLayer('mui')` plugin, after stylis-plugin-rtl
+for right-to-left). The original runs on stylis 4.4.0 (from the stylis
+fixture), the version vemotion-cache uses, and stylis-plugin-rtl on stylis
+4.4.0 beside it and on vstylis beside VPM. The CSS, inserted state and messages
+must be the same in production and development; the declarations whose
+prefixes VPM changes are left out (see below). There are no differences.
 
 `types.cjs` compiles an application using each VPM package's API (subclassing
 `StyleSheet` as MUI does, the cache and serialized style types) against the
@@ -83,6 +99,8 @@ class name, `gridArea` and `lineClamp` numbers are serialized with `px`,
 `undefined` results are recomputed by memoize, unitless properties written in
 kebab-case are serialized with `px`, `width: [100, '50%']` becomes a selector
 block, styled elements drop current HTML attributes such as `commandFor` and
-`shadowRootMode`, and @emotion/utils's
+`shadowRootMode`, the cache's prefixer invents declarations
+(`-webkit-box-flex-wrap`) and writes `-ms-flex-item-align:flex-start` and
+`justify-content: space-between` without `-ms-flex-pack`, and @emotion/utils's
 declarations, installed with only its declared dependencies, fail to compile
 because they import the undeclared `@emotion/sheet`.

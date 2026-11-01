@@ -32,6 +32,7 @@ now have current comparison targets:
 
 | Order | VPM package | Verified comparison baseline | Latest stable target |
 | --- | --- | --- | --- |
+| Suite and differential verified | vemotion-cache | @emotion/cache 11.14.0; Emotion's suite under React 16 and 18, 10,000 generated styles with identical CSS in development and production (including VentiMath's RTL and `@layer` configurations), and its declarations under TypeScript 7.1, 5.8 and 5.9 | [@emotion/cache 11.14.0](https://www.npmjs.com/package/@emotion/cache), checked November 1, 2026 |
 | Suite verified | vemotion-is-prop-valid | @emotion/is-prop-valid 1.4.0; Emotion's 293-test suite with it in place of the original | [@emotion/is-prop-valid 1.4.0](https://www.npmjs.com/package/@emotion/is-prop-valid), checked November 1, 2026 |
 | Suite verified | vemotion-use-insertion-effect-with-fallbacks | @emotion/use-insertion-effect-with-fallbacks 1.2.0; Emotion's suite under React 16 and React 18, and its declarations under TypeScript 7.1, 5.8 and 5.9 | [@emotion/use-insertion-effect-with-fallbacks 1.2.0](https://www.npmjs.com/package/@emotion/use-insertion-effect-with-fallbacks), checked November 1, 2026 |
 | Suite and differential verified | vemotion-serialize | @emotion/serialize 1.3.3; Emotion's 293-test suite with it in place of the original, 20,000 generated style arguments with identical results in development and production, and its declarations under TypeScript 7.1, 5.8 and 5.9 | [@emotion/serialize 1.3.3](https://www.npmjs.com/package/@emotion/serialize), checked November 1, 2026 |
@@ -147,7 +148,8 @@ Emotion's own packages follow on it, each written for VPM: first the leaves
 `vemotion-hash`, `vemotion-memoize`, `vemotion-unitless` and
 `vemotion-weak-memoize`, then `vemotion-sheet`, `vemotion-utils`,
 `vemotion-serialize`, `vemotion-is-prop-valid` and
-`vemotion-use-insertion-effect-with-fallbacks`.
+`vemotion-use-insertion-effect-with-fallbacks`, then `vemotion-cache` on
+vstylis.
 SDK upgrades and actual adoption of VPM
 packages require separate installation and application verification; changing an
 SDK version does not automatically install VPM replacements.
@@ -186,6 +188,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vemotion-cache](packages/vemotion-cache) | @emotion/cache 11.14.0 | On vstylis (stylis 4.4.0); Emotion's prefixer by property name (the original's copy of stylis 4.0.13's invented `-webkit-box-flex-wrap` and others), a valid `-ms-flex-item-align`, and `-ms-flex-pack` kept for `space-between`; otherwise identical CSS over 10,000 generated styles, VentiMath's RTL configuration included. |
 | [vemotion-is-prop-valid](packages/vemotion-is-prop-valid) | @emotion/is-prop-valid 1.4.0 | Forwards 17 current HTML and SVG attributes the original rejected (`command`, `commandFor`, `closedBy`, `part`, `shadowRootMode`, `imageSrcSet`, `noModule`, `precedence`...), which styled elements dropped. |
 | [vemotion-use-insertion-effect-with-fallbacks](packages/vemotion-use-insertion-effect-with-fallbacks) | @emotion/use-insertion-effect-with-fallbacks 1.2.0 | The same behavior, written for VPM. |
 | [vemotion-serialize](packages/vemotion-serialize) | @emotion/serialize 1.3.3 | Unitless properties written in kebab-case (`'font-weight': 600`) no longer get `px`, numeric fallback lists stay declarations (the original wrote `width{100;50%;}`), custom properties detected by `--`, and each call keeps its own state; otherwise identical output over 20,000 generated inputs. |
@@ -305,16 +308,16 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 ## Current verification
 
-The root suite contains **2,836 tests**: all pass on Node 24, and Bun passes
-2,833 with three documented runtime-specific skips. All 108 Node runtime packages'
+The root suite contains **2,839 tests**: all pass on Node 24, and Bun passes
+2,836 with three documented runtime-specific skips. All 108 Node runtime packages'
 public declarations compile without ambient Node, Undici or DOM types, under
 TypeScript 7 and under the TypeScript 5.8 and 5.9 compilers downstream
 applications use. The
-catalog covers **116 packages**, including two declaration-only packages and
-six browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
-`vemotion-sheet`, `vemotion-utils`, `vemotion-serialize` and
-`vemotion-use-insertion-effect-with-fallbacks`, whose declarations are checked
-with DOM (and React) types in their fixtures.
+catalog covers **117 packages**, including two declaration-only packages and
+seven browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
+`vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
+`vemotion-use-insertion-effect-with-fallbacks` and `vemotion-cache`, whose
+declarations are checked with DOM (and React) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
 24 and Bun. Earlier Node versions are outside the current support contract. Packages
@@ -438,6 +441,7 @@ and 39 total external runtime dependencies, all VPM packages.
 
 | Replacement | Upstream direct dependencies | VPM direct dependencies |
 | --- | ---: | ---: |
+| `vemotion-cache` | 5 (four Emotion packages, `stylis`) | 5 (four VPM Emotion packages, `vstylis`) |
 | `vemotion-is-prop-valid` | 1 (`@emotion/memoize`) | 1 (`vemotion-memoize`) |
 | `vemotion-use-insertion-effect-with-fallbacks` | 0 (React peer) | 0 (React peer) |
 | `vemotion-serialize` | 5 (four Emotion packages, `csstype`) | 4 (VPM Emotion packages; `csstype` peer, types only) |
@@ -619,7 +623,7 @@ Firebase handles errors thrown by plain handlers itself; finalhandler is exercis
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
 
-## Emotion's packages below the cache
+## Emotion's packages up to the cache
 
 `vemotion-hash`, `vemotion-memoize`, `vemotion-unitless`,
 `vemotion-weak-memoize`, `vemotion-sheet` and `vemotion-utils` target
@@ -659,6 +663,17 @@ parts, declarative shadow roots, `<link>` image candidates, `noModule`,
 `blocking` and React 19's `precedence`. `vemotion-use-insertion-effect-with-fallbacks`
 keeps the original's behavior; Emotion's suite now also runs under React 18,
 as upstream's `test:react18` does, where `useInsertionEffect` is used.
+
+`vemotion-cache` targets @emotion/cache 11.14.0 on vstylis. Its prefixer, a
+copy of stylis 4.0.13's in the original, selected properties by the same hash,
+so `flex-wrap` (in MUI's grid and stack styles) gained `-webkit-box-flex-wrap`
+and `color-scheme` gained `-webkit-print-color-scheme`; it gave IE
+`-ms-flex-item-align:flex-start`, and dropped `-ms-flex-pack` for
+`justify-content: space-between`. Properties are now selected by name with
+Emotion's rule set. Over 10,000 generated styles, with the default prefixer,
+without plugins, and in VentiMath's own configurations (stylis-plugin-rtl and
+its `@layer mui` plugin), its CSS is otherwise identical to the original's
+running on stylis 4.4.0, in development and production, on Node and Bun.
 
 See the [conformance record](scripts/emotion-conformance/README.md).
 

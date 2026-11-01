@@ -1,0 +1,56 @@
+{
+  "name": "vemotion-cache",
+  "version": "0.1.0",
+  "description": "Emotion's style cache on vstylis: inserts serialized styles into a sheet, or returns them on the server",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#is-development": {
+      "development": "./src/conditions/true.js",
+      "default": "./src/conditions/false.js"
+    },
+    "#is-browser": {
+      "edge-light": "./src/conditions/false.js",
+      "workerd": "./src/conditions/false.js",
+      "worker": "./src/conditions/false.js",
+      "browser": "./src/conditions/true.js",
+      "default": "./src/conditions/is-browser.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src/",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vemotion-cache"
+  },
+  "dependencies": {
+    "vemotion-memoize": "0.1.0",
+    "vemotion-sheet": "0.1.0",
+    "vemotion-utils": "0.1.0",
+    "vemotion-weak-memoize": "0.1.0",
+    "vstylis": "0.1.0"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

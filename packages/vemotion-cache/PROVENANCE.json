@@ -1,0 +1,31 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/cache",
+    "version": "11.14.0",
+    "tarball": "https://registry.npmjs.org/@emotion/cache/-/cache-11.14.0.tgz",
+    "tarballSha256": "750b790ef5dc9eef2f4049eddf88e7d9263db1f1d165f40a592dd488af76ff2b",
+    "integrity": "sha512-L/B1lc/TViYk4DcpGxtAVbx0ZyiKM5ktoIyafGkH6zg/tj+mA+NE//aPYKG0k8kCHSHVJrpLpcAlOBEXQ3SavA=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM: createCache, Emotion's stylis plugins (compat, removeLabel and the development alarms) and its prefixer, on vstylis (stylis 4.4.0) instead of stylis 4.2.0, vemotion-sheet, vemotion-memoize and vemotion-weak-memoize.",
+    "compat splits selectors with its own scanner instead of stylis's module-global tokenizer.",
+    "The prefixer selects properties by name with Emotion's rule set (stylis's rules without grid prefixing): the original's copy of stylis 4.0.13's prefixer selected them by a hash of the name's length and first four characters, so properties sharing a hash got invented declarations (flex-wrap gained -webkit-box-flex-wrap, color-scheme -webkit-print-color-scheme).",
+    "align-self gives IE's -ms-flex-item-align a valid keyword (the original wrote flex-start), and justify-content: space-between keeps -ms-flex-pack:justify (the original's pattern removed it).",
+    "The prefixer is exported for combining with other plugins.",
+    "The #is-development and #is-browser conditions choose development or production and browser or server behavior, as in the original's conditional builds.",
+    "ES module with bundled declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests pass with this package in place of the original, in development and production builds and with React 16 and React 18.",
+    "differential": "compare-cache.cjs: 10,000 generated styles as classes and global styles, in regular and compat mode, give the same CSS, inserted state and messages as @emotion/cache 11.14.0 (on stylis 4.4.0) with no plugins, the default prefixer and VentiMath's two configurations (stylis-plugin-rtl 2.1.1 and its @layer plugin), in development and production, on Node and Bun.",
+    "declarations": "types.cjs compiles an application against the declarations with DOM types under TypeScript 7.1, 5.8 and 5.9.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

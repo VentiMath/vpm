@@ -43,6 +43,10 @@ try {
         assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0'});
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
       }
+      if (name === 'vemotion-cache') {
+        assert.deepEqual(metadata.dependencies, {'vemotion-memoize': '0.1.0', 'vemotion-sheet': '0.1.0', 'vemotion-utils': '0.1.0', 'vemotion-weak-memoize': '0.1.0', vstylis: '0.1.0'});
+        assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/plugins.js', 'src/prefixer.js', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
+      }
       if (name === 'vemotion-serialize') {
         assert.deepEqual(metadata.dependencies, {'vemotion-hash': '0.1.0', 'vemotion-memoize': '0.1.0', 'vemotion-unitless': '0.1.0', 'vemotion-utils': '0.1.0'});
         assert.deepEqual(metadata.peerDependencies, {csstype: '^3.1.3'});

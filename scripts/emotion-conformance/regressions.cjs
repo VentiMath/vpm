@@ -66,7 +66,29 @@ const load = async name => (await import(pathToFileURL(path.join(packages, name,
     found.push(`${attributes.length} current HTML and SVG attributes not forwarded by styled elements (command, commandFor, part, shadowRootMode...)`);
   }
 
-  // 7. @emotion/utils's declarations import @emotion/sheet, which it does not
+  // 7. @emotion/cache's prefixer (a copy of stylis 4.0.13's) selects
+  // properties by a hash of the name's length and first four characters, so
+  // properties sharing a hash with a prefixed one get invented declarations;
+  // align-self gives IE an invalid value; and justify-content: space-between
+  // loses -ms-flex-pack (the replacement pattern spans both prefixed forms).
+  {
+    const original = require('./node_modules/@emotion/cache').default, {default: createCache} = await import(pathToFileURL(path.join(packages, 'vemotion-cache/index.js')).href);
+    let id = 0;
+    const css = (create, styles) => { const cache = create({key: 'css'}); return cache.insert('.a', {name: 'r' + id++, styles}, cache.sheet, false); };
+    const cases = {
+      'flex-wrap:wrap;': ['.a{-webkit-box-flex-wrap:wrap;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;}', '.a{flex-wrap:wrap;}'],
+      'color-scheme:dark;': ['.a{-webkit-print-color-scheme:dark;color-scheme:dark;}', '.a{color-scheme:dark;}'],
+      'align-self:flex-start;': ['.a{-webkit-align-self:flex-start;-ms-flex-item-align:flex-start;align-self:flex-start;}', '.a{-webkit-align-self:flex-start;-ms-flex-item-align:start;align-self:flex-start;}'],
+      'justify-content:space-between;': ['.a{-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;}', '.a{-webkit-box-pack:justify;-ms-flex-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;}'],
+    };
+    for (const [styles, [before, after]] of Object.entries(cases)) {
+      assert.equal(css(original, styles), before, styles);
+      assert.equal(css(createCache, styles), after, styles);
+    }
+    found.push("@emotion/cache's prefixer: -webkit-box-flex-wrap and other invented declarations, -ms-flex-item-align:flex-start, and justify-content: space-between without -ms-flex-pack");
+  }
+
+  // 8. @emotion/utils's declarations import @emotion/sheet, which it does not
   // depend on: installed on its own (pnpm, or any isolated install), its types
   // fail to compile.
   {

@@ -62,6 +62,20 @@ export function useStyles(insert: () => string): void {
   useInsertionEffectWithLayoutFallback(() => () => void inserted, [inserted]);
 }
 `,
+  cache: `import createCache, { type EmotionCache, type Options, type StylisPlugin, type StylisElement } from '@emotion/cache';
+// VentiMath's RootThemeProvider plugin.
+const wrapInLayer: (layerName: string) => StylisPlugin = layerName => (node: StylisElement) => {
+  if (node.root) return;
+  const child = { ...node, parent: node, root: node };
+  Object.assign(node, { children: [child], length: 6, parent: null, props: [layerName], return: '', root: null, type: '@layer', value: \`@layer \${layerName}\` });
+};
+const options: Options = { key: 'muiltr', stylisPlugins: [wrapInLayer('mui')], prepend: false, nonce: 'n', insertionPoint: document.createElement('meta') };
+const cache: EmotionCache = createCache(options);
+cache.sheet.insert('.a{}');
+// @ts-expect-error key is required
+createCache({});
+export { cache };
+`,
 };
 const available = Object.keys(consumers).filter(name => fs.existsSync(path.join(packages, 'vemotion-' + name)));
 

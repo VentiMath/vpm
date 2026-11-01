@@ -93,6 +93,17 @@
       "name": "vee-first",
       "version": "0.1.0",
     },
+    "packages/vemotion-cache": {
+      "name": "vemotion-cache",
+      "version": "0.1.0",
+      "dependencies": {
+        "vemotion-memoize": "0.1.0",
+        "vemotion-sheet": "0.1.0",
+        "vemotion-utils": "0.1.0",
+        "vemotion-weak-memoize": "0.1.0",
+        "vstylis": "0.1.0",
+      },
+    },
     "packages/vemotion-hash": {
       "name": "vemotion-hash",
       "version": "0.1.0",
@@ -881,6 +892,8 @@
     "vduplexify": ["vduplexify@workspace:packages/vduplexify"],
 
     "vee-first": ["vee-first@workspace:packages/vee-first"],
+
+    "vemotion-cache": ["vemotion-cache@workspace:packages/vemotion-cache"],
 
     "vemotion-hash": ["vemotion-hash@workspace:packages/vemotion-hash"],
 

@@ -49,10 +49,12 @@
     "react18": "npm:react@18.0.0-rc.0-next-aa8f2bdbc-20211215",
     "react18-dom": "npm:react-dom@18.0.0-rc.0-next-aa8f2bdbc-20211215",
     "react18-test-renderer": "npm:react-test-renderer@18.0.0-rc.0-next-aa8f2bdbc-20211215",
-    "stylis": "4.2.0"
+    "stylis": "4.2.0",
+    "stylis-plugin-rtl": "2.1.1"
   },
   "overrides": {
     "babel-preset-current-node-syntax": "1.0.1",
-    "cheerio": "1.0.0-rc.3"
+    "cheerio": "1.0.0-rc.3",
+    "cssjanus": "2.3.0"
   }
 }
