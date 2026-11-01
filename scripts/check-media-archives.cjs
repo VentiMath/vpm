@@ -96,10 +96,15 @@ try {
       assert.equal(metadata.bin.vuuid,'bin/vuuid.cjs');
       assert.doesNotMatch(run('tar',['-tzf',packed]),/\/(?:test|bench|node_modules)\//);
     }
-    if (['vfull-ui-headless-calendar','vordered-map','vlong','vobject-hash','vyocto-queue','vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
+    if (['vordered-map','vlong','vobject-hash','vyocto-queue','vpromisify','vprojectify','vduplexify','vstream-events','vretry-request','vextend','vis-stream','vgoogle-logging-utils','vjson-bigint'].includes(name)) {
       assert.equal(metadata.dependencies, undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
+    }
+    if (name === 'vfull-ui-headless-calendar') {
+      assert.equal(metadata.dependencies, undefined);
+      const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
+      assert.deepEqual(entries.sort(), ['LICENSE','README.md','PROVENANCE.json','package.json','index.js','index.d.ts','markers.js','durations.js','ranges.js','environment.js','formatters.js','zones.js'].sort());
     }
     if (name === 'vtanstack-query-core') {
       assert.equal(metadata.dependencies, undefined);

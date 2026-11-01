@@ -14,3 +14,9 @@ const iso: string = env.formatIso(wall) + formatTimeZoneOffset(offset, true);
 // @ts-expect-error settings require a locale
 new DateEnv({timeZone: 'UTC', calendarSystem: 'gregory'});
 void [text, duration, parsed, iso];
+
+// @ts-expect-error parsing can fail; callers must handle null
+const alwaysDate: Date = env.createMarker('invalid');
+// @ts-expect-error nonintegral month differences return null
+const alwaysMonths: number = env.diffWholeMonths(new Date(0), new Date(1));
+void [alwaysDate, alwaysMonths];

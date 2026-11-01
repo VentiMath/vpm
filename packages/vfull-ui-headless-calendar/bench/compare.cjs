@@ -1,8 +1,10 @@
 'use strict';
-// Paired measurements against @full-ui/headless-calendar 7.1.3 on
+// Process-isolated measurements against @full-ui/headless-calendar 7.1.3 on
 // temporal-polyfill 1.0.1 (which uses a runtime's native Temporal when there is
 // one, as on Bun). Run with TZ=America/New_York.
 const assert = require('node:assert/strict'), path = require('node:path');
+process.env.TZ = 'America/New_York';
+const expected = require('./expected.json');
 const fixture = path.resolve(__dirname, '../../../scripts/headless-calendar-conformance');
 
 (async () => {
@@ -25,6 +27,7 @@ const fixture = path.resolve(__dirname, '../../../scripts/headless-calendar-conf
     {name: 'local zone / 42 day cells to instants', make: compiled('const e = make("local"); return () => { let s = 0; for (const m of cells) s += e.toDate(m).valueOf() % 9973; return s; };'), validate: v => assert.ok(v > 0)},
     {name: 'UTC / parse 200 ISO strings and add a month', make: compiled('const e = make("UTC"), month = lib.createDuration({months: 1}); return () => { let s = 0; for (const t of isoStrings) s += e.add(e.createMarker(t), month).valueOf() % 9973; return s; };'), validate: v => assert.ok(v > 0)},
   ];
-  await require('../../../scripts/bench-paired.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases,
-    files: ['package.json', 'index.js', 'bench/compare.cjs', '../../scripts/headless-calendar-conformance/package-lock.json']});
+  for (const item of cases) item.validate = value => assert.equal(value, expected[item.name], item.name);
+  await require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases,
+    files: ['package.json', 'PROVENANCE.json', 'index.js', 'markers.js', 'ranges.js', 'durations.js', 'environment.js', 'formatters.js', 'zones.js', 'bench/compare.cjs', 'bench/expected.json', '../../scripts/headless-calendar-conformance/package-lock.json']});
 })().catch(error => { console.error(error); process.exit(1); });

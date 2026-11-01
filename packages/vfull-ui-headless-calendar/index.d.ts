@@ -48,7 +48,7 @@ declare function asRoughHours(dur: Duration): number;
 declare function asRoughMinutes(dur: Duration): number;
 declare function asRoughSeconds(dur: Duration): number;
 declare function asRoughMs(dur: Duration): number;
-declare function wholeDivideDurations(numerator: Duration, denominator: Duration): number;
+declare function wholeDivideDurations(numerator: Duration, denominator: Duration): number | null;
 declare function greatestDurationDenominator(dur: Duration): {
     unit: string;
     value: number;
@@ -64,8 +64,8 @@ declare function diffHours(m0: any, m1: any): number;
 declare function diffMinutes(m0: any, m1: any): number;
 declare function diffSeconds(m0: any, m1: any): number;
 declare function diffDayAndTime(m0: DateMarker, m1: DateMarker): Duration;
-declare function diffWholeWeeks(m0: DateMarker, m1: DateMarker): number;
-declare function diffWholeDays(m0: DateMarker, m1: DateMarker): number;
+declare function diffWholeWeeks(m0: DateMarker, m1: DateMarker): number | null;
+declare function diffWholeDays(m0: DateMarker, m1: DateMarker): number | null;
 declare function startOfDay(m: DateMarker): DateMarker;
 declare function startOfHour(m: DateMarker): Date;
 declare function startOfMinute(m: DateMarker): Date;
@@ -173,9 +173,9 @@ declare class DateEnv {
     weekTextShort: string;
     cmdFormatter?: CmdDateFormatterFunc;
     constructor(settings: DateEnvSettings);
-    createMarker(input: DateInput): DateMarker;
+    createMarker(input: DateInput): DateMarker | null;
     createNowMarker(): DateMarker;
-    createMarkerMeta(input: DateInput): DateMarkerMeta;
+    createMarkerMeta(input: DateInput): DateMarkerMeta | null;
     parse(s: string): DateMarkerMeta | null;
     getYear(marker: DateMarker): number;
     getMonth(marker: DateMarker): number;
@@ -184,14 +184,14 @@ declare class DateEnv {
     subtract(marker: DateMarker, dur: Duration): DateMarker;
     addYears(marker: DateMarker, n: number): Date;
     addMonths(marker: DateMarker, n: number): Date;
-    diffWholeYears(m0: DateMarker, m1: DateMarker): number;
-    diffWholeMonths(m0: DateMarker, m1: DateMarker): number;
+    diffWholeYears(m0: DateMarker, m1: DateMarker): number | null;
+    diffWholeMonths(m0: DateMarker, m1: DateMarker): number | null;
     greatestWholeUnit(m0: DateMarker, m1: DateMarker): {
         unit: string;
         value: number;
     };
     countDurationsBetween(m0: DateMarker, m1: DateMarker, d: Duration): number;
-    startOf(m: DateMarker, unit: string): Date;
+    startOf(m: DateMarker, unit: string): Date | null;
     startOfYear(m: DateMarker): DateMarker;
     startOfMonth(m: DateMarker): DateMarker;
     startOfWeek(m: DateMarker): DateMarker;
@@ -223,9 +223,9 @@ interface DateRange {
     start: DateMarker;
     end: DateMarker;
 }
-declare function parseRange(input: DateRangeInput, dateEnv: DateEnv): OpenDateRange;
+declare function parseRange(input: DateRangeInput, dateEnv: DateEnv): OpenDateRange | null;
 declare function invertRanges(ranges: DateRange[], constraintRange: DateRange): DateRange[];
-declare function intersectRanges(range0: OpenDateRange, range1: OpenDateRange): OpenDateRange;
+declare function intersectRanges(range0: OpenDateRange, range1: OpenDateRange): OpenDateRange | null;
 declare function rangesEqual(range0: OpenDateRange, range1: OpenDateRange): boolean;
 declare function rangesIntersect(range0: OpenDateRange, range1: OpenDateRange): boolean;
 declare function rangeContainsRange(outerRange: OpenDateRange, innerRange: OpenDateRange): boolean;
@@ -281,8 +281,8 @@ declare function joinDateTimeFormatParts(parts: {
 declare function parse(str: any): {
     marker: Date;
     isTimeUnspecified: boolean;
-    timeZoneOffset: any;
-};
+    timeZoneOffset: number | null;
+} | null;
 
 declare function isInt(n: any): boolean;
 declare function trimEnd(s: string): string;

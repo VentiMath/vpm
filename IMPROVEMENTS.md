@@ -837,39 +837,27 @@ including on Bun 1.4.0, whose fetch forwarded them in the recorded control.
 
 ## vfull-ui-headless-calendar
 
-Targets **@full-ui/headless-calendar 7.1.3**, checked November 1, 2026, the
-date engine under `@fullcalendar/core` and `@fullcalendar/react` 7.1.3. The
-published ES module and declarations are retained;
-[PROVENANCE.json](packages/vfull-ui-headless-calendar/PROVENANCE.json) records
-the changes.
+Targets **@full-ui/headless-calendar 7.1.3**. The adapted runtime bundle is
+replaced with independent modules for markers, durations, ranges, date
+environments and formatting. The independent VPM Intl time-zone layer is
+retained; public type contracts remain attributed to upstream, with corrected
+nullable results. All named runtime exports remain available.
 
-The original reads named IANA time zones through its `temporal-polyfill` peer,
-20 modules and about 411 KiB of source in a bundle. Here they are read through
-`Intl.DateTimeFormat`, with Temporal's `'compatible'` handling of skipped and
-repeated wall-clock times, in one 41 KiB module. Where a runtime has no native
-`Temporal` (Node.js 24, the iOS 15 WebView, browsers before Temporal shipped),
-the polyfill samples each zone every 60 days and misses offset changes that come
-in pairs inside one period. Against Node's own time zone data from 1840 to 2100
-the original has wrong offsets in 29 zones, among them Casablanca for weeks in most
-years from 2018 to 2083, Fiji in 2020-2021, Cairo in 2010 and 2014 and much of
-Europe in the 1940s. Years 0-99 are no longer read as
-1900-1999, offsets are rounded as a whole so Denver's local mean time prints as
-`-07:00` rather than `-06:60`, and the `'local'` zone keeps milliseconds when
-converting to a `Date`. VentiMath's calendar uses the `'local'` zone, which
-never needed the polyfill.
+Duration parsing rejects trailing junk and nonfinite values. Range inversion
+clips to the visible window and preserves caller order; epoch zero is a valid
+range boundary. Formatter caches observe changes to reused contexts. Earlier
+corrections remain: no temporal-polyfill dependency, accurate IANA transitions,
+years 0–99, local milliseconds and offset rounding without `:60`.
 
-The release's **75 vitest tests** pass for VPM and the original on Bun; Node
-22's ICU renders UTC as "GMT" instead of "GMT+0", failing the same two for both.
-Against a reference built from the runtime's `longOffset` zone names, VPM
-matches every zone around every offset change from 1840 to 2100 and across the
-whole `Date` range: 418 zones and about 2.8 million conversions on Node, 445
-zones on Bun. Four regression cases and eight focused tests cover the
-changes.
-Named-zone conversions take 66-84% less time than the polyfill on Node; against
-Bun's native `Temporal`, reading instants takes 44% less time and resolving
-wall-clock day cells about 89% more.
+Validation includes 75 upstream formatting tests, 107,500 deterministic
+arithmetic/parsing comparisons per runtime, focused regressions, the IANA
+transition sweep, and the mounted/browser calendar caller suites. Current
+measurements use isolated Node 24 and Bun processes; older same-process timing
+claims are superseded. Local conversion still costs about 7–8% more; Bun also
+retains an 11% UTC parse/add cost and a 10% named-wall conversion cost.
 
 See the [package contract](packages/vfull-ui-headless-calendar/README.md),
+[provenance](packages/vfull-ui-headless-calendar/PROVENANCE.json),
 [conformance record](scripts/headless-calendar-conformance/README.md) and
 [measurements](packages/vfull-ui-headless-calendar/bench/results/README.md).
 
