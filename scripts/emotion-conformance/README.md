@@ -31,10 +31,11 @@ node scripts/emotion-conformance/run.cjs
 node scripts/emotion-conformance/run.cjs --upstream --mode=production
 node scripts/emotion-conformance/run.cjs --mode=production
 node scripts/emotion-conformance/regressions.cjs
+node scripts/emotion-conformance/compare-serialize.cjs
 node scripts/emotion-conformance/types.cjs
 ```
 
-Repeat the regressions with Bun; Jest runs on Node.
+Repeat the regressions and the serialize comparison with Bun; Jest runs on Node.
 
 `run.cjs` runs the suite the way upstream's `test:dist` does, against built
 packages (`jest.dist.js`), with upstream's Babel configuration (its Emotion
@@ -49,9 +50,18 @@ that no package publishes, and is not run.
 
 In development, 285 tests pass and 8 are gated to production; in production, 5
 pass. The same holds with VPM's packages: currently vemotion-hash,
-vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet and
-vemotion-utils, with the original packages above them. 305 and 11 snapshots
+vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet,
+vemotion-utils and vemotion-serialize, with the original packages above them. 305 and 11 snapshots
 match.
+
+`compare-serialize.cjs` runs 20,000 generated style arguments (objects with
+nested selectors and at-rules, fallback arrays, numbers, booleans, null, custom
+properties and vendor keys; arrays; template literals; functions of props;
+serialized styles; keyframes; labels; registered class names) through
+@emotion/serialize and vemotion-serialize, in the production build and with the
+`development` condition, and requires the same name, styles, keyframes,
+messages and errors. The inputs leave out what VPM changes (below). There are
+no differences.
 
 `types.cjs` compiles an application using each VPM package's API (subclassing
 `StyleSheet` as MUI does, the cache and serialized style types) against the
@@ -61,6 +71,8 @@ originals' and VPM's declarations with DOM types, under TypeScript 7.1, 5.8 and
 `regressions.cjs` reproduces each change with the originals: two styles
 differing by characters whose UTF-16 code units share a low byte get the same
 class name, `gridArea` and `lineClamp` numbers are serialized with `px`,
-`undefined` results are recomputed by memoize, and @emotion/utils's
+`undefined` results are recomputed by memoize, unitless properties written in
+kebab-case are serialized with `px`, `width: [100, '50%']` becomes a selector
+block, and @emotion/utils's
 declarations, installed with only its declared dependencies, fail to compile
 because they import the undeclared `@emotion/sheet`.

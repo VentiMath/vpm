@@ -18,12 +18,15 @@ const load = async name => (await import(pathToFileURL(path.join(packages, name,
   const hash = await load('vemotion-hash');
   assert.notEqual(hash(first.styles), hash(second.styles));
   assert.equal(hash('something'), require('./node_modules/@emotion/hash').default('something'));
+  const vpmSerialize = (await import(pathToFileURL(path.join(packages, 'vemotion-serialize/index.js')).href)).serializeStyles;
+  assert.notEqual(vpmSerialize([{'&::before': {content: '"中"'}}]).name, vpmSerialize([{'&::before': {content: '"伭"'}}]).name);
   found.push(`two styles differing by 中/伭 share class css-${first.name}`);
 
   // 2. @emotion/unitless lacks gridArea and lineClamp, which take numbers.
   assert.equal(serializeStyles([{gridArea: 2, lineClamp: 3}]).styles, 'grid-area:2px;line-clamp:3px;');
   const unitless = await load('vemotion-unitless');
   assert.deepEqual([unitless.gridArea, unitless.lineClamp], [1, 1]);
+  assert.equal(vpmSerialize([{gridArea: 2, lineClamp: 3}]).styles, 'grid-area:2;line-clamp:3;');
   found.push('gridArea: 2 and lineClamp: 3 serialized with px');
 
   // 3. @emotion/memoize recomputes undefined results on every call.
@@ -37,7 +40,20 @@ const load = async name => (await import(pathToFileURL(path.join(packages, name,
   }
   found.push('undefined results recomputed by memoize');
 
-  // 4. @emotion/utils's declarations import @emotion/sheet, which it does not
+  // 4. @emotion/serialize decides units with the key as written, so unitless
+  // properties written in kebab-case get px in production (development only
+  // warns that kebab-case is unsupported).
+  assert.equal(serializeStyles([{'font-weight': 600, 'line-height': 1.5, opacity: 0.5}]).styles, 'font-weight:600px;line-height:1.5px;opacity:0.5;');
+  assert.equal(vpmSerialize([{'font-weight': 600, 'line-height': 1.5, opacity: 0.5}]).styles, 'font-weight:600;line-height:1.5;opacity:0.5;');
+  found.push('font-weight: 600 and line-height: 1.5 written in kebab-case serialized with px');
+
+  // 5. A fallback list counts as one only when its first value is a string;
+  // numbers first make it a selector block.
+  assert.equal(serializeStyles([{width: [100, '50%']}]).styles, 'width{100;50%;}');
+  assert.equal(vpmSerialize([{width: [100, '50%']}]).styles, 'width:100px;width:50%;');
+  found.push('the fallback list width: [100, "50%"] serialized as width{100;50%;}');
+
+  // 6. @emotion/utils's declarations import @emotion/sheet, which it does not
   // depend on: installed on its own (pnpm, or any isolated install), its types
   // fail to compile.
   {

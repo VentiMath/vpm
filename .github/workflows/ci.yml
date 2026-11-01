@@ -112,6 +112,7 @@ jobs:
           node scripts/emotion-conformance/run.cjs --upstream --mode=production
           node scripts/emotion-conformance/run.cjs --mode=production
           node scripts/emotion-conformance/regressions.cjs
+          node scripts/emotion-conformance/compare-serialize.cjs
           node scripts/emotion-conformance/types.cjs
           node scripts/gax-conformance/run.cjs --upstream
           node scripts/gax-conformance/run.cjs
@@ -378,6 +379,7 @@ jobs:
           bun scripts/stylis-conformance/compare.cjs
           bun scripts/stylis-conformance/regressions.cjs
           bun scripts/emotion-conformance/regressions.cjs
+          bun scripts/emotion-conformance/compare-serialize.cjs
           bun scripts/gax-conformance/run.cjs --upstream
           bun scripts/gax-conformance/run.cjs
           bun scripts/gax-conformance/regressions.cjs

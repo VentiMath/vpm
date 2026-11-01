@@ -1,0 +1,31 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/serialize",
+    "version": "1.3.3",
+    "tarball": "https://registry.npmjs.org/@emotion/serialize/-/serialize-1.3.3.tgz",
+    "tarballSha256": "08471d4e6b98a3319efb1ecfcbc43badd803daef5aa91179659c8cc33ecf25d2",
+    "integrity": "sha512-EISGqt7sSNWHGI76hC7x1CksiXPahbxEOrC5RjmFRJTqLyEK9/9hZvBbiYn70dw4wuwMKiEMCUlR6ZXTSWQqxA=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM: each serializeStyles call keeps its state (registered styles, props, collected keyframes) in its own object instead of module variables saved and restored around nested calls.",
+    "Units are decided with the camelCase form of a key, so unitless properties written in kebab-case ('font-weight': 600, 'line-height': 1.5) no longer get px; the original added px in production and only warned in development.",
+    "An array of values starting with a number is a fallback list (width: [100, '50%'] is width:100px;width:50%;), not a selector block (width{100;50%;}).",
+    "Custom properties are keys starting with --; the original took any key whose second character is - (so z-index escaped the kebab-case warning).",
+    "On vemotion-hash, vemotion-unitless and vemotion-memoize, so non-ASCII styles get distinct class names and gridArea and lineClamp take no px.",
+    "csstype, used only by the declarations, is a peer dependency.",
+    "ES module with bundled declarations; the #is-development condition chooses development or production behavior."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds.",
+    "differential": "compare-serialize.cjs: 20,000 generated style arguments give the same name, styles, keyframes, messages and errors as @emotion/serialize 1.3.3 in development and production, on Node and Bun.",
+    "declarations": "types.cjs compiles an application against the declarations with DOM types under TypeScript 7.1, 5.8 and 5.9.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

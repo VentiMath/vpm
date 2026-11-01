@@ -101,6 +101,19 @@
       "name": "vemotion-memoize",
       "version": "0.1.0",
     },
+    "packages/vemotion-serialize": {
+      "name": "vemotion-serialize",
+      "version": "0.1.0",
+      "dependencies": {
+        "vemotion-hash": "0.1.0",
+        "vemotion-memoize": "0.1.0",
+        "vemotion-unitless": "0.1.0",
+        "vemotion-utils": "0.1.0",
+      },
+      "peerDependencies": {
+        "csstype": "^3.1.3",
+      },
+    },
     "packages/vemotion-sheet": {
       "name": "vemotion-sheet",
       "version": "0.1.0",
@@ -815,6 +828,8 @@
 
     "@typescript/typescript-win32-x64": ["@typescript/typescript-win32-x64@7.1.0-beta", "", { "os": "win32", "cpu": "x64" }, "sha512-UKcHvbybY2tDTvFW2b1vwiAvDlIRooo69lh8CXWVhOQejcvpM5+IgbiFW9EIwR5Wi5X/v+BdN7gdWbigBuJ3rw=="],
 
+    "csstype": ["csstype@3.2.3", "", {}, "sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ=="],
+
     "react": ["react@19.3.1", "", {}, "sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw=="],
 
     "react-dom": ["react-dom@19.3.1", "", { "dependencies": { "scheduler": "^0.28.0" }, "peerDependencies": { "react": "^19.3.1" } }, "sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ=="],
@@ -856,6 +871,8 @@
     "vemotion-hash": ["vemotion-hash@workspace:packages/vemotion-hash"],
 
     "vemotion-memoize": ["vemotion-memoize@workspace:packages/vemotion-memoize"],
+
+    "vemotion-serialize": ["vemotion-serialize@workspace:packages/vemotion-serialize"],
 
     "vemotion-sheet": ["vemotion-sheet@workspace:packages/vemotion-sheet"],
 

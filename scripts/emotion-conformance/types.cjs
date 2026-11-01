@@ -42,6 +42,16 @@ const css: string | undefined = insertStyles(cache, serialized, true);
 cache.insert('.css-abc', serialized, cache.sheet, true);
 export { raw, css };
 `,
+  serialize: `import { serializeStyles, type CSSObject, type Interpolation, type Keyframes, type SerializedStyles } from '@emotion/serialize';
+type Theme = { spacing: number };
+const card: CSSObject = { display: ['-webkit-box', 'flex'], padding: 8, '&:hover': { opacity: 0.5 }, '@media (min-width: 600px)': { padding: 12 } };
+const themed: Interpolation<{ theme: Theme }> = ({ theme }) => ({ margin: theme.spacing * 2 });
+declare const fade: Keyframes;
+const serialized: SerializedStyles = serializeStyles<{ theme: Theme }>([card, themed, { animationName: fade }], {}, { theme: { spacing: 4 } });
+// @ts-expect-error not a CSS value
+const wrong: CSSObject = { display: { nested: Symbol('x') } };
+export { serialized, wrong };
+`,
 };
 const available = Object.keys(consumers).filter(name => fs.existsSync(path.join(packages, 'vemotion-' + name)));
 
@@ -52,9 +62,12 @@ try {
     const root = path.join(directory, library), nodeModules = path.join(root, 'node_modules');
     fs.mkdirSync(path.join(nodeModules, '@emotion'), {recursive: true});
     if (library === 'upstream') {
+      fs.symlinkSync(path.join(modules, 'csstype'), path.join(nodeModules, 'csstype'), 'dir');
       for (const name of fs.readdirSync(path.join(modules, '@emotion'))) fs.symlinkSync(path.join(modules, '@emotion', name), path.join(nodeModules, '@emotion', name), 'dir');
     } else {
       for (const name of fs.readdirSync(packages).filter(name => name.startsWith('vemotion-') || name === 'vstylis')) fs.symlinkSync(path.join(packages, name), path.join(nodeModules, name), 'dir');
+      // Peer of vemotion-serialize (style property types), as an application installs it.
+      fs.symlinkSync(path.join(modules, 'csstype'), path.join(nodeModules, 'csstype'), 'dir');
     }
     const files = available.map(name => {
       const file = path.join(root, name + '.ts');
