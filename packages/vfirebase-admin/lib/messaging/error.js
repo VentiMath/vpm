@@ -18,7 +18,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FirebaseMessagingError = exports.messagingClientErrorCode = exports.MessagingErrorCode = void 0;
 const error_1 = require("../utils/error");
-const deep_copy_1 = require("../utils/deep-copy");
 /**
  * The constant mapping for valid Messaging client error codes.
  */
@@ -219,77 +218,30 @@ const TOPIC_MGT_SERVER_TO_CLIENT_CODE = {
     INTERNAL: 'INTERNAL_ERROR',
     UNKNOWN: 'UNKNOWN_ERROR',
 };
-/**
- * Firebase Messaging error code structure. This extends `FirebaseError`.
- */
+// Code/diagnostic tables above retain the upstream public contract. The mapping
+// and error construction below are independent, with own-key lookup only.
+function serverInfo(mapping, serverCode, message, cause) {
+    const key = typeof serverCode === 'string' && Object.hasOwn(mapping, serverCode) ? mapping[serverCode] : 'UNKNOWN_ERROR';
+    const info = exports.messagingClientErrorCode[key];
+    let description = message || info.message;
+    const response = cause?.response, data = response?.data;
+    if (key === 'UNKNOWN_ERROR' && data !== undefined) {
+        try {description += ` Raw server response: "${typeof data === 'string' ? data : JSON.stringify(data)}"`;} catch {}
+    }
+    return {code: info.code, message: description, cause,
+        httpResponse: response ? error_1.toHttpResponse(response) : undefined};
+}
 class FirebaseMessagingError extends error_1.FirebaseError {
-    /**
-     * Creates the developer-facing error corresponding to the backend error code.
-     *
-     * @param serverErrorCode - The server error code.
-     * @param [message] The error message. The default message is used
-     *     if not provided.
-     * @param [serverError] The error's raw server response.
-     * @returns The corresponding developer-facing error.
-     * @internal
-     */
-    static fromServerError(serverErrorCode, message, serverError) {
-        // If not found, default to unknown error.
-        let clientCodeKey = 'UNKNOWN_ERROR';
-        if (serverErrorCode && serverErrorCode in MESSAGING_SERVER_TO_CLIENT_CODE) {
-            clientCodeKey = MESSAGING_SERVER_TO_CLIENT_CODE[serverErrorCode];
-        }
-        const error = (0, deep_copy_1.deepCopy)(exports.messagingClientErrorCode[clientCodeKey]);
-        error.message = message || error.message;
-        const rawData = serverError?.response?.data;
-        if (clientCodeKey === 'UNKNOWN_ERROR' && typeof rawData !== 'undefined') {
-            try {
-                error.message += ` Raw server response: "${typeof rawData === 'string' ? rawData : JSON.stringify(rawData)}"`;
-            }
-            catch (e) {
-                // Ignore JSON parsing error.
-            }
-        }
-        error.cause = serverError;
-        error.httpResponse = serverError?.response ? (0, error_1.toHttpResponse)(serverError.response) : undefined;
-        return new FirebaseMessagingError(error);
-    }
-    /**
-     * @internal
-     */
-    static fromTopicManagementServerError(serverErrorCode, message, serverError) {
-        // If not found, default to unknown error.
-        const clientCodeKey = TOPIC_MGT_SERVER_TO_CLIENT_CODE[serverErrorCode] || 'UNKNOWN_ERROR';
-        const error = (0, deep_copy_1.deepCopy)(exports.messagingClientErrorCode[clientCodeKey]);
-        error.message = message || error.message;
-        const rawData = serverError?.response?.data;
-        if (clientCodeKey === 'UNKNOWN_ERROR' && typeof rawData !== 'undefined') {
-            try {
-                error.message += ` Raw server response: "${typeof rawData === 'string' ? rawData : JSON.stringify(rawData)}"`;
-            }
-            catch (e) {
-                // Ignore JSON parsing error.
-            }
-        }
-        error.cause = serverError;
-        error.httpResponse = serverError?.response ? (0, error_1.toHttpResponse)(serverError.response) : undefined;
-        return new FirebaseMessagingError(error);
-    }
-    /**
-     *
-     * @param info - The error code info.
-     * @param message - The error message. This will override the default message if provided.
-     */
     constructor(info, message) {
-        // Override default message if custom message provided.
-        super({
-            code: `messaging/${info.code}`,
-            message: message || info.message,
-            httpResponse: info.httpResponse,
-            cause: info.cause,
-        });
-        /** @internal */
+        super({code: `messaging/${info.code}`, message: message || info.message,
+            httpResponse: info.httpResponse, cause: info.cause});
         this.codePrefix = 'messaging';
+    }
+    static fromServerError(code, message, cause) {
+        return new FirebaseMessagingError(serverInfo(MESSAGING_SERVER_TO_CLIENT_CODE, code, message, cause));
+    }
+    static fromTopicManagementServerError(code, message, cause) {
+        return new FirebaseMessagingError(serverInfo(TOPIC_MGT_SERVER_TO_CLIENT_CODE, code, message, cause));
     }
 }
 exports.FirebaseMessagingError = FirebaseMessagingError;

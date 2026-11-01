@@ -994,8 +994,12 @@ pending work and recovers from failure; encoded identifiers cannot change the
 resource path. Batch sessions open only when discovery succeeds and at least one
 message validates, and close after all results settle. Twenty-four normal
 original/VPM outcomes, 511 unchanged Messaging tests and real local FCM exchanges
-cover this orchestration. Schema validators, server-error mapping and topic
-management remain upstream-derived.
+cover this orchestration. Response dispatch and error decoding are independently
+implemented: HTTP 200 error bodies or missing message names cannot count as
+successful batch deliveries, and malformed/prototype-named errors retain Firebase
+error context. Sixty-three normal projections and real HTTP/1+HTTP/2 batches
+verify error codes, ordering and counts. Schema validators and topic-management
+orchestration remain upstream-derived.
 
 Credential documents preserve the validated identity through first use, including
 frozen objects and files. Factories observe file rotation, honor HTTP agent

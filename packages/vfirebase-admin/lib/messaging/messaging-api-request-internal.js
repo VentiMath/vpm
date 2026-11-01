@@ -16,256 +16,81 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FirebaseMessagingRequestHandler = void 0;
-const api_request_1 = require("../utils/api-request");
-const messaging_errors_internal_1 = require("./messaging-errors-internal");
-const index_1 = require("../utils/index");
-const error_1 = require("./error");
-const error_2 = require("../utils/error");
-// FCM backend constants
-const FIREBASE_MESSAGING_TIMEOUT = 15000;
-const FIREBASE_MESSAGING_HTTP_METHOD = 'POST';
-const FIREBASE_MESSAGING_HEADERS = {
-    'X-Firebase-Client': `fire-admin-node/${(0, index_1.getSdkVersion)()}`,
-    'access_token_auth': 'true',
-};
-/**
- * Class that provides a mechanism to send requests to the Firebase Cloud Messaging backend.
- */
+Object.defineProperty(exports, '__esModule', {value: true});
+
+const {AuthorizedHttpClient, AuthorizedHttp2Client, RequestResponseError} = require('../utils/api-request');
+const {getSdkVersion} = require('../utils');
+const {toHttpResponse} = require('../utils/error');
+const {FirebaseMessagingError, MessagingErrorCode: codes} = require('./error');
+const {createFirebaseError, getErrorCode, getErrorMessage, hasServerError} = require('./messaging-errors-internal');
+const headers = Object.freeze({'X-Firebase-Client': `fire-admin-node/${getSdkVersion()}`, access_token_auth: 'true'});
+
+function request(host, path, data, session, method = 'POST') {
+    const plan = {method, url: `https://${host}${path}`, data, headers, timeout: 15000};
+    if (session !== undefined) plan.http2SessionHandler = session;
+    return plan;
+}
+function dispatch(client, plan, accept, reject) {
+    return client.send(plan).then(accept).catch(error => {
+        if (error instanceof RequestResponseError) return reject(error);
+        throw error;
+    });
+}
+function validSendData(data) {
+    return data !== null && typeof data === 'object' && !Array.isArray(data)
+        && !hasServerError(data) && typeof data.name === 'string' && data.name.length > 0;
+}
+
 class FirebaseMessagingRequestHandler {
-    /**
-     * @param app - The app used to fetch access tokens to sign API requests.
-     * @constructor
-     */
     constructor(app) {
-        this.httpClient = new api_request_1.AuthorizedHttpClient(app);
-        this.http2Client = new api_request_1.AuthorizedHttp2Client(app);
+        this.httpClient = new AuthorizedHttpClient(app);
+        this.http2Client = new AuthorizedHttp2Client(app);
     }
-    /**
-     * Invokes the request handler with the provided request data.
-     *
-     * @param host - The host to which to send the request.
-     * @param path - The path to which to send the request.
-     * @param requestData - The request data.
-     * @returns A promise that resolves with the response.
-     */
-    invokeRequestHandler(host, path, requestData) {
-        const request = {
-            method: FIREBASE_MESSAGING_HTTP_METHOD,
-            url: `https://${host}${path}`,
-            data: requestData,
-            headers: FIREBASE_MESSAGING_HEADERS,
-            timeout: FIREBASE_MESSAGING_TIMEOUT,
-        };
-        return this.httpClient.send(request).then((response) => {
-            // Send non-JSON responses to the catch() below where they will be treated as errors.
-            if (!response.isJson()) {
-                throw new api_request_1.RequestResponseError(response);
-            }
-            // Check for backend errors in the response.
-            const errorCode = (0, messaging_errors_internal_1.getErrorCode)(response.data);
-            if (errorCode) {
-                throw new api_request_1.RequestResponseError(response);
-            }
-            // Return entire response.
+    invokeRequestHandler(host, path, data) {
+        // Legacy topic management also uses this generic JSON operation.
+        return dispatch(this.httpClient, request(host, path, data), response => {
+            if (!response.isJson() || hasServerError(response.data)) throw new RequestResponseError(response);
             return response.data;
-        })
-            .catch((err) => {
-            if (err instanceof api_request_1.RequestResponseError) {
-                throw (0, messaging_errors_internal_1.createFirebaseError)(err);
-            }
-            // Re-throw the error if it already has the proper format.
-            throw err;
-        });
+        }, error => {throw createFirebaseError(error);});
     }
-    /**
-     * Invokes the HTTP/1.1 request handler with the provided request data.
-     *
-     * @param host - The host to which to send the request.
-     * @param path - The path to which to send the request.
-     * @param requestData - The request data.
-     * @returns A promise that resolves with the {@link SendResponse}.
-     */
-    invokeHttpRequestHandlerForSendResponse(host, path, requestData) {
-        const request = {
-            method: FIREBASE_MESSAGING_HTTP_METHOD,
-            url: `https://${host}${path}`,
-            data: requestData,
-            headers: FIREBASE_MESSAGING_HEADERS,
-            timeout: FIREBASE_MESSAGING_TIMEOUT,
-        };
-        return this.httpClient.send(request).then((response) => {
-            return this.buildSendResponse(response);
-        })
-            .catch((err) => {
-            if (err instanceof api_request_1.RequestResponseError) {
-                return this.buildSendResponseFromError(err);
-            }
-            // Re-throw the error if it already has the proper format.
-            throw err;
-        });
+    invokeHttpRequestHandlerForSendResponse(host, path, data) {
+        return dispatch(this.httpClient, request(host, path, data),
+            response => this.buildSendResponse(response), error => this.buildSendResponseFromError(error));
     }
-    /**
-     * Invokes the HTTP/2 request handler with the provided request data.
-     *
-     * @param host - The host to which to send the request.
-     * @param path - The path to which to send the request.
-     * @param requestData - The request data.
-     * @returns A promise that resolves with the {@link SendResponse}.
-     */
-    invokeHttp2RequestHandlerForSendResponse(host, path, requestData, http2SessionHandler) {
-        const request = {
-            method: FIREBASE_MESSAGING_HTTP_METHOD,
-            url: `https://${host}${path}`,
-            data: requestData,
-            headers: FIREBASE_MESSAGING_HEADERS,
-            timeout: FIREBASE_MESSAGING_TIMEOUT,
-            http2SessionHandler: http2SessionHandler
-        };
-        return this.http2Client.send(request).then((response) => {
-            return this.buildSendResponse(response);
-        })
-            .catch((err) => {
-            if (err instanceof api_request_1.RequestResponseError) {
-                return this.buildSendResponseFromError(err);
-            }
-            // Re-throw the error if it already has the proper format.
-            throw err;
-        });
+    invokeHttp2RequestHandlerForSendResponse(host, path, data, session) {
+        return dispatch(this.http2Client, request(host, path, data, session),
+            response => this.buildSendResponse(response), error => this.buildSendResponseFromError(error));
     }
     buildSendResponse(response) {
-        const result = {
-            success: response.status === 200,
-        };
-        if (result.success) {
-            result.messageId = response.data.name;
+        if (response.status === 200 && response.isJson()) {
+            const data = response.data;
+            if (validSendData(data)) return {success: true, messageId: data.name};
         }
-        else {
-            result.error = (0, messaging_errors_internal_1.createFirebaseError)(new api_request_1.RequestResponseError(response));
-        }
-        return result;
+        return this.buildSendResponseFromError(new RequestResponseError(response));
     }
-    buildSendResponseFromError(err) {
-        return {
-            success: false,
-            error: (0, messaging_errors_internal_1.createFirebaseError)(err)
-        };
+    buildSendResponseFromError(error) {return {success: false, error: createFirebaseError(error)};}
+    invokeHttpRequestHandlerForTopicSubscriptionResponse(host, path, method, data) {
+        return dispatch(this.httpClient, request(host, path, data, undefined, method === 'subscribeToTopic' ? 'POST' : 'DELETE'),
+            response => this.buildTopicSubscriptionResponse(response, method), error => this.buildTopicSubscriptionResponseFromError(error, method));
     }
-    /**
-     * Invokes the HTTP/1.1 request handler for a topic management operation.
-     *
-     * @param host - The host to which to send the request.
-     * @param path - The path to which to send the request.
-     * @param methodName - The name of the calling method (subscribeToTopic or unsubscribeFromTopic).
-     * @param requestData - The request data (or undefined for DELETE).
-     * @returns A promise that resolves with the {@link TopicSubscriptionResponse}.
-     */
-    invokeHttpRequestHandlerForTopicSubscriptionResponse(host, path, methodName, requestData) {
-        const request = {
-            method: methodName === 'subscribeToTopic' ? 'POST' : 'DELETE',
-            url: `https://${host}${path}`,
-            data: requestData,
-            headers: FIREBASE_MESSAGING_HEADERS,
-            timeout: FIREBASE_MESSAGING_TIMEOUT,
-        };
-        return this.httpClient.send(request).then((response) => {
-            return this.buildTopicSubscriptionResponse(response, methodName);
-        })
-            .catch((err) => {
-            if (err instanceof api_request_1.RequestResponseError) {
-                return this.buildTopicSubscriptionResponseFromError(err, methodName);
-            }
-            // Re-throw the error if it already has the proper format.
-            throw err;
-        });
+    invokeHttp2RequestHandlerForTopicSubscriptionResponse(host, path, method, data, session) {
+        return dispatch(this.http2Client, request(host, path, data, session, method === 'subscribeToTopic' ? 'POST' : 'DELETE'),
+            response => this.buildTopicSubscriptionResponse(response, method), error => this.buildTopicSubscriptionResponseFromError(error, method));
     }
-    /**
-     * Invokes the HTTP/2 request handler for a topic management operation.
-     *
-     * @param host - The host to which to send the request.
-     * @param path - The path to which to send the request.
-     * @param methodName - The name of the calling method (subscribeToTopic or unsubscribeFromTopic).
-     * @param requestData - The request data (or undefined for DELETE).
-     * @param http2SessionHandler - The HTTP/2 session handler.
-     * @returns A promise that resolves with the {@link TopicSubscriptionResponse}.
-     */
-    invokeHttp2RequestHandlerForTopicSubscriptionResponse(host, path, methodName, requestData, http2SessionHandler) {
-        const request = {
-            method: methodName === 'subscribeToTopic' ? 'POST' : 'DELETE',
-            url: `https://${host}${path}`,
-            data: requestData,
-            headers: FIREBASE_MESSAGING_HEADERS,
-            timeout: FIREBASE_MESSAGING_TIMEOUT,
-            http2SessionHandler: http2SessionHandler
-        };
-        return this.http2Client.send(request).then((response) => {
-            return this.buildTopicSubscriptionResponse(response, methodName);
-        })
-            .catch((err) => {
-            if (err instanceof api_request_1.RequestResponseError) {
-                return this.buildTopicSubscriptionResponseFromError(err, methodName);
-            }
-            // Re-throw the error if it already has the proper format.
-            throw err;
-        });
+    buildTopicSubscriptionResponse(response, method) {
+        return response.status === 200 ? {success: true} : this.buildTopicSubscriptionResponseFromError(new RequestResponseError(response), method);
     }
-    buildTopicSubscriptionResponse(response, methodName) {
-        if (response.status === 200) {
-            return { success: true };
-        }
-        return this.buildTopicSubscriptionResponseFromError(new api_request_1.RequestResponseError(response), methodName);
-    }
-    buildTopicSubscriptionResponseFromError(err, methodName) {
-        if (err.response.isJson()) {
-            const json = err.response.data;
-            const errorCode = (0, messaging_errors_internal_1.getErrorCode)(json);
-            if (methodName === 'subscribeToTopic' && (errorCode === 'ALREADY_EXISTS' || err.response.status === 409)) {
-                return { success: true };
-            }
-            const errorMessage = (0, messaging_errors_internal_1.getErrorMessage)(json);
-            return {
-                success: false,
-                error: error_1.FirebaseMessagingError.fromTopicManagementServerError(errorCode || 'UNKNOWN_ERROR', errorMessage, err),
-            };
-        }
-        // Non-JSON response
-        if (methodName === 'subscribeToTopic' && err.response.status === 409) {
-            return { success: true };
-        }
-        let errorCode;
-        switch (err.response.status) {
-            case 400:
-                errorCode = error_1.MessagingErrorCode.INVALID_REGISTRATION_TOKEN;
-                break;
-            case 401:
-            case 403:
-                errorCode = error_1.MessagingErrorCode.AUTHENTICATION_ERROR;
-                break;
-            case 404:
-                errorCode = error_1.MessagingErrorCode.REGISTRATION_TOKEN_NOT_REGISTERED;
-                break;
-            case 429:
-                errorCode = error_1.MessagingErrorCode.TOPICS_SUBSCRIPTION_RATE_EXCEEDED;
-                break;
-            case 500:
-                errorCode = error_1.MessagingErrorCode.INTERNAL_ERROR;
-                break;
-            case 503:
-                errorCode = error_1.MessagingErrorCode.SERVER_UNAVAILABLE;
-                break;
-            default:
-                errorCode = error_1.MessagingErrorCode.UNKNOWN_ERROR;
-        }
-        return {
-            success: false,
-            error: new error_1.FirebaseMessagingError({
-                code: errorCode,
-                message: `Server responded with status ${err.response.status}.`,
-                httpResponse: (0, error_2.toHttpResponse)(err.response),
-                cause: err,
-            }),
-        };
+    buildTopicSubscriptionResponseFromError(cause, method) {
+        const response = cause.response, status = response.status, json = response.isJson();
+        const data = json ? response.data : undefined, code = json ? getErrorCode(data) : null;
+        if (method === 'subscribeToTopic' && (status === 409 || code === 'ALREADY_EXISTS')) return {success: true};
+        if (json) return {success: false,
+            error: FirebaseMessagingError.fromTopicManagementServerError(code || 'UNKNOWN_ERROR', getErrorMessage(data), cause)};
+        const mapped = status === 400 ? codes.INVALID_REGISTRATION_TOKEN : status === 401 || status === 403 ? codes.AUTHENTICATION_ERROR
+            : status === 404 ? codes.REGISTRATION_TOKEN_NOT_REGISTERED : status === 429 ? codes.TOPICS_SUBSCRIPTION_RATE_EXCEEDED
+            : status === 500 ? codes.INTERNAL_ERROR : status === 503 ? codes.SERVER_UNAVAILABLE : codes.UNKNOWN_ERROR;
+        return {success: false, error: new FirebaseMessagingError({code: mapped,
+            message: `Server responded with status ${status}.`, httpResponse: toHttpResponse(response), cause})};
     }
 }
 exports.FirebaseMessagingRequestHandler = FirebaseMessagingRequestHandler;

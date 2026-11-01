@@ -15,110 +15,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.createFirebaseError = createFirebaseError;
-exports.getErrorCode = getErrorCode;
-exports.getErrorMessage = getErrorMessage;
-const error_1 = require("./error");
-const error_2 = require("../utils/error");
-const validator = require("../utils/validator");
-/**
- * Creates a new `FirebaseMessagingError` by extracting the error code, message and other relevant
- * details from a `RequestResponseError` response.
- *
- * @param err - The `RequestResponseError` to convert into a Firebase error
- * @returns A Firebase error that can be returned to the user.
- */
-function createFirebaseError(err) {
-    if (err.response.isJson()) {
-        // For JSON responses, map the server response to a client-side error.
-        const json = err.response.data;
-        let errorCode = getErrorCode(json);
-        const errorMessage = getErrorMessage(json);
-        if (errorCode === 'UNREGISTERED' || errorCode === 'NOT_FOUND') {
-            let requestData = err.response.config && err.response.config.data;
-            if (requestData && (typeof requestData === 'string' || Buffer.isBuffer(requestData))) {
-                try {
-                    const strData = typeof requestData === 'string' ? requestData : requestData.toString('utf-8');
-                    requestData = JSON.parse(strData);
-                }
-                catch (e) {
-                    // Ignore parsing errors.
-                }
-            }
-            const messageObj = requestData && requestData.message;
-            if (messageObj && typeof messageObj.fid === 'string') {
-                errorCode = 'UNREGISTERED_FID';
-            }
-        }
-        return error_1.FirebaseMessagingError.fromServerError(errorCode, errorMessage, err);
-    }
-    // Non-JSON response
-    let error;
-    switch (err.response.status) {
-        case 400:
-            error = error_1.messagingClientErrorCode.INVALID_ARGUMENT;
-            break;
-        case 401:
-        case 403:
-            error = error_1.messagingClientErrorCode.AUTHENTICATION_ERROR;
-            break;
-        case 500:
-            error = error_1.messagingClientErrorCode.INTERNAL_ERROR;
-            break;
-        case 503:
-            error = error_1.messagingClientErrorCode.SERVER_UNAVAILABLE;
-            break;
-        default:
-            // Treat non-JSON responses with unexpected status codes as unknown errors.
-            error = error_1.messagingClientErrorCode.UNKNOWN_ERROR;
-    }
-    return new error_1.FirebaseMessagingError({
-        code: error.code,
-        message: `${error.message} Raw server response: "${err.response.text}". Status code: ` +
-            `${err.response.status}.`,
-        httpResponse: (0, error_2.toHttpResponse)(err.response),
-        cause: err,
-    });
-}
-/**
- * @param response - The response to check for errors.
- * @returns The error code if present; null otherwise.
- */
+Object.defineProperty(exports, '__esModule', {value: true});
+
+const {FirebaseMessagingError, messagingClientErrorCode: codes} = require('./error');
+const {toHttpResponse} = require('../utils/error');
+const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const text = value => typeof value === 'string' && value.length > 0;
+const own = (value, key) => record(value) && Object.hasOwn(value, key);
+const detailType = 'type.googleapis.com/google.firebase.fcm.v1.FcmError';
+
+// The wire error envelope is data, including malformed or prototype-named fields.
+// Select a usable FCM detail first, then the canonical status or legacy message.
 function getErrorCode(response) {
-    if (validator.isNonNullObject(response) && 'error' in response) {
-        const error = response.error;
-        if (validator.isString(error)) {
-            return error;
-        }
-        if (validator.isArray(error.details)) {
-            const fcmErrorType = 'type.googleapis.com/google.firebase.fcm.v1.FcmError';
-            for (const element of error.details) {
-                if (element['@type'] === fcmErrorType) {
-                    return element.errorCode;
-                }
-            }
-        }
-        if ('status' in error) {
-            return error.status;
-        }
-        else {
-            return error.message;
+    if (!own(response, 'error')) return null;
+    const error = response.error;
+    if (typeof error === 'string') return error;
+    if (!record(error)) return null;
+    if (Array.isArray(error.details)) {
+        for (const detail of error.details) {
+            if (record(detail) && detail['@type'] === detailType && text(detail.errorCode)) return detail.errorCode;
         }
     }
-    return null;
+    return text(error.status) ? error.status : text(error.message) ? error.message : null;
 }
-/**
- * Extracts error message from the given response object.
- *
- * @param response - The response to check for errors.
- * @returns The error message if present; null otherwise.
- */
 function getErrorMessage(response) {
-    if (validator.isNonNullObject(response) &&
-        'error' in response &&
-        validator.isNonEmptyString(response.error.message)) {
-        return response.error.message;
-    }
-    return null;
+    const error = own(response, 'error') ? response.error : null;
+    return record(error) && text(error.message) ? error.message : null;
 }
+function hasServerError(response) {return own(response, 'error') && response.error !== undefined;}
+function requestMessage(config) {
+    let data = config?.data;
+    if (typeof data === 'string' || Buffer.isBuffer(data)) {
+        try {data = JSON.parse(typeof data === 'string' ? data : data.toString('utf8'));} catch {return undefined;}
+    }
+    return record(data) ? data.message : undefined;
+}
+function createFirebaseError(cause) {
+    const response = cause.response;
+    if (response.isJson()) {
+        const data = response.data;
+        let code = getErrorCode(data);
+        if ((code === 'UNREGISTERED' || code === 'NOT_FOUND') && typeof requestMessage(response.config)?.fid === 'string') code = 'UNREGISTERED_FID';
+        return FirebaseMessagingError.fromServerError(code, getErrorMessage(data), cause);
+    }
+    const status = response.status;
+    const info = status === 400 ? codes.INVALID_ARGUMENT : status === 401 || status === 403 ? codes.AUTHENTICATION_ERROR
+        : status === 500 ? codes.INTERNAL_ERROR : status === 503 ? codes.SERVER_UNAVAILABLE : codes.UNKNOWN_ERROR;
+    return new FirebaseMessagingError({code: info.code,
+        message: `${info.message} Raw server response: "${response.text}". Status code: ${status}.`,
+        httpResponse: toHttpResponse(response), cause});
+}
+Object.assign(exports, {createFirebaseError, getErrorCode, getErrorMessage, hasServerError});
