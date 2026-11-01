@@ -970,8 +970,8 @@ See the [package contract](packages/vfirebase-functions/README.md),
 Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
 service lifecycle, token lease, option snapshots, credential adapters, Auth response records,
 user-management plans, token policy, key caches, signature adaptation, Auth
-request dispatch, HTTP/1 request plans and retry policy have source-informed VPM implementations.
-Response/authorization helpers, HTTP/2, other service APIs and Google Auth
+request dispatch, HTTP/1 request plans, retry policy and authorization headers
+have source-informed VPM implementations. Response helpers, HTTP/2, other service APIs and Google Auth
 remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
@@ -1004,8 +1004,8 @@ invalid or duplicate response indices cannot produce impossible totals. Update
 normalization handles frozen structural inputs and own prototype-named keys
 without modifying caller data or prototypes. Provider linking also validates
 unlink lists. Local HTTP controls compare normal and partial-failure requests
-and reproduce the original defects. Existing transport, endpoint schemas and
-MFA conversion remain retained.
+and reproduce the original defects. Endpoint schemas and MFA conversion remain retained; transport status is
+recorded below.
 
 Token-kind policy separates blocking events from ID/session tokens: only blocking
 events may omit their subject. Malformed claim shapes return Auth errors;
@@ -1030,14 +1030,13 @@ invalid Unicode are rejected. Concurrent project discovery shares work and can
 retry after failure. Non-JSON responses, non-string error codes and prototype-named
 unknown codes return Auth errors with response context. The 296 unchanged upstream
 request-handler tests and real local HTTP controls verify the boundary; the generic
-HTTP authorization helpers and endpoint schemas remain retained.
+endpoint schemas remain retained.
 
 HTTP/1 request plans capture wire bytes once for retries. Explicit content types
 survive header casing, and completed errors preserve connection reuse. Truncated
 responses and malformed gzip settle as errors rather than leaving pending promises;
 failed streams are destroyed and buffered chunks released. Case-insensitive
-coding and Brotli are supported. Response projection, authorization headers
-and HTTP/2 transport remain retained. Actual local HTTP controls
+coding and Brotli are supported. Response projection and HTTP/2 transport remain retained. Actual local HTTP controls
 verify the changes on Node and Bun.
 
 While public keys are missing or expired, upstream starts one key request per
@@ -1060,7 +1059,7 @@ Admin calls (`verifyIdToken` with revocation checks, `getUser`, `updateUser`,
 `exists`, `delete` and signed URLs, and `sendEachForMulticast`) produce
 identical requests and results against local servers. Existing regression probes,
 isolated app-lifecycle, user-record, user-operation, token-policy, key/cache and
-request-dispatch, HTTP lifecycle and retry controls, and seventeen focused tests cover the changes.
+request-dispatch, HTTP lifecycle and retry/authorization controls, and eighteen focused tests cover the changes.
 
 See the [package contract](packages/vfirebase-admin/README.md),
 [conformance record](scripts/firebase-admin-conformance/README.md) and
@@ -1071,7 +1070,14 @@ policy. It owns validated settings and arrays, parses complete Retry-After
 values, treats HTTP dates as UTC, honors explicit zero delays, rejects invalid
 limits and splits long native timer waits. Normal upstream retry behavior and
 actual request callers remain verified; focused controls reproduce each fixed
-boundary. Response projection and transport authorization remain retained.
+boundary. Response projection remains retained.
+
+One independent authorization adapter now serves HTTP/1 and HTTP/2. It captures
+transport options and header values before token acquisition, canonicalizes
+protected headers and checks app lifetime after acquisition. Header casing can
+no longer let stale caller Authorization override the acquired bearer token or
+replace explicit quota/metrics values. Original controls reproduce the old wire
+behavior; the operation builders remain responsible for request body ownership.
 
 ## vgoogle-cloud-firestore
 

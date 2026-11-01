@@ -3,8 +3,8 @@
 **Implementation status:** app registration, service lifetime, token refresh
 ownership, option snapshots, credential adapters, Auth response records,
 user-management plans, token policy, key caching, signature adaptation, Auth
-request dispatch, HTTP/1 request plans and retry policy use VPM redesigns. Google
-Auth, response/authorization helpers, HTTP/2 and other service implementations remain
+request dispatch, HTTP/1 request plans, retry policy and authorization headers use
+VPM redesigns. Google Auth, response helpers, HTTP/2 and other service implementations remain
 upstream-derived. This is not yet a completed SDK rewrite. [Provenance](PROVENANCE.json) records
 the boundary.
 
@@ -49,8 +49,17 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   responses and invalid compressed bodies reject instead of remaining pending;
   failures destroy their streams and release buffered chunks. Completed error
   responses keep connections reusable. Gzip/deflate coding is case-insensitive,
-  and Brotli responses are decoded. Response projection, authorization headers
-  and HTTP/2 transport still use retained implementations. The retry policy is independently implemented.
+  and Brotli responses are decoded. Response projection and HTTP/2 transport
+  still use retained implementations. The retry policy is independently implemented.
+
+- **Authorization header ownership.** HTTP/1 and HTTP/2 share one preparation
+  path. Transport options and header values are captured before token acquisition,
+  including copies of array-valued headers. The acquired bearer token wins over
+  every spelling of `Authorization`; duplicate casing cannot substitute a stale
+  credential. Explicit quota and metrics headers are recognized without case.
+  Prototype-named headers remain data, caller records remain unchanged, and app
+  deletion is checked after token acquisition. Auth/message operation builders
+  own request bodies; this adapter handles transport options and headers.
 
 - **Owned retry policy.** Each client captures its retry settings and arrays;
   later caller mutations cannot change an in-flight budget. Counts/delay limits
@@ -70,7 +79,7 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   Dot-segment identifiers and malformed Unicode are rejected. Concurrent project
   discovery shares one operation and failures allow retry. Malformed server
   codes and non-JSON error bodies produce Auth errors with response context.
-  Endpoint schemas and authorized-header assembly remain upstream-derived.
+  Endpoint schemas remain upstream-derived.
 
 - **Owned signing keys and freshness.** Certificate and JWKS caches publish
   immutable snapshots. Prototype-named key IDs remain own data. Concurrent
@@ -106,8 +115,7 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   cannot change the result. Oversized batches are rejected before copying;
   sparse lists reject invalid UIDs rather than reporting unsent users as deleted.
   Error indices must be unique integers within the batch. Linking a provider
-  also validates any unlink list. Endpoint schema validation, authorized-header assembly and MFA conversion
-  remain upstream-derived.
+  also validates any unlink list. Endpoint schema validation and MFA conversion remain upstream-derived.
 
 - **Auth response records.** User, provider, timestamp and MFA records use
   explicit field projections. Serializing JSON-shaped claims preserves own
@@ -188,22 +196,29 @@ Missing-dependency errors name the VPM packages.
 
 The isolated measurements compare the full VPM stack with upstream, including
 previous JWT improvements; they do not isolate the HTTP rewrite alone. The
-[full report](bench/results/README.md) includes all thirty cases, process
+[full report](bench/results/README.md) includes all thirty-two cases, process
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
 The HTTP cases serialize a request and consume a synthetic response stream;
-they exclude sockets and network latency. With Auth-style headers, the Bun case
-takes about 2.7 µs versus 2.3 µs (+21% median paired time). Both Node transport
-comparisons and Bun's headerless comparison remain inconclusive under the
-control checks. Request ownership, header normalization and response-failure
-handling have a CPU cost; these changes are not presented as a transport speedup.
+they exclude sockets and network latency. With Auth-style headers, Node takes
+about 2.8 µs versus 2.2 µs (+25% median paired time), and Bun takes 3.2 µs versus
+2.3 µs (+39%). Bun's headerless comparison also retains a cost; Node's is
+inconclusive under the control checks.
+
+The two authorized-request cases additionally capture headers before a synthetic
+token acquisition. With default metrics headers they take 3.7 µs versus 2.5 µs
+on Node (+50%) and 3.2 µs versus 2.2 µs on Bun (+42%). With explicit metrics and
+request headers they take 3.2 µs versus 2.5 µs (+29%) and 3.5 µs versus 2.2 µs
+(+54%), respectively. The one-pass owned header record avoids repeated deletion
+and copying, but ownership and protected-header normalization retain measurable
+CPU costs. These changes are not presented as a transport speedup.
 
 The retry cases expose their costs separately. Custom policy capture takes about
-115 ns versus 10 ns on Node and 362 ns versus 3 ns on Bun; it copies and freezes
-caller settings instead of retaining them. Default-policy construction takes
-16 ns versus 10 ns on Node and 6 ns versus 11 ns on Bun. Strict UTC HTTP-date
-parsing takes 469 ns versus 242 ns on Node and 425 ns versus 42 ns on Bun. These
+112 ns versus 10 ns on Node and 373 ns versus 3 ns on Bun; it copies and freezes
+caller settings instead of retaining them. Default-policy construction is
+inconclusive on Node and takes 7 ns versus 11 ns on Bun. Strict UTC HTTP-date
+parsing takes 466 ns versus 241 ns on Node and 437 ns versus 47 ns on Bun. These
 setup/error-path regressions are retained with their full percentages and
 controls; ordinary request success does not execute the retry-date parser.
 
@@ -228,6 +243,9 @@ wire compatibility; these CPU timings do not establish application latency.
   results are identical to the original's.
 - [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
   fix above reproduced with the original, then checked here.
+- [Authorization controls](../../scripts/firebase-admin-conformance/authorized-headers.cjs)
+  reproduce duplicate-casing overrides and pending option/header mutations for
+  both clients, then verify the HTTP/1 wire result and retained deletion checks.
 - [Retry controls](../../scripts/firebase-admin-conformance/http-retry.cjs)
   compare normal budgets and actual HTTP retries, then reproduce mutable policy,
   numeric-prefix, timezone and timer-overflow failures in the original adapter.
