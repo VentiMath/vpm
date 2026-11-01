@@ -68,4 +68,4 @@ fragment).
 
 `types.cjs` compiles a React component using the calendar, plugins, a locale and
 the option, callback and error types against each library's declarations, with
-DOM and React 19 types, under TypeScript 7.1, 5.8 and 5.9.
+DOM and React 19 types, under the configured TypeScript 7 compiler.

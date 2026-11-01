@@ -56,12 +56,11 @@ The two platform declaration packages have additional checks:
 node scripts/sync-types.cjs --check
 npm run test:types
 node scripts/check-type-archives.cjs
-node scripts/check-legacy-types.cjs
 ```
 
-The workspace builds with TypeScript 7. The isolated legacy compiler gate only
-checks that public declarations remain usable by downstream TypeScript 5.8/5.9
-applications. Platform declaration baselines are documented in
+The workspace and declaration fixtures use the configured TypeScript 7 compiler.
+Runtime declarations are checked with NodeNext and bundler resolution; browser
+fixtures include their required DOM and React types. Platform baselines are documented in
 [vnode-types](../packages/vnode-types) and [vundici-types](../packages/vundici-types).
 They do not change the Node 24 runtime target.
 

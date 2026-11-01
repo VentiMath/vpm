@@ -18,7 +18,7 @@
   "verification": {
     "fixture": "scripts/emotion-conformance",
     "upstreamSuite": "Emotion's 293 tests (hash, weak-memoize, sheet, cache, react, styled) pass with this package in place of the original, in development and production builds.",
-    "declarations": "scripts/emotion-conformance/types.cjs compiles an application against the declarations with DOM types under TypeScript 7.1, 5.8 and 5.9.",
+    "declarations": "scripts/emotion-conformance/types.cjs compiles an application against the declarations with DOM types under the configured TypeScript 7 compiler.",
     "runtimes": [
       "Node.js 24",
       "Bun"

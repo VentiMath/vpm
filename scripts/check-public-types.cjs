@@ -12,12 +12,15 @@ const files = fs.readdirSync(path.join(root, 'packages')).flatMap(name => {
   // fixtures check them with those types.
   return metadata.vpm?.kind === 'types' || metadata.vpm?.platform === 'browser' ? [] : [path.join(directory, metadata.types)];
 });
-const result = compile({ files, compilerOptions: {
-  strict: true, noEmit: true, target: 'ES2022', lib: ['ES2022'], types: [],
-  module: 'NodeNext', moduleResolution: 'NodeNext', skipLibCheck: false,
-} });
-clean(result);
-for (const file of result.files) {
-  assert.doesNotMatch(file, /(?:@types\/node|\/vnode-types\/|\/v?undici-types\/|lib\.dom)/);
+for (const [name, resolution] of Object.entries({
+  NodeNext: {module: 'NodeNext', moduleResolution: 'NodeNext'},
+  bundler: {module: 'ESNext', moduleResolution: 'bundler'},
+})) {
+  const result = compile({files, compilerOptions: {
+    strict: true, noEmit: true, target: 'ES2022', lib: ['ES2022'], types: [],
+    ...resolution, skipLibCheck: false,
+  }});
+  clean(result);
+  for (const file of result.files) assert.doesNotMatch(file, /(?:@types\/node|\/vnode-types\/|\/v?undici-types\/|lib\.dom)/);
+  console.log(`${files.length} runtime packages: public declarations compile with ${name} resolution, without Node, Undici or DOM types.`);
 }
-console.log(`${files.length} runtime packages: public declarations compile without Node, Undici or DOM types.`);

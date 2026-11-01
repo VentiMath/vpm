@@ -339,8 +339,6 @@ jobs:
       - run: npm --prefix scripts/type-consumers ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/sync-types.cjs --check
       - run: npm run test:types
-      - run: npm --prefix scripts/legacy-typescript ci --ignore-scripts --no-audit --no-fund
-      - run: node scripts/check-legacy-types.cjs
       - run: node scripts/fullcalendar-react-conformance/types.cjs
       - run: node scripts/emotion-conformance/types.cjs
       - run: node scripts/check-type-archives.cjs

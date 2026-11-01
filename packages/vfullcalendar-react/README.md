@@ -86,7 +86,7 @@ changes come from the packages below it:
   the time zone and JSON feed cases observed through a mounted calendar.
 - [Declarations](../../scripts/fullcalendar-react-conformance/types.cjs): an
   application compiles against them with DOM and React 19 types under
-  TypeScript 7.1, 5.8 and 5.9.
+  the configured TypeScript 7 compiler.
 - [Bundle size](bench/bundle.cjs), recorded in
   [bench/results/bundle.json](bench/results/bundle.json).
 

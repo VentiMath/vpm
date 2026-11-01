@@ -22,7 +22,7 @@
     "fixture": "scripts/emotion-conformance",
     "upstreamSuite": "Emotion's 293 tests pass with this package in place of the original, in development and production builds and with React 16 and React 18.",
     "differential": "compare-cache.cjs: 10,000 generated styles as classes and global styles, in regular and compat mode, give the same CSS, inserted state and messages as @emotion/cache 11.14.0 (on stylis 4.4.0) with no plugins, the default prefixer and VentiMath's two configurations (stylis-plugin-rtl 2.1.1 and its @layer plugin), in development and production, on Node and Bun.",
-    "declarations": "types.cjs compiles an application against the declarations with DOM types under TypeScript 7.1, 5.8 and 5.9.",
+    "declarations": "types.cjs compiles an application against the declarations with DOM types under the configured TypeScript 7 compiler.",
     "runtimes": [
       "Node.js 24",
       "Bun"
