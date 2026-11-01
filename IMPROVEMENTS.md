@@ -971,7 +971,8 @@ Targets **firebase-admin 14.5.0**, checked October 31, 2026. The app registry,
 service lifecycle, token lease, option snapshots, credential adapters, Auth response records,
 user-management plans, token policy, key caches, signature adaptation, Auth
 request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy and authorization
-headers and JSON/text response projection have source-informed VPM implementations. Multipart/raw-HTTP helpers, other service APIs and Google Auth
+headers, JSON/text response projection and Firestore client configuration/registry
+have source-informed VPM implementations. Multipart/raw-HTTP helpers, other service APIs and Google Auth
 remain upstream-derived.
 [PROVENANCE.json](packages/vfirebase-admin/PROVENANCE.json) records that boundary.
 Realtime Database and multipart parsing are omitted; app-option equality is
@@ -1098,6 +1099,13 @@ valid JSON. Normal scalar values, parsed-object identity, raw text and diagnosti
 causes remain compatible. Native error construction preserves subclasses on Node
 24 and Bun. Twenty-four original/VPM outcomes, including actual HTTP requests,
 match on both runtimes. Multipart and raw-HTTP helpers remain retained.
+
+Firestore client initialization now uses one owned database record containing the
+client and captured settings. Mutating an earlier settings object cannot disguise
+a conflicting `preferRest` value. Project and credential come from one app-options
+snapshot; settings getters are read once. Failed construction is not cached.
+Entry-point export routing and underlying Google Cloud Firestore operations
+remain retained and tracked separately.
 
 ## vgoogle-cloud-firestore
 

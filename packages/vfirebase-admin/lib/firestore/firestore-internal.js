@@ -16,130 +16,71 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FirestoreService = exports.DEFAULT_DATABASE_ID = void 0;
-exports.getFirestoreOptions = getFirestoreOptions;
-const error_1 = require("./error");
-const credential_internal_1 = require("../app/credential-internal");
-const validator = require("../utils/validator");
-const utils = require("../utils/index");
-exports.DEFAULT_DATABASE_ID = '(default)';
-class FirestoreService {
-    constructor(app) {
-        this.databases = new Map();
-        this.firestoreSettings = new Map();
-        this.appInternal = app;
+const {FirebaseFirestoreError} = require('./error');
+const {ServiceAccountCredential, isApplicationDefault} = require('../app/credential-internal');
+const {getSdkVersion} = require('../utils');
+const nonempty = value => typeof value === 'string' && value.length > 0;
+const DEFAULT_DATABASE_ID = '(default)';
+
+function getFirestoreOptions(app, settings) {
+    if (!app || typeof app !== 'object' || Array.isArray(app) || !('options' in app)) {
+        throw new FirebaseFirestoreError({code: 'invalid-argument',
+            message: 'First argument passed to admin.firestore() must be a valid Firebase app instance.'});
     }
-    initializeDatabase(databaseId, settings) {
-        const existingInstance = this.databases.get(databaseId);
-        if (existingInstance) {
-            const initialSettings = this.firestoreSettings.get(databaseId) ?? {};
-            if (this.checkIfSameSettings(settings, initialSettings)) {
-                return existingInstance;
-            }
-            throw new error_1.FirebaseFirestoreError({
-                code: 'failed-precondition',
+    // Credential and project come from the same app-options snapshot.
+    const options = app.options;
+    const {credential, projectId: explicitProject} = options;
+    const serviceAccount = credential instanceof ServiceAccountCredential;
+    const projectId = nonempty(explicitProject) ? explicitProject : serviceAccount ? credential.projectId
+        : process.env.GOOGLE_CLOUD_PROJECT || process.env.GCLOUD_PROJECT;
+    if (!serviceAccount && !isApplicationDefault(credential)) {
+        throw new FirebaseFirestoreError({code: 'invalid-credential',
+            message: 'Failed to initialize Google Cloud Firestore client with the available credentials. ' +
+                'Must initialize the SDK with a certificate credential or application default credentials ' +
+                'to use Cloud Firestore API.'});
+    }
+    const version = getSdkVersion();
+    const result = {firebaseVersion: version, firebaseAdminVersion: version, preferRest: settings?.preferRest};
+    if (serviceAccount) result.credentials = {private_key: credential.privateKey, client_email: credential.clientEmail};
+    if (nonempty(projectId)) result.projectId = projectId;
+    return result;
+}
+
+class FirestoreService {
+    #app;
+    #databases = new Map();
+    constructor(app) {this.#app = app;}
+    get app() {return this.#app;}
+    getDatabase(id) {
+        return this.#databases.get(id)?.client ?? this.initializeDatabase(id, {});
+    }
+    initializeDatabase(id, settings) {
+        const preferRest = settings?.preferRest;
+        const existing = this.#databases.get(id);
+        if (existing) {
+            if (existing.preferRest === preferRest) return existing.client;
+            throw new FirebaseFirestoreError({code: 'failed-precondition',
                 message: 'initializeFirestore() has already been called with ' +
                     'different options. To avoid this error, call initializeFirestore() with the ' +
                     'same options as when it was originally called, or call getFirestore() to return the' +
-                    ' already initialized instance.'
-            });
+                    ' already initialized instance.'});
         }
-        const newInstance = initFirestore(this.app, databaseId, settings);
-        this.databases.set(databaseId, newInstance);
-        this.firestoreSettings.set(databaseId, settings);
-        return newInstance;
-    }
-    getDatabase(databaseId) {
-        let database = this.databases.get(databaseId);
-        if (database === undefined) {
-            database = initFirestore(this.app, databaseId, {});
-            this.databases.set(databaseId, database);
-            this.firestoreSettings.set(databaseId, {});
+        const options = getFirestoreOptions(this.#app, {preferRest});
+        options.databaseId = id;
+        let Firestore;
+        try {({Firestore} = require('vgoogle-cloud-firestore'));}
+        catch (cause) {
+            throw new FirebaseFirestoreError({code: 'missing-dependencies',
+                message: 'Failed to import the Cloud Firestore client library for Node.js. ' +
+                    'Make sure the "vgoogle-cloud-firestore" package is installed.', cause});
         }
-        return database;
-    }
-    checkIfSameSettings(settingsA, settingsB) {
-        const a = settingsA ?? {};
-        const b = settingsB ?? {};
-        // If we start passing more settings to Firestore constructor,
-        // replace this with deep equality check.
-        return (a.preferRest === b.preferRest);
-    }
-    /**
-     * Returns the app associated with this Storage instance.
-     *
-     * @returns The app associated with this Storage instance.
-     */
-    get app() {
-        return this.appInternal;
+        const client = new Firestore(options);
+        // Only publish successful construction and the actual option value used.
+        this.#databases.set(id, {client, preferRest});
+        return client;
     }
 }
+
+exports.DEFAULT_DATABASE_ID = DEFAULT_DATABASE_ID;
+exports.getFirestoreOptions = getFirestoreOptions;
 exports.FirestoreService = FirestoreService;
-function getFirestoreOptions(app, firestoreSettings) {
-    if (!validator.isNonNullObject(app) || !('options' in app)) {
-        throw new error_1.FirebaseFirestoreError({
-            code: 'invalid-argument',
-            message: 'First argument passed to admin.firestore() must be a valid Firebase app instance.',
-        });
-    }
-    const projectId = utils.getExplicitProjectId(app);
-    const credential = app.options.credential;
-    const sdkVersion = utils.getSdkVersion();
-    const preferRest = firestoreSettings?.preferRest;
-    if (credential instanceof credential_internal_1.ServiceAccountCredential) {
-        return {
-            credentials: {
-                private_key: credential.privateKey,
-                client_email: credential.clientEmail,
-            },
-            // When the SDK is initialized with ServiceAccountCredentials an explicit projectId is
-            // guaranteed to be available.
-            projectId: projectId,
-            firebaseVersion: sdkVersion,
-            firebaseAdminVersion: sdkVersion,
-            preferRest,
-        };
-    }
-    else if ((0, credential_internal_1.isApplicationDefault)(app.options.credential)) {
-        // Try to use the Google application default credentials.
-        // If an explicit project ID is not available, let Firestore client discover one from the
-        // environment. This prevents the users from having to set GOOGLE_CLOUD_PROJECT in GCP runtimes.
-        return validator.isNonEmptyString(projectId)
-            ? {
-                projectId,
-                firebaseVersion: sdkVersion,
-                firebaseAdminVersion: sdkVersion,
-                preferRest
-            }
-            : {
-                firebaseVersion: sdkVersion,
-                firebaseAdminVersion: sdkVersion,
-                preferRest
-            };
-    }
-    throw new error_1.FirebaseFirestoreError({
-        code: 'invalid-credential',
-        message: 'Failed to initialize Google Cloud Firestore client with the available credentials. ' +
-            'Must initialize the SDK with a certificate credential or application default credentials ' +
-            'to use Cloud Firestore API.',
-    });
-}
-function initFirestore(app, databaseId, firestoreSettings) {
-    const options = getFirestoreOptions(app, firestoreSettings);
-    options.databaseId = databaseId;
-    let firestoreDatabase;
-    try {
-        // Lazy-load the Firestore implementation here, which in turns loads gRPC.
-        firestoreDatabase = require('vgoogle-cloud-firestore').Firestore;
-    }
-    catch (err) {
-        throw new error_1.FirebaseFirestoreError({
-            code: 'missing-dependencies',
-            message: 'Failed to import the Cloud Firestore client library for Node.js. '
-                + 'Make sure the "vgoogle-cloud-firestore" package is installed.',
-            cause: err,
-        });
-    }
-    return new firestoreDatabase(options);
-}

@@ -38,17 +38,14 @@ export interface FirestoreSettings {
     preferRest?: boolean;
 }
 export declare class FirestoreService {
-    private readonly appInternal;
-    private readonly databases;
-    private readonly firestoreSettings;
+    #private;
     constructor(app: App);
     initializeDatabase(databaseId: string, settings: FirestoreSettings): Firestore;
     getDatabase(databaseId: string): Firestore;
-    private checkIfSameSettings;
     /**
-     * Returns the app associated with this Storage instance.
+     * Returns the app associated with this Firestore service.
      *
-     * @returns The app associated with this Storage instance.
+     * @returns The app associated with this Firestore service.
      */
     get app(): App;
 }
