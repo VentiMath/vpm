@@ -1,7 +1,7 @@
 # vgoogle-cloud-storage
 
 **Implementation status:** endpoint selection, per-client emulator context and
-CRC32C checksums have independent VPM implementations. Bucket/file operations,
+CRC32C checksums and hash-stream validation have independent VPM implementations. Bucket/file operations,
 transport and signing retain upstream runtime code with focused changes. Rewriting those
 application-facing paths is still pending.
 [Provenance](PROVENANCE.json) records this boundary.
@@ -58,6 +58,11 @@ V4 signatures expire within seven days.
   seeds fail immediately. Chunking and resumed checksums preserve the wire format.
   Initialization respects typed-array/DataView offsets, including cross-realm
   views; upstream base64 decoding remains compatible.
+- The hash Transform exposes non-destructive in-progress MD5 snapshots and caches
+  the final digest. It hashes each chunk before emission and validates every enabled
+  checksum independently; MD5 success cannot hide a CRC failure. Every enabled
+  hash needs an expected value unless `updateHashesOnly` is enabled. Custom CRC
+  providers, original chunk identity and backpressure are preserved.
 - CJS and native ESM entry points share class identities. Export enumeration
   ignores inherited properties. Public declarations are
   self-contained and do not install ambient Node declarations.
@@ -75,7 +80,7 @@ part of your application contract.
 ## Verified scope
 
 The broader published SDK implementation and public declarations are retained;
-endpoint configuration and CRC32C computation are independently implemented.
+endpoint configuration, CRC32C computation and hash-stream validation are independently implemented.
 Independent verification focuses on backend object uploads, signed URLs,
 listings, existence checks and deletion, plus local-file uploads and bucket
 creation. Retaining the broader API does not certify every SDK operation.
@@ -84,11 +89,14 @@ Checks on Node 24 and Bun cover:
 
 - 110 retained upstream signer, CRC32C and lazy-import tests, with documented
   fixture adaptations and original-upstream controls.
-- Ten focused tests, five paired regression probes, ordinary V2/V4 URL parity,
+- Sixteen focused tests, five paired regression probes, ordinary V2/V4 URL parity,
   and independently verified RSA signatures for corrected canonical requests.
 - CRC32C controls compare 260 lengths, five chunkings, resumed seeds and real
   files against an independent bit-at-a-time oracle. Upstream controls reproduce
   table-mutation and numeric-seed failures, alongside sliced-view regressions.
+- Six hash-stream groups include original/VPM fault controls, non-destructive MD5
+  snapshots, simultaneous checksum failures, custom provider errors and real
+  backpressure pipelines.
 - 25 real local HTTP requests per caller run: binary multipart and resumable
   uploads, download integrity, automatic/manual/streamed pagination, callbacks,
   cleanup, checksum failure deletion and transient retries.
@@ -138,3 +146,10 @@ Derived from Google's Apache-2.0 implementation at
 [PROVENANCE.json](PROVENANCE.json) records the exact source and npm integrity.
 Original notices and the [license](LICENSE) are retained. Hash-pinned published
 files and selected upstream tests are kept in the development fixture.
+
+The isolated 64 KiB stream cases record 86%/93% less time for CRC32C and
+68%/79% less for CRC32C plus MD5 on Node/Bun. Those comparisons include the
+previously rebuilt CRC engine; they do not isolate this Transform's contribution.
+MD5-only stream differences are inconclusive. The complete
+[measurement report](bench/results/README.md) retains all sixteen cases,
+including construction costs and inconclusive HTTP results.

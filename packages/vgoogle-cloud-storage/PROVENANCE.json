@@ -9,28 +9,31 @@
   },
   "checked": "2026-10-30",
   "license": "Apache-2.0",
-  "source": "Source-informed VPM endpoint selection and per-client emulator context in lib/storage-endpoint.js, plus an independently implemented streaming CRC32C engine in lib/crc32c.js. Remaining published CJS runtime and declarations are retained with VPM imports, structural platform types and focused signing corrections. Source, diagnostic contracts and licenses retain attribution; this is a partial runtime rewrite.",
+  "source": "Source-informed VPM endpoint selection and per-client emulator context in lib/storage-endpoint.js, plus an independently implemented streaming CRC32C engine in lib/crc32c.js and checksum Transform in lib/hash-stream-validator.js. Remaining published CJS runtime and declarations are retained with VPM imports, structural platform types and focused signing corrections. Source, diagnostic contracts and licenses retain attribution; this is a partial runtime rewrite.",
   "scope": "Actual VentiMath backend save, signing, listing, exists and delete paths; local file uploads and bucket creation; selected upstream signing, checksum and helper tests. Other upstream APIs remain available but are not all independently verified.",
   "implementation": {
     "kind": "mixed: independent endpoint configuration and checksums with retained SDK operations",
     "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "Endpoint selection and CRC32C computation are independently implemented; bucket/file operations, transport and signing still retain upstream code with focused corrections.",
+    "basis": "Endpoint selection and CRC32C computation and hash-stream validation are independently implemented; bucket/file operations, transport and signing still retain upstream code with focused corrections.",
     "targetScope": "Bucket/file metadata, save/upload, existence, deletion, listing and signing paths used by VentiMath and Firebase Admin.",
     "remainingWork": "Independently implement the bucket/file, upload/download, existence, deletion, listing and signing paths used by callers, retaining existing correctness fixes and wire contracts.",
     "independentComponents": {
       "lib/storage-endpoint.js": "Own per-client endpoint selection, HTTP(S) validation and normalization, explicit-over-ambient precedence and captured emulator identity. Metadata and upload hosts cannot diverge when an explicit API endpoint overrides an ambient emulator. Canonical default endpoints keep normal authentication; V4 form routes use the captured client identity rather than reading global state later.",
-      "lib/crc32c.js": "Own slicing-by-eight Castagnoli checksum engine with derived private tables, signed/unsigned 32-bit seed normalization, bounded numeric initialization, chunked/resumed updates and async file streaming. Public inspection tables cannot change active computations; byte-view offsets and upstream base64 decoding remain supported."
+      "lib/crc32c.js": "Own slicing-by-eight Castagnoli checksum engine with derived private tables, signed/unsigned 32-bit seed normalization, bounded numeric initialization, chunked/resumed updates and async file streaming. Public inspection tables cannot change active computations; byte-view offsets and upstream base64 decoding remain supported.",
+      "lib/hash-stream-validator.js": "Own Transform with native private state, non-destructive MD5 snapshots, final digest caching, hashing before chunk emission and independent validation of every enabled checksum. Custom CRC providers and stream backpressure remain supported."
     }
   },
   "changes": [
     "VPM-specific emulatorHost is an optional per-client endpoint, mutually exclusive with apiEndpoint. Ambient STORAGE_EMULATOR_HOST remains supported when neither explicit option is set; construction does not mutate it.",
     "Explicit apiEndpoint selects both metadata and upload hosts. Canonical default endpoints keep authentication rather than being classified as custom by casing or trailing slash. Endpoints reject non-HTTP schemes, credentials, query strings and fragments.",
     "Storage captures emulatorHost as a read-only property. Signed V4 form routing uses this per-client context; later environment changes cannot add or remove the bucket route.",
-    "CRC32C computes checksums independently using private derived tables. Valid unsigned seeds normalize to the signed representation before serialization; out-of-range seeds fail at construction. Mutating exported inspection tables cannot corrupt results."
+    "CRC32C computes checksums independently using private derived tables. Valid unsigned seeds normalize to the signed representation before serialization; out-of-range seeds fail at construction. Mutating exported inspection tables cannot corrupt results.",
+    "Hash-stream digest reads no longer finalize the live MD5. Every enabled checksum must have a matching expected value unless updateHashesOnly is set; successful MD5 cannot conceal a CRC mismatch. Bytes are hashed before downstream consumers can mutate them."
   ],
   "verification": {
     "endpointContext": "Original/VPM controls under scripts/firebase-admin-conformance/storage-context.cjs use two local servers, metadata/upload/download requests, V2/V4 URLs, independently verified V4 form signatures, explicit-versus-ambient configuration and canonical default authentication classification on Node 24 and Bun.",
     "retainedScope": "110 retained signing/checksum/helper tests, existing focused tests, 25-request HTTP scenarios, Firebase callers and packed type consumers remain verified. This does not establish an independent implementation of the remaining SDK.",
-    "crc32c": "Original/VPM isolated controls compare 260 lengths, five chunkings, resumed seeds and files with an independent bit-at-a-time oracle; demonstrate upstream table-mutation and numeric-seed failures; preserve base64 compatibility and cross-realm/sliced byte views on Node 24 and Bun."
+    "crc32c": "Original/VPM isolated controls compare 260 lengths, five chunkings, resumed seeds and files with an independent bit-at-a-time oracle; demonstrate upstream table-mutation and numeric-seed failures; preserve base64 compatibility and cross-realm/sliced byte views on Node 24 and Bun.",
+    "hashStream": "Six focused groups compare original/VPM normal streams, reproduce early-finalization/CRC-masking/downstream-mutation faults, and exercise empty input, custom providers, failure identity and real backpressure pipelines on Node 24 and Bun."
   }
 }

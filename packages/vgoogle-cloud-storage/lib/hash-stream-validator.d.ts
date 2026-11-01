@@ -10,9 +10,9 @@ interface HashStreamValidatorOptions {
     crc32cInstance: CRC32CValidator;
     /** Set a custom CRC32C generator. Used if `crc32cInstance` has not been provided. */
     crc32cGenerator: CRC32CValidatorGenerator;
-    /** Sets the expected CRC32C value to verify once all data has been consumed. Also sets the `crc32c` option to `true` */
+    /** Sets the expected CRC32C value to verify once all data has been consumed. Requires `crc32c: true`. */
     crc32cExpected?: string;
-    /** Sets the expected MD5 value to verify once all data has been consumed. Also sets the `md5` option to `true` */
+    /** Sets the expected MD5 value to verify once all data has been consumed. Requires `md5: true`. */
     md5Expected?: string;
     /** Indicates whether or not to run a validation check or only update the hash values */
     updateHashesOnly?: boolean;
@@ -30,7 +30,7 @@ declare class HashStreamValidator extends Transform {
      */
     get crc32c(): string | undefined;
     /**
-     * Return the calculated MD5 value, if available.
+     * Return the MD5 of bytes consumed so far without ending the stream; cached after completion.
      */
     get md5Digest(): string | undefined;
     _flush(callback: (error?: Error | null | undefined) => void): void;

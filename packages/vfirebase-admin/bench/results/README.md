@@ -1,5 +1,11 @@
 # vfirebase-admin measurements
 
+These recordings precede the independent Storage hash-stream implementation.
+Their retained source hashes describe that earlier tree, not the current
+transitive Storage source. Current hash-stream and transfer measurements are in
+[the Storage report](../../../vgoogle-cloud-storage/bench/results/README.md).
+Re-record this report before attributing an end-to-end change to that rewrite.
+
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
 balanced upstream-first / VPM-first order; two further pairs run identical

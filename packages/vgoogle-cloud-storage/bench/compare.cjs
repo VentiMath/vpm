@@ -7,7 +7,7 @@ const certificate = require('../../../scripts/firebase-admin-conformance/upstrea
 const credentials = {client_email: certificate.client_email, private_key: certificate.private_key};
 const body = Buffer.alloc(64 * 1024, 97), crc32c = 'TpXtPw==';
 let selectedRoot, server;
-const library = directory => {selectedRoot = directory;return require(directory);};
+const library = directory => {selectedRoot = directory;return {...require(directory), HashStreamValidator: require(path.join(directory, directory === root ? 'lib/hash-stream-validator.js' : 'build/cjs/src/hash-stream-validator.js')).HashStreamValidator};};
 const make = source => directory => new Function('lib', 'env', source)(library(directory), {
     credentials, body, crc32c, endpoint: process.env.VPM_STORAGE_BENCH_ORIGIN,
     start: new Date(Number(process.env.VPM_STORAGE_BENCH_START)),
@@ -25,6 +25,9 @@ const cases = [
     {name: 'CRC32C / 64B', make: make('const bytes = env.body.subarray(0, 64); return () => {const hash = new lib.CRC32C(); hash.update(bytes); return hash.toString();};'), validate: value => assert.equal(value, 'N67uMw==')},
     {name: 'CRC32C / 64KiB in 1KiB chunks', make: make('const chunks = Array.from({length: 64}, (_, i) => env.body.subarray(i * 1024, (i + 1) * 1024)); return () => {const hash = new lib.CRC32C(); for (const chunk of chunks) hash.update(chunk); return hash.toString();};'), validate: value => assert.equal(value, crc32c)},
     {name: 'CRC32C / resumed 32KiB', make: make('const bytes = env.body.subarray(32768); return () => {const hash = lib.CRC32C.from("QEaKDQ=="); hash.update(bytes); return hash.toString();};'), validate: value => assert.equal(value, crc32c)},
+    ...['md5', 'crc32c', 'both'].map(mode => ({name: 'hash stream / 64KiB / ' + mode, async: true,
+        make: make('return () => new Promise((resolve, reject) => {const stream = new lib.HashStreamValidator({md5: ' + (mode !== 'crc32c') + ', crc32c: ' + (mode !== 'md5') + ', updateHashesOnly: true}); stream.resume(); stream.once("error", reject); stream.once("end", () => resolve({md5: stream.md5Digest, crc32c: stream.crc32c})); stream.end(env.body);});'),
+        validate: value => {if(mode !== 'md5') assert.equal(value.crc32c, crc32c); if(mode !== 'crc32c') assert.equal(value.md5, 'LWGqVLWMLpRAP7CSw9vAJw==');}})),
     {name: 'HTTP object metadata', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return () => file.getMetadata();'), validate: value => assert.equal(value[0].name, 'fixture.pdf')},
     {name: 'HTTP automatic listing / one page', async: true, make: make(connection + 'const bucket = storage.bucket("fixture"); return () => bucket.getFiles({prefix: "fixture"});'), validate: value => {assert.equal(value[0].length, 1);assert.equal(value[0][0].name, 'fixture.pdf');}},
     {name: 'HTTP multipart upload / 64KiB + CRC32C', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return async () => {await file.save(env.body, {resumable: false}); return file.metadata;};'), validate: value => assert.equal(value.crc32c, crc32c)},
