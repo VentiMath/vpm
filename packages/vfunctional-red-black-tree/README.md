@@ -76,9 +76,9 @@ can differ in number and order from upstream; comparators should be pure.
   original tree.
 - [Paired measurements](bench/results/README.md), with controls and source hashes.
 
-The latest isolated Node 24 / Bun recording is too variable to establish a
-per-case performance difference, including the Firestore Watch pattern. Raw
-samples include slower Bun traversals; they remain in the report alongside both
+The latest isolated Node recording supports faster key and range traversal;
+its remaining cases and all Bun cases are inconclusive, including Firestore
+Watch. Raw samples include slower Bun traversals and remain alongside both
 process orders and the controls. Inconclusive results do not establish parity.
 These are tree CPU measurements, not listener latency.
 

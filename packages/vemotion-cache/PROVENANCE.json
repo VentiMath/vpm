@@ -20,7 +20,7 @@
   ],
   "verification": {
     "fixture": "scripts/emotion-conformance",
-    "upstreamSuite": "Emotion's 293 tests pass with this package in place of the original, in development and production builds and with React 16 and React 18.",
+    "upstreamSuite": "The complete VPM Emotion stack is checked against the pinned upstream suite. React 16 development: 413 passing, two documented Babel-plugin differences, eight skipped (423 total). React 18 development: 416 passing, the same two differences, five skipped. Production: five passing and 418 skipped. See scripts/emotion-conformance/README.md for the configuration, adaptations and snapshot counts.",
     "differential": "compare-cache.cjs: 10,000 generated styles as classes and global styles, in regular and compat mode, give the same CSS, inserted state and messages as @emotion/cache 11.14.0 (on stylis 4.4.0) with no plugins, the default prefixer and VentiMath's two configurations (stylis-plugin-rtl 2.1.1 and its @layer plugin), in development and production, on Node and Bun.",
     "declarations": "types.cjs compiles an application against the declarations with DOM types under the configured TypeScript 7 compiler.",
     "runtimes": [

@@ -44,11 +44,11 @@ in place of `@google-cloud/firestore`.
   which brings a second, older google-gax with its own gRPC, auth and protobuf
   copies. Here the generated client layer runs on the same gax as everything else.
 - **Cold start.** Upstream loads that firestore-api package at import, and with
-  it gax, protobufjs and the static protos: 404 modules, about 270 ms, although
+  it gax, protobufjs and the static protos, although
   its own tests require that importing Firestore loads neither gax nor protobufjs
   (they are skipped whenever another test loaded gax first, so they never run).
-  Here import loads 65 modules, about 50 ms. The `protos` export, OpenTelemetry
-  and the transport load on first use.
+  Here the `protos` export, OpenTelemetry and the transport load on first use.
+  Earlier startup timing figures are historical.
 - **Reads after `terminate()`.** Upstream's streaming requests discard the
   client pool's rejection. A query, document get, `getAll`, aggregate or
   listener on a terminated client waits forever, and the rejection is
@@ -87,8 +87,10 @@ registered through API 1.9 (as the 2.x Node SDK does) is not used.
 - [Regressions](../../scripts/firestore-conformance/regressions.cjs): each
   behavioral change above reproduced with the original, then checked here.
 - [Focused tests](test/firestore.test.cjs) and [type tests](test/types.ts).
-- [Measurements](bench/results/README.md): cold start and per-operation CPU,
-  with controls and source hashes.
+- [Measurements](bench/results/README.md): isolated Node 24 and Bun per-operation CPU,
+  with controls and source hashes. All six Node cases are inconclusive at the
+  observed variation. Bun query construction costs 11.3% more; its other cases
+  are inconclusive. Inconclusive does not mean equal performance.
 
 Apache-2.0 licensing, the pinned source and the files changed from it are
 recorded in [PROVENANCE.json](PROVENANCE.json).
