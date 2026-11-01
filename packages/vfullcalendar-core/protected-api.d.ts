@@ -1,44 +1,28 @@
-interface BaseOptions {
-}
-interface BaseOptionsRefined {
-}
-interface EventSourceOptions {
-}
-interface EventSourceOptionsRefined {
-}
-interface EventRefiners {
-}
-type RawOptionsFromRefiners<Refiners extends GenericRefiners> = {
-    [Prop in keyof Refiners]?: Refiners[Prop] extends ((input: infer RawType, optionName: string) => infer RefinedType) ? (any extends RawType ? RefinedType : RawType) : never;
-};
-type RefinedOptionsFromRefiners<Refiners extends GenericRefiners> = {
-    [Prop in keyof Refiners]?: Refiners[Prop] extends ((input: any, optionName: string) => infer RefinedType) ? RefinedType : never;
-};
-type GenericRefiners = {
-    [propName: string]: (input: any, propName: string) => any;
-};
-type Identity<T = any> = (raw: T) => T;
-/**
- * The runtime's fetch `Response`. Without DOM or Node types it is the part
- * FullCalendar reads.
- */
-type FetchResponse = typeof globalThis extends {
-    Response: {
-        prototype: infer R;
-    };
-} ? R : {
-    readonly ok: boolean;
-    readonly status: number;
-    readonly statusText: string;
-    readonly url: string;
-    json(): Promise<any>;
-    text(): Promise<string>;
-};
-declare class JsonRequestError extends Error {
-    response: FetchResponse;
-    constructor(message: string, response: FetchResponse);
-}
-declare function requestJson<ParsedResponse>(method: string, url: string, params: Record<string, any>): Promise<[ParsedResponse, FetchResponse]>;
-declare function identity<T>(raw: T): T;
+// Open interfaces are the connector's declaration-augmentation boundary.
+export interface BaseOptions {}
+export interface BaseOptionsRefined {}
+export interface EventSourceOptions {}
+export interface EventSourceOptionsRefined {}
+export interface EventRefiners {}
+export type Identity<T = any> = (value: T) => T;
+export type GenericRefiners = Record<string, (value: any, name: string) => any>;
+type RawValue<F> = F extends (value: infer Input, name: string) => infer Output
+  ? any extends Input ? Output : Input : never;
+export type RawOptionsFromRefiners<R extends GenericRefiners> = {[K in keyof R]?: RawValue<R[K]>};
+export type RefinedOptionsFromRefiners<R extends GenericRefiners> = {[K in keyof R]?: ReturnType<R[K]>};
 
-export { BaseOptions, BaseOptionsRefined, EventRefiners, EventSourceOptions, EventSourceOptionsRefined, FetchResponse, Identity, JsonRequestError, RawOptionsFromRefiners, RefinedOptionsFromRefiners, identity, requestJson };
+// Use the platform declaration when present, while allowing DOM-free consumers.
+export type FetchResponse = typeof globalThis extends {Response: {prototype: infer R}} ? R : {
+  readonly ok: boolean;
+  readonly status: number;
+  readonly statusText: string;
+  readonly url: string;
+  json(): Promise<any>;
+  text(): Promise<string>;
+};
+export class JsonRequestError extends Error {
+  constructor(message: string, response: FetchResponse);
+  response: FetchResponse;
+}
+export function identity<T>(value: T): T;
+export function requestJson<T>(method: string, url: string, parameters: Record<string, any>): Promise<[T, FetchResponse]>;

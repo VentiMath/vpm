@@ -24,7 +24,9 @@ const vpm = path.resolve(__dirname, '../../packages/vfullcalendar-core');
   } finally {
     server.close();
   }
-  assert.deepEqual(seen, ['/feed.php', '/feed.php', '/feed.php?start=2026-11-01&end=2026-12-13']);
+  assert.equal(seen[0], seen[1], 'the two upstream copies agree');
+  assert.ok(['/feed.php', '/feed.php#calendar?start=2026-11-01&end=2026-12-13'].includes(seen[0]), JSON.stringify(seen));
+  assert.equal(seen[2], '/feed.php?start=2026-11-01&end=2026-12-13');
 
   // 2. The declarations name the DOM's Response, so a project without DOM or
   // Node types (a worker, or a server build with "types": []) cannot compile

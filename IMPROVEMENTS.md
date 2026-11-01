@@ -802,7 +802,7 @@ See the [package contract](packages/vfullcalendar-react/README.md),
 
 ## vfullcalendar-core
 
-Targets **@fullcalendar/core 7.1.3**, checked November 1, 2026. In FullCalendar
+Independently implements **@fullcalendar/core 7.1.3**, checked November 1, 2026. In FullCalendar
 7 the connectors are self-contained, and `@fullcalendar/core` keeps only the
 option interfaces they extend through `declare module` and the JSON feed request
 (`requestJson`, `JsonRequestError`, `identity`); `@fullcalendar/react` 7.1.3
@@ -825,6 +825,10 @@ regression cases and five focused tests cover the changes.
 
 See the [package contract](packages/vfullcalendar-core/README.md) and
 [conformance record](scripts/fullcalendar-core-conformance/README.md).
+
+The former adapted runtime and declarations are replaced with an independent
+request pipeline and option contracts. Fragments are stripped before transport,
+including on Bun 1.4.0, whose fetch forwarded them in the recorded control.
 
 ## vfull-ui-headless-calendar
 
