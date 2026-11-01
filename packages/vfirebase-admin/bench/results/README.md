@@ -23,67 +23,71 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T14:10:05.300Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T14:38:19.718Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| auth / cached certificate snapshot | 70 | 81 | 16.1% | 18.8% | 12.1% | 7% | higher time in every pair, beyond control spread |
-| auth / no-kid RSA verification with cached key | 77005 | 49262 | -35.6% | -35.5% | -36.2% | 0.8% | lower time in every pair, beyond control spread |
-| auth / verify RS256 ID token signature | 44511 | 23475 | -47.2% | -46.5% | -47.8% | 2.4% | lower time in every pair, beyond control spread |
-| auth / verify ID token with cached test key | 48446 | 28234 | -41.9% | -41.3% | -42.1% | 1.6% | lower time in every pair, beyond control spread |
-| auth / verify ID token and synthetic revocation lookup | 54872 | 35037 | -36.1% | -35.8% | -36.4% | 6.1% | lower time in every pair, beyond control spread |
-| auth / decode ID token | 2734 | 1983 | -27.4% | -27.4% | -27.5% | 0.1% | lower time in every pair, beyond control spread |
-| auth / project a user response | 4295 | 4546 | 6.4% | 5.4% | 6.5% | 2.8% | higher time in every pair, beyond control spread |
-| auth / serialize a user record | 323 | 216 | -33.5% | -33.5% | -32.9% | 0.9% | lower time in every pair, beyond control spread |
-| auth / update disabled with synthetic transport | 4839 | 5183 | 6.9% | 5.9% | 7.9% | 12% | unestablished at this precision |
-| auth / delete 100 users with synthetic transport | 8403 | 8500 | 0.8% | 2% | -0.4% | 13.3% | unestablished at this precision |
-| auth / get user through request dispatch | 5160 | 5460 | 5.9% | 5.6% | 7.4% | 37.4% | unestablished at this precision |
-| auth / update disabled through request dispatch | 6951 | 6463 | -6.9% | -6.9% | -8.4% | 3% | lower time in every pair, beyond control spread |
-| messaging / copy and validate a message | 1722 | 1406 | -18.6% | -17.9% | -18.6% | 2.9% | lower time in every pair, beyond control spread |
-| app / create context and read project | 252 | 326 | 30.4% | 30.4% | 27.1% | 4% | higher time in every pair, beyond control spread |
-| app / repeat initialization with equal options | 674 | 832 | 23% | 23.9% | 22.7% | 1.9% | higher time in every pair, beyond control spread |
-| app / cached service lookup | 16 | 15 | -5.7% | -5.7% | -11.2% | 1.7% | lower time in every pair, beyond control spread |
-| auth / cached OAuth access token | 92 | 93 | 1.1% | 3.1% | 0.4% | 10% | unestablished at this precision |
-| auth / twenty concurrent forced refreshes | 6363 | 1951 | -69.5% | -69.9% | -69.5% | 3.6% | lower time in every pair, beyond control spread |
-| app / dispose three services | 482 | 1138 | 136.1% | 181.1% | 133.5% | 1.1% | higher time in every pair, beyond control spread |
-| credential / build application-default context | 23 | 24 | 5.8% | 5.7% | 8.1% | 2.4% | higher time in every pair, beyond control spread |
-| credential / reuse service-account factory | 4056 | 4294 | 6.1% | 6.1% | 17.9% | 6.6% | unestablished at this precision |
-| credential / acquire cached Google client token | 184 | 356 | 94.5% | 96.1% | 90.4% | 3.3% | higher time in every pair, beyond control spread |
-| credential / twenty concurrent acquisitions | 4032 | 1936 | -52% | -63.3% | -52% | 2.3% | lower time in every pair, beyond control spread |
+| auth / cached certificate snapshot | 64 | 78 | 24.2% | 21.4% | 24.2% | 54.4% | unestablished at this precision |
+| auth / no-kid RSA verification with cached key | 76849 | 49563 | -36% | -36.4% | -34.3% | 13.5% | lower time in every pair, beyond control spread |
+| auth / verify RS256 ID token signature | 43390 | 23452 | -46.1% | -45.8% | -46.3% | 19.3% | lower time in every pair, beyond control spread |
+| auth / verify ID token with cached test key | 47745 | 28328 | -40.7% | -41.7% | -39.7% | 4.9% | lower time in every pair, beyond control spread |
+| auth / verify ID token and synthetic revocation lookup | 54375 | 35309 | -35.1% | -35.1% | -35.1% | 1.3% | lower time in every pair, beyond control spread |
+| auth / decode ID token | 2699 | 1998 | -26.4% | -26.6% | -25.9% | 0.8% | lower time in every pair, beyond control spread |
+| auth / project a user response | 4288 | 4602 | 7% | 7.2% | 6.9% | 1.3% | higher time in every pair, beyond control spread |
+| auth / serialize a user record | 323 | 211 | -34.7% | -34.8% | -34.7% | 49.1% | unestablished at this precision |
+| auth / update disabled with synthetic transport | 4837 | 5243 | 8.1% | 8% | 8.1% | 2.4% | higher time in every pair, beyond control spread |
+| auth / delete 100 users with synthetic transport | 8497 | 8331 | -0.9% | -2.3% | -0.7% | 2.1% | unestablished at this precision |
+| auth / get user through request dispatch | 5163 | 5283 | 2.1% | 4.1% | 1.8% | 0.8% | unestablished at this precision |
+| auth / update disabled through request dispatch | 6890 | 6525 | -5.6% | -5.7% | -5.5% | 1.5% | lower time in every pair, beyond control spread |
+| http / JSON request with synthetic response stream | 2809 | 2797 | 3.2% | -10.1% | 14.2% | 13.2% | unestablished at this precision |
+| http / JSON request with headers and synthetic stream | 2402 | 2839 | 18.2% | 21.1% | 11.5% | 19.1% | unestablished at this precision |
+| messaging / copy and validate a message | 1720 | 1438 | -17.5% | -14.4% | -18.9% | 7.8% | lower time in every pair, beyond control spread |
+| app / create context and read project | 253 | 329 | 29.9% | 32.9% | 29.3% | 5.5% | higher time in every pair, beyond control spread |
+| app / repeat initialization with equal options | 662 | 829 | 25.8% | 26.6% | 25.8% | 2.3% | higher time in every pair, beyond control spread |
+| app / cached service lookup | 16 | 15 | -5.9% | -0.2% | -6.4% | 0.7% | unestablished at this precision |
+| auth / cached OAuth access token | 89 | 90 | 0% | -1.8% | 1.9% | 8.4% | unestablished at this precision |
+| auth / twenty concurrent forced refreshes | 6170 | 1932 | -68.6% | -68.9% | -68.5% | 1.6% | lower time in every pair, beyond control spread |
+| app / dispose three services | 478 | 1129 | 139.3% | 139.5% | 136.9% | 3.7% | higher time in every pair, beyond control spread |
+| credential / build application-default context | 23 | 24 | 7.2% | 8.2% | -27.4% | 1.4% | unestablished at this precision |
+| credential / reuse service-account factory | 4042 | 4055 | 0.4% | 3% | -4.3% | 2% | unestablished at this precision |
+| credential / acquire cached Google client token | 181 | 355 | 95.6% | 97.4% | 66.1% | 6.9% | higher time in every pair, beyond control spread |
+| credential / twenty concurrent acquisitions | 3979 | 1902 | -52.1% | -52% | -52.2% | 9% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T14:11:40.353Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-01T14:40:00.040Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| auth / cached certificate snapshot | 43 | 50 | 12.4% | 16.1% | 10% | 6.2% | higher time in every pair, beyond control spread |
-| auth / no-kid RSA verification with cached key | 36215 | 20842 | -41.9% | -43.7% | -13.2% | 59% | unestablished at this precision |
-| auth / verify RS256 ID token signature | 23950 | 17436 | -26.3% | -25.8% | -27.7% | 78.4% | unestablished at this precision |
-| auth / verify ID token with cached test key | 27586 | 22188 | -19.7% | -21.4% | 31.6% | 87.2% | unestablished at this precision |
-| auth / verify ID token and synthetic revocation lookup | 30750 | 24469 | -20.1% | -14% | -21.9% | 15.5% | unestablished at this precision |
-| auth / decode ID token | 2497 | 1588 | -35.3% | -37.2% | -33.5% | 2.7% | lower time in every pair, beyond control spread |
-| auth / project a user response | 1211 | 1566 | 24.1% | 11.9% | 47.1% | 3.6% | higher time in every pair, beyond control spread |
-| auth / serialize a user record | 513 | 283 | -45.7% | -55% | -42.6% | 7.3% | lower time in every pair, beyond control spread |
-| auth / update disabled with synthetic transport | 1759 | 1969 | 1.4% | -31.3% | 13.8% | 0.4% | unestablished at this precision |
-| auth / delete 100 users with synthetic transport | 1460 | 1288 | -10.5% | -14.2% | -7.3% | 11.8% | unestablished at this precision |
-| auth / get user through request dispatch | 2173 | 2226 | 4.4% | 4.2% | 4.4% | 2.2% | unestablished at this precision |
-| auth / update disabled through request dispatch | 3397 | 3227 | -5.1% | -5.1% | -2.4% | 5.7% | unestablished at this precision |
-| messaging / copy and validate a message | 2115 | 695 | -67.1% | -66.4% | -68.5% | 3.2% | lower time in every pair, beyond control spread |
-| app / create context and read project | 261 | 262 | 0.5% | 13.2% | -4.8% | 41.6% | unestablished at this precision |
-| app / repeat initialization with equal options | 391 | 1117 | 138.6% | 188.2% | 65.5% | 2.1% | higher time in every pair, beyond control spread |
-| app / cached service lookup | 14 | 17 | 23.8% | -17.5% | 38.4% | 7.5% | unestablished at this precision |
-| auth / cached OAuth access token | 68 | 76 | 9.9% | -7.4% | 9.9% | 4.1% | unestablished at this precision |
-| auth / twenty concurrent forced refreshes | 3536 | 1388 | -61.1% | -61.1% | -60.2% | 8.4% | lower time in every pair, beyond control spread |
-| app / dispose three services | 450 | 1049 | 132.9% | 130.3% | 178.3% | 2.7% | higher time in every pair, beyond control spread |
-| credential / build application-default context | 24 | 20 | -22.1% | -26.7% | -17.3% | 49.4% | unestablished at this precision |
-| credential / reuse service-account factory | 2093 | 5279 | 153.4% | 172.6% | 148.5% | 5.8% | higher time in every pair, beyond control spread |
-| credential / acquire cached Google client token | 160 | 269 | 54.6% | 35.6% | 112.7% | 6.3% | higher time in every pair, beyond control spread |
-| credential / twenty concurrent acquisitions | 3146 | 1326 | -57.7% | -56.9% | -57.7% | 3.3% | lower time in every pair, beyond control spread |
+| auth / cached certificate snapshot | 44 | 48 | 9.7% | 9.7% | 12.7% | 5.9% | unestablished at this precision |
+| auth / no-kid RSA verification with cached key | 36212 | 20314 | -43.9% | -49.1% | -43.9% | 3.6% | lower time in every pair, beyond control spread |
+| auth / verify RS256 ID token signature | 23777 | 17367 | -26.7% | -27.6% | -26.7% | 3.9% | lower time in every pair, beyond control spread |
+| auth / verify ID token with cached test key | 27512 | 20628 | -24.7% | -28.6% | -24.3% | 4.1% | lower time in every pair, beyond control spread |
+| auth / verify ID token and synthetic revocation lookup | 30636 | 23416 | -24% | -24% | -22.6% | 2.7% | lower time in every pair, beyond control spread |
+| auth / decode ID token | 2395 | 1504 | -37.2% | -39.7% | 42.2% | 18.5% | unestablished at this precision |
+| auth / project a user response | 1206 | 1381 | 11.9% | 11.9% | 55.4% | 2.2% | higher time in every pair, beyond control spread |
+| auth / serialize a user record | 495 | 270 | -45.5% | -46.2% | -39.9% | 4.8% | lower time in every pair, beyond control spread |
+| auth / update disabled with synthetic transport | 1699 | 1682 | 0.6% | -2.7% | 1.7% | 3% | unestablished at this precision |
+| auth / delete 100 users with synthetic transport | 1291 | 1200 | -10.6% | -12.3% | -10.6% | 2.5% | lower time in every pair, beyond control spread |
+| auth / get user through request dispatch | 2116 | 2130 | 1.9% | -1.3% | 2.9% | 3.8% | unestablished at this precision |
+| auth / update disabled through request dispatch | 3402 | 2976 | -11.8% | -10% | -14.1% | 7% | lower time in every pair, beyond control spread |
+| http / JSON request with synthetic response stream | 2152 | 2346 | 8.9% | 9.2% | 6.6% | 9.9% | unestablished at this precision |
+| http / JSON request with headers and synthetic stream | 2348 | 2715 | 16.4% | 17.7% | 13.2% | 1.7% | higher time in every pair, beyond control spread |
+| messaging / copy and validate a message | 2067 | 594 | -71.3% | -71.5% | -71.3% | 39.1% | lower time in every pair, beyond control spread |
+| app / create context and read project | 362 | 217 | -40.2% | -40.2% | -41.2% | 3.5% | lower time in every pair, beyond control spread |
+| app / repeat initialization with equal options | 768 | 471 | -39.2% | -40.7% | 1% | 6.2% | unestablished at this precision |
+| app / cached service lookup | 13 | 6 | -56.3% | -61% | -54.2% | 29.7% | lower time in every pair, beyond control spread |
+| auth / cached OAuth access token | 62 | 67 | 6.5% | 5.8% | 13.7% | 13.3% | unestablished at this precision |
+| auth / twenty concurrent forced refreshes | 3334 | 1136 | -65.6% | -66.5% | -65.5% | 5.4% | lower time in every pair, beyond control spread |
+| app / dispose three services | 459 | 883 | 95.4% | 94.1% | 96.5% | 8% | higher time in every pair, beyond control spread |
+| credential / build application-default context | 22 | 12 | -43.6% | -43.6% | -44.3% | 1.4% | lower time in every pair, beyond control spread |
+| credential / reuse service-account factory | 2035 | 4818 | 136.7% | 136.7% | 133.6% | 2.4% | higher time in every pair, beyond control spread |
+| credential / acquire cached Google client token | 155 | 225 | 46.5% | 42.2% | 48.1% | 6.9% | higher time in every pair, beyond control spread |
+| credential / twenty concurrent acquisitions | 2981 | 1260 | -57.3% | -58% | -55% | 1.8% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

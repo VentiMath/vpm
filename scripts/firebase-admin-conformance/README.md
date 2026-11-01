@@ -139,3 +139,13 @@ identity once, owns each header record and returns Auth errors with the original
 response context. Lookup failures allow retry. The 296 unchanged upstream
 request-handler tests run within the full Admin suite. Tenant/provider controls
 exercise the shared builder; they do not expand VentiMath's application scope.
+
+`http-transport.cjs` uses actual local HTTP/1 requests on both runtimes. It
+reproduces changed payloads/headers on retry, ignored Content-Type casing, and
+pending promises after truncated bodies or invalid gzip. A bounded observation
+period distinguishes an unresolved original promise from VPM's settled error.
+Both clients also check normal gzip/deflate, timeouts, configured agents and
+keep-alive reuse after a complete 503 response. VPM handles case-insensitive
+coding and Brotli. The retained HTTP/1/authorized suite runs 93 tests: 89 pass,
+with the same four exact multipart differences. The new stream lifecycle follows
+[Node 24's response/error event contract](https://nodejs.org/docs/latest-v24.x/api/http.html#httprequestoptions-callback).
