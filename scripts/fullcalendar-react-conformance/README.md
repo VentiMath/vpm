@@ -19,6 +19,7 @@ npm --prefix scripts/fullcalendar-react-conformance ci --ignore-scripts --no-aud
 node scripts/fullcalendar-react-conformance/react-suite.cjs --upstream
 node scripts/fullcalendar-react-conformance/react-suite.cjs
 node scripts/fullcalendar-react-conformance/regressions.cjs
+node scripts/fullcalendar-react-conformance/application.cjs
 node scripts/fullcalendar-react-conformance/types.cjs
 node scripts/fullcalendar-react-conformance/browser-compare.cjs
 ```
@@ -69,3 +70,13 @@ fragment).
 `types.cjs` compiles a React component using the calendar, plugins, a locale and
 the option, callback and error types against each library's declarations, with
 DOM and React 19 types, under the configured TypeScript 7 compiler.
+
+`application.cjs` runs four mounted, app-shaped cases against both implementations
+on Node/Bun: navigation, month/week/day views, custom event content, click and
+selection callbacks, edit payloads, filtering and unmount. A separate assertion
+reproduces upstream clearing `allDay` when `setDates` omits that option; VPM must
+preserve the boolean and accept explicit conversions. Both v7 APIs lack the
+v6 `updateSize` method. The TypeScript consumer covers the v7 callback/ref types
+and checks that removal. These probes represent the calendar configuration used
+by VentiMath; they do not mount the app, exercise pointer dragging or verify its
+custom CSS. The app still pins v6.1.17 and migration is separate work.

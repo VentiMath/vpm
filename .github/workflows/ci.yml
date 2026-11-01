@@ -111,6 +111,7 @@ jobs:
           node scripts/fullcalendar-react-conformance/react-suite.cjs --upstream
           node scripts/fullcalendar-react-conformance/react-suite.cjs
           node scripts/fullcalendar-react-conformance/regressions.cjs
+          node scripts/fullcalendar-react-conformance/application.cjs
           node scripts/fullcalendar-react-conformance/browser-compare.cjs
           node scripts/tanstack-query-conformance/run.cjs --package=core --upstream
           node scripts/tanstack-query-conformance/sharing.cjs
@@ -402,6 +403,7 @@ jobs:
           bun scripts/fullcalendar-react-conformance/react-suite.cjs --upstream
           bun scripts/fullcalendar-react-conformance/react-suite.cjs
           bun scripts/fullcalendar-react-conformance/regressions.cjs
+          bun scripts/fullcalendar-react-conformance/application.cjs
           bun scripts/tanstack-query-conformance/run.cjs --package=core --upstream
           bun scripts/tanstack-query-conformance/sharing.cjs
           bun scripts/tanstack-query-conformance/application.cjs --upstream

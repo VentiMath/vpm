@@ -1,0 +1,65 @@
+// App-shaped caller probe: VentiMath CalendarAppView/Header configuration,
+// with v7 imports and types. This does not migrate or mount the full application.
+import React, {createRef} from 'react'
+import {render, act, fireEvent, cleanup} from '@testing-library/react'
+import FullCalendar from '../dist/index'
+import dayGrid from '../dist/daygrid'
+import timeGrid from '../dist/timegrid'
+import interaction from '../dist/interaction'
+import classic from '../dist/themes/classic'
+
+afterEach(cleanup)
+const events=[{id:'seminar',title:'Seminar',start:'2026-11-03T10:00:00Z',end:'2026-11-03T11:00:00Z',extendedProps:{label:'math'}}]
+function mount(extra={}) {
+  const ref=createRef<any>(),dates=vi.fn(),select=vi.fn(),click=vi.fn(),change=vi.fn(),add=vi.fn(),remove=vi.fn()
+  const options={plugins:[dayGrid,timeGrid,interaction,classic],headerToolbar:false,initialView:'dayGridMonth',initialDate:'2026-11-03',timeZone:'UTC',
+    editable:true,selectable:true,selectMirror:true,dayMaxEvents:true,weekends:true,events,
+    datesSet:dates,select,eventClick:click,eventChange:change,eventAdd:add,eventRemove:remove,
+    eventContent:(info:any)=><span data-testid="calendar-event">{info.timeText} {info.event.title} {info.event.extendedProps.label}</span>,...extra}
+  const view=render(<FullCalendar ref={ref} {...options} />)
+  return {ref,api:ref.current.getApi(),view,options,dates,select,click,change,add,remove}
+}
+it('renders app content and navigates month, week and day views',()=>{
+ const {api,view,dates}=mount()
+ expect(view.getAllByTestId('calendar-event')[0].textContent).toContain('Seminar math')
+ expect(dates.mock.lastCall[0].view.title).toContain('2026')
+ act(()=>api.next());expect(api.getDate().getUTCMonth()).toBe(11)
+ act(()=>api.prev());expect(api.getDate().getUTCMonth()).toBe(10)
+ for(const name of ['timeGridWeek','timeGridDay','dayGridMonth']) {act(()=>api.changeView(name));expect(api.view.type).toBe(name)}
+ act(()=>api.today());expect(api.getDate().toISOString().slice(0,10)).toBe(new Date().toISOString().slice(0,10))
+ // v7 removed the v6 imperative sizing API used by the application.
+ expect(api.updateSize).toBeUndefined()
+})
+it('exposes event click, selection and edit payloads used by the app',()=>{
+ const {api,view,click,select,change,add,remove}=mount()
+ fireEvent.click(view.getAllByTestId('calendar-event')[0])
+ expect(click.mock.lastCall[0].event.id).toBe('seminar')
+ act(()=>api.select({start:'2026-11-04',end:'2026-11-05',allDay:true}))
+ expect(select.mock.lastCall[0].startStr).toBe('2026-11-04')
+ const event=api.getEventById('seminar')
+ act(()=>event.setDates('2026-11-03T12:00:00Z','2026-11-03T13:00:00Z',{allDay:false}))
+ const changed=change.mock.lastCall[0].event
+ expect(JSON.stringify({id:changed.id,title:changed.title,allDay:changed.allDay,start:changed.start.toISOString(),end:changed.end.toISOString(),extendedProps:changed.extendedProps})).toBe(JSON.stringify({id:'seminar',title:'Seminar',allDay:false,start:'2026-11-03T12:00:00.000Z',end:'2026-11-03T13:00:00.000Z',extendedProps:{label:'math'}}))
+ act(()=>api.addEvent({id:'new',title:'New',start:'2026-11-05'}));expect(add.mock.lastCall[0].event.id).toBe('new')
+ act(()=>api.getEventById('new').remove());expect(remove.mock.lastCall[0].event.id).toBe('new')
+})
+it('rerenders filtered event arrays and releases the ref on unmount',()=>{
+ const {ref,view,options}=mount()
+ view.rerender(<FullCalendar ref={ref} {...options} events={[]} />)
+ expect(ref.current.getApi().getEvents()).toHaveLength(0)
+ view.unmount();expect(ref.current).toBeNull()
+})
+
+it('setDates preserves omitted allDay while allowing explicit conversion',()=>{
+ const {api}=mount()
+ const event=api.getEventById('seminar')
+ expect(event.allDay).toBe(false)
+ act(()=>event.setDates('2026-11-03T12:00:00Z','2026-11-03T13:00:00Z'))
+ expect(event.allDay).toBe(process.env.UPSTREAM_CONTROL==='1'?undefined:false)
+ act(()=>event.setDates('2026-11-04','2026-11-05',{allDay:true}))
+ expect(event.allDay).toBe(true)
+ act(()=>event.setDates('2026-11-05','2026-11-06',{allDay:undefined}))
+ expect(event.allDay).toBe(process.env.UPSTREAM_CONTROL==='1'?undefined:true)
+ act(()=>event.setDates('2026-11-05T12:00:00Z',null,{allDay:false}))
+ expect(event.allDay).toBe(false)
+})

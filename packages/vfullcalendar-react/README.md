@@ -51,11 +51,15 @@ v6 packages (`@fullcalendar/core` as the calendar, `@fullcalendar/daygrid`,
 
 ## Changes from 7.1.3
 
-The calendar's own code is unchanged: every file is byte-identical to 7.1.3
-apart from the two package names and the JSON feed request, which the
-[focused tests](test/react.test.cjs) check against the recorded hashes. The
-changes come from the packages below it:
+The calendar retains 7.1.3 runtime code apart from the two package names,
+the JSON feed request and the `setDates` correction below. The
+[focused tests](test/react.test.cjs) check these exact differences against the
+recorded hashes. The changes are:
 
+- **Event edits preserve all-day status.** `setDates(start, end)` used to write
+  `allDay: undefined` when the optional flag was omitted, including in upstream
+  7.1.3. It now retains the current flag; explicit `true` and `false` still convert
+  it. A mounted original/VPM control covers both timed and all-day events.
 - **Named time zones.** A calendar with a `timeZone` such as
   `'Africa/Casablanca'` converts times through `vfull-ui-headless-calendar`.
   Where a browser has no native `Temporal` (the iOS 15 WebView, older
@@ -70,8 +74,29 @@ changes come from the packages below it:
   request is now `vfullcalendar-core`'s, which puts them ahead of the fragment.
   `JsonRequestError` is the class `vfullcalendar-core` exports.
 - **Smaller bundles.** A typical application (calendar, day and time grids,
-  interaction, list, classic theme) bundles to 283,220 bytes minified and 77,697
+  interaction, list, classic theme) bundles to 281,307 bytes minified and 77,789
   gzipped instead of 301,385 and 84,399: the 19 polyfill modules are gone.
+
+## Adopting the v7 API
+
+VentiMath currently pins the separate 6.1.17 packages. Its calendar has not been
+migrated by building this replacement. The application-shaped fixture confirms
+navigation, month/week/day views, custom event content, click/selection payloads,
+event edits, event-array filtering and unmount against the v7 API.
+
+- Import plugins and public types from this package's subpaths/root. Use
+  `CalendarRef` for the React ref, `DatesSetInfo`, `DateSelectInfo`,
+  `EventClickInfo`, `EventAddInfo`, `EventChangeInfo`, `EventRemoveInfo` and
+  `EventDropInfo` for callbacks, and `EventDisplayInfo` for custom content.
+- Install a theme plugin and its explicit CSS, as shown above. The application's
+  existing calendar CSS needs a browser review against v7 markup.
+- Remove the v6 `getApi().updateSize()` call: v7 no longer exposes that method.
+  Verify resizing when the app's sidebar changes in its actual browser layout.
+- The app's custom agenda view is separate; it is not the FullCalendar list plugin.
+
+The fixture does not mount the complete application or certify its pointer
+selection, drag/resize persistence, styling or responsive layout. The retained
+calendar rendering and interactions still need an independent implementation.
 
 ## Evidence
 
@@ -84,6 +109,8 @@ changes come from the packages below it:
   VPM, spec by spec.
 - [Regressions](../../scripts/fullcalendar-react-conformance/regressions.cjs):
   the time zone and JSON feed cases observed through a mounted calendar.
+- [Application-shaped callers](../../scripts/fullcalendar-react-conformance/application.cjs):
+  four mounted checks, including the omitted-`allDay` regression control.
 - [Declarations](../../scripts/fullcalendar-react-conformance/types.cjs): an
   application compiles against them with DOM and React 19 types under
   the configured TypeScript 7 compiler.

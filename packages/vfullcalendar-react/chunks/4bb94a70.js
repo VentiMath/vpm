@@ -1939,7 +1939,7 @@ class EventImpl {
     }
     setDates(startInput, endInput, options = {}) {
         let { dateEnv } = this._context;
-        let standardProps = { allDay: options.allDay };
+        let standardProps = options.allDay === undefined ? {} : { allDay: options.allDay };
         let startMeta = dateEnv.createMarkerMeta(startInput);
         let endMeta = null;
         if (!startMeta) {

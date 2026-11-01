@@ -158,16 +158,15 @@ Storage 7, gax 4, gtoken 8 and `form-data` 2.5.5 branches are not separate work:
 the Admin 14 upgrade removes them. This dependency coverage does not mean the
 retained SDK implementations have completed their independent rewrites.
 
-The frontend starts with FullCalendar 7, VentiMath's calendar: `@fullcalendar/react`
-7.1.3 depends on `@fullcalendar/core` and `@full-ui/headless-calendar` 7.1.3, and
-6.x is npm's `legacy` line, so the 6.1.17 packages VentiMath locks are not
-rebuilt. `vfull-ui-headless-calendar` covers `@full-ui/headless-calendar` 7.1.3,
-checked November 1, 2026, without its `temporal-polyfill` peer: polyfill packages
-are made unnecessary rather than rebuilt. `vfullcalendar-core` covers
-`@fullcalendar/core` 7.1.3, which in v7 holds only the option types connectors
-extend and the JSON feed request. `vfullcalendar-react` covers
-`@fullcalendar/react` 7.1.3 on those two packages, completing FullCalendar;
-VentiMath's six calendar files move to the 7.x API when it adopts them.
+FullCalendar work targets 7.1.3 while VentiMath still pins the 6.1.17 API.
+`vfull-ui-headless-calendar` independently provides dates/time zones without
+`temporal-polyfill`; `vfullcalendar-core` independently provides the v7 option
+contracts and JSON feed request. `vfullcalendar-react` retains the upstream
+calendar with focused corrections. Its rendering, navigation and interaction
+implementation still needs the independent rewrite; FullCalendar is not complete.
+Adopting v7 requires updated imports and types, explicit theme/CSS, removal of
+the obsolete `updateSize()` call, and browser review of the application's styling
+and pointer interactions. The application has not been migrated here.
 TanStack Query follows: `vtanstack-query-core` and `vtanstack-react-query` cover
 the application-facing APIs used from 5.105.0. Their independent implementations
 replace the former adapted builds; adoption requires aliases/import changes and
@@ -243,7 +242,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vstylis](packages/vstylis) | stylis 4.4.0 | Vendor prefixes chosen by property name (stylis's hash gave more than 50 unprefixed properties, `flex-wrap` and `grid-gap` among them, invented declarations), IE grid spans on the right axis, `mask-composite: subtract` converted, the same `namespace` result on JavaScriptCore, and bundled declarations; otherwise identical trees and output, and all 113 upstream tests pass. |
 | [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.0, scoped APIs | Independent cache, request and mutation lifecycle; bounded long timers and DOM-independent declarations. The former upstream build is removed. |
 | [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.0, scoped APIs | Independently written provider, query and mutation hooks on the VPM core; mounted application comparisons. |
-| [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | The calendar unchanged on VPM's headless engine and core: no `temporal-polyfill`, correct named time zones where the polyfill is wrong, `#fragment` JSON feeds that keep their range, and an application bundle 8% smaller gzipped; identical results on FullCalendar's 1,542-spec browser suite. |
+| [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | Adapted calendar on VPM's independent headless engine and core; omitted allDay edit flags preserved: no `temporal-polyfill`, correct named time zones where the polyfill is wrong, `#fragment` JSON feeds that keep their range, and an application bundle 8% smaller gzipped; identical results on FullCalendar's 1,542-spec browser suite. |
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Mixed implementation on VPM dependencies: independent logging, initialization, declaration assembly and HTTP/scheduler factories; non-mutating manifest serialization and shared CJS/ESM state. Callable request validation, verification orchestration, payload conversion and response lifecycle are independently implemented, with prototype-safe data and cancellation cleanup. Firestore event adapters, secret accessors and registration are independently implemented; changed protobuf events decode once, field masks preserve sibling changes, and JSON secret errors omit credential excerpts. Trace propagation, configuration and iterative deployment discovery are independently implemented. Admin/Firestore clients, generic parameter expressions and other SDK services remain adapted upstream code; a complete package-wide rewrite remains pending. |
@@ -878,7 +877,8 @@ Targets **@fullcalendar/react 7.1.3**, checked November 1, 2026: FullCalendar
 multi-month plugins, five themes and 81 locales. The published build is retained
 with `@full-ui/headless-calendar` mapped to `vfull-ui-headless-calendar` and
 `@fullcalendar/core` to `vfullcalendar-core`, whose JSON feed request replaces
-the bundled copy; every other byte matches 7.1.3, and
+the bundled copy. The only additional runtime change preserves `allDay` when
+`setDates()` receives no replacement value. Remaining code is retained, and
 [PROVENANCE.json](packages/vfullcalendar-react/PROVENANCE.json) records the
 hashes. `temporal-polyfill`, which the original asks applications to install, is
 not needed.
@@ -887,7 +887,7 @@ The fixes come from the packages below: a calendar with a named `timeZone` gets
 correct offsets where the polyfill's are wrong (a mounted Casablanca calendar
 showed a 15:00 UTC event at 16:00 during Ramadan 2020), and a JSON feed URL with
 a `#fragment` keeps its `start`, `end` and `timeZone` parameters. A typical
-application bundle is 283,220 bytes minified and 77,697 gzipped instead of
+application bundle is 281,307 bytes minified and 77,789 gzipped instead of
 301,385 and 84,399.
 
 The release's **27 React tests** pass for both libraries on Node and Bun.
@@ -897,6 +897,13 @@ library; the five that fail in this configuration fail for both and are pinned.
 An application's types compile against the declarations under the configured
 TypeScript 7 compiler, and five focused tests check the derivation against the
 recorded hashes.
+
+Four app-shaped mounted checks cover month/week/day navigation, custom content,
+clicks, selection, edit payloads, filtering and unmount. An upstream control
+reproduces `setDates()` clearing `allDay` to undefined; VPM preserves it while
+honoring explicit true/false conversions. These tests do not certify the app's
+actual CSS or pointer dragging/resizing. Its v6 imports/types and `updateSize()`
+call require migration; the calendar runtime remains an adapted implementation.
 
 See the [package contract](packages/vfullcalendar-react/README.md),
 [conformance record](scripts/fullcalendar-react-conformance/README.md) and

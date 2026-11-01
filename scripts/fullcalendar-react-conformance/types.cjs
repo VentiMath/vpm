@@ -11,7 +11,7 @@ const compilers = {[compiler().version]: compiler().path};
 
 const app = name => `import { useRef } from 'react';
 import FullCalendar, { JsonRequestError, formatDate, type CalendarRef } from '${name}';
-import type { CalendarOptions, EventApi, EventClickInfo, DateSelectInfo, EventInput, EventSourceInput, EventDropInfo } from '${name}';
+import type { CalendarOptions, EventApi, EventClickInfo, DateSelectInfo, EventInput, EventSourceInput, EventDropInfo, DatesSetInfo, EventDisplayInfo, EventAddInfo, EventChangeInfo, EventRemoveInfo } from '${name}';
 import dayGridPlugin from '${name}/daygrid';
 import timeGridPlugin from '${name}/timegrid';
 import interactionPlugin from '${name}/interaction';
@@ -26,9 +26,20 @@ const options: CalendarOptions = { initialView: 'timeGridWeek', timeZone: 'Ameri
 
 export function Schedule(props: { onPick(event: EventApi): void }) {
   const calendar = useRef<CalendarRef>(null);
+  const api = calendar.current?.getApi();
+  api?.prev(); api?.next(); api?.today(); api?.changeView('timeGridDay');
+  // @ts-expect-error FullCalendar 7 removed the v6 imperative sizing method.
+  api?.updateSize();
   const label: string = formatDate('2026-11-03', { month: 'long', day: 'numeric' });
+  const feedOptions: CalendarOptions = {eventSources: [events, feed], headerToolbar: {start: 'prev,next today', center: 'title', end: label}};
+  void feedOptions;
   return <FullCalendar ref={calendar} plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, classicThemePlugin]} {...options}
-    eventSources={[events, feed]} headerToolbar={{ start: 'prev,next today', center: 'title', end: label }}
+    events={events} headerToolbar={false} selectMirror dayMaxEvents weekends
+    datesSet={(info: DatesSetInfo) => void info.view.title}
+    eventContent={(info: EventDisplayInfo) => <span>{info.timeText} {info.event.title} {String(info.event.extendedProps.label)}</span>}
+    eventAdd={(info: EventAddInfo) => void info.event.id}
+    eventChange={(info: EventChangeInfo) => void info.event.id}
+    eventRemove={(info: EventRemoveInfo) => void info.event.id}
     eventClick={(info: EventClickInfo) => props.onPick(info.event)}
     select={(info: DateSelectInfo) => calendar.current?.getApi().unselect() ?? info.startStr}
     eventDrop={(info: EventDropInfo) => { if (!info.event.start) info.revert(); }} />;

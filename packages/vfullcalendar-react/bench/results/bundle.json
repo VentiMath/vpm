@@ -9,9 +9,9 @@
       "polyfillModules": 19
     },
     "vpm": {
-      "bytes": 283220,
-      "gzip": 77697,
-      "modules": 33,
+      "bytes": 281307,
+      "gzip": 77789,
+      "modules": 39,
       "polyfillModules": 0
     }
   }

@@ -2,7 +2,7 @@
 // The calendar itself is exercised in scripts/fullcalendar-react-conformance
 // (upstream's React and browser suites, with React installed there). These
 // checks cover the derivation: every file is upstream's, apart from the
-// package names and the shared JSON feed request.
+// package names, shared JSON feed request and setDates flag preservation.
 const test = require('node:test'), assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path'), {createHash} = require('node:crypto');
 const root = path.join(__dirname, '..');
 const provenance = require('../PROVENANCE.json'), metadata = require('../package.json');
@@ -32,11 +32,12 @@ test('unmodified files are byte-identical to 7.1.3', () => {
   assert.ok(checked > 200);
 });
 
-test('modified files differ only in package names, apart from the JSON feed request', () => {
+test('modified files match the documented dependency, feed and setDates changes', () => {
   for (const file of provenance.modified.filter(file => !REQUEST_CHUNKS.includes(file))) {
     const text = fs.readFileSync(path.join(root, file), 'utf8');
     assert.match(text, /'vfull-ui-headless-calendar'|'vfullcalendar-core\/protected-api'/, file);
-    const restored = text.replaceAll("'vfull-ui-headless-calendar'", "'@full-ui/headless-calendar'").replaceAll("'vfullcalendar-core/protected-api'", "'@fullcalendar/core/protected-api'");
+    let restored = text.replaceAll("'vfull-ui-headless-calendar'", "'@full-ui/headless-calendar'").replaceAll("'vfullcalendar-core/protected-api'", "'@fullcalendar/core/protected-api'");
+    if (file === 'chunks/4bb94a70.js') restored = restored.replace('let standardProps = options.allDay === undefined ? {} : { allDay: options.allDay };', 'let standardProps = { allDay: options.allDay };');
     assert.equal(sha256(restored), provenance.sourceSHA256[file], file);
   }
 });
