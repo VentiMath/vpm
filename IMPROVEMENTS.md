@@ -261,7 +261,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
 | [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
 | [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Retained comparison package, no current VPM runtime consumers; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
-| [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; independent endpoint context, streaming CRC32C and hash validation, private checksum tables and normalized seeds; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, real HTTP and Firebase callers. |
+| [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; independent endpoint context, streaming CRC32C, hash validation and V2/V4 URL signing, private checksum tables and normalized seeds; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, real HTTP and Firebase callers. |
 | [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
 | [vfast-xml-parser](packages/vfast-xml-parser) | fast-xml-parser 5.11.2 | Reusable parser setup, exact depth limits, deterministic filters, safer callbacks and stricter XML syntax checks; all six helpers use VPM. |
 | [vfast-xml-builder](packages/vfast-xml-builder) | fast-xml-builder 1.3.1 | Bounded raw/ordinary traversal, deterministic filters, corrected array/text handling, readonly callback paths and faster serialization. |
@@ -1002,8 +1002,8 @@ except for the explicitly verified preservation of Express query data.
 See the [package contract](packages/vfirebase-functions/README.md),
 [conformance record](scripts/firebase-functions-conformance/README.md) and
 [measurements](packages/vfirebase-functions/bench/results/README.md). The saved recordings precede the Storage hash-stream
-rewrite and are historical for that transitive component; current checksum-stream
-and transfer measurements are in the [Storage report](packages/vgoogle-cloud-storage/bench/results/README.md).
+and URL-signing rewrites and are historical for those transitive components; current
+signing, checksum-stream and transfer measurements are in the [Storage report](packages/vgoogle-cloud-storage/bench/results/README.md).
 
 ## vfirebase-admin
 
@@ -1120,8 +1120,8 @@ request-dispatch, HTTP lifecycle and retry/authorization controls, HTTP/2 wire/s
 See the [package contract](packages/vfirebase-admin/README.md),
 [conformance record](scripts/firebase-admin-conformance/README.md) and
 [measurements](packages/vfirebase-admin/bench/results/README.md). The saved recordings precede the Storage hash-stream
-rewrite and are historical for that transitive component; current checksum-stream
-and transfer measurements are in the [Storage report](packages/vgoogle-cloud-storage/bench/results/README.md).
+and URL-signing rewrites and are historical for those transitive components; current
+signing, checksum-stream and transfer measurements are in the [Storage report](packages/vgoogle-cloud-storage/bench/results/README.md).
 
 The HTTP/1 and HTTP/2 clients now share an independently implemented retry
 policy. It owns validated settings and arrays, parses complete Retry-After
@@ -1653,7 +1653,7 @@ for the replacement caller.
 ## vgoogle-cloud-storage
 
 The baseline is **@google-cloud/storage 8.4.0**, checked October 30, 2026.
-Endpoint configuration, CRC32C computation and hash-stream validation are independently implemented;
+Endpoint configuration, CRC32C, hash-stream validation and V2/V4 URL signing are independently implemented;
 the rest of the published SDK and declarations are retained with focused changes. All 13 direct library
 dependencies are VPM packages. Its unused `abort-controller` dependency
 is removed; Node 24/Bun provide the native controller used by resumable uploads.
@@ -1674,8 +1674,15 @@ are updated before passing chunks downstream, and every enabled checksum must
 match: MD5 success cannot hide a CRC failure. Missing expected values fail unless
 `updateHashesOnly` is enabled. Custom CRC providers and backpressure are preserved.
 
+The URL signer now owns canonicalization and V2/V4 signing. It captures the URL,
+bucket/file identity, query values, dates, endpoint and authentication provider
+before credential awaits. Changing those destination options or replacing the
+signer’s provider cannot redirect the prepared operation. Existing canonical header, exact
+SHA256 and reserved query-field protections remain. Signed POST policies are
+still retained upstream code in File; they are outside this component rewrite.
+
 Verification covers 110 retained upstream tests on both runtimes and controls,
-sixteen focused tests, five paired regression probes, independent RSA signature
+twenty-one focused tests, five paired regression probes, independent RSA signature
 verification, 25 real local HTTP requests per caller run and Firebase Admin
 12.7.0's actual Storage factory. HTTP coverage includes simple/resumable/local
 uploads, integrity-checked downloads, pagination, existence, deletion, transient
@@ -1693,12 +1700,16 @@ runtimes, including verified V4 form signatures.
 
 [Measurements](packages/vgoogle-cloud-storage/bench/results/README.md) use one
 selected SDK per fresh worker, four balanced comparison pairs and two identical-
-source controls. A separate Node 24 server serves both client runtimes. All sixteen
+source controls. A separate Node 24 server serves both client runtimes. All twenty
 CPU/localhost workloads and their regressions/inconclusive results are retained;
 old shared-process percentages are historical and are not current evidence.
-The 64 KiB stream cases establish 86%/93% less time for CRC32C and 68%/79% less
-for CRC32C plus MD5 on Node/Bun, including the previously rebuilt CRC engine.
-MD5-only differences are inconclusive; these are not cloud latency claims.
+Signer preparation without RSA and canonicalization are measured separately from
+real RSA signatures and HTTP transfers. Node V4 preparation uses 48% less paired
+time (11.1 vs 21.0 µs); other signer comparisons, including real RSA, remain
+inconclusive. Custom endpoint construction costs 112%/19% more on Node/Bun;
+Bun metadata costs 57% more and integrity-checked uploads use 50% less time.
+Whole-stack comparisons include earlier VPM dependencies and do not isolate one
+component or establish cloud latency.
 [API, migration and verification scope](packages/vgoogle-cloud-storage/README.md).
 
 ## vmime

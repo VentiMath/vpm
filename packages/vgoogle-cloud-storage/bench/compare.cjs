@@ -7,7 +7,7 @@ const certificate = require('../../../scripts/firebase-admin-conformance/upstrea
 const credentials = {client_email: certificate.client_email, private_key: certificate.private_key};
 const body = Buffer.alloc(64 * 1024, 97), crc32c = 'TpXtPw==';
 let selectedRoot, server;
-const library = directory => {selectedRoot = directory;return {...require(directory), HashStreamValidator: require(path.join(directory, directory === root ? 'lib/hash-stream-validator.js' : 'build/cjs/src/hash-stream-validator.js')).HashStreamValidator};};
+const library = directory => {selectedRoot = directory;return {...require(directory), URLSigner: require(path.join(directory, directory === root ? 'lib/signer.js' : 'build/cjs/src/signer.js')).URLSigner, HashStreamValidator: require(path.join(directory, directory === root ? 'lib/hash-stream-validator.js' : 'build/cjs/src/hash-stream-validator.js')).HashStreamValidator};};
 const make = source => directory => new Function('lib', 'env', source)(library(directory), {
     credentials, body, crc32c, endpoint: process.env.VPM_STORAGE_BENCH_ORIGIN,
     start: new Date(Number(process.env.VPM_STORAGE_BENCH_START)),
@@ -21,6 +21,11 @@ const cases = [
     ...['v2', 'v4'].map(version => ({name: version + ' signed URL / RSA fixture', async: true,
         make: make('const file = new lib.Storage({projectId: "fixture-project", credentials: env.credentials}).bucket("fixture").file("nested/fixture.pdf"); return () => file.getSignedUrl({action: "read", version: ' + JSON.stringify(version) + ', expires: env.expires, accessibleAt: env.start});'),
         validate: value => assert.ok(new URL(value[0]).searchParams.has(version === 'v2' ? 'Signature' : 'X-Goog-Signature'))})),
+    ...['v2','v4'].map(version => ({name: 'signer / ' + version + ' preparation without RSA', async: true,
+        make: make('const signer = new lib.URLSigner({getCredentials: async () => ({client_email: "fixture@example.com"}), sign: async () => "YWJj"}, {name: "fixture"}, {name: "folder/report.pdf"}, {apiEndpoint: "https://storage.googleapis.com", universeDomain: "googleapis.com"}); const options = {version: ' + JSON.stringify(version) + ', method: "GET", expires: env.expires, accessibleAt: env.start, queryParams: {download: "true"}}; return () => signer.getSignedUrl(options);'),
+        validate: value => {const url = new URL(value); assert.equal(url.pathname, '/fixture/folder/report.pdf'); assert.equal(url.searchParams.get(version === 'v2' ? 'Signature' : 'X-Goog-Signature'), version === 'v2' ? 'YWJj' : '616263');}})),
+    {name: 'signer / canonical headers', make: make('const signer = new lib.URLSigner({}, {name: "fixture"}, undefined, {}); const headers = {"x-goog-meta-note": "one two", host: "storage.googleapis.com", "content-type": "application/pdf"}; return () => signer.getCanonicalHeaders(headers);'), validate: value => assert.equal(value, 'content-type:application/pdf\nhost:storage.googleapis.com\nx-goog-meta-note:one two\n')},
+    {name: 'signer / canonical query', make: make('const signer = new lib.URLSigner({}, {name: "fixture"}, undefined, {}); const query = {download: "report one.pdf", generation: "12345", "response-content-type": "application/pdf"}; return () => signer.getCanonicalQueryParams(query);'), validate: value => assert.equal(value, 'download=report%20one.pdf&generation=12345&response-content-type=application%2Fpdf')},
     {name: 'CRC32C / 64KiB', make: make('return () => {const hash = new lib.CRC32C(); hash.update(env.body); return hash.toString();};'), validate: value => assert.equal(value, crc32c)},
     {name: 'CRC32C / 64B', make: make('const bytes = env.body.subarray(0, 64); return () => {const hash = new lib.CRC32C(); hash.update(bytes); return hash.toString();};'), validate: value => assert.equal(value, 'N67uMw==')},
     {name: 'CRC32C / 64KiB in 1KiB chunks', make: make('const chunks = Array.from({length: 64}, (_, i) => env.body.subarray(i * 1024, (i + 1) * 1024)); return () => {const hash = new lib.CRC32C(); for (const chunk of chunks) hash.update(chunk); return hash.toString();};'), validate: value => assert.equal(value, crc32c)},
