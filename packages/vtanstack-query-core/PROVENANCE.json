@@ -199,5 +199,10 @@
     "Timers longer than 2^31 - 1 ms (about 24.8 days) run as a chain of timers in the default timeout provider. The platform treats such delays as 1 ms, so a gcTime of 30 days collected an unused query at once and a refetchInterval of 30 days refetched every millisecond.",
     "Declarations type a query's AbortSignal as the runtime's, with a structural fallback, and VoidFunction as () => void, so they compile without DOM or Node types.",
     "The legacy build and the TypeScript sources are not shipped: 2.1 MB unpacked instead of 4.7 MB."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-fork",
+    "replacementStatus": "independent implementation pending",
+    "targetScope": "QueryClient cache, request deduplication, retries, invalidation, cache updates, query observation and mutation state."
+  }
 }

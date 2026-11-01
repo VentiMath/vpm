@@ -184,5 +184,10 @@
     "Firestore.v1beta1 throws a descriptive error: the deprecated v1beta1 API is not provided.",
     "Declarations are a module (export = with the FirebaseFirestore global retained) under any package name, and need no ambient Node types; stream results remain assignable to NodeJS.ReadableStream and bundles are Node Buffers where Node types are loaded.",
     "The library header and tracer report vgoogle-cloud-firestore and its version."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-fork",
+    "replacementStatus": "independent implementation pending",
+    "targetScope": "Document references, snapshots, queries, writes, transactions, batches and listeners."
+  }
 }

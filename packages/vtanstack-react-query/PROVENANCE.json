@@ -281,5 +281,10 @@
     "Derived from @tanstack/react-query 5.105.0: QueryClientProvider, useQuery, useQueries, useInfiniteQuery, the suspense hooks, mutations, hydration and the query option helpers.",
     "Runs on vtanstack-query-core, so long gcTime, staleTime and refetchInterval values are honoured.",
     "The legacy build, the TypeScript sources and the v4/v5 migration codemods are not shipped: 1.2 MB unpacked instead of 2.8 MB."
-  ]
+  ],
+  "implementation": {
+    "kind": "dependency-remapped-upstream-build",
+    "replacementStatus": "independent implementation pending",
+    "targetScope": "QueryClientProvider, useQuery, useMutation and useQueryClient."
+  }
 }

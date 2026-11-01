@@ -1,5 +1,10 @@
 # vfull-ui-headless-calendar
 
+**Implementation status:** the current package retains upstream implementation
+code with the changes documented below. Its tests verify that adapted build.
+An independently written implementation of the application-facing APIs is
+pending; this package is not yet a completed rewrite.
+
 FullCalendar's headless date engine, targeting **@full-ui/headless-calendar
 7.1.3**, the latest stable release checked November 1, 2026. It is the deepest
 package under `@fullcalendar/core` 7 and `@fullcalendar/react` 7. Zero runtime

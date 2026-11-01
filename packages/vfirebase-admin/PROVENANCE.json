@@ -304,5 +304,10 @@
     "multipart/mixed responses, which no Admin API reads, fail with ERR_UNSUPPORTED_MULTIPART_RESPONSE instead of being parsed with @fastify/busboy into a response whose text and data getters throw.",
     "Missing-dependency messages name vgoogle-cloud-firestore and vgoogle-cloud-storage.",
     "Public declarations need no ambient Node types; Buffer is Node's Buffer where Node types are loaded, and httpAgent accepts any Node http or https Agent."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-fork",
+    "replacementStatus": "independent implementation pending",
+    "targetScope": "App credentials, Auth, Firestore, Storage and messaging."
+  }
 }

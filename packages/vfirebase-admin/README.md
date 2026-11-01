@@ -1,5 +1,10 @@
 # vfirebase-admin
 
+**Implementation status:** the current package retains upstream implementation
+code with the changes documented below. Its tests verify that adapted build.
+An independently written implementation of the application-facing APIs is
+pending; this package is not yet a completed rewrite.
+
 The Firebase Admin SDK, targeting **firebase-admin 14.5.0**, the latest stable
 release checked October 31, 2026. All dependencies are VPM packages; Node.js 24+
 and Bun.

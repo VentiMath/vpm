@@ -298,5 +298,10 @@
     "The firebase-functions bin reads its documented [functionsDir] argument. Upstream read it only when two or more arguments were given.",
     "Realtime Database snapshots read data as before; DataSnapshot#ref, which needs the Realtime Database client, throws vfirebase-admin's descriptive error.",
     "Public declarations need no ambient Node types and use vcors and vexpress declarations instead of @types/cors and @types/express."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-fork",
+    "replacementStatus": "independent implementation pending",
+    "targetScope": "HTTP and callable handlers, logger, secret parameters, schedules and Firestore triggers."
+  }
 }

@@ -300,5 +300,10 @@
     "Dates and named time zones come from vfull-ui-headless-calendar, so no temporal-polyfill is needed and its fixes apply to the calendar: correct offsets where the polyfill misses paired changes (Casablanca during Ramadan), years 0-99, offsets never printed with \":60\" and local-time milliseconds.",
     "The JSON feed request is vfullcalendar-core's instead of a bundled copy, so a feed URL with a #fragment keeps its range parameters; JsonRequestError is the same class core exports.",
     "The unused temporal-polyfill peer is removed."
-  ]
+  ],
+  "implementation": {
+    "kind": "upstream-fork",
+    "replacementStatus": "independent implementation pending",
+    "targetScope": "Mounted calendar, date navigation, month and week views, event display, selection and editing."
+  }
 }
