@@ -20,6 +20,9 @@ try {
   fs.rmSync(directory, {recursive: true, force: true});
 }
 const {upstream, vpm} = reports;
+for (const name of ['upstream', 'vpm']) for (const spec of reports[name].specs.filter(spec => spec.status === 'failed')) {
+  console.log(`${name}: ${spec.name}: ${spec.message}`);
+}
 for (const report of [upstream, vpm]) {
   assert.deepEqual(report.done, {status: 'failed', incomplete: null, globalErrors: []});
   assert.deepEqual(report.pageErrors, []);

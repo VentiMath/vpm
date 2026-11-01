@@ -13,6 +13,7 @@ const assert = require('node:assert/strict'), fs = require('node:fs'), os = requ
 const {verify} = require('./upstream.cjs');
 const upstream = process.argv.includes('--upstream');
 const output = process.argv.find(arg => arg.startsWith('--output='))?.slice(9);
+const only = process.argv.find(arg => arg.startsWith('--grep='))?.slice(7);
 verify();
 const modules = path.join(__dirname, 'node_modules'), packages = path.resolve(__dirname, '../../packages');
 const implementation = upstream ? path.join(modules, '@fullcalendar/react') : path.join(packages, 'vfullcalendar-react');
@@ -32,6 +33,19 @@ function materialize(root) {
     }
   };
   for (const dir of ['vanilla-tests', 'vanilla-w-react', 'icalendar', 'rrule', 'google-calendar', 'format-moment', 'format-luxon3']) walk(dir);
+  // The upstream Deferred test resolves after 100 ms and asserts at 101 ms.
+  // jQuery schedules another timer to deliver its then callback, so scheduler
+  // load can make the assertion run first. Wait for the actual event-store update instead;
+  // both implementations retain the same assertion and Jasmine timeout.
+  const deferredFile = path.join(root, 'vanilla-tests/src/legacy/events-function.ts');
+  const sourceText = fs.readFileSync(deferredFile, 'utf8');
+  const start = sourceText.indexOf("  it('can return a promise-like object'");
+  assert.notEqual(start, -1);
+  const prefix = sourceText.slice(0, start), testText = sourceText.slice(start);
+  const timedAssertion = `    setTimeout(() => {\n      expect(calendar.getEvents().length).toBe(1)\n      setTimeout(done) // :(\n    }, 101)`;
+  assert.equal(testText.split(timedAssertion).length, 2);
+  const updated = testText.replace('    let calendar = initCalendar({', `    let calendar = initCalendar({\n      eventsSet(events) {\n        if (events.length) {\n          expect(calendar.getEvents().length).toBe(1)\n          setTimeout(done)\n        }\n      },`).replace(timedAssertion, '');
+  fs.writeFileSync(deferredFile, prefix + updated);
 }
 
 // `fullcalendar` is fullcalendar-w-react (upstream's FORCE_REACT remap):
@@ -113,6 +127,7 @@ async function run(root) {
 <script>
   const env = jasmine.getEnv();
   env.configure({random: false, stopOnSpecFailure: false});
+  if (${JSON.stringify(only ?? null)}) env.configure({specFilter: spec => spec.getFullName().includes(${JSON.stringify(only ?? '')})});
   window.__specs = []; window.__done = null;
   // Karma's client configuration. --no-gcal skips the Google Calendar tests,
   // which call Google's live API, as upstream's CI does.
