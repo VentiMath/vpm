@@ -106,6 +106,31 @@ export function App() {
   );
 }
 `,
+  'styled.tsx': `import styled from '@emotion/styled';
+import type { Theme } from '@emotion/react';
+declare module '@emotion/react' {
+  interface Theme { color: { primary: string } }
+}
+const Button = styled.button<{ variant: 'primary' | 'text' }>(({ theme, variant }) => ({ color: variant === 'primary' ? theme.color.primary : 'inherit' }));
+const Card = styled('section', { shouldForwardProp: prop => prop !== 'elevated' })<{ elevated?: boolean }>\`
+  box-shadow: \${props => (props.elevated ? '0 1px 4px rgba(0, 0, 0, 0.3)' : 'none')};
+\`;
+function Label(props: { text: string; className?: string }) { return <span className={props.className}>{props.text}</span>; }
+const StyledLabel = styled(Label)({ fontWeight: 600 });
+const LinkButton = Button.withComponent('a');
+export const view = (
+  <Card elevated>
+    <Button variant="primary" onClick={() => undefined}>Save</Button>
+    <StyledLabel text="new" />
+    <LinkButton variant="text" href="/back" />
+    {/* @ts-expect-error variant is required */}
+    <Button />
+    {/* @ts-expect-error a section has no href */}
+    <Card href="/" />
+  </Card>
+);
+export const theme: Theme = { color: { primary: 'hotpink' } };
+`,
 };
 const packageOf = name => name.replace(/\.tsx$/, '');
 const available = Object.keys(consumers).filter(name => fs.existsSync(path.join(packages, 'vemotion-' + packageOf(name))));

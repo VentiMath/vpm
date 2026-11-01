@@ -1,0 +1,30 @@
+{
+  "license": "MIT",
+  "checkedOn": "2026-11-01",
+  "upstream": {
+    "package": "@emotion/styled",
+    "version": "11.14.1",
+    "tarball": "https://registry.npmjs.org/@emotion/styled/-/styled-11.14.1.tgz",
+    "tarballSha256": "563dfb8af1c46ba714fd543219a5df59023ac3141c0d5f7cd6fd773dbe4c1653",
+    "integrity": "sha512-qEEJt42DuToa3gurlH4Qqc1kVpNq8wO8cJtDzU46TjlzWjDlsVyevtYCRijVq3SrHsROS+gVQ8Fnea108GnKzw=="
+  },
+  "source": "Written for VPM to the upstream package's API and behavior. Emotion's tests are retained in scripts/emotion-conformance/upstream (repository commit 49229553967b6050c92d9602eb577bdc48167e91, tag @emotion/styled@11.14.1).",
+  "changes": [
+    "Written for VPM in plain JavaScript: createStyled (styles from templates and interpolations, the as prop, prop forwarding, labels and targets, withComponent, styling styled components) and the element shorthands.",
+    "The theme context is read on every render: the original read it only when the theme prop was null, so a component whose theme prop came and went changed the order of its hooks (React warns in development).",
+    "On vemotion-is-prop-valid (so current HTML attributes such as command and commandFor reach DOM elements), vemotion-serialize, vemotion-utils and vemotion-use-insertion-effect-with-fallbacks; vemotion-react is a peer, as @emotion/react is.",
+    "No macro entry, so no run-time dependency on @emotion/babel-plugin or @babel/runtime: 4 direct dependencies instead of 6.",
+    "Declarations on React's React.JSX namespace, checked with React 18.3 and 19 types.",
+    "ES modules with bundled declarations."
+  ],
+  "verification": {
+    "fixture": "scripts/emotion-conformance",
+    "upstreamSuite": "Emotion's 293 tests pass with this package and the other eleven VPM Emotion packages in place of every original, in development and production builds and with React 16 and React 18.",
+    "regression": "hook-order.cjs renders a styled component whose theme prop comes and goes with React 16.14: React reports a change in the order of hooks for the original and nothing for VPM.",
+    "declarations": "types.cjs compiles a TSX application (shorthands with props, shouldForwardProp, styled components, withComponent, an augmented Theme, and two expected errors) with React 18.3 and 19 types under TypeScript 7.1, 5.8 and 5.9.",
+    "runtimes": [
+      "Node.js 24",
+      "Bun"
+    ]
+  }
+}

@@ -43,6 +43,11 @@ try {
         assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0'});
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
       }
+      if (name === 'vemotion-styled') {
+        assert.deepEqual(metadata.dependencies, {'vemotion-is-prop-valid': '0.1.0', 'vemotion-serialize': '0.1.0', 'vemotion-use-insertion-effect-with-fallbacks': '0.1.0', 'vemotion-utils': '0.1.0'});
+        assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0', 'vemotion-react': '0.1.0'});
+        assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'base.js', 'base.d.ts', 'types.d.ts', 'package.json', 'src/forward.js', 'src/tags.js', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
+      }
       if (name === 'vemotion-react') {
         assert.deepEqual(metadata.dependencies, {'vemotion-cache': '0.1.0', 'vemotion-serialize': '0.1.0', 'vemotion-use-insertion-effect-with-fallbacks': '0.1.0', 'vemotion-utils': '0.1.0', 'vemotion-weak-memoize': '0.1.0'});
         assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0'});

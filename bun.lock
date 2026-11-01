@@ -150,6 +150,20 @@
       "name": "vemotion-sheet",
       "version": "0.1.0",
     },
+    "packages/vemotion-styled": {
+      "name": "vemotion-styled",
+      "version": "0.1.0",
+      "dependencies": {
+        "vemotion-is-prop-valid": "0.1.0",
+        "vemotion-serialize": "0.1.0",
+        "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
+        "vemotion-utils": "0.1.0",
+      },
+      "peerDependencies": {
+        "react": ">=16.8.0",
+        "vemotion-react": "0.1.0",
+      },
+    },
     "packages/vemotion-unitless": {
       "name": "vemotion-unitless",
       "version": "0.1.0",
@@ -920,6 +934,8 @@
     "vemotion-serialize": ["vemotion-serialize@workspace:packages/vemotion-serialize"],
 
     "vemotion-sheet": ["vemotion-sheet@workspace:packages/vemotion-sheet"],
+
+    "vemotion-styled": ["vemotion-styled@workspace:packages/vemotion-styled"],
 
     "vemotion-unitless": ["vemotion-unitless@workspace:packages/vemotion-unitless"],
 

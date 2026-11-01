@@ -63,8 +63,9 @@ In development, 285 tests pass and 8 are gated to production; in production, 5
 pass; under React 18, 288 pass (311 snapshots). The same holds with VPM's packages: currently vemotion-hash,
 vemotion-memoize, vemotion-unitless, vemotion-weak-memoize, vemotion-sheet,
 vemotion-utils, vemotion-serialize, vemotion-is-prop-valid,
-vemotion-use-insertion-effect-with-fallbacks, vemotion-cache and
-vemotion-react, with the original packages above them. 305 and 11 snapshots
+vemotion-use-insertion-effect-with-fallbacks, vemotion-cache, vemotion-react
+and vemotion-styled: all twelve, so no original Emotion package runs (the
+companion packages @emotion/css and @emotion/server run on VPM's too). 305 and 11 snapshots
 match.
 
 `compare-serialize.cjs` runs 20,000 generated style arguments (objects with
@@ -89,10 +90,17 @@ fixture), the version vemotion-cache uses, and stylis-plugin-rtl on stylis
 must be the same in production and development; the declarations whose
 prefixes VPM changes are left out (see below). There are no differences.
 
+`hook-order.cjs` (run by `regressions.cjs`) renders a styled component whose
+`theme` prop comes and goes, with React 16.14 and react-test-renderer, from a
+tree linking VPM's packages beside the fixture's React (Node's
+`--preserve-symlinks`), and collects what React reports.
+
 `types.cjs` compiles an application using each VPM package's API (subclassing
 `StyleSheet` as MUI does, the cache and style types, VentiMath's cache plugin,
 and a TSX component using the `css` prop through `jsxImportSource`, `Global`,
-`ClassNames`, theming and `keyframes`, with two expected type errors) against
+`ClassNames`, theming and `keyframes`, and a TSX component using styled
+shorthands, `shouldForwardProp`, styled components and `withComponent`, each
+with two expected type errors) against
 the originals' and VPM's declarations with DOM types and React 18.3 and 19
 types (`@types/react` 18.3.12, the lockfile's, and 19.2.14), under TypeScript
 7.1, 5.8 and 5.9.
@@ -105,6 +113,7 @@ kebab-case are serialized with `px`, `width: [100, '50%']` becomes a selector
 block, styled elements drop current HTML attributes such as `commandFor` and
 `shadowRootMode`, the cache's prefixer invents declarations
 (`-webkit-box-flex-wrap`) and writes `-ms-flex-item-align:flex-start` and
-`justify-content: space-between` without `-ms-flex-pack`, and @emotion/utils's
+`justify-content: space-between` without `-ms-flex-pack`, a styled component
+whose `theme` prop comes and goes changes the order of its hooks, and @emotion/utils's
 declarations, installed with only its declared dependencies, fail to compile
 because they import the undeclared `@emotion/sheet`.

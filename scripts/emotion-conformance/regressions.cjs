@@ -88,7 +88,18 @@ const load = async name => (await import(pathToFileURL(path.join(packages, name,
     found.push("@emotion/cache's prefixer: -webkit-box-flex-wrap and other invented declarations, -ms-flex-item-align:flex-start, and justify-content: space-between without -ms-flex-pack");
   }
 
-  // 8. @emotion/utils's declarations import @emotion/sheet, which it does not
+  // 8. @emotion/styled reads the theme context only when the theme prop is
+  // null: a styled component whose theme prop comes and goes changes the
+  // order of its hooks, which React reports (hook-order.cjs).
+  {
+    const messages = require('./hook-order.cjs')();
+    assert.equal(messages.upstream.length, 1, JSON.stringify(messages));
+    assert.match(messages.upstream[0], /change in the order of Hooks/);
+    assert.deepEqual(messages.vpm, []);
+    found.push('a styled component whose theme prop comes and goes changing the order of its hooks (React warns)');
+  }
+
+  // 9. @emotion/utils's declarations import @emotion/sheet, which it does not
   // depend on: installed on its own (pnpm, or any isolated install), its types
   // fail to compile.
   {

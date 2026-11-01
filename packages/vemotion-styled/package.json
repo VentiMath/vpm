@@ -1,0 +1,66 @@
+{
+  "name": "vemotion-styled",
+  "version": "0.1.0",
+  "description": "Emotion's styled components, on vemotion-react",
+  "type": "module",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./base": {
+      "types": "./base.d.ts",
+      "default": "./base.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "imports": {
+    "#is-development": {
+      "development": "./src/conditions/true.js",
+      "default": "./src/conditions/false.js"
+    },
+    "#is-browser": {
+      "edge-light": "./src/conditions/false.js",
+      "workerd": "./src/conditions/false.js",
+      "worker": "./src/conditions/false.js",
+      "browser": "./src/conditions/true.js",
+      "default": "./src/conditions/is-browser.js"
+    }
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "base.js",
+    "base.d.ts",
+    "types.d.ts",
+    "src/",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vemotion-styled"
+  },
+  "dependencies": {
+    "vemotion-is-prop-valid": "0.1.0",
+    "vemotion-serialize": "0.1.0",
+    "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
+    "vemotion-utils": "0.1.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "vemotion-react": "0.1.0"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}
