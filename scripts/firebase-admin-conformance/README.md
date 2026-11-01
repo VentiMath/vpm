@@ -86,3 +86,10 @@ destination to a local server: RSA signing, token request bodies, Gaxios,
 configured HTTP Agent selection and response conversion run normally. The
 server verifies the signature and both JWT/refresh-token forms. Both scripts
 run on Node 24 and Bun through the package tests; no live credentials are used.
+
+`user-records.cjs` compares 160 generated user/provider/metadata/MFA projections
+and isolates the original serializer's prototype writes and constructor-key
+aliasing. VPM preserves those claim keys, detaches nested outputs and supports
+20,000-level claim data on Node and Bun; Node's original serializer overflows
+its stack on that case. Cycles report an explicit error. The unchanged upstream
+record suites also run within the full Admin gate.

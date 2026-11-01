@@ -5,6 +5,7 @@ const assert = require('node:assert/strict'), path = require('node:path');
 const roots = {upstream: path.resolve(__dirname, '../../../scripts/firebase-admin-conformance/node_modules/firebase-admin'), vpm: path.resolve(__dirname, '..')};
 const library = root => ({jwt: require(path.join(root, 'lib/utils/jwt.js')), messaging: require(path.join(root, 'lib/messaging/messaging-internal.js')),
   deepCopy: require(path.join(root, 'lib/utils/deep-copy.js')).deepCopy,
+  UserRecord: require(path.join(root, 'lib/auth/user-record.js')).UserRecord,
   credentialFactory: require(path.join(root, 'lib/app/credential-factory.js')),
   ApplicationDefaultCredential: require(path.join(root, 'lib/app/credential-internal.js')).ApplicationDefaultCredential,
   ...require(path.join(root, 'lib/app/firebase-app.js')), ...require(path.join(root, 'lib/app/lifecycle.js'))});
@@ -14,13 +15,19 @@ const certificate = require('../../../scripts/firebase-admin-conformance/upstrea
 const message = {token: 'device-token', notification: {title: 'Practice set ready', body: 'Ten problems on modular arithmetic'}, data: {set: '42', topic: 'number-theory'},
   android: {priority: 'high', notification: {channelId: 'practice', clickAction: 'OPEN_SET'}}, apns: {payload: {aps: {badge: 1, sound: 'default'}}, headers: {'apns-priority': '10'}},
   webpush: {fcmOptions: {link: 'https://example.com/sets/42'}}};
-const env = {token, publicKey, message, library, certificate};
+const user = {localId: 'ada', email: 'ada@example.com', emailVerified: true, displayName: 'Ada',
+  phoneNumber: '+15555550100', createdAt: '1600000000000', lastLoginAt: '1700000000000', validSince: '1600000000',
+  providerUserInfo: [{rawId: 'ada-google', providerId: 'google.com', email: 'ada@example.com'}],
+  customAttributes: '{"role":"teacher","classes":["math","science"]}'};
+const env = {token, publicKey, message, library, certificate, user};
 // A worker constructs only its selected SDK; both workers use the same fixed token.
-const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate} = env; const {jwt, messaging, deepCopy, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
+const compiled = body => async lib => new Function('lib', 'env', 'const {token, publicKey, message, certificate, user} = env; const {jwt, messaging, deepCopy, UserRecord, FirebaseApp, FirebaseAppInternals, AppStore, credentialFactory, ApplicationDefaultCredential} = env.library(lib);\n' + body)(lib, env);
 const syntheticCredential = 'const credential = new ApplicationDefaultCredential(); const client = {credentials: {access_token: "bench", expiry_date: Date.now() + 3600000}, getAccessToken: async () => ({token: "bench"})}; credential.googleAuth.getClient = async () => client; ';
 const cases = [
   {name: 'auth / verify RS256 ID token signature', async: true, make: compiled('return () => jwt.verifyJwtSignature(token, publicKey, {algorithms: ["RS256"]}).then(() => true);'), validate: v => assert.equal(v, true)},
   {name: 'auth / decode ID token', async: true, make: compiled('return () => jwt.decodeJwt(token).then(decoded => decoded.payload.sub);'), validate: v => assert.equal(v, 'ada')},
+  {name: 'auth / project a user response', make: compiled('return () => new UserRecord(user);'), validate: v => {assert.equal(v.uid, 'ada'); assert.equal(v.providerData[0].providerId, 'google.com'); assert.equal(v.customClaims.classes.length, 2);}},
+  {name: 'auth / serialize a user record', make: compiled('const record = new UserRecord(user); return () => record.toJSON();'), validate: v => {assert.equal(v.uid, 'ada'); assert.equal(v.metadata.lastSignInTime, 'Tue, 14 Nov 2023 22:13:20 GMT'); assert.deepEqual(v.customClaims.classes, ['math', 'science']);}},
   {name: 'messaging / copy and validate a message', make: compiled('return () => { const copy = deepCopy(message); messaging.validateMessage(copy); return copy.token; };'), validate: v => assert.equal(v, 'device-token')},
   {name: 'app / create context and read project', make: compiled('return () => new FirebaseApp({projectId: "bench", storageBucket: "bench.appspot.com"}, "bench").options.projectId;'), validate: v => assert.equal(v, 'bench')},
   {name: 'app / repeat initialization with equal options', make: compiled('const store = new AppStore(), options = {projectId: "bench", databaseAuthVariableOverride: {role: "admin"}}; const app = store.initializeApp(options); return () => store.initializeApp(options) === app;'), validate: v => assert.equal(v, true)},

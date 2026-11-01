@@ -1,7 +1,7 @@
 "use strict";
 // VPM app-option snapshots. Credentials/agents with their own class retain
 // identity; plain records and arrays are detached without invoking __proto__.
-function snapshotOptions(source) {
+function snapshotOptions(source, cycleMessage = 'App options must not contain cycles.') {
   const frames = [];
   let copies, active;
   function copy(value) {
@@ -13,7 +13,7 @@ function snapshotOptions(source) {
       copies = new WeakMap(frames.map(frame => [frame.source, frame.target]));
       active = new Set(frames.map(frame => frame.source));
     }
-    if (active?.has(value)) throw new TypeError('App options must not contain cycles.');
+    if (active?.has(value)) throw new TypeError(cycleMessage);
     if (copies?.has(value)) return copies.get(value);
     const target = Array.isArray(value) ? new Array(value.length) : Object.create(proto);
     copies?.set(value, target); active?.add(value);
