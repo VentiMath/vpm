@@ -1,0 +1,1603 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-01T22:24:01.681Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/floating-react-dom-conformance/node_modules/@floating-ui/core": "4fd91caeccb98c18f80960165f3acaa53fe0c40e49482c93e97817fcf657a727",
+    "../../scripts/floating-react-dom-conformance/node_modules/@floating-ui/dom": "06a7ebaf7ee4927e8477933f93592e9cef607f25541dde8683a42eb0b4a028ac",
+    "../../scripts/floating-react-dom-conformance/node_modules/@floating-ui/react-dom": "f702793decc2ecc36369451d0538eec827e19e7b58508ca99040e1d30f273c70",
+    "../../scripts/floating-react-dom-conformance/node_modules/@floating-ui/utils": "fcb2d52f207a79153335cecca5de776c4fe142f63a3b525ae7a4512450d27d74",
+    "../../scripts/floating-react-dom-conformance/node_modules/jsdom": "32e3c27f376dccd4f7242d7e53902a8dca691a6111df7440cdb3d45f327aa6e4",
+    "../../scripts/floating-react-dom-conformance/node_modules/react": "b8be677a125f362347fb2b1f35507e0b5c1ab6f994d766dec3ae9b1a9b445483",
+    "../../scripts/floating-react-dom-conformance/node_modules/react-dom": "a618ca6f455bc83b2562fe61c96ef682a7d305062b3c02105a048b5dae04350d",
+    "../../scripts/floating-react-dom-conformance/node_modules/scheduler": "8c1d4507b958948378ee7cf8c66e82549878b98b6d4f6d5fe4f327569c08bdf1",
+    "../../scripts/floating-react-dom-conformance/package-lock.json": "1e7a49061a149438148352bb0011b2ae78a7a5dd2ac67f4870009d3d2f8cac65",
+    "../../scripts/floating-react-dom-conformance/prepare.cjs": "ce034b710432c7fb8c09753254ce9af00a35f72cb66d9835fa4788f9abedfdb2",
+    "../vfloating-ui-core/engine.mjs": "44fe8b9d3d2a6444d5103b5ac22056c01c18246f2e97f30091267cb0cf9d37b0",
+    "../vfloating-ui-core/geometry.mjs": "7cba8b3d614630fe985d7907e8836a893969610d24858a53ad59fa6cf6c7b3ee",
+    "../vfloating-ui-core/motion.mjs": "baafaf81e6e6113693c3df8d68643a8138f3fede648c1bb851b6fef87e9a8d45",
+    "../vfloating-ui-core/package.json": "890a4176079bbdfca9c087c3b361579016b2cde79ac438884959f4a7acc6e254",
+    "../vfloating-ui-core/runtime.mjs": "086fbc55d06f3168c5952d275ab0a67a39406fbab442f1cd2dcff8c897934a0c",
+    "../vfloating-ui-core/selection.mjs": "6d5b2479cab6f14a6cc8d01bbbec131e502085b454a217f706f2f5f15d7f7e6d",
+    "../vfloating-ui-core/visibility.mjs": "1f0cce97b2fd654f76dd7b61b5010a16017b1e8a5ecaf32e6f2c692bb71a8a2f",
+    "../vfloating-ui-dom/geometry.mjs": "7e78d893f618df17b08ed4d19f5bf68661862ccf9f5eb940b8870d2a280b0889",
+    "../vfloating-ui-dom/package.json": "fd8a0d3e96d13a805b1e009f6c05d6c72f6edb14e9c7af6d54b42ad4c6db0dd0",
+    "../vfloating-ui-dom/runtime.mjs": "5f10d255fc976384b815a158a9fe6d215dc6f8af11a9551c7f8e1a39fe1319fa",
+    "../vfloating-ui-dom/updates.mjs": "d38233355153602cde6878325377effa395aa4fe3d70bf838a8c6db8baaa783c",
+    "../vfloating-ui-utils/dom.mjs": "c9efa00d2409e88ef083f6f106ba8f7cbde54efa082393bfb4773e92ce6db5af",
+    "../vfloating-ui-utils/package.json": "dc6f74a24aaf1cbe87cd39cea4ee82ffef296a35a246c063b0495e83350c5f86",
+    "../vfloating-ui-utils/runtime.mjs": "cf941dba6a1c0f91703ab0de1de1fec5c211f73bdb034002955c6e4f1c9fba59",
+    "bench/compare.cjs": "237a4738827f57c32db131a69fac9fadd2a371a4b8fdad561716ddf8d181bcfd",
+    "equivalent.mjs": "879d98da48677123bcbe4d5e81994b2313bdfebbc83994265ccb142848fe5b48",
+    "index.cjs": "f38802af8cae3a627b557924731fb71d3737fcf6277b1226ca4a828e55b02de8",
+    "package.json": "eba92ac0041895b1af39e3794062893fe48ca1ecab8f8220deb2485e1849b0e4",
+    "runtime.mjs": "ca6a909002d1095b8eca66d38b9fa9a61e1b326afbd88e7907dc887624f7f6bd"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 14006,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2757,
+            "samples": [
+              3706.5799782371955,
+              3461.4922016685064,
+              3774.0750816104455,
+              3710.313021400071,
+              3691.799782372164,
+              3666.2890823358493,
+              3687.0845121508555,
+              3373.9118607181704,
+              3584.5422560754687,
+              3673.0594849474032,
+              3653.7751178817407,
+              3594.6982227058716
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 73315,
+            "samples": [
+              157.7621769078631,
+              123.76504126031554,
+              107.27795130601024,
+              110.55036486394351,
+              108.74763690922782,
+              90.20210052513096,
+              112.29681511287164,
+              109.78653754347648,
+              106.10778149082645,
+              133.55554797790137,
+              124.69651503784834,
+              152.02550637659598
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 4073,
+            "samples": [
+              2927.5818806776306,
+              2236.629265897394,
+              3007.8566167444087,
+              2479.2126196906547,
+              2838.294868647194,
+              3162.687208445859,
+              2628.068990915781,
+              2893.649398477786,
+              2406.08887797691,
+              2687.7402406088695,
+              2298.4183648416606,
+              2814.5202553400636
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 3221,
+            "samples": [
+              2300.165476560062,
+              1942.1893821794251,
+              1922.9276622166747,
+              1930.145917416911,
+              1885.6982303632517,
+              1891.0922073890256,
+              1863.2154610369287,
+              2180.133188450784,
+              1923.5613163614094,
+              1817.836075752893,
+              1893.9509469108957,
+              1940.3135672151348
+            ]
+          }
+        ],
+        "checksum": 304768
+      },
+      "vpm": {
+        "pid": 14028,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2757,
+            "samples": [
+              4206.549873050423,
+              4366.959738846579,
+              4376.088139281839,
+              4408.0522306855355,
+              4428.878128400438,
+              3997.491476242324,
+              4250.922016684837,
+              4225.108813928197,
+              4256.831338411319,
+              4328.542618788552,
+              4176.898077620609,
+              4130.168661588695
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 73315,
+            "samples": [
+              138.84381095273872,
+              141.17278865170738,
+              142.9317465730076,
+              142.44356543681423,
+              161.03628179772218,
+              138.23000750187506,
+              145.39941348973554,
+              142.6413421537207,
+              142.6578326399773,
+              146.69860192320706,
+              145.44316988338056,
+              139.29505558207833
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 4073,
+            "samples": [
+              1650.3805548735527,
+              1632.3449545789401,
+              1954.9472133562708,
+              1648.5698502332602,
+              1633.5624846550195,
+              1584.04959489319,
+              1864.606432604971,
+              1633.0714461085054,
+              1621.5320402651403,
+              1723.67836975202,
+              1646.5850724281895,
+              1666.574515099408
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 3221,
+            "samples": [
+              2033.1676497982176,
+              1972.032598571859,
+              1895.6327227569311,
+              1935.5917416951368,
+              1961.7485253027105,
+              2057.29338714684,
+              2564.343371623701,
+              1972.2135982613981,
+              1993.363862154602,
+              2021.396150263913,
+              2077.4088792300827,
+              2138.699161750961
+            ]
+          }
+        ],
+        "checksum": 283648
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 14032,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2654,
+            "samples": [
+              3657.608138658627,
+              3698.128485305208,
+              4103.036548605874,
+              3929.053504144707,
+              3913.715146948003,
+              3910.3711379050533,
+              4051.0233609646057,
+              3674.139788997743,
+              4155.4099472494345,
+              4306.31424265263,
+              4131.484174830453,
+              3949.745666917854
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 61818,
+            "samples": [
+              160.9213174156404,
+              161.0527516257402,
+              145.937121873889,
+              164.13099744411028,
+              156.89134232747756,
+              170.0711443268953,
+              163.92610566501733,
+              145.7996376459919,
+              157.87675110809195,
+              162.48233524216332,
+              141.54655601928098,
+              162.1459930764506
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 7472,
+            "samples": [
+              1657.8783458244063,
+              1780.831771948593,
+              1580.7012847965939,
+              1564.1729122055674,
+              1781.2667291220382,
+              1560.1746520342683,
+              1636.2252408993388,
+              1714.0044164882263,
+              1600.6367773019158,
+              1757.55594218416,
+              1640.2736884368153,
+              1557.2582976445608
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 4726,
+            "samples": [
+              2006.0304697418308,
+              1963.9758781210542,
+              1970.3853152771708,
+              1759.0192551840669,
+              1970.0943715615435,
+              2034.058188743133,
+              1672.5914092255646,
+              1962.3535759627632,
+              1899.6773169699618,
+              1723.4358865848683,
+              1935.6485399915603,
+              1796.9212865002144
+            ]
+          }
+        ],
+        "checksum": 968256
+      },
+      "upstream": {
+        "pid": 14040,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2654,
+            "samples": [
+              3700.671816126613,
+              3727.047098718903,
+              3557.3349660889035,
+              3492.0874152222955,
+              3274.570082893755,
+              3507.4886963074605,
+              3559.4069329314216,
+              3634.2155237377633,
+              3670.921250942008,
+              3275.873021853846,
+              3693.402788244148,
+              3673.3703843255216
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 61818,
+            "samples": [
+              96.34936426283676,
+              89.21349768675768,
+              89.206752078681,
+              92.98532789802269,
+              96.30825973017716,
+              86.59020026529542,
+              86.45001455886587,
+              85.23677569639788,
+              105.27948170435727,
+              91.43911158562128,
+              88.72077711993144,
+              101.50765149309227
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 7472,
+            "samples": [
+              1666.2485278372553,
+              1603.168495717347,
+              1600.620048179857,
+              1679.2469218415392,
+              1557.4925053533273,
+              1782.5103051391939,
+              1785.3430139186362,
+              1584.130754818006,
+              1634.3237419700258,
+              1726.7521413276215,
+              1579.5580835117623,
+              1526.4320128479453
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 4726,
+            "samples": [
+              1704.7185780786954,
+              1907.8766398645737,
+              1946.9953449005761,
+              1575.1074904782197,
+              1859.9944985188383,
+              1668.4212865002075,
+              1782.2771900126736,
+              1863.7414303850796,
+              1667.7158273381262,
+              1859.2801523486908,
+              1917.5835801946678,
+              1621.3324164198063
+            ]
+          }
+        ],
+        "checksum": 228416
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 14041,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 3024,
+            "samples": [
+              3560.750000000009,
+              3639.9500661375814,
+              3617.9041005290987,
+              3638.007275132289,
+              3587.852513227499,
+              3576.2096560846567,
+              3497.4923941798916,
+              3177.3865740740844,
+              3485.2017195767326,
+              3560.1025132275217,
+              3544.8082010581766,
+              3665.481812169322
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 50915,
+            "samples": [
+              94.17002847883735,
+              93.14135323578553,
+              91.63228910930094,
+              94.71668467052913,
+              80.2677599921429,
+              94.15775311794371,
+              95.89594422076122,
+              96.97780614750123,
+              88.80404595895222,
+              95.47121673377366,
+              99.28066385151799,
+              79.35855838161567
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 6968,
+            "samples": [
+              1650.7307692307872,
+              1684.2530137772462,
+              1623.5110505166513,
+              1584.7566016073526,
+              1756.565729047099,
+              1596.1897244546346,
+              1612.334959816314,
+              1682.2498564868079,
+              1574.327784156144,
+              1592.3507462686425,
+              1748.1343283582146,
+              1551.1624569460528
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 5102,
+            "samples": [
+              2071.058800470409,
+              1936.1279890239034,
+              1677.7244217953535,
+              1955.7606820854369,
+              1828.841630733017,
+              1838.1599372794733,
+              1848.0660525284086,
+              1619.9121912975193,
+              1824.2600940807263,
+              1901.0846726773636,
+              1692.5307722461655,
+              1896.8541748334103
+            ]
+          }
+        ],
+        "checksum": 817792
+      },
+      "vpm": {
+        "pid": 14042,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 3024,
+            "samples": [
+              4048.7076719576708,
+              3808.627976190476,
+              3896.384259259261,
+              3937.4173280423242,
+              3791.625330687825,
+              3942.0608465608484,
+              3848.0628306878184,
+              3928.2129629629644,
+              3904.624007936515,
+              3933.724537037033,
+              3793.9953703703586,
+              3959.4768518518686
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 50915,
+            "samples": [
+              143.96623784739373,
+              148.68162623981294,
+              161.95457134439678,
+              144.15447314151172,
+              146.96718059510775,
+              145.17332809584727,
+              149.96480408523954,
+              148.3477364234513,
+              163.54382794854095,
+              148.2241579102424,
+              158.26868309928398,
+              145.13895708533929
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 6968,
+            "samples": [
+              1787.4509184845053,
+              1635.4285304248162,
+              1705.1940298507327,
+              1689.1923076922972,
+              1668.819460390355,
+              1707.1493972445396,
+              1832.9865097588956,
+              1618.7990815155056,
+              1712.6327497129907,
+              1620.736366245688,
+              1623.7741102181158,
+              1885.5004305395867
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 5102,
+            "samples": [
+              1856.0203841631003,
+              1894.3143865150987,
+              1883.313798510382,
+              1591.418463347684,
+              1795.9705997647795,
+              1878.4137593100504,
+              1805.9259114073175,
+              1631.0188161505082,
+              1844.4317914543153,
+              1781.1315170521254,
+              1769.2981183849536,
+              1605.4896119168877
+            ]
+          }
+        ],
+        "checksum": 227584
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 14044,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2736,
+            "samples": [
+              3894.4777046783543,
+              3774.4426169590542,
+              3931.636695906432,
+              4049.600877192997,
+              3918.951023391803,
+              3480.6136695906275,
+              3758.528508771918,
+              3828.475146198859,
+              4009.3505116959277,
+              4082.099780701762,
+              4142.558845029265,
+              4526.1023391812905
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 97095,
+            "samples": [
+              154.20207013749337,
+              153.51545393686575,
+              158.5006951954274,
+              148.85292754518835,
+              157.92608270250813,
+              152.37911323961077,
+              158.19128688398004,
+              144.90104536793854,
+              142.4661414078998,
+              150.21456305680059,
+              147.5882692208656,
+              150.24031103558482
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 6888,
+            "samples": [
+              1967.267857142867,
+              1797.9940476190507,
+              1801.8898083623733,
+              1888.0904471544757,
+              1777.8805168408978,
+              1749.3768873403033,
+              1751.9599303135717,
+              1675.2563879209922,
+              1784.8734030197484,
+              1773.2530487804675,
+              1815.1797328687624,
+              1743.9326364692035
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 4815,
+            "samples": [
+              2136.1889927310503,
+              2072.317341640705,
+              1865.9050882658107,
+              2156.9055036344475,
+              2068.2502596053964,
+              1800.6749740394855,
+              1977.5786085150455,
+              1912.660228452736,
+              1777.1202492211798,
+              2148.6240913810857,
+              2048.6585669782125,
+              1827.6220145378932
+            ]
+          }
+        ],
+        "checksum": 836160
+      },
+      "upstream": {
+        "pid": 14112,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2736,
+            "samples": [
+              3853.7401315789493,
+              3672.34722222223,
+              3560.413742690054,
+              3365.8472222222413,
+              3730.7960526315696,
+              3779.483187134482,
+              3797.804093567264,
+              3733.6136695906257,
+              3517.1176900584837,
+              3673.5957602338904,
+              3735.197368421067,
+              3691.8709795321597
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 97095,
+            "samples": [
+              94.24619187393822,
+              81.62881713785461,
+              97.33379679695088,
+              101.45604820021718,
+              88.49322828158026,
+              99.24344198980472,
+              87.4929193058348,
+              102.70181780730276,
+              104.13898758947374,
+              92.620629280602,
+              108.48482414130575,
+              91.60100932076838
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 6888,
+            "samples": [
+              1633.2450638792204,
+              1583.6660859465517,
+              1611.4316202090656,
+              1720.7521777003446,
+              1591.9715447154501,
+              1626.3549651567876,
+              1633.892276422758,
+              1597.6456155632854,
+              1624.7942799070902,
+              1774.0756387921178,
+              1594.8812427410166,
+              1598.0267131242726
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 4815,
+            "samples": [
+              1987.3831775700958,
+              1900.1817237798468,
+              1866.484942886834,
+              1627.1462097611577,
+              1846.5038421598824,
+              1757.2170301142291,
+              1600.0604361370742,
+              1911.6130841121806,
+              1851.8257528556703,
+              1630.4517133956463,
+              1762.833229491163,
+              1584.1034267912632
+            ]
+          }
+        ],
+        "checksum": 227712
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 14114,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2982,
+            "samples": [
+              3947.6022803487585,
+              3785.2810194500366,
+              3810.487927565403,
+              3681.533534540584,
+              3404.300804828982,
+              3625.5449362843724,
+              3675.120053655261,
+              3617.189134808866,
+              3566.4543930248237,
+              3809.1327967806847,
+              3557.511737089218,
+              3592.2059020791353
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 155135,
+            "samples": [
+              90.43333225899997,
+              100.37332645760145,
+              94.15670222709234,
+              90.47012601927344,
+              93.93270377413256,
+              96.91156089857266,
+              94.00602700873495,
+              100.23500821864867,
+              98.02913591388167,
+              96.86482740838595,
+              94.75000483449874,
+              98.32968060076695
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 6878,
+            "samples": [
+              1669.3928467577766,
+              1679.055103227699,
+              1757.4210526315767,
+              1681.1997673742435,
+              1630.197731898821,
+              1758.6507705728416,
+              1895.681884268666,
+              1765.7567606862399,
+              1709.1330328584006,
+              1807.1023553358734,
+              1848.4116022099506,
+              1722.5756033730636
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 3438,
+            "samples": [
+              2720.8042466549855,
+              1978.548574752751,
+              2027.3414776032655,
+              2095.8042466550332,
+              2134.1745200697887,
+              2361.995927865005,
+              2269.960732984326,
+              1940.0573007562366,
+              1869.8371146015081,
+              1966.5622454915583,
+              2679.513379871992,
+              1963.5325770796685
+            ]
+          }
+        ],
+        "checksum": 947776
+      },
+      "vpm": {
+        "pid": 14151,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2982,
+            "samples": [
+              4156.704225352107,
+              4004.583165660648,
+              3912.6146881287727,
+              4243.879946344743,
+              3831.8661971830797,
+              3779.6083165660725,
+              3648.1666666666615,
+              3255.4912810194314,
+              3691.999329309192,
+              3714.8447350771357,
+              3800.483232729705,
+              3819.2907444668126
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 155135,
+            "samples": [
+              118.31791665323722,
+              101.23843748992775,
+              98.85610597221788,
+              120.71663389950722,
+              104.44612756631338,
+              109.70579817578195,
+              101.60317143133392,
+              106.85102007928563,
+              101.39958745608683,
+              111.12015341476824,
+              168.7194508009163,
+              213.74985013053137
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 6878,
+            "samples": [
+              3673.3788892119765,
+              2290.2551613840947,
+              1895.3124454783108,
+              1669.6471357952898,
+              1972.3636231462488,
+              2165.358098284383,
+              1873.667199767352,
+              2114.61660366383,
+              1753.7316080256123,
+              1651.6126781040957,
+              1827.7842396045385,
+              1708.3394882233194
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 3438,
+            "samples": [
+              2361.559336823713,
+              3412.1704479349455,
+              2155.516870273445,
+              1988.5471204188227,
+              2513.743455497479,
+              2369.134089586936,
+              2325.140488656194,
+              2250.908958696904,
+              1995.7097149506637,
+              2159.9889470622606,
+              1915.6486329261897,
+              2141.4944735311406
+            ]
+          }
+        ],
+        "checksum": 206272
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 14164,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2203,
+            "samples": [
+              5591.598275079457,
+              6680.587380844326,
+              4817.956423059475,
+              4133.340898774425,
+              3917.403994552885,
+              4454.134362233315,
+              3795.449387199252,
+              4103.419881979138,
+              3784.2147072174425,
+              3477.5497049478286,
+              4101.16886064455,
+              3895.350885156604
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 162410,
+            "samples": [
+              96.90366972477045,
+              97.53376023643872,
+              100.65061880426097,
+              98.86167723662376,
+              112.99796810541207,
+              102.06088910781402,
+              97.05375284773133,
+              96.49959977833885,
+              104.6656609814665,
+              95.88516101225314,
+              110.6815528600446,
+              101.96314266362994
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 7102,
+            "samples": [
+              1893.6976907913054,
+              2326.762461278532,
+              1896.8424387496593,
+              2107.111799493097,
+              2079.4964798648152,
+              2106.7069839481615,
+              1854.7592227541395,
+              1897.5406927626273,
+              2311.39707124753,
+              2869.960292875252,
+              1897.423261053226,
+              1828.3054069276332
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 3894,
+            "samples": [
+              1973.7737544941253,
+              1911.9583975346616,
+              2352.272727272735,
+              1949.7090395480272,
+              2050.676168464325,
+              2172.369799691889,
+              1923.4504365690789,
+              2352.5724191062986,
+              2784.27272727278,
+              2232.6014381098894,
+              2822.1409861325124,
+              2053.05161787369
+            ]
+          }
+        ],
+        "checksum": 790208
+      },
+      "upstream": {
+        "pid": 14168,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "hook / mounted controlled-platform update",
+            "iterations": 2203,
+            "samples": [
+              4317.0299591466,
+              3714.820699046769,
+              4305.5115751248395,
+              4024.0013617793843,
+              3487.2333182024936,
+              4178.544711756692,
+              3962.248751702227,
+              3421.2814344076496,
+              3889.241942805258,
+              4049.572855197447,
+              3508.2274171584563,
+              3957.349523377199
+            ]
+          },
+          {
+            "case": "middleware / popover chain",
+            "iterations": 162410,
+            "samples": [
+              99.39915645588326,
+              100.45794593928956,
+              99.7537097469369,
+              107.0513392032511,
+              112.08053691275151,
+              101.46927529093071,
+              104.86577181208054,
+              111.52381626747105,
+              110.5974077950866,
+              96.54064404901182,
+              97.54787266793932,
+              100.73117418878125
+            ]
+          },
+          {
+            "case": "server render / defaults",
+            "iterations": 7102,
+            "samples": [
+              1618.8631371444812,
+              1847.009152351458,
+              1613.8939735285783,
+              1615.2668262461461,
+              1626.977048718674,
+              1793.4736693889229,
+              1637.989298789079,
+              1651.1429174880434,
+              1656.8572233173506,
+              1668.8373697549976,
+              1871.7203604618414,
+              1668.045480146451
+            ]
+          },
+          {
+            "case": "server render / popover options",
+            "iterations": 3894,
+            "samples": [
+              2299.0390344119105,
+              2207.777092963532,
+              1894.2496147919635,
+              2229.7336928608174,
+              1897.0744735490173,
+              1835.858500256797,
+              2176.917565485351,
+              1933.8618387262336,
+              1797.3269131997902,
+              1942.2935285054348,
+              1733.9712378017382,
+              1690.506676938864
+            ]
+          }
+        ],
+        "checksum": 219648
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "hook / mounted controlled-platform update",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3669.674283641626,
+          "vpmNs": 4253.876677548078,
+          "changePct": 15.91973425300064
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3596.8112283345927,
+          "vpmNs": 3939.3995855312805,
+          "changePct": 9.524780018975697
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 3568.479828042333,
+          "vpmNs": 3916.41848544974,
+          "changePct": 9.750332751587564
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3711.3335160818647,
+          "vpmNs": 3925.2938596491176,
+          "changePct": 5.765052982711594
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3650.3324949698167,
+          "vpmNs": 3809.8869885982585,
+          "changePct": 4.37095781954957
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3959.7991375397132,
+          "vpmNs": 4102.294371311844,
+          "changePct": 3.5985470177324563
+        }
+      ]
+    },
+    {
+      "case": "middleware / popover chain",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 111.42358998840757,
+          "vpmNs": 142.649587396849,
+          "changePct": 28.024583853105224
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 90.32630463618948,
+          "vpmNs": 160.98703452069032,
+          "changePct": 78.22829702720998
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 94.16389079839053,
+          "vpmNs": 148.28594716684685,
+          "changePct": 57.476444430630295
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 95.78999433544455,
+          "vpmNs": 151.30971213759778,
+          "changePct": 57.95982992516959
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 95.80741612144234,
+          "vpmNs": 108.27840912753379,
+          "changePct": 13.01673034400972
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 101.10022473985597,
+          "vpmNs": 99.75614802044237,
+          "changePct": -1.3294497839862252
+        }
+      ]
+    },
+    {
+      "case": "server render / defaults",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2751.1302479744663,
+          "vpmNs": 1647.5774613307249,
+          "changePct": -40.11270594899089
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1618.7461188436864,
+          "vpmNs": 1638.249464668077,
+          "changePct": 1.2048427852492605
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1617.9230051664827,
+          "vpmNs": 1697.193168771515,
+          "changePct": 4.899501604952805
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1618.1129500580778,
+          "vpmNs": 1781.3769599303232,
+          "changePct": 10.089778335089994
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1739.9983280023202,
+          "vpmNs": 1884.4898226228315,
+          "changePct": 8.30411686581336
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1654.000070402697,
+          "vpmNs": 1988.5185863137212,
+          "changePct": 20.224818722624338
+        }
+      ]
+    },
+    {
+      "case": "server render / popover options",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1923.2444892890421,
+          "vpmNs": 2007.3800062092573,
+          "changePct": 4.374665695848012
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1820.778671180682,
+          "vpmNs": 1949.0010579771617,
+          "changePct": 7.042173155144327
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1843.112994903941,
+          "vpmNs": 1800.9482555860486,
+          "changePct": -2.2876914998957942
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1804.6685358255227,
+          "vpmNs": 2013.1185877466291,
+          "changePct": 11.55060044451619
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2061.572862129149,
+          "vpmNs": 2205.448952879582,
+          "changePct": 6.978947646887468
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1915.4681561376256,
+          "vpmNs": 2112.7107087827894,
+          "changePct": 10.297354827494832
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "hook / mounted controlled-platform update",
+      "upstream_ns": 3633,
+      "vpm_ns": 3932,
+      "change_pct": 9.6,
+      "upstream_first_pct": 12.8,
+      "vpm_first_pct": 7.6,
+      "process_range_pct": "15.9, 9.5, 9.8, 5.8",
+      "control_max_abs_pct": 4.4,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "middleware / popover chain",
+      "upstream_ns": 95,
+      "vpm_ns": 150,
+      "change_pct": 57.7,
+      "upstream_first_pct": 42.8,
+      "vpm_first_pct": 68.1,
+      "process_range_pct": "28.0, 78.2, 57.5, 58.0",
+      "control_max_abs_pct": 13,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "server render / defaults",
+      "upstream_ns": 1618,
+      "vpm_ns": 1672,
+      "change_pct": 3.1,
+      "upstream_first_pct": -17.6,
+      "vpm_first_pct": 5.6,
+      "process_range_pct": "-40.1, 1.2, 4.9, 10.1",
+      "control_max_abs_pct": 20.2,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "server render / popover options",
+      "upstream_ns": 1832,
+      "vpm_ns": 1978,
+      "change_pct": 5.7,
+      "upstream_first_pct": 1,
+      "vpm_first_pct": 9.3,
+      "process_range_pct": "4.4, 7.0, -2.3, 11.6",
+      "control_max_abs_pct": 10.3,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

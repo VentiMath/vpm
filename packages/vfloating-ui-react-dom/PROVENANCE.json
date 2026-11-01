@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "@floating-ui/react-dom",
+    "version": "2.1.9",
+    "repository": "https://github.com/floating-ui/floating-ui",
+    "directory": "packages/react-dom",
+    "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+    "integrity": "sha512-JDjEFGCpImxDCA7JJKviA0M9+RtmJdj0m/NVU5IMgBK+AmZouAQQ7/+2GLH0GXXY0YMw9oXPB8hKdbPYg5QLYg=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent source-informed hook, comparison and middleware adapter implementation; no upstream runtime copied. Public declarations and original tests retain MIT attribution. This is not a clean-room claim.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "React 19 positioning hook, reactive middleware and DOM exports beneath popover, tooltip and dropdown callers."
+  },
+  "changes": [
+    "Generation-checked asynchronous measurements prevent stale results after newer updates or changed elements/configuration.",
+    "Open-state transitions invalidate pending measurements and reopening retained elements positions them again.",
+    "Cycle-safe structural middleware comparison preserves opaque object identity and avoids render-phase state updates."
+  ],
+  "verification": {
+    "runtime": "15 unchanged upstream runtime tests, ten focused VPM probes, three package groups; Node 24 and Bun. React 19.1.0 and @floating-ui/react 0.27.20 caller.",
+    "browser": "72 mounted Chrome app-middleware cases, including every subscription cleanup.",
+    "types": "Packed TypeScript 7 NodeNext/bundler consumers compile; original type fixture produces the identical single obsolete DOM expectation in both implementations.",
+    "limits": "Higher-level React interactions remain upstream. No certification of React 16\u201318, Safari/Firefox or application frame rate."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
+  "directory": "packages/react-dom/test",
+  "sha256": {
+    "index.test.tsx": "eb5b62c5368c765a88df34e8c43051b537ac3bb79a872e1b3df62686b9a1ffb5",
+    "index.test-d.tsx": "1e049b30a4e50ba6a1bd8da2243e0f71a5d8405aaccab6fbe524e7fcee230830"
+  }
+}

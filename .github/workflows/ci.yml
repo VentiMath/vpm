@@ -45,10 +45,14 @@ jobs:
       - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/floating-react-dom-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/floating-react-dom-conformance/run.cjs
+      - run: node scripts/floating-react-dom-conformance/archives.cjs
       - run: npm --prefix scripts/floating-dom-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-dom-conformance/archives.cjs
       - run: npm --prefix scripts/floating-core-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-core-conformance/archives.cjs
+      - run: node scripts/floating-react-dom-conformance/browser.cjs
       - run: node scripts/floating-dom-conformance/browser.cjs
       - run: node scripts/floating-core-conformance/browser.cjs
       - run: npm --prefix scripts/floating-utils-conformance ci --ignore-scripts --no-audit --no-fund
@@ -330,6 +334,9 @@ jobs:
       - run: npm --prefix scripts/tanstack-query-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/stylis-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/emotion-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/floating-react-dom-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/floating-react-dom-conformance/run.cjs
+      - run: node scripts/floating-react-dom-conformance/archives.cjs
       - run: npm --prefix scripts/floating-dom-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/floating-dom-conformance/archives.cjs
       - run: npm --prefix scripts/floating-core-conformance ci --ignore-scripts --no-audit --no-fund

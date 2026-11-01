@@ -221,6 +221,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 
 | VPM package | Compared with | Main improvements |
 | --- | --- | --- |
+| [vfloating-ui-react-dom](packages/vfloating-ui-react-dom) | @floating-ui/react-dom 2.1.9 | Independent React 19 positioning hook; stale-measurement protection, retained-element reopening and cycle-safe middleware comparison. |
 | [vfloating-ui-dom](packages/vfloating-ui-dom) | @floating-ui/dom 1.8.0 | Independent browser geometry and lifecycle updates; owned subscriptions, complete cleanup, inherited platform overrides and real-browser conformance. |
 | [vfloating-ui-core](packages/vfloating-ui-core) | @floating-ui/core 1.8.0 | Independent positioning and all middleware on VPM utils; stable async execution plans, inherited platform support, safe data keys and bounded inline geometry, verified with actual DOM callers. |
 | [vfloating-ui-utils](packages/vfloating-ui-utils) | @floating-ui/utils 0.2.12 | Independent zero-dependency placement and DOM helpers; owned fallback arrays, iterative ancestry and browser-tested Floating UI core/dom callers. |
@@ -352,11 +353,11 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 111 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **125 packages**, including two declaration-only packages and
-twelve browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
+compiler in NodeNext and bundler resolution modes. The catalog covers **126 packages**, including two declaration-only packages and
+thirteen browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core` and `vfloating-ui-dom`, whose declarations are checked with DOM
+`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom` and `vfloating-ui-react-dom`, whose declarations are checked with DOM
 (and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
@@ -665,6 +666,29 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vfloating-ui-react-dom
+
+An independent implementation of @floating-ui/react-dom 2.1.9 on VPM's DOM,
+core and utilities, supporting the React 19 positioning contract. Pending
+measurements cannot overwrite newer work after updates, placement changes or
+reference switches. Reopening retained elements requests a fresh position;
+cyclic middleware records compare safely and DOM instances retain identity.
+
+Fifteen unchanged upstream runtime tests, ten focused VPM probes and three
+package groups pass on Node 24 and Bun. Chrome matches 72 mounted app-middleware
+cases and verifies subscription cleanup. React 19.1.0 matches the application;
+the latest higher-level React caller, 0.27.20, exercises click/role/dismissal.
+Packed npm/Bun, CJS/ESM, SSR, browser and TypeScript 7 consumers pass. The
+original type fixture retains one identical obsolete DOM expectation on both
+implementations. [API, evidence and limits](packages/vfloating-ui-react-dom/README.md).
+
+[Process-isolated measurements](packages/vfloating-ui-react-dom/bench/results/README.md)
+cover controlled-platform mounted updates, middleware creation and server
+rendering. Bun mounted updates take 9.6% more time (3.93 versus 3.63 µs);
+three-middleware creation takes 57.7% more (150 versus 95 ns). All Node
+directions and Bun server-rendering directions are inconclusive against controls.
+These results do not establish browser or application performance.
 
 ## vfloating-ui-dom
 

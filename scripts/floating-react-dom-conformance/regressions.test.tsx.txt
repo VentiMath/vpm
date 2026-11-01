@@ -1,0 +1,96 @@
+import * as React from 'react';
+import {act, render, fireEvent, screen} from '@testing-library/react';
+import {expect, test, vi} from 'vitest';
+import {useFloating, offset, arrow, flip, shift, limitShift} from '../src';
+import * as positioning from '../src';
+import {useFloating as useInteractionsFloating, useClick, useDismiss, useRole, useInteractions} from '@floating-ui/react';
+
+const original = process.env.VPM_ORIGINAL === '1';
+const rects = (x = 0) => ({reference:{x,y:0,width:20,height:10},floating:{x:0,y:0,width:10,height:5}});
+const platform = {isRTL:()=>false,getElementRects:()=>rects()};
+const settle = () => act(async()=>{});
+
+test('late measurements cannot overwrite a newer result (paired fault control)', async()=>{
+  const pending = [];
+  const delayed = {...platform,getElementRects:()=>new Promise(resolve=>pending.push(resolve))};
+  let current;
+  function App(){current=useFloating({platform:delayed});return <><button ref={current.refs.setReference}/><div ref={current.refs.setFloating}/></>;}
+  render(<App/>); await settle();
+  current.update(); await settle();
+  expect(pending.length).toBe(2);
+  await act(async()=>pending[1](rects(100)));
+  expect(current.x).toBe(105);
+  await act(async()=>pending[0](rects(10)));
+  expect(current.x).toBe(original?15:105);
+});
+
+test('changing placement invalidates old work (paired fault control)',async()=>{
+  const pending=[];const delayed={...platform,getElementRects:()=>new Promise(resolve=>pending.push(resolve))};let current;
+  function App({placement}){current=useFloating({platform:delayed,placement});return <><button ref={current.refs.setReference}/><div ref={current.refs.setFloating}/></>;}
+  const view=render(<App placement="bottom"/>);await settle();
+  view.rerender(<App placement="top"/>);await settle();
+  await act(async()=>pending[1](rects()));expect(current.placement).toBe('top');
+  await act(async()=>pending[0](rects()));expect(current.placement).toBe(original?'bottom':'top');
+});
+
+test('switching the reference invalidates old work (paired fault control)',async()=>{
+  const pending=[];const delayed={...platform,getElementRects:()=>new Promise(resolve=>pending.push(resolve))};let current;
+  const first=document.createElement('button'),second=document.createElement('button'),floating=document.createElement('div');
+  function App({reference}){current=useFloating({platform:delayed,elements:{reference,floating}});return null;}
+  const view=render(<App reference={first}/>);await settle();view.rerender(<App reference={second}/>);await settle();
+  await act(async()=>pending[1](rects(100)));await act(async()=>pending[0](rects(10)));
+  expect(current.x).toBe(original?15:105);
+});
+
+test('closed snapshots remain immutable and reopen positions retained elements',async()=>{
+  let current;function App({open}){current=useFloating({platform,open});return <><button ref={current.refs.setReference}/><div ref={current.refs.setFloating}/></>;}
+  const view=render(<App open/>);await settle();expect(current.isPositioned).toBe(true);const snapshot=current;
+  view.rerender(<App open={false}/>);await settle();expect(current.isPositioned).toBe(false);
+  // The returned object is already a copy upstream; exercise public state here.
+  expect(snapshot.isPositioned).toBe(true);
+  view.rerender(<App open/>);await settle();if(!original)expect(current.isPositioned).toBe(true);
+});
+
+test('dependency arrays refresh closure values and React arrow refs resolve late',async()=>{
+  let current;
+  function App({gap}){const ref=React.useRef(null);current=useFloating({platform,middleware:[offset(()=>gap,[gap]),arrow({element:ref})]});return <><button ref={current.refs.setReference}/><div ref={current.refs.setFloating}/></>;}
+  const view=render(<App gap={4}/>);await settle();expect(current.y).toBe(14);
+  view.rerender(<App gap={9}/>);await settle();expect(current.y).toBe(19);
+});
+
+test('strict mode cleans subscriptions and discards pending work on unmount',async()=>{
+  const pending=[];let current;const cleanup=vi.fn();const mount=vi.fn((a,b,update)=>{update();return cleanup;});
+  const delayed={...platform,getElementRects:()=>new Promise(resolve=>pending.push(resolve))};
+  function App(){current=useFloating({platform:delayed,whileElementsMounted:mount});return <><button ref={current.refs.setReference}/><div ref={current.refs.setFloating}/></>;}
+  const view=render(<React.StrictMode><App/></React.StrictMode>);await settle();view.unmount();
+  expect(cleanup.mock.calls.length).toBe(mount.mock.calls.length);
+  await act(async()=>pending.forEach(resolve=>resolve(rects(10))));expect(current.isPositioned).toBe(false);
+});
+
+test('React caller popover: click, role, positioning, Escape dismissal',async()=>{
+  const called=vi.spyOn(positioning,'useFloating');
+  function Popover(){const [open,setOpen]=React.useState(false);const f=useInteractionsFloating({open,onOpenChange:setOpen,placement:'bottom-start',middleware:[offset(4),flip({fallbackAxisSideDirection:'end',crossAxis:false}),shift({limiter:limitShift({offset:4})})]});const {getReferenceProps,getFloatingProps}=useInteractions([useClick(f.context),useDismiss(f.context),useRole(f.context)]);return <><button ref={f.refs.setReference} {...getReferenceProps()}>Toggle</button>{open&&<div ref={f.refs.setFloating} style={f.floatingStyles} {...getFloatingProps()}>Panel</div>}</>;}
+  render(<Popover/>);fireEvent.click(screen.getByText('Toggle'));await settle();expect(screen.getByRole('dialog').style.transform).toContain('translate(');fireEvent.keyDown(document,{key:'Escape'});await settle();expect(screen.queryByRole('dialog')).toBe(null);expect(called).toHaveBeenCalled();called.mockRestore();
+});
+
+test('DPR-aware styles support transforms and layout positioning',async()=>{
+  const old=window.devicePixelRatio;Object.defineProperty(window,'devicePixelRatio',{configurable:true,value:2});let current;
+  const fractional={...platform,getElementRects:()=>rects(0.26)};
+  function App({transform}){current=useFloating({platform:fractional,transform});return <><button ref={current.refs.setReference}/><div ref={current.refs.setFloating}/></>;}
+  try{const view=render(<App transform/>);await settle();expect(current.floatingStyles.transform).toBe('translate(5.5px, 10px)');expect(current.floatingStyles.willChange).toBe('transform');view.rerender(<App transform={false}/>);await settle();expect(current.floatingStyles).toEqual({position:'absolute',left:5.5,top:10});}finally{Object.defineProperty(window,'devicePixelRatio',{configurable:true,value:old});}
+});
+
+test('arrow accepts a populated React ref and derives options',async()=>{
+  const reference=document.createElement('button'),floating=document.createElement('div'),element=document.createElement('i');
+  floating.append(element);Object.defineProperty(floating,'clientWidth',{value:10});
+  const custom={...platform,getDimensions:()=>({width:2,height:2}),getOffsetParent:()=>floating,isElement:()=>true};
+  const {computePosition}=await import('../src');
+  const result=await computePosition(reference,floating,{platform:custom,middleware:[arrow(()=>({element:{current:element},padding:1}),[element])]});
+  expect(result.middlewareData.arrow.x).toBe(4);
+});
+
+if(!original)test('cyclic middleware options stay usable and DOM identities remain distinct',async()=>{
+  let current;let runs=0;const a=document.createElement('div'),b=document.createElement('div');
+  function App({boundary}){const options:any={boundary};options.self=options;current=useFloating({platform,middleware:[{name:'cycle',options,fn:()=>{runs++;return {};}}]});return <><button ref={current.refs.setReference}/><div ref={current.refs.setFloating}/></>;}
+  const view=render(<App boundary={a}/>);await settle();const before=runs;view.rerender(<App boundary={a}/>);await settle();expect(runs).toBe(before);view.rerender(<App boundary={b}/>);await settle();expect(runs).toBe(before+1);
+});
