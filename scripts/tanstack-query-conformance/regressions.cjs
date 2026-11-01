@@ -7,7 +7,7 @@
 const assert = require('node:assert/strict'), path = require('node:path'), {spawnSync} = require('node:child_process');
 const entries = {
   upstream: path.join(__dirname, 'node_modules/@tanstack/query-core/build/modern/index.js'),
-  vpm: path.resolve(__dirname, '../../packages/vtanstack-query-core/build/modern/index.js'),
+  vpm: path.resolve(__dirname, '../../packages/vtanstack-query-core/query-client.js'),
 };
 const DAY = 864e5;
 
@@ -42,10 +42,11 @@ async function child(entry) {
     await settle();
   };
 
+  globalThis.window = {addEventListener() {}, removeEventListener() {}};
   const {QueryClient, QueryObserver, environmentManager} = await import(entry);
   // Run as in a browser: on a server (no window) observers schedule no
   // staleTime or refetchInterval timers.
-  environmentManager.setIsServer(() => false);
+  environmentManager?.setIsServer(() => false);
   const out = {};
   // An unused query with gcTime of 30 days, the kind of value set to keep a
   // persisted cache: kept a day later, collected after 30 days.
@@ -77,6 +78,16 @@ async function child(entry) {
     unsubscribe();
     client.clear();
   }
+  // Parent renders replace option objects without postponing the poll deadline.
+  {
+    let fetches = 0;
+    const client = new QueryClient();
+    const options = {queryKey: ['poll'], queryFn: async () => ++fetches, refetchInterval: 1000};
+    const observer = new QueryObserver(client, options), stop = observer.subscribe(() => {});
+    await advance(0);
+    for (let i = 0; i < 10; i++) {await advance(100); observer.setOptions({...options});}
+    out.pollAfterRenders = fetches; stop(); client.clear();
+  }
   return out;
 }
 
@@ -89,9 +100,10 @@ if (process.argv[2] === '--child') {
     assert.equal(run.status, 0, library + '\n' + run.stderr);
     results[library] = JSON.parse(run.stdout);
   }
+  assert.equal(results.upstream.pollAfterRenders, 2);
   assert.equal(results.upstream.cachedAfterOneDay, 0, JSON.stringify(results));
   assert.ok(results.upstream.fetchesInFirstSecond > 100, JSON.stringify(results));
-  assert.deepEqual(results.vpm, {cachedAfterOneDay: 1, cachedAfterThirtyDays: 0, fetchesInFirstSecond: 1, fetchesAfterThirtyDays: 2});
+  assert.deepEqual(results.vpm, {cachedAfterOneDay: 1, cachedAfterThirtyDays: 0, fetchesInFirstSecond: 1, fetchesAfterThirtyDays: 2, pollAfterRenders: 2});
   // Declarations: a project compiled without DOM or Node types (a worker, or a
   // server build with "types": []) could not compile against AbortSignal and
   // VoidFunction.

@@ -1,63 +1,76 @@
 # vtanstack-query-core
 
-TanStack Query's framework-agnostic core, targeting **@tanstack/query-core
-5.105.0**, the latest stable release checked November 1, 2026. Zero
-dependencies; ES module and CommonJS builds for browsers, Node.js 24+ and Bun.
-[`vtanstack-react-query`](../vtanstack-react-query/README.md) builds on it.
+An independently written query cache for the APIs VentiMath uses, checked
+against **@tanstack/query-core 5.105.0**. It deduplicates requests, caches data,
+notifies observers, retries failures, and coordinates mutations with cache
+invalidation. Zero runtime dependencies. Native ES modules also load through
+`require()` on Node 24 and Bun.
 
 ```js
 import { QueryClient, QueryObserver } from 'vtanstack-query-core';
 
 const client = new QueryClient({ defaultOptions: { queries: { staleTime: 60_000 } } });
 const observer = new QueryObserver(client, {
-  queryKey: ['todos', { done: false }],
-  queryFn: ({ signal }) => fetch('/api/todos?done=false', { signal }).then((response) => response.json()),
+  queryKey: ['todos'],
+  queryFn: ({ signal }) => fetch('/api/todos', { signal }).then(r => r.json()),
 });
-const unsubscribe = observer.subscribe((result) => console.log(result.status, result.data));
+const unsubscribe = observer.subscribe(result => console.log(result.status, result.data));
+// On teardown: unsubscribe(); client.clear();
 ```
 
-This is 5.105.0's published modern build: `QueryClient`, the query and mutation
-caches and observers, infinite and streamed queries, retries, the focus, online,
-timeout and environment managers, structural sharing, key hashing and
-dehydration/hydration, with the same exports and declarations.
+## Contract
 
-## Changes from 5.105.0
+The [declarations](query-client.d.ts) define the supported surface: `QueryClient`,
+query and mutation caches/observers, key and predicate filters, dependent queries,
+staleness and collection, invalidation/refetch, cancellation, retries, online and
+focus recovery, polling, initial/placeholder data, selection, and mutation
+callbacks with optimistic context. Browser lifecycle subscriptions are owned by
+`client.mount()` / `client.unmount()`; the React provider handles them.
 
-- **Timers longer than about 24.8 days.** The platform's `setTimeout` and
-  `setInterval` treat a delay above 2^31 - 1 ms as 1 ms, and the default timeout
-  provider passed every delay through. So a `gcTime` of 30 days, the kind of
-  value set to keep a persisted cache, collected an unused query at once, and a
-  `refetchInterval` of 30 days refetched every millisecond (1,001 fetches in the
-  first second). Upstream documents the limit and suggests a custom provider;
-  here the default provider runs longer delays as a chain of timers, so they
-  last as long as asked. Custom providers set with
-  `timeoutManager.setTimeoutProvider` are used as before.
-- **Declarations without DOM types.** A query function's `signal` was typed with
-  the DOM's `AbortSignal`, and one helper with `VoidFunction`, so a project
-  compiled without DOM or Node types (a worker, or a server build with
-  `"types": []`) failed with TS2304. `AbortSignal` is now the runtime's when one
-  is declared, with a structural fallback, and `VoidFunction` is `() => void`.
-- **Modern build only.** The legacy build, reached only through the `main` and
-  `module` fields by tools that do not read `exports`, and the TypeScript
-  sources, reached only through React Native's `react-native` field and
-  TanStack's monorepo condition, are not shipped; source maps keep their
-  embedded sources. The package is 1.7 MB and 169 files unpacked instead of
-  3.9 MB and 365.
+Infinite and streamed queries, dehydration/hydration, persistence, suspense,
+mutation scopes, and custom timeout/environment providers are outside this
+contract. This is a scoped replacement, not every export of TanStack Query.
+Query keys and structural sharing target JSON-shaped data; exotic instances
+retain the supplied value. Native `AbortController` and modern browser APIs are
+required. React bindings live in [vtanstack-react-query](../vtanstack-react-query).
 
-Every other file is byte-identical to 5.105.0; the
-[focused tests](test/core.test.cjs) check the recorded hashes.
+## Implementation and differences
 
-## Evidence
+The former upstream build has been replaced with an independent Map-based cache,
+explicit request records and AbortControllers, and observers that own their
+subscriptions and timers. A cancelled request cannot overwrite a newer result,
+even when its transport ignores abort. Unmount cancels a consumed signal while
+allowing a request whose signal was never consumed to finish into the cache.
+Mutation callbacks await invalidation before reporting success.
 
-- [Upstream suite](../../scripts/tanstack-query-conformance/README.md): the
-  release's 1,608 query-core tests in 41 files, runtime and type tests, run with
-  its own vitest configuration against the built modules, pass for the original
-  and VPM on Node and Bun.
-- [Regressions](../../scripts/tanstack-query-conformance/regressions.cjs): the
-  long `gcTime` and `refetchInterval` cases on a simulated clock, and the
-  declarations compiled without DOM types.
-- [Focused tests](test/core.test.cjs) (the timer chain in both module formats,
-  cancellation part-way, long intervals) and [type tests](test/types.ts).
+Long delays are split into bounded platform timers. The retained regression
+reproduces upstream's 30-day collection running immediately and its 30-day polling
+running 1,001 times in one second; here collection and polling wait the full
+duration. Declarations compile without ambient DOM or Node types and use the
+runtime's AbortSignal declaration when available.
 
-MIT licensing, the pinned source and the modified files are recorded in
-[PROVENANCE.json](PROVENANCE.json).
+The implementation was informed by the public contract, upstream tests and source
+inspection. It is not a clean-room claim. [PROVENANCE.json](PROVENANCE.json)
+records the comparison release and evidence; MIT attribution is retained.
+
+## Verification
+
+- [Focused cache tests](test/application-cache.test.cjs): request sharing,
+  invalidation, disabled readers, retry/focus/offline behavior, cancellation,
+  structural sharing, rollback and concurrent mutations on Node 24 and Bun.
+- [Timer and import tests](test/core.test.cjs) and [type checks](test/types.ts).
+- [Application comparisons](../../scripts/tanstack-query-conformance/README.md):
+  mounted React behavior against the original, developer-tool interaction, long
+  timers, and strict declaration consumers. The old full-suite pass applied to
+  the copied build; it is not evidence for this narrower implementation.
+- [Benchmarks](bench/results/README.md) retain separate processes, controls and
+  raw measurements. Microbenchmarks do not establish application speedups.
+
+## Measurements
+
+In the recorded run, cache reads took 10% less time on Node and 33% less on Bun;
+request deduplication took 44% and 31% less, respectively. Node's unchanged JSON
+update took 20% less time, but the same case remained **14% slower on Bun**.
+Node's fresh-cache fetch and Bun's construction/invalidation results are
+inconclusive at the control spread. These are seven local cache operations with
+no network; consult the raw samples and per-case evidence in the linked report.

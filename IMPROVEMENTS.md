@@ -56,8 +56,8 @@ now have current comparison targets:
 | Suite verified | vemotion-unitless | @emotion/unitless 0.10.0; Emotion's 293-test suite with it in place of the original | [@emotion/unitless 0.10.0](https://www.npmjs.com/package/@emotion/unitless), checked November 1, 2026 |
 | Suite verified | vemotion-weak-memoize | @emotion/weak-memoize 0.4.0; Emotion's 293-test suite with it in place of the original | [@emotion/weak-memoize 0.4.0](https://www.npmjs.com/package/@emotion/weak-memoize), checked November 1, 2026 |
 | Suite and differential verified | vstylis | stylis 4.4.0; its 113 tests, and identical trees and output over 12 stylesheets and 20,000 generated inputs | [stylis 4.4.0](https://www.npmjs.com/package/stylis), checked November 1, 2026 |
-| Suites verified | vtanstack-react-query | @tanstack/react-query 5.105.0; its 609 tests (hooks, suspense, SSR hydration, type tests) | [@tanstack/react-query 5.105.0](https://www.npmjs.com/package/@tanstack/react-query), checked November 1, 2026 |
-| Suites verified | vtanstack-query-core | @tanstack/query-core 5.105.0; its 1,608 tests, and long timers on a simulated clock | [@tanstack/query-core 5.105.0](https://www.npmjs.com/package/@tanstack/query-core), checked November 1, 2026 |
+| Application scope | vtanstack-react-query | Independent hooks; mounted public-API comparisons with 5.105.0 | [Contract and evidence](packages/vtanstack-react-query/README.md) |
+| Application scope | vtanstack-query-core | Independent cache, requests and mutations; long-timer regressions retained | [Contract and evidence](packages/vtanstack-query-core/README.md) |
 | Suites verified | vfullcalendar-react | @fullcalendar/react 7.1.3; its React suite, FullCalendar's 1,542-spec browser suite on the React build (identical per spec), a mounted calendar's time zone and JSON feed behavior, and declarations under TypeScript 7.1, 5.8 and 5.9 | [@fullcalendar/react 7.1.3](https://www.npmjs.com/package/@fullcalendar/react), checked November 1, 2026 |
 | Caller paths verified | vfullcalendar-core | @fullcalendar/core 7.1.3 and the copy of its JSON feed request that @fullcalendar/react 7.1.3 bundles; requests and results against a recording server | [@fullcalendar/core 7.1.3](https://www.npmjs.com/package/@fullcalendar/core), checked November 1, 2026 |
 | Suite and time zones verified | vfull-ui-headless-calendar | @full-ui/headless-calendar 7.1.3 on temporal-polyfill 1.0.1; its vitest suite, and every IANA zone around every offset change from 1840 to 2100 against the runtime's own time zone data | [@full-ui/headless-calendar 7.1.3](https://www.npmjs.com/package/@full-ui/headless-calendar), checked November 1, 2026 |
@@ -151,7 +151,9 @@ extend and the JSON feed request. `vfullcalendar-react` covers
 `@fullcalendar/react` 7.1.3 on those two packages, completing FullCalendar;
 VentiMath's six calendar files move to the 7.x API when it adopts them.
 TanStack Query follows: `vtanstack-query-core` and `vtanstack-react-query` cover
-5.105.0, the same major version as VentiMath's 5.90, so no migration is needed.
+the application-facing APIs used from 5.105.0. Their independent implementations
+replace the former adapted builds; adoption requires aliases/import changes and
+consumer checks. Unused TanStack APIs are explicitly outside their contract.
 Emotion, MUI's styling engine, comes next, deepest first: `vstylis` covers
 stylis 4.4.0, written for VPM against stylis's tests and a differential
 comparison rather than retained from the published build. Emotion 11.14 pins
@@ -215,8 +217,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vemotion-unitless](packages/vemotion-unitless) | @emotion/unitless 0.10.0 | Adds `gridArea` and `lineClamp`, which were serialized with `px`. |
 | [vemotion-weak-memoize](packages/vemotion-weak-memoize) | @emotion/weak-memoize 0.4.0 | The same behavior, written for VPM. |
 | [vstylis](packages/vstylis) | stylis 4.4.0 | Vendor prefixes chosen by property name (stylis's hash gave more than 50 unprefixed properties, `flex-wrap` and `grid-gap` among them, invented declarations), IE grid spans on the right axis, `mask-composite: subtract` converted, the same `namespace` result on JavaScriptCore, and bundled declarations; otherwise identical trees and output, and all 113 upstream tests pass. |
-| [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.0 | `gcTime`, `staleTime` and `refetchInterval` beyond about 24.8 days last as asked (30-day `gcTime` collected at once, 30-day `refetchInterval` fetched every millisecond), declarations that compile without DOM types, and the modern build only (1.7 MB instead of 3.9 MB unpacked); all 1,608 upstream tests pass. |
-| [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.0 | On vtanstack-query-core with its fixes; modern build only, without codemods (0.8 MB instead of 1.8 MB unpacked); all 609 upstream tests pass. |
+| [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.0, scoped APIs | Independent cache, request and mutation lifecycle; bounded long timers and DOM-independent declarations. The former upstream build is removed. |
+| [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.0, scoped APIs | Independently written provider, query and mutation hooks on the VPM core; mounted application comparisons. |
 | [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | The calendar unchanged on VPM's headless engine and core: no `temporal-polyfill`, correct named time zones where the polyfill is wrong, `#fragment` JSON feeds that keep their range, and an application bundle 8% smaller gzipped; identical results on FullCalendar's 1,542-spec browser suite. |
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
@@ -742,30 +744,22 @@ See the [package contract](packages/vstylis/README.md) and the
 
 ## vtanstack-query-core and vtanstack-react-query
 
-Target **@tanstack/query-core and @tanstack/react-query 5.105.0**, checked
-November 1, 2026. The published modern builds are retained, with the React
-package's `@tanstack/query-core` specifier mapped to `vtanstack-query-core`;
-the provenance files record the hashes.
+The retained builds have been replaced with independent implementations of the
+APIs VentiMath uses, compared with **5.105.0**: query caching and invalidation,
+request deduplication/cancellation/retries, mutations and optimistic context,
+and React's provider/query/mutation hooks. Long collection and polling delays
+remain bounded timer chains, and core declarations compile without DOM types.
 
-The platform's timers treat a delay above 2^31 - 1 ms as 1 ms, and the default
-timeout provider passed every delay through: a `gcTime` of 30 days collected an
-unused query at once, and a `refetchInterval` of 30 days fetched 1,001 times in
-the first second. The default provider now runs longer delays as a chain of
-timers. The core's declarations typed a query function's signal with the DOM's
-`AbortSignal` and failed to compile without DOM or Node types; they now use the
-runtime's type with a structural fallback. The legacy builds, TypeScript
-sources and migration codemods, which no `exports` entry reaches, are not
-shipped: 1.7 MB instead of 3.9 MB for the core, 0.8 MB instead of 1.8 MB for
-React.
-
-Upstream's suites, run with their own vitest configuration against the built
-modules, pass in full for the original and VPM: **1,608 core tests** (Node and
-Bun) and **609 React tests** (Node), runtime and type tests. Three regression
-cases and eight focused tests cover the changes.
+The contract excludes infinite and streamed queries, hydration, persistence and
+suspense. The old 1,608/609-test full-suite claims belonged to the copied builds;
+the rewrite has focused tests and mounted application comparisons on Node 24 and
+Bun. Developer tools and archive consumers are checked separately. This change
+does not deploy the replacements to VentiMath.
 
 See the [core](packages/vtanstack-query-core/README.md) and
-[React](packages/vtanstack-react-query/README.md) package contracts and the
-[conformance record](scripts/tanstack-query-conformance/README.md).
+[React](packages/vtanstack-react-query/README.md) contracts, the
+[comparison record](scripts/tanstack-query-conformance/README.md), and
+[isolated measurements](packages/vtanstack-query-core/bench/results/README.md).
 
 ## vfullcalendar-react
 
