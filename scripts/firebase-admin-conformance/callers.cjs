@@ -92,6 +92,9 @@ async function child(library) {
   const fcmPort = await listen(fcm);
   const connect = http2.connect;
   http2.connect = (authority, options, listener) => {
+    // FCM alone is redirected. Firestore uses the same native HTTP/2 module;
+    // its binary gRPC requests must still reach the local Firestore server.
+    if (new URL(String(authority)).hostname !== 'fcm.googleapis.com') return connect(authority, options, listener);
     const session = connect('http://127.0.0.1:' + fcmPort, {...options, ALPNProtocols: undefined}, listener);
     // The original sends ':scheme: https:', which Node's HTTP/2 server rejects
     // (regressions.cjs covers that); pass the bare scheme so the rest of the

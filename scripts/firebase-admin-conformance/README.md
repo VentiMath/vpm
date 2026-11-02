@@ -98,7 +98,10 @@ gRPC server and scenario, a Cloud Storage JSON API (`save` with checksum
 validation, `exists`, `delete`, v2 signed URLs) and FCM over HTTP/2
 (`sendEachForMulticast` with one unregistered token). The FCM server is Node's
 HTTP/2 server, so the original's `:scheme` value is normalized in transit for
-both libraries. Request logs (with the current time in `validSince` and the
+both libraries. The connection redirect matches only `fcm.googleapis.com`;
+Firestore connections pass through to their own local gRPC server. This boundary
+is required when both clients use the same native HTTP/2 module. Request logs
+(with the current time in `validSince` and the
 emulator port normalized) and results must be identical.
 
 The percent-condition distribution cases use the same 100,000 deterministic

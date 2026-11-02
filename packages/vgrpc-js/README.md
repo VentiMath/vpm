@@ -79,7 +79,10 @@ new public client from retained internal compatibility tests:
 - Real GAX 6.14.0 and Firestore 9.4.0 produce identical results for 23 workflows
   and identical decoded logs for 25 requests, including writes, queries,
   transactions, bulk writes and Watch. Additional Watch tests verify reconnects
-  with resume tokens. Twelve interoperability calls cover all four RPC modes
+  with resume tokens. The combined Firebase Admin 14.5.0 caller also matches
+  17 public results, 17 Auth/Storage/FCM requests and 25 Firestore RPCs on both
+  runtimes, with FCM and gRPC routed to separate local peers. Twelve
+  interoperability calls cover all four RPC modes
   and verified TLS with call credentials.
 - 1,504 frame/metadata comparisons and the existing unit tests remain passing.
   The retained internal/server suite passes 499 cases on Node; Bun passes 497
