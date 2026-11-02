@@ -1,5 +1,10 @@
 # vgoogle-cloud-firestore measurements
 
+Historical recording from before the independent snapshot index replaced the
+general tree dependency. The retained source hashes describe that earlier build.
+Current Watch index measurements are [recorded separately](../snapshot-results/README.md);
+these earlier SDK timings are not a fresh measurement of the changed runtime.
+
 These records supersede the earlier same-process comparison. Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
 balanced upstream-first / VPM-first order; two further pairs run identical

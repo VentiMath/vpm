@@ -336,6 +336,8 @@ jobs:
           node scripts/jwks-conformance/run.cjs --upstream --legacy
           node scripts/jwks-conformance/callers.cjs
           node scripts/jwks-conformance/callers.cjs --upstream
+          node scripts/firestore-conformance/watch-index.cjs --upstream
+          node scripts/firestore-conformance/watch-index.cjs
           node scripts/firestore-conformance/wire.cjs
           node scripts/firestore-conformance/tracing.cjs
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund
@@ -694,6 +696,8 @@ jobs:
           bun scripts/jwks-conformance/run.cjs --upstream --legacy
           bun scripts/jwks-conformance/callers.cjs
           bun scripts/jwks-conformance/callers.cjs --upstream
+          bun scripts/firestore-conformance/watch-index.cjs --upstream
+          bun scripts/firestore-conformance/watch-index.cjs
           bun scripts/firestore-conformance/wire.cjs
           bun scripts/firestore-conformance/tracing.cjs
       - run: npm --prefix scripts/agent-conformance ci --ignore-scripts --no-audit --no-fund

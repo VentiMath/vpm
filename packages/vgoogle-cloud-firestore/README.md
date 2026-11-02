@@ -7,7 +7,7 @@ pending; this package is not yet a completed rewrite.
 
 The Cloud Firestore server client, targeting **@google-cloud/firestore 9.4.0**,
 the latest stable release checked October 31, 2026, and the version Firebase
-Admin 14 uses. All six runtime dependencies are VPM packages; Node.js 24+ and
+Admin 14 uses. All five runtime dependencies are VPM packages; Node.js 24+ and
 Bun.
 
 ```js
@@ -22,7 +22,7 @@ await db.runTransaction(async transaction => {
 });
 ```
 
-This is 9.4.0's implementation: the same API, settings, environment variables
+The retained 9.4.0 runtime preserves the same API, settings, environment variables
 (`FIRESTORE_EMULATOR_HOST`, `FIRESTORE_PREFER_REST`, `FIRESTORE_ENABLE_TRACING`),
 serialization, queries, aggregations, transactions, batches, BulkWriter,
 listeners, bundles, recursive delete, vector search, pipelines
@@ -36,7 +36,8 @@ in place of `@google-cloud/firestore`.
 | `@google-cloud/firestore-api` ^0.2.0, with its own `google-gax` ^5 | [`vgoogle-cloud-firestore-api`](../vgoogle-cloud-firestore-api/README.md) 0.7.1 API on the same gax |
 | `google-gax` ^6 | [`vgoogle-gax`](../vgoogle-gax/README.md) |
 | `protobufjs` ^7 | [`vprotobufjs`](../vprotobufjs/README.md) |
-| `fast-deep-equal`, `functional-red-black-tree`, `@opentelemetry/api` | `vfast-deep-equal`, `vfunctional-red-black-tree`, `vopentelemetry-api` |
+| `fast-deep-equal`, `@opentelemetry/api` | `vfast-deep-equal`, `vopentelemetry-api` |
+| `functional-red-black-tree` | Removed; the independent snapshot index is internal |
 
 ## Changes from 9.4.0
 
@@ -72,6 +73,35 @@ The `x-goog-api-client` library token and the OpenTelemetry tracer name report
 `vopentelemetry-api` 1.10.0: as with the original 1.10.0 API, a global provider
 registered through API 1.9 (as the 2.x Node SDK does) is not used.
 
+## Independent snapshot index
+
+Watch document ordering uses an independently written persistent AVL index.
+Insertion and removal copy O(log n) nodes and return the change index during the
+same search. Unchanged subtrees are shared, and no node is mutated: a snapshot
+materialized after later changes or a reset still sees its original documents.
+Each document has one comparator key; equal sort values use the query's existing
+path tie-breaker. Internal equal-key insertion replaces the key at its rank.
+Missing removal returns the same index object and length as its missing rank.
+
+Only document ordering, rank updates, ordered traversal and key materialization
+are implemented. General tree iterators, node layout and arbitrary map values
+are outside this internal API. `vfunctional-red-black-tree` is no longer a runtime
+dependency. The rest of the Firestore SDK remains upstream-derived.
+
+All 61 active upstream Watch/query-comparator tests pass unchanged on Node24 and
+Bun, with the same one upstream skip. Actual local Listen streams cover ascending
+and descending order, equal-value path ties, inserts, moves, deletes, reset and
+lazily retained snapshots, against both SDKs. Randomized and 20,000-entry ordered
+stress checks verify ranks, persistence and bounded comparator work. See
+[caller checks](../../scripts/firestore-conformance/watch-index.cjs) and
+[index measurements](bench/snapshot-results/README.md).
+
+The isolated recordings establish about 46% less Node time to materialize 1,000
+documents and 36% / 27% less Node / Bun time for a middle-document remove/restore.
+Bun's initial 1,000-document insertion takes about 33% less time. Other cases
+are inconclusive against process-order and identical-source controls. These are
+local index costs, not network latency or application throughput claims.
+
 ## Evidence
 
 - [Upstream suite](../../scripts/firestore-conformance/README.md): the 9.4.0
@@ -87,10 +117,11 @@ registered through API 1.9 (as the 2.x Node SDK does) is not used.
 - [Regressions](../../scripts/firestore-conformance/regressions.cjs): each
   behavioral change above reproduced with the original, then checked here.
 - [Focused tests](test/firestore.test.cjs) and [type tests](test/types.ts).
-- [Measurements](bench/results/README.md): isolated Node 24 and Bun per-operation CPU,
+- [Earlier measurements](bench/results/README.md): isolated Node 24 and Bun per-operation CPU,
   with controls and source hashes. All six Node cases are inconclusive at the
   observed variation. Bun query construction costs 11.3% more; its other cases
-  are inconclusive. Inconclusive does not mean equal performance.
+  are inconclusive. These precede the independent index; its results are recorded
+  separately above. Inconclusive does not mean equal performance.
 
 Apache-2.0 licensing, the pinned source and the files changed from it are
 recorded in [PROVENANCE.json](PROVENANCE.json).

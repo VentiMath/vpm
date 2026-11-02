@@ -1,8 +1,9 @@
 # vfunctional-red-black-tree
 
-**Implementation status:** upstream-derived runtime with focused fixes. The
-independent implementation of the caller paths VentiMath needs is still pending.
-[Provenance](PROVENANCE.json) identifies the retained code and rewrite scope.
+**Runtime dependency eliminated.** Firestore now owns an independently written
+persistent snapshot index. No VPM runtime package imports this general tree.
+This package remains an attributed upstream-derived reference; it is not counted
+as independently rewritten. [Provenance](PROVENANCE.json) records that boundary.
 
 Persistent red-black trees targeting **functional-red-black-tree 1.0.1**, the
 latest stable release checked October 31, 2026. Zero runtime dependencies;
@@ -20,8 +21,8 @@ one.find(2).index; // 1
 
 Every modification (`insert`, `remove`, an iterator's `remove` or `update`)
 returns a new tree and leaves the original intact, sharing unchanged nodes.
-Firestore 9.4.0 keeps `onSnapshot` results in one of these trees, so a snapshot
-already delivered to the application keeps its contents after later changes.
+Upstream Firestore 9.4.0 uses these trees to preserve `onSnapshot` results.
+VPM Firestore now preserves that contract with its own index.
 CommonJS and native ES module imports provide the same default function; the
 upstream `rbtree.js` path is also exported.
 
@@ -65,7 +66,10 @@ enumerability. Nodes are shared between versions: treat them as read-only.
 explicitly passed `undefined` bound is compared like any key. Comparator calls
 can differ in number and order from upstream; comparators should be pure.
 
-## Evidence
+## Historical evidence for the retained implementation
+
+These records verify the retained package, not the current VPM Firestore index.
+For that index, see the [Firestore contract](../vgoogle-cloud-firestore/README.md).
 
 - [Upstream suite](../../scripts/rbtree-conformance/README.md): the 9 original
   tape tests and their 25,663 assertions pass unchanged on Node and Bun, including

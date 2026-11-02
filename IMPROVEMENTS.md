@@ -25,12 +25,11 @@ compatibility, not independent implementation. Generated protocol schemas remain
 separately attributed inputs.
 
 The same boundary applies to retained foundations such as
-[`vgrpc-js`](packages/vgrpc-js/README.md) and
-[`vfunctional-red-black-tree`](packages/vfunctional-red-black-tree/README.md).
-Their fixes and compatibility tests remain valid; application-facing independent
-rewrites are pending. Transpiling TypeScript does not change that classification.
-`vobject-hash` and `vordered-map` now have no VPM runtime callers: GAX owns its
-JSON descriptor cache and gRPC Channelz owns its numeric registry. Those retained
+[`vgrpc-js`](packages/vgrpc-js/README.md). Their fixes and compatibility tests
+remain valid; application-facing independent rewrites are pending. Transpiling TypeScript does not change that classification.
+`vobject-hash`, `vordered-map` and `vfunctional-red-black-tree` now have no VPM
+runtime callers: GAX owns its JSON descriptor cache, gRPC Channelz owns its numeric
+registry and Firestore owns its persistent snapshot index. Those retained
 packages are marked unnecessary for the current graph, not independently rewritten.
 
 ## Latest stable upgrade roadmap
@@ -83,7 +82,7 @@ now have current comparison targets:
 | Caller paths verified | vfirebase-admin | firebase-admin 14.5.0 without Realtime Database; its unit suite, and VentiMath's Auth, Firestore, Storage and FCM calls against local servers | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked October 31, 2026 |
 | Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
-| Caller paths verified | vfunctional-red-black-tree | functional-red-black-tree 1.0.1; Firestore 9.4.0 `onSnapshot` listener ordering, change indexes and retained snapshots | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
+| Runtime dependency eliminated | vfunctional-red-black-tree | Retained 1.0.1 reference; Firestore owns its independent persistent snapshot index | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
 | Caller paths verified | vfast-deep-equal | fast-deep-equal 3.1.3; Firestore 9.4.0 document, query and transform equality | [fast-deep-equal 3.1.3](https://www.npmjs.com/package/fast-deep-equal), checked October 30, 2026 |
 | Caller paths verified | vgoogle-gax | google-gax 6.14.0; Firestore 9.4.0 RPCs, transactions, batches, queries and native REST | [google-gax 6.14.0](https://www.npmjs.com/package/google-gax), checked October 30, 2026 |
 | Caller paths verified | vopentelemetry-api | @opentelemetry/api 1.10.0; SDK 3.0.0 and gax 6.14.0 tracing helpers | [@opentelemetry/api 1.10.0](https://www.npmjs.com/package/@opentelemetry/api), checked October 30, 2026 |
@@ -134,8 +133,8 @@ checked October 30, 2026. `vopentelemetry-api` now covers the zero-dependency
 gax tracing helpers. `vgoogle-gax` now covers 6.14.0 itself with nine VPM runtime
 dependencies, checked Firestore 9.4.0 callers and native REST transport. Those
 latest targets were checked October 30, 2026. `vfast-deep-equal` now covers 3.1.3 with verified Firestore equality callers.
-`vfunctional-red-black-tree` now covers 1.0.1 with verified Firestore listener
-callers, checked October 31, 2026. `vgoogle-cloud-firestore-api` now covers the
+Firestore no longer needs `vfunctional-red-black-tree`; an independent internal
+index preserves listener ordering, change indexes and earlier snapshots. `vgoogle-cloud-firestore-api` now covers the
 generated `@google-cloud/firestore-api` 0.7.1 clients on the VPM gax stack,
 checked October 31, 2026. `vgoogle-cloud-firestore` now covers Firestore 9.4.0,
 the version Firebase Admin 14 uses, on that package and the VPM gax stack
@@ -256,9 +255,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Mixed implementation on VPM dependencies: independent logging, initialization, declaration assembly and HTTP/scheduler factories; non-mutating manifest serialization and shared CJS/ESM state. Callable request validation, verification orchestration, payload conversion and response lifecycle are independently implemented, with prototype-safe data and cancellation cleanup. Firestore event adapters, secret accessors and registration are independently implemented; changed protobuf events decode once, field masks preserve sibling changes, and JSON secret errors omit credential excerpts. Trace propagation, configuration and iterative deployment discovery are independently implemented. Admin/Firestore clients, generic parameter expressions and other SDK services remain adapted upstream code; a complete package-wide rewrite remains pending. |
 | [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, redesigned app/token/service lifetimes, credential identity/transport, prototype-safe Auth record serialization, owned user-management plans, token-kind/revocation policy, immutable signing-key caches and owned Auth request dispatch; isolated CPU measurements and identical Auth, Firestore, Storage and FCM caller behavior. |
-| [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | All six dependencies are VPM with one gax stack, 65 modules and about 50 ms at import instead of 404 and 270 ms, reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
+| [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | Five VPM dependencies with one gax stack and an independent persistent snapshot index; reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
-| [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Same persistent trees and node layout; `at()` no longer throws on empty trees or selects the first entry for `NaN`; non-function comparators fail at construction; iterative, range-pruned traversal. Actual Firestore listener paths verified. |
+| [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Retained upstream-derived reference. Runtime dependency eliminated: Firestore owns its independently implemented persistent snapshot index. |
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
 | [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership, independent JSON proto caching and nine VPM dependencies; actual Firestore transactions/batches/queries verified. |
 | [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
@@ -511,7 +510,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | `vfull-ui-headless-calendar` | 1 (`temporal-polyfill` peer) | 0 |
 | `vfirebase-functions` | 5 (including `@types/cors` and `@types/express`) | 3 (`vcors`, `vexpress`, `vprotobufjs`; `vfirebase-admin` peer) |
 | `vfirebase-admin` | 9 (including `@firebase/database-compat`, `@firebase/database-types` and `@fastify/busboy`) | 5 (3 direct, 2 optional; app-option comparison internal) |
-| `vgoogle-cloud-firestore` | 6 (including `@google-cloud/firestore-api` ^0.2.0, which adds a second `google-gax`) | 6 (all VPM, one gax stack) |
+| `vgoogle-cloud-firestore` | 6 (including `@google-cloud/firestore-api` ^0.2.0, which adds a second `google-gax`) | 5 (all VPM, one gax stack; snapshot index internal) |
 | `vgoogle-cloud-firestore-api` | 2 | 3 (`vgoogle-gax`, `vgoogle-logging-utils`, `vlong`; logging is imported directly so import does not load gax) |
 | `vfunctional-red-black-tree` | 0 | 0 |
 | `vfast-deep-equal` | 0 | 0 |
@@ -1325,9 +1324,8 @@ tracked; its own endpoint resolver is independently implemented.
 Targets **@google-cloud/firestore 9.4.0**, checked October 31, 2026, the
 version Firebase Admin 14 uses. The published implementation is retained, with
 its dependencies mapped to `vgoogle-cloud-firestore-api`, `vgoogle-gax`,
-`vprotobufjs`, `vfast-deep-equal`, `vfunctional-red-black-tree` and
-`vopentelemetry-api`; [PROVENANCE.json](packages/vgoogle-cloud-firestore/PROVENANCE.json)
-lists the six files changed beyond that.
+`vprotobufjs`, `vfast-deep-equal` and `vopentelemetry-api`; [PROVENANCE.json](packages/vgoogle-cloud-firestore/PROVENANCE.json)
+records retained code, changes and the independently implemented snapshot index.
 
 9.4.0 pins `@google-cloud/firestore-api` ^0.2.0, which installs a second, older
 google-gax stack, and loads it at import, though its own lazy-load tests forbid
@@ -1349,7 +1347,7 @@ requests from both libraries, directly and through Firebase Admin 14.5.0, for
 writes with every transform, gets, queries, aggregates, streams, transactions,
 batches, BulkWriter and a listener, with identical results. Four regression
 cases reproduce the behavioral defects with the original; six focused tests and
-a type test cover the package. Current per-operation comparisons use isolated
+a type test cover the package. Earlier per-operation comparisons used isolated
 Node 24 and Bun workers. All Node cases are inconclusive; Bun query construction
 costs 11.3% more, with its other cases inconclusive. These do not establish parity.
 
@@ -1402,8 +1400,21 @@ See the [package contract](packages/vgoogle-cloud-firestore-api/README.md),
 
 ## vfunctional-red-black-tree
 
+**Runtime dependency eliminated.** Firestore owns an independent persistent AVL
+index for document ordering and change ranks. Updates copy O(log n) nodes and
+preserve earlier roots. All 61 active upstream Watch/comparator tests pass on
+Node24/Bun with the original single skip; actual Listen streams verify both sort
+directions, path ties, reorder/insert/delete, reset and lazily retained snapshots.
+No general tree runtime is loaded. The rest of Firestore remains upstream-derived.
+See [current index measurements](packages/vgoogle-cloud-firestore/bench/snapshot-results/README.md).
+
+The following evidence describes the retained upstream-derived general tree and
+its historical controls. It is not an independent rewrite or the current VPM
+Firestore index.
+
+
 Targets **functional-red-black-tree 1.0.1**, checked October 31, 2026. No runtime
-dependencies. Firestore 9.4.0 keeps `onSnapshot` results in this persistent tree.
+dependencies. Upstream Firestore 9.4.0 uses this persistent tree for listeners.
 The path-copying insert and removal, node layout and property enumerability are
 retained, so earlier tree versions keep their contents and code inspecting nodes
 still works. `at()` returns an invalid iterator for an empty tree, where upstream

@@ -56,3 +56,26 @@ and without field masks; compound queries; count and sum; streams;
 read-write and read-only transactions; batches; BulkWriter; a query listener;
 collection listing; and precondition failures. Server logs (method, decoded
 request, routing and resource headers) and results must be identical.
+
+## Independent snapshot index
+
+`watch-index.cjs` runs the actual original or VPM SDK against a local gRPC Listen
+server. Both sort directions, path tie-breaking, additions, reorders, removals and
+reset preserve change indexes. Snapshot documents are first materialized after
+later changes and reset, proving persistence rather than a cached array. VPM also
+asserts that its index loads and neither general red-black-tree package loads.
+
+```sh
+node scripts/firestore-conformance/watch-index.cjs --upstream
+node scripts/firestore-conformance/watch-index.cjs
+node scripts/firestore-conformance/run.cjs --upstream '--grep=watch|Query comparator'
+node scripts/firestore-conformance/run.cjs '--grep=watch|Query comparator'
+```
+
+Repeat with Bun. The selected original suite has 61 passes and one original skip
+on both SDKs and runtimes; no assertions are changed. Filtered suites now fail on
+unexpected failures and on an empty selection. The full Firestore suite remains
+in CI; these targeted results do not claim a new full-suite run.
+[Index benchmarks](../../packages/vgoogle-cloud-firestore/bench/snapshot-results/README.md)
+measure the exact former/current Watch operation sequences, in isolated workers
+with balanced process order and identical-source controls.

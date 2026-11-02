@@ -156,7 +156,7 @@ try {
       assert.doesNotMatch(entries.join('\n'),/(?:test|bench|node_modules)\/|\.map$|busboy|database-compat/);
     }
     if (name === 'vgoogle-cloud-firestore') {
-      assert.deepEqual(metadata.dependencies, {'vfast-deep-equal':'0.1.0','vfunctional-red-black-tree':'0.1.0','vgoogle-cloud-firestore-api':'0.1.0','vgoogle-gax':'0.1.0','vopentelemetry-api':'0.1.0',vprotobufjs:'0.1.0'});
+      assert.deepEqual(metadata.dependencies, {'vfast-deep-equal':'0.1.0','vgoogle-cloud-firestore-api':'0.1.0','vgoogle-gax':'0.1.0','vopentelemetry-api':'0.1.0',vprotobufjs:'0.1.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const files=dir=>fs.readdirSync(path.join(root,'packages',name,dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages',name,dir,f)).isFile()).map(f=>dir+'/'+f);
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json',...files('build'),...files('types'),...files('pipelines')].sort());

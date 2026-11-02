@@ -18,7 +18,6 @@
     "@google-cloud/firestore-api": "vgoogle-cloud-firestore-api",
     "protobufjs": "vprotobufjs",
     "fast-deep-equal": "vfast-deep-equal",
-    "functional-red-black-tree": "vfunctional-red-black-tree",
     "@opentelemetry/api": "vopentelemetry-api"
   },
   "modified": [
@@ -27,7 +26,8 @@
     "build/src/pool.js",
     "build/src/serializer.js",
     "types/firestore.d.ts",
-    "types/pipelines.d.ts"
+    "types/pipelines.d.ts",
+    "build/src/watch.js"
   ],
   "removed": [
     "build/protos/firestore_v1beta1_proto_api.d.ts",
@@ -188,6 +188,9 @@
   "implementation": {
     "kind": "upstream-fork",
     "replacementStatus": "independent implementation pending",
-    "targetScope": "Document references, snapshots, queries, writes, transactions, batches and listeners."
+    "targetScope": "Document references, snapshots, queries, writes, transactions, batches and listeners.",
+    "independentComponents": {
+      "build/src/snapshot-index.js": "Independent persistent AVL document index with path copying and subtree ranks. Watch insertion/removal obtains change indexes in the same search; previous roots retain snapshot order. No general functional-red-black-tree runtime remains in the Firestore dependency graph."
+    }
   }
 }

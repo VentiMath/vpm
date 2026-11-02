@@ -17,7 +17,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QueryWatch = exports.DocumentWatch = exports.WATCH_IDLE_TIMEOUT_MS = void 0;
 const assert = require("assert");
-const rbtree = require("vfunctional-red-black-tree");
+const { SnapshotIndex } = require("./snapshot-index");
 const google_gax_1 = require("vgoogle-gax");
 const backoff_1 = require("./backoff");
 const document_1 = require("./document");
@@ -170,7 +170,7 @@ class Watch {
         assert(this.docTree === undefined, 'docTree should not already be defined.');
         this.onNext = onNext;
         this.onError = onError;
-        this.docTree = rbtree(this.getComparator());
+        this.docTree = new SnapshotIndex(this.getComparator());
         this.initStream();
         const unsubscribe = () => {
             (0, logger_1.logger)('Watch.onSnapshot', this.requestTag, 'Unsubscribe called');
@@ -505,9 +505,9 @@ class Watch {
     deleteDoc(name) {
         assert(this.docMap.has(name), 'Document to delete does not exist');
         const oldDocument = this.docMap.get(name);
-        const existing = this.docTree.find(oldDocument);
-        const oldIndex = existing.index;
-        this.docTree = existing.remove();
+        const removed = this.docTree.remove(oldDocument);
+        const oldIndex = removed.index;
+        this.docTree = removed.tree;
         this.docMap.delete(name);
         return new document_change_1.DocumentChange(ChangeType.removed, oldDocument, oldIndex, -1);
     }
@@ -520,8 +520,9 @@ class Watch {
     addDoc(newDocument) {
         const name = newDocument.ref.path;
         assert(!this.docMap.has(name), 'Document to add already exists');
-        this.docTree = this.docTree.insert(newDocument, null);
-        const newIndex = this.docTree.find(newDocument).index;
+        const inserted = this.docTree.insert(newDocument);
+        this.docTree = inserted.tree;
+        const newIndex = inserted.index;
         this.docMap.set(name, newDocument);
         return new document_change_1.DocumentChange(ChangeType.added, newDocument, -1, newIndex);
     }

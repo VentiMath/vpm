@@ -1,5 +1,9 @@
 # Red-black tree conformance
 
+Historical controls for the retained general tree. Current VPM Firestore uses
+its own persistent index and no longer imports this package. The current
+[Watch fixture](../firestore-conformance/watch-index.cjs) verifies both full SDKs.
+
 Baseline: **functional-red-black-tree 1.0.1**, the npm tarball recorded in the
 package [provenance](../../packages/vfunctional-red-black-tree/PROVENANCE.json),
 checked October 31, 2026. The original source, tests, license, README and

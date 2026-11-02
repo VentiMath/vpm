@@ -83,8 +83,9 @@ try {
   const unexpected = stats.failures.filter(failure => expected[failure.fullTitle] !== (failure.err.message || '').split('\n')[0]);
   for (const failure of stats.failures) console.log(failure.fullTitle in expected ? 'EXPECTED' : 'FAIL', failure.fullTitle, '\n ', (failure.err.message || '').split('\n')[0]);
   console.log(`${upstream ? 'Upstream' : 'VPM'} Firestore suite: ${stats.stats.passes} passed, ${stats.stats.failures} failed (${stats.stats.failures - unexpected.length} expected), ${stats.stats.pending} pending of ${stats.stats.tests}.`);
+  if (!unskip) assert.equal(unexpected.length, 0);
+  if (only) assert.ok(stats.stats.tests > 0, 'filtered suite must select tests');
   if (!only && !unskip) {
-    assert.equal(unexpected.length, 0);
     assert.equal(stats.stats.failures, Object.keys(expected).length, 'an expected failure now passes; update the expectation');
     assert.equal(stats.stats.tests, 1056);
     assert.equal(stats.stats.pending, 47);

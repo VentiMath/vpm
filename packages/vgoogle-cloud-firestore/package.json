@@ -28,7 +28,6 @@
   ],
   "dependencies": {
     "vfast-deep-equal": "workspace:*",
-    "vfunctional-red-black-tree": "workspace:*",
     "vgoogle-cloud-firestore-api": "workspace:*",
     "vgoogle-gax": "workspace:*",
     "vopentelemetry-api": "workspace:*",
