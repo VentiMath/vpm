@@ -1,0 +1,810 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-02T08:58:58.141Z",
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/box-model-conformance/node_modules/css-box-model": "a6b92ab7920d82eea8fbed18c1ee7598442398208783b6ddb1a1259184ad2307",
+    "../../scripts/box-model-conformance/node_modules/tiny-invariant": "9dbc814f257853e68b862655aa4eec1f9801ed0c193a03d45d45126157d38534",
+    "../../scripts/box-model-conformance/package-lock.json": "54db7bd1a3bd501932268104ffddb4831e8a74983a4f00bbfb49993b2a48ddc5",
+    "../vtiny-invariant/index.cjs": "0bc5a2843c0c38648738ff449af74979e4694af6a0247de6b0fd78a985d3d503",
+    "bench/compare.cjs": "909b5f505d20adb4e5980a1f0fd73f7acfef438a3f27f2ba41467640caa449f3",
+    "index.cjs": "75c3c8302f23299247b57edef9084d1c8b5ffea8403637f75add9efe5418565f",
+    "package.json": "a7e87b7e54680043485d8af47e1ca38eba37f3f8b9b57d16d1199185756d97be"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40667,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 108467,
+            "samples": [
+              36.455023186775556,
+              37.71577530493136,
+              38.472530815824186,
+              30.719020531590456,
+              36.63671900209273,
+              34.141720523292776,
+              34.860446034277636,
+              31.736998349728545,
+              32.89556270570774,
+              33.20249476799386,
+              32.66469986263116,
+              38.11451409184378
+            ]
+          }
+        ],
+        "checksum": 82912
+      },
+      "vpm": {
+        "pid": 40668,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 108467,
+            "samples": [
+              46.959748126158146,
+              46.70391916435409,
+              38.49403966183258,
+              41.73158656549918,
+              40.43127402804537,
+              37.90707772871022,
+              40.33254353858783,
+              36.221081066130594,
+              38.74066766850759,
+              39.345681174919555,
+              36.9705440364351,
+              39.78398960052358
+            ]
+          }
+        ],
+        "checksum": 3168
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40669,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 243523,
+            "samples": [
+              39.09127679931666,
+              37.261880807973,
+              39.72708532664271,
+              38.34322836036021,
+              37.135268537263336,
+              37.806490557360085,
+              37.90453057822044,
+              38.441954148068056,
+              40.41148064043223,
+              52.0520648973609,
+              50.61226249676615,
+              40.69294070785927
+            ]
+          }
+        ],
+        "checksum": 108384
+      },
+      "upstream": {
+        "pid": 40670,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 243523,
+            "samples": [
+              32.0178504699762,
+              31.622097296764544,
+              31.919810449115737,
+              32.65759291730147,
+              30.551529013686583,
+              31.372806675344776,
+              30.735462358791683,
+              35.14401103797159,
+              32.78164280170646,
+              32.094331952218184,
+              33.53328022404464,
+              33.405641356257924
+            ]
+          }
+        ],
+        "checksum": 2272
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40671,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 340828,
+            "samples": [
+              35.42158214700669,
+              34.81411445069065,
+              34.49968312462597,
+              34.3430792071074,
+              35.27084629197137,
+              34.45481885291106,
+              35.35263241282996,
+              37.30217294353744,
+              35.67403206309337,
+              34.577801706432524,
+              33.66641825202162,
+              32.53449540530704
+            ]
+          }
+        ],
+        "checksum": 82848
+      },
+      "vpm": {
+        "pid": 40672,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 340828,
+            "samples": [
+              38.11710012088211,
+              38.45121292851521,
+              38.97126996608251,
+              38.5849548745996,
+              38.73324668161062,
+              37.189092445456275,
+              37.89178999377983,
+              37.78775511401641,
+              37.61501402466946,
+              38.05426197378139,
+              37.382858802680566,
+              37.365011090638156
+            ]
+          }
+        ],
+        "checksum": 1760
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40673,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 143024,
+            "samples": [
+              36.589138885781416,
+              38.95208496476107,
+              53.69844221948774,
+              39.81615672894068,
+              39.112897136145065,
+              40.03086894507205,
+              36.642738281687,
+              37.84825623671548,
+              39.09891346906815,
+              38.609198456203146,
+              39.69642157959517,
+              39.33576882201565
+            ]
+          }
+        ],
+        "checksum": 58592
+      },
+      "upstream": {
+        "pid": 40674,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 143024,
+            "samples": [
+              37.83485289182237,
+              36.799187548942704,
+              34.10675131446471,
+              36.60516416825137,
+              40.031742924264336,
+              41.34241805571096,
+              33.11098836558906,
+              35.79090222619975,
+              34.981597494126866,
+              34.78582615505076,
+              35.26971697057845,
+              34.213957098109404
+            ]
+          }
+        ],
+        "checksum": 3104
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40675,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 353923,
+            "samples": [
+              34.780751745436156,
+              35.21928781119062,
+              33.696829536368014,
+              34.57060999143888,
+              33.957010423171155,
+              36.26165295841193,
+              32.27267230442774,
+              35.09744209898758,
+              33.56568236593847,
+              33.611830821958335,
+              34.25945191468197,
+              33.99786111668356
+            ]
+          }
+        ],
+        "checksum": 81696
+      },
+      "vpm": {
+        "pid": 40676,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 353923,
+            "samples": [
+              38.28740149693578,
+              35.56894013669637,
+              33.60912401850117,
+              33.76216860729593,
+              33.391912930213685,
+              35.05081896344679,
+              32.26937780251644,
+              34.95746249890515,
+              34.54164606425703,
+              33.139976774609124,
+              33.67646352455183,
+              33.060272997233966
+            ]
+          }
+        ],
+        "checksum": 1888
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40677,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 350826,
+            "samples": [
+              34.45368929326792,
+              34.49656239845395,
+              33.31198086800866,
+              33.339056968411725,
+              32.708995342420465,
+              34.87139493652122,
+              36.33817048907438,
+              34.80809290075427,
+              33.970424084874,
+              37.37619503685594,
+              37.695207880829884,
+              36.07925866383899
+            ]
+          }
+        ],
+        "checksum": 75360
+      },
+      "upstream": {
+        "pid": 40678,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create box with default spacing",
+            "iterations": 350826,
+            "samples": [
+              36.03151134750562,
+              32.68963816820869,
+              33.39725390934544,
+              33.75129836443146,
+              32.87527150211217,
+              30.275099336993218,
+              34.38207259439147,
+              33.28038685844272,
+              31.27690079982675,
+              30.384124893821983,
+              30.82867290337656,
+              37.437598695649626
+            ]
+          }
+        ],
+        "checksum": 1888
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "create box with default spacing",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 34.5010832787852,
+          "vpmNs": 39.56483538772157,
+          "changePct": 14.67708149340947
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 32.0560912110972,
+          "vpmNs": 38.766615473692354,
+          "changePct": 20.933694686618875
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 34.69595807856159,
+          "vpmNs": 37.97302598378061,
+          "changePct": 9.445099909905363
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 35.530309598389096,
+          "vpmNs": 39.10590530260661,
+          "changePct": 10.063508437257251
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 34.12865651568276,
+          "vpmNs": 33.71931606592388,
+          "changePct": -1.199403936603205
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 33.07782918027745,
+          "vpmNs": 34.65232764960411,
+          "changePct": 4.7599812573717815
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "create box with default spacing",
+      "upstream_ns": 35,
+      "vpm_ns": 39,
+      "change_pct": 12.4,
+      "upstream_first_pct": 12.1,
+      "vpm_first_pct": 15.5,
+      "process_range_pct": "14.7, 20.9, 9.4, 10.1",
+      "control_max_abs_pct": 4.8,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

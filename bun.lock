@@ -78,6 +78,13 @@
         "vvary": "workspace:*",
       },
     },
+    "packages/vcss-box-model": {
+      "name": "vcss-box-model",
+      "version": "1.2.1",
+      "dependencies": {
+        "vtiny-invariant": "workspace:*",
+      },
+    },
     "packages/vdebug": {
       "name": "vdebug",
       "version": "0.1.0",
@@ -995,6 +1002,8 @@
     "vcookie-signature": ["vcookie-signature@workspace:packages/vcookie-signature"],
 
     "vcors": ["vcors@workspace:packages/vcors"],
+
+    "vcss-box-model": ["vcss-box-model@workspace:packages/vcss-box-model"],
 
     "vdebug": ["vdebug@workspace:packages/vdebug"],
 

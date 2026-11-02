@@ -1,0 +1,14 @@
+{
+  "LICENSE": "75238a9ac0cb846f9a7e0d26e6fcb81f6527606a81bde99d2e7b7783b2d6a5de",
+  "package.json": "3e3ccbbc08a443be1b82e372a059559db3199fb42f0d1ab3ca9f9e799da7d1e0",
+  "src/index.d.ts.txt": "cc0db34c3fa72ad32b36db06b2921b228ddc3921cf91076ce762c550ff28a265",
+  "src/index.js.txt": "96c85af6400bc9fd49bb90a4d5638bcde60de64030a326ca584d27915a0689eb",
+  "test/calculate-box.spec.js.txt": "67fb505764a44811b0970fa4bad126c827a0c1d592e36a8781d883f5d79e2503",
+  "test/expand.spec.js.txt": "46e80814987b3018a9e5f6aa6a694ca1f3f547d6c08f3e326542993c376fbe2a",
+  "test/get-rect.spec.js.txt": "4c9da091be0e9d213be5d0e96c0d4de92a5c6bafac47aff58ecd0edf8c0ebb2b",
+  "test/mock.js.txt": "b321a81251ef5eb4f0cb2771e8ae47ad1fb48c55da1173e0480b1327270a7afb",
+  "test/offset.spec.js.txt": "0ca2bdefcc951f81b09a7e8318f33e515336208e328639911549b9f0720eb1d4",
+  "test/pixel-parsing.spec.js.txt": "764e3b9bee9a5bcd14b5e39d7e81ec7cf1e3b2fc3fc165b024d6195d7153be7f",
+  "test/shrink.spec.js.txt": "389d452ce824b18291e4bc2308ae6694412c9fb3b2a63216d15a3ae4bd462ee8",
+  "test/with-scroll.spec.js.txt": "f2a0e5700361621f9d653b4dc4f0fc770fe268513653cbb764f22617e76016f1"
+}

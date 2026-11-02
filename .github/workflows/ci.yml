@@ -83,6 +83,11 @@ jobs:
       - run: node scripts/hoist-conformance/archives.cjs
       - run: npm --prefix scripts/react-is-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/react-is-conformance/archives.cjs
+      - run: npm --prefix scripts/box-model-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/box-model-conformance/run.cjs --upstream
+      - run: node scripts/box-model-conformance/run.cjs
+      - run: node scripts/box-model-conformance/callers.cjs
+      - run: node scripts/box-model-conformance/archives.cjs
       - run: npm --prefix scripts/invariant-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/invariant-conformance/run.cjs --upstream
       - run: node scripts/invariant-conformance/run.cjs
@@ -414,6 +419,11 @@ jobs:
       - run: node scripts/hoist-conformance/archives.cjs
       - run: npm --prefix scripts/react-is-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/react-is-conformance/archives.cjs
+      - run: npm --prefix scripts/box-model-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/box-model-conformance/run.cjs --upstream
+      - run: node scripts/box-model-conformance/run.cjs
+      - run: node scripts/box-model-conformance/callers.cjs
+      - run: node scripts/box-model-conformance/archives.cjs
       - run: npm --prefix scripts/invariant-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/invariant-conformance/run.cjs --upstream
       - run: node scripts/invariant-conformance/run.cjs
@@ -575,6 +585,9 @@ jobs:
           bun scripts/object-hash-conformance/run.cjs
           bun scripts/object-hash-conformance/run.cjs --upstream
           bun scripts/object-hash-conformance/callers.cjs --upstream
+          bun scripts/box-model-conformance/run.cjs --upstream
+          bun scripts/box-model-conformance/run.cjs
+          bun scripts/box-model-conformance/callers.cjs
           bun scripts/invariant-conformance/run.cjs --upstream
           bun scripts/invariant-conformance/run.cjs
           bun scripts/invariant-conformance/callers.cjs

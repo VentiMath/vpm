@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "css-box-model",
+    "version": "1.2.1",
+    "commit": "1fc7824e417e3106c7d47cc6f8d409a8860ddcb4",
+    "repository": "https://github.com/alexreardon/css-box-model",
+    "integrity": "sha512-a7Vr4Q/kd/aw96bnJG332W9V9LkJO69JRcaCYDUqjp6/z0w6VcZjgAcTbgFxEPfBgdnAwlh3iwu+hLopa+flJw=="
+  },
+  "checked": "2026-11-02",
+  "license": "MIT",
+  "retainedEvidence": "../../scripts/box-model-conformance/upstream",
+  "implementation": {
+    "kind": "independent implementation",
+    "basis": "Direct edge arithmetic and own box assembly; original source/tests are retained only as comparison fixtures.",
+    "targetScope": "All eight public css-box-model functions, used by @hello-pangea/dnd18.0.1."
+  },
+  "changes": [
+    "Independent mutable default spacing records prevent cross-box and cross-field contamination.",
+    "getBox reads styles from the owning document window.",
+    "Direct derived rectangle construction avoids intermediate spacing objects.",
+    "vtiny-invariant supplies lazy failure diagnostics; CJS/ESM and DOM declarations."
+  ]
+}
