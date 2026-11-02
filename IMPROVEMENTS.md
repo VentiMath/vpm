@@ -223,6 +223,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | --- | --- | --- |
 | [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
 | [vhoist-non-react-statics](packages/vhoist-non-react-statics) | hoist-non-react-statics 3.3.2 | Independent zero-dependency static hoisting; safe prototype-named fields, nearest inherited descriptors, iterative traversal and no classification getter execution. |
+| [vreact-fast-compare](packages/vreact-fast-compare) | react-fast-compare 3.2.2 | Independent React-aware equality; terminating DataView comparisons, meaningful ArrayBuffer bytes, deep/cyclic traversal and preserved application exceptions. |
 | [vfloating-ui-react](packages/vfloating-ui-react) | @floating-ui/react 0.27.20 | Independent app-used popover, menu and tooltip interactions on VPM positioning/tabbable; complete ref cleanup and restoration of existing accessibility attributes. Explicit public subset. |
 | [vfloating-ui-react-dom](packages/vfloating-ui-react-dom) | @floating-ui/react-dom 2.1.9 | Independent React 19 positioning hook; stale-measurement protection, retained-element reopening and cycle-safe middleware comparison. |
 | [vfloating-ui-dom](packages/vfloating-ui-dom) | @floating-ui/dom 1.8.0 | Independent browser geometry and lifecycle updates; owned subscriptions, complete cleanup, inherited platform overrides and real-browser conformance. |
@@ -354,9 +355,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 112 Node runtime packages' public declarations compile
+recorded by the tests. All 113 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **129 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **130 packages**, including two declaration-only packages and
 fifteen browser packages, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

@@ -1,0 +1,7 @@
+{
+  "test/node/basics.spec.js": "d878840a496e0a65db425197f45afe5a80727b4ad12f084c80d1f8813773ad81",
+  "test/node/advanced.spec.js": "89d2edcb49c66a6017844d1f4d38ec6f2ffa8665a3aaee2204fe8bda97c106a8",
+  "test/node/tests.js": "d32bb372c854038b705473b4a572dcecb255a11784fa30737b6d0d6309f04940",
+  "LICENSE": "1e187eec147d04bcbb3b7aef9f3b0ea82228961fa7d390d3efb9e57751dbe0cb",
+  "index.d.ts": "3f415109c8c5d1447ca07f797c3952366308f7869edb8332aee78b348265de66"
+}

@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "react-fast-compare",
+    "version": "3.2.2",
+    "repository": "https://github.com/FormidableLabs/react-fast-compare",
+    "commit": "c306521de14d24169077ae1859be373ff21a8818",
+    "integrity": "sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independent source-informed implementation. Upstream runtime was inspected for contracts, but is not shipped. Retained tests and the upstream MIT license preserve attribution.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "React/Preact-aware deep equality; props/options comparisons in react-popper 2.3.0."
+  },
+  "changes": [
+    "DataView compares visible bytes and offsets instead of looping indefinitely. ArrayBuffer contents participate in equality.",
+    "A bounded recursive path switches to explicit graph traversal for deep/cyclic values; structurally equal cycles compare true without console warnings. Shared identity is immaterial outside Map/Set keys.",
+    "Application exceptions propagate; matching stack/recursion text is not treated as an overflow.",
+    "Array kinds must agree, including objects that spoof an array constructor."
+  ],
+  "verification": {
+    "upstream": "117 original tests pass upstream; VPM passes the same 116 functional tests on Node24/Bun. The one original cycle-warning assertion is explicitly excluded because cycle handling changed.",
+    "caller": "Actual react-popper2.3.0 usePopper on React19.1 with both comparators: nested equal options retain identity, changed options update once, unmount disposes once.",
+    "regressions": "Six focused groups and3000 generated comparisons on Node24/Bun; original DataView hang checked in a bounded subprocess.",
+    "archives": "Packed npm/Bun CJS/ESM, browser build and TypeScript7 consumers."
+  }
+}

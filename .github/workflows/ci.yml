@@ -81,6 +81,11 @@ jobs:
       - run: node scripts/hoist-conformance/archives.cjs
       - run: npm --prefix scripts/react-is-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/react-is-conformance/archives.cjs
+      - run: npm --prefix scripts/fast-compare-conformance ci --legacy-peer-deps --ignore-scripts --no-audit --no-fund
+      - run: node scripts/fast-compare-conformance/run.cjs --upstream
+      - run: node scripts/fast-compare-conformance/run.cjs
+      - run: node scripts/fast-compare-conformance/callers.cjs
+      - run: node scripts/fast-compare-conformance/archives.cjs
       - run: npm --prefix scripts/clsx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/clsx-conformance/archives.cjs
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
@@ -379,6 +384,11 @@ jobs:
       - run: node scripts/hoist-conformance/archives.cjs
       - run: npm --prefix scripts/react-is-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/react-is-conformance/archives.cjs
+      - run: npm --prefix scripts/fast-compare-conformance ci --legacy-peer-deps --ignore-scripts --no-audit --no-fund
+      - run: node scripts/fast-compare-conformance/run.cjs --upstream
+      - run: node scripts/fast-compare-conformance/run.cjs
+      - run: node scripts/fast-compare-conformance/callers.cjs
+      - run: node scripts/fast-compare-conformance/archives.cjs
       - run: npm --prefix scripts/clsx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/clsx-conformance/archives.cjs
       - run: npm --prefix scripts/gax-conformance ci --ignore-scripts --no-audit --no-fund
@@ -507,6 +517,8 @@ jobs:
           bun scripts/object-hash-conformance/run.cjs
           bun scripts/object-hash-conformance/run.cjs --upstream
           bun scripts/object-hash-conformance/callers.cjs --upstream
+          bun scripts/fast-compare-conformance/run.cjs
+          bun scripts/fast-compare-conformance/callers.cjs
           bun scripts/storage-conformance/regressions.cjs
           bun scripts/storage-conformance/run.cjs
           bun scripts/storage-conformance/run.cjs --upstream

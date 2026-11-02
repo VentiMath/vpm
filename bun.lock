@@ -761,6 +761,10 @@
         "viconv-lite": "workspace:*",
       },
     },
+    "packages/vreact-fast-compare": {
+      "name": "vreact-fast-compare",
+      "version": "3.2.2",
+    },
     "packages/vreact-is": {
       "name": "vreact-is",
       "version": "0.1.0",
@@ -1168,6 +1172,8 @@
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
 
     "vraw-body": ["vraw-body@workspace:packages/vraw-body"],
+
+    "vreact-fast-compare": ["vreact-fast-compare@workspace:packages/vreact-fast-compare"],
 
     "vreact-is": ["vreact-is@workspace:packages/vreact-is"],
 
