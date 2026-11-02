@@ -60,3 +60,9 @@ Safari, Firefox and the complete upstream Cypress suite are not certified here.
 [provenance](PROVENANCE.json) identify the exact baseline. Public declarations,
 original tests and fixtures retain upstream MIT attribution. The runtime is
 independently written with source review; this is not a clean-room claim.
+
+## Installation
+
+Available in the public [Floating UI release](../../docs/INSTALLATION.md#floating-ui).
+The React entry installs all six VPM packages from pinned release URLs. Package
+versions identify upstream API baselines; application adoption is separate.

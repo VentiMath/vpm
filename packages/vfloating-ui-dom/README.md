@@ -59,3 +59,9 @@ In this recording, Bun's simulated popover takes 16% more paired time (7.41 vs
 6.32 µs). All other comparisons, including every Node case, are inconclusive
 against identical-source control variation. No speedup is established. This is
 the complete DOM/core/utils stack on synthetic geometry, not a browser render.
+
+## Installation
+
+Available in the public [Floating UI release](../../docs/INSTALLATION.md#floating-ui).
+The React entry installs all six VPM packages from pinned release URLs. Package
+versions identify upstream API baselines; application adoption is separate.

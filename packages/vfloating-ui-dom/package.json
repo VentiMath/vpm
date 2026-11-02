@@ -1,6 +1,6 @@
 {
   "name": "vfloating-ui-dom",
-  "version": "0.1.0",
+  "version": "1.8.0",
   "description": "Independent browser geometry and lifecycle updates on VPM Floating UI",
   "type": "commonjs",
   "main": "./index.cjs",

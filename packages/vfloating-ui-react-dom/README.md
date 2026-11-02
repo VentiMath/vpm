@@ -75,3 +75,9 @@ the process controls; no speedup is established.
 See the [conformance fixture](../../scripts/floating-react-dom-conformance/README.md)
 and [provenance](PROVENANCE.json). Runtime code is an independent, source-informed
 implementation; public declarations and original tests retain MIT attribution.
+
+## Installation
+
+Available in the public [Floating UI release](../../docs/INSTALLATION.md#floating-ui).
+The React entry installs all six VPM packages from pinned release URLs. Package
+versions identify upstream API baselines; application adoption is separate.

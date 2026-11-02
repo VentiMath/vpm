@@ -330,14 +330,14 @@
     },
     "packages/vfloating-ui-core": {
       "name": "vfloating-ui-core",
-      "version": "0.1.0",
+      "version": "1.8.0",
       "dependencies": {
         "vfloating-ui-utils": "workspace:*",
       },
     },
     "packages/vfloating-ui-dom": {
       "name": "vfloating-ui-dom",
-      "version": "0.1.0",
+      "version": "1.8.0",
       "dependencies": {
         "vfloating-ui-core": "workspace:*",
         "vfloating-ui-utils": "workspace:*",
@@ -357,7 +357,7 @@
     },
     "packages/vfloating-ui-react-dom": {
       "name": "vfloating-ui-react-dom",
-      "version": "0.1.0",
+      "version": "2.1.9",
       "dependencies": {
         "vfloating-ui-dom": "workspace:*",
       },
@@ -368,7 +368,7 @@
     },
     "packages/vfloating-ui-utils": {
       "name": "vfloating-ui-utils",
-      "version": "0.1.0",
+      "version": "0.2.12",
     },
     "packages/vforwarded": {
       "name": "vforwarded",

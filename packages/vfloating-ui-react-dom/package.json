@@ -1,6 +1,6 @@
 {
   "name": "vfloating-ui-react-dom",
-  "version": "0.1.0",
+  "version": "2.1.9",
   "description": "Independent React positioning hooks on VPM Floating UI",
   "type": "commonjs",
   "main": "./index.cjs",

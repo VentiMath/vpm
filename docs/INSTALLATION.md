@@ -133,3 +133,52 @@ Node 24/Bun MUI rendering, TypeScript 7 theme augmentation and JSX, a Vite build
 containing no original Emotion/clsx/Stylis modules, Chrome theme and RTL updates,
 Global cleanup and a frozen lockfile installation. Chrome is required; set
 `CHROME_BIN` if it is not on a standard path.
+
+## Floating UI
+
+The [Floating UI release](https://github.com/VentiMath/vpm/releases/tag/floating-0.27.20)
+contains six independently implemented packages. Install the React entry alone:
+
+```sh
+bun add vfloating-ui-react@https://github.com/VentiMath/vpm/releases/download/floating-0.27.20/vfloating-ui-react-0.27.20.tgz
+```
+
+Its archive pins all VPM runtime dependencies to public URLs in the same release;
+no overrides, npm registry names or authentication are needed. Keep the app's
+React and React DOM 19 peers. Commit package.json and bun.lock together.
+
+| Package | Upstream API baseline |
+| --- | --- |
+| vfloating-ui-react | @floating-ui/react 0.27.20 |
+| vfloating-ui-react-dom | @floating-ui/react-dom 2.1.9 |
+| vfloating-ui-dom | @floating-ui/dom 1.8.0 |
+| vfloating-ui-core | @floating-ui/core 1.8.0 |
+| vfloating-ui-utils | @floating-ui/utils 0.2.12 |
+| vtabbable | tabbable 6.5.1 |
+
+For VentiMath's direct Tiptap tooltip, popover and dropdown-menu components,
+change imports from `@floating-ui/react` to `vfloating-ui-react`. Positioning,
+interaction hooks and callback types come from the same entry. No global alias
+is included: MUI/Radix's transitive callers require their own compatibility check.
+The React package implements the app-used subset described in its
+[contract](../packages/vfloating-ui-react/README.md), not every upstream API.
+
+`consumer-package.json` contains the top-level dependency URL. `SHA256SUMS` and
+`release-manifest.json` record the exact source commit, archive hashes, source
+hashes and transitive URLs. Release preparation does not migrate or deploy the
+application; adoption remains recorded separately in [ADOPTION.md](ADOPTION.md).
+
+```sh
+node scripts/pack-floating-release.cjs --ref COMMIT_SHA --tag floating-0.27.20 --out /absolute/path/to/empty-output
+node scripts/check-floating-release.cjs /absolute/path/to/output
+# After publication:
+node scripts/check-floating-release.cjs /absolute/path/to/output --published
+```
+
+The public check installs only the React entry and its React peers in a fresh
+Bun cache, verifies all six installed packages against the manifest, checks
+CJS/ESM/SSR on Node and Bun, compiles TypeScript 7 consumers and runs the mounted
+Chrome interaction checks against the original. A frozen-lockfile install must
+leave the lock unchanged. Safari/Firefox and assistive-technology behavior are
+outside this release's automated verification; test the app's target browsers
+as part of its separate cutover.

@@ -71,3 +71,9 @@ node scripts/floating-core-conformance/archives.cjs
 ```
 
 Chrome is required for the browser fixture; `CHROME_BIN` can select its executable.
+
+## Installation
+
+Available in the public [Floating UI release](../../docs/INSTALLATION.md#floating-ui).
+The React entry installs all six VPM packages from pinned release URLs. Package
+versions identify upstream API baselines; application adoption is separate.

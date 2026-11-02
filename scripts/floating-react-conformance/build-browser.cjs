@@ -1,5 +1,6 @@
 "use strict";
 const path = require("node:path");
+const releaseModules = process.env.VPM_FLOATING_RELEASE_MODULES;
 (async () => {
   for (const variant of ["upstream", "vpm"]) {
     const result = await Bun.build({
@@ -14,15 +15,14 @@ const path = require("node:path");
                 name: "VPM React positioning",
                 setup(build) {
                   build.onResolve({ filter: /^@floating-ui\/react$/ }, () => ({
-                    path: path.resolve(
-                      __dirname,
-                      "../../packages/vfloating-ui-react/runtime.mjs",
-                    ),
+                    path: releaseModules
+                      ? path.join(releaseModules, "vfloating-ui-react/runtime.mjs")
+                      : path.resolve(__dirname, "../../packages/vfloating-ui-react/runtime.mjs"),
                   }));
                   build.onResolve(
                     { filter: /^react(?:-dom)?(?:\/.*)?$/ },
                     ({ path: specifier }) => ({
-                      path: require.resolve(specifier, { paths: [__dirname] }),
+                      path: require.resolve(specifier, { paths: [releaseModules || __dirname] }),
                     }),
                   );
                 },

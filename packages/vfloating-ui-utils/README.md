@@ -62,3 +62,9 @@ node scripts/floating-utils-conformance/archives.cjs
 ```
 
 The browser check requires Chrome; set `CHROME_BIN` for a nonstandard installation.
+
+## Installation
+
+Available in the public [Floating UI release](../../docs/INSTALLATION.md#floating-ui).
+The React entry installs all six VPM packages from pinned release URLs. Package
+versions identify upstream API baselines; application adoption is separate.

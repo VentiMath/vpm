@@ -76,3 +76,9 @@ In this recording, SSR uses 40–58% less paired time on Node and 38–52% less 
 Bun. Composed click props use 18%/42% less time on Node/Bun. Each difference is
 consistent across all four pairs and exceeds the identical-source control spread;
 the full process ranges remain in the report.
+
+## Installation
+
+Available in the public [Floating UI release](../../docs/INSTALLATION.md#floating-ui).
+The React entry installs all six VPM packages from pinned release URLs. Package
+versions identify upstream API baselines; application adoption is separate.

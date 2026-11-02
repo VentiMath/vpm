@@ -1,6 +1,6 @@
 {
   "name": "vfloating-ui-utils",
-  "version": "0.1.0",
+  "version": "0.2.12",
   "description": "Independent placement and DOM helpers for Floating UI",
   "type": "commonjs",
   "main": "./index.cjs",
