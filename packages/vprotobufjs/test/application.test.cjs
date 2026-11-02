@@ -2,6 +2,23 @@
 const test = require("node:test"),
   assert = require("node:assert/strict"),
   pb = require("..");
+test("empty namespaces retain the upstream shape and safely acquire and release children", () => {
+  const root = pb.Root.fromJSON({});
+  assert.equal(root.nested, undefined);
+  assert.equal(root.get("missing"), null);
+  assert.deepEqual(root.nestedArray, []);
+  assert.deepEqual(root.toJSON(), {});
+  const child = new pb.Type("__proto__");
+  root.add(child);
+  assert.equal(Object.getPrototypeOf(root.nested), null);
+  assert.equal(root.get("__proto__"), child);
+  assert.deepEqual(root.nestedArray, [child]);
+  root.remove(child);
+  assert.equal(root.nested, undefined);
+  assert.deepEqual(root.nestedArray, []);
+  root.define("again").add(new pb.Type("Message"));
+  assert.equal(root.lookupType("again.Message").name, "Message");
+});
 test("cached namespace lists follow additions, removals, reparenting and namespace replacement", () => {
   const root = new pb.Root(),
     left = new pb.Namespace("left"),

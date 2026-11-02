@@ -1567,11 +1567,23 @@ exercise actual Firestore 9.4.0 transactions, batch commits, query streams and
 RPCs, native REST and current OpenTelemetry SDK tracing. Cloud deployments,
 browser bundles and older gax majors remain outside verified coverage.
 
-The current isolated-process benchmark covers JSON proto caches, the Firestore
+IAM initialization supplies its declared service and port defaults, respects
+explicit endpoint overrides and leaves caller options unchanged. This removes
+invalid `undefined:undefined` targets without weakening gRPC validation. Empty
+protobuf roots now expose `nested: undefined`, matching the REST loader contract;
+child dictionaries remain prototype-safe and cached lists remain invalidated.
+These repairs clear all ten failures found when rerunning the GAX gate on the
+independent gRPC/protobuf stack. Sixty-one combined GAX/protobuf unit tests pass.
+
+Earlier isolated-process benchmarks cover JSON proto caches, the Firestore
 schema, helper work and local Firestore RPCs. Raw samples, balanced process order
-and identical-upstream controls replace the previous shared-process report.
+and identical-upstream controls replace the previous shared-process reports.
 Results compare the complete selected stack and do not establish deployed
-application speedups.
+application speedups; their recorded source snapshots predate these repairs.
+The new [initialization measurements](packages/vgoogle-gax/bench/initialization-results/README.md)
+show Node IAM construction taking 5% less time (Bun inconclusive) and empty
+REST schema loading taking 87% / 62% less on Node / Bun. These cases exclude
+network/authentication work and do not establish whole-SDK improvements.
 
 See the [package contract](packages/vgoogle-gax/README.md),
 [conformance and caller controls](scripts/gax-conformance/README.md), and
@@ -1841,9 +1853,13 @@ inconclusive. These are operation timings, not application latency claims. See t
 are reported separately. A follow-up caches namespace child lists with mutation
 invalidation and replaces per-child getter closures with direct properties.
 The previous Node loading regression is removed: fresh wrapper-schema loading
-takes 12–14% less time than upstream on Node and 24–37% less on Bun. All 29
-unit tests, 343 paired messages, 185 descriptor comparisons and the full Firestore
-gate still pass on both runtimes. No cross-root reflection cache is used.
+takes 17–20% less time than upstream on Node and 23–39% less on Bun in the latest
+measurements. Empty namespaces now defer their prototype-safe child dictionary,
+matching the upstream empty-root shape required by GAX's REST loader. All 30
+unit tests and 185 descriptor comparisons pass on both runtimes; the full
+Firestore gate retains its documented expected failure and skips. The earlier
+343 paired-message results remain recorded with their source snapshot. No
+cross-root reflection cache is used.
 The application runtime is built, but is not released or adopted by VentiMath.
 
 ## vlong

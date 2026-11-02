@@ -99,17 +99,17 @@ class ReflectionObject {
 class Namespace extends ReflectionObject {
   constructor(name, options) {
     super(name, options);
-    this.nested = dict();
+    this.nested = undefined;
     this._nestedList = null;
   }
   get nestedArray() {
-    return (this._nestedList ||= Object.values(this.nested));
+    return (this._nestedList ||= this.nested ? Object.values(this.nested) : []);
   }
   get _nestedArray() {
     return this.nestedArray;
   }
   get(name) {
-    return this.nested[name] || null;
+    return this.nested?.[name] || null;
   }
   add(obj) {
     const old = this.get(obj.name);
@@ -120,7 +120,7 @@ class Namespace extends ReflectionObject {
       } else throw Error("duplicate name " + obj.name);
     }
     if (obj.parent && obj.parent !== this) obj.parent.remove(obj);
-    put(this.nested, obj.name, obj);
+    put((this.nested ||= dict()), obj.name, obj);
     this._nestedList = null;
     obj.parent = this;
     if (!Reflect.has(this, obj.name))
@@ -131,8 +131,9 @@ class Namespace extends ReflectionObject {
     return this;
   }
   remove(obj) {
-    if (this.nested[obj.name] !== obj) throw Error("not a child");
+    if (this.nested?.[obj.name] !== obj) throw Error("not a child");
     delete this.nested[obj.name];
+    if (!Object.keys(this.nested).length) this.nested = undefined;
     this._nestedList = null;
     obj.parent = null;
     return this;

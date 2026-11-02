@@ -70,3 +70,10 @@ Repeat with `bun`. CI additionally checks root tests, declarations, isolated
 archives and the combined integration stack. See the
 [package contract](../../packages/vgoogle-gax/README.md) and
 [benchmark record](../../packages/vgoogle-gax/bench/results/README.md).
+
+
+The IAM/default-endpoint and empty-protobuf-root follow-up clears ten failures
+exposed after the independent transports landed. The unchanged suite again reports
+751 passes, zero failures and four upstream skips on both runtimes. Separate
+package tests cover default/custom endpoints, frozen caller options and continued
+rejection of malformed gRPC targets; no upstream assertions were relaxed.

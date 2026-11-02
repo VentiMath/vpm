@@ -77,13 +77,11 @@ class IamClient {
     options) {
         this.gaxGrpc = gaxGrpc;
         // Ensure that options include the service address and port.
-        const opts = Object.assign({
-            servicePath: options.servicePath,
-            port: options.port,
-            clientConfig: options.clientConfig,
-            apiEndpoint: options.apiEndpoint,
-            fallback: options.fallback,
-        }, options);
+        const opts = {
+            ...options,
+            servicePath: options.servicePath ?? options.apiEndpoint ?? this.constructor.servicePath,
+            port: options.port ?? this.constructor.port,
+        };
         version = opts.fallback ? fallback.version : version;
         opts.scopes = this.constructor.scopes;
         // Save options to use in initialize() method.

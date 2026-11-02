@@ -108,6 +108,12 @@ or the derived runtime do not describe this revision.
 [Schema-loading measurements](bench/loading-results/README.md) separately cover
 the repaired load path. Cached namespace lists with mutation invalidation and
 direct child properties remove repeated allocation: the paired Node cases take
-12–14% less time than upstream, Bun 24–37% less. These do not measure network
+17–20% less time than upstream, Bun 23–39% less. These do not measure network
 latency or the codec loop. Addition, removal, reparenting and namespace replacement
 are regression-tested; roots do not share cached reflection objects.
+
+Empty namespaces use `nested === undefined`, allocate an own-key-safe map on the
+first child and restore the empty shape after the last removal. This matches
+GAX's fallback loader and the declaration now reflects the optional property.
+The namespace cache and mutation protections remain tested; the protobuf unit
+suite has 30 cases after this compatibility follow-up.

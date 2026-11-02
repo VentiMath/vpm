@@ -12,10 +12,10 @@ controls and untrimmed samples are in [Node](node.json) and [Bun](bun.json).
 
 | Runtime | Case | Original ns | VPM ns | Paired change | Control spread | Evidence |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| node | load and resolve bundled wrappers | 13116 | 11546 | -11.8% | 3% | lower time in every pair, beyond control spread |
-| node | load duplicate bundled aliases | 14031 | 12058 | -14.4% | 1% | lower time in every pair, beyond control spread |
-| bun | load and resolve bundled wrappers | 12501 | 7900 | -37.1% | 6.3% | lower time in every pair, beyond control spread |
-| bun | load duplicate bundled aliases | 13375 | 10217 | -24.2% | 8.1% | lower time in every pair, beyond control spread |
+| node | load and resolve bundled wrappers | 16338 | 13059 | -20.2% | 0.7% | lower time in every pair, beyond control spread |
+| node | load duplicate bundled aliases | 16753 | 13965 | -16.6% | 1.5% | lower time in every pair, beyond control spread |
+| bun | load and resolve bundled wrappers | 14880 | 9160 | -38.5% | 3.9% | lower time in every pair, beyond control spread |
+| bun | load duplicate bundled aliases | 15814 | 12176 | -23.4% | 3.7% | lower time in every pair, beyond control spread |
 
 These measurements replace the Node regression recorded in commit 7fce9c5.
 Profiles identified repeated namespace-list materialization, per-child getter
@@ -26,7 +26,7 @@ Codec invalidation reuses the child list. Validation, resolver behavior, fresh
 Root instances and independently owned reflection graphs are preserved; no
 cross-root schema cache is introduced.
 
-Both Node cases now take 12–14% less time than upstream, and Bun takes 24–37%
+Both Node cases now take 17–20% less time than upstream, and Bun takes 23–39%
 less. These are fresh reflection-graph construction and resolution costs, not
 wire-operation or network timings. Absolute timings from different runs are not
 used as a before/after comparison. Mutation regression tests, schema alias checks,
@@ -36,3 +36,7 @@ claim. The previous reports remain in git history.
 
 Reproduce with `OUTPUT=packages/vprotobufjs/bench/loading-results/node.json node
 packages/vprotobufjs/bench/loading.cjs`, then the corresponding Bun command.
+
+These reports were refreshed after the GAX compatibility repair: empty namespaces
+now allocate their map only when a child is added. This restores the upstream
+empty shape while retaining namespace-list caching and prototype-safe maps.

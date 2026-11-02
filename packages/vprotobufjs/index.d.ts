@@ -97,7 +97,7 @@ export class ReflectionObject {
 }
 export class Namespace extends ReflectionObject {
   constructor(name: string, options?: Record<string, any>);
-  nested: Record<string, ReflectionObject>;
+  nested: Record<string, ReflectionObject> | undefined;
   readonly nestedArray: ReflectionObject[];
   get(name: string): ReflectionObject | null;
   add(object: ReflectionObject): this;

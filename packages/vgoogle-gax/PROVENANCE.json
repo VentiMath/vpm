@@ -289,7 +289,8 @@
     "Consume the gaxios-owned response stream and avoid duplicate pipeline errors.",
     "Opt into gRPC terminal status after readable end; retain HTTP premature-end detection in vretry-request.",
     "Identify protobuf 8 Any messages structurally and preserve empty nested error payloads.",
-    "Independently implements JSON descriptor cache ownership: compile the serialized snapshot, scope gRPC results by the selected compiler, preserve refresh and clear behavior, and publish only successful results."
+    "Independently implements JSON descriptor cache ownership: compile the serialized snapshot, scope gRPC results by the selected compiler, preserve refresh and clear behavior, and publish only successful results.",
+    "Apply IAM service endpoint/port defaults before stub construction, preserving explicit endpoints and strict gRPC target validation."
   ],
   "implementation": {
     "kind": "upstream-derived with focused modifications",

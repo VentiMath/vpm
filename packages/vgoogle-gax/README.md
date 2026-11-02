@@ -93,7 +93,7 @@ the verified scope.
 - [Benchmarks](bench/results/README.md) retain paired samples, controls and source
   hashes. They measure both helpers and actual Firestore SDK requests.
 
-The current benchmark uses one selected GAX implementation per process, balanced
+The earlier helper/cache/RPC benchmark uses one selected GAX implementation per process, balanced
 order and identical-upstream controls. It includes cache hits/refreshes, the actual
 Firestore schema, helper work and local Firestore RPCs. These local measurements
 are not deployment performance guarantees; unsupported directions and regressions
@@ -103,3 +103,23 @@ show no established change on either runtime; local RPC differences also remain
 unestablished. These comparisons include the selected dependency stacks.
 
 Apache-2.0 upstream provenance is recorded in [PROVENANCE.json](PROVENANCE.json).
+
+
+## IAM initialization and empty schema follow-up
+
+IAM clients now apply their declared service path and port when callers omit
+both, honor an explicit `apiEndpoint` or `servicePath`, and preserve the caller's
+options. This prevents construction of `undefined:undefined` targets. Explicit
+malformed targets are still rejected by vgrpc-js. Empty protobuf roots now expose
+`nested === undefined` as upstream does, and still accept later additions/removals.
+
+These repairs clear all ten reproduced GAX conformance failures: **751 passes,
+zero failures, four upstream skips** on Node 24 and Bun. Sixty-one combined
+GAX/protobuf unit tests, strict public declarations, descriptor comparisons,
+actual local gRPC/REST callers and the full Firestore gate also pass. Firestore
+retains its one documented tracing-fixture exception and 47 upstream skips.
+
+[Initialization measurements](bench/initialization-results/README.md) cover the
+changed boundary. Earlier cache/RPC reports describe their recorded dependency
+snapshots and were not rerun for this repair. GAX still retains upstream-derived
+code; this follow-up does not claim its independent rewrite is complete.
