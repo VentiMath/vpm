@@ -494,7 +494,6 @@
       "version": "0.1.0",
       "dependencies": {
         "vgrpc-proto-loader": "workspace:*",
-        "vordered-map": "workspace:*",
       },
     },
     "packages/vgrpc-proto-loader": {

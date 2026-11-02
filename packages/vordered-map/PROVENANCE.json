@@ -31,9 +31,10 @@
   "scope": "The complete OrderedMap runtime method surface is retained. Iterator pair identity is now stable; deletion still swaps node payloads as upstream does, so callers must not rely on unrelated iterators retaining a particular key across erase. No runtime dependencies.",
   "implementation": {
     "kind": "upstream-derived with focused modifications",
-    "replacementStatus": "application-facing independent rewrite pending",
+    "replacementStatus": "independent rewrite pending only if a future caller needs the general ordered-map API",
     "basis": "The runtime was transpiled from js-sdsl TypeScript sources and then modified. Transpilation and iterator/index fixes do not constitute an independent map implementation.",
-    "targetScope": "Ordered registry operations used by gRPC Channelz diagnostics.",
-    "remainingWork": "Determine whether the rewritten gRPC client needs this runtime; otherwise eliminate it. If retained, independently implement the required registry ordering and iteration contracts."
+    "targetScope": "No current VPM runtime caller: gRPC Channelz owns its numeric registry.",
+    "remainingWork": "No general ordered-map rewrite is needed for the current VPM dependency graph. Retain the upstream-derived package and comparison fixtures without counting it as independently rewritten; reassess only for an actual new caller.",
+    "runtimeDependencyStatus": "eliminated"
   }
 }

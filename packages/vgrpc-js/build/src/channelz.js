@@ -23,7 +23,7 @@ exports.getChannelzHandlers = getChannelzHandlers;
 exports.getChannelzServiceDefinition = getChannelzServiceDefinition;
 exports.setup = setup;
 const net_1 = require("net");
-const ordered_map_1 = require("vordered-map");
+const { ChannelzRegistry } = require("./channelz-registry");
 const connectivity_state_1 = require("./connectivity-state");
 const constants_1 = require("./constants");
 const subchannel_address_1 = require("./subchannel-address");
@@ -123,9 +123,9 @@ class ChannelzTrace {
 exports.ChannelzTrace = ChannelzTrace;
 class ChannelzChildrenTracker {
     constructor() {
-        this.channelChildren = new ordered_map_1.OrderedMap();
-        this.subchannelChildren = new ordered_map_1.OrderedMap();
-        this.socketChildren = new ordered_map_1.OrderedMap();
+        this.channelChildren = new ChannelzRegistry();
+        this.subchannelChildren = new ChannelzRegistry();
+        this.socketChildren = new ChannelzRegistry();
         this.trackerMap = {
             ["channel" /* EntityTypes.channel */]: this.channelChildren,
             ["subchannel" /* EntityTypes.subchannel */]: this.subchannelChildren,
@@ -134,24 +134,24 @@ class ChannelzChildrenTracker {
     }
     refChild(child) {
         const tracker = this.trackerMap[child.kind];
-        const trackedChild = tracker.find(child.id);
-        if (trackedChild.equals(tracker.end())) {
-            tracker.setElement(child.id, {
+        const trackedChild = tracker.get(child.id);
+        if (trackedChild === undefined) {
+            tracker.set(child.id, {
                 ref: child,
                 count: 1,
-            }, trackedChild);
+            });
         }
         else {
-            trackedChild.pointer[1].count += 1;
+            trackedChild.count += 1;
         }
     }
     unrefChild(child) {
         const tracker = this.trackerMap[child.kind];
-        const trackedChild = tracker.getElementByKey(child.id);
+        const trackedChild = tracker.get(child.id);
         if (trackedChild !== undefined) {
             trackedChild.count -= 1;
             if (trackedChild.count === 0) {
-                tracker.eraseElementByKey(child.id);
+                tracker.delete(child.id);
             }
         }
     }
@@ -195,10 +195,10 @@ class ChannelzCallTrackerStub extends ChannelzCallTracker {
 }
 exports.ChannelzCallTrackerStub = ChannelzCallTrackerStub;
 const entityMaps = {
-    ["channel" /* EntityTypes.channel */]: new ordered_map_1.OrderedMap(),
-    ["subchannel" /* EntityTypes.subchannel */]: new ordered_map_1.OrderedMap(),
-    ["server" /* EntityTypes.server */]: new ordered_map_1.OrderedMap(),
-    ["socket" /* EntityTypes.socket */]: new ordered_map_1.OrderedMap(),
+    ["channel" /* EntityTypes.channel */]: new ChannelzRegistry(),
+    ["subchannel" /* EntityTypes.subchannel */]: new ChannelzRegistry(),
+    ["server" /* EntityTypes.server */]: new ChannelzRegistry(),
+    ["socket" /* EntityTypes.socket */]: new ChannelzRegistry(),
 };
 const generateRegisterFn = (kind) => {
     let nextId = 1;
@@ -210,7 +210,7 @@ const generateRegisterFn = (kind) => {
         const id = getNextId();
         const ref = { id, name, kind };
         if (channelzEnabled) {
-            entityMap.setElement(id, { ref, getInfo });
+            entityMap.set(id, { ref, getInfo });
         }
         return ref;
     };
@@ -220,7 +220,7 @@ exports.registerChannelzSubchannel = generateRegisterFn("subchannel" /* EntityTy
 exports.registerChannelzServer = generateRegisterFn("server" /* EntityTypes.server */);
 exports.registerChannelzSocket = generateRegisterFn("socket" /* EntityTypes.socket */);
 function unregisterChannelzRef(ref) {
-    entityMaps[ref.kind].eraseElementByKey(ref.id);
+    entityMaps[ref.kind].delete(ref.id);
 }
 /**
  * Parse a single section of an IPv6 address as two bytes
@@ -357,7 +357,7 @@ function getChannelMessage(channelEntry) {
 }
 function GetChannel(call, callback) {
     const channelId = parseInt(call.request.channel_id, 10);
-    const channelEntry = entityMaps["channel" /* EntityTypes.channel */].getElementByKey(channelId);
+    const channelEntry = entityMaps["channel" /* EntityTypes.channel */].get(channelId);
     if (channelEntry === undefined) {
         callback({
             code: constants_1.Status.NOT_FOUND,
@@ -369,17 +369,10 @@ function GetChannel(call, callback) {
 }
 function GetTopChannels(call, callback) {
     const maxResults = parseInt(call.request.max_results, 10) || DEFAULT_MAX_RESULTS;
-    const resultList = [];
     const startId = parseInt(call.request.start_channel_id, 10);
     const channelEntries = entityMaps["channel" /* EntityTypes.channel */];
-    let i;
-    for (i = channelEntries.lowerBound(startId); !i.equals(channelEntries.end()) && resultList.length < maxResults; i = i.next()) {
-        resultList.push(getChannelMessage(i.pointer[1]));
-    }
-    callback(null, {
-        channel: resultList,
-        end: i.equals(channelEntries.end()),
-    });
+    const page = channelEntries.page(startId, maxResults, getChannelMessage);
+    callback(null, { channel: page.values, end: page.end });
 }
 function getServerMessage(serverEntry) {
     const resolvedInfo = serverEntry.getInfo();
@@ -402,7 +395,7 @@ function getServerMessage(serverEntry) {
 function GetServer(call, callback) {
     const serverId = parseInt(call.request.server_id, 10);
     const serverEntries = entityMaps["server" /* EntityTypes.server */];
-    const serverEntry = serverEntries.getElementByKey(serverId);
+    const serverEntry = serverEntries.get(serverId);
     if (serverEntry === undefined) {
         callback({
             code: constants_1.Status.NOT_FOUND,
@@ -416,19 +409,12 @@ function GetServers(call, callback) {
     const maxResults = parseInt(call.request.max_results, 10) || DEFAULT_MAX_RESULTS;
     const startId = parseInt(call.request.start_server_id, 10);
     const serverEntries = entityMaps["server" /* EntityTypes.server */];
-    const resultList = [];
-    let i;
-    for (i = serverEntries.lowerBound(startId); !i.equals(serverEntries.end()) && resultList.length < maxResults; i = i.next()) {
-        resultList.push(getServerMessage(i.pointer[1]));
-    }
-    callback(null, {
-        server: resultList,
-        end: i.equals(serverEntries.end()),
-    });
+    const page = serverEntries.page(startId, maxResults, getServerMessage);
+    callback(null, { server: page.values, end: page.end });
 }
 function GetSubchannel(call, callback) {
     const subchannelId = parseInt(call.request.subchannel_id, 10);
-    const subchannelEntry = entityMaps["subchannel" /* EntityTypes.subchannel */].getElementByKey(subchannelId);
+    const subchannelEntry = entityMaps["subchannel" /* EntityTypes.subchannel */].get(subchannelId);
     if (subchannelEntry === undefined) {
         callback({
             code: constants_1.Status.NOT_FOUND,
@@ -479,7 +465,7 @@ function subchannelAddressToAddressMessage(subchannelAddress) {
 function GetSocket(call, callback) {
     var _a, _b, _c, _d, _e;
     const socketId = parseInt(call.request.socket_id, 10);
-    const socketEntry = entityMaps["socket" /* EntityTypes.socket */].getElementByKey(socketId);
+    const socketEntry = entityMaps["socket" /* EntityTypes.socket */].get(socketId);
     if (socketEntry === undefined) {
         callback({
             code: constants_1.Status.NOT_FOUND,
@@ -535,7 +521,7 @@ function GetSocket(call, callback) {
 }
 function GetServerSockets(call, callback) {
     const serverId = parseInt(call.request.server_id, 10);
-    const serverEntry = entityMaps["server" /* EntityTypes.server */].getElementByKey(serverId);
+    const serverEntry = entityMaps["server" /* EntityTypes.server */].get(serverId);
     if (serverEntry === undefined) {
         callback({
             code: constants_1.Status.NOT_FOUND,
@@ -550,15 +536,8 @@ function GetServerSockets(call, callback) {
     // instead say
     // const allSockets = resolvedInfo.listenerChildren.sockets.concat(resolvedInfo.sessionChildren.sockets).sort((ref1, ref2) => ref1.id - ref2.id);
     const allSockets = resolvedInfo.sessionChildren.sockets;
-    const resultList = [];
-    let i;
-    for (i = allSockets.lowerBound(startId); !i.equals(allSockets.end()) && resultList.length < maxResults; i = i.next()) {
-        resultList.push(socketRefToMessage(i.pointer[1].ref));
-    }
-    callback(null, {
-        socket_ref: resultList,
-        end: i.equals(allSockets.end()),
-    });
+    const page = allSockets.page(startId, maxResults, entry => socketRefToMessage(entry.ref));
+    callback(null, { socket_ref: page.values, end: page.end });
 }
 function getChannelzHandlers() {
     return {

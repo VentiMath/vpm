@@ -35,8 +35,7 @@
     "node": ">=24"
   },
   "dependencies": {
-    "vgrpc-proto-loader": "workspace:*",
-    "vordered-map": "workspace:*"
+    "vgrpc-proto-loader": "workspace:*"
   },
   "license": "Apache-2.0",
   "repository": {

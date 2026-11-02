@@ -1,5 +1,5 @@
 import type {Buffer} from './platform';
-import { OrderedMap } from 'vordered-map';
+import { ChannelzRegistry } from './channelz-registry';
 import { ConnectivityState } from './connectivity-state';
 import { Timestamp } from './generated/google/protobuf/Timestamp';
 import { ChannelTrace } from './generated/grpc/channelz/v1/ChannelTrace';
@@ -73,15 +73,15 @@ export declare class ChannelzCallTrackerStub extends ChannelzCallTracker {
     addCallFailed(): void;
 }
 export interface ChannelzChildren {
-    channels: OrderedMap<number, {
+    channels: ChannelzRegistry<{
         ref: ChannelRef;
         count: number;
     }>;
-    subchannels: OrderedMap<number, {
+    subchannels: ChannelzRegistry<{
         ref: SubchannelRef;
         count: number;
     }>;
-    sockets: OrderedMap<number, {
+    sockets: ChannelzRegistry<{
         ref: SocketRef;
         count: number;
     }>;

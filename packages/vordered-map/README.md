@@ -1,8 +1,10 @@
 # vordered-map
 
-**Implementation status:** upstream-derived runtime with focused fixes. The
-independent implementation of the caller paths VentiMath needs is still pending.
-[Provenance](PROVENANCE.json) identifies the retained code and rewrite scope.
+**Implementation status:** upstream-derived runtime retained for reference.
+No VPM runtime package depends on it: gRPC Channelz now owns its independently
+implemented numeric registry. A general map rewrite is unnecessary for the
+current caller graph. This package is not counted as independently rewritten.
+[Provenance](PROVENANCE.json) records that distinction.
 
 An ordered key/value map based on **@js-sdsl/ordered-map 4.4.2**, with checked
 iterators, fewer iterator allocations and logarithmic indexed position lookup.

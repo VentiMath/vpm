@@ -5,7 +5,7 @@ independent implementation of the caller paths VentiMath needs is still pending.
 [Provenance](PROVENANCE.json) identifies the retained code and rewrite scope.
 
 A gRPC HTTP/2 client and server derived from **@grpc/grpc-js 1.14.7**, for Node.js
-24 and Bun. It uses `vgrpc-proto-loader` and `vordered-map`; its entire external
+24 and Bun. It uses `vgrpc-proto-loader`; its entire external
 runtime dependency tree consists of VPM packages.
 
 ```js
@@ -64,3 +64,36 @@ See the [conformance fixture](../../scripts/grpc-conformance/README.md) for exac
 suite results, original controls, runtime limitations and test-harness adapters.
 [Paired benchmarks](bench/results/README.md) cover framing, metadata, client-class
 construction and local RPCs. Their results are workload-specific.
+
+## Independent Channelz registry
+
+Channelz now owns a small, independently written AVL tree for numeric IDs. It no
+longer loads `vordered-map`. Lookup, insertion and removal take O(log n); a page
+starts with a tree search and visits only its requested rows. The implementation
+has no general comparator, rank index or mutable tree-iterator proxies. The
+[registry benchmarks](bench/channelz-results/README.md) include stable pages,
+connection updates, repeated middle-ID churn and pages immediately after changes.
+Node's two paging cases take about 79–81% less time, and the 100-channel Bun case
+about 69% less. Child reference/release takes 88% / 84% less time on Node / Bun.
+One stress case remains slower: repeatedly removing and restoring the middle ID
+among 10,000 children takes 138 → 279 ns on Bun. These are diagnostic costs, not
+HTTP/2 payload or application throughput gains; inconclusive cases remain in the
+report alongside the improvements and regression.
+
+The registry covers the operations this caller uses, not the general OrderedMap
+API. Internal child lists retain ordered pair iteration, `forEach`, `size()` and
+`getElementByKey`; general comparator, rank and mutable tree-iterator APIs are no
+longer exposed there. Iteration returns detached pairs, and deleting the current
+ID in a callback does not skip its successor. The underlying entry objects remain
+shared for reference counting. The Channelz service's request/response shapes,
+ordering, pagination defaults, reference counts and disabled-registration behavior
+remain compatible for valid requests. Direct handler calls with IDs that parse
+to NaN now return NOT_FOUND. Internal registrations require nonnegative
+safe-integer IDs before mutating the registry. The original tree comparator could
+treat NaN as an existing key and return an unrelated entry; five paired controls
+record this correction. Normal protobuf-decoded numeric IDs are unaffected. The
+transport and remaining diagnostics runtime are still upstream-derived.
+
+The seven-handler differential fixture, nine upstream Channelz network tests,
+randomized registry checks and packed consumers run on Node 24 and Bun. See
+[fixture details](../../scripts/grpc-conformance/README.md).

@@ -33,6 +33,8 @@ jobs:
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/grpc-conformance/channelz.cjs --upstream
+      - run: node scripts/grpc-conformance/channelz.cjs
       - run: npm --prefix scripts/deep-equal-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/rbtree-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/firestore-api-conformance ci --ignore-scripts --no-audit --no-fund
@@ -371,6 +373,8 @@ jobs:
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/grpc-conformance/channelz.cjs --upstream
+      - run: node scripts/grpc-conformance/channelz.cjs
       - run: npm --prefix scripts/deep-equal-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/rbtree-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/firestore-api-conformance ci --ignore-scripts --no-audit --no-fund
@@ -550,6 +554,8 @@ jobs:
           bun scripts/protobuf-conformance/callers.cjs --upstream
           bun scripts/protobuf-conformance/callers.cjs --legacy
           bun scripts/protobuf-conformance/bundles.cjs
+          bun scripts/grpc-conformance/channelz.cjs --upstream
+          bun scripts/grpc-conformance/channelz.cjs
           bun scripts/long-conformance/mixed.cjs
           bun scripts/long-conformance/regressions.cjs
           bun scripts/long-conformance/run.cjs

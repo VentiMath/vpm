@@ -87,3 +87,28 @@ Run with `bun` too. `GRPC_TEST_FILES=test-end-to-end` selects a diagnostic subse
 CI runs the complete suite. The [package contract](../../packages/vgrpc-js/README.md)
 and [benchmarks](../../packages/vgrpc-js/bench/results/README.md) describe the
 maintained API, deliberate differences and performance evidence.
+
+## Independent Channelz registry
+
+`channelz.cjs` runs the seven diagnostic handlers against the original grpc-js
+1.14.7 module and the VPM module. It verifies sparse numeric pages, references,
+counts, disabled registration, misses and cleanup. Five direct-handler probes
+confirm that malformed IDs no longer alias an unrelated stored entry through
+the original tree comparator. The original ordered-map
+fixture remains a standalone historical control; VPM gRPC no longer imports it.
+
+```sh
+node scripts/grpc-conformance/channelz.cjs --upstream
+node scripts/grpc-conformance/channelz.cjs
+GRPC_TEST_FILES=test-channelz node scripts/grpc-conformance/run.cjs --upstream
+GRPC_TEST_FILES=test-channelz node scripts/grpc-conformance/run.cjs
+```
+
+Repeat with Bun. The selected upstream suite has nine network cases, unchanged;
+it needs permission to bind localhost sockets. Six focused registry groups
+cover 2,500 randomized mutation/page comparisons, 20,000-entry bulk operations in
+both directions, invalid registrations and traversal during deletion, insertion
+and clear. Fresh-process [benchmarks](../../packages/vgrpc-js/bench/channelz-results/README.md)
+include ordered pages, registration, child reference churn and middle deletion
+in a 10,000-entry child registry, plus the first page after connection churn.
+Timing excludes network transport.

@@ -24,14 +24,14 @@ pending. Passing current-release tests and replacing dependency names establish
 compatibility, not independent implementation. Generated protocol schemas remain
 separately attributed inputs.
 
-The same boundary applies to retained foundations:
-[`vgrpc-js`](packages/vgrpc-js/README.md),
-[`vfunctional-red-black-tree`](packages/vfunctional-red-black-tree/README.md),
-[`vobject-hash`](packages/vobject-hash/README.md) and
-[`vordered-map`](packages/vordered-map/README.md). Their existing fixes and
-compatibility tests remain valid; their application-facing independent rewrites
-are pending. Transpiling upstream TypeScript does not change that classification.
-The gRPC diagnostics map may instead become unnecessary when its caller is rebuilt.
+The same boundary applies to retained foundations such as
+[`vgrpc-js`](packages/vgrpc-js/README.md) and
+[`vfunctional-red-black-tree`](packages/vfunctional-red-black-tree/README.md).
+Their fixes and compatibility tests remain valid; application-facing independent
+rewrites are pending. Transpiling TypeScript does not change that classification.
+`vobject-hash` and `vordered-map` now have no VPM runtime callers: GAX owns its
+JSON descriptor cache and gRPC Channelz owns its numeric registry. Those retained
+packages are marked unnecessary for the current graph, not independently rewritten.
 
 ## Latest stable upgrade roadmap
 
@@ -88,7 +88,7 @@ now have current comparison targets:
 | Caller paths verified | vgoogle-gax | google-gax 6.14.0; Firestore 9.4.0 RPCs, transactions, batches, queries and native REST | [google-gax 6.14.0](https://www.npmjs.com/package/google-gax), checked October 30, 2026 |
 | Caller paths verified | vopentelemetry-api | @opentelemetry/api 1.10.0; SDK 3.0.0 and gax 6.14.0 tracing helpers | [@opentelemetry/api 1.10.0](https://www.npmjs.com/package/@opentelemetry/api), checked October 30, 2026 |
 | Caller paths verified | vgrpc-js | @grpc/grpc-js 1.14.7; gax 6.14.0 / Firestore 9.4.0 local HTTP/2 callers | [@grpc/grpc-js 1.14.7](https://www.npmjs.com/package/@grpc/grpc-js), checked October 30, 2026 |
-| Caller paths verified | vordered-map | @js-sdsl/ordered-map 4.4.2; gRPC 1.14.7 Channelz diagnostics | [@js-sdsl/ordered-map 4.4.2](https://www.npmjs.com/package/@js-sdsl/ordered-map), checked October 30, 2026 |
+| Runtime dependency eliminated | vordered-map | Retained @js-sdsl/ordered-map 4.4.2 reference; gRPC owns its numeric registry | [@js-sdsl/ordered-map 4.4.2](https://www.npmjs.com/package/@js-sdsl/ordered-map), checked October 30, 2026 |
 | Caller paths verified | vgrpc-proto-loader | @grpc/proto-loader 0.8.1 runtime API; gax 6.14.0 and Firestore 9.4.0 local gRPC callers | [@grpc/proto-loader 0.8.1](https://www.npmjs.com/package/@grpc/proto-loader), checked October 30, 2026 |
 | Caller paths verified | vlodash.camelcase | lodash.camelcase 4.3.0; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 method aliases | [lodash.camelcase 4.3.0](https://www.npmjs.com/package/lodash.camelcase), checked October 30, 2026 |
 | Caller paths verified | vjwks-rsa | 4.1.0 API and Firebase Admin 14.5.0 token callers; retained 3.2.2 / Admin 12.7.0 coverage | [jwks-rsa 4.1.0](https://www.npmjs.com/package/jwks-rsa), checked October 30, 2026 |
@@ -126,9 +126,9 @@ Storage 8 / Firestore 9. Firebase Functions **7.4.0** permits Admin 14. These np
 manifests were checked October 30, 2026. The `vjwks-rsa` 4.1.0 API and Admin 14 JWKS/App Check
 callers now pass against upstream controls on Node 24 and Bun. `vlodash.camelcase` now covers the 4.3.0 method-name conversion used by
 `@grpc/proto-loader` 0.8.1. `vgrpc-proto-loader` now covers its runtime API with
-those VPM foundations and actual Firestore calls. `vordered-map` now covers
-4.4.2 and gRPC's Channelz diagnostic handlers. `vgrpc-js` now covers the
-1.14.7 transport with those two VPM dependencies and local Firestore callers; these targets were
+those VPM foundations and actual Firestore calls. `vgrpc-js` now covers the
+1.14.7 transport with `vgrpc-proto-loader` as its sole external runtime dependency
+and local Firestore callers. Its Channelz numeric registry is independently implemented; these targets were
 checked October 30, 2026. `vopentelemetry-api` now covers the zero-dependency
 `@opentelemetry/api` 1.10.0 API, including current SDK interoperability and actual
 gax tracing helpers. `vgoogle-gax` now covers 6.14.0 itself with nine VPM runtime
@@ -260,8 +260,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
 | [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership, independent JSON proto caching and nine VPM dependencies; actual Firestore transactions/batches/queries verified. |
 | [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
-| [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Complete-frame fast path, released network chunks, preserved metadata keys/binary values and own package namespaces; actual Firestore calls over HTTP/2 and two VPM dependencies. |
-| [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Checked foreign/stale iterators and retained pair access, reused iterator allocations, correct reverse-end movement and logarithmic indexed position lookup; real gRPC Channelz handlers. |
+| [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Complete-frame fast path, released network chunks, preserved metadata keys/binary values and own package namespaces; actual Firestore calls over HTTP/2, one VPM dependency and an independent Channelz registry. |
+| [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Retained upstream-derived reference with iterator/index fixes. No VPM runtime callers: gRPC Channelz now owns its independent numeric registry. |
 | [vgrpc-proto-loader](packages/vgrpc-proto-loader) | @grpc/proto-loader 0.8.1 | Reused private descriptors and codecs, isolated public definitions, safe method-option keys and VPM protobuf/long/camel-case dependencies; real Google SDK runtime calls. |
 | [vlodash.camelcase](packages/vlodash.camelcase) | lodash.camelcase 4.3.0 | Direct ASCII identifier conversion, lazy compatible Unicode handling, single object coercion and corrected zero BigInts/Symbol branding; actual gRPC and Google method aliases. |
 | [vproto3-json-serializer](packages/vproto3-json-serializer) | proto3-json-serializer 4.1.0 | Correct byte slices and collections, signed durations, offset timestamps, FieldMasks and Any wrappers; validated scalars, safe output keys and verified Google fallback callers. |
@@ -359,7 +359,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 116 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **133 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **134 packages**, including two declaration-only packages and
 sixteen browser packages, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -515,7 +515,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | `vfast-deep-equal` | 0 | 0 |
 | `vgoogle-gax` | 11 | 9 (all VPM; node-fetch and object-hash removed) |
 | `vopentelemetry-api` | 0 | 0 |
-| `vgrpc-js` | 2 | 2 (`vgrpc-proto-loader`, `vordered-map`) |
+| `vgrpc-js` | 2 | 1 (`vgrpc-proto-loader`; numeric Channelz registry is internal) |
 | `vordered-map` | 0 | 0 |
 | `vgrpc-proto-loader` | 4 (including CLI-only `yargs`) | 3 (`vlodash.camelcase`, `vlong`, `vprotobufjs`; runtime API only) |
 | `vlodash.camelcase` | 0 | 0 |
@@ -1532,7 +1532,24 @@ metadata parsing is 10% / 8% slower (92 / 58 ns per six headers), Node cloning i
 3.9% control bias. The benchmark report includes every case and identical-code
 controls; these results do not imply a deployed application speedup.
 
+Channelz registry storage is independently implemented as a focused numeric-ID
+AVL tree. The general ordered-map runtime dependency is gone.
+Its seven handlers, all nine selected upstream network tests and 2,500 randomized
+registry comparisons pass on Node and Bun. Lookup and membership changes are logarithmic; pages search for the starting ID
+and then traverse the requested rows without rebuilding an index.
+Fresh [registry measurements](packages/vgrpc-js/bench/channelz-results/README.md)
+record Node paging at 79–81% less time, the 100-channel Bun page at 69% less, and
+reference/release at 88% / 84% less on Node / Bun. Repeated middle-ID removal and
+restoration among 10,000 children remains slower on Bun: 138 → 279 ns. Other
+inconclusive cases and controls remain in the report. These diagnostic results
+are separate from the earlier transport recordings above.
+
 ## vordered-map
+
+The runtime dependency is eliminated. Channelz now uses its own numeric registry;
+no VPM runtime package imports this general map. The following records describe
+the retained upstream-derived implementation and its historical controls, not
+an independent rewrite or the current gRPC runtime.
 
 Based on **@js-sdsl/ordered-map 4.4.2**, retaining its red-black tree and complete
 OrderedMap runtime method surface with zero dependencies. Shared navigation
