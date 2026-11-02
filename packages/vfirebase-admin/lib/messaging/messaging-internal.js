@@ -7,9 +7,7 @@ const {
   messagingClientErrorCode: codes
 } = require('./error');
 
-const {
-  isURL
-} = require('../utils/validator');
+const {isImageURL: isURL} = require('./messaging-url');
 
 const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
 const present = (object, key) => own(object, key) && object[key] !== undefined;

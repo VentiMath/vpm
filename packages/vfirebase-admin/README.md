@@ -3,12 +3,12 @@
 **Implementation status:** VPM independently implements app and credential
 management and the Auth operations used by VentiMath. It also owns HTTP transport,
 responses, retries, authorization, Firestore client configuration, Storage
-contexts and Messaging validation/send/response orchestration. Auth endpoint schemas, remaining service APIs and Google Auth remain
+contexts and all Messaging runtime operations. Auth endpoint schemas, remaining service APIs and Google Auth remain
 upstream-derived. This is a partial SDK rewrite;
 [provenance](PROVENANCE.json) maps the boundary.
 
 The Firebase Admin SDK, targeting **firebase-admin 14.5.0**, the latest stable
-release checked October 31, 2026. All dependencies are VPM packages; Node.js 24+
+release checked November 1, 2026. All dependencies are VPM packages; Node.js 24+
 and Bun.
 
 ```js
@@ -42,13 +42,32 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 
 ## Changes from 14.5.0
 
+**Messaging runtime rewrite is complete.** `send`, `sendEach`, token/FID multicast,
+v1 and legacy topic subscription/unsubscription, service lookup, validation,
+response/error handling and session ownership now use independently written
+runtime logic. Message-model declarations and diagnostic/code tables remain
+attributed contract data. Shared authentication and HTTP infrastructure are SDK
+dependencies; this does not mark the rest of Firebase Admin complete.
+
+- **Owned topic operations.** Capture token arrays and transport choice at the
+  call boundary; reject sparse or malformed inputs before requests. Encode project,
+  token and topic identifiers and reject dot-segment tokens. Validate and discover
+  the project before opening a session. A 100-worker queue handles up to 1,000
+  tokens, retaining input order across success, failure and session errors.
+  Failed discovery opens no connection; app deletion closes owned sessions once
+  and prevents later dispatch. Populated legacy response arrays must report one
+  valid result per recipient. Legacy empty envelopes still report zero outcomes,
+  and the existing single-send empty-name result remains compatible.
+  [Controls](../../scripts/firebase-admin-conformance/messaging-topics.cjs) and
+  [current whole-operation measurements](bench/messaging-results/README.md).
+
 - **Independent Messaging validation.** Validate the entire owned request before
   converting fields to wire names. Invalid later branches cannot leave earlier
   fields partly normalized. Nonfinite durations, invalid Dates and nonstring
   enum options produce structured `messaging/invalid-payload` errors. Conflicting
   SDK/wire aliases reject instead of silently overwriting one another. Validation
   accepts JSON records (including null prototypes), rather than class instances
-  or inherited targets. Shared URL validation remains upstream-derived.
+  or inherited targets. An independent image URL policy uses the platform URL parser; valid repeated-slash and ampersand paths are accepted.
   All 171 original payload/options tests pass on Node 24 and Bun. Seven focused
   tests include the reminder payload VentiMath sends and ordered mixed-validity
   batches. [Original defect controls](../../scripts/firebase-admin-conformance/messaging-validation.cjs)
@@ -63,7 +82,7 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   pending and can retry after failure; encoded identifiers cannot introduce path
   segments or query strings. HTTP/2 sessions open after project discovery and only
   when at least one message validates, then close once the batch settles. Message
-  topic-management orchestration remains retained.
+  topic subscriptions use the same captured-input and app-lifetime guarantees.
 
 - **Reliable Messaging delivery results.** Batch success requires a real message
   name and no error envelope, even when the HTTP status is 200. Malformed FCM
@@ -269,10 +288,10 @@ previous JWT improvements; they do not isolate the HTTP rewrite alone. The
 orders, identical-source controls and raw samples, including regressions and
 inconclusive comparisons.
 
-The Messaging measurements cover response validation, stale-device errors,
+The historical Messaging measurements cover response validation, stale-device errors,
 mixed response batches and single/multicast send planning. Send-plan cases
 replace authentication, HTTP and network I/O with synthetic dispatch; they do
-not measure FCM delivery latency. The retained copy/validation helper is measured
+not measure FCM delivery latency. The earlier copy/validation helper was measured
 separately and remains source-derived.
 
 The report compares complete stacks, including earlier Auth, HTTP, Firestore
@@ -304,7 +323,7 @@ separately verify correctness and wire compatibility.
   The unchanged 511-test Messaging suite retains only Bun's existing diagnostic
   wording difference; actual local FCM HTTP/2 requests and results match.
 - [Messaging response controls](../../scripts/firebase-admin-conformance/messaging-response.cjs)
-  compare 63 normal projections, then exercise malformed/prototype-named error
+  compare 69 normal projections, then exercise malformed/prototype-named error
   envelopes and ordered HTTP/1 and HTTP/2 batches against a separate local server.
   Malformed successful-status bodies become batch failures. Single-send empty-name
   output and legacy topic operations retain their existing contracts. All 519

@@ -1132,14 +1132,20 @@ original/VPM outcomes, 511 unchanged Messaging tests and real local FCM exchange
 cover this orchestration. Response dispatch and error decoding are independently
 implemented: HTTP 200 error bodies or missing message names cannot count as
 successful batch deliveries, and malformed/prototype-named errors retain Firebase
-error context. Sixty-three normal projections and real HTTP/1+HTTP/2 batches
+error context. Sixty-nine normal projections and real HTTP/1+HTTP/2 send/topic batches
 verify error codes, ordering and counts. Messaging schema validation now uses an independent deferred normalization plan:
 all branches validate before any wire conversion. Nonfinite durations, invalid
 Dates, incorrect option types and conflicting SDK/wire aliases reject with SDK
 errors. All 171 original validation tests pass on Node and Bun; focused controls
-cover malformed values and the actual reminder multicast shape. Shared URL
-validation and topic-management orchestration remain upstream-derived. Timings
-are [recorded separately](packages/vfirebase-admin/bench/messaging-validation-results/README.md).
+cover malformed values and the actual reminder multicast shape. Messaging runtime
+logic is now fully independent, including service entry points, image URL policy,
+v1/legacy topic operations and app-deletion cleanup. Topic input and transport
+are captured before asynchronous work, identifiers are encoded, and discovery
+precedes session allocation. Up to 1,000 recipients run through a 100-worker
+queue with ordered outcomes. Public message schemas and diagnostic tables retain
+attribution; shared SDK authentication/HTTP dependencies remain separately tracked.
+Current send/topic timings, including regressions, are
+[recorded separately](packages/vfirebase-admin/bench/messaging-results/README.md).
 
 Credential documents preserve the validated identity through first use, including
 frozen objects and files. Factories observe file rotation, honor HTTP agent

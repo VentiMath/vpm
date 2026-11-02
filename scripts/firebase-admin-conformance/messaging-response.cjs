@@ -21,7 +21,7 @@ else (async () => {
             normal.push(JSON.parse(run.stdout));
         }
         assert.deepEqual(normal[1], normal[0]);
-        console.log(`Messaging response: ${normal[0].length} normal projections match; malformed/prototype errors, false-success rejection and real HTTP/1 + HTTP/2 ordered batches pass.`);
+        console.log(`Messaging response: ${normal[0].length} normal projections match; malformed/prototype errors, false-success rejection and real HTTP/1 + HTTP/2 ordered send/topic batches pass.`);
     } finally {const exit = once(worker, 'exit'); worker.stdin.end(); await exit;}
 })().catch(fail);
 function fail(error) {console.error(error); process.exitCode = 1;}
@@ -48,20 +48,37 @@ async function server() {
         stream.on('end', () => {
             try {
                 assert.equal(headers.authorization, 'Bearer fixture-token');
-                const body = JSON.parse(Buffer.concat(chunks));
+                const raw = Buffer.concat(chunks).toString();
+                const body = raw ? JSON.parse(raw) : undefined;
+                const route = headers[':path'];
+                if (route.startsWith('/iid/v1:')) {
+                    assert.equal(headers[':method'], 'POST');
+                    assert.ok(['/iid/v1:batchAdd', '/iid/v1:batchRemove'].includes(route));
+                    assert.equal(body.to, '/topics/math');
+                    return done(200, JSON.stringify({results: body.registration_tokens.map(token => token === 'stale' ? {error: 'NOT_FOUND'} : {})}));
+                }
+                if (route.includes('/topicSubscriptions')) {
+                    const match = /^\/v1\/projects\/fixture\/registrations\/([^/]+)\/topicSubscriptions/.exec(route);
+                    assert.ok(match, route);
+                    const token = decodeURIComponent(match[1]), method = headers[':method'];
+                    if (method === 'POST') {assert.ok(route.endsWith('?topic_name=math')); assert.deepEqual(body, {});}
+                    else {assert.equal(method, 'DELETE');assert.ok(route.endsWith('/math?allow_missing=true'));assert.equal(body, undefined);}
+                    const status = token === 'stale' ? 404 : 200;
+                    return setTimeout(() => done(status, JSON.stringify(status === 200 ? {} : {error: {status: 'NOT_FOUND'}})), token === 'slow' ? 25 : 1);
+                }
+                assert.equal(headers[':method'], 'POST');
+                assert.equal(route, '/v1/projects/fixture/messages:send');
                 assert.equal(body.message.notification.title, 'Reminder');
                 respond(body.message, done);
             } catch (error) {console.error(error); done(400, JSON.stringify({error: {status: 'INVALID_ARGUMENT', message: error.message}}));}
         });
     };
     const one = http.createServer((req, res) => {
-        assert.equal(req.method, 'POST'); assert.equal(req.url, '/v1/projects/fixture/messages:send');
-        consume(req, req.headers, (status, data) => {res.writeHead(status, {'content-type': 'application/json'});res.end(data);});
+        consume(req, {...req.headers, ':method': req.method, ':path': req.url}, (status, data) => {res.writeHead(status, {'content-type': 'application/json'});res.end(data);});
     });
     const two = http2.createServer();
     two.on('session', session => {sessions.add(session);session.once('close', () => sessions.delete(session));});
     two.on('stream', (stream, headers) => {
-        assert.equal(headers[':method'], 'POST');assert.equal(headers[':path'], '/v1/projects/fixture/messages:send');
         consume(stream, headers, (status, data) => {stream.respond({':status': status, 'content-type': 'application/json'});stream.end(data);});
     });
     one.listen(0, '127.0.0.1'); two.listen(0, '127.0.0.1');
@@ -144,7 +161,7 @@ async function child(original) {
             const service = getMessaging(app);
             if (legacy) service.enableLegacyHttpTransport();
             const client = service.messagingRequestHandler.httpClient, send = client.send.bind(client);
-            client.send = config => send({...config, url: config.url.replace('https://fcm.googleapis.com', `http://127.0.0.1:${addresses.one}`)});
+            client.send = config => send({...config, url: config.url.replace(/^https:\/\/(?:fcm|iid)\.googleapis\.com/, `http://127.0.0.1:${addresses.one}`)});
             const result = await service.sendEachForMulticast({tokens: ['slow', 'stale', 'fast'], notification: {title: 'Reminder'}});
             assert.equal(result.successCount, 2);assert.equal(result.failureCount, 1);
             assert.equal(result.responses[0].messageId, 'projects/fixture/messages/slow');
@@ -157,6 +174,12 @@ async function child(original) {
                 assert.ok(malformed.responses.every(r => r.error instanceof FirebaseMessagingError));
                 assert.equal(malformed.responses[0].error.code, 'messaging/registration-token-not-registered');
                 assert.equal(malformed.responses[3].error.code, 'messaging/invalid-argument');
+            }
+            for (const method of ['subscribeToTopic', 'unsubscribeFromTopic', ...(legacy ? ['subscribeToTopicLegacy', 'unsubscribeFromTopicLegacy'] : [])]) {
+                const topic = await service[method](['slow', 'stale', 'two/three'], 'math');
+                assert.equal(topic.successCount, 2);assert.equal(topic.failureCount, 1);
+                assert.equal(topic.errors[0].index, 1);
+                normal.push({method, legacy, ...topic, errors: topic.errors.map(item => ({index: item.index, code: item.error.code}))});
             }
             // Preserve the single-send adapter's legacy empty-name result;
             // only per-device batch results count delivery in VentiMath.

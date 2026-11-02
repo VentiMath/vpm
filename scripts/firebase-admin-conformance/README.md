@@ -27,8 +27,15 @@ option tests pass on Node 24/Bun; the broader 511-test Messaging suite retains
 its existing outcomes. These HTTP/2 tests need socket access: sandbox-denied
 connections add session diagnostics and are not a valid conformance run.
 Seven focused tests also exercise the actual reminder multicast shape and an
-ordered valid/invalid batch. The shared URL predicate remains upstream-derived.
+ordered valid/invalid batch. Image references now use an independent HTTP(S) URL policy.
 
+
+`messaging-topics.cjs` compares 12 normal request/result scenarios and reproduces
+mutable inputs, sparse-list dispatch, unencoded projects, pre-discovery session
+allocation and malformed legacy response handling. It verifies 100-request
+concurrency, ordered results and app-deletion cleanup. `messaging-response.cjs`
+also checks both modern topic methods over HTTP/1 and HTTP/2, plus both legacy
+methods over HTTP/1. No upstream assertions or exclusions change for this rewrite.
 
 `messaging-send.cjs` runs each implementation in a separate process. Twenty-four
 normal send/multicast outcomes match, including token/FID recipients, dry-run
@@ -40,12 +47,12 @@ session closure. Dispatch is synthetic in these ownership controls; `callers.cjs
 separately exercises the real local FCM HTTP/2 exchange. No assertion in the
 retained 511-test Messaging suite is edited or newly exempted.
 
-`messaging-response.cjs` compares 63 normal response/error projections and
+`messaging-response.cjs` compares 69 normal response/error projections and
 reproduces false successful deliveries, malformed-detail crashes and prototype-
 named code failures in the original. Both client runtimes use a separate Node 24
 HTTP/1 and HTTP/2 server for ordered normal/malformed batches. HTTP/2 normalizes
 only the original's already-documented trailing scheme colon, as in `callers.cjs`.
-Single-send placeholder results and legacy topic semantics remain compatible;
+Single-send placeholder results and empty legacy topic envelopes remain compatible;
 per-device batch success is stricter. All 519 selected Messaging/error tests and
 full suites retain their expected results. Empty suite filters now fail explicitly.
 

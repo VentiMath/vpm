@@ -238,3 +238,9 @@ test('actual reminder multicast plan preserves app inputs and ordered invalid re
   assert.deepEqual(batch.responses.map(r => r.success), [true, false, true]);
   assert.equal(batch.responses[1].error.code, 'messaging/invalid-payload');
 });
+
+test('image URL policy accepts HTTP path delimiters without silent input repairs', () => {
+  const {isImageURL} = require('../lib/messaging/messaging-url');
+  for (const value of ['https://example.com/a&b.png', 'https://example.com//image.png', 'http://[::1]/a.png', 'https://example.com/a%20b']) assert.equal(isImageURL(value), true, value);
+  for (const value of ['https://example.com/\nimage', 'https:\\example.com\\a', 'ftp://example.com/a', 'https://a..b/image', '/image.png', 'https://-bad.example/image', 'https://example.com/a b']) assert.equal(isImageURL(value), false, value);
+});

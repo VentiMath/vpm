@@ -5,7 +5,6 @@
 const {snapshotJson} = require('../utils/json-snapshot');
 const {validateMessage} = require('./messaging-internal');
 const {FirebaseMessagingError, messagingClientErrorCode: codes} = require('./error');
-const {Http2SessionHandler} = require('../utils/api-request');
 const utils = require('../utils');
 const host = 'fcm.googleapis.com';
 const projects = new WeakMap();
@@ -34,14 +33,16 @@ function projectId(service) {
     }).finally(() => {state.pending = undefined;});
     return state.pending;
 }
+function encodeProject(project) {
+    if (typeof project !== 'string' || !project.length || project === '.' || project === '..') throw invalid('Messaging project identifiers cannot be empty or dot segments.');
+    try {return encodeURIComponent(project);} catch {throw invalid('Messaging project identifiers must contain valid Unicode.');}
+}
 function urlPath(service) {
     const cached = paths.get(service);
     if (cached) return cached;
     const pending = service.getProjectId().then(project => {
-        if (project === '.' || project === '..') throw invalid('Messaging project identifiers cannot be dot segments.');
-        let encoded;
-        try {encoded = encodeURIComponent(project);} catch {throw invalid('Messaging project identifiers must contain valid Unicode.');}
-        return `/v1/projects/${encoded}/messages:send`;
+        service.assertActive();
+        return `/v1/projects/${encodeProject(project)}/messages:send`;
     }).catch(error => {paths.delete(service); throw error;});
     paths.set(service, pending);
     return pending;
@@ -51,7 +52,7 @@ function send(service, input, dryRun) {
     validateMessage(message);
     checkDryRun(dryRun);
     const request = dryRun ? {message, validate_only: true} : {message};
-    return service.getUrlPath().then(path => service.messagingRequestHandler.invokeRequestHandler(host, path, request))
+    return service.getUrlPath().then(path => {service.assertActive(); return service.messagingRequestHandler.invokeRequestHandler(host, path, request);})
         .then(response => response.name);
 }
 function sendEach(service, input, dryRun) {
@@ -68,13 +69,14 @@ function sendEach(service, input, dryRun) {
 }
 async function runBatch(service, messages, dryRun, legacy) {
     const path = await service.getUrlPath();
+    service.assertActive();
     const plans = messages.map(message => {
         try {return payload(message, dryRun);} catch (error) {return {error};}
     });
     let session;
     try {
         // Discovery and local validation cannot leave an unused connection.
-        if (!legacy && plans.some(plan => plan.message)) session = new Http2SessionHandler(`https://${host}`);
+        if (!legacy && plans.some(plan => plan.message)) session = service.openSession();
         const handler = service.messagingRequestHandler;
         const outcomes = await Promise.allSettled(plans.map(async plan => {
             if (!plan.message) throw plan.error;
@@ -83,7 +85,7 @@ async function runBatch(service, messages, dryRun, legacy) {
                 : handler.invokeHttpRequestHandlerForSendResponse(host, path, plan);
         }));
         return collect(outcomes, session?.getErrors() || []);
-    } finally {session?.close();}
+    } finally {if (session) service.closeSession(session);}
 }
 function sessionError(reason, diagnostics) {
     const streamMessage = reason?.message || 'Unknown stream error';
@@ -120,4 +122,4 @@ function multicast(service, input, dryRun) {
     return service.sendEach(messages, dryRun);
 }
 
-Object.assign(exports, {send, sendEach, multicast, projectId, urlPath, collect, sessionError});
+Object.assign(exports, {send, sendEach, multicast, projectId, urlPath, collect, sessionError, encodeProject});

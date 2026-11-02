@@ -12,7 +12,7 @@
   "checked": "2026-11-01",
   "license": "Apache-2.0",
   "retainedEvidence": "../../scripts/firebase-admin-conformance/upstream",
-  "source": "Source-informed VPM app registry, service lifecycle, token lease, option snapshots, credential adapters, Auth response projections, user-management plans, token verification policy, key caching, signature adaptation, Auth request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy, authorization-header ownership and HTTP response projection, plus Firestore client configuration and registry ownership, and per-client Storage context, alongside retained Firebase Admin 14.5.0 service implementations. Upstream source and tests informed compatibility; diagnostics and public declarations remain attributed. Google Auth is a separately tracked upstream-derived dependency. This is not a clean-room claim. Messaging send-response dispatch, error decoding and error factories are independently implemented; diagnostic and error-code tables remain attributed contract data. Messaging payload validation and deferred wire normalization are independently implemented; field spellings and compatibility diagnostics remain attributed contract data and shared URL validation remains upstream-derived.",
+  "source": "Source-informed VPM app registry, service lifecycle, token lease, option snapshots, credential adapters, Auth response projections, user-management plans, token verification policy, key caching, signature adaptation, Auth request dispatch, HTTP/1 and HTTP/2 request plans, HTTP/2 session ownership, retry policy, authorization-header ownership and HTTP response projection, plus Firestore client configuration and registry ownership, and per-client Storage context, alongside retained Firebase Admin 14.5.0 service implementations. Upstream source and tests informed compatibility; diagnostics and public declarations remain attributed. Google Auth is a separately tracked upstream-derived dependency. This is not a clean-room claim. Messaging send-response dispatch, error decoding and error factories are independently implemented; diagnostic and error-code tables remain attributed contract data. Messaging payload validation and deferred wire normalization are independently implemented; field spellings and compatibility diagnostics remain attributed contract data and image URL validation now uses an independent HTTP(S) policy over the platform URL parser. All public Messaging send/topic methods, service routing and session lifetime are now independently implemented; public message-model declarations and diagnostic tables remain attributed data.",
   "dependencyMap": {
     "google-auth-library": "vgoogle-auth-library",
     "jsonwebtoken": "vjsonwebtoken",
@@ -42,9 +42,7 @@
     "lib/utils/api-request.d.ts",
     "lib/firestore/firestore-internal.d.ts",
     "lib/storage/storage.d.ts",
-    "lib/storage/index.js",
-    "lib/messaging/messaging.js",
-    "lib/messaging/messaging.d.ts"
+    "lib/storage/index.js"
   ],
   "replaced": [
     "lib/database/index.d.ts",
@@ -62,7 +60,11 @@
     "lib/messaging/messaging-api-request-internal.js",
     "lib/messaging/messaging-errors-internal.js",
     "lib/messaging/error.js",
-    "lib/messaging/messaging-internal.js"
+    "lib/messaging/messaging-internal.js",
+    "lib/messaging/messaging.js",
+    "lib/messaging/index.js",
+    "lib/messaging/messaging-api.js",
+    "lib/messaging/messaging.d.ts"
   ],
   "removed": [
     "lib/database/database.d.ts",
@@ -89,7 +91,9 @@
     "lib/utils/http-response.js",
     "lib/storage/storage-context.js",
     "lib/messaging/message-send.js",
-    "lib/utils/json-snapshot.js"
+    "lib/utils/json-snapshot.js",
+    "lib/messaging/topic-management.js",
+    "lib/messaging/messaging-url.js"
   ],
   "sourceSHA256": {
     "lib/app-check/app-check-api-client-internal.d.ts": "81914798466ebfeadc6bb52dec1e6b7dded7a3cf760d2d7470c91e6510de1cbe",
@@ -398,9 +402,12 @@
       "lib/messaging/messaging-api-request-internal.js": "Own request assembly and response dispatch shared by HTTP/1 and HTTP/2. Batch send success requires HTTP 200, JSON, no error envelope and a nonempty message name. Transport failures preserve identity; generic/topic and single-send legacy output contracts remain compatible.",
       "lib/messaging/messaging-errors-internal.js": "Own shape-checked FCM error decoding, detail/status/message precedence, object/string/Buffer FID recognition and non-JSON status mapping. Malformed bodies preserve Firebase error context instead of causing TypeError.",
       "lib/messaging/error.js": "Own error factories and constructor over retained diagnostic/code mapping tables. Only own mapping keys are accepted; prototype-named remote codes become unknown errors. Cause and HTTP response contracts remain compatible.",
-      "lib/messaging/messaging-internal.js": "Validate the entire owned JSON message before applying wire conversions. Own fields, finite durations, valid Dates, typed enums and unambiguous SDK/wire names receive explicit SDK diagnostics. Shared isURL policy remains attributed upstream code."
+      "lib/messaging/messaging-internal.js": "Validate the entire owned JSON message before applying wire conversions. Own fields, finite durations, valid Dates, typed enums and unambiguous SDK/wire names receive explicit SDK diagnostics. Independent image URL policy delegates syntax parsing to the platform.",
+      "lib/messaging/messaging.js": "Owned service identity, operation guards and active-session registry. App deletion closes every session once and prevents post-discovery dispatch or future operations.",
+      "lib/messaging/topic-management.js": "Captured bounded token snapshots, validated and encoded paths, discovery before connection allocation, 100-worker queue, ordered result collection and legacy response validation. All four public topic methods preserved.",
+      "lib/messaging/messaging-url.js": "Own absolute HTTP(S) URL policy, rejecting raw controls/whitespace and backslashes; accepts legitimate repeated-slash and ampersand path segments."
     },
-    "remainingWork": "Multipart/raw-HTTP helpers, Auth endpoint schemas and other Auth methods, plus Firestore/Storage entry-point routing and helpers, plus Messaging topic-management orchestration and service routing remain upstream-derived. The send/sendEach/sendEachForMulticast orchestration used by callers is independently implemented. Google Auth and underlying service client runtimes are tracked separately."
+    "remainingWork": "Multipart/raw-HTTP helpers, Auth endpoint schemas and other Auth methods, plus Firestore/Storage entry-point routing and helpers remain upstream-derived. All Messaging public operations now use independent runtime logic; its public message schemas and diagnostic tables remain attributed contract data. Google Auth and underlying service client runtimes are tracked separately."
   },
   "verification": {
     "applicationRuntime": "Twenty-five focused tests on Node 24 and Bun, including isolated original app/credential controls, deep/shared options, provider/cleanup recovery, file rotation and actual signed-JWT/refresh-token OAuth POSTs through a local HTTP server and a counting agent.",
@@ -421,7 +428,8 @@
     "firestoreFacade": "Original/VPM controls on Node 24 and Bun reproduce mutable initialization settings and mixed project/credential snapshots, then verify captured getters, database identity and constructor failure recovery. Complete Admin/Functions suites, actual Firestore wire callers and packed public declaration consumers retain their documented outcomes.",
     "storageContext": "Original/VPM controls on Node 24 and Bun use two local servers to reproduce cross-client emulator leakage, mixed metadata/upload endpoints and download-URL redirection. V2/V4 URLs and V4 form signatures, explicit ADC projects, one options snapshot and deleted-app bucket access are verified. The unchanged suite retains one new exact global-mutation difference; all actual caller protocols and archive consumers pass. The existing Storage signer/checksum suites and 25-request HTTP scenarios pass too.",
     "messagingSend": "511 unchanged Messaging tests: all pass on Node, with one existing engine-wording difference on Bun. Twenty-four normal original/VPM outcomes match. Isolated controls reproduce payload aliasing/prototype writes, sparse-batch aggregation errors, duplicate project discovery and unnecessary session creation; response ordering, lookup recovery and closure are verified. Actual local FCM HTTP/2 caller protocols remain identical.",
-    "messagingResponses": "63 original/VPM normal projections, malformed/prototype-error controls, and actual HTTP/1 and HTTP/2 batches against a separate Node 24 server on both runtimes. Ordered success/failure accounting, stale-token codes, causes and response metadata are verified. All 519 selected Messaging/error tests retain existing results; no upstream assertion is edited or newly exempted. Empty test filters now fail.",
-    "messagingValidation": "171 unchanged payload/options tests pass on Node 24 and Bun; the 511-test Messaging suite passes on Node (Bun retains its existing read-only-property wording difference). Seven focused tests plus original malformed-input controls verify atomic validation, normal reminder payloads and ordered mixed-validity batches. Original sources reproduce nonfinite TTL acceptance, raw Date/type exceptions, alias overwrites and partial conversion before failure."
+    "messagingResponses": "69 original/VPM normal projections, malformed/prototype-error controls, and actual HTTP/1 and HTTP/2 send/topic batches against a separate Node 24 server on both runtimes. Ordered success/failure accounting, stale-token codes, causes and response metadata are verified. All 519 selected Messaging/error tests retain existing results; no upstream assertion is edited or newly exempted. Empty test filters now fail.",
+    "messagingValidation": "171 unchanged payload/options tests pass on Node 24 and Bun; the 511-test Messaging suite passes on Node (Bun retains its existing read-only-property wording difference). Seven focused tests plus original malformed-input controls verify atomic validation, normal reminder payloads and ordered mixed-validity batches. Original sources reproduce nonfinite TTL acceptance, raw Date/type exceptions, alias overwrites and partial conversion before failure.",
+    "messagingTopics": "12 normal original/VPM request/result controls plus mutation, sparse inputs, encoded identifiers, concurrency bounds, failed discovery, malformed legacy results and deletion checks on Node/Bun. Real HTTP/1 and HTTP/2 topic controls extend normal response projections from 63 to 69. All 511 original Messaging tests retain their established results. Complete 6,062-test Admin suites retain the existing 47 exact differences on Node and those plus 15 engine-wording differences on Bun; no new exemptions."
   }
 }

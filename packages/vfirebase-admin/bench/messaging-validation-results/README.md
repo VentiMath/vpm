@@ -1,5 +1,9 @@
 # Messaging validation measurements
 
+These validation-only measurements predate the completed Messaging overhaul
+(commit `e39ea8a`). Their hashes apply to that revision. Current send and topic
+operations are measured in the [Messaging report](../messaging-results/README.md).
+
 Recorded November 1, 2026 on Apple M1 Pro, Node 24.22.1 / Bun 1.4.0, against
 firebase-admin 14.5.0. Four balanced process pairs plus two identical-source
 controls use the [shared harness](../../../../scripts/bench-process.cjs), with
