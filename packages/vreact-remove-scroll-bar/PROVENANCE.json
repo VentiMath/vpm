@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "react-remove-scroll-bar",
+    "version": "2.3.8",
+    "repository": "https://github.com/theKashey/react-remove-scroll-bar",
+    "commit": "b3b1287aad81def2e2ae707274b74531b61ddbaf",
+    "integrity": "sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==",
+    "sourceNote": "Commit is registry-reported gitHead; GitHub no longer resolves that ref. Comparison uses the installed npm 2.3.8 tarball pinned by integrity. No upstream runtime is retained."
+  },
+  "checked": "2026-11-02",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete",
+    "basis": "Independent layout measurement, CSS rule generation and effect ownership for the public root/constants APIs on React19. CSS class names and compensation formulas preserve the consumer contract; no copied upstream runtime."
+  },
+  "changes": [
+    "Use vreact-style-singleton instead of upstream and remove tslib.",
+    "Memoize CSS across unchanged React renders.",
+    "Capture the body element for cleanup; normalize negative lock counts.",
+    "Return independent zero measurements during SSR; constants entry does not import React."
+  ]
+}

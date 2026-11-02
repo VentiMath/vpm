@@ -41,6 +41,8 @@ jobs:
       - run: node scripts/nonce-conformance/archives.cjs
       - run: node scripts/style-singleton-conformance/run.cjs
       - run: node scripts/style-singleton-conformance/archives.cjs
+      - run: node scripts/scrollbar-conformance/run.cjs
+      - run: node scripts/scrollbar-conformance/archives.cjs
       - run: node scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
@@ -425,6 +427,8 @@ jobs:
       - run: bun scripts/nonce-conformance/archives.cjs
       - run: bun scripts/style-singleton-conformance/run.cjs
       - run: bun scripts/style-singleton-conformance/archives.cjs
+      - run: bun scripts/scrollbar-conformance/run.cjs
+      - run: bun scripts/scrollbar-conformance/archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund

@@ -1,0 +1,5 @@
+"use strict";
+exports.zeroRightClassName = "right-scroll-bar-position";
+exports.fullWidthClassName = "width-before-scroll-bar";
+exports.noScrollbarsClassName = "with-scroll-bars-hidden";
+exports.removedBarSizeVariable = "--removed-body-scroll-bar-size";

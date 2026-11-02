@@ -779,6 +779,16 @@
       "name": "vreact-is",
       "version": "0.1.0",
     },
+    "packages/vreact-remove-scroll-bar": {
+      "name": "vreact-remove-scroll-bar",
+      "version": "2.3.8",
+      "dependencies": {
+        "vreact-style-singleton": "workspace:*",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vreact-style-singleton": {
       "name": "vreact-style-singleton",
       "version": "2.2.3",
@@ -1237,6 +1247,8 @@
     "vreact-fast-compare": ["vreact-fast-compare@workspace:packages/vreact-fast-compare"],
 
     "vreact-is": ["vreact-is@workspace:packages/vreact-is"],
+
+    "vreact-remove-scroll-bar": ["vreact-remove-scroll-bar@workspace:packages/vreact-remove-scroll-bar"],
 
     "vreact-style-singleton": ["vreact-style-singleton@workspace:packages/vreact-style-singleton"],
 

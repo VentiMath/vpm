@@ -224,6 +224,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vuse-sidecar](packages/vuse-sidecar) | use-sidecar 1.1.3 | Independent React 19 sidecar loading and registration queues; no tslib/detect-node-es. Isolated caches, cancelled stale loads, handled failures, per-registration cleanup and safe render-prop publication. Actual nested scroll-lock caller and packed consumers verified. |
 | [vget-nonce](packages/vget-nonce) | get-nonce 1.0.1 | Independent nonce accessor with shared CJS/ESM state, typed reset and no dependencies. Original stylesheet caller and clean archive/browser consumers verified; no demonstrated speed improvement. |
 | [vreact-style-singleton](packages/vreact-style-singleton) | react-style-singleton 2.2.3 | Independent React 19 stylesheet factories using vget-nonce, without tslib. Fix dynamic CSS updates, unbalanced cleanup and direct server calls; unchanged scroll-lock callers verified. |
+| [vreact-remove-scroll-bar](packages/vreact-remove-scroll-bar) | react-remove-scroll-bar 2.3.8 | Independent React 19 body scrollbar compensation with vreact-style-singleton and no tslib. CSS-option parity, nested locks, hydration, body-owned cleanup, constants-only entry and actual scroll-lock caller verified. |
 | [vuse-callback-ref](packages/vuse-callback-ref) | use-callback-ref 1.3.3 | Independent React 19 observable/merged/transformed refs, no tslib; preserved falsy defaults, owned membership snapshots and complete merged assignments after callback errors. Original tests, scroll-lock UI ref wiring and packed consumers verified. |
 | [vredux](packages/vredux) | redux 5.0.1 | Independent store, cached reentrant listener snapshots and middleware composition; own prototype-named reducer/action keys. All 78 public-API tests, DND store caller and packed consumers verified. |
 | [vcss-box-model](packages/vcss-box-model) | css-box-model 1.2.1 | Independent CSS box geometry, isolated default spacing, owning-window style lookup and direct rectangle construction. All original tests, DND caller paths and packed consumers verified. |
@@ -366,11 +367,11 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **141 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **142 packages**, including two declaration-only packages and
 twenty browser packages, `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react`, `vtabbable`, `vuse-callback-ref`, `vuse-sidecar`, `vget-nonce` and `vreact-style-singleton`, whose declarations are checked with DOM
+`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react`, `vtabbable`, `vuse-callback-ref`, `vuse-sidecar`, `vget-nonce`, `vreact-style-singleton` and `vreact-remove-scroll-bar`, whose declarations are checked with DOM
 (and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
@@ -5319,3 +5320,15 @@ verify browser, SSR and TS7 consumers. Built, not released or adopted.
 [Contract](packages/vreact-style-singleton/README.md),
 [checks](scripts/style-singleton-conformance/README.md),
 [measurements](packages/vreact-style-singleton/bench/results/README.md).
+
+## vreact-remove-scroll-bar
+
+Independent react-remove-scroll-bar 2.3.8 root and constants APIs for React 19.
+Uses vreact-style-singleton and removes tslib. Gap calculation and all eight CSS
+option combinations match upstream. CSS generation is memoized; cleanup targets
+the body originally locked, negative counts normalize to zero, and server-side
+measurements cannot be corrupted by a previous caller. Real scroll-lock consumers,
+nested locks, StrictMode, hydration and clean npm/Bun archive consumers pass.
+Built, not released or adopted. [Contract](packages/vreact-remove-scroll-bar/README.md),
+[checks](scripts/scrollbar-conformance/README.md),
+[measurements](packages/vreact-remove-scroll-bar/bench/results/README.md).
