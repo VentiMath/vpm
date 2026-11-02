@@ -1,13 +1,7 @@
 import type {Buffer} from './platform';
+/** Incremental gRPC framing. Returned buffers and pending bytes are owned. */
 export declare class StreamDecoder {
-    private maxReadMessageLength;
-    private readState;
-    private readCompressFlag;
-    private readPartialSize;
-    private readSizeRemaining;
-    private readMessageSize;
-    private readPartialMessage;
-    private readMessageRemaining;
+    #private;
     constructor(maxReadMessageLength: number);
     write(data: Buffer): Buffer[];
 }

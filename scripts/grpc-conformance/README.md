@@ -1,8 +1,8 @@
 # gRPC transport comparison fixture
 
 Pins **@grpc/grpc-js 1.14.7**, checked against npm's latest release on October 30,
-2026. Its two runtime dependencies are replaced by `vgrpc-proto-loader` and
-`vordered-map` in VPM. Original grpc-js, proto-loader, Mocha and Lodash here are
+2026 (rechecked November 2). VPM uses `vgrpc-proto-loader`; the former ordered-map
+dependency is eliminated by its independent Channelz registry. Original grpc-js, proto-loader, Mocha and Lodash here are
 comparison/test tools and do not ship in VPM archives.
 
 The retained tests are from grpc-node commit
@@ -57,14 +57,19 @@ weighted-round-robin timing cases. No VPM skips are added.
 The gate accepts these only on Bun, only with their exact known assertions, and
 only when VPM matches the upstream control in the same run. Any other failure,
 changed test count, changed skip count or unmatched VPM result fails the gate.
+After the independent decoder's allocation tuning, the 37 end-to-end/server-error
+cases and all twelve local caller checks were rerun on both runtimes; they pass.
+The full suite also remains a CI gate.
+
 It never reports these cases as passes. Direct `run.cjs` exits unsuccessfully for
 any failed assertion, including these runtime limitations.
 
 ## Additional checks
 
-Seven unit tests cover frame splits, coalescing, empty frames, ownership and size
-limits; released chunk references; metadata prototypes/combined binary values;
-and inherited package namespaces. `regressions.cjs` adds **1,504 exact differential
+Seventeen unit tests cover Channelz registry behavior, frame splits, coalescing,
+empty frames, input ownership while a message is pending, geometric allocation
+bounds, terminal size errors, metadata prototypes/combined binary values and
+inherited package namespaces. `regressions.cjs` adds **1,504 exact differential
 comparisons** and original controls demonstrating the deliberate corrections.
 
 `consumers.cjs` privately evaluates installed, unchanged **google-gax 6.14.0** and

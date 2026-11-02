@@ -20,8 +20,10 @@ assert.ok(Array.isArray(Object.getPrototypeOf(a.toJSON())));assert.equal(Object.
 const headers={'x-bin':['YQ==, Yg==']};assert.deepEqual(upstream.Metadata.fromHttp2Headers(headers).get('x-bin').map(x=>x.toString()),['a']);assert.deepEqual(vpm.Metadata.fromHttp2Headers(headers).get('x-bin').map(x=>x.toString()),['a','b']);
 const wire=frame(Buffer.alloc(1000,7)),old=new OriginalDecoder(2000),next=new Decoder(2000);
 for(const d of [old,next]){d.write(wire.subarray(0,500));d.write(wire.subarray(500));}
-assert.ok(old.readPartialMessage.length>0);assert.equal(next.readPartialMessage.length,0);
+assert.ok(old.readPartialMessage.length>0);
+const prefix=Buffer.from(wire.subarray(0,500)),owned=new Decoder(2000);owned.write(prefix);prefix.fill(0);assert.deepEqual(owned.write(wire.subarray(500)),[wire]);
+const borrowedPrefix=Buffer.from(wire.subarray(0,500)),borrowed=new OriginalDecoder(2000);borrowed.write(borrowedPrefix);borrowedPrefix.fill(0);assert.notDeepEqual(borrowed.write(wire.subarray(500)),[wire]);
 const key='VpmNamespaceControl',definition={format:'Protocol Buffer 3 DescriptorProto',type:{},fileDescriptorProtos:[]};
 try {upstream.loadPackageDefinition({['toString.'+key]:definition});assert.equal(Object.prototype.toString[key],definition);}finally{delete Object.prototype.toString[key];}
 assert.equal(vpm.loadPackageDefinition({['toString.'+key]:definition}).toString[key],definition);assert.equal(Object.hasOwn(Object.prototype.toString,key),false);
-console.log(`${checks} exact frame/metadata comparisons; original controls reproduce metadata loss/prototype changes, dropped binary values, retained chunks and inherited-namespace writes.`);
+console.log(`${checks} exact frame/metadata comparisons; original controls reproduce metadata loss/prototype changes, dropped binary values, retained chunks, mutable pending inputs and inherited-namespace writes.`);

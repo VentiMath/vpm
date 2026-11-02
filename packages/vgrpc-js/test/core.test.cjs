@@ -49,14 +49,14 @@ test('frame limits reject complete and split oversized headers before buffering 
   for(const split of [0,1,2,3,4,5]) {
     const d=new StreamDecoder(1024);
     assert.throws(()=>{d.write(header.subarray(0,split));d.write(header.subarray(split));},/4294967295 vs 1024/);
-    assert.equal(d.readPartialMessage.length,0);
+    assert.throws(()=>d.write(Buffer.alloc(0)),/4294967295 vs 1024/);
   }
   assert.deepEqual(new StreamDecoder(0).write(frame(Buffer.alloc(0))),[frame(Buffer.alloc(0))]);
   assert.deepEqual(new StreamDecoder(-1).write(frame(Buffer.alloc(2048))),[frame(Buffer.alloc(2048))]);
 });
 test('fragment completion releases input chunks and does not retain the compression-flag slice',()=>{
   const d=new StreamDecoder(10000),wire=frame(Buffer.alloc(2000,7));
-  d.write(wire.subarray(0,700));const out=d.write(wire.subarray(700));
-  assert.deepEqual(out,[wire]);assert.deepEqual(d.readPartialMessage,[]);
-  assert.notEqual(d.readCompressFlag.buffer,wire.buffer);
+  const prefix=Buffer.from(wire.subarray(0,700));d.write(prefix);prefix.fill(0);
+  const out=d.write(wire.subarray(700));assert.deepEqual(out,[wire]);
+  assert.deepEqual(d.write(frame(Buffer.from('next'))),[frame(Buffer.from('next'))]);
 });

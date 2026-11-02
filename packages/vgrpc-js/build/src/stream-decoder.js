@@ -1,116 +1,76 @@
-"use strict";
-/*
- * Copyright 2019 gRPC authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.StreamDecoder = void 0;
-var ReadState;
-(function (ReadState) {
-    ReadState[ReadState["NO_DATA"] = 0] = "NO_DATA";
-    ReadState[ReadState["READING_SIZE"] = 1] = "READING_SIZE";
-    ReadState[ReadState["READING_MESSAGE"] = 2] = "READING_MESSAGE";
-})(ReadState || (ReadState = {}));
+'use strict';
+// Independent gRPC length-prefix decoder. It owns every byte kept across writes
+// and uses geometric storage instead of one retained Buffer view per fragment.
 class StreamDecoder {
-    constructor(maxReadMessageLength) {
-        this.maxReadMessageLength = maxReadMessageLength;
-        this.readState = ReadState.NO_DATA;
-        this.readCompressFlag = Buffer.alloc(1);
-        this.readPartialSize = Buffer.alloc(4);
-        this.readSizeRemaining = 4;
-        this.readMessageSize = 0;
-        this.readPartialMessage = [];
-        this.readMessageRemaining = 0;
+    #header = Buffer.allocUnsafe(5);
+    #headerBytes = 0;
+    #frame = null;
+    #used = 0;
+    #total = 0;
+    #failure = null;
+    #limit;
+    constructor(maxReadMessageLength) { this.#limit = maxReadMessageLength; }
+    #length(size) {
+        if (this.#limit !== -1 && size > this.#limit) {
+            this.#frame = null;
+            this.#failure = new Error(`Received message larger than max (${size} vs ${this.#limit})`);
+            throw this.#failure;
+        }
+        this.#total = size + 5;
     }
     write(data) {
-        let readHead = 0;
-        let toRead;
-        const result = [];
-        while (readHead < data.length) {
-            switch (this.readState) {
-                case ReadState.NO_DATA:
-                    // Complete frames need one copy and no fragment array. Keep
-                    // ownership independent from the HTTP/2 input buffer.
-                    if (data.length - readHead >= 5) {
-                        const size = data.readUInt32BE(readHead + 1);
-                        if (this.maxReadMessageLength !== -1 && size > this.maxReadMessageLength) {
-                            throw new Error(`Received message larger than max (${size} vs ${this.maxReadMessageLength})`);
-                        }
-                        const end = readHead + size + 5;
-                        if (end <= data.length) {
-                            result.push(Buffer.from(data.subarray(readHead, end)));
-                            readHead = end;
-                            break;
-                        }
-                    }
-                    this.readCompressFlag[0] = data[readHead];
-                    readHead += 1;
-                    this.readState = ReadState.READING_SIZE;
-                    this.readPartialSize.fill(0);
-                    this.readSizeRemaining = 4;
-                    this.readMessageSize = 0;
-                    this.readMessageRemaining = 0;
-                    this.readPartialMessage = [];
-                    break;
-                case ReadState.READING_SIZE:
-                    toRead = Math.min(data.length - readHead, this.readSizeRemaining);
-                    data.copy(this.readPartialSize, 4 - this.readSizeRemaining, readHead, readHead + toRead);
-                    this.readSizeRemaining -= toRead;
-                    readHead += toRead;
-                    // readSizeRemaining >=0 here
-                    if (this.readSizeRemaining === 0) {
-                        this.readMessageSize = this.readPartialSize.readUInt32BE(0);
-                        if (this.maxReadMessageLength !== -1 && this.readMessageSize > this.maxReadMessageLength) {
-                            throw new Error(`Received message larger than max (${this.readMessageSize} vs ${this.maxReadMessageLength})`);
-                        }
-                        this.readMessageRemaining = this.readMessageSize;
-                        if (this.readMessageRemaining > 0) {
-                            this.readState = ReadState.READING_MESSAGE;
-                        }
-                        else {
-                            const message = Buffer.concat([this.readCompressFlag, this.readPartialSize], 5);
-                            this.readState = ReadState.NO_DATA;
-                            result.push(message);
-                        }
-                    }
-                    break;
-                case ReadState.READING_MESSAGE:
-                    toRead = Math.min(data.length - readHead, this.readMessageRemaining);
-                    this.readPartialMessage.push(data.slice(readHead, readHead + toRead));
-                    this.readMessageRemaining -= toRead;
-                    readHead += toRead;
-                    // readMessageRemaining >=0 here
-                    if (this.readMessageRemaining === 0) {
-                        // At this point, we have read a full message
-                        const framedMessageBuffers = [
-                            this.readCompressFlag,
-                            this.readPartialSize,
-                        ].concat(this.readPartialMessage);
-                        const framedMessage = Buffer.concat(framedMessageBuffers, this.readMessageSize + 5);
-                        this.readState = ReadState.NO_DATA;
-                        // Do not retain the final payload's network chunks for
-                        // the lifetime of an otherwise idle call.
-                        this.readPartialMessage = [];
-                        result.push(framedMessage);
-                    }
-                    break;
-                default:
-                    throw new Error('Unexpected read state');
+        if (this.#failure) throw this.#failure;
+        const messages = [];
+        let offset = 0;
+        while (offset < data.length) {
+            if (this.#headerBytes === 0 && data.length - offset >= 5) {
+                this.#length(data.readUInt32BE(offset + 1));
+                if (this.#total <= data.length - offset) {
+                    messages.push(Buffer.from(data.subarray(offset, offset + this.#total)));
+                    offset += this.#total;
+                    continue;
+                }
+            }
+            if (this.#headerBytes < 5) {
+                const amount = Math.min(5 - this.#headerBytes, data.length - offset);
+                data.copy(this.#header, this.#headerBytes, offset, offset + amount);
+                this.#headerBytes += amount;
+                offset += amount;
+                if (this.#headerBytes !== 5) continue;
+                this.#length(this.#header.readUInt32BE(1));
+                this.#used = 5;
+                if (this.#total === 5) {
+                    messages.push(Buffer.from(this.#header));
+                    this.#headerBytes = 0;
+                    continue;
+                }
+            }
+            const amount = Math.min(this.#total - this.#used, data.length - offset);
+            if (amount === 0) continue;
+            const needed = this.#used + amount;
+            if (this.#frame === null || this.#frame.length < needed) {
+                // Grow the payload in powers of two, separately from its five-byte
+                // header. Otherwise a power-of-two payload needs an extra full
+                // reallocation just to accommodate those last five bytes.
+                const previous = this.#frame === null ? 0 : this.#frame.length - 5;
+                const payload = 2 ** Math.ceil(Math.log2(Math.max(256, needed - 5, previous * 4)));
+                const capacity = Math.min(this.#total, payload + 5);
+                const next = Buffer.allocUnsafe(capacity);
+                if (this.#frame === null) this.#header.copy(next);
+                else this.#frame.copy(next, 0, 0, this.#used);
+                this.#frame = next;
+            }
+            data.copy(this.#frame, this.#used, offset, offset + amount);
+            this.#used = needed;
+            offset += amount;
+            if (this.#used === this.#total) {
+                messages.push(this.#frame);
+                this.#frame = null;
+                this.#headerBytes = 0;
+                this.#used = 0;
             }
         }
-        return result;
+        return messages;
     }
 }
 exports.StreamDecoder = StreamDecoder;

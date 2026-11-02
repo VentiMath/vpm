@@ -262,7 +262,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
 | [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership, independent JSON proto caching and nine VPM dependencies; actual Firestore transactions/batches/queries verified. |
 | [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
-| [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Complete-frame fast path, released network chunks, preserved metadata keys/binary values and own package namespaces; actual Firestore calls over HTTP/2, one VPM dependency and an independent Channelz registry. |
+| [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Independent bounded frame decoder and Channelz registry; preserved metadata keys/binary values and own package namespaces. Actual Firestore calls over HTTP/2; one VPM dependency. Transport orchestration remains upstream-derived. |
 | [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Retained upstream-derived reference with iterator/index fixes. No VPM runtime callers: gRPC Channelz now owns its independent numeric registry. |
 | [vgrpc-proto-loader](packages/vgrpc-proto-loader) | @grpc/proto-loader 0.8.1 | Reused private descriptors and codecs, isolated public definitions, safe method-option keys and VPM protobuf/long/camel-case dependencies; real Google SDK runtime calls. |
 | [vlodash.camelcase](packages/vlodash.camelcase) | lodash.camelcase 4.3.0 | Direct ASCII identifier conversion, lazy compatible Unicode handling, single object coercion and corrected zero BigInts/Symbol branding; actual gRPC and Google method aliases. |
@@ -1557,10 +1557,10 @@ See the [package contract](packages/vopentelemetry-api/README.md),
 
 Derived from **@grpc/grpc-js 1.14.7**, retaining the HTTP/2 transport and its
 client/server, retry, resolver, credential, diagnostic and experimental exports.
-Its two dependencies and their dependency trees are VPM packages. Complete
-frames avoid fragment assembly while retaining independent output buffers and
-receive-size checks. Fragmented-message inputs are released immediately after
-emission instead of remaining attached to an idle decoder.
+Its one dependency and its dependency tree are VPM packages. The independent
+decoder owns partial inputs immediately and uses geometric storage instead of
+retaining per-fragment Buffer views. Complete frames retain one-copy output,
+receive-size checks run at header completion, and oversized errors are terminal.
 
 Metadata conversion preserves own `__proto__` keys with an ordinary result
 prototype, classifies incoming binary names case-insensitively, and splits
@@ -1570,20 +1570,18 @@ each corrected behavior. Normal validation/coercion contracts remain in place.
 
 The [fixture](scripts/grpc-conformance/README.md) runs the original 508-case suite:
 499 active cases pass on Node 24. Bun retains two HTTP/2 failures reproduced by
-the original control; nine original skips remain. Seven focused tests, 1,504 exact
+the original control; nine original skips remain. Seventeen focused tests, 1,504 exact
 differential comparisons and actual gax/Firestore local calls pass on both
 runtimes. The public declarations compile without ambient platform types and
 installable archives are checked in CJS and ESM consumers. See the
 [package contract](packages/vgrpc-js/README.md) for verification boundaries and
-[paired measurements](packages/vgrpc-js/bench/results/README.md) for timing evidence.
-
-Complete small/coalesced frames take 69–73% less time on Node and 57–58% less on
-Bun; complete 16 KiB frames take 28% / 8% less. Local unary calls improve 4.8% on
-Node, while Bun unary and streaming differences are inconclusive. Costs remain:
-metadata parsing is 10% / 8% slower (92 / 58 ns per six headers), Node cloning is
-8% slower (28 ns), and Node fragmented decoding records 4.7% more time with a
-3.9% control bias. The benchmark report includes every case and identical-code
-controls; these results do not imply a deployed application speedup.
+[isolated decoder measurements](packages/vgrpc-js/bench/decoder-results/README.md)
+for current framing results. One-byte 4 KiB fragmentation takes 58% / 42% less
+time on Node / Bun; ordinary 16 KiB fragmentation takes 15% less on Node. Bun
+records 1,676 → 1,920 ns for that ordinary fragmented case, but its 28.7% control
+spread makes the direction inconclusive. Earlier same-process transport recordings remain
+[historical](packages/vgrpc-js/bench/results/README.md); their small timing changes
+are provisional and are not application performance claims.
 
 Channelz registry storage is independently implemented as a focused numeric-ID
 AVL tree. The general ordered-map runtime dependency is gone.

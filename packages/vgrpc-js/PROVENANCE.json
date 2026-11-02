@@ -353,7 +353,7 @@
   },
   "changes": [
     "Uses vgrpc-proto-loader; Channelz owns its independent numeric registry and no longer imports vordered-map.",
-    "Complete frames use one copied slice; fragmented-message inputs are released after emission.",
+    "Independent framing owns partial input bytes immediately, uses geometric storage instead of per-fragment Buffer views, copies complete frames once and rejects oversized headers before buffering payloads.",
     "Metadata conversion preserves own __proto__ properties and parses combined custom binary headers in arrays with case-insensitive names.",
     "Metadata parsing avoids redundant case conversion for text headers; cloning reuses its value mapper.",
     "Namespace construction does not traverse inherited Object members.",
@@ -366,9 +366,10 @@
     "replacementStatus": "application-facing independent rewrite pending",
     "basis": "The HTTP/2 client/server, retry, resolver, load-balancing and credential runtime is retained from grpc-js. Focused framing/metadata fixes and VPM dependency names do not constitute an independent client implementation.",
     "targetScope": "The client-side unary and streaming HTTP/2 paths reached through gax and Firestore.",
-    "remainingWork": "Independently implement the client paths the application uses. Channelz registry operations are independently implemented; the remaining transport and diagnostic service runtime is still retained. Preserve protocol/declaration provenance and conformance controls.",
+    "remainingWork": "Independently implement the client paths the application uses. Channelz registry and frame decoding are independently implemented; transport orchestration, retry, resolution, credentials and diagnostic service code remain upstream-derived. Preserve protocol/declaration provenance and conformance controls.",
     "independentComponents": {
-      "build/src/channelz-registry.js": "Independently written numeric-ID AVL registry with logarithmic lookup/updates, bounded ordered traversal, mutation-aware resumption and detached pairs. Only Channelz operations are implemented; no general OrderedMap runtime is retained here."
+      "build/src/channelz-registry.js": "Independently written numeric-ID AVL registry with logarithmic lookup/updates, bounded ordered traversal, mutation-aware resumption and detached pairs. Only Channelz operations are implemented; no general OrderedMap runtime is retained here.",
+      "build/src/stream-decoder.js": "Independently written length-prefix decoder with owned partial inputs, a complete-frame copy path, geometric payload storage, fixed per-message metadata and terminal oversized-frame errors."
     }
   }
 }

@@ -1,4 +1,11 @@
-# gRPC measurements
+# Historical gRPC measurements
+
+These October 30 recordings predate the independent decoder and Channelz
+registry. They time both implementations in the same process and are provisional;
+they do not describe the current decoder. Use the [isolated decoder report](../decoder-results/README.md)
+and [registry report](../channelz-results/README.md) for those components. The old
+source hashes deliberately remain historical; `--verify-current` is expected to
+reject them after runtime changes. No fixed percentage corrects their bias.
 
 Compare @grpc/grpc-js 1.14.7 with vgrpc-js on Node 24 and Bun. The shared runner
 retains outputs and validates them outside timing, warms each variant for 150 ms

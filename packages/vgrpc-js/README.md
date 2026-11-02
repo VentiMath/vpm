@@ -27,8 +27,10 @@ Node stream, socket and TLS capabilities use structural declarations.
 - Complete frames take one copy instead of assembling separate flag, size and
   payload fragments. Returned buffers remain independent of the input; split
   frames, empty messages and receive-size limits retain their behavior.
-- Completed fragmented messages release references to their input chunks
-  immediately. An idle decoder no longer holds the previous message's chunks.
+- Fragmented input is copied into owned geometric storage as it arrives. Caller
+  mutation cannot alter a pending message. One-byte fragmentation no longer
+  retains one Buffer view per fragment. Header-only messages do not reserve
+  their advertised payload; oversized-header errors are terminal.
 - `Metadata.getMap()`, `toHttp2Headers()` and `toJSON()` preserve an own
   `__proto__` key without invoking the inherited setter. Results retain their
   ordinary object prototype; existing buffer-copy behavior is preserved.
@@ -62,8 +64,9 @@ coverage of experimental features.
 
 See the [conformance fixture](../../scripts/grpc-conformance/README.md) for exact
 suite results, original controls, runtime limitations and test-harness adapters.
-[Paired benchmarks](bench/results/README.md) cover framing, metadata, client-class
-construction and local RPCs. Their results are workload-specific.
+[Fresh-process decoder benchmarks](bench/decoder-results/README.md) cover the
+independent framing implementation. The earlier [transport recordings](bench/results/README.md)
+are historical same-process evidence, not current application speedup claims.
 
 ## Independent Channelz registry
 
@@ -97,3 +100,18 @@ transport and remaining diagnostics runtime are still upstream-derived.
 The seven-handler differential fixture, nine upstream Channelz network tests,
 randomized registry checks and packed consumers run on Node 24 and Bun. See
 [fixture details](../../scripts/grpc-conformance/README.md).
+
+## Independent frame decoder
+
+The decoder now retains a five-byte header and at most one geometrically growing
+payload allocation. A 64 KiB message arriving one byte at a time needs at most ten
+payload allocations in total, not roughly 65,000 retained fragment views. Allocated
+capacity never exceeds the declared frame; the receive limit is checked after the
+fifth header byte, before buffering payload. Unlimited mode does not preallocate a
+multi-gigabyte frame just because a peer advertises one.
+
+The gRPC compression flag, zero-length messages, concatenated frames and all
+header splits retain their framing contract. Compression and incomplete-stream
+termination remain the responsibility of the surrounding transport. This replaces
+the decoder, not the HTTP/2 client/server orchestration. No application deployment
+or complete independent gRPC implementation is claimed.

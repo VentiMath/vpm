@@ -1,0 +1,807 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-02T10:29:39.519Z",
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/grpc-conformance/node_modules/@grpc/grpc-js/build/src/stream-decoder.js": "b11c00ec37606d60d8d135a2259e3f6244309bfde775db9a76581d28433b1bf6",
+    "../../scripts/grpc-conformance/package-lock.json": "74d1928b50b4f6eabfb5c8304df69508724e12360c8199c1f4e92aee8ea764e9",
+    "bench/decoder.cjs": "e270349b93e07a762eac3af9494dc386978ba03abe35accde547055239b952c5",
+    "build/src/stream-decoder.js": "9a7b3cd4d0af9797f17afc3d80e59f07e3192dfc3b0ebd6292f27ea8e19727cb"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 66965,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 1979,
+            "samples": [
+              4861.125315816073,
+              4748.926225366343,
+              4822.74330469934,
+              4764.548762001001,
+              4853.31379484589,
+              5483.13542193028,
+              5201.301162203146,
+              5366.493683678601,
+              5406.202627589685,
+              5060.615462354743,
+              4879.000505305694,
+              4883.463870641742
+            ]
+          }
+        ],
+        "checksum": 8096
+      },
+      "vpm": {
+        "pid": 66966,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 1979,
+            "samples": [
+              1328.553815058113,
+              1347.397675593741,
+              1332.2597271349123,
+              1377.400202122285,
+              1293.6664982314346,
+              1295.793329964635,
+              1296.2986356745919,
+              1349.229408792326,
+              1272.1071248105168,
+              1257.4957049014668,
+              1233.4512379989906,
+              1254.2107124810454
+            ]
+          }
+        ],
+        "checksum": 4640
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 66967,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 7621,
+            "samples": [
+              1266.1833092769987,
+              1250.240650833221,
+              1260.5028211520794,
+              1307.22674189739,
+              1269.9559112977347,
+              1255.6915103004822,
+              1269.5785330009176,
+              1292.7765385120097,
+              1372.5616060884447,
+              1351.747408476579,
+              1415.1358089489534,
+              1365.0111533919392
+            ]
+          }
+        ],
+        "checksum": 9248
+      },
+      "upstream": {
+        "pid": 66968,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 7621,
+            "samples": [
+              4903.63797401916,
+              4821.337882167698,
+              5202.1443380133815,
+              5011.601627083062,
+              4847.646896732712,
+              4800.660412019417,
+              5407.230022306778,
+              4914.014958666855,
+              4813.782180816166,
+              4926.0649521060295,
+              5328.23225298517,
+              4879.6854743471995
+            ]
+          }
+        ],
+        "checksum": 1312
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 66969,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 2062,
+            "samples": [
+              5060.722114451982,
+              4829.857904946657,
+              4827.857419980598,
+              4745.008729388946,
+              4736.744422890384,
+              4887.750242483013,
+              4788.272065955392,
+              4719.285645004863,
+              4878.4350145489725,
+              4847.5184287099955,
+              4804.3569350145535,
+              4870.615421920488
+            ]
+          }
+        ],
+        "checksum": 6880
+      },
+      "vpm": {
+        "pid": 66970,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 2062,
+            "samples": [
+              1370.8171677982575,
+              1385.7701260911776,
+              1258.8908826382149,
+              1343.3559650824354,
+              1348.9733268671253,
+              1352.3074684772164,
+              1312.7827352085424,
+              1255.9000969932076,
+              1399.1673132880742,
+              1259.3559650824548,
+              1268.3074684772082,
+              1324.3006789524836
+            ]
+          }
+        ],
+        "checksum": 4448
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 66973,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 7610,
+            "samples": [
+              1318.741787122205,
+              1313.52391590013,
+              1330.9352168199719,
+              1311.3064388961882,
+              1307.1452036793646,
+              1263.994743758209,
+              1291.9240473061777,
+              1353.7943495400843,
+              1374.748094612354,
+              1329.6977660972368,
+              1340.2868593955347,
+              1328.5972404730655
+            ]
+          }
+        ],
+        "checksum": 9952
+      },
+      "upstream": {
+        "pid": 66974,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 7610,
+            "samples": [
+              4808.880814717474,
+              4795.263994743759,
+              5201.3524310118255,
+              5095.313140604474,
+              4781.729040735881,
+              4765.86727989487,
+              5065.013140604471,
+              4887.417871222081,
+              4854.495137976337,
+              5143.08475689883,
+              4852.458344283846,
+              4801.05676741131
+            ]
+          }
+        ],
+        "checksum": 1312
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 66975,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 1948,
+            "samples": [
+              5352.520020533875,
+              5336.990759753591,
+              5168.4419917864525,
+              5146.218172484585,
+              5089.386550308015,
+              5509.069301848057,
+              5338.317248459964,
+              5193.018480492835,
+              5603.674537987704,
+              5486.289527720746,
+              5216.525154004133,
+              5609.257700205331
+            ]
+          }
+        ],
+        "checksum": 6496
+      },
+      "vpm": {
+        "pid": 66977,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 1948,
+            "samples": [
+              5441.948665297733,
+              5489.968172484599,
+              5301.869609856253,
+              5411.319301848074,
+              5321.483572895267,
+              5620.764887063658,
+              5401.458932238192,
+              5696.655030800818,
+              5692.612422997967,
+              5294.896303901438,
+              5378.058521560564,
+              5715.584188911708
+            ]
+          }
+        ],
+        "checksum": 1888
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 66979,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 1805,
+            "samples": [
+              5159.14127423823,
+              5364.357894736849,
+              5295.960110803315,
+              5122.253185595582,
+              5739.196675900294,
+              5388.388365650974,
+              5563.042105263159,
+              5575.7850415512585,
+              4901.892520775622,
+              4758.563988919659,
+              4741.019944598346,
+              4924.607756232683
+            ]
+          }
+        ],
+        "checksum": 6688
+      },
+      "upstream": {
+        "pid": 66980,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "coalesced 16 x 128B",
+            "iterations": 1805,
+            "samples": [
+              4764.889196675889,
+              4772.11412742382,
+              4919.182825484757,
+              4863.157894736837,
+              4876.40775623269,
+              4784.049307479242,
+              4811.380609418295,
+              4855.193905817169,
+              4764.335180055404,
+              4790.397229916917,
+              4821.491412742376,
+              5226.915789473702
+            ]
+          }
+        ],
+        "checksum": 2144
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "coalesced 16 x 128B",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4881.232187973717,
+          "vpmNs": 1296.0459828196135,
+          "changePct": -73.44838489730552
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4908.826466343007,
+          "vpmNs": 1281.366224904872,
+          "changePct": -73.89668928632003
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4828.857662463628,
+          "vpmNs": 1333.8283220174594,
+          "changePct": -72.3779739381062
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4853.476741130091,
+          "vpmNs": 1323.6695137976353,
+          "changePct": -72.72739554760017
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 5337.654004106777,
+          "vpmNs": 5426.633983572903,
+          "changePct": 1.6670241157944021
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4816.436011080335,
+          "vpmNs": 5227.550692520772,
+          "changePct": 8.53566164887598
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "coalesced 16 x 128B",
+      "upstream_ns": 4867,
+      "vpm_ns": 1310,
+      "change_pct": -73.1,
+      "upstream_first_pct": -72.9,
+      "vpm_first_pct": -73.3,
+      "process_range_pct": "-73.4, -73.9, -72.4, -72.7",
+      "control_max_abs_pct": 8.5,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}
