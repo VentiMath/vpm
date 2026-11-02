@@ -12,9 +12,11 @@
     "Full, light and minimal public entries now use an independently written reader/writer, message reflection, schema loader/parser and application descriptor conversion runtime.",
     "Preserve reader bounds on errors, validate lengths and varint widths, protect shared zero, and preserve prototype-named fields as own data.",
     "Preserve exact 64-bit values through vlong, explicit presence, negative zero, closed enums, unknown fields and repeated singular-message merging.",
-    "Flat scalar messages specialize fixed, validated templates once; environments blocking dynamic functions use the checked interpreter.",
+    "Constructors and scalar/repeated/map/nested codecs specialize fixed, validated templates once; enum/group codecs and environments blocking dynamic functions retain the checked interpreter.",
     "Align the package version with the 8.8.1 API comparison target; public declarations describe implemented APIs.",
-    "Retain upstream compatibility source and generated schema data with their original license; public application runtime imports do not load src/."
+    "Retain upstream compatibility source and generated schema data with their original license; public application runtime imports do not load src/.",
+    "Reduce short-string conversion, writer allocation and length-delimiter overhead without removing bounds, UTF-8, enum or prototype-safety checks.",
+    "Restore short service-name lookup needed by the actual GAX fallback caller while preserving descriptor qualification."
   ],
   "implementation": {
     "kind": "independent application runtime with retained internal compatibility",

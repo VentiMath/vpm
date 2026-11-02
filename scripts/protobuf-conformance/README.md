@@ -58,7 +58,11 @@ is already fixed in upstream 8 and is not credited to VPM.
 Seven paired correction probes check unknown groups, restored bounds, explicit
 length validation, bounded skipped varints and protected zero. Focused tests add
 UTF-8 validation, closed enums, prototype-safe fields/maps, message merging,
-recursion limits and a CSP fallback. `bundles.cjs` executes all three browser
+recursion limits and a CSP fallback. Performance regressions additionally cover
+short Unicode and buffer-growth boundaries, writer output ownership, mixed
+compiled/interpreted parity, packed destination errors and short service names.
+The actual `scripts/gax-conformance/callers.cjs` fixture verifies the lookup repair
+through Firestore gRPC and REST/native-fetch calls on both runtimes. `bundles.cjs` executes all three browser
 entries without Node globals. Packed consumers and public declarations are
 checked by the repository archive and TypeScript 7 gates.
 

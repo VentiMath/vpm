@@ -134,3 +134,191 @@ test("scalar specialization has a checked fallback when dynamic functions are un
     globalThis.Function = Original;
   }
 });
+
+test("specialized Unicode strings match native UTF-8 through prefix boundaries and lone surrogates", () => {
+  const strings = [
+    "",
+    "ascii",
+    "\u007f",
+    "\u0080",
+    "\u07ff",
+    "\u0800",
+    "\uffff",
+    "😀",
+    "\ud800",
+    "\udc00",
+    "a\ud800b",
+    "\ud800\ud800\udc00",
+    "é".repeat(63),
+    "é".repeat(64),
+    "漢".repeat(127),
+    "😀".repeat(65),
+  ];
+  for (let i = 0; i < 200; i++)
+    strings.push(
+      String.fromCodePoint((i * 7919) % 0x110000) +
+        "a" +
+        String.fromCodePoint((i * 1543) % 0x110000),
+    );
+  for (const text of strings) {
+    const expected = Buffer.from(text, "utf8"),
+      w = pb.Writer.create().string(text),
+      r = pb.Reader.create(w.finish());
+    assert.deepEqual(Buffer.from(r.bytes()), expected);
+    const decoded = pb.Reader.create(w.finish()).stringVerify();
+    assert.equal(decoded, expected.toString("utf8"));
+  }
+});
+test("specialized mixed codecs and CSP fallback preserve defaults, exact integers and safe keys", () => {
+  const schema =
+    'syntax="proto3";message M{M child=1;map<string,string> names=2;repeated sint32 values=3;bytes data=4;int64 id=5;oneof selected{string text=6;int32 number=7;}}';
+  const value = JSON.parse(
+    '{"child":{"id":"9007199254740993"},"names":{"__proto__":"entry"},"values":[-1,0,2000],"data":"AP+A","id":"-9223372036854775808","text":"😀"}',
+  );
+  const T = pb.parse(schema).root.lookupType("M"),
+    bytes = T.encode(T.fromObject(value)).finish(),
+    options = { longs: String, bytes: String, defaults: true, oneofs: true };
+  const expected = T.toObject(T.decode(bytes), options),
+    F = globalThis.Function;
+  const U = pb.parse(schema).root.lookupType("M");
+  try {
+    globalThis.Function = function () {
+      throw new EvalError("CSP");
+    };
+    assert.deepEqual(
+      Buffer.from(U.encode(U.fromObject(value)).finish()),
+      Buffer.from(bytes),
+    );
+    assert.deepEqual(U.toObject(U.decode(bytes), options), expected);
+  } finally {
+    globalThis.Function = F;
+  }
+  for (const model of [T, U]) {
+    const r = pb.Reader.create(Uint8Array.from([18, 3, 10, 1, 255]));
+    assert.throws(() => model.decode(r));
+    assert.equal(r.len, 5);
+    assert.throws(
+      () => model.ctor({ text: "no new" }),
+      /requires new|class constructor|Class constructor/,
+    );
+  }
+});
+test("uint32 packed fast path restores bounds when the destination throws", () => {
+  const reader = pb.Reader.create(Uint8Array.from([2, 1, 2, 8, 7]));
+  const target = [];
+  target.push = () => {
+    throw Error("destination");
+  };
+  assert.throws(() => reader.uint32s(target), /destination/);
+  assert.equal(reader.len, 5);
+  assert.equal(reader.pos, 2);
+});
+test("writer results remain owned across later writes, nested delimiters and buffer growth", () => {
+  const w = pb.Writer.create().uint32(8).uint32(7),
+    first = w.finish();
+  w.fork().string("漢".repeat(127)).fork().uint32(128).ldelim().ldelim();
+  assert.deepEqual([...first], [8, 7]);
+  const later = w.finish();
+  const snapshot = Buffer.from(later);
+  w.string("x".repeat(10000));
+  assert.deepEqual(Buffer.from(later), snapshot);
+  const T = pb
+    .parse("message M{repeated string values=1;int32 count=2;}")
+    .root.lookupType("M");
+  T.encode({ count: 7 });
+  T.add(new pb.Field("extra", 3, "string"));
+  assert.equal(T.fromObject({ extra: "new" }).extra, "new");
+  assert.equal(
+    T.toObject(T.decode(T.encode({ extra: "new" }).finish())).extra,
+    "new",
+  );
+});
+
+test("short service names resolve inside packages with lexical precedence", () => {
+  const root = pb.Root.fromJSON({
+    nested: {
+      a: {
+        nested: {
+          T: { fields: {} },
+          deep: { nested: { Echo: { methods: {} } } },
+        },
+      },
+      b: { nested: { T: { fields: {} }, Echo: { methods: {} } } },
+    },
+  });
+  assert.equal(root.lookupService("Echo").fullName, ".a.deep.Echo");
+  assert.equal(root.lookupService("a.Echo").fullName, ".a.deep.Echo");
+  assert.equal(root.lookup("b").lookupService("Echo").fullName, ".b.Echo");
+  assert.equal(root.lookup("b").lookupType("T").fullName, ".b.T");
+  const path = ["", "a", "deep", "Echo"];
+  assert.equal(root.lookup(path).fullName, ".a.deep.Echo");
+  assert.deepEqual(path, ["", "a", "deep", "Echo"]);
+  const shadow = pb.Root.fromJSON({
+    nested: {
+      Echo: { fields: {} },
+      inner: { nested: { Echo: { methods: {} } } },
+    },
+  });
+  assert.equal(shadow.lookup("Echo", [pb.Service]), null);
+});
+
+test("short Unicode preserves its ASCII prefix when the writer grows mid-string", () => {
+  for (let offset = 100; offset < 140; offset++)
+    for (const text of ["Aé", "\0\ufeff", "abcd😀"]) {
+      const w = pb.Writer.create().raw(Buffer.alloc(offset, 7)).string(text),
+        r = pb.Reader.create(w.finish());
+      r.skip(offset);
+      assert.deepEqual(Buffer.from(r.bytes()), Buffer.from(text));
+    }
+});
+
+test("descriptor qualification is preserved while public lookup accepts short names", () => {
+  require("../ext/descriptor");
+  const root = pb.Root.fromJSON({
+    nested: {
+      a: {
+        nested: { M: { fields: { stamp: { id: 1, type: ".b.Timestamp" } } } },
+      },
+      b: { nested: { Timestamp: { fields: {} } } },
+    },
+  });
+  assert.equal(root.lookupType("Timestamp").fullName, ".b.Timestamp");
+  assert.equal(
+    root.lookupType("a.M").toDescriptor("proto3").field[0].typeName,
+    "b.Timestamp",
+  );
+});
+
+test("compiled byte containers preserve the interpreter omission of undefined entries", () => {
+  const schema =
+      "message M{repeated bytes chunks=1;map<string,bytes> entries=2;}",
+    value = {
+      chunks: [undefined, Buffer.from([7])],
+      entries: { absent: undefined, present: Buffer.from([8]) },
+    };
+  const T = pb.parse(schema).root.lookupType("M");
+  const actual = T.toObject(T.fromObject(value), { bytes: Array });
+  assert.deepEqual(actual, { chunks: [[7]], entries: { present: [8] } });
+  const U = pb.parse(schema).root.lookupType("M"),
+    F = globalThis.Function;
+  try {
+    globalThis.Function = function () {
+      throw new EvalError("CSP");
+    };
+    assert.deepEqual(U.toObject(U.fromObject(value), { bytes: Array }), actual);
+  } finally {
+    globalThis.Function = F;
+  }
+});
+
+test("specialized implicit int64 presence uses the same word coercion as writing", () => {
+  const T = pb
+    .parse('syntax="proto3";message M{int64 value=1;}')
+    .root.lookupType("M");
+  for (const value of [
+    { low: 2 ** 32, high: 0 },
+    { low: NaN, high: 0 },
+    { low: 0, high: 2 ** 32 },
+  ])
+    assert.equal(T.encode({ value }).finish().length, 0);
+});

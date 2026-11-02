@@ -29,10 +29,11 @@ independent descriptor conversion used by proto-loader.
 The public entries use `runtime/`: independent wire primitives, reflection,
 message conversion, schema parsing/loading and application descriptor conversion.
 Protocol encoding follows the [Protocol Buffers wire specification](https://protobuf.dev/programming-guides/encoding/).
-Flat scalar messages specialize validated templates once; only whitelisted wire
-methods, checked field IDs and JSON-quoted names enter the generated functions.
-Environments blocking dynamic functions use the same checked interpreter used
-for compound messages.
+Message constructors and scalar, repeated, map and nested-message codecs
+specialize validated templates once. Only whitelisted wire methods, checked field
+IDs and JSON-quoted names enter generated functions. Closed enums and groups
+retain the checked interpreter. Environments blocking dynamic functions use the
+interpreter and ordinary constructors for every message.
 
 Compared with the 8.8.1 baseline:
 
@@ -42,6 +43,8 @@ Compared with the 8.8.1 baseline:
   limits. Valid unknown groups, including those in empty messages, are skipped.
 - The shared integer zero cannot be mutated. `vlong` preserves exact 64-bit values.
 - Prototype-named message/map fields remain own data, without changing prototypes.
+- Short service names resolve within packages as required by GAX fallback calls;
+  descriptor type names retain their lexical qualification.
 
 Presence, negative zero, UTF-8 verification for proto3 strings, closed enum
 filtering, retained unknown fields and singular-message merging are preserved.
@@ -81,6 +84,13 @@ package archives, TypeScript 7 consumers and focused malformed-input tests are
 checked separately. See the [fixture contract](../../scripts/protobuf-conformance/README.md).
 
 [Current measurements](bench/application-results/README.md) use separate processes,
-balanced AB/BA order and identical-source controls. The independent implementation
-has real remaining performance costs; it is not a universal speed improvement.
-Historical measurements of the derived runtime do not describe this version.
+balanced AB/BA order and identical-source controls. Results are workload-specific;
+small differences that overlap control spread remain inconclusive, and no
+universal speed improvement is claimed.
+The performance follow-up removes repeated schema interpretation, generic
+constructor overhead, redundant short-string Buffer conversions and temporary
+writer allocations. Short Unicode encoding preserves lone-surrogate replacement
+and prefixes when buffers grow. Longer Unicode strings keep the native path;
+Node and Bun use different short-string cutoffs based on measured conversion
+costs. Historical measurements of either the earlier independent implementation
+or the derived runtime do not describe this revision.

@@ -1816,8 +1816,16 @@ Watch. Browser bundles, archive installs and TypeScript 7 consumers are checked.
 The 79-file / 2,877-assertion suite separately covers retained compatibility source;
 it is not presented as coverage of the new public runtime.
 
-Current process-isolated measurements disclose remaining runtime costs. Earlier
-derived-runtime percentages no longer describe this implementation. See the
+The performance follow-up specializes message construction, codecs and conversion
+once per schema, reduces short-string Buffer conversions and writer allocations,
+and preserves the checked interpreter for CSP, closed enums and groups. It also
+repairs short service-name lookup used by the actual GAX REST fallback caller.
+Current process-isolated measurements replace the earlier independent and derived
+runtime percentages; controls and raw samples remain visible. Actual proto-loader
+serialization/deserialization takes **13% / 41% less time on Node** and
+**27% / 30% less on Bun**. No repeatable higher-time result is established across
+the seven tracked workloads on either runtime; several small differences remain
+inconclusive. These are operation timings, not application latency claims. See the
 [package contract](packages/vprotobufjs/README.md),
 [fixture scope](scripts/protobuf-conformance/README.md) and
 [current measurements](packages/vprotobufjs/bench/application-results/README.md).

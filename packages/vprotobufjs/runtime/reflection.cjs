@@ -41,6 +41,8 @@ function invalidateCodecs(object) {
     object._fastCodec = undefined;
     delete object.encode;
     delete object.decode;
+    delete object.fromObject;
+    delete object.toObject;
     for (const field of object.fieldsArray) {
       field.resolved = false;
       field._explicit = field._packed = undefined;
@@ -160,7 +162,9 @@ class Namespace extends ReflectionObject {
   }
   lookup(path, types, parentChecked) {
     if (path instanceof ReflectionObject) return path;
-    const segments = Array.isArray(path) ? path : String(path).split(".");
+    const segments = Array.isArray(path)
+      ? path.slice()
+      : String(path).split(".");
     let start = this;
     if (segments[0] === "") {
       start = this.root;
@@ -168,19 +172,29 @@ class Namespace extends ReflectionObject {
       parentChecked = true;
     }
     if (!segments.length) return start;
+    function within(scope, index) {
+      const child = scope.get(segments[index]);
+      if (child) {
+        if (index === segments.length - 1)
+          return !types || types.some((T) => child instanceof T) ? child : null;
+        return child instanceof Namespace ? within(child, index + 1) : null;
+      }
+      for (const nested of scope.nestedArray)
+        if (nested instanceof Namespace) {
+          const value = within(nested, index);
+          if (value) return value;
+        }
+      return null;
+    }
     for (
       let scope = start;
       scope;
       scope = parentChecked ? null : scope.parent
     ) {
-      let value = scope;
-      for (const name of segments) {
-        value = value instanceof Namespace ? value.get(name) : null;
-        if (!value) break;
-      }
-      if (value && (!types || types.some((T) => value instanceof T)))
-        return value;
+      const value = within(scope, 0);
+      if (value) return value;
     }
+
     return null;
   }
   lookupType(name) {
@@ -579,7 +593,7 @@ class Type extends Namespace {
     if (!this._ctor) {
       const type = this;
       const containers = type.fieldsArray.filter((f) => f.map || f.repeated);
-      const C = class extends Message {
+      let C = class extends Message {
         constructor(properties) {
           super();
           for (const f of containers)
@@ -590,6 +604,16 @@ class Type extends Namespace {
               if (properties[k] != null) put(this, k, properties[k]);
         }
       };
+      try {
+        C = new Function(
+          "put",
+          `"use strict";return function(properties){if(!new.target)throw TypeError('Message constructor requires new');${containers.map((f) => "put(this," + JSON.stringify(f.name) + "," + (f.map ? "{}" : "[]") + ");").join("")}if(properties)for(const k of Object.keys(properties))if(properties[k]!=null)put(this,k,properties[k]);}`,
+        )(put);
+        Object.setPrototypeOf(C, Message);
+        Object.setPrototypeOf(C.prototype, Message.prototype);
+      } catch (error) {
+        if (!(error instanceof EvalError)) throw error;
+      }
       Object.defineProperty(C, "name", { value: this.name });
       this._ctor = C;
       Object.defineProperty(C, "$type", { value: this });
@@ -622,6 +646,8 @@ class Type extends Namespace {
   set ctor(C) {
     delete this.encode;
     delete this.decode;
+    delete this.fromObject;
+    delete this.toObject;
     this._ctor = C;
     this._fastCodec = undefined;
     Object.defineProperty(C.prototype, "$type", {
@@ -643,15 +669,18 @@ class Type extends Namespace {
   }
   fastCodec() {
     if (this._fastCodec === undefined) {
-      this._fastCodec = require("./flat.cjs")(
+      this._fastCodec = require("./codec.cjs")(
         this,
         util,
         require("./wire.cjs"),
         scalarWire,
+        { Enum, convert, merge: mergeMessage },
       );
       if (this._fastCodec) {
         this.encode = this._fastCodec.encode;
         this.decode = this._fastCodec.decode;
+        this.fromObject = this._fastCodec.fromObject;
+        this.toObject = this._fastCodec.toObject;
       }
     }
     return this._fastCodec;
@@ -813,6 +842,8 @@ class Type extends Namespace {
     return this.decode(r, r.size());
   }
   fromObject(o, depth = 0) {
+    const fast = this.fastCodec();
+    if (fast) return fast.fromObject(o, depth);
     depthCheck(depth);
     if (o instanceof this.ctor) return o;
     if (!o || typeof o !== "object") throw TypeError("object expected");
@@ -842,6 +873,8 @@ class Type extends Namespace {
     return m;
   }
   toObject(m, options = {}, depth = 0) {
+    const fast = this.fastCodec();
+    if (fast) return fast.toObject(m, options, depth);
     depthCheck(depth);
     const o = {};
     for (const f of this.fieldsArray) {

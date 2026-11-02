@@ -51,6 +51,19 @@ function options(o) {
   if (!o) return undefined;
   return Object.fromEntries(Object.entries(o).map(([k, v]) => [camel(k), v]));
 }
+// Descriptor names use lexical qualification. Public lookup also searches
+// descendants for convenience, which must not shorten a cross-package name.
+function lexicalLookup(scope, parts) {
+  for (; scope; scope = scope.parent) {
+    let value = scope;
+    for (const name of parts) {
+      value = value instanceof Namespace ? value.get(name) : null;
+      if (!value) break;
+    }
+    if (value) return value;
+  }
+  return null;
+}
 function fieldObject(f, syntax) {
   f.resolve();
   const t = f.resolvedType;
@@ -65,7 +78,7 @@ function fieldObject(f, syntax) {
     result.typeName = t.fullName;
     for (let i = parts.length - 1; i >= 0; i--) {
       const name = parts.slice(i).join(".");
-      if (f.parent.lookup(name) === t) {
+      if (lexicalLookup(f.parent, parts.slice(i)) === t) {
         result.typeName = name;
         break;
       }
