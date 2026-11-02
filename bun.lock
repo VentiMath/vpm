@@ -745,6 +745,10 @@
       "name": "vqs",
       "version": "0.1.0",
     },
+    "packages/vraf-schd": {
+      "name": "vraf-schd",
+      "version": "4.0.3",
+    },
     "packages/vrange-parser": {
       "name": "vrange-parser",
       "version": "0.1.0",
@@ -1178,6 +1182,8 @@
     "vproxy-addr": ["vproxy-addr@workspace:packages/vproxy-addr"],
 
     "vqs": ["vqs@workspace:packages/vqs"],
+
+    "vraf-schd": ["vraf-schd@workspace:packages/vraf-schd"],
 
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
 

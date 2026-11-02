@@ -1,0 +1,20 @@
+{
+  "upstream": {
+    "name": "raf-schd",
+    "version": "4.0.3",
+    "repository": "https://github.com/alexreardon/raf-schd",
+    "commit": "29b96b83cb7775b05e7b3b35bf6e9ca47d38329b",
+    "integrity": "sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ=="
+  },
+  "checked": "2026-11-01",
+  "implementation": {
+    "kind": "independent implementation",
+    "basis": "Independently written per-frame ticket state and argument lifecycle; upstream source is retained only in the development conformance fixture.",
+    "targetScope": "raf-schd 4.0.3 callable/cancel API used by @hello-pangea/dnd."
+  },
+  "changes": [
+    "Release arguments on completion and cancellation.",
+    "Ignore callbacks for canceled frames if a host delivers them late.",
+    "Recover after a frame request throws."
+  ]
+}
