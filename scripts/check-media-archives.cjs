@@ -186,7 +186,7 @@ try {
     if (name === 'vgrpc-js') {
       assert.deepEqual(metadata.dependencies,{'vgrpc-proto-loader':'0.1.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
-      const library=['build/src','proto'].flatMap(dir=>fs.readdirSync(path.join(root,'packages/vgrpc-js',dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vgrpc-js',dir,f)).isFile()).map(f=>dir+'/'+f));
+      const library=['build/src','proto','client-runtime'].flatMap(dir=>fs.readdirSync(path.join(root,'packages/vgrpc-js',dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vgrpc-js',dir,f)).isFile()).map(f=>dir+'/'+f));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json','index.js','index.mjs','index.d.ts',...library].sort());
       assert.doesNotMatch(entries.join('\n'), /(?:test|bench|node_modules)\/|\.js\.map$/);
     }

@@ -1,1 +1,1 @@
-export * from './build/src/index.js';
+export * from './client-runtime/index.js';

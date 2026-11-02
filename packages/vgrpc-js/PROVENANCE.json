@@ -5,7 +5,7 @@
     "commit": "5e0c170d4c3ccb7c027344663c009fde8db8bee9",
     "repository": "https://github.com/grpc/grpc-node/tree/5e0c170d4c3ccb7c027344663c009fde8db8bee9/packages/grpc-js",
     "integrity": "sha512-W4W/fcBMGRVtG6dW2c7cw2mnpS3hvbBd+oQXjh2iYFTZDk1JJmcNqkM5KSaPubQpamlUUurrlb7G1s9NJeERmQ==",
-    "checked": "2026-10-30"
+    "checked": "2026-11-02"
   },
   "sourceSHA256": {
     "build/src/constants.js": "24e18395d722626f978df87d9b3e24174cca482bd5369ce89cd414b7aa27971c",
@@ -358,18 +358,25 @@
     "Metadata parsing avoids redundant case conversion for text headers; cloning reuses its value mapper.",
     "Namespace construction does not traverse inherited Object members.",
     "Explicit structural platform declarations and Node 24 runtime baseline.",
-    "Malformed direct Channelz handler IDs return NOT_FOUND instead of aliasing a tree entry via NaN comparison."
+    "Malformed direct Channelz handler IDs return NOT_FOUND instead of aliasing a tree entry via NaN comparison.",
+    "The public entry points use the independently implemented application client; retained Server/experimental exports load lazily.",
+    "Modern Google Auth Headers retain authorization; callback errors cannot be overridden by metadata; credential equality checks the whole plan.",
+    "Public client declarations describe the supported scope, excluding internal channel factories, interceptors and parent-call propagation.",
+    "Package version aligns with the 1.14.7 comparison target; it is not a claim of every upstream feature."
   ],
-  "scope": "Retains upstream HTTP/2 client/server, retries, resolvers, load balancing, credentials and experimental exports. Verification scope is documented separately; not an application deployment.",
+  "scope": "Independent public application client for Google GAX and Firestore, using native Node/Bun HTTP/2, TLS and OS DNS. Retained server, diagnostic, internal and experimental compatibility exports remain upstream-derived; public client imports do not load that transport graph.",
   "implementation": {
-    "kind": "upstream-derived with focused modifications",
-    "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "The HTTP/2 client/server, retry, resolver, load-balancing and credential runtime is retained from grpc-js. Focused framing/metadata fixes and VPM dependency names do not constitute an independent client implementation.",
-    "targetScope": "The client-side unary and streaming HTTP/2 paths reached through gax and Firestore.",
-    "remainingWork": "Independently implement the client paths the application uses. Channelz registry and frame decoding are independently implemented; transport orchestration, retry, resolution, credentials and diagnostic service code remain upstream-derived. Preserve protocol/declaration provenance and conformance controls.",
+    "kind": "independent application client with retained server compatibility",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "basis": "client-runtime is independently written around native HTTP/2, TLS, streams and DNS. Shared Metadata, CallCredentials, framing and the numeric Channelz registry are independent. Protocol constants, declarations, server, legacy internal client and experimental compatibility modules retain upstream provenance.",
+    "targetScope": "Public GAX/Firestore client: four RPC modes, metadata and Google credentials, verified TLS, deadlines, cancellation, per-channel sessions, reconnects, bounded configured/transparent retries, compression and message limits.",
+    "remainingWork": "Server-only, experimental and diagnostic service runtime remains upstream-derived and is outside this completed application-client scope. Internal build/src client entry points retain the original compatibility runtime. Advanced load-balancing, custom resolvers/interceptors, HTTP CONNECT proxies, hedging, parent-call propagation and retry throttling are not implemented by the public client.",
     "independentComponents": {
       "build/src/channelz-registry.js": "Independently written numeric-ID AVL registry with logarithmic lookup/updates, bounded ordered traversal, mutation-aware resumption and detached pairs. Only Channelz operations are implemented; no general OrderedMap runtime is retained here.",
-      "build/src/stream-decoder.js": "Independently written length-prefix decoder with owned partial inputs, a complete-frame copy path, geometric payload storage, fixed per-message metadata and terminal oversized-frame errors."
+      "build/src/stream-decoder.js": "Independently written length-prefix decoder with owned partial inputs, a complete-frame copy path, geometric payload storage, fixed per-message metadata and terminal oversized-frame errors.",
+      "client-runtime": "Independent public client, native HTTP/2 channel, TLS credentials, callback/stream calls, configuration, replay budgets and retry decisions. No retained client/resolver/retry transport is imported by the public client.",
+      "build/src/metadata.js": "Independent metadata ownership, validation, cloning, header parsing and conversion.",
+      "build/src/call-credentials.js": "Independent flattened credential plans, parallel ordered composition, error-first callbacks and modern Google Auth Headers support."
     }
   }
 }

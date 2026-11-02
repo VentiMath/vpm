@@ -11,7 +11,52 @@ The retained tests are from grpc-node commit
 accompany the byte-for-byte snapshot. TypeScript files have a `.txt` suffix to
 keep root Bun discovery from executing unadapted upstream tests.
 
-## Harness
+## Public application client
+
+The root CJS/ESM entry points now use `client-runtime`, independently implemented
+for the GAX/Firestore consumer paths. `app-client.test.cjs` runs 42 checks on both
+Node 24 and Bun, with `GRPC_UPSTREAM=1` selecting the original control. It verifies
+all response/status paths, retries, stream backpressure, size/decompression limits,
+cancellation, TLS trust/name rejection and Google credentials. The import test
+asserts that the public client does not load the retained client/resolver/retry
+modules. Deliberate corrections have explicit original controls: Google Auth
+Headers, error-plus-metadata callbacks, credential-plan prefix equality and extra
+unary responses. Connection loss is UNAVAILABLE in VPM versus INTERNAL in the
+local original control; committed calls are not replayed in either case.
+
+`reset-peer.cjs` runs a Node HTTP/2 peer for both client runtimes. Bun 1.4.0's
+HTTP/2 server loses the reset code in this fixture, causing both clients to fail
+otherwise. The peer sends real REFUSED_STREAM and CANCEL resets; assertions are
+unchanged, and both original and VPM clients pass on both runtimes.
+
+`firestore-client.cjs` leaves Firestore 9.4.0 and GAX 6.14.0 unchanged and substitutes
+only gRPC. Its 23 public SDK results and 25 decoded requests match exactly for
+writes, batches, queries, aggregates, transactions, bulk writes and Watch. An
+additional listener survives UNAVAILABLE and reconnects with its resume token.
+It reuses the public in-memory server/scenario in the Firestore fixture; no
+private application source or credentials are embedded.
+
+`packed.cjs` installs the five-package VPM closure into clean npm and Bun consumers,
+with explicit tarball overrides, then runs all twelve interoperability calls
+through CJS and ESM on Node/Bun and compiles scoped declarations with TypeScript 7.
+
+```sh
+node --test scripts/grpc-conformance/app-client.test.cjs
+GRPC_UPSTREAM=1 node --test scripts/grpc-conformance/app-client.test.cjs
+bun test scripts/grpc-conformance/app-client.test.cjs
+GRPC_UPSTREAM=1 bun test scripts/grpc-conformance/app-client.test.cjs
+node scripts/grpc-conformance/firestore-client.cjs
+bun scripts/grpc-conformance/firestore-client.cjs
+node scripts/grpc-conformance/packed.cjs
+```
+
+## Retained compatibility harness
+
+**This suite imports internal `build/src` modules, including the retained legacy
+client. Its results do not establish coverage of the new public client.** The
+public-client, SDK and package checks above are separate mandatory CI gates.
+
+
 
 `run.cjs` verifies hashes, prepares a temporary copy and compiles tests with the
 workspace's TypeScript 7 compiler. Source/build imports select the original or

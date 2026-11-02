@@ -9,12 +9,12 @@ function consumer(grpc,stats={}) {
     if(cache.has(file))return cache.get(file).exports;
     if(file.endsWith('.json'))return JSON.parse(fs.readFileSync(file,'utf8'));
     const local=createRequire(file),module={exports:{}};cache.set(file,module);
-    function req(name){if(name==='@grpc/grpc-js')return wrapped;if(isBuiltin(name))return local(name);const resolved=local.resolve(name);return /\/node_modules\/(?:google-gax|@google-cloud\/firestore-api)\//.test(resolved)?load(resolved):local(name);}
+    function req(name){if(name==='@grpc/grpc-js')return wrapped;if(isBuiltin(name))return local(name);const resolved=local.resolve(name);return /\/node_modules\/(?:google-gax|@google-cloud\/firestore(?:-api)?)\//.test(resolved)?load(resolved):local(name);}
     req.resolve=local.resolve;req.cache=require.cache;
     new Function('exports','require','module','__filename','__dirname',fs.readFileSync(file,'utf8'))(module.exports,req,module,file,path.dirname(file));
     return module.exports;
   }
-  return {stats,gax:()=>load(gaxEntry),firestore:()=>load(firestoreEntry)};
+  return {stats,gax:()=>load(gaxEntry),firestore:()=>load(firestoreEntry),firestorePublic:()=>load(from.resolve('@google-cloud/firestore'))};
 }
 const collect=stream=>new Promise((resolve,reject)=>{const values=[];stream.on('data',v=>values.push(v));stream.on('error',reject);stream.on('end',()=>resolve(values));});
 const unary=(client,method,request,metadata,options={})=>new Promise((resolve,reject)=>client[method](request,metadata,{deadline:Date.now()+5000,...options},(e,v)=>e?reject(e):resolve(v)));

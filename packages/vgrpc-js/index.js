@@ -1,2 +1,2 @@
 'use strict';
-module.exports = require('./build/src/index.js');
+module.exports = require('./client-runtime/index.cjs');

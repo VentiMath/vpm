@@ -1,7 +1,7 @@
 {
   "name": "vgrpc-js",
-  "version": "0.1.0",
-  "description": "gRPC HTTP/2 transport with VPM dependencies, faster frame decoding and safe metadata conversion",
+  "version": "1.14.7",
+  "description": "Independent application-scope gRPC HTTP/2 client with retained server compatibility",
   "type": "commonjs",
   "main": "index.js",
   "types": "index.d.ts",
@@ -29,7 +29,8 @@
     "proto",
     "README.md",
     "LICENSE",
-    "PROVENANCE.json"
+    "PROVENANCE.json",
+    "client-runtime"
   ],
   "engines": {
     "node": ">=24"

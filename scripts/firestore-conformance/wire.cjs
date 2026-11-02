@@ -13,9 +13,9 @@ const targets = {
   vpm: path.resolve(__dirname, '../../packages/vgoogle-cloud-firestore'),
 };
 
-function startServer() {
-  const grpc = require(path.join(fixture, '@grpc/grpc-js'));
-  const loader = require(path.join(fixture, '@grpc/proto-loader'));
+function startServer(overrides = {}) {
+  const grpc = overrides.grpc || require(path.join(fixture, '@grpc/grpc-js'));
+  const loader = overrides.loader || require(path.join(fixture, '@grpc/proto-loader'));
   const json = require(path.resolve(__dirname, '../../packages/vgoogle-cloud-firestore-api/protos/protos.json'));
   const definitions = loader.fromJSON(json, {longs: String, enums: String, defaults: false, oneofs: true, bytes: Buffer});
   const log = [], store = new Map();
@@ -142,6 +142,7 @@ function startServer() {
         for (const document of query(q)) call.write({documentChange: {document, targetIds: [targetId]}});
         call.write({targetChange: {targetChangeType: 'CURRENT', targetIds: [targetId], resumeToken: Buffer.from('r1')}});
         call.write({targetChange: {targetChangeType: 'NO_CHANGE', targetIds: [], readTime: now(), resumeToken: Buffer.from('r1')}});
+        overrides.onListen?.(call, request);
       });
       call.on('end', () => call.end());
       call.on('error', () => {});

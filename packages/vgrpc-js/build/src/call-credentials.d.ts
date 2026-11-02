@@ -9,10 +9,12 @@ export interface OldOAuth2Client {
         [index: string]: string;
     }) => void) => void;
 }
+/** Structural header collection: supports native Headers without ambient DOM types. */
+export interface AuthHeaderCollection {
+    forEach(callback: (value: string, name: string) => void): void;
+}
 export interface CurrentOAuth2Client {
-    getRequestHeaders: (url?: string) => Promise<{
-        [index: string]: string;
-    }>;
+    getRequestHeaders: (url?: string) => Promise<{[index: string]: string} | AuthHeaderCollection>;
 }
 export type OAuth2Client = OldOAuth2Client | CurrentOAuth2Client;
 /**

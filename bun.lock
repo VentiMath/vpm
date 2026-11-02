@@ -497,7 +497,7 @@
     },
     "packages/vgrpc-js": {
       "name": "vgrpc-js",
-      "version": "0.1.0",
+      "version": "1.14.7",
       "dependencies": {
         "vgrpc-proto-loader": "workspace:*",
       },

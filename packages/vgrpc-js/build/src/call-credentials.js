@@ -1,162 +1,105 @@
 "use strict";
-/*
- * Copyright 2019 gRPC authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CallCredentials = void 0;
-exports.isEmptyCallCredentials = isEmptyCallCredentials;
-const metadata_1 = require("./metadata");
-function isCurrentOauth2Client(client) {
-    return ('getRequestHeaders' in client &&
-        typeof client.getRequestHeaders === 'function');
-}
-/**
- * A class that represents a generic method of adding authentication-related
- * metadata on a per-request basis.
- */
+// Independently implemented request credential plans. See PROVENANCE.json.
+const { Metadata } = require("./metadata");
+const plans = new WeakMap();
+const invoke = (generator, options) =>
+  new Promise((resolve, reject) => {
+    generator(options, (error, metadata) => {
+      // A failed authentication callback must never become a successful one just
+      // because it also supplied metadata.
+      if (error != null) reject(error);
+      else if (metadata == null)
+        reject(new Error("Metadata generator returned no metadata"));
+      else resolve(metadata);
+    });
+  });
 class CallCredentials {
-    /**
-     * Creates a new CallCredentials object from a given function that generates
-     * Metadata objects.
-     * @param metadataGenerator A function that accepts a set of options, and
-     * generates a Metadata object based on these options, which is passed back
-     * to the caller via a supplied (err, metadata) callback.
-     */
-    static createFromMetadataGenerator(metadataGenerator) {
-        return new SingleCallCredentials(metadataGenerator);
-    }
-    /**
-     * Create a gRPC credential from a Google credential object.
-     * @param googleCredentials The authentication client to use.
-     * @return The resulting CallCredentials object.
-     */
-    static createFromGoogleCredential(googleCredentials) {
-        return CallCredentials.createFromMetadataGenerator((options, callback) => {
-            let getHeaders;
-            if (isCurrentOauth2Client(googleCredentials)) {
-                getHeaders = googleCredentials.getRequestHeaders(options.service_url);
-            }
-            else {
-                getHeaders = new Promise((resolve, reject) => {
-                    googleCredentials.getRequestMetadata(options.service_url, (err, headers) => {
-                        if (err) {
-                            reject(err);
-                            return;
-                        }
-                        if (!headers) {
-                            reject(new Error('Headers not set by metadata plugin'));
-                            return;
-                        }
-                        resolve(headers);
-                    });
-                });
-            }
-            getHeaders.then(headers => {
-                const metadata = new metadata_1.Metadata();
-                for (const key of Object.keys(headers)) {
-                    metadata.add(key, headers[key]);
-                }
-                callback(null, metadata);
-            }, err => {
-                callback(err);
-            });
-        });
-    }
-    static createEmpty() {
-        return new EmptyCallCredentials();
-    }
+  static createEmpty() {
+    return new CredentialPlan([]);
+  }
+  static createFromMetadataGenerator(generator) {
+    if (typeof generator !== "function")
+      throw new TypeError("Metadata generator must be a function");
+    return new CredentialPlan([generator]);
+  }
+  static createFromGoogleCredential(client) {
+    return new GoogleCredential(client);
+  }
+  compose(other) {
+    const left = plans.get(this),
+      right = plans.get(other);
+    if (right?.length === 0) return this;
+    if (left?.length === 0) return other;
+    return new CredentialPlan([...(left || [this]), ...(right || [other])]);
+  }
+  _equals(other) {
+    if (this === other) return true;
+    const left = plans.get(this),
+      right = plans.get(other);
+    if (!left || !right || left.length !== right.length) return false;
+    return left.every(
+      (item, i) =>
+        item === right[i] ||
+        (typeof item !== "function" &&
+          typeof right[i] !== "function" &&
+          item._equals(right[i])),
+    );
+  }
 }
-exports.CallCredentials = CallCredentials;
-class ComposedCallCredentials extends CallCredentials {
-    constructor(creds) {
-        super();
-        this.creds = creds;
-    }
-    async generateMetadata(options) {
-        const base = new metadata_1.Metadata();
-        const generated = await Promise.all(this.creds.map(cred => cred.generateMetadata(options)));
-        for (const gen of generated) {
-            base.merge(gen);
+class CredentialPlan extends CallCredentials {
+  constructor(parts) {
+    super();
+    plans.set(this, parts);
+  }
+  generateMetadata(options) {
+    const parts = plans.get(this);
+    if (parts.length === 0) return Promise.resolve(new Metadata());
+    if (parts.length === 1 && typeof parts[0] === "function")
+      return invoke(parts[0], options);
+    // Start every generator before awaiting; merge by plan order, never finish order.
+    return Promise.all(
+      parts.map((part) => {
+        if (typeof part === "function") return invoke(part, options);
+        try {
+          return part.generateMetadata(options);
+        } catch (error) {
+          return Promise.reject(error);
         }
-        return base;
-    }
-    compose(other) {
-        if (other instanceof EmptyCallCredentials) {
-            return this;
-        }
-        return new ComposedCallCredentials(this.creds.concat([other]));
-    }
-    _equals(other) {
-        if (this === other) {
-            return true;
-        }
-        if (other instanceof ComposedCallCredentials) {
-            return this.creds.every((value, index) => value._equals(other.creds[index]));
-        }
-        else {
-            return false;
-        }
-    }
+      }),
+    ).then((values) => {
+      const result = new Metadata();
+      for (const value of values) result.merge(value);
+      return result;
+    });
+  }
 }
-class SingleCallCredentials extends CallCredentials {
-    constructor(metadataGenerator) {
-        super();
-        this.metadataGenerator = metadataGenerator;
+class GoogleCredential extends CallCredentials {
+  constructor(client) {
+    super();
+    this.client = client;
+  }
+  async generateMetadata(options) {
+    const client = this.client;
+    const headers =
+      typeof client.getRequestHeaders === "function"
+        ? await client.getRequestHeaders(options.service_url)
+        : await new Promise((resolve, reject) => {
+            client.getRequestMetadata(options.service_url, (error, values) =>
+              error ? reject(error) : resolve(values),
+            );
+          });
+    if (!headers) throw new Error("Headers not set by metadata plugin");
+    const result = new Metadata();
+    if (typeof headers.forEach === "function") {
+      // Google Auth 10 returns WHATWG Headers; Map-like adapters work too.
+      headers.forEach((value, name) => result.add(name, value));
+    } else {
+      for (const name of Object.keys(headers)) result.add(name, headers[name]);
     }
-    generateMetadata(options) {
-        return new Promise((resolve, reject) => {
-            this.metadataGenerator(options, (err, metadata) => {
-                if (metadata !== undefined) {
-                    resolve(metadata);
-                }
-                else {
-                    reject(err);
-                }
-            });
-        });
-    }
-    compose(other) {
-        if (other instanceof EmptyCallCredentials) {
-            return this;
-        }
-        return new ComposedCallCredentials([this, other]);
-    }
-    _equals(other) {
-        if (this === other) {
-            return true;
-        }
-        if (other instanceof SingleCallCredentials) {
-            return this.metadataGenerator === other.metadataGenerator;
-        }
-        else {
-            return false;
-        }
-    }
+    return result;
+  }
 }
-class EmptyCallCredentials extends CallCredentials {
-    generateMetadata(options) {
-        return Promise.resolve(new metadata_1.Metadata());
-    }
-    compose(other) {
-        return other;
-    }
-    _equals(other) {
-        return other instanceof EmptyCallCredentials;
-    }
+function isEmptyCallCredentials(value) {
+  return plans.get(value)?.length === 0;
 }
-function isEmptyCallCredentials(callCredentials) {
-    return callCredentials instanceof EmptyCallCredentials;
-}
+module.exports = { CallCredentials, isEmptyCallCredentials };
