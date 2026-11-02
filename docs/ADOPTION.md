@@ -5,7 +5,7 @@ Adoption here means a VPM artifact is reachable from VentiMath's committed
 production dependencies. It does not by itself verify a deployment.
 
 Verified November 2, 2026 against the application's main branch, commit
-`245c1541` (styling migration; calendar migration: `63f63f6a`):
+`8fcc5099` (styling migration: `245c1541`; calendar migration: `63f63f6a`):
 
 | Package | In use | Available update |
 | --- | --- | --- |
