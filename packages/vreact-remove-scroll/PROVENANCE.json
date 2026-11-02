@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "react-remove-scroll",
+    "version": "2.7.2",
+    "repository": "https://github.com/theKashey/react-remove-scroll",
+    "commit": "ef5c312e4c1c6bc5d4cd60b03261d686b8cb165f",
+    "integrity": "sha512-Iqb9NjCCTt6Hf+vOdNIZGdTiH1QSqr27H/Ek9sv/a97gfueI/5h1s3yRi1nngzMUaOOToin5dI1dXKdXiF+u0Q=="
+  },
+  "checked": "2026-11-02",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete",
+    "basis": "Independent event controller and React composition for the public root/UI/sidecar contracts on React19 and modern DOM. No upstream runtime copied."
+  },
+  "changes": [
+    "One native listener set per owner document, with a stack of active locks.",
+    "Captured event identity in WeakSets replaces timer-expired event matching queues.",
+    "Compose forwarded child refs and capture handlers.",
+    "Use VPM scrollbar, stylesheet, callback-ref and sidecar implementations; remove tslib.",
+    "Track touch movement incrementally and support composed shadow paths; clip overflow is not scrollable."
+  ]
+}
