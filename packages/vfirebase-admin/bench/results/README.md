@@ -1,5 +1,10 @@
 # vfirebase-admin measurements
 
+Messaging rows below predate the independent schema validation rewrite. Current
+validation-only measurements, including remaining regressions, are in the
+[Messaging validation report](../messaging-validation-results/README.md). They
+do not remeasure complete send or multicast latency.
+
 These recordings precede the independent Storage hash-stream, URL-signing and save implementations.
 Their retained source hashes describe that earlier tree, not the current
 transitive Storage source. Earlier signing and hash-stream measurements are in

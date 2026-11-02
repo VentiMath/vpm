@@ -134,6 +134,7 @@ jobs:
           node scripts/firebase-admin-conformance/run.cjs --upstream
           node scripts/firebase-admin-conformance/run.cjs
           node scripts/firebase-admin-conformance/regressions.cjs
+          node scripts/firebase-admin-conformance/messaging-validation.cjs
           node scripts/firebase-admin-conformance/callers.cjs
           node scripts/firebase-functions-conformance/run.cjs --upstream
           node scripts/firebase-functions-conformance/run.cjs
@@ -455,6 +456,7 @@ jobs:
           bun scripts/firebase-admin-conformance/run.cjs --upstream
           bun scripts/firebase-admin-conformance/run.cjs
           bun scripts/firebase-admin-conformance/regressions.cjs
+          bun scripts/firebase-admin-conformance/messaging-validation.cjs
           bun scripts/firebase-admin-conformance/callers.cjs
           bun scripts/firebase-functions-conformance/run.cjs --upstream
           bun scripts/firebase-functions-conformance/run.cjs

@@ -3,7 +3,7 @@
 **Implementation status:** VPM independently implements app and credential
 management and the Auth operations used by VentiMath. It also owns HTTP transport,
 responses, retries, authorization, Firestore client configuration, Storage
-contexts and Messaging send/response orchestration. Endpoint schemas, remaining service APIs and Google Auth remain
+contexts and Messaging validation/send/response orchestration. Auth endpoint schemas, remaining service APIs and Google Auth remain
 upstream-derived. This is a partial SDK rewrite;
 [provenance](PROVENANCE.json) maps the boundary.
 
@@ -42,6 +42,18 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
 
 ## Changes from 14.5.0
 
+- **Independent Messaging validation.** Validate the entire owned request before
+  converting fields to wire names. Invalid later branches cannot leave earlier
+  fields partly normalized. Nonfinite durations, invalid Dates and nonstring
+  enum options produce structured `messaging/invalid-payload` errors. Conflicting
+  SDK/wire aliases reject instead of silently overwriting one another. Validation
+  accepts JSON records (including null prototypes), rather than class instances
+  or inherited targets. Shared URL validation remains upstream-derived.
+  All 171 original payload/options tests pass on Node 24 and Bun. Seven focused
+  tests include the reminder payload VentiMath sends and ordered mixed-validity
+  batches. [Original defect controls](../../scripts/firebase-admin-conformance/messaging-validation.cjs)
+  and [isolated timings](bench/messaging-validation-results/README.md) document the differences.
+
 - **Owned Messaging send plans.** `send`, `sendEach` and `sendEachForMulticast`
   detach JSON-shaped payloads before asynchronous project lookup. Own
   `constructor` fields and null prototypes cannot bypass that copy, and own
@@ -51,7 +63,7 @@ namespaces, still present in 13.x, were removed upstream in 14.0.
   pending and can retry after failure; encoded identifiers cannot introduce path
   segments or query strings. HTTP/2 sessions open after project discovery and only
   when at least one message validates, then close once the batch settles. Message
-  schema validation and topic-management orchestration remain retained.
+  topic-management orchestration remains retained.
 
 - **Reliable Messaging delivery results.** Batch success requires a real message
   name and no error envelope, even when the HTTP status is 200. Malformed FCM

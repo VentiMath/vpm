@@ -20,6 +20,16 @@ node scripts/firebase-admin-conformance/callers.cjs
 
 Repeat with Bun.
 
+`messaging-validation.cjs` reproduces five original malformed-input outcomes and
+partial normalization before rejection. VPM returns structured SDK errors and
+validates all branches before editing wire fields. All 171 unchanged payload and
+option tests pass on Node 24/Bun; the broader 511-test Messaging suite retains
+its existing outcomes. These HTTP/2 tests need socket access: sandbox-denied
+connections add session diagnostics and are not a valid conformance run.
+Seven focused tests also exercise the actual reminder multicast shape and an
+ordered valid/invalid batch. The shared URL predicate remains upstream-derived.
+
+
 `messaging-send.cjs` runs each implementation in a separate process. Twenty-four
 normal send/multicast outcomes match, including token/FID recipients, dry-run
 requests, APNs/data payloads and ordered partial failures. Additional controls

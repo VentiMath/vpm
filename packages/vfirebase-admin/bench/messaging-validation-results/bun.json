@@ -1,0 +1,1041 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-02T01:53:49.041Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/firebase-admin-conformance/node_modules/firebase-admin": "d31d17fea1e81715904823960de5fa0e02ba7aec1e95647fc24c6c9bd7852900",
+    "../../scripts/firebase-admin-conformance/package-lock.json": "1b27b6f0e873a29b247c90dd5832c22de55276d178c86fffb896aeecb66d458b",
+    "bench/messaging-validation.cjs": "68b53fa8f2836ef6572bab5bf433092f4e97a585a789532f79aea42f5be4d384",
+    "lib/messaging/error.js": "b68ae638762c1ff70a9724007f9eec34876ad3380db8002271e9c44255c9d3d1",
+    "lib/messaging/messaging-internal.js": "e58c6370f1ce9886ad0c7328c87de0c6defd5bed36e09740312b615061f82e70",
+    "lib/utils/validator.js": "f93ee67c091c2106aa9401f1505caf6c6b0c24b055dbc229797143990ca19c4f",
+    "package.json": "2c677d7fb745e80965435927bd7a32d71d5f076746490e4b0f083a04e1f99f53"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 29618,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 61209,
+            "samples": [
+              242.25264258524044,
+              241.53515005963203,
+              240.58212027643017,
+              239.66926432387393,
+              248.4635919554316,
+              245.85369798559003,
+              253.74127987714226,
+              242.9068110898726,
+              239.58146677776116,
+              248.86319005375015,
+              253.487379306964,
+              244.67125749481312
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 41070,
+            "samples": [
+              329.4355247139048,
+              308.7878500121743,
+              309.831799366934,
+              303.9789870952035,
+              318.34774774774655,
+              296.7687363038698,
+              325.60973946919904,
+              300.5457998539091,
+              330.4622108595087,
+              313.69308497686876,
+              324.46635013391744,
+              302.7209642074493
+            ]
+          }
+        ],
+        "checksum": 61248
+      },
+      "vpm": {
+        "pid": 29621,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 61209,
+            "samples": [
+              153.72943521377584,
+              166.81778823375632,
+              154.6892613831301,
+              142.22308810795838,
+              151.57560162721225,
+              155.68040647617187,
+              141.38102239866708,
+              154.86011861000847,
+              154.8002254570406,
+              149.74786387622703,
+              167.78645297260195,
+              151.62394419121298
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 41070,
+            "samples": [
+              629.1859264670089,
+              644.5702459215964,
+              615.6744582420259,
+              599.0088142196264,
+              634.6096177258356,
+              643.4603603603605,
+              691.0549062576086,
+              652.2157292427573,
+              667.0836376917448,
+              862.4563671779877,
+              653.3225712198681,
+              759.8531044558051
+            ]
+          }
+        ],
+        "checksum": 3328
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 29627,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 88602,
+            "samples": [
+              152.52147807047254,
+              154.66496241619848,
+              156.57660097966175,
+              153.74746619715094,
+              148.55336222658636,
+              138.58603643258613,
+              148.7889663890205,
+              145.08701835173042,
+              146.44796957179264,
+              145.85261055055156,
+              143.8144737139118,
+              156.8305455858781
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 19144,
+            "samples": [
+              611.1335666527348,
+              570.2112933556247,
+              556.5102904304201,
+              608.6263058921829,
+              597.0604366903456,
+              592.3417781027994,
+              558.8021312160486,
+              577.7462912661942,
+              583.5770998746357,
+              582.4888737985785,
+              585.7536042624314,
+              579.7225240284162
+            ]
+          }
+        ],
+        "checksum": 78976
+      },
+      "upstream": {
+        "pid": 29631,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 88602,
+            "samples": [
+              231.70563869890074,
+              237.12123879822113,
+              239.18806573214994,
+              233.7640120990501,
+              232.198945847724,
+              233.69439741766527,
+              235.21713956795563,
+              236.0998284463107,
+              248.34982280309725,
+              247.2108417417212,
+              237.00461614862013,
+              243.39837701180502
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 19144,
+            "samples": [
+              286.321197241959,
+              321.16678854993705,
+              277.42587755955105,
+              302.9082218971977,
+              278.28123694107666,
+              311.6838173840406,
+              322.99503760969895,
+              297.9414960300889,
+              280.1922273297074,
+              275.06879440033146,
+              300.0265357292086,
+              266.49994776431
+            ]
+          }
+        ],
+        "checksum": 4096
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 29633,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 17068,
+            "samples": [
+              265.39430513241194,
+              239.0950902273255,
+              219.16985001171793,
+              244.214319193813,
+              241.73892664635602,
+              219.22363487227645,
+              257.5287086946331,
+              239.74443402859183,
+              225.12403327865078,
+              255.40725333958198,
+              240.20828450902258,
+              247.2658190766336
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 38878,
+            "samples": [
+              299.9522094757975,
+              286.7356602705906,
+              304.9293173517148,
+              316.2907042543334,
+              299.6467410875037,
+              297.0606769895572,
+              288.0967385153573,
+              302.8972940994898,
+              284.4700087453054,
+              294.7318277689204,
+              292.20039611091227,
+              282.98029734039835
+            ]
+          }
+        ],
+        "checksum": 62016
+      },
+      "vpm": {
+        "pid": 29638,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 17068,
+            "samples": [
+              177.65215608155702,
+              146.3996953363019,
+              149.27056479962383,
+              130.96385048043058,
+              149.3486641668617,
+              136.3370049214904,
+              129.62362315444048,
+              151.65807358800154,
+              141.20969064916812,
+              150.37889617998732,
+              168.0850128896165,
+              135.6998476681509
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 38878,
+            "samples": [
+              580.4085858326051,
+              582.7931992386449,
+              580.6368640362147,
+              587.5452440969183,
+              587.2547970574608,
+              574.8291578784917,
+              586.9718606924224,
+              574.3490405885092,
+              584.4082771747499,
+              578.0593651936829,
+              588.7948454138588,
+              573.5773702350938
+            ]
+          }
+        ],
+        "checksum": 5952
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 29641,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 85481,
+            "samples": [
+              137.5929504802237,
+              138.99532059755978,
+              138.14862952001013,
+              149.7335665235549,
+              136.97488330740174,
+              140.0447701828474,
+              141.2482539979647,
+              143.63230425474651,
+              138.8700412957264,
+              143.27403750541055,
+              135.42190662252457,
+              142.8353435266314
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 19344,
+            "samples": [
+              594.1528122415217,
+              592.3693134822117,
+              617.3921629445855,
+              586.6203473945401,
+              589.3774296939646,
+              589.3645057899089,
+              588.7828784119098,
+              562.2027502067792,
+              602.5921215880924,
+              576.8562861869337,
+              587.6822270471505,
+              615.5547456575675
+            ]
+          }
+        ],
+        "checksum": 58432
+      },
+      "upstream": {
+        "pid": 29646,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 85481,
+            "samples": [
+              234.8046115511047,
+              247.2547583673564,
+              237.0375639030894,
+              244.74541711023517,
+              253.81468396485747,
+              253.7288988196203,
+              250.86861407798227,
+              250.56785718463752,
+              242.70695242217548,
+              242.1585849487025,
+              242.52271264959478,
+              259.6653993285058
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 19344,
+            "samples": [
+              300.6789702233242,
+              315.31523986766064,
+              296.213761373036,
+              331.19871794871693,
+              308.33421215881026,
+              304.04993796526475,
+              330.4362593052131,
+              276.3540115798219,
+              304.6444375516975,
+              322.0766129032294,
+              280.70719602977994,
+              328.3942307692285
+            ]
+          }
+        ],
+        "checksum": 4160
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 29647,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 58965,
+            "samples": [
+              235.89698973967634,
+              233.51210039854175,
+              240.7049266514037,
+              224.60357839396215,
+              226.16029848215,
+              239.7905537183066,
+              222.86737895361622,
+              254.7549393708127,
+              252.0725515136104,
+              237.26222335283617,
+              232.0868311710337,
+              236.12736369032567
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 20456,
+            "samples": [
+              268.7719984356691,
+              296.26393234258444,
+              283.8164841611313,
+              304.41757919436895,
+              294.04370355886255,
+              292.4203167774697,
+              298.29673445444274,
+              301.7105494720368,
+              276.10686351192965,
+              306.6296929996098,
+              310.77473601877267,
+              289.9414352757105
+            ]
+          }
+        ],
+        "checksum": 61952
+      },
+      "vpm": {
+        "pid": 29650,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 58965,
+            "samples": [
+              240.8985499872808,
+              236.26444500975146,
+              242.20652929704124,
+              255.0340540998893,
+              237.14491647587647,
+              237.76887984397604,
+              226.69168150597798,
+              230.9413720003392,
+              249.6516408038667,
+              233.20542694818906,
+              235.0214873229884,
+              237.78229458153208
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 20456,
+            "samples": [
+              285.287104028157,
+              286.712944857255,
+              299.82440359796476,
+              293.4530211184991,
+              274.9437817755163,
+              285.6354125928856,
+              302.29717442314865,
+              295.0132968322271,
+              280.19285295267935,
+              294.6446030504488,
+              298.5452190066475,
+              298.22345522096214
+            ]
+          }
+        ],
+        "checksum": 4288
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 29655,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 62402,
+            "samples": [
+              247.06539854491876,
+              228.6057818659653,
+              230.08542995416846,
+              238.37711932309836,
+              229.78898112239992,
+              223.50980737796925,
+              232.74228390115746,
+              238.8104547931153,
+              244.82922021730053,
+              246.75290856062307,
+              234.6085381878785,
+              234.06568699721208
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 42625,
+            "samples": [
+              290.8572903225802,
+              304.6412434017588,
+              295.348973607038,
+              291.4398826979481,
+              297.01564809384223,
+              279.6529736070382,
+              289.19061583577593,
+              291.8172199413467,
+              283.7390029325516,
+              293.33724340176025,
+              291.3656070381249,
+              290.12412903225766
+            ]
+          }
+        ],
+        "checksum": 58304
+      },
+      "upstream": {
+        "pid": 29656,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "application reminder payload",
+            "iterations": 62402,
+            "samples": [
+              226.01371750905486,
+              230.87401044838276,
+              222.0261369827889,
+              228.41948975994427,
+              229.56595942437755,
+              221.14207877952555,
+              231.00020832665612,
+              237.78817986603,
+              226.13191884875494,
+              235.4471811800908,
+              237.54712989968286,
+              236.9528701003175
+            ]
+          },
+          {
+            "case": "Android topic normalization",
+            "iterations": 42625,
+            "samples": [
+              291.76832844574625,
+              287.41250439882623,
+              283.21604692082155,
+              290.7243401759549,
+              294.36755425219934,
+              308.3333489736063,
+              296.7663812316721,
+              279.0909090909093,
+              281.7908269794729,
+              295.54057478005745,
+              303.6431906158371,
+              279.3792609970678
+            ]
+          }
+        ],
+        "checksum": 3584
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "application reminder payload",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 243.78903429234288,
+          "vpmNs": 154.20934829845297,
+          "changePct": -36.74475607728493
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 236.55222229746542,
+          "vpmNs": 148.67116430780342,
+          "changePct": -37.15080633618027
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 240.97360557768928,
+          "vpmNs": 147.83513006796287,
+          "changePct": -38.650903399334666
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 246.0000877387958,
+          "vpmNs": 139.5200453902036,
+          "changePct": -43.28455462245741
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 236.012176715001,
+          "vpmNs": 237.45689815992625,
+          "changePct": 0.6121385197297879
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 230.21998493638017,
+          "vpmNs": 234.33711259254528,
+          "changePct": 1.788345028909144
+        }
+      ]
+    },
+    {
+      "case": "Android topic normalization",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 311.7624421719014,
+          "vpmNs": 648.3929875821768,
+          "changePct": 107.97661933398062
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 292.131346636024,
+          "vpmNs": 583.032986836607,
+          "changePct": 99.5790570065139
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 295.89625237923883,
+          "vpmNs": 581.7150316374298,
+          "changePct": 96.59425456050319
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 306.48932485525387,
+          "vpmNs": 589.3709677419367,
+          "changePct": 92.29738850456857
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 295.15381795072346,
+          "vpmNs": 294.048812084474,
+          "changePct": -0.3743830501403034
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 291.24633431085056,
+          "vpmNs": 291.4027448680365,
+          "changePct": 0.05370387152032752
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "application reminder payload",
+      "upstream_ns": 242,
+      "vpm_ns": 148,
+      "change_pct": -37.9,
+      "upstream_first_pct": -37.7,
+      "vpm_first_pct": -40.2,
+      "process_range_pct": "-36.7, -37.2, -38.7, -43.3",
+      "control_max_abs_pct": 1.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Android topic normalization",
+      "upstream_ns": 301,
+      "vpm_ns": 586,
+      "change_pct": 98.1,
+      "upstream_first_pct": 102.3,
+      "vpm_first_pct": 95.9,
+      "process_range_pct": "108.0, 99.6, 96.6, 92.3",
+      "control_max_abs_pct": 0.4,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}
