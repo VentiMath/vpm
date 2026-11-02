@@ -881,6 +881,13 @@
         "vnode-types": "^0.1.0",
       },
     },
+    "packages/vuse-sync-external-store": {
+      "name": "vuse-sync-external-store",
+      "version": "1.7.0",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vuuid": {
       "name": "vuuid",
       "version": "0.1.0",
@@ -1207,6 +1214,8 @@
     "vtype-is": ["vtype-is@workspace:packages/vtype-is"],
 
     "vundici-types": ["vundici-types@workspace:packages/vundici-types"],
+
+    "vuse-sync-external-store": ["vuse-sync-external-store@workspace:packages/vuse-sync-external-store"],
 
     "vuuid": ["vuuid@workspace:packages/vuuid"],
 

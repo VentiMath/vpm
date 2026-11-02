@@ -1,0 +1,5 @@
+{
+ "name":"external-store-conformance","private":true,
+ "description":"Pinned external-store controls and real React Redux caller fixtures",
+ "dependencies":{"use-sync-external-store":"1.7.0","external-store-legacy":"npm:use-sync-external-store@1.6.0","react":"19.1.0","react-dom":"19.1.0","react-redux":"9.2.0","redux":"5.0.1","@types/react":"19.2.10","@types/react-dom":"19.2.3","jsdom":"27.4.0","esbuild":"0.19.12"}
+}

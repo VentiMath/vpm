@@ -1,0 +1,1312 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-02T01:52:25.628Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/external-store-conformance/node_modules/react": "b8be677a125f362347fb2b1f35507e0b5c1ab6f994d766dec3ae9b1a9b445483",
+    "../../scripts/external-store-conformance/node_modules/react-dom": "a618ca6f455bc83b2562fe61c96ef682a7d305062b3c02105a048b5dae04350d",
+    "../../scripts/external-store-conformance/node_modules/use-sync-external-store": "4102bdbbf8a9eb834b1a031d69aae111907da514fdf88ef345a48d1b330bdf28",
+    "../../scripts/external-store-conformance/package-lock.json": "26f35fabbcd0507cc2dc1bf99ee5d9ef7bd5caf34adc066e81f3fe9c76333580",
+    "bench/compare.cjs": "8c28e05d9ed4480f1ecaecfc8f7ffd274e0e423e46b839911fb6d0306d593fc4",
+    "package.json": "9ffcc1ed3a6a57a21b0688910f2e650ad6a63b7186bc75cd8e2ea32d6c1f0432",
+    "selection.cjs": "97169c5c129c2ab420a2fa122f8ef133cb740c081c7467046fdf59d6331a0510",
+    "with-selector.cjs": "4b441aeafa65264e25c2c1e12a8c25ecca8ffa1fd4cc46ab213002cf11d625f4"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 28955,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 10507,
+            "samples": [
+              1355.0926049300404,
+              1306.1054535071864,
+              1674.5384029694503,
+              1161.4835823736562,
+              1166.4762539259548,
+              1167.721518987347,
+              1168.4234319977127,
+              1164.1127819548824,
+              1212.2910440658682,
+              1209.0550109450817,
+              1194.0967926144378,
+              1212.524983344438
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 63379,
+            "samples": [
+              165.01325360135135,
+              157.4088578235689,
+              143.82393221729563,
+              159.07608198299138,
+              161.52104009214366,
+              156.67847394247266,
+              142.6964451947802,
+              157.95847204910174,
+              159.47711387052428,
+              141.56174758200646,
+              155.5450859117374,
+              156.33332807396698
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 4504,
+            "samples": [
+              2779.5108792184947,
+              2839.2724245115264,
+              2354.869671403186,
+              2791.398312611034,
+              2322.41718472473,
+              2808.0686056838467,
+              2859.0142095915144,
+              2395.666740674926,
+              2880.6061278863194,
+              2487.8903197157874,
+              3325.1554174067464,
+              3002.5810390763854
+            ]
+          }
+        ],
+        "checksum": 275776
+      },
+      "vpm": {
+        "pid": 28971,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 10507,
+            "samples": [
+              1190.476158751308,
+              1153.8141239173954,
+              1141.8340154182933,
+              1163.807461692203,
+              1124.0482535452468,
+              1149.6938231655095,
+              1156.5820881317193,
+              1197.0313124583543,
+              1201.016845912253,
+              1225.3934519843845,
+              1131.8366803083643,
+              1170.36661273436
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 63379,
+            "samples": [
+              148.8367598100302,
+              160.91752788778658,
+              159.42452547373674,
+              162.3368939238539,
+              144.36564161630886,
+              671.5151390839245,
+              232.1043563325379,
+              165.5727133593163,
+              163.35786301456392,
+              149.07212168068267,
+              162.49203995014133,
+              165.81399201628182
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 4504,
+            "samples": [
+              3093.8332593250657,
+              3032.2768650088815,
+              2608.144538188272,
+              3308.8643428064042,
+              2667.378996447624,
+              3805.7375666074536,
+              3397.1654085257574,
+              2607.4507104795784,
+              3474.189609236254,
+              2895.472690941381,
+              3788.299289520426,
+              3753.006438721115
+            ]
+          }
+        ],
+        "checksum": 28224
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 28994,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 6324,
+            "samples": [
+              1142.4269449715314,
+              1272.0852308665408,
+              1097.610847564829,
+              1075.690543959526,
+              1201.4217267552228,
+              1068.9372232764042,
+              1320.3537318153076,
+              1079.656862745104,
+              1082.94465528146,
+              1460.4878241619251,
+              1103.1652435167746,
+              1234.2398798228999
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 68073,
+            "samples": [
+              261.88368369250554,
+              2585.2552847678226,
+              2989.557166571182,
+              1729.988394811452,
+              610.8870917985124,
+              434.70489033831376,
+              1090.3521366768005,
+              500.4921187548685,
+              293.1724031554347,
+              251.75424911492024,
+              295.75358805987696,
+              387.8599738516018
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 815,
+            "samples": [
+              10447.69938650288,
+              11390.184049079913,
+              5678.579141104077,
+              11099.642944785108,
+              12873.466257668633,
+              8037.8319018405045,
+              8052.658895705485,
+              5448.0576687116245,
+              30278.57791411033,
+              4163.1901840491155,
+              3807.4134969324655,
+              3780.573006135031
+            ]
+          }
+        ],
+        "checksum": 221344
+      },
+      "upstream": {
+        "pid": 28997,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 6324,
+            "samples": [
+              1306.9326375711566,
+              1157.6269765970894,
+              1554.5210309930385,
+              1708.9920936116446,
+              1258.670619860848,
+              1443.350727387728,
+              1360.893580012659,
+              1093.3349146110118,
+              1432.6968690702122,
+              1124.72327640732,
+              1105.8072422517337,
+              1056.899588867813
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 68073,
+            "samples": [
+              155.71518810688391,
+              143.37733021902983,
+              158.60852320303064,
+              167.61357660159052,
+              155.29895847105388,
+              141.76937993036717,
+              158.15130815448182,
+              153.7430405594005,
+              153.81525715041113,
+              144.57273808999156,
+              163.81249540933993,
+              158.7156435003586
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 815,
+            "samples": [
+              3028.0674846626366,
+              5468.813496932529,
+              3894.580368098015,
+              2382.4638036810584,
+              2364.9791411044357,
+              2811.3496932515222,
+              2631.084662576775,
+              2648.261349693355,
+              2238.9570552147175,
+              2328.2723926379513,
+              4897.494478527845,
+              2351.7374233129785
+            ]
+          }
+        ],
+        "checksum": 32512
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 29002,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 3936,
+            "samples": [
+              1989.9115853658525,
+              1286.1407520325217,
+              1798.4522357723592,
+              2088.636941056905,
+              3450.1925813008215,
+              1566.7769308943075,
+              1600.0063516259972,
+              2718.3371443089513,
+              2527.026168699184,
+              1414.9623983739884,
+              1518.9913617886443,
+              1298.050050812995
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 41487,
+            "samples": [
+              192.59447537782748,
+              282.4137681683418,
+              156.02379058500398,
+              149.95458818425143,
+              191.1984477065121,
+              148.77149468508037,
+              171.44327138621708,
+              145.70730590305274,
+              161.25834598789902,
+              144.45086412611224,
+              179.46585677441217,
+              145.36881432738082
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 4542,
+            "samples": [
+              2287.4376926464374,
+              2713.3053720827656,
+              2701.5173932188804,
+              2466.9841479524544,
+              2983.450682518717,
+              2419.1343020695977,
+              2761.934830471136,
+              3006.8251871422117,
+              2563.66512549541,
+              3184.2250110083974,
+              2479.451122853366,
+              3329.0766182298107
+            ]
+          }
+        ],
+        "checksum": 258368
+      },
+      "vpm": {
+        "pid": 29026,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 3936,
+            "samples": [
+              997.247459349591,
+              1203.8871951219337,
+              1181.0317581300872,
+              1242.6956300813044,
+              930.3861788617685,
+              1189.9664634146402,
+              1187.3729674796723,
+              1191.5650406503917,
+              909.9763719512293,
+              1283.9387703252041,
+              1284.7855691056914,
+              1303.6605691056948
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 41487,
+            "samples": [
+              142.26345602236987,
+              167.2401475160905,
+              173.5814833562317,
+              160.01699327500296,
+              140.6072986718715,
+              172.62537662400206,
+              151.44705570419723,
+              162.26268469640917,
+              141.0592474751127,
+              168.91537108009726,
+              161.5827608648487,
+              195.31219418131096
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 4542,
+            "samples": [
+              2437.243284896505,
+              3188.857771906648,
+              3646.558124174355,
+              2441.9859092910606,
+              3200.9026860414165,
+              2789.786217525289,
+              2500.8623954205236,
+              2960.8009687362332,
+              2426.3265081462037,
+              3045.9784236019373,
+              3041.565609863499,
+              2499.192646411287
+            ]
+          }
+        ],
+        "checksum": 41216
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 29040,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 11105,
+            "samples": [
+              1105.2190904997753,
+              1107.425393966681,
+              1081.0483565961283,
+              1128.5569563259737,
+              1117.555965781185,
+              1171.9233678523233,
+              1101.2381809995582,
+              1097.6737505628184,
+              1060.3294011706412,
+              1076.6809545249898,
+              1062.4981539846901,
+              1078.9921656911315
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 43864,
+            "samples": [
+              299.0103957687384,
+              208.68573317527057,
+              186.1653747948214,
+              175.62807769469302,
+              161.4706821083356,
+              174.3580384825833,
+              160.5872697428411,
+              173.9961471821991,
+              169.4859793908453,
+              152.54156027721902,
+              245.3977065475113,
+              701.0304577785884
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 1193,
+            "samples": [
+              4678.471081307619,
+              2560.9807208716575,
+              2452.2917015926837,
+              2469.9639564123504,
+              2329.3512154232867,
+              2174.490360435851,
+              3730.511316010182,
+              2383.6261525565674,
+              2337.1056160938224,
+              2416.9111483653705,
+              2255.553227158429,
+              2222.896898575045
+            ]
+          }
+        ],
+        "checksum": 243328
+      },
+      "upstream": {
+        "pid": 29058,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 11105,
+            "samples": [
+              1186.44385411977,
+              1193.1149031967602,
+              1192.559657811798,
+              1160.9221972084704,
+              1173.8819450697824,
+              1183.1870328680734,
+              1183.9298514182842,
+              1152.8140477262514,
+              1102.3826204412383,
+              1084.0650157586679,
+              1103.845925258889,
+              1093.955425484015
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 43864,
+            "samples": [
+              148.71534743753332,
+              168.89989513040373,
+              148.1539531278485,
+              161.86300838956544,
+              148.32587087360952,
+              169.66836129855832,
+              147.80437260623765,
+              171.5653383184382,
+              145.01071493707946,
+              171.2632682837837,
+              146.94756520153385,
+              170.64392212292628
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 1193,
+            "samples": [
+              2293.133277451745,
+              2386.3512154231757,
+              2276.194467728242,
+              2298.302598491336,
+              3799.734283319391,
+              2406.6772841575043,
+              2376.606035205446,
+              2325.8943839060635,
+              2219.7191953060887,
+              2237.461860855022,
+              3747.4853310980325,
+              2526.9279128248313
+            ]
+          }
+        ],
+        "checksum": 29696
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 29063,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 10921,
+            "samples": [
+              1079.7393095870339,
+              1076.938925006869,
+              1114.8208955223934,
+              1104.042670085163,
+              1106.244116839114,
+              1084.3252449409365,
+              1101.4330189543136,
+              1103.7297866495792,
+              1205.4565515978425,
+              1097.0644629612677,
+              1112.859811372576,
+              1123.7143118761971
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 72162,
+            "samples": [
+              153.8852304537023,
+              158.27697403065244,
+              155.0388847315758,
+              167.31105013719244,
+              141.16848202655152,
+              156.8357722901236,
+              154.9511238602025,
+              155.42864665613502,
+              175.498073778442,
+              146.72715556664158,
+              158.82320334802267,
+              156.1844599650784
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 3947,
+            "samples": [
+              2552.149227261223,
+              2967.7707119331462,
+              2445.4228527996097,
+              2829.0367367621225,
+              2519.698505193815,
+              2950.014948061805,
+              2436.7767925006447,
+              3017.0382569039657,
+              2443.7230808208337,
+              3029.104383075723,
+              2447.0590321763107,
+              2934.7392956676385
+            ]
+          }
+        ],
+        "checksum": 232768
+      },
+      "vpm": {
+        "pid": 29068,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 10921,
+            "samples": [
+              1451.5001373500595,
+              1315.3137075359325,
+              1218.1347861917452,
+              1478.3979489057765,
+              1256.6004028935101,
+              1383.9659371852374,
+              1153.5536123065708,
+              1159.6274150718739,
+              1140.8601776394114,
+              1141.5926197234735,
+              1158.444739492723,
+              1186.0521014559165
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 72162,
+            "samples": [
+              144.20562068678785,
+              151.32213630442635,
+              158.4577062719989,
+              158.18689892186998,
+              159.96992877137615,
+              144.95163659543695,
+              154.75654776752344,
+              162.8586790831739,
+              157.5390510240848,
+              153.16694382084862,
+              145.08674925861223,
+              158.96293062830884
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 3947,
+            "samples": [
+              2730.100836078065,
+              2548.253863693912,
+              2928.6589815049247,
+              2490.95287560174,
+              3059.5705599189378,
+              2423.4228527996215,
+              3198.684570559901,
+              2563.159614897428,
+              3162.1484671902695,
+              2451.461109703579,
+              3201.8201165441687,
+              2526.686850772691
+            ]
+          }
+        ],
+        "checksum": 28352
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 29069,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 9605,
+            "samples": [
+              1117.1699115044294,
+              1027.9324310255129,
+              1115.608224882868,
+              1151.5486725663675,
+              1166.4193649141143,
+              1067.2782925559625,
+              1112.2679854242526,
+              1116.6622592399813,
+              1089.831650182201,
+              1079.9626236335303,
+              1008.3983342009337,
+              1124.1540864133278
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 68354,
+            "samples": [
+              159.86445562805372,
+              162.24971472042606,
+              161.32987096585313,
+              147.89245691547015,
+              158.14059162594677,
+              164.2033970213875,
+              159.97296427421972,
+              148.02596775609288,
+              161.75717587851426,
+              159.65109576615808,
+              163.7163443251304,
+              148.88057758141514
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 4027,
+            "samples": [
+              2459.574869629948,
+              2915.5803327539375,
+              2418.135833126374,
+              2896.593742239879,
+              2301.3719890737407,
+              2963.641172088397,
+              2433.821703501405,
+              2946.4447479513196,
+              2318.2681897193806,
+              3122.827166625266,
+              2607.099826173382,
+              2831.439781475037
+            ]
+          }
+        ],
+        "checksum": 263040
+      },
+      "upstream": {
+        "pid": 29098,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR with selector",
+            "iterations": 9605,
+            "samples": [
+              1155.1448204060391,
+              1158.2161374284158,
+              1115.5387818844333,
+              1048.4513274336298,
+              1129.5461738677766,
+              1123.416657990623,
+              1124.943571056738,
+              1018.0851639771007,
+              1108.836543466938,
+              1130.166579906306,
+              1105.0538261322151,
+              1093.4322748568375
+            ]
+          },
+          {
+            "case": "unselected field update",
+            "iterations": 68354,
+            "samples": [
+              154.5008338941391,
+              155.16282880299607,
+              156.05158439886443,
+              142.27527284431105,
+              156.1899523071084,
+              158.1344910319805,
+              159.98149340199583,
+              144.26247183778523,
+              156.69773531907416,
+              157.60354917049463,
+              157.85835503408748,
+              143.86745472101185
+            ]
+          },
+          {
+            "case": "selected field update and render",
+            "iterations": 4027,
+            "samples": [
+              2846.7946362056277,
+              2374.7827166625093,
+              2847.611869878335,
+              2432.2490687856694,
+              2868.3262974919,
+              2345.977154209074,
+              3056.3901167122235,
+              2302.748199652361,
+              2880.4837347901575,
+              2963.0824435063255,
+              2392.5378693816588,
+              3020.9627514279023
+            ]
+          }
+        ],
+        "checksum": 29312
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "SSR with selector",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1201.5759017797598,
+          "vpmNs": 1160.1947749119613,
+          "changePct": -3.443904526256325
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1282.8016287160024,
+          "vpmNs": 1122.796094244153,
+          "changePct": -12.473131534140947
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1699.2292936991782,
+          "vpmNs": 1190.765752032516,
+          "changePct": -29.923185973315604
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1167.4020711391263,
+          "vpmNs": 1099.4559657811883,
+          "changePct": -5.820283091637624
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1103.8862283673711,
+          "vpmNs": 1202.093443823831,
+          "changePct": 8.896497930018255
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1119.477719937528,
+          "vpmNs": 1113.9381051535602,
+          "changePct": -0.494839217012466
+        }
+      ]
+    },
+    {
+      "case": "unselected field update",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 157.04366588302076,
+          "vpmNs": 162.4144669369976,
+          "changePct": 3.4199412142973395
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 155.5070732889689,
+          "vpmNs": 467.59850454659113,
+          "changePct": 200.6927560636953
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 158.6410682864515,
+          "vpmNs": 161.92272278062893,
+          "changePct": 2.0686033759252487
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 155.2891779135494,
+          "vpmNs": 174.99305808863818,
+          "changePct": 12.68850826556509
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 155.80655331060672,
+          "vpmNs": 156.14779939580413,
+          "changePct": 0.21901908356647404
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 156.12076835298643,
+          "vpmNs": 159.91870995113672,
+          "changePct": 2.4326946620985224
+        }
+      ]
+    },
+    {
+      "case": "selected field update and render",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2799.73345914744,
+          "vpmNs": 3201.3488010657347,
+          "changePct": 14.344770592576062
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2639.673006135065,
+          "vpmNs": 8045.245398772995,
+          "changePct": 204.78189457839767
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2707.411382650823,
+          "vpmNs": 2875.293593130761,
+          "changePct": 6.200838614912119
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2351.2502095557547,
+          "vpmNs": 2400.268650460969,
+          "changePct": 2.0847819898536457
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2690.5929820116726,
+          "vpmNs": 2646.6302254877464,
+          "changePct": -1.633943031065832
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2847.203253041981,
+          "vpmNs": 2719.2698038242097,
+          "changePct": -4.493302298706137
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "SSR with selector",
+      "upstream_ns": 1242,
+      "vpm_ns": 1141,
+      "change_pct": -9.1,
+      "upstream_first_pct": -16.7,
+      "vpm_first_pct": -9.1,
+      "process_range_pct": "-3.4, -12.5, -29.9, -5.8",
+      "control_max_abs_pct": 8.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "unselected field update",
+      "upstream_ns": 156,
+      "vpm_ns": 169,
+      "change_pct": 8.1,
+      "upstream_first_pct": 2.7,
+      "vpm_first_pct": 106.7,
+      "process_range_pct": "3.4, 200.7, 2.1, 12.7",
+      "control_max_abs_pct": 2.4,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "selected field update and render",
+      "upstream_ns": 2674,
+      "vpm_ns": 3038,
+      "change_pct": 10.3,
+      "upstream_first_pct": 10.3,
+      "vpm_first_pct": 103.4,
+      "process_range_pct": "14.3, 204.8, 6.2, 2.1",
+      "control_max_abs_pct": 4.5,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

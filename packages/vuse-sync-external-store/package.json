@@ -1,0 +1,84 @@
+{
+  "name": "vuse-sync-external-store",
+  "version": "1.7.0",
+  "description": "React 19 external-store subscriptions and independently written selector caching",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    },
+    "./shim": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    },
+    "./shim/index.js": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    },
+    "./shim/index.native": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    },
+    "./shim/index.native.js": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    },
+    "./with-selector": {
+      "types": "./with-selector.d.ts",
+      "import": "./with-selector.mjs",
+      "require": "./with-selector.cjs"
+    },
+    "./with-selector.js": {
+      "types": "./with-selector.d.ts",
+      "import": "./with-selector.mjs",
+      "require": "./with-selector.cjs"
+    },
+    "./shim/with-selector": {
+      "types": "./with-selector.d.ts",
+      "import": "./with-selector.mjs",
+      "require": "./with-selector.cjs"
+    },
+    "./shim/with-selector.js": {
+      "types": "./with-selector.d.ts",
+      "import": "./with-selector.mjs",
+      "require": "./with-selector.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.d.ts",
+    "with-selector.cjs",
+    "with-selector.mjs",
+    "with-selector.d.ts",
+    "selection.cjs",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vuse-sync-external-store"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

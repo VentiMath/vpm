@@ -1,0 +1,22 @@
+{
+  "upstream": {
+    "name": "use-sync-external-store",
+    "version": "1.7.0",
+    "commit": "1d34f91dfde6bba84d08b683aaba164c7194dacb",
+    "repository": "https://github.com/facebook/react/tree/1d34f91dfde6bba84d08b683aaba164c7194dacb/packages/use-sync-external-store",
+    "integrity": "sha512-6L+EeigHMQhdaIPNIFUKwfWJSwWFQ8gJbJ2DLOs5sDIegTwR9fRxvnM3uciHKjIZhFz+KAv2emhWMRvDmMcY8A=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "React 19 native external-store hook and selector helper, including shim import aliases. React 16\u201318 fallback implementations excluded."
+  },
+  "source": "Native subscription entry points re-export React; selector reader and hook wiring are independently written. Upstream test contracts retained as attributed reference evidence, not shipped runtime.",
+  "verification": {
+    "baseline": "1.7.0 current control; 1.6.0 application lock control",
+    "callers": "Twelve mounted cases per implementation on Node 24 and Bun include real React Redux 9.2.0; MUI Data Grid, Tiptap, XState and MobX are lockfile evidence only.",
+    "archives": "Clean npm/Bun installs, every CJS/ESM export, browser bundling and strict TypeScript 7 inference pass.",
+    "performance": "Isolated balanced process measurements retain controls and raw samples; no directional performance claim established."
+  }
+}
