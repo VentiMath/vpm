@@ -1,0 +1,17 @@
+{
+  "name": "vpm-sidecar-conformance",
+  "private": true,
+  "description": "Pinned sidecar and actual scroll-lock caller comparison fixtures",
+  "dependencies": {
+    "react-remove-scroll": "2.7.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@types/react": "19.2.10",
+    "@types/react-dom": "19.2.3",
+    "@testing-library/react": "16.3.2",
+    "vitest": "0.34.6",
+    "jsdom": "26.1.0",
+    "esbuild": "0.25.12",
+    "use-sidecar": "1.1.3"
+  }
+}

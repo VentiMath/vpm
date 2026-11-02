@@ -221,6 +221,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | --- | --- | --- |
 | [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
 | [vhoist-non-react-statics](packages/vhoist-non-react-statics) | hoist-non-react-statics 3.3.2 | Independent zero-dependency static hoisting; safe prototype-named fields, nearest inherited descriptors, iterative traversal and no classification getter execution. |
+| [vuse-sidecar](packages/vuse-sidecar) | use-sidecar 1.1.3 | Independent React 19 sidecar loading and registration queues; no tslib/detect-node-es. Isolated caches, cancelled stale loads, handled failures, per-registration cleanup and safe render-prop publication. Actual nested scroll-lock caller and packed consumers verified. |
 | [vuse-callback-ref](packages/vuse-callback-ref) | use-callback-ref 1.3.3 | Independent React 19 observable/merged/transformed refs, no tslib; preserved falsy defaults, owned membership snapshots and complete merged assignments after callback errors. Original tests, scroll-lock UI ref wiring and packed consumers verified. |
 | [vredux](packages/vredux) | redux 5.0.1 | Independent store, cached reentrant listener snapshots and middleware composition; own prototype-named reducer/action keys. All 78 public-API tests, DND store caller and packed consumers verified. |
 | [vcss-box-model](packages/vcss-box-model) | css-box-model 1.2.1 | Independent CSS box geometry, isolated default spacing, owning-window style lookup and direct rectangle construction. All original tests, DND caller paths and packed consumers verified. |
@@ -363,11 +364,11 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **138 packages**, including two declaration-only packages and
-eighteen browser packages, `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
+compiler in NodeNext and bundler resolution modes. The catalog covers **139 packages**, including two declaration-only packages and
+nineteen browser packages, `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react`, `vtabbable` and `vuse-callback-ref`, whose declarations are checked with DOM
+`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react`, `vtabbable`, `vuse-callback-ref` and `vuse-sidecar`, whose declarations are checked with DOM
 (and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
@@ -676,6 +677,25 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vuse-sidecar
+
+All seven use-sidecar 1.1.3 APIs are independently implemented for React 19,
+removing tslib and detect-node-es. Registration cleanup is constant-time and
+specific to one registration, including duplicates and NaN. Async writes share
+a scheduled FIFO delivery. Cache keys include both importer and medium; late
+requests and discarded StrictMode effects cannot replace the active result.
+
+Load failures are handled and reach the configured error callback; fallback
+nodes render correctly. Render-prop publication uses a committed component
+effect instead of invoking hooks inside the callback, and child closures stay
+current. Original controls record each deliberate correction. All 14 original
+tests and 14 focused groups pass on Node/Bun, plus three isolated error controls
+and the actual react-remove-scroll sidecar lifecycle. Clean archives verify
+CJS/ESM, SSR, browser bundling and strict TypeScript 7 consumers. Built but not
+released or adopted. [Contract](packages/vuse-sidecar/README.md),
+[fixture](scripts/sidecar-conformance/README.md) and
+[isolated measurements](packages/vuse-sidecar/bench/results/README.md).
 
 ## vuse-callback-ref
 

@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "use-sidecar",
+    "version": "1.1.3",
+    "commit": "0ceffd96208b62a66883fd472fa48a2ccd4acaa8",
+    "repository": "https://github.com/theKashey/use-sidecar",
+    "integrity": "sha512-Fedw0aZvkhynoPYlA5WXrMCAMm+nSWdZt6lzJQ7Ok8S6Q+VsHmHpRWndVRJ8Be0ZbkfPc5LRYH+5XrzXcEeLRQ=="
+  },
+  "checked": "2026-11-02",
+  "license": "MIT",
+  "retainedEvidence": "../../scripts/sidecar-conformance/upstream",
+  "implementation": {
+    "kind": "independent implementation",
+    "basis": "Independent registration queues, request-scoped hook state, importer/medium cache and committed render-prop publication. Runtime and declarations are independently authored; original tests are retained only in the fixture.",
+    "targetScope": "All seven use-sidecar 1.1.3 exports on React 19, including the actual react-remove-scroll 2.7.2 sidecar caller."
+  },
+  "changes": [
+    "Remove tslib and detect-node-es runtime dependencies; React remains a peer.",
+    "Cancellation removes one registration in constant time, including duplicate values and NaN; asynchronous writes share a scheduled delivery.",
+    "Ignore superseded/unmounted imports and discarded StrictMode effects; cache by importer and medium.",
+    "Handle thrown/rejected/malformed imports, render fallback elements and invoke the configured error handler.",
+    "Render-prop publication uses a component commit effect instead of calling hooks inside a user render callback; current children closures are preserved."
+  ]
+}

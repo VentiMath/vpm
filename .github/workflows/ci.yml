@@ -33,6 +33,10 @@ jobs:
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/callback-ref-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/sidecar-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/sidecar-conformance/run.cjs
+      - run: node scripts/sidecar-conformance/errors.cjs
+      - run: node scripts/sidecar-conformance/archives.cjs
       - run: node scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
@@ -404,6 +408,10 @@ jobs:
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/callback-ref-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/sidecar-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/sidecar-conformance/run.cjs
+      - run: bun scripts/sidecar-conformance/errors.cjs
+      - run: bun scripts/sidecar-conformance/archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund

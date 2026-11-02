@@ -1,0 +1,120 @@
+import * as React from 'react';
+import {act, render, renderHook, waitFor} from '@testing-library/react';
+import {createMedium, createSidecarMedium, exportSidecar, useSidecar, sidecar, renderCar, setConfig} from 'subject';
+import {env} from 'environment';
+import {RemoveScroll} from 'caller';
+const original = process.env.VPM_ORIGINAL === '1';
+const tick = () => new Promise(resolve => setTimeout(resolve, 10));
+const deferred = () => {let resolve; const promise = new Promise(r => resolve = r); return {promise, resolve};};
+beforeEach(() => {env.isNode = false; env.forceCache = false;});
+afterEach(() => {setConfig({onError: error => console.error(error)});});
+
+it('cleanup belongs to one registration even when values are identical', () => {
+  const m = createMedium('default'), drop = m.useMedium('same');
+  m.useMedium('same'); drop(); drop();
+  expect(m.read()).toBe(original ? 'default' : 'same');
+});
+it('NaN registrations can be removed', () => {
+  const m = createMedium('default'), drop = m.useMedium(NaN);
+  drop(); expect(m.read()).toBe(original ? NaN : 'default');
+});
+it('transforms values with assignment state and restores the most recent live value', () => {
+  const flags = [], m = createMedium(0, (v, assigned) => {flags.push(assigned); return v * 2;});
+  const a = m.useMedium(1), b = m.useMedium(2), c = m.useMedium(3);
+  b(); expect(m.read()).toBe(6); c(); expect(m.read()).toBe(2); a(); expect(m.read()).toBe(0);
+  const seen = []; m.assignSyncMedium(v => seen.push(v)); m.useMedium(4);
+  expect(seen).toEqual([8]); expect(flags).toEqual([false,false,false,true]);
+  expect(() => m.read()).toThrow();
+});
+it('async deliveries keep FIFO order, cancellation and reentrant next-batch behavior', async () => {
+  const m = createMedium(), seen = [];
+  m.assignMedium(v => {seen.push(v); if (v === 1) m.useMedium(3);});
+  m.useMedium(1); const drop = m.useMedium(9); m.useMedium(2); drop();
+  expect(seen).toEqual([]); await tick(); expect(seen).toEqual([1,2,3]);
+});
+it('a delivery snapshot is not changed by cleanup during its callbacks', () => {
+  const m = createMedium(), seen = []; m.useMedium(1); const drop = m.useMedium(2);
+  m.assignSyncMedium(v => {seen.push(v); drop();}); expect(seen).toEqual([1,2]);
+});
+it('changing the importer ignores the superseded completion', async () => {
+  const a = deferred(), b = deferred(), A = () => null, B = () => null;
+  const first = () => a.promise, second = () => b.promise;
+  const view = renderHook(({importer}) => useSidecar(importer), {initialProps: {importer: first}});
+  view.rerender({importer: second});
+  await act(async () => {b.resolve(B); await tick(); a.resolve(A); await tick();});
+  expect(view.result.current[0]).toBe(original ? A : B);
+});
+it('a shared importer does not mix components from different media', async () => {
+  const a = createSidecarMedium({async:false}), b = createSidecarMedium({async:false});
+  const A = () => null, B = () => null; a.useMedium(A); b.useMedium(B);
+  const importer = () => Promise.resolve({});
+  const first = renderHook(() => useSidecar(importer, a));
+  await waitFor(() => expect(first.result.current[0]).toBe(A)); first.unmount();
+  const second = renderHook(() => useSidecar(importer, b));
+  await waitFor(() => expect(second.result.current[0]).toBe(original ? A : B));
+});
+it('a completion after unmount cannot seed the component cache', async () => {
+  const pending = deferred(), A = () => null, importer = () => pending.promise;
+  const first = renderHook(() => useSidecar(importer)); first.unmount();
+  await act(async () => {pending.resolve(A); await tick();});
+  const second = renderHook(() => useSidecar(importer));
+  expect(second.result.current[0]).toBe(original ? A : undefined);
+  await waitFor(() => expect(second.result.current[0]).toBe(A));
+});
+it('rejected imports render their fallback and report through setConfig', async () => {
+  const failure = Error('fixture import'), reported = jest.fn(), log = jest.spyOn(console,'error').mockImplementation(() => {});
+  setConfig({onError: reported});
+  try {
+    const Car = sidecar(() => Promise.reject(failure), <span>unavailable</span>);
+    const view = render(<Car sideCar={null}/>);
+    await act(tick);
+    expect(view.container.innerHTML).toBe(original ? '' : '<span>unavailable</span>');
+    expect(reported).toHaveBeenCalledTimes(original ? 0 : 1);
+    if (!original) expect(reported).toHaveBeenCalledWith(failure);
+  } finally {log.mockRestore();}
+});
+it('StrictMode does not let a discarded effect overwrite the active result', async () => {
+  const a = deferred(), b = deferred(), A = () => null, B = () => null;
+  let calls = 0; const importer = () => ++calls === 1 ? a.promise : b.promise;
+  const view = renderHook(() => useSidecar(importer), {reactStrictMode: true});
+  await act(async () => {await tick();});
+  expect(calls).toBe(2);
+  await act(async () => {b.resolve(B); await tick(); a.resolve(A); await tick();});
+  expect(view.result.current[0]).toBe(original ? A : B);
+});
+it('renderCar uses the current children closure after props change', () => {
+  function Source({x, children}) {return children(x);}
+  const Bridge = renderCar(Source, props => [props.x]);
+  const view = render(<Bridge x={1}>{x => <span>A{x}</span>}</Bridge>);
+  view.rerender(<Bridge x={2}>{x => <span>B{x}</span>}</Bridge>);
+  expect(view.container.textContent).toBe(original ? 'A2' : 'B2');
+});
+it('renderCar supports a source conditionally invoking its render prop', () => {
+  function Source({enabled, children}) {React.useState(0); return enabled ? children(7) : null;}
+  const Bridge = renderCar(Source, () => [1]);
+  const log = jest.spyOn(console,'error').mockImplementation(() => {});
+  try {
+    const view = render(<Bridge enabled={false}>{x => <span>{x}</span>}</Bridge>);
+    if (original) expect(() => view.rerender(<Bridge enabled={true}>{x => <span>{x}</span>}</Bridge>)).toThrow();
+    else {view.rerender(<Bridge enabled={true}>{x => <span>{x}</span>}</Bridge>); expect(view.container.textContent).toBe('7');}
+  } finally {log.mockRestore();}
+});
+it('exportSidecar strips its medium prop and preserves other props', () => {
+  const medium = createSidecarMedium(), seen = [];
+  const Car = exportSidecar(medium, props => {seen.push(props); return <b>{props.text}</b>;});
+  expect(Car.isSideCarExport).toBe(true);
+  const view = render(<Car sideCar={medium} text="ready"/>);
+  expect(view.container.textContent).toBe('ready'); expect(seen[0]).toEqual({text:'ready'});
+});
+it('actual react-remove-scroll sidecar mounts, disables and cleans up nested locks', () => {
+  const ref = React.createRef<HTMLDivElement>();
+  const first = render(<RemoveScroll ref={ref} data-testid="lock">one</RemoveScroll>);
+  expect(ref.current).toBe(first.getByTestId('lock'));
+  expect(document.body.getAttribute('data-scroll-locked')).toBe('1');
+  const second = render(<RemoveScroll>two</RemoveScroll>);
+  expect(document.body.getAttribute('data-scroll-locked')).toBe('2');
+  first.rerender(<RemoveScroll enabled={false} ref={ref}>one</RemoveScroll>);
+  expect(document.body.getAttribute('data-scroll-locked')).toBe('1');
+  second.unmount(); expect(document.body.hasAttribute('data-scroll-locked')).toBe(false);
+  first.unmount(); expect(ref.current).toBe(null);
+});
