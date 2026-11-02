@@ -220,6 +220,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | --- | --- | --- |
 | [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
 | [vhoist-non-react-statics](packages/vhoist-non-react-statics) | hoist-non-react-statics 3.3.2 | Independent zero-dependency static hoisting; safe prototype-named fields, nearest inherited descriptors, iterative traversal and no classification getter execution. |
+| [vuse-callback-ref](packages/vuse-callback-ref) | use-callback-ref 1.3.3 | Independent React 19 observable/merged/transformed refs, no tslib; preserved falsy defaults, owned membership snapshots and complete merged assignments after callback errors. Original tests, scroll-lock UI ref wiring and packed consumers verified. |
 | [vredux](packages/vredux) | redux 5.0.1 | Independent store, cached reentrant listener snapshots and middleware composition; own prototype-named reducer/action keys. All 78 public-API tests, DND store caller and packed consumers verified. |
 | [vcss-box-model](packages/vcss-box-model) | css-box-model 1.2.1 | Independent CSS box geometry, isolated default spacing, owning-window style lookup and direct rectangle construction. All original tests, DND caller paths and packed consumers verified. |
 | [vtiny-invariant](packages/vtiny-invariant) | tiny-invariant 1.3.3 | Independent assertion with lazy diagnostics, production function selection, CJS/ESM exports and strict type narrowing. Original runtime tests, css-box-model caller and packed consumers verified. |
@@ -361,11 +362,11 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **137 packages**, including two declaration-only packages and
-seventeen browser packages, `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
+compiler in NodeNext and bundler resolution modes. The catalog covers **138 packages**, including two declaration-only packages and
+eighteen browser packages, `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react` and `vtabbable`, whose declarations are checked with DOM
+`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react`, `vtabbable` and `vuse-callback-ref`, whose declarations are checked with DOM
 (and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
@@ -675,6 +676,23 @@ Firebase handles errors thrown by plain handlers itself; finalhandler is exercis
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
 
+## vuse-callback-ref
+
+Independent **use-callback-ref 1.3.3** APIs for the scroll-lock UI beneath Radix.
+All nine exports, no runtime dependencies and React 19 as a peer. Merged refs
+preserve falsy defaults and snapshot membership so mutated input arrays detach
+removed refs correctly. All merged assignments are attempted before rethrowing
+a callback error. The 22 original tests plus four control/caller groups pass
+on Node and Bun; packed SSR, browser and TypeScript 7 consumers pass.
+
+Fresh case/implementation-isolated measurements record cached callback assignment
+at 16 → 8 ns on Node and 3 → 2 ns on Bun. Updating and clearing two merged refs
+records 40 → 22 ns on Bun. Observable-ref creation costs 32 → 36 ns on Bun
+(+14.1%, about 4 ns); Node creation and both SSR cases are inconclusive. The full
+[report](packages/vuse-callback-ref/bench/results/README.md) retains every result
+and control. [Contract and limits](packages/vuse-callback-ref/README.md).
+Built, unreleased and not adopted; no complete scroll-lock or application-speed claim.
+
 ## vredux
 
 Independent **Redux 5.0.1** runtime for the dependency beneath DND18. Zero runtime
@@ -763,6 +781,10 @@ TypeScript7 consumers pass. [Scope](packages/vhoist-non-react-statics/README.md)
 retain the behavior differences and performance limits.
 
 ## vfloating-ui-react
+
+The [Floating UI release](docs/INSTALLATION.md#floating-ui) provides all six
+packages through a single top-level URL, with pinned transitive URLs and verified
+clean installation. Release availability is separate from application adoption.
 
 Targets **@floating-ui/react 0.27.20** with independent React 19 popover, dropdown
 and tooltip interactions on VPM positioning and tabbable. Merged refs finish all

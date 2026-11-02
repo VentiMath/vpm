@@ -1,0 +1,34 @@
+import * as React from 'react';
+import {render,renderHook} from '@testing-library/react';
+import {useMergeRefs,mergeRefs,createCallbackRef} from 'subject';
+import {RemoveScroll} from 'caller';
+const original=process.env.VPM_ORIGINAL==='1';
+it('preserves falsy initial values',()=>{
+ for(const value of [0,false,'']){const {result,unmount}=renderHook(()=>useMergeRefs([],value));expect(result.current.current).toBe(original?null:value);unmount();}
+});
+it('owns membership snapshots when the caller mutates the array in place',()=>{
+ const a=React.createRef<HTMLDivElement>(),b=React.createRef<HTMLDivElement>(),refs=[a];
+ function App(){return <div data-testid="node" ref={useMergeRefs(refs)}/>}
+ const view=render(<App/>),node=view.getByTestId('node');expect(a.current).toBe(node);
+ refs[0]=b;view.rerender(<App/>);
+ expect(a.current).toBe(original?node:null);expect(b.current).toBe(original?null:node);
+ view.unmount();expect(b.current).toBe(null);
+});
+it('clears every merged ref despite an earlier throwing callback',()=>{
+ const failure=Error('cleanup'),other={current:null};
+ const merged=mergeRefs([value=>{if(value===null)throw failure},other]);
+ merged.current=7;expect(other.current).toBe(7);
+ expect(()=>{merged.current=null}).toThrow(failure);expect(other.current).toBe(original?7:null);
+ const events=[];const signal=createCallbackRef((value,old)=>events.push([value,old]));signal.current=NaN;signal.current=NaN;
+ expect(events.length).toBe(2); // Preserve upstream's strict-equality change rule.
+});
+it('actual react-remove-scroll UI keeps object/callback refs through replacement and unmount',()=>{
+ const a=React.createRef<HTMLDivElement>(),seen=[],b=(node)=>{seen.push(node)};
+ const view=render(<RemoveScroll enabled={false} ref={a} data-testid="lock">text</RemoveScroll>);
+ const node=view.getByTestId('lock');expect(a.current).toBe(node);
+ view.rerender(<RemoveScroll enabled={false} ref={b} data-testid="lock">text</RemoveScroll>);
+ expect(a.current).toBe(null);expect(seen).toEqual([node]);
+ view.unmount();expect(seen).toEqual([node,null]);
+ const child=React.createRef<HTMLButtonElement>();const forwarded=render(<RemoveScroll enabled={false} forwardProps ref={child}><button data-testid="child">ok</button></RemoveScroll>);
+ expect(child.current).toBe(forwarded.getByTestId('child'));forwarded.unmount();expect(child.current).toBe(null);
+});

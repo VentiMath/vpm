@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "use-callback-ref",
+    "version": "1.3.3",
+    "commit": "bd99fd56601f693ecdda88e2d4455cfa03c5689d",
+    "repository": "https://github.com/theKashey/use-callback-ref",
+    "integrity": "sha512-jQL3lRnocaFtu3V00JToYz/4QkNWswxijDaCVNZRiRTO3HQDLsdu1ZtmIUvV4yPp+rvWm5j0y0TG/S61cuijTg=="
+  },
+  "checked": "2026-11-02",
+  "license": "MIT",
+  "retainedEvidence": "../../scripts/callback-ref-conformance/upstream",
+  "implementation": {
+    "kind": "independent implementation",
+    "basis": "Independent observable-ref closures, per-hook membership snapshots and weakly memoized callback adapters. No upstream runtime or declarations copied.",
+    "targetScope": "All nine use-callback-ref 1.3.3 exports on React 19, including ref forwarding in react-remove-scroll 2.7.2."
+  },
+  "changes": [
+    "Remove the tslib runtime dependency; React is a peer.",
+    "Preserve false, zero and empty-string initial values in useMergeRefs.",
+    "Snapshot ref membership so in-place array edits detach removed refs and attach added ones.",
+    "Attempt every merged ref update before rethrowing the first callback error."
+  ]
+}

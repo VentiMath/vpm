@@ -1,0 +1,16 @@
+{
+  "LICENSE": "30f0cfddf483d1128e3610205020f2041a6c5e837aa999e0aa82e5576187d4a9",
+  "package.json": "1fb8f0b34573d1d4057710e559488dbfdff0436cd01d318e20bf66e4cd165318",
+  "src/assignRef.ts.txt": "974dbd21287284a4b2b0b5c6ca9733f0d1428a30941834aa3af911ba6a19dc68",
+  "src/createRef.ts.txt": "bb30722faaea5553218c091d4430e9833607fe49999b21a284c7609d4a0243ed",
+  "src/index.ts.txt": "6f8223698d45308b45513ef28cba048b61e3086a029c20316f52112e0a1325f8",
+  "src/mergeRef.ts.txt": "17dc83b910e1df64488135c5e42100ad616a12ffdb47f4814fff393f995e7c1a",
+  "src/refToCallback.ts.txt": "54dec2edb7569cfdecc65d2261976cdc9427eeb84ca3e2e2acd03e0bccd38ece",
+  "src/transformRef.ts.txt": "e331f3fabdacee11a2e3355a8be9adc84f5b91e6c05064d3ff9aa7cbe0fac41b",
+  "src/types.ts.txt": "405f9cae45da9db5cee0c610e57cae44aa08d4a67cd5a90d4ed6acee30a3c470",
+  "src/useMergeRef.ts.txt": "dcf6e532428d01990910d66c6b0ef8a2d3a5484bdf04308eeed7e51ad8a594cf",
+  "src/useRef.ts.txt": "07ee76b88539c6b35097bf6adaaeb257458f9c574b8a8e209fa6f419f91e9d9a",
+  "src/useTransformRef.ts.txt": "4783821b719a6f063ad1b226e411c3acad86a40db81d02e3d686798e19f7891c",
+  "__tests__/index.tsx.txt": "b8178e6c786a642a6417b781c3e3ceb2df71bebdd1fad566c2af3274bbe621a3",
+  "__tests__/ref.spec.tsx.txt": "b5eb7262c144f9ef98f330e37681f5517931cddc3353d4ecfc2080fdc75ae42e"
+}

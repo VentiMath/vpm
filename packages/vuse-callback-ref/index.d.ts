@@ -1,0 +1,11 @@
+import type {Ref, RefObject} from 'react';
+export type ReactRef<T> = Ref<T> | undefined;
+export declare function assignRef<T, R extends ReactRef<T>>(ref: R, value: T | null): R;
+export declare function createCallbackRef<T>(callback: (value: T | null, previous: T | null) => void): RefObject<T | null>;
+export declare function useCallbackRef<T>(initialValue: T | null, callback: (value: T | null, previous: T | null) => void): RefObject<T | null>;
+export declare function mergeRefs<T>(refs: readonly ReactRef<T>[]): RefObject<T | null>;
+export declare function useMergeRefs<T>(refs: readonly ReactRef<T>[], defaultValue?: T): RefObject<T | null>;
+export declare function transformRef<T, K>(ref: ReactRef<K>, transform: (value: T | null) => K | null): RefObject<T | null>;
+export declare function useTransformRef<T, K>(ref: ReactRef<K>, transform: (value: T | null) => K | null): RefObject<T | null>;
+export declare function refToCallback<T>(ref: ReactRef<T>): (value: T | null) => void;
+export declare function useRefToCallback<T>(ref: ReactRef<T>): (value: T | null) => void;

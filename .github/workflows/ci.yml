@@ -32,6 +32,9 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/callback-ref-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/callback-ref-conformance/run.cjs
+      - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Check Redux public contract and consumers
         run: |
@@ -395,6 +398,9 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/callback-ref-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/callback-ref-conformance/run.cjs
+      - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Check Redux public contract and consumers
         run: |
