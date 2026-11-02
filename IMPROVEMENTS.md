@@ -16,11 +16,11 @@ Their compatibility evidence describes those forks, not independent VPM
 implementations. Replacement work is scoped to the APIs used by applications;
 that work must be verified before the implementation status changes.
 
-The implementation audit also covers earlier SDK work: Google Auth, gax and
-protobuf retain upstream runtime code with focused changes. Cloud Storage now
-has an independent implementation of its documented application-used scope.
-Their package provenance marks the application-facing independent rewrites as
-pending. Passing current-release tests and replacing dependency names establish
+The implementation audit also covers earlier SDK work: Google Auth and gax
+retain upstream runtime code with focused changes; their provenance marks the
+application-facing independent rewrites as pending. Cloud Storage and protobuf
+now independently implement their documented application-used scopes, with
+retained compatibility material explicitly identified. Passing current-release tests and replacing dependency names establish
 compatibility, not independent implementation. Generated protocol schemas remain
 separately attributed inputs.
 
@@ -98,7 +98,7 @@ now have current comparison targets:
 | Complete | vgcp-metadata | 9.2.3 API; Google Auth 10.6.1/11.3.2 callers | [gcp-metadata 9.2.3](https://www.npmjs.com/package/gcp-metadata) |
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 | Caller paths verified | vproto3-json-serializer | proto3-json-serializer 4.1.0; gax 6.14.0 fallback and Firestore 9.4.0 schemas with protobuf 7/8 | [proto3-json-serializer 4.1.0](https://www.npmjs.com/package/proto3-json-serializer), checked October 30, 2026 |
-| Caller paths verified | vprotobufjs | protobuf.js 8.8.1; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 serialization against 7.6.6 controls | [protobuf.js 8.8.1](https://www.npmjs.com/package/protobufjs), checked October 30, 2026 |
+| Application runtime verified | vprotobufjs | Independent protobuf.js 8.8.1 application runtime; proto-loader 0.8.1, GAX 6.14.0 and Firestore 9.4.0 with stock controls | [protobuf.js 8.8.1](https://www.npmjs.com/package/protobufjs), checked November 2, 2026 |
 | Caller paths verified | vlong | long 5.3.2; protobuf.js 8.8.1/7.6.6, proto-loader 0.8.1 and google-gax 6.14.0 integer paths | [long 5.3.2](https://www.npmjs.com/package/long), checked November 1, 2026 |
 | Runtime dependency removed | vobject-hash | Retained object-hash 3.0.0 comparison package; GAX now owns its JSON cache | [object-hash 3.0.0](https://www.npmjs.com/package/object-hash), checked October 30, 2026 |
 | Caller paths verified | vgoogle-cloud-storage | @google-cloud/storage 8.4.0; object and signing operations, Firebase Admin 12.7.0 factory | [Storage 8.4.0](https://www.npmjs.com/package/@google-cloud/storage), checked October 30, 2026 |
@@ -271,7 +271,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vgrpc-proto-loader](packages/vgrpc-proto-loader) | @grpc/proto-loader 0.8.1 | Reused private descriptors and codecs, isolated public definitions, safe method-option keys and VPM protobuf/long/camel-case dependencies; real Google SDK runtime calls. |
 | [vlodash.camelcase](packages/vlodash.camelcase) | lodash.camelcase 4.3.0 | Direct ASCII identifier conversion, lazy compatible Unicode handling, single object coercion and corrected zero BigInts/Symbol branding; actual gRPC and Google method aliases. |
 | [vproto3-json-serializer](packages/vproto3-json-serializer) | proto3-json-serializer 4.1.0 | Correct byte slices and collections, signed durations, offset timestamps, FieldMasks and Any wrappers; validated scalars, safe output keys and verified Google fallback callers. |
-| [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
+| [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | Independent application reader/writer, reflection, parser and descriptors; exact integers, restored bounds and safe own fields. Actual Firestore transactions, bulk writes and Watch match stock protobuf. Legacy internal/tooling source remains attributed; unreleased and unadopted. |
 | [vlong](packages/vlong) | long 5.3.2 | Independent 64-bit runtime and arithmetic kernel; complete integer/radix validation, native formatting, isolated small integers, protected constants and validated bytes. Original suite, mixed-signedness controls and exact protobuf/gRPC caller bytes verified. |
 | [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Retained comparison package, no current VPM runtime consumers; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
 | [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | Independent app-used Storage client: six VPM dependencies, own authenticated dispatch, resumable uploads, validated downloads, metadata/listing/deletion and signing; unused SDK administration runtime removed. Real HTTP and Firebase callers verified. |
@@ -1797,40 +1797,31 @@ See the [package contract](packages/vproto3-json-serializer/README.md),
 
 ## vprotobufjs
 
-The baseline is **protobuf.js 8.8.1**, checked October 30, 2026. Full, light and
-minimal runtimes, descriptor/ProtoJSON/text-format extensions and Google schemas
-are retained. The sole runtime dependency changes from `long` to `vlong`;
-version 8's earlier helper consolidation is credited to upstream.
+The **8.8.1** application runtime is independently implemented: readers/writers,
+generated-code helpers, reflection, message conversion, schema loading/parsing and
+descriptors used by proto-loader, GAX and Firestore. `vlong` is its only runtime
+dependency. Public entries do not load retained `src/` code. The separate internal
+compatibility runtime, optional legacy extensions and generated schema data retain
+upstream attribution; CLI/compiler and advanced tooling parity are not claimed.
 
-Packed varint readers and dynamically generated decoders restore temporary bounds
-after errors. Explicit lengths require nonnegative safe integers, skipped varints
-are bounded to ten bytes, empty messages correctly skip unknown groups, and the
-shared LongBits zero cannot be mutated to corrupt later writes. Failed reads can
-still advance their cursor or append partial values. Existing SDK static decoders
-keep their generated logic while receiving VPM readers and writers.
+Reader bounds are restored on failure, explicit lengths and wire widths are
+validated, shared zero is immutable and prototype-named fields remain own data.
+Presence, negative zero, UTF-8 validation, closed enums and message merging remain
+compatibility requirements. Failed decodes can still advance their cursor.
 
-All **79 unchanged upstream runtime files / 2,877 assertions** pass on Node 24
-and Bun, with original controls. Separate CLI and legacy UMD-loader tests are
-excluded; modern browser bundles are independently executed. Ten focused tests,
-seven paired correction probes, packed installations and public declarations
-cover the changed behavior and package surfaces.
+On Node 24 and Bun, 343 paired message cases, 15 unchanged upstream binary/RPC
+files and 185 loader comparisons pass. Actual Firestore callers produce identical
+23 workflow results and 25 decoded RPCs, including transactions, bulk writes and
+Watch. Browser bundles, archive installs and TypeScript 7 consumers are checked.
+The 79-file / 2,877-assertion suite separately covers retained compatibility source;
+it is not presented as coverage of the new public runtime.
 
-**22 caller checks including controls** load actual proto-loader 0.8.1,
-google-gax 6.14.0 and Firestore 9.4.0 code. Selected gRPC/fallback, descriptor,
-Proto3 JSON, Timestamp and Firestore Value/Document paths preserve exact wire bytes
-and int64 values against protobuf 7.6.6. The descriptor map round-trip failure
-in 7.6.6 is already fixed upstream in 8.8.1; VPM retains that improvement. This is
-local serialization evidence, not complete SDK or deployment migration coverage.
-
-Measured gRPC deserialization takes **35% less time on Node / 21% less on Bun**;
-Google-shaped decode/conversion takes **32% / 25% less**. Remaining regressions
-include Node's short packed reader (about 12 ns / 30% more), malformed decoding
-(6% more on Node / 19% on Bun) and generated Firestore Document encoding.
-Bun small-message controls are noisy; detailed samples and limitations remain visible.
-
-See the [package contract](packages/vprotobufjs/README.md),
+Current process-isolated measurements disclose remaining runtime costs. Earlier
+derived-runtime percentages no longer describe this implementation. See the
+[package contract](packages/vprotobufjs/README.md),
 [fixture scope](scripts/protobuf-conformance/README.md) and
-[paired measurements](packages/vprotobufjs/bench/results/README.md).
+[current measurements](packages/vprotobufjs/bench/application-results/README.md).
+The application runtime is built, but is not released or adopted by VentiMath.
 
 ## vlong
 

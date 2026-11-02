@@ -1,2 +1,2 @@
 "use strict";
-module.exports = require("../descriptor");
+module.exports = require("../../runtime/descriptor.cjs");

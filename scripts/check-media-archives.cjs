@@ -140,7 +140,7 @@ try {
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json','special.js',...['index','react','es6/index','es6/react'].flatMap(s=>[s+'.js',s+'.mjs',s+'.d.ts'])].sort());
     }
     if (name === 'vfirebase-functions') {
-      assert.deepEqual(metadata.dependencies, {vcors:'0.1.0',vexpress:'0.1.0',vprotobufjs:'0.1.0'});
+      assert.deepEqual(metadata.dependencies, {vcors:'0.1.0',vexpress:'0.1.0',vprotobufjs:require('../packages/vprotobufjs/package.json').version});
       assert.equal(metadata.bin['firebase-functions'], './lib/bin/firebase-functions.js');
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const files=dir=>fs.readdirSync(path.join(root,'packages',name,dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages',name,dir,f)).isFile()).map(f=>dir+'/'+f);
@@ -156,7 +156,7 @@ try {
       assert.doesNotMatch(entries.join('\n'),/(?:test|bench|node_modules)\/|\.map$|busboy|database-compat/);
     }
     if (name === 'vgoogle-cloud-firestore') {
-      assert.deepEqual(metadata.dependencies, {'vfast-deep-equal':'0.1.0','vgoogle-cloud-firestore-api':'0.1.0','vgoogle-gax':'0.1.0','vopentelemetry-api':'0.1.0',vprotobufjs:'0.1.0'});
+      assert.deepEqual(metadata.dependencies, {'vfast-deep-equal':'0.1.0','vgoogle-cloud-firestore-api':'0.1.0','vgoogle-gax':'0.1.0','vopentelemetry-api':'0.1.0',vprotobufjs:require('../packages/vprotobufjs/package.json').version});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const files=dir=>fs.readdirSync(path.join(root,'packages',name,dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages',name,dir,f)).isFile()).map(f=>dir+'/'+f);
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json',...files('build'),...files('types'),...files('pipelines')].sort());
@@ -191,7 +191,7 @@ try {
       assert.doesNotMatch(entries.join('\n'), /(?:test|bench|node_modules)\/|\.js\.map$/);
     }
     if (name === 'vgrpc-proto-loader') {
-      assert.deepEqual(metadata.dependencies,{'vlodash.camelcase':'0.1.0',vlong:require('../packages/vlong/package.json').version,vprotobufjs:'0.1.0'});
+      assert.deepEqual(metadata.dependencies,{'vlodash.camelcase':'0.1.0',vlong:require('../packages/vlong/package.json').version,vprotobufjs:require('../packages/vprotobufjs/package.json').version});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','util.js','index.d.ts','package.json'].sort());
     }
@@ -201,14 +201,14 @@ try {
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','unicode.js','index.d.ts','package.json'].sort());
     }
     if (name === 'vproto3-json-serializer') {
-      assert.deepEqual(metadata.dependencies, {vprotobufjs:'0.1.0'});
+      assert.deepEqual(metadata.dependencies, {vprotobufjs:require('../packages/vprotobufjs/package.json').version});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json'].sort());
     }
     if (name === 'vprotobufjs') {
       assert.deepEqual(metadata.dependencies, {vlong:require('../packages/vlong/package.json').version});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
-      const library=['src','ext','google'].flatMap(dir=>fs.readdirSync(path.join(root,'packages/vprotobufjs',dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vprotobufjs',dir,f)).isFile()).map(f=>dir+'/'+f));
+      const library=['src','ext','google','runtime'].flatMap(dir=>fs.readdirSync(path.join(root,'packages/vprotobufjs',dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vprotobufjs',dir,f)).isFile()).map(f=>dir+'/'+f));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json',...['index','light','minimal'].flatMap(n=>[n+'.js',n+'.d.ts']),...library].sort());
       assert.doesNotMatch(entries.join('\n'), /(?:test|bench|node_modules|dist|cli)\//);
     }

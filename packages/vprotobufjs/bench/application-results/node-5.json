@@ -1,0 +1,816 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-02T20:04:07.166Z",
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/protobuf-conformance/consumers.cjs": "a8e4cd5c6de97490adb49aafecc7b7436f8a99217f778e289b804abd131f50f0",
+    "../../scripts/protobuf-conformance/node_modules/@google-cloud/firestore/build/protos/firestore_v1_proto_api.js": "0e4739578cb2e1fd982d6d9941cba4e0fa5acbcc21be4100b0b9608b87f46a09",
+    "../../scripts/protobuf-conformance/node_modules/@grpc/proto-loader/build/src/index.js": "6f99a960ec14b1afc20fc996824815d9d89d58e7d537c2f2e5c028d8012b012e",
+    "../../scripts/protobuf-conformance/node_modules/protobufjs/src": "bc246d884585470d57bb4318386446977e918db67db942e023a027af8631ad47",
+    "../../scripts/protobuf-conformance/package-lock.json": "0d841d2cb1e7cdfc1b93bc76cc5b5e1d5e48dcbee15881c4bd53bd6271154faf",
+    "../vlong/index.js": "508f7934a9c12eab9e382ec667eaa08a5d67b012db6b40308b7d309d7246b049",
+    "bench/application.cjs": "3a608287d018a3b486affb9b59d6125a5fe97205eaaec06dc1b268eb8ed36b8b",
+    "ext/descriptor.js": "c86d486defa87e23d08dc24c255e17e1ba02c69d199b90134406b37de6b643ea",
+    "index.js": "f791e93ba991d0592e46c0d48cebe35db1ec212265c6c1d316793726e9a44c40",
+    "light.js": "aeb22f4cafd4b9578495f55416fa327414d5cc13074944c3beb639d93f66207c",
+    "minimal.js": "16337072409e2400f17e9bf5626e297846777187228e8f7d629b69682a01a522",
+    "package.json": "d536601529eaac2899402331bed70265b44139d965baef9bd659d9bd14542d94",
+    "runtime": "ca3e9c30bcac72e72d61175953249fbd14e49f256369201970ed820ee1518ed0"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 24886,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 27903,
+            "samples": [
+              371.6610400315383,
+              382.20951152205976,
+              374.8506612192231,
+              382.77694154750253,
+              389.1337848976794,
+              381.93025839515605,
+              373.75461419919026,
+              378.1269039171422,
+              376.93678099129187,
+              375.170232591477,
+              382.79934057269946,
+              380.8207719600037
+            ]
+          }
+        ],
+        "checksum": 28448
+      },
+      "vpm": {
+        "pid": 24915,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 27903,
+            "samples": [
+              549.9154929577463,
+              550.9996057771552,
+              557.5998279754853,
+              544.738307708847,
+              550.160377020393,
+              554.1369386804289,
+              583.769343798159,
+              557.2384689818305,
+              544.6681360427177,
+              550.4336451277636,
+              540.0345482564594,
+              544.2410493495333
+            ]
+          }
+        ],
+        "checksum": 1696
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 24916,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 17215,
+            "samples": [
+              542.7751960499562,
+              531.1574208539071,
+              528.9645657856532,
+              541.4778971826909,
+              544.8881789137374,
+              544.5929131571323,
+              530.0875980249772,
+              543.3197792622714,
+              537.1067092651748,
+              529.7681672959625,
+              535.5866976474003,
+              542.0757478942791
+            ]
+          }
+        ],
+        "checksum": 21408
+      },
+      "upstream": {
+        "pid": 24917,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 17215,
+            "samples": [
+              379.99320360151046,
+              382.4232355503921,
+              380.4966598896315,
+              377.98675573627725,
+              390.51699099622533,
+              394.3629973859992,
+              394.73087423758454,
+              377.5970374673257,
+              379.9302933488242,
+              364.95788556491556,
+              371.9115887307595,
+              370.6530351437691
+            ]
+          }
+        ],
+        "checksum": 2464
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 24918,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 26582,
+            "samples": [
+              382.2965916785792,
+              374.5203521179746,
+              376.0909638100973,
+              379.31525092167703,
+              379.8544503799558,
+              376.37781205327013,
+              376.0878413964354,
+              387.8204047851921,
+              379.78391392671733,
+              379.65070348356096,
+              378.77450906628496,
+              376.84493266119927
+            ]
+          }
+        ],
+        "checksum": 28000
+      },
+      "vpm": {
+        "pid": 24919,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 26582,
+            "samples": [
+              558.1001053344349,
+              565.4781807237982,
+              538.8671657512598,
+              563.3417350086514,
+              554.9573019336386,
+              561.959220525167,
+              549.3222481378373,
+              561.5062072078842,
+              561.9200586863292,
+              563.0752388834552,
+              554.2362500940487,
+              559.9967271085693
+            ]
+          }
+        ],
+        "checksum": 1696
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 24920,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 18666,
+            "samples": [
+              541.5840565734503,
+              535.1419157827062,
+              533.6708453873352,
+              552.3857816350585,
+              536.3829958212776,
+              538.5415729133209,
+              534.5123754419781,
+              551.8188149576773,
+              538.8942462230777,
+              536.1731490410385,
+              547.733847637415,
+              548.4525875924138
+            ]
+          }
+        ],
+        "checksum": 22688
+      },
+      "upstream": {
+        "pid": 24921,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 18666,
+            "samples": [
+              383.0181613629058,
+              377.9264438015655,
+              382.1430943962284,
+              385.8753884067278,
+              371.4128361727208,
+              385.2860816457738,
+              376.32819029251027,
+              377.808100289296,
+              385.6521482910126,
+              383.3864245151618,
+              383.8485481624345,
+              375.8795135540553
+            ]
+          }
+        ],
+        "checksum": 2336
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 24922,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 22804,
+            "samples": [
+              391.83915102613656,
+              384.2417996842657,
+              389.4163304683384,
+              390.0595071040177,
+              383.97868794948107,
+              387.6037975793737,
+              378.34735134187025,
+              375.12059287844346,
+              385.33809857919783,
+              393.3849324679885,
+              379.84743904578085,
+              381.9706630415723
+            ]
+          }
+        ],
+        "checksum": 30432
+      },
+      "vpm": {
+        "pid": 24923,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 22804,
+            "samples": [
+              379.06726890019297,
+              377.4703560778809,
+              382.8220926153303,
+              387.8595860375362,
+              382.57174179968285,
+              382.4657954744775,
+              388.78416067356636,
+              376.6718558147699,
+              375.2137782845116,
+              376.7029468514289,
+              388.34743904578005,
+              374.6126118224871
+            ]
+          }
+        ],
+        "checksum": 2144
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 24924,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 27855,
+            "samples": [
+              377.79870759289184,
+              379.3858194220067,
+              380.57350565428214,
+              374.2505833782072,
+              376.2475318614266,
+              380.540585173219,
+              371.39798958894386,
+              377.3080595943269,
+              392.31886555376076,
+              376.8548555017038,
+              370.76377670077227,
+              387.6952073236393
+            ]
+          }
+        ],
+        "checksum": 28256
+      },
+      "upstream": {
+        "pid": 24925,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "generated Firestore Document / encode",
+            "iterations": 27855,
+            "samples": [
+              375.42182732005074,
+              389.0908274995509,
+              389.3167115419122,
+              388.8754263148454,
+              378.0260994435453,
+              382.3176449470465,
+              377.7583198707603,
+              376.3462574044168,
+              379.0537066953865,
+              377.34550350026973,
+              376.38513731825407,
+              380.4583019206607
+            ]
+          }
+        ],
+        "checksum": 1952
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "generated Firestore Document / encode",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 379.47383793857296,
+          "vpmNs": 550.2970110740782,
+          "changePct": 45.01579715309838
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 379.9617484751673,
+          "vpmNs": 539.2923032239328,
+          "changePct": 41.93331444235593
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 379.044879993981,
+          "vpmNs": 560.7514671582268,
+          "changePct": 47.93801387506702
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 382.5806278795671,
+          "vpmNs": 538.7179095681993,
+          "changePct": 40.81160161036246
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 384.78994913173176,
+          "vpmNs": 380.7665321873352,
+          "changePct": -1.0456138351522148
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 378.53990306946594,
+          "vpmNs": 377.5533835936094,
+          "changePct": -0.2606117526467222
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "generated Firestore Document / encode",
+      "upstream_ns": 380,
+      "vpm_ns": 545,
+      "change_pct": 43.5,
+      "upstream_first_pct": 46.5,
+      "vpm_first_pct": 41.4,
+      "process_range_pct": "45.0, 41.9, 47.9, 40.8",
+      "control_max_abs_pct": 1,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

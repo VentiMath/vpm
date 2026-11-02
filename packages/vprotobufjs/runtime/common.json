@@ -1,0 +1,275 @@
+{
+  "google/protobuf/any.proto": {
+    "nested": {
+      "google": {
+        "nested": {
+          "protobuf": {
+            "nested": {
+              "Any": {
+                "fields": {
+                  "type_url": {
+                    "type": "string",
+                    "id": 1
+                  },
+                  "value": {
+                    "type": "bytes",
+                    "id": 2
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "google/protobuf/duration.proto": {
+    "nested": {
+      "google": {
+        "nested": {
+          "protobuf": {
+            "nested": {
+              "Duration": {
+                "fields": {
+                  "seconds": {
+                    "type": "int64",
+                    "id": 1
+                  },
+                  "nanos": {
+                    "type": "int32",
+                    "id": 2
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "google/protobuf/timestamp.proto": {
+    "nested": {
+      "google": {
+        "nested": {
+          "protobuf": {
+            "nested": {
+              "Timestamp": {
+                "fields": {
+                  "seconds": {
+                    "type": "int64",
+                    "id": 1
+                  },
+                  "nanos": {
+                    "type": "int32",
+                    "id": 2
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "google/protobuf/empty.proto": {
+    "nested": {
+      "google": {
+        "nested": {
+          "protobuf": {
+            "nested": {
+              "Empty": {
+                "fields": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "google/protobuf/struct.proto": {
+    "nested": {
+      "google": {
+        "nested": {
+          "protobuf": {
+            "nested": {
+              "Struct": {
+                "fields": {
+                  "fields": {
+                    "keyType": "string",
+                    "type": "Value",
+                    "id": 1
+                  }
+                }
+              },
+              "Value": {
+                "oneofs": {
+                  "kind": {
+                    "oneof": [
+                      "nullValue",
+                      "numberValue",
+                      "stringValue",
+                      "boolValue",
+                      "structValue",
+                      "listValue"
+                    ]
+                  }
+                },
+                "fields": {
+                  "nullValue": {
+                    "type": "NullValue",
+                    "id": 1,
+                    "protoName": "null_value"
+                  },
+                  "numberValue": {
+                    "type": "double",
+                    "id": 2,
+                    "protoName": "number_value"
+                  },
+                  "stringValue": {
+                    "type": "string",
+                    "id": 3,
+                    "protoName": "string_value"
+                  },
+                  "boolValue": {
+                    "type": "bool",
+                    "id": 4,
+                    "protoName": "bool_value"
+                  },
+                  "structValue": {
+                    "type": "Struct",
+                    "id": 5,
+                    "protoName": "struct_value"
+                  },
+                  "listValue": {
+                    "type": "ListValue",
+                    "id": 6,
+                    "protoName": "list_value"
+                  }
+                }
+              },
+              "NullValue": {
+                "values": {
+                  "NULL_VALUE": 0
+                }
+              },
+              "ListValue": {
+                "fields": {
+                  "values": {
+                    "rule": "repeated",
+                    "type": "Value",
+                    "id": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "google/protobuf/wrappers.proto": {
+    "nested": {
+      "google": {
+        "nested": {
+          "protobuf": {
+            "nested": {
+              "DoubleValue": {
+                "fields": {
+                  "value": {
+                    "type": "double",
+                    "id": 1
+                  }
+                }
+              },
+              "FloatValue": {
+                "fields": {
+                  "value": {
+                    "type": "float",
+                    "id": 1
+                  }
+                }
+              },
+              "Int64Value": {
+                "fields": {
+                  "value": {
+                    "type": "int64",
+                    "id": 1
+                  }
+                }
+              },
+              "UInt64Value": {
+                "fields": {
+                  "value": {
+                    "type": "uint64",
+                    "id": 1
+                  }
+                }
+              },
+              "Int32Value": {
+                "fields": {
+                  "value": {
+                    "type": "int32",
+                    "id": 1
+                  }
+                }
+              },
+              "UInt32Value": {
+                "fields": {
+                  "value": {
+                    "type": "uint32",
+                    "id": 1
+                  }
+                }
+              },
+              "BoolValue": {
+                "fields": {
+                  "value": {
+                    "type": "bool",
+                    "id": 1
+                  }
+                }
+              },
+              "StringValue": {
+                "fields": {
+                  "value": {
+                    "type": "string",
+                    "id": 1
+                  }
+                }
+              },
+              "BytesValue": {
+                "fields": {
+                  "value": {
+                    "type": "bytes",
+                    "id": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "google/protobuf/field_mask.proto": {
+    "nested": {
+      "google": {
+        "nested": {
+          "protobuf": {
+            "nested": {
+              "FieldMask": {
+                "fields": {
+                  "paths": {
+                    "rule": "repeated",
+                    "type": "string",
+                    "id": 1
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

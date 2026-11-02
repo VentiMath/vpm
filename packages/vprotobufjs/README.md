@@ -1,17 +1,16 @@
 # vprotobufjs
 
-**Implementation status:** this package retains upstream runtime code with
-focused VPM changes. Its tests establish compatibility and the documented fixes;
-an independent rewrite of the application-facing paths is still pending.
-[Provenance](PROVENANCE.json) records this boundary.
+Independent Protocol Buffers runtime for generated Google messages, proto-loader,
+GAX and Firestore. Version **8.8.1** matches the upstream API comparison target;
+it does not promise every upstream tooling API. Supports Node 24+, Bun and browser
+bundling, with one runtime dependency, `vlong`.
 
-Protocol Buffers based on **protobuf.js 8.8.1**, with VPM 64-bit integers,
-restored reader bounds after decoding errors, validated lengths and protected
-shared zero values. Supports Node 24+, Bun and browser bundling.
+The application-used runtime is rewritten. It is built and locally validated,
+but has not been released or adopted by VentiMath. Retained compatibility code
+and schema data are identified in [provenance](PROVENANCE.json).
 
 ```js
 import { parse } from 'vprotobufjs';
-
 const Item = parse('syntax="proto3"; message Item { int64 id = 1; }')
   .root.lookupType('Item');
 const bytes = Item.encode(Item.fromObject({ id: '9007199254740993' })).finish();
@@ -20,76 +19,68 @@ Item.toObject(Item.decode(bytes), { longs: String });
 ```
 
 CommonJS uses `require('vprotobufjs')`. The full entry includes the schema parser;
-`vprotobufjs/light` supplies reflection without the parser, and
-`vprotobufjs/minimal` supplies the generated-code runtime. All share constructors.
-Descriptor, ProtoJSON and text-format extensions, Google schemas and declarations
-are included. Modern bundlers can build each entry for the browser; prebuilt UMD
-bundles and the separately published protobuf.js CLI are not included.
+`vprotobufjs/light` supplies reflection and JSON schemas, and
+`vprotobufjs/minimal` supplies readers, writers and generated-code helpers.
+Constructors are shared across entries. `vprotobufjs/ext/descriptor` provides the
+independent descriptor conversion used by proto-loader.
 
-## Changes from 8.8.1
+## Implementation and correctness
 
-- `vlong` replaces `long`. Exact 64-bit arithmetic remains, with faster native
-  string conversion, complete integer-text validation and protected constants.
-- Packed varint reads and dynamically generated decoders restore their temporary
-  reader bounds in `finally` blocks. A malformed nested field no longer leaves
-  the reader's length shortened after the exception.
-- Explicit decode and skip lengths must be nonnegative safe integers. Negative,
-  fractional, NaN and coerced string lengths are rejected before consuming bytes.
-- Skipped varints stop at ten bytes, matching the integer reader's maximum width.
-  Noncanonical encodings within that width remain accepted.
-- Empty message types correctly skip valid unknown groups. Upstream passed the
-  full wire tag where the group field number was required.
-- The shared `LongBits.zero` object and its static property are immutable, so
-  modifying a zero conversion cannot corrupt later integer encoding.
+The public entries use `runtime/`: independent wire primitives, reflection,
+message conversion, schema parsing/loading and application descriptor conversion.
+Protocol encoding follows the [Protocol Buffers wire specification](https://protobuf.dev/programming-guides/encoding/).
+Flat scalar messages specialize validated templates once; only whitelisted wire
+methods, checked field IDs and JSON-quoted names enter the generated functions.
+Environments blocking dynamic functions use the same checked interpreter used
+for compound messages.
 
-A failed decode can still advance the cursor and append partial values; restoring
-bounds does not rewind input. Dynamic decoder changes apply to reflection-based
-messages and code generated with this implementation. Existing pre-generated SDK
-code keeps its own decoder logic while using the replacement readers and writers.
+Compared with the 8.8.1 baseline:
 
-## Compatibility and dependencies
+- Temporary message and packed-reader bounds are restored even when decoding or
+  appending values throws. Explicit lengths must be nonnegative safe integers.
+- Varint skipping is bounded to ten bytes; tags and lengths have their own width
+  limits. Valid unknown groups, including those in empty messages, are skipped.
+- The shared integer zero cannot be mutated. `vlong` preserves exact 64-bit values.
+- Prototype-named message/map fields remain own data, without changing prototypes.
 
-The baseline is the current **8.8.1** API, including proto2, proto3 and editions.
-It has one runtime dependency, `vlong`, replacing upstream's one `long` dependency.
-Version 8 already consolidated the older `@protobufjs/*` helpers and removed the
-runtime Node-types dependency; those reductions are upstream improvements.
+Presence, negative zero, UTF-8 verification for proto3 strings, closed enum
+filtering, retained unknown fields and singular-message merging are preserved.
+Those are compatibility requirements, not claimed discoveries or unique VPM
+features. A failed decode may advance the cursor or append partial values;
+restoring bounds does not rewind input. Pre-generated SDK decoders keep their own
+logic while using VPM readers and writers.
 
-Moving from protobuf 7 also adopts version 8 behavior, including decimal int64
-map keys instead of eight-byte hash keys. The tested descriptor map round-trip
-failure in 7.6.6 is fixed by upstream 8.8.1 and remains fixed here. This package
-is not a promise that every application using version 7 can upgrade unchanged.
+## Scope and retained material
 
-VPM's intentional differences are the input and mutation protections above and
-[vlong's documented validation rules](../vlong/README.md). Boxed string inputs to
-integer writers remain accepted. Ordinary Long and LongBits instances remain
-mutable. Public declarations compile without ambient Node, Undici or DOM types.
+The verified scope includes generated messages, reflected proto2/proto3 messages,
+tested edition presence/packing features, imports, maps, oneofs, services and the
+descriptors used by the actual Google callers. Public declarations describe this
+implemented scope. Advanced edition/descriptor tooling, the separate CLI/compiler,
+decorator APIs and source/comment metadata are not claimed.
 
-## Evidence
+`src/`, its compatibility declarations and `ext/descriptor-compat.js` retain the
+previous upstream-derived implementation. Optional ProtoJSON, text-format and
+debug extensions also retain upstream provenance. They are not evidence of a
+completed independent rewrite and are outside the application-runtime completion
+claim. Tests assert that the public full/light/minimal and descriptor entries do
+not load `src/`. Google/descriptor schemas and `runtime/common.json` are retained
+protocol data, with upstream attribution and licenses preserved.
 
-On Node 24 and Bun:
+## Validation and performance
 
-- **79 unchanged upstream runtime test files, 2,877 assertions** pass, as do the
-  original implementation controls. Separate CLI tests and old UMD-loader tests
-  are outside the shipped package's scope.
-- Ten focused tests and seven paired correction probes exercise bounds recovery,
-  invalid input, unknown groups, exact integers, shared-value mutation, extensions
-  and CommonJS/ESM identity.
-- **22 caller checks, including stock controls**, exercise proto-loader **0.8.1**,
-  google-gax **6.14.0** gRPC/fallback schema loading, Proto3 JSON conversion and
-  Firestore **9.4.0** serialization. Exact bytes and integer values match the
-  selected protobuf **7.6.6** controls. Version 8 descriptor round-tripping also
-  succeeds where that control fails.
-- Full, light and minimal browser bundles execute without Node globals. Packed
-  npm/Bun installations and declaration consumers verify public entry points.
+On Node 24 and Bun, 343 paired scalar, seeded and full Firestore-schema messages
+match upstream. Fifteen unchanged upstream binary/RPC test files run against the
+new public runtime; 185 loader comparisons cover exact descriptors, wire bytes
+and conversions. The actual Firestore SDK produces the same 23 workflow results
+and 25 decoded RPCs against a local stock server, including transactions, bulk
+writes and Watch. These are synthetic local fixtures, not cloud deployment tests.
 
-The caller tests load actual SDK sources locally. They do not perform cloud RPCs
-or establish complete Google SDK or application migration coverage.
+The separate retained-source suite passes 79 files / 2,877 assertions. That count
+applies to compatibility source, not the new public runtime. Browser bundles,
+package archives, TypeScript 7 consumers and focused malformed-input tests are
+checked separately. See the [fixture contract](../../scripts/protobuf-conformance/README.md).
 
-See the [comparison fixture](../../scripts/protobuf-conformance/README.md) and
-[measurements](bench/results/README.md) for scope, controls and remaining costs.
-
-## Provenance
-
-Derived from [protobuf.js 8.8.1](https://github.com/protobufjs/protobuf.js/tree/798b4c942cca81a7ae0a2694f28ecd2985d386c9).
-The BSD 3-Clause [license](LICENSE) and extension notices are retained.
-[PROVENANCE.json](PROVENANCE.json) records the upstream commit and npm integrity.
+[Current measurements](bench/application-results/README.md) use separate processes,
+balanced AB/BA order and identical-source controls. The independent implementation
+has real remaining performance costs; it is not a universal speed improvement.
+Historical measurements of the derived runtime do not describe this version.

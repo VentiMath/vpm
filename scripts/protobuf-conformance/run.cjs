@@ -5,10 +5,16 @@ try{
  const source=require('./SOURCE.json'),archive=path.join(fixture,source.archive);
  assert.equal(createHash('sha256').update(fs.readFileSync(archive)).digest('hex'),source.sha256);
  assert.equal(spawnSync('tar',['-xzf',archive,'-C',temp]).status,0);
- const upstream=process.argv.includes('--upstream'),target=upstream?path.join(fixture,'node_modules/protobufjs'):path.resolve(fixture,'../../packages/vprotobufjs');
+ const upstream=process.argv.includes('--upstream');assert(upstream||process.argv.includes('--compat'),'Use --compat for retained source, binary.cjs/application.cjs for the independent public runtime');const target=upstream?path.join(fixture,'node_modules/protobufjs'):path.resolve(fixture,'../../packages/vprotobufjs');
  // Copy only runtime/extension files over the reference layout. Tests remain untouched.
  for(const dir of ['src','ext','google']){fs.rmSync(path.join(temp,dir),{recursive:true});fs.cpSync(path.join(target,dir),path.join(temp,dir),{recursive:true});}
  for(const name of ['index.js','index.d.ts','light.js','light.d.ts','minimal.js','minimal.d.ts'])fs.copyFileSync(path.join(target,name),path.join(temp,name));
+ if(!upstream){
+  fs.copyFileSync(path.join(target,'src/compatibility.d.ts'),path.join(temp,'index.d.ts'));
+  for(const [entry,sourceEntry]of [['index','index'],['light','index-light'],['minimal','index-minimal']])fs.writeFileSync(path.join(temp,entry+'.js'),"module.exports=require('./src/"+sourceEntry+"');\n");
+  fs.copyFileSync(path.join(target,'ext/descriptor-compat.js'),path.join(temp,'ext/descriptor.js'));
+  fs.writeFileSync(path.join(temp,'ext/descriptor/index.js'),"module.exports=require('../descriptor');\n");
+ }
  // The separate CLI generates static-code runtime tests; it is not shipped by VPM.
  fs.cpSync(path.join(fixture,'node_modules/protobufjs-cli'),path.join(temp,'cli'),{recursive:true});
  fs.mkdirSync(path.join(temp,'node_modules'));
@@ -22,5 +28,5 @@ try{
  if(result.status!==0)console.error(result.stdout,result.stderr);
  assert.equal(result.status,0,String(result.error||'upstream runtime tests failed'));
  const totals=JSON.parse(result.stdout.trim().split('\n').at(-1));assert.equal(totals.failures,0);assert.equal(totals.assertions,2877);assert.equal(totals.files,79);
- console.log(`${upstream?'Upstream':'VPM'} protobuf.js: ${totals.files} unmodified runtime test files, ${totals.assertions} assertions passed. Separate CLI and legacy UMD-loader tests excluded; VPM browser bundles are checked separately.`);
+ console.log(`${upstream?'Upstream':'Retained compatibility source'} protobuf.js: ${totals.files} unmodified runtime test files, ${totals.assertions} assertions passed. Separate CLI and legacy UMD-loader tests excluded; VPM browser bundles are checked separately.`);
 }finally{fs.rmSync(temp,{recursive:true,force:true});}

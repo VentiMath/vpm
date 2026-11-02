@@ -6,20 +6,26 @@
     "commit": "798b4c942cca81a7ae0a2694f28ecd2985d386c9",
     "integrity": "sha512-d9e9179bjXSJdpJ3+R9fP8hzXsnKLyxTjHLG1dUzje8a27pPyXCe6PrcRtgx2rjoM3IZzHd2vAs+6J/BsO1k7Q=="
   },
-  "checked": "2026-10-30",
+  "checked": "2026-11-02",
   "license": "BSD-3-Clause",
   "changes": [
-    "Derived full/light/minimal runtimes and extensions; long is replaced by vlong.",
-    "Restore temporary reader bounds on decode and packed-read failures.",
-    "Validate explicit decode/skip lengths and bound skipped varints to ten bytes.",
-    "Correct unknown group skipping for empty message types.",
-    "Protect the shared LongBits zero value against mutation."
+    "Full, light and minimal public entries now use an independently written reader/writer, message reflection, schema loader/parser and application descriptor conversion runtime.",
+    "Preserve reader bounds on errors, validate lengths and varint widths, protect shared zero, and preserve prototype-named fields as own data.",
+    "Preserve exact 64-bit values through vlong, explicit presence, negative zero, closed enums, unknown fields and repeated singular-message merging.",
+    "Flat scalar messages specialize fixed, validated templates once; environments blocking dynamic functions use the checked interpreter.",
+    "Align the package version with the 8.8.1 API comparison target; public declarations describe implemented APIs.",
+    "Retain upstream compatibility source and generated schema data with their original license; public application runtime imports do not load src/."
   ],
   "implementation": {
-    "kind": "upstream-derived with focused modifications",
-    "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "The full/light/minimal protobuf runtimes are derived from upstream, with focused bounds and unknown-field corrections. Generated protocol schemas are a separate retained input, not an independent-runtime claim.",
-    "targetScope": "The protobuf reader/writer and message encoding/decoding paths used by Firestore, gax and Firebase event schemas.",
-    "remainingWork": "Independently implement the application-facing runtime paths; retain current conformance and correctness fixes as requirements."
-  }
+    "kind": "independent application runtime with retained internal compatibility",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "basis": "runtime/*.cjs and public declarations are independently written around native typed arrays, DataView, TextEncoder/TextDecoder and vlong. runtime/common.json and google/ contain retained protocol schema data. src/, src/compatibility.d.ts, ext/descriptor-compat.js, optional legacy extensions and generated descriptor declarations retain upstream provenance.",
+    "targetScope": "Generated message readers/writers, reflection encode/decode/conversion/verification, proto2/proto3 and tested edition features, JSON/.proto loading, descriptors used by actual proto-loader, GAX and Firestore.",
+    "remainingWork": "Separate CLI/compiler/decorator APIs, comment/source metadata and advanced edition/descriptor tooling are not implemented or claimed by the public runtime. Legacy src/ and optional ProtoJSON/text-format/debug extension source remain upstream-derived compatibility code. This package has not been released or adopted by the application.",
+    "independentComponents": {
+      "runtime": "Independent public application runtime; tests assert that the full/light/minimal and descriptor entries do not import retained src/ code.",
+      "index.d.ts": "Declarations authored for the implemented public API, rather than the full upstream tooling surface."
+    }
+  },
+  "scope": "Independent application-used Protocol Buffers runtime for generated Google messages, proto-loader, GAX and Firestore; retained optional tooling and internal compatibility source is outside the completed scope."
 }

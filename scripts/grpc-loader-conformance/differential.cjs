@@ -3,11 +3,14 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const vpm=require('../../packages/vgrpc-proto-loader'),{upstream,upstreamOnPB8,entry,firestoreSchema,plain}=require('./consumers.cjs'),{schema,input}=require('../../packages/vgrpc-proto-loader/test/schema.cjs');
 assert.equal(require('./node_modules/@grpc/proto-loader/package.json').version,'0.8.1');
 for(const[file,hash]of Object.entries(require('../../packages/vgrpc-proto-loader/PROVENANCE.json').upstream.sourceHashes))assert.equal(createHash('sha256').update(fs.readFileSync(path.join(path.dirname(entry),file))).digest('hex'),hash);
+// Base64 preserves exact bytes while keeping descriptor failure output bounded.
+function compact(value){if(value instanceof Uint8Array)return {wireBytes:Buffer.from(value).toString('base64')};if(typeof value==='function')return '<function>';if(Array.isArray(value))return value.map(compact);if(value&&typeof value==='object')return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,compact(v)]));return value;}
+function equivalent(a,b){assert.deepEqual(compact(a),compact(b));}
 const sameEngine=upstreamOnPB8();let comparisons=0;
 for(const longs of [undefined,String,Number])for(const enums of [undefined,String])for(const bytes of [undefined,String,Array])for(const defaults of [false,true]){
  const opts={longs,enums,bytes,defaults,oneofs:true};
  const selected=vpm.fromJSON(structuredClone(schema),opts),baseline=upstream.fromJSON(structuredClone(schema),opts);
- assert.deepEqual(plain(selected),plain(sameEngine.fromJSON(structuredClone(schema),opts)));comparisons++;
+ equivalent(selected,sameEngine.fromJSON(structuredClone(schema),opts));comparisons++;
  for(const name of ['GetDocument','ListDocuments','Upload','Chat']){
   const a=selected['example.Catalog'][name],b=baseline['example.Catalog'][name];
   assert.equal(a.path,b.path);assert.equal(a.originalName,b.originalName);assert.equal(a.requestStream,b.requestStream);assert.equal(a.responseStream,b.responseStream);
@@ -16,9 +19,9 @@ for(const longs of [undefined,String,Number])for(const enums of [undefined,Strin
  }
 }
 const fire=JSON.parse(fs.readFileSync(firestoreSchema,'utf8'));
-assert.deepEqual(plain(vpm.fromJSON(fire)),plain(sameEngine.fromJSON(fire)));comparisons++;
+equivalent(vpm.fromJSON(fire),sameEngine.fromJSON(fire));comparisons++;
 for(const filename of ['enums.proto','messages.proto','rpc.proto','well_known.proto']){
- const file=path.join(__dirname,'upstream/test_protos',filename);assert.deepEqual(plain(vpm.loadSync(file)),plain(sameEngine.loadSync(file)));comparisons++;
+ const file=path.join(__dirname,'upstream/test_protos',filename);equivalent(vpm.loadSync(file),sameEngine.loadSync(file));comparisons++;
 }
 const malicious=structuredClone(schema);malicious.nested.example.nested.Catalog.methods.GetDocument.parsedOptions=JSON.parse('[{"__proto__":{"polluted":true}}]');
 const old=upstream.fromJSON(malicious)['example.Catalog'].GetDocument.options,fixed=vpm.fromJSON(malicious)['example.Catalog'].GetDocument.options;

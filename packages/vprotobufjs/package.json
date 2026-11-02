@@ -1,7 +1,7 @@
 {
   "name": "vprotobufjs",
-  "version": "0.1.0",
-  "description": "Protocol Buffers with VPM integers, resilient reader bounds and verified Google SDK callers",
+  "version": "8.8.1",
+  "description": "Independent Protocol Buffers runtime for generated messages, GAX and Firestore",
   "type": "commonjs",
   "main": "index.js",
   "types": "index.d.ts",
@@ -20,7 +20,8 @@
     "google/",
     "LICENSE",
     "README.md",
-    "PROVENANCE.json"
+    "PROVENANCE.json",
+    "runtime/"
   ],
   "engines": {
     "node": ">=24"

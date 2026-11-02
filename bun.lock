@@ -737,7 +737,7 @@
     },
     "packages/vprotobufjs": {
       "name": "vprotobufjs",
-      "version": "0.1.0",
+      "version": "8.8.1",
       "dependencies": {
         "vlong": "workspace:*",
       },
