@@ -7,7 +7,7 @@
     "commit": "12d94738472e922e1b3fa31b02b2b61b9ed77e6a",
     "integrity": "sha512-CMqMy7OaXl9W0eq1Uy7L7i2Y/anPvHmFmESd2CEw0t5YvZhcVCeo4MBevAmswRllX7Y2dEidA4ozGPunLSTQpw=="
   },
-  "checked": "2026-11-01",
+  "checked": "2026-11-02",
   "license": "MIT",
   "source": "Independent source-informed runtime and subset declarations; no upstream runtime copied. Original tests and MIT license retain attribution. Not a clean-room claim.",
   "implementation": {
@@ -18,11 +18,14 @@
   "changes": [
     "Merged-ref cleanup releases all refs despite a throwing cleanup and rethrows the first error.",
     "Modal cleanup preserves existing aria-hidden values, including false.",
-    "Owned hover timers and cancellable focus work; VPM positioning and tabbable foundations."
+    "Owned hover timers and cancellable focus work; VPM positioning and tabbable foundations.",
+    "Mouse opening defers menu selection until navigation; keyboard and virtual activation retain initial selection.",
+    "Focused menus handle Escape locally before document-wide floating layers or ancestor handlers can consume it.",
+    "Side-center strings from component alignment props normalize to canonical centered placements before middleware."
   ],
   "verification": {
-    "runtime": "37 unchanged original tests plus nine focused integration/control scenarios on Node 24 and Bun.",
-    "browser": "Ten mounted Chrome checks for focus, ARIA, Escape, modal guards, menu navigation/typeahead and portal teardown.",
+    "runtime": "37 unchanged original tests plus 18 focused integration/control scenarios on Node 24 and Bun.",
+    "browser": "16 mounted Chrome checks, including native mouse opening, first-item navigation, Escape with another open hint, centered geometry and an explicit upstream control for the undeclared bottom-center spelling.",
     "types": "Packed npm/Bun installs, CJS/ESM identity, SSR, browser bundle and app-shaped TypeScript 7 NodeNext/bundler consumers.",
     "limits": "No FloatingTree, safePolygon, transition, composite, virtual/grid navigation, editable-combobox typeahead or utils subpath. No React 16\u201318, Safari/Firefox, screen-reader or nested cross-shadow/iframe modal certification."
   }

@@ -29,7 +29,7 @@ let server, child, socket, timer;
     if (req.url === "/") {
       res.setHeader("Content-Type", "text/html");
       res.end(
-        `<!doctype html><script type="module">import {run as upstream} from '/upstream.mjs';import {run as vpm} from '/vpm.mjs';window.checks=(async()=>({upstream:await upstream(),vpm:await vpm()}))();</script>`,
+        `<!doctype html><script type="module">import {run as upstream} from '/upstream.mjs';import {run as vpm} from '/vpm.mjs';window.checks=(async()=>({upstream:await upstream("upstream"),vpm:await vpm("vpm")}))();</script>`,
       );
     } else if (["/upstream.mjs", "/vpm.mjs"].includes(req.url)) {
       res.setHeader("Content-Type", "text/javascript");
@@ -71,11 +71,17 @@ let server, child, socket, timer;
   socket.onmessage = (message) => {
     const event = JSON.parse(message.data);
     if (event.method === 'Runtime.bindingCalled' && event.params.name === 'vpmPress') {
-      const {key} = JSON.parse(event.params.payload);
+      const {key, x, y} = JSON.parse(event.params.payload);
       (async () => {
+        if (key === undefined) {
+          await send('Input.dispatchMouseEvent', {type:'mouseMoved', x, y});
+          await send('Input.dispatchMouseEvent', {type:'mousePressed', x, y, button:'left', clickCount:1});
+          await send('Input.dispatchMouseEvent', {type:'mouseReleased', x, y, button:'left', clickCount:1});
+        } else {
         const code = key.length === 1 ? 'Key' + key.toUpperCase() : key;
         await send('Input.dispatchKeyEvent', {type:'keyDown', key, code, windowsVirtualKeyCode: {Tab:9, Escape:27, ArrowDown:40, End:35}[key] || key.toUpperCase().charCodeAt(0)});
         await send('Input.dispatchKeyEvent', {type:'keyUp', key, code});
+        }
         await send('Runtime.evaluate', {expression:'window.vpmKeyDone()'});
       })().catch(error => {for (const {reject} of pending.values()) reject(error);});
       return;
@@ -116,9 +122,9 @@ let server, child, socket, timer;
   );
   const result = evaluated.result.value;
   assert.deepEqual(result.vpm, result.upstream);
-  assert.equal(result.vpm.checks, 10);
+  assert.equal(result.vpm.checks, 16);
   console.log(
-    "Chrome: 10 app-shaped popover, modal focus and keyboard menu checks match; portals clean up.",
+    "Chrome: 16 app-shaped popover, modal focus and keyboard menu checks match; portals clean up.",
   );
 })()
   .catch((error) => {
@@ -134,5 +140,5 @@ let server, child, socket, timer;
       await ended;
     }
     if (server) await new Promise((resolve) => server.close(resolve));
-    fs.rmSync(temp, { recursive: true, force: true });
+    fs.rmSync(temp, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   });

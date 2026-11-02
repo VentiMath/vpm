@@ -92,6 +92,12 @@ export function useDismiss(context, options = {}) {
     const { context: c } = current.current;
     c.onOpenChange(false, native(event), reason);
   });
+  const escape = useEvent((e) => {
+    const {context: c, options: o} = current.current;
+    if (!c.open || o.enabled === false || o.escapeKey === false || e.key !== "Escape" || e.isComposing || native(e).isComposing) return;
+    if (!(typeof o.bubbles === "object" ? o.bubbles.escapeKey : o.bubbles)) e.stopPropagation();
+    dismiss(e, "escape-key");
+  });
   React.useEffect(() => {
     if (!context.open || options.enabled === false) return;
     const doc =
@@ -106,10 +112,7 @@ export function useDismiss(context, options = {}) {
       const { context: c, options: o } = current.current;
       if (!c.open || stack.at(-1) !== layer) return;
       if (e.type === "keydown") {
-        if (o.escapeKey !== false && e.key === "Escape" && !e.isComposing) {
-          e.stopPropagation();
-          dismiss(e, "escape-key");
-        }
+        escape(e);
         return;
       }
       if (
@@ -162,9 +165,11 @@ export function useDismiss(context, options = {}) {
     options.ancestorScroll,
     current,
     dismiss,
+    escape,
   ]);
   const reference = React.useMemo(
     () => ({
+      onKeyDown: escape,
       [options.referencePressEvent === "click"
         ? "onClick"
         : options.referencePressEvent === "mousedown"
@@ -174,9 +179,10 @@ export function useDismiss(context, options = {}) {
           dismiss(e, "reference-press");
       },
     }),
-    [options.referencePressEvent, current, dismiss],
+    [options.referencePressEvent, current, dismiss, escape],
   );
-  return options.enabled === false ? empty : { reference };
+  const floating = React.useMemo(() => ({onKeyDown: escape}), [escape]);
+  return options.enabled === false ? empty : { reference, floating };
 }
 export function useFocus(context, options = {}) {
   const state = useCurrent({ context, options }),

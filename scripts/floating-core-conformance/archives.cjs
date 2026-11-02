@@ -6,7 +6,7 @@ try {
  const dependencies={};
  for(const name of ['vfloating-ui-utils','vfloating-ui-core']){
   run('bun',['pm','pack','--ignore-scripts','--destination',temp,'--quiet'],path.join(root,'packages',name));
-  dependencies[name]='file:'+path.join(temp,name+'-0.1.0.tgz');
+  dependencies[name]='file:'+path.join(temp,name+'-'+require(path.join(root,'packages',name,'package.json')).version+'.tgz');
   assert.doesNotMatch(run('tar',['-tzf',dependencies[name].slice(5)]),/\/(test|bench|node_modules)\//);
  }
  for(const manager of ['npm','bun']){

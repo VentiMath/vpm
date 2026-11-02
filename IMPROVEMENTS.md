@@ -791,8 +791,14 @@ and tooltip interactions on VPM positioning and tabbable. Merged refs finish all
 cleanup callbacks even after an error, and modal cleanup restores existing
 `aria-hidden` values. Two original-package controls reproduce those faults.
 
-Both runtimes pass 37 unchanged upstream tests plus nine app-shaped scenarios.
-Chrome exercises ten mounted focus/ARIA/menu checks; packed npm/Bun installs,
+Both runtimes pass 37 unchanged upstream tests plus 18 integration/control scenarios.
+Chrome exercises 16 mounted checks, including native mouse-open first selection,
+Escape routing with another floating hint and measured centered placement. The
+runtime accepts `*-center` as an alias for the canonical centered spelling; a
+separate control records current upstream's misalignment for that undeclared
+input. The `r2` release includes these corrections. These direct callers belong
+to the documentation editor example; MUI/Radix's transitive Floating UI remains.
+Packed npm/Bun installs,
 CJS/ESM, SSR, browser bundling and TypeScript 7 consumers pass. This is the app-used
 subset, with advanced tree, polygon, transition and virtual/grid APIs omitted.
 [Scope and evidence](packages/vfloating-ui-react/README.md) and

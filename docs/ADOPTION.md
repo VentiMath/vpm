@@ -2,7 +2,8 @@
 
 Building a replacement, releasing it and adopting it are separate milestones.
 Adoption here means a VPM artifact is reachable from VentiMath's committed
-production dependencies. It does not by itself verify a deployment.
+production dependencies. This is dependency adoption, not proof that every
+installed module reaches a production bundle or a deployed feature.
 
 Verified November 2, 2026 against the application's main branch, commit
 `8fcc5099` (styling migration: `245c1541`; calendar migration: `63f63f6a`):
@@ -13,7 +14,7 @@ Verified November 2, 2026 against the application's main branch, commit
 | `vfullcalendar-core` | `calendar-7.1.3`, package 7.1.3 | Included in the same replacement release |
 | `vfull-ui-headless-calendar` | `calendar-7.1.3`, package 7.1.3 | Included in the same replacement release |
 | `vclsx`, `vstylis` and 13 Emotion packages | `styling-11.14.1` | Current published styling release |
-| Five `vfloating-ui-*` packages and `vtabbable` | Not adopted | `floating-0.27.20`: six packages with pinned transitive URLs |
+| Five `vfloating-ui-*` packages and `vtabbable` | Not adopted | `floating-0.27.20-r2`: menu interaction fixes and pinned transitive URLs |
 
 Evidence: the top-level calendar release URL in `package.json`, all three
 resolved release archives in `bun.lock`, and v7 calendar imports in the app's
@@ -31,3 +32,9 @@ The standalone progress tree uses a teal/blue/purple gradient and **IN USE** bad
 for verified adoption. Green means available; yellow tracks partial work;
 purple means made unnecessary; red means not started. Adoption and implementation
 scope remain separately documented even when a row is collapsed.
+
+The pending Floating UI cutover targets the Tiptap documentation editor example.
+It is not yet adoption on main. Switching its three primitives does not replace
+MUI/Radix's transitive Floating UI dependencies or establish production bundle
+savings. The revised release is available for the application's own browser
+comparison before that cutover lands.

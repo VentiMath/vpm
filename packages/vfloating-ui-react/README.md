@@ -46,6 +46,17 @@ and lost attribute. Hover timers and pending focus work are cancelled on teardow
 Click-pinned panels stay open after hover ends, and Escape prevents immediate
 hover reopening until re-entry. Positioning inherits VPM's stale-measurement fixes.
 
+Mouse opening with the default `focusItemOnOpen: 'auto'` leaves selection unset;
+keyboard or virtual activation selects an item. The first ArrowDown after a mouse
+open selects the first enabled item. Escape is handled on the focused panel or
+trigger before unrelated document-wide floating layers can consume it.
+
+Use `bottom`, `top`, `left` or `right` for centered placement. For existing
+component APIs that join side and alignment, the runtime also accepts
+`bottom-center` (and the other three sides) and normalizes it before positioning.
+This is a compatibility extension: the current upstream types do not define
+`*-center`, and upstream 0.27.20 aligns that spelling to the start edge.
+
 The declarations intentionally omit APIs not implemented here: FloatingTree and
 nested-tree event routing, safe polygons, transitions, composite widgets, virtual
 or grid list navigation, client-point/inner positioning and the `utils` subpath.
@@ -57,12 +68,13 @@ is a separate change.
 
 ## Verification and performance
 
-Node 24 and Bun pass **37 unchanged upstream tests plus nine integration/control
+Node 24 and Bun pass **37 unchanged upstream tests plus 18 integration/control
 probes**. Fixtures cover app-shaped menu navigation, disabled items, repeated-letter
 typeahead, focus/portals, dismissal, tooltip delays and React 19 ref cleanup.
 Packed npm/Bun installs check CJS/ESM identity, SSR, browser bundling and TypeScript 7
 NodeNext/bundler consumers. Chrome checks the mounted interactions against the
-original. [Commands and scope](../../scripts/floating-react-conformance/README.md).
+original, including real mouse/keyboard input, overlapping hints and measured
+centering. [Commands and scope](../../scripts/floating-react-conformance/README.md).
 
 [Benchmark results](bench/results/README.md) use production React in separate
 processes, balanced execution order and identical-source controls. SSR and prop
@@ -72,10 +84,11 @@ remain in the report.
 
 [Provenance](PROVENANCE.json) · [MIT license](LICENSE)
 
-In this recording, SSR uses 40–58% less paired time on Node and 38–52% less on
-Bun. Composed click props use 18%/42% less time on Node/Bun. Each difference is
-consistent across all four pairs and exceeds the identical-source control spread;
-the full process ranges remain in the report.
+In the current local recording, popover/tooltip SSR uses about 52–53% less
+paired time on Node; the menu and composed-click differences are inconclusive
+against the identical-source controls. Bun's SSR cases use 42–49% less time and
+composed click props 45% less. All controls and process ranges remain in the
+report; these CPU measurements do not establish browser responsiveness gains.
 
 ## Installation
 

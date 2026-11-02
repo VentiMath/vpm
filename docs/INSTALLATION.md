@@ -136,11 +136,14 @@ Global cleanup and a frozen lockfile installation. Chrome is required; set
 
 ## Floating UI
 
-The [Floating UI release](https://github.com/VentiMath/vpm/releases/tag/floating-0.27.20)
-contains six independently implemented packages. Install the React entry alone:
+The [Floating UI release](https://github.com/VentiMath/vpm/releases/tag/floating-0.27.20-r2)
+contains six independently implemented packages. Revision `r2` fixes mouse-open
+menu selection and Escape routing, and accepts `*-center` as a runtime alias for
+centered placement. It uses new immutable URLs; the first release is unchanged.
+Install the React entry alone:
 
 ```sh
-bun add vfloating-ui-react@https://github.com/VentiMath/vpm/releases/download/floating-0.27.20/vfloating-ui-react-0.27.20.tgz
+bun add vfloating-ui-react@https://github.com/VentiMath/vpm/releases/download/floating-0.27.20-r2/vfloating-ui-react-0.27.20.tgz
 ```
 
 Its archive pins all VPM runtime dependencies to public URLs in the same release;
@@ -157,7 +160,10 @@ React and React DOM 19 peers. Commit package.json and bun.lock together.
 | vtabbable | tabbable 6.5.1 |
 
 For VentiMath's direct Tiptap tooltip, popover and dropdown-menu components,
-change imports from `@floating-ui/react` to `vfloating-ui-react`. Positioning,
+change imports from `@floating-ui/react` to `vfloating-ui-react`. These primitives
+currently belong to the documentation editor example. Their cutover alone does
+not remove the upstream positioning packages used by MUI/Radix, and no production
+bundle reduction is claimed. Positioning,
 interaction hooks and callback types come from the same entry. No global alias
 is included: MUI/Radix's transitive callers require their own compatibility check.
 The React package implements the app-used subset described in its
@@ -169,7 +175,7 @@ hashes and transitive URLs. Release preparation does not migrate or deploy the
 application; adoption remains recorded separately in [ADOPTION.md](ADOPTION.md).
 
 ```sh
-node scripts/pack-floating-release.cjs --ref COMMIT_SHA --tag floating-0.27.20 --out /absolute/path/to/empty-output
+node scripts/pack-floating-release.cjs --ref COMMIT_SHA --tag floating-0.27.20-r2 --out /absolute/path/to/empty-output
 node scripts/check-floating-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-floating-release.cjs /absolute/path/to/output --published

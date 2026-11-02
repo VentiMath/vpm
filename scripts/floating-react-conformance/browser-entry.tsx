@@ -13,33 +13,47 @@ import {
   useListItem,
   useListNavigation,
   useTypeahead,
+  offset, flip, shift, limitShift, autoUpdate,
 } from "@floating-ui/react";
 const Context = React.createContext<any>(null);
-function Item({ label, disabled = false }) {
+function Item({ label, disabled = false, asDiv = false }) {
+  const Tag = asDiv ? "div" : "button";
   const { active, getItemProps } = React.useContext(Context),
     { ref, index } = useListItem({ label: disabled ? null : label });
   return (
-    <button
+    <Tag
       ref={ref}
       role="menuitem"
-      disabled={disabled}
+      disabled={asDiv ? undefined : disabled}
+      aria-disabled={disabled}
       tabIndex={active === index ? 0 : -1}
       {...getItemProps()}
     >
       {label}
-    </button>
+    </Tag>
   );
 }
-function App({ modal = false, menu = false }) {
+// An independently mounted toolbar hint must not take Escape away from a focused menu.
+function Hint() {
+  const [open, setOpen] = React.useState(true);
+  const {context, refs} = useFloating({open, onOpenChange: setOpen});
+  const {getFloatingProps} = useInteractions([useDismiss(context), useRole(context, {role: "tooltip"})]);
+  return open ? <FloatingPortal><div ref={refs.setFloating} {...getFloatingProps()}>Hint</div></FloatingPortal> : null;
+}
+function App({ modal = false, menu = false, mouseMenu = false, centered = false, centerAlias = false }) {
   const [open, setOpen] = React.useState(false),
     [active, setActive] = React.useState<number | null>(null),
     listRef = React.useRef([]),
     labels = React.useRef([]);
-  const { refs, context } = useFloating({ open, onOpenChange: setOpen });
+  const { refs, context, floatingStyles } = useFloating({ open, onOpenChange: setOpen,
+    placement: centered ? (centerAlias ? "bottom-center" : "bottom") as any : "bottom-start",
+    middleware: [offset(4), flip({crossAxis: false, fallbackAxisSideDirection: "end"}), shift({limiter: limitShift({offset: 4})})],
+    whileElementsMounted: autoUpdate,
+  });
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [
-      useClick(context),
-      useDismiss(context),
+      useClick(context, {event: mouseMenu ? "mousedown" : "click"}),
+      useDismiss(context, {outsidePressEvent: mouseMenu ? "mousedown" : "pointerdown"}),
       useRole(context, { role: menu ? "menu" : "dialog" }),
       useListNavigation(context, {
         enabled: menu,
@@ -57,23 +71,24 @@ function App({ modal = false, menu = false }) {
     ],
   );
   return (
-    <>
-      <button ref={refs.setReference} {...getReferenceProps()}>
+    <div>
+      <button style={{marginLeft: 200, width: 100}} ref={refs.setReference} {...getReferenceProps()}>
         Open
       </button>
       <button>After</button>
       {open && (
         <FloatingPortal>
           <FloatingFocusManager context={context} modal={modal}>
-            <div ref={refs.setFloating} {...getFloatingProps()}>
+            <div style={{...floatingStyles, width: centered ? 180 : 120}} ref={refs.setFloating} {...getFloatingProps()}>
               {menu ? (
                 <Context.Provider value={{ active, getItemProps }}>
                   <FloatingList elementsRef={listRef} labelsRef={labels}>
-                    <Item label="Alpha" />
-                    <Item label="Blocked" disabled />
-                    <Item label="Beta" />
-                    <Item label="Bravo" />
+                    <Item asDiv={mouseMenu} label="Alpha" />
+                    <Item asDiv={mouseMenu} label="Blocked" disabled />
+                    <Item asDiv={mouseMenu} label="Beta" />
+                    <Item asDiv={mouseMenu} label="Bravo" />
                   </FloatingList>
+                  {mouseMenu && active != null && <Hint />}
                 </Context.Provider>
               ) : (
                 <>
@@ -85,10 +100,10 @@ function App({ modal = false, menu = false }) {
           </FloatingFocusManager>
         </FloatingPortal>
       )}
-    </>
+    </div>
   );
 }
-export async function run() {
+export async function run(variant: "upstream" | "vpm") {
   const host = document.createElement("div");
   document.body.append(host);
   const root = createRoot(host);
@@ -106,6 +121,14 @@ export async function run() {
       throw Error(label + ": focused " + document.activeElement?.outerHTML);
     checks++;
   };
+  const click = async (node) => {
+    const box = node.getBoundingClientRect();
+    await new Promise(resolve => {
+      (window as any).vpmKeyDone = resolve;
+      (window as any).vpmPress(JSON.stringify({x: box.x + box.width / 2, y: box.y + box.height / 2}));
+    });
+    await wait();
+  };
   const key = async (value) => {
     await new Promise(resolve => {
       (window as any).vpmKeyDone = resolve;
@@ -113,6 +136,7 @@ export async function run() {
     });
     await wait();
   };
+  const failures: string[] = [];
   try {
     flushSync(() => root.render(<App />));
     button("Open").focus();
@@ -156,6 +180,35 @@ export async function run() {
     await key("b");
     await key("b");
     check(document.activeElement === button("Bravo"), "typeahead cycles");
+    await key("Escape");
+    check(!document.querySelector("[role=menu]"), "menu item Escape");
+
+    flushSync(() => root.render(<App key="mouse-menu" menu mouseMenu />));
+    await click(button("Open"));
+    const panel = document.querySelector("[role=menu]");
+    if (document.activeElement !== panel) failures.push("mouse-open must focus the menu before selecting an item");
+    await key("ArrowDown");
+    if (document.activeElement?.textContent !== "Alpha") failures.push("first ArrowDown must select the first item");
+    await key("Escape");
+    if (document.querySelector("[role=menu]")) failures.push("Escape from mouse-open menu must dismiss");
+    checks += 3;
+
+    flushSync(() => root.render(<App key="centered" centered />));
+    await click(button("Open"));
+    const a = button("Open").getBoundingClientRect();
+    const b = document.querySelector("[role=dialog]")!.getBoundingClientRect();
+    if (Math.abs(a.x + a.width / 2 - b.x - b.width / 2) > 1 || Math.abs(b.y - a.bottom - 4) > 1)
+      failures.push("bottom-center must center the panel with its 4px offset: " + JSON.stringify({a:a.toJSON(), b:b.toJSON()}));
+    checks++;
+    flushSync(() => root.render(<App key="center-alias" centered centerAlias />));
+    await click(button("Open"));
+    const alias = document.querySelector("[role=dialog]")!.getBoundingClientRect();
+    // The current original misaligns this undeclared spelling. Check that
+    // control explicitly; VPM canonicalizes it to the supported bottom value.
+    if (Math.abs(alias.x - (variant === "upstream" ? a.x : b.x)) > 1 || Math.abs(alias.y - b.y) > 1)
+      failures.push("center alias behavior differs from its documented control");
+    checks++;
+    if (failures.length) throw Error(failures.join("; "));
   } finally {
     flushSync(() => root.unmount());
     host.remove();

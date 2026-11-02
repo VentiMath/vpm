@@ -23,29 +23,29 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-01T23:35:43.213Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-02T16:57:18.795Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| SSR interactions / popover | 17786 | 7131 | -58.2% | -58.9% | -55.4% | 4.7% | lower time in every pair, beyond control spread |
-| SSR interactions / tooltip | 14006 | 8644 | -40.1% | -40.1% | -40.1% | 7% | lower time in every pair, beyond control spread |
-| SSR interactions / menu | 15124 | 7680 | -47.4% | -54.2% | -40.3% | 12.9% | lower time in every pair, beyond control spread |
-| mounted interaction props / composed click | 572 | 465 | -17.7% | -20.9% | -15.4% | 6.8% | lower time in every pair, beyond control spread |
+| SSR interactions / popover | 18172 | 8699 | -51.5% | -55.6% | -46.4% | 17.5% | lower time in every pair, beyond control spread |
+| SSR interactions / tooltip | 15668 | 7531 | -53.2% | -54% | -47.3% | 13.4% | lower time in every pair, beyond control spread |
+| SSR interactions / menu | 18901 | 11224 | -38.5% | -43.3% | -28.6% | 34.7% | unestablished at this precision |
+| mounted interaction props / composed click | 643 | 553 | -15.8% | -19% | -9.2% | 15% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-01T23:36:02.918Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-02T16:57:39.310Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| SSR interactions / popover | 15308 | 7086 | -52.2% | -52.6% | -51.8% | 10.3% | lower time in every pair, beyond control spread |
-| SSR interactions / tooltip | 13015 | 7891 | -38.2% | -34.8% | -44.3% | 10% | lower time in every pair, beyond control spread |
-| SSR interactions / menu | 15481 | 7802 | -48.7% | -48.8% | -47.8% | 6.3% | lower time in every pair, beyond control spread |
-| mounted interaction props / composed click | 450 | 262 | -42.1% | -42.7% | -41.6% | 1.5% | lower time in every pair, beyond control spread |
+| SSR interactions / popover | 20184 | 9964 | -48.5% | -50.6% | -43.9% | 18.1% | lower time in every pair, beyond control spread |
+| SSR interactions / tooltip | 17262 | 9558 | -44.6% | -44.6% | -42.8% | 2.9% | lower time in every pair, beyond control spread |
+| SSR interactions / menu | 17974 | 9965 | -42.5% | -41.5% | -45.6% | 36.9% | lower time in every pair, beyond control spread |
+| mounted interaction props / composed click | 545 | 306 | -44.9% | -42.6% | -45.6% | 10.3% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

@@ -80,7 +80,8 @@ export function useListItem({ label } = {}) {
 export function useListNavigation(context, options) {
   const state = useCurrent({ context, options }),
     lastOpen = React.useRef(false),
-    opening = React.useRef(1);
+    opening = React.useRef(1),
+    focusOnOpen = React.useRef(false);
   const navigate = useEvent((index, event) => {
     const { context: c, options: o } = state.current;
     o.onNavigate?.(index);
@@ -103,9 +104,11 @@ export function useListNavigation(context, options) {
   useCommit(() => {
     if (options.enabled === false) return;
     if (context.open) {
+      if (!context.elements.floating) return;
       if (options.activeIndex != null && !options.virtual)
         focus(options.listRef.current[options.activeIndex]);
-      else if (!lastOpen.current && options.focusItemOnOpen !== false) {
+      else if (!lastOpen.current && options.focusItemOnOpen !== false &&
+        (options.selectedIndex != null || options.focusItemOnOpen === true || focusOnOpen.current)) {
         const indices = available();
         if (!indices.length) return;
         navigate(
@@ -116,6 +119,7 @@ export function useListNavigation(context, options) {
       }
     } else if (lastOpen.current && options.activeIndex != null)
       options.onNavigate?.(null);
+    if (!context.open) focusOnOpen.current = false;
     lastOpen.current = context.open;
   }, [
     context.open,
@@ -143,14 +147,15 @@ export function useListNavigation(context, options) {
     if (editable(e.target) && !o.virtual) return;
     e.preventDefault();
     const indices = available();
-    if (!indices.length) return;
     opening.current = previous ? -1 : 1;
     if (!c.open) {
       if (o.openOnArrowKeyDown !== false) {
-        navigate(previous ? indices.at(-1) : indices[0], e);
+        focusOnOpen.current = true;
+        c.onOpenChange(true, native(e), "list-navigation");
       }
       return;
     }
+    if (!indices.length) return;
     let slot = indices.indexOf(o.activeIndex),
       index;
     if (e.key === "Home") index = indices[0];
@@ -167,8 +172,26 @@ export function useListNavigation(context, options) {
     }
     navigate(index, e);
   });
-  const reference = React.useMemo(() => ({ onKeyDown: key }), [key]),
-    floating = reference;
+  const reference = React.useMemo(() => ({
+    onKeyDown: (e) => {
+      if (!e.altKey && !e.ctrlKey && !e.metaKey && !e.isComposing &&
+          ["ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Enter", " "].includes(e.key))
+        focusOnOpen.current = true;
+      key(e);
+    },
+    onPointerDown: (e) => {
+      // A real pointer leaves selection to the first navigation key. Zero-area
+      // accessibility activation and keyboard clicks request initial selection.
+      focusOnOpen.current = e.width === 0 && e.height === 0;
+    },
+    onMouseDown: (e) => {
+      if (e.detail === 0 && !native(e).pointerType) focusOnOpen.current = true;
+    },
+    onClick: (e) => {
+      if (e.detail === 0 && !native(e).pointerType) focusOnOpen.current = true;
+    },
+  }), [key]);
+  const floating = React.useMemo(() => ({onKeyDown: key}), [key]);
   const item = React.useMemo(
     () => ({
       onFocus: (e) => {

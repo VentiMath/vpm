@@ -14,14 +14,20 @@ node scripts/floating-react-conformance/browser.cjs
 ```
 
 Both implementations pass 37 original tests (click, role, merged refs, lists and
-delay groups) and nine app-shaped scenarios on Node 24 and Bun. Two scenarios
+delay groups) and 18 integration/control scenarios on Node 24 and Bun. Two scenarios
 explicitly assert the original failure and VPM correction: cleanup stopping after
 the first throwing ref, and loss of an existing `aria-hidden="false"` value.
 Modal Tab tests use user-event's keyboard simulation. jsdom tests do not establish
 browser layout or assistive-technology correctness.
 
-Chrome runs ten mounted checks for popover focus/ARIA/Escape, modal focus guards,
-menu navigation/typeahead and portal cleanup. A local debugging connection waits
+Chrome runs 16 mounted checks for popover focus/ARIA/Escape, modal focus guards,
+menu navigation/typeahead and portal cleanup. Native mouse clicks reproduce the
+app's mousedown-open menu with initially untabbable items: focus stays on the
+panel and the first ArrowDown selects the first item. A second floating hint
+must not consume Escape from that menu. Measured popover rectangles verify
+centered placement with offset/flip/shift. An explicit control records upstream's
+misalignment of the undeclared `bottom-center` spelling; VPM normalizes it to
+`bottom`. This extension is not reported as identical upstream behavior. A local debugging connection waits
 for actual animation frames; it does not replace the browser's frame scheduler.
 `CHROME_BIN` can select the executable. No external page or user browser profile
 is used. Safari/Firefox, iframe/shadow-tree modal scopes and screen readers are

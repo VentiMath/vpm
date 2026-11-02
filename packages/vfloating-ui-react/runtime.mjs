@@ -71,6 +71,9 @@ export function useFloating(options = {}) {
     domRef = React.useRef(domReference);
   const result = usePosition({
     ...options,
+    // Component APIs often join side + alignment, including the word "center".
+    // Canonicalize that alias before middleware sees the placement.
+    placement: options.placement?.replace(/^(top|right|bottom|left)-center$/, "$1"),
     open: root.open,
     elements: {
       reference: positionReference || root.elements.reference || reference,

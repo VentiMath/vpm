@@ -107,22 +107,24 @@ test("modal Tab wraps and restores previous outside accessibility attributes", a
   }
 });
 const MenuContext = React.createContext<any>(null);
-function Item({ label, disabled = false }) {
+function Item({ label, disabled = false, asDiv = false }) {
+  const Tag = asDiv ? "div" : "button";
   const { active, getItemProps } = React.useContext(MenuContext),
     { ref, index } = useListItem({ label: disabled ? null : label });
   return (
-    <button
+    <Tag
       ref={ref}
       role="menuitem"
-      disabled={disabled}
+      disabled={asDiv ? undefined : disabled}
+      aria-disabled={disabled}
       tabIndex={index === active ? 0 : -1}
       {...getItemProps()}
     >
       {label}
-    </button>
+    </Tag>
   );
 }
-function Menu() {
+function Menu({nativeMenu = false, navigation = {}, dismissal = {}, stopKeys = false}) {
   const [open, setOpen] = React.useState(false),
     [active, setActive] = React.useState<number | null>(null),
     list = React.useRef([]),
@@ -131,13 +133,14 @@ function Menu() {
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions(
     [
       useClick(context, { event: "mousedown" }),
-      useDismiss(context, { outsidePressEvent: "mousedown" }),
+      useDismiss(context, { outsidePressEvent: "mousedown", ...dismissal }),
       useRole(context, { role: "menu" }),
       useListNavigation(context, {
         listRef: list,
         activeIndex: active,
         onNavigate: setActive,
         loop: true,
+        ...navigation,
       }),
       useTypeahead(context, {
         listRef: labels,
@@ -147,7 +150,7 @@ function Menu() {
     ],
   );
   return (
-    <>
+    <div onKeyDown={stopKeys ? e => e.stopPropagation() : undefined}>
       <button ref={refs.setReference} {...getReferenceProps()}>
         Menu
       </button>
@@ -157,17 +160,17 @@ function Menu() {
             <div ref={refs.setFloating} {...getFloatingProps()}>
               <MenuContext.Provider value={{ active, getItemProps }}>
                 <FloatingList elementsRef={list} labelsRef={labels}>
-                  <Item label="Alpha" />
-                  <Item label="Blocked" disabled />
-                  <Item label="Beta" />
-                  <Item label="Bravo" />
+                  <Item asDiv={nativeMenu} label="Alpha" />
+                  <Item asDiv={nativeMenu} label="Blocked" disabled />
+                  <Item asDiv={nativeMenu} label="Beta" />
+                  <Item asDiv={nativeMenu} label="Bravo" />
                 </FloatingList>
               </MenuContext.Provider>
             </div>
           </FloatingFocusManager>
         </FloatingPortal>
       )}
-    </>
+    </div>
   );
 }
 test("app-shaped menu navigates, skips disabled items, wraps and typeaheads", async () => {
@@ -313,4 +316,70 @@ test("merged ref cleanup releases remaining refs even after a callback throws", 
   expect(calls).toEqual(
     process.env.VPM_ORIGINAL === "1" ? ["first"] : ["first", "second"],
   );
+});
+
+async function mouseOpenMenu() {
+  const trigger = screen.getByText("Menu");
+  fireEvent.pointerDown(trigger, {pointerType: "mouse", width: 1, height: 1});
+  fireEvent.mouseDown(trigger, {button: 0, detail: 1});
+  await settle();
+}
+test("mouse opening defers selection; first Down selects the first item; reopening resets it", async () => {
+  render(<Menu nativeMenu />);
+  await mouseOpenMenu();
+  expect(document.activeElement).toBe(screen.getByRole("menu"));
+  fireEvent.keyDown(document.activeElement!, {key: "ArrowDown"});
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText("Alpha"));
+  fireEvent.keyDown(document.activeElement!, {key: "Escape"});
+  await settle();
+  expect(screen.queryByRole("menu")).toBeNull();
+  await mouseOpenMenu();
+  expect(document.activeElement).toBe(screen.getByRole("menu"));
+});
+test.each([['ArrowDown', 'Alpha'], ['ArrowUp', 'Bravo']])("%s opens an unmounted menu and selects %s", async (key, label) => {
+  render(<Menu nativeMenu />);
+  fireEvent.keyDown(screen.getByText("Menu"), {key});
+  await settle();
+  expect(document.activeElement).toBe(screen.getByText(label));
+});
+test.each([
+  [{focusItemOnOpen: true}, 'Alpha'],
+  [{focusItemOnOpen: false}, null],
+  [{selectedIndex: 2}, 'Beta'],
+])("explicit initial selection overrides pointer modality: %j", async (navigation, label) => {
+  render(<Menu nativeMenu navigation={navigation} />);
+  await mouseOpenMenu();
+  expect(document.activeElement).toBe(label ? screen.getByText(label) : screen.getByRole("menu"));
+});
+test("menu owns Escape before an ancestor can stop propagation", async () => {
+  render(<Menu nativeMenu stopKeys />);
+  await mouseOpenMenu();
+  fireEvent.keyDown(document.activeElement!, {key: "ArrowDown"});
+  await settle();
+  fireEvent.keyDown(document.activeElement!, {key: "Escape"});
+  await settle();
+  expect(screen.queryByRole("menu")).toBeNull();
+});
+test("escapeKey false keeps the menu open", async () => {
+  render(<Menu nativeMenu dismissal={{escapeKey: false}} />);
+  await mouseOpenMenu();
+  fireEvent.keyDown(document.activeElement!, {key: "Escape"});
+  await settle();
+  expect(screen.getByRole("menu")).toBeInTheDocument();
+});
+test("side-center aliases normalize before positioning middleware", async () => {
+  let placement;
+  function Positioned({side}) {
+    placement = useFloating({placement: `${side}-center` as any}).placement;
+    return null;
+  }
+  const mounted = render(<Positioned side="bottom" />);
+  for (const side of ['top', 'right', 'bottom', 'left']) {
+    mounted.rerender(<Positioned key={side} side={side} />);
+    await settle();
+    // Upstream 0.27.20 does not define this spelling. VPM accepts it for
+    // component APIs that join a side and an alignment, including "center".
+    expect(placement).toBe(process.env.VPM_ORIGINAL === '1' ? `${side}-center` : side);
+  }
 });
