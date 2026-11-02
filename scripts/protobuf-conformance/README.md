@@ -9,6 +9,7 @@ These are comparison fixtures, not VPM runtime dependencies.
 ```sh
 npm --prefix scripts/protobuf-conformance ci --ignore-scripts --no-audit --no-fund
 node scripts/protobuf-conformance/application.cjs
+node scripts/protobuf-conformance/loading.cjs
 node scripts/protobuf-conformance/binary.cjs
 node scripts/protobuf-conformance/binary.cjs --upstream
 node scripts/protobuf-conformance/firestore.cjs
@@ -30,6 +31,14 @@ credentials. CI runs both runtimes and original controls.
 `application.cjs` pairs 343 scalar, seeded and full Firestore-schema messages
 against upstream: exact bytes, conversions/defaults, large integers and generated
 Document messages. It asserts no retained `vprotobufjs/src/` module is imported.
+
+`loading.cjs` runs 32 paired original/VPM scenarios for bundled schema aliases,
+deduplication, sync/promise/callback loading, custom resolver paths and missing
+files. Its browser bundle also loads a fetched schema importing a bundled wrapper,
+with no fetch for the built-in definitions. The full
+[Firestore suite](../firestore-conformance/README.md) passes its gate on both
+runtimes: 1,008 passes, one documented tracing-fixture failure, 47 upstream skips.
+This broader gate exposed and now verifies the prefixed wrapper-schema repair.
 
 `binary.cjs` verifies the retained source archive hash, then runs 15 unchanged
 upstream binary/RPC test files with VPM's public runtime, plus original controls.

@@ -261,6 +261,7 @@ jobs:
           node scripts/protobuf-conformance/binary.cjs
           node scripts/protobuf-conformance/binary.cjs --upstream
           node scripts/protobuf-conformance/application.cjs
+          node scripts/protobuf-conformance/loading.cjs
           node scripts/protobuf-conformance/firestore.cjs
           node scripts/protobuf-conformance/run.cjs --compat
           node scripts/protobuf-conformance/run.cjs --upstream
@@ -627,6 +628,7 @@ jobs:
           bun scripts/protobuf-conformance/binary.cjs
           bun scripts/protobuf-conformance/binary.cjs --upstream
           bun scripts/protobuf-conformance/application.cjs
+          bun scripts/protobuf-conformance/loading.cjs
           bun scripts/protobuf-conformance/firestore.cjs
           bun scripts/protobuf-conformance/run.cjs --compat
           bun scripts/protobuf-conformance/run.cjs --upstream

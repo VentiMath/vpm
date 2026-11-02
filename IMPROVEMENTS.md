@@ -1821,6 +1821,11 @@ The performance follow-up specializes message construction, codecs and conversio
 once per schema, reduces short-string Buffer conversions and writer allocations,
 and preserves the checked interpreter for CSP, closed enums and groups. It also
 repairs short service-name lookup used by the actual GAX REST fallback caller.
+The subsequent loader follow-up recognizes prefixed bundled Google schema paths
+and deduplicates aliases. It clears 47 unexpected Firestore pipeline failures;
+the full suite now reports 1,008 passes, one documented tracing-fixture failure
+and 47 upstream-skipped tests on both runtimes. Thirty-two paired loader cases
+and a browser fetch probe cover the repaired path.
 Current process-isolated measurements replace the earlier independent and derived
 runtime percentages; controls and raw samples remain visible. Actual proto-loader
 serialization/deserialization takes **13% / 41% less time on Node** and
@@ -1829,7 +1834,9 @@ the seven tracked workloads on either runtime; several small differences remain
 inconclusive. These are operation timings, not application latency claims. See the
 [package contract](packages/vprotobufjs/README.md),
 [fixture scope](scripts/protobuf-conformance/README.md) and
-[current measurements](packages/vprotobufjs/bench/application-results/README.md).
+[wire measurements](packages/vprotobufjs/bench/application-results/README.md).
+[Schema-loading measurements](packages/vprotobufjs/bench/loading-results/README.md)
+are reported separately.
 The application runtime is built, but is not released or adopted by VentiMath.
 
 ## vlong

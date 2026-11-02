@@ -1,0 +1,1039 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-02T21:55:50.468Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.0",
+    "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+    "openssl": "1.1.0",
+    "llhttp": "9.3.0",
+    "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+    "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+    "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+    "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+    "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+    "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/protobuf-conformance/node_modules/protobufjs": "3bf516e02b75c8e1b10a5c0548c1ab3edcbd3d3a021484f0ca9c1064c3b4218c",
+    "../../scripts/protobuf-conformance/package-lock.json": "0d841d2cb1e7cdfc1b93bc76cc5b5e1d5e48dcbee15881c4bd53bd6271154faf",
+    "bench/loading.cjs": "dec28249cd79dfb6dd086b929759797ef97d80f65a324d201434f89043b037e7",
+    "package.json": "d536601529eaac2899402331bed70265b44139d965baef9bd659d9bd14542d94",
+    "runtime": "744d6ba5fbc27aca449d7c06b3838a4721800ccf911956a9b0431017bb3756da"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 63925,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 1138,
+            "samples": [
+              12178.859402460435,
+              12551.918277680148,
+              13537.383128295278,
+              11961.957820738135,
+              11921.572934973601,
+              12591.57117750439,
+              12926.95518453426,
+              11940.868189806675,
+              11961.847978910395,
+              13355.594024604572,
+              12214.33831282954,
+              12430.177504393705
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 815,
+            "samples": [
+              12703.374233128836,
+              12419.938650306618,
+              13769.120245398848,
+              12671.012269938616,
+              12816.769325153322,
+              13406.134969325069,
+              15188.548466257746,
+              12606.238036809696,
+              13318.813496932496,
+              13961.144785276072,
+              14545.398773006033,
+              14999.84662576687
+            ]
+          }
+        ],
+        "checksum": 11776
+      },
+      "vpm": {
+        "pid": 63926,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 1138,
+            "samples": [
+              8216.571177504396,
+              8603.727592267138,
+              8659.123901581726,
+              8839.228471001787,
+              8256.663444639698,
+              8081.466608084357,
+              9854.020210896335,
+              9245.021089630913,
+              7793.203866432354,
+              8708.626537785585,
+              9107.754833040412,
+              9733.486818980664
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 815,
+            "samples": [
+              12115.644171779093,
+              10659.917791410988,
+              11335.225766871145,
+              9855.368098159588,
+              10896.67730061355,
+              11648.977914110443,
+              9893.404907975339,
+              11845.552147239292,
+              10572.699386503096,
+              12344.938650306824,
+              10957.822085889526,
+              12054.703067484614
+            ]
+          }
+        ],
+        "checksum": 4160
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 63927,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 1656,
+            "samples": [
+              8644.625603864726,
+              9415.30797101447,
+              8219.25362318841,
+              8359.375000000025,
+              8712.91304347826,
+              7784.82306763284,
+              8508.957125603883,
+              8942.582729468604,
+              7944.8725845410845,
+              8116.017512077308,
+              8616.521135265697,
+              8074.803743961346
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 958,
+            "samples": [
+              12458.464509394558,
+              11614.51774530272,
+              11823.546972860115,
+              10906.662839248418,
+              11308.716075156468,
+              11893.354906054248,
+              11989.517745302697,
+              11931.889352818478,
+              10591.378914404966,
+              10898.530271398733,
+              10563.892484342427,
+              13465.031315240072
+            ]
+          }
+        ],
+        "checksum": 8960
+      },
+      "upstream": {
+        "pid": 63929,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 1656,
+            "samples": [
+              12811.745169082127,
+              12850.190821256048,
+              12162.238526570052,
+              12540.408816425108,
+              12642.13466183573,
+              14294.559782608687,
+              13055.605676328481,
+              12911.533816425132,
+              12614.78502415459,
+              12842.315821256054,
+              12325.181159420299,
+              12343.221618357498
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 958,
+            "samples": [
+              13338.377870563614,
+              14126.304801670161,
+              13783.272442588755,
+              13046.755741127326,
+              12160.143006263019,
+              13938.196242171094,
+              13198.504175365266,
+              12863.039665970826,
+              13231.689979123208,
+              13096.0762004176,
+              13861.169102296448,
+              13390.483298538615
+            ]
+          }
+        ],
+        "checksum": 3328
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 63930,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 607,
+            "samples": [
+              13742.93080724877,
+              12189.729818780856,
+              12900.94728171333,
+              11197.55518945636,
+              13022.789126853371,
+              12321.115321252051,
+              12356.327841845148,
+              12408.772652388716,
+              14068.78088962113,
+              11963.825370675468,
+              11934.652388797333,
+              11940.416803953894
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 755,
+            "samples": [
+              14634.712582781487,
+              13218.874172185371,
+              13563.686092715101,
+              13444.482119205273,
+              14345.19867549661,
+              13124.3920529801,
+              13695.52980132443,
+              13797.847682119196,
+              13713.466225165528,
+              13602.098013245046,
+              13702.373509933737,
+              12995.41986754971
+            ]
+          }
+        ],
+        "checksum": 8960
+      },
+      "vpm": {
+        "pid": 63931,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 607,
+            "samples": [
+              9197.075782537033,
+              9315.349258649132,
+              10206.136738056044,
+              8416.461285008229,
+              7766.062602965402,
+              9294.275123558493,
+              8478.308072487642,
+              8346.581548599708,
+              8549.766062603005,
+              8632.894563426711,
+              10355.093904448093,
+              8713.619439868191
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 755,
+            "samples": [
+              10560.817218543025,
+              10652.263576158952,
+              12370.639735099412,
+              11357.450331125778,
+              12085.486092715257,
+              9819.480794702044,
+              10657.560264900627,
+              12254.083443708654,
+              10868.433112582865,
+              9930.186754966762,
+              11431.237086092713,
+              9927.317880794591
+            ]
+          }
+        ],
+        "checksum": 4992
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 63932,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 1169,
+            "samples": [
+              8259.83746792131,
+              7989.058169375544,
+              8612.525235243791,
+              9352.046193327642,
+              7783.931565440515,
+              8702.131736526911,
+              8566.544910179653,
+              8555.104362703178,
+              8110.671514114641,
+              8618.940119760467,
+              7758.305389221552,
+              9522.989734816056
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 955,
+            "samples": [
+              10534.381151832473,
+              10933.159162303731,
+              11026.26492146596,
+              11524.083769633491,
+              11461.649214659687,
+              10767.80104712037,
+              11260.297382198883,
+              11764.702617801006,
+              12269.589528795774,
+              11402.966492146548,
+              10981.32670157068,
+              11458.289005235636
+            ]
+          }
+        ],
+        "checksum": 8384
+      },
+      "upstream": {
+        "pid": 63933,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 1169,
+            "samples": [
+              12640.539777587685,
+              12483.497005988027,
+              11542.985457656145,
+              12335.579127459334,
+              11474.372112917032,
+              12472.234388366118,
+              11785.10863986313,
+              12826.668092386648,
+              11720.059880239496,
+              12223.231822070127,
+              13192.650128314808,
+              11888.294268605616
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 955,
+            "samples": [
+              12826.221989528829,
+              12341.230366492182,
+              13324.69424083774,
+              14855.978010471194,
+              11578.838743455446,
+              12713.524607329775,
+              12770.070157068085,
+              13260.122513088985,
+              13265.880628272336,
+              13396.20418848176,
+              12869.895287958117,
+              12869.545549738272
+            ]
+          }
+        ],
+        "checksum": 3456
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 63962,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 629,
+            "samples": [
+              11604.066772655007,
+              13408.850556438794,
+              13970.322734499236,
+              11844.860095389533,
+              12708.13354531001,
+              12184.883942766279,
+              13097.243243243209,
+              11943.627980922092,
+              13669.515103338603,
+              11542.195548489668,
+              13033.518282988867,
+              11878.90779014309
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 721,
+            "samples": [
+              13156.321775311972,
+              13653.144244105299,
+              12953.82524271841,
+              13622.57281553395,
+              12950.357836338462,
+              13146.15117891805,
+              13041.320388349484,
+              14636.09570041598,
+              12233.009708737934,
+              12642.85714285714,
+              13780.166435506306,
+              12851.016643550614
+            ]
+          }
+        ],
+        "checksum": 8512
+      },
+      "vpm": {
+        "pid": 63963,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 629,
+            "samples": [
+              12203.961844197167,
+              15319.75357710655,
+              12777.093799682021,
+              11519.276629570777,
+              13741.588235294084,
+              12134.472178060385,
+              13964.626391096976,
+              11072.734499205148,
+              11770.270270270283,
+              13925.213036565983,
+              12170.772655007953,
+              11692.76629570751
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 721,
+            "samples": [
+              13708.911234396648,
+              14261.500693481325,
+              12716.307905686528,
+              14175.739251040148,
+              13333.796116504805,
+              13794.324549237284,
+              14059.350901525679,
+              13923.370319001457,
+              13803.687933425765,
+              13049.700416088703,
+              13053.571428571371,
+              14206.427184465885
+            ]
+          }
+        ],
+        "checksum": 4224
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 63964,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 905,
+            "samples": [
+              12416.528176795566,
+              12936.325966850844,
+              12656.491712707188,
+              12430.064088397801,
+              13512.707182320488,
+              12212.016574585632,
+              12309.991160221038,
+              12983.333701657439,
+              12659.668508287286,
+              12570.85635359115,
+              11996.685082872895,
+              12376.56574585633
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 753,
+            "samples": [
+              12979.525896414381,
+              11872.730411686554,
+              13813.68924302787,
+              14219.013280212452,
+              13017.484727755718,
+              13768.646746347957,
+              13158.47808764936,
+              14780.600265604337,
+              13457.669322709082,
+              13722.664010624178,
+              13388.335989375813,
+              13038.01460823376
+            ]
+          }
+        ],
+        "checksum": 9600
+      },
+      "upstream": {
+        "pid": 63965,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.0",
+          "boringssl": "2288897e2e716330490893d226b4f079f9da9e0c",
+          "openssl": "1.1.0",
+          "llhttp": "9.3.0",
+          "libarchive": "ded82291ab41d5e355831b96b0e1ff49e24d8939",
+          "mimalloc": "6a14aee24315e503fa295a1fa90fe8b24ad91774",
+          "picohttpparser": "066d2b1e9ab820703db0837a7255d92d30f0c9f5",
+          "uwebsockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "webkit": "0f966e81b78c84bb23213e391bc679c4ef83e56b",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "c8c56a20f8f621e6a966b716b31f1dedab6a41e3",
+          "usockets": "34cbb9a40b4bd1bd767d134a7065e66c2432a676",
+          "lshpack": "8905c024b6d052f083a3d11d0a169b3c2735c8a1",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "load and resolve bundled wrappers",
+            "iterations": 905,
+            "samples": [
+              12233.33370165746,
+              12897.973480663037,
+              13361.14254143647,
+              13744.566850828716,
+              12246.823204419878,
+              13004.373480662982,
+              13153.729281767917,
+              12843.37016574584,
+              12080.662983425405,
+              12540.285082872908,
+              13281.169060773527,
+              13745.027624309409
+            ]
+          },
+          {
+            "case": "load duplicate bundled aliases",
+            "iterations": 753,
+            "samples": [
+              13307.880478087696,
+              14370.407702523253,
+              11758.852589641454,
+              12935.314741035794,
+              13354.693227091557,
+              12987.827357237631,
+              15156.262948207248,
+              13346.66799468802,
+              13475.984063744896,
+              12019.312084993293,
+              13849.43559096947,
+              13174.911022576349
+            ]
+          }
+        ],
+        "checksum": 3840
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "load and resolve bundled wrappers",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 12322.257908611624,
+          "vpmNs": 8683.875219683656,
+          "changePct": -29.526915569468983
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 12726.939915458928,
+          "vpmNs": 8434.166062801954,
+          "changePct": -33.72981943163498
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 12338.7215815486,
+          "vpmNs": 8673.257001647451,
+          "changePct": -29.707004535887304
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 12279.405474764731,
+          "vpmNs": 8560.824636441415,
+          "changePct": -30.283069045690603
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 12446.508744038143,
+          "vpmNs": 12187.367249602561,
+          "changePct": -2.0820416372559936
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 12951.173480663008,
+          "vpmNs": 12500.460220994475,
+          "changePct": -3.4800959182693325
+        }
+      ]
+    },
+    {
+      "case": "load duplicate bundled aliases",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13362.474233128782,
+          "vpmNs": 11146.523926380334,
+          "changePct": -16.583383197511235
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13285.03392484341,
+          "vpmNs": 11719.032359081419,
+          "changePct": -11.787712207746203
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 13648.813907284737,
+          "vpmNs": 10762.996688741747,
+          "changePct": -21.14335529919382
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 12869.720418848196,
+          "vpmNs": 11331.631937172715,
+          "changePct": -11.951219075613261
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13093.735783633767,
+          "vpmNs": 13799.006241331525,
+          "changePct": 5.386319606198975
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13327.274236387857,
+          "vpmNs": 13423.002656042449,
+          "changePct": 0.7182895613659701
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "load and resolve bundled wrappers",
+      "upstream_ns": 12330,
+      "vpm_ns": 8617,
+      "change_pct": -30,
+      "upstream_first_pct": -29.6,
+      "vpm_first_pct": -32,
+      "process_range_pct": "-29.5, -33.7, -29.7, -30.3",
+      "control_max_abs_pct": 3.5,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "load duplicate bundled aliases",
+      "upstream_ns": 13324,
+      "vpm_ns": 11239,
+      "change_pct": -14.3,
+      "upstream_first_pct": -18.9,
+      "vpm_first_pct": -11.9,
+      "process_range_pct": "-16.6, -11.8, -21.1, -12.0",
+      "control_max_abs_pct": 5.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

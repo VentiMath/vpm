@@ -43,6 +43,10 @@ Compared with the 8.8.1 baseline:
   limits. Valid unknown groups, including those in empty messages, are skipped.
 - The shared integer zero cannot be mutated. `vlong` preserves exact 64-bit values.
 - Prototype-named message/map fields remain own data, without changing prototypes.
+- Bundled Google schemas load from prefixed paths such as
+  `../protos/google/protobuf/wrappers.proto`. Aliases share one `Root.files` entry;
+  standard imports bypass file/network access while other paths retain their
+  resolver behavior.
 - Short service names resolve within packages as required by GAX fallback calls;
   descriptor type names retain their lexical qualification.
 
@@ -83,7 +87,13 @@ applies to compatibility source, not the new public runtime. Browser bundles,
 package archives, TypeScript 7 consumers and focused malformed-input tests are
 checked separately. See the [fixture contract](../../scripts/protobuf-conformance/README.md).
 
-[Current measurements](bench/application-results/README.md) use separate processes,
+The full original Firestore suite now reports **1,008 passes, one expected
+tracing-fixture failure and 47 upstream-skipped tests** on Node and Bun. The
+bundled-schema repair clears 47 unexpected pipeline failures missed by the
+earlier focused caller checks. Thirty-two paired loading scenarios and a
+browser fetch probe cover sync, promise, callback, resolver and alias behavior.
+
+[Wire-operation measurements](bench/application-results/README.md) use separate processes,
 balanced AB/BA order and identical-source controls. Results are workload-specific;
 small differences that overlap control spread remain inconclusive, and no
 universal speed improvement is claimed.
@@ -94,3 +104,6 @@ and prefixes when buffers grow. Longer Unicode strings keep the native path;
 Node and Bun use different short-string cutoffs based on measured conversion
 costs. Historical measurements of either the earlier independent implementation
 or the derived runtime do not describe this revision.
+
+[Schema-loading measurements](bench/loading-results/README.md) separately cover
+the repaired load path; they do not measure network latency or the codec loop.

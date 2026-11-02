@@ -19,6 +19,18 @@ function common(name, json) {
   util.put(common, name, json);
 }
 Object.assign(common, require("./common.json"));
+function bundledName(file) {
+  const start = file.lastIndexOf("google/protobuf/");
+  const canonical = start < 0 ? file : file.slice(start);
+  if (Object.hasOwn(common, canonical)) return canonical;
+  if (Object.hasOwn(common, file)) return file;
+}
+function loadPath(root, name, origin) {
+  // Standard imports bypass custom resolvers; top-level requests still resolve
+  // first. Canonical names also make aliases share one entry in Root.files.
+  const file = (origin && bundledName(name)) || root.resolvePath(origin, name);
+  return file && (bundledName(file) || file);
+}
 function resolvePath(origin, target) {
   if (/^(?:[a-z]+:|\/|[A-Za-z]:[\\/])/i.test(target)) return target;
   if (/^[a-z]+:/i.test(origin)) return new URL(target, origin).href;
@@ -418,8 +430,9 @@ function parse(source, root, options) {
 function loadSync(root, files, options) {
   const fs = require("fs");
   function visit(name, origin, weak) {
-    const file = root.resolvePath(origin, name),
-      builtin = common[name] || common[file];
+    const file = loadPath(root, name, origin);
+    if (!file) return;
+    const builtin = Object.hasOwn(common, file) ? common[file] : undefined;
     if (root.files.includes(file)) return;
     root.files.push(file);
     let text;
@@ -448,10 +461,11 @@ function loadSync(root, files, options) {
 async function load(root, files, options) {
   if (util.isNode) return loadSync(root, files, options);
   async function visit(name, origin, weak) {
-    const file = root.resolvePath(origin, name);
+    const file = loadPath(root, name, origin);
+    if (!file) return;
     if (root.files.includes(file)) return;
     root.files.push(file);
-    const builtin = common[name] || common[file];
+    const builtin = Object.hasOwn(common, file) ? common[file] : undefined;
     if (builtin) {
       root.addJSON(builtin.nested);
       return;

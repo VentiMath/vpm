@@ -16,7 +16,8 @@
     "Align the package version with the 8.8.1 API comparison target; public declarations describe implemented APIs.",
     "Retain upstream compatibility source and generated schema data with their original license; public application runtime imports do not load src/.",
     "Reduce short-string conversion, writer allocation and length-delimiter overhead without removing bounds, UTF-8, enum or prototype-safety checks.",
-    "Restore short service-name lookup needed by the actual GAX fallback caller while preserving descriptor qualification."
+    "Restore short service-name lookup needed by the actual GAX fallback caller while preserving descriptor qualification.",
+    "Recognize prefixed bundled Google schema paths in Node and browser loaders; canonicalize aliases, honor custom resolvers and skip declined paths. Full Firestore conformance verifies pipeline/explain loading."
   ],
   "implementation": {
     "kind": "independent application runtime with retained internal compatibility",
