@@ -779,6 +779,16 @@
       "name": "vreact-is",
       "version": "0.1.0",
     },
+    "packages/vreact-style-singleton": {
+      "name": "vreact-style-singleton",
+      "version": "2.2.3",
+      "dependencies": {
+        "vget-nonce": "workspace:*",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vread-package-up": {
       "name": "vread-package-up",
       "version": "0.1.0",
@@ -1227,6 +1237,8 @@
     "vreact-fast-compare": ["vreact-fast-compare@workspace:packages/vreact-fast-compare"],
 
     "vreact-is": ["vreact-is@workspace:packages/vreact-is"],
+
+    "vreact-style-singleton": ["vreact-style-singleton@workspace:packages/vreact-style-singleton"],
 
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
 

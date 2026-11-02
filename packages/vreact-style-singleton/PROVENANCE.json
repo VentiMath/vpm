@@ -1,0 +1,22 @@
+{
+  "upstream": {
+    "name": "react-style-singleton",
+    "version": "2.2.3",
+    "repository": "https://github.com/theKashey/react-style-singleton",
+    "commit": "dc032ea2e1c783897b34106a3102471dc9fd1a3d",
+    "integrity": "sha512-b6jSvxvVnyptAiLjbkWLE/lOnR4lfTtDAl+eUC7RZy+QQWc6wRzIV2CE6xBuMmDxc2qIihtDCZD5NPOFl7fRBQ=="
+  },
+  "checked": "2026-11-02",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete",
+    "basis": "Three public factory contracts independently implemented for React 19 and modern browsers; original license retained for attribution. No upstream runtime or tslib."
+  },
+  "changes": [
+    "Dynamic effects track the CSS text, not its truthiness.",
+    "Unbalanced removal cannot make the reference count negative.",
+    "Direct server-side add is a no-op and does not poison later browser insertion.",
+    "The only runtime dependency is vget-nonce; React is a peer."
+  ]
+}
