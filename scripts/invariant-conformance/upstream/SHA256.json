@@ -1,0 +1,8 @@
+{
+  "LICENSE": "b1c501095de70182748cb8e8d97ac5577701a4ef3b755ba30d59fd87b24bdb0f",
+  "test/throw-behaviour.spec.ts.txt": "0f628f0e079bf3ee914c4211a65fdd27e62192d32b1bb70633d30df72c729c7b",
+  "test/bundle-behaviour.spec.ts.txt": "9ba8e3dc1e6fa051fc7ac6ad09436cddfef4b85e4e919475f052aac06d102baf",
+  "test/type-narrowing.spec.ts.txt": "f927417336c8d4a9b991224367f2ae3bfda844b4186b062e7f74c558a4fadf8b",
+  "test/message-behaviour.spec.ts.txt": "a65950e641f301e7fb0fe91b6334a7a557eab591c3ceeaf3a305485ea3c6b925",
+  "src/tiny-invariant.ts.txt": "911035a470f1f122d8e85c256db984e682ec7b4782c8c56a1335e4f666e52446"
+}
