@@ -25,7 +25,7 @@ compatibility, not independent implementation. Generated protocol schemas remain
 separately attributed inputs.
 
 The same boundary applies to retained foundations:
-[`vgrpc-js`](packages/vgrpc-js/README.md), [`vlong`](packages/vlong/README.md),
+[`vgrpc-js`](packages/vgrpc-js/README.md),
 [`vfunctional-red-black-tree`](packages/vfunctional-red-black-tree/README.md),
 [`vobject-hash`](packages/vobject-hash/README.md) and
 [`vordered-map`](packages/vordered-map/README.md). Their existing fixes and
@@ -99,7 +99,7 @@ now have current comparison targets:
 | Core caller paths verified | vgoogle-auth-library | 11.3.2; selected credential and token APIs | [google-auth-library 11.3.2](https://www.npmjs.com/package/google-auth-library) |
 | Caller paths verified | vproto3-json-serializer | proto3-json-serializer 4.1.0; gax 6.14.0 fallback and Firestore 9.4.0 schemas with protobuf 7/8 | [proto3-json-serializer 4.1.0](https://www.npmjs.com/package/proto3-json-serializer), checked October 30, 2026 |
 | Caller paths verified | vprotobufjs | protobuf.js 8.8.1; proto-loader 0.8.1, google-gax 6.14.0 and Firestore 9.4.0 serialization against 7.6.6 controls | [protobuf.js 8.8.1](https://www.npmjs.com/package/protobufjs), checked October 30, 2026 |
-| Caller paths verified | vlong | long 5.3.2; protobuf.js 8.8.1/7.6.6, proto-loader 0.8.1 and google-gax 6.14.0 integer paths | [long 5.3.2](https://www.npmjs.com/package/long), checked October 30, 2026 |
+| Caller paths verified | vlong | long 5.3.2; protobuf.js 8.8.1/7.6.6, proto-loader 0.8.1 and google-gax 6.14.0 integer paths | [long 5.3.2](https://www.npmjs.com/package/long), checked November 1, 2026 |
 | Runtime dependency removed | vobject-hash | Retained object-hash 3.0.0 comparison package; GAX now owns its JSON cache | [object-hash 3.0.0](https://www.npmjs.com/package/object-hash), checked October 30, 2026 |
 | Caller paths verified | vgoogle-cloud-storage | @google-cloud/storage 8.4.0; object and signing operations, Firebase Admin 12.7.0 factory | [Storage 8.4.0](https://www.npmjs.com/package/@google-cloud/storage), checked October 30, 2026 |
 | Caller paths verified | vmime | mime 4.1.2; Storage 8.4.0 upload/compose callers using mime 3.0.0 | [mime 4.1.2](https://www.npmjs.com/package/mime), checked October 30, 2026 |
@@ -265,7 +265,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vlodash.camelcase](packages/vlodash.camelcase) | lodash.camelcase 4.3.0 | Direct ASCII identifier conversion, lazy compatible Unicode handling, single object coercion and corrected zero BigInts/Symbol branding; actual gRPC and Google method aliases. |
 | [vproto3-json-serializer](packages/vproto3-json-serializer) | proto3-json-serializer 4.1.0 | Correct byte slices and collections, signed durations, offset timestamps, FieldMasks and Any wrappers; validated scalars, safe output keys and verified Google fallback callers. |
 | [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
-| [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
+| [vlong](packages/vlong) | long 5.3.2 | Independent 64-bit runtime and arithmetic kernel; complete integer/radix validation, native formatting, isolated small integers, protected constants and validated bytes. Original suite, mixed-signedness controls and exact protobuf/gRPC caller bytes verified. |
 | [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Retained comparison package, no current VPM runtime consumers; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
 | [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | Independent app-used Storage client: six VPM dependencies, own authenticated dispatch, resumable uploads, validated downloads, metadata/listing/deletion and signing; unused SDK administration runtime removed. Real HTTP and Firebase callers verified. |
 | [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
@@ -1696,34 +1696,36 @@ See the [package contract](packages/vprotobufjs/README.md),
 
 ## vlong
 
-The baseline is **long 5.3.2**, checked October 30, 2026. It already has zero
-runtime dependencies; VPM retains that property. Arithmetic and optional
-WebAssembly acceleration remain, while complete integer/radix validation rejects
-silently accepted junk. Decimal conversion uses native Number/BigInt paths;
-nondecimal parsing combines validation and bounded two-word accumulation.
-Formatting uses native conversion instead of repeated Long division.
+The baseline is **long 5.3.2**, checked November 1, 2026. The runtime is now
+independently written: direct word operations, an independently assembled
+memory-free WebAssembly multiplication/division/remainder kernel, and a native
+BigInt fallback for absent or blocked WebAssembly. Both kernels preserve the
+public mutable-word API and upstream receiver-directed mixed-signedness behavior.
+The package version now matches the 5.3.2 compatibility target.
 
-Small `fromInt` values no longer share a mutable cache. Shared constants and their
-constructor properties are immutable; methods that return those constants can
-also return frozen objects. Byte constructors require exactly eight valid bytes,
-read array elements once and respect Uint8Array slices. These intentional input
-and mutability differences are described in the [package README](packages/vlong/README.md).
+Complete integer/radix validation rejects silently accepted junk. Parsing validates
+bounded decimal tokens before native conversion and uses constant-space word
+accumulation for other inputs; formatting uses native
+Number/BigInt conversion. Small `fromInt` values remain independent mutable
+objects. Shared constants are frozen. Byte constructors require exactly eight
+valid bytes, read array elements once and respect Uint8Array slices. These
+intentional differences remain documented in the [package README](packages/vlong/README.md).
 
-All **175 unchanged upstream/Closure cases** pass on Node 24 and Bun, alongside
-ten focused tests with an independent BigInt oracle, disabled-WebAssembly
-coverage, every radix and 10,000-digit inputs. Seven paired regression probes
-fail on upstream and pass on VPM. Sixteen real caller paths verify protobuf.js
-8.8.1 and the 7.6.6 used by Google, proto-loader 0.8.1 and google-gax 6.14.0,
-including exact wire bytes, timestamps, signed/unsigned limits, defaults and
-version-specific int64 map keys. This is integer-boundary coverage, not a claim
-that the entire SDK is replaced or verified.
+All **175 unchanged upstream/Closure cases**, eleven focused tests and seven
+paired correction probes pass on Node 24 and Bun. An independent BigInt oracle
+checks arithmetic and conversions; 2,496 mixed-signedness/boundary comparisons
+match the original with both kernels. Sixteen real caller paths verify
+protobuf.js 8.8.1/7.6.6, proto-loader 0.8.1 and google-gax 6.14.0, including exact
+wire bytes, timestamps, limits, defaults and version-specific int64 map keys.
+This is integer-boundary coverage, not a claim of full SDK verification.
 
-[Process-isolated measurements](packages/vlong/bench/results/README.md) cover
-construction, parsing, formatting, arithmetic, bytes and actual protobuf
-conversions on Node 24 and Bun. Several protobuf conversion paths improve;
-validated byte arrays and several small-integer construction cases cost more. Each case
-shows both process orders and independent controls; local CPU measurements do
-not establish application or network throughput gains.
+[Fresh process-isolated measurements](packages/vlong/bench/rewrite-results/README.md)
+cover the independent runtime. All four measured protobuf paths take 43–68%
+less time on Node and 12–41% less on Bun. Independent small objects and validated
+byte construction retain nanosecond-scale costs, documented beside the gains.
+Earlier reports describe the retained arithmetic
+implementation and are historical. Local CPU timings do not establish application
+or network throughput gains.
 
 ## vobject-hash
 

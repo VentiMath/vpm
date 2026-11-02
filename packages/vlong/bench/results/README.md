@@ -1,4 +1,8 @@
-# vlong measurements
+# Historical vlong measurements
+
+These source-hashed recordings describe the earlier upstream-derived arithmetic
+runtime. See the [independent rewrite results](../rewrite-results/README.md) for
+the current implementation.
 
 These records supersede the earlier same-process comparison. Each timed
 implementation runs alone in a fresh process. Four comparison pairs use

@@ -83,3 +83,13 @@ test('number coercions and mixed signedness preserve the upstream API',()=>{
   for(const alias of ['eq','neq','lt','lte','gt','gte','comp','neg','sub','mul','div','mod','shl','shr','shru','rotl','rotr','eqz'])assert.equal(typeof Long.prototype[alias],'function',alias);
 });
 test('native ESM default import shares the CommonJS constructor',async()=>assert.equal((await import('../index.js')).default,Long));
+test('the independently assembled kernel executes, and blocked compilation falls back',()=>{
+  let calls=0;
+  const context={module:{exports:{}},WebAssembly:{Module:WebAssembly.Module,Instance:class {
+    constructor(module){const instance=new WebAssembly.Instance(module);this.exports=Object.fromEntries(Object.entries(instance.exports).map(([name,fn])=>[name,(...args)=>{calls++;return fn(...args)}]));}
+  }}};
+  vm.runInNewContext(fs.readFileSync(require.resolve('..'),'utf8'),context);
+  oracle(context.module.exports);assert(calls>100,'kernel must execute, not silently fall back');
+  const blocked={module:{exports:{}},WebAssembly:{Module:class{constructor(){throw Error('CSP')}},Instance:WebAssembly.Instance}};
+  vm.runInNewContext(fs.readFileSync(require.resolve('..'),'utf8'),blocked);oracle(blocked.module.exports);
+});

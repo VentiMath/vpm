@@ -597,7 +597,7 @@
     },
     "packages/vlong": {
       "name": "vlong",
-      "version": "0.1.0",
+      "version": "5.3.2",
     },
     "packages/vmedia-typer": {
       "name": "vmedia-typer",

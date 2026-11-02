@@ -6,21 +6,19 @@
     "commit": "e1bcb4f65096465b69f0fd67e68fc2a79a67ade9",
     "integrity": "sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA=="
   },
-  "checked": "2026-10-30",
+  "checked": "2026-11-01",
   "license": "Apache-2.0",
   "changes": [
-    "Derived from long 5.3.2 with existing bit arithmetic and optional WebAssembly acceleration.",
-    "Validate complete integer strings and radices, with bounded two-word or BigInt accumulation for arbitrarily long input.",
-    "Use native string conversion; preserve signed/unsigned wrapping.",
-    "Remove mutable small-integer caches and freeze shared constants.",
-    "Require exactly eight valid bytes; include Uint8Array declarations.",
-    "Self-contained declarations and common CommonJS/native ESM default entry."
+    "Independent arithmetic, conversion, bitwise, comparison, shift and rotate implementation.",
+    "Validate every integer digit and radix; bounded native decimal conversion and constant-space word accumulation.",
+    "Native Number/BigInt formatting.",
+    "Independent mutable small integers and frozen shared constants.",
+    "Exactly eight validated bytes, including cross-realm Uint8Arrays.",
+    "Preserve receiver-directed mixed-signedness semantics and wire compatibility."
   ],
   "implementation": {
-    "kind": "upstream-derived with focused modifications",
-    "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "The package retains upstream two-word arithmetic and optional WebAssembly acceleration, with parsing and validation changes. The arithmetic runtime is not independently rewritten.",
-    "targetScope": "64-bit values, conversions and operations reached by protobufjs, proto-loader and Firestore message types.",
-    "remainingWork": "Independently implement the required 64-bit value operations and conversions, preserving wire compatibility and existing strict input/caching fixes."
+    "kind": "independent implementation",
+    "basis": "New mutable-word value implementation, independently assembled memory-free WebAssembly multiply/divide/remainder kernel, and native BigInt fallback. No upstream arithmetic runtime or binary is retained. Public type contracts and licenses retain attribution.",
+    "targetScope": "The long 5.3.2 value API, including actual protobufjs, proto-loader and Google SDK integer paths."
   }
 }

@@ -10,6 +10,7 @@ npm --prefix scripts/long-conformance ci --ignore-scripts --no-audit --no-fund
 node scripts/long-conformance/run.cjs
 node scripts/long-conformance/run.cjs --upstream
 node scripts/long-conformance/regressions.cjs
+node scripts/long-conformance/mixed.cjs
 node scripts/long-conformance/callers.cjs
 node scripts/long-conformance/callers.cjs --upstream
 ```
@@ -46,3 +47,7 @@ strings. Each version's existing behavior is preserved. Both proto-loader
 Long/string options and Google gRPC/fallback definitions are checked. Source
 hashes are unchanged afterwards. No cloud requests or credentials are involved;
 this verifies the integer boundary, not the full protobuf or transport API.
+
+The independent runtime also matches 2,496 mixed-signedness and boundary
+operation controls, with both its assembled WebAssembly and BigInt kernels.
+See the [rewrite measurements](../../packages/vlong/bench/rewrite-results/README.md).

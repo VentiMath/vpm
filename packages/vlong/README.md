@@ -1,12 +1,9 @@
 # vlong
 
-**Implementation status:** upstream-derived runtime with focused fixes. The
-independent implementation of the caller paths VentiMath needs is still pending.
-[Provenance](PROVENANCE.json) identifies the retained code and rewrite scope.
-
-Signed and unsigned 64-bit integers based on **long 5.3.2**, with strict text
-parsing, faster string conversion and protection against shared-value mutation.
-Zero runtime dependencies, as upstream already has. Supports Node 24+ and Bun.
+An independently written implementation of the **long 5.3.2** value API,
+including signed/unsigned arithmetic, conversions and the mutable word fields
+used by protobuf callers. Zero runtime dependencies; Node 24+ and Bun.
+[Provenance](PROVENANCE.json) records the rewrite and retained attribution.
 
 ```js
 import Long from 'vlong';
@@ -24,9 +21,9 @@ included declarations need no ambient Node, Undici or DOM types.
 
 - Text parsing validates the entire string and radix. Decimal prefixes followed
   by junk, invalid interior chunks, whitespace and fractional radices throw.
-- Short decimals use exact Number arithmetic. Other decimals use bounded native
-  BigInt conversion; nondecimal strings combine validation with exact two-word
-  accumulation. Arbitrarily long strings wrap without unbounded BigInts.
+- Short decimal tokens are validated in full before bounded native Number/BigInt
+  conversion. Other inputs combine validation with exact two-word accumulation.
+  Arbitrarily long strings wrap with constant intermediate storage.
 - String formatting uses native Number/BigInt conversion instead of repeated
   Long division and intermediate objects.
 - `fromInt` returns independent mutable values. Mutating a small integer can no
@@ -37,8 +34,10 @@ included declarations need no ambient Node, Undici or DOM types.
   Uint8Arrays, including Buffers. Array elements are read once and must be integers from 0 to 255; custom
   iterators cannot bypass validation. Cross-realm Uint8Arrays are supported.
 
-The existing word arithmetic and optional WebAssembly multiplication/division
-remain. The fallback is checked independently with WebAssembly disabled.
+Word operations use direct arithmetic; multiplication, division and remainder
+use an independently assembled, memory-free WebAssembly kernel. If WebAssembly
+is unavailable or compilation is blocked, native BigInt implements those
+operations. Tests verify both paths and prove the kernel actually executes.
 
 ## Compatibility and migration
 
@@ -72,9 +71,10 @@ On Node 24 and Bun:
 
 - All **175 unchanged upstream/Closure cases** and the upstream CommonJS entry
   checks pass, with the original implementation as a control.
-- Ten focused tests cover an independent BigInt oracle, all radices, boundary
-  wrapping, 10,000-digit input, disabled WebAssembly, malformed inputs, mutation
+- Eleven focused tests cover an independent BigInt oracle, all radices, boundary
+  wrapping, 10,000-digit input, absent/blocked WebAssembly, malformed inputs, mutation
   isolation, typed-array slices and CommonJS/ESM identity.
+- 2,496 mixed-signedness/boundary comparisons match upstream with both kernels.
 - Seven paired correction probes fail on upstream and pass on VPM.
 - Sixteen real caller paths verify protobuf.js **8.8.1** and **7.6.6**, gRPC
   proto-loader **0.8.1**, and google-gax **6.14.0** gRPC/fallback definitions.
@@ -83,10 +83,20 @@ On Node 24 and Bun:
 - Packed npm/Bun installations and public type consumers are checked.
 
 See the [comparison fixture](../../scripts/long-conformance/README.md) and
-[benchmarks](bench/results/README.md), including remaining costs and controls.
+[benchmarks](bench/rewrite-results/README.md), including remaining costs and controls.
+
+The isolated corpus records 43–68% less time for its four protobuf conversion
+paths on Node and 12–41% less on Bun. This is local CPU work, not application
+latency. Fresh small-integer objects and strict byte validation retain small
+costs: array-byte construction is 10 → 19 ns on Node and 10 → 30 ns on Bun;
+Uint8Array construction is 11 → 14 ns and 14 → 30 ns. All controls and other
+cases, including inconclusive results, remain in the measurement record.
 
 ## Provenance
 
-Derived from [long 5.3.2](https://github.com/dcodeIO/long.js/tree/e1bcb4f65096465b69f0fd67e68fc2a79a67ade9).
+The arithmetic runtime is independently implemented. The public API/type
+contract and upstream/Closure test fixtures retain their license attribution.
+
+Compatible with [long 5.3.2](https://github.com/dcodeIO/long.js/tree/e1bcb4f65096465b69f0fd67e68fc2a79a67ade9).
 The Apache 2.0 [license](LICENSE), Closure and long.js attribution are retained.
 [PROVENANCE.json](PROVENANCE.json) records the upstream commit and npm integrity.

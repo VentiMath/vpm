@@ -218,6 +218,7 @@ jobs:
           node scripts/protobuf-conformance/callers.cjs --upstream
           node scripts/protobuf-conformance/callers.cjs --legacy
           node scripts/protobuf-conformance/bundles.cjs
+          node scripts/long-conformance/mixed.cjs
           node scripts/long-conformance/regressions.cjs
           node scripts/long-conformance/run.cjs
           node scripts/long-conformance/run.cjs --upstream
@@ -537,6 +538,7 @@ jobs:
           bun scripts/protobuf-conformance/callers.cjs --upstream
           bun scripts/protobuf-conformance/callers.cjs --legacy
           bun scripts/protobuf-conformance/bundles.cjs
+          bun scripts/long-conformance/mixed.cjs
           bun scripts/long-conformance/regressions.cjs
           bun scripts/long-conformance/run.cjs
           bun scripts/long-conformance/run.cjs --upstream
