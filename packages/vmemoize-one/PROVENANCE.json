@@ -1,0 +1,27 @@
+{
+  "upstream": {
+    "name": "memoize-one",
+    "version": "6.0.0",
+    "repository": "https://github.com/alexreardon/memoize-one",
+    "commit": "d5acc5343970ee4b615d4d1d5da85c2436752a79",
+    "integrity": "sha512-rkpe71W0N0c0Xz6QD0eJETuWAJGnJ9afsl1srmwPrI+yBCkge5EycXXbYRyvL29zZVUWQCY7InPRCv3GDXuZNw=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "source": "Independently written runtime and declarations informed by upstream contracts. The original MIT license and hash-pinned tests are retained; no upstream runtime is shipped.",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "targetScope": "Single-entry memoization, clear, custom equality and receiver identity; react-window 1.8.11 caller using memoize-one 5.2.1."
+  },
+  "changes": [
+    "Clear during function evaluation prevents that evaluation from repopulating the cache.",
+    "Clear from a custom equality function causes a miss rather than a TypeError.",
+    "Reentrant equality retains the result associated with the arguments actually compared."
+  ],
+  "verification": {
+    "originalTests": "All 78 runtime tests on Node24/Bun, using Mocha and the official Jest mock/expect libraries; TypeScript syntax erased, original imports redirected, assertions unchanged.",
+    "caller": "Actual react-window1.8.11 mounted with React19.1, against 5.2.1,6.0.0 and VPM.",
+    "regressions": "Six groups, three original-failure controls and 4000 differential calls."
+  }
+}

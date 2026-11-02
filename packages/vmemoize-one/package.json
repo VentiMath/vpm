@@ -1,0 +1,41 @@
+{
+  "name": "vmemoize-one",
+  "version": "6.0.0",
+  "description": "Single-result memoization with explicit cache ownership and reliable clearing",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./runtime.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./runtime.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "runtime.mjs",
+    "index.cjs",
+    "index.d.cts",
+    "index.d.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vmemoize-one"
+  }
+}

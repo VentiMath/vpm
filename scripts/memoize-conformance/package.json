@@ -1,0 +1,16 @@
+{
+  "name": "vpm-memoize-conformance",
+  "private": true,
+  "dependencies": {
+    "memoize-one": "6.0.0",
+    "memoize-one-legacy": "npm:memoize-one@5.2.1",
+    "mocha": "11.7.5",
+    "jest-mock": "30.2.0",
+    "expect": "30.2.0",
+    "lodash.isequal": "4.5.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-window": "1.8.11",
+    "jsdom": "27.3.0"
+  }
+}

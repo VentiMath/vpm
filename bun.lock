@@ -603,6 +603,10 @@
       "name": "vmedia-typer",
       "version": "0.1.0",
     },
+    "packages/vmemoize-one": {
+      "name": "vmemoize-one",
+      "version": "6.0.0",
+    },
     "packages/vmerge-descriptors": {
       "name": "vmerge-descriptors",
       "version": "0.1.0",
@@ -1109,6 +1113,8 @@
     "vlong": ["vlong@workspace:packages/vlong"],
 
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
+
+    "vmemoize-one": ["vmemoize-one@workspace:packages/vmemoize-one"],
 
     "vmerge-descriptors": ["vmerge-descriptors@workspace:packages/vmerge-descriptors"],
 

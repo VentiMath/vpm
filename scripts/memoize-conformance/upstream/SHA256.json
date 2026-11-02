@@ -1,0 +1,5 @@
+{
+  "LICENSE.txt": "b1c501095de70182748cb8e8d97ac5577701a4ef3b755ba30d59fd87b24bdb0f",
+  "test/cache-clearing.spec.ts.txt": "fff113c46c2c135db3000c2a0fe4bc4e4befa99ea65ff6a68cdb485c36624826",
+  "test/memoize-one.spec.ts.txt": "fafedc976ec6b391555bcd843287a43f26559fd2b4964a11e216380c8058870b"
+}
