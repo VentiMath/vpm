@@ -814,6 +814,10 @@
         "vsend": "workspace:*",
       },
     },
+    "packages/vshallow-equal": {
+      "name": "vshallow-equal",
+      "version": "3.1.0",
+    },
     "packages/vstatuses": {
       "name": "vstatuses",
       "version": "0.1.0",
@@ -1194,6 +1198,8 @@
     "vsend": ["vsend@workspace:packages/vsend"],
 
     "vserve-static": ["vserve-static@workspace:packages/vserve-static"],
+
+    "vshallow-equal": ["vshallow-equal@workspace:packages/vshallow-equal"],
 
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
 

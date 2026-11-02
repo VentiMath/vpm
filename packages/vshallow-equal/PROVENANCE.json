@@ -1,0 +1,21 @@
+{
+  "upstream": {
+    "name": "shallow-equal",
+    "version": "3.1.0",
+    "commit": "782329b14436c306490c94cb46544b626d23673a",
+    "repository": "https://github.com/moroshko/shallow-equal",
+    "integrity": "sha512-pfVOw8QZIXpMbhBWvzBISicvToTiM5WBF1EeAUZDDSb5Dt29yl4AYbyywbJFSEsRUMr7gJaxqCdr4L3tQf9wVg=="
+  },
+  "checked": "2026-11-01",
+  "license": "MIT",
+  "implementation": {
+    "kind": "independent",
+    "targetScope": "3.1.0 comparisons plus 1.2.1 array/object import paths; strict values, own string keys, no deep comparison"
+  },
+  "source": "Independent implementation informed by public contracts and original tests; no upstream runtime copied.",
+  "verification": {
+    "upstream": "31 original test assertions unchanged, TS syntax compiled with esbuild",
+    "caller": "Actual React Autosuggest 10.1.0 lifecycle methods and SSR compared with 1.2.1 and 3.1.0",
+    "adoption": "Not installed in VentiMath."
+  }
+}

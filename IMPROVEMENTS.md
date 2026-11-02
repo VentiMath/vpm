@@ -221,6 +221,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | --- | --- | --- |
 | [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
 | [vhoist-non-react-statics](packages/vhoist-non-react-statics) | hoist-non-react-statics 3.3.2 | Independent zero-dependency static hoisting; safe prototype-named fields, nearest inherited descriptors, iterative traversal and no classification getter execution. |
+| [vshallow-equal](packages/vshallow-equal) | shallow-equal 3.1.0; app 1.2.1 entry points retained | Independent zero-dependency array/object comparisons; checks own keys before reading values and rejects false equality for distinct scalars. All 31 original tests, real Autosuggest lifecycle/SSR and packed consumers pass. |
 | [vuse-sync-external-store](packages/vuse-sync-external-store) | use-sync-external-store 1.7.0; app 1.6.0 also checked | React 19 native subscriptions with an independent selector cache; zero runtime dependencies, stable equal selections, concurrent-render isolation and hydration. React Redux caller and packed consumers pass; React 16–18 support is excluded. |
 | [vmemoize-one](packages/vmemoize-one) | memoize-one 6.0.0 | Independent single-entry cache; reliable clear during evaluation/comparison, correctly paired reentrant results; zero dependencies. All 78 original tests and actual react-window 1.8.11 callers pass. |
 | [vreact-fast-compare](packages/vreact-fast-compare) | react-fast-compare 3.2.2 | Independent React-aware equality; terminating DataView comparisons, meaningful ArrayBuffer bytes, deep/cyclic traversal and preserved application exceptions. |
@@ -355,9 +356,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 114 Node runtime packages' public declarations compile
+recorded by the tests. All 115 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **132 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **133 packages**, including two declaration-only packages and
 sixteen browser packages, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

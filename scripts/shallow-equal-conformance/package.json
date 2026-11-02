@@ -1,0 +1,1 @@
+{"name":"vpm-shallow-equal-conformance","private":true,"dependencies":{"shallow-equal":"3.1.0","shallow-equal-legacy":"npm:shallow-equal@1.2.1","react-autosuggest":"10.1.0","react":"19.1.0","react-dom":"19.1.0","esbuild":"0.25.12"}}

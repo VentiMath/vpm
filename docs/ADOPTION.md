@@ -21,7 +21,7 @@ independent renderer has already been adopted.
 
 The styling release makes `vclsx` and Emotion replacements available. The checked
 application revision still resolves their upstream packages, so they are not
-marked in use. `vmemoize-one` and `vuse-sync-external-store` are implemented
+marked in use. `vmemoize-one`, `vuse-sync-external-store` and `vshallow-equal` are implemented
 and tested, but not yet adopted.
 
 The standalone progress tree uses a teal/blue/purple gradient and **IN USE** badge
