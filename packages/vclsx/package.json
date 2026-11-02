@@ -1,6 +1,6 @@
 {
   "name": "vclsx",
-  "version": "0.1.0",
+  "version": "2.1.1",
   "description": "Conditional class names with own-property dictionaries and stack-safe array traversal",
   "type": "commonjs",
   "main": "./index.cjs",

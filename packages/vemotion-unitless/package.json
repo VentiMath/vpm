@@ -1,6 +1,6 @@
 {
   "name": "vemotion-unitless",
-  "version": "0.1.0",
+  "version": "0.10.0",
   "description": "CSS properties whose numbers take no unit, for Emotion",
   "type": "module",
   "main": "./index.js",

@@ -12,8 +12,8 @@
   "changes": [
     "StyleDefinition handles template collection, predicate composition, inheritance and retargeting; one shared renderer handles theme lookup, registered classes, serialization and insertion. Emotion-facing metadata remains an explicit compatibility facade for MUI.",
     "The theme context is read on every render: the original read it only when the theme prop was null, so a component whose theme prop came and went changed the order of its hooks (React warns in development).",
-    "On vemotion-is-prop-valid (so current HTML attributes such as command and commandFor reach DOM elements), vemotion-serialize, vemotion-utils and vemotion-use-insertion-effect-with-fallbacks; vemotion-react is a peer, as @emotion/react is.",
-    "No macro entry, so no run-time dependency on @emotion/babel-plugin or @babel/runtime: 4 direct dependencies instead of 6.",
+    "On vemotion-is-prop-valid (so current HTML attributes such as command and commandFor reach DOM elements), vemotion-serialize, vemotion-utils and vemotion-use-insertion-effect-with-fallbacks; vemotion-react is a pinned dependency so an install cannot fall back to an unclaimed VPM peer name.",
+    "No macro entry, so no run-time dependency on @emotion/babel-plugin or @babel/runtime: 5 direct dependencies instead of 6.",
     "Declarations on React's React.JSX namespace, checked with React 18.3 and 19 types.",
     "ES modules with bundled declarations."
   ],

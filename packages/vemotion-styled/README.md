@@ -2,7 +2,7 @@
 
 A source-informed implementation of Emotion's styled-component API, targeting **@emotion/styled 11.14.1**, the latest
 release checked November 1, 2026. On VPM's Emotion packages; React 16.8 or
-later and [vemotion-react](../vemotion-react) are peers. ES modules for
+later is a peer; [vemotion-react](../vemotion-react) is a pinned dependency. ES modules for
 browsers and server rendering.
 
 ```jsx
@@ -46,7 +46,7 @@ attribution. The macro entry is outside the supported surface.
 | --- | --- |
 | Reads the theme context only when the `theme` prop is null, so a component whose `theme` prop comes and goes changes the order of its hooks (React warns in development) | Reads it on every render |
 | Drops current HTML attributes such as `command`, `commandFor`, `part` and `shadowRootMode` (@emotion/is-prop-valid) | Forwards them |
-| Depends on @emotion/babel-plugin and @babel/runtime (for the `macro` entry) | No macro entry: 4 direct dependencies, all VPM |
+| Depends on @emotion/babel-plugin and @babel/runtime (for the `macro` entry) | No macro entry: 5 direct dependencies, all VPM |
 
 The complete fixture has 413 passing assertions under React 16 and 416 under
 React 18, with two existing Babel-plugin differences and respectively eight

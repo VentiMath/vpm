@@ -1,6 +1,6 @@
 {
   "name": "vemotion-utils",
-  "version": "0.1.0",
+  "version": "1.4.2",
   "description": "Registration and insertion of serialized styles in an Emotion cache",
   "type": "module",
   "main": "./index.js",
@@ -43,6 +43,6 @@
     "platform": "browser"
   },
   "dependencies": {
-    "vemotion-sheet": "0.1.0"
+    "vemotion-sheet": "1.4.0"
   }
 }

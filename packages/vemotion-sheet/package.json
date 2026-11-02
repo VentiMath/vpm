@@ -1,6 +1,6 @@
 {
   "name": "vemotion-sheet",
-  "version": "0.1.0",
+  "version": "1.4.0",
   "description": "Style element sheet for Emotion: insertRule in production, one element per rule in development",
   "type": "module",
   "main": "./index.js",

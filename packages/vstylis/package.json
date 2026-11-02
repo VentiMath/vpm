@@ -1,6 +1,6 @@
 {
   "name": "vstylis",
-  "version": "0.1.0",
+  "version": "4.4.0",
   "description": "CSS preprocessor with nesting, prefixing and middleware, compatible with stylis 4.4.0",
   "type": "module",
   "main": "./index.js",

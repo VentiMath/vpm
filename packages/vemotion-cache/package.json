@@ -1,6 +1,6 @@
 {
   "name": "vemotion-cache",
-  "version": "0.1.0",
+  "version": "11.14.0",
   "description": "Emotion's style cache on vstylis: inserts serialized styles into a sheet, or returns them on the server",
   "type": "module",
   "main": "./index.js",
@@ -44,9 +44,9 @@
     "directory": "packages/vemotion-cache"
   },
   "dependencies": {
-    "vemotion-sheet": "0.1.0",
-    "vemotion-utils": "0.1.0",
-    "vstylis": "0.1.0"
+    "vemotion-sheet": "1.4.0",
+    "vemotion-utils": "1.4.2",
+    "vstylis": "4.4.0"
   },
   "vpm": {
     "platform": "browser"

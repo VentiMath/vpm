@@ -53,7 +53,7 @@
     },
     "packages/vclsx": {
       "name": "vclsx",
-      "version": "0.1.0",
+      "version": "2.1.1",
     },
     "packages/vcontent-disposition": {
       "name": "vcontent-disposition",
@@ -99,7 +99,7 @@
     },
     "packages/vemotion-babel-plugin": {
       "name": "vemotion-babel-plugin",
-      "version": "0.1.0",
+      "version": "11.13.5",
       "dependencies": {
         "vemotion-hash": "0.1.0",
         "vemotion-serialize": "0.1.0",
@@ -108,36 +108,36 @@
     },
     "packages/vemotion-cache": {
       "name": "vemotion-cache",
-      "version": "0.1.0",
+      "version": "11.14.0",
       "dependencies": {
-        "vemotion-sheet": "0.1.0",
-        "vemotion-utils": "0.1.0",
-        "vstylis": "0.1.0",
+        "vemotion-sheet": "1.4.0",
+        "vemotion-utils": "1.4.2",
+        "vstylis": "4.4.0",
       },
     },
     "packages/vemotion-hash": {
       "name": "vemotion-hash",
-      "version": "0.1.0",
+      "version": "0.9.2",
     },
     "packages/vemotion-is-prop-valid": {
       "name": "vemotion-is-prop-valid",
-      "version": "0.1.0",
+      "version": "1.4.0",
       "dependencies": {
-        "vemotion-memoize": "0.1.0",
+        "vemotion-memoize": "0.9.0",
       },
     },
     "packages/vemotion-memoize": {
       "name": "vemotion-memoize",
-      "version": "0.1.0",
+      "version": "0.9.0",
     },
     "packages/vemotion-react": {
       "name": "vemotion-react",
-      "version": "0.1.0",
+      "version": "11.14.0",
       "dependencies": {
-        "vemotion-cache": "0.1.0",
-        "vemotion-serialize": "0.1.0",
-        "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
-        "vemotion-utils": "0.1.0",
+        "vemotion-cache": "11.14.0",
+        "vemotion-serialize": "1.3.3",
+        "vemotion-use-insertion-effect-with-fallbacks": "1.2.0",
+        "vemotion-utils": "1.4.2",
       },
       "peerDependencies": {
         "react": ">=16.8.0",
@@ -145,12 +145,12 @@
     },
     "packages/vemotion-serialize": {
       "name": "vemotion-serialize",
-      "version": "0.1.0",
+      "version": "1.3.3",
       "dependencies": {
-        "vemotion-hash": "0.1.0",
-        "vemotion-memoize": "0.1.0",
-        "vemotion-unitless": "0.1.0",
-        "vemotion-utils": "0.1.0",
+        "vemotion-hash": "0.9.2",
+        "vemotion-memoize": "0.9.0",
+        "vemotion-unitless": "0.10.0",
+        "vemotion-utils": "1.4.2",
       },
       "peerDependencies": {
         "csstype": "^3.1.3",
@@ -158,43 +158,43 @@
     },
     "packages/vemotion-sheet": {
       "name": "vemotion-sheet",
-      "version": "0.1.0",
+      "version": "1.4.0",
     },
     "packages/vemotion-styled": {
       "name": "vemotion-styled",
-      "version": "0.1.0",
+      "version": "11.14.1",
       "dependencies": {
-        "vemotion-is-prop-valid": "0.1.0",
-        "vemotion-serialize": "0.1.0",
-        "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
-        "vemotion-utils": "0.1.0",
+        "vemotion-is-prop-valid": "1.4.0",
+        "vemotion-react": "11.14.0",
+        "vemotion-serialize": "1.3.3",
+        "vemotion-use-insertion-effect-with-fallbacks": "1.2.0",
+        "vemotion-utils": "1.4.2",
       },
       "peerDependencies": {
         "react": ">=16.8.0",
-        "vemotion-react": "0.1.0",
       },
     },
     "packages/vemotion-unitless": {
       "name": "vemotion-unitless",
-      "version": "0.1.0",
+      "version": "0.10.0",
     },
     "packages/vemotion-use-insertion-effect-with-fallbacks": {
       "name": "vemotion-use-insertion-effect-with-fallbacks",
-      "version": "0.1.0",
+      "version": "1.2.0",
       "peerDependencies": {
         "react": ">=16.8.0",
       },
     },
     "packages/vemotion-utils": {
       "name": "vemotion-utils",
-      "version": "0.1.0",
+      "version": "1.4.2",
       "dependencies": {
-        "vemotion-sheet": "0.1.0",
+        "vemotion-sheet": "1.4.0",
       },
     },
     "packages/vemotion-weak-memoize": {
       "name": "vemotion-weak-memoize",
-      "version": "0.1.0",
+      "version": "0.4.0",
     },
     "packages/vencodeurl": {
       "name": "vencodeurl",
@@ -830,7 +830,7 @@
     },
     "packages/vstylis": {
       "name": "vstylis",
-      "version": "0.1.0",
+      "version": "4.4.0",
     },
     "packages/vtabbable": {
       "name": "vtabbable",

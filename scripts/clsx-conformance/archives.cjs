@@ -5,7 +5,7 @@ const root = path.resolve(__dirname, '../..'), temp = fs.mkdtempSync(path.join(o
 function run(command,args,cwd=temp) {const result=spawnSync(command,args,{cwd,encoding:'utf8'});assert.equal(result.status,0,result.stdout+result.stderr);return result.stdout;}
 try {
   run('bun',['pm','pack','--ignore-scripts','--destination',temp,'--quiet'],path.join(root,'packages/vclsx'));
-  const archive=path.join(temp,'vclsx-0.1.0.tgz');
+  const archive=path.join(temp,'vclsx-'+require('../../packages/vclsx/package.json').version+'.tgz');
   const entries=run('tar',['-tzf',archive]);assert.doesNotMatch(entries,/\/(test|bench|node_modules)\//);
   for(const manager of ['npm','bun']) {
     const dir=path.join(temp,manager);fs.mkdirSync(dir);

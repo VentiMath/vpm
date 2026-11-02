@@ -1,6 +1,6 @@
 {
   "name": "vemotion-styled",
-  "version": "0.1.0",
+  "version": "11.14.1",
   "description": "Emotion's styled components, on vemotion-react",
   "type": "module",
   "main": "./index.js",
@@ -51,14 +51,14 @@
     "directory": "packages/vemotion-styled"
   },
   "dependencies": {
-    "vemotion-is-prop-valid": "0.1.0",
-    "vemotion-serialize": "0.1.0",
-    "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
-    "vemotion-utils": "0.1.0"
+    "vemotion-is-prop-valid": "1.4.0",
+    "vemotion-serialize": "1.3.3",
+    "vemotion-use-insertion-effect-with-fallbacks": "1.2.0",
+    "vemotion-utils": "1.4.2",
+    "vemotion-react": "11.14.0"
   },
   "peerDependencies": {
-    "react": ">=16.8.0",
-    "vemotion-react": "0.1.0"
+    "react": ">=16.8.0"
   },
   "vpm": {
     "platform": "browser"

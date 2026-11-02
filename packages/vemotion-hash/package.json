@@ -1,6 +1,6 @@
 {
   "name": "vemotion-hash",
-  "version": "0.1.0",
+  "version": "0.9.2",
   "description": "MurmurHash2 class name hashes for Emotion, over UTF-8 so distinct characters do not collide",
   "type": "module",
   "main": "./index.js",

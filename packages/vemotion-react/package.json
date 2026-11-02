@@ -1,6 +1,6 @@
 {
   "name": "vemotion-react",
-  "version": "0.1.0",
+  "version": "11.14.0",
   "description": "Emotion for React: the css prop, Global, ClassNames, keyframes and theming, on VPM's Emotion packages",
   "type": "module",
   "main": "./index.js",
@@ -67,10 +67,10 @@
     "directory": "packages/vemotion-react"
   },
   "dependencies": {
-    "vemotion-cache": "0.1.0",
-    "vemotion-serialize": "0.1.0",
-    "vemotion-use-insertion-effect-with-fallbacks": "0.1.0",
-    "vemotion-utils": "0.1.0"
+    "vemotion-cache": "11.14.0",
+    "vemotion-serialize": "1.3.3",
+    "vemotion-use-insertion-effect-with-fallbacks": "1.2.0",
+    "vemotion-utils": "1.4.2"
   },
   "peerDependencies": {
     "react": ">=16.8.0"

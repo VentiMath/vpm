@@ -47,27 +47,27 @@ try {
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
       }
       if (name === 'vemotion-styled') {
-        assert.deepEqual(metadata.dependencies, {'vemotion-is-prop-valid': '0.1.0', 'vemotion-serialize': '0.1.0', 'vemotion-use-insertion-effect-with-fallbacks': '0.1.0', 'vemotion-utils': '0.1.0'});
-        assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0', 'vemotion-react': '0.1.0'});
+        assert.deepEqual(metadata.dependencies, {'vemotion-is-prop-valid': '1.4.0', 'vemotion-serialize': '1.3.3', 'vemotion-use-insertion-effect-with-fallbacks': '1.2.0', 'vemotion-utils': '1.4.2', 'vemotion-react': '11.14.0'});
+        assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0'});
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'base.js', 'base.d.ts', 'types.d.ts', 'package.json', 'src/definition.js', 'src/render.js', 'src/tags.js', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
       }
       if (name === 'vemotion-react') {
-        assert.deepEqual(metadata.dependencies, {'vemotion-cache': '0.1.0', 'vemotion-serialize': '0.1.0', 'vemotion-use-insertion-effect-with-fallbacks': '0.1.0', 'vemotion-utils': '0.1.0'});
+        assert.deepEqual(metadata.dependencies, {'vemotion-cache': '11.14.0', 'vemotion-serialize': '1.3.3', 'vemotion-use-insertion-effect-with-fallbacks': '1.2.0', 'vemotion-utils': '1.4.2'});
         assert.deepEqual(metadata.peerDependencies, {react: '>=16.8.0'});
         for (const file of ['index.js', 'index.d.ts', 'jsx-runtime.js', 'jsx-runtime.d.ts', 'jsx-dev-runtime.js', 'jsx-dev-runtime.d.ts', '_isolated-hnrs.js', 'jsx-namespace.d.ts', 'types/css-prop.d.ts', 'src/element.js', 'src/global.js', 'src/global-sheet.js', 'src/style-batch.js', 'src/class-names.js', 'src/hoist-statics.js']) assert.ok(entries.includes(file), name + ': ' + file);
         assert.ok(!entries.some(file => /macro/.test(file)), name + ': no macro entry');
       }
       if (name === 'vemotion-cache') {
-        assert.deepEqual(metadata.dependencies, {'vemotion-sheet': '0.1.0', 'vemotion-utils': '0.1.0', vstylis: '0.1.0'});
+        assert.deepEqual(metadata.dependencies, {'vemotion-sheet': '1.4.0', 'vemotion-utils': '1.4.2', vstylis: '4.4.0'});
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/compiler.js', 'src/hydration.js', 'src/plugins.js', 'src/prefixer.js', 'src/conditions/true.js', 'src/conditions/false.js', 'src/conditions/is-browser.js'].sort());
       }
       if (name === 'vemotion-serialize') {
-        assert.deepEqual(metadata.dependencies, {'vemotion-hash': '0.1.0', 'vemotion-memoize': '0.1.0', 'vemotion-unitless': '0.1.0', 'vemotion-utils': '0.1.0'});
+        assert.deepEqual(metadata.dependencies, {'vemotion-hash': '0.9.2', 'vemotion-memoize': '0.9.0', 'vemotion-unitless': '0.10.0', 'vemotion-utils': '1.4.2'});
         assert.deepEqual(metadata.peerDependencies, {csstype: '^3.1.3'});
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/conditions/true.js', 'src/conditions/false.js'].sort());
       }
       if (name === 'vemotion-sheet' || name === 'vemotion-utils') {
-        assert.deepEqual(metadata.dependencies, name === 'vemotion-utils' ? {'vemotion-sheet': '0.1.0'} : undefined);
+        assert.deepEqual(metadata.dependencies, name === 'vemotion-utils' ? {'vemotion-sheet': '1.4.0'} : undefined);
         assert.deepEqual(entries.sort(), ['LICENSE', 'README.md', 'PROVENANCE.json', 'index.js', 'index.d.ts', 'package.json', 'src/conditions/true.js', 'src/conditions/false.js', ...(name === 'vemotion-utils' ? ['src/conditions/is-browser.js'] : [])].sort());
       }
       continue;
@@ -118,12 +118,12 @@ try {
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','protected-api.js','protected-api.d.ts','package.json'].sort());
     }
     if (name === 'vemotion-babel-plugin') {
-      assert.deepEqual(metadata.dependencies, {'vemotion-hash': '0.1.0', 'vemotion-serialize': '0.1.0', vstylis: '0.1.0'});
+      assert.deepEqual(metadata.dependencies, {'vemotion-hash': '0.9.2', 'vemotion-serialize': '1.3.3', vstylis: '4.4.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.cjs','index.d.ts','package.json',...['imports','label','source-map','styles','target-class-name','transformers'].map(module => `src/${module}.cjs`)].sort());
     }
     if (['vemotion-hash','vemotion-memoize','vemotion-unitless','vemotion-weak-memoize','vstylis','vemotion-is-prop-valid'].includes(name)) {
-      assert.deepEqual(metadata.dependencies, name === 'vemotion-is-prop-valid' ? {'vemotion-memoize': '0.1.0'} : undefined);
+      assert.deepEqual(metadata.dependencies, name === 'vemotion-is-prop-valid' ? {'vemotion-memoize': '0.9.0'} : undefined);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const sources = name === 'vstylis' ? ['constants','element','middleware','parser','prefix','scanner','serializer','tokenize'].map(module => `src/${module}.js`) : [];
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','index.js','index.d.ts','package.json',...sources].sort());
