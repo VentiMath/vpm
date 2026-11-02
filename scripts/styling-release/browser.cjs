@@ -37,5 +37,6 @@ let child, socket, timer, server;
   clearTimeout(timer); socket?.close();
   if (child && child.exitCode === null) {const stopped = new Promise(resolve => child.once('exit', resolve)); child.kill(); await stopped;}
   if (server) await new Promise(resolve => server.close(resolve));
-  fs.rmSync(profile, {recursive: true, force: true});
+  // Chrome helper processes can finish profile writes after the main child exits.
+  fs.rmSync(profile, {recursive: true, force: true, maxRetries: 5, retryDelay: 100});
 });
