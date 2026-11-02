@@ -39,6 +39,9 @@ with no fetch for the built-in definitions. The full
 [Firestore suite](../firestore-conformance/README.md) passes its gate on both
 runtimes: 1,008 passes, one documented tracing-fixture failure, 47 upstream skips.
 This broader gate exposed and now verifies the prefixed wrapper-schema repair.
+Namespace-cache mutation tests in the package unit suite cover addition, removal,
+reparenting, namespace replacement and codec invalidation; both runtimes pass all
+29 unit tests after the allocation optimization.
 
 `binary.cjs` verifies the retained source archive hash, then runs 15 unchanged
 upstream binary/RPC test files with VPM's public runtime, plus original controls.

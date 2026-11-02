@@ -12,18 +12,27 @@ controls and untrimmed samples are in [Node](node.json) and [Bun](bun.json).
 
 | Runtime | Case | Original ns | VPM ns | Paired change | Control spread | Evidence |
 | --- | --- | ---: | ---: | ---: | ---: | --- |
-| node | load and resolve bundled wrappers | 13871 | 15226 | 10.4% | 1.7% | higher time in every pair, beyond control spread |
-| node | load duplicate bundled aliases | 14295 | 15954 | 11.3% | 0.8% | higher time in every pair, beyond control spread |
-| bun | load and resolve bundled wrappers | 12330 | 8617 | -30% | 3.5% | lower time in every pair, beyond control spread |
-| bun | load duplicate bundled aliases | 13324 | 11239 | -14.3% | 5.4% | lower time in every pair, beyond control spread |
+| node | load and resolve bundled wrappers | 13116 | 11546 | -11.8% | 3% | lower time in every pair, beyond control spread |
+| node | load duplicate bundled aliases | 14031 | 12058 | -14.4% | 1% | lower time in every pair, beyond control spread |
+| bun | load and resolve bundled wrappers | 12501 | 7900 | -37.1% | 6.3% | lower time in every pair, beyond control spread |
+| bun | load duplicate bundled aliases | 13375 | 10217 | -24.2% | 8.1% | lower time in every pair, beyond control spread |
 
-Node needs about 1–2 microseconds more per fresh wrapper schema; Bun needs less
-time. These are fresh reflection-graph construction and resolution costs, not
-wire-operation or network timings. The prior VPM implementation threw on this
-path, so this comparison measures the repaired API against upstream. It does
-not establish that normalization itself caused the Node difference. Firestore
-caches the resulting root after its initial load. No application speed claim
-or universal protobuf performance improvement follows from these measurements.
+These measurements replace the Node regression recorded in commit 7fce9c5.
+Profiles identified repeated namespace-list materialization, per-child getter
+allocation and garbage collection. Namespace child lists now cache like field
+lists, with invalidation on addition/removal/reparenting and replacement. Child
+properties hold the same object directly instead of allocating getter closures.
+Codec invalidation reuses the child list. Validation, resolver behavior, fresh
+Root instances and independently owned reflection graphs are preserved; no
+cross-root schema cache is introduced.
+
+Both Node cases now take 12–14% less time than upstream, and Bun takes 24–37%
+less. These are fresh reflection-graph construction and resolution costs, not
+wire-operation or network timings. Absolute timings from different runs are not
+used as a before/after comparison. Mutation regression tests, schema alias checks,
+full Firestore conformance and existing binary/descriptor checks remain passing.
+Firestore caches its root after initial load; this is not an application latency
+claim. The previous reports remain in git history.
 
 Reproduce with `OUTPUT=packages/vprotobufjs/bench/loading-results/node.json node
 packages/vprotobufjs/bench/loading.cjs`, then the corresponding Bun command.

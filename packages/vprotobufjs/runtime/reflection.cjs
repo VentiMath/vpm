@@ -48,7 +48,7 @@ function invalidateCodecs(object) {
       field._explicit = field._packed = undefined;
     }
   }
-  for (const child of Object.values(object.nested || {}))
+  for (const child of object instanceof Namespace ? object.nestedArray : [])
     invalidateCodecs(child);
 }
 class ReflectionObject {
@@ -100,9 +100,10 @@ class Namespace extends ReflectionObject {
   constructor(name, options) {
     super(name, options);
     this.nested = dict();
+    this._nestedList = null;
   }
   get nestedArray() {
-    return Object.values(this.nested);
+    return (this._nestedList ||= Object.values(this.nested));
   }
   get _nestedArray() {
     return this.nestedArray;
@@ -120,10 +121,11 @@ class Namespace extends ReflectionObject {
     }
     if (obj.parent && obj.parent !== this) obj.parent.remove(obj);
     put(this.nested, obj.name, obj);
+    this._nestedList = null;
     obj.parent = this;
     if (!Reflect.has(this, obj.name))
       Object.defineProperty(this, obj.name, {
-        get: () => obj,
+        value: obj,
         configurable: true,
       });
     return this;
@@ -131,6 +133,7 @@ class Namespace extends ReflectionObject {
   remove(obj) {
     if (this.nested[obj.name] !== obj) throw Error("not a child");
     delete this.nested[obj.name];
+    this._nestedList = null;
     obj.parent = null;
     return this;
   }

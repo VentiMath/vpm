@@ -1837,7 +1837,12 @@ inconclusive. These are operation timings, not application latency claims. See t
 [fixture scope](scripts/protobuf-conformance/README.md) and
 [wire measurements](packages/vprotobufjs/bench/application-results/README.md).
 [Schema-loading measurements](packages/vprotobufjs/bench/loading-results/README.md)
-are reported separately.
+are reported separately. A follow-up caches namespace child lists with mutation
+invalidation and replaces per-child getter closures with direct properties.
+The previous Node loading regression is removed: fresh wrapper-schema loading
+takes 12–14% less time than upstream on Node and 24–37% less on Bun. All 29
+unit tests, 343 paired messages, 185 descriptor comparisons and the full Firestore
+gate still pass on both runtimes. No cross-root reflection cache is used.
 The application runtime is built, but is not released or adopted by VentiMath.
 
 ## vlong

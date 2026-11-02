@@ -2,6 +2,44 @@
 const test = require("node:test"),
   assert = require("node:assert/strict"),
   pb = require("..");
+test("cached namespace lists follow additions, removals, reparenting and namespace replacement", () => {
+  const root = new pb.Root(),
+    left = new pb.Namespace("left"),
+    right = new pb.Namespace("right");
+  root.add(left).add(right);
+  const first = new pb.Type("First").add(new pb.Field("n", 1, "int32"));
+  left.add(first);
+  assert.equal(left.First, first);
+  const before = left.nestedArray;
+  const second = new pb.Type("Second");
+  left.add(second);
+  assert.deepEqual(left.nestedArray, [first, second]);
+  assert.deepEqual(before, [first]);
+  assert.throws(() => left.add(new pb.Type("Second")), /duplicate/);
+  right.add(first);
+  assert.deepEqual(left.nestedArray, [second]);
+  assert.deepEqual(right.nestedArray, [first]);
+  assert.equal(root.lookupType("First"), first);
+  right.remove(first);
+  assert.deepEqual(right.nestedArray, []);
+  assert.throws(() => root.lookupType("First"));
+  const replacement = new pb.Type("left");
+  root.add(replacement).resolveAll();
+  assert.equal(root.get("left"), replacement);
+  assert.equal(replacement.get("Second"), second);
+  assert.deepEqual(left.nestedArray, []);
+  assert.deepEqual(root.nestedArray, [right, replacement]);
+  assert.deepEqual(Object.keys(root.toJSON().nested.left.nested), ["Second"]);
+  second.add(new pb.Field("value", 1, "int32"));
+  const encoded = second.encode({ value: 7 }).finish();
+  replacement.setOption("test", true);
+  assert.deepEqual(second.encode({ value: 7 }).finish(), encoded);
+  replacement.add(new pb.Type("Third"));
+  assert.deepEqual(
+    replacement.nestedArray.map((x) => x.name),
+    ["Second", "Third"],
+  );
+});
 test("implicit presence preserves negative zero and explicit optional presence", () => {
   const T = pb
     .parse(

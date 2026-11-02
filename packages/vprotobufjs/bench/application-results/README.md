@@ -3,8 +3,8 @@
 Recorded November 2, 2026 on Apple M1 Pro, Node 24.22.1 and Bun 1.4.0,
 against protobuf.js 8.8.1 with its original long dependency. These reports replace
 the first independent-runtime results in commit c55122c. They record the codec
-implementation in commit 4701d85. The subsequent schema-path repair leaves those
-wire operations unchanged; its runtime-directory hash differs and its separate
+implementation in commit 4701d85. Subsequent schema-path and reflection-allocation work leaves the wire codec
+implementation unchanged; the runtime-directory hash differs and separate
 [loading measurements](../loading-results/README.md) cover that path.
 
 Each implementation runs alone in fresh processes, in balanced AB/BA order.

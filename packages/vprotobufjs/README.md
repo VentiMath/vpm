@@ -106,4 +106,8 @@ costs. Historical measurements of either the earlier independent implementation
 or the derived runtime do not describe this revision.
 
 [Schema-loading measurements](bench/loading-results/README.md) separately cover
-the repaired load path; they do not measure network latency or the codec loop.
+the repaired load path. Cached namespace lists with mutation invalidation and
+direct child properties remove repeated allocation: the paired Node cases take
+12–14% less time than upstream, Bun 24–37% less. These do not measure network
+latency or the codec loop. Addition, removal, reparenting and namespace replacement
+are regression-tested; roots do not share cached reflection objects.

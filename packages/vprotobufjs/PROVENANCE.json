@@ -17,7 +17,8 @@
     "Retain upstream compatibility source and generated schema data with their original license; public application runtime imports do not load src/.",
     "Reduce short-string conversion, writer allocation and length-delimiter overhead without removing bounds, UTF-8, enum or prototype-safety checks.",
     "Restore short service-name lookup needed by the actual GAX fallback caller while preserving descriptor qualification.",
-    "Recognize prefixed bundled Google schema paths in Node and browser loaders; canonicalize aliases, honor custom resolvers and skip declined paths. Full Firestore conformance verifies pipeline/explain loading."
+    "Recognize prefixed bundled Google schema paths in Node and browser loaders; canonicalize aliases, honor custom resolvers and skip declined paths. Full Firestore conformance verifies pipeline/explain loading.",
+    "Cache namespace child lists with invalidation on mutation and use direct child properties to reduce schema construction allocations; preserve reflection checks and avoid shared cross-root state."
   ],
   "implementation": {
     "kind": "independent application runtime with retained internal compatibility",
