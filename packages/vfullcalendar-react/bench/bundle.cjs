@@ -1,6 +1,6 @@
 'use strict';
 // Bundle size of a typical application entry (calendar, day and time grids,
-// interaction, list and the classic theme) with each library, minified by
+// interaction and the classic theme) with each library, minified by
 // esbuild for browsers, with React and react-dom left external. Sizes are
 // deterministic for these inputs; `--verify-current` rebuilds and compares with
 // the recorded results.
@@ -14,10 +14,9 @@ import FullCalendar from '${name}';
 import dayGridPlugin from '${name}/daygrid';
 import timeGridPlugin from '${name}/timegrid';
 import interactionPlugin from '${name}/interaction';
-import listPlugin from '${name}/list';
 import classicThemePlugin from '${name}/themes/classic';
 createRoot(document.getElementById('calendar')).render(createElement(FullCalendar, {
-  plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin, classicThemePlugin],
+  plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, classicThemePlugin],
   initialView: 'dayGridMonth', timeZone: 'America/New_York', events: { url: '/api/events' },
 }));
 `;

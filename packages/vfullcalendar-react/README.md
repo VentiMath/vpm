@@ -1,127 +1,88 @@
 # vfullcalendar-react
 
-**Implementation status:** the current package retains upstream implementation
-code with the changes documented below. Its tests verify that adapted build.
-An independently written implementation of the application-facing APIs is
-pending; this package is not yet a completed rewrite.
+An independently written React calendar for the FullCalendar **7.1.3** APIs
+VentiMath uses. It provides month, week and day views, navigation, custom React
+event content, selection, event dragging/resizing, and the classic theme hooks.
 
-FullCalendar 7 for React, targeting **@fullcalendar/react 7.1.3**, the latest
-stable release checked November 1, 2026. Its dates and time zones come from
-[`vfull-ui-headless-calendar`](../vfull-ui-headless-calendar/README.md) and its
-JSON feed request from [`vfullcalendar-core`](../vfullcalendar-core/README.md);
-`temporal-polyfill` is not needed. React and react-dom 17-19 are peers. An ES
-module package for browsers.
+The renderer, event model, styles and declarations are new implementations.
+The previous copied renderer chunks and unused theme/plugin bundles no longer
+ship. Dates and time zones come from `vfull-ui-headless-calendar`; JSON feeds
+use `vfullcalendar-core`. React and React DOM remain peers.
 
-```jsx
-import FullCalendar from 'vfullcalendar-react';
-import dayGridPlugin from 'vfullcalendar-react/daygrid';
-import timeGridPlugin from 'vfullcalendar-react/timegrid';
-import interactionPlugin from 'vfullcalendar-react/interaction';
-import classicThemePlugin from 'vfullcalendar-react/themes/classic';
+```tsx
+import Calendar from 'vfullcalendar-react';
+import dayGrid from 'vfullcalendar-react/daygrid';
+import timeGrid from 'vfullcalendar-react/timegrid';
+import interaction from 'vfullcalendar-react/interaction';
+import classic from 'vfullcalendar-react/themes/classic';
 import 'vfullcalendar-react/skeleton.css';
 import 'vfullcalendar-react/themes/classic/theme.css';
 import 'vfullcalendar-react/themes/classic/palette.css';
 
-export function Schedule({ onPick }) {
-  return (
-    <FullCalendar
-      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, classicThemePlugin]}
-      initialView="timeGridWeek"
-      events={{ url: '/api/events' }}
-      editable
-      eventClick={(info) => onPick(info.event)}
-    />
-  );
-}
+<Calendar plugins={[dayGrid, timeGrid, interaction, classic]}
+  initialView="dayGridMonth" height="100%" events={events}
+  editable selectable selectMirror dayMaxEvents
+  eventClick={({event}) => openEvent(event.id)} />
 ```
 
-This is 7.1.3's published build: the calendar component and
-`useCalendarController`, the day grid, time grid, interaction, list and
-multi-month plugins, the classic, monarch, forma, breezy and pulse themes, 81
-locales, and the public and protected APIs, with the same exports, CSS and
-declarations. In FullCalendar 7 the plugins are subpaths of this package; the
-v6 packages (`@fullcalendar/core` as the calendar, `@fullcalendar/daygrid`,
-`@fullcalendar/interaction` and so on) are not used with it.
+Give the parent a definite height when using `height="100%"`. The ref exposes
+`getApi()` with navigation, event lookup/mutation, selection and refetch methods.
+FullCalendar 7 has no `updateSize()`. The public callback names include
+`CalendarRef`, `EventDisplayInfo`, `DateSelectInfo` and `EventClickInfo`.
 
-| Upstream dependency | Here |
-| --- | --- |
-| `@full-ui/headless-calendar` 7.1.3 | `vfull-ui-headless-calendar` |
-| `@fullcalendar/core` 7.1.3 (types) | `vfullcalendar-core` |
-| `temporal-polyfill` ^1.0.1 (peer) | Not needed: time zones are read through `Intl` |
+## Scope and behavior
 
-## Installation
+- Views: `dayGridMonth`, `dayGridWeek`, `dayGridDay`, `timeGridWeek`, `timeGridDay`.
+- Events: arrays, callback/promise sources and JSON feeds; custom React content;
+  multiday spans, overlapping timed events in separate columns, filtering and
+  overflow popovers. Async results from obsolete ranges or unmounted calendars
+  cannot replace current events.
+- Interaction: click, pointer selection with preview, drag, resize and reversible
+  event changes. `setDates()` preserves `allDay` when its replacement is omitted.
+- Styling: `dayHeaderInnerClass`, `dayCellTopInnerClass`, `eventClass` and the
+  other declared hooks; inherited `--fc-classic-*` variables support app themes.
+  DOM structure and internal class names differ from upstream.
+- Dates: local, UTC and named time zones through the independent headless engine.
+  The Casablanca paired-offset fix, years below 100 and fragment-safe feed
+  requests remain covered.
 
-Install the [7.1.3 calendar release](../../docs/INSTALLATION.md). Its React archive
-pins both VPM dependencies to the same public release; application overrides
-are unnecessary. React and React DOM remain peer dependencies.
+This is **application-scope compatibility**, not the full FullCalendar product.
+Custom view/plugin internals, list and multimonth views, recurring/resource
+calendars, external draggable integration, alternative theme packs and the full
+locale catalog are excluded. English defaults and a French locale descriptor
+ship; Intl handles formatting for supplied locale codes. Only the APIs in the
+public declarations are supported. `eventContent` can receive `el: null` before
+mounting; use `eventDidMount` when an element is needed. The rendered output is
+not pixel-identical to the upstream themes.
 
-## Changes from 7.1.3
+## Verification and measurements
 
-The calendar retains 7.1.3 runtime code apart from the two package names,
-the JSON feed request and the `setDates` correction below. The
-[focused tests](test/react.test.cjs) check these exact differences against the
-recorded hashes. The changes are:
+Four app-shaped cases run against the pinned original and VPM on Node 24/Bun.
+Eleven additional cases cover lifecycle/StrictMode, context, callback updates,
+reversible edits, stale async sources, option updates and date correctness.
+Real Chromium checks selection, drag/revert/resize, spanning and overlapping
+events, overflow, theme changes, narrow layouts, filtering and unmounting.
+TypeScript 7 verifies the public consumer. VentiMath's committed source also
+passes its full frontend typecheck against these declarations.
 
-- **Event edits preserve all-day status.** `setDates(start, end)` used to write
-  `allDay: undefined` when the optional flag was omitted, including in upstream
-  7.1.3. It now retains the current flag; explicit `true` and `false` still convert
-  it. A mounted original/VPM control covers both timed and all-day events.
-- **Named time zones.** A calendar with a `timeZone` such as
-  `'Africa/Casablanca'` converts times through `vfull-ui-headless-calendar`.
-  Where a browser has no native `Temporal` (the iOS 15 WebView, older
-  browsers), the original's polyfill has wrong offsets in 29 zones: a mounted
-  Casablanca calendar shows a 15:00 UTC event at 16:00 during Ramadan 2020,
-  when Morocco was on GMT. The engine's other fixes (years 0-99, offsets never
-  printed as ":60", local-time milliseconds) apply too. Calendars in the
-  default `'local'` zone, or `'UTC'`, never used the polyfill.
-- **JSON feeds with a `#fragment`.** The bundled request appended the range
-  parameters after the fragment, which fetch never sends, so a feed at
-  `/api/events.php#calendar` received no `start`, `end` or `timeZone`. The
-  request is now `vfullcalendar-core`'s, which puts them ahead of the fragment.
-  `JsonRequestError` is the class `vfullcalendar-core` exports.
-- **Smaller bundles.** A typical application (calendar, day and time grids,
-  interaction, list, classic theme) bundles to 281,307 bytes minified and 77,789
-  gzipped instead of 301,385 and 84,399: the 19 polyfill modules are gone.
+The original 27-test React suite is retained as an upstream control. The former
+1,542-spec comparison describes the previous fork; it is **not** a parity claim
+for this smaller implementation. See the [conformance record](../../scripts/fullcalendar-react-conformance/README.md).
 
-## Adopting the v7 API
+The application-shaped JS entry is **13,025 bytes gzipped**, versus **82,453**
+for upstream (84% smaller; React and CSS excluded). The supported scope is
+smaller. Node timing directions are inconclusive; Bun navigation is 16% faster
+and view switching 11% slower in the isolated jsdom workload.
+[Reproduction and timing results](bench/results/README.md).
 
-VentiMath currently pins the separate 6.1.17 packages. Its calendar has not been
-migrated by building this replacement. The application-shaped fixture confirms
-navigation, month/week/day views, custom event content, click/selection payloads,
-event edits, event-array filtering and unmount against the v7 API.
+## Adoption
 
-- Import plugins and public types from this package's subpaths/root. Use
-  `CalendarRef` for the React ref, `DatesSetInfo`, `DateSelectInfo`,
-  `EventClickInfo`, `EventAddInfo`, `EventChangeInfo`, `EventRemoveInfo` and
-  `EventDropInfo` for callbacks, and `EventDisplayInfo` for custom content.
-- Install a theme plugin and its explicit CSS, as shown above. The application's
-  existing calendar CSS needs a browser review against v7 markup.
-- Remove the v6 `getApi().updateSize()` call: v7 no longer exposes that method.
-  Verify resizing when the app's sidebar changes in its actual browser layout.
-- The app's custom agenda view is separate; it is not the FullCalendar list plugin.
+VentiMath's committed frontend uses the three VPM calendar packages from
+[`calendar-7.1.3`](https://github.com/VentiMath/vpm/releases/tag/calendar-7.1.3).
+That immutable release contains the earlier adapted renderer. The independent
+renderer is distributed separately as `calendar-7.1.3-r2`; the app must update
+its release URL and lockfile to adopt it. Source adoption is verified; production
+deployment is not inferred. See [installation](../../docs/INSTALLATION.md) and
+[adoption evidence](../../docs/ADOPTION.md).
 
-The fixture does not mount the complete application or certify its pointer
-selection, drag/resize persistence, styling or responsive layout. The retained
-calendar rendering and interactions still need an independent implementation.
-
-## Evidence
-
-- [React suite](../../scripts/fullcalendar-react-conformance/README.md): the
-  release's 27 React tests (vitest, jsdom) pass for both libraries on Node and
-  Bun.
-- [Browser suite](../../scripts/fullcalendar-react-conformance/browser-compare.cjs):
-  FullCalendar's 1,542-spec browser suite, run as upstream runs it against the
-  React build in headless Chromium, gives identical results for the original and
-  VPM, spec by spec.
-- [Regressions](../../scripts/fullcalendar-react-conformance/regressions.cjs):
-  the time zone and JSON feed cases observed through a mounted calendar.
-- [Application-shaped callers](../../scripts/fullcalendar-react-conformance/application.cjs):
-  four mounted checks, including the omitted-`allDay` regression control.
-- [Declarations](../../scripts/fullcalendar-react-conformance/types.cjs): an
-  application compiles against them with DOM and React 19 types under
-  the configured TypeScript 7 compiler.
-- [Bundle size](bench/bundle.cjs), recorded in
-  [bench/results/bundle.json](bench/results/bundle.json).
-
-MIT licensing, the pinned source, the dependency map and the modified files are
-recorded in [PROVENANCE.json](PROVENANCE.json).
+MIT. [Provenance](PROVENANCE.json) records the comparison baseline and scope.

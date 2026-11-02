@@ -1,17 +1,17 @@
 {
-  "recordedAt": "2026-11-01",
+  "recordedAt": "2026-11-02",
   "esbuild": "0.19.12",
   "results": {
     "upstream": {
-      "bytes": 301385,
-      "gzip": 84399,
-      "modules": 51,
+      "bytes": 295869,
+      "gzip": 82453,
+      "modules": 49,
       "polyfillModules": 19
     },
     "vpm": {
-      "bytes": 281307,
-      "gzip": 77789,
-      "modules": 39,
+      "bytes": 37955,
+      "gzip": 13025,
+      "modules": 17,
       "polyfillModules": 0
     }
   }

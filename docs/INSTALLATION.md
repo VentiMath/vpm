@@ -7,7 +7,7 @@ contains `vfullcalendar-react`, `vfullcalendar-core` and
 Emotion and Stylis replacements.
 
 ```sh
-bun add vfullcalendar-react@https://github.com/VentiMath/vpm/releases/download/calendar-7.1.3/vfullcalendar-react-7.1.3.tgz
+bun add vfullcalendar-react@https://github.com/VentiMath/vpm/releases/download/calendar-7.1.3-r2/vfullcalendar-react-7.1.3.tgz
 ```
 
 The archive pins both VPM dependencies to URLs in the same release. No overrides,
@@ -16,17 +16,22 @@ remain peer dependencies; keep the versions selected by your application.
 Commit the application's `package.json` and `bun.lock`, and use
 `bun install --frozen-lockfile` in CI.
 
-The [calendar release](https://github.com/VentiMath/vpm/releases/tag/calendar-7.1.3)
+The [calendar release](https://github.com/VentiMath/vpm/releases/tag/calendar-7.1.3-r2)
 includes the three archives, `SHA256SUMS` and `release-manifest.json`. The manifest
 records the exact source commit, dependency URLs and hashes of shipped files.
 A new release gets a new tag and URLs; existing assets must not be replaced.
 
-Package versions identify the compatibility baseline, not a claim of identical
-behavior or of a complete independent rewrite. The React calendar remains
-adapted upstream code; the date engine and core runtime are independently
-implemented. Read the [calendar API and limitations](../packages/vfullcalendar-react/README.md)
-before migration. FullCalendar 7 requires its v7 imports, callback/ref types and
-theme stylesheets.
+The `calendar-7.1.3-r2` release replaces the retained React renderer with an
+independently written implementation of VentiMath's month/week/day workflow.
+Its package version remains 7.1.3 to identify the upstream API baseline; the
+immutable release tag identifies the revision. The original `calendar-7.1.3`
+release remains available and is still the one adopted by VentiMath's checked
+main branch. See [adoption evidence](ADOPTION.md).
+
+Read the [calendar API and limits](../packages/vfullcalendar-react/README.md)
+before upgrading: this implements the app-used scope, not every upstream
+plugin, theme or internal API. FullCalendar 7 uses v7 imports, callback/ref types
+and explicit theme stylesheets.
 
 ## Preparing a calendar release
 
@@ -34,7 +39,7 @@ Set the three workspace package versions to their upstream baselines and use
 `workspace:*` for their local dependencies. From a committed snapshot:
 
 ```sh
-node scripts/pack-calendar-release.cjs --ref COMMIT_SHA --tag calendar-7.1.3 --out /absolute/path/to/empty-output
+node scripts/pack-calendar-release.cjs --ref COMMIT_SHA --tag calendar-7.1.3-r2 --out /absolute/path/to/empty-output
 ```
 
 The packer snapshots only the three committed package directories. It rewrites

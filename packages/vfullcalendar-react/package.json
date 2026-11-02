@@ -1,7 +1,7 @@
 {
   "name": "vfullcalendar-react",
   "version": "7.1.3",
-  "description": "FullCalendar 7 for React on VPM's headless calendar engine, without temporal-polyfill",
+  "description": "Independent React calendar for VentiMath\u2019s FullCalendar 7 month, week and day workflows",
   "type": "module",
   "main": "./index.js",
   "types": "./index.d.ts",
@@ -13,14 +13,6 @@
       "types": "./index.d.ts",
       "default": "./index.js"
     },
-    "./all": {
-      "types": "./all.d.ts",
-      "default": "./all.js"
-    },
-    "./public-components": {
-      "types": "./public-components.d.ts",
-      "default": "./public-components.js"
-    },
     "./public-api": {
       "types": "./public-api.d.ts",
       "default": "./public-api.js"
@@ -28,18 +20,6 @@
     "./protected-api": {
       "types": "./protected-api.d.ts",
       "default": "./protected-api.js"
-    },
-    "./protected-styles": {
-      "types": "./protected-styles.d.ts",
-      "default": "./protected-styles.js"
-    },
-    "./locales-all": {
-      "types": "./locales-all.d.ts",
-      "default": "./locales-all.js"
-    },
-    "./locales/*": {
-      "types": "./locales/*.d.ts",
-      "default": "./locales/*.js"
     },
     "./interaction": {
       "types": "./interaction.d.ts",
@@ -53,87 +33,35 @@
       "types": "./timegrid.d.ts",
       "default": "./timegrid.js"
     },
-    "./multimonth": {
-      "types": "./multimonth.d.ts",
-      "default": "./multimonth.js"
-    },
-    "./list": {
-      "types": "./list.d.ts",
-      "default": "./list.js"
-    },
     "./themes/classic": {
       "types": "./themes/classic/index.d.ts",
       "default": "./themes/classic/index.js"
     },
     "./themes/classic/theme.css": "./themes/classic/theme.css",
     "./themes/classic/palette.css": "./themes/classic/palette.css",
-    "./themes/monarch": {
-      "types": "./themes/monarch/index.d.ts",
-      "default": "./themes/monarch/index.js"
-    },
-    "./themes/monarch/theme.css": "./themes/monarch/theme.css",
-    "./themes/monarch/palettes/blue.css": "./themes/monarch/palettes/blue.css",
-    "./themes/monarch/palettes/green.css": "./themes/monarch/palettes/green.css",
-    "./themes/monarch/palettes/purple.css": "./themes/monarch/palettes/purple.css",
-    "./themes/monarch/palettes/red.css": "./themes/monarch/palettes/red.css",
-    "./themes/monarch/palettes/yellow.css": "./themes/monarch/palettes/yellow.css",
-    "./themes/breezy": {
-      "types": "./themes/breezy/index.d.ts",
-      "default": "./themes/breezy/index.js"
-    },
-    "./themes/breezy/theme.css": "./themes/breezy/theme.css",
-    "./themes/breezy/palettes/amber.css": "./themes/breezy/palettes/amber.css",
-    "./themes/breezy/palettes/emerald.css": "./themes/breezy/palettes/emerald.css",
-    "./themes/breezy/palettes/indigo.css": "./themes/breezy/palettes/indigo.css",
-    "./themes/breezy/palettes/rose.css": "./themes/breezy/palettes/rose.css",
-    "./themes/forma": {
-      "types": "./themes/forma/index.d.ts",
-      "default": "./themes/forma/index.js"
-    },
-    "./themes/forma/theme.css": "./themes/forma/theme.css",
-    "./themes/forma/palettes/blue.css": "./themes/forma/palettes/blue.css",
-    "./themes/forma/palettes/green.css": "./themes/forma/palettes/green.css",
-    "./themes/forma/palettes/purple.css": "./themes/forma/palettes/purple.css",
-    "./themes/forma/palettes/red.css": "./themes/forma/palettes/red.css",
-    "./themes/pulse": {
-      "types": "./themes/pulse/index.d.ts",
-      "default": "./themes/pulse/index.js"
-    },
-    "./themes/pulse/theme.css": "./themes/pulse/theme.css",
-    "./themes/pulse/palettes/blue.css": "./themes/pulse/palettes/blue.css",
-    "./themes/pulse/palettes/green.css": "./themes/pulse/palettes/green.css",
-    "./themes/pulse/palettes/purple.css": "./themes/pulse/palettes/purple.css",
-    "./themes/pulse/palettes/red.css": "./themes/pulse/palettes/red.css"
+    "./locales/fr": {
+      "types": "./locales/fr.d.ts",
+      "default": "./locales/fr.js"
+    }
   },
   "files": [
     "index.js",
     "index.d.ts",
-    "all.js",
-    "all.d.ts",
-    "daygrid.js",
-    "daygrid.d.ts",
-    "interaction.js",
-    "interaction.d.ts",
-    "list.js",
-    "list.d.ts",
-    "locales-all.js",
-    "locales-all.d.ts",
-    "multimonth.js",
-    "multimonth.d.ts",
-    "protected-api.js",
-    "protected-api.d.ts",
-    "protected-styles.js",
-    "protected-styles.d.ts",
     "public-api.js",
     "public-api.d.ts",
-    "public-components.js",
-    "public-components.d.ts",
+    "protected-api.js",
+    "protected-api.d.ts",
+    "daygrid.js",
+    "daygrid.d.ts",
     "timegrid.js",
     "timegrid.d.ts",
+    "interaction.js",
+    "interaction.d.ts",
+    "src",
     "skeleton.css",
-    "chunks",
-    "locales",
-    "themes",
+    "themes/classic",
+    "locales/fr.js",
+    "locales/fr.d.ts",
     "README.md",
     "LICENSE",
     "PROVENANCE.json"

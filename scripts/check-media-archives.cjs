@@ -34,7 +34,8 @@ try {
       if (name === 'vfullcalendar-react') {
         assert.deepEqual(metadata.dependencies, {'vfull-ui-headless-calendar': '7.1.3', 'vfullcalendar-core': '7.1.3'});
         assert.deepEqual(Object.keys(metadata.peerDependencies).sort(), ['react', 'react-dom']);
-        for (const file of ['index.js', 'index.d.ts', 'daygrid.js', 'timegrid.js', 'interaction.js', 'skeleton.css', 'themes/classic/theme.css', 'locales/fr.js', 'chunks/cb8ba596.js', 'LICENSE', 'PROVENANCE.json', 'README.md']) assert.ok(entries.includes(file), name + ': ' + file);
+        for (const file of ['index.js', 'index.d.ts', 'daygrid.js', 'timegrid.js', 'interaction.js', 'skeleton.css', 'themes/classic/theme.css', 'locales/fr.js', 'src/calendar.js', 'src/model.js', 'LICENSE', 'PROVENANCE.json', 'README.md']) assert.ok(entries.includes(file), name + ': ' + file);
+        assert.ok(!entries.some(f => f.startsWith('chunks/')), 'No upstream renderer chunks');
         const extracted = path.join(directory, name + '-extracted');
         fs.mkdirSync(extracted);
         run('tar', ['-xzf', packed, '-C', extracted]);
