@@ -32,6 +32,13 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Check Redux public contract and consumers
+        run: |
+          node scripts/redux-conformance/run.cjs --upstream
+          node scripts/redux-conformance/run.cjs
+          node scripts/redux-conformance/callers.cjs
+          node scripts/redux-conformance/archives.cjs
       - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/grpc-conformance/channelz.cjs --upstream
       - run: node scripts/grpc-conformance/channelz.cjs
@@ -384,6 +391,13 @@ jobs:
       - run: npm --prefix scripts/xml-helpers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/path-matcher-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/xml-builder-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Check Redux public contract and consumers
+        run: |
+          bun scripts/redux-conformance/run.cjs --upstream
+          bun scripts/redux-conformance/run.cjs
+          bun scripts/redux-conformance/callers.cjs
+          bun scripts/redux-conformance/archives.cjs
       - run: npm --prefix scripts/grpc-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/grpc-conformance/channelz.cjs --upstream
       - run: node scripts/grpc-conformance/channelz.cjs

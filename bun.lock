@@ -779,6 +779,10 @@
       "name": "vread-package-up",
       "version": "0.1.0",
     },
+    "packages/vredux": {
+      "name": "vredux",
+      "version": "5.0.1",
+    },
     "packages/vretry": {
       "name": "vretry",
       "version": "0.1.0",
@@ -1205,6 +1209,8 @@
     "vreact-is": ["vreact-is@workspace:packages/vreact-is"],
 
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
+
+    "vredux": ["vredux@workspace:packages/vredux"],
 
     "vretry": ["vretry@workspace:packages/vretry"],
 

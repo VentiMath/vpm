@@ -220,6 +220,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | --- | --- | --- |
 | [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
 | [vhoist-non-react-statics](packages/vhoist-non-react-statics) | hoist-non-react-statics 3.3.2 | Independent zero-dependency static hoisting; safe prototype-named fields, nearest inherited descriptors, iterative traversal and no classification getter execution. |
+| [vredux](packages/vredux) | redux 5.0.1 | Independent store, cached reentrant listener snapshots and middleware composition; own prototype-named reducer/action keys. All 78 public-API tests, DND store caller and packed consumers verified. |
 | [vcss-box-model](packages/vcss-box-model) | css-box-model 1.2.1 | Independent CSS box geometry, isolated default spacing, owning-window style lookup and direct rectangle construction. All original tests, DND caller paths and packed consumers verified. |
 | [vtiny-invariant](packages/vtiny-invariant) | tiny-invariant 1.3.3 | Independent assertion with lazy diagnostics, production function selection, CJS/ESM exports and strict type narrowing. Original runtime tests, css-box-model caller and packed consumers verified. |
 | [vraf-schd](packages/vraf-schd) | raf-schd 4.0.3 | Independent frame scheduler; releases argument references on cancel/run, rejects stale deliveries and recovers from a failed frame request. Original suite, actual DND scroll caller and packed consumers verified. |
@@ -358,9 +359,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 117 Node runtime packages' public declarations compile
+recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **136 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **137 packages**, including two declaration-only packages and
 seventeen browser packages, `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -673,6 +674,20 @@ on its own app, so validator tests also use application responses and static fil
 Firebase handles errors thrown by plain handlers itself; finalhandler is exercised
 through Express applications. Framework body parsing runs before handlers, so
 parser-specific limits are also checked in a direct application.
+
+## vredux
+
+Independent **Redux 5.0.1** runtime for the dependency beneath DND18. Zero runtime
+dependencies, all nine exports, reentrant listener snapshots and the original
+MIT declaration contract. Prototype-named reducers and bound action creators
+remain own keys instead of inheriting state or invoking prototype setters.
+All 78 retained public-API tests pass on Node and Bun; focused regression groups,
+the actual DND store, packed CJS/ESM/browser consumers and TypeScript 7 pass.
+Built, not yet adopted. See the [contract](packages/vredux/README.md),
+[fixture](scripts/redux-conformance/README.md) and
+[isolated measurements](packages/vredux/bench/results/README.md). Dispatch to
+eight listeners records 110 → 30 ns on Node and 123 → 22 ns on Bun; combining
+eight reducers is inconclusive on both. No application frame-rate claim is made.
 
 ## vcss-box-model
 

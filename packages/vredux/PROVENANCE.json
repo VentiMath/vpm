@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "redux",
+    "version": "5.0.1",
+    "commit": "50b010210df25c470386f7e39a9389a4a77b3842",
+    "repository": "https://github.com/reduxjs/redux",
+    "integrity": "sha512-M9/ELqF6fy8FwmkpnF0S3YKOqMyoWJ4+CS5Efg2ct3oY9daQvd/Pc71FpGZsVsbl3Cpb+IIcjBDUnnyBdQbq4w=="
+  },
+  "checked": "2026-11-02",
+  "license": "MIT",
+  "retainedEvidence": "../../scripts/redux-conformance/upstream",
+  "retainedDeclarations": "index.d.ts is the MIT-licensed Redux 5.0.1 public declaration contract, preserved byte-for-byte. LICENSE retains the upstream attribution. No upstream runtime is shipped.",
+  "implementation": {
+    "kind": "independent implementation",
+    "basis": "Independently written store with cached listener snapshots, own-property reducer assembly and iterative middleware composition.",
+    "targetScope": "All nine Redux 5.0.1 runtime exports; the store, enhancer and middleware APIs used by @hello-pangea/dnd18.0.1."
+  },
+  "changes": [
+    "Prototype-named reducer and bound-action keys stay own properties without invoking inherited setters or inheriting slice state.",
+    "Listener membership changes invalidate a cached snapshot; reentrant dispatch preserves each dispatch's notification set.",
+    "Plain object checks use two prototype reads and do not access constructor getters.",
+    "Zero runtime dependencies, CJS/ESM exports and the original public TypeScript contract."
+  ]
+}
