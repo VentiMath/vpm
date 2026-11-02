@@ -1,0 +1,7 @@
+{
+  "upstream": {"name": "get-nonce", "version": "1.0.1", "repository": "https://github.com/theKashey/get-nonce", "commit": "fe602104915e8a18049dc96dfecbc10a96c03068", "integrity": "sha512-FJhYRoDaiatfEkUK8HKlicmu/3SGFD51q3itKDGoSTysQJBnfOcxU5GxnhE1E6soB76MbT0MBtnKJuXyAx+96Q=="},
+  "checked": "2026-11-02",
+  "license": "MIT",
+  "implementation": {"kind": "independent implementation", "replacementStatus": "complete", "basis": "Two-function nonce configuration contract; original license retained as attribution. No runtime dependencies."},
+  "changes": ["CJS and ESM exports share one nonce slot.", "Declarations allow clearing the configured value with undefined."]
+}

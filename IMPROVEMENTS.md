@@ -222,6 +222,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vtabbable](packages/vtabbable) | tabbable 6.5.1 | Independent focus eligibility and tab order; correct form-owned radio groups, inert shadow/slot inheritance and nested legend exemptions; traversal-local radio lookup. |
 | [vhoist-non-react-statics](packages/vhoist-non-react-statics) | hoist-non-react-statics 3.3.2 | Independent zero-dependency static hoisting; safe prototype-named fields, nearest inherited descriptors, iterative traversal and no classification getter execution. |
 | [vuse-sidecar](packages/vuse-sidecar) | use-sidecar 1.1.3 | Independent React 19 sidecar loading and registration queues; no tslib/detect-node-es. Isolated caches, cancelled stale loads, handled failures, per-registration cleanup and safe render-prop publication. Actual nested scroll-lock caller and packed consumers verified. |
+| [vget-nonce](packages/vget-nonce) | get-nonce 1.0.1 | Independent nonce accessor with shared CJS/ESM state, typed reset and no dependencies. Original stylesheet caller and clean archive/browser consumers verified; no demonstrated speed improvement. |
 | [vuse-callback-ref](packages/vuse-callback-ref) | use-callback-ref 1.3.3 | Independent React 19 observable/merged/transformed refs, no tslib; preserved falsy defaults, owned membership snapshots and complete merged assignments after callback errors. Original tests, scroll-lock UI ref wiring and packed consumers verified. |
 | [vredux](packages/vredux) | redux 5.0.1 | Independent store, cached reentrant listener snapshots and middleware composition; own prototype-named reducer/action keys. All 78 public-API tests, DND store caller and packed consumers verified. |
 | [vcss-box-model](packages/vcss-box-model) | css-box-model 1.2.1 | Independent CSS box geometry, isolated default spacing, owning-window style lookup and direct rectangle construction. All original tests, DND caller paths and packed consumers verified. |
@@ -364,11 +365,11 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **139 packages**, including two declaration-only packages and
-nineteen browser packages, `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
+compiler in NodeNext and bundler resolution modes. The catalog covers **140 packages**, including two declaration-only packages and
+twenty browser packages, `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
-`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react`, `vtabbable`, `vuse-callback-ref` and `vuse-sidecar`, whose declarations are checked with DOM
+`vemotion-react`, `vemotion-styled`, `vfloating-ui-utils`, `vfloating-ui-core`, `vfloating-ui-dom`, `vfloating-ui-react-dom`, `vfloating-ui-react`, `vtabbable`, `vuse-callback-ref`, `vuse-sidecar` and `vget-nonce`, whose declarations are checked with DOM
 (and React where needed) types in their fixtures.
 
 All runtime packages declare Node.js 24+; CI and performance work target Node.js
@@ -5289,3 +5290,13 @@ Packages are currently available from this repository as standard package
 archives. Registry publication, automatic replacement of installed dependencies,
 and native VPM support in `bun install` remain future work. Applications benefit
 only after adopting and validating the replacements they use.
+
+## vget-nonce
+
+Independent get-nonce 1.0.1 behavior for the style injection beneath scroll locking.
+CommonJS and ESM share state, and the declarations permit clearing it with
+undefined. No runtime dependencies, nonce generation or per-request storage.
+Original/VPM precedence and the actual react-style-singleton 2.2.3 caller pass on
+Node 24 and Bun, alongside clean package, browser and TS7 checks. Nanosecond-scale
+[measurements](packages/vget-nonce/bench/results/README.md) are inconclusive.
+Built but unreleased and unadopted. [Contract](packages/vget-nonce/README.md).

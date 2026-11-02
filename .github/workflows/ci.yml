@@ -37,6 +37,8 @@ jobs:
       - run: node scripts/sidecar-conformance/run.cjs
       - run: node scripts/sidecar-conformance/errors.cjs
       - run: node scripts/sidecar-conformance/archives.cjs
+      - run: node scripts/nonce-conformance/run.cjs
+      - run: node scripts/nonce-conformance/archives.cjs
       - run: node scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
@@ -412,6 +414,8 @@ jobs:
       - run: bun scripts/sidecar-conformance/run.cjs
       - run: bun scripts/sidecar-conformance/errors.cjs
       - run: bun scripts/sidecar-conformance/archives.cjs
+      - run: bun scripts/nonce-conformance/run.cjs
+      - run: bun scripts/nonce-conformance/archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund

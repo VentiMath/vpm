@@ -434,6 +434,10 @@
         "vjson-bigint": "workspace:*",
       },
     },
+    "packages/vget-nonce": {
+      "name": "vget-nonce",
+      "version": "1.0.1",
+    },
     "packages/vgoogle-auth-library": {
       "name": "vgoogle-auth-library",
       "version": "0.1.0",
@@ -1105,6 +1109,8 @@
     "vgaxios": ["vgaxios@workspace:packages/vgaxios"],
 
     "vgcp-metadata": ["vgcp-metadata@workspace:packages/vgcp-metadata"],
+
+    "vget-nonce": ["vget-nonce@workspace:packages/vget-nonce"],
 
     "vgoogle-auth-library": ["vgoogle-auth-library@workspace:packages/vgoogle-auth-library"],
 
