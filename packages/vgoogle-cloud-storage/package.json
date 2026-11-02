@@ -1,7 +1,7 @@
 {
   "name": "vgoogle-cloud-storage",
-  "version": "0.1.0",
-  "description": "Cloud Storage client on VPM foundations with stricter URL signing and checksum handling",
+  "version": "8.4.0",
+  "description": "Independent Cloud Storage client for application uploads, downloads, metadata, listing and signing",
   "type": "commonjs",
   "main": "index.js",
   "types": "index.d.ts",
@@ -41,16 +41,9 @@
   "dependencies": {
     "vasync-retry": "workspace:*",
     "vduplexify": "workspace:*",
-    "vfast-xml-parser": "workspace:*",
-    "vgaxios": "workspace:*",
     "vgoogle-auth-library": "workspace:*",
-    "vhtml-entities": "workspace:*",
     "vmime": "workspace:*",
     "vp-limit": "workspace:*",
-    "vpaginator": "workspace:*",
-    "vprojectify": "workspace:*",
-    "vpromisify": "workspace:*",
-    "vretry-request": "workspace:*",
     "vteeny-request": "workspace:*"
   }
 }

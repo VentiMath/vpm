@@ -266,7 +266,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vprotobufjs](packages/vprotobufjs) | protobuf.js 8.8.1 | VPM int64 conversion, restored reader bounds, validated lengths, bounded skipped varints, correct empty-message groups and protected zero; actual Google SDK serialization checks. |
 | [vlong](packages/vlong) | long 5.3.2 | Complete integer/radix validation, native formatting, isolated small integers, protected constants and validated byte input; exact protobuf/gRPC caller bytes with zero dependencies. |
 | [vobject-hash](packages/vobject-hash) | object-hash 3.0.0 | Retained comparison package, no current VPM runtime consumers; corrected binary framing, sparse arrays, map pairs, DataViews and file timestamps; zero dependencies. |
-| [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | All 13 dependencies are VPM; independent endpoint context, streaming CRC32C, hash validation, V2/V4 URL signing and isolated save orchestration, private checksum tables and normalized seeds; corrected signed-URL canonicalization and reserved fields, exact SHA-256 validation, real HTTP and Firebase callers. |
+| [vgoogle-cloud-storage](packages/vgoogle-cloud-storage) | @google-cloud/storage 8.4.0 | Independent app-used Storage client: six VPM dependencies, own authenticated dispatch, resumable uploads, validated downloads, metadata/listing/deletion and signing; unused SDK administration runtime removed. Real HTTP and Firebase callers verified. |
 | [vmime](packages/vmime) | mime 4.1.2; mime 3.0.0 Storage caller migration | Suffix-only lookup, atomic custom definitions, locked built-in mappings, frozen table arrays and both module systems; zero dependencies. |
 | [vfast-xml-parser](packages/vfast-xml-parser) | fast-xml-parser 5.11.2 | Reusable parser setup, exact depth limits, deterministic filters, safer callbacks and stricter XML syntax checks; all six helpers use VPM. |
 | [vfast-xml-builder](packages/vfast-xml-builder) | fast-xml-builder 1.3.1 | Bounded raw/ordinary traversal, deterministic filters, corrected array/text handling, readonly callback paths and faster serialization. |
@@ -521,7 +521,7 @@ and 39 total external runtime dependencies, all VPM packages.
 | `vprotobufjs` | 1 | 1 (`vlong`) |
 | `vlong` | 0 | 0 |
 | `vobject-hash` | 0 | 0 |
-| `vgoogle-cloud-storage` | 14 | 13 (all VPM) |
+| `vgoogle-cloud-storage` | 14 | 6 (all VPM) |
 | `vmime` | 0 | 0 |
 | `vfast-xml-parser` | 6 | 6 (all VPM) |
 | `vfast-xml-builder` | 2 | 2 (both VPM) |
@@ -1755,89 +1755,35 @@ for the replacement caller.
 
 ## vgoogle-cloud-storage
 
-The baseline is **@google-cloud/storage 8.4.0**, checked October 30, 2026.
-Endpoint configuration, CRC32C, hash-stream validation, V2/V4 URL signing, File.save, createWriteStream and multipart orchestration are independently implemented;
-the rest of the published SDK and declarations are retained with focused changes. All 13 direct library
-dependencies are VPM packages. Its unused `abort-controller` dependency
-is removed; Node 24/Bun provide the native controller used by resumable uploads.
+Targets **@google-cloud/storage 8.4.0**, checked November 1, 2026. The app-used
+Storage client is independently implemented throughout, including authenticated
+dispatch, metadata and listing, resumable uploads, downloads and signed forms.
+Six VPM dependencies replace the previous thirteen. Unused SDK administration
+classes and their declarations have been removed; this is scoped compatibility,
+not a full SDK claim. [Supported APIs and exclusions](packages/vgoogle-cloud-storage/README.md).
 
-Signed URLs reject malformed SHA-256 digests and caller query parameters that
-overwrite authentication fields. Canonical headers combine case variants,
-exclude undefined fields consistently, normalize spaces/tabs and preserve host
-ports. Invalid actions and header values settle both callback/promise APIs.
-CRC32C uses private, derived slicing tables and independently implemented streaming
-updates. Public table mutation cannot corrupt results; signed/unsigned 32-bit
-seeds normalize before serialization and out-of-range seeds fail at construction.
-Initialization respects typed-array and DataView slice boundaries. Independent
-bitwise controls cover 260 lengths, five chunkings, resumed checksums and files.
-Module exports ignore inherited properties.
+Existing endpoint isolation, checksum ownership, V2/V4 canonical signing,
+per-upload retry policy, frozen input support and cancellation fixes remain.
+Resumable writes validate acknowledged ranges and query the session before
+replaying a partially persisted chunk. Downloads validate wire checksums before
+decompression, preserve backpressure and stop on cancellation. Repeated listing
+tokens and custom checksum failures reject rather than hanging or escaping.
 
-The hash Transform now snapshots MD5 without consuming its active state. Hashes
-are updated before passing chunks downstream, and every enabled checksum must
-match: MD5 success cannot hide a CRC failure. Missing expected values fail unless
-`updateHashesOnly` is enabled. Custom CRC providers and backpressure are preserved.
+Node24/Bun verification includes 110 retained original tests, 50 focused groups,
+25-request local HTTP scenarios, save/multipart controls, Firebase Admin callers
+and two-server endpoint controls with independent RSA form verification. Packed
+npm/Bun CJS/ESM and TypeScript7 consumers check the reduced declarations.
+No cloud credentials or production deployment are involved.
 
-The URL signer now owns canonicalization and V2/V4 signing. It captures the URL,
-bucket/file identity, query values, dates, endpoint and authentication provider
-before credential awaits. Changing those destination options or replacing the
-signer’s provider cannot redirect the prepared operation. Existing canonical header, exact
-SHA256 and reserved query-field protections remain. Signed POST policies are
-still retained upstream code in File; they are outside this component rewrite.
-
-File.save now captures plain options and byte payloads, owns its retry policy,
-and gives retries fresh options. A non-idempotent write cannot turn off a
-concurrent conditional write's retries. Invalid contexts settle once before
-upload setup, and premature closure rejects. One-shot streams are not replayed;
-caller source factories remain responsible for producing fresh retry streams.
-An HTTP control reproduces the original concurrency failure and verifies its fix.
-Multipart orchestration is now independently implemented; authenticated request dispatch and resumable protocol remain retained.
-
-File.createWriteStream now owns lazy setup, options/metadata, gzip/checksum pipelines,
-backpressure and response completion. Frozen options work without mutation;
-cancellation during MIME lookup cannot start a later upload. A transport that
-closes without response metadata rejects instead of leaving completion pending.
-Eight focused groups preserve checksum/deletion errors, normal/empty/compressed
-and partial/resumed uploads, and cancellation cleanup on Node 24 and Bun.
-
-
-The multipart adapter owns request planning, progress and response settlement.
-Cancellation propagates through pending authentication, preventing the late HTTP
-upload reproduced by the original on both runtimes. Duplicate/late callbacks
-cannot overwrite metadata or report success after cancellation. Auth, encryption
-headers, interceptors and precondition/billing query precedence remain covered.
-The old unused multipart helper and progress class are removed. MIME framing and
-HTTP streaming use the existing VPM teeny-request implementation.
-
-Verification covers 110 retained upstream tests on both runtimes and controls,
-forty-one focused tests, five paired regression probes, independent RSA signature
-verification, 25 real local HTTP requests per caller run and Firebase Admin
-12.7.0's actual Storage factory. HTTP coverage includes simple/resumable/local
-uploads, integrity-checked downloads, pagination, existence, deletion, transient
-retries and corrupt-checksum cleanup. Packed npm/Bun installs and standalone
-declarations are checked. Broader SDK methods, live IAM/cloud operations and
-browser bundles are retained or possible but not independently certified.
-
-An owned endpoint resolver now makes explicit API endpoints select the same
-server for metadata and uploads. Optional per-client emulator configuration
-replaces Admin's global environment mutation. Existing clients retain their
-Firebase download URLs and signed-form bucket routes after environment changes.
-Canonical default endpoints preserve normal authentication, and endpoint syntax
-is checked. Two-server original/VPM controls exercise those boundaries on both
-runtimes, including verified V4 form signatures.
-
-[Focused multipart measurements](packages/vgoogle-cloud-storage/bench/multipart-results/README.md)
-separate request planning from a real integrity-checked 64 KiB local upload, using
-four balanced process pairs and two identical-source controls. HTTP timing covers
-the entire client dependency stack: local uploads use 49%/56% less paired time on
-Node/Bun. Planning/cancellation costs 2.28 versus 0.96 µs on Node and 1.22 versus
-0.56 µs on Bun, with substantial Node process-order sensitivity. The abort signal,
-owned options and response guards are retained; local comparisons do not establish
-cloud latency.
-[Previous stream](packages/vgoogle-cloud-storage/bench/stream-results/README.md),
-[save](packages/vgoogle-cloud-storage/bench/save-results/README.md) and
-[earlier client](packages/vgoogle-cloud-storage/bench/results/README.md) reports
-predate this adapter and remain historical evidence.
-[API, migration and verification scope](packages/vgoogle-cloud-storage/README.md).
+[Complete-client measurements](packages/vgoogle-cloud-storage/bench/client-results/README.md)
+record construction, signing, checksums and local HTTP operations with balanced
+isolated processes and identical-source controls. Multipart uploads take 42%/63%
+less paired time and resumable uploads 46%/53% less on Node/Bun. Canonical signing
+headers still cost 69%/74% more; Node custom-endpoint construction costs 13% more.
+Full RSA signing, metadata and download timing directions remain inconclusive.
+Previous multipart, stream,
+save and client reports remain historical; local HTTP does not establish cloud
+latency or attribute gains solely to this package.
 
 ## vmime
 

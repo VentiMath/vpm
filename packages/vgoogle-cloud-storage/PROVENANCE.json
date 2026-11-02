@@ -9,23 +9,41 @@
   },
   "checked": "2026-11-01",
   "license": "Apache-2.0",
-  "source": "Independent, source-informed endpoint configuration, CRC32C, hash-stream validation, URL signing, save orchestration, upload-stream lifecycle and multipart request orchestration in the seven components listed below. Remaining SDK runtime and declarations retain upstream code with VPM imports, structural platform types and focused corrections. Original licenses and contracts remain attributed; this is a partial rewrite.",
-  "scope": "Actual VentiMath backend save, signing, listing, exists and delete paths; local file uploads and bucket creation; selected upstream signing, checksum and helper tests. Other upstream APIs remain available but are not all independently verified.",
+  "source": "Independent, source-informed implementation of the Storage APIs used by VentiMath. Runtime classes, transport, resumable protocol, download pipeline and signing are independently written. Selected structural checksum/signer declarations, public diagnostic strings and Apache-2.0 notices retain upstream provenance; the broader upstream SDK runtime is removed.",
+  "scope": "VentiMath object storage: client/bucket/file handles, metadata, simple/resumable/local-file uploads, downloads, listing, existence, deletion, V2/V4 URLs, V4 signed forms and Firebase Admin request dispatch. This is scoped API compatibility with 8.4.0, not the entire Google SDK.",
   "implementation": {
-    "kind": "mixed: independent endpoint configuration, checksums, URL signing and save/upload-stream/multipart orchestration with retained SDK transport/operations",
-    "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "Endpoint selection, CRC32C, hash-stream validation V2/V4 URL signing and File.save, createWriteStream and multipart orchestration are independently implemented. Bucket/file operations, transport and signed POST policies still retain upstream code with focused corrections.",
+    "kind": "independent implementation of application-used Storage APIs",
+    "replacementStatus": "application-facing independent rewrite complete",
+    "basis": "Independent, source-informed implementation of the Storage APIs used by VentiMath. Runtime classes, transport, resumable protocol, download pipeline and signing are independently written. Selected structural checksum/signer declarations, public diagnostic strings and Apache-2.0 notices retain upstream provenance; the broader upstream SDK runtime is removed.",
     "targetScope": "Bucket/file metadata, save/upload, existence, deletion, listing and signing paths used by VentiMath and Firebase Admin.",
-    "remainingWork": "Independently implement the remaining bucket/file operations, resumable upload, authenticated request dispatch and download transport, existence, deletion, listing and signed POST policies used by callers, retaining existing correctness fixes and wire contracts.",
+    "remainingWork": "",
     "independentComponents": {
       "lib/storage-endpoint.js": "Own per-client endpoint selection, HTTP(S) validation and normalization, explicit-over-ambient precedence and captured emulator identity. Metadata and upload hosts cannot diverge when an explicit API endpoint overrides an ambient emulator. Canonical default endpoints keep normal authentication; V4 form routes use the captured client identity rather than reading global state later.",
       "lib/crc32c.js": "Own slicing-by-eight Castagnoli checksum engine with derived private tables, signed/unsigned 32-bit seed normalization, bounded numeric initialization, chunked/resumed updates and async file streaming. Public inspection tables cannot change active computations; byte-view offsets and upstream base64 decoding remain supported.",
       "lib/hash-stream-validator.js": "Own Transform with native private state, non-destructive MD5 snapshots, final digest caching, hashing before chunk emission and independent validation of every enabled checksum. Custom CRC providers and stream backpressure remain supported.",
       "lib/signer.js": "Own V2/V4 URL signing with per-operation destination/resource/auth snapshots, synchronous input validation, canonical headers/query encoding, exact payload hashes and preserved signing errors. Mutating caller URL/bucket values or replacing signer.auth cannot change the captured destination or provider across credential awaits; query accessors are read once.",
-      "lib/save.js": "Own save orchestration, captured plain options and byte payloads, per-attempt retry configuration and stream completion. One-shot streams are not retried; replayable factories and conditional writes keep their retry budget. Invalid contexts settle once and never start an upload. Multipart orchestration is independently implemented in simple-upload.js; authenticated dispatch and resumable protocol remain retained.",
-      "lib/upload-stream.js": "Own lazy upload setup, owned options and per-attempt retry policy, gzip/checksum pipeline, backpressure, response metadata gate and cancellation. Frozen input records work, cancellation during MIME lookup cannot resurrect transport, and closure without metadata rejects instead of hanging. Multipart orchestration is independently implemented; authenticated dispatch and resumable protocol remain retained.",
-      "lib/simple-upload.js": "Own one-shot multipart request planning, metadata serialization, progress stream, cancellation signal and guarded response settlement. Captured queries preserve precondition/ACL/billing precedence; late or duplicate callbacks cannot overwrite metadata after cancellation/completion. Abort signals prevent HTTP startup after pending authentication resolves. VPM teeny-request owns framing and HTTP; SDK authentication/interceptor dispatch and resumable protocol remain retained."
-    }
+      "lib/save.js": "Own save orchestration, captured plain options and byte payloads, per-attempt retry configuration and stream completion. One-shot streams are not retried; replayable factories and conditional writes keep their retry budget. Invalid contexts settle once and never start an upload. Multipart orchestration is independently implemented in simple-upload.js; authenticated dispatch and resumable protocol are independently implemented.",
+      "lib/upload-stream.js": "Own lazy upload setup, owned options and per-attempt retry policy, gzip/checksum pipeline, backpressure, response metadata gate and cancellation. Frozen input records work, cancellation during MIME lookup cannot resurrect transport, and closure without metadata rejects instead of hanging. Multipart orchestration is independently implemented; authenticated dispatch and resumable protocol are independently implemented.",
+      "lib/simple-upload.js": "Own one-shot multipart request planning, metadata serialization, progress stream, cancellation signal and guarded response settlement. Captured queries preserve precondition/ACL/billing precedence; late or duplicate callbacks cannot overwrite metadata after cancellation/completion. Abort signals prevent HTTP startup after pending authentication resolves. VPM teeny-request owns framing and HTTP; Authentication/interceptor dispatch and resumable protocol are independently implemented.",
+      "lib/storage.js": "Own client construction, Google authentication wiring, bucket factory, project lookup and bucket creation.",
+      "lib/bucket.js": "Own metadata, existence/deletion, local-file upload, automatic/manual/streamed listing and repeated-token detection.",
+      "lib/file.js": "Own object operations, encryption headers, preconditions and public signing/upload/download facades.",
+      "lib/transport.js": "Own request snapshots, captured authentication provider/destination, interceptor dispatch, cancellation and bounded idempotent retries; vteeny-request owns HTTP.",
+      "lib/resumable-upload.js": "Own session creation, bounded chunk buffer, content ranges, 308 acknowledgement validation, partial/resumed uploads and status probing before replay after transient errors.",
+      "lib/download.js": "Own lazy stream, ranges, wire-byte integrity validation before decompression, backpressure and cancellation.",
+      "lib/post-policy.js": "Own V4 form policy construction with captured inputs and existing endpoint context, verified independently with RSA.",
+      "lib/errors.js": "Own error classes with attributed compatible diagnostic text.",
+      "lib/util.js": "Own encoding, dates, context validation and cached dependency loaders.",
+      "lib/index.js": "Explicit supported exports; unused retained SDK classes removed."
+    },
+    "unsupportedAPIs": [
+      "ACL/IAM administration",
+      "HMAC keys",
+      "notifications and channels",
+      "TransferManager",
+      "object copy/move/compose",
+      "service-account and bucket administration beyond the documented methods"
+    ]
   },
   "changes": [
     "VPM-specific emulatorHost is an optional per-client endpoint, mutually exclusive with apiEndpoint. Ambient STORAGE_EMULATOR_HOST remains supported when neither explicit option is set; construction does not mutate it.",
@@ -37,16 +55,20 @@
     "File.save owns its retry settings and upload inputs. A non-idempotent upload cannot disable retries on concurrent conditional writes; metadata and Buffer/Uint8Array payload mutations cannot change the captured upload. Context validation cannot double-call a callback or start an invalid upload. Non-retryable uploads skip unnecessary retry machinery.",
     "File.createWriteStream owns setup and completion without mutating supplied options. Cancellation removes metadata/forwarding listeners and settles pending writes once; missing response metadata on transport close is ERR_STREAM_PREMATURE_CLOSE. Existing checksum/deletion failure contracts are preserved.",
     "Multipart uploads propagate cancellation across pending authentication, do not emit successful metadata events after cancellation, and settle duplicate callbacks once. Request options are owned; per-attempt maxRetries remains zero, leaving replay to File.save.",
-    "The unused retained makeWritableStream and ProgressStream implementation and internal declarations are removed. Cancellation with no supplied error signals null to the owned HTTP adapter, avoiding an unused default DOMException stack; supplied errors retain their identity."
+    "The unused retained makeWritableStream and ProgressStream implementation and internal declarations are removed. Cancellation with no supplied error signals null to the owned HTTP adapter, avoiding an unused default DOMException stack; supplied errors retain their identity.",
+    "Remaining upstream SDK runtime removed. Public runtime and declarations expose the independently implemented app-used surface; unused administration classes are absent.",
+    "Direct runtime dependencies reduced from 13 to 6 VPM packages.",
+    "Resumable sessions reject cross-origin destinations and invalid byte acknowledgements. Transient failures probe persisted position before replaying buffered bytes. Downloads validate compressed wire bytes before decompression."
   ],
   "verification": {
     "endpointContext": "Original/VPM controls under scripts/firebase-admin-conformance/storage-context.cjs use two local servers, metadata/upload/download requests, V2/V4 URLs, independently verified V4 form signatures, explicit-versus-ambient configuration and canonical default authentication classification on Node 24 and Bun.",
-    "retainedScope": "110 retained signing/checksum/helper tests, existing focused tests, 25-request HTTP scenarios, Firebase callers and packed type consumers remain verified. This does not establish an independent implementation of the remaining SDK.",
+    "retainedScope": "110 original signer/checksum/helper tests with recorded adaptations; 50 focused groups, HTTP and Firebase caller controls and packed consumers on Node24/Bun. This certifies the documented scope, not unimplemented SDK methods.",
     "crc32c": "Original/VPM isolated controls compare 260 lengths, five chunkings, resumed seeds and files with an independent bit-at-a-time oracle; demonstrate upstream table-mutation and numeric-seed failures; preserve base64 compatibility and cross-realm/sliced byte views on Node 24 and Bun.",
     "hashStream": "Six focused groups compare original/VPM normal streams, reproduce early-finalization/CRC-masking/downstream-mutation faults, and exercise empty input, custom providers, failure identity and real backpressure pipelines on Node 24 and Bun.",
     "urlSigner": "Existing 110-test suites and signing regressions retained, plus five focused groups demonstrating original mutable-destination/provider faults, single-read query validation, frozen Date/configuration handling and independent RSA verification of app-used V2/V4 download paths.",
     "save": "Seven focused groups reproduce original shared-policy, mutable-payload and duplicate-callback faults, preserve source factories/progress/retries and reject premature close. An original/VPM HTTP concurrency control verifies that a conditional upload retries after 503 while a non-idempotent upload is active. Existing 25-request caller scenarios remain covered on Node 24 and Bun.",
     "uploadStream": "Eight focused original/VPM groups on Node 24 and Bun: frozen inputs, cancellation across MIME awaits, missing/late metadata, gzip/auto MIME, checksum and partial/resumed uploads, corruption cleanup errors, retry/metadata ownership, slow-sink backpressure and empty uploads. Existing 25-request HTTP suite and save concurrency controls pass.",
-    "multipart": "Five focused original/VPM groups plus live HTTP controls on Node24/Bun verify query precedence, binary/progress data, frozen options, errors, duplicate/late settlement, auth/encryption/interceptors and cancellation. Original opens one HTTP upload after auth resolves despite cancellation; VPM opens none. Existing 25-request callers and concurrent-save controls pass."
+    "multipart": "Five focused original/VPM groups plus live HTTP controls on Node24/Bun verify query precedence, binary/progress data, frozen options, errors, duplicate/late settlement, auth/encryption/interceptors and cancellation. Original opens one HTTP upload after auth resolves despite cancellation; VPM opens none. Existing 25-request callers and concurrent-save controls pass.",
+    "client": "Nine additional groups cover multichunk recovery after partial persistence, invalid/no-progress acknowledgements, empty/partial/resumed sessions, cross-origin session rejection, cancellation during auth, gzip/ranges/checksum/custom-provider failures, lazy cancellation, token cycles, metadata snapshots and signed URL/form snapshots."
   }
 }

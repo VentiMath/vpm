@@ -158,3 +158,10 @@ The existing 25-request HTTP suite, concurrent-save control and 110 original tes
 also pass. [Multipart measurements](../../packages/vgoogle-cloud-storage/bench/multipart-results/README.md)
 retain request-planning costs and whole-stack local upload comparisons. The stream
 report now predates this adapter and is historical.
+
+The independently written app-used client is covered by 50 focused groups in
+`packages/vgoogle-cloud-storage/test`. The nine client groups add partial-persistence
+recovery, invalid acknowledgements, empty/partial/continued sessions, auth cancellation,
+gzip/range downloads, hash-provider errors, lazy cancellation, pagination cycles
+and facade input snapshots. Unused SDK administration APIs are removed, rather
+than treated as verified by these selected tests.

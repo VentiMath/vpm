@@ -36,6 +36,7 @@ const cases = [
     {name: 'HTTP object metadata', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return () => file.getMetadata();'), validate: value => assert.equal(value[0].name, 'fixture.pdf')},
     {name: 'HTTP automatic listing / one page', async: true, make: make(connection + 'const bucket = storage.bucket("fixture"); return () => bucket.getFiles({prefix: "fixture"});'), validate: value => {assert.equal(value[0].length, 1);assert.equal(value[0][0].name, 'fixture.pdf');}},
     {name: 'HTTP multipart upload / 64KiB + CRC32C', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return async () => {await file.save(env.body, {resumable: false}); return file.metadata;};'), validate: value => assert.equal(value.crc32c, crc32c)},
+    {name: 'HTTP resumable upload / 64KiB + CRC32C', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return async () => {await file.save(env.body); return file.metadata;};'), validate: value => assert.equal(value.crc32c, crc32c)},
     {name: 'HTTP download / 64KiB + CRC32C', async: true, make: make(connection + 'const file = storage.bucket("fixture").file("fixture.pdf"); return () => file.download();'), validate: value => assert.deepEqual(value[0], body)},
 ];
 const envNames = ['HTTP_PROXY', 'HTTPS_PROXY', 'ALL_PROXY', 'http_proxy', 'https_proxy', 'all_proxy', 'GOOGLE_SDK_NODE_LOGGING', 'STORAGE_EMULATOR_HOST'];

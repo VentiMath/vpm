@@ -58,4 +58,4 @@ test('native ESM exports share CJS classes without inherited export pollution',a
  const esm=await import('../index.mjs');for(const key of Object.keys(vpm))assert.equal(esm[key],vpm[key],key);
  const {spawnSync}=require('node:child_process');const result=spawnSync(process.execPath,['-e',`Object.prototype.inheritedExport='polluted';const v=require(${JSON.stringify(require.resolve('..'))});if(Object.hasOwn(v,'inheritedExport'))throw new Error('Inherited export');delete Object.prototype.inheritedExport;`],{encoding:'utf8'});assert.equal(result.status,0,result.stderr);
 });
-test('all production dependencies stay inside VPM',()=>{const pkg=require('../package.json');assert.equal(Object.keys(pkg.dependencies).length,13);assert(Object.keys(pkg.dependencies).every(n=>n.startsWith('v')));assert.equal(pkg.dependencies['abort-controller'],undefined);});
+test('all production dependencies stay inside VPM',()=>{const pkg=require('../package.json');assert.equal(Object.keys(pkg.dependencies).length,6);assert(Object.keys(pkg.dependencies).every(n=>n.startsWith('v')));assert.equal(pkg.dependencies['abort-controller'],undefined);});

@@ -10,6 +10,17 @@ const server = http.createServer(async (request, response) => {
     try {
         const url = new URL(request.url, 'http://fixture');
         response.setHeader('content-type', 'application/json');
+        if (request.method === 'POST' && url.searchParams.get('uploadType') === 'resumable') {
+            for await (const chunk of request) void chunk;
+            response.setHeader('location', 'http://' + request.headers.host + '/session');
+            return response.end();
+        }
+        if (request.method === 'PUT' && url.pathname === '/session') {
+            const chunks = [];for await (const chunk of request) chunks.push(chunk);
+            assert.deepEqual(Buffer.concat(chunks), body);
+            assert.ok(['bytes 0-65535/65536', 'bytes 0-*/*'].includes(request.headers['content-range']));
+            return response.end(JSON.stringify(metadata));
+        }
         if (request.method === 'POST') {
             const chunks = [];for await (const chunk of request) chunks.push(chunk);
             assert.ok(Buffer.concat(chunks).includes(body));

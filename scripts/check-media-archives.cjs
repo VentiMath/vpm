@@ -148,7 +148,7 @@ try {
     }
     if (name === 'vfirebase-admin') {
       assert.deepEqual(metadata.dependencies, {'vgoogle-auth-library':'0.1.0','vjsonwebtoken':'0.1.0','vjwks-rsa':'0.1.0'});
-      assert.deepEqual(metadata.optionalDependencies, {'vgoogle-cloud-firestore':'0.1.0','vgoogle-cloud-storage':'0.1.0'});
+      assert.deepEqual(metadata.optionalDependencies, {'vgoogle-cloud-firestore':'0.1.0','vgoogle-cloud-storage':'8.4.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const files=fs.readdirSync(path.join(root,'packages',name,'lib'),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages',name,'lib',f)).isFile()).map(f=>'lib/'+f);
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json',...files].sort());
@@ -212,7 +212,7 @@ try {
       assert.doesNotMatch(entries.join('\n'), /(?:test|bench|node_modules|dist|cli)\//);
     }
     if (name === 'vgoogle-cloud-storage') {
-      assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vasync-retry','vduplexify','vfast-xml-parser','vgaxios','vgoogle-auth-library','vhtml-entities','vmime','vp-limit','vpaginator','vprojectify','vpromisify','vretry-request','vteeny-request']);
+      assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vasync-retry','vduplexify','vgoogle-auth-library','vmime','vp-limit','vteeny-request']);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const library=fs.readdirSync(path.join(root,'packages/vgoogle-cloud-storage/lib'),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vgoogle-cloud-storage/lib',f)).isFile()).map(f=>'lib/'+f);
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json','index.js','index.mjs','index.d.ts','index.d.mts',...library].sort());
