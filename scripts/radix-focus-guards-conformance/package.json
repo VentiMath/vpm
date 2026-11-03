@@ -1,0 +1,13 @@
+{
+  "name": "vpm-radix-focus-guards-conformance",
+  "private": true,
+  "dependencies": {
+    "@radix-ui/react-focus-guards": "1.2.0",
+    "@radix-ui/react-menu": "2.2.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "@types/react": "19.2.14",
+    "@testing-library/react": "16.3.2",
+    "jsdom": "27.4.0"
+  }
+}

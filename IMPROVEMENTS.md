@@ -225,6 +225,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vradix-react-context](packages/vradix-react-context) | @radix-ui/react-context 1.3.0 | Independent context/scope factories; shape-aware provider memoization fixes stale keys, stable composed scopes avoid identity churn. React 19, zero runtime dependencies beyond its peer; built, unreleased and unadopted. |
 | [vradix-react-use-callback-ref](packages/vradix-react-use-callback-ref) | @radix-ui/react-use-callback-ref 1.1.5 | Stable callbacks publish targets only on commit; React 19 insertion effects remove the fallback dependency. |
 | [vradix-react-direction](packages/vradix-react-direction) | @radix-ui/react-direction 1.2.0 | Independent React 19 direction provider/hook; unchanged public behavior, shared CJS/ESM context and actual RovingFocus keyboard controls. No runtime dependencies beyond React. |
+| [vradix-react-focus-guards](packages/vradix-react-focus-guards) | @radix-ui/react-focus-guards 1.2.0 | Independent shared focus guards for React 19; per-body ownership prevents a second document stealing the first pair. StrictMode, SSR and unchanged current Menu caller verified; React is the only peer. |
 | [vradix-react-use-layout-effect](packages/vradix-react-use-layout-effect) | @radix-ui/react-use-layout-effect 1.1.4 | Independent module-load browser hook/server no-op; React 19, no extra dependencies. Unchanged callback-ref caller and clean archives checked; no measured speed claim. |
 | [vradix-react-primitive](packages/vradix-react-primitive) | @radix-ui/react-primitive 2.2.0 | Independent DOM components using VPM Slot; lazy per-tag wrappers, fewer initialization copies, deferred ReactDOM dispatch import. Unchanged Toggle caller verified. |
 | [vradix-react-slot](packages/vradix-react-slot) | @radix-ui/react-slot 1.5.0 | Independent React 19 slots with VPM refs; direct-child fast path, explicit ambiguous-target and cyclic-child errors; unchanged Radix Primitive callers verified. |
@@ -372,7 +373,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **152 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **153 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

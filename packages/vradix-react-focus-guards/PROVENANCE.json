@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-focus-guards",
+    "version": "1.2.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/focus-guards",
+    "integrity": "sha512-MPm5R0iRGUDrDnPNxmLBkv+X7pN4XKzt+MbWJEuJQsH3NFH4omrbpXpucyYCCKTSt+na/ZxGhEWQrWTZ0285cA==",
+    "checked": "2026-11-03"
+  },
+  "sourceSHA256": {
+    "dist/index.js": "e2fd6c905824fc324c6e8165efc35ce4ed2375f1b2e3ead009f6387354823845",
+    "dist/index.d.ts": "052c80f48295db78df4935f79e704febb394ed9a881adfcf9197335fa6d70e1d",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "FocusGuards/Root and useFocusGuards on React 19, shared invisible focusable body boundaries and cleanup."
+  },
+  "changes": [
+    "Keep guard pairs and reference counts per document body, avoiding cross-document moves and cleanup interference.",
+    "Preserve guard styling, first/last body positions, hook/component aliases and StrictMode cleanup.",
+    "Independent runtime and declarations, React-only peer, shared CommonJS/ESM state."
+  ]
+}

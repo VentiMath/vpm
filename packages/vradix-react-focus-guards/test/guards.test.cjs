@@ -1,0 +1,4 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs'),{spawnSync}=require('node:child_process'),{createHash}=require('node:crypto');
+for(const variant of ['upstream','vpm'])for(const mode of ['client','server'])test(variant+' '+mode+' focus-guard contracts and Menu caller',()=>{const child=spawnSync(process.execPath,[path.resolve(__dirname,'../../../scripts/radix-focus-guards-conformance/run.cjs'),variant,mode],{encoding:'utf8',timeout:30000});assert.equal(child.status,0,child.stdout+child.stderr)});
+test('pinned original focus-guard sources retain recorded hashes',()=>{const root=path.resolve(__dirname,'../../../scripts/radix-focus-guards-conformance/node_modules/@radix-ui/react-focus-guards');for(const [name,hash]of Object.entries(require('../PROVENANCE.json').sourceSHA256))assert.equal(createHash('sha256').update(fs.readFileSync(path.join(root,name))).digest('hex'),hash)});

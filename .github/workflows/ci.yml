@@ -51,6 +51,7 @@ jobs:
       - run: npm --prefix scripts/slot-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-react-primitive-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-context-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-focus-guards-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-layout-effect-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/aria-conformance/run.cjs
       - run: node scripts/aria-conformance/callers.cjs
@@ -61,6 +62,7 @@ jobs:
       - run: node scripts/radix-react-primitive-conformance/archives.cjs
       - run: node scripts/radix-context-conformance/archives.cjs
       - run: node scripts/radix-context-conformance/direction-archives.cjs
+      - run: node scripts/radix-focus-guards-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: node scripts/aria-conformance/browser.cjs
@@ -468,6 +470,7 @@ jobs:
       - run: npm --prefix scripts/slot-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-react-primitive-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-context-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-focus-guards-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-layout-effect-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/aria-conformance/run.cjs
       - run: bun scripts/aria-conformance/callers.cjs
@@ -478,6 +481,7 @@ jobs:
       - run: node scripts/radix-react-primitive-conformance/archives.cjs
       - run: node scripts/radix-context-conformance/archives.cjs
       - run: node scripts/radix-context-conformance/direction-archives.cjs
+      - run: node scripts/radix-focus-guards-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
