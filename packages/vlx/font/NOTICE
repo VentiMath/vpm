@@ -1,0 +1,6 @@
+Font outline and metric data extracted from @mathjax/mathjax-newcm-font 4.1.3.
+Copyright (c) 2024 MathJax, Inc. (www.mathjax.org). Apache-2.0.
+Based on New Computer Modern. Only selected numeric metrics and glyph outlines
+are retained; no upstream parser, layout, rendering or loader code is shipped.
+Data was subsetted, SMP remaps resolved, and SVG path commands materialized.
+Reproduce with scripts/vlx-conformance/build-font.cjs.

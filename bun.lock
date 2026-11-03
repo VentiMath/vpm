@@ -604,6 +604,16 @@
       "name": "vlong",
       "version": "5.3.2",
     },
+    "packages/vlx": {
+      "name": "vlx",
+      "version": "0.1.0",
+      "peerDependencies": {
+        "@resvg/resvg-js": "2.6.2",
+      },
+      "optionalPeers": [
+        "@resvg/resvg-js",
+      ],
+    },
     "packages/vmedia-typer": {
       "name": "vmedia-typer",
       "version": "0.1.0",
@@ -1296,6 +1306,8 @@
     "vlodash.camelcase": ["vlodash.camelcase@workspace:packages/vlodash.camelcase"],
 
     "vlong": ["vlong@workspace:packages/vlong"],
+
+    "vlx": ["vlx@workspace:packages/vlx"],
 
     "vmedia-typer": ["vmedia-typer@workspace:packages/vmedia-typer"],
 

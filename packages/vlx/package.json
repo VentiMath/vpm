@@ -1,0 +1,48 @@
+{
+  "name": "vlx",
+  "version": "0.1.0",
+  "description": "Independent VentiMath TeX parser and mathematical layout for web, MathML and SVG",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    },
+    "./png": {
+      "types": "./png.d.ts",
+      "import": "./png.mjs",
+      "require": "./png.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json",
+    "font"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "peerDependencies": {
+    "@resvg/resvg-js": "2.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vlx"
+  },
+  "peerDependenciesMeta": {
+    "@resvg/resvg-js": {
+      "optional": true
+    }
+  }
+}

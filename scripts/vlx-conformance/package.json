@@ -1,0 +1,10 @@
+{
+  "name": "vpm-vlx-conformance",
+  "private": true,
+  "dependencies": {
+    "katex": "0.19.1",
+    "@mathjax/src": "4.1.3",
+    "@mathjax/mathjax-newcm-font": "4.1.3",
+    "@resvg/resvg-js": "2.6.2"
+  }
+}
