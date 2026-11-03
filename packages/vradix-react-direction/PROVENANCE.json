@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-direction",
+    "version": "1.2.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/direction",
+    "integrity": "sha512-FtRA52a/r+LKStFT+neLUm+8vSe7wbzkbQGGeU8ixFiwC8NU14Evoq9ATECqL3eGbcUzJR4fyfA4KkK/q6dfqg==",
+    "checked": "2026-11-03"
+  },
+  "sourceSHA256": {
+    "dist/index.js": "989f40979e3d0bc20cf5208d1e50d6202f8d0820d306661c98dff07bbe6c3f45",
+    "dist/index.d.ts": "e8379fae98d9ebeef6fe250f95d2fa0f2c7770796a0cb59a992fead5bd1fb873",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "DirectionProvider/Provider and useDirection on React 19; local override, nearest-provider inheritance and left-to-right default."
+  },
+  "changes": [
+    "Independent runtime and declarations with React as the sole peer.",
+    "One context shared by native ESM and CommonJS imports.",
+    "Current direction contract and unchanged RovingFocus caller checked; no new behavior or application speedup claimed."
+  ]
+}

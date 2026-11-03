@@ -25,3 +25,10 @@ node scripts/radix-context-conformance/archives.cjs
 [Measurements](../../packages/vradix-react-context/bench/results/README.md) use
 fresh isolated processes, balanced order and identical-code controls. Development
 SSR and factory construction are measured, not browser rendering or app speed.
+
+`direction.cjs` separately checks **@radix-ui/react-direction 1.2.0** against
+`vradix-react-direction`: provider aliases, defaults, nesting, explicit overrides,
+updates and hydration, then unchanged RovingFocus LTR/RTL ArrowRight behavior.
+`direction-archives.cjs` checks clean mixed-module consumers and declarations.
+Only the direction import is substituted in that caller; no upstream assertions
+or runtime files are patched.

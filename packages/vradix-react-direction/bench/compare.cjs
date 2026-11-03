@@ -1,0 +1,6 @@
+'use strict';
+const path=require('node:path'),assert=require('node:assert/strict');
+const fixture=path.resolve(__dirname,'../../../scripts/radix-context-conformance'),upstream=path.join(fixture,'node_modules/@radix-ui/react-direction'),vpm=path.resolve(__dirname,'..'),load=require(path.join(fixture,'direction-load.cjs'));
+const React=require(path.join(fixture,'node_modules/react')),{renderToStaticMarkup}=require(path.join(fixture,'node_modules/react-dom/server'));
+const cases=[{name:'SSR / inherited direction with local override',make:file=>{const {DirectionProvider,useDirection}=load(file===upstream?'upstream':'vpm');function Read({dir}){return React.createElement('span',null,useDirection(dir))}const tree=React.createElement(DirectionProvider,{dir:'rtl'},React.createElement(Read),React.createElement(Read,{dir:'ltr'}));return()=>renderToStaticMarkup(tree);},validate:html=>assert.equal(html,'<span>rtl</span><span>ltr</span>')}];
+require('../../../scripts/bench-process.cjs').run({root:vpm,upstream,vpm,cases,files:['index.cjs','index.mjs','index.d.ts','package.json','PROVENANCE.json','bench/compare.cjs','../../scripts/radix-context-conformance/direction-load.cjs','../../scripts/radix-context-conformance/package-lock.json','../../scripts/radix-context-conformance/node_modules/@radix-ui/react-direction']}).catch(e=>{console.error(e);process.exitCode=1});

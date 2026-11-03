@@ -60,6 +60,7 @@ jobs:
       - run: node scripts/slot-conformance/archives.cjs
       - run: node scripts/radix-react-primitive-conformance/archives.cjs
       - run: node scripts/radix-context-conformance/archives.cjs
+      - run: node scripts/radix-context-conformance/direction-archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: node scripts/aria-conformance/browser.cjs
@@ -476,6 +477,7 @@ jobs:
       - run: node scripts/slot-conformance/archives.cjs
       - run: node scripts/radix-react-primitive-conformance/archives.cjs
       - run: node scripts/radix-context-conformance/archives.cjs
+      - run: node scripts/radix-context-conformance/direction-archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
