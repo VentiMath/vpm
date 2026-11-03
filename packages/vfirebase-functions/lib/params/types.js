@@ -1,420 +1,101 @@
-const require_logger_index = require('../logger/index.js');
-
-//#region src/params/types.ts
-const EXPRESSION_TAG = Symbol.for("firebase-functions:Expression:Tag");
-var Expression = class {
-	/**
-	* Handle the "Dual-Package Hazard" .
-	*
-	* We implement custom `Symbol.hasInstance` to so CJS/ESM Expression instances
-	* are recognized as the same type.
-	*/
-	static [Symbol.hasInstance](instance) {
-		return instance?.[EXPRESSION_TAG] === true;
-	}
-	get [EXPRESSION_TAG]() {
-		return true;
-	}
-	/** Returns the expression's runtime value, based on the CLI's resolution of parameters. */
-	value() {
-		if (process.env.FUNCTIONS_CONTROL_API === "true") {
-			require_logger_index.warn(`${this.toString()}.value() invoked during function deployment, instead of during runtime.`);
-			require_logger_index.warn(`This is usually a mistake. In configs, use Params directly without calling .value().`);
-			require_logger_index.warn(`example: { memory: memoryParam } not { memory: memoryParam.value() }`);
-		}
-		return this.runtimeValue();
-	}
-	/** @internal */
-	runtimeValue() {
-		throw new Error("Not implemented");
-	}
-	/** Returns the expression's representation as a braced CEL expression. */
-	toCEL(_transform = (a) => a) {
-		return `{{ ${this.toString()} }}`;
-	}
-	/** Returns the expression's representation as JSON. */
-	toJSON() {
-		return this.toString();
-	}
-};
-/**
-* An InterpolationExpression allows string fragments and Expressions to be
-* joined natively into a new Expression block evaluating to a string string.
-*/
-var InterpolationExpression = class extends Expression {
-	constructor(strings, values) {
-		super();
-		this.strings = strings;
-		this.values = values;
-	}
-	/** @internal */
-	runtimeValue() {
-		return this.strings.reduce((result, str, i) => {
-			const val = i < this.values.length ? String(valueOf(this.values[i])) : "";
-			return result + str + val;
-		}, "");
-	}
-	toCEL(transform$1 = (a) => a) {
-		const exprPlaceholders = [];
-		const PLACEHOLDER_PREFIX = "🤿🤿🤿🐙🐙🐙";
-		const PLACEHOLDER_SUFFIX = "🐙🐙🐙🤿🤿🤿";
-		const rawString = this.strings.reduce((result, str, i) => {
-			if (i >= this.values.length) {
-				return result + str;
-			}
-			const val = this.values[i];
-			let valStr;
-			if (val instanceof Expression) {
-				valStr = `${PLACEHOLDER_PREFIX}${exprPlaceholders.length}${PLACEHOLDER_SUFFIX}`;
-				exprPlaceholders.push(val.toCEL());
-			} else {
-				valStr = String(val);
-			}
-			return result + str + valStr;
-		}, "");
-		let transformed = transform$1(rawString);
-		for (let i = 0; i < exprPlaceholders.length; i++) {
-			const placeholder = `${PLACEHOLDER_PREFIX}${i}${PLACEHOLDER_SUFFIX}`;
-			transformed = transformed.split(placeholder).join(exprPlaceholders[i]);
-		}
-		return transformed;
-	}
-};
-/** @internal */
-var TransformedStringExpression = class extends Expression {
-	constructor(source, transformer) {
-		super();
-		this.source = source;
-		this.transformer = transformer;
-	}
-	runtimeValue() {
-		return this.transformer(valueOf(this.source));
-	}
-	toCEL() {
-		return this.source instanceof Expression ? this.source.toCEL(this.transformer) : this.transformer(this.source);
-	}
-};
-function valueOf(arg) {
-	return arg instanceof Expression ? arg.runtimeValue() : arg;
+'use strict';
+const logger = require('../logger/index.js');
+const tag = Symbol.for('firebase-functions:Expression:Tag');
+const identity = x => x;
+class Expression {
+  static [Symbol.hasInstance](value) {return value?.[tag] === true;}
+  get [tag]() {return true;}
+  value() {
+    if (process.env.FUNCTIONS_CONTROL_API === 'true') {
+      logger.warn(`${this}.value() invoked during function deployment, instead of during runtime.`);
+      logger.warn('This is usually a mistake. In configs, use Params directly without calling .value().');
+      logger.warn('example: { memory: memoryParam } not { memory: memoryParam.value() }');
+    }
+    return this.runtimeValue();
+  }
+  runtimeValue() {throw new Error('Not implemented');}
+  toCEL() {return `{{ ${this} }}`;}
+  toJSON() {return this.toString();}
 }
-function celOf(arg) {
-	return arg instanceof Expression ? arg.toCEL() : arg;
+const valueOf = x => x instanceof Expression ? x.runtimeValue() : x;
+const celOf = x => x instanceof Expression ? x.toCEL() : x;
+const reference = x => x instanceof Expression ? x.toString() : typeof x === 'string' || Array.isArray(x) ? JSON.stringify(x) : String(x);
+class InterpolationExpression extends Expression {
+  constructor(strings, values) {super(); this.strings = strings; this.values = values;}
+  runtimeValue() {return this.strings.map((s,i) => s + (i < this.values.length ? String(valueOf(this.values[i])) : '')).join('');}
+  toCEL(convert = identity) {
+    // Reserve placeholders absent from literal text; a literal that resembles
+    // an earlier placeholder must never acquire expression semantics.
+    const text = this.strings.join('') + this.values.filter(v => !(v instanceof Expression)).join('');
+    let marker = '🤿🐙'; while (text.includes(marker)) marker += '🐙';
+    const expressions = [];
+    const raw = this.strings.map((s,i) => {
+      if (i >= this.values.length) return s;
+      const value = this.values[i];
+      if (!(value instanceof Expression)) return s + String(value);
+      const token = `${marker}${expressions.length}${marker}`;
+      expressions.push([token, value.toCEL()]); return s + token;
+    }).join('');
+    let result = convert(raw);
+    for (const [token, value] of expressions) result = result.split(token).join(value);
+    return result;
+  }
 }
-/**
-* Transforms a string or a string expression using a function.
-*/
-function transform(source, transformer) {
-	return new TransformedStringExpression(source, transformer);
+class TransformedStringExpression extends Expression {
+  constructor(source, transformer) {super(); Object.assign(this, {source, transformer});}
+  runtimeValue() {return this.transformer(valueOf(this.source));}
+  toCEL() {return this.source instanceof Expression ? this.source.toCEL(this.transformer) : this.transformer(this.source);}
 }
-/**
-* Returns how an entity (either an `Expression` or a literal value) should be represented in CEL.
-* - Expressions delegate to the `.toString()` method, which is used by the WireManifest
-* - Strings have to be quoted explicitly
-* - Arrays are represented as []-delimited, parsable JSON
-* - Numbers and booleans are not quoted explicitly
-*/
-function refOf(arg) {
-	if (arg instanceof Expression) {
-		return arg.toString();
-	} else if (typeof arg === "string") {
-		return `"${arg}"`;
-	} else if (Array.isArray(arg)) {
-		return JSON.stringify(arg);
-	} else {
-		return arg.toString();
-	}
+const transform = (source, transformer) => new TransformedStringExpression(source, transformer);
+class TernaryExpression extends Expression {
+  constructor(test, ifTrue, ifFalse) {super(); Object.assign(this, {test, ifTrue, ifFalse});}
+  runtimeValue() {return valueOf(valueOf(this.test) ? this.ifTrue : this.ifFalse);}
+  toString() {return `${this.test} ? ${reference(this.ifTrue)} : ${reference(this.ifFalse)}`;}
 }
-/**
-* A CEL expression corresponding to a ternary operator, e.g {{ cond ? ifTrue : ifFalse }}
-*/
-var TernaryExpression = class extends Expression {
-	constructor(test, ifTrue, ifFalse) {
-		super();
-		this.test = test;
-		this.ifTrue = ifTrue;
-		this.ifFalse = ifFalse;
-		this.ifTrue = ifTrue;
-		this.ifFalse = ifFalse;
-	}
-	/** @internal */
-	runtimeValue() {
-		return this.test.runtimeValue() ? valueOf(this.ifTrue) : valueOf(this.ifFalse);
-	}
-	toString() {
-		return `${this.test} ? ${refOf(this.ifTrue)} : ${refOf(this.ifFalse)}`;
-	}
-};
-/**
-* A CEL expression that evaluates to boolean true or false based on a comparison
-* between the value of another expression and a literal of that same type.
-*/
-var CompareExpression = class extends Expression {
-	constructor(cmp, lhs, rhs) {
-		super();
-		this.cmp = cmp;
-		this.lhs = lhs;
-		this.rhs = rhs;
-	}
-	/** @internal */
-	runtimeValue() {
-		const left = valueOf(this.lhs);
-		const right = valueOf(this.rhs);
-		switch (this.cmp) {
-			case "==": return Array.isArray(left) ? this.arrayEquals(left, right) : left === right;
-			case "!=": return Array.isArray(left) ? !this.arrayEquals(left, right) : left !== right;
-			case ">": return left > right;
-			case ">=": return left >= right;
-			case "<": return left < right;
-			case "<=": return left <= right;
-			default: throw new Error(`Unknown comparator ${this.cmp}`);
-		}
-	}
-	/** @internal */
-	arrayEquals(a, b) {
-		return a.every((item) => b.includes(item)) && b.every((item) => a.includes(item));
-	}
-	toString() {
-		return `${refOf(this.lhs)} ${this.cmp} ${refOf(this.rhs)}`;
-	}
-	/** Returns a `TernaryExpression` which can resolve to one of two values, based on the resolution of this comparison. */
-	thenElse(ifTrue, ifFalse) {
-		return new TernaryExpression(this, ifTrue, ifFalse);
-	}
-};
-/** Create a select input from a series of values or a map of labels to values */
-function select(options) {
-	let wireOpts;
-	if (Array.isArray(options)) {
-		wireOpts = options.map((opt) => ({ value: opt }));
-	} else {
-		wireOpts = Object.entries(options).map(([label, value]) => ({
-			label,
-			value
-		}));
-	}
-	return { select: { options: wireOpts } };
+const equal = (a,b) => Array.isArray(a) ? Array.isArray(b) && a.every(x => b.includes(x)) && b.every(x => a.includes(x)) : a === b;
+const comparisons = new Map([['==',equal],['!=',(a,b)=>!equal(a,b)],['>',(a,b)=>a>b],['>=',(a,b)=>a>=b],['<',(a,b)=>a<b],['<=',(a,b)=>a<=b]]);
+class CompareExpression extends Expression {
+  constructor(cmp,lhs,rhs) {super(); Object.assign(this,{cmp,lhs,rhs});}
+  runtimeValue() {const op=comparisons.get(this.cmp); if (!op) throw new Error(`Unknown comparator ${this.cmp}`); return op(valueOf(this.lhs),valueOf(this.rhs));}
+  arrayEquals(a,b) {return equal(a,b);}
+  toString() {return `${reference(this.lhs)} ${this.cmp} ${reference(this.rhs)}`;}
+  thenElse(a,b) {return new TernaryExpression(this,a,b);}
 }
-/** Create a multi-select input from a series of values or map of labels to values. */
-function multiSelect(options) {
-	let wireOpts;
-	if (Array.isArray(options)) {
-		wireOpts = options.map((opt) => ({ value: opt }));
-	} else {
-		wireOpts = Object.entries(options).map(([label, value]) => ({
-			label,
-			value
-		}));
-	}
-	return { multiSelect: { options: wireOpts } };
+class Param extends Expression {
+  static type = 'string';
+  constructor(name, options = {}) {super(); Object.assign(this,{name,options});}
+  cmp(operator, rhs) {
+    if (this.constructor.type === 'list' && operator !== '==' && operator !== '!=') throw new Error('>/< comparison operators not supported on params of type List');
+    return new CompareExpression(operator,this,rhs);
+  }
+  toString() {return `params.${this.name}`;}
+  toSpec() {
+    const {default: fallback,...options} = this.options;
+    const result = {name:this.name,...options,type:this.constructor.type};
+    if (fallback !== undefined) result.default = celOf(fallback);
+    if (result.input?.text?.validationRegex instanceof RegExp) result.input = {...result.input,text:{...result.input.text,validationRegex:result.input.text.validationRegex.source}};
+    return result;
+  }
 }
-/**
-* Autogenerate a list of buckets in a project that a user can select from.
-*/
-const BUCKET_PICKER = { resource: { type: "storage.googleapis.com/Bucket" } };
-/**
-* Represents a parametrized value that will be read from .env files if present,
-* or prompted for by the CLI if missing. Instantiate these with the defineX
-* methods exported by the firebase-functions/params namespace.
-*/
-var Param = class extends Expression {
-	static {
-		this.type = "string";
-	}
-	constructor(name, options = {}) {
-		super();
-		this.name = name;
-		this.options = options;
-	}
-	/** @internal */
-	runtimeValue() {
-		throw new Error("Not implemented");
-	}
-	/** Returns a parametrized expression of Boolean type, based on comparing the value of this parameter to a literal or a different expression. */
-	cmp(cmp, rhs) {
-		return new CompareExpression(cmp, this, rhs);
-	}
-	/** Returns a parametrized expression of Boolean type, based on comparing the value of this parameter to a literal or a different expression. */
-	equals(rhs) {
-		return this.cmp("==", rhs);
-	}
-	/** Returns a parametrized expression of Boolean type, based on comparing the value of this parameter to a literal or a different expression. */
-	notEquals(rhs) {
-		return this.cmp("!=", rhs);
-	}
-	/** Returns a parametrized expression of Boolean type, based on comparing the value of this parameter to a literal or a different expression. */
-	greaterThan(rhs) {
-		return this.cmp(">", rhs);
-	}
-	/** Returns a parametrized expression of Boolean type, based on comparing the value of this parameter to a literal or a different expression. */
-	greaterThanOrEqualTo(rhs) {
-		return this.cmp(">=", rhs);
-	}
-	/** Returns a parametrized expression of Boolean type, based on comparing the value of this parameter to a literal or a different expression. */
-	lessThan(rhs) {
-		return this.cmp("<", rhs);
-	}
-	/** Returns a parametrized expression of Boolean type, based on comparing the value of this parameter to a literal or a different expression. */
-	lessThanOrEqualTo(rhs) {
-		return this.cmp("<=", rhs);
-	}
-	/**
-	* Returns a parametrized expression of Boolean type, based on comparing the value of this parameter to a literal or a different expression.
-	* @deprecated A typo. Use lessThanOrEqualTo instead.
-	*/
-	lessThanorEqualTo(rhs) {
-		return this.lessThanOrEqualTo(rhs);
-	}
-	toString() {
-		return `params.${this.name}`;
-	}
-	/** @internal */
-	toSpec() {
-		const { default: paramDefault,...otherOptions } = this.options;
-		const out = {
-			name: this.name,
-			...otherOptions,
-			type: this.constructor.type
-		};
-		if (paramDefault instanceof Expression) {
-			out.default = paramDefault.toCEL();
-		} else if (paramDefault !== undefined) {
-			out.default = paramDefault;
-		}
-		if (out.input && "text" in out.input && out.input.text.validationRegex instanceof RegExp) {
-			out.input.text.validationRegex = out.input.text.validationRegex.source;
-		}
-		return out;
-	}
-};
-const {SecretParam, JsonSecretParam} = require('../runtime/secret-parameter.js');
-/**
-*  A parametrized value of String type that will be read from .env files
-*  if present, or prompted for by the CLI if missing.
-*/
-var StringParam = class extends Param {
-	/** @internal */
-	runtimeValue() {
-		return process.env[this.name] || "";
-	}
-};
-/**
-* A CEL expression which represents an internal Firebase variable. This class
-* cannot be instantiated by developers, but we provide several canned instances
-* of it to make available parameters that will never have to be defined at
-* deployment time, and can always be read from process.env.
-* @internal
-*/
-var InternalExpression = class extends Param {
-	constructor(name, getter) {
-		super(name);
-		this.getter = getter;
-	}
-	/** @internal */
-	runtimeValue() {
-		return this.getter(process.env) || "";
-	}
-	toSpec() {
-		throw new Error("An InternalExpression should never be marshalled for wire transmission.");
-	}
-};
-/**
-*  A parametrized value of Integer type that will be read from .env files
-*  if present, or prompted for by the CLI if missing.
-*/
-var IntParam = class extends Param {
-	static {
-		this.type = "int";
-	}
-	/** @internal */
-	runtimeValue() {
-		return parseInt(process.env[this.name] || "0", 10) || 0;
-	}
-};
-/**
-*  A parametrized value of Float type that will be read from .env files
-*  if present, or prompted for by the CLI if missing.
-*/
-var FloatParam = class extends Param {
-	static {
-		this.type = "float";
-	}
-	/** @internal */
-	runtimeValue() {
-		return parseFloat(process.env[this.name] || "0") || 0;
-	}
-};
-/**
-*  A parametrized value of Boolean type that will be read from .env files
-*  if present, or prompted for by the CLI if missing.
-*/
-var BooleanParam = class extends Param {
-	static {
-		this.type = "boolean";
-	}
-	/** @internal */
-	runtimeValue() {
-		return !!process.env[this.name] && process.env[this.name] === "true";
-	}
-	/** @deprecated */
-	then(ifTrue, ifFalse) {
-		return this.thenElse(ifTrue, ifFalse);
-	}
-	thenElse(ifTrue, ifFalse) {
-		return new TernaryExpression(this, ifTrue, ifFalse);
-	}
-};
-/**
-*  A parametrized value of String[] type that will be read from .env files
-*  if present, or prompted for by the CLI if missing.
-*/
-var ListParam = class extends Param {
-	static {
-		this.type = "list";
-	}
-	/** @internal */
-	runtimeValue() {
-		const val = JSON.parse(process.env[this.name]);
-		if (!Array.isArray(val) || !val.every((v) => typeof v === "string")) {
-			return [];
-		}
-		return val;
-	}
-	/** @hidden */
-	greaterThan(rhs) {
-		throw new Error(">/< comparison operators not supported on params of type List");
-	}
-	/** @hidden */
-	greaterThanOrEqualTo(rhs) {
-		throw new Error(">/< comparison operators not supported on params of type List");
-	}
-	/** @hidden */
-	lessThan(rhs) {
-		throw new Error(">/< comparison operators not supported on params of type List");
-	}
-	/** @hidden */
-	lessThanorEqualTo(rhs) {
-		throw new Error(">/< comparison operators not supported on params of type List");
-	}
-};
-
-//#endregion
-exports.BUCKET_PICKER = BUCKET_PICKER;
-exports.BooleanParam = BooleanParam;
-exports.CompareExpression = CompareExpression;
-exports.Expression = Expression;
-exports.FloatParam = FloatParam;
-exports.IntParam = IntParam;
-exports.InternalExpression = InternalExpression;
-exports.InterpolationExpression = InterpolationExpression;
-exports.JsonSecretParam = JsonSecretParam;
-exports.ListParam = ListParam;
-exports.Param = Param;
-exports.SecretParam = SecretParam;
-exports.StringParam = StringParam;
-exports.TernaryExpression = TernaryExpression;
-exports.TransformedStringExpression = TransformedStringExpression;
-exports.celOf = celOf;
-exports.multiSelect = multiSelect;
-exports.select = select;
-exports.transform = transform;
-exports.valueOf = valueOf;
+for (const [method,op] of Object.entries({equals:'==',notEquals:'!=',greaterThan:'>',greaterThanOrEqualTo:'>=',lessThan:'<',lessThanOrEqualTo:'<=',lessThanorEqualTo:'<='})) {
+  Object.defineProperty(Param.prototype,method,{value:function(rhs){return this.cmp(op,rhs)},writable:true,configurable:true});
+}
+class StringParam extends Param {runtimeValue(){return process.env[this.name] || '';}}
+class IntParam extends Param {static type='int'; runtimeValue(){return parseInt(process.env[this.name] || '0',10) || 0;}}
+class FloatParam extends Param {static type='float'; runtimeValue(){return parseFloat(process.env[this.name] || '0') || 0;}}
+class BooleanParam extends Param {
+  static type='boolean'; runtimeValue(){return process.env[this.name] === 'true';}
+  then(a,b){return this.thenElse(a,b)} thenElse(a,b){return new TernaryExpression(this,a,b)}
+}
+class ListParam extends Param {
+  static type='list'; runtimeValue(){const value=JSON.parse(process.env[this.name]); return Array.isArray(value)&&value.every(v=>typeof v==='string') ? value : [];}
+}
+class InternalExpression extends Param {
+  constructor(name,getter){super(name);this.getter=getter;}
+  runtimeValue(){return this.getter(process.env) || '';}
+  toSpec(){throw new Error('An InternalExpression should never be marshalled for wire transmission.');}
+}
+const choice = (kind,options) => ({[kind]:{options:Array.isArray(options)?options.map(value=>({value})):Object.entries(options).map(([label,value])=>({label,value}))}});
+const select = options=>choice('select',options), multiSelect = options=>choice('multiSelect',options);
+const BUCKET_PICKER={resource:{type:'storage.googleapis.com/Bucket'}};
+module.exports={Expression,InterpolationExpression,TransformedStringExpression,TernaryExpression,CompareExpression,Param,StringParam,IntParam,FloatParam,BooleanParam,ListParam,InternalExpression,valueOf,celOf,transform,select,multiSelect,BUCKET_PICKER,...require('../runtime/secret-parameter.js')};

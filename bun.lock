@@ -308,7 +308,7 @@
     },
     "packages/vfirebase-functions": {
       "name": "vfirebase-functions",
-      "version": "0.1.0",
+      "version": "7.4.0",
       "bin": {
         "firebase-functions": "./lib/bin/firebase-functions.js",
       },
@@ -321,16 +321,8 @@
         "vfirebase-admin": "workspace:*",
       },
       "peerDependencies": {
-        "@apollo/server": "^5.2.0",
-        "@as-integrations/express4": "^1.1.2",
-        "graphql": "^16.12.0",
         "vfirebase-admin": "workspace:*",
       },
-      "optionalPeers": [
-        "@apollo/server",
-        "@as-integrations/express4",
-        "graphql",
-      ],
     },
     "packages/vfloating-ui-core": {
       "name": "vfloating-ui-core",

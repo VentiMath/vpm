@@ -6,7 +6,18 @@ import { DecodedIdToken } from "vfirebase-admin/auth";
 import { TaskContext } from "./tasks";
 import { Expression } from "../../params";
 /** An express request with the wire format representation of the request body. */
-export interface Request extends express.Request {
+/** Incoming server request as delivered by the Functions Framework. */
+export interface Request extends express.Request<Record<string, string>> {
+    method: string;
+    url: string;
+    headers: Record<string, string | string[] | undefined> & {
+        authorization?: string;
+        cookie?: string;
+        origin?: string;
+        'content-type'?: string;
+        'user-agent'?: string;
+        referer?: string;
+    };
     /** The wire format representation of the request body. */
     rawBody: Buffer;
 }

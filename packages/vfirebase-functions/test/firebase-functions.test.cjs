@@ -11,9 +11,11 @@ const loaded = code => {
   return JSON.parse(child.stdout.trim().split('\n').at(-1));
 };
 
-test('the export map and bin match the original package', () => {
+test('public entries expose the application scope and preserve the Firebase CLI bin', () => {
   const original = require('../../../scripts/firebase-functions-conformance/node_modules/firebase-functions/package.json');
-  assert.deepEqual(Object.keys(metadata.exports), Object.keys(original.exports));
+  for(const name of ['logger','params','v2','v2/https','v2/firestore','v2/scheduler','v2/tasks'])assert.ok(metadata.exports['./'+name]);
+  for(const name of ['v1','v2/database','v2/pubsub','v2/storage','v2/ai','v2/dataconnect'])assert.equal(metadata.exports['./'+name],undefined);
+  assert.equal(require(root).logger,require('../lib/logger/index.js').logger);
   assert.deepEqual(Object.keys(metadata.bin), Object.keys(original.bin));
   assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vcors', 'vexpress', 'vprotobufjs']);
 });
@@ -57,12 +59,8 @@ test('onInit runs once for concurrent first invocations, and again after a failu
   assert.deepEqual(result, {runs: 2, first: ['rejected', 'rejected', 'rejected'], ok: [200, 200, 200]});
 });
 
-test('Realtime Database snapshots read data; their ref explains the missing client', () => {
-  const {DataSnapshot} = require('../lib/common/providers/database.js');
-  const snapshot = new DataSnapshot({a: {b: 1}}, '/rooms/r1', {name: '[DEFAULT]', options: {}}, 'https://p-default-rtdb.firebaseio.com');
-  assert.deepEqual(snapshot.val(), {a: {b: 1}});
-  assert.equal(snapshot.child('a/b').val(), 1);
-  assert.throws(() => snapshot.ref, /does not include the Realtime Database client/);
+test('omitted providers are absent from the package, not copied behind unavailable exports',()=>{
+  for(const name of ['v1','v2/providers/database.js','v2/providers/pubsub.js','v2/providers/storage.js','v2/providers/ai','v2/providers/dataconnect']){const file=path.join(root,'lib',name);if(fs.existsSync(file)){assert(fs.statSync(file).isDirectory());assert.equal(fs.readdirSync(file,{recursive:true}).filter(n=>/\.(js|mjs)$/.test(n)).length,0);}}
 });
 
 test('the bin writes the deploy manifest for a functions directory argument', () => {

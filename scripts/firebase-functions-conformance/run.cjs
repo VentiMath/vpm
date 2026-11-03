@@ -10,6 +10,9 @@ const {createHash} = require('node:crypto'), {spawnSync} = require('node:child_p
 const {compiler} = require('../platform-types.cjs');
 const root = path.resolve(__dirname, '../..');
 const upstream = process.argv.includes('--upstream');
+const applicationSpecs = require('./application-specs.json');
+const allUpstream = process.argv.includes('--all-upstream');
+assert.ok(!allUpstream || upstream, '--all-upstream is only supported by the original SDK');
 const only = process.argv.find(arg => arg.startsWith('--grep='))?.slice(7);
 const BUN_RUNTIME_DIFFERENCES = [
   "logger compat should format multiple arguments in console.error",
@@ -76,6 +79,12 @@ try {
     // mutable as their original compiler emitted them.
     let text = fs.readFileSync(filename, 'utf8').replace(/__importStar\((require\([^\n]+?\))\)/g, '$1');
     if (!upstream) text = text.replace(/require\("firebase-admin(\/[a-z-]+)?"\)/g, (match, entry) => `require(${JSON.stringify(path.join(admin, adminExports['.' + (entry ?? '')].require ?? adminExports['.' + (entry ?? '')]))})`);
+    // Manifest specs use v1 only to manufacture legacy endpoint input data.
+    // Those fixtures come from the pinned original SDK, not a VPM v1 API.
+    if (!upstream && file === 'spec/runtime/manifest.spec.js') text = text.replaceAll('require("../../src/v1")', 'require(' + JSON.stringify(path.join(original,'lib/v1/index.js')) + ')');
+    // Firestore specs likewise construct the original internal path-pattern
+    // argument; the snapshot/trigger implementation under test remains VPM.
+    if (!upstream && file === 'spec/v2/providers/firestore.spec.js') text = text.replaceAll('require("../../../src/common/utilities/path-pattern")', 'require(' + JSON.stringify(path.join(original,'lib/common/utilities/path-pattern.js')) + ')');
     fs.writeFileSync(filename, text);
   }
   const report = path.join(temporary, 'report.json');
@@ -83,7 +92,7 @@ try {
   // depend on what ran before them. Load files in one sorted order everywhere;
   // directory listing order differs between filesystems and runtimes.
   const args = [path.join(__dirname, 'node_modules/mocha/bin/mocha.js'), '--reporter', 'json', '--reporter-option', 'output=' + report, '--exit',
-    '--file', path.join(build, 'mocha/setup.js'), ...fs.readdirSync(path.join(build, 'spec'), {recursive: true}).filter(f => f.endsWith('.spec.js')).sort().map(f => path.join(build, 'spec', f))];
+    '--file', path.join(build, 'mocha/setup.js'), ...fs.readdirSync(path.join(build, 'spec'), {recursive: true}).filter(f => f.endsWith('.spec.js') && (allUpstream || applicationSpecs.includes(f))).sort().map(f => path.join(build, 'spec', f))];
   if (only) args.push('--grep', only);
   // The optional GraphQL peers the Data Connect specs load are not workspace
   // packages; expose exactly those three from the fixture to VPM's lib.
@@ -97,9 +106,8 @@ try {
     throw new Error('Suite produced no report\n' + result.stdout.slice(-6000) + result.stderr.slice(-6000));
   }
   if (process.env.OUTPUT) fs.copyFileSync(report, process.env.OUTPUT);
-  // DataSnapshot#ref opens the Realtime Database client through Firebase
-  // Admin, which vfirebase-admin omits; it must fail with that explanation.
-  const expected = upstream ? {} : {'DataSnapshot #ref: firebase.database.Reference should return a ref for correct instance, not the default instance': /^vfirebase-admin does not include the Realtime Database client/};
+  // Omitted providers are outside the explicit application selection.
+  const expected = {};
   // Under Bun both libraries fail the same logger specs: they capture output by
   // replacing process.stdout.write and process.stderr.write, which Bun's console
   // does not call. The logger's own output is identical.
@@ -124,7 +132,8 @@ try {
   assert.equal(unexpected.length, 0);
   if (!only) {
     assert.equal(stats.stats.failures, Object.keys(expected).length + preciseSpanCases.size, 'an expected failure now passes; update the expectation');
-    assert.equal(stats.stats.tests, 996);
+    if(allUpstream) assert.equal(stats.stats.tests,996);
+    else assert.equal(stats.stats.tests,351,'application suite count');
   }
 } finally {
   if (!process.env.KEEP) fs.rmSync(temporary, {recursive: true, force: true}); else console.log('kept', temporary);

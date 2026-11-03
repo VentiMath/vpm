@@ -1,89 +1,35 @@
 {
   "name": "vfirebase-functions",
-  "version": "0.1.0",
-  "description": "Cloud Functions for Firebase SDK on VPM dependencies, with providers and Admin services loaded on first use",
-  "main": "lib/v2/index.js",
-  "types": "lib/v2/index.d.ts",
+  "version": "7.4.0",
+  "description": "Independent Firebase Functions application runtime: HTTP, callable, task queue, schedule and Firestore triggers",
+  "main": "./lib/v2/index.js",
+  "types": "./lib/v2/index.d.ts",
   "bin": {
     "firebase-functions": "./lib/bin/firebase-functions.js"
   },
   "exports": {
-    "./lifecycle": {
-      "types": "./lib/lifecycle/index.d.ts",
-      "import": "./lib/esm/lifecycle/index.mjs",
-      "require": "./lib/lifecycle/index.js"
+    ".": {
+      "types": "./lib/v2/index.d.ts",
+      "import": "./lib/esm/v2/index.mjs",
+      "require": "./lib/v2/index.js"
+    },
+    "./package.json": "./package.json",
+    "./logger": {
+      "types": "./lib/logger/index.d.ts",
+      "import": "./lib/esm/logger/index.mjs",
+      "require": "./lib/logger/index.js"
     },
     "./logger/compat": {
       "types": "./lib/logger/compat.d.ts",
       "import": "./lib/esm/logger/compat.mjs",
       "require": "./lib/logger/compat.js"
     },
-    "./logger": {
-      "types": "./lib/logger/index.d.ts",
-      "import": "./lib/esm/logger/index.mjs",
-      "require": "./lib/logger/index.js"
-    },
     "./params": {
       "types": "./lib/params/index.d.ts",
       "import": "./lib/esm/params/index.mjs",
       "require": "./lib/params/index.js"
     },
-    "./v1": {
-      "types": "./lib/v1/index.d.ts",
-      "import": "./lib/esm/v1/index.mjs",
-      "require": "./lib/v1/index.js"
-    },
-    "./v1/analytics": {
-      "types": "./lib/v1/providers/analytics.d.ts",
-      "import": "./lib/esm/v1/providers/analytics.mjs",
-      "require": "./lib/v1/providers/analytics.js"
-    },
-    "./v1/auth": {
-      "types": "./lib/v1/providers/auth.d.ts",
-      "import": "./lib/esm/v1/providers/auth.mjs",
-      "require": "./lib/v1/providers/auth.js"
-    },
-    "./v1/database": {
-      "types": "./lib/v1/providers/database.d.ts",
-      "import": "./lib/esm/v1/providers/database.mjs",
-      "require": "./lib/v1/providers/database.js"
-    },
-    "./v1/firestore": {
-      "types": "./lib/v1/providers/firestore.d.ts",
-      "import": "./lib/esm/v1/providers/firestore.mjs",
-      "require": "./lib/v1/providers/firestore.js"
-    },
-    "./v1/https": {
-      "types": "./lib/v1/providers/https.d.ts",
-      "import": "./lib/esm/v1/providers/https.mjs",
-      "require": "./lib/v1/providers/https.js"
-    },
-    "./v1/pubsub": {
-      "types": "./lib/v1/providers/pubsub.d.ts",
-      "import": "./lib/esm/v1/providers/pubsub.mjs",
-      "require": "./lib/v1/providers/pubsub.js"
-    },
-    "./v1/remoteConfig": {
-      "types": "./lib/v1/providers/remoteConfig.d.ts",
-      "import": "./lib/esm/v1/providers/remoteConfig.mjs",
-      "require": "./lib/v1/providers/remoteConfig.js"
-    },
-    "./v1/storage": {
-      "types": "./lib/v1/providers/storage.d.ts",
-      "import": "./lib/esm/v1/providers/storage.mjs",
-      "require": "./lib/v1/providers/storage.js"
-    },
-    "./v1/tasks": {
-      "types": "./lib/v1/providers/tasks.d.ts",
-      "import": "./lib/esm/v1/providers/tasks.mjs",
-      "require": "./lib/v1/providers/tasks.js"
-    },
-    "./v1/testLab": {
-      "types": "./lib/v1/providers/testLab.d.ts",
-      "import": "./lib/esm/v1/providers/testLab.mjs",
-      "require": "./lib/v1/providers/testLab.js"
-    },
-    ".": {
+    "./v2": {
       "types": "./lib/v2/index.d.ts",
       "import": "./lib/esm/v2/index.mjs",
       "require": "./lib/v2/index.js"
@@ -103,115 +49,20 @@
       "import": "./lib/esm/v2/providers/https.mjs",
       "require": "./lib/v2/providers/https.js"
     },
-    "./ai": {
-      "types": "./lib/v2/providers/ai/index.d.ts",
-      "import": "./lib/esm/v2/providers/ai/index.mjs",
-      "require": "./lib/v2/providers/ai/index.js"
-    },
-    "./ai/types/gemini/v1beta": {
-      "types": "./lib/v2/providers/ai/types/gemini/v1beta/index.d.ts",
-      "import": "./lib/esm/v2/providers/ai/types/gemini/v1beta/index.mjs",
-      "require": "./lib/v2/providers/ai/types/gemini/v1beta/index.js"
-    },
-    "./ai/types/vertex/v1beta1": {
-      "types": "./lib/v2/providers/ai/types/vertex/v1beta1/index.d.ts",
-      "import": "./lib/esm/v2/providers/ai/types/vertex/v1beta1/index.mjs",
-      "require": "./lib/v2/providers/ai/types/vertex/v1beta1/index.js"
-    },
-    "./pubsub": {
-      "types": "./lib/v2/providers/pubsub.d.ts",
-      "import": "./lib/esm/v2/providers/pubsub.mjs",
-      "require": "./lib/v2/providers/pubsub.js"
-    },
-    "./storage": {
-      "types": "./lib/v2/providers/storage.d.ts",
-      "import": "./lib/esm/v2/providers/storage.mjs",
-      "require": "./lib/v2/providers/storage.js"
-    },
-    "./tasks": {
-      "types": "./lib/v2/providers/tasks.d.ts",
-      "import": "./lib/esm/v2/providers/tasks.mjs",
-      "require": "./lib/v2/providers/tasks.js"
-    },
-    "./alerts": {
-      "types": "./lib/v2/providers/alerts/index.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/index.mjs",
-      "require": "./lib/v2/providers/alerts/index.js"
-    },
-    "./alerts/appDistribution": {
-      "types": "./lib/v2/providers/alerts/appDistribution.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/appDistribution.mjs",
-      "require": "./lib/v2/providers/alerts/appDistribution.js"
-    },
-    "./alerts/billing": {
-      "types": "./lib/v2/providers/alerts/billing.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/billing.mjs",
-      "require": "./lib/v2/providers/alerts/billing.js"
-    },
-    "./alerts/crashlytics": {
-      "types": "./lib/v2/providers/alerts/crashlytics.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/crashlytics.mjs",
-      "require": "./lib/v2/providers/alerts/crashlytics.js"
-    },
-    "./alerts/performance": {
-      "types": "./lib/v2/providers/alerts/performance.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/performance.mjs",
-      "require": "./lib/v2/providers/alerts/performance.js"
-    },
-    "./eventarc": {
-      "types": "./lib/v2/providers/eventarc.d.ts",
-      "import": "./lib/esm/v2/providers/eventarc.mjs",
-      "require": "./lib/v2/providers/eventarc.js"
-    },
-    "./identity": {
-      "types": "./lib/v2/providers/identity.d.ts",
-      "import": "./lib/esm/v2/providers/identity.mjs",
-      "require": "./lib/v2/providers/identity.js"
-    },
-    "./database": {
-      "types": "./lib/v2/providers/database.d.ts",
-      "import": "./lib/esm/v2/providers/database.mjs",
-      "require": "./lib/v2/providers/database.js"
+    "./firestore": {
+      "types": "./lib/v2/providers/firestore.d.ts",
+      "import": "./lib/esm/v2/providers/firestore.mjs",
+      "require": "./lib/v2/providers/firestore.js"
     },
     "./scheduler": {
       "types": "./lib/v2/providers/scheduler.d.ts",
       "import": "./lib/esm/v2/providers/scheduler.mjs",
       "require": "./lib/v2/providers/scheduler.js"
     },
-    "./remoteConfig": {
-      "types": "./lib/v2/providers/remoteConfig.d.ts",
-      "import": "./lib/esm/v2/providers/remoteConfig.mjs",
-      "require": "./lib/v2/providers/remoteConfig.js"
-    },
-    "./testLab": {
-      "types": "./lib/v2/providers/testLab.d.ts",
-      "import": "./lib/esm/v2/providers/testLab.mjs",
-      "require": "./lib/v2/providers/testLab.js"
-    },
-    "./firestore": {
-      "types": "./lib/v2/providers/firestore.d.ts",
-      "import": "./lib/esm/v2/providers/firestore.mjs",
-      "require": "./lib/v2/providers/firestore.js"
-    },
-    "./dataconnect": {
-      "types": "./lib/v2/providers/dataconnect/index.d.ts",
-      "import": "./lib/esm/v2/providers/dataconnect/index.mjs",
-      "require": "./lib/v2/providers/dataconnect/index.js"
-    },
-    "./dataconnect/graphql": {
-      "types": "./lib/v2/providers/dataconnect/graphql.d.ts",
-      "import": "./lib/esm/v2/providers/dataconnect/graphql.mjs",
-      "require": "./lib/v2/providers/dataconnect/graphql.js"
-    },
-    "./v2": {
-      "types": "./lib/v2/index.d.ts",
-      "import": "./lib/esm/v2/index.mjs",
-      "require": "./lib/v2/index.js"
-    },
-    "./v2/lifecycle": {
-      "types": "./lib/lifecycle/index.d.ts",
-      "import": "./lib/esm/lifecycle/index.mjs",
-      "require": "./lib/lifecycle/index.js"
+    "./tasks": {
+      "types": "./lib/v2/providers/tasks.d.ts",
+      "import": "./lib/esm/v2/providers/tasks.mjs",
+      "require": "./lib/v2/providers/tasks.js"
     },
     "./v2/core": {
       "types": "./lib/v2/core.d.ts",
@@ -228,112 +79,24 @@
       "import": "./lib/esm/v2/providers/https.mjs",
       "require": "./lib/v2/providers/https.js"
     },
-    "./v2/ai": {
-      "types": "./lib/v2/providers/ai/index.d.ts",
-      "import": "./lib/esm/v2/providers/ai/index.mjs",
-      "require": "./lib/v2/providers/ai/index.js"
-    },
-    "./v2/ai/types/gemini/v1beta": {
-      "types": "./lib/v2/providers/ai/types/gemini/v1beta/index.d.ts",
-      "import": "./lib/esm/v2/providers/ai/types/gemini/v1beta/index.mjs",
-      "require": "./lib/v2/providers/ai/types/gemini/v1beta/index.js"
-    },
-    "./v2/ai/types/vertex/v1beta1": {
-      "types": "./lib/v2/providers/ai/types/vertex/v1beta1/index.d.ts",
-      "import": "./lib/esm/v2/providers/ai/types/vertex/v1beta1/index.mjs",
-      "require": "./lib/v2/providers/ai/types/vertex/v1beta1/index.js"
-    },
-    "./v2/pubsub": {
-      "types": "./lib/v2/providers/pubsub.d.ts",
-      "import": "./lib/esm/v2/providers/pubsub.mjs",
-      "require": "./lib/v2/providers/pubsub.js"
-    },
-    "./v2/storage": {
-      "types": "./lib/v2/providers/storage.d.ts",
-      "import": "./lib/esm/v2/providers/storage.mjs",
-      "require": "./lib/v2/providers/storage.js"
-    },
-    "./v2/tasks": {
-      "types": "./lib/v2/providers/tasks.d.ts",
-      "import": "./lib/esm/v2/providers/tasks.mjs",
-      "require": "./lib/v2/providers/tasks.js"
-    },
-    "./v2/alerts": {
-      "types": "./lib/v2/providers/alerts/index.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/index.mjs",
-      "require": "./lib/v2/providers/alerts/index.js"
-    },
-    "./v2/alerts/appDistribution": {
-      "types": "./lib/v2/providers/alerts/appDistribution.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/appDistribution.mjs",
-      "require": "./lib/v2/providers/alerts/appDistribution.js"
-    },
-    "./v2/alerts/billing": {
-      "types": "./lib/v2/providers/alerts/billing.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/billing.mjs",
-      "require": "./lib/v2/providers/alerts/billing.js"
-    },
-    "./v2/alerts/crashlytics": {
-      "types": "./lib/v2/providers/alerts/crashlytics.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/crashlytics.mjs",
-      "require": "./lib/v2/providers/alerts/crashlytics.js"
-    },
-    "./v2/alerts/performance": {
-      "types": "./lib/v2/providers/alerts/performance.d.ts",
-      "import": "./lib/esm/v2/providers/alerts/performance.mjs",
-      "require": "./lib/v2/providers/alerts/performance.js"
-    },
-    "./v2/eventarc": {
-      "types": "./lib/v2/providers/eventarc.d.ts",
-      "import": "./lib/esm/v2/providers/eventarc.mjs",
-      "require": "./lib/v2/providers/eventarc.js"
-    },
-    "./v2/identity": {
-      "types": "./lib/v2/providers/identity.d.ts",
-      "import": "./lib/esm/v2/providers/identity.mjs",
-      "require": "./lib/v2/providers/identity.js"
-    },
-    "./v2/database": {
-      "types": "./lib/v2/providers/database.d.ts",
-      "import": "./lib/esm/v2/providers/database.mjs",
-      "require": "./lib/v2/providers/database.js"
+    "./v2/firestore": {
+      "types": "./lib/v2/providers/firestore.d.ts",
+      "import": "./lib/esm/v2/providers/firestore.mjs",
+      "require": "./lib/v2/providers/firestore.js"
     },
     "./v2/scheduler": {
       "types": "./lib/v2/providers/scheduler.d.ts",
       "import": "./lib/esm/v2/providers/scheduler.mjs",
       "require": "./lib/v2/providers/scheduler.js"
     },
-    "./v2/remoteConfig": {
-      "types": "./lib/v2/providers/remoteConfig.d.ts",
-      "import": "./lib/esm/v2/providers/remoteConfig.mjs",
-      "require": "./lib/v2/providers/remoteConfig.js"
-    },
-    "./v2/testLab": {
-      "types": "./lib/v2/providers/testLab.d.ts",
-      "import": "./lib/esm/v2/providers/testLab.mjs",
-      "require": "./lib/v2/providers/testLab.js"
-    },
-    "./v2/firestore": {
-      "types": "./lib/v2/providers/firestore.d.ts",
-      "import": "./lib/esm/v2/providers/firestore.mjs",
-      "require": "./lib/v2/providers/firestore.js"
-    },
-    "./v2/dataconnect": {
-      "types": "./lib/v2/providers/dataconnect/index.d.ts",
-      "import": "./lib/esm/v2/providers/dataconnect/index.mjs",
-      "require": "./lib/v2/providers/dataconnect/index.js"
-    },
-    "./v2/dataconnect/graphql": {
-      "types": "./lib/v2/providers/dataconnect/graphql.d.ts",
-      "import": "./lib/esm/v2/providers/dataconnect/graphql.mjs",
-      "require": "./lib/v2/providers/dataconnect/graphql.js"
+    "./v2/tasks": {
+      "types": "./lib/v2/providers/tasks.d.ts",
+      "import": "./lib/esm/v2/providers/tasks.mjs",
+      "require": "./lib/v2/providers/tasks.js"
     }
   },
   "typesVersions": {
     "*": {
-      "lifecycle": [
-        "lib/lifecycle/index"
-      ],
       "logger": [
         "lib/logger/index"
       ],
@@ -343,38 +106,8 @@
       "params": [
         "lib/params/index"
       ],
-      "v1": [
-        "lib/v1/index"
-      ],
-      "v1/analytics": [
-        "lib/v1/providers/analytics"
-      ],
-      "v1/auth": [
-        "lib/v1/providers/auth"
-      ],
-      "v1/database": [
-        "lib/v1/providers/database"
-      ],
-      "v1/firestore": [
-        "lib/v1/providers/firestore"
-      ],
-      "v1/https": [
-        "lib/v1/providers/https"
-      ],
-      "v1/pubsub": [
-        "lib/v1/providers/pubsub"
-      ],
-      "v1/remoteConfig": [
-        "lib/v1/providers/remoteConfig"
-      ],
-      "v1/storage": [
-        "lib/v1/providers/storage"
-      ],
-      "v1/tasks": [
-        "lib/v1/providers/tasks"
-      ],
-      "v1/testLab": [
-        "lib/v1/providers/testLab"
+      "v2": [
+        "lib/v2/index"
       ],
       "core": [
         "lib/v2/core"
@@ -385,101 +118,17 @@
       "https": [
         "lib/v2/providers/https"
       ],
-      "ai": [
-        "lib/v2/providers/ai"
-      ],
-      "ai/types/gemini/v1beta": [
-        "lib/v2/providers/ai/types/gemini/v1beta"
-      ],
-      "ai/types/vertex/v1beta1": [
-        "lib/v2/providers/ai/types/vertex/v1beta1"
-      ],
-      "pubsub": [
-        "lib/v2/providers/pubsub"
-      ],
-      "storage": [
-        "lib/v2/providers/storage"
-      ],
-      "tasks": [
-        "lib/v2/providers/tasks"
-      ],
-      "alerts": [
-        "lib/v2/providers/alerts/index"
-      ],
-      "alerts/appDistribution": [
-        "lib/v2/providers/alerts/appDistribution"
-      ],
-      "alerts/billing": [
-        "lib/v2/providers/alerts/billing"
-      ],
-      "alerts/crashlytics": [
-        "lib/v2/providers/alerts/crashlytics"
-      ],
-      "alerts/performance": [
-        "lib/v2/providers/alerts/performance"
-      ],
-      "eventarc": [
-        "lib/v2/providers/eventarc"
-      ],
-      "identity": [
-        "lib/v2/providers/identity"
-      ],
-      "database": [
-        "lib/v2/providers/database"
+      "firestore": [
+        "lib/v2/providers/firestore"
       ],
       "scheduler": [
         "lib/v2/providers/scheduler"
       ],
-      "remoteConfig": [
-        "lib/v2/providers/remoteConfig"
-      ],
-      "testLab": [
-        "lib/v2/providers/testLab"
-      ],
-      "firestore": [
-        "lib/v2/providers/firestore"
-      ],
-      "dataconnect": [
-        "lib/v2/providers/dataconnect/index"
-      ],
-      "dataconnect/graphql": [
-        "lib/v2/providers/dataconnect/graphql"
-      ],
-      "v2": [
-        "lib/v2/index"
+      "tasks": [
+        "lib/v2/providers/tasks"
       ],
       "v2/core": [
         "lib/v2/core"
-      ],
-      "v2/alerts": [
-        "lib/v2/providers/alerts/index"
-      ],
-      "v2/alerts/appDistribution": [
-        "lib/v2/providers/alerts/appDistribution"
-      ],
-      "v2/alerts/billing": [
-        "lib/v2/providers/alerts/billing"
-      ],
-      "v2/alerts/crashlytics": [
-        "lib/v2/providers/alerts/crashlytics"
-      ],
-      "v2/alerts/performance": [
-        "lib/v2/providers/alerts/performance"
-      ],
-      "v2/base": [
-        "lib/v2/base"
-      ],
-      "v2/database": [
-        "lib/v2/providers/database"
-      ],
-      "v2/eventarc": [
-        "lib/v2/providers/eventarc"
-      ],
-      "v2/identity": [
-        "lib/v2/providers/identity"
-      ],
-      "v2/lifecycle": [
-        "lib/lifecycle/index"
       ],
       "v2/options": [
         "lib/v2/options"
@@ -487,44 +136,14 @@
       "v2/https": [
         "lib/v2/providers/https"
       ],
-      "v2/ai": [
-        "lib/v2/providers/ai"
-      ],
-      "v2/ai/types/gemini/v1beta": [
-        "lib/v2/providers/ai/types/gemini/v1beta"
-      ],
-      "v2/ai/types/vertex/v1beta1": [
-        "lib/v2/providers/ai/types/vertex/v1beta1"
-      ],
-      "v2/pubsub": [
-        "lib/v2/providers/pubsub"
-      ],
-      "v2/storage": [
-        "lib/v2/providers/storage"
-      ],
-      "v2/tasks": [
-        "lib/v2/providers/tasks"
+      "v2/firestore": [
+        "lib/v2/providers/firestore"
       ],
       "v2/scheduler": [
         "lib/v2/providers/scheduler"
       ],
-      "v2/remoteConfig": [
-        "lib/v2/providers/remoteConfig"
-      ],
-      "v2/testLab": [
-        "lib/v2/providers/testLab"
-      ],
-      "v2/firestore": [
-        "lib/v2/providers/firestore"
-      ],
-      "v2/dataconnect": [
-        "lib/v2/providers/dataconnect/index"
-      ],
-      "v2/dataconnect/graphql": [
-        "lib/v2/providers/dataconnect/graphql"
-      ],
-      "*": [
-        "lib/v2/index.d.ts"
+      "v2/tasks": [
+        "lib/v2/providers/tasks"
       ]
     }
   },
@@ -541,21 +160,7 @@
     "vprotobufjs": "workspace:*"
   },
   "peerDependencies": {
-    "vfirebase-admin": "workspace:*",
-    "@apollo/server": "^5.2.0",
-    "@as-integrations/express4": "^1.1.2",
-    "graphql": "^16.12.0"
-  },
-  "peerDependenciesMeta": {
-    "@apollo/server": {
-      "optional": true
-    },
-    "@as-integrations/express4": {
-      "optional": true
-    },
-    "graphql": {
-      "optional": true
-    }
+    "vfirebase-admin": "workspace:*"
   },
   "devDependencies": {
     "vfirebase-admin": "workspace:*"
@@ -568,5 +173,6 @@
     "type": "git",
     "url": "git+https://github.com/VentiMath/vpm.git",
     "directory": "packages/vfirebase-functions"
-  }
+  },
+  "module": "./lib/esm/v2/index.mjs"
 }

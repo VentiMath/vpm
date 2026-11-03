@@ -1,73 +1,25 @@
-const require_params_types = require('../params/types.js');
-require('../params/index.js');
-
-//#region src/common/encoding.ts
-/** Get a google.protobuf.Duration for a number of seconds. */
-function durationFromSeconds(s) {
-	return `${s}s`;
+'use strict';
+const {Expression}=require('../params/types.js');
+const own=(object,key,value)=>Object.defineProperty(object,key,{value,enumerable:true,writable:true,configurable:true});
+const durationFromSeconds=seconds=>`${seconds}s`;
+function copyIfPresent(target,source,...keys){if(source)for(const key of keys)if(Object.hasOwn(source,key))own(target,key,source[key]);}
+function convertIfPresent(target,source,to,from,convert=x=>x){if(source&&Object.hasOwn(source,from))own(target,to,convert(source[from]));}
+function convertInvoker(value){
+  const list=typeof value==='string'?[value]:value;
+  if(!Array.isArray(list)||!list.length)throw new Error('Invalid option for invoker: Must be a non-empty array.');
+  if(list.some(v=>typeof v!=='string'||!v.length))throw new Error('Invalid option for invoker: Must be a non-empty string.');
+  if(list.length>1&&list.some(v=>v==='public'||v==='private'))throw new Error("Invalid option for invoker: Cannot have 'public' or 'private' in an array of service accounts.");
+  return list;
 }
-/**
-* Utility function to help copy fields from type A to B.
-* As a safety net, catches typos or fields that aren't named the same
-* in A and B, but cannot verify that both Src and Dest have the same type for the same field.
-*/
-function copyIfPresent(dest, src, ...fields) {
-	if (!src) {
-		return;
-	}
-	for (const field of fields) {
-		if (!Object.prototype.hasOwnProperty.call(src, field)) {
-			continue;
-		}
-		dest[field] = src[field];
-	}
+function serviceAccountFromShorthand(value){
+  if(value==='default')return null;
+  if(value instanceof Expression)return value;
+  if(typeof value==='string'&&value.includes('@')) {
+    if(!value.endsWith('@'))return value;
+    const project=process.env.GCLOUD_PROJECT;
+    if(!project)throw new Error(`Unable to determine email for service account '${value}' because process.env.GCLOUD_PROJECT is not set.`);
+    return `${value}${project}.iam.gserviceaccount.com`;
+  }
+  throw new Error(`Invalid option for serviceAccount: '${value}'. Valid options are 'default', a service account email, or '{serviceAccountName}@'`);
 }
-function convertIfPresent(dest, src, destField, srcField, converter = (from) => {
-	return from;
-}) {
-	if (!src) {
-		return;
-	}
-	if (!Object.prototype.hasOwnProperty.call(src, srcField)) {
-		return;
-	}
-	dest[destField] = converter(src[srcField]);
-}
-function serviceAccountFromShorthand(serviceAccount) {
-	if (serviceAccount === "default") {
-		return null;
-	} else if (serviceAccount instanceof require_params_types.Expression) {
-		return serviceAccount;
-	} else if (serviceAccount.endsWith("@")) {
-		if (!process.env.GCLOUD_PROJECT) {
-			throw new Error(`Unable to determine email for service account '${serviceAccount}' because process.env.GCLOUD_PROJECT is not set.`);
-		}
-		return `${serviceAccount}${process.env.GCLOUD_PROJECT}.iam.gserviceaccount.com`;
-	} else if (serviceAccount.includes("@")) {
-		return serviceAccount;
-	} else {
-		throw new Error(`Invalid option for serviceAccount: '${serviceAccount}'. Valid options are 'default', a service account email, or '{serviceAccountName}@'`);
-	}
-}
-function convertInvoker(invoker) {
-	if (typeof invoker === "string") {
-		invoker = [invoker];
-	}
-	if (invoker.length === 0) {
-		throw new Error("Invalid option for invoker: Must be a non-empty array.");
-	}
-	if (invoker.find((inv) => inv.length === 0)) {
-		throw new Error("Invalid option for invoker: Must be a non-empty string.");
-	}
-	if (invoker.length > 1 && invoker.find((inv) => inv === "public" || inv === "private")) {
-		throw new Error("Invalid option for invoker: Cannot have 'public' or 'private' in an array of service accounts.");
-	}
-	return invoker;
-}
-
-//#endregion
-exports.convertIfPresent = convertIfPresent;
-exports.convertInvoker = convertInvoker;
-exports.copyIfPresent = copyIfPresent;
-exports.durationFromSeconds = durationFromSeconds;
-exports.serviceAccountFromShorthand = serviceAccountFromShorthand;
+module.exports={durationFromSeconds,copyIfPresent,convertIfPresent,convertInvoker,serviceAccountFromShorthand};

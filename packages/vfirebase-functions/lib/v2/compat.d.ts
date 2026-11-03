@@ -1,5 +1,5 @@
 import { CloudEvent } from "./core";
-import { EventContext as V1EventContext } from "../v1";
+import { EventContext as V1EventContext } from "../v1/cloud-functions";
 export type V1Compat<DataName extends string, DataType, ContextType = V1EventContext> = {
     [K in DataName]: DataType;
 } & {

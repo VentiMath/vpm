@@ -1,25 +1,7 @@
-
-//#region src/logger/common.ts
-/** @hidden */
-const CONSOLE_SEVERITY = {
-	DEBUG: "debug",
-	INFO: "info",
-	NOTICE: "info",
-	WARNING: "warn",
-	ERROR: "error",
-	CRITICAL: "error",
-	ALERT: "error",
-	EMERGENCY: "error"
-};
-/** @hidden */
-const UNPATCHED_CONSOLE = {
-	debug: console.debug,
-	info: console.info,
-	log: console.log,
-	warn: console.warn,
-	error: console.error
-};
-
-//#endregion
-exports.CONSOLE_SEVERITY = CONSOLE_SEVERITY;
-exports.UNPATCHED_CONSOLE = UNPATCHED_CONSOLE;
+'use strict';
+const CONSOLE_SEVERITY=Object.fromEntries([
+  ['DEBUG','debug'],['INFO','info'],['NOTICE','info'],['WARNING','warn'],
+  ...['ERROR','CRITICAL','ALERT','EMERGENCY'].map(level=>[level,'error']),
+]);
+const UNPATCHED_CONSOLE=Object.fromEntries(['debug','info','log','warn','error'].map(name=>[name,console[name]]));
+module.exports={CONSOLE_SEVERITY,UNPATCHED_CONSOLE};

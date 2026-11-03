@@ -1,0 +1,22 @@
+[
+  "common/api.spec.js",
+  "common/change.spec.js",
+  "common/config.spec.js",
+  "common/encoding.spec.js",
+  "common/params.spec.js",
+  "common/providers/https.spec.js",
+  "common/providers/tasks.spec.js",
+  "common/trace.spec.js",
+  "logger.spec.js",
+  "params/params.spec.js",
+  "runtime/manifest.spec.js",
+  "v2/compat.spec.js",
+  "v2/options.spec.js",
+  "v2/params.spec.js",
+  "v2/providers/firestore.spec.js",
+  "v2/providers/https.spec.js",
+  "v2/providers/httpsAsync.spec.js",
+  "v2/providers/scheduler.spec.js",
+  "v2/providers/tasks.spec.js",
+  "v2/security.spec.js"
+]

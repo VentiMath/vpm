@@ -9,6 +9,11 @@ setGlobalOptions({region: 'us-central1', maxInstances: 10});
 const apiKey = defineSecret('API_KEY');
 export const api = onRequest({cors: true, secrets: [apiKey]}, (request: Request, response) => {
   const raw: Buffer = request.rawBody;
+  const method: string = request.method, url: string = request.url;
+  const headers: Record<string, string | string[] | undefined> = request.headers;
+  const authorization: string | undefined = request.headers.authorization;
+  const parameter: string = request.params.id;
+  void [method, url, headers, authorization, parameter];
   logger.info('request', {path: request.path, bytes: raw.length, key: apiKey.value().length});
   response.status(200).json({ok: true});
 });

@@ -1,4 +1,2 @@
-import { Change } from "../common/change.mjs";
-import { onInit } from "../common/onInit.mjs";
-
-export { Change, onInit };
+import api from '../../v2/core.js';
+export const {Change,onInit}=api;

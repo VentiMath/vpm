@@ -1,22 +1,14 @@
 # vfirebase-functions
 
-**Implementation status:** the current package retains upstream implementation
-code with the changes documented below. Logging, initialization, option
-projection, manifest serialization, HTTP/callable factories and the scheduler
-adapter now have independent implementations. Callable request validation,
-verification orchestration, payload conversion and response streaming are also
-independently implemented. Firestore trigger adapters and secret accessors now
-use independent implementations as well. The underlying Admin/Firestore clients,
-generic parameter expressions and other SDK services still retain upstream code.
-Trace propagation, configuration, app selection and deployment discovery also
-have independent implementations. Tests verify this mixed
-implementation.
-The application-facing functions described here have independent runtime
-implementations; the package as a whole remains a mixed implementation, including
-retained providers outside VentiMath's current use.
+**Implementation status:** independently implemented for VentiMath's application
+surface: HTTP and callable handlers, logging, parameters and secrets, schedules,
+task queues, Firestore triggers and deployment discovery. No hand-written
+upstream provider runtime remains in this package. The attributed upstream
+declarations and generated Firestore protobuf codec remain; Admin/Firestore
+clients are separately tracked VPM dependencies.
 
 The Cloud Functions for Firebase SDK, targeting **firebase-functions 7.4.0**, the
-latest stable release checked October 31, 2026. Dependencies are VPM packages
+latest stable release checked November 2, 2026. Dependencies are VPM packages
 (`vcors`, `vexpress`, `vprotobufjs`), with `vfirebase-admin` as the peer;
 Node.js 24+ and Bun.
 
@@ -34,14 +26,17 @@ exports.grade = onCall(request => {
 exports.roomCreated = onDocumentCreated('rooms/{roomId}', event => logger.info('room', event.params.roomId));
 ```
 
-This retains 7.4.0's v1 and v2 providers (HTTPS, callable,
-scheduler, task queues, Firestore, Storage, Pub/Sub, Eventarc, identity,
-alerts, Remote Config, Test Lab, Data Connect), parameters and secrets, logger,
-endpoint manifests, entry points and `firebase-functions` bin, which the
-Firebase CLI runs to discover functions at deploy. CommonJS, native ES modules
-and TypeScript are supported. The optional `@apollo/server`,
-`@as-integrations/express4` and `graphql` peers are needed only for the Data
-Connect GraphQL server, as upstream.
+The root and `v2` export the supported second-generation API. Direct entrypoints
+are `logger`, `logger/compat`, `params`, `core`, `options`, `https`, `firestore`,
+`scheduler` and `tasks` (the last six also have `v2/` aliases). The Firebase CLI
+`firebase-functions` bin remains. CommonJS, native ES modules and TypeScript are
+supported. V1 providers, Realtime Database triggers, Pub/Sub, Storage triggers,
+Eventarc, identity, alerts, Remote Config, Test Lab, AI, lifecycle hooks and Data
+Connect are outside this package's scope and are not exported. Their copied
+implementations and the optional GraphQL peers were removed. This does not
+remove the separately implemented Cloud Storage or Admin clients.
+
+Built, not yet released or adopted by VentiMath.
 
 | Upstream dependency | Here |
 | --- | --- |
@@ -93,8 +88,9 @@ Connect GraphQL server, as upstream.
   with offsets and before the epoch, and rejects invalid timestamps. Secret
   reads stay dynamic and unavailable during deployment; JSON errors omit parser
   excerpts that could quote a credential. Parameter registration preserves its
-  public arrays and removes every duplicate name. Generic expression classes
-  remain upstream-derived.
+  public arrays and removes every duplicate name. Generic parameter expressions are independently implemented. Frozen validation
+  options remain untouched, CEL string literals are escaped, interpolation tokens
+  cannot collide with literal text, and all ordered List comparisons are rejected.
 - **Independent runtime and discovery.** An explicit worklist discovers grouped
   exports without recursive stack growth. Ancestor cycles and colliding endpoint
   names are rejected; shared groups and prototype-named exports remain valid.
@@ -113,22 +109,28 @@ Connect GraphQL server, as upstream.
   directory only when two or more arguments were given, so a single directory
   argument was ignored and `-h` printed nothing. The Firebase CLI runs the bin
   from the functions directory without arguments, which is unchanged.
-- **Realtime Database with vfirebase-admin.** Database triggers decode their
-  data as before; `DataSnapshot#ref` needs the Realtime Database client, which
-  vfirebase-admin omits, and throws its descriptive error. Upstream with
-  vfirebase-admin would fail as soon as `firebase-functions/v2` was imported.
+- **Independent task queues.** Invocation, task headers, error envelopes and queue
+  definitions use the same shared lifecycle/definition building blocks. The
+  Discord deadline's IAM invoker, retry policy and concurrency limit match 7.4.0.
+  Production task authentication belongs to the Cloud Run/Functions IAM boundary;
+  this adapter decodes the platform token to expose claims and does not verify
+  JWT signatures itself. Do not expose task handlers as unauthenticated routes.
+- **Shared helpers.** Own-property option copying preserves prototype-named data.
+  Malformed or null debug records disable features; inherited names cannot turn
+  them on. Reset sentinels, role registration and optional console routing have
+  independent implementations with shared CJS/ESM identity.
 - **Declarations** compile without ambient Node types and use VPM's Express
   and CORS declarations.
 
 ## Evidence
 
-- [Upstream suite](../../scripts/firebase-functions-conformance/README.md): the
-  release's 996 unit tests pass for the original on Node. VPM passes 991;
-  four original assertions expect rounded span IDs and are checked for only the
-  exact integer correction. `DataSnapshot#ref` must fail with vfirebase-admin's
-  explanation. Bun has the same additional 25 console-capture failures as upstream.
+- [Upstream suite](../../scripts/firebase-functions-conformance/README.md): an
+  explicit 351-test application selection from the pinned release runs unchanged
+  against both implementations. Four VPM assertions retain the exact span-ID
+  correction; Bun's console-capture differences are checked against the original.
+  This is not a claim that all 996 SDK tests apply after removing unused providers.
 - [Callers](../../scripts/firebase-functions-conformance/callers.cjs): VentiMath's
-  function shapes and an additional task-queue compatibility case, served by one shared host (HTTP with and without CORS,
+  function shapes including its task-queue deadline configuration, served by one shared host (HTTP with and without CORS,
   handler errors, callable with and without auth and with the wrong method,
   scheduler, task queue) and a protobuf Firestore trigger event produce
   identical responses, handler results and endpoint definitions. The one
@@ -142,7 +144,7 @@ Connect GraphQL server, as upstream.
   regressions](test/logging-init.test.cjs), [deployment regressions](test/deployment.test.cjs),
   [callable regressions](test/callable.test.cjs), [event and secret regressions](test/events-secrets.test.cjs),
   [runtime and discovery regressions](test/runtime.test.cjs),
-  and [type tests](test/types.ts).
+  [completion regressions](test/completion.test.cjs), and [type tests](test/types.ts).
 - [Measurements](bench/results/README.md): isolated logging, initialization,
   endpoint construction, fresh manifest serialization and initialized HTTP
   invocation, callable payload conversion, callable requests, secret reads and
@@ -160,9 +162,26 @@ identical-code controls, including inconclusive results.
 Trace parsing, event materialization and invocation results differ by runtime
 and case; the report records which directions hold beyond the control variation.
 Input preservation and discovery validation add deployment costs, and several
-callable paths cost more. The complete report retains all sixteen cases,
+callable paths cost more. The complete report retains all nineteen cases,
 including regressions, outliers and identical-code controls. These local CPU
 measurements do not imply a general speedup or application latency guarantee.
 
+Current measurements retain these costs: task declaration takes 20% more time
+on Node / 42.6% on Bun; the initialized local task adapter takes 27.3% / 39.3%
+more (1.525 → 1.946 μs / 0.992 → 1.368 μs). Non-mutating parameter specification
+takes 62 → 94 ns / 120 → 238 ns. Existing regressions include Node callable
+encoding and deployment discovery, and Firestore declaration on both runtimes.
+Changed-document materialization improves 51.6% / 44%, and nested logging improves
+34.9% / 46.7%. See the full report for controls and inconclusive cases; task
+measurements use emulator-style requests and exclude platform authentication.
+
 MIT licensing, the pinned source and the files changed from it are recorded in
 [PROVENANCE.json](PROVENANCE.json).
+
+The read-only app snapshot comparison at `7a8aad2c` found 18 existing diagnostic
+locations with either implementation: missing image-rendering dependencies and
+four incompatible request mocks. VPM adds no diagnostic locations; the four mock
+errors name different incompatible Express fields. This is not a clean app
+build claim. Incoming request declarations now match server method, URL, headers
+and ordinary route parameters. Consumer migration/release and deployment are
+separate work.

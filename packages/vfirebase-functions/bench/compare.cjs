@@ -11,6 +11,22 @@ function logging(root, call) {
   return () => {call(logger); return line;};
 }
 const cases = [
+  {name: 'declaration / app task queue', make: root => {
+    const {onTaskDispatched}=require(path.join(root,'lib/v2/providers/tasks.js'));
+    const options={invoker:['tasks@example.iam.gserviceaccount.com'],timeoutSeconds:60,retryConfig:{maxAttempts:100,minBackoffSeconds:5,maxBackoffSeconds:300},rateLimits:{maxConcurrentDispatches:1}};
+    return ()=>onTaskDispatched(options,()=>{}).__endpoint;
+  },validate:value=>{assert.equal(value.taskQueueTrigger.retryConfig.maxAttempts,100);assert.equal(value.taskQueueTrigger.rateLimits.maxConcurrentDispatches,1);assert.equal(value.timeoutSeconds,60)}},
+  {name:'task / initialized emulator request',async:true,make:root=>{
+    process.env.FUNCTIONS_EMULATOR='true';
+    const {onTaskDispatched}=require(path.join(root,'lib/v2/providers/tasks.js'));
+    let seen;const fn=onTaskDispatched(async request=>{seen=request.data.id});
+    const request={method:'POST',headers:{'content-type':'application/json'},body:{data:{id:42}},header(name){return this.headers[name.toLowerCase()]},get(name){return this.header(name)}};
+    return async()=>{let status;const response={status(code){status=code;return this},end(){},send(){}};await fn(request,response);return {status,id:seen};};
+  },validate:value=>assert.deepEqual(value,{status:204,id:42})},
+  {name:'parameter / validation specification',make:root=>{
+    const {StringParam}=require(path.join(root,'lib/params/types.js'));
+    return ()=>new StringParam('NAME',{default:'guest',input:{text:{validationRegex:/^[a-z]+$/}}}).toSpec();
+  },validate:value=>{assert.equal(value.default,'guest');assert.equal(value.input.text.validationRegex,'^[a-z]+$')}},
   {name: 'logger / formatted status', make: root => logging(root, log => log.info('saved %d records', 3)), validate: output => assert.deepEqual(JSON.parse(output), {severity: 'INFO', message: 'saved 3 records'})},
   {name: 'logger / structured request', make: root => {
     const data = {path: '/api/rooms', method: 'GET', count: 12, elapsed: 1.25};

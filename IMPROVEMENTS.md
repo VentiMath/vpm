@@ -79,7 +79,7 @@ now have current comparison targets:
 | App scope independently implemented | vfullcalendar-react | @fullcalendar/react 7.1.3; mounted app-shaped comparisons, 11 lifecycle/event checks, real-browser selection/drag/resize/layout, date/feed regressions and TypeScript 7 | [@fullcalendar/react 7.1.3](https://www.npmjs.com/package/@fullcalendar/react), checked November 1, 2026 |
 | Caller paths verified | vfullcalendar-core | @fullcalendar/core 7.1.3 and the copy of its JSON feed request that @fullcalendar/react 7.1.3 bundles; requests and results against a recording server | [@fullcalendar/core 7.1.3](https://www.npmjs.com/package/@fullcalendar/core), checked November 1, 2026 |
 | Suite and time zones verified | vfull-ui-headless-calendar | @full-ui/headless-calendar 7.1.3 on temporal-polyfill 1.0.1; its vitest suite, and every IANA zone around every offset change from 1840 to 2100 against the runtime's own time zone data | [@full-ui/headless-calendar 7.1.3](https://www.npmjs.com/package/@full-ui/headless-calendar), checked November 1, 2026 |
-| Caller paths verified | vfirebase-functions | firebase-functions 7.4.0 on vfirebase-admin; its unit suite, VentiMath's HTTP, callable, scheduled and Firestore-triggered functions, and the deploy manifest | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked October 31, 2026 |
+| Caller paths verified | vfirebase-functions | 351 selected application-contract assertions; HTTP, callable, schedules, task queues, Firestore triggers and deployment manifests | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked November 2, 2026 |
 | Caller paths verified | vfirebase-admin | firebase-admin 14.5.0 without Realtime Database; its unit suite, and VentiMath's Auth, Firestore, Storage and FCM calls against local servers | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked October 31, 2026 |
 | Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
@@ -267,7 +267,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | Independent app-used month/week/day renderer, event model, styles and declarations; two VPM dependencies; preserved allDay/timezone/feed fixes; 84% smaller gzipped app-shaped JS entry with narrower supported scope. |
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
-| [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Mixed implementation on VPM dependencies: independent logging, initialization, declaration assembly and HTTP/scheduler factories; non-mutating manifest serialization and shared CJS/ESM state. Callable request validation, verification orchestration, payload conversion and response lifecycle are independently implemented, with prototype-safe data and cancellation cleanup. Firestore event adapters, secret accessors and registration are independently implemented; changed protobuf events decode once, field masks preserve sibling changes, and JSON secret errors omit credential excerpts. Trace propagation, configuration and iterative deployment discovery are independently implemented. Admin/Firestore clients, generic parameter expressions and other SDK services remain adapted upstream code; a complete package-wide rewrite remains pending. |
+| [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Independent application runtime: HTTP/callable, logging, parameters/secrets, schedules, task queues, Firestore triggers and CLI discovery. Unused provider runtime removed; attributed declarations/generated protocol retained. Frozen input, CEL escaping, own-key safety and exact trace fixes; current app contracts and clean archives verified. Built, unreleased and unadopted. |
 | [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, redesigned app/token/service lifetimes, credential identity/transport, prototype-safe Auth record serialization, owned user-management plans, token-kind/revocation policy, immutable signing-key caches and owned Auth request dispatch; isolated CPU measurements and identical Auth, Firestore, Storage and FCM caller behavior. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | Five VPM dependencies with one gax stack and an independent persistent snapshot index; reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
@@ -1157,67 +1157,59 @@ See the [package contract](packages/vfull-ui-headless-calendar/README.md),
 
 ## vfirebase-functions
 
-Targets **firebase-functions 7.4.0** with `vfirebase-admin` as its peer.
-Logging, initialization, option projection, manifest serialization,
-HTTP/callable factories and the scheduler adapter have independent
-implementations. Callable request validation, verification orchestration, payload
-conversion and response streaming are independently implemented. Firestore event
-adapters, secret accessors and parameter registration also have independent
-implementations. Underlying Admin/Firestore clients, generic parameter expressions,
-and other SDK services retain upstream code. Trace propagation, configuration,
-Admin app selection, deployment discovery and CLI hosting are independently
-implemented. The package as a whole remains a mixed implementation.
-[PROVENANCE.json](packages/vfirebase-functions/PROVENANCE.json) identifies those
-boundaries.
+**7.4.0 is independently implemented for the VentiMath-used surface:** HTTP and
+callable handlers, structured logging, initialization, parameters/secrets,
+schedules, task queues, Firestore triggers and CLI discovery. Unused provider
+implementations and exports are removed. Upstream declaration files and generated
+Firestore protocol code remain attributed artifacts; Admin/Firestore clients are
+separate dependencies. This is not a full Firebase SDK replacement.
+[Provenance](packages/vfirebase-functions/PROVENANCE.json) records this boundary.
 
-The logger preserves null-prototype objects, including Express query data that
-upstream replaces with an error marker. It handles cycles, throwing getters,
-shadowed property names, BigInt and recursive `toJSON` output; limits nesting;
-and adds trace context without mutating caller entries. Initialization shares
-one pending callback among concurrent requests and retries failed runs. Each
-registration owns its completion, so an earlier callback cannot finish a newer
-registration. CommonJS and ESM share logging, trace and initialization state.
+The task adapter shares deployment/invocation infrastructure and preserves the
+Discord deadline's invoker configuration, retry policy and concurrency limit.
+Cloud Run/Functions IAM authenticates incoming production task requests; the SDK
+adapter decodes the platform token to expose claims. It must not be exposed as
+an unauthenticated endpoint. Invalid requests and handler failures retain the
+upstream HTTP error/retry behavior.
 
-A shared function-definition builder assembles HTTP/callable/scheduler metadata
-from option projection tables. Manifest serialization preserves frozen and
-reusable declarations instead of modifying them, and handles deep structures
-without recursive traversal. HTTP CORS completion removes its finish listener.
-These factories, options and manifest helpers also share CJS/ESM identity.
+Parameter specs preserve frozen validation options, escape CEL string literals,
+and prevent interpolation placeholders from colliding with literal data. Ordered
+List comparisons are rejected consistently. Option copying safely preserves
+prototype-named own properties; malformed debug records disable features rather
+than throwing or enabling inherited names. CJS/ESM share the completed runtime.
+Incoming HTTP request types match server methods, URLs, headers and ordinary
+route parameters used by the app.
 
-Callable conversion preserves own prototype-named properties, detects cycles
-and handles deep data with bounded recursion and an explicit worklist. The
-response lifecycle handles synchronous stream callbacks, disconnects and
-heartbeat cleanup. Production authentication still uses the Admin SDK verifiers.
-Firestore changes decode their protobuf event once for both snapshots, and
-field-mask patches accumulate sibling edits without mutating inputs. Event
-timestamps preserve fractional nanoseconds. Secret values remain runtime-only;
-JSON parse errors identify the parameter without including credential excerpts.
+Earlier corrections remain: structured logging preserves null-prototype objects
+and bounds cycles; concurrent initialization shares one run and retries failures;
+manifest serialization preserves input; callable data preserves own keys and
+handles deep data; streaming cleans up on disconnect; Firestore changed events
+decode once; field-mask changes accumulate; secret JSON errors omit credentials;
+trace IDs retain integer precision; discovery rejects cycles and collisions.
 
-Earlier improvements remain: lazy provider/Admin loading, the bin's directory
-argument and VPM declaration dependencies. Earlier Node 22 and same-process
-performance claims are withdrawn as current evidence. New isolated Node 24 and
-Bun comparisons measure logging CPU with console I/O excluded, and an already
-initialized handler. The new report also measures endpoint construction, fresh
-64-endpoint serialization, initialized HTTP/callable invocation, secret reads
-and Firestore event materialization. See its controls
-and remaining costs; deployment-time work is distinct from request latency.
+The same **351 original application-contract assertions** run against both
+implementations. Node's original passes 351; VPM retains four exact span-ID
+corrections. Bun has the same additional 25 console-capture differences on both
+sides. Forty-nine focused tests and ten caller invocations cover transport,
+metadata, errors, secrets, events and deployment. Clean npm/Bun archives and
+TypeScript 7 pass. A read-only app snapshot at `7a8aad2c` has the same 18 diagnostic
+locations with both declarations; four existing mock-request errors name different
+Express fields. Missing image dependencies prevent a clean app-build claim.
 
-The original release's **996 unit tests** remain the compatibility gate: VPM
-passes 991 on Node; four original assertions require the exact integer
-correction for span IDs and one needs the omitted Realtime Database client. Bun has the same 25 console-capture failures with upstream and VPM.
-Forty-four focused tests cover loading, discovery, initialization, logging,
-frozen and deep declarations, module identity, callable payloads and cancellation,
-secret access, timestamps, field masks, Firestore event materialization, trace
-precision, export cycles, endpoint collisions and native manifest serving.
-The actual HTTP/callable/scheduler/Firestore caller tests require matching
-responses, results, endpoint definitions and deployment manifests. Logs match
-except for the explicitly verified preservation of Express query data.
+Task declaration costs 20% / 42.6% more on Node/Bun, and the initialized local
+task adapter costs 27.3% / 39.3% more (about 0.4 μs additional CPU per operation).
+Non-mutating parameter specifications add 32 / 118 ns. Changed-document
+materialization improves 51.6% / 44%; existing callable/deployment regressions
+remain visible in the report. These are local CPU measurements, not network
+latency or production throughput claims.
 
-See the [package contract](packages/vfirebase-functions/README.md),
+Fresh isolated Node 24/Bun measurements cover all nineteen cases, including task
+queue declaration/invocation and parameter specifications. All samples and
+identical-code controls are retained; performance costs are documented alongside
+gains. Built, not released or adopted. See the
+[package contract](packages/vfirebase-functions/README.md),
 [conformance record](scripts/firebase-functions-conformance/README.md) and
-[measurements](packages/vfirebase-functions/bench/results/README.md). The saved recordings precede the Storage hash-stream
-URL-signing, save, upload-stream and multipart rewrites and are historical for those transitive components. Earlier
-signing/checksum samples remain in the [historical Storage report](packages/vgoogle-cloud-storage/bench/results/README.md); current uploads are in the [multipart report](packages/vgoogle-cloud-storage/bench/multipart-results/README.md).
+[measurements](packages/vfirebase-functions/bench/results/README.md).
 
 ## vfirebase-admin
 

@@ -1,19 +1,10 @@
-const require_security_roles = require('../security/roles.js');
-
-//#region src/v2/security.ts
-/**
-* Declares that this codebase requires the specified IAM role to operate.
-* When deployed, the Firebase CLI will automatically provision a managed service account
-* with this role and attach it to all functions in this codebase.
-* @param role The IAM role required (e.g. "roles/bigquery.dataEditor")
-*/
-function requiresRole(role) {
-	const roleRegex = /^(roles\/[a-zA-Z0-9_.-]+|projects\/[a-zA-Z0-9_-]+\/roles\/[a-zA-Z0-9_.-]+|organizations\/[a-zA-Z0-9_-]+\/roles\/[a-zA-Z0-9_.-]+)$/;
-	if (!roleRegex.test(role)) {
-		throw new Error(`Invalid role: "${role}". Role must be a valid GCP IAM role format (e.g., "roles/viewer", "projects/<project-id>/roles/<custom-role>", or "organizations/<org-id>/roles/<custom-role>").`);
-	}
-	require_security_roles.registerRole(role);
+'use strict';
+const {registerRole}=require('../security/roles.js');
+function requiresRole(role){
+  const parts=typeof role==='string'?role.split('/'):[];
+  const validName=value=>typeof value==='string'&&/^[a-zA-Z0-9_.-]+$/.test(value);
+  const valid=parts.length===2&&parts[0]==='roles'&&validName(parts[1]) || parts.length===4&&['projects','organizations'].includes(parts[0])&&/^[a-zA-Z0-9_-]+$/.test(parts[1])&&parts[2]==='roles'&&validName(parts[3]);
+  if(!valid)throw new Error(`Invalid role: "${role}". Role must be a valid GCP IAM role format (e.g., "roles/viewer", "projects/<project-id>/roles/<custom-role>", or "organizations/<org-id>/roles/<custom-role>").`);
+  registerRole(role);
 }
-
-//#endregion
-exports.requiresRole = requiresRole;
+module.exports={requiresRole};
