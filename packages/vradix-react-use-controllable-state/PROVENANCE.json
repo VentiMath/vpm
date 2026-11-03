@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-use-controllable-state",
+    "version": "1.3.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/use-controllable-state",
+    "checked": "2026-11-03",
+    "integrity": "sha512-TAcBI7bw2ljYCbv4+zuTSd6zICu8pRt6SDN2vJ/Z06K2MXh6I9WYFe/A9ovlFDtR5HVHGm5iDxDoABm/++dbKg=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "6fdbad65d6b9f6f22d44d42bb787ea245837f359697adccaea0220ab07d74a98",
+    "dist/index.d.ts": "a208dbb5dce54ac46f6d411407a3baaa1fe17139c486c796070c441725d6ee2c",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19 controlled/uncontrolled state and reducer hooks, including current Dropdown Menu callers."
+  },
+  "changes": [
+    "Keep controlled reducers pure and notify only after commit, avoiding StrictMode replay and React 19.2 Effect Event render errors.",
+    "Retained simple setters read committed callbacks and props.",
+    "Use Object.is for state equality, including NaN and signed zero.",
+    "Use native React 19 insertion effects; remove legacy layout-effect dependency."
+  ]
+}

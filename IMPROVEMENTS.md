@@ -233,6 +233,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vradix-react-use-callback-ref](packages/vradix-react-use-callback-ref) | @radix-ui/react-use-callback-ref 1.1.5 | Stable callbacks publish targets only on commit; React 19 insertion effects remove the fallback dependency. |
 | [vradix-react-direction](packages/vradix-react-direction) | @radix-ui/react-direction 1.2.0 | Independent React 19 direction provider/hook; unchanged public behavior, shared CJS/ESM context and actual RovingFocus keyboard controls. No runtime dependencies beyond React. |
 | [vpngjs](packages/vpngjs) | pngjs 7.0.0 | Independent app-used synchronous PNG reader: complete static formats/Adam7, bounded inflation, strict chunk structure and CRC checks. Matches 162 valid corpus images and actual app pixel tests. No writer/stream API; built, not adopted. |
+| [vradix-react-use-controllable-state](packages/vradix-react-use-controllable-state) | @radix-ui/react-use-controllable-state 1.3.0 | Pure controlled reducers; commit-only notifications; stable setters; React 19.2 support. |
 | [vradix-react-id](packages/vradix-react-id) | @radix-ui/react-id 1.1.4 | Native React 19 IDs with Radix prefix and override semantics; removes redundant state, layout effects and legacy counter. SSR/hydration and current Dropdown Menu ARIA links verified on React 19.1/19.2. |
 | [vradix-react-use-effect-event](packages/vradix-react-use-effect-event) | @radix-ui/react-use-effect-event 0.0.5 | React 19.1 commit-safe retained callbacks with one ref; direct native delegation on React 19.2. Drops the layout-effect dependency and separate memo hook. Actual reducer and current Dropdown Menu controls on both React versions. |
 | [vradix-react-focus-guards](packages/vradix-react-focus-guards) | @radix-ui/react-focus-guards 1.2.0 | Independent shared focus guards for React 19; per-body ownership prevents a second document stealing the first pair. StrictMode, SSR and unchanged current Menu caller verified; React is the only peer. |
@@ -383,7 +384,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 119 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **156 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **157 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5659,3 +5660,21 @@ less time for small RGBA (−23.5% Node / −9.5% Bun), interlaced 16-bit RGB
 (−26.0% / −42.4%) and 960×480 resvg output (−17.7% / −19.5%). Indexed transparency
 is inconclusive on both runtimes. These are decode CPU timings, not measured
 end-to-end application gains.
+
+## vradix-react-use-controllable-state
+
+The independent 1.3.0 implementation targets React 19. Controlled reducers now
+notify after commit, avoiding duplicate StrictMode notifications and React 19.2
+Effect Event render errors. Abandoned renders do not notify. Simple setters keep
+identity and read the latest committed callback and prop; equality uses Object.is.
+The obsolete layout-effect dependency is removed.
+
+Node 24/Bun tests exercise both React 19.1 and 19.2, original-defect controls,
+SSR, batching, suspended work and unchanged Dropdown Menu 2.2.1. Clean npm/Bun
+archives, TypeScript 7 and browser bundles pass. Built, unreleased and unadopted.
+[Isolated benchmarks](packages/vradix-react-use-controllable-state/bench/results/README.md)
+establish no general state-commit gain. The corrected controlled reducer costs
+3.2% more on Node with React 19.1; its unsafe upstream behavior prevents a React 19.2 timing
+comparison. Direct controlled setter overhead is about 1 ns on Node with React 19.2 and
+4 ns on Bun with React 19.1; the latter is a large percentage of a roughly 1 ns baseline.
+These timings do not measure an application-level regression or improvement.
