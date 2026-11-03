@@ -156,14 +156,14 @@ try {
       assert.doesNotMatch(entries.join('\n'),/(?:test|bench|node_modules)\/|\.map$|busboy|database-compat/);
     }
     if (name === 'vgoogle-cloud-firestore') {
-      assert.deepEqual(metadata.dependencies, {'vfast-deep-equal':'0.1.0','vgoogle-cloud-firestore-api':'0.1.0','vgoogle-gax':'0.1.0','vopentelemetry-api':'0.1.0',vprotobufjs:require('../packages/vprotobufjs/package.json').version});
+      assert.deepEqual(metadata.dependencies, {'vfast-deep-equal':'0.1.0','vgoogle-cloud-firestore-api':'0.1.0','vgoogle-gax':require('../packages/vgoogle-gax/package.json').version,'vopentelemetry-api':'0.1.0',vprotobufjs:require('../packages/vprotobufjs/package.json').version});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const files=dir=>fs.readdirSync(path.join(root,'packages',name,dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages',name,dir,f)).isFile()).map(f=>dir+'/'+f);
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json',...files('build'),...files('types'),...files('pipelines')].sort());
       assert.doesNotMatch(entries.join('\n'),/(?:test|bench|node_modules)\/|\.map$|v1beta1/);
     }
     if (name === 'vgoogle-cloud-firestore-api') {
-      assert.deepEqual(metadata.dependencies, {'vgoogle-gax':'0.1.0','vgoogle-logging-utils':'0.1.0',vlong:require('../packages/vlong/package.json').version});
+      assert.deepEqual(metadata.dependencies, {'vgoogle-gax':require('../packages/vgoogle-gax/package.json').version,'vgoogle-logging-utils':'0.1.0',vlong:require('../packages/vlong/package.json').version});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const files=dir=>fs.readdirSync(path.join(root,'packages',name,dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages',name,dir,f)).isFile()).map(f=>dir+'/'+f);
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json','index.js','index.mjs','index.d.ts',...files('lib'),...files('v1'),...files('protos')].sort());
@@ -172,7 +172,15 @@ try {
     if (name === 'vgoogle-gax') {
       assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vduplexify','vgoogle-auth-library','vgoogle-logging-utils','vgrpc-js','vgrpc-proto-loader','vopentelemetry-api','vproto3-json-serializer','vprotobufjs','vretry-request']);
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
-      const library=fs.readdirSync(path.join(root,'packages/vgoogle-gax/build'),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vgoogle-gax/build',f)).isFile()).map(f=>'build/'+f);
+      const library=['build','app-runtime'].flatMap(dir=>fs.readdirSync(path.join(root,'packages/vgoogle-gax',dir),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages/vgoogle-gax',dir,f)).isFile()).map(f=>dir+'/'+f));
+      assert.equal(metadata.main, './app-runtime/index.cjs');
+      assert.equal(metadata.types, './app-runtime/index.d.ts');
+      for(const entry of ['.', './fallback', './gax', './build/src/index.js']) {
+        for(const target of Object.values(metadata.exports[entry])) {
+          assert.ok(target.startsWith('./app-runtime/'), 'GAX public entry must use the independent runtime: '+entry);
+          assert.ok(entries.includes(target.slice(2)), 'GAX exported target must be packed: '+target);
+        }
+      }
       assert.deepEqual(entries.sort(),['LICENSE','README.md','PROVENANCE.json','package.json','index.mjs','fallback.mjs',...library].sort());
       assert.doesNotMatch(entries.join('\n'),/(?:test|bench|node_modules)\/|\.map$/);
     }

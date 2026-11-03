@@ -124,3 +124,9 @@ matching original GAX. The full repository test gate also exercises the unchange
 VPM Firestore API callback/close test, which detected a return-shape integration
 regression missed by the earlier stock-caller-only checks. Promise cancellation
 is unchanged.
+
+The repository-wide `scripts/check-media-archives.cjs` gate also checks packed
+Firestore dependencies against the current GAX version, includes the independent
+`app-runtime` files, and requires the public root, fallback, settings and generated
+client alias to resolve to those packed files. Its fresh npm/Bun consumers exercise
+CJS, ESM and TypeScript exports without workspace aliases.
