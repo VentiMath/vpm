@@ -48,14 +48,21 @@ deletes, resets and retained snapshots over actual local Listen streams.
 compares lazy imports, one transport stack, prompt termination errors and listener
 cleanup; client construction uses implementation-specific observation adapters.
 
-Thirty-three focused package tests cover values, vectors and zero thresholds,
+Thirty-six focused package tests cover values, vectors and zero thresholds,
 prototype-safe maps, immutable arguments, invalid writes, converters, incomplete
 reads, transaction retries/failed reads, bulk failures, recursive deletion,
 decoded Functions int64/timestamp snapshots, nested wire-container/byte ownership,
-unknown wire-field preservation, stream cancellation, real REST requests, lazy
-imports and the persistent index.
+unknown wire-field preservation, inherited-setter/symbol/oneof guards, timestamp
+boundaries and ordering, path normalization, stream cancellation, real REST
+requests, lazy imports and the persistent index.
 
 `VPM_APP_REPO=/path/to/ventimath-private node scripts/firestore-conformance/app-types.cjs`
 compiles a detached snapshot twice, mapping only Firestore and its Admin types.
 The checked snapshot has 18 pre-existing diagnostics and no additional locations
 under VPM. No application files or installed dependencies are changed.
+
+The nine-case isolated CPU benchmark retains the original snapshot and timestamp
+workloads and adds protobuf-decoded snapshots with exact int64 values, repeated
+fresh data from a retained snapshot, and mixed signed timestamps with varied
+nanoseconds. The new cases retain full returned data/strings, not just field counts.
+These are CPU workloads, not a live-cloud throughput measurement.

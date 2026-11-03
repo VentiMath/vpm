@@ -23,33 +23,39 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-03T17:41:35.514Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-03T18:16:21.877Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| encode / 12-field document | 4353 | 3956 | -8.6% | -8.4% | -9.3% | 1% | lower time in every pair, beyond control spread |
-| decode / snapshot data() of 12-field document | 7337 | 8581 | 17.4% | 17.4% | 17% | 1.7% | higher time in every pair, beyond control spread |
-| write / compile batch merge with transforms | 45981 | 13981 | -69.8% | -69.8% | -69.3% | 2% | lower time in every pair, beyond control spread |
-| query / where, orderBy, limit to proto | 2054 | 1263 | -38.5% | -38% | -38.5% | 4.1% | lower time in every pair, beyond control spread |
-| compare / isEqual of independently read equal snapshots | 9159 | 7983 | -12.8% | -13.4% | -12.8% | 2.1% | lower time in every pair, beyond control spread |
-| timestamp / fromMillis, toDate, valueOf | 82 | 83 | 2.4% | 1.8% | 13.7% | 2.5% | unestablished at this precision |
+| encode / 12-field document | 4367 | 3961 | -9.5% | -8.5% | -11.6% | 0.9% | lower time in every pair, beyond control spread |
+| decode / snapshot data() of 12-field document | 7417 | 6435 | -12.9% | -9.6% | -13.7% | 0.9% | lower time in every pair, beyond control spread |
+| decode / protobuf-decoded document with exact int64 | 12977 | 7721 | -40.7% | -40.7% | -45% | 0.3% | lower time in every pair, beyond control spread |
+| decode / fresh data from a retained snapshot | 7104 | 2994 | -58.2% | -58.7% | -56.2% | 2.6% | lower time in every pair, beyond control spread |
+| write / compile batch merge with transforms | 45834 | 13546 | -70.6% | -70.7% | -69.9% | 1.2% | lower time in every pair, beyond control spread |
+| query / where, orderBy, limit to proto | 2037 | 1188 | -41.6% | -41.6% | -42.1% | 2.6% | lower time in every pair, beyond control spread |
+| compare / isEqual of independently read equal snapshots | 9056 | 7930 | -12.5% | -11.4% | -12.6% | 4% | lower time in every pair, beyond control spread |
+| timestamp / fromMillis, toDate, valueOf | 82 | 67 | -17% | -16.8% | -17% | 1.1% | lower time in every pair, beyond control spread |
+| timestamp / mixed signed seconds and fractions | 242 | 174 | -27.8% | -27.5% | -28.7% | 1.3% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-03T17:42:00.998Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-03T18:16:58.141Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| encode / 12-field document | 4463 | 3087 | -30.9% | -31.7% | -29.4% | 2.7% | lower time in every pair, beyond control spread |
-| decode / snapshot data() of 12-field document | 3870 | 5525 | 42.4% | 45.5% | 40.1% | 32.7% | higher time in every pair, beyond control spread |
-| write / compile batch merge with transforms | 32284 | 20453 | -36.6% | -18.5% | -37% | 0.9% | unestablished at this precision |
-| query / where, orderBy, limit to proto | 1945 | 1796 | -7.8% | -6.5% | -8.9% | 2.9% | lower time in every pair, beyond control spread |
-| compare / isEqual of independently read equal snapshots | 10624 | 6046 | -43.1% | -44.1% | -42.4% | 1.2% | lower time in every pair, beyond control spread |
-| timestamp / fromMillis, toDate, valueOf | 60 | 83 | 38.8% | 38.8% | 37.8% | 2.2% | higher time in every pair, beyond control spread |
+| encode / 12-field document | 4468 | 2886 | -36.3% | -37.4% | -22.5% | 1.8% | lower time in every pair, beyond control spread |
+| decode / snapshot data() of 12-field document | 3911 | 4004 | 2.3% | 3.8% | 1.8% | 2.6% | unestablished at this precision |
+| decode / protobuf-decoded document with exact int64 | 10498 | 5613 | -46.9% | -40.7% | -48.9% | 3.7% | lower time in every pair, beyond control spread |
+| decode / fresh data from a retained snapshot | 3739 | 1943 | -48.4% | -47.6% | -49% | 1% | lower time in every pair, beyond control spread |
+| write / compile batch merge with transforms | 32885 | 21813 | -33.5% | -35.1% | -33.5% | 4% | lower time in every pair, beyond control spread |
+| query / where, orderBy, limit to proto | 2058 | 1835 | -10.1% | -32.7% | -5.3% | 1.9% | lower time in every pair, beyond control spread |
+| compare / isEqual of independently read equal snapshots | 10788 | 6037 | -44% | -47.8% | -41.6% | 3.7% | lower time in every pair, beyond control spread |
+| timestamp / fromMillis, toDate, valueOf | 62 | 59 | -17.9% | -18.5% | 63.3% | 1.9% | unestablished at this precision |
+| timestamp / mixed signed seconds and fractions | 132 | 81 | -38.3% | -44.2% | -34.6% | 3% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

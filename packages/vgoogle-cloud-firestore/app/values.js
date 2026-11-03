@@ -2,16 +2,22 @@
 const equal = require('vfast-deep-equal');
 const integer=(name,value,min,max)=>{if(!Number.isInteger(value)||value<min||value>max)throw new RangeError(name+' is out of range');return value;};
 class Timestamp {
-  constructor(seconds,nanoseconds){this._seconds=integer('seconds',seconds,-62135596800,253402300799);this._nanoseconds=integer('nanoseconds',nanoseconds,0,999999999);}
+  constructor(seconds,nanoseconds){
+    if(!Number.isInteger(seconds)||seconds < -62135596800||seconds > 253402300799)throw new RangeError('seconds is out of range');
+    if(!Number.isInteger(nanoseconds)||nanoseconds < 0||nanoseconds > 999999999)throw new RangeError('nanoseconds is out of range');
+    this._seconds=seconds;this._nanoseconds=nanoseconds;
+  }
   get seconds(){return this._seconds;} get nanoseconds(){return this._nanoseconds;}
   static now(){return this.fromMillis(Date.now());}
   static fromDate(date){return this.fromMillis(date.getTime());}
   static fromMillis(ms){if(!Number.isFinite(ms))throw new RangeError('Invalid timestamp');const seconds=Math.floor(ms/1000);return new Timestamp(seconds,Math.floor((ms-seconds*1000)*1e6));}
   static fromProto(value){if(typeof value==='string'){const ms=Date.parse(value),fraction=/\.(\d+)(?:Z|[+-]\d{2}:\d{2})$/.exec(value)?.[1];const t=Timestamp.fromMillis(ms);return fraction?new Timestamp(t.seconds,Number(fraction.padEnd(9,'0'))):t;}return new Timestamp(Number(value.seconds||0),value.nanos||0);}
   toProto(){return {seconds:String(this.seconds),nanos:this.nanoseconds};}
-  toDate(){return new Date(this.seconds*1000+Math.round(this.nanoseconds/1e6));} toMillis(){return this.seconds*1000+Math.floor(this.nanoseconds/1e6);}
+  toDate(){return new Date(this._seconds*1000+Math.round(this._nanoseconds/1e6));} toMillis(){return this._seconds*1000+Math.floor(this._nanoseconds/1e6);}
   isEqual(other){return other instanceof Timestamp&&other.seconds===this.seconds&&other.nanoseconds===this.nanoseconds;}
-  valueOf(){return String(this.seconds+62135596800).padStart(12,'0')+'.'+String(this.nanoseconds).padStart(9,'0');}
+  // Validated fields have bounded decimal widths; slice fixed padding without
+  // the general padStart path. The result remains lexicographically ordered.
+  valueOf(){const seconds=String(this.seconds+62135596800),nanos=String(this.nanoseconds);return '000000000000'.slice(seconds.length)+seconds+'.'+'000000000'.slice(nanos.length)+nanos;}
   toJSON(){return {seconds:this.seconds,nanoseconds:this.nanoseconds};}
 }
 class GeoPoint {
@@ -45,6 +51,14 @@ const deletion=Object.freeze(new FieldValue('delete')),timestamp=Object.freeze(n
 const plain=value=>value!==null&&typeof value==='object'&&(Object.getPrototypeOf(value)===Object.prototype||Object.getPrototypeOf(value)===null);
 // These destinations are fresh plain records. Only inherited keys need a
 // descriptor to avoid setters (including __proto__); ordinary fields assign.
-const own=(object,key,value)=>{if(key in Object.prototype)Object.defineProperty(object,key,{value,enumerable:true,writable:true,configurable:true});else object[key]=value;return object;};
-const path=(value,even)=>{if(typeof value!=='string'||!value||value.includes('//'))throw new TypeError('Invalid resource path');const parts=value.split('/').filter(Boolean);if(parts.length%2!==(even?0:1))throw new TypeError(even?'A document path must have an even number of segments':'A collection path must have an odd number of segments');return parts.join('/');};
+const own=(object,key,value)=>{if(Object.hasOwn(Object.prototype,key))Object.defineProperty(object,key,{value,enumerable:true,writable:true,configurable:true});else object[key]=value;return object;};
+const path=(value,even)=>{
+  if(typeof value!=='string'||!value||value.includes('//'))throw new TypeError('Invalid resource path');
+  const first=value[0]==='/'?1:0,last=value.endsWith('/')?value.length-1:value.length;
+  const normalized=first||last!==value.length?value.slice(first,last):value;
+  let segments=normalized?1:0;
+  for(let at=normalized.indexOf('/');at!==-1;at=normalized.indexOf('/',at+1))segments++;
+  if(segments%2!==(even?0:1))throw new TypeError(even?'A document path must have an even number of segments':'A collection path must have an odd number of segments');
+  return normalized;
+};
 module.exports={Timestamp,GeoPoint,FieldPath,FieldValue,VectorValue,plain,own,path,integer,equal};

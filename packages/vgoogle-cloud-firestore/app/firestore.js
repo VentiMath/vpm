@@ -14,38 +14,56 @@ function copyProtocol(value){
   if(Array.isArray(value))return value.map(copyProtocol);
   const out={};for(const key of Object.keys(value))own(out,key,copyProtocol(value[key]));return out;
 }
+// Timestamp wire records are frequent and usually have exactly these two
+// fields. Keep a generic fallback for omitted, additional or unusual fields.
+function copyTime(value){
+  if(value&&typeof value==='object'){
+    const keys=Object.keys(value);
+    if(keys.length===2&&Object.hasOwn(value,'seconds')&&Object.hasOwn(value,'nanos')){
+      const seconds=value.seconds,nanos=value.nanos;
+      return {seconds:seconds!==null&&typeof seconds==='object'?copyProtocol(seconds):seconds,nanos:nanos!==null&&typeof nanos==='object'?copyProtocol(nanos):nanos};
+    }
+  }
+  return copyProtocol(value);
+}
 // Firestore Values are tagged unions. Clone their wire containers directly
 // instead of walking every scalar and wrapper through the generic copier.
 function copyFields(fields){
-  if(!fields||typeof fields!=='object'||Array.isArray(fields)||fields instanceof Uint8Array)return copyProtocol(fields);
-  const out={};for(const key of Object.keys(fields))own(out,key,copyValue(fields[key]));return out;
+  if(!fields||typeof fields!=='object'||Array.isArray(fields))return copyProtocol(fields);
+  if(ArrayBuffer.isView(fields))return copyProtocol(fields);
+  const out={};for(const key of Object.keys(fields)){const value=copyValue(fields[key]);if(Object.hasOwn(Object.prototype,key))Object.defineProperty(out,key,{value,enumerable:true,writable:true,configurable:true});else out[key]=value;}return out;
 }
 function copyValue(value){
-  if(!value||typeof value!=='object'||Array.isArray(value)||value instanceof Uint8Array)return copyProtocol(value);
+  if(!value||typeof value!=='object'||Array.isArray(value))return copyProtocol(value);
+  if(ArrayBuffer.isView(value))return copyProtocol(value);
   const keys=Object.keys(value);
   if(keys.length!==1)return copyProtocol(value);
   const kind=keys[0],item=value[kind];
   switch(kind){
-    case 'nullValue': return {nullValue:copyProtocol(item)};
-    case 'stringValue': return {stringValue:copyProtocol(item)};
-    case 'booleanValue': return {booleanValue:copyProtocol(item)};
-    case 'doubleValue': return {doubleValue:copyProtocol(item)};
-    case 'integerValue': return {integerValue:copyProtocol(item)};
-    case 'referenceValue': return {referenceValue:copyProtocol(item)};
+    case 'nullValue': return {nullValue:item!==null&&typeof item==='object'?copyProtocol(item):item};
+    case 'stringValue': return {stringValue:item!==null&&typeof item==='object'?copyProtocol(item):item};
+    case 'booleanValue': return {booleanValue:item!==null&&typeof item==='object'?copyProtocol(item):item};
+    case 'doubleValue': return {doubleValue:item!==null&&typeof item==='object'?copyProtocol(item):item};
+    case 'integerValue': return {integerValue:item!==null&&typeof item==='object'?copyProtocol(item):item};
+    case 'referenceValue': return {referenceValue:item!==null&&typeof item==='object'?copyProtocol(item):item};
     case 'bytesValue': return {bytesValue:copyProtocol(item)};
-    case 'timestampValue': return {timestampValue:copyProtocol(item)};
+    case 'timestampValue': return {timestampValue:copyTime(item)};
     case 'geoPointValue': return {geoPointValue:copyProtocol(item)};
-    case 'arrayValue':
-      if(item&&Object.keys(item).length===1&&Object.hasOwn(item,'values')&&Array.isArray(item.values))return {arrayValue:{values:item.values.map(copyValue)}};
+    case 'arrayValue':{
+      const keys=item&&Object.keys(item);
+      if(keys&&keys.length===1&&keys[0]==='values'&&Array.isArray(item.values))return {arrayValue:{values:item.values.map(copyValue)}};
       return copyProtocol(value);
-    case 'mapValue':
-      if(item&&Object.keys(item).length===1&&Object.hasOwn(item,'fields'))return {mapValue:{fields:copyFields(item.fields)}};
+    }
+    case 'mapValue':{
+      const keys=item&&Object.keys(item);
+      if(keys&&keys.length===1&&keys[0]==='fields')return {mapValue:{fields:copyFields(item.fields)}};
       return copyProtocol(value);
+    }
     default:return copyProtocol(value);
   }
 }
 function copyDocument(document){
-  const out={};for(const key of Object.keys(document))own(out,key,key==='fields'?copyFields(document[key]):copyProtocol(document[key]));return out;
+  const out={};for(const key of Object.keys(document))own(out,key,key==='fields'?copyFields(document[key]):key==='createTime'||key==='updateTime'?copyTime(document[key]):copyProtocol(document[key]));return out;
 }
 
 class Firestore {

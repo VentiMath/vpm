@@ -28,8 +28,34 @@ class Codec {
       return {mapValue:Object.keys(fields).length?{fields}:{}};
     }finally{seen.delete(value);}
   }
-  decodeFields(fields={}){const data={};for(const key of Object.keys(fields))own(data,key,this.decodeValue(fields[key]));return data;}
+  // Inline the own-property guard on this hot loop. Object.prototype has no
+  // parent; hasOwn keeps inherited setters and prototype-shaped keys safe.
+  decodeFields(fields={}){const data={};for(const key of Object.keys(fields)){const value=this.decodeValue(fields[key]);if(Object.hasOwn(Object.prototype,key))Object.defineProperty(data,key,{value,enumerable:true,writable:true,configurable:true});else data[key]=value;}return data;}
+  // Real wire Values have one own tag; ambiguous inputs retain the previous
+  // precedence rules in the fallback. Neither path caches mutable data.
   decodeValue(value){
+    const keys=Object.keys(value);
+    if(keys.length!==1)return this.decodeUnusualValue(value);
+    const kind=keys[0],item=value[kind];
+    switch(kind){
+      case 'nullValue':return null;
+      case 'stringValue':case 'booleanValue':return item;
+      case 'integerValue':return this.db._settings.useBigInt?BigInt(String(item)):Number(item);
+      case 'doubleValue':return Number(item);
+      case 'timestampValue':if(!item)return this.decodeUnusualValue(value);return Timestamp.fromProto(item);
+      case 'geoPointValue':if(!item)return this.decodeUnusualValue(value);return new GeoPoint(item.latitude||0,item.longitude||0);
+      case 'bytesValue':return Buffer.from(item,typeof item==='string'?'base64':undefined);
+      case 'referenceValue':if(!item)return this.decodeUnusualValue(value);return this.db._reference(item);
+      case 'arrayValue':if(!item)return this.decodeUnusualValue(value);return (item.values||[]).map(v=>this.decodeValue(v));
+      case 'mapValue':if(!item)return this.decodeUnusualValue(value);{
+        const fields=item.fields||{};
+        if(fields.__type__?.stringValue==='__vector__')return new VectorValue((fields.value?.arrayValue?.values||[]).map(v=>Number(v.doubleValue??v.integerValue)));
+        return this.decodeFields(fields);
+      }
+      default:return this.decodeUnusualValue(value);
+    }
+  }
+  decodeUnusualValue(value){
     if(Object.hasOwn(value,'nullValue'))return null;
     if(Object.hasOwn(value,'stringValue'))return value.stringValue;
     if(Object.hasOwn(value,'booleanValue'))return value.booleanValue;

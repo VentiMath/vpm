@@ -71,7 +71,7 @@ use the VPM package identity.
 
 The [conformance fixture](../../scripts/firestore-conformance/README.md) records
 213 cross-SDK write/query cases, 14 Listen cases, real local gRPC/REST callers and
-33 focused tests on Node and Bun. Both direct and Firebase Admin wire controls
+36 focused tests on Node and Bun. Both direct and Firebase Admin wire controls
 produce identical 25 requests and 23 results against 9.4.0. A read-only comparison
 of VentiMath's backend types adds no diagnostic locations; its existing 18
 unrelated diagnostics remain, so it is not a clean app-build claim.
@@ -81,20 +81,30 @@ assert private module layout or APIs outside this contract; that total is not
 claimed as replacement conformance. Generated protocol definitions live in
 `vgoogle-cloud-firestore-api`; this package contains no copied SDK runtime.
 
-Snapshot materialization now copies known Firestore Value containers directly,
+Snapshot materialization copies known Firestore Value containers directly,
 while preserving owned bytes, nested maps/arrays, decoded int64 values, timestamp
-precision and unknown wire fields. Returned data remains independently decoded;
-there is no mutable decoded-data cache.
+precision and unknown wire fields. Decoding dispatches on the single wire tag,
+with the existing priority rules retained for multi-tag values. Hot field loops
+inline the prototype-collision guard; inherited setters and prototype-shaped keys
+remain safe. Resource paths are scanned without split/filter/join arrays, and
+timestamps retain full validation with fixed-width formatting. Returned data
+remains independently decoded; there is no mutable decoded-data cache.
 
-The refreshed isolated 12-field fixture records snapshot creation plus decoding
-at 7.3 → 8.6 microseconds on Node (+17%) and 3.9 → 5.5 microseconds on Bun (+42%).
-The remaining overhead is explicit: this path copies caller-owned protocol data,
-unlike upstream's retained references. Encoding takes 9%/31% less time on Node/Bun,
-independent snapshot equality 13%/43% less, and query construction 38%/8% less.
-Node compiled merge writes take 70% less time; Bun's write direction is unestablished
-beyond the controls in this recording. Bun timestamp operations cost 23 additional
-nanoseconds (+39%); Node's difference is inconclusive. All raw samples and controls
-are retained. These are local CPU measurements, not application or network latency
+The nine-case isolated suite records the original snapshot-creation/decoding
+fixture at 7.4 → 6.4 microseconds on Node (13% less time). Bun records
+3.9 → 4.0 microseconds (+2.3%); that difference reverses across process pairs and
+does not clear the 2.6% control spread. This path still copies caller-owned
+protocol data, unlike upstream's retained references.
+
+Protobuf-decoded snapshots with exact int64 values take 41%/47% less time on
+Node/Bun; fresh data from retained snapshots takes 58%/48% less. Encoding,
+compiled writes, query construction and independent equality also improve beyond
+the controls on both runtimes. Short timestamp operations take 17% less time on
+Node; Bun's short case is inconclusive. Mixed signed timestamps and fractions
+take 28%/38% less time on Node/Bun. All nine Node cases and seven Bun cases improve
+beyond controls; two Bun directions remain unestablished. No measured regression
+clears the controls in this recording. All raw samples, including outliers, are
+retained. These are local CPU measurements, not application or network latency
 claims; earlier recordings remain in repository history.
 
 See [current isolated measurements](bench/results/README.md),

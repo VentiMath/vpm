@@ -109,3 +109,30 @@ test('snapshot cloning preserves noncanonical and future wire fields without ali
  fields.a.arrayValue.future.bytes[0]=9;fields.b.mapValue.future[0]=9;fields.c.stringValue.future=9;fields.d.unknown.future[0]=9;fields.h.future[0]=9;source.future.items[0]=9;
  assert.deepEqual(structuredClone(snapshot._proto),expected);assert(Object.hasOwn(snapshot._proto.fields.e.arrayValue,'values'));
 });
+test('optimized decoding preserves oneof priority, empty values, wire defaults and owned fields',()=>{
+ const db=database(),values=[{nullValue:0},{stringValue:''},{booleanValue:false},{integerValue:'-0'},{doubleValue:'NaN'},{arrayValue:{}},{mapValue:{}},{bytesValue:''},{stringValue:'first',integerValue:'2'},{unknown:true,stringValue:'kept'}];
+ const expected=[null,'',false,-0,NaN,[],{},Buffer.alloc(0),'first','kept'];
+ for(let i=0;i<values.length;i++)assert.deepEqual(db._serializer.decodeValue(values[i]),expected[i]);
+ const fields=JSON.parse('{"__proto__":{"mapValue":{"fields":{"safe":{"booleanValue":true}}}},"constructor":{"stringValue":"own"},"toString":{"stringValue":"data"}}'),symbol=Symbol('not a wire field');fields[symbol]={stringValue:'ignored'};
+ let called=0;Object.defineProperty(Object.prototype,'vpmSetterFixture',{configurable:true,set(){called++;throw Error('must not call a prototype setter');}});
+ try{
+  Object.defineProperty(fields,'vpmSetterFixture',{enumerable:true,value:{integerValue:'7'}});
+  const snapshot=db.snapshot_({name:db.doc('c/a')._name,fields});const result=snapshot.data();
+  assert.equal(called,0);assert.equal(result.vpmSetterFixture,7);assert.equal(Object.getPrototypeOf(result),Object.prototype);assert.equal(Object.hasOwn(result,'__proto__'),true);assert.deepEqual(result.__proto__,{safe:true});assert.equal(result.constructor,'own');assert.equal(result.toString,'data');assert.deepEqual(Object.getOwnPropertySymbols(result),[]);assert.deepEqual(Object.getOwnPropertySymbols(snapshot._proto.fields),[]);
+ }finally{delete Object.prototype.vpmSetterFixture;}
+});
+test('timestamp fast validation retains boundaries, precision, ordering and invalid-input rejection',()=>{
+ const valid=[];
+ for(const seconds of [-62135596800,-62135596799,-1,0,1,1700000000,253402300799])for(const nanos of [0,1,123,999999,500000000,999999999]){
+  const a=new F.Timestamp(seconds,nanos),b=new upstream.Timestamp(seconds,nanos);assert.equal(a.valueOf(),b.valueOf());assert.equal(a.toDate().getTime(),b.toDate().getTime());assert.equal(a.toMillis(),b.toMillis());valid.push(a);
+ }
+ assert.deepEqual(valid.map(t=>t.valueOf()).toSorted(),valid.map(t=>t.valueOf()));
+ for(const value of [NaN,Infinity,-Infinity,1.5,'1',1n,undefined,null]){assert.throws(()=>new F.Timestamp(value,0),RangeError);assert.throws(()=>new F.Timestamp(0,value),RangeError);}
+ for(const value of [NaN,Infinity,-Infinity,'1',1n,undefined,null])assert.throws(()=>F.Timestamp.fromMillis(value),RangeError);
+ for(const args of [[-62135596801,0],[253402300800,0],[0,-1],[0,1000000000]])assert.throws(()=>new F.Timestamp(...args),RangeError);
+});
+test('resource-path scan keeps normalization, depth parity and rejection behavior',()=>{
+ const {path}=require('../app/values');const previous=(value,even)=>{if(typeof value!=='string'||!value||value.includes('//'))throw new TypeError('Invalid resource path');const parts=value.split('/').filter(Boolean);if(parts.length%2!==(even?0:1))throw new TypeError(even?'A document path must have an even number of segments':'A collection path must have an odd number of segments');return parts.join('/');};
+ for(let count=0;count<40;count++)for(const prefix of ['','/'])for(const suffix of ['','/'])for(const even of [false,true]){const input=prefix+Array.from({length:count},(_,i)=>'x'+i).join('/')+suffix;let expected;try{expected=previous(input,even);}catch(error){assert.throws(()=>path(input,even),{name:error.name,message:error.message});continue;}assert.equal(path(input,even),expected);}
+ for(const value of [undefined,null,1,{},'//a/b','a//b','a/b//'])assert.throws(()=>path(value,true),TypeError);
+});
