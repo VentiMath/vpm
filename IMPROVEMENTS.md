@@ -227,6 +227,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vreact-remove-scroll-bar](packages/vreact-remove-scroll-bar) | react-remove-scroll-bar 2.3.8 | Independent React 19 body scrollbar compensation with vreact-style-singleton and no tslib. CSS-option parity, nested locks, hydration, body-owned cleanup, constants-only entry and actual scroll-lock caller verified. |
 | [vreact-remove-scroll](packages/vreact-remove-scroll) | react-remove-scroll 2.7.2 | Independent React 19 scroll isolation with document-scoped listeners and weak event identity. Preserves nested locks, portals, shards and lazy sidecars; fixes stale wheel decisions, touch reversal and overwritten refs/handlers. VPM dependencies only. |
 | [varia-hidden](packages/varia-hidden) | aria-hidden 1.2.6 | Independent DOM isolation without tslib. Per-attribute ownership, idempotent undo, exact restoration, safe markers and invalid-target handling; actual Radix menus and Chrome focus behavior verified. |
+| [vradix-react-compose-refs](packages/vradix-react-compose-refs) | @radix-ui/react-compose-refs 1.1.5 | Independent React 19 ref composition; lazy cleanup storage, complete once-only teardown after errors, stable hook identity. Unchanged current/app Slot callers verified. |
 | [vradix-primitive](packages/vradix-primitive) | @radix-ui/primitive 1.2.0 | Independent event/DOM helpers, correct secondary Document ownership, DOM-only timer types and conditional exports. Original 1.1.3 callers retained as controls. |
 | [vuse-callback-ref](packages/vuse-callback-ref) | use-callback-ref 1.3.3 | Independent React 19 observable/merged/transformed refs, no tslib; preserved falsy defaults, owned membership snapshots and complete merged assignments after callback errors. Original tests, scroll-lock UI ref wiring and packed consumers verified. |
 | [vredux](packages/vredux) | redux 5.0.1 | Independent store, cached reentrant listener snapshots and middleware composition; own prototype-named reducer/action keys. All 78 public-API tests, DND store caller and packed consumers verified. |
@@ -370,7 +371,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **145 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **146 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5408,3 +5409,32 @@ iterative. Current and app-version comparisons, an unchanged Radix Toggle caller
 clean archives, browser bundling and TypeScript 7 pass on Node 24/Bun.
 See the [contract](packages/vradix-primitive/README.md) and
 [untrimmed measurements](packages/vradix-primitive/bench/results/README.md).
+
+## vradix-react-compose-refs
+
+Independently implements `composeRefs` and `useComposedRefs` for React 19,
+matching **@radix-ui/react-compose-refs 1.1.5** with app-version 1.1.2 controls.
+There are no runtime dependencies beyond the React peer. Plain attachment avoids
+allocating a cleanup-result array, and stable hook inputs reuse the composed
+callback without creating an unused replacement each render.
+
+Cleanup is idempotent and reentrant-safe. All refs are released in order even
+when a cleanup throws, then the first thrown value is propagated unchanged;
+upstream stops at the first error and can leave later refs attached. Normal
+assignment, cleanup ordering, null handling and attachment exceptions retain
+upstream behavior. Arbitrary callback side effects are not rolled back.
+
+Each implementation passes 125 mixed-ref combinations, with paired controls for
+intentional cleanup differences. Unchanged Slot 1.5.0 and 1.2.3 callers pass
+StrictMode mount/update/unmount checks with original and VPM composition. Hook
+identity, SSR, clean npm/Bun archives, module identity, TypeScript 7 declarations
+and browser bundling also pass on Node 24 and Bun. The package is built but not
+yet released or adopted.
+
+See the [contract](packages/vradix-react-compose-refs/README.md),
+[caller controls](scripts/compose-refs-conformance/README.md) and
+[isolated measurements](packages/vradix-react-compose-refs/bench/results/README.md).
+Plain attachment uses 34% less time on Node 24 and 66.8% less on Bun; mixed
+attachment/cleanup uses 29.6% and 37.4% less, respectively, beyond control spread
+in every process pair. Creation is inconclusive; no application-rendering
+improvement is claimed.

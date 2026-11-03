@@ -1,0 +1,16 @@
+{
+  "name": "vpm-compose-refs-conformance",
+  "private": true,
+  "description": "Pinned Radix ref composition and unchanged Slot caller controls",
+  "dependencies": {
+    "@radix-ui/react-compose-refs": "1.1.5",
+    "compose-refs-legacy": "npm:@radix-ui/react-compose-refs@1.1.2",
+    "@radix-ui/react-slot": "1.5.0",
+    "slot-legacy": "npm:@radix-ui/react-slot@1.2.3",
+    "@testing-library/react": "16.3.2",
+    "@types/react": "19.2.14",
+    "jsdom": "27.4.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  }
+}

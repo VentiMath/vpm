@@ -762,6 +762,13 @@
       "name": "vradix-primitive",
       "version": "1.2.0",
     },
+    "packages/vradix-react-compose-refs": {
+      "name": "vradix-react-compose-refs",
+      "version": "1.1.5",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vraf-schd": {
       "name": "vraf-schd",
       "version": "4.0.3",
@@ -1262,6 +1269,8 @@
     "vqs": ["vqs@workspace:packages/vqs"],
 
     "vradix-primitive": ["vradix-primitive@workspace:packages/vradix-primitive"],
+
+    "vradix-react-compose-refs": ["vradix-react-compose-refs@workspace:packages/vradix-react-compose-refs"],
 
     "vraf-schd": ["vraf-schd@workspace:packages/vraf-schd"],
 

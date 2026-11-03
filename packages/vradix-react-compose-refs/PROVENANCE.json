@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-compose-refs",
+    "version": "1.1.5",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/compose-refs",
+    "integrity": "sha512-+48PbAAbq3didjJxa+OaWY2ZwgAKsNiRGyeHKszblZMQ+kcpd9pAaT11cMkGEie0vsOi3QdeTE6d5Fe3Gn61kA==",
+    "checked": "2026-11-02"
+  },
+  "sourceSHA256": {
+    "dist/index.js": "1852eaec18dce998951bc2eff56db8a5f0fab87768d9295f54363ecaf7d29b4b",
+    "dist/index.d.ts": "fe42fce0ec0d998fd2c5d8717ce88969ac9359a2d1ec73da10faac68e1d0a287",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "composeRefs and useComposedRefs for React 19 callback/object refs, cleanup callbacks and stable hook identity. No copied upstream runtime."
+  },
+  "changes": [
+    "Allocate cleanup storage only for callbacks that return cleanup functions.",
+    "Idempotent, reentrant-safe cleanup completes all refs before propagating the first thrown error, including non-Error values.",
+    "Memoize composition when participating hook refs are unchanged.",
+    "React 19 peer only; no other runtime dependencies. Current 1.1.5 and app 1.1.2 controls are pinned."
+  ]
+}
