@@ -1,6 +1,6 @@
 {
   "license": "Apache-2.0",
-  "checkedOn": "2026-10-29",
+  "checkedOn": "2026-11-03",
   "upstream": {
     "package": "google-auth-library",
     "version": "11.3.2",
@@ -121,13 +121,22 @@
     "Keep public declarations independent of ambient Node, Undici and DOM types.",
     "Reuse parsed immutable private keys only per owning credential object; bound self-signed JWT cache to 500 entries.",
     "Supply key-file issuer before signing; return revocation promises, use POST form bodies and preserve newer tokens.",
-    "Preserve transport errors instead of copying untrusted token response text into their messages."
+    "Preserve transport errors instead of copying untrusted token response text into their messages.",
+    "Replace upstream runtime with independent application-scoped discovery, credential clients and token orchestration.",
+    "Encode Compute ID-token audiences as query parameters; upstream truncates audiences containing ampersands.",
+    "Keep request options caller-owned, avoid replaying Node/Web streams on authentication failures, coalesce identity-token refreshes and reject nonfinite token expiries."
   ],
   "implementation": {
-    "kind": "upstream-derived with focused modifications",
-    "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "The Google Auth runtime is upstream-derived, with VPM dependency integration and focused fixes. Its current-release conformance is not evidence of an independently written SDK.",
-    "targetScope": "GoogleAuth and the application-default/service-account token flows used by Firebase Admin, Storage and Firestore.",
-    "remainingWork": "Independently implement the application-facing runtime paths; retain current conformance and correctness fixes as requirements."
+    "kind": "independent application-facing implementation",
+    "replacementStatus": "complete for documented application scope",
+    "basis": "Public contracts, inspected upstream source, retained tests and real SDK callers; not a clean-room claim. The former upstream runtime is removed and remains in Git history.",
+    "targetScope": "GoogleAuth ADC/project/universe discovery, service-account JWT and token exchange, authorized-user refresh, Compute metadata credentials, ID tokens, impersonation, authenticated requests/fetch, pass-through emulator credentials and Storage signing.",
+    "unsupported": [
+      "AWS/workload identity/executable credential providers",
+      "downscoping and GDCH",
+      "browser authentication",
+      "interactive OAuth authorization-code and PKCE flows"
+    ],
+    "retained": "Independent signing-key and ID-token verification helpers; structural platform declarations. Original fixture source hashes describe comparison evidence, not shipped runtime."
   }
 }

@@ -436,7 +436,7 @@
     },
     "packages/vgoogle-auth-library": {
       "name": "vgoogle-auth-library",
-      "version": "0.1.0",
+      "version": "11.3.2",
       "dependencies": {
         "vgaxios": "workspace:*",
         "vgcp-metadata": "workspace:*",

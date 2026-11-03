@@ -8,6 +8,13 @@ const {compiler} = require('../platform-types.cjs');
 const root = path.resolve(__dirname, '../..');
 const fixture = path.join(__dirname, 'upstream-11.3.2');
 const upstream = process.argv.includes('--upstream');
+if (!upstream) {
+  for (const flags of [['--upstream'], []]) {
+    const result = spawnSync(process.execPath, [path.join(__dirname, 'application.cjs'), ...flags], {stdio:'inherit', timeout:60000});
+    assert.equal(result.status, 0, 'Application-facing Google Auth comparison failed');
+  }
+  process.exit(0);
+}
 const modules = path.join(root, 'scripts/google-http-conformance/node_modules');
 const resolve = createRequire(path.join(modules, 'google-auth11/package.json')).resolve;
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'vgoogle-auth-conformance-'));

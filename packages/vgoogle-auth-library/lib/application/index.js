@@ -1,0 +1,18 @@
+'use strict';
+const clients=require('./client'),tokens=require('./token'),{GoogleAuth}=require('./googleauth');
+exports.AuthClient=clients.AuthClient;
+exports.PassThroughClient=clients.PassThroughClient;
+exports.OAuth2Client=clients.OAuth2Client;
+exports.UserRefreshClient=clients.UserRefreshClient;
+exports.JWT=clients.JWT;
+exports.Compute=clients.Compute;
+exports.Impersonated=clients.Impersonated;
+exports.IdTokenClient=clients.IdTokenClient;
+exports.LoginTicket=clients.LoginTicket;
+exports.DEFAULT_UNIVERSE=clients.DEFAULT_UNIVERSE;
+exports.JWTAccess=tokens.JWTAccess;
+exports.GoogleToken=tokens.GoogleToken;
+exports.GoogleAuth=GoogleAuth;
+exports.auth=new GoogleAuth();
+exports.gaxios=require('vgaxios');
+exports.gcpMetadata=require('vgcp-metadata');

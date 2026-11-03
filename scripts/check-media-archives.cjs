@@ -148,7 +148,7 @@ try {
       assert.doesNotMatch(entries.join('\n'),/(?:test|bench|node_modules)\/|\.map$/);
     }
     if (name === 'vfirebase-admin') {
-      assert.deepEqual(metadata.dependencies, {'vgoogle-auth-library':'0.1.0','vjsonwebtoken':'0.1.0','vjwks-rsa':'0.1.0'});
+      assert.deepEqual(metadata.dependencies, {'vgoogle-auth-library':require('../packages/vgoogle-auth-library/package.json').version,'vjsonwebtoken':'0.1.0','vjwks-rsa':'0.1.0'});
       assert.deepEqual(metadata.optionalDependencies, {'vgoogle-cloud-firestore':'0.1.0','vgoogle-cloud-storage':'8.4.0'});
       const entries=run('tar',['-tzf',packed]).trim().split('\n').filter(f=>!f.endsWith('/')).map(f=>f.replace(/^package\//,''));
       const files=fs.readdirSync(path.join(root,'packages',name,'lib'),{recursive:true}).filter(f=>fs.statSync(path.join(root,'packages',name,'lib',f)).isFile()).map(f=>'lib/'+f);

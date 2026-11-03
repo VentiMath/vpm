@@ -308,7 +308,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vhttp-proxy-agent](packages/vhttp-proxy-agent) | http-proxy-agent 9.1.0; 7.0.2 caller coverage | Two VPM dependencies, prepared absolute requests, preserved streamed bodies, bounded TCP/TLS connections, credential-safe diagnostics and isolated configuration. |
 | [vstream-events](packages/vstream-events) | stream-events 1.0.5 | Zero dependencies; independent once-only read/write notifications, exact method results and receivers, reentrant restoration and validation before mutation. |
 | [vretry-request](packages/vretry-request) | retry-request 9.1.0 | Zero dependencies; cancelled backoff, once-only attempt settlement, monotonic retry budgets, bounded timers, isolated stream events and safe transport teardown. |
-| [vgoogle-auth-library](packages/vgoogle-auth-library) | google-auth-library 11.3.2 | Four VPM dependencies; isolated JWT caches, shared forced refreshes, per-owner private-key parsing, strict ID-token verification and private debug messages. |
+| [vgoogle-auth-library](packages/vgoogle-auth-library) | google-auth-library 11.3.2 | Independent backend auth runtime; four VPM dependencies, isolated JWT caches, shared refreshes, encoded Compute audiences, safe request retries and strict ID-token verification. |
 | [vgcp-metadata](packages/vgcp-metadata) | gcp-metadata 9.2.3 | Entirely VPM runtime tree; first-success endpoint races, finite deadlines, direct requests, credential-safe errors/logs, bounded bulk reads and endpoint-aware availability caching. |
 | [vjson-bigint](packages/vjson-bigint) | json-bigint 1.0.0 | Zero dependencies; exact numeric wrappers/native bigints, strict JSON syntax, bounded parsing, exact prototype-key policies, reentrant serialization and safe replacers. |
 | [vgoogle-logging-utils](packages/vgoogle-logging-utils) | google-logging-utils 2.1.1 / 0.0.2 | Current activation/stdout behavior, structured filtering and protected message fields, public custom-backend support, stable logger identity, correct chaining, inert disabled loggers and isolated sink failures; zero dependencies. |
@@ -2533,31 +2533,39 @@ cancellation, timeout semantics and intentional differences.
 
 ## vgoogle-auth-library
 
-Targets Google Auth 11.3.2's credential and token flows used by backend SDKs:
-application-default discovery, service-account JWTs, OAuth refresh credentials,
-Compute, ID tokens, impersonation, authenticated requests and Cloud Storage-style
-signing. Its four dependencies and their runtime trees are VPM packages. Native
-Base64 conversion and VPM JWS verification remove two direct dependencies.
+An independent implementation of Google Auth 11.3.2's backend application contract
+replaces the former upstream runtime and declarations. It covers ADC discovery,
+service-account JWTs, authorized-user refresh, Compute metadata, ID tokens,
+impersonation, authenticated requests/fetch, emulator credentials and Storage
+signing. Its four dependencies and their runtime trees are VPM packages.
 
 JWT caches distinguish claims and scope boundaries, invalidate rotated credentials
-and isolate returned headers. Forced token refreshes coalesce, key-file issuers
-are supplied before signing, malformed expiry values reject, and revocation uses
-a POST body with correct promise/cache lifecycle. ID-token verification enforces
-canonical JWS, algorithm/key agreement and finite numeric timestamps. Verification
-errors and default debug messages omit token and request payloads.
+and isolate returned headers. Forced exchanges coalesce; key-file issuers are
+supplied before signing, invalid expiry values reject, and revocation uses a POST
+body with correct promise/cache lifecycle. OAuth refreshes cannot overwrite newly
+assigned credentials. Failed refreshes can retry. Authentication retries preserve
+caller options, stop after one replay and exclude consumed Node/Web streams.
+Compute ID-token audiences preserve embedded query delimiters that upstream loses.
+Strict ID-token verification and private default debug messages are retained.
 
-Across three paired runs, Node signing for new audiences improves 33.6%, forced
-JWT exchanges with stub transport 33.1%, RSA ID-token verification 46.3% and local
-authenticated HTTP 23.5%. Bun improves the two signing cases 13.0%/14.1% and
-verification 22.3%; local HTTP is near parity. Remaining small costs include
-OAuth2 construction (+87 ns Node, +155 ns Bun) and Node cached JWT headers (+48 ns).
-See [all samples and controls](packages/vgoogle-auth-library/bench/results/README.md).
+Twenty-eight focused tests, public comparisons against 11.3.2, and real Firebase
+Admin, Storage and Firestore/GAX callers validate the contract on Node and Bun.
+Fresh npm/Bun archive and TypeScript 7 consumers pass. The historical 545-test
+suite now runs against upstream only; it is not claimed as replacement coverage.
 
-Dedicated external-provider suites, browser bundling and live cloud deployments
-are outside the current verification claim. Version 9/10 callers are not blindly
-aliased to version 11; Headers and SDK upgrades need explicit consumer checks.
-Current Storage and gax retry paths are now checked with `vretry-request` 9.1.0
-compatibility; the replacement removes its upstream `extend` dependency.
+AWS/workload identity/executable providers, downscoping, GDCH, interactive OAuth
+and browser authentication are not implemented. Unsupported providers reject
+explicitly; there is no live-cloud deployment claim. See the
+[package contract](packages/vgoogle-auth-library/README.md) and
+[isolated benchmark evidence](packages/vgoogle-auth-library/bench/results/README.md).
+
+Fresh process-isolated measurements with one pinned 2,048-bit RSA fixture show
+OAuth2 construction taking 83.6% less time on Node and 78.9% on Bun. New-audience
+JWT signing improves 33.8%/13.7%, forced stubbed exchanges 33.4%/13.5%, and ID-token
+verification 47.2%/19.2%. Cached JWT headers retain a Node cost of 39 ns (343 to
+382 ns, +12.3% paired) for isolation and credential validation; Bun improves 44.6%.
+Local HTTP and cached project lookup have no established direction. The prior
+shared-process reports are superseded; their historical results remain in Git.
 
 ## vgcp-metadata
 

@@ -382,6 +382,7 @@ jobs:
       - run: node scripts/google-http-conformance/json.cjs
       - run: node scripts/google-http-conformance/metadata.cjs
       - run: node scripts/google-auth-conformance/run.cjs
+      - run: node scripts/google-auth-conformance/run.cjs --upstream
       - run: |
           node scripts/retry-request-conformance/run.cjs
           node scripts/retry-request-conformance/timers.cjs
@@ -796,6 +797,7 @@ jobs:
       - run: bun scripts/google-http-conformance/json.cjs
       - run: bun scripts/google-http-conformance/metadata.cjs
       - run: bun scripts/google-auth-conformance/run.cjs
+      - run: bun scripts/google-auth-conformance/run.cjs --upstream
       - run: |
           bun scripts/retry-request-conformance/run.cjs
           bun scripts/retry-request-conformance/timers.cjs

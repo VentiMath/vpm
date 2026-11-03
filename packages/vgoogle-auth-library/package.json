@@ -1,7 +1,7 @@
 {
   "name": "vgoogle-auth-library",
-  "version": "0.1.0",
-  "description": "Google authentication clients with VPM transport, isolated JWT caches and credential-safe diagnostics",
+  "version": "11.3.2",
+  "description": "Independent Google authentication for VentiMath ADC, service-account and SDK flows",
   "type": "commonjs",
   "main": "index.js",
   "types": "index.d.ts",
