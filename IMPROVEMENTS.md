@@ -76,7 +76,7 @@ now have current comparison targets:
 | Suite and time zones verified | vfull-ui-headless-calendar | @full-ui/headless-calendar 7.1.3 on temporal-polyfill 1.0.1; its vitest suite, and every IANA zone around every offset change from 1840 to 2100 against the runtime's own time zone data | [@full-ui/headless-calendar 7.1.3](https://www.npmjs.com/package/@full-ui/headless-calendar), checked November 1, 2026 |
 | Caller paths verified | vfirebase-functions | 351 selected application-contract assertions; HTTP, callable, schedules, task queues, Firestore triggers and deployment manifests | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked November 2, 2026 |
 | Application scope complete | vfirebase-admin | firebase-admin 14.5.0; 1,801 selected original tests, application/server and identity-audit callers, App Check verification/replay | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked November 3, 2026 |
-| Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
+| Application scope independently implemented | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 213 cross-SDK fixtures, 14 Listen fixtures, 33 focused checks and identical local gRPC results directly and through Firebase Admin 14.5.0 | [Contract and evidence](packages/vgoogle-cloud-firestore/README.md), checked November 3, 2026 |
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
 | Runtime dependency eliminated | vfunctional-red-black-tree | Retained 1.0.1 reference; Firestore owns its independent persistent snapshot index | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
 | Caller paths verified | vfast-deep-equal | fast-deep-equal 3.1.3; Firestore 9.4.0 document, query and transform equality | [fast-deep-equal 3.1.3](https://www.npmjs.com/package/fast-deep-equal), checked October 30, 2026 |
@@ -1417,7 +1417,7 @@ failures do not mask completed results. Functions snapshots preserve decoded int
 values, timestamp precision and independent byte storage. Listeners use persistent
 snapshots and resume only after a consistent published read time.
 
-**213 retained cross-SDK write/query fixtures, 14 Listen fixtures and 31 focused
+**213 retained cross-SDK write/query fixtures, 14 Listen fixtures and 33 focused
 tests** pass on Node 24 and Bun. Direct and Firebase Admin controls produce identical
 25 local wire requests and 23 results. Real REST and reconnect tests, OpenTelemetry
 SDK 3 integration, clean npm/Bun archives and TypeScript 7 declarations also pass.
@@ -1427,15 +1427,21 @@ diagnostic locations to its 18 existing diagnostics. This is not app adoption or
 live-cloud validation. The original SDK's 1,009 active tests still run as an upstream
 control; that number is not claimed as replacement coverage.
 
-The isolated 12-field fixture records compiled merge writes taking 69% less time
-on Node and 37% less on Bun. Encoding improves 10%/29%, and equality of independently
-received snapshots improves 13%/41%. Node query construction improves 38%; Bun's
-direction is inconclusive. Snapshot creation plus data decoding costs 52% more on
-Node (6.2 to 9.4 microseconds) and 113% more on Bun (3.2 to 7.1 microseconds). This
-path includes copying caller-owned protocol data, unlike upstream's retained
-references. Bun timestamp operations cost about 20 additional nanoseconds (43%);
-Node's timestamp difference is inconclusive. These are local CPU measurements,
-not application or network latency claims.
+Snapshot materialization now copies known Firestore Value containers directly,
+while preserving owned bytes, nested maps/arrays, decoded int64 values, timestamp
+precision and unknown wire fields. Returned data remains independently decoded;
+there is no mutable decoded-data cache.
+
+The refreshed isolated 12-field fixture records snapshot creation plus decoding
+at 7.3 → 8.6 microseconds on Node (+17%) and 3.9 → 5.5 microseconds on Bun (+42%).
+The remaining overhead is explicit: this path copies caller-owned protocol data,
+unlike upstream's retained references. Encoding takes 9%/31% less time on Node/Bun,
+independent snapshot equality 13%/43% less, and query construction 38%/8% less.
+Node compiled merge writes take 70% less time; Bun's write direction is unestablished
+beyond the controls in this recording. Bun timestamp operations cost 23 additional
+nanoseconds (+39%); Node's difference is inconclusive. All raw samples and controls
+are retained. These are local CPU measurements, not application or network latency
+claims; earlier recordings remain in repository history.
 
 See the [package contract](packages/vgoogle-cloud-firestore/README.md),
 [conformance record](scripts/firestore-conformance/README.md),

@@ -48,10 +48,12 @@ deletes, resets and retained snapshots over actual local Listen streams.
 compares lazy imports, one transport stack, prompt termination errors and listener
 cleanup; client construction uses implementation-specific observation adapters.
 
-Thirty-one focused package tests cover values, vectors and zero thresholds,
+Thirty-three focused package tests cover values, vectors and zero thresholds,
 prototype-safe maps, immutable arguments, invalid writes, converters, incomplete
 reads, transaction retries/failed reads, bulk failures, recursive deletion,
-decoded Functions int64/timestamp snapshots, stream cancellation, real REST requests, lazy imports and the persistent index.
+decoded Functions int64/timestamp snapshots, nested wire-container/byte ownership,
+unknown wire-field preservation, stream cancellation, real REST requests, lazy
+imports and the persistent index.
 
 `VPM_APP_REPO=/path/to/ventimath-private node scripts/firestore-conformance/app-types.cjs`
 compiles a detached snapshot twice, mapping only Firestore and its Admin types.

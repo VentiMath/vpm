@@ -14,6 +14,40 @@ function copyProtocol(value){
   if(Array.isArray(value))return value.map(copyProtocol);
   const out={};for(const key of Object.keys(value))own(out,key,copyProtocol(value[key]));return out;
 }
+// Firestore Values are tagged unions. Clone their wire containers directly
+// instead of walking every scalar and wrapper through the generic copier.
+function copyFields(fields){
+  if(!fields||typeof fields!=='object'||Array.isArray(fields)||fields instanceof Uint8Array)return copyProtocol(fields);
+  const out={};for(const key of Object.keys(fields))own(out,key,copyValue(fields[key]));return out;
+}
+function copyValue(value){
+  if(!value||typeof value!=='object'||Array.isArray(value)||value instanceof Uint8Array)return copyProtocol(value);
+  const keys=Object.keys(value);
+  if(keys.length!==1)return copyProtocol(value);
+  const kind=keys[0],item=value[kind];
+  switch(kind){
+    case 'nullValue': return {nullValue:copyProtocol(item)};
+    case 'stringValue': return {stringValue:copyProtocol(item)};
+    case 'booleanValue': return {booleanValue:copyProtocol(item)};
+    case 'doubleValue': return {doubleValue:copyProtocol(item)};
+    case 'integerValue': return {integerValue:copyProtocol(item)};
+    case 'referenceValue': return {referenceValue:copyProtocol(item)};
+    case 'bytesValue': return {bytesValue:copyProtocol(item)};
+    case 'timestampValue': return {timestampValue:copyProtocol(item)};
+    case 'geoPointValue': return {geoPointValue:copyProtocol(item)};
+    case 'arrayValue':
+      if(item&&Object.keys(item).length===1&&Object.hasOwn(item,'values')&&Array.isArray(item.values))return {arrayValue:{values:item.values.map(copyValue)}};
+      return copyProtocol(value);
+    case 'mapValue':
+      if(item&&Object.keys(item).length===1&&Object.hasOwn(item,'fields'))return {mapValue:{fields:copyFields(item.fields)}};
+      return copyProtocol(value);
+    default:return copyProtocol(value);
+  }
+}
+function copyDocument(document){
+  const out={};for(const key of Object.keys(document))own(out,key,key==='fields'?copyFields(document[key]):copyProtocol(document[key]));return out;
+}
+
 class Firestore {
   constructor(settings={}){this._settings={};this._listeners=new Set();this._writers=new Set();this._streams=new Set();this._active=new Set();this._clients=new Map();this._serializer=new Codec(this);this.settings(settings);}
   settings(settings){if(this._started)throw new Error('Firestore settings cannot change after the first request');if(!plain(settings))throw new TypeError('Expected Firestore settings');for(const key of ['projectId','databaseId'])if(settings[key]!==undefined&&(typeof settings[key]!=='string'||!settings[key]||settings[key].includes('/')))throw new TypeError('Invalid '+key);for(const key of ['ignoreUndefinedProperties','useBigInt','preferRest','ssl'])if(settings[key]!==undefined&&typeof settings[key]!=='boolean')throw new TypeError('Invalid '+key);this._settings={...this._settings,...settings};this._projectId=this._settings.projectId;}
@@ -42,7 +76,7 @@ class Firestore {
   }
   doc(relative){return new Q.DocumentReference(this,relative);}collection(relative){return new Q.CollectionReference(this,relative);}collectionGroup(name){return new Q.CollectionGroup(this,name);}batch(){return new W.WriteBatch(this);}bulkWriter(options){this._assertOpen();return new W.BulkWriter(this,options);}
   _reference(name){const match=/^projects\/([^/]+)\/databases\/([^/]+)\/documents\/(.+)$/.exec(name);if(!match)throw new TypeError('Invalid document resource');const db=(match[1]===this._projectId||!this._projectId)&&match[2]===this.databaseId?this:new Firestore({...this._settings,projectId:match[1],databaseId:match[2]});return db.doc(match[3]);}
-  snapshot_(document,readTime){const ref=this._reference(typeof document==='string'?document:document.name);return new Q.DocumentSnapshot(ref,typeof document==='string'?undefined:copyProtocol(document),readTime);}
+  snapshot_(document,readTime){const ref=this._reference(typeof document==='string'?document:document.name);return new Q.DocumentSnapshot(ref,typeof document==='string'?undefined:copyDocument(document),readTime);}
   getAll(...refs){return this._getAll(refs);}
   async _getAll(arguments_,selector={},capture){
     this._assertOpen();const refs=[...arguments_],options=plain(refs.at(-1))?refs.pop():{};if(!refs.length)throw new TypeError('getAll requires document references');for(const ref of refs)W.reference(this,ref);

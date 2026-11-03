@@ -23,42 +23,33 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-03T15:11:18.966Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-03T17:41:35.514Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| encode / 12-field document | 3648 | 3281 | -9.8% | -9.8% | -10% | 1% | lower time in every pair, beyond control spread |
-| decode / snapshot data() of 12-field document | 6187 | 9395 | 51.9% | 51.7% | 51.9% | 0.9% | higher time in every pair, beyond control spread |
-| write / compile batch merge with transforms | 38594 | 11833 | -69.4% | -69.5% | -69.4% | 1.4% | lower time in every pair, beyond control spread |
-| query / where, orderBy, limit to proto | 1699 | 1067 | -37.6% | -37% | -37.8% | 4.7% | lower time in every pair, beyond control spread |
-| compare / isEqual of independently read equal snapshots | 7600 | 6652 | -13.1% | -13.1% | -12.9% | 1.6% | lower time in every pair, beyond control spread |
-| timestamp / fromMillis, toDate, valueOf | 69 | 69 | 0.4% | 6.2% | -0.5% | 2.5% | unestablished at this precision |
+| encode / 12-field document | 4353 | 3956 | -8.6% | -8.4% | -9.3% | 1% | lower time in every pair, beyond control spread |
+| decode / snapshot data() of 12-field document | 7337 | 8581 | 17.4% | 17.4% | 17% | 1.7% | higher time in every pair, beyond control spread |
+| write / compile batch merge with transforms | 45981 | 13981 | -69.8% | -69.8% | -69.3% | 2% | lower time in every pair, beyond control spread |
+| query / where, orderBy, limit to proto | 2054 | 1263 | -38.5% | -38% | -38.5% | 4.1% | lower time in every pair, beyond control spread |
+| compare / isEqual of independently read equal snapshots | 9159 | 7983 | -12.8% | -13.4% | -12.8% | 2.1% | lower time in every pair, beyond control spread |
+| timestamp / fromMillis, toDate, valueOf | 82 | 83 | 2.4% | 1.8% | 13.7% | 2.5% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-03T15:12:01.373Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-03T17:42:00.998Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| encode / 12-field document | 3769 | 2665 | -28.8% | -30.2% | -28.6% | 2% | lower time in every pair, beyond control spread |
-| decode / snapshot data() of 12-field document | 3239 | 7057 | 113.3% | 119.3% | 111.3% | 1.7% | higher time in every pair, beyond control spread |
-| write / compile batch merge with transforms | 27629 | 17385 | -37.1% | -37.4% | -35.8% | 3.2% | lower time in every pair, beyond control spread |
-| query / where, orderBy, limit to proto | 1664 | 1544 | -7.7% | -3.2% | -7.7% | 1.7% | unestablished at this precision |
-| compare / isEqual of independently read equal snapshots | 8934 | 5215 | -40.8% | -40.8% | -40.8% | 1.7% | lower time in every pair, beyond control spread |
-| timestamp / fromMillis, toDate, valueOf | 52 | 72 | 43.3% | 43.3% | 44.4% | 2% | higher time in every pair, beyond control spread |
-
-## Work represented
-
-Write cases include deferred upstream serialization, so both sides produce the
-compiled write. Snapshot equality uses two independent protocol responses,
-avoiding a shared-input identity shortcut. Snapshot materialization includes
-VPM's copy of caller-owned data; upstream retains those references. The encoding
-case uses each SDK's internal encoder, so it does not include upstream's separate
-public-write validation. End-to-end write construction is reported separately.
+| encode / 12-field document | 4463 | 3087 | -30.9% | -31.7% | -29.4% | 2.7% | lower time in every pair, beyond control spread |
+| decode / snapshot data() of 12-field document | 3870 | 5525 | 42.4% | 45.5% | 40.1% | 32.7% | higher time in every pair, beyond control spread |
+| write / compile batch merge with transforms | 32284 | 20453 | -36.6% | -18.5% | -37% | 0.9% | unestablished at this precision |
+| query / where, orderBy, limit to proto | 1945 | 1796 | -7.8% | -6.5% | -8.9% | 2.9% | lower time in every pair, beyond control spread |
+| compare / isEqual of independently read equal snapshots | 10624 | 6046 | -43.1% | -44.1% | -42.4% | 1.2% | lower time in every pair, beyond control spread |
+| timestamp / fromMillis, toDate, valueOf | 60 | 83 | 38.8% | 38.8% | 37.8% | 2.2% | higher time in every pair, beyond control spread |
 
 ## Reproduce
 

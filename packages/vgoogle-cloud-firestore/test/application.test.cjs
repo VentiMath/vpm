@@ -89,3 +89,23 @@ test('fresh Listen reconnect removes stale documents and keeps query ordering',a
  db._getClient=async()=>({listen(){active=new Duplex({objectMode:true,read(){},write(request,_encoding,done){done();const n=++attempts;assert.deepEqual(request.addTarget.query.structuredQuery.orderBy.map(o=>o.field.fieldPath),['score','__name__']);queueMicrotask(()=>{for(const [id,score] of (n===1?[['a',2],['b',1]]:[['b',1]]))this.push({documentChange:{document:{name:db.doc('c/'+id)._name,fields:{score:{integerValue:String(score)}},updateTime:{seconds:1}},targetIds:[1]}});this.push({targetChange:{targetChangeType:'CURRENT'}});this.push({targetChange:{targetChangeType:'NO_CHANGE',readTime:{seconds:n}}});});}});active.cancel=()=>active.destroy();return active;}});
  const timer=setTimeout(()=>reject(Error('fresh Listen timeout')),2000);try{stop=db.collection('c').where('score','>',0).orderBy('score').onSnapshot(snapshot=>{received.push(snapshot.docs.map(d=>d.id));if(received.length===1)setImmediate(()=>active.emit('error',Object.assign(Error('disconnect'),{code:14})));else{try{assert.deepEqual(received,[['b','a'],['b']]);assert.deepEqual(snapshot.docChanges().map(c=>[c.type,c.doc.id,c.oldIndex,c.newIndex]),[['removed','a',1,-1]]);resolve();}catch(error){reject(error);}}},reject);await finished;}finally{clearTimeout(timer);stop?.();await db.terminate();}
 });
+test('snapshot wire cloning retains every value and isolates nested containers and metadata',()=>{
+ const db=new F.Firestore({projectId:'fixture',useBigInt:true}),Document=F.protos.google.firestore.v1.Document;
+ const input=JSON.parse('{"__proto__":{"polluted":true},"constructor":"own","nested":{"items":[null,false,1.25,"text"]}}');
+ Object.assign(input,{n:9223372036854775807n,bytes:Buffer.from([3,4]),time:new F.Timestamp(-1,999999999),point:new F.GeoPoint(12,34),ref:db.doc('c/other'),emptyMap:{},emptyArray:[],vector:F.FieldValue.vector([1,2])});
+ const wire={name:db.doc('c/a')._name,fields:db._serializer.encodeFields(input),createTime:{seconds:1,nanos:9},updateTime:{seconds:2,nanos:10}};
+ for(const source of [wire,Document.decode(Document.encode(wire).finish())]){
+  const snapshot=db.snapshot_(source,{seconds:3},'protobufJS'),expected=snapshot.data();
+  source.fields.nested.mapValue.fields.items.arrayValue.values[0].nullValue=1;
+  source.fields.nested.mapValue.fields.items.arrayValue.values[3].stringValue='changed';
+  source.fields.bytes.bytesValue[0]=99;source.fields.time.timestampValue.nanos=0;source.createTime.nanos=0;
+  const result=snapshot.data();assert.deepEqual(result,expected);assert.equal(result.n,9223372036854775807n);assert.equal(snapshot.createTime.nanoseconds,9);
+  result.nested.items.push('extra');result.bytes[1]=99;result.__proto__.polluted=false;assert.deepEqual(snapshot.data(),expected);assert.equal({}.polluted,undefined);
+ }
+});
+test('snapshot cloning preserves noncanonical and future wire fields without aliasing',()=>{
+ const db=database(),fields={a:{arrayValue:{values:[{stringValue:'a'}],future:{bytes:Buffer.from([1])}}},b:{mapValue:{fields:{n:{integerValue:'1'}},future:[2]}},c:{stringValue:{future:3}},d:{unknown:{future:[4]}},e:{arrayValue:{values:undefined}},f:{mapValue:{fields:null}},g:{arrayValue:{}},h:{stringValue:'x',future:[5]},i:null};
+ const source={name:db.doc('c/a')._name,fields,future:{items:[6]}},snapshot=db.snapshot_(source,null),expected=structuredClone(snapshot._proto);
+ fields.a.arrayValue.future.bytes[0]=9;fields.b.mapValue.future[0]=9;fields.c.stringValue.future=9;fields.d.unknown.future[0]=9;fields.h.future[0]=9;source.future.items[0]=9;
+ assert.deepEqual(structuredClone(snapshot._proto),expected);assert(Object.hasOwn(snapshot._proto.fields.e.arrayValue,'values'));
+});
