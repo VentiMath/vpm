@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-use-layout-effect",
+    "version": "1.1.4",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/use-layout-effect",
+    "checked": "2026-11-03",
+    "integrity": "sha512-K20DkRkUwDnxEYMBPcg3Y6voLkEy5p5QQmszZgLngKKiC7dzBR/aEuK3w1qlx2JWDUNH6FluahYdgR3BP+QbYw=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "ca0420a83ef1606921fef92bf5fef6f62daf72d5c0e0edfe06f54af4fa97e388",
+    "dist/index.d.ts": "b6bf0f09572b7a0d36583378943e98aacd159e292ff734c5cd7f9c6347dd617e",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "The useLayoutEffect export on React 19, including its module-load browser selection and server no-op."
+  },
+  "changes": [
+    "No bundler interop scaffold; direct React hook identity in the browser.",
+    "Preserves server no-op and module-load environment choice; no claimed React scheduling speedup."
+  ]
+}

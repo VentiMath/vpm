@@ -1,0 +1,6 @@
+ 'use strict';
+const path=require('node:path'),assert=require('node:assert/strict');
+const fixture=path.resolve(__dirname,'../../../scripts/radix-layout-effect-conformance'),upstream=path.join(fixture,'node_modules/@radix-ui/react-use-layout-effect'),vpm=path.resolve(__dirname,'..'),load=require(path.join(fixture,'load.cjs'));
+const React=require(path.join(fixture,'node_modules/react')),{renderToStaticMarkup:ssr}=require(path.join(fixture,'node_modules/react-dom/server'));
+const cases=[{name:'SSR / layout-effect component',make:file=>{const {useLayoutEffect}=load(file===upstream?'upstream':'vpm');function View(){useLayoutEffect(()=>{throw Error('server effect ran')},[]);return React.createElement('span',null,'layout')}const tree=React.createElement(View);return()=>ssr(tree)},validate:html=>assert.equal(html,'<span>layout</span>')}];
+require('../../../scripts/bench-process.cjs').run({root:vpm,upstream,vpm,cases,files:['index.cjs','index.mjs','index.d.ts','package.json','PROVENANCE.json','bench/compare.cjs','../../scripts/radix-layout-effect-conformance/load.cjs','../../scripts/radix-layout-effect-conformance/package-lock.json','../../scripts/radix-layout-effect-conformance/node_modules/@radix-ui/react-use-layout-effect']}).catch(e=>{console.error(e);process.exitCode=1});

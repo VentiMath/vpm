@@ -1,0 +1,14 @@
+{
+  "name": "vpm-radix-layout-effect-conformance",
+  "private": true,
+  "dependencies": {
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@testing-library/react": "16.3.2",
+    "jsdom": "27.4.0",
+    "@radix-ui/react-use-layout-effect": "1.1.4",
+    "@radix-ui/react-use-callback-ref": "1.1.5"
+  }
+}

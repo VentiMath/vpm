@@ -789,6 +789,13 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vradix-react-use-layout-effect": {
+      "name": "vradix-react-use-layout-effect",
+      "version": "1.1.4",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vraf-schd": {
       "name": "vraf-schd",
       "version": "4.0.3",
@@ -1297,6 +1304,8 @@
     "vradix-react-primitive": ["vradix-react-primitive@workspace:packages/vradix-react-primitive"],
 
     "vradix-react-slot": ["vradix-react-slot@workspace:packages/vradix-react-slot"],
+
+    "vradix-react-use-layout-effect": ["vradix-react-use-layout-effect@workspace:packages/vradix-react-use-layout-effect"],
 
     "vraf-schd": ["vraf-schd@workspace:packages/vraf-schd"],
 
