@@ -1,0 +1,4 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),{spawnSync}=require('node:child_process'),path=require('node:path');
+test('server helpers fail explicitly and module entries share identity',async()=>{const c=require('..'),m=await import('../index.mjs');assert.equal(c.canUseDOM,false);assert.equal(c.composeEventHandlers,m.composeEventHandlers);for(const fn of [c.getOwnerDocument,c.getOwnerWindow,c.getActiveElement])assert.throws(()=>fn(null),/outside of the DOM/)});
+test('current/app-version comparisons and original Radix caller',()=>{for(const [file,args]of [['run.cjs',[]],['caller.cjs',['--upstream']],['caller.cjs',[]]]){const r=spawnSync(process.execPath,[path.resolve(__dirname,'../../../scripts/radix-primitive-conformance',file),...args],{encoding:'utf8'});assert.equal(r.status,0,r.stdout+r.stderr)}});

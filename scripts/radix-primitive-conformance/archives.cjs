@@ -1,0 +1,15 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),{spawnSync}=require('node:child_process');
+const root=path.resolve(__dirname,'../..'),temp=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-primitive-'));
+function run(cmd,args,cwd=temp){const r=spawnSync(cmd,args,{cwd,encoding:'utf8',timeout:120000,env:{...process.env,BUN_INSTALL_CACHE_DIR:path.join(temp,'cache')}});assert.equal(r.status,0,r.stdout+r.stderr);return r.stdout}
+try{
+ run('bun',['pm','pack','--ignore-scripts','--destination',temp,'--quiet'],path.join(root,'packages/vradix-primitive'));const archive=path.join(temp,'vradix-primitive-1.2.0.tgz');assert.doesNotMatch(run('tar',['-tzf',archive]),/\/(test|bench|node_modules)\//);
+ for(const manager of ['npm','bun']){const cwd=path.join(temp,manager);fs.mkdirSync(cwd);fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify({private:true,type:'module',dependencies:{'vradix-primitive':'file:'+archive}}));run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund','--cache',path.join(temp,'npm-cache')]:[])],cwd);
+ fs.writeFileSync(path.join(cwd,'test.mjs'),"import assert from 'node:assert/strict';import {composeEventHandlers} from 'vradix-primitive';import {IS_DEVELOPMENT} from 'vradix-primitive/is-development';import {createRequire} from 'node:module';const c=createRequire(import.meta.url)('vradix-primitive');assert.equal(c.composeEventHandlers,composeEventHandlers);assert.equal(IS_DEVELOPMENT,process.argv.includes('dev'));assert.equal(composeEventHandlers(undefined,()=>42)({defaultPrevented:false}),42);");
+ for(const runtime of ['node','bun']){run(runtime,['test.mjs'],cwd);run(runtime,['--conditions=development','test.mjs','dev'],cwd)}
+ fs.writeFileSync(path.join(cwd,'test.ts'),"import {composeEventHandlers,getOwnerWindow,getOwnerDocument,getActiveElement,type Immediate} from 'vradix-primitive';import {IS_DEVELOPMENT} from 'vradix-primitive/is-development';const x:Window=getOwnerWindow(document);const y:Document=getOwnerDocument(document);const z:HTMLElement|null=getActiveElement(document,true);composeEventHandlers<MouseEvent>(e=>e.preventDefault(),e=>void e.button)(new MouseEvent('click'));const flag:boolean=IS_DEVELOPMENT;let handle:Immediate;void handle!;void x;void y;void z;void flag;\n// @ts-expect-error requires an event\ncomposeEventHandlers<number>();");
+ for(const resolution of ['NodeNext','Bundler']){fs.writeFileSync(path.join(cwd,'tsconfig.json'),JSON.stringify({compilerOptions:{strict:true,noEmit:true,target:'ES2022',module:resolution==='Bundler'?'ESNext':resolution,moduleResolution:resolution,lib:['ES2022','DOM'],types:[]},files:['test.ts']}));run('node',[require('../platform-types.cjs').compiler().path,'-p','tsconfig.json'],cwd)}
+ run('bun',['build','test.ts','--target=browser','--outfile=browser.js'],cwd);
+ }
+ console.log('Clean npm/Bun archives, CJS/ESM identity, development conditions, DOM-only TS7 and browser bundle pass.');
+}finally{fs.rmSync(temp,{recursive:true,force:true})}

@@ -1,0 +1,19 @@
+{
+  "upstream": {
+    "name": "@radix-ui/primitive",
+    "version": "1.2.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/core/primitive",
+    "integrity": "sha512-KABY+VMIRPJL+Vyzv/335FEhXXD/xDv8BMb1kl48/aXJZMH0LtHCTx5ga5RnxaEP3nZHtmTLf1P9vanmFX46bw=="
+  },
+  "checked": "2026-11-02",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete",
+    "scope": "Public 1.2.0 event and DOM helpers plus is-development conditional entry. No copied upstream runtime."
+  },
+  "changes": [
+    "Document inputs resolve their own document/window rather than the global document.",
+    "Iterative focus traversal avoids recursion limits; inaccessible iframe documents preserve the iframe as focus target.",
+    "Timer types compile in DOM-only consumers without requiring Node ambient declarations."
+  ]
+}

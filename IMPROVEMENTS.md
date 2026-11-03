@@ -227,6 +227,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vreact-remove-scroll-bar](packages/vreact-remove-scroll-bar) | react-remove-scroll-bar 2.3.8 | Independent React 19 body scrollbar compensation with vreact-style-singleton and no tslib. CSS-option parity, nested locks, hydration, body-owned cleanup, constants-only entry and actual scroll-lock caller verified. |
 | [vreact-remove-scroll](packages/vreact-remove-scroll) | react-remove-scroll 2.7.2 | Independent React 19 scroll isolation with document-scoped listeners and weak event identity. Preserves nested locks, portals, shards and lazy sidecars; fixes stale wheel decisions, touch reversal and overwritten refs/handlers. VPM dependencies only. |
 | [varia-hidden](packages/varia-hidden) | aria-hidden 1.2.6 | Independent DOM isolation without tslib. Per-attribute ownership, idempotent undo, exact restoration, safe markers and invalid-target handling; actual Radix menus and Chrome focus behavior verified. |
+| [vradix-primitive](packages/vradix-primitive) | @radix-ui/primitive 1.2.0 | Independent event/DOM helpers, correct secondary Document ownership, DOM-only timer types and conditional exports. Original 1.1.3 callers retained as controls. |
 | [vuse-callback-ref](packages/vuse-callback-ref) | use-callback-ref 1.3.3 | Independent React 19 observable/merged/transformed refs, no tslib; preserved falsy defaults, owned membership snapshots and complete merged assignments after callback errors. Original tests, scroll-lock UI ref wiring and packed consumers verified. |
 | [vredux](packages/vredux) | redux 5.0.1 | Independent store, cached reentrant listener snapshots and middleware composition; own prototype-named reducer/action keys. All 78 public-API tests, DND store caller and packed consumers verified. |
 | [vcss-box-model](packages/vcss-box-model) | css-box-model 1.2.1 | Independent CSS box geometry, isolated default spacing, owning-window style lookup and direct rectangle construction. All original tests, DND caller paths and packed consumers verified. |
@@ -369,7 +370,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **144 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **145 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5387,3 +5388,12 @@ Chrome native inert/focus checks cover the behavior. Built, not released or
 adopted. [Contract](packages/varia-hidden/README.md),
 [fixture](scripts/aria-conformance/README.md),
 [measurements](packages/varia-hidden/bench/results/README.md).
+
+## vradix-primitive
+
+Independent 1.2.0 event composition and DOM helpers with zero dependencies.
+A secondary Document retains its own window/document; iframe focus traversal is
+iterative. Current and app-version comparisons, an unchanged Radix Toggle caller,
+clean archives, browser bundling and TypeScript 7 pass on Node 24/Bun.
+See the [contract](packages/vradix-primitive/README.md) and
+[untrimmed measurements](packages/vradix-primitive/bench/results/README.md).

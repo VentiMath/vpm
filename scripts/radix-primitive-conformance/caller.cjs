@@ -1,0 +1,9 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),{createRequire}=require('node:module'),{JSDOM}=require('jsdom');
+const dom=new JSDOM('<body></body>',{url:'https://test.invalid',pretendToBeVisual:true});
+for(const name of ['window','document','navigator','HTMLElement','Node','MutationObserver'])Object.defineProperty(globalThis,name,{value:dom.window[name],configurable:true});
+globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+const React=require('react'),{render,fireEvent,screen,cleanup}=require('@testing-library/react'),original=process.argv.includes('--upstream'),file=require.resolve('@radix-ui/react-toggle'),local=createRequire(file),mod={exports:{}};let calls=0;
+function req(name){if(name==='@radix-ui/primitive'){const api=require(original?'@radix-ui/primitive':'../../packages/vradix-primitive');return {...api,composeEventHandlers(...args){calls++;return api.composeEventHandlers(...args)}}}return local(name)}
+new Function('require','module','exports',fs.readFileSync(file,'utf8'))(req,mod,mod.exports);
+try{const Toggle=mod.exports.Root;const states=[];render(React.createElement(Toggle,{onPressedChange:v=>states.push(v)},'toggle'));const button=screen.getByRole('button');fireEvent.click(button);assert.equal(button.getAttribute('aria-pressed'),'true');fireEvent.click(button);assert.deepEqual(states,[true,false]);cleanup();render(React.createElement(Toggle,{onClick:e=>e.preventDefault(),onPressedChange:()=>assert.fail('prevented')},'toggle'));fireEvent.click(screen.getByRole('button'));assert.equal(screen.getByRole('button').getAttribute('aria-pressed'),'false');assert(calls>0);console.log((original?'Original':'VPM')+': unchanged Radix Toggle caller toggles, respects preventDefault and cleans up.')}finally{cleanup();dom.window.close()}

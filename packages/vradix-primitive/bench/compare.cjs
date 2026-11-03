@@ -1,0 +1,5 @@
+'use strict';
+const path=require('node:path'),assert=require('node:assert/strict');
+const upstream=path.resolve(__dirname,'../../../scripts/radix-primitive-conformance/node_modules/@radix-ui/primitive'),vpm=path.resolve(__dirname,'..');
+const cases=[{name:'compose two handlers',make:file=>{const {composeEventHandlers}=require(file);return()=>composeEventHandlers(()=>{},()=>{})},validate:f=>assert.equal(typeof f,'function')},...[false,true].map(prevented=>({name:prevented?'prevented event':'two-handler dispatch',make:file=>{let value=0;const handler=require(file).composeEventHandlers(()=>{value=1},()=>{value=2}),event={defaultPrevented:prevented};return()=>{handler(event);return value}},validate:v=>assert.equal(v,prevented?1:2)}))];
+require('../../../scripts/bench-process.cjs').run({root:vpm,upstream,vpm,cases,files:['index.cjs','package.json','bench/compare.cjs','../../scripts/radix-primitive-conformance/package-lock.json','../../scripts/radix-primitive-conformance/node_modules/@radix-ui/primitive']}).catch(e=>{console.error(e);process.exitCode=1});
