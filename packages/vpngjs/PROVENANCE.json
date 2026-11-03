@@ -1,0 +1,40 @@
+{
+  "upstream": {
+    "name": "pngjs",
+    "version": "7.0.0",
+    "repository": "https://github.com/pngjs/pngjs",
+    "integrity": "sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow==",
+    "checked": "2026-11-03"
+  },
+  "sourceSHA256": {
+    "lib/png-sync.js": "867b1a78dcd3e45458eb4f0af01acd48f38d3a31225bd7cb8dd8ee3966ab54be",
+    "lib/parser-sync.js": "266c9fb230b90075022b3f54f5710a9cacb71ca565f83fce66e7cbd1b7e9b507",
+    "lib/parser.js": "574e43fea28a28cc6feb7ab62a480a86bb75411ee4bfaba76a7e9d7310b6e94c",
+    "lib/format-normaliser.js": "c73989d85bef5d33ce571095bf0d96927261730d8b0f79c9d48f971fcbdd0be0",
+    "LICENSE": "be75ef59c5cf59715588a17a82dff7dd3e83c4dba3c458676bb9311e05fbedc5"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "PNG.sync.read for application figure validation and RGBA pixel inspection. Static/default PNG image decoding: five color types, legal sample depths, transparency, all filters and Adam7. No writer, stream parser, constructor or gamma adjustment API."
+  },
+  "specification": "https://www.w3.org/TR/png-3/",
+  "changes": [
+    "Independent bounded chunk parser, scanline reconstruction and sample conversion, using supported-runtime zlib inflate and CRC32.",
+    "Input and pixel bounds before bitmap allocation; exact inflated lengths including Adam7 passes and strict chunk ordering/CRC checks.",
+    "No PNG stream/writer implementation, compatibility shims or third-party runtime dependencies; app uses synchronous reading only.",
+    "Follow PNG decoder compatibility rules for final IDAT padding, transparency-key high bits and empty palette transparency."
+  ],
+  "verification": {
+    "corpus": "162 exact valid PNG comparisons; 14 invalid files rejected. Missing-IDAT upstream outcome is runtime/state-dependent and not an equality control. Corpus revision and hashes live in scripts/png-conformance/images.json.",
+    "application": {
+      "commit": "0f2ef94b994f40f567f71fc17d30f619060ea1c7",
+      "tests": "28 unchanged problemImage tests pass against upstream and VPM on Bun 1.4.0; source copies temporary only.",
+      "sourceSHA256": {
+        "problemImage.ts": "e676ca11026eff3af552f3b384d4e5af4d7e5205adbaec074547449159317fb6",
+        "problemImage.test.ts": "f17ab8bb8ebaf0918c5c7e65c2046c1bee6a80953ca6032ef0dc00739d38698d"
+      }
+    },
+    "limitations": "No writer, async parser, PNG constructor, bitblt, gamma adjustment, 16-bit skipRescale output or animation-frame API. Resource defaults match app bounds; no adoption or release claim."
+  }
+}

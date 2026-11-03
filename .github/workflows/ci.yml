@@ -69,6 +69,8 @@ jobs:
       - run: npm --prefix scripts/radix-id-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-id-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-id-conformance/archives.cjs
+      - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/png-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: node scripts/aria-conformance/browser.cjs
@@ -494,6 +496,8 @@ jobs:
       - run: npm --prefix scripts/radix-id-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-id-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-id-conformance/archives.cjs
+      - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/png-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs

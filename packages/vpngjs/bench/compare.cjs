@@ -1,0 +1,9 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),{createHash}=require('node:crypto');
+const fixture=path.resolve(__dirname,'../../../scripts/png-conformance'),upstream=path.join(fixture,'node_modules/pngjs'),vpm=path.resolve(__dirname,'..');
+const {Resvg}=require(path.join(fixture,'node_modules/@resvg/resvg-js'));
+const medium=new Resvg('<svg xmlns="http://www.w3.org/2000/svg" width="960" height="480"><rect width="960" height="480" fill="white"/>'+Array.from({length:24},(_,i)=>'<path d="M36 '+(20+i*17)+' h700 v4 H36z" fill="'+(i%3?'#112233':'#cc3344')+'"/>').join('')+'</svg>').render().asPng();
+const inputs=[['small RGBA',fs.readFileSync(path.join(fixture,'images/basn6a08.png'))],['interlaced 16-bit RGB',fs.readFileSync(path.join(fixture,'images/basi2c16.png'))],['indexed transparency',fs.readFileSync(path.join(fixture,'images/tp0n3p08.png'))],['resvg 960×480',Buffer.from(medium)]];
+const controls=require("./expected.json");
+const cases=inputs.map(([name,input])=>{const expected=controls[name],hash=expected.pixelsSHA256;assert.equal(createHash('sha256').update(input).digest('hex'),expected.inputSHA256);return {name,make:file=>{const api=require(file===vpm?path.join(vpm,'index.cjs'):file).PNG;return()=>api.sync.read(input,{checkCRC:true});},validate:result=>{assert.equal(result.width,expected.width);assert.equal(result.height,expected.height);assert.equal(createHash('sha256').update(result.data).digest('hex'),hash);}};});
+require('../../../scripts/bench-process.cjs').run({root:vpm,upstream,vpm,cases,files:['index.cjs','index.mjs','index.d.ts','package.json','PROVENANCE.json','bench/compare.cjs','bench/expected.json','../../scripts/png-conformance/package-lock.json','../../scripts/png-conformance/images.json','../../scripts/png-conformance/node_modules/pngjs']}).catch(error=>{console.error(error);process.exitCode=1});

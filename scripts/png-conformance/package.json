@@ -1,0 +1,9 @@
+{
+  "name": "vpm-png-conformance",
+  "private": true,
+  "dependencies": {
+    "pngjs": "7.0.0",
+    "@resvg/resvg-js": "2.6.2",
+    "mathjax-full": "3.2.2"
+  }
+}

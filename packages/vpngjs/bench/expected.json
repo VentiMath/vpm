@@ -1,0 +1,26 @@
+{
+  "small RGBA": {
+    "inputSHA256": "559c594166eb156f461c9beff0f053196730dc998fdb0d2b801c89e6680860a5",
+    "width": 32,
+    "height": 32,
+    "pixelsSHA256": "2eb6a2cb3166e9c188add371157e9f81caa18fdf34d218844ed930b53b7431d2"
+  },
+  "interlaced 16-bit RGB": {
+    "inputSHA256": "ae13eba5fabbf7cbe8c01ec4458cdaa7e6bfdfcbd5109e831efaac9f39096027",
+    "width": 32,
+    "height": 32,
+    "pixelsSHA256": "a9dff6085fe81eea37100681e299a0504206137521dc59d592d87fa73b18c917"
+  },
+  "indexed transparency": {
+    "inputSHA256": "da40ddb18bd45db32ed03dc89e2250b096d808efe975a88477e4f5a91a4677c9",
+    "width": 32,
+    "height": 32,
+    "pixelsSHA256": "fcfd3c6af7fcfc3f3bcca2fed5f85c8b2ff9ee495a5190d20110141b4250eb2e"
+  },
+  "resvg 960×480": {
+    "inputSHA256": "ba0f780938024dbfb65a8834caf81745866ce1918eb7f7eb17d2216b95fbb641",
+    "width": 960,
+    "height": 480,
+    "pixelsSHA256": "89b8a716677b2adc4fae74479e5fd61d97e81caff798db8a10a8cf4dd05735c9"
+  }
+}

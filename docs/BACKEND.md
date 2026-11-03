@@ -31,7 +31,7 @@ VentiMath now declares upstream Firebase Admin `^14.5.0` and Firebase Functions
 the adoption blocker. Package release/consumption and application validation
 remain separate work; the checked Functions dependencies contain no VPM archives.
 
-## Remaining production dependency roots
+## Payment and image production dependencies
 
 These are real backend dependencies omitted from the earlier HTTP/cloud
 comparison inventory. The versions below describe the application's lockfile,
@@ -42,7 +42,11 @@ not a decision to recreate an older upstream release.
 | `stripe` | 17.7.0 | Payment operations, imported by `functions/src/payments.ts` | No replacement; inspect the used payment APIs before choosing scope |
 | `mathjax-full` | 3.2.2 | TeX to SVG in `functions/src/problemImage.ts` | No replacement; needs a rendering/API and current-upstream assessment |
 | `@resvg/resvg-js` | 2.6.2 | SVG rasterization in `functions/src/problemImage.ts` | No replacement; native engine reuse versus wrapper replacement is undecided |
-| `pngjs` | 7.0.0 | PNG image processing in `functions/src/problemImage.ts` | No replacement; a leaf candidate in the image pipeline |
+| `pngjs` | 7.0.0 | PNG image processing in `functions/src/problemImage.ts` | [vpngjs](../packages/vpngjs): independent synchronous reader completed, not released or adopted |
+
+The PNG reader has Node/Bun corpus controls and passes the app's unchanged image
+tests with its module substituted. It validates figures and exposes decoded pixels;
+it does not render TeX/SVG or replace the remaining MathJax/resvg stages.
 
 Their dependencies belong in the backend inventory too. Optional native binaries
 are platform artifacts, not automatically separate JavaScript rewrite projects.

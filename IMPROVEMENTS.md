@@ -153,7 +153,8 @@ and modular imports; the old Admin 12 namespace migration is already addressed.
 `vfirebase-functions` covers the documented Functions 7.4.0 application APIs on
 `vfirebase-admin`. These are completed VPM implementation paths, not an application
 cutover. Stripe, MathJax, resvg and PNG processing remain outside this HTTP/cloud
-work and have no VPM replacements. The [backend inventory](docs/BACKEND.md) records
+work. `vpngjs` now implements the app-used synchronous reader; Stripe, MathJax
+and resvg still have no VPM replacements. The [backend inventory](docs/BACKEND.md) records
 those remaining roots and current consumption evidence.
 
 Admin 12's older Storage, GAX and `form-data` branches remain historical comparison
@@ -231,6 +232,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vradix-react-context](packages/vradix-react-context) | @radix-ui/react-context 1.3.0 | Independent context/scope factories; shape-aware provider memoization fixes stale keys, stable composed scopes avoid identity churn. React 19, zero runtime dependencies beyond its peer; built, unreleased and unadopted. |
 | [vradix-react-use-callback-ref](packages/vradix-react-use-callback-ref) | @radix-ui/react-use-callback-ref 1.1.5 | Stable callbacks publish targets only on commit; React 19 insertion effects remove the fallback dependency. |
 | [vradix-react-direction](packages/vradix-react-direction) | @radix-ui/react-direction 1.2.0 | Independent React 19 direction provider/hook; unchanged public behavior, shared CJS/ESM context and actual RovingFocus keyboard controls. No runtime dependencies beyond React. |
+| [vpngjs](packages/vpngjs) | pngjs 7.0.0 | Independent app-used synchronous PNG reader: complete static formats/Adam7, bounded inflation, strict chunk structure and CRC checks. Matches 162 valid corpus images and actual app pixel tests. No writer/stream API; built, not adopted. |
 | [vradix-react-id](packages/vradix-react-id) | @radix-ui/react-id 1.1.4 | Native React 19 IDs with Radix prefix and override semantics; removes redundant state, layout effects and legacy counter. SSR/hydration and current Dropdown Menu ARIA links verified on React 19.1/19.2. |
 | [vradix-react-use-effect-event](packages/vradix-react-use-effect-event) | @radix-ui/react-use-effect-event 0.0.5 | React 19.1 commit-safe retained callbacks with one ref; direct native delegation on React 19.2. Drops the layout-effect dependency and separate memo hook. Actual reducer and current Dropdown Menu controls on both React versions. |
 | [vradix-react-focus-guards](packages/vradix-react-focus-guards) | @radix-ui/react-focus-guards 1.2.0 | Independent shared focus guards for React 19; per-body ownership prevents a second document stealing the first pair. StrictMode, SSR and unchanged current Menu caller verified; React is the only peer. |
@@ -379,9 +381,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 118 Node runtime packages' public declarations compile
+recorded by the tests. All 119 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **155 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **156 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5632,3 +5634,28 @@ and Dropdown Menu 2.2.1 trigger/content accessibility links. Clean archive and
 TypeScript 7 checks pass. [Isolated measurements](packages/vradix-react-id/bench/results/README.md)
 establish no timing difference beyond the noisy identical-source controls. Built,
 unreleased and unadopted.
+
+## vpngjs application reader
+
+The independently written synchronous reader targets pngjs 7.0.0 and the app's
+figure validation/pixel inspection. It supports static PNG color/depth formats,
+all filters and Adam7 using native zlib/CRC32, with no runtime dependencies.
+The writer, streaming constructor and unused transformation APIs are omitted.
+
+The parser checks bounds before bitmap allocation, bounds inflation to exact
+scanline sizes, checks ignored ancillary chunk CRCs, and rejects duplicate
+headers, missing image data and truncated zlib checksums. It also preserves the
+PNG specification's permitted IDAT padding and masks unused transparency bits.
+The default 16-million-pixel/10-MiB limits match the application.
+
+189 test groups pass on Node 24/Bun, including 162 exact valid corpus comparisons,
+14 invalid-image rejections, 192 upstream-encoded fixtures, malformed-input
+controls and real resvg output. The unchanged app's 28 image tests pass against
+either decoder on Bun. Packed consumers and TypeScript 7 pass. Built, unreleased
+and unadopted; Stripe, MathJax and resvg remain separate backend work.
+
+[Final isolated measurements](packages/vpngjs/bench/results/README.md) establish
+less time for small RGBA (−23.5% Node / −9.5% Bun), interlaced 16-bit RGB
+(−26.0% / −42.4%) and 960×480 resvg output (−17.7% / −19.5%). Indexed transparency
+is inconclusive on both runtimes. These are decode CPU timings, not measured
+end-to-end application gains.
