@@ -7,7 +7,9 @@ try{
  assert.equal(manifest.packages.length,2);const top=manifest.packages.find(p=>p.name==='vtanstack-react-query'),core=manifest.packages.find(p=>p.name==='vtanstack-query-core');assert(top&&core);
  for(const manager of ['npm','bun']){
   const cwd=path.join(temp,manager);fs.mkdirSync(cwd);
-  const dependencies={react:'19.2.4','react-dom':'19.2.4','@tanstack/react-query':published?top.url:'file:'+path.join(directory,top.asset),'@tanstack/react-query-devtools':'5.91.3',jsdom:'27.4.0','@testing-library/react':'16.3.2','@types/react':'19.2.14','@types/react-dom':'19.2.3'};
+  // Cover the application's React version as well as the current fixture peer.
+  const reactVersion=manager==='npm'?'19.1.0':'19.2.4';
+  const dependencies={react:reactVersion,'react-dom':reactVersion,'@tanstack/react-query':published?top.url:'file:'+path.join(directory,top.asset),'@tanstack/react-query-devtools':'5.91.3',jsdom:'27.4.0','@testing-library/react':'16.3.2','@types/react':'19.2.14','@types/react-dom':'19.2.3'};
   // npm can redirect the transitive URL before publication; Bun ignores name
   // overrides for URL dependencies, so its local check uses exact extracted bytes.
   // Published installs use the root URL alone, with no overrides and fresh caches.

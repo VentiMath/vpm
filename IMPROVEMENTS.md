@@ -1060,8 +1060,11 @@ Bun. The current baseline also checks static-query recovery, own-key shallow
 equality, shared request errors and offline mutation recovery. The release pins
 both archives to immutable public URLs, and clean npm/Bun consumers keep the
 original import name so React Devtools shares the application provider.
-TypeScript 7 and a Chrome production bundle are checked separately. This change
-does not deploy the replacements to VentiMath.
+Revision `tanstack-5.105.3-r2` routes React query and mutation notifications
+through the scheduler, fixing async retry transitions without delaying cache
+writes. Regression checks cover partial results, empty catalogs and mutation
+refreshes on React 19.1.0 and 19.2.4. TypeScript 7 and a Chrome production bundle
+are checked separately. This change does not deploy the replacements to VentiMath.
 
 See the [core](packages/vtanstack-query-core/README.md) and
 [React](packages/vtanstack-react-query/README.md) contracts, the

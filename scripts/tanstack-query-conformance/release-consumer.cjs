@@ -14,6 +14,8 @@ const React=from('react'),{render,act,waitFor,fireEvent,screen,cleanup}=from('@t
   render(React.createElement(api.QueryClientProvider,{client},React.createElement(App)));await waitFor(()=>assert.equal(screen.getByRole('button',{name:'Save record'}).textContent,'1'));assert.equal(captured,client);await waitFor(()=>assert(screen.getByText('["release-record"]')));
   fireEvent.click(screen.getByText('["release-record"]'));await waitFor(()=>assert(screen.getByText('Query Details')));fireEvent.click(screen.getByRole('button',{name:'Invalidate'}));await waitFor(()=>assert.equal(client.getQueryData(['release-record']),2));
   fireEvent.click(screen.getByRole('button',{name:'Save record'}));await waitFor(()=>assert.equal(screen.getByRole('button',{name:'Save record'}).textContent,'3'));assert.equal(fetches,3);
-  console.log('Installed app and unchanged React Devtools share one provider: query load, Devtools invalidation and mutation refresh pass.');
+  cleanup();
+  await require('./transitions.cjs')(React, api, from('@testing-library/react'));
+  console.log('Installed app and unchanged React Devtools share one provider: query load, invalidation, mutation refresh, scheduled notifications and async transition retries pass.');
  }finally{await act(async()=>cleanup());client.clear();dom.window.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

@@ -7,7 +7,8 @@ const dom = new JSDOM('<!doctype html><html><body></body></html>', {url: 'https:
 for (const name of ['window', 'document', 'navigator', 'HTMLElement', 'MutationObserver']) Object.defineProperty(globalThis, name, {value: dom.window[name], configurable: true, writable: true});
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 const React = require('react');
-const {renderHook, act, waitFor, cleanup} = require('@testing-library/react');
+const testing = require('@testing-library/react');
+const {renderHook, act, waitFor, cleanup} = testing;
 const deferred = () => { let resolve, reject; const promise = new Promise((yes, no) => {resolve = yes; reject = no;}); return {promise, resolve, reject}; };
 const delay = () => new Promise(resolve => setTimeout(resolve, 0));
 
@@ -99,6 +100,7 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 0));
       });
       await waitFor(() => assert.equal(rendered.result.current.data, 2)); rendered.unmount();
     }
-    console.log(`${current ? 'Current upstream 5.105.3' : upstream ? 'Upstream 5.105.0' : 'VPM'}: seven mounted React application scenarios passed.`);
+    await require('./transitions.cjs')(React, {...core, ...hooks}, testing);
+    console.log(`${current ? 'Current upstream 5.105.3' : upstream ? 'Upstream 5.105.0' : 'VPM'}: application scenarios passed, including scheduled query/mutation notifications and three async transition retries.`);
   } finally {cleanup(); clients.forEach(client => client.clear()); dom.window.close();}
 })().catch(error => {console.error(error); process.exitCode = 1;});

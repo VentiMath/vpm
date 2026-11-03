@@ -3,6 +3,17 @@
 export function createBindings(React, core) {
   const QueryClientContext = React.createContext(undefined);
 
+  function subscribeToObserver(observer, listener) {
+    let active = true;
+    // Keep cache writes synchronous, but deliver React updates through the
+    // notification scheduler. Immediate store notifications can interrupt an
+    // async transition while its action is still settling.
+    const unsubscribe = observer.subscribe(core.notifyManager.batchCalls(() => {
+      if (active) listener();
+    }));
+    return () => { active = false; unsubscribe(); };
+  }
+
   function QueryClientProvider({client, children}) {
     React.useEffect(() => { client.mount(); return () => client.unmount(); }, [client]);
     return React.createElement(QueryClientContext.Provider, {value: client}, children);
@@ -19,7 +30,7 @@ export function createBindings(React, core) {
     const client = useQueryClient(providedClient);
     const normalized = client.defaultQueryOptions(options);
     const observer = React.useMemo(() => new core.QueryObserver(client, normalized), [client, normalized.queryHash]);
-    const subscribe = React.useCallback(listener => observer.subscribe(listener), [observer]);
+    const subscribe = React.useCallback(listener => subscribeToObserver(observer, listener), [observer]);
     const snapshot = React.useCallback(() => observer.getCurrentResult(), [observer]);
     let result = React.useSyncExternalStore(subscribe, snapshot, snapshot);
     React.useEffect(() => { observer.setOptions(options); }, [observer, options]);
@@ -35,7 +46,7 @@ export function createBindings(React, core) {
   function useMutation(options, providedClient) {
     const client = useQueryClient(providedClient);
     const observer = React.useMemo(() => new core.MutationObserver(client, options), [client]);
-    const subscribe = React.useCallback(listener => observer.subscribe(listener), [observer]);
+    const subscribe = React.useCallback(listener => subscribeToObserver(observer, listener), [observer]);
     const snapshot = React.useCallback(() => observer.getCurrentResult(), [observer]);
     const result = React.useSyncExternalStore(subscribe, snapshot, snapshot);
     React.useEffect(() => { observer.setOptions(options); }, [observer, options]);

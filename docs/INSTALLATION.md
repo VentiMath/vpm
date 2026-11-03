@@ -191,19 +191,24 @@ as part of its separate cutover.
 
 ## TanStack Query
 
-The [TanStack release](https://github.com/VentiMath/vpm/releases/tag/tanstack-5.105.3)
+The [TanStack release](https://github.com/VentiMath/vpm/releases/tag/tanstack-5.105.3-r2)
 contains `vtanstack-react-query` and `vtanstack-query-core`, both **5.105.3** to
 identify their upstream comparison baseline. They independently implement the
 [query and mutation APIs VentiMath uses](../packages/vtanstack-react-query/README.md),
 not TanStack's entire export surface. Infinite queries, suspense, hydration,
 persistence and `useQueries` are outside this release.
 
+Revision **r2** fixes React notifications during async retry actions, including
+reloading partial results and retrying an empty catalog. Cache updates remain
+synchronous; React subscriptions use the notification scheduler. The original
+release and its assets are unchanged.
+
 Replace the application's existing dependency entry with:
 
 ```json
 {
   "dependencies": {
-    "@tanstack/react-query": "https://github.com/VentiMath/vpm/releases/download/tanstack-5.105.3/vtanstack-react-query-5.105.3.tgz"
+    "@tanstack/react-query": "https://github.com/VentiMath/vpm/releases/download/tanstack-5.105.3-r2/vtanstack-react-query-5.105.3.tgz"
   }
 }
 ```
@@ -227,7 +232,7 @@ The release includes `consumer-package.json`, `release-manifest.json` and
 archive/source hashes. Existing releases are immutable; revisions use a new tag.
 
 ```sh
-node scripts/pack-tanstack-release.cjs --ref COMMIT_SHA --tag tanstack-5.105.3 --out /absolute/path/to/empty-output
+node scripts/pack-tanstack-release.cjs --ref COMMIT_SHA --tag tanstack-5.105.3-r2 --out /absolute/path/to/empty-output
 node scripts/check-tanstack-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-tanstack-release.cjs /absolute/path/to/output --published

@@ -41,6 +41,22 @@ persistence, hydration and suspense are outside the replacement's contract.
 The [core](../../packages/vtanstack-query-core/README.md) and
 [React](../../packages/vtanstack-react-query/README.md) READMEs define the limits.
 
+## React transition regressions
+
+`transitions.cjs` is shared by the mounted application comparisons and clean
+release consumers. It verifies that cache writes stay synchronous while React
+query and mutation notifications respect a controlled scheduler. It then uses
+async `useTransition` buttons to retry partial results, an empty catalog with a
+dependent query, and a mutation that awaits a catalog refresh. Both upstream
+5.105.3 and VPM pass. The original VPM release fails the scheduler assertion.
+Release consumers exercise React 19.1.0 (npm) and 19.2.4 (Bun), with each consumer
+run on both Node 24 and Bun.
+
+The application's eight unchanged PaperPanel tests also pass with revised VPM
+and upstream 5.105.3; the original release fails the partial-results and
+empty-paper retries. This local check swaps only the Query package, retaining
+the app's React 19.1.0 and actual UI components; it does not change app source.
+
 ## Current baseline and release consumers
 
 `current.cjs` compares 5.105.3 and VPM for an empty static query recovering on

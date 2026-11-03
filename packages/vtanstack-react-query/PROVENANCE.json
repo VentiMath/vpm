@@ -7,7 +7,7 @@
     "tarballSha256": "530ecacb38fa754d3d406870780cc7887ee5ea91db1041da9ab089a9126b449b",
     "integrity": "sha512-dj5hGWZmwoc9NG4enoXuYbiYwb5FxgJYPVv06eUgicMTfEMTRXn08Xv9D/r1V8TfjAv+BpxdvZFzJ1h3hSWZcQ=="
   },
-  "checked": "2026-11-02",
+  "checked": "2026-11-03",
   "license": "MIT",
   "retainedEvidence": "../../scripts/tanstack-query-conformance/upstream",
   "implementation": {
@@ -21,7 +21,8 @@
       "suspense",
       "custom timer/environment providers"
     ],
-    "replacementStatus": "complete for documented application scope"
+    "replacementStatus": "complete for documented application scope",
+    "verification": "Scheduled query/mutation notifications and async transition retry controls match upstream 5.105.3 on Node 24 and Bun; release consumers cover React 19.1.0 and 19.2.4."
   },
   "retainedComparisonBaseline": {
     "name": "@tanstack/react-query",
