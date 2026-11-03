@@ -11,18 +11,13 @@ Earlier same-process performance differences are provisional, particularly small
 ones; they are not corrected by subtracting a fixed percentage. See the
 [measurement method](docs/DEVELOPMENT.md#replacing-a-package).
 
-Several recent SDK and UI entries below are currently patched upstream builds.
-Their compatibility evidence describes those forks, not independent VPM
-implementations. Replacement work is scoped to the APIs used by applications;
-that work must be verified before the implementation status changes.
-
-The implementation audit also covers earlier SDK work: Google Auth and gax
-retain upstream runtime code with focused changes; their provenance marks the
-application-facing independent rewrites as pending. Cloud Storage and protobuf
-now independently implement their documented application-used scopes, with
-retained compatibility material explicitly identified. Passing current-release tests and replacing dependency names establish
-compatibility, not independent implementation. Generated protocol schemas remain
-separately attributed inputs.
+SDK and UI rewrites are scoped to the APIs used by applications. Google Auth,
+Firestore, Firebase Admin/Functions, Cloud Storage and the other completed entries
+identify their independent application contracts in package provenance. GAX's
+application runtime is independent; unused administration/long-running-operation
+compatibility and generated protocols remain separately attributed. Passing
+upstream tests or changing dependency names alone does not establish an
+independent implementation.
 
 `vgrpc-js` now independently implements the public GAX/Firestore client. Its
 server, internal compatibility and experimental exports remain upstream-derived
@@ -2563,8 +2558,14 @@ assigned credentials. Failed refreshes can retry. Authentication retries preserv
 caller options, stop after one replay and exclude consumed Node/Web streams.
 Compute ID-token audiences preserve embedded query delimiters that upstream loses.
 Strict ID-token verification and private default debug messages are retained.
+Universe discovery falls back to `googleapis.com` when ADC is unavailable, as
+upstream does; authenticated operations still reject missing credentials. The
+integration gate now uses an empty ADC directory and a local metadata endpoint,
+so a developer's credential file cannot conceal this regression.
+[Universe lookup measurements](packages/vgoogle-auth-library/bench/universe-results/README.md)
+record the changed method independently.
 
-Twenty-eight focused tests, public comparisons against 11.3.2, and real Firebase
+Twenty-nine focused tests, public comparisons against 11.3.2, and real Firebase
 Admin, Storage and Firestore/GAX callers validate the contract on Node and Bun.
 Fresh npm/Bun archive and TypeScript 7 consumers pass. The historical 545-test
 suite now runs against upstream only; it is not claimed as replacement coverage.
@@ -2575,7 +2576,8 @@ explicitly; there is no live-cloud deployment claim. See the
 [package contract](packages/vgoogle-auth-library/README.md) and
 [isolated benchmark evidence](packages/vgoogle-auth-library/bench/results/README.md).
 
-Fresh process-isolated measurements with one pinned 2,048-bit RSA fixture show
+Measurements recorded before the universe-discovery follow-up, with one pinned
+2,048-bit RSA fixture, show
 OAuth2 construction taking 83.6% less time on Node and 78.9% on Bun. New-audience
 JWT signing improves 33.8%/13.7%, forced stubbed exchanges 33.4%/13.5%, and ID-token
 verification 47.2%/19.2%. Cached JWT headers retain a Node cost of 39 ns (343 to

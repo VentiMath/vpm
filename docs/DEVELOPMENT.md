@@ -37,15 +37,18 @@ bun run typecheck
 bun run check:docs
 node scripts/check-body-options.cjs
 bun scripts/check-body-options.cjs
-node scripts/integration.cjs
-bun scripts/integration.cjs
+node scripts/integration-offline.cjs
+bun scripts/integration-offline.cjs
 node scripts/check-media-archives.cjs
 ```
 
 The root suites test individual packages. Integration replaces supported upstream
 packages inside pinned consumers and exercises their real caller paths. It reports
 unsupported installed versions separately; verified replacement coverage does not
-mean the application has adopted or deployed it.
+mean the application has adopted or deployed it. The offline wrapper supplies an
+empty ADC directory and a local metadata endpoint; it does not use developer
+credentials or a live GCE metadata service. Individual metadata tests can replace
+that endpoint with their own local fixtures.
 
 Public declarations must compile without ambient Node, Undici or DOM types.
 The archive gate packs every runtime package and verifies isolated installation,

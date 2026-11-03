@@ -124,7 +124,8 @@
     "Preserve transport errors instead of copying untrusted token response text into their messages.",
     "Replace upstream runtime with independent application-scoped discovery, credential clients and token orchestration.",
     "Encode Compute ID-token audiences as query parameters; upstream truncates audiences containing ampersands.",
-    "Keep request options caller-owned, avoid replaying Node/Web streams on authentication failures, coalesce identity-token refreshes and reject nonfinite token expiries."
+    "Keep request options caller-owned, avoid replaying Node/Web streams on authentication failures, coalesce identity-token refreshes and reject nonfinite token expiries.",
+    "Match the default universe fallback when ADC is unavailable, preserving explicit universes, credential failures for authenticated operations and recovery on later lookup."
   ],
   "implementation": {
     "kind": "independent application-facing implementation",
@@ -138,5 +139,6 @@
       "interactive OAuth authorization-code and PKCE flows"
     ],
     "retained": "Independent signing-key and ID-token verification helpers; structural platform declarations. Original fixture source hashes describe comparison evidence, not shipped runtime."
-  }
+  },
+  "universeVerification": "Paired original/VPM missing-credential, configured-domain, retry and authenticated-rejection checks. Entire integration gate passes on Node/Bun with an empty ADC directory and a local metadata endpoint; no developer credentials. Fresh isolated lookup measurements are in bench/universe-results."
 }

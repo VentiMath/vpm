@@ -89,7 +89,15 @@ class GoogleAuth {
     return this.projectFlight;
   }
   async getUniverseDomainFromMetadataServer() {try{return await metadata.universe('universe-domain') || DEFAULT_UNIVERSE;}catch(error){if(error.response?.status===404)return DEFAULT_UNIVERSE;throw error;}}
-  async getUniverseDomain() {if(this.clientOptions.universeDomain)return this.clientOptions.universeDomain;const client=await this.getClient();if(client instanceof Compute){client.universeDomain=await this.getUniverseDomainFromMetadataServer();}return client.universeDomain || DEFAULT_UNIVERSE;}
+  async getUniverseDomain() {
+    if(this.clientOptions.universeDomain)return this.clientOptions.universeDomain;
+    let client;
+    // Endpoint discovery also serves credential-free emulator clients. A failed
+    // ADC lookup must not prevent selecting the default Google universe.
+    try{client=await this.getClient();}catch{return DEFAULT_UNIVERSE;}
+    if(client instanceof Compute)client.universeDomain=await this.getUniverseDomainFromMetadataServer();
+    return client.universeDomain || DEFAULT_UNIVERSE;
+  }
   getCredentials(done) {return callback((async()=>{
     const client=await this.getClient();
     if(client instanceof JWT){await client.getCredentials();return {client_email:client.email,private_key:client.key,universe_domain:client.universeDomain};}

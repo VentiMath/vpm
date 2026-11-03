@@ -46,3 +46,9 @@ package in the SDK stack. No live cloud account is used.
 The unused upstream `aws-security-credentials-fake.json` fixture is omitted: its
 AWS-shaped sample credentials trigger GitHub push protection. It is not required
 by any selected suite. Distributed source files retain their original hash checks.
+
+The universe-discovery regression compares the original and VPM with failing
+credential discovery: both return the default domain, retain explicit settings,
+recover on a later lookup and reject credential-dependent requests. The full
+`integration-offline.cjs` gate uses an empty ADC directory and a local 404 metadata
+server so local developer credentials cannot hide missing-credential failures.

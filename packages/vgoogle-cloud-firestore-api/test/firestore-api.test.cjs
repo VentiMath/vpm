@@ -5,7 +5,7 @@ const api = require('..');
 const gax = require('vgoogle-gax');
 
 // No credentials or metadata-server lookups are needed: the transport is stubbed.
-const options = {auth: {getUniverseDomain: async () => 'googleapis.com', getProjectId: async () => 'p'}, projectId: 'p'};
+const options = {auth: {getUniverseDomain: async () => 'googleapis.com', getProjectId: async () => 'p'}, projectId: 'p', sslCreds: gax.grpc.credentials.createInsecure()};
 const database = 'projects/p/databases/(default)', parent = database + '/documents';
 // A transport stub that records what each unary RPC receives.
 function fakeStub(calls, respond = () => ({})) {

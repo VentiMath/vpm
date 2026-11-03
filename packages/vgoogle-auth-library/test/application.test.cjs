@@ -66,3 +66,14 @@ test('public entry loads only independently implemented runtime files',()=>{
  const root=path.resolve(__dirname,'../lib')+path.sep;
  for(const file of Object.keys(require.cache).filter(file=>file.startsWith(root)))assert(file.includes(path.sep+'application'+path.sep)||file.endsWith('verify-token.js')||file.endsWith('signing-key.js'),file);
 });
+test('universe discovery falls back without credentials, while authenticated access still rejects',async()=>{
+ const Original=require('../../../scripts/google-http-conformance/node_modules/google-auth11').GoogleAuth;
+ for(const Auth of [Original,GoogleAuth]){
+  const auth=new Auth(),missing=Error('fixture credentials unavailable');let attempts=0;
+  auth.getClient=async()=>{attempts++;throw missing;};
+  assert.equal(await auth.getUniverseDomain(),'googleapis.com');assert.equal(attempts,1);
+  await assert.rejects(auth.getRequestHeaders('https://example.invalid'),e=>e===missing);
+  auth.getClient=async()=>({universeDomain:'private.example'});assert.equal(await auth.getUniverseDomain(),'private.example');
+  const configured=new Auth({universeDomain:'configured.example'});configured.getClient=async()=>{throw Error('must not discover credentials')};assert.equal(await configured.getUniverseDomain(),'configured.example');
+ }
+});

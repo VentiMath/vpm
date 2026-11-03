@@ -94,12 +94,17 @@ The [full report](bench/results/README.md) includes all cases, controls and outl
 
 ## Verified scope
 
-Twenty-eight focused tests pass on Node 24 and Bun. Public-API comparisons run
+Twenty-nine focused tests pass on Node 24 and Bun. Public-API comparisons run
 against both this implementation and Google Auth 11.3.2 using generated fixture
 keys and local HTTP/metadata servers. They cover file/environment/stream and
 well-known ADC, quota and project handling, token exchange, concurrent refresh,
 callbacks, authenticated requests/fetch, identity tokens, impersonation and signing.
 Tests explicitly preserve VPM's cache-isolation and encoded-audience corrections.
+
+Universe discovery returns `googleapis.com` when credentials are unavailable,
+matching 11.3.2 and allowing credential-free emulator transports to initialize.
+An explicit universe takes precedence. This fallback does not authorize requests:
+credential-dependent operations still reject, and later discovery can retry.
 
 Caller gates exercise Firebase Admin's real service-account and refresh-token
 transport, Storage operations and signing, and Firestore/GAX requests, streams,
@@ -119,5 +124,5 @@ root exports are public; old upstream internal file paths are removed. Older SDK
 need explicit caller checks before being aliased to this package.
 
 See the [upstream test fixture](../../scripts/google-auth-conformance/README.md),
-[benchmark evidence](bench/results/README.md), [provenance](PROVENANCE.json), and
+[benchmark evidence](bench/results/README.md), [universe lookup measurements](bench/universe-results/README.md), [provenance](PROVENANCE.json), and
 [central improvements](../../IMPROVEMENTS.md).

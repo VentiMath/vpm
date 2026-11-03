@@ -1,5 +1,10 @@
 # vgoogle-auth-library measurements
 
+These recordings precede the universe-discovery fallback correction. The recorded
+source hashes describe that build; its RSA/header/HTTP implementations are
+unchanged by the follow-up. [Current universe lookup measurements](../universe-results/README.md)
+cover the changed method separately.
+
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
 balanced upstream-first / VPM-first order; two further pairs run identical

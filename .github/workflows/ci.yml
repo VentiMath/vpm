@@ -180,7 +180,7 @@ jobs:
       - run: npm --prefix scripts/entities-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm test
       - run: node scripts/check-body-options.cjs
-      - run: node scripts/integration.cjs
+      - run: node scripts/integration-offline.cjs
       - run: |
           node scripts/build-deep-equal.cjs --check
           node scripts/deep-equal-conformance/run.cjs --upstream
@@ -589,7 +589,7 @@ jobs:
       - run: node scripts/emotion-conformance/types.cjs
       - run: node scripts/check-type-archives.cjs
       - run: node scripts/check-media-archives.cjs
-      - run: bun scripts/integration.cjs
+      - run: bun scripts/integration-offline.cjs
       - run: |
           bun scripts/build-deep-equal.cjs --check
           bun scripts/deep-equal-conformance/run.cjs --upstream
