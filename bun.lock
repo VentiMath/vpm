@@ -769,6 +769,16 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vradix-react-slot": {
+      "name": "vradix-react-slot",
+      "version": "1.5.0",
+      "dependencies": {
+        "vradix-react-compose-refs": "workspace:*",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vraf-schd": {
       "name": "vraf-schd",
       "version": "4.0.3",
@@ -1271,6 +1281,8 @@
     "vradix-primitive": ["vradix-primitive@workspace:packages/vradix-primitive"],
 
     "vradix-react-compose-refs": ["vradix-react-compose-refs@workspace:packages/vradix-react-compose-refs"],
+
+    "vradix-react-slot": ["vradix-react-slot@workspace:packages/vradix-react-slot"],
 
     "vraf-schd": ["vraf-schd@workspace:packages/vraf-schd"],
 

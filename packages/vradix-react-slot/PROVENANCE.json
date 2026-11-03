@@ -1,0 +1,26 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-slot",
+    "version": "1.5.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/slot",
+    "integrity": "sha512-tyYd9ddPXAysAbdbD9eYxgwpCSv6f3PncqVSNKQFSR5lcJVLz3cb/pANDoYrLiHBpXv7skortyUgGUWsYuPPFQ==",
+    "checked": "2026-11-02"
+  },
+  "sourceSHA256": {
+    "dist/index.js": "59b2da9bfa13682c0dbc9bb8d1f3e14692669af5a0a32999aa83046c2a6060fa",
+    "dist/index.d.ts": "a03fb958d0570b272c00034f1f1a27bc989fb22745df1cb7d6604761aefecd97",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19 Slot/Root, Slottable and named factories; current property, event, ref, ARIA, render-prop and lazy-child contracts. No copied upstream runtime."
+  },
+  "changes": [
+    "Direct element slotting skips child traversal and intermediate arrays.",
+    "Only parent-supplied event handlers are scanned for composition; child props retain precedence.",
+    "Multiple Slottable targets and cyclic lazy child wrappers throw explicitly.",
+    "Ref ownership is handled by independently implemented vradix-react-compose-refs; React 19 is a peer.",
+    "Render-function declarations reject explicit element children paired with non-function renderers."
+  ]
+}

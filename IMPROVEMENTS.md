@@ -227,6 +227,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vreact-remove-scroll-bar](packages/vreact-remove-scroll-bar) | react-remove-scroll-bar 2.3.8 | Independent React 19 body scrollbar compensation with vreact-style-singleton and no tslib. CSS-option parity, nested locks, hydration, body-owned cleanup, constants-only entry and actual scroll-lock caller verified. |
 | [vreact-remove-scroll](packages/vreact-remove-scroll) | react-remove-scroll 2.7.2 | Independent React 19 scroll isolation with document-scoped listeners and weak event identity. Preserves nested locks, portals, shards and lazy sidecars; fixes stale wheel decisions, touch reversal and overwritten refs/handlers. VPM dependencies only. |
 | [varia-hidden](packages/varia-hidden) | aria-hidden 1.2.6 | Independent DOM isolation without tslib. Per-attribute ownership, idempotent undo, exact restoration, safe markers and invalid-target handling; actual Radix menus and Chrome focus behavior verified. |
+| [vradix-react-slot](packages/vradix-react-slot) | @radix-ui/react-slot 1.5.0 | Independent React 19 slots with VPM refs; direct-child fast path, explicit ambiguous-target and cyclic-child errors; unchanged Radix Primitive callers verified. |
 | [vradix-react-compose-refs](packages/vradix-react-compose-refs) | @radix-ui/react-compose-refs 1.1.5 | Independent React 19 ref composition; lazy cleanup storage, complete once-only teardown after errors, stable hook identity. Unchanged current/app Slot callers verified. |
 | [vradix-primitive](packages/vradix-primitive) | @radix-ui/primitive 1.2.0 | Independent event/DOM helpers, correct secondary Document ownership, DOM-only timer types and conditional exports. Original 1.1.3 callers retained as controls. |
 | [vuse-callback-ref](packages/vuse-callback-ref) | use-callback-ref 1.3.3 | Independent React 19 observable/merged/transformed refs, no tslib; preserved falsy defaults, owned membership snapshots and complete merged assignments after callback errors. Original tests, scroll-lock UI ref wiring and packed consumers verified. |
@@ -371,7 +372,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **146 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **147 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5438,3 +5439,25 @@ Plain attachment uses 34% less time on Node 24 and 66.8% less on Bun; mixed
 attachment/cleanup uses 29.6% and 37.4% less, respectively, beyond control spread
 in every process pair. Creation is inconclusive; no application-rendering
 improvement is claimed.
+
+
+## vradix-react-slot
+
+Independently implements Slot 1.5.0's public root, alias and named factories for
+React 19, using `vradix-react-compose-refs`. Ordinary element slotting avoids child
+traversal and child-list allocation; event composition scans parent props instead
+of all child props. Child-first event returns, prop precedence, style/class
+merging, ARIA ID deduplication, render functions and stable refs retain the
+current contract. Multiple marked targets and cyclic lazy wrappers throw
+explicitly; paired controls demonstrate the upstream failures.
+
+The current and app-version controls, unchanged Radix Primitive 2.1.3 `asChild`
+callers, StrictMode, hydration, clean npm/Bun archives, TypeScript 7 and browser
+bundling are covered. Built, not released or adopted. See the
+[contract](packages/vradix-react-slot/README.md),
+[fixtures](scripts/slot-conformance/README.md) and
+[isolated measurements](packages/vradix-react-slot/bench/results/README.md).
+In React's development SSR build, ordinary buttons take 13.5% less time on Node 24
+and 15% less on Bun beyond the control spread. Bun's 64-prop child improves 11.5%;
+the other measured directions are inconclusive. These are renderer microbenchmarks,
+not browser or whole-application speedups.
