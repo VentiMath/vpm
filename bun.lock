@@ -607,6 +607,9 @@
     "packages/vlx": {
       "name": "vlx",
       "version": "0.1.0",
+      "dependencies": {
+        "vpngjs": "7.0.0",
+      },
       "peerDependencies": {
         "@resvg/resvg-js": "2.6.2",
       },

@@ -40,7 +40,7 @@ not a decision to recreate an older upstream release.
 | Dependency | Locked version | Application use | VPM status |
 | --- | --- | --- | --- |
 | `stripe` | 17.7.0 | Checkout sessions and signed completion webhooks in `functions/src/payments.ts` | [vstripe](../packages/vstripe): independent app-used APIs targeting current 23.1.0 completed; not released or adopted |
-| `mathjax-full` | 3.2.2 | TeX to SVG in `functions/src/problemImage.ts` | [VLX](../packages/vlx) independent engine started; full app rendering coverage remains pending |
+| `mathjax-full` | 3.2.2 | TeX to SVG in `functions/src/problemImage.ts` | [VLX](../packages/vlx) shared engine and page renderer pass the 28 app picture tests; visual/accessibility acceptance and integration remain pending |
 | `@resvg/resvg-js` | 2.6.2 | SVG rasterization in `functions/src/problemImage.ts` | VLX currently reuses this native SVG rasterizer for optional PNG output; no independent rasterizer replacement |
 | `pngjs` | 7.0.0 | PNG image processing in `functions/src/problemImage.ts` | [vpngjs](../packages/vpngjs): independent synchronous reader completed, not released or adopted |
 
@@ -63,15 +63,18 @@ needs caller evidence, not merely a package count.
 
 ## Unified math rendering
 
-[VLX](../packages/vlx) now has an independent TeX parser and layout engine for a
-bounded expression scope. The same layout produces web SVG with MathML and
-standalone images. Current KaTeX 0.19.1 and MathJax 4.1.3 are reference controls,
-not selectable runtime engines. Only attributed glyph metrics/outlines are reused.
-Its 13-case synthetic corpus includes fractions, roots, arrays/rules, colors,
-scripts and bounded macros. This does not close the MathJax family: full
-problem-page composition, real application coverage, broader typography and
-accessibility acceptance are pending. The application still uses KaTeX in the
-frontend and MathJax 3 for backend SVG generation. No app cutover is claimed.
+[VLX](../packages/vlx) now independently parses TeX and lays out browser formulas
+and complete problem SVG/PNG pages, including prose, figures and choice grids.
+All 28 unchanged application picture tests pass on Bun. Its local corpus audit
+renders 8,470 math spans and 1,275 full normalized statements; that snapshot is
+not a production-wide inventory or proof of visual equivalence. Thirty public
+synthetic cases and page geometry/corruption checks run on Node 24 and Bun.
+
+KaTeX 0.19.1 and MathJax 4.1.3 remain test controls. VLX reuses attributed font
+outlines/metrics, the VPM PNG validator and optional native resvg rasterization;
+it does not route between upstream math engines. Broader typography, accessibility
+acceptance and application integration are still pending. The app continues to
+use KaTeX in the frontend and MathJax 3 for backend pictures; no cutover is claimed.
 
 ## Reading progress correctly
 

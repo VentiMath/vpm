@@ -1,16 +1,16 @@
 {
   "implementation": {
     "kind": "independent parser and layout implementation",
-    "replacementStatus": "initial engine; full application coverage pending",
-    "targetScope": "Prose/math segmentation, bounded TeX parsing and macro expansion, shared layout, accessible HTML/MathML, standalone SVG and optional expression PNG.",
-    "remainingWork": "Full app corpus and problem-page composition; advanced TeX features, line breaking, accessibility and visual acceptance before adoption."
+    "replacementStatus": "app-shaped renderer implemented; broader visual and accessibility acceptance pending",
+    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation.",
+    "remainingWork": "Application integration/release, broader typographic and screen-reader acceptance, production-corpus inventory, advanced TeX and equation references."
   },
   "fontData": {
     "package": "@mathjax/mathjax-newcm-font",
     "version": "4.1.3",
     "license": "Apache-2.0",
     "source": "https://www.npmjs.com/package/@mathjax/mathjax-newcm-font",
-    "sha256": "be5443a9d9a7ecae13bcb22642ee4f3f78604852aa14fcf93aaf04862e90f010",
+    "sha256": "35a248c30c8574e37f6091cb496516178300cfdb0b47ee1b2ba7f17dc9f3dd76",
     "approach": "Selected numeric glyph metrics and SVG outlines, flattened to JSON. No upstream executable code ships with the math engine."
   },
   "referenceEngines": {
@@ -25,6 +25,9 @@
   "changes": [
     "One independent syntax tree and layout for web and image output; no engine routing or fallback.",
     "Explicit unsupported syntax, finite input/recursion/expansion/pixel bounds and request-local macros.",
-    "Generated font data retains upstream attribution and reproducible extraction."
+    "Generated font data retains upstream attribution and reproducible extraction.",
+    "Expanded notation, styled text, primes, font variants, spanning table cells and scoped colors against actual caller requirements.",
+    "Independent 960px page composition using shared outlines/layout and vpngjs figure validation; 28 unchanged application picture tests pass.",
+    "All 8470 math spans and 1275 normalized full statements render in the audited 89-file local corpus; this is not a production-wide or visual-equivalence claim."
   ]
 }

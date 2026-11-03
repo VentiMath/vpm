@@ -16,7 +16,12 @@
       "import": "./png.mjs",
       "require": "./png.cjs"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./problem": {
+      "types": "./problem.d.ts",
+      "import": "./problem.mjs",
+      "require": "./problem.cjs"
+    }
   },
   "files": [
     "*.cjs",
@@ -44,5 +49,8 @@
     "@resvg/resvg-js": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "vpngjs": "7.0.0"
   }
 }

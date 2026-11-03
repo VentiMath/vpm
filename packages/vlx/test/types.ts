@@ -7,3 +7,9 @@ renderer.renderMath('x',{display:true,fontSize:24});renderer.renderText('Hello $
 createRenderer({engine:'katex'});
 // @ts-expect-error Display mode must be boolean
 renderer.renderMath('x',{display:'block'});
+
+import {renderProblemPng,renderProblemSvg,pngSize} from '../problem';
+const png:Uint8Array=renderProblemPng({statement:'Find $x$.',options:{A:'1'}});
+const page:string=renderProblemSvg({statement:'',figure:{png,width:10}}).svg;pngSize(png);
+// @ts-expect-error figures need a display width
+renderProblemSvg({statement:'',figure:{png}});

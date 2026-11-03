@@ -11,12 +11,13 @@ exports.mathjax=async(tex,display=true)=>{
  }
  const {mathjax,TeX,SVG,MathJaxNewcmFont,adaptor,SerializedMmlVisitor}=context;
  const input=new TeX({packages:['base','ams','newcommand','configmacros','textmacros','color','enclose'],macros:{overarc:['\\overparen{#1}',1]},formatError(_jax,error){throw error}}),output=new SVG({fontData:MathJaxNewcmFont,fontCache:'local',useXlink:false}),doc=mathjax.document('',{InputJax:input,OutputJax:output});
- try{const node=await doc.convertPromise(tex,{display,em:16,ex:8,containerWidth:888});const svg=adaptor.tags(node,'svg')[0];const styles=adaptor.cssText(output.styleSheet(doc));return {svg:adaptor.outerHTML(svg).replace(/(<svg[^>]*>)/,'$1<style>'+styles+'</style>'),mathml:new SerializedMmlVisitor().visitTree(input.mathNode)};}finally{doc.clear()}
+ try{await output.font.loadDynamicFiles();const node=await doc.convertPromise(tex,{display,em:16,ex:8,containerWidth:888});const svg=adaptor.tags(node,'svg')[0];const styles=adaptor.cssText(output.styleSheet(doc));return {svg:adaptor.outerHTML(svg).replace(/(<svg[^>]*>)/,'$1<style>'+styles+'</style>'),mathml:new SerializedMmlVisitor().visitTree(input.mathNode)};}finally{doc.clear()}
 };
 // Benchmark a ready renderer, not repeated engine construction. Cases contain
 // no macro definitions; clear equation counters between conversions.
 exports.svgFactory=async()=>{
  await exports.mathjax('x');const {mathjax,TeX,SVG,MathJaxNewcmFont,adaptor}=context;
  const input=new TeX({packages:['base','ams','newcommand','configmacros','textmacros','color','enclose'],formatError(_jax,error){throw error}}),output=new SVG({fontData:MathJaxNewcmFont,fontCache:'local',useXlink:false}),doc=mathjax.document('',{InputJax:input,OutputJax:output});
+ await output.font.loadDynamicFiles();
  return async tex=>{input.reset();const node=await doc.convertPromise(tex,{display:true,em:16,ex:8,containerWidth:888});return adaptor.outerHTML(adaptor.tags(node,'svg')[0]);};
 };

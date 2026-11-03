@@ -1,0 +1,98 @@
+{
+  "appCommit": "0f2ef94b994f40f567f71fc17d30f619060ea1c7",
+  "files": 89,
+  "statements": 1275,
+  "math": 8470,
+  "passed": 8470,
+  "sourceErrors": 0,
+  "pagesPassed": 1275,
+  "pageErrors": {},
+  "errors": {},
+  "sourceDigest": "0438dfafe192f1a32a835d32ab42c762887e24ce17ebfd552818279192d8f47e",
+  "applicationPictureTests": {
+    "runtime": "Bun 1.4.0",
+    "passed": 28,
+    "failed": 0,
+    "testSHA256": "f17ab8bb8ebaf0918c5c7e65c2046c1bee6a80953ca6032ef0dc00739d38698d"
+  },
+  "scope": "Local ingestion snapshot, normalized using the app source at appCommit. Rendering success is not a claim of visual equivalence, production inventory completeness or adoption.",
+  "pageBenchmarks": {
+    "node": {
+      "recordedAt": "2026-11-03T22:44:44.126Z",
+      "version": "24.22.1",
+      "applicationSourceSHA256": "e676ca11026eff3af552f3b384d4e5af4d7e5205adbaec074547449159317fb6",
+      "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+      "settings": {
+        "pairs": 4,
+        "controls": 2,
+        "rounds": 12,
+        "warmupMs": 150,
+        "blockMs": 10,
+        "maxIterations": 1000000
+      },
+      "summary": [
+        {
+          "case": "Problem PNG / prose and choices",
+          "upstream_ns": 5430003,
+          "vpm_ns": 2954497,
+          "change_pct": -45.6,
+          "upstream_first_pct": -47.3,
+          "vpm_first_pct": -45.2,
+          "process_range_pct": "-50.1, -46.8, -44.4, -43.7",
+          "control_max_abs_pct": 1.4,
+          "evidence": "lower time in every pair, beyond control spread"
+        },
+        {
+          "case": "Problem PNG / array and figure",
+          "upstream_ns": 11169401,
+          "vpm_ns": 8047760,
+          "change_pct": -26.8,
+          "upstream_first_pct": -28.6,
+          "vpm_first_pct": -26.6,
+          "process_range_pct": "-30.8, -27.2, -26.4, -25.9",
+          "control_max_abs_pct": 6,
+          "evidence": "lower time in every pair, beyond control spread"
+        }
+      ]
+    },
+    "bun": {
+      "recordedAt": "2026-11-03T22:45:08.133Z",
+      "version": "1.4.0",
+      "applicationSourceSHA256": "e676ca11026eff3af552f3b384d4e5af4d7e5205adbaec074547449159317fb6",
+      "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+      "settings": {
+        "pairs": 4,
+        "controls": 2,
+        "rounds": 12,
+        "warmupMs": 150,
+        "blockMs": 10,
+        "maxIterations": 1000000
+      },
+      "summary": [
+        {
+          "case": "Problem PNG / prose and choices",
+          "upstream_ns": 5349055,
+          "vpm_ns": 2882062,
+          "change_pct": -46,
+          "upstream_first_pct": -49.8,
+          "vpm_first_pct": -45.3,
+          "process_range_pct": "-44.6, -43.2, -55.0, -47.4",
+          "control_max_abs_pct": 47.5,
+          "evidence": "unestablished at this precision"
+        },
+        {
+          "case": "Problem PNG / array and figure",
+          "upstream_ns": 10918541,
+          "vpm_ns": 8147807,
+          "change_pct": -24.5,
+          "upstream_first_pct": -22.9,
+          "vpm_first_pct": -30.8,
+          "process_range_pct": "-22.3, -25.5, -23.5, -36.0",
+          "control_max_abs_pct": 2.5,
+          "evidence": "lower time in every pair, beyond control spread"
+        }
+      ]
+    },
+    "scope": "Synthetic pages compared with the actual app renderer at appCommit. Full samples are retained locally outside this public repository, since their manifests include private temporary source paths. Reproduce with bench-app.cjs and the local app. Bun prose/choices direction is unestablished under the control spread; no samples were discarded."
+  }
+}
