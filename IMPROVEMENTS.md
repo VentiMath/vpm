@@ -235,6 +235,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vstripe](packages/vstripe) | stripe 23.1.0 (app controls: 17.7.0) | Independent Checkout/webhook APIs; native Fetch/crypto, bounded responses and exact-byte signatures; no runtime dependencies. |
 | [vpngjs](packages/vpngjs) | pngjs 7.0.0 | Independent app-used synchronous PNG reader: complete static formats/Adam7, bounded inflation, strict chunk structure and CRC checks. Matches 162 valid corpus images and actual app pixel tests. No writer/stream API; built, not adopted. |
 | [vradix-react-use-controllable-state](packages/vradix-react-use-controllable-state) | @radix-ui/react-use-controllable-state 1.3.0 | Pure controlled reducers; commit-only notifications; stable setters; React 19.2 support. |
+| [vradix-rect](packages/vradix-rect) | `@radix-ui/rect` 1.1.3 | Independent shared-frame observer; fixes final-callback RAF leak, subscription cleanup, mutable measurements and exception recovery. Unchanged useRect caller, Node/Bun controls and archive/type checks; [isolated timings](packages/vradix-rect/bench/results/README.md). |
 | [vradix-react-id](packages/vradix-react-id) | @radix-ui/react-id 1.1.4 | Native React 19 IDs with Radix prefix and override semantics; removes redundant state, layout effects and legacy counter. SSR/hydration and current Dropdown Menu ARIA links verified on React 19.1/19.2. |
 | [vradix-react-use-effect-event](packages/vradix-react-use-effect-event) | @radix-ui/react-use-effect-event 0.0.5 | React 19.1 commit-safe retained callbacks with one ref; direct native delegation on React 19.2. Drops the layout-effect dependency and separate memo hook. Actual reducer and current Dropdown Menu controls on both React versions. |
 | [vradix-react-focus-guards](packages/vradix-react-focus-guards) | @radix-ui/react-focus-guards 1.2.0 | Independent shared focus guards for React 19; per-body ownership prevents a second document stealing the first pair. StrictMode, SSR and unchanged current Menu caller verified; React is the only peer. |
@@ -385,7 +386,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 120 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **158 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **159 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,

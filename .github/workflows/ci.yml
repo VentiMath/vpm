@@ -72,6 +72,8 @@ jobs:
       - run: npm --prefix scripts/radix-state-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-state-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-state-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-rect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/radix-rect-conformance/archives.cjs
       - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/png-conformance/archives.cjs
       - run: npm --prefix scripts/stripe-conformance ci --ignore-scripts --no-audit --no-fund
@@ -504,6 +506,8 @@ jobs:
       - run: npm --prefix scripts/radix-state-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-state-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-state-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-rect-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/radix-rect-conformance/archives.cjs
       - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/png-conformance/archives.cjs
       - run: npm --prefix scripts/stripe-conformance ci --ignore-scripts --no-audit --no-fund

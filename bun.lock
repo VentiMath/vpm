@@ -846,6 +846,10 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vradix-rect": {
+      "name": "vradix-rect",
+      "version": "1.1.3",
+    },
     "packages/vraf-schd": {
       "name": "vraf-schd",
       "version": "4.0.3",
@@ -1374,6 +1378,8 @@
     "vradix-react-use-effect-event": ["vradix-react-use-effect-event@workspace:packages/vradix-react-use-effect-event"],
 
     "vradix-react-use-layout-effect": ["vradix-react-use-layout-effect@workspace:packages/vradix-react-use-layout-effect"],
+
+    "vradix-rect": ["vradix-rect@workspace:packages/vradix-rect"],
 
     "vraf-schd": ["vraf-schd@workspace:packages/vraf-schd"],
 
