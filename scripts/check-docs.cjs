@@ -17,6 +17,9 @@ for (const { name, metadata } of packages) {
   if (metadata.vpm?.kind !== 'types') {
     assert.equal(metadata.engines?.node, '>=24', `${name}: runtime support must match the Node 24 baseline`);
   }
+  if (metadata.vpm?.kind !== 'types' && metadata.vpm?.platform !== 'browser') {
+    assert.ok(fs.existsSync(path.join(root, 'packages', name, 'test/types.ts')), `${name}: missing platform type consumer fixture`);
+  }
   assert.equal(rows.filter(row => row[1] === name && row[2] === name).length, 1, `${name}: missing or duplicate comparison row`);
   assert.ok(fs.existsSync(path.join(root, 'packages', name, 'README.md')), `${name}: missing README`);
 }
