@@ -87,7 +87,7 @@ protocol data and some compatibility declarations remain attributed upstream.
 Import guards run on both CJS and ESM archives so Bun's CJS namespace inspection
 cannot accidentally load the old runtime.
 
-`application.test.cjs` covers 16 groups: isolated frozen settings, callback and
+`application.test.cjs` covers 17 groups: isolated frozen settings, callback and
 promise settlement, stub initialization deadlines/cancellation, backoff teardown,
 pagination, backpressure, terminal stream status, retry/resumption safety,
 throwing retry hooks, strict JSON framing at every split and resource paths.
@@ -118,3 +118,9 @@ node scripts/gax-conformance/archives.cjs
 Repeat application tests and callers with Bun. Archive verification itself checks
 both installers and runtimes. Current measurements use `bench/application.cjs`;
 older helper and initialization recordings remain historical evidence.
+
+The callback-return control requires `undefined` on both success and failure,
+matching original GAX. The full repository test gate also exercises the unchanged
+VPM Firestore API callback/close test, which detected a return-shape integration
+regression missed by the earlier stock-caller-only checks. Promise cancellation
+is unchanged.

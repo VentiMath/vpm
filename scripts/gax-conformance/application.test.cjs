@@ -327,3 +327,27 @@ test("throwing stream retry hooks reject the stream without escaping the event h
     await assert.rejects(collect(call({})), (error) => error === expected);
   }
 });
+
+test("callback return contract matches upstream for success and failure", async () => {
+  for (const library of [require("google-gax"), api]) {
+    for (const rejected of [false, true]) {
+      let resolve;
+      const completion = new Promise(done => { resolve = done; });
+      let callbacks = 0;
+      const expected = Object.assign(new Error("RPC rejected"), {code: 3});
+      const call = library.createApiCall((request, metadata, options, callback) => {
+        queueMicrotask(() => rejected ? callback(expected) : callback(null, {ok: true}));
+        return {cancel() {}};
+      }, new library.CallSettings({retry: null}));
+      const returned = call({}, {}, (error, value) => {
+        callbacks++;
+        assert.equal(error, rejected ? expected : null);
+        if (!rejected) assert.deepEqual(value, {ok: true});
+        resolve();
+      });
+      assert.equal(returned, undefined);
+      await completion;
+      assert.equal(callbacks, 1);
+    }
+  }
+});

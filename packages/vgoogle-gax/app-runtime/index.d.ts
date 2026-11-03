@@ -147,7 +147,7 @@ export interface GaxCall {
   ):
     | CancellablePromise<[any, any, any]>
     | CancellableStream
-    | { cancel(): void };
+    | void;
 }
 export declare function createApiCall(
   func: GRPCCall | Promise<GRPCCall>,

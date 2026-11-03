@@ -293,7 +293,8 @@
     "Apply IAM service endpoint/port defaults before stub construction, preserving explicit endpoints and strict gRPC target validation.",
     "Independent public application runtime and declarations replace the retained implementation on root/fallback/gax exports.",
     "Stub initialization, cancellation and backoff settle promptly; server-stream terminal status and pagination teardown are owned per invocation.",
-    "Original generated Firestore API compatibility and real Watch resume-token workflows remain required gates."
+    "Original generated Firestore API compatibility and real Watch resume-token workflows remain required gates.",
+    "Callback-style calls return undefined like upstream; promise cancellation remains available. Paired success/error controls and unchanged VPM Firestore callback tests cover the integration boundary."
   ],
   "implementation": {
     "kind": "independent application-facing implementation with retained compatibility surface",

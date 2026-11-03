@@ -47,6 +47,11 @@ The upstream version was checked November 2, 2026.
 - Call settings snapshot retry, metadata and transport options. Per-call timeout
   overrides do not mutate shared or frozen defaults. Explicit retry overrides
   retain upstream precedence.
+- Callback-style calls return `undefined`, as upstream does; generated Firestore
+  wrappers can safely use optional promise chaining. Promise-style calls retain
+  their cancellation method. Success and error callback returns have paired
+  upstream controls, and the existing VPM Firestore callback/close test remains
+  unchanged.
 - Cancellation settles during stub initialization and retry backoff. Unresolved
   stubs time out. Late callbacks cannot settle a call twice. Paged-stream teardown
   cancels an outstanding request; caller requests remain unchanged.
@@ -77,7 +82,7 @@ rejections, rather than upstream's permissive results.
 ## Verification
 
 [Independent application tests](../../scripts/gax-conformance/application.test.cjs)
-cover 16 groups, including frozen-default upstream controls, cancellation,
+cover 17 groups, including frozen-default upstream controls, cancellation,
 backpressure, retry failures, framing at every byte split and path validation.
 [Actual stock Firestore callers](../../scripts/gax-conformance/firestore.cjs)
 match 23 results and 25 decoded requests against original packages, including
@@ -102,7 +107,8 @@ skips; it is not presented as coverage of every new implementation path.
 [Current benchmarks](bench/application-results/README.md) compare isolated,
 balanced processes with identical-upstream noise controls. They measure settings,
 paths, descriptor hits and actual local Firestore SDK calls. They include the
-selected dependency stacks and are not production latency guarantees. Earlier
+selected dependency stacks and are not production latency guarantees. The current callback-return correction is a compatibility repair; these timings
+record the preceding implementation and do not measure that correction. Earlier
 [helper/cache](bench/results/README.md) and
 [initialization](bench/initialization-results/README.md) reports describe their
 recorded earlier sources, not this application rewrite.

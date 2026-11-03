@@ -1574,7 +1574,7 @@ compatibility declaration types are also retained; no whole-package clean-room
 claim is made. Automatic mTLS discovery, browser runtime and unused customization
 hooks remain outside the independent contract.
 
-Sixteen focused application groups, paired real HTTP cases, stock Firestore
+Seventeen focused application groups, paired real HTTP cases, stock Firestore
 transactions/queries/bulk writes/Watch recovery, and OpenTelemetry SDK integration
 pass on Node 24 and Bun. Stock Firestore comparisons match 23 results and 25
 requests. Generated Firestore API checks retain all 320 upstream cases and match
@@ -1589,6 +1589,13 @@ Firestore unary/stream calls. Balanced process order, raw samples and identical
 upstream controls are retained. Results include selected dependency stacks and
 do not establish deployed latency. Earlier cache and initialization reports
 refer to their recorded sources, not this independent application rewrite.
+
+Callback calls now return `undefined` like original GAX, preserving generated
+Firestore wrappers' optional promise chaining. The previous cancellation-handle
+return caused the full repository callback test to fail on both runtimes. Paired
+success/error controls and the unchanged VPM caller test cover the correction;
+promise cancellation remains available. The recorded application timings below
+predate this return-contract repair.
 
 Settings merging still costs more than upstream's shared objects: 132 versus
 42 ns on Node, 153 versus 70 ns on Bun, after removing redundant copies. Those

@@ -491,7 +491,9 @@ function createApiCall(func, defaults = new CallSettings(), descriptor) {
           (values) => cb(null, ...values),
           (error) => cb(error),
         );
-        return { cancel: promise.cancel };
+        // Generated clients use optional promise chaining on this return value.
+        // Upstream callback calls return nothing; only promise calls are cancellable.
+        return undefined;
       }
       return promise;
     };
