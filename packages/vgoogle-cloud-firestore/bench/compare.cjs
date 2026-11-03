@@ -16,17 +16,20 @@ const doc = {...data, joined: new lib.Timestamp(data.joined.seconds, data.joined
 const fields = db._serializer.encodeFields(doc);
 const proto = {name: 'projects/p/databases/(default)/documents/users/ada', fields, createTime: {seconds: 1, nanos: 0}, updateTime: {seconds: 2, nanos: 0}};
 const readTime = {seconds: 3, nanos: 0};
+const copy = value => Buffer.isBuffer(value) ? Buffer.from(value) : Array.isArray(value) ? value.map(copy) : value && typeof value === "object" ? Object.fromEntries(Object.entries(value).map(([key, item]) => [key, copy(item)])) : value;
 `;
 const compiled = body => async root => new Function('lib', 'env', prelude + body)(require(root), env);
 const cases = [
   {name: 'encode / 12-field document', make: compiled('return () => Object.keys(db._serializer.encodeFields(doc)).length;'), validate: v => assert.equal(v, 12)},
   {name: 'decode / snapshot data() of 12-field document', make: compiled('return () => Object.keys(db.snapshot_(proto, readTime, "protobufJS").data()).length;'), validate: v => assert.equal(v, 12)},
-  {name: 'write / batch set merge with transforms', make: compiled('return () => { const batch = db.batch(); batch.set(db.doc("users/ada"), {...doc, seen: lib.FieldValue.serverTimestamp(), visits: lib.FieldValue.increment(1)}, {merge: true}); return batch._ops.length; };'), validate: v => assert.equal(v, 1)},
+  // Upstream defers serialization until commit. Include it in both workers.
+  {name: 'write / compile batch merge with transforms', make: compiled('return () => { const batch = db.batch(); batch.set(db.doc("users/ada"), {...doc, seen: lib.FieldValue.serverTimestamp(), visits: lib.FieldValue.increment(1)}, {merge: true}); const item = batch._ops[0]; const write = typeof item.op === "function" ? item.op() : item; return write.updateTransforms.length; };'), validate: v => assert.equal(v, 2)},
   {name: 'query / where, orderBy, limit to proto', make: compiled('return () => db.collection("users").where("score", ">", 10).where("active", "==", true).orderBy("score", "desc").limit(20).toProto().structuredQuery.orderBy.length;'), validate: v => assert.ok(v >= 1)},
-  {name: 'compare / isEqual of equal snapshots', make: compiled('const a = db.snapshot_(proto, readTime, "protobufJS"), b = db.snapshot_(proto, readTime, "protobufJS"); return () => a.isEqual(b);'), validate: v => assert.equal(v, true)},
+  // Independent responses avoid upstream's shared-proto identity shortcut.
+  {name: 'compare / isEqual of independently read equal snapshots', make: compiled('const a = db.snapshot_(proto, readTime, "protobufJS"), b = db.snapshot_(copy(proto), readTime, "protobufJS"); return () => a.isEqual(b);'), validate: v => assert.equal(v, true)},
   {name: 'timestamp / fromMillis, toDate, valueOf', make: compiled('return () => { const t = lib.Timestamp.fromMillis(1700000000123); return t.toDate().getTime() + t.valueOf().length; };'), validate: v => assert.equal(v, 1700000000123 + 22)},
 ];
 require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases,
-  files: ['package.json', 'build/src', 'bench/compare.cjs', '../vfast-deep-equal/index.js', '../vlong/index.js',
+  files: ['package.json', 'app','build/src/snapshot-index.js', 'bench/compare.cjs', '../vfast-deep-equal/index.js', '../vlong/index.js',
     '../../scripts/firestore-conformance/package-lock.json', '../../scripts/firestore-conformance/node_modules/@google-cloud/firestore/build/src',
     '../../scripts/firestore-conformance/node_modules/fast-deep-equal/index.js', '../../scripts/firestore-conformance/node_modules/long/umd/index.js']}).catch(e => {console.error(e); process.exitCode = 1;});

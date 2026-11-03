@@ -9,43 +9,17 @@
     "tarballSha256": "8b42aaf283b22ab2f33e804eac9f650042f4fe6d11271e549df5d8e30665e765",
     "integrity": "sha512-4tVhdRFepX5w+fRfl3H6D2+gaGQjmMiA9l+OwIwInfAkCi8iacfRx4jS9SmSfpQNlXequ55DfzFopwyFnIIJ9w=="
   },
-  "checked": "2026-10-31",
+  "checked": "2026-11-03",
   "license": "Apache-2.0",
   "retainedEvidence": "../../scripts/firestore-conformance/upstream",
-  "source": "The published build/src, build/protos, types and pipelines files of 9.4.0 (source maps omitted), with dependency specifiers mapped to VPM packages. Files not listed under modified or removed differ from the original only in those specifiers.",
+  "source": "Independently implemented application APIs in app/, public declarations in types/, and the persistent snapshot index in build/src/snapshot-index.js. No upstream Firestore SDK runtime remains. Generated wire definitions are provided by vgoogle-cloud-firestore-api.",
   "dependencyMap": {
     "google-gax": "vgoogle-gax",
     "@google-cloud/firestore-api": "vgoogle-cloud-firestore-api",
-    "protobufjs": "vprotobufjs",
     "fast-deep-equal": "vfast-deep-equal",
-    "@opentelemetry/api": "vopentelemetry-api"
+    "@opentelemetry/api": "vopentelemetry-api",
+    "google-auth-library": "vgoogle-auth-library"
   },
-  "modified": [
-    "build/src/index.js",
-    "build/src/pipelines/pipelines.js",
-    "build/src/pool.js",
-    "build/src/serializer.js",
-    "types/firestore.d.ts",
-    "types/pipelines.d.ts",
-    "build/src/watch.js"
-  ],
-  "removed": [
-    "build/protos/firestore_v1beta1_proto_api.d.ts",
-    "build/protos/firestore_v1beta1_proto_api.js",
-    "build/protos/google/firestore/v1beta1/common.proto",
-    "build/protos/google/firestore/v1beta1/document.proto",
-    "build/protos/google/firestore/v1beta1/firestore.proto",
-    "build/protos/google/firestore/v1beta1/query.proto",
-    "build/protos/google/firestore/v1beta1/undeliverable_first_gen_event.proto",
-    "build/protos/google/firestore/v1beta1/write.proto",
-    "build/protos/v1beta1.json",
-    "types/protos/firestore_admin_v1_proto_api.d.ts",
-    "types/protos/firestore_v1_proto_api.d.ts",
-    "types/protos/firestore_v1beta1_proto_api.d.ts",
-    "types/v1/firestore_admin_client.d.ts",
-    "types/v1/firestore_client.d.ts",
-    "types/v1beta1/firestore_client.d.ts"
-  ],
   "sourceSHA256": {
     "build/protos/admin_v1.json": "117493b3eed9fa52f41a845ee15ba5b66d4d2370f32db53a6c63e768197a1472",
     "build/protos/firestore/bundle.proto": "89a8de3469b2249a508fad3c8b99b30f941e5159dc15e14f68bd3560bb838538",
@@ -176,21 +150,60 @@
     "types/v1beta1/firestore_client.d.ts": "c4946492aa7c79884ed9c8c1de706e4fad8287640ca7abba9790e095e4be37a9"
   },
   "changes": [
-    "One transport stack: the GAPIC layer is vgoogle-cloud-firestore-api on vgoogle-gax. The original also installs @google-cloud/firestore-api 0.2.0 with its own google-gax 5 stack.",
-    "Importing loads 65 modules instead of 404. firestore-api, the 1.3 MB static protos, protobufjs and OpenTelemetry load on first use, restoring the original's own lazy-loading tests' intent.",
-    "Reads after terminate() (queries, document gets, getAll, aggregates, listeners) reject at once with the terminated error instead of waiting forever and raising an unhandled rejection; they are not retried.",
-    "terminate() with open listeners or BulkWriters rejects with an Error instead of a string.",
-    "A failure closing an idle GAPIC client is logged instead of failing the operation that released it.",
-    "Firestore.v1beta1 throws a descriptive error: the deprecated v1beta1 API is not provided.",
-    "Declarations are a module (export = with the FirebaseFirestore global retained) under any package name, and need no ambient Node types; stream results remain assignable to NodeJS.ReadableStream and bundles are Node Buffers where Node types are loaded.",
-    "The library header and tracer report vgoogle-cloud-firestore and its version."
+    "Replace the former upstream runtime with independently implemented application APIs and declarations.",
+    "Share one VPM API/GAX/Auth transport stack; delay transport, protos and OpenTelemetry loading until needed.",
+    "Preserve scalar/timestamp/byte/reference/vector values and protect prototype-shaped fields with own properties.",
+    "Reject conflicting merge paths and deletion sentinels excluded or subsumed by mergeFields; preserve a zero vector distance threshold.",
+    "Snapshot write/query inputs, bound transaction attempts, prevent writes after failed reads, cancel destroyed streams and settle bulk failures.",
+    "Recursively traverse missing parent documents before deleting ancestors, reporting failures.",
+    "Preserve the persistent snapshot index, coalesced Listen updates, consistent resume tokens and immutable earlier snapshot data.",
+    "Reject reads promptly after termination; close listeners/writers explicitly and isolate cleanup/logging failures.",
+    "Use TypeScript declarations without Node/Undici/DOM ambient types; remove unused pipeline/bundle/partition exports."
   ],
   "implementation": {
-    "kind": "upstream-fork",
-    "replacementStatus": "independent implementation pending",
-    "targetScope": "Document references, snapshots, queries, writes, transactions, batches and listeners.",
+    "kind": "independent application-facing implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Document values and serialization, references/snapshots, ordinary/composite/vector/collection-group queries, cursors, aggregations, writes/batches, transactions, BulkWriter, recursive deletion, REST/gRPC transport and snapshot listeners used by VentiMath and its Firebase wrappers.",
+    "basis": "Public APIs, inspected protocol behavior, retained upstream fixture data and real SDK callers; not a clean-room claim. Former upstream runtime and broad declarations removed.",
     "independentComponents": {
-      "build/src/snapshot-index.js": "Independent persistent AVL document index with path copying and subtree ranks. Watch insertion/removal obtains change indexes in the same search; previous roots retain snapshot order. No general functional-red-black-tree runtime remains in the Firestore dependency graph."
+      "build/src/snapshot-index.js": "Retained independent persistent AVL index for document ordering and stable prior snapshots.",
+      "app": "Independent application runtime, with VPM API/GAX/Auth transport.",
+      "types": "Independently maintained application declarations without ambient platform types."
+    },
+    "unsupported": [
+      "Enterprise BSON and pipeline APIs",
+      "bundle generation",
+      "query partitioning and explain/profile APIs",
+      "custom BulkWriter rate-limit tuning"
+    ],
+    "consumerEvidence": {
+      "repository": "johnclyde-org/ventimath-private",
+      "commit": "0f2ef94b994f40f567f71fc17d30f619060ea1c7",
+      "paths": [
+        "functions/src",
+        "scripts",
+        "cli",
+        "shared",
+        "smtp-server"
+      ],
+      "observedSpecializedCalls": [
+        "FieldValue.vector/findNearest",
+        "collectionGroup",
+        "startAt/startAfter/endAt/endBefore",
+        "select",
+        "recursiveDelete",
+        "count",
+        "Firebase Functions snapshot materialization"
+      ]
     }
+  },
+  "note": "Original sourceSHA256 entries are historical comparison evidence, not a list of shipped runtime files.",
+  "verification": {
+    "applicationFixtures": "213 retained cross-SDK cases and 14 Listen cases on Node 24 and Bun; two explicit delete/merge corrections. Expected fixture data is unchanged.",
+    "focused": "31 tests, including prototype keys, immutable inputs, int64/timestamp snapshots, transaction retry/failure, bulk failures, recursive deletion, stream cancellation and consistent-token/fresh listener recovery.",
+    "wire": "Direct and Firebase Admin 14.5 controls match 25 local requests over 7 RPCs and 23 results on Node/Bun; real REST and Listen reconnect checks also pass. No live-cloud claim.",
+    "types": "TypeScript 7 workspace and public declarations; detached app comparison has no new diagnostic locations alongside 18 existing diagnostics.",
+    "archives": "Clean npm/Bun archives consumed by Node/Bun CJS/ESM and TypeScript 7 without ambient platform types.",
+    "benchmarks": "Fresh isolated processes with balanced order and identical-source controls. Write cases include upstream deferred serialization; equality uses independent responses, without a shared-object shortcut. Snapshot materialization includes VPM input ownership."
   }
 }

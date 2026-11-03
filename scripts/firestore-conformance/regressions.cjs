@@ -44,8 +44,8 @@ const both = body => ({upstream: run('upstream', body), vpm: run('vpm', body)});
 // has loaded two google-gax versions (its own ^6 and firestore-api 0.2.0's ^5).
 {
   const {upstream, vpm} = both(`
-    const db = new library.Firestore({projectId: 'p'});
-    await db._clientPool.run('regression', false, async () => {});
+    const db = new library.Firestore({projectId: 'p', host:'127.0.0.1:1', ssl:false});
+    if(db._getClient)await db._getClient();else await db._clientPool.run('regression', false, async () => {});
     const versions = new Set();
     for (const file of Object.keys(require.cache)) {
       const match = file.replace(/\\\\/g, '/').match(/^(.*\\/v?google-gax)\\//);

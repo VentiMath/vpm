@@ -1,81 +1,59 @@
 # Firestore conformance
 
-Baseline: **@google-cloud/firestore 9.4.0**, the npm tarball recorded in the
-package [provenance](../../packages/vgoogle-cloud-firestore/PROVENANCE.json),
-checked October 31, 2026. The release's unit tests (`dev/test`), cross-SDK
-conformance runner and cases (`dev/conformance`), Mocha configuration, manifest
-and license from the `firestore-v9.4.0` tag (commit
-`cf2e273257719b10195f55639b18cc25472775d2`) are retained under `upstream/`
-(TypeScript files use a `.txt` suffix to avoid root test discovery) and verified
-against `SHA256.json` before execution. Test tools are pinned in `package.json`
-at the versions the release's development ranges resolve to;
-`@opentelemetry/api` is 1.9.1 because the 2.x Node SDK the tests use accepts
-only < 1.10.
+The pinned baseline is **@google-cloud/firestore 9.4.0**, checked November 3,
+2026. Apache-2.0 sources and cross-SDK data from tag `firestore-v9.4.0`, commit
+`cf2e273257719b10195f55639b18cc25472775d2`, remain under `upstream/` with SHA-256
+checks. Test dependencies have a separate lockfile and never ship in VPM packages.
 
 ```sh
-npm --prefix scripts/firestore-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/jwks-conformance ci --ignore-scripts --no-audit --no-fund
-npm --prefix scripts/otel-conformance ci --ignore-scripts --no-audit --no-fund
-node scripts/firestore-conformance/run.cjs --upstream
+npm --prefix scripts/firestore-conformance ci --ignore-scripts
+npm --prefix scripts/firebase-admin-conformance ci --ignore-scripts
+npm --prefix scripts/otel-conformance ci --ignore-scripts
 node scripts/firestore-conformance/run.cjs
-node scripts/firestore-conformance/regressions.cjs
+node scripts/firestore-conformance/run.cjs --upstream
 node scripts/firestore-conformance/wire.cjs
+node scripts/firestore-conformance/watch-index.cjs --upstream
+node scripts/firestore-conformance/watch-index.cjs
+node scripts/firestore-conformance/regressions.cjs
 node scripts/firestore-conformance/tracing.cjs
 ```
 
-Repeat the runtime commands with Bun.
+Repeat runtime commands with Bun. The default runner checks:
 
-`run.cjs` compiles the tests with the workspace TypeScript 7 compiler (no type
-checking) into upstream's build layout, links `build/src` and `build/protos` to
-the implementation under test, and runs them with upstream's Mocha settings
-(throw on deprecation, 10 s timeout, exit). For VPM, the tests' own
-`google-gax`, `@google-cloud/firestore`, Firestore API, `protobufjs` and
-`@opentelemetry/api` imports resolve to the VPM packages. **1,056 tests**: the
-original passes all 1,009 active ones on both runtimes. VPM passes 1,008. The
-remaining test registers a global tracer provider with the 2.x Node SDK through
-API 1.9.1, which `vopentelemetry-api` (API 1.10.0) ignores as the original
-1.10.0 does; `run.cjs` requires exactly that failure, and `tracing.cjs` checks
-the global-provider path with OpenTelemetry SDK 3.0.0 from the
-[OpenTelemetry fixture](../otel-conformance/README.md). Upstream skips 47
-tests: two lazy-load checks that only run if no earlier test loaded gax, the
-BulkWriter suite and one Watch case. `run.cjs --unskip` runs the last 45:
-40 pass and the same 5 time out for both libraries (the four basic BulkWriter
-tests await a write before flushing it).
+- `application.cjs`: all 213 retained set/create/update/delete/query data cases
+  through public builders, against both current SDKs. Small extraction adapters
+  observe compiled protobufs without writing to a cloud service. Two fixtures
+  (`set-del-nomerge`, `set-del-nonleaf`) demonstrate upstream accepting ambiguous
+  delete/merge combinations; VPM enforces the fixtures' rejection contract.
+- `listen-cases.cjs`: all 14 retained Listen data cases through the new listener
+  and a deterministic duplex transport. Expected snapshots, changes and errors
+  remain unchanged.
+- `reconnect.cjs`: both SDKs recover a real local gRPC disconnect with the last
+  consistent resume token and document snapshot read times.
 
-`regressions.cjs` runs each case in a fresh process per library: modules loaded
-at import, the number of google-gax copies once a client exists, reads after
-`terminate()` (pending forever with unhandled rejections upstream), and the
-string rejection from `terminate()` with an open listener.
+`--upstream` retains the historical TypeScript 7 compiler and original suite:
+1,009 active tests and 47 original skips. It is **upstream-only reference evidence**,
+not a conformance total for the independent implementation. `--unskip` and `--grep`
+apply only to that original suite. Obsolete runtime redirection and private-layout exceptions are removed.
 
-`wire.cjs` starts a local gRPC Firestore server, loaded from the API package's
-proto JSON, with an in-memory document store. It runs one scenario directly and
-through Firebase Admin 14.5.0 from the [jwks fixture](../jwks-conformance/package.json),
-with each library in its own process: writes with server timestamps,
-increments, array unions and removals, field deletes and references; gets with
-and without field masks; compound queries; count and sum; streams;
-read-write and read-only transactions; batches; BulkWriter; a query listener;
-collection listing; and precondition failures. Server logs (method, decoded
-request, routing and resource headers) and results must be identical.
+`wire.cjs` compares decoded requests, routing/resource headers and results against
+9.4.0: 25 requests over seven RPCs and 23 results, directly and through Firebase
+Admin 14.5.0. It covers transforms, gets, field masks, compound queries, aggregates,
+streams, read-write/read-only transactions, batches, bulk writes, listeners and
+precondition failures. The Admin fixture supplies the pinned original wrapper.
 
-## Independent snapshot index
+`watch-index.cjs` exercises ascending/descending ordering, path ties, moves,
+deletes, resets and retained snapshots over actual local Listen streams.
+`tracing.cjs` verifies the global OpenTelemetry SDK 3 provider. `regressions.cjs`
+compares lazy imports, one transport stack, prompt termination errors and listener
+cleanup; client construction uses implementation-specific observation adapters.
 
-`watch-index.cjs` runs the actual original or VPM SDK against a local gRPC Listen
-server. Both sort directions, path tie-breaking, additions, reorders, removals and
-reset preserve change indexes. Snapshot documents are first materialized after
-later changes and reset, proving persistence rather than a cached array. VPM also
-asserts that its index loads and neither general red-black-tree package loads.
+Thirty-one focused package tests cover values, vectors and zero thresholds,
+prototype-safe maps, immutable arguments, invalid writes, converters, incomplete
+reads, transaction retries/failed reads, bulk failures, recursive deletion,
+decoded Functions int64/timestamp snapshots, stream cancellation, real REST requests, lazy imports and the persistent index.
 
-```sh
-node scripts/firestore-conformance/watch-index.cjs --upstream
-node scripts/firestore-conformance/watch-index.cjs
-node scripts/firestore-conformance/run.cjs --upstream '--grep=watch|Query comparator'
-node scripts/firestore-conformance/run.cjs '--grep=watch|Query comparator'
-```
-
-Repeat with Bun. The selected original suite has 61 passes and one original skip
-on both SDKs and runtimes; no assertions are changed. Filtered suites now fail on
-unexpected failures and on an empty selection. The full Firestore suite remains
-in CI; these targeted results do not claim a new full-suite run.
-[Index benchmarks](../../packages/vgoogle-cloud-firestore/bench/snapshot-results/README.md)
-measure the exact former/current Watch operation sequences, in isolated workers
-with balanced process order and identical-source controls.
+`VPM_APP_REPO=/path/to/ventimath-private node scripts/firestore-conformance/app-types.cjs`
+compiles a detached snapshot twice, mapping only Firestore and its Admin types.
+The checked snapshot has 18 pre-existing diagnostics and no additional locations
+under VPM. No application files or installed dependencies are changed.

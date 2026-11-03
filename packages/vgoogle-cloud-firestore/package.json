@@ -1,27 +1,21 @@
 {
   "name": "vgoogle-cloud-firestore",
-  "version": "0.1.0",
-  "description": "Cloud Firestore client with VPM dependencies, one transport stack and lazy loading",
+  "version": "9.4.0",
+  "description": "Independent application-scoped Firestore client on the VPM transport stack",
   "type": "commonjs",
-  "main": "./build/src/index.js",
-  "types": "./types/firestore.d.ts",
+  "main": "./app/index.js",
+  "types": "./types/application.d.ts",
   "exports": {
     ".": {
-      "types": "./types/firestore.d.ts",
-      "default": "./build/src/index.js"
+      "types": "./types/application.d.ts",
+      "default": "./app/index.js"
     },
-    "./pipelines": {
-      "types": "./types/pipelines.d.ts",
-      "default": "./build/src/pipelines/index.js"
-    },
-    "./package.json": "./package.json",
-    "./build/src/path": "./build/src/path.js"
+    "./package.json": "./package.json"
   },
   "files": [
-    "build/protos",
-    "build/src",
+    "app",
+    "build/src/snapshot-index.js",
     "types",
-    "pipelines",
     "LICENSE",
     "PROVENANCE.json",
     "README.md"
@@ -31,7 +25,7 @@
     "vgoogle-cloud-firestore-api": "workspace:*",
     "vgoogle-gax": "workspace:*",
     "vopentelemetry-api": "workspace:*",
-    "vprotobufjs": "workspace:*"
+    "vgoogle-auth-library": "workspace:*"
   },
   "engines": {
     "node": ">=24"

@@ -1,13 +1,13 @@
 'use strict';
 // Drives the Firestore operations VentiMath-style backends use against a local
 // gRPC Firestore server with an in-memory store, directly and through Firebase
-// Admin 14.5.0 (pinned in the jwks fixture). The server records every request
+// Admin 14.5.0 (pinned in the Admin fixture). The server records every request
 // (method, decoded request, routing and resource headers). The original
 // Firestore 9.4.0 and vgoogle-cloud-firestore run in separate processes and
 // must produce identical server logs and identical results.
 const assert = require('node:assert/strict'), path = require('node:path'), {spawnSync} = require('node:child_process');
 const fixture = path.join(__dirname, 'node_modules');
-const admin = path.resolve(__dirname, '../jwks-conformance/node_modules');
+const admin = path.resolve(__dirname, '../firebase-admin-conformance/node_modules');
 const targets = {
   upstream: path.join(fixture, '@google-cloud/firestore'),
   vpm: path.resolve(__dirname, '../../packages/vgoogle-cloud-firestore'),

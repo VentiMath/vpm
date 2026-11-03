@@ -613,6 +613,7 @@
     "wire": "17 Auth/Storage/FCM requests, 25 Firestore RPCs and 17 results match; real GET user pagination, signed App Check JWT/JWKS and authenticated replay consumption match.",
     "regressions": "292 update-schema controls; structured scalar-claim/provider failures; integer list limits and corrupt list responses; captured replay consumption and own-key error mapping; retained app/credential/Auth/Messaging/HTTP/Storage regression controls.",
     "archivesAndTypes": "Clean npm/Bun archive consumers pass on Node and Bun in CJS/ESM. TypeScript 7 public declarations compile with NodeNext and Bundler resolution.",
-    "benchmarks": "bench/completion-results/README.md records fresh processes with balanced ordering and identical-source controls. Both improvements and remaining regressions are reported."
+    "benchmarks": "bench/completion-results/README.md records fresh processes with balanced ordering and identical-source controls. Both improvements and remaining regressions are reported.",
+    "firestoreApplicationContract": "Firestore 9.4 application runtime checked through the existing local wire callers. BundleBuilder and QueryPartition re-exports are removed: those unused APIs are outside the independent Firestore contract, rather than retained as upstream runtime."
   }
 }

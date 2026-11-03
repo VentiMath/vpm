@@ -271,7 +271,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Independent application runtime: HTTP/callable, logging, parameters/secrets, schedules, task queues, Firestore triggers and CLI discovery. Unused provider runtime removed; attributed declarations/generated protocol retained. Frozen input, CEL escaping, own-key safety and exact trace fixes; current app contracts and clean archives verified. Built, unreleased and unadopted. |
 | [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | Independent application scope complete: app/credentials, Auth lifecycle and user listing, App Check verification/replay, Firestore/Storage facades and Messaging. Unused providers removed; 1,801 selected original tests plus wire/regression controls. Built, not adopted; Admin 12 namespace migration remains in the app. |
-| [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | Five VPM dependencies with one gax stack and an independent persistent snapshot index; reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
+| [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | Independent application runtime: values, queries/vectors, writes, transactions, bulk/recursive deletion and listeners. Copied SDK runtime removed; five VPM dependencies, owned types and persistent snapshots. Built, not adopted. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Retained upstream-derived reference. Runtime dependency eliminated: Firestore owns its independently implemented persistent snapshot index. |
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
@@ -1396,39 +1396,54 @@ tracked; its own endpoint resolver is independently implemented.
 
 ## vgoogle-cloud-firestore
 
-Targets **@google-cloud/firestore 9.4.0**, checked October 31, 2026, the
-version Firebase Admin 14 uses. The published implementation is retained, with
-its dependencies mapped to `vgoogle-cloud-firestore-api`, `vgoogle-gax`,
-`vprotobufjs`, `vfast-deep-equal` and `vopentelemetry-api`; [PROVENANCE.json](packages/vgoogle-cloud-firestore/PROVENANCE.json)
-records retained code, changes and the independently implemented snapshot index.
+Independently implements **@google-cloud/firestore 9.4.0** APIs used by VentiMath,
+checked November 3, 2026. The copied SDK runtime, unused pipelines and duplicate
+protocol tree are removed. Five VPM packages supply transport, authentication,
+wire definitions, equality and tracing; import does not load the transport stack.
+Public declarations are independently maintained and require no ambient Node types.
 
-9.4.0 pins `@google-cloud/firestore-api` ^0.2.0, which installs a second, older
-google-gax stack, and loads it at import, though its own lazy-load tests forbid
-loading gax or protobufjs at import (they never run because other tests load gax
-first). Here there is one stack and those dependencies load on first use. Earlier
-Node 22 startup measurements are historical. After `terminate()`, upstream's queries,
-document gets, `getAll`, aggregates and listeners wait forever while their
-rejection goes unhandled, which ends a Node process by default; here they
-reject at once. `terminate()` rejects with an Error instead of a string, a
-failure closing an idle connection no longer fails the operation that released
-it, and the deprecated v1beta1 accessor throws a descriptive error.
-Declarations work under any package name and need no ambient Node types.
+The application contract covers documents/collections/groups, converters, values,
+composite filters, projections, cursors, vector search, aggregations, streams,
+listeners, writes/transforms, batches, transactions, BulkWriter and recursive deletion.
+Recursive deletion includes missing parent documents and deletes descendants first.
+Enterprise BSON/pipelines, bundles, partitioning, explain/profile APIs and custom
+BulkWriter throttling are outside the supported application scope. Firebase Admin's
+unused bundle/partition re-exports are removed accordingly.
 
-**1,008 of the 1,009 active upstream unit and conformance tests** pass unchanged
-on Node and Bun; the one remaining test registers a tracer provider through
-OpenTelemetry API 1.9, which API 1.10.0 ignores by design, and a separate check
-covers that path with SDK 3.0.0. A local gRPC Firestore receives identical
-requests from both libraries, directly and through Firebase Admin 14.5.0, for
-writes with every transform, gets, queries, aggregates, streams, transactions,
-batches, BulkWriter and a listener, with identical results. Four regression
-cases reproduce the behavioral defects with the original; six focused tests and
-a type test cover the package. Earlier per-operation comparisons used isolated
-Node 24 and Bun workers. All Node cases are inconclusive; Bun query construction
-costs 11.3% more, with its other cases inconclusive. These do not establish parity.
+Queued writes and query arguments cannot be changed through their original inputs.
+Own-key maps preserve prototype-shaped field names. Invalid/overlapping writes
+reject atomically; two ambiguous delete/merge combinations accepted by upstream now
+follow the rejection required by its own cross-SDK fixtures. Zero vector thresholds
+are preserved. Transactions cannot commit after a swallowed failed read; retries
+use fresh write sets. Streams cancel promptly, closed clients reject, and cleanup
+failures do not mask completed results. Functions snapshots preserve decoded int64
+values, timestamp precision and independent byte storage. Listeners use persistent
+snapshots and resume only after a consistent published read time.
+
+**213 retained cross-SDK write/query fixtures, 14 Listen fixtures and 31 focused
+tests** pass on Node 24 and Bun. Direct and Firebase Admin controls produce identical
+25 local wire requests and 23 results. Real REST and reconnect tests, OpenTelemetry
+SDK 3 integration, clean npm/Bun archives and TypeScript 7 declarations also pass.
+The complete workspace checks pass; Firebase Admin's 1,801 selected original tests
+retain their existing exact exceptions. A detached app type comparison adds no
+diagnostic locations to its 18 existing diagnostics. This is not app adoption or
+live-cloud validation. The original SDK's 1,009 active tests still run as an upstream
+control; that number is not claimed as replacement coverage.
+
+The isolated 12-field fixture records compiled merge writes taking 69% less time
+on Node and 37% less on Bun. Encoding improves 10%/29%, and equality of independently
+received snapshots improves 13%/41%. Node query construction improves 38%; Bun's
+direction is inconclusive. Snapshot creation plus data decoding costs 52% more on
+Node (6.2 to 9.4 microseconds) and 113% more on Bun (3.2 to 7.1 microseconds). This
+path includes copying caller-owned protocol data, unlike upstream's retained
+references. Bun timestamp operations cost about 20 additional nanoseconds (43%);
+Node's timestamp difference is inconclusive. These are local CPU measurements,
+not application or network latency claims.
 
 See the [package contract](packages/vgoogle-cloud-firestore/README.md),
-[conformance record](scripts/firestore-conformance/README.md) and
-[measurements](packages/vgoogle-cloud-firestore/bench/results/README.md).
+[conformance record](scripts/firestore-conformance/README.md),
+[provenance](packages/vgoogle-cloud-firestore/PROVENANCE.json) and
+[isolated measurements](packages/vgoogle-cloud-firestore/bench/results/README.md).
 
 ## vgoogle-cloud-firestore-api
 

@@ -19,7 +19,9 @@ The application scope is complete. The Auth list includes the identity-audit
 tool's paginated user scan, alongside production authentication and user-lifecycle
 operations. Firestore and Storage delegate database/object operations to
 `vgoogle-cloud-firestore` and `vgoogle-cloud-storage`. Their implementation status,
-and that of `vgoogle-auth-library`, are tracked separately.
+and that of `vgoogle-auth-library`, are tracked separately. The Firestore facade
+exports its independent application's types and values; unused `BundleBuilder`
+and `QueryPartition` exports are removed.
 
 Unused provider implementations and their exports have been removed: Realtime
 Database, Cloud Tasks, Remote Config, Eventarc, Extensions, Data Connect, Machine

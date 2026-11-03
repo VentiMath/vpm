@@ -1,0 +1,11 @@
+'use strict';
+// Compile a read-only snapshot twice; never change the app or its dependencies.
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),{execFileSync,spawnSync}=require('node:child_process');
+const app=process.env.VPM_APP_REPO,root=path.resolve(__dirname,'../..'),temporary=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-firestore-app-'));
+try{
+ assert(app,'Set VPM_APP_REPO');const commit=execFileSync('git',['rev-parse','origin/main'],{cwd:app,encoding:'utf8'}).trim();const archive=execFileSync('git',['archive','origin/main','functions'],{cwd:app,maxBuffer:64*1024*1024});execFileSync('tar',['-xf','-','-C',temporary],{input:archive});
+ for(const sub of ['', 'functions'])fs.symlinkSync(path.join(app,sub,'node_modules'),path.join(temporary,sub,'node_modules'),'dir');
+ const compiler=require('../platform-types.cjs').compiler().path,reports=[];
+ for(const variant of ['upstream','vpm']){const paths={'@google-cloud/firestore':[path.join(root,'packages/vgoogle-cloud-firestore/types/application.d.ts')],'firebase-admin/firestore':[path.join(root,'packages/vfirebase-admin/lib/firestore/index.d.ts')]};fs.writeFileSync(path.join(temporary,'functions/tsconfig.compare.json'),JSON.stringify({extends:'./tsconfig.json',compilerOptions:{noEmit:true,...(variant==='vpm'?{paths}:{})}}));const result=spawnSync('node',[compiler,'-p',path.join(temporary,'functions/tsconfig.compare.json'),'--pretty','false'],{encoding:'utf8',maxBuffer:16e6});const diagnostics=(result.stdout+result.stderr).replaceAll(temporary,'APP');fs.writeFileSync('/private/tmp/vpm-firestore-app-'+variant+'.log',diagnostics);reports.push({variant,status:result.status,diagnostics});}
+ const locations=text=>text.split('\n').filter(line=>/\(\d+,\d+\): error TS/.test(line)).map(line=>line.split(': error TS')[0]).sort();assert.deepEqual(locations(reports[1].diagnostics),locations(reports[0].diagnostics),'New app type errors');assert.equal(reports[1].status,reports[0].status);console.log(JSON.stringify({appCommit:commit,baselineStatus:reports[0].status,vpmStatus:reports[1].status,diagnosticLocations:locations(reports[0].diagnostics).length}));
+}finally{fs.rmSync(temporary,{recursive:true,force:true});}

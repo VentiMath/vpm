@@ -1,1 +1,0 @@
-module.exports=require("vgoogle-cloud-firestore-api/build/protos/protos");
