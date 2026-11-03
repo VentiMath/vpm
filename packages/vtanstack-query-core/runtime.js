@@ -116,7 +116,7 @@ export function replaceEqualDeep(before, after) {
 
 export const enabled = (options, query) => options.queryFn !== skipToken && (typeof options.enabled === 'function' ? options.enabled(query) : options.enabled) !== false;
 export const staleTime = (options, query) => typeof options.staleTime === 'function' ? options.staleTime(query) : options.staleTime ?? 0;
-export const shallowEqualObjects = (a, b) => a === b || Object.keys(a).length === Object.keys(b).length && Object.keys(a).every(key => a[key] === b[key]);
+export const shallowEqualObjects = (a, b) => a === b || Object.keys(a).length === Object.keys(b).length && Object.keys(a).every(key => Object.hasOwn(b, key) && a[key] === b[key]);
 
 let batchDepth = 0, queue = [], scheduler = fn => setTimeout(fn, 0), notify = fn => fn(), batched = fn => fn();
 export const notifyManager = {

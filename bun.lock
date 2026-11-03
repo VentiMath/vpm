@@ -897,11 +897,11 @@
     },
     "packages/vtanstack-query-core": {
       "name": "vtanstack-query-core",
-      "version": "0.1.0",
+      "version": "5.105.3",
     },
     "packages/vtanstack-react-query": {
       "name": "vtanstack-react-query",
-      "version": "0.1.0",
+      "version": "5.105.3",
       "dependencies": {
         "vtanstack-query-core": "0.1.0",
       },

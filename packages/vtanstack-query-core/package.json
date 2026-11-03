@@ -1,6 +1,6 @@
 {
   "name": "vtanstack-query-core",
-  "version": "0.1.0",
+  "version": "5.105.3",
   "description": "Independent query caching and request lifecycles for the APIs VentiMath uses",
   "type": "module",
   "main": "./query-client.js",

@@ -1,7 +1,7 @@
 # vtanstack-query-core
 
 An independently written query cache for the APIs VentiMath uses, checked
-against **@tanstack/query-core 5.105.0**. It deduplicates requests, caches data,
+against **@tanstack/query-core 5.105.3**. It deduplicates requests, caches data,
 notifies observers, retries failures, and coordinates mutations with cache
 invalidation. Zero runtime dependencies. Native ES modules also load through
 `require()` on Node 24 and Bun.
@@ -53,6 +53,10 @@ The implementation was informed by the public contract, upstream tests and sourc
 inspection. It is not a clean-room claim. [PROVENANCE.json](PROVENANCE.json)
 records the comparison release and evidence; MIT attribution is retained.
 
+An empty query with `staleTime: 'static'` remains eligible for refetch until it
+has data. Shallow comparisons require matching own property names, including
+when the values are `undefined`. Both cases match the 5.105.3 comparison baseline.
+
 ## Verification
 
 - [Focused cache tests](test/application-cache.test.cjs): request sharing,
@@ -68,9 +72,10 @@ records the comparison release and evidence; MIT attribution is retained.
 
 ## Measurements
 
-In the recorded run, cache reads took 11% less time on Node and 31% less on Bun;
-request deduplication took 43% and 32% less, respectively. Node's unchanged JSON
-update took 21% less time, but the same case was **30% slower on Bun**. All seven
-Node directions exceeded the measured control spread. Bun construction and
-invalidation remain inconclusive. These are local cache operations with no
-network; consult the raw samples and per-case evidence in the linked report.
+Against 5.105.3, cache reads took 6% less time on Node and 33% less on Bun;
+request deduplication took 60% and 41% less, respectively. Six Node cases and
+five Bun cases were faster in every pair beyond the measured control spread.
+The unchanged 16-record JSON update remains **18% slower on Bun**; its Node
+direction is inconclusive because one process pair reversed. Bun construction
+is also inconclusive. These are local cache operations with no network, not
+measured application speedups. The report retains every sample and control.

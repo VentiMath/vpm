@@ -40,3 +40,11 @@ primitives' imports are present on main. These six packages bring verified
 dependency adoption to **24 packages**. The upstream React entry and tabbable
 leave the lockfile; lower upstream Floating UI packages remain for MUI/Radix.
 This does not establish production bundle savings or deployment of a new feature.
+
+The `tanstack-5.105.3` release prepares `vtanstack-react-query` and
+`vtanstack-query-core` for the next application cutover. Neither is adopted in
+checked app commit `7a8aad2c`; they must remain available, without an **IN USE**
+badge. The [installation recipe](INSTALLATION.md#tanstack-query) preserves the
+original `@tanstack/react-query` import name while resolving it to the VPM
+archive, including for React Devtools. Adoption should be verified from the
+resolved release URL, not the dependency key alone.

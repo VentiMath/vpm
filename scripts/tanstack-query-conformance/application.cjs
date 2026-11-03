@@ -12,10 +12,10 @@ const deferred = () => { let resolve, reject; const promise = new Promise((yes, 
 const delay = () => new Promise(resolve => setTimeout(resolve, 0));
 
 (async () => {
-  const upstream = process.argv.includes('--upstream');
+  const upstream = process.argv.includes('--upstream'), current = process.argv.includes('--current');
   const consumer = process.env.VPM_QUERY_CONSUMER && require('node:module').createRequire(require('node:path').join(process.env.VPM_QUERY_CONSUMER, 'package.json'));
-  const core = consumer ? consumer('vtanstack-query-core') : upstream ? require('@tanstack/query-core') : await import('../../packages/vtanstack-query-core/query-client.js');
-  const hooks = consumer ? consumer('vtanstack-react-query') : upstream ? require('@tanstack/react-query') : (await import('../../packages/vtanstack-react-query/bindings.js')).createBindings(React, core);
+  const core = consumer ? consumer('vtanstack-query-core') : current ? require('current-query-core') : upstream ? require('@tanstack/query-core') : await import('../../packages/vtanstack-query-core/query-client.js');
+  const hooks = consumer ? consumer('vtanstack-react-query') : current ? require('current-react-query') : upstream ? require('@tanstack/react-query') : (await import('../../packages/vtanstack-react-query/bindings.js')).createBindings(React, core);
   const clients = [];
   function setup() {
     const client = new core.QueryClient({defaultOptions: {queries: {retry: false, gcTime: Infinity}, mutations: {gcTime: Infinity}}}); clients.push(client);
@@ -99,6 +99,6 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 0));
       });
       await waitFor(() => assert.equal(rendered.result.current.data, 2)); rendered.unmount();
     }
-    console.log(`${upstream ? 'Upstream' : 'VPM'}: seven mounted React application scenarios passed.`);
+    console.log(`${current ? 'Current upstream 5.105.3' : upstream ? 'Upstream 5.105.0' : 'VPM'}: seven mounted React application scenarios passed.`);
   } finally {cleanup(); clients.forEach(client => client.clear()); dom.window.close();}
 })().catch(error => {console.error(error); process.exitCode = 1;});

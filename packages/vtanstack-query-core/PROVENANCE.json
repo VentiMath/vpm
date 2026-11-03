@@ -1,15 +1,13 @@
 {
   "upstream": {
     "name": "@tanstack/query-core",
-    "version": "5.105.0",
-    "tag": "@tanstack/query-core@5.105.0",
-    "commit": "5cc606e2e84b6feb86a2284a984ba2d3ef1643c8",
-    "repository": "https://github.com/TanStack/query/tree/5cc606e2e84b6feb86a2284a984ba2d3ef1643c8/packages/query-core",
-    "tarball": "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.105.0.tgz",
-    "tarballSha256": "3a702c6ef0961ae7f58208fcdb3480aa96d186d7fcb86e4f0cd73682de794583",
-    "integrity": "sha512-7p56vRmT/z4UJ6sctGIdl5WRUQyUv53IUpUwEKi2g97zMbO7zh8ZsCLffGAvCPBR4xD72e3VXsDyLwXHhoNTMQ=="
+    "version": "5.105.3",
+    "repository": "https://github.com/TanStack/query/tree/main/packages/query-core",
+    "tarball": "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.105.3.tgz",
+    "tarballSha256": "f7790f375cc3732ee53194ddab3b6737e6cdee9e468ba35964ecd61a9cd7d8bf",
+    "integrity": "sha512-v1rbNy7MB/4Akth7CQH+CerV13K7Ok9hAusEsfz4sCjDdu3/kOSJPoWfoB+YjdEX1eBFBWKNAGE5nqZCgdlHDw=="
   },
-  "checked": "2026-11-01",
+  "checked": "2026-11-02",
   "license": "MIT",
   "retainedEvidence": "../../scripts/tanstack-query-conformance/upstream",
   "implementation": {
@@ -22,6 +20,17 @@
       "hydration/persistence",
       "suspense",
       "custom timer/environment providers"
-    ]
+    ],
+    "replacementStatus": "complete for documented application scope"
+  },
+  "retainedComparisonBaseline": {
+    "name": "@tanstack/query-core",
+    "version": "5.105.0",
+    "tag": "@tanstack/query-core@5.105.0",
+    "commit": "5cc606e2e84b6feb86a2284a984ba2d3ef1643c8",
+    "repository": "https://github.com/TanStack/query/tree/5cc606e2e84b6feb86a2284a984ba2d3ef1643c8/packages/query-core",
+    "tarball": "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.105.0.tgz",
+    "tarballSha256": "3a702c6ef0961ae7f58208fcdb3480aa96d186d7fcb86e4f0cd73682de794583",
+    "integrity": "sha512-7p56vRmT/z4UJ6sctGIdl5WRUQyUv53IUpUwEKi2g97zMbO7zh8ZsCLffGAvCPBR4xD72e3VXsDyLwXHhoNTMQ=="
   }
 }

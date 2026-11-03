@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('node:assert/strict'), path = require('node:path');
 (async () => {
-  const {upstream, vpm} = await require('../../../scripts/bench-library.cjs').load({upstream: () => import('../../../scripts/tanstack-query-conformance/node_modules/@tanstack/query-core/build/modern/index.js'), vpm: () => import('../query-client.js')});
+  const {upstream, vpm} = await require('../../../scripts/bench-library.cjs').load({upstream: () => import('../../../scripts/tanstack-query-conformance/node_modules/current-query-core/build/modern/index.js'), vpm: () => import('../query-client.js')});
   const options = {defaultOptions: {queries: {gcTime: Infinity}, mutations: {gcTime: Infinity}}};
   const cases = [
     {name: 'client construction', make: ({QueryClient}) => () => new QueryClient(options), validate: client => assert.equal(client.getQueryCache().getAll().length, 0)},
@@ -14,6 +14,6 @@ const assert = require('node:assert/strict'), path = require('node:path');
   ];
   await require('../../../scripts/bench-process.cjs').run({root: path.resolve(__dirname, '..'), upstream, vpm, cases, files: ['../../scripts/bench-library.cjs', 
     'query-client.js','runtime.js','cache.js','observer.js','mutation.js','package.json','bench/compare.cjs',
-    '../../scripts/tanstack-query-conformance/package-lock.json', '../../scripts/tanstack-query-conformance/node_modules/@tanstack/query-core/build/modern',
+    '../../scripts/tanstack-query-conformance/package-lock.json', '../../scripts/tanstack-query-conformance/node_modules/current-query-core/build/modern',
   ]});
 })().catch(error => {console.error(error); process.exitCode = 1;});

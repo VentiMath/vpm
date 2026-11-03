@@ -1,7 +1,7 @@
 # vtanstack-react-query
 
 Independently written React bindings for VentiMath's query and mutation usage,
-checked against **@tanstack/react-query 5.105.0**. Built on
+checked against **@tanstack/react-query 5.105.3**. Built on
 [vtanstack-query-core](../vtanstack-query-core), with React 18 or 19 as a peer.
 Mounted comparisons currently use React 19.2.4.
 
@@ -36,8 +36,10 @@ invalidation and rollback. Result and option types are in
 error-reset boundaries, and React's experimental query-result promise are not
 implemented. They are not used by the application scope inspected for this
 replacement. This package does not claim all TanStack Query APIs or the old
-copied build's full upstream test pass. Adoption still requires replacing imports
-or package aliases; this repository does not change VentiMath's deployment.
+copied build's full upstream test pass. The [release installation recipe](../../docs/INSTALLATION.md#tanstack-query)
+keeps the application's `@tanstack/react-query` import name, including Devtools
+imports, while resolving it to this package. This repository does not change
+VentiMath's deployment.
 
 ## Evidence
 
@@ -46,9 +48,16 @@ same scenarios against the pinned original and VPM on Node 24 and Bun: shared
 requests, dependent keys, pending mutations during invalidation, optimistic
 rollback, unmount cancellation, and provider isolation. The core's long-timer and
 DOM-independent declaration checks remain in place. Its developer-tool cache
-interface is exercised with VentiMath's pinned tools. The frontend declaration
-comparison added no errors to VentiMath's existing baseline; it does not assert
-that the baseline application typecheck is clean.
+interface is exercised with VentiMath's pinned tools. The November 2 declaration comparison used committed app snapshot `7a8aad2c`: its
+171 importing files use the five application APIs above. Both the original and
+replacement declarations produced the same 47 existing TypeScript diagnostics;
+the replacement added none. This does not assert a clean application typecheck
+or establish behavior for every app screen.
+
+Release checks install the exact archives with npm and Bun, mount the unchanged
+React Devtools 5.91.3 beside the hooks, and verify a shared provider. A Chrome
+production bundle loads a query and refreshes it after mutation. NodeNext and
+Bundler declaration consumers compile with TypeScript 7.
 
 The hooks are implemented in [bindings.js](bindings.js), with a small
 [index.js](index.js) entry. The published upstream runtime and its source maps

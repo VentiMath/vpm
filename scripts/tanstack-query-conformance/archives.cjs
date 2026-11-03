@@ -9,10 +9,12 @@ function run(command, args, env = process.env) {
 try {
   const dependencies = {react: 'file:' + path.join(__dirname, 'node_modules/react')};
   for (const name of ['vtanstack-query-core', 'vtanstack-react-query']) {
-    const packed = JSON.parse(run('npm', ['pack', path.join(root, 'packages', name), '--ignore-scripts', '--json', '--cache', path.join(temp, 'cache')]))[0];
-    dependencies[name] = 'file:' + path.join(temp, packed.filename);
-    assert.ok(packed.files.every(({path}) => !path.startsWith('build/') && !path.startsWith('test/') && !path.startsWith('bench/')));
-    console.log(`${name}: ${packed.unpackedSize} unpacked bytes, ${packed.files.length} files`);
+    const directory = path.join(root, 'packages', name), metadata = require(path.join(directory, 'package.json'));
+    const result = spawnSync('bun', ['pm', 'pack', '--ignore-scripts', '--destination', temp, '--quiet'], {cwd: directory, encoding: 'utf8'});
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+    const filename = name + '-' + metadata.version + '.tgz';
+    dependencies[name] = 'file:' + path.join(temp, filename);
+    assert.doesNotMatch(run('tar', ['-tzf', path.join(temp, filename)]), /package\/(build|test|bench)\//);
   }
   fs.writeFileSync(path.join(temp, 'package.json'), JSON.stringify({private: true, dependencies}));
   run('npm', ['install', '--offline', '--ignore-scripts', '--legacy-peer-deps', '--no-audit', '--no-fund', '--cache', path.join(temp, 'cache')]);

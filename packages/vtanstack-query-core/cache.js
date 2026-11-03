@@ -40,7 +40,7 @@ export class Query extends Subscribable {
     return value;
   }
   isActive() { return [...this.observers].some(observer => enabled(observer.options, this)); }
-  isStatic() { return [...this.observers].some(observer => staleTime(observer.options, this) === 'static'); }
+  isStatic() { return this.state.data !== undefined && [...this.observers].some(observer => staleTime(observer.options, this) === 'static'); }
   isDisabled() { return this.observers.size > 0 ? !this.isActive() : !this.options.queryFn; }
   isStaleByTime(time = 0) { return this.state.data === undefined || time !== 'static' && (this.state.isInvalidated || Date.now() - this.state.dataUpdatedAt >= time); }
   isStale() { return this.observers.size ? [...this.observers].some(o => o.getCurrentResult().isStale) : this.state.data === undefined || this.state.isInvalidated; }

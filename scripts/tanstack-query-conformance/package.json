@@ -1,7 +1,7 @@
 {
   "name": "tanstack-query-conformance",
   "private": true,
-  "description": "Pinned @tanstack/query-core and @tanstack/react-query 5.105.0 controls and the test tools at the versions in the release's lockfile",
+  "description": "Retained TanStack 5.105.0 controls, current 5.105.3 application comparisons and pinned React Devtools",
   "dependencies": {
     "@tanstack/query-core": "5.105.0",
     "@tanstack/query-persist-client-core": "5.105.0",
@@ -14,6 +14,8 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.1.1",
+    "current-query-core": "npm:@tanstack/query-core@5.105.3",
+    "current-react-query": "npm:@tanstack/react-query@5.105.3",
     "jsdom": "27.4.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",

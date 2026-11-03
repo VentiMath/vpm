@@ -188,3 +188,55 @@ Chrome interaction checks against the original. A frozen-lockfile install must
 leave the lock unchanged. Safari/Firefox and assistive-technology behavior are
 outside this release's automated verification; test the app's target browsers
 as part of its separate cutover.
+
+## TanStack Query
+
+The [TanStack release](https://github.com/VentiMath/vpm/releases/tag/tanstack-5.105.3)
+contains `vtanstack-react-query` and `vtanstack-query-core`, both **5.105.3** to
+identify their upstream comparison baseline. They independently implement the
+[query and mutation APIs VentiMath uses](../packages/vtanstack-react-query/README.md),
+not TanStack's entire export surface. Infinite queries, suspense, hydration,
+persistence and `useQueries` are outside this release.
+
+Replace the application's existing dependency entry with:
+
+```json
+{
+  "dependencies": {
+    "@tanstack/react-query": "https://github.com/VentiMath/vpm/releases/download/tanstack-5.105.3/vtanstack-react-query-5.105.3.tgz"
+  }
+}
+```
+
+Merge that entry into the existing package.json, retaining other dependencies.
+Keep imports from `@tanstack/react-query` unchanged. The dependency key is an
+installation alias for the VPM archive; its package name remains
+`vtanstack-react-query`. React Devtools also resolves that same entry, so its
+provider and hooks share one context. Do not add a second `vtanstack-react-query`
+dependency alongside the alias. No Vite alias or TypeScript path mapping is
+needed for this recipe. Keep the application's React/React DOM peers.
+
+The React archive pins `vtanstack-query-core` to its sibling release URL. It
+requires no registry account, overrides or GitHub authentication. Commit the
+resulting package.json and bun.lock together and use `bun install --frozen-lockfile`
+in CI. Run application tests before merging the separate consumer cutover.
+Preparing this release does not migrate or deploy VentiMath.
+
+The release includes `consumer-package.json`, `release-manifest.json` and
+`SHA256SUMS`. The manifest records the source commit, exact dependency URLs and
+archive/source hashes. Existing releases are immutable; revisions use a new tag.
+
+```sh
+node scripts/pack-tanstack-release.cjs --ref COMMIT_SHA --tag tanstack-5.105.3 --out /absolute/path/to/empty-output
+node scripts/check-tanstack-release.cjs /absolute/path/to/output
+# After publication:
+node scripts/check-tanstack-release.cjs /absolute/path/to/output --published
+```
+
+Before publication, the checker redirects the core URL to its exact local
+archive. After publication it installs only the top-level URL with a fresh
+npm/Bun cache and no overrides. Both modes verify installed source hashes,
+module identity, Node 24/Bun query and mutation hooks with unchanged React
+Devtools 5.91.3, TypeScript 7 consumers and a Chrome production bundle. The public
+check also repeats frozen installs and requires unchanged locks. Set `CHROME_BIN`
+if Chrome is not installed at a standard location.

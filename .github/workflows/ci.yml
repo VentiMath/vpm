@@ -209,12 +209,16 @@ jobs:
           node scripts/tanstack-query-conformance/run.cjs --package=core --upstream
           node scripts/tanstack-query-conformance/sharing.cjs
           node scripts/tanstack-query-conformance/application.cjs --upstream
+          node scripts/tanstack-query-conformance/application.cjs --current
+          node scripts/tanstack-query-conformance/current.cjs
           node scripts/tanstack-query-conformance/application.cjs
           node scripts/tanstack-query-conformance/run.cjs --package=react --upstream
           node scripts/tanstack-query-conformance/devtools.cjs --upstream
           node scripts/tanstack-query-conformance/devtools.cjs
           node scripts/tanstack-query-conformance/archives.cjs
           node scripts/tanstack-query-conformance/regressions.cjs
+          node scripts/pack-tanstack-release.cjs --ref "$GITHUB_SHA" --tag tanstack-5.105.3-ci --out "$RUNNER_TEMP/tanstack-release"
+          node scripts/check-tanstack-release.cjs "$RUNNER_TEMP/tanstack-release"
           node scripts/stylis-conformance/run.cjs --upstream
           node scripts/stylis-conformance/run.cjs
           node scripts/stylis-conformance/compare.cjs
@@ -592,6 +596,8 @@ jobs:
           bun scripts/tanstack-query-conformance/run.cjs --package=core --upstream
           bun scripts/tanstack-query-conformance/sharing.cjs
           bun scripts/tanstack-query-conformance/application.cjs --upstream
+          bun scripts/tanstack-query-conformance/application.cjs --current
+          bun scripts/tanstack-query-conformance/current.cjs
           bun scripts/tanstack-query-conformance/application.cjs
           bun scripts/tanstack-query-conformance/devtools.cjs --upstream
           bun scripts/tanstack-query-conformance/devtools.cjs

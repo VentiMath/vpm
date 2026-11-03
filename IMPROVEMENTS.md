@@ -74,7 +74,7 @@ now have current comparison targets:
 | Suite verified | vemotion-unitless | @emotion/unitless 0.10.0; Emotion's development suite with the complete VPM stack and documented exceptions | [@emotion/unitless 0.10.0](https://www.npmjs.com/package/@emotion/unitless), checked November 1, 2026 |
 | Suite verified | vemotion-weak-memoize | @emotion/weak-memoize 0.4.0; Emotion's development suite with the complete VPM stack and documented exceptions | [@emotion/weak-memoize 0.4.0](https://www.npmjs.com/package/@emotion/weak-memoize), checked November 1, 2026 |
 | Suite and differential verified | vstylis | stylis 4.4.0; its 113 tests, and identical trees and output over 12 stylesheets and 20,000 generated inputs | [stylis 4.4.0](https://www.npmjs.com/package/stylis), checked November 1, 2026 |
-| Application scope | vtanstack-react-query | Independent hooks; mounted public-API comparisons with 5.105.0 | [Contract and evidence](packages/vtanstack-react-query/README.md) |
+| Application scope | vtanstack-react-query | Independent hooks; mounted public-API comparisons with 5.105.3 | [Contract and evidence](packages/vtanstack-react-query/README.md) |
 | Application scope | vtanstack-query-core | Independent cache, requests and mutations; long-timer regressions retained | [Contract and evidence](packages/vtanstack-query-core/README.md) |
 | App scope independently implemented | vfullcalendar-react | @fullcalendar/react 7.1.3; mounted app-shaped comparisons, 11 lifecycle/event checks, real-browser selection/drag/resize/layout, date/feed regressions and TypeScript 7 | [@fullcalendar/react 7.1.3](https://www.npmjs.com/package/@fullcalendar/react), checked November 1, 2026 |
 | Caller paths verified | vfullcalendar-core | @fullcalendar/core 7.1.3 and the copy of its JSON feed request that @fullcalendar/react 7.1.3 bundles; requests and results against a recording server | [@fullcalendar/core 7.1.3](https://www.npmjs.com/package/@fullcalendar/core), checked November 1, 2026 |
@@ -257,8 +257,8 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vemotion-unitless](packages/vemotion-unitless) | @emotion/unitless 0.10.0 | Adds `gridArea` and `lineClamp`, which were serialized with `px`. |
 | [vemotion-weak-memoize](packages/vemotion-weak-memoize) | @emotion/weak-memoize 0.4.0 | The same behavior, written for VPM. |
 | [vstylis](packages/vstylis) | stylis 4.4.0 | Vendor prefixes chosen by property name (stylis's hash gave more than 50 unprefixed properties, `flex-wrap` and `grid-gap` among them, invented declarations), IE grid spans on the right axis, `mask-composite: subtract` converted, the same `namespace` result on JavaScriptCore, and bundled declarations; otherwise identical trees and output, and all 113 upstream tests pass. |
-| [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.0, scoped APIs | Independent cache, request and mutation lifecycle; bounded long timers and DOM-independent declarations. The former upstream build is removed. |
-| [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.0, scoped APIs | Independently written provider, query and mutation hooks on the VPM core; mounted application comparisons. |
+| [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.3, scoped APIs | Independent cache, request and mutation lifecycle; bounded long timers and DOM-independent declarations. The former upstream build is removed. |
+| [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.3, scoped APIs | Independently written provider, query and mutation hooks on the VPM core; mounted application comparisons. |
 | [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | Independent app-used month/week/day renderer, event model, styles and declarations; two VPM dependencies; preserved allDay/timezone/feed fixes; 84% smaller gzipped app-shaped JS entry with narrower supported scope. |
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
@@ -1042,7 +1042,7 @@ See the [package contract](packages/vstylis/README.md) and the
 ## vtanstack-query-core and vtanstack-react-query
 
 The retained builds have been replaced with independent implementations of the
-APIs VentiMath uses, compared with **5.105.0**: query caching and invalidation,
+APIs VentiMath uses, compared with **5.105.3**: query caching and invalidation,
 request deduplication/cancellation/retries, mutations and optimistic context,
 and React's provider/query/mutation hooks. Long collection and polling delays
 remain bounded timer chains, and core declarations compile without DOM types.
@@ -1050,7 +1050,11 @@ remain bounded timer chains, and core declarations compile without DOM types.
 The contract excludes infinite and streamed queries, hydration, persistence and
 suspense. The old 1,608/609-test full-suite claims belonged to the copied builds;
 the rewrite has focused tests and mounted application comparisons on Node 24 and
-Bun. Developer tools and archive consumers are checked separately. This change
+Bun. The current baseline also checks static-query recovery, own-key shallow
+equality, shared request errors and offline mutation recovery. The release pins
+both archives to immutable public URLs, and clean npm/Bun consumers keep the
+original import name so React Devtools shares the application provider.
+TypeScript 7 and a Chrome production bundle are checked separately. This change
 does not deploy the replacements to VentiMath.
 
 See the [core](packages/vtanstack-query-core/README.md) and

@@ -1,15 +1,13 @@
 {
   "upstream": {
     "name": "@tanstack/react-query",
-    "version": "5.105.0",
-    "tag": "@tanstack/react-query@5.105.0",
-    "commit": "5cc606e2e84b6feb86a2284a984ba2d3ef1643c8",
-    "repository": "https://github.com/TanStack/query/tree/5cc606e2e84b6feb86a2284a984ba2d3ef1643c8/packages/react-query",
-    "tarball": "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.105.0.tgz",
-    "tarballSha256": "cb3e19a62f3cc18cf2673e6ec46562357b5b4425b7091a6e9135ae17ec032568",
-    "integrity": "sha512-y+hMuDERvgg6ay1da0V1a6ZC0ZONt7dELxSFkqRZuwm7p1TTZs0MoXrPlBRflIpRoYjvzQVYxycnLImpFLhWrw=="
+    "version": "5.105.3",
+    "repository": "https://github.com/TanStack/query/tree/main/packages/react-query",
+    "tarball": "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.105.3.tgz",
+    "tarballSha256": "530ecacb38fa754d3d406870780cc7887ee5ea91db1041da9ab089a9126b449b",
+    "integrity": "sha512-dj5hGWZmwoc9NG4enoXuYbiYwb5FxgJYPVv06eUgicMTfEMTRXn08Xv9D/r1V8TfjAv+BpxdvZFzJ1h3hSWZcQ=="
   },
-  "checked": "2026-11-01",
+  "checked": "2026-11-02",
   "license": "MIT",
   "retainedEvidence": "../../scripts/tanstack-query-conformance/upstream",
   "implementation": {
@@ -22,6 +20,17 @@
       "hydration/persistence",
       "suspense",
       "custom timer/environment providers"
-    ]
+    ],
+    "replacementStatus": "complete for documented application scope"
+  },
+  "retainedComparisonBaseline": {
+    "name": "@tanstack/react-query",
+    "version": "5.105.0",
+    "tag": "@tanstack/react-query@5.105.0",
+    "commit": "5cc606e2e84b6feb86a2284a984ba2d3ef1643c8",
+    "repository": "https://github.com/TanStack/query/tree/5cc606e2e84b6feb86a2284a984ba2d3ef1643c8/packages/react-query",
+    "tarball": "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.105.0.tgz",
+    "tarballSha256": "cb3e19a62f3cc18cf2673e6ec46562357b5b4425b7091a6e9135ae17ec032568",
+    "integrity": "sha512-y+hMuDERvgg6ay1da0V1a6ZC0ZONt7dELxSFkqRZuwm7p1TTZs0MoXrPlBRflIpRoYjvzQVYxycnLImpFLhWrw=="
   }
 }
