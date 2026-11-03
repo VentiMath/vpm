@@ -74,6 +74,7 @@ jobs:
       - run: node scripts/radix-state-conformance/archives.cjs
       - run: npm --prefix scripts/radix-rect-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-rect-conformance/archives.cjs
+      - run: node scripts/vlx-conformance/check-lock.cjs
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: node scripts/vlx-conformance/archives.cjs
@@ -511,6 +512,7 @@ jobs:
       - run: node scripts/radix-state-conformance/archives.cjs
       - run: npm --prefix scripts/radix-rect-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/radix-rect-conformance/archives.cjs
+      - run: node scripts/vlx-conformance/check-lock.cjs
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: node scripts/vlx-conformance/archives.cjs
