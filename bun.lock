@@ -769,6 +769,13 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vradix-react-context": {
+      "name": "vradix-react-context",
+      "version": "1.3.0",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vradix-react-primitive": {
       "name": "vradix-react-primitive",
       "version": "2.2.0",
@@ -1292,6 +1299,8 @@
     "vradix-primitive": ["vradix-primitive@workspace:packages/vradix-primitive"],
 
     "vradix-react-compose-refs": ["vradix-react-compose-refs@workspace:packages/vradix-react-compose-refs"],
+
+    "vradix-react-context": ["vradix-react-context@workspace:packages/vradix-react-context"],
 
     "vradix-react-primitive": ["vradix-react-primitive@workspace:packages/vradix-react-primitive"],
 

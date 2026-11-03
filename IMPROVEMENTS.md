@@ -227,6 +227,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vreact-remove-scroll-bar](packages/vreact-remove-scroll-bar) | react-remove-scroll-bar 2.3.8 | Independent React 19 body scrollbar compensation with vreact-style-singleton and no tslib. CSS-option parity, nested locks, hydration, body-owned cleanup, constants-only entry and actual scroll-lock caller verified. |
 | [vreact-remove-scroll](packages/vreact-remove-scroll) | react-remove-scroll 2.7.2 | Independent React 19 scroll isolation with document-scoped listeners and weak event identity. Preserves nested locks, portals, shards and lazy sidecars; fixes stale wheel decisions, touch reversal and overwritten refs/handlers. VPM dependencies only. |
 | [varia-hidden](packages/varia-hidden) | aria-hidden 1.2.6 | Independent DOM isolation without tslib. Per-attribute ownership, idempotent undo, exact restoration, safe markers and invalid-target handling; actual Radix menus and Chrome focus behavior verified. |
+| [vradix-react-context](packages/vradix-react-context) | @radix-ui/react-context 1.3.0 | Independent context/scope factories; shape-aware provider memoization fixes stale keys, stable composed scopes avoid identity churn. React 19, zero runtime dependencies beyond its peer; built, unreleased and unadopted. |
 | [vradix-react-primitive](packages/vradix-react-primitive) | @radix-ui/react-primitive 2.2.0 | Independent DOM components using VPM Slot; lazy per-tag wrappers, fewer initialization copies, deferred ReactDOM dispatch import. Unchanged Toggle caller verified. |
 | [vradix-react-slot](packages/vradix-react-slot) | @radix-ui/react-slot 1.5.0 | Independent React 19 slots with VPM refs; direct-child fast path, explicit ambiguous-target and cyclic-child errors; unchanged Radix Primitive callers verified. |
 | [vradix-react-compose-refs](packages/vradix-react-compose-refs) | @radix-ui/react-compose-refs 1.1.5 | Independent React 19 ref composition; lazy cleanup storage, complete once-only teardown after errors, stable hook identity. Unchanged current/app Slot callers verified. |
@@ -373,7 +374,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **148 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **149 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5488,3 +5489,21 @@ identical-code control spread. Native-button results and all Bun directions
 are inconclusive; Bun controls were especially noisy. Lazy Slot creation
 defers work to first use. These measurements do not establish cold-start,
 browser or whole-application speedups.
+
+## vradix-react-context
+
+Independent context and scope factories target 1.3.0, with the app's 1.1.2
+baseline retained as a control. Providers compare keys and values, fixing stale
+context fields after equal-valued key changes. Composed scope records retain
+identity across equivalent renders; context registration avoids repeatedly
+copying the definition list. Default/null/optional reads, scope overrides,
+unchanged ToggleGroup selection and hydration pass on Node 24 and Bun.
+Clean archives, CJS/ESM, TypeScript 7 DOM-only types and browser bundles pass.
+Built, not released or adopted. See the [contract](packages/vradix-react-context/README.md),
+[fixtures](scripts/radix-context-conformance/README.md) and
+[measurements](packages/vradix-react-context/bench/results/README.md).
+
+Factory construction takes 95.1% less time on Node 24 and 76.3% less on Bun;
+creating a 16-context scope takes 90.4% and 63.6% less, respectively, beyond
+identical-code controls. Provider/consumer SSR directions are inconclusive on
+both runtimes. These are construction/renderer microbenchmarks, not app speedups.
