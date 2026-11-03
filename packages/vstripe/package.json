@@ -1,0 +1,41 @@
+{
+  "name": "vstripe",
+  "version": "23.1.0",
+  "description": "Checkout sessions and signed snapshot webhooks using native Node 24 and Bun APIs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.ts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json",
+    "index.d.cts"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vstripe"
+  },
+  "type": "module"
+}

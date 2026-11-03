@@ -232,6 +232,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vradix-react-context](packages/vradix-react-context) | @radix-ui/react-context 1.3.0 | Independent context/scope factories; shape-aware provider memoization fixes stale keys, stable composed scopes avoid identity churn. React 19, zero runtime dependencies beyond its peer; built, unreleased and unadopted. |
 | [vradix-react-use-callback-ref](packages/vradix-react-use-callback-ref) | @radix-ui/react-use-callback-ref 1.1.5 | Stable callbacks publish targets only on commit; React 19 insertion effects remove the fallback dependency. |
 | [vradix-react-direction](packages/vradix-react-direction) | @radix-ui/react-direction 1.2.0 | Independent React 19 direction provider/hook; unchanged public behavior, shared CJS/ESM context and actual RovingFocus keyboard controls. No runtime dependencies beyond React. |
+| [vstripe](packages/vstripe) | stripe 23.1.0 (app controls: 17.7.0) | Independent Checkout/webhook APIs; native Fetch/crypto, bounded responses and exact-byte signatures; no runtime dependencies. |
 | [vpngjs](packages/vpngjs) | pngjs 7.0.0 | Independent app-used synchronous PNG reader: complete static formats/Adam7, bounded inflation, strict chunk structure and CRC checks. Matches 162 valid corpus images and actual app pixel tests. No writer/stream API; built, not adopted. |
 | [vradix-react-use-controllable-state](packages/vradix-react-use-controllable-state) | @radix-ui/react-use-controllable-state 1.3.0 | Pure controlled reducers; commit-only notifications; stable setters; React 19.2 support. |
 | [vradix-react-id](packages/vradix-react-id) | @radix-ui/react-id 1.1.4 | Native React 19 IDs with Radix prefix and override semantics; removes redundant state, layout effects and legacy counter. SSR/hydration and current Dropdown Menu ARIA links verified on React 19.1/19.2. |
@@ -382,9 +383,9 @@ version-scoped integration aliases remain limited to their tested baselines.
 ## Current verification
 
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
-recorded by the tests. All 119 Node runtime packages' public declarations compile
+recorded by the tests. All 120 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **157 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **158 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5653,7 +5654,7 @@ The default 16-million-pixel/10-MiB limits match the application.
 14 invalid-image rejections, 192 upstream-encoded fixtures, malformed-input
 controls and real resvg output. The unchanged app's 28 image tests pass against
 either decoder on Bun. Packed consumers and TypeScript 7 pass. Built, unreleased
-and unadopted; Stripe, MathJax and resvg remain separate backend work.
+and unadopted; MathJax and resvg remain separate backend work.
 
 [Final isolated measurements](packages/vpngjs/bench/results/README.md) establish
 less time for small RGBA (−23.5% Node / −9.5% Bun), interlaced 16-bit RGB
@@ -5678,3 +5679,32 @@ establish no general state-commit gain. The corrected controlled reducer costs
 comparison. Direct controlled setter overhead is about 1 ns on Node with React 19.2 and
 4 ns on Bun with React 19.1; the latter is a large percentage of a roughly 1 ns baseline.
 These timings do not measure an application-level regression or improvement.
+
+## vstripe application APIs
+
+The independent 23.1.0 implementation covers the application's Checkout session
+creation and signed snapshot webhook calls. It uses native Fetch/crypto, retains
+request and idempotency snapshots across retries, bounds response buffering and
+refuses credential-bearing redirects. Verification authenticates original bytes,
+rejects malformed/duplicate timestamps and invalid UTF-8, and applies a symmetric
+clock window. Other Stripe resources and thin notifications are outside scope.
+
+Current upstream 23.1.0 already has zero runtime dependencies; dependency removal
+is relative to the app's 17.7.0 baseline. Its default API version is current
+2026-10-28.endive, so consuming the replacement requires reviewing the app's API
+migration or explicitly retaining an older API version. Built, unreleased and
+unadopted; no live payment calls were made during implementation.
+
+Eleven Node 24/Bun test groups cover app-shaped wire contracts against both
+upstream versions, API errors, retry advice and body/key preservation, signatures,
+malformed inputs, redirect refusal and an interrupted response body. Clean npm/Bun
+archives and CJS/ESM TypeScript 7 consumers pass. [Isolated measurements](packages/vstripe/bench/results/README.md)
+compare current 23.1.0 using identical-source controls. Checkout request timings
+use a synthetic Fetch transport; they do not measure Stripe network latency.
+
+Final results establish roughly 99% lower client-construction cost on both
+runtimes. Node byte-webhook verification is 5.3–11.1% lower; Bun's 32 KiB byte case
+is 28.7% lower. String verification is inconclusive. The synthetic Checkout
+pipeline is 70.5% lower on Node; Bun's median is 14.5% higher but remains
+inconclusive against 24% identical-source control variation. No overall Bun
+Checkout speedup is claimed.

@@ -39,10 +39,18 @@ not a decision to recreate an older upstream release.
 
 | Dependency | Locked version | Application use | VPM status |
 | --- | --- | --- | --- |
-| `stripe` | 17.7.0 | Payment operations, imported by `functions/src/payments.ts` | No replacement; inspect the used payment APIs before choosing scope |
+| `stripe` | 17.7.0 | Checkout sessions and signed completion webhooks in `functions/src/payments.ts` | [vstripe](../packages/vstripe): independent app-used APIs targeting current 23.1.0 completed; not released or adopted |
 | `mathjax-full` | 3.2.2 | TeX to SVG in `functions/src/problemImage.ts` | No replacement; needs a rendering/API and current-upstream assessment |
 | `@resvg/resvg-js` | 2.6.2 | SVG rasterization in `functions/src/problemImage.ts` | No replacement; native engine reuse versus wrapper replacement is undecided |
 | `pngjs` | 7.0.0 | PNG image processing in `functions/src/problemImage.ts` | [vpngjs](../packages/vpngjs): independent synchronous reader completed, not released or adopted |
+
+The Stripe replacement covers Checkout session creation and raw-body snapshot
+webhook verification, with Node/Bun controls against both SDK 23.1.0 and the
+app's 17.7.0. It uses native Fetch and crypto and has no runtime package
+dependencies. Other Stripe resource APIs and thin event notifications are outside
+the checked app scope. Its default API version matches 23.1.0; adoption requires
+reviewing that upgrade or explicitly retaining the app's chosen API version.
+The app's webhook endpoint version and fulfillment logic are separate concerns.
 
 The PNG reader has Node/Bun corpus controls and passes the app's unchanged image
 tests with its module substituted. It validates figures and exposes decoded pixels;

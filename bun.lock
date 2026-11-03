@@ -968,6 +968,10 @@
       "name": "vstream-events",
       "version": "0.1.0",
     },
+    "packages/vstripe": {
+      "name": "vstripe",
+      "version": "23.1.0",
+    },
     "packages/vstrnum": {
       "name": "vstrnum",
       "version": "0.1.0",
@@ -1406,6 +1410,8 @@
     "vstatuses": ["vstatuses@workspace:packages/vstatuses"],
 
     "vstream-events": ["vstream-events@workspace:packages/vstream-events"],
+
+    "vstripe": ["vstripe@workspace:packages/vstripe"],
 
     "vstrnum": ["vstrnum@workspace:packages/vstrnum"],
 

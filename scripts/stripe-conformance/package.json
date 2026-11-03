@@ -1,0 +1,8 @@
+{
+  "name": "vpm-stripe-conformance",
+  "private": true,
+  "dependencies": {
+    "stripe": "23.1.0",
+    "stripe-app": "npm:stripe@17.7.0"
+  }
+}

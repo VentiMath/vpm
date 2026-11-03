@@ -1,0 +1,35 @@
+{
+  "upstream": {
+    "name": "stripe",
+    "version": "23.1.0",
+    "repository": "https://github.com/stripe/stripe-node",
+    "checked": "2026-11-03",
+    "integrity": "sha512-fVUfMSfTPoukfoV//MUKAx2+YxyKmYaYtnAL9VkfnHfaPNQylFdWZMD+zgUFerI8rjbaiER8Vzj2XEUQ2AhAsQ=="
+  },
+  "sourceSHA256": {
+    "cjs/Webhooks.js": "e6dec063e2db89886235a8ac37c79601d67ff1f4b75360d0c99d1c7db53c29b0",
+    "cjs/RequestSender.js": "4c2f31d8334391b2efba5cb51ea35adad1ef3894b7afb15208b988ea1019895e",
+    "cjs/resources/Checkout/Sessions.js": "de0283fec85c11ad019466c6ce57e1f7341911b2885b45a7d33c42ed585b4558",
+    "cjs/apiVersion.js": "c3745b97ec1840452efcdaa169d1ff6e04c80d2893c38e1e1bdce4befb65eeb3",
+    "LICENSE": "b36d54d51ac6f20b867c24264b9433f54372c3370d4984cf1c9884c5c6de1f7a"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Checkout sessions.create and signed snapshot webhook verification used by the payments caller; Node 24/Bun native fetch and crypto."
+  },
+  "applicationBaseline": {
+    "upstream": "stripe 17.7.0",
+    "sourceCommit": "0f2ef94b994f40f567f71fc17d30f619060ea1c7",
+    "usage": "Checkout creation and checkout.session.completed snapshot events; no other Stripe SDK resource calls in checked backend source."
+  },
+  "changes": [
+    "Replace the generated SDK resource graph with scoped native fetch and HMAC operations. The app 17.7 dependency graph is removed; current upstream 23.1.0 itself already has no runtime dependencies.",
+    "Authenticate raw webhook bytes and reject invalid UTF-8, malformed or duplicate timestamps, nonfinite tolerance and timestamps beyond either side of the allowed window.",
+    "Bound request structure and response buffering, prohibit credential-bearing redirects and preserve idempotency keys across retries."
+  ],
+  "omitted": [
+    "All resource methods except checkout.sessions.create.",
+    "Thin event notifications, custom crypto providers, callback-style methods, agents/proxies, telemetry, API event emitters and generated SDK-wide types."
+  ]
+}
