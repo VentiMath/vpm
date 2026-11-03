@@ -21,6 +21,7 @@ bun install --frozen-lockfile --ignore-scripts
 for lockfile in scripts/*/package-lock.json; do
   npm --prefix "${lockfile%/package-lock.json}" ci --ignore-scripts --no-audit --no-fund
 done
+npm --prefix scripts/radix-effect-event-conformance/current ci --ignore-scripts --no-audit --no-fund
 ```
 
 These separately locked fixtures contain original packages, SDK callers and test

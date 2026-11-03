@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-use-effect-event",
+    "version": "0.0.5",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/use-effect-event",
+    "integrity": "sha512-7cshFL8HGS/7HEiHH+9kL9HBwp2sa9yX18Knwek6KYWmXwM7pegMgta2AXMQKI+rq3JnfSj9x8wYqFMTdG1Jgg==",
+    "checked": "2026-11-03"
+  },
+  "sourceSHA256": {
+    "dist/index.js": "9b83d535b78c4e4c38d3c91128eb5d408107c312a853a4d8ff363a3212315406",
+    "dist/index.d.ts": "ca95dfb5c11ae8da99e7ae3b43e302dd6d2b5e7f9755871699936da45f4d1c7d",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "useEffectEvent on React 19: native delegation when available, commit-only callback publication and a stable retained callable on the insertion-effect fallback."
+  },
+  "changes": [
+    "A single retained record owns the callable and its committed callback, removing the separate memo hook from the React 19.1 fallback.",
+    "React 19.2 native useEffectEvent is exported directly, preserving native commit and render-phase semantics.",
+    "React 19 guarantees insertion effects, so the older React layout-effect fallback and runtime dependency are omitted."
+  ]
+}

@@ -810,6 +810,13 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vradix-react-use-effect-event": {
+      "name": "vradix-react-use-effect-event",
+      "version": "0.0.5",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vradix-react-use-layout-effect": {
       "name": "vradix-react-use-layout-effect",
       "version": "1.1.4",
@@ -1331,6 +1338,8 @@
     "vradix-react-slot": ["vradix-react-slot@workspace:packages/vradix-react-slot"],
 
     "vradix-react-use-callback-ref": ["vradix-react-use-callback-ref@workspace:packages/vradix-react-use-callback-ref"],
+
+    "vradix-react-use-effect-event": ["vradix-react-use-effect-event@workspace:packages/vradix-react-use-effect-event"],
 
     "vradix-react-use-layout-effect": ["vradix-react-use-layout-effect@workspace:packages/vradix-react-use-layout-effect"],
 
