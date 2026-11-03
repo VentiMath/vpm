@@ -94,4 +94,5 @@ report; these CPU measurements do not establish browser responsiveness gains.
 
 Available in the public [Floating UI release](../../docs/INSTALLATION.md#floating-ui).
 The React entry installs all six VPM packages from pinned release URLs. Package
-versions identify upstream API baselines; application adoption is separate.
+versions identify upstream API baselines. VentiMath adopted this release for its
+Tiptap editor primitives in PR #406; see [adoption scope](../../docs/ADOPTION.md).
