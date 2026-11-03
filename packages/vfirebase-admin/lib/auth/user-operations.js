@@ -5,7 +5,7 @@
 const validator = require('../utils/validator');
 const {FirebaseAuthError, authClientErrorCode: codes} = require('./error');
 const {detachClaims} = require('./claim-snapshot');
-const {convertMultiFactorInfoToServerFormat} = require('./user-import-builder');
+const {convertMultiFactorInfoToServerFormat} = require('./update-schema');
 
 const error = (code, message) => new FirebaseAuthError(code, message);
 const maximumBatch = () => error(codes.MAXIMUM_USER_COUNT_EXCEEDED, '`uids` parameter must have <= 1000 entries.');

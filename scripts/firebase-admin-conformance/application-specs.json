@@ -1,0 +1,70 @@
+{
+  "files": {
+    "app/credential-internal": null,
+    "app/index": null,
+    "app/firebase-app": null,
+    "utils/error": null,
+    "utils/validator": null,
+    "utils/jwt": null,
+    "auth/index": null,
+    "auth/user-record": null,
+    "auth/token-verifier": null,
+    "messaging/index": null,
+    "messaging/messaging": null,
+    "storage/storage": null,
+    "storage/index": null,
+    "firestore/firestore": null,
+    "firestore/index": null,
+    "app-check/token-verifier": null,
+    "utils/index": [
+      "SDK_VERSION",
+      "getExplicitProjectId()",
+      "findProjectId()"
+    ],
+    "utils/api-request": [
+      "HttpClient",
+      "Http2Client",
+      "AuthorizedHttpClient",
+      "AuthorizedHttp2Client",
+      "ApiSettings",
+      "defaultRetryConfig()"
+    ],
+    "auth/auth": [
+      "Auth Constructor",
+      "Auth app",
+      "Auth verifyIdToken()",
+      "Auth getUser()",
+      "Auth updateUser()",
+      "Auth revokeRefreshTokens()",
+      "Auth deleteUsers()",
+      "Auth listUsers()"
+    ],
+    "auth/auth-api-request": [
+      "FIREBASE_AUTH_GET_ACCOUNT_INFO",
+      "FIREBASE_AUTH_SET_ACCOUNT_INFO",
+      "AuthRequestHandler Constructor",
+      "AuthRequestHandler getAccountInfoByUid",
+      "AuthRequestHandler updateExistingAccount",
+      "AuthRequestHandler revokeRefreshTokens",
+      "AuthRequestHandler deleteAccounts",
+      "AuthRequestHandler downloadAccount",
+      "FIREBASE_AUTH_DOWNLOAD_ACCOUNT"
+    ],
+    "app-check/app-check": [
+      "AppCheck app",
+      "AppCheck verifyToken"
+    ],
+    "app-check/app-check-api-client-internal": [
+      "AppCheckApiClient verifyReplayProtection"
+    ]
+  },
+  "fixtureOnlyModules": [
+    "auth/auth-config",
+    "auth/user-import-builder",
+    "auth/action-code-settings-builder",
+    "app-check/token-generator",
+    "auth/token-generator",
+    "utils/crypto-signer"
+  ],
+  "expectedTests": 1801
+}

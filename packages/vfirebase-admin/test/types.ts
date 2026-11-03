@@ -21,3 +21,13 @@ async function calls(token: string): Promise<void> {
 void calls;
 // @ts-expect-error the namespaced API (admin.firestore()) is not part of Admin 14
 import('vfirebase-admin').then(admin => admin.firestore());
+
+import {getAppCheck, type VerifyAppCheckTokenResponse} from 'vfirebase-admin/app-check';
+import type {ListUsersResult} from 'vfirebase-admin/auth';
+const page: Promise<ListUsersResult> = getAuth(app).listUsers(1000, 'page-token');
+const attestation: Promise<VerifyAppCheckTokenResponse> = getAppCheck(app).verifyToken('token', {consume: true});
+void [page, attestation];
+// @ts-expect-error user creation is outside the documented application scope
+getAuth(app).createUser({uid: 'unused'});
+// @ts-expect-error App Check token minting is outside the documented application scope
+getAppCheck(app).createToken('unused');

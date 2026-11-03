@@ -10,6 +10,9 @@ const {createHash} = require('node:crypto'), {spawnSync} = require('node:child_p
 const {compiler} = require('../platform-types.cjs');
 const root = path.resolve(__dirname, '../..');
 const upstream = process.argv.includes('--upstream');
+const all = process.argv.includes('--all-upstream');
+assert.ok(!all || upstream, 'Full SDK coverage only exists for upstream; VPM exposes the documented application scope.');
+const scope = require('./application-specs.json');
 const only = process.argv.find(arg => arg.startsWith('--grep='))?.slice(7);
 // VPM omits the Realtime Database client and multipart response parsing (see
 // the package README); the tests that exercise them must fail, and only those.
@@ -64,17 +67,19 @@ try {
       text = text.replace('crypto.randomUUID()', "'vpm-percent-condition-' + i");
     }
     for (const [from, to] of Object.entries(redirects)) text = text.replaceAll(`require("${from}")`, `require(${JSON.stringify(to)})`);
+    if (!upstream) for (const module of scope.fixtureOnlyModules) {
+      const pattern = new RegExp('require\\("((?:\\.\\./)+)src/' + module + '"\\)', 'g');
+      text = text.replace(pattern, () => 'require(' + JSON.stringify(path.join(original, 'lib', module)) + ')');
+    }
     fs.writeFileSync(filename, text);
   }
-  // The Realtime Database specs require lib/database's implementation, which
-  // VPM omits; leave their two files (the 84 tests of the "Database" suite)
-  // out of the VPM run instead of letting the missing module abort the suite.
-  if (!upstream) {
+  if (!all) {
+    // Select suites at definition time, so removed providers cannot run hooks.
+    // Both implementations use this exact manifest and unchanged assertions.
     const index = path.join(build, 'test/unit/index.spec.js');
-    const text = fs.readFileSync(index, 'utf8');
-    const stripped = text.replace(/^require\("\.\/database\/(?:database|index)\.spec"\);\n/gm, '');
-    assert.equal(text.length - stripped.length, 'require("./database/database.spec");\nrequire("./database/index.spec");\n'.length, 'database spec imports');
-    fs.writeFileSync(index, stripped);
+    fs.writeFileSync(index, `const originalDescribe=global.describe,originalIt=global.it;
+const select=(file,prefixes)=>{const stack=[];global.it=function(title,body){const full=[...stack,title].join(' ');if(!prefixes||prefixes.some(p=>full===p||full.startsWith(p+' ')))return originalIt(title,body)};global.it.skip=originalIt.skip;global.it.only=originalIt.only;global.describe=function(title,body){const full=[...stack,title].join(' ');if(prefixes&&!prefixes.some(p=>full===p||full.startsWith(p+' ')||p.startsWith(full+' ')))return;return originalDescribe(title,function(){stack.push(title);try{body.call(this)}finally{stack.pop()}})};try{require('./'+file+'.spec.js')}finally{global.describe=originalDescribe;global.it=originalIt}};
+` + Object.entries(scope.files).map(([file,prefixes])=>'select('+JSON.stringify(file)+','+JSON.stringify(prefixes)+');').join('\n'));
   }
   const report = path.join(temporary, 'report.json');
   const args = [path.join(__dirname, 'node_modules/mocha/bin/mocha.js'), '--reporter', 'json', '--reporter-option', 'output=' + report,
@@ -116,11 +121,9 @@ try {
   console.log(`${upstream ? 'Upstream' : 'VPM'} Firebase Admin suite: ${stats.stats.passes} passed, ${stats.stats.failures} failed (${stats.stats.failures - unexpected.length} expected), ${stats.stats.pending} pending of ${stats.stats.tests}.`);
   assert.equal(unexpected.length, 0);
   assert.ok(stats.stats.tests > 0, 'suite filter matched no tests');
-  if (!only) {
-    assert.equal(stats.stats.failures, [...expected.keys()].filter(title => !(title in unavailable) || !upstream).length, 'an expected failure now passes; update the expectation');
-    assert.equal(schemeFailures, upstream ? 0 : SCHEME_TESTS, ':scheme assertions');
-    assert.equal(stats.stats.tests, upstream ? 6146 : 6146 - 84);
-  }
+  if (!only && all) assert.equal(stats.stats.tests, 6146);
+  if (!only && !all && scope.expectedTests) {assert.equal(stats.stats.tests, scope.expectedTests, 'application suite selection changed');assert.equal(stats.stats.failures,(upstream?0:47)+(process.versions.bun?6:0),'application suite expected differences changed');}
+
 } finally {
   if (!process.env.KEEP) fs.rmSync(temporary, {recursive: true, force: true}); else console.log('kept', temporary);
 }

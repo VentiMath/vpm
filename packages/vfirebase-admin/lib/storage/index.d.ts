@@ -54,5 +54,6 @@ export declare function getStorage(app?: App): Storage;
  * const downloadUrl = await getDownloadURL(myRef);
  * ```
  */
-export declare function getDownloadURL(file: File): Promise<string>;
+
 export { FirebaseStorageError, StorageErrorCode, } from './error';
+export declare function getDownloadURL(file: import('vgoogle-cloud-storage').File): Promise<string>;

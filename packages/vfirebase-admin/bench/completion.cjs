@@ -1,0 +1,15 @@
+'use strict';
+const path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const vpm=path.resolve(__dirname,'..'),fixture=path.resolve(__dirname,'../../../scripts/firebase-admin-conformance'),upstream=path.join(fixture,'node_modules/firebase-admin');
+const key=require(path.join(fixture,'upstream/test/resources/mock.key.json')).private_key;
+const now=Math.floor(Date.now()/1000),token=require(path.join(fixture,'node_modules/jsonwebtoken')).sign({iss:'https://firebaseappcheck.googleapis.com/123',aud:['projects/bench'],sub:'application',iat:now-30,exp:now+3600},key,{algorithm:'RS256',keyid:'fixture'});
+const pem=crypto.createPublicKey(key).export({type:'spki',format:'pem'});
+const app=root=>new (require(root+'/lib/app/firebase-app').FirebaseApp)({projectId:'bench',credential:{getAccessToken:async()=>({access_token:'bench',expires_in:3600})}},'bench');
+const cases=[
+ {name:'Auth / construct application service',make:root=>{const {Auth}=require(root+'/lib/auth/auth'),value=app(root);return()=>new Auth(value);},validate:value=>assert.equal(value.app.name,'bench')},
+ {name:'Auth / validate update disabled',make:root=>{const validate=require(root+'/lib/auth/auth-api-request').FIREBASE_AUTH_SET_ACCOUNT_INFO.getRequestValidator();return()=>{const body={localId:'user',disableUser:true};validate(body);return body}},validate:body=>assert.deepEqual(body,{localId:'user',disableUser:true})},
+ {name:'Auth / validate profile and linked provider',make:root=>{const validate=require(root+'/lib/auth/auth-api-request').FIREBASE_AUTH_SET_ACCOUNT_INFO.getRequestValidator();return()=>{const body={localId:'user',email:'user@example.com',displayName:'Test',photoUrl:'https://example.com/photo.png',linkProviderUserInfo:{providerId:'github.com',rawId:'user'},mfa:{enrollments:[{mfaEnrollmentId:'factor',phoneInfo:'+15555550100'}]}};validate(body);return body}},validate:body=>assert.equal(body.mfa.enrollments[0].phoneInfo,'+15555550100')},
+ {name:'App Check / construct verifier service',make:root=>{const {AppCheck}=require(root+'/lib/app-check/app-check'),value=app(root);return()=>new AppCheck(value)},validate:value=>assert.equal(value.app.name,'bench')},
+ {name:'App Check / verify real signature with cached key',async:true,make:root=>{const {AppCheck}=require(root+'/lib/app-check/app-check'),value=new AppCheck(app(root));value.appCheckTokenVerifier.signatureVerifier.keyFetcher.fetchPublicKeys=async()=>({fixture:pem});return()=>value.verifyToken(token)},validate:value=>assert.equal(value.appId,'application')},
+];
+require('../../../scripts/bench-process.cjs').run({root:vpm,upstream,vpm,cases,files:['package.json','lib','bench/completion.cjs','../../scripts/firebase-admin-conformance/package-lock.json','../../scripts/firebase-admin-conformance/node_modules/firebase-admin','../vjsonwebtoken/index.js','../vjsonwebtoken/lib','../vjws/index.js','../vjws/lib','../vjwa/index.js','../vjwks-rsa/index.js']}).catch(error=>{console.error(error);process.exitCode=1});

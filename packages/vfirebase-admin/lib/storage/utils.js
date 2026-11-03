@@ -1,20 +1,5 @@
-/*! firebase-admin v14.5.0 */
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.getFirebaseMetadata = getFirebaseMetadata;
-function getFirebaseMetadata(endpoint, file) {
-    const uri = `${endpoint}/b/${file.bucket.name}/o/${encodeURIComponent(file.name)}`;
-    return new Promise((resolve, reject) => {
-        file.storage.makeAuthenticatedRequest({
-            method: 'GET',
-            uri,
-        }, (err, body) => {
-            if (err) {
-                reject(err);
-            }
-            else {
-                resolve(body);
-            }
-        });
-    });
-}
+'use strict';
+exports.getFirebaseMetadata=(endpoint,file)=>new Promise((resolve,reject)=>{
+  const uri=endpoint+'/b/'+encodeURIComponent(file.bucket.name)+'/o/'+encodeURIComponent(file.name);
+  file.storage.makeAuthenticatedRequest({method:'GET',uri},(error,body)=>error?reject(error):resolve(body));
+});

@@ -6,11 +6,11 @@ const metadata = require('../package.json');
 const load = entry => { const target = metadata.exports['.' + entry]; return require(path.join(root, typeof target === 'string' ? target : target.require)); };
 const listen = server => new Promise(resolve => server.listen(0, '127.0.0.1', () => resolve('http://127.0.0.1:' + server.address().port)));
 
-test('every original entry point resolves; Realtime Database explains its absence', () => {
+test('documented application entrypoints resolve; omitted providers are not exported', () => {
   const original = require('../../../scripts/firebase-admin-conformance/node_modules/firebase-admin/package.json');
-  assert.deepEqual(Object.keys(metadata.exports), Object.keys(original.exports));
+  assert.deepEqual(Object.keys(metadata.exports), ['.','./app','./app-check','./auth','./firestore','./messaging','./storage']);
   for (const entry of Object.keys(metadata.exports).filter(name => name !== './database' && name !== './package.json')) assert.equal(typeof load(entry.slice(1)), 'object', entry);
-  assert.throws(() => load('/database'), /does not include the Realtime Database client/);
+  assert.equal(metadata.exports['./database'], undefined);
   assert.deepEqual(Object.keys(metadata.dependencies).sort(), ['vgoogle-auth-library', 'vjsonwebtoken', 'vjwks-rsa']);
   assert.deepEqual(Object.keys(metadata.optionalDependencies).sort(), ['vgoogle-cloud-firestore', 'vgoogle-cloud-storage']);
 });
@@ -30,7 +30,7 @@ test('native ES module entry points', async () => {
   const firestore = await import(path.join(root, metadata.exports['./firestore'].import));
   assert.equal(typeof app.initializeApp, 'function');
   assert.equal(firestore.FieldValue, require('vgoogle-cloud-firestore').FieldValue);
-  await assert.rejects(import(path.join(root, metadata.exports['./database'].import)), /Realtime Database/);
+  assert.equal(metadata.exports['./functions'], undefined);
 });
 
 test('concurrent key fetches share one request', async () => {

@@ -22,8 +22,6 @@
  */
 import { App } from '../app';
 import { AppCheck } from './app-check';
-export { AppCheckToken, AppCheckTokenOptions, DecodedAppCheckToken, VerifyAppCheckTokenOptions, VerifyAppCheckTokenResponse, } from './app-check-api';
-export { AppCheck } from './app-check';
 /**
  * Gets the {@link AppCheck} service for the default app or a given app.
  *
@@ -51,4 +49,6 @@ export { AppCheck } from './app-check';
  *   app.
  */
 export declare function getAppCheck(app?: App): AppCheck;
-export { FirebaseAppCheckError, AppCheckErrorCode } from './error';
+export {AppCheck} from './app-check';
+export {VerifyAppCheckTokenOptions,VerifyAppCheckTokenResponse,DecodedAppCheckToken} from './app-check-api';
+export {FirebaseAppCheckError,AppCheckErrorCode} from './error';

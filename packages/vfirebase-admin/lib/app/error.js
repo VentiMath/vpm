@@ -22,23 +22,9 @@ const error_1 = require("../utils/error");
  * Firebase App error code structure. This extends `FirebaseError`.
  */
 class FirebaseAppError extends error_1.FirebaseError {
-    /**
-     * @param info - The error code info.
-     * @param message - The error message. This will override the default message if provided.
-     */
-    constructor(info, message) {
-        // Override default message if custom message provided.
-        super({
-            code: `app/${info.code}`,
-            message: message || info.message,
-            httpResponse: info.httpResponse,
-            cause: info.cause,
-        });
-        /** @internal */
-        this.codePrefix = 'app';
-    }
+    constructor(info,message){super({...info,code:'app/'+info.code,message:message||info.message});this.codePrefix='app';}
 }
-exports.FirebaseAppError = FirebaseAppError;
+exports.FirebaseAppError=FirebaseAppError;
 /**
  * The constant mapping for valid App client error codes.
  */

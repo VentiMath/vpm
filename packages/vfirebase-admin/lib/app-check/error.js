@@ -47,19 +47,6 @@ exports.AppCheckErrorCode = {
  * Firebase App Check error code structure. This extends `FirebaseError`.
  */
 class FirebaseAppCheckError extends error_1.FirebaseError {
-    /**
-     * @param info - The error code info.
-     * @param message - The error message. If provided, this will override the default message.
-     */
-    constructor(info, message) {
-        super({
-            code: `app-check/${info.code}`,
-            message: message || info.message,
-            httpResponse: info.httpResponse,
-            cause: info.cause,
-        });
-        /** @internal */
-        this.codePrefix = 'app-check';
-    }
+    constructor(info,message){super({...info,code:'app-check/'+info.code,message:message||info.message});this.codePrefix='app-check';}
 }
-exports.FirebaseAppCheckError = FirebaseAppCheckError;
+exports.FirebaseAppCheckError=FirebaseAppCheckError;

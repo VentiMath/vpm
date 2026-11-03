@@ -1,381 +1,88 @@
 # vfirebase-admin
 
-**Implementation status:** VPM independently implements app and credential
-management and the Auth operations used by VentiMath. It also owns HTTP transport,
-responses, retries, authorization, Firestore client configuration, Storage
-contexts and all Messaging runtime operations. Auth endpoint schemas, remaining service APIs and Google Auth remain
-upstream-derived. This is a partial SDK rewrite;
-[provenance](PROVENANCE.json) maps the boundary.
+An independently implemented Firebase Admin runtime for the APIs VentiMath uses,
+matching **firebase-admin 14.5.0** (checked November 3, 2026). Node 24+ and Bun.
+Its direct and optional runtime dependencies are VPM packages.
 
-The Firebase Admin SDK, targeting **firebase-admin 14.5.0**, the latest stable
-release checked November 1, 2026. All dependencies are VPM packages; Node.js 24+
-and Bun.
+## Supported scope
 
-```js
-const {initializeApp} = require('vfirebase-admin/app');
-const {getAuth} = require('vfirebase-admin/auth');
-const {getFirestore, FieldValue} = require('vfirebase-admin/firestore');
-const {getMessaging} = require('vfirebase-admin/messaging');
-
-const app = initializeApp();
-const {uid} = await getAuth(app).verifyIdToken(idToken, true);
-await getFirestore(app).doc(`users/${uid}`).set({seen: FieldValue.serverTimestamp()}, {merge: true});
-await getMessaging(app).sendEachForMulticast({tokens, notification: {title: 'Practice set ready'}});
-```
-
-The package targets 14.5.0's entry points (`/app`, `/auth`,
-`/firestore`, `/storage`, `/messaging`, `/app-check`, `/functions`,
-`/remote-config`, `/security-rules` and the rest), options, environment
-variables and emulator support, in CommonJS, native ES modules and TypeScript.
-Admin 14 provides the modular API only: `admin.firestore()`,
-`admin.messaging()`, `admin.apps` and the `admin.firestore.FieldValue`-style
-namespaces, still present in 13.x, were removed upstream in 14.0.
-
-| Upstream dependency | Here |
+| Entry point | Implemented API |
 | --- | --- |
-| `@google-cloud/firestore` ^9 (optional) | [`vgoogle-cloud-firestore`](../vgoogle-cloud-firestore/README.md) |
-| `@google-cloud/storage` ^8 (optional) | [`vgoogle-cloud-storage`](../vgoogle-cloud-storage/README.md) |
-| `google-auth-library` ^11, `jsonwebtoken` ^9, `jwks-rsa` ^4 | `vgoogle-auth-library`, `vjsonwebtoken`, `vjwks-rsa` |
-| `fast-deep-equal` | App-option comparison is internal |
-| `@firebase/database-compat`, `@firebase/database-types` | Omitted (see below) |
-| `@fastify/busboy` | Omitted (see below) |
+| `/app` and root | App initialization, lookup, deletion, ADC, certificate and refresh-token credentials |
+| `/auth` | `verifyIdToken`, `getUser`, `updateUser`, `revokeRefreshTokens`, `deleteUsers`, paginated `listUsers` |
+| `/firestore` | Default/named database factories, settings/credential ownership, exported Firestore types and values |
+| `/storage` | App-scoped Storage client, buckets and download URLs |
+| `/messaging` | `send`, `sendEach`, `sendEachForMulticast`, token/FID topic operations and legacy transport selection |
+| `/app-check` | Signed token verification and optional replay-protection consumption for callable functions |
 
-## Changes from 14.5.0
+The application scope is complete. The Auth list includes the identity-audit
+tool's paginated user scan, alongside production authentication and user-lifecycle
+operations. Firestore and Storage delegate database/object operations to
+`vgoogle-cloud-firestore` and `vgoogle-cloud-storage`. Their implementation status,
+and that of `vgoogle-auth-library`, are tracked separately.
 
-**Messaging runtime rewrite is complete.** `send`, `sendEach`, token/FID multicast,
-v1 and legacy topic subscription/unsubscription, service lookup, validation,
-response/error handling and session ownership now use independently written
-runtime logic. Message-model declarations and diagnostic/code tables remain
-attributed contract data. Shared authentication and HTTP infrastructure are SDK
-dependencies; this does not mark the rest of Firebase Admin complete.
+Unused provider implementations and their exports have been removed: Realtime
+Database, Cloud Tasks, Remote Config, Eventarc, Extensions, Data Connect, Machine
+Learning, Installations, project management, security rules and phone verification.
+Auth token minting, session-cookie APIs, user creation/import, tenant/provider
+configuration and App Check token minting are outside this package's current
+scope. They are not advertised by its public declarations.
 
-- **Owned topic operations.** Capture token arrays and transport choice at the
-  call boundary; reject sparse or malformed inputs before requests. Encode project,
-  token and topic identifiers and reject dot-segment tokens. Validate and discover
-  the project before opening a session. A 100-worker queue handles up to 1,000
-  tokens, retaining input order across success, failure and session errors.
-  Failed discovery opens no connection; app deletion closes owned sessions once
-  and prevents later dispatch. Populated legacy response arrays must report one
-  valid result per recipient. Legacy empty envelopes still report zero outcomes,
-  and the existing single-send empty-name result remains compatible.
-  [Controls](../../scripts/firebase-admin-conformance/messaging-topics.cjs) and
-  [current whole-operation measurements](bench/messaging-results/README.md).
+## What changed
 
-- **Independent Messaging validation.** Validate the entire owned request before
-  converting fields to wire names. Invalid later branches cannot leave earlier
-  fields partly normalized. Nonfinite durations, invalid Dates and nonstring
-  enum options produce structured `messaging/invalid-payload` errors. Conflicting
-  SDK/wire aliases reject instead of silently overwriting one another. Validation
-  accepts JSON records (including null prototypes), rather than class instances
-  or inherited targets. An independent image URL policy uses the platform URL parser; valid repeated-slash and ampersand paths are accepted.
-  All 171 original payload/options tests pass on Node 24 and Bun. Seven focused
-  tests include the reminder payload VentiMath sends and ordered mixed-validity
-  batches. [Original defect controls](../../scripts/firebase-admin-conformance/messaging-validation.cjs)
-  and [isolated timings](bench/messaging-validation-results/README.md) document the differences.
+The runtime owns app/service/token lifetimes, credential snapshots and transport,
+Auth endpoint validation and user-record projection, request authorization,
+HTTP/1 and HTTP/2 retry/response handling, signing-key caches, service entrypoints,
+Messaging serialization/dispatch, and App Check policy. No copied provider runtime
+remains behind the supported surface. Public declarations, protocol names and
+error-code/diagnostic tables retain Apache-licensed upstream attribution.
+This is source-informed work, not a clean-room claim.
 
-- **Owned Messaging send plans.** `send`, `sendEach` and `sendEachForMulticast`
-  detach JSON-shaped payloads before asynchronous project lookup. Own
-  `constructor` fields and null prototypes cannot bypass that copy, and own
-  `__proto__` keys remain data. Sparse batch slots produce per-message validation
-  failures without crashing result collection. Results preserve recipient order
-  even when requests finish in a different order. Project lookup is shared while
-  pending and can retry after failure; encoded identifiers cannot introduce path
-  segments or query strings. HTTP/2 sessions open after project discovery and only
-  when at least one message validates, then close once the batch settles. Message
-  topic subscriptions use the same captured-input and app-lifetime guarantees.
+Correctness improvements include bounded/cycle-aware input snapshots, own-key
+handling, ordered and validated batch results, shared concurrent key retrieval,
+valid HTTP/2 `:scheme` values and per-client Storage emulator routing. App Check
+captures `consume` before asynchronous verification, so callers cannot change
+replay-protection policy mid-request. Malformed replay responses, scalar custom
+claims and malformed provider records produce structured SDK errors. User-list
+page sizes must be integers from 1 through 1000; upstream also accepts fractions.
 
-- **Reliable Messaging delivery results.** Batch success requires a real message
-  name and no error envelope, even when the HTTP status is 200. Malformed FCM
-  details and prototype-named remote codes produce `FirebaseMessagingError`
-  rather than `TypeError`, preserving the cause and HTTP response. Token/FID
-  distinctions and normal error codes remain compatible. Single-send empty-name
-  behavior and legacy topic result semantics remain unchanged.
-
-- **Per-client Storage context.** Credential and project come from one app-options
-  snapshot, including an explicit project with application-default credentials.
-  Emulator configuration is passed to each client instead of writing
-  `STORAGE_EMULATOR_HOST`. Changing the environment later cannot redirect an
-  existing client's metadata, Firebase download URLs or signed-form routes.
-  Metadata and uploads honor the same explicit endpoint. Named buckets check app
-  lifetime without copying all options. Underlying Storage operations remain
-  separately tracked in `vgoogle-cloud-storage`.
-
-- **Firestore client configuration.** Each database has one owned client/settings
-  record. Mutating the original `preferRest` option cannot disguise a conflicting
-  later initialization. Settings getters are captured once, and project identity
-  and credentials come from the same app-options snapshot. Failed construction
-  leaves no cached client. Database identity, project precedence and lazy client
-  loading remain compatible. Firestore operations still use the separately
-  tracked, upstream-derived `vgoogle-cloud-firestore` runtime.
-
-- **Owned HTTP response projection.** The raw body is read once, so text and JSON
-  cannot describe different reads of a changing transport record. Header records
-  and array values are detached. Parsed values and failures are private: setting
-  an unrelated property cannot replace the JSON result or disguise a parse error.
-  JSON scalar values, parsed-object identity, raw text and diagnostic causes remain
-  compatible. Native error construction preserves `RequestResponseError`
-  subclasses. Diagnostic request references retain identity; this is not a deep
-  freeze of returned JSON or headers. Multipart and raw-HTTP helpers remain retained.
-
-- **HTTP/1 request lifecycle.** URL, headers and body bytes are prepared once,
-  so changing caller input cannot change a retry's request. Header names are
-  compared without case, preserving an explicit `Content-Type`. Truncated
-  responses and invalid compressed bodies reject instead of remaining pending;
-  failures destroy their streams and release buffered chunks. Completed error
-  responses keep connections reusable. Gzip/deflate coding is case-insensitive,
-  and Brotli responses are decoded. Response projection and the
-  retry policy are independently implemented.
-
-- **HTTP/2 request lifecycle.** Requests reuse the captured URL, header and
-  payload plan across attempts. Caller pseudo-headers cannot override the planned
-  method, scheme or path; mixed-case content types do not create duplicate fields.
-  A close before response headers, aborted/error streams and invalid compressed
-  responses settle as errors. Only the failed stream is destroyed, leaving its
-  batch session available unless the peer violates the connection protocol.
-  Gzip/deflate coding is case-insensitive and Brotli is decoded. Wire byte counts
-  enforce `Content-Length` even on Bun, where the original accepts mismatched
-  bodies; HEAD and 304 representation lengths are handled separately. Common
-  JSON/text response projection is independently implemented. Session generations own their
-  diagnostics: late events cannot contaminate a later batch, destroyed sessions
-  are recreated, repeated close calls are coalesced, and reading errors cannot
-  erase the stored list. A failed connection creation allows another attempt.
-
-- **Authorization header ownership.** HTTP/1 and HTTP/2 share one preparation
-  path. Transport options and header values are captured before token acquisition,
-  including copies of array-valued headers. The acquired bearer token wins over
-  every spelling of `Authorization`; duplicate casing cannot substitute a stale
-  credential. Explicit quota and metrics headers are recognized without case.
-  Prototype-named headers remain data, caller records remain unchanged, and app
-  deletion is checked after token acquisition. Auth/message operation builders
-  own request bodies; this adapter handles transport options and headers.
-
-- **Owned retry policy.** Each client captures its retry settings and arrays;
-  later caller mutations cannot change an in-flight budget. Counts/delay limits
-  must be nonnegative safe integers and the backoff factor must be finite.
-  Retry-After accepts complete decimal seconds or HTTP dates, including the two
-  obsolete date forms interpreted in UTC. Junk suffixes, impossible dates and
-  numeric prefixes are not accepted as delays. An explicit zero is honored;
-  valid excessive delays stop retries when they exceed the configured budget.
-  Header names are case-insensitive. Long timer waits use bounded segments so
-  native timer overflow cannot turn a long delay into an immediate attempt.
-
-- **Auth request ownership and resource identity.** JSON-shaped input is copied
-  before project lookup, so asynchronous discovery and validation cannot mutate
-  the caller's data or send later edits. Each request owns its headers. Resource
-  identifiers are encoded separately from endpoint templates; slashes, query
-  delimiters and replacement-string syntax cannot alter the resource structure.
-  Dot-segment identifiers and malformed Unicode are rejected. Concurrent project
-  discovery shares one operation and failures allow retry. Malformed server
-  codes and non-JSON error bodies produce Auth errors with response context.
-  Endpoint schemas remain upstream-derived.
-
-- **Owned signing keys and freshness.** Certificate and JWKS caches publish
-  immutable snapshots. Prototype-named key IDs remain own data. Concurrent
-  refreshes share pending work, and failures allow retry. Certificate freshness
-  handles quoted and case-insensitive `max-age`, subtracts response age, and
-  honors `no-cache`/`no-store`. Malformed or duplicate directives cannot produce
-  `NaN` or infinite cache lifetimes. Noncacheable snapshots are not retained.
-  The cache uses explicit response freshness only, without heuristic freshness
-  or conditional revalidation; JWKS retains the six-hour SDK policy.
-- **Consistent signature routing.** Tokens without a key ID use one key fetch
-  and stop at the first valid signature. Every public-key path enforces RS256
-  or ES256; upstream's no-ID fallback also accepts other RSA algorithms.
-  Emulator verification remains a separate unsigned-token path.
-
-- **Auth verification policy.** Token-kind checks, per-call project resolution
-  and signature verification form separate stages. A blocking-event claim cannot
-  exempt ID tokens or session cookies from their required user subject. Malformed
-  legacy-token or audience shapes produce `FirebaseAuthError`, avoiding accidental
-  `TypeError` failures. Revocation captures the authentication time before user
-  lookup and requires a finite numeric `auth_time` when comparing it with the
-  user's revocation timestamp; the comparison also rejects an invalid record timestamp.
-  These changes follow the [ID-token contract](https://firebase.google.com/docs/auth/admin/verify-id-tokens)
-  and [revocation model](https://firebase.google.com/docs/auth/admin/manage-sessions).
-  The controls use locally signed fixture tokens; they do not demonstrate an
-  ability to forge Google's signatures. Crypto and key retrieval use the
-  VPM JWT adapter over `vjsonwebtoken` and `vjwks-rsa`.
-
-- **Auth user-management plans.** `getUser`, `updateUser`,
-  `revokeRefreshTokens` and `deleteUsers` use owned request plans. Update inputs
-  are detached before normalization, including structural class instances and
-  records with own `constructor` or `__proto__` keys. Frozen inputs remain usable.
-  Deletion counts belong to the submitted batch, so changing the caller's array
-  cannot change the result. Oversized batches are rejected before copying;
-  sparse lists reject invalid UIDs rather than reporting unsent users as deleted.
-  Error indices must be unique integers within the batch. Linking a provider
-  also validates any unlink list. Endpoint schema validation and MFA conversion remain upstream-derived.
-
-- **Auth response records.** User, provider, timestamp and MFA records use
-  explicit field projections. Serializing JSON-shaped claims preserves own
-  `__proto__` and `constructor` keys without changing `Object.prototype` or
-  returning aliases to the original claims. Nested JSON data in TOTP output is detached too;
-  its public getter retains upstream's identity contract. A bounded shallow walk with an iterative
-  fallback handles deeply nested records and reports cycles explicitly.
-  Malformed MFA collections must be arrays.
-
-- **Credential transport and identity.** Factories distinguish HTTP agents and
-  pass them through to JSON auth clients. Validated credential data is detached
-  before use: frozen camel-case objects work, and changing a file/object after
-  construction cannot silently change the authentication identity. A new factory
-  call observes rotated file contents.
-- **Bounded credential storage.** Certificate and refresh-token factories retain
-  at most 64 entries per agent and credential kind, using digest keys. Agents
-  are weakly held. An evicted credential can be recreated by a later factory
-  call; object identity is not permanent across eviction. ADC remains cached
-  per agent.
-- **Credential acquisition.** Concurrent calls share client discovery and token
-  acquisition; failures can be retried. Project/email lookup memoization also
-  retains an absent email. Token results expose only `access_token` and
-  `expires_in`, with nonempty tokens and finite positive expiry. Malformed-file
-  errors keep a sanitized SyntaxError without quoting credential contents.
-
-Credential inputs are plain, acyclic JSON records with up to 64 nested
-containers. Functions and conflicting snake/camel aliases are rejected. Explicit
-constructors validate their credential kind; the legacy `refreshToken` tag is
-normalized to `authorized_user`. Google Auth's underlying providers are still
-upstream-derived and tracked separately.
-
-- **Owned app and service lifetimes.** Registries cannot delete a different
-  instance with the same name. Prototype-named services work. Concurrent app
-  deletion shares cleanup; every existing service is visited even when another
-  cleanup fails, and no service can be created after closing begins.
-- **Recoverable token refresh.** Forced refreshes share one pending acquisition.
-  Synchronous credential errors reject normally and can be retried. Expiry must
-  be finite and positive, tokens non-empty, and malformed-token errors omit the
-  response contents. Provider errors retain their existing message and cause.
-- **Detached configuration.** Iterative snapshots preserve own `__proto__` keys
-  without modifying prototypes, copy null-prototype records and support deep
-  options. Cycles are rejected explicitly. Credential/agent class instances
-  retain identity; custom conversion hooks are not used for option equality.
-  Environment JSON can start with whitespace.
-
-- **No Realtime Database.** `vfirebase-admin/database` throws a descriptive
-  error on import. Upstream's entry point wraps `@firebase/database-compat`;
-  with `@firebase/database-types` that is 14 installed packages, including a
-  websocket stack, which no VPM caller uses. Every
-  other entry point is unaffected: the database client was only loaded by that
-  entry point.
-- **No multipart parsing.** Upstream parses `multipart/mixed` responses with
-  `@fastify/busboy` into a response whose `text` and `data` throw, and no Admin
-  14 API requests or reads one. Such a response fails here with
-  `ERR_UNSUPPORTED_MULTIPART_RESPONSE`.
-- **One key request at a time.** While the public keys are missing or expired,
-  upstream starts a separate key request for every concurrent token
-  verification: ID tokens and session cookies (Google certificates), App Check
-  and phone-number verification (JWKS). A cold Cloud Functions instance serving
-  concurrent requests fetches the certificates once per request. Here concurrent
-  callers share the request in flight; a failed request is retried by the next
-  caller.
-- **Valid HTTP/2 requests.** Upstream sends FCM requests with `:scheme: https:`;
-  RFC 9113 requires the bare scheme, and conforming HTTP/2 servers such as
-  Node's reject the stream. Google's front end accepts both; here the value is
-  `https`.
-- **Token verification dependencies.** Signature verification and decoding use
-  `vjsonwebtoken`. Current CPU comparisons use isolated Node 24 and Bun workers
-  with identical-source controls. The measurements cover local CPU work and
-  synthetic credential providers. Two full ID-token cases include claim checks
-  and real RSA verification; one includes a synthetic revocation lookup. Certificate
-  retrieval and application request latency are excluded.
-- **Declarations without Node types.** Public declarations compile without
-  ambient Node types; `Buffer` is Node's `Buffer` where Node types are loaded,
-  and `httpAgent` accepts any Node `http` or `https` `Agent`.
-
-Missing-dependency errors name the VPM packages.
-
-The isolated measurements compare the full VPM stack with upstream, including
-previous JWT improvements; they do not isolate the HTTP rewrite alone. The
-[full report](bench/results/README.md) includes all fifty-two cases, process
-orders, identical-source controls and raw samples, including regressions and
-inconclusive comparisons.
-
-The historical Messaging measurements cover response validation, stale-device errors,
-mixed response batches and single/multicast send planning. Send-plan cases
-replace authentication, HTTP and network I/O with synthetic dispatch; they do
-not measure FCM delivery latency. The earlier copy/validation helper was measured
-separately and remains source-derived.
-
-The report compares complete stacks, including earlier Auth, HTTP, Firestore
-and Storage changes. It records costs as well as gains: response validation,
-header ownership, immutable retry-policy capture, date parsing and lifecycle
-management can require additional CPU work. Each row identifies whether its
-direction holds across process orders beyond identical-source control variation.
-Exact timings and all samples live in that dated report. Local-server fixtures
-separately verify correctness and wire compatibility.
+Multipart response parsing and raw multipart helpers are absent. No supported
+Admin API reads those responses; an unexpected multipart response rejects
+explicitly. There is no `busboy` or Realtime Database dependency.
 
 ## Evidence
 
-- [Upstream suite](../../scripts/firebase-admin-conformance/README.md): the
-  release's 6,146 unit tests pass for the original. VPM runs the 6,062 that do not
-  require the Realtime Database client; all pass except 47 that assert the
-  `https:` scheme, multipart parsing or global Storage emulator mutation, each
-  required to fail on its exact recorded assertion.
-- [Callers](../../scripts/firebase-admin-conformance/callers.cjs): `verifyIdToken`
-  with revocation checks, `getUser`, `updateUser`, `revokeRefreshTokens`,
-  `deleteUsers` (Auth emulator protocol), a full Firestore scenario (gRPC),
-  `save`, `exists`, `delete` and signed URLs (Storage JSON API) and
-  `sendEachForMulticast` (FCM over HTTP/2), against local servers. Requests and
-  results are identical to the original's.
-- [Regressions](../../scripts/firebase-admin-conformance/regressions.cjs): each
-  fix above reproduced with the original, then checked here.
-- [Messaging controls](../../scripts/firebase-admin-conformance/messaging-send.cjs)
-  compare 24 normal send outcomes and isolate payload aliasing, prototype writes,
-  sparse batches, shared/recoverable project lookup and batch session lifetime.
-  The unchanged 511-test Messaging suite retains only Bun's existing diagnostic
-  wording difference; actual local FCM HTTP/2 requests and results match.
-- [Messaging response controls](../../scripts/firebase-admin-conformance/messaging-response.cjs)
-  compare 69 normal projections, then exercise malformed/prototype-named error
-  envelopes and ordered HTTP/1 and HTTP/2 batches against a separate local server.
-  Malformed successful-status bodies become batch failures. Single-send empty-name
-  output and legacy topic operations retain their existing contracts. All 519
-  selected upstream Messaging/error tests keep their existing results.
-- [Storage context controls](../../scripts/firebase-admin-conformance/storage-context.cjs)
-  compare two real server destinations, metadata/uploads/download URLs, V2/V4
-  signatures, ADC projects, captured options and deleted-app access.
-- [Firestore configuration controls](../../scripts/firebase-admin-conformance/firestore-facade.cjs)
-  reproduce mutable settings and inconsistent option reads, and verify database
-  identity and retry after failed construction.
-- [Response controls](../../scripts/firebase-admin-conformance/http-response.cjs)
-  compare 24 normal and real HTTP outcomes, then reproduce changing body reads,
-  aliased headers, exposed parse-state mutation and erased error subclasses.
-- [HTTP/2 controls](../../scripts/firebase-admin-conformance/http2-transport.cjs)
-  compare retry bytes, actual wire headers, compressed bodies, no-header closures,
-  peer resets, content-length mismatches, timeouts and usable batch sessions.
-  Synthetic controls inspect pseudo-header overrides and aborted/error ordering.
-  [Session controls](../../scripts/firebase-admin-conformance/http2-session.cjs)
-  reproduce diagnostics crossing generations, error-array mutation and recovery.
-- [Authorization controls](../../scripts/firebase-admin-conformance/authorized-headers.cjs)
-  reproduce duplicate-casing overrides and pending option/header mutations for
-  both clients, then verify the HTTP/1 wire result and retained deletion checks.
-- [Retry controls](../../scripts/firebase-admin-conformance/http-retry.cjs)
-  compare normal budgets and actual HTTP retries, then reproduce mutable policy,
-  numeric-prefix, timezone and timer-overflow failures in the original adapter.
-- [HTTP controls](../../scripts/firebase-admin-conformance/http-transport.cjs)
-  compare retry bytes, header casing, partial responses, compression failures,
-  timeouts and connection reuse against the original on local servers.
-- [Request controls](../../scripts/firebase-admin-conformance/auth-requests.cjs)
-  reproduce URL substitution, request mutation and malformed error handling,
-  including actual local HTTP requests and responses on both runtimes.
-- [Key/cache controls](../../scripts/firebase-admin-conformance/key-verification.cjs)
-  exercise actual HTTP certificate/JWKS responses, expiry, immutable key maps,
-  prototype-named IDs, and signed no-key-ID verification against the original.
-- [Token-policy controls](../../scripts/firebase-admin-conformance/token-verification.cjs)
-  compare twelve locally signed outcomes and exercise ID/session/blocking subject
-  handling, malformed claims, signature failures and revocation input ownership.
-- [User-operation controls](../../scripts/firebase-admin-conformance/user-operations.cjs)
-  compare normal and partial-failure HTTP requests/results, then reproduce batch
-  mutation, sparse-input, invalid-index and input-ownership defects.
-- [User-record controls](../../scripts/firebase-admin-conformance/user-records.cjs)
-  compare 160 generated responses and isolate prototype, aliasing and deep-data
-  cases against the original on both runtimes.
-- [Credential controls](../../scripts/firebase-admin-conformance/credentials.cjs)
-  and [local OAuth transport](../../scripts/firebase-admin-conformance/credential-transport.cjs)
-  verify the credential changes against the original, including actual signed
-  JWT and refresh-token POSTs through the configured agent.
-- [App lifecycle controls](../../scripts/firebase-admin-conformance/app-lifecycle.cjs)
-  reproduce the original token, ownership, cleanup and option-copy defects in
-  isolated processes.
-- [Focused tests](test/firebase-admin.test.cjs) and [type tests](test/types.ts).
-- [Measurements](bench/results/README.md), with controls and source hashes.
+[Conformance controls](../../scripts/firebase-admin-conformance/README.md) include
+**1,801 unchanged upstream assertions selected for the supported API**, run against
+both implementations. Node's upstream control passes all 1,801; VPM passes 1,754
+with 47 exact existing differences: 39 HTTP/2 scheme assertions, seven multipart
+assertions and one process-global Storage emulator mutation. Bun adds six
+readonly-property diagnostic differences shared by both implementations.
 
-Apache-2.0 licensing, the pinned source and the files changed from it are
-recorded in [PROVENANCE.json](PROVENANCE.json).
+Additional controls compare 17 Auth/Storage/FCM requests, 25 Firestore RPCs and 17
+results against local servers; verify real signed App Check tokens and replay
+requests; and exercise 292 Auth validation cases plus ownership/malformed-input
+regressions. Tests also cover credential transport, token revocation, response
+truncation, retries, Messaging batches and service cleanup. Clean npm/Bun archives
+check CJS, ESM and TypeScript 7 on both runtimes.
+
+[Closeout measurements](bench/completion-results/README.md) use fresh processes,
+balanced order and identical-code controls. They measure construction, validation
+and cached-key signature verification, not network latency or application speed.
+Auth construction takes 61.8% less time on Node and 48.9% less on Bun;
+the common disable-user validator takes 25.8% and 75.4% less. Cached-key App Check
+verification takes 42.1% and 23.2% less. Remaining costs are explicit: richer
+profile validation is 538 → 814 ns on Node and 426 → 562 ns on Bun; App Check
+construction is 712 → 1,623 ns and 541 → 1,180 ns. These are local CPU timings.
+
+Earlier measurements describe their recorded source snapshots and remain in
+repository history and the other benchmark folders.
+
+## Consumption status
+
+Built and tested; this completion is not a release or an application cutover.
+VentiMath's checked main commit `7a8aad2c` still declares Admin `^12.7.0` and uses
+some `admin.auth()`, `admin.firestore` and `admin.messaging()` namespace imports.
+Admin 14 removed those namespaces. Adoption requires converting those imports to
+`/auth`, `/firestore` and `/messaging`; this package exposes their modular APIs.
+No application deployment or registry publication is implied by version 14.5.0.

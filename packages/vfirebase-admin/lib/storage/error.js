@@ -32,19 +32,6 @@ exports.StorageErrorCode = {
  * Firebase Storage error code structure. This extends `FirebaseError`.
  */
 class FirebaseStorageError extends error_1.FirebaseError {
-    /**
-     * @param info - The error code info.
-     * @param message - The error message. If provided, this will override the default message.
-     */
-    constructor(info, message) {
-        super({
-            code: `storage/${info.code}`,
-            message: message || info.message,
-            httpResponse: info.httpResponse,
-            cause: info.cause,
-        });
-        /** @internal */
-        this.codePrefix = 'storage';
-    }
+    constructor(info,message){super({...info,code:'storage/'+info.code,message:message||info.message});this.codePrefix='storage';}
 }
-exports.FirebaseStorageError = FirebaseStorageError;
+exports.FirebaseStorageError=FirebaseStorageError;

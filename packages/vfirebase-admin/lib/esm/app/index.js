@@ -1,13 +1,12 @@
-import mod from "../../app/index.js";
-
-export const AppErrorCode = mod.AppErrorCode;
-export const FirebaseAppError = mod.FirebaseAppError;
-export const FirebaseError = mod.FirebaseError;
-export const SDK_VERSION = mod.SDK_VERSION;
-export const applicationDefault = mod.applicationDefault;
-export const cert = mod.cert;
-export const deleteApp = mod.deleteApp;
-export const getApp = mod.getApp;
-export const getApps = mod.getApps;
-export const initializeApp = mod.initializeApp;
-export const refreshToken = mod.refreshToken;
+import api from '../../app/index.js';
+export const initializeApp=api.initializeApp;
+export const getApp=api.getApp;
+export const getApps=api.getApps;
+export const deleteApp=api.deleteApp;
+export const applicationDefault=api.applicationDefault;
+export const cert=api.cert;
+export const refreshToken=api.refreshToken;
+export const SDK_VERSION=api.SDK_VERSION;
+export const FirebaseError=api.FirebaseError;
+export const FirebaseAppError=api.FirebaseAppError;
+export const AppErrorCode=api.AppErrorCode;

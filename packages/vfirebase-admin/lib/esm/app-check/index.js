@@ -1,6 +1,5 @@
-import mod from "../../app-check/index.js";
-
-export const AppCheck = mod.AppCheck;
-export const AppCheckErrorCode = mod.AppCheckErrorCode;
-export const FirebaseAppCheckError = mod.FirebaseAppCheckError;
-export const getAppCheck = mod.getAppCheck;
+import api from '../../app-check/index.js';
+export const getAppCheck=api.getAppCheck;
+export const AppCheck=api.AppCheck;
+export const FirebaseAppCheckError=api.FirebaseAppCheckError;
+export const AppCheckErrorCode=api.AppCheckErrorCode;

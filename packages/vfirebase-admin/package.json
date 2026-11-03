@@ -1,7 +1,7 @@
 {
   "name": "vfirebase-admin",
-  "version": "0.1.0",
-  "description": "Firebase Admin SDK on VPM dependencies, without the Realtime Database client",
+  "version": "14.5.0",
+  "description": "Independent Firebase Admin application runtime for Auth, Firestore, Storage, Messaging and App Check",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
   "exports": {
@@ -21,70 +21,15 @@
       "require": "./lib/auth/index.js",
       "import": "./lib/esm/auth/index.js"
     },
-    "./phone-number-verification": {
-      "types": "./lib/phone-number-verification/index.d.ts",
-      "require": "./lib/phone-number-verification/index.js",
-      "import": "./lib/esm/phone-number-verification/index.js"
-    },
-    "./database": {
-      "types": "./lib/database/index.d.ts",
-      "require": "./lib/database/index.js",
-      "import": "./lib/esm/database/index.js"
-    },
-    "./data-connect": {
-      "types": "./lib/data-connect/index.d.ts",
-      "require": "./lib/data-connect/index.js",
-      "import": "./lib/esm/data-connect/index.js"
-    },
-    "./eventarc": {
-      "types": "./lib/eventarc/index.d.ts",
-      "require": "./lib/eventarc/index.js",
-      "import": "./lib/esm/eventarc/index.js"
-    },
-    "./extensions": {
-      "types": "./lib/extensions/index.d.ts",
-      "require": "./lib/extensions/index.js",
-      "import": "./lib/esm/extensions/index.js"
-    },
     "./firestore": {
       "types": "./lib/firestore/index.d.ts",
       "require": "./lib/firestore/index.js",
       "import": "./lib/esm/firestore/index.js"
     },
-    "./functions": {
-      "types": "./lib/functions/index.d.ts",
-      "require": "./lib/functions/index.js",
-      "import": "./lib/esm/functions/index.js"
-    },
-    "./installations": {
-      "types": "./lib/installations/index.d.ts",
-      "require": "./lib/installations/index.js",
-      "import": "./lib/esm/installations/index.js"
-    },
-    "./machine-learning": {
-      "types": "./lib/machine-learning/index.d.ts",
-      "require": "./lib/machine-learning/index.js",
-      "import": "./lib/esm/machine-learning/index.js"
-    },
     "./messaging": {
       "types": "./lib/messaging/index.d.ts",
       "require": "./lib/messaging/index.js",
       "import": "./lib/esm/messaging/index.js"
-    },
-    "./project-management": {
-      "types": "./lib/project-management/index.d.ts",
-      "require": "./lib/project-management/index.js",
-      "import": "./lib/esm/project-management/index.js"
-    },
-    "./remote-config": {
-      "types": "./lib/remote-config/index.d.ts",
-      "require": "./lib/remote-config/index.js",
-      "import": "./lib/esm/remote-config/index.js"
-    },
-    "./security-rules": {
-      "types": "./lib/security-rules/index.d.ts",
-      "require": "./lib/security-rules/index.js",
-      "import": "./lib/esm/security-rules/index.js"
     },
     "./storage": {
       "types": "./lib/storage/index.d.ts",
@@ -103,44 +48,11 @@
       "auth": [
         "lib/auth"
       ],
-      "phone-number-verification": [
-        "lib/phone-number-verification"
-      ],
-      "eventarc": [
-        "lib/eventarc"
-      ],
-      "extensions": [
-        "lib/extensions"
-      ],
-      "database": [
-        "lib/database"
-      ],
-      "data-connect": [
-        "lib/data-connect"
-      ],
       "firestore": [
         "lib/firestore"
       ],
-      "functions": [
-        "lib/functions"
-      ],
-      "installations": [
-        "lib/installations"
-      ],
-      "machine-learning": [
-        "lib/machine-learning"
-      ],
       "messaging": [
         "lib/messaging"
-      ],
-      "project-management": [
-        "lib/project-management"
-      ],
-      "remote-config": [
-        "lib/remote-config"
-      ],
-      "security-rules": [
-        "lib/security-rules"
       ],
       "storage": [
         "lib/storage"

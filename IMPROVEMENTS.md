@@ -80,7 +80,7 @@ now have current comparison targets:
 | Caller paths verified | vfullcalendar-core | @fullcalendar/core 7.1.3 and the copy of its JSON feed request that @fullcalendar/react 7.1.3 bundles; requests and results against a recording server | [@fullcalendar/core 7.1.3](https://www.npmjs.com/package/@fullcalendar/core), checked November 1, 2026 |
 | Suite and time zones verified | vfull-ui-headless-calendar | @full-ui/headless-calendar 7.1.3 on temporal-polyfill 1.0.1; its vitest suite, and every IANA zone around every offset change from 1840 to 2100 against the runtime's own time zone data | [@full-ui/headless-calendar 7.1.3](https://www.npmjs.com/package/@full-ui/headless-calendar), checked November 1, 2026 |
 | Caller paths verified | vfirebase-functions | 351 selected application-contract assertions; HTTP, callable, schedules, task queues, Firestore triggers and deployment manifests | [firebase-functions 7.4.0](https://www.npmjs.com/package/firebase-functions), checked November 2, 2026 |
-| Caller paths verified | vfirebase-admin | firebase-admin 14.5.0 without Realtime Database; its unit suite, and VentiMath's Auth, Firestore, Storage and FCM calls against local servers | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked October 31, 2026 |
+| Application scope complete | vfirebase-admin | firebase-admin 14.5.0; 1,801 selected original tests, application/server and identity-audit callers, App Check verification/replay | [firebase-admin 14.5.0](https://www.npmjs.com/package/firebase-admin), checked November 3, 2026 |
 | Caller paths verified | vgoogle-cloud-firestore | @google-cloud/firestore 9.4.0; 1,008 of its 1,009 active unit and conformance tests, local gRPC wire log and results directly and through Firebase Admin 14.5.0 | [@google-cloud/firestore 9.4.0](https://www.npmjs.com/package/@google-cloud/firestore), checked October 31, 2026 |
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
 | Runtime dependency eliminated | vfunctional-red-black-tree | Retained 1.0.1 reference; Firestore owns its independent persistent snapshot index | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
@@ -142,8 +142,8 @@ the version Firebase Admin 14 uses, on that package and the VPM gax stack
 instead of the older API package and second gax stack 9.4.0 pins, checked
 October 31, 2026.
 
-`vfirebase-admin` now covers `firebase-admin` 14.5.0, checked October 31,
-2026. VentiMath's backend uses its app, auth, Firestore, Storage and messaging
+`vfirebase-admin` independently implements its documented application scope
+against `firebase-admin` 14.5.0, checked November 3, 2026. VentiMath's backend uses its app, auth, Firestore, Storage and messaging
 (`sendEachForMulticast`) APIs, all on VPM dependencies. Its two other
 dependencies are eliminated: `@firebase/database-compat` and its Realtime
 Database and websocket tree serve only `getDatabase()`, which VentiMath never
@@ -269,7 +269,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Independent application runtime: HTTP/callable, logging, parameters/secrets, schedules, task queues, Firestore triggers and CLI discovery. Unused provider runtime removed; attributed declarations/generated protocol retained. Frozen input, CEL escaping, own-key safety and exact trace fixes; current app contracts and clean archives verified. Built, unreleased and unadopted. |
-| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | All dependencies VPM, Realtime Database and multipart parsing eliminated; one public-key request for concurrent token verifications, RFC-conforming HTTP/2 requests, redesigned app/token/service lifetimes, credential identity/transport, prototype-safe Auth record serialization, owned user-management plans, token-kind/revocation policy, immutable signing-key caches and owned Auth request dispatch; isolated CPU measurements and identical Auth, Firestore, Storage and FCM caller behavior. |
+| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | Independent application scope complete: app/credentials, Auth lifecycle and user listing, App Check verification/replay, Firestore/Storage facades and Messaging. Unused providers removed; 1,801 selected original tests plus wire/regression controls. Built, not adopted; Admin 12 namespace migration remains in the app. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | Five VPM dependencies with one gax stack and an independent persistent snapshot index; reads after `terminate()` that reject instead of hanging with unhandled rejections, and declarations without ambient Node types; identical wire behavior directly and through Firebase Admin 14. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Retained upstream-derived reference. Runtime dependency eliminated: Firestore owns its independently implemented persistent snapshot index. |
@@ -5509,3 +5509,30 @@ callback-ref caller, and clean npm/Bun archives pass. SSR measurements establish
 no speed difference. Built, unreleased and unadopted. See the
 [contract](packages/vradix-react-use-layout-effect/README.md) and
 [measurements](packages/vradix-react-use-layout-effect/bench/results/README.md).
+
+## vfirebase-admin application-scope completion
+
+Admin 14.5.0 now owns the remaining Auth endpoint validation and orchestration,
+App Check token/replay verification, service routing and shared runtime helpers.
+Unused providers and their exports are removed. The supported Auth API includes
+`listUsers` for VentiMath's identity-audit tool. Its public declarations match the
+supported surface, with attributed Firebase data shapes and diagnostics retained.
+
+The same 1,801 selected upstream assertions run against upstream and VPM. The
+47 VPM differences are the already-documented scheme, multipart and Storage
+emulator corrections; Bun has six extra engine diagnostic differences in both
+versions. Additional signed-token/replay controls, 292 schema comparisons and
+existing local Auth/Firestore/Storage/FCM callers verify actual behavior.
+
+Completion is scoped to the [documented APIs](packages/vfirebase-admin/README.md),
+not all Firebase Admin products. VentiMath still needs its Admin 12 namespace
+imports migrated to Admin 14 modular imports before adoption. Google Auth and
+underlying Firestore/Storage clients are separate implementation units. See
+[closeout measurements](packages/vfirebase-admin/bench/completion-results/README.md).
+
+The final closeout recording shows Auth construction −61.8% Node / −48.9% Bun,
+common disable-user validation −25.8% / −75.4%, and cached-key App Check signature
+verification −42.1% / −23.2%. Richer profile validation still costs 538 → 814 ns
+on Node and 426 → 562 ns on Bun; App Check construction costs 712 → 1,623 ns and
+541 → 1,180 ns. All directions clear the retained identical-code controls;
+these are CPU microbenchmarks, not application latency claims.

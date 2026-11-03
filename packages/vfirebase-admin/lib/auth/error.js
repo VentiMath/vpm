@@ -18,7 +18,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FirebaseAuthError = exports.authClientErrorCode = exports.AuthErrorCode = void 0;
 const error_1 = require("../utils/error");
-const deep_copy_1 = require("../utils/deep-copy");
 /**
  * The constant mapping for valid Auth client error codes.
  */
@@ -642,50 +641,16 @@ const AUTH_SERVER_TO_CLIENT_CODE = {
 /**
  * Firebase Auth error code structure. This extends `FirebaseError`.
  */
+// The diagnostic tables above retain their Apache-licensed upstream wording.
+// Error construction and server mapping below are owned by VPM.
 class FirebaseAuthError extends error_1.FirebaseError {
-    /**
-     * Creates the developer-facing error corresponding to the backend error code.
-     *
-     * @param serverErrorCode - The server error code.
-     * @param [message] The error message. The default message is used
-     *     if not provided.
-     * @param [serverError] The error's raw server response.
-     * @returns The corresponding developer-facing error.
-     * @internal
-     */
-    static fromServerError(serverErrorCode, message, serverError) {
-        // serverErrorCode could contain additional details:
-        // ERROR_CODE : Detailed message which can also contain colons
-        const colonSeparator = (serverErrorCode || '').indexOf(':');
-        let customMessage = null;
-        if (colonSeparator !== -1) {
-            customMessage = serverErrorCode.substring(colonSeparator + 1).trim();
-            serverErrorCode = serverErrorCode.substring(0, colonSeparator).trim();
-        }
-        // If not found, default to internal error.
-        const clientCodeKey = Object.hasOwn(AUTH_SERVER_TO_CLIENT_CODE, serverErrorCode)
-            ? AUTH_SERVER_TO_CLIENT_CODE[serverErrorCode] : 'INTERNAL_ERROR';
-        const error = (0, deep_copy_1.deepCopy)(exports.authClientErrorCode[clientCodeKey]);
-        // Server detailed message should have highest priority.
-        error.message = customMessage || message || error.message;
-        error.cause = serverError;
-        error.httpResponse = serverError?.response ? (0, error_1.toHttpResponse)(serverError.response) : undefined;
-        return new FirebaseAuthError(error);
-    }
-    /**
-     * @param info - The error code info.
-     * @param message - The error message. This will override the default message if provided.
-     */
-    constructor(info, message) {
-        // Override default message if custom message provided.
-        super({
-            code: `auth/${info.code}`,
-            message: message || info.message,
-            httpResponse: info.httpResponse,
-            cause: info.cause,
-        });
-        /** @internal */
-        this.codePrefix = 'auth';
+    constructor(info,message){super({...info,code:'auth/'+info.code,message:message||info.message});this.codePrefix='auth';}
+    static fromServerError(serverCode,message,cause){
+        const raw=serverCode||'',colon=raw.indexOf(':');
+        const code=colon<0?raw:raw.slice(0,colon).trim(),detail=colon<0?'':raw.slice(colon+1).trim();
+        const mapped=Object.hasOwn(AUTH_SERVER_TO_CLIENT_CODE,code)?AUTH_SERVER_TO_CLIENT_CODE[code]:'INTERNAL_ERROR';
+        const info=exports.authClientErrorCode[mapped];
+        return new FirebaseAuthError({...info,message:detail||message||info.message,cause,httpResponse:cause?.response?error_1.toHttpResponse(cause.response):undefined});
     }
 }
-exports.FirebaseAuthError = FirebaseAuthError;
+exports.FirebaseAuthError=FirebaseAuthError;

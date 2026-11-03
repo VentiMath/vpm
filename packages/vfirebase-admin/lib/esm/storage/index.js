@@ -1,7 +1,6 @@
-import mod from "../../storage/index.js";
-
-export const FirebaseStorageError = mod.FirebaseStorageError;
-export const Storage = mod.Storage;
-export const StorageErrorCode = mod.StorageErrorCode;
-export const getDownloadURL = mod.getDownloadURL;
-export const getStorage = mod.getStorage;
+import api from '../../storage/index.js';
+export const getStorage=api.getStorage;
+export const Storage=api.Storage;
+export const FirebaseStorageError=api.FirebaseStorageError;
+export const StorageErrorCode=api.StorageErrorCode;
+export const getDownloadURL=api.getDownloadURL;
