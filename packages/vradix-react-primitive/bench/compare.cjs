@@ -1,0 +1,11 @@
+'use strict';
+process.env.NODE_ENV='development';
+const path=require('node:path'),assert=require('node:assert/strict');
+const fixture=path.resolve(__dirname,'../../../scripts/radix-react-primitive-conformance'),upstream=path.join(fixture,'node_modules/@radix-ui/react-primitive'),vpm=path.resolve(__dirname,'..');
+const React=require(path.join(fixture,'node_modules/react')),{renderToStaticMarkup:ssr}=require(path.join(fixture,'node_modules/react-dom/server')),h=React.createElement,load=require(path.join(fixture,'load.cjs'));
+const cases=[
+  {name:'module initialization / warm dependencies',make:file=>load.warmFactory(file===upstream?'upstream':'vpm'),validate:api=>{assert.equal(Object.keys(api.Primitive).length,17);assert.equal(api.Primitive,api.Root)}},
+  {name:'SSR / native button',make:file=>{const {Primitive}=load(file===upstream?'upstream':'vpm');const tree=h(Primitive.button,{type:'button',className:'native'},'Text');return()=>ssr(tree)},validate:x=>assert.equal(x,'<button type="button" class="native">Text</button>')},
+  {name:'SSR / asChild button',make:file=>{const {Primitive}=load(file===upstream?'upstream':'vpm');const tree=h(Primitive.button,{asChild:true,type:'button',className:'outer',onClick(){}},h('button',{className:'inner',onClick(){}},'Text'));return()=>ssr(tree)},validate:x=>assert.ok(['<button type="button" class="outer inner">Text</button>','<button class="outer inner" type="button">Text</button>'].includes(x),'same button attributes, irrespective of attribute order')},
+];
+require('../../../scripts/bench-process.cjs').run({root:vpm,upstream,vpm,cases,files:['index.cjs','index.mjs','index.d.ts','package.json','PROVENANCE.json','bench/compare.cjs','../vradix-react-slot/index.cjs','../vradix-react-slot/package.json','../vradix-react-compose-refs/index.cjs','../vradix-react-compose-refs/package.json','../../scripts/radix-react-primitive-conformance/load.cjs','../../scripts/radix-react-primitive-conformance/package-lock.json','../../scripts/radix-react-primitive-conformance/node_modules/@radix-ui/react-primitive','../../scripts/radix-react-primitive-conformance/node_modules/@radix-ui/react-slot','../../scripts/radix-react-primitive-conformance/node_modules/@radix-ui/react-compose-refs']}).catch(e=>{console.error(e);process.exitCode=1});

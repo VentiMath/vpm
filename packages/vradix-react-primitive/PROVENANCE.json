@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-primitive",
+    "version": "2.2.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/primitive",
+    "integrity": "sha512-HCTSPMNqv55Qk0IX4geJbpyXazmqulcimwuyjxTkKi29v+QZbG2Zho9BnbBq4YS2PF+KlNb2CXoLz66uUmblkg==",
+    "checked": "2026-11-02"
+  },
+  "sourceSHA256": {
+    "dist/index.js": "aa8bc6a18e8b56f60d54a99e2cc4d6693d272ff932426f21c3d6031c2ad6188a",
+    "dist/index.d.ts": "7d47a748d25dd950f03fc0a5d5affe8e3027b2bb1e2c4e851eb903e7281b2e73",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "All 17 Primitive DOM components, Root alias, asChild/ref forwarding and synchronous discrete custom-event dispatch on React 19. No copied upstream runtime."
+  },
+  "changes": [
+    "Create named Slot wrappers only for tags that actually use asChild, retaining stable identities thereafter.",
+    "Build the component table once and reuse the copied prop record when forwarding refs.",
+    "Load ReactDOM for discrete-event dispatch only when that helper is called.",
+    "Use the independently written VPM Slot/ref stack with React 19 peers."
+  ]
+}

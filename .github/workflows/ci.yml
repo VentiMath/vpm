@@ -49,12 +49,14 @@ jobs:
       - run: npm --prefix scripts/radix-primitive-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/compose-refs-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/slot-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-react-primitive-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/aria-conformance/run.cjs
       - run: node scripts/aria-conformance/callers.cjs
       - run: node scripts/aria-conformance/archives.cjs
       - run: node scripts/radix-primitive-conformance/archives.cjs
       - run: node scripts/compose-refs-conformance/archives.cjs
       - run: node scripts/slot-conformance/archives.cjs
+      - run: node scripts/radix-react-primitive-conformance/archives.cjs
       - run: node scripts/aria-conformance/browser.cjs
       - run: node scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
@@ -457,12 +459,14 @@ jobs:
       - run: npm --prefix scripts/radix-primitive-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/compose-refs-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/slot-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-react-primitive-conformance ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/aria-conformance/run.cjs
       - run: bun scripts/aria-conformance/callers.cjs
       - run: node scripts/aria-conformance/archives.cjs
       - run: node scripts/radix-primitive-conformance/archives.cjs
       - run: node scripts/compose-refs-conformance/archives.cjs
       - run: node scripts/slot-conformance/archives.cjs
+      - run: node scripts/radix-react-primitive-conformance/archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
