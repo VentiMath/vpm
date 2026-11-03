@@ -85,7 +85,7 @@ now have current comparison targets:
 | Wire behavior verified | vgoogle-cloud-firestore-api | @google-cloud/firestore-api 0.7.1 on google-gax 6.14.0; generated suite, local gRPC wire log and results for every call shape | [@google-cloud/firestore-api 0.7.1](https://www.npmjs.com/package/@google-cloud/firestore-api), checked October 31, 2026 |
 | Runtime dependency eliminated | vfunctional-red-black-tree | Retained 1.0.1 reference; Firestore owns its independent persistent snapshot index | [functional-red-black-tree 1.0.1](https://www.npmjs.com/package/functional-red-black-tree), checked October 31, 2026 |
 | Caller paths verified | vfast-deep-equal | fast-deep-equal 3.1.3; Firestore 9.4.0 document, query and transform equality | [fast-deep-equal 3.1.3](https://www.npmjs.com/package/fast-deep-equal), checked October 30, 2026 |
-| Caller paths verified | vgoogle-gax | google-gax 6.14.0; Firestore 9.4.0 RPCs, transactions, batches, queries and native REST | [google-gax 6.14.0](https://www.npmjs.com/package/google-gax), checked October 30, 2026 |
+| Application runtime verified | vgoogle-gax | Independent google-gax 6.14.0 Firestore calls, retries, streams, paging and REST; retained administration/LRO compatibility is explicit | [google-gax 6.14.0](https://www.npmjs.com/package/google-gax), checked November 2, 2026 |
 | Caller paths verified | vopentelemetry-api | @opentelemetry/api 1.10.0; SDK 3.0.0 and gax 6.14.0 tracing helpers | [@opentelemetry/api 1.10.0](https://www.npmjs.com/package/@opentelemetry/api), checked October 30, 2026 |
 | Caller paths verified | vgrpc-js | @grpc/grpc-js 1.14.7; gax 6.14.0 / Firestore 9.4.0 local HTTP/2 callers | [@grpc/grpc-js 1.14.7](https://www.npmjs.com/package/@grpc/grpc-js), checked October 30, 2026 |
 | Runtime dependency eliminated | vordered-map | Retained @js-sdsl/ordered-map 4.4.2 reference; gRPC owns its numeric registry | [@js-sdsl/ordered-map 4.4.2](https://www.npmjs.com/package/@js-sdsl/ordered-map), checked October 30, 2026 |
@@ -269,7 +269,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Retained upstream-derived reference. Runtime dependency eliminated: Firestore owns its independently implemented persistent snapshot index. |
 | [vfast-deep-equal](packages/vfast-deep-equal) | fast-deep-equal 3.1.3 | Byte-accurate Buffer/DataView/ArrayBuffer comparison, null-prototype records, guarded conversion hooks and fused traversals; actual Firestore binary false positives fixed. |
-| [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Isolated call deadlines, checked and compiled resource paths, complete incremental JSON stream framing, native REST body ownership, independent JSON proto caching and nine VPM dependencies; actual Firestore transactions/batches/queries verified. |
+| [vgoogle-gax](packages/vgoogle-gax) | google-gax 6.14.0 | Independent Firestore application runtime: isolated settings/deadlines, retries, paging, stream cancellation/status, resource paths, native REST and descriptor caching. Nine VPM dependencies; administration/LRO compatibility remains attributed. |
 | [vopentelemetry-api](packages/vopentelemetry-api) | @opentelemetry/api 1.10.0 | Isolated baggage records, validated trace-state updates, preserved overflow order and cached serialization; shared provider registry and native ESM retained. |
 | [vgrpc-js](packages/vgrpc-js) | @grpc/grpc-js 1.14.7 | Independent app-used HTTP/2 client, TLS/authentication, metadata, framing, bounded retries and Channelz registry. Verified GAX/Firestore transactions, queries, writes and Watch recovery; one VPM dependency. Retained server/internal/experimental compatibility is separately attributed. |
 | [vordered-map](packages/vordered-map) | @js-sdsl/ordered-map 4.4.2 | Retained upstream-derived reference with iterator/index fixes. No VPM runtime callers: gRPC Channelz now owns its independent numeric registry. |
@@ -1543,57 +1543,61 @@ See the [package contract](packages/vfast-deep-equal/README.md),
 
 ## vgoogle-gax
 
-Targets **google-gax 6.14.0** with its RPC, retry, pagination, LRO, generated
-service clients, tracing and REST APIs. Nine VPM runtime dependencies remain;
-the unused direct node-fetch and general object-hash dependencies are removed.
-Ordinary REST calls use the native fetch transport through VPM auth/gaxios.
+The public application runtime is independently written against **google-gax
+6.14.0** for VentiMath's Firestore workflows. Root, fallback and gax exports now
+select `app-runtime/`: RPC construction, authentication, calls, retries, paging,
+streams, resource paths, metadata, locations and logical-call/attempt tracing.
+Nine VPM dependencies remain. Ordinary REST requests use native fetch through
+VPM auth/gaxios; the unused direct node-fetch and object-hash dependencies stay
+removed.
 
-The JSON proto cache is independently implemented. Native SHA-256 replaces a
-full generic object serializer; the compiled descriptor is the same JSON snapshot
-used for identity. Separate gRPC implementations cannot reuse each other's stubs.
-Refresh replaces the cached result, clearing releases it, and failed compilations
-are retryable. The separate file-based proto cache and remaining GAX runtime
-still retain upstream implementations.
+Settings clone retries and per-call transport options, preserving frozen defaults
+and explicit retry precedence. Cancellation settles pending initialization and
+backoff; unresolved stubs time out. Streams respect backpressure, wait for gRPC
+terminal status and avoid replaying delivered data without an explicit resumption
+hook. Throwing retry hooks become stream errors. Paged-stream destruction cancels
+an in-flight request without mutating caller inputs.
 
-Timeout calls snapshot options instead of mutating a shared deadline. Compiled
-resource paths preserve literal replacement characters, enforce complete binding
-validation, handle arbitrary positive-length `**` matches and check repeated
-bindings. The REST parser detects incomplete framing and trailing data while
-assembling fragmented messages once. It keeps strict ProtoJSON validation.
+REST owns the selected response body, maps HTTP/abort errors without modifying
+read-only native exceptions and enforces deadlines during body consumption.
+Its incremental parser validates framing and ProtoJSON, handles split UTF-8 and
+escaped strings, and emits a completed object before another chunk arrives.
+Compiled paths preserve literal replacements and reject invalid/repeated bindings.
+The independent JSON cache compiles the exact serialized snapshot, scopes gRPC
+results by compiler and retains only native SHA-256 keys.
 
-Actual Firestore callers exposed two additional integration requirements: gRPC
-can deliver terminal status after readable end, and gaxios owns the adapted
-native-fetch body stream. Both are handled explicitly, retaining normal HTTP
-premature-end checks and single-error delivery. Protobuf 8 Any messages are
-identified through type metadata while preserving gax's decoded error shapes.
+The rewrite is complete for this documented application scope. Private
+`build/src` modules, administration/IAM/LRO, file-proto loading, bundling and
+resumable-upload compatibility remain attributed upstream code. Lazy public
+administration adapters preserve generated callers. Protocol schemas and some
+compatibility declaration types are also retained; no whole-package clean-room
+claim is made. Automatic mTLS discovery, browser runtime and unused customization
+hooks remain outside the independent contract.
 
-The upstream gate executes 755 cases: 751 pass and four retain upstream skips,
-with one documented stricter malformed-message assertion. Both runtimes also
-exercise actual Firestore 9.4.0 transactions, batch commits, query streams and
-RPCs, native REST and current OpenTelemetry SDK tracing. Cloud deployments,
-browser bundles and older gax majors remain outside verified coverage.
+Sixteen focused application groups, paired real HTTP cases, stock Firestore
+transactions/queries/bulk writes/Watch recovery, and OpenTelemetry SDK integration
+pass on Node 24 and Bun. Stock Firestore comparisons match 23 results and 25
+requests. Generated Firestore API checks retain all 320 upstream cases and match
+31 requests across 24 RPCs; administration cases exercise retained compatibility.
+Clean npm/Bun installs verify the 24-package VPM archive closure, both module
+formats and TypeScript 7 declarations. The 751 active upstream GAX tests separately
+cover the retained build, with four original skips.
 
-IAM initialization supplies its declared service and port defaults, respects
-explicit endpoint overrides and leaves caller options unchanged. This removes
-invalid `undefined:undefined` targets without weakening gRPC validation. Empty
-protobuf roots now expose `nested: undefined`, matching the REST loader contract;
-child dictionaries remain prototype-safe and cached lists remain invalidated.
-These repairs clear all ten failures found when rerunning the GAX gate on the
-independent gRPC/protobuf stack. Sixty-one combined GAX/protobuf unit tests pass.
+Current [isolated measurements](packages/vgoogle-gax/bench/application-results/README.md)
+cover settings merges, resource paths, cached descriptors and actual local
+Firestore unary/stream calls. Balanced process order, raw samples and identical
+upstream controls are retained. Results include selected dependency stacks and
+do not establish deployed latency. Earlier cache and initialization reports
+refer to their recorded sources, not this independent application rewrite.
 
-Earlier isolated-process benchmarks cover JSON proto caches, the Firestore
-schema, helper work and local Firestore RPCs. Raw samples, balanced process order
-and identical-upstream controls replace the previous shared-process reports.
-Results compare the complete selected stack and do not establish deployed
-application speedups; their recorded source snapshots predate these repairs.
-The new [initialization measurements](packages/vgoogle-gax/bench/initialization-results/README.md)
-show Node IAM construction taking 5% less time (Bun inconclusive) and empty
-REST schema loading taking 87% / 62% less on Node / Bun. These cases exclude
-network/authentication work and do not establish whole-SDK improvements.
+Settings merging still costs more than upstream's shared objects: 132 versus
+42 ns on Node, 153 versus 70 ns on Bun, after removing redundant copies. Those
+regressions are established across all pairs; the other measured directions are
+inconclusive against the controls. The extra ownership cost is disclosed rather
+than turned into a whole-SDK speed claim.
 
-See the [package contract](packages/vgoogle-gax/README.md),
-[conformance and caller controls](scripts/gax-conformance/README.md), and
-[paired measurements](packages/vgoogle-gax/bench/results/README.md).
+See the [package contract](packages/vgoogle-gax/README.md) and
+[verification boundary](scripts/gax-conformance/README.md).
 
 ## vopentelemetry-api
 
@@ -1931,7 +1935,7 @@ packed npm/Bun installs and standalone declarations are checked.
 [Historical measurements](packages/vobject-hash/bench/results/README.md) cover
 the retained serializer and the original upstream cache caller. They use the
 older shared-process methodology and do not establish current GAX performance.
-See the isolated [current GAX report](packages/vgoogle-gax/bench/results/README.md)
+See the isolated [current GAX report](packages/vgoogle-gax/bench/application-results/README.md)
 for the replacement caller.
 [API, digest migration and limits](packages/vobject-hash/README.md).
 

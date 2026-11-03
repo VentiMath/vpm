@@ -1,6 +1,6 @@
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict');
-const {PathTemplate,CallSettings,createApiCall,PageDescriptor,Status}=require('..');
+const {PathTemplate,CallSettings,createApiCall,PageDescriptor,Status}=require('../build/src/index.js');
 const {addTimeoutArg}=require('../build/src/normalCalls/timeout');
 const {StreamArrayParser}=require('../build/src/streamArrayParser');
 const protobuf=require('vprotobufjs');

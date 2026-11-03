@@ -33,7 +33,7 @@ async function run(original=process.argv.includes('--upstream')){
   assert.ok(bound.stats.gaxImports>0);assert.equal(calls.commit,2);assert.equal(calls.query,1);assert.ok(calls.batchGet>=3);
  }finally{if(oldEmulator===undefined)delete process.env.FIRESTORE_EMULATOR_HOST;else process.env.FIRESTORE_EMULATOR_HOST=oldEmulator;await sdk?.close();await firestore?.terminate();server.forceShutdown();gax.GrpcClient.clearProtoCache();}
  // Exercise the real auth.fetch -> gaxios/native-fetch path with a local server.
- const fallback=require(path.join(directory,'build/src/fallback')),authLib=original?require('google-auth-library'):require('../../packages/vgoogle-auth-library');
+ const fallback=require(path.join(directory,original?'build/src/fallback':'app-runtime/fallback.cjs')),authLib=original?require('google-auth-library'):require('../../packages/vgoogle-auth-library');
  const auth=new authLib.GoogleAuth({authClient:new authLib.PassThroughClient(),projectId:'vpm-fixture'}),hits=[];
  const httpServer=http.createServer(async(req,res)=>{
   hits.push(req.url);let body='';for await(const chunk of req)body+=chunk;const input=JSON.parse(body||'{}');res.setHeader('content-type','application/json');

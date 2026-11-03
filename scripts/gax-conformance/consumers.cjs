@@ -10,7 +10,7 @@ function consumer(directory=path.resolve(__dirname,'../../packages/vgoogle-gax')
   if(file.endsWith('.json'))return JSON.parse(fs.readFileSync(file,'utf8'));
   const local=createRequire(file),module={exports:{}};cache.set(file,module);
   function req(name){
-   if(name==='google-gax'||name.startsWith('google-gax/')){stats.gaxImports++;const sub=name.slice(11);return require(path.join(directory,name==='google-gax'?'build/src/index.js':sub.startsWith('build/')?sub:'build/src/'+sub));}
+   if(name==='google-gax'||name.startsWith('google-gax/')){stats.gaxImports++;const sub=name.slice(11);const modern=fs.existsSync(path.join(directory,'app-runtime/index.cjs'));return require(path.join(directory,modern?(name==='google-gax'?'app-runtime/index.cjs':sub==='fallback'?'app-runtime/fallback.cjs':sub):name==='google-gax'?'build/src/index.js':sub.startsWith('build/')?sub:'build/src/'+sub));}
    if(isBuiltin(name))return local(name);const resolved=local.resolve(name);
    return /\/node_modules\/@google-cloud\/firestore(?:-api)?\//.test(resolved)?load(resolved):local(name);
   }

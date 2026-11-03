@@ -5,7 +5,7 @@ const {dynamic,staticArgs}=require('../otel-conformance/consumers.cjs');
 module.exports=async function(original=false){
  const directory=original?path.join(__dirname,'node_modules/google-gax'):path.resolve(__dirname,'../../packages/vgoogle-gax');
  const api=original?require('../otel-conformance/node_modules/api-current'):require('../../packages/vopentelemetry-api');
- const helper=require(path.join(directory,'build/src/observability/TracerHelper')),exporter=new InMemorySpanExporter(),provider=new TracerProvider({spanProcessors:[new SimpleSpanProcessor({exporter})]}),manager=new AsyncLocalStorageContextManager().enable();
+ const helper=require(path.join(directory,original?'build/src/observability/TracerHelper':'app-runtime/tracing.cjs')),exporter=new InMemorySpanExporter(),provider=new TracerProvider({spanProcessors:[new SimpleSpanProcessor({exporter})]}),manager=new AsyncLocalStorageContextManager().enable();
  api.trace.disable();api.context.disable();
  try{
   assert.equal(api.context.setGlobalContextManager(manager),true);assert.equal(api.trace.setGlobalTracerProvider(provider),true);

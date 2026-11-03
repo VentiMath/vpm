@@ -486,7 +486,7 @@
     },
     "packages/vgoogle-gax": {
       "name": "vgoogle-gax",
-      "version": "0.1.0",
+      "version": "6.14.0",
       "dependencies": {
         "vduplexify": "workspace:*",
         "vgoogle-auth-library": "workspace:*",

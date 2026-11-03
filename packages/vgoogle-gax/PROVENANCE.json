@@ -5,7 +5,7 @@
     "commit": "cb723569f62de17cb07011e806981b64e80efe3d",
     "repository": "https://github.com/googleapis/google-cloud-node/tree/cb723569f62de17cb07011e806981b64e80efe3d/core/packages/gax",
     "integrity": "sha512-C6By4tAdiSoY+4S1Y8phpJkIqELIu0kPtUIcVacScAKhi4LwR6w9dbZI3JHnIfMBvWyvxgPZS2Y7hryBwTNJBQ==",
-    "checked": "2026-10-30"
+    "checked": "2026-11-02"
   },
   "sourceSHA256": {
     "build/protos/locations.d.ts": "2368808dcbd42d82a70cccb12a06d6e20022f65e1feaf0251789ee24a85e0e67",
@@ -290,16 +290,30 @@
     "Opt into gRPC terminal status after readable end; retain HTTP premature-end detection in vretry-request.",
     "Identify protobuf 8 Any messages structurally and preserve empty nested error payloads.",
     "Independently implements JSON descriptor cache ownership: compile the serialized snapshot, scope gRPC results by the selected compiler, preserve refresh and clear behavior, and publish only successful results.",
-    "Apply IAM service endpoint/port defaults before stub construction, preserving explicit endpoints and strict gRPC target validation."
+    "Apply IAM service endpoint/port defaults before stub construction, preserving explicit endpoints and strict gRPC target validation.",
+    "Independent public application runtime and declarations replace the retained implementation on root/fallback/gax exports.",
+    "Stub initialization, cancellation and backoff settle promptly; server-stream terminal status and pagination teardown are owned per invocation.",
+    "Original generated Firestore API compatibility and real Watch resume-token workflows remain required gates."
   ],
   "implementation": {
-    "kind": "upstream-derived with focused modifications",
-    "replacementStatus": "application-facing independent rewrite pending",
-    "basis": "The JSON descriptor cache is independently implemented. The remaining GAX runtime is upstream-derived with focused changes to streaming, paths, deadlines and VPM dependencies; conformance does not make the complete runtime an independent rewrite.",
-    "targetScope": "The RPC/REST, retry, paging and streaming adapters exercised by the application Firestore callers.",
-    "remainingWork": "Independently implement the remaining application-facing RPC/REST, retry, paging and streaming paths. The legacy file-based proto cache and unrelated generated services remain upstream-derived.",
+    "kind": "independent application-facing implementation with retained compatibility surface",
+    "replacementStatus": "complete for documented application scope",
+    "basis": "app-runtime is independently written for the Firestore workflows tested through stock and VPM SDK callers. The independent JSON cache remains shared with the retained build. Existing protocol data, declarations and unused compatibility code retain Apache attribution; not a clean-room claim.",
+    "targetScope": "Firestore unary/server-stream/bidirectional gRPC, REST JSON requests/streams, retries, cancellation, paging, paths, metadata, credentials and OpenTelemetry spans on Node 24 and Bun.",
+    "retainedCompatibility": "build/src retains private upstream conformance modules, legacy file-proto loading, bundling, resumable uploads, IAM and administration/LRO runtime. Lazy public administration/LRO adapters preserve generated clients without loading these paths in ordinary Firestore use. Protocol schemas and generated namespace/declaration data remain attributed.",
+    "unsupported": [
+      "browser runtime",
+      "automatic mTLS certificate discovery (explicit cert/key and sslCreds supported)",
+      "REST client/bidirectional streaming",
+      "all unused upstream extension/customization hooks"
+    ],
     "independentComponents": {
-      "jsonProtoCache": "Native bounded-size digest keys, compile-time JSON snapshots, compiler-scoped caches, explicit refresh/clear and failure recovery; called by gRPC loadProtoJSON and REST protobufFromJSON."
+      "calls": "Per-call cancellation, bounded deadlines, retry attempts, paging and streaming backpressure",
+      "settings": "Independent metadata/options/retry snapshots; frozen defaults do not mutate",
+      "transports": "gRPC construction/authentication and REST transcoding/body ownership",
+      "paths": "Compiled resource bindings and routing headers",
+      "tracing": "Logical call/attempt spans with callback/promise/stream lifetimes",
+      "jsonProtoCache": "Compiler-scoped immutable descriptor snapshots with digest keys"
     }
   }
 }

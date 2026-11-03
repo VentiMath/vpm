@@ -1,32 +1,32 @@
 {
   "name": "vgoogle-gax",
-  "version": "0.1.0",
-  "description": "Google API extensions with VPM dependencies, isolated call options and checked resource paths and JSON streams",
+  "version": "6.14.0",
+  "description": "Independent Firestore-facing Google API calls, retries, paging and RPC/REST transports",
   "type": "commonjs",
-  "main": "./build/src/index.js",
-  "types": "./build/src/index.d.ts",
+  "main": "./app-runtime/index.cjs",
+  "types": "./app-runtime/index.d.ts",
   "exports": {
     ".": {
-      "types": "./build/src/index.d.ts",
-      "require": "./build/src/index.js",
-      "default": "./index.mjs"
+      "types": "./app-runtime/index.d.ts",
+      "require": "./app-runtime/index.cjs",
+      "default": "./app-runtime/index.mjs"
     },
     "./fallback": {
-      "types": "./build/src/fallback.d.ts",
-      "require": "./build/src/fallback.js",
-      "default": "./fallback.mjs"
+      "types": "./app-runtime/fallback.d.ts",
+      "require": "./app-runtime/fallback.cjs",
+      "default": "./app-runtime/fallback.mjs"
     },
     "./gax": {
-      "types": "./build/src/gax.d.ts",
-      "default": "./build/src/gax.js"
+      "types": "./app-runtime/settings.d.ts",
+      "default": "./app-runtime/settings.cjs"
     },
     "./build/src/protobuf": {
       "types": "./build/src/protobuf.d.ts",
       "default": "./build/src/protobuf.js"
     },
     "./build/src/index.js": {
-      "types": "./build/src/index.d.ts",
-      "default": "./build/src/index.js"
+      "types": "./app-runtime/index.d.ts",
+      "default": "./app-runtime/index.cjs"
     },
     "./package.json": "./package.json"
   },
@@ -36,7 +36,8 @@
     "fallback.mjs",
     "LICENSE",
     "PROVENANCE.json",
-    "README.md"
+    "README.md",
+    "app-runtime"
   ],
   "engines": {
     "node": ">=24"

@@ -239,6 +239,11 @@ jobs:
           node scripts/gax-conformance/run.cjs
           node scripts/gax-conformance/regressions.cjs
           node scripts/gax-conformance/callers.cjs --upstream
+          node scripts/gax-conformance/callers.cjs
+          node --test scripts/gax-conformance/application.test.cjs
+          node scripts/gax-conformance/firestore.cjs
+          node scripts/gax-conformance/rest-application.cjs
+          node scripts/gax-conformance/archives.cjs
           node scripts/otel-conformance/run.cjs --upstream
           node scripts/otel-conformance/run.cjs
           node scripts/otel-conformance/regressions.cjs
@@ -619,6 +624,10 @@ jobs:
           bun scripts/gax-conformance/run.cjs
           bun scripts/gax-conformance/regressions.cjs
           bun scripts/gax-conformance/callers.cjs --upstream
+          bun scripts/gax-conformance/callers.cjs
+          bun test scripts/gax-conformance/application.test.cjs
+          bun scripts/gax-conformance/firestore.cjs
+          bun scripts/gax-conformance/rest-application.cjs
           bun scripts/otel-conformance/run.cjs --upstream
           bun scripts/otel-conformance/run.cjs
           bun scripts/otel-conformance/regressions.cjs
