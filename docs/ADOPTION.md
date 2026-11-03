@@ -5,8 +5,8 @@ Adoption here means a VPM artifact is reachable from VentiMath's committed
 production dependencies. This is dependency adoption, not proof that every
 installed module reaches a production bundle or a deployed feature.
 
-Verified November 2, 2026 against the application's main branch, commit
-`7a8aad2c` (Floating UI migration: PR #406; styling migration: `245c1541`;
+Verified November 3, 2026 against the application's main branch, commit
+`0f2ef94b` (Floating UI migration: PR #406; styling migration: `245c1541`;
 calendar migration: `63f63f6a`):
 
 | Package | In use | Available update |
@@ -41,10 +41,15 @@ dependency adoption to **24 packages**. The upstream React entry and tabbable
 leave the lockfile; lower upstream Floating UI packages remain for MUI/Radix.
 This does not establish production bundle savings or deployment of a new feature.
 
-The `tanstack-5.105.3` release prepares `vtanstack-react-query` and
+The revised `tanstack-5.105.3-r2` release prepares `vtanstack-react-query` and
 `vtanstack-query-core` for the next application cutover. Neither is adopted in
-checked app commit `7a8aad2c`; they must remain available, without an **IN USE**
+checked app commit `0f2ef94b`; they must remain available, without an **IN USE**
 badge. The [installation recipe](INSTALLATION.md#tanstack-query) preserves the
 original `@tanstack/react-query` import name while resolving it to the VPM
 archive, including for React Devtools. Adoption should be verified from the
 resolved release URL, not the dependency key alone.
+
+The Functions backend still consumes upstream Firebase Admin 14.5.0 and Firebase
+Functions 7.4.0, not VPM archives. Its Admin modular-import migration is complete;
+VPM adoption remains separate. [Backend coverage](BACKEND.md) records implemented
+application paths and the remaining payment/image dependencies.

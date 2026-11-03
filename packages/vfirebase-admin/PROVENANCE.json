@@ -581,7 +581,7 @@
       "lib/messaging/index.js": "Owned application-scope implementation; contracts and diagnostics compared with upstream 14.5.0.",
       "lib/index.js": "Owned application-scope implementation; contracts and diagnostics compared with upstream 14.5.0."
     },
-    "remainingWork": "No independent runtime rewrite remains within this documented application scope. SDK-wide unused providers, Auth minting/admin/configuration/tenant APIs and App Check minting are omitted. VentiMath adoption and its Admin 12 namespace-to-14 modular import migration are separate work; no release or deployment is implied."
+    "remainingWork": "No independent runtime rewrite remains within this documented application scope. SDK-wide unused providers, Auth minting/admin/configuration/tenant APIs and App Check minting are omitted. VentiMath now uses upstream Admin 14 modular imports; VPM release and application adoption remain separate work; no release or deployment is implied."
   },
   "retainedMaterial": "Apache-licensed declarations and error/diagnostic tables; runtime ownership is listed in implementation.independentComponents. Historical original source hashes remain evidence, including removed files.",
   "verificationHistory": {
@@ -609,7 +609,7 @@
   },
   "verification": {
     "upstreamSuite": "Same 1,801 selected upstream 14.5.0 assertions. Node original: 1,801 pass; VPM: 1,754 pass plus 47 exact known differences. Bun original: 1,795 pass plus six engine diagnostic differences; VPM: 1,748 pass plus those six and the 47 known differences. Selection/counts and exact failure messages are gated. Archived sources remain hash-verified.",
-    "applicationScope": "Verified functions/src plus repository scripts, tools and SMTP callers at VentiMath origin/main 7a8aad2c. Includes identity-audit listUsers. SDK 12 namespace usage remains a separate modular-import migration; no adoption claim.",
+    "applicationScope": "Verified functions/src plus repository scripts, tools and SMTP callers at VentiMath origin/main 7a8aad2c. Includes identity-audit listUsers. That original scope audit predates the app migration. Consumption rechecked at 0f2ef94b on 2026-11-03: Functions now uses upstream Admin 14 modular imports; no VPM adoption claim.",
     "wire": "17 Auth/Storage/FCM requests, 25 Firestore RPCs and 17 results match; real GET user pagination, signed App Check JWT/JWKS and authenticated replay consumption match.",
     "regressions": "292 update-schema controls; structured scalar-claim/provider failures; integer list limits and corrupt list responses; captured replay consumption and own-key error mapping; retained app/credential/Auth/Messaging/HTTP/Storage regression controls.",
     "archivesAndTypes": "Clean npm/Bun archive consumers pass on Node and Bun in CJS/ESM. TypeScript 7 public declarations compile with NodeNext and Bundler resolution.",

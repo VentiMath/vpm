@@ -138,3 +138,8 @@ of complete upstream parity.
 Keep the root README focused on the project's purpose and standards. Package
 inventories, progress, measurements and fixture instructions belong in the catalog,
 package READMEs and this guide.
+
+Progress inventories must include the current application's production dependency
+roots, not just the historical comparison fixture. Keep implementation, published
+artifacts and committed adoption distinct; verify adoption from resolved release
+URLs. [Backend coverage](BACKEND.md) records the current boundary and missing roots.

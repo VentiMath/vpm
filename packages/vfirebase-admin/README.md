@@ -83,8 +83,9 @@ repository history and the other benchmark folders.
 ## Consumption status
 
 Built and tested; this completion is not a release or an application cutover.
-VentiMath's checked main commit `7a8aad2c` still declares Admin `^12.7.0` and uses
-some `admin.auth()`, `admin.firestore` and `admin.messaging()` namespace imports.
-Admin 14 removed those namespaces. Adoption requires converting those imports to
-`/auth`, `/firestore` and `/messaging`; this package exposes their modular APIs.
+VentiMath's checked main commit `0f2ef94b` declares upstream Admin `^14.5.0` and
+its Functions source uses modular `/app`, `/auth`, `/firestore` and `/messaging`
+imports. The earlier Admin 12 namespace migration has already happened. It still
+consumes upstream Admin, so a VPM release and validated application cutover remain.
+See [backend coverage](../../docs/BACKEND.md) for the remaining payment/image work.
 No application deployment or registry publication is implied by version 14.5.0.

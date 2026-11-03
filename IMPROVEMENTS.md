@@ -19,6 +19,10 @@ compatibility and generated protocols remain separately attributed. Passing
 upstream tests or changing dependency names alone does not establish an
 independent implementation.
 
+[Backend coverage](docs/BACKEND.md) distinguishes completed application contracts
+from actual adoption and the remaining payment/image dependencies. The historical
+HTTP/cloud fixture is not the whole backend.
+
 `vgrpc-js` now independently implements the public GAX/Firestore client. Its
 server, internal compatibility and experimental exports remain upstream-derived
 and are explicitly separated in its provenance. Transpiling TypeScript alone
@@ -138,21 +142,23 @@ instead of the older API package and second gax stack 9.4.0 pins, checked
 October 31, 2026.
 
 `vfirebase-admin` independently implements its documented application scope
-against `firebase-admin` 14.5.0, checked November 3, 2026. VentiMath's backend uses its app, auth, Firestore, Storage and messaging
-(`sendEachForMulticast`) APIs, all on VPM dependencies. Its two other
+against `firebase-admin` 14.5.0, checked November 3, 2026. VentiMath uses its app,
+auth, Firestore, Storage and messaging (`sendEachForMulticast`) APIs; the VPM
+replacement routes those APIs through VPM dependencies. Two upstream
 dependencies are eliminated: `@firebase/database-compat` and its Realtime
 Database and websocket tree serve only `getDatabase()`, which VentiMath never
 calls, and `@fastify/busboy` only parses `multipart/mixed` responses, which no
-Admin 14 API requests. Admin 14 also removed the namespaced API
-(`admin.firestore()`, `admin.messaging()`, `admin.apps`), which VentiMath's
-backend still uses, so adopting it includes moving those calls to the modular
-API. `vfirebase-functions` now covers `firebase-functions` 7.4.0 on
-`vfirebase-admin`, checked October 31, 2026. Its dependency inventory now covers every
-package VentiMath's Cloud Functions load is a VPM package or eliminated, apart
-from type-only declaration packages and `safe-buffer`. Admin 12.7's older
-Storage 7, gax 4, gtoken 8 and `form-data` 2.5.5 branches are not separate work:
-the Admin 14 upgrade removes them. This dependency coverage does not mean the
-retained SDK implementations have completed their independent rewrites.
+Admin 14 API requests. VentiMath main `0f2ef94b` now uses upstream Admin 14.5.0
+and modular imports; the old Admin 12 namespace migration is already addressed.
+`vfirebase-functions` covers the documented Functions 7.4.0 application APIs on
+`vfirebase-admin`. These are completed VPM implementation paths, not an application
+cutover. Stripe, MathJax, resvg and PNG processing remain outside this HTTP/cloud
+work and have no VPM replacements. The [backend inventory](docs/BACKEND.md) records
+those remaining roots and current consumption evidence.
+
+Admin 12's older Storage, GAX and `form-data` branches remain historical comparison
+evidence, not separate work when no current caller needs them. Both current app
+lockfiles omit `form-data`; native FormData/Blob cover the app's upload usage.
 
 VentiMath has migrated its calendar to v7 imports and adopts all three packages
 from the `calendar-7.1.3` release. The new `calendar-7.1.3-r2` release independently
@@ -268,7 +274,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Independent application runtime: HTTP/callable, logging, parameters/secrets, schedules, task queues, Firestore triggers and CLI discovery. Unused provider runtime removed; attributed declarations/generated protocol retained. Frozen input, CEL escaping, own-key safety and exact trace fixes; current app contracts and clean archives verified. Built, unreleased and unadopted. |
-| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | Independent application scope complete: app/credentials, Auth lifecycle and user listing, App Check verification/replay, Firestore/Storage facades and Messaging. Unused providers removed; 1,801 selected original tests plus wire/regression controls. Built, not adopted; Admin 12 namespace migration remains in the app. |
+| [vfirebase-admin](packages/vfirebase-admin) | firebase-admin 14.5.0 | Independent application scope complete: app/credentials, Auth lifecycle and user listing, App Check verification/replay, Firestore/Storage facades and Messaging. Unused providers removed; 1,801 selected original tests plus wire/regression controls. Built, not adopted; the app already uses Admin 14 modular imports. See backend coverage for remaining payment/image work. |
 | [vgoogle-cloud-firestore](packages/vgoogle-cloud-firestore) | @google-cloud/firestore 9.4.0 | Independent application runtime: values, queries/vectors, writes, transactions, bulk/recursive deletion and listeners. Copied SDK runtime removed; five VPM dependencies, owned types and persistent snapshots. Built, not adopted. |
 | [vgoogle-cloud-firestore-api](packages/vgoogle-cloud-firestore-api) | @google-cloud/firestore-api 0.7.1 | One VPM transport stack, three modules at import, cached proto loading, nonmutating routing, no unhandled stub/close rejections, prompt closed-stream errors and status details decoded for every call shape; identical wire behavior. |
 | [vfunctional-red-black-tree](packages/vfunctional-red-black-tree) | functional-red-black-tree 1.0.1 | Retained upstream-derived reference. Runtime dependency eliminated: Firestore owns its independently implemented persistent snapshot index. |
@@ -596,7 +602,9 @@ The complete external VPM trees contain 13 packages for `vsend`, 15 for
 
 ## The target dependency graph
 
-Targets come from a Cloud Functions gen 2 backend. The reproducible
+This section describes the HTTP/cloud comparison graph, not the entire backend.
+[Current backend coverage](docs/BACKEND.md) also includes the application payment
+and image dependencies. The reproducible
 [consumer fixture](scripts/consumers/package.json) pins Functions Framework 5.0.2,
 Firebase Functions 7.4.0, Express 5.3.0, body-parser 2.4.0, router 2.2.0,
 send 1.2.1, serve-static 2.2.1, cors 2.8.6 and qs 6.17.0. This is an isolated
@@ -5573,9 +5581,10 @@ versions. Additional signed-token/replay controls, 292 schema comparisons and
 existing local Auth/Firestore/Storage/FCM callers verify actual behavior.
 
 Completion is scoped to the [documented APIs](packages/vfirebase-admin/README.md),
-not all Firebase Admin products. VentiMath still needs its Admin 12 namespace
-imports migrated to Admin 14 modular imports before adoption. Google Auth and
-underlying Firestore/Storage clients are separate implementation units. See
+not all Firebase Admin products. VentiMath now uses upstream Admin 14 modular
+imports; consuming VPM archives and validating the application cutover remain.
+Google Auth and Firestore/Storage have completed their documented independent
+application scopes as separate implementation units. See
 [closeout measurements](packages/vfirebase-admin/bench/completion-results/README.md).
 
 The final closeout recording shows Auth construction −61.8% Node / −48.9% Bun,
