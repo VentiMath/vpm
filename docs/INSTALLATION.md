@@ -233,8 +233,10 @@ node scripts/check-tanstack-release.cjs /absolute/path/to/output
 node scripts/check-tanstack-release.cjs /absolute/path/to/output --published
 ```
 
-Before publication, the checker redirects the core URL to its exact local
-archive. After publication it installs only the top-level URL with a fresh
+Before publication, npm redirects the core URL to its exact local archive;
+Bun checks the extracted archives after installing peers because it cannot
+redirect URL dependencies through name overrides. After publication the checker
+installs only the top-level URL with a fresh
 npm/Bun cache and no overrides. Both modes verify installed source hashes,
 module identity, Node 24/Bun query and mutation hooks with unchanged React
 Devtools 5.91.3, TypeScript 7 consumers and a Chrome production bundle. The public

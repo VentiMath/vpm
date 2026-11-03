@@ -8,10 +8,18 @@ try{
  for(const manager of ['npm','bun']){
   const cwd=path.join(temp,manager);fs.mkdirSync(cwd);
   const dependencies={react:'19.2.4','react-dom':'19.2.4','@tanstack/react-query':published?top.url:'file:'+path.join(directory,top.asset),'@tanstack/react-query-devtools':'5.91.3',jsdom:'27.4.0','@testing-library/react':'16.3.2','@types/react':'19.2.14','@types/react-dom':'19.2.3'};
-  // Before publication only the transitive URL is redirected to its exact local
-  // archive. Published installs have no overrides and use a clean cache.
-  const pkg={private:true,type:'module',dependencies,...(!published?{overrides:{'vtanstack-query-core':'file:'+path.join(directory,core.asset)}}:{})};fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify(pkg));
+  // npm can redirect the transitive URL before publication; Bun ignores name
+  // overrides for URL dependencies, so its local check uses exact extracted bytes.
+  // Published installs use the root URL alone, with no overrides and fresh caches.
+  if(!published && manager==='bun')delete dependencies['@tanstack/react-query'];
+  const pkg={private:true,type:'module',dependencies,...(!published && manager==='npm'?{overrides:{'vtanstack-query-core':'file:'+path.join(directory,core.asset)}}:{})};fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify(pkg));
   run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund','--cache',path.join(temp,'npm-cache')]:[])],cwd);
+  if(!published && manager==='bun'){
+   // Devtools' peer installation supplies upstream here; replace it before any
+   // module is loaded, without changing the release archives or their metadata.
+   for(const name of ['@tanstack/react-query','@tanstack/query-core'])fs.rmSync(path.join(cwd,'node_modules',name),{recursive:true,force:true});
+   for(const item of manifest.packages){const unpack=path.join(cwd,'unpack-'+item.name);fs.mkdirSync(unpack);run('tar',['-xzf',path.join(directory,item.asset),'-C',unpack],cwd);const target=path.join(cwd,'node_modules',item===top?'@tanstack/react-query':item.name);fs.mkdirSync(path.dirname(target),{recursive:true});fs.renameSync(path.join(unpack,'package'),target);}
+  }
   for(const item of manifest.packages){
    assert.equal(hash(fs.readFileSync(path.join(directory,item.asset))),item.sha256);const dir=path.join(cwd,'node_modules',item===top?'@tanstack/react-query':item.name),p=JSON.parse(fs.readFileSync(path.join(dir,'package.json')));assert.equal(p.name,item.name);assert.equal(p.version,item.version);assert.deepEqual(p.dependencies||{},item.dependencies);
    for(const [file,digest]of Object.entries(item.sourceFiles))assert.equal(hash(fs.readFileSync(path.join(dir,file))),digest,item.name+'/'+file);
@@ -25,5 +33,5 @@ try{
   if(manager==='bun')console.log(run('node',[path.join(__dirname,'tanstack-query-conformance/release-browser.cjs')],cwd).trim());
   if(published){const file=path.join(cwd,manager==='bun'?'bun.lock':'package-lock.json'),before=fs.readFileSync(file);for(const item of manifest.packages)assert(before.toString().includes(item.url));run(manager,manager==='bun'?['install','--frozen-lockfile','--ignore-scripts']:['ci','--ignore-scripts','--no-audit','--no-fund','--cache',path.join(temp,'npm-cache')],cwd);assert.deepEqual(fs.readFileSync(file),before);}
  }
- console.log((published?'Public root URL, no overrides':'Exact local release archives')+': npm/Bun installs, Node/Bun hooks and React Devtools, shared module identity, hashes and TS7 pass.');
+ console.log((published?'Public root URL, no overrides':'Local npm install / Bun extracted release archives')+': consumer checks, Node/Bun hooks and React Devtools, shared module identity, hashes and TS7 pass.');
 }finally{fs.rmSync(temp,{recursive:true,force:true});}
