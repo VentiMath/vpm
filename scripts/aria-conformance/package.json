@@ -1,0 +1,15 @@
+{
+  "name": "vpm-aria-conformance",
+  "private": true,
+  "description": "Pinned aria-hidden contract and Radix menu consumer fixtures",
+  "dependencies": {
+    "aria-hidden": "1.2.6",
+    "@radix-ui/react-menu": "2.1.16",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@types/react": "19.2.10",
+    "@types/react-dom": "19.2.3",
+    "jsdom": "26.1.0",
+    "esbuild": "0.25.12"
+  }
+}

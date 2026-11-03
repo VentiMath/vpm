@@ -25,6 +25,10 @@
       "name": "vanynum",
       "version": "0.1.0",
     },
+    "packages/varia-hidden": {
+      "name": "varia-hidden",
+      "version": "1.2.6",
+    },
     "packages/vasync-retry": {
       "name": "vasync-retry",
       "version": "0.1.0",
@@ -1038,6 +1042,8 @@
     "vagent-base": ["vagent-base@workspace:packages/vagent-base"],
 
     "vanynum": ["vanynum@workspace:packages/vanynum"],
+
+    "varia-hidden": ["varia-hidden@workspace:packages/varia-hidden"],
 
     "vasync-retry": ["vasync-retry@workspace:packages/vasync-retry"],
 

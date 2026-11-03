@@ -45,6 +45,11 @@ jobs:
       - run: node scripts/scrollbar-conformance/archives.cjs
       - run: node scripts/scroll-conformance/run.cjs
       - run: node scripts/scroll-conformance/archives.cjs
+      - run: npm --prefix scripts/aria-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/aria-conformance/run.cjs
+      - run: node scripts/aria-conformance/callers.cjs
+      - run: node scripts/aria-conformance/archives.cjs
+      - run: node scripts/aria-conformance/browser.cjs
       - run: node scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund
@@ -433,6 +438,10 @@ jobs:
       - run: bun scripts/scrollbar-conformance/archives.cjs
       - run: bun scripts/scroll-conformance/run.cjs
       - run: bun scripts/scroll-conformance/archives.cjs
+      - run: npm --prefix scripts/aria-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/aria-conformance/run.cjs
+      - run: bun scripts/aria-conformance/callers.cjs
+      - run: node scripts/aria-conformance/archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund

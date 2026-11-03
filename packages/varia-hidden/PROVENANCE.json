@@ -1,0 +1,21 @@
+{
+  "upstream": {
+    "name": "aria-hidden",
+    "version": "1.2.6",
+    "repository": "https://github.com/theKashey/aria-hidden",
+    "commit": "720e8a8e1cfa047bd299a929d95d47ac860a5c1a",
+    "integrity": "sha512-ik3ZgC9dY/lYVVM++OISsaYDeg1tb0VtP5uL3ouh1koGOaUMDPpbFIei4JkFimWUFPn90sbMNMXQAIVOlnYKJA=="
+  },
+  "checked": "2026-11-02",
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete",
+    "scope": "Four public DOM helpers: hideOthers, inertOthers, suppressOthers and supportsInert. No upstream runtime or tslib."
+  },
+  "changes": [
+    "Independent per-attribute ownership for mixed aria/inert calls.",
+    "Idempotent undo restores original attribute values and preserves later external changes.",
+    "Invalid targets do not hide the document; iterative traversal handles deep and nested-shadow paths.",
+    "Prototype-named markers are safe; automatic suppression uses the target document's inert support."
+  ]
+}
