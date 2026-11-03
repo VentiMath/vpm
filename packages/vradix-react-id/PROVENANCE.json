@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-id",
+    "version": "1.1.4",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/id",
+    "checked": "2026-11-03",
+    "integrity": "sha512-TMQp2llA+RYn7JcjnrMnz7wN4pcVttPZnRZo52PLQsoLVKzNlVwUeHmfePgTgRluXFvlD3GD5g5MOVVTJCO0qA=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "d03263439d1d4746b94dbe20148a1a14c8b84e07b7286ea725216a6016b09f97",
+    "dist/index.d.ts": "264258c56f48d643868cfa079643859e4fd627c2bd180d93eb4553a5e9ed2baf",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19 useId, Radix prefix and deterministic override semantics, including server rendering and hydration."
+  },
+  "changes": [
+    "Use React 19 native IDs directly instead of redundant state and layout effects.",
+    "Remove the layout-effect runtime dependency and pre-React-18 process-global counter.",
+    "Always call the native hook, including when the caller supplies an override, so updates preserve hook order."
+  ]
+}

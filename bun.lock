@@ -782,6 +782,13 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vradix-react-id": {
+      "name": "vradix-react-id",
+      "version": "1.1.4",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vradix-react-primitive": {
       "name": "vradix-react-primitive",
       "version": "2.2.0",
@@ -1332,6 +1339,8 @@
     "vradix-react-direction": ["vradix-react-direction@workspace:packages/vradix-react-direction"],
 
     "vradix-react-focus-guards": ["vradix-react-focus-guards@workspace:packages/vradix-react-focus-guards"],
+
+    "vradix-react-id": ["vradix-react-id@workspace:packages/vradix-react-id"],
 
     "vradix-react-primitive": ["vradix-react-primitive@workspace:packages/vradix-react-primitive"],
 

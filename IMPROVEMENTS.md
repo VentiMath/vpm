@@ -231,6 +231,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vradix-react-context](packages/vradix-react-context) | @radix-ui/react-context 1.3.0 | Independent context/scope factories; shape-aware provider memoization fixes stale keys, stable composed scopes avoid identity churn. React 19, zero runtime dependencies beyond its peer; built, unreleased and unadopted. |
 | [vradix-react-use-callback-ref](packages/vradix-react-use-callback-ref) | @radix-ui/react-use-callback-ref 1.1.5 | Stable callbacks publish targets only on commit; React 19 insertion effects remove the fallback dependency. |
 | [vradix-react-direction](packages/vradix-react-direction) | @radix-ui/react-direction 1.2.0 | Independent React 19 direction provider/hook; unchanged public behavior, shared CJS/ESM context and actual RovingFocus keyboard controls. No runtime dependencies beyond React. |
+| [vradix-react-id](packages/vradix-react-id) | @radix-ui/react-id 1.1.4 | Native React 19 IDs with Radix prefix and override semantics; removes redundant state, layout effects and legacy counter. SSR/hydration and current Dropdown Menu ARIA links verified on React 19.1/19.2. |
 | [vradix-react-use-effect-event](packages/vradix-react-use-effect-event) | @radix-ui/react-use-effect-event 0.0.5 | React 19.1 commit-safe retained callbacks with one ref; direct native delegation on React 19.2. Drops the layout-effect dependency and separate memo hook. Actual reducer and current Dropdown Menu controls on both React versions. |
 | [vradix-react-focus-guards](packages/vradix-react-focus-guards) | @radix-ui/react-focus-guards 1.2.0 | Independent shared focus guards for React 19; per-body ownership prevents a second document stealing the first pair. StrictMode, SSR and unchanged current Menu caller verified; React is the only peer. |
 | [vradix-react-use-layout-effect](packages/vradix-react-use-layout-effect) | @radix-ui/react-use-layout-effect 1.1.4 | Independent module-load browser hook/server no-op; React 19, no extra dependencies. Unchanged callback-ref caller and clean archives checked; no measured speed claim. |
@@ -380,7 +381,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **154 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **155 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5618,3 +5619,16 @@ Clean archive consumers pass CJS/ESM, SSR, TypeScript 7 and browser-bundle check
 establish no speed difference for mounted updates or retained calls. The fallback
 preserves upstream's more limited render-phase checks; native semantics remain
 React's own. Built, unreleased and unadopted.
+
+## vradix-react-id
+
+The React 19 wrapper targets Radix ID 1.1.4 and delegates identity generation
+to native React useId. It preserves the prefix and deterministic override while
+removing extra state, layout effects, the legacy counter and a runtime dependency.
+The hook is called even with an explicit ID, so override changes keep hook order.
+
+Node 24 and Bun verify actual React 19.1/19.2 SSR, StrictMode, stable IDs, hydration
+and Dropdown Menu 2.2.1 trigger/content accessibility links. Clean archive and
+TypeScript 7 checks pass. [Isolated measurements](packages/vradix-react-id/bench/results/README.md)
+establish no timing difference beyond the noisy identical-source controls. Built,
+unreleased and unadopted.
