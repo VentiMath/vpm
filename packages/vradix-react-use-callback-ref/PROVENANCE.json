@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-use-callback-ref",
+    "version": "1.1.5",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/use-callback-ref",
+    "checked": "2026-11-03",
+    "integrity": "sha512-Y5GBf4NKeADoXI1geiMlMuMoURT3k9MizzzKhGb/m55H94aGigZ01PIpkvsO6lML13BA6XYAXSJ6gza7vTn5nw=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "2b496d51b4f10361d61e478fe40bdd0bd95f95c3eb61b30b9a98e197c20d645e",
+    "dist/index.d.ts": "d0a86d1b9e8f4b4b751228cc3f57aafef192af3a57b69bb6d6d8a8920d037318",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "useCallbackRef on React 19, including commit-phase publication, stable identity, optional callbacks and server rendering.",
+    "basis": "Public contract and inspected source; not a clean-room claim."
+  },
+  "changes": [
+    "Use React 19 insertion effects directly; remove legacy layout-effect fallback dependency.",
+    "Use React callback memoization instead of shipping generated interop machinery."
+  ]
+}

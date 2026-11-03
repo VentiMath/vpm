@@ -228,6 +228,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vreact-remove-scroll](packages/vreact-remove-scroll) | react-remove-scroll 2.7.2 | Independent React 19 scroll isolation with document-scoped listeners and weak event identity. Preserves nested locks, portals, shards and lazy sidecars; fixes stale wheel decisions, touch reversal and overwritten refs/handlers. VPM dependencies only. |
 | [varia-hidden](packages/varia-hidden) | aria-hidden 1.2.6 | Independent DOM isolation without tslib. Per-attribute ownership, idempotent undo, exact restoration, safe markers and invalid-target handling; actual Radix menus and Chrome focus behavior verified. |
 | [vradix-react-context](packages/vradix-react-context) | @radix-ui/react-context 1.3.0 | Independent context/scope factories; shape-aware provider memoization fixes stale keys, stable composed scopes avoid identity churn. React 19, zero runtime dependencies beyond its peer; built, unreleased and unadopted. |
+| [vradix-react-use-callback-ref](packages/vradix-react-use-callback-ref) | @radix-ui/react-use-callback-ref 1.1.5 | Stable callbacks publish targets only on commit; React 19 insertion effects remove the fallback dependency. |
 | [vradix-react-use-layout-effect](packages/vradix-react-use-layout-effect) | @radix-ui/react-use-layout-effect 1.1.4 | Independent module-load browser hook/server no-op; React 19, no extra dependencies. Unchanged callback-ref caller and clean archives checked; no measured speed claim. |
 | [vradix-react-primitive](packages/vradix-react-primitive) | @radix-ui/react-primitive 2.2.0 | Independent DOM components using VPM Slot; lazy per-tag wrappers, fewer initialization copies, deferred ReactDOM dispatch import. Unchanged Toggle caller verified. |
 | [vradix-react-slot](packages/vradix-react-slot) | @radix-ui/react-slot 1.5.0 | Independent React 19 slots with VPM refs; direct-child fast path, explicit ambiguous-target and cyclic-child errors; unchanged Radix Primitive callers verified. |
@@ -375,7 +376,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 CI runs the package tests on Node 24 and Bun, with runtime-specific skips
 recorded by the tests. All 118 Node runtime packages' public declarations compile
 without ambient Node, Undici or DOM types using the configured TypeScript 7
-compiler in NodeNext and bundler resolution modes. The catalog covers **150 packages**, including two declaration-only packages and
+compiler in NodeNext and bundler resolution modes. The catalog covers **151 packages**, including two declaration-only packages and
 browser packages `vcss-box-model`, `vuse-sync-external-store`, `vfullcalendar-react`, `vtanstack-react-query`,
 `vemotion-sheet`, `vemotion-utils`, `vemotion-serialize`,
 `vemotion-use-insertion-effect-with-fallbacks`, `vemotion-cache`,
@@ -5539,3 +5540,12 @@ verification −42.1% / −23.2%. Richer profile validation still costs 538 → 
 on Node and 426 → 562 ns on Bun; App Check construction costs 712 → 1,623 ns and
 541 → 1,180 ns. All directions clear the retained identical-code controls;
 these are CPU microbenchmarks, not application latency claims.
+
+## vradix-react-use-callback-ref
+
+Independent React 19 callback hook matching 1.1.5. Stable callable identity,
+optional targets, transparent return/error forwarding and commit-phase updates
+are checked against upstream, including suspended renders. The old layout-effect
+fallback dependency is unnecessary on React 19. See the
+[contract](packages/vradix-react-use-callback-ref/README.md) and
+[measurements](packages/vradix-react-use-callback-ref/bench/results/README.md).

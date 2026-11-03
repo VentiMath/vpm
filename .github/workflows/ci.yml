@@ -61,6 +61,7 @@ jobs:
       - run: node scripts/radix-react-primitive-conformance/archives.cjs
       - run: node scripts/radix-context-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
+      - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: node scripts/aria-conformance/browser.cjs
       - run: node scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
@@ -475,6 +476,7 @@ jobs:
       - run: node scripts/radix-react-primitive-conformance/archives.cjs
       - run: node scripts/radix-context-conformance/archives.cjs
       - run: node scripts/radix-layout-effect-conformance/archives.cjs
+      - run: node scripts/radix-layout-effect-conformance/callback-archives.cjs
       - run: bun scripts/callback-ref-conformance/run.cjs
       - run: node scripts/callback-ref-conformance/archives.cjs
       - run: npm --prefix scripts/redux-conformance ci --ignore-scripts --no-audit --no-fund

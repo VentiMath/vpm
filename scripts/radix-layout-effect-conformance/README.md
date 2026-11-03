@@ -20,3 +20,7 @@ node scripts/radix-layout-effect-conformance/archives.cjs
 A preliminary Node benchmark overlapped archive installation and was discarded
 before recording the published isolated run. The published Node controls still
 show substantial process noise; no performance direction is claimed.
+
+The same pinned fixture also checks `vradix-react-use-callback-ref` against
+1.1.5 via `callback.cjs` and `callback-archives.cjs`: stable identity, optional
+targets, commit timing, aborted renders and SSR. React 19 needs no fallback leaf.
