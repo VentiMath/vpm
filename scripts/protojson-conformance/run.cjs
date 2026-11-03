@@ -17,13 +17,13 @@ try {
  const expected=[];
  for(const load of ['loadSync','fromJSON']) {
    if(!upstream)for(const value of ['NaN','Infinity','negative Infinity'])expected.push(`google.protobuf.Value ${load} test serializes ${value} to proto3 JSON`);
-   if(!legacy)expected.push(`google.protobuf.Value ${load} test serializes google.protobuf.NullValue to proto3 JSON`);
  }
  assert.equal(report.stats.tests,316);assert.equal(report.stats.pending,0);
  assert.deepEqual(report.failures.map(f=>f.fullTitle).sort(),expected.sort(),'Unexpected upstream-suite difference');
- for(const f of report.failures)if(!f.fullTitle.includes('google.protobuf.NullValue'))assert.equal(f.err.message,'Value numbers must be finite');else {const stringify=require('./node_modules/mocha/lib/utils').stringify;assert.equal(f.err.actual,stringify({}));assert.equal(f.err.expected,stringify({nullValueField:null}));}
+ for(const f of report.failures)assert.equal(f.err.message,'Value numbers must be finite');
+ for(const load of ['loadSync','fromJSON'])assert(report.passes.some(t=>t.fullTitle===`google.protobuf.Value ${load} test serializes google.protobuf.NullValue to proto3 JSON`),'NullValue presence must pass in both loading modes');
  assert.equal(r.status,expected.length?1:0);
  console.log(`${upstream?'Upstream':'VPM'} / protobuf ${legacy?'7.6.6':'8.8.1'}: ${report.stats.passes}/316 unchanged cases pass; ${expected.length} explicitly verified differences.`);
  if(!upstream)console.log('Six legacy expectations stringify nonfinite Value numbers; VPM rejects them with a tested error.');
- if(!legacy)console.log('Two legacy NullValue-presence expectations differ with protobuf 8 for both serializers.');
+ console.log('NullValue presence passes in both schema-loading modes; no expected-failure exemption.');
 }finally{fs.rmSync(temp,{recursive:true,force:true});}

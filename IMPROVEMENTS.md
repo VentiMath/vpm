@@ -1786,10 +1786,12 @@ conflicting oneofs/field aliases fail. Unknown fields remain ignored.
 Non-finite numbers inside Value are rejected instead of silently changing into
 strings. Ordinary float/double fields retain their special-string mapping.
 Fifteen focused tests and thirteen paired correction probes cover these behaviors.
-All **316 unchanged upstream tests execute**: 310 pass with protobuf 7, with six
-explicitly verified differences for that Value policy; 308 pass with protobuf 8,
-with two additional NullValue-presence differences that affect the original
-serializer as well. No assertion sources are edited or cases skipped.
+All **316 unchanged upstream tests execute**: 310 pass with both protobuf 7 and
+the independent VPM protobuf 8 runtime, with six explicitly verified differences
+for that Value policy. Original serializer controls pass all 316 with either
+runtime. Both NullValue presence cases now pass and are explicitly required by
+the gate; stale exemptions from the earlier derived runtime are removed. No
+assertion sources are edited or cases skipped.
 
 Twelve checks including controls drive actual google-gax 6.14.0 fallback code
 with Firestore 9.4.0 schemas: request bodies/URLs, decoded values, Status/Any error

@@ -62,10 +62,10 @@ ProtoJSON strings `NaN`, `Infinity` and `-Infinity`. Explicit input strings rema
 strings inside Value. These choices follow the [ProtoJSON mapping](https://protobuf.dev/programming-guides/json/).
 
 The serializer accepts the tested protobuf **7.6.6** and **8.8.1** reflected types
-without an `instanceof` dependency on one constructor. Version 8's presence and
-object-conversion rules still apply when that runtime supplies the type. In
-particular, it drops an implicit default NullValue enum before serialization;
-two older upstream expectations differ for both serializers for this reason.
+without an `instanceof` dependency on one constructor. The independent VPM
+protobuf runtime preserves explicit NullValue input in both schema-loading
+modes. Both serializers now pass those original presence assertions; the earlier
+derived-runtime differences no longer apply.
 Arbitrary schema mutation after resolution is not a supported cache-invalidation
 API; add/remove fields through the protobuf reflection APIs.
 
@@ -80,8 +80,8 @@ On Node 24 and Bun:
 
 - All **316 unchanged upstream cases** run. With protobuf 7, **310 pass** and six
   expectations for non-finite Value output are explicitly verified as intentional
-  rejections. With protobuf 8, **308 pass**, with the same six differences plus the
-  two inherited NullValue-presence differences. Original controls establish both.
+  rejections. With VPM protobuf 8, **310 pass** with the same six differences.
+  Original serializer controls pass all 316 with both tested runtimes.
 - Fifteen focused tests cover corrected behavior, integer limits, aliases, nulls,
   recursion, schema additions and CommonJS/ESM identity. **Thirteen paired probes**
   demonstrate upstream failures using identical protobuf 7 types.

@@ -40,14 +40,15 @@ failure fails the gate:
 | --- | --- | ---: | --- |
 | Original 4.1.0 | protobuf 7.6.6 | 316 | None |
 | VPM | protobuf 7.6.6 | 310 | Six non-finite Value output expectations |
-| Original 4.1.0 | VPM protobuf 8.8.1 | 314 | Two implicit-default NullValue presence expectations |
-| VPM | VPM protobuf 8.8.1 | 308 | Both groups above |
+| Original 4.1.0 | VPM protobuf 8.8.1 | 316 | None |
+| VPM | VPM protobuf 8.8.1 | 310 | Six non-finite Value output expectations |
 
 The six Value cases expect NaN/infinities to become strings, in both schema-loading
 modes. VPM explicitly rejects this type-changing conversion and asserts the exact
-error. The two NullValue cases differ before serialization: protobuf 8 omits an
-implicit default enum that version 7 kept as an own property. Both serializers
-behave alike there. Focused tests separately exercise valid Value strings/nulls
+error. Both NullValue presence cases now pass with the independent VPM protobuf
+runtime, for both serializers. The gate explicitly requires those two passes;
+the expected-failure entries inherited from the earlier derived protobuf runtime
+have been removed. Focused tests separately exercise valid Value strings/nulls
 and ordinary float/double special values.
 
 Thirteen paired correction probes use the **same protobuf 7 types** on both sides:
@@ -73,5 +74,6 @@ actual gax fallback methods using Firestore's shipped schemas and HTTP annotatio
 There are **twelve checks including stock controls**, with import/function counters
 and unchanged source hashes. VPM runs with both protobuf 7 and 8; the original
 serializer with protobuf 7 is the control. No credentials or cloud RPCs are used.
-The browser check executes a built bundle without Node globals and verifies sliced
+The browser sandbox supplies standard TextEncoder/TextDecoder and atob/btoa APIs,
+without Buffer or require. It executes a built bundle and verifies sliced
 bytes and timestamp offsets. Packed installations independently verify public exports.
