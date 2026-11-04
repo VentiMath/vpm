@@ -8,7 +8,7 @@ module.exports=function checkReact(cwd,run){
   fs.writeFileSync(path.join(cwd,'tsconfig-react.json'),JSON.stringify({compilerOptions:{strict:true,noEmit:true,target:'ES2022',module:mode==='Bundler'?'ESNext':mode,moduleResolution:mode,jsx:'react-jsx',lib:['ES2022','DOM'],types:[]},files:['react-types.tsx']}));
   run('node',[require('../platform-types.cjs').compiler().path,'-p','tsconfig-react.json'],cwd);
  }
- fs.writeFileSync(path.join(cwd,'react-browser.js'),`import React from 'react';import {createRoot} from 'react-dom/client';import {MathText,DisplayMath} from 'vlx/react';const root=createRoot(document.getElementById('root'));window.mountMath=()=>root.render(React.createElement(DisplayMath,{tex:'x^2+1'}));window.unmountMath=()=>root.unmount();root.render(React.createElement(MathText,{source:'Plain prose'}));window.ready=true;`);
+ fs.copyFileSync(path.join(__dirname,'react-browser-entry.mjs'),path.join(cwd,'react-browser.js'));
  run('bun',['build','react-browser.js','--target=browser','--splitting','--minify','--metafile=react-meta.json','--outdir=react-dist'],cwd);
  const meta=JSON.parse(fs.readFileSync(path.join(cwd,'react-meta.json'))),entries=Object.entries(meta.outputs),entry=entries.find(([,o])=>o.entryPoint?.endsWith('react-browser.js'));
  assert(entry,'React browser entry');const eager=new Set();

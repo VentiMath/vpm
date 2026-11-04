@@ -1,5 +1,9 @@
 # vlx measurements
 
+These core-engine measurements were recorded for r5 (commit 1289a87). r6 changes
+the React mounting layer; it does not change the measured parser/layout code.
+[Separate r5/r6 React rerender measurements](react.md) cover that change.
+
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
 balanced upstream-first / VPM-first order; two further pairs run identical

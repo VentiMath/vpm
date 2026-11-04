@@ -125,7 +125,14 @@ public URL with no overrides and checks frozen npm/Bun lockfiles. See the
 missing-observer windows against clean installed consumers. `react-consumer.cjs`
 compiles both TS7 module modes and checks the emitted dynamic chunk graph.
 `react-browser.cjs` verifies in real Chrome that plain prose requests no glyph
-chunk, then first math fetches it, renders and unmounts. These run for clean
+chunk, then first math fetches it, renders and unmounts. For both lazy and preloaded
+mounts, it checks all three components through 60 parent updates: formula identity,
+focus and scroll are preserved with zero HTML writes. Changed TeX and provider
+defaults remain live. The preloaded identity regression fails on r5. Chrome also rejects both r5
+(80 HTML writes across the first 20 updates) and a memoization-only repair
+(four writes from one lazy remount): both lose focus and scroll. The complete
+fix passes with zero writes. Hydration preserves server nodes, and a missing
+glyph chunk reaches the application error boundary. These run for clean
 archives and the release checker, including published-URL installs.
 
 The DOM regression check asserts zero computed-style reads for fitting/hidden
@@ -135,3 +142,11 @@ provider defaults and explicit overrides. Chrome startup allows 30 seconds,
 uses disk-backed shared memory, reports early exit/stderr, and kills a failed
 launch. It does not retry failed browser assertions. The previous CI timeout
 alone did not establish whether Chrome was slow or crashed.
+
+
+`bench-react.cjs PREVIOUS_RELEASE.tgz` compares preloaded React parent updates
+against an immutable prior archive using the same isolated process harness. It
+packs the current package, loads one implementation per worker, and uses identical
+React/jsdom fixtures. Unchanged single-formula and 20-formula updates plus changed
+TeX are measured; browser paint and application tests are excluded. Set `OUTPUT`
+to record raw samples. Temporary extracted code is removed after the run.

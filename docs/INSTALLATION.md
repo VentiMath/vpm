@@ -3,11 +3,11 @@
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r5)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r6)
 provides its `vlx` package for frontend integration:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r5/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r6/vlx-0.1.0.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -16,8 +16,9 @@ are needed. The archive pins `vpngjs` to its sibling release URL. That dependenc
 supports the separate Node page-export entry; it is excluded from browser builds.
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
 
-Revision **r5** keeps formula-only input strict and renders all **99,635** audited
-expressions after verified source repairs: 165 statements, two current rubrics,
+Revision **r6** preserves formula nodes, focus and scroll across parent updates,
+including the transition after lazy loading. It keeps formula-only input strict
+and renders all **99,635** audited expressions after verified source repairs: 165 statements, two current rubrics,
 and 94 bare answer/choice values. All 99,184 originally KaTeX-accepted expressions
 still render. Wrapped answers are corrected at ingestion, not by the renderer.
 `observeMath` skips style/layout work for fitting or hidden formulas; forced-colors
@@ -52,7 +53,7 @@ records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r5 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r6 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published

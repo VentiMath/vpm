@@ -22,17 +22,18 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r5/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r6/vlx-0.1.0.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Version 0.1.0 identifies this original API, not upstream engine compatibility.
 
-Release revision **r5** restores strict bare-TeX input for formula-only APIs.
-It skips style/layout reads for fitting or hidden formulas, installs forced-colors
-CSS once per document, and renders immediately after `preloadMath()` resolves.
-`MathProvider` supplies inherited `scrollLabel` and `loadingFallback` defaults.
+Release revision **r6** preserves formula DOM nodes, keyboard focus and horizontal
+scroll when a parent re-renders with unchanged math. Both preloaded and initially
+lazy components retain their mounted subtree. Changed TeX still updates normally.
+It retains r5's strict bare-TeX input, shared forced-colors stylesheet, immediate
+preloaded rendering and inherited `MathProvider` defaults.
 Existing release assets remain unchanged.
 
 An **npm registry mirror is planned** for VentiLaTeX. It will distribute the same
@@ -67,6 +68,12 @@ customizes the loading state; `fallback` accepts a React node or `(error, source
 callback for a failed formula. Defaults preserve source as text. Lifecycle and
 copy/scroll observers are mounted and cleaned up by the components. React is an
 optional peer, not a dependency of the core entry.
+
+The React adapter currently mounts generated SVG/MathML markup through a memoized
+`dangerouslySetInnerHTML` value. Unchanged output causes no HTML write. Prose and
+fallbacks remain React text/nodes; caller-provided HTML is not an input API. A
+native React element output path would require a separate layout-output refactor;
+r6 does not claim to implement one. See the [rerender measurements](bench/results/react.md).
 
 ```tsx
 import { MathProvider } from 'vlx/react';

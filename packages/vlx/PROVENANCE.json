@@ -42,6 +42,7 @@
     "Intern repeated font paths: expanded glyph coverage uses 784343 bytes instead of 896594 bytes in r2. Bold symbols retain italic letter shapes, including nested italic text.",
     "After verified source repairs to 165 statements, two rubrics and 94 answer/choice values, all 99635 audited expressions render. Slanted roman text, crossed-o letters and bounded array spacing remain supported; formula-only input rejects outer delimiters, legacy aliases and corrupt control characters.",
     "Fitting/hidden formulas skip computed-style reads; forced-colors rules are installed once per document or imported as static CSS.",
-    "Preloaded React renders immediately, with inherited provider defaults for scroll labels and loading fallbacks."
+    "Preloaded React renders immediately, with inherited provider defaults for scroll labels and loading fallbacks.",
+    "React preserves generated-markup prop identity and its loading boundary; unchanged parent updates keep formula nodes, focus and horizontal scroll. Lazy/preloaded Chrome controls verify zero repeated HTML writes; changed TeX and provider defaults remain live."
   ]
 }

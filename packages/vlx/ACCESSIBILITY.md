@@ -3,7 +3,7 @@
 VentiLaTeX (VLX, pronounced “Vee Ell Ex”) is ready for a browser integration trial. The automated
 checks below pass in Chrome 156.0.8078.76. They do **not** certify screen-reader
 speech, every browser/assistive-technology combination, or WCAG conformance.
-VentiMath has not switched its renderers yet.
+Application adoption and deployment are tracked separately from these package checks.
 
 ## Verified behavior
 
@@ -17,6 +17,7 @@ VentiMath has not switched its renderers yet.
 | Keyboard | With `observeMath`, only formulas with usable scrolling overflow enter the tab order. Tab reaches them, arrow keys scroll, and Tab leaves without a trap. Resizing or scaling the SVG to fit removes the added tab stop; hidden overflow gets none. |
 | Inline alignment and clipping | Inline math shares the prose baseline; all 48 fixture outline bounds fit their SVG viewports. Light, dark, narrow and enlarged screenshots are generated for inspection. |
 | Copying | With `observeMath`, mixed prose/formula selections copy each whole formula once as authored TeX. Tests use an in-memory copy event, without touching the OS clipboard. |
+| React parent updates | Real Chrome checks preserve the same InlineMath, DisplayMath and MathText formula nodes, focus and scroll through 60 updates in each of lazy and preloaded modes, with zero HTML writes. Changed TeX and provider defaults still update. Node/Bun jsdom checks verify hydration reuses server math; Chrome verifies failed chunk loads reach the application error boundary. |
 | Lifecycle | Replacement content is observed; cleanup disconnects listeners/observers and removes only attributes VLX added, preserving caller changes. Print windows without ResizeObserver or MutationObserver still render; resize/beforeprint refreshes remain available. |
 
 The [browser suite](../../scripts/vlx-conformance/browser.cjs) runs in an isolated
@@ -91,7 +92,7 @@ explicit equation labels and mixed prose/figures. This requires those actual
 reader/browser combinations; an accessibility-tree snapshot cannot substitute
 for it. WebKit and Firefox rendering are also not covered by this Chrome gate.
 
-The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r5)
+The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r6)
 ships this browser lifecycle. Application integration and production cutover
 remain separate from these verified package-level checks. A controlled application
 trial can use the documented lifecycle and existing text-on-error behavior while

@@ -3,8 +3,11 @@ const React=require('react'),{createRenderer,VlxError}=require('./index.cjs'),{o
 const renderer=createRenderer();
 function Mounted({html,scrollLabel}){
  const root=React.useRef(null);
+ // React compares this prop by identity. Replacing it would replace the math
+ // subtree even when its string is unchanged, losing keyboard focus and scroll.
+ const inner=React.useMemo(()=>({__html:html}),[html]);
  React.useEffect(()=>root.current?observeMath(root.current,{scrollLabel}):undefined,[html,scrollLabel]);
- return React.createElement('span',{ref:root,dangerouslySetInnerHTML:{__html:html}});
+ return React.createElement('span',{ref:root,dangerouslySetInnerHTML:inner});
 }
 module.exports=function MathRenderer({mode,tex,source,fontSize,fallback,scrollLabel,className,style}){
  const result=React.useMemo(()=>{

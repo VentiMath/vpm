@@ -11,7 +11,12 @@ function MathProvider({children,scrollLabel,loadingFallback}){
  return React.createElement(Defaults.Provider,{value},children);
 }
 function preloadMath(){return pending||(pending=import('./react-renderer.mjs').then(module=>{resolved=module.default;return module;}));}
-const Loaded=React.lazy(()=>preloadMath().then(module=>({default:module.default})));
+// Keep the same component and Suspense boundary before and after loading. A
+// lazy-to-direct component switch would remount math on the next parent update.
+function Loaded(props){
+ const Renderer=resolved||React.use(preloadMath()).default;
+ return React.createElement(Renderer,props);
+}
 function component(mode){
  return function VentiLaTeX({loadingFallback,...props}){
   const defaults=React.useContext(Defaults);
@@ -24,7 +29,6 @@ function component(mode){
    catch(error){if(error instanceof VlxError)return null;throw error;}
   },[source]);
   if(plain!==null)return React.createElement('span',{className:props.className,style:props.style},plain);
-  if(resolved)return React.createElement(resolved,{...props,scrollLabel:label,mode});
   const fallback=loading===undefined?React.createElement('span',null,source):loading;
   return React.createElement(React.Suspense,{fallback},React.createElement(Loaded,{...props,scrollLabel:label,mode}));
  };
