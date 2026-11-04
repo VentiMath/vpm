@@ -16,3 +16,6 @@ export declare function DisplayMath(props:MathProps&{tex:string}):ReactElement;
 export declare function MathText(props:MathProps&{source:string}):ReactElement;
 /** Optional eager load, for route prefetch or server rendering. */
 export declare function preloadMath():Promise<void>;
+/** Shared defaults. Nested providers inherit omitted settings; component props win. */
+export interface MathProviderProps {children?:ReactNode;scrollLabel?:string;loadingFallback?:ReactNode}
+export declare function MathProvider(props:MathProviderProps):ReactElement;

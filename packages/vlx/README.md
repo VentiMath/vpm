@@ -10,9 +10,9 @@ selector or KaTeX/MathJax fallback.
 snapshot, all **99,184 formulas accepted by the app's KaTeX 0.16.38 baseline**
 render in VLX, across 99,635 extracted expressions and 15,107 documents. The other
 451 expressions were rejected by that baseline. After source repairs to
-165 live statements and two current rubrics, **all 99,635 formulas render**.
-The corrections normalize imported macros and restore damaged TeX; VLX r4's
-implementation is unchanged. The audit overlays only verified repairs onto the
+165 live statements, two current rubrics, and 94 answer/choice values, **all 99,635 formulas render**.
+The corrections normalize imported macros, restore damaged TeX, and remove stored
+math delimiters from bare answer/choice fields. Formula-only rendering is strict. The audit overlays only verified repairs onto the
 original dump, not a new full-database snapshot or historical rubric revisions.
 This verifies renderability after the caller's existing preprocessing, not visual
 equivalence, all possible TeX or a completed application deployment. See the
@@ -22,17 +22,17 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r4/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r5/vlx-0.1.0.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Version 0.1.0 identifies this original API, not upstream engine compatibility.
 
-Release revision **r4** adds slanted text, bounded array spacing, crossed-o
-letters and single-expression delimiter handling. It rejects corrupted control
-characters instead of silently skipping them. Legacy `\equal`, `\plus` and
-`\minus` belong to importer normalization; VLX does not define those aliases.
+Release revision **r5** restores strict bare-TeX input for formula-only APIs.
+It skips style/layout reads for fitting or hidden formulas, installs forced-colors
+CSS once per document, and renders immediately after `preloadMath()` resolves.
+`MathProvider` supplies inherited `scrollLabel` and `loadingFallback` defaults.
 Existing release assets remain unchanged.
 
 An **npm registry mirror is planned** for VentiLaTeX. It will distribute the same
@@ -61,11 +61,21 @@ import { InlineMath, DisplayMath, MathText } from 'vlx/react';
 ```
 
 The React entry loads the renderer and glyph pool on first math use; plain prose
-does not load them. `preloadMath()` can prefetch the renderer. `loadingFallback`
+does not load them. Once `preloadMath()` resolves, rendering is synchronous on the
+first pass, including server rendering. `loadingFallback`
 customizes the loading state; `fallback` accepts a React node or `(error, source)`
 callback for a failed formula. Defaults preserve source as text. Lifecycle and
 copy/scroll observers are mounted and cleaned up by the components. React is an
 optional peer, not a dependency of the core entry.
+
+```tsx
+import { MathProvider } from 'vlx/react';
+<MathProvider scrollLabel="Scrollable formula" loadingFallback={null}>
+  <InlineMath tex="x^2" />
+</MathProvider>
+```
+
+Nested providers inherit omitted settings; explicit component props take precedence.
 
 HTML inherits the surrounding color and font size unless `fontSize` is supplied.
 Set `--vlx-scale` on a parent or the React `style` prop to scale that size. Display
@@ -73,6 +83,9 @@ math is centered when it fits; `--vlx-display-margin: 0` requests left alignment
 Standalone SVG defaults to 16 px and black ink. Use `observeMath(host)` from
 `vlx/dom` after mounting HTML for keyboard scrolling of oversized expressions and
 copying selected formulas as TeX; call its cleanup function on unmount.
+React and `observeMath` install the small forced-colors stylesheet once per document.
+For static HTML without either lifecycle, import `vlx/styles.css` once in the page,
+or call `installMathStyles(document)` from `vlx/dom`. No per-formula style tag ships.
 
 The browser entry has no executable upstream engine dependency. The package's
 one VPM dependency, `vpngjs`, validates figures in the separate Node page entry;
@@ -136,10 +149,11 @@ format, byte, dimension and pixel validation precede embedding. Page input,
 item counts, image totals, SVG size and raster pixels are bounded. Unknown TeX
 or corrupt images cause an error rather than a missing formula or diagram.
 
-`renderMath()` accepts a bare expression or exactly one complete outer `$…$`,
-`$$…$$`, `\(…\)` or `\[…\]` wrapper. Its `display` option still controls layout;
-returned/copied TeX retains the original input. Adjacent expressions, mixed prose
-and unmatched wrappers remain errors. `renderText()` is the prose entry.
+`renderMath()`, `InlineMath` and `DisplayMath` require **bare TeX**, such as
+`10^{100^{100}}`. Outer `$…$`, `$$…$$`, `\(…\)` and `\[…\]` wrappers are errors.
+Fix stored answer/choice values at ingestion; the renderer does not strip their
+delimiters or repair malformed syntax. `renderText()` and `MathText` are the prose
+entries and intentionally recognize delimited math.
 
 `\textsl` uses sheared roman outlines; `\o`/`\O` mean the letters ø/Ø, never the
 empty-set symbol. Array column specs accept `@{}` and bounded, nonnegative

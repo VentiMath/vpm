@@ -31,7 +31,8 @@
       "types": "./react.d.ts",
       "import": "./react.mjs",
       "require": "./react.cjs"
-    }
+    },
+    "./styles.css": "./styles.css"
   },
   "files": [
     "*.cjs",
@@ -41,12 +42,15 @@
     "ACCESSIBILITY.md",
     "LICENSE",
     "PROVENANCE.json",
-    "font"
+    "font",
+    "*.css"
   ],
   "engines": {
     "node": ">=24"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "./styles.css"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "@resvg/resvg-js": "2.6.2",

@@ -17,8 +17,7 @@ function renderMath(tex,options={}) {
  const attrs=`xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${round(w)} ${round(h)}"`;
  const svg=`<svg ${attrs} width="${width}" height="${height}"><title>${escape(tex)}</title><g color="black">${inner}</g></svg>`;
  const mathml=`<math xmlns="http://www.w3.org/1998/Math/MathML" display="${display?'block':'inline'}"><semantics>${b.mml}<annotation encoding="application/x-tex">${escape(tex)}</annotation></semantics></math>`;
- const contrast='<style>@media (forced-colors:active){.vlx-math [color]{color:CanvasText}}</style>';
- const webSvg=`<svg ${attrs} width="${round(w)}em" height="${round(h)}em" style="display:block;${display?'margin:var(--vlx-display-margin,0 auto);':''}max-width:none" aria-hidden="true" focusable="false">${contrast}${inner}</svg>`;
+ const webSvg=`<svg ${attrs} width="${round(w)}em" height="${round(h)}em" style="display:block;${display?'margin:var(--vlx-display-margin,0 auto);':''}max-width:none" aria-hidden="true" focusable="false">${inner}</svg>`;
  const html=`<span class="vlx-math" data-vlx="math" data-vlx-display="${display}" style="position:relative;max-width:100%;min-width:0;${display?'display:block;overflow-x:auto;':'display:inline-block;overflow-x:auto;vertical-align:'+round(-(b.d+pad))+'em;'}font-size:calc(var(--vlx-scale,1) * ${checked.fontSize===undefined?'1em':fontSize+'px'})">${webSvg}<span style="position:absolute;left:0;top:0;width:1px;height:1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;user-select:none">${mathml}</span></span>`;
  return Object.freeze({tex,display,svg,html,mathml,width,height,baseline});
 }

@@ -1,2 +1,2 @@
 import api from './dom.cjs';
-export const {observeMath}=api;
+export const {observeMath,installMathStyles}=api;

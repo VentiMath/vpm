@@ -42,7 +42,7 @@ function build({ref,tag,out}) {
     if(relative==='package.json')assert.deepEqual(JSON.parse(fs.readFileSync(packed)),published);
     else {const bytes=fs.readFileSync(packed);assert.deepEqual(bytes,fs.readFileSync(path.join(dir,relative)),name+'/'+relative);sourceFiles[relative]=hash(bytes);}
    }
-   for(const required of ['package.json','LICENSE','PROVENANCE.json','README.md',...(name==='vlx'?['ACCESSIBILITY.md','font/NOTICE','font/LICENSE','dom.cjs','dom.mjs','dom.d.ts','react.cjs','react.mjs','react.d.ts','react-renderer.cjs','react-renderer.mjs']:[])])assert.ok(entries.includes('package/'+required),name+': '+required);
+   for(const required of ['package.json','LICENSE','PROVENANCE.json','README.md',...(name==='vlx'?['ACCESSIBILITY.md','font/NOTICE','font/LICENSE','dom.cjs','dom.mjs','dom.d.ts','react.cjs','react.mjs','react.d.ts','react-renderer.cjs','react-renderer.mjs','styles.cjs','styles.css']:[])])assert.ok(entries.includes('package/'+required),name+': '+required);
    manifest.packages.push({name,version:published.version,asset:assets[name],url:base+'/'+assets[name],sha256:hash(fs.readFileSync(archive)),packageJsonSHA256:hash(fs.readFileSync(path.join(unpack,'package/package.json'))),dependencies:published.dependencies||{},sourceFiles});
   }
   const top=manifest.packages.find(p=>p.name==='vlx');

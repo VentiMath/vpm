@@ -40,6 +40,8 @@
     "Optional React 19 components defer renderer/glyph loading, isolate errors per formula and own DOM cleanup. Core rendering stays synchronous and React-free.",
     "CSS scale and centered display hooks; scroll focus requires actual usable overflow and handles scaled formulas and missing window observers.",
     "Intern repeated font paths: expanded glyph coverage uses 784343 bytes instead of 896594 bytes in r2. Bold symbols retain italic letter shapes, including nested italic text.",
-    "After verified import canonicalization, 99629 of 99635 expressions render, including 445 of 451 originally baseline-rejected inputs. New renderer support: single complete math wrappers, slanted roman text, crossed-o letters, bounded array spacing. Three undefined custom macros and three damaged string escapes remain explicit source errors; no legacy import aliases were added."
+    "After verified source repairs to 165 statements, two rubrics and 94 answer/choice values, all 99635 audited expressions render. Slanted roman text, crossed-o letters and bounded array spacing remain supported; formula-only input rejects outer delimiters, legacy aliases and corrupt control characters.",
+    "Fitting/hidden formulas skip computed-style reads; forced-colors rules are installed once per document or imported as static CSS.",
+    "Preloaded React renders immediately, with inherited provider defaults for scroll labels and loading fallbacks."
   ]
 }

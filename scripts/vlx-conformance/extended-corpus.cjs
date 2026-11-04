@@ -5,5 +5,5 @@ module.exports=[
  ['crossed-o letters',String.raw`\o+\O+\text{\o\O}`],
  ['array spacing',String.raw`\begin{array}{|r@{\hspace{2em}}l|}\hline\vspace{4pt}a&b\\c&d\\\hline\end{array}`],
  ['array padding',String.raw`\begin{array}{@{}l@{}c@{}}a&b\\c&d\end{array}`],
- ['wrapped formula',String.raw`$\frac{x+1}{y}$`],
+ ['bare answer',String.raw`\frac{x+1}{y}`],
 ];

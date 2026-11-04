@@ -1,5 +1,5 @@
 {
-  "snapshot": "2026-11-03 supplied production dump, overlaid only with verified source repairs to 165 statements and two current rubrics",
+  "snapshot": "2026-11-03 supplied production dump, overlaid only with verified source repairs to 165 statements, two current rubrics, 82 choices and 12 answers",
   "scope": "Caller-preprocessed math from ten application surfaces. Baseline classifications are from the original dump, before source repairs. Renderability, not visual equivalence or a fresh full-database/deployment verification. Historical rubric revisions remain unchanged and are outside this current-content inventory.",
   "baseline": {
     "package": "katex",
@@ -12,12 +12,12 @@
   "originalExtractorSHA256": "359c392855353955605f73fec9ad4f18cd956a5eaa32afe1c5ce48ed37dd41f7",
   "normalizationSHA256": "978408e84134c4e5a502e8d2e29a64773fc546b981c172d639bd5a50d61372a6",
   "sourceSHA256": {
-    "index.cjs": "1f516708da419bcc0847192dbea4f0faad23d34eb5b9cd3b391b8de1f53f8305",
-    "tex.cjs": "12989fa88452ba7a0fd53d44f3a127e24fff63b5313422b268c3470e12b0fd62",
+    "index.cjs": "458ee946c719c83038d70232d0db662f957098507206c8302289d213b86fdd1b",
+    "tex.cjs": "16a06e57325133818ccaa7ce9d6cbc74d0d97f27d7fb9abfb5068c75ac77279e",
     "layout.cjs": "1d9111a6d9a96d4a0fc684da4df317293cc6aeee7f765d26ed14ede5f8d56deb",
     "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78"
   },
-  "inventorySHA256": "b8f59d7a64c273d34c190c531c13ffed357a4f4b72aa638499bb35703af89b92",
+  "inventorySHA256": "00610dfcb9fc18e119248be7e7d684e353dad519fcb8889090f22c8c81677c5d",
   "expressions": 99635,
   "documents": 15107,
   "baselineAccepted": 99184,

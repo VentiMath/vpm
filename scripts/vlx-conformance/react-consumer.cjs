@@ -3,7 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 module.exports=function checkReact(cwd,run){
  for(const runtime of ['node','bun'])console.log(run(runtime,[path.join(__dirname,'react.cjs')],cwd,{VPM_VLX_CONSUMER:cwd}).trim());
- fs.writeFileSync(path.join(cwd,'react-types.tsx'),`import {InlineMath,DisplayMath,MathText,preloadMath} from 'vlx/react';const a=<InlineMath tex="x" style={{'--vlx-scale':1.2}}/>;const b=<DisplayMath tex="x" fallback={(error,raw)=><span>{error.code+raw}</span>}/>;const c=<MathText source="$x$"/>;const p:Promise<void>=preloadMath();\n// @ts-expect-error tex is required\nconst bad=<InlineMath/>;`);
+ fs.writeFileSync(path.join(cwd,'react-types.tsx'),`import {InlineMath,DisplayMath,MathText,preloadMath,MathProvider} from 'vlx/react';const a=<InlineMath tex="x" style={{'--vlx-scale':1.2}}/>;const b=<DisplayMath tex="x" fallback={(error,raw)=><span>{error.code+raw}</span>}/>;const c=<MathText source="$x$"/>;const p:Promise<void>=preloadMath();const provider=<MathProvider scrollLabel="Formula" loadingFallback={null}>{a}</MathProvider>;\n// @ts-expect-error tex is required\nconst bad=<InlineMath/>;`);
  for(const mode of ['NodeNext','Bundler']){
   fs.writeFileSync(path.join(cwd,'tsconfig-react.json'),JSON.stringify({compilerOptions:{strict:true,noEmit:true,target:'ES2022',module:mode==='Bundler'?'ESNext':mode,moduleResolution:mode,jsx:'react-jsx',lib:['ES2022','DOM'],types:[]},files:['react-types.tsx']}));
   run('node',[require('../platform-types.cjs').compiler().path,'-p','tsconfig-react.json'],cwd);

@@ -5,6 +5,8 @@ const React=selected('react'),api=selected('vlx/react'),h=React.createElement;
 assert(!Object.keys(require.cache).some(p=>p.endsWith('/vlx/font/glyphs.json')),'Importing React entry must not load glyphs');
 assert.equal(selected('react-dom/server').renderToString(h(api.MathText,{source:'<em>plain</em>'})),'<span>&lt;em&gt;plain&lt;/em&gt;</span>');
 assert(!Object.keys(require.cache).some(p=>p.endsWith('/vlx/font/glyphs.json')),'Plain prose must not load glyphs');
+const provided=selected('react-dom/server').renderToString(h(api.MathProvider,{loadingFallback:'Math is loading'},h(api.MathProvider,{scrollLabel:'Expression'},h(api.InlineMath,{tex:'x'}))));assert.match(provided,/Math is loading/);
+const overridden=selected('react-dom/server').renderToString(h(api.MathProvider,{loadingFallback:'Hidden loading'},h(api.InlineMath,{tex:'x',loadingFallback:null})));assert.doesNotMatch(overridden,/Hidden loading/);
 const initial=selected('react-dom/server').renderToString(h(api.InlineMath,{tex:'x',loadingFallback:'Loading math'}));assert.match(initial,/Loading math/);
 const dom=new JSDOM('<!doctype html><body><div id="host"></div></body>',{pretendToBeVisual:true});
 for(const name of ['window','document','navigator','HTMLElement','Element','Node','MutationObserver','getComputedStyle'])Object.defineProperty(globalThis,name,{configurable:true,value:dom.window[name]});
@@ -15,8 +17,12 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
 (async()=>{try{
  await api.preloadMath();
  assert(Object.keys(require.cache).some(p=>p.endsWith('/vlx/font/glyphs.json')),'Preload resolves the deferred renderer');
+ const immediate=selected('react-dom/server').renderToString(h(api.InlineMath,{tex:'x',loadingFallback:'must not suspend'}));assert.match(immediate,/<math/);assert.doesNotMatch(immediate,/must not suspend|<template/);
+ act(()=>root.render(h(api.MathProvider,{scrollLabel:'Translated formula'},h(api.InlineMath,{tex:'x'}))));assert.equal(container.querySelectorAll('math').length,1,'Preloaded math renders on its first synchronous pass');
+ const formula=container.querySelector('.vlx-math');Object.defineProperties(formula,{clientWidth:{value:100},scrollWidth:{value:200}});formula.querySelector('svg').getBoundingClientRect=()=>({width:200});window.dispatchEvent(new window.Event('resize'));assert.equal(formula.getAttribute('aria-label'),'Translated formula');
  const source=String.raw`Before <em>literal</em> $x^2$ then $\missingCommand$ then $y+1$ and $open`;
  await act(async()=>{root.render(h(React.StrictMode,null,h(api.MathText,{source})));});
+ assert.equal(document.querySelectorAll('style[data-vlx-styles]').length,1);
  assert.equal(container.querySelectorAll('math').length,2);assert.equal(container.querySelector('em'),null);assert.match(container.textContent,/\$\\missingCommand\$/);assert.match(container.textContent,/\$open/);assert.equal(copies,2,'StrictMode cleans up its first lifecycle');
  await act(async()=>root.render(h(api.MathText,{source:String.raw`$\unknown$`,fallback:(_error,raw)=>h('strong',null,'Invalid: '+raw)})));
  assert.equal(copies,0);assert.match(container.querySelector('strong').textContent,/Invalid/);
@@ -24,5 +30,5 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
  await act(async()=>root.render(h(api.InlineMath,{tex:'x',scrollLabel:'Scrollable formula'})));assert.equal(copies,1);assert.equal(container.querySelector('.vlx-math').dataset.vlxDisplay,'false');
  await act(async()=>root.render(h(api.InlineMath,{tex:String.raw`\unknown`,fallback:null})));assert.equal(container.textContent,'');assert.equal(copies,0);
  await act(async()=>root.unmount());assert.equal(copies,0);
- console.log('React: deferred glyph loading, SSR fallback, StrictMode, source/error isolation, print-window observer fallback and cleanup pass.');
+ console.log('React: deferred glyph loading, SSR fallback, immediate preloaded rendering, inherited provider defaults, shared styles, StrictMode, source/error isolation, print-window observer fallback and cleanup pass.');
 }finally{dom.window.close();}})().catch(error=>{console.error(error);process.exitCode=1});

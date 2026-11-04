@@ -6,8 +6,8 @@ cases compare mathematical tokens against both pinned engines and render real
 PNG pixels. Command spellings are documented in
 [KaTeX's supported functions](https://katex.org/docs/supported.html).
 The production audit now checks all 99,184 KaTeX-accepted expressions in the
-supplied November 3 dump. All render. After source repairs to 165 statements and two current rubrics,
-all 99,635 expressions render using unchanged VLX r4. The follow-up fixed three
+supplied November 3 dump. All render. After source repairs to 165 statements, two current rubrics and 94 answer/choice values,
+all 99,635 expressions render using strict bare-TeX VLX r5. The follow-up fixed three
 undefined custom macros and three damaged string escapes, plus neighboring
 missing backslashes in the same rubric fields. Historical rubric revisions are
 preserved, not included as current content. The 451 originally baseline-rejected
@@ -30,7 +30,7 @@ characters, double primes, invisible operator markers and existing accent wrappe
 differences, equivalent double-vertical glyphs and combining Unicode accents are normalized for token comparison. This does not certify spacing,
 full structural semantics or screen-reader behavior. MathJax's responsive equation
 tag SVG is checked semantically and labeled as such in the static preview.
-Slanted roman text, crossed-o letters, array spacing and whole-expression wrappers
+Slanted roman text, crossed-o letters, array spacing and rejection of formula-only wrappers
 have independent geometry/semantic tests. MathJax rejects `\textsl`, math-mode
 `\o` and `\vspace` in those fixtures; these are recorded as unsupported controls,
 not skipped VLX assertions. [LaTeX kernel documentation](https://latex-project.org/help/documentation/source2e.pdf)
@@ -127,3 +127,11 @@ compiles both TS7 module modes and checks the emitted dynamic chunk graph.
 `react-browser.cjs` verifies in real Chrome that plain prose requests no glyph
 chunk, then first math fetches it, renders and unmounts. These run for clean
 archives and the release checker, including published-URL installs.
+
+The DOM regression check asserts zero computed-style reads for fitting/hidden
+math, shared per-document styles, and preservation of caller-owned attributes.
+React consumers verify synchronous first rendering after preload, inherited
+provider defaults and explicit overrides. Chrome startup allows 30 seconds,
+uses disk-backed shared memory, reports early exit/stderr, and kills a failed
+launch. It does not retry failed browser assertions. The previous CI timeout
+alone did not establish whether Chrome was slow or crashed.

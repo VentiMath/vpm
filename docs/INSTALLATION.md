@@ -3,11 +3,11 @@
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r4)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r5)
 provides its `vlx` package for frontend integration:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r4/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r5/vlx-0.1.0.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -16,18 +16,20 @@ are needed. The archive pins `vpngjs` to its sibling release URL. That dependenc
 supports the separate Node page-export entry; it is excluded from browser builds.
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
 
-Revision **r4** retains the production baseline coverage:
-99,184 KaTeX-accepted expressions render. After verified source repairs to 165 statements and two current rubrics,
-all 99,635 audited expressions render with unchanged r4. Slanted text, array spacing, crossed-o letters and complete outer math
-wrappers are supported. The release also includes `vlx/react` components,
-per-formula source fallback, CSS scaling/centering hooks and safer scroll
-observation. Shared outlines reduce the data from 897 KB to 784 KB, and the React
-entry defers loading them until first math use. See the
-[coverage record](../scripts/vlx-conformance/production-coverage.json).
+Revision **r5** keeps formula-only input strict and renders all **99,635** audited
+expressions after verified source repairs: 165 statements, two current rubrics,
+and 94 bare answer/choice values. All 99,184 originally KaTeX-accepted expressions
+still render. Wrapped answers are corrected at ingestion, not by the renderer.
+`observeMath` skips style/layout work for fitting or hidden formulas; forced-colors
+CSS is shared per document. `preloadMath()` enables immediate first-pass React
+rendering; `MathProvider` supplies shared loading and localized scroll defaults.
+See the [coverage record](../scripts/vlx-conformance/production-coverage.json).
 
 For React 19, import `InlineMath`, `DisplayMath` and `MathText` from `vlx/react`.
 React remains an optional peer supplied by the app. Core imports are synchronous;
 React imports split the renderer into a dynamic chunk with a compatible bundler.
+For static HTML without React or `observeMath`, import `vlx/styles.css` once, or
+call `installMathStyles(document)` from `vlx/dom`, for forced-colors support.
 
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
@@ -50,7 +52,7 @@ records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r4 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r5 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published

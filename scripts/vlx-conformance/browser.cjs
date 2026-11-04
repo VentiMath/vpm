@@ -1,7 +1,7 @@
 'use strict';
 // Isolated real-Chrome fixture: no user profile, application state or clipboard.
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),http=require('node:http'),assert=require('node:assert/strict');
-const {spawn,spawnSync}=require('node:child_process');
+const {spawnSync}=require('node:child_process');
 const packageDir=path.resolve(process.env.VPM_VLX_PACKAGE_DIR||path.join(__dirname,'../../packages/vlx'));
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vlx-browser-'));
 const chrome=process.env.CHROME_BIN||['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome','/usr/bin/google-chrome','/usr/bin/chromium'].find(p=>fs.existsSync(p));
@@ -14,8 +14,7 @@ const output=process.env.VLX_BROWSER_OUTPUT; if(output)fs.mkdirSync(output,{recu
  const html='<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>VLX browser acceptance</title><style>body{overflow-wrap:anywhere;margin:0;padding:24px;font:20px/1.6 system-ui;background:#fff;color:#172332}*{box-sizing:border-box}main{max-width:100%;min-width:0}section{padding:12px;margin:12px 0;border:1px solid #8b939e;min-width:0}h1{font-size:24px}h2{font-size:18px;margin:0 0 8px}button{font:inherit;max-width:100%}body.dark{background:#131b26;color:#f5f7ff}body.dark section{border-color:#8b939e}</style></head><body><h1>VLX browser acceptance</h1><button id="before">Before formulas</button><main id="fixture"></main><button id="after">After formulas</button><script type="module" src="/bundle.js"></script></body></html>';
  server=http.createServer((req,res)=>{res.setHeader('Content-Type',req.url==='/bundle.js'?'text/javascript':'text/html');res.end(req.url==='/bundle.js'?fs.readFileSync(path.join(temp,'bundle.js')):html)});
  await new Promise((r,j)=>{server.once('error',j);server.listen(0,'127.0.0.1',r)});
- const profile=path.join(temp,'profile');child=spawn(chrome,['--headless=new','--no-sandbox','--disable-gpu','--no-first-run','--no-default-browser-check','--no-proxy-server','--remote-debugging-port=0','--user-data-dir='+profile,'about:blank'],{stdio:'ignore'});
- const port=await require('../floating-react-conformance/chrome-port.cjs')(path.join(profile,'DevToolsActivePort'));
+ const profile=path.join(temp,'profile');let port;({child,port}=await require('./launch-chrome.cjs')(chrome,profile));
  const pages=await(await fetch('http://127.0.0.1:'+port+'/json/list')).json();socket=new WebSocket(pages.find(p=>p.type==='page').webSocketDebuggerUrl);
  await new Promise((r,j)=>{socket.onopen=r;socket.onerror=j});socket.onmessage=e=>{const x=JSON.parse(e.data);if(x.method==='Page.loadEventFired')loaded?.();if(x.method==='Runtime.exceptionThrown'){errors.push(x.params.exceptionDetails);console.error(JSON.stringify(x.params.exceptionDetails));}const p=pending.get(x.id);if(p){pending.delete(x.id);clearTimeout(p.timer);x.error?p.reject(Error(JSON.stringify(x.error))):p.resolve(x.result)}};
  const send=(method,params={})=>new Promise((resolve,reject)=>{const id=++sequence,timer=setTimeout(()=>{pending.delete(id);reject(Error('CDP timeout '+method))},20000);pending.set(id,{resolve,reject,timer});socket.send(JSON.stringify({id,method,params}))});

@@ -2,16 +2,12 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {renderMath,parseMath,createRenderer}=require('../index.cjs');
 const {layout}=require('../layout.cjs');
-test('one complete outer math wrapper is accepted without changing original source',()=>{
- const bare='x+1',reference=layout(parseMath(bare));
- for(const wrapped of ['$x+1$','$$x+1$$',String.raw`\(x+1\)`,String.raw`\[x+1\]`,'  $x+1$ \n']){
-  assert.deepEqual(layout(parseMath(wrapped)),reference);
-  const r=renderMath(wrapped);assert.equal(r.tex,wrapped);assert.match(r.mathml,/<annotation/);
- }
- for(const bad of ['$x','$x$ $y$','$x$ prose','$$x$$ trailing',String.raw`\(x+1`,String.raw`\(x\)\(y\)`,'$$$x$$$'])assert.throws(()=>renderMath(bad),{code:'TEX'},bad);
+test('formula-only input is bare TeX; delimiters belong to prose parsing',()=>{
+ for(const wrapped of ['$x+1$','$$x+1$$',String.raw`\(x+1\)`,String.raw`\[x+1\]`,'  $x+1$ \n','$x','$x$ $y$','$x$ prose'])assert.throws(()=>renderMath(wrapped),{code:'TEX'});
+ assert.doesNotThrow(()=>renderMath('x+1'));
  assert.match(renderMath(String.raw`\$`).mathml,/<mo>\$<\/mo>/);
- assert.match(renderMath(String.raw`\text{cost $x$}`).mathml,/<mi>x<\/mi>/);
- const r=createRenderer();assert.notEqual(r.renderMath('$x$'),r.renderMath('x'));
+ assert.throws(()=>renderMath('10^{100^100}}'),{code:'TEX'},'Do not hide a separate brace error');
+ assert.equal(createRenderer().renderText('Answer: $x+1$').diagnostics.length,0);
 });
 test('slanted text uses sheared roman outlines and the crossed-o remains a letter',()=>{
  const normal=layout(parseMath(String.raw`\text{Apg}`)),slant=layout(parseMath(String.raw`\textsl{Apg}`));

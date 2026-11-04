@@ -29,10 +29,8 @@ const tokens=mml=>[...mml.matchAll(/<(mi|mn|mo|mtext)\b[^>]*>(.*?)<\/\1>/gs)].ma
  }
  for(const [name,tex]of require('./extended-corpus.cjs')){
   const r=renderer.renderMath(tex,{display:true});let control;
-  // MathJax supplies a semantic control where it supports the same syntax;
-  // wrapper handling is verified against the unwrapped expression.
-  const input=name==='wrapped formula'?tex.slice(1,-1):tex;
-  try{control=await references.mathjax(input);}catch(error){const command={'slanted roman text':'textsl','crossed-o letters':'o','array spacing':'vspace'}[name];assert.ok(command,name+' unexpectedly failed in MathJax');assert.equal(error.id,'UndefinedControlSequence');assert.equal(error.message,'Undefined control sequence '+String.fromCharCode(92)+command);}
+  // MathJax supplies a semantic control where it supports the same bare TeX.
+  try{control=await references.mathjax(tex);}catch(error){const command={'slanted roman text':'textsl','crossed-o letters':'o','array spacing':'vspace'}[name];assert.ok(command,name+' unexpectedly failed in MathJax');assert.equal(error.id,'UndefinedControlSequence');assert.equal(error.message,'Undefined control sequence '+String.fromCharCode(92)+command);}
   if(control)assert.equal(tokens(r.mathml),tokens(control.mathml),name+' MathJax semantics');
   report.push({name,vlx:'pass',mathjax:control?'pass':'unsupported'});pictures.push({name,r,control});
  }

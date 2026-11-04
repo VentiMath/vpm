@@ -2,21 +2,31 @@
 // Optional browser lifecycle. Mark only overflowing formulas as keyboard scroll
 // targets; static MathML remains accessible without this helper or JavaScript.
 const selector='[data-vlx="math"]';
+function installMathStyles(document) {
+ if(!document?.createElement||!document.querySelector)throw new TypeError('installMathStyles needs a document');
+ if(document.querySelector('style[data-vlx-styles]'))return;
+ const style=document.createElement('style');style.setAttribute('data-vlx-styles','');
+ style.textContent=require('./styles.cjs');
+ (document.head||document.documentElement).appendChild(style);
+}
 function observeMath(root,options={}) {
  const view=root?.ownerDocument?.defaultView;
  if(!root?.querySelectorAll||!view?.getComputedStyle)throw new TypeError('observeMath needs a browser element or document fragment');
  const label=options.scrollLabel??'Scrollable mathematical expression';
  if(typeof label!=='string'||!label.trim())throw new TypeError('scrollLabel must be a nonempty string');
+ installMathStyles(root.ownerDocument);
  const records=new Map();let stopped=false;
  function restore(element,record){
   for(const [name,value] of record.owned)if(element.getAttribute(name)===value)element.removeAttribute(name);
   record.owned.clear();
  }
  function update(element,record){
+  const width=element.clientWidth;
+  if(width<=0||element.scrollWidth<=width+1){restore(element,record);return;}
   const style=view.getComputedStyle(element),svg=element.querySelector('svg'),scale=element.offsetWidth?element.getBoundingClientRect().width/element.offsetWidth:1;
-  const available=element.clientWidth-(parseFloat(style.paddingLeft)||0)-(parseFloat(style.paddingRight)||0);
+  const available=width-(parseFloat(style.paddingLeft)||0)-(parseFloat(style.paddingRight)||0);
   const visibleOverflow=!svg||svg.getBoundingClientRect().width>available*scale+1;
-  const overflow=/^(auto|scroll)$/.test(style.overflowX)&&element.clientWidth>0&&element.scrollWidth>element.clientWidth+1&&visibleOverflow;
+  const overflow=/^(auto|scroll)$/.test(style.overflowX)&&visibleOverflow;
   if(!overflow){restore(element,record);return;}
   for(const [name,value] of [['tabindex','0'],['role','group'],['aria-label',label]])if(!element.hasAttribute(name)){element.setAttribute(name,value);record.owned.set(name,value);}
  }
@@ -55,3 +65,4 @@ function observeMath(root,options={}) {
  return function disconnect(){if(stopped)return;stopped=true;root.ownerDocument.removeEventListener('copy',copy);view.removeEventListener('resize',scan);view.removeEventListener('beforeprint',scan);mutation?.disconnect();resize?.disconnect();for(const [element,record]of records)restore(element,record);records.clear();};
 }
 exports.observeMath=observeMath;
+exports.installMathStyles=installMathStyles;

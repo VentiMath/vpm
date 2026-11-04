@@ -1,5 +1,5 @@
 'use strict';
-const {VlxError,parse}=require('./source.cjs');
+const {VlxError}=require('./source.cjs');
 const symbols={alpha:'α',beta:'β',gamma:'γ',delta:'δ',epsilon:'ϵ',varepsilon:'ε',zeta:'ζ',eta:'η',theta:'θ',vartheta:'ϑ',iota:'ι',kappa:'κ',lambda:'λ',mu:'μ',nu:'ν',xi:'ξ',pi:'π',rho:'ρ',sigma:'σ',tau:'τ',upsilon:'υ',phi:'ϕ',varphi:'φ',chi:'χ',psi:'ψ',omega:'ω',Gamma:'Γ',Delta:'Δ',Theta:'Θ',Lambda:'Λ',Xi:'Ξ',Pi:'Π',Sigma:'Σ',Phi:'Φ',Psi:'Ψ',Omega:'Ω',times:'×',div:'÷',pm:'±',mp:'∓',cdot:'⋅',circ:'∘',infty:'∞',le:'≤',leq:'≤',ge:'≥',geq:'≥',ne:'≠',neq:'≠',approx:'≈',equiv:'≡',in:'∈',notin:'∉',subset:'⊂',subseteq:'⊆',supset:'⊃',supseteq:'⊇',cup:'∪',cap:'∩',intersect:'∩',emptyset:'∅',forall:'∀',exists:'∃',neg:'¬',land:'∧',lor:'∨',to:'→',rightarrow:'→',leftarrow:'←',leftrightarrow:'↔',Rightarrow:'⇒',Leftarrow:'⇐',Leftrightarrow:'⇔',ldots:'…',cdots:'⋯',vdots:'⋮',ddots:'⋱',partial:'∂',nabla:'∇',angle:'∠',perp:'⊥',parallel:'∥',prime:'′',langle:'⟨',rangle:'⟩',lceil:'⌈',rceil:'⌉',lfloor:'⌊',rfloor:'⌋',vert:'|',Vert:'‖'};
 Object.assign(symbols,{cong:'≅',sim:'∼',simeq:'≃',nmid:'∤',nparallel:'∦',leqslant:'⩽',geqslant:'⩾',nsim:'≁',ncong:'≇',dots:'…',triangle:'△',ell:'ℓ',leqq:'≦',geqq:'≧',colon:':',bullet:'•',varnothing:'∅',mapsto:'↦',iff:'⇔',Longrightarrow:'⟹',Longleftrightarrow:'⟺',lnot:'¬',mid:'∣',subsetneq:'⊊',setminus:'∖','|':'‖'});
 Object.assign(symbols,{o:'ø',O:'Ø',yen:'¥',S:'§',blacksquare:'■',Im:'ℑ',Re:'ℜ',odot:'⊙',star:'⋆',diamond:'⋄',bigtriangleup:'△',otimes:'⊗',oplus:'⊕',square:'□',Box:'□',Diamond:'◇',blacklozenge:'⧫',diamondsuit:'♢',heartsuit:'♡',measuredangle:'∡',bot:'⊥',top:'⊤',dagger:'†',longrightarrow:'⟶',longleftarrow:'⟵',longmapsto:'⟼',backslash:'\\',wedge:'∧',vee:'∨',ast:'∗',bigcirc:'◯',bigstar:'★',boxdot:'⊡',vdash:'⊢',ni:'∋',varDelta:'Δ',lt:'<',gt:'>',natural:'♮',sharp:'♯',flat:'♭',downarrow:'↓',uparrow:'↑',frown:'⌢',dotsc:'…',dotsb:'⋯',lbrace:'{',rbrace:'}',lbrack:'[',rbrack:']',lvert:'|',rvert:'|',lVert:'‖',rVert:'‖'});
@@ -14,14 +14,6 @@ function parseMath(source){
  if(source.length>16384)throw new VlxError('LIMIT','At most 16384 TeX characters are supported');
  // Reject damaged string escapes before whitespace handling can hide them.
  if(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(source))throw new VlxError('TEX','Unexpected control character in TeX');
- // Some formula-only fields retain one outer math delimiter. Accept exactly
- // one complete expression; mixed prose, partial wrappers and adjacent math
- // remain errors. The public result retains the caller's original source.
- const trimmed=source.trim();
- if(trimmed[0]==='$'||/^\\[([]/.test(trimmed)){
-  const parts=parse(trimmed);
-  if(!parts.diagnostics.length&&parts.nodes.length===1&&parts.nodes[0].kind==='math')source=parts.nodes[0].tex;
- }
  source=require('./macros.cjs').expand(source,new Set([...Object.keys(symbols),...Object.keys(fonts),...functions,...decorations,...'newline mathbin mathrel mathord mathopen mathclose mathpunct mathinner cal Bbb textrm textcircled cfrac choose stackrel overset underset rule boldsymbol char Im Re bigoplus bigotimes not phantom hphantom vphantom binom dbinom tbinom textit textsl textbf texttt textsc emph vspace pmod bmod mod bigcup bigcap iint iiint tt rm bf it displaystyle textstyle scriptstyle scriptscriptstyle multicolumn over tag hspace makebox limits nolimits big bigl bigr bigm Big Bigl Bigr Bigm bigg biggl biggr biggm Bigg Biggl Biggr Biggm substack frac dfrac tfrac sqrt left right begin end text mbox operatorname mathrm mathit mathbf mathbb boxed underline overline overarc arc color textcolor enclose sum prod int sin cos tan log ln exp min max lim arcsin arccos arctan quad qquad'.split(' ')]));
  let i=0,count=0,depth=0,activeStop=()=>false;
  const fail=message=>{throw new VlxError('TEX',message,{start:i})};
