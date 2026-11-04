@@ -5,9 +5,9 @@ Adoption here means a VPM artifact is reachable from VentiMath's committed
 production dependencies. This is dependency adoption, not proof that every
 installed module reaches a production bundle or a deployed feature.
 
-Verified November 3, 2026 against the application's main branch, commit
-`0f2ef94b` (Floating UI migration: PR #406; styling migration: `245c1541`;
-calendar migration: `63f63f6a`):
+Verified November 4, 2026 against the application's main branch, commit
+`15a83287` (VLX migration; Floating UI: PR #406; styling: `245c1541`;
+calendar: `63f63f6a`):
 
 | Package | In use | Available update |
 | --- | --- | --- |
@@ -16,6 +16,7 @@ calendar migration: `63f63f6a`):
 | `vfull-ui-headless-calendar` | `calendar-7.1.3`, package 7.1.3 | Included in the same replacement release |
 | `vclsx`, `vstylis` and 13 Emotion packages | `styling-11.14.1` | Current published styling release |
 | Five `vfloating-ui-*` packages and `vtabbable` | `floating-0.27.20-r2` | Current published Floating UI release |
+| `vlx` and its `vpngjs` dependency | `vlx-0.1.0-r7` | Native React SVG/MathML output |
 
 Evidence: the top-level calendar release URL in `package.json`, all three
 resolved release archives in `bun.lock`, and v7 calendar imports in the app's
@@ -43,7 +44,7 @@ This does not establish production bundle savings or deployment of a new feature
 
 The revised `tanstack-5.105.3-r2` release prepares `vtanstack-react-query` and
 `vtanstack-query-core` for the next application cutover. Neither is adopted in
-checked app commit `0f2ef94b`; they must remain available, without an **IN USE**
+checked app commit `15a83287`; they must remain available, without an **IN USE**
 badge. The [installation recipe](INSTALLATION.md#tanstack-query) preserves the
 original `@tanstack/react-query` import name while resolving it to the VPM
 archive, including for React Devtools. Adoption should be verified from the
@@ -54,8 +55,12 @@ Functions 7.4.0, not VPM archives. Its Admin modular-import migration is complet
 VPM adoption remains separate. [Backend coverage](BACKEND.md) records implemented
 application paths and the remaining payment/image dependencies.
 
-The `vlx-0.1.0-r4` release makes VentiLaTeX (VLX) and its pinned `vpngjs` dependency available
-for the frontend math-rendering cutover. The [installation recipe](INSTALLATION.md#vlx-math-rendering)
-uses one public URL, and browser imports exclude the Node image-export path.
-Publication is not adoption: no VLX application cutover is verified here, so the
-math families remain in progress without an **IN USE** badge.
+VentiMath main now pins `vlx-0.1.0-r7`; its shared math component imports
+`InlineMath`, `DisplayMath`, `MathText` and `preloadMath` from `vlx/react`.
+The lockfile resolves VLX and its sibling `vpngjs` archive, bringing verified
+production-dependency adoption to **26 packages**. VLX therefore receives the
+**IN USE** gradient. The image helper is reachable in the installed dependency
+graph but excluded from the browser math bundle. The Discord problem-image
+caller still uses MathJax. This source verification does not establish which
+application commit is currently deployed, nor complete manual screen-reader or
+Safari/Firefox acceptance. See the [installation recipe](INSTALLATION.md#vlx-math-rendering).

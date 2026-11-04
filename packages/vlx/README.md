@@ -6,7 +6,11 @@ and problem pictures. One layout produces SVG, accessible MathML and browser
 HTML; a Node entry composes complete pages and exports PNGs. There is no engine
 selector or KaTeX/MathJax fallback.
 
-**Ready for the frontend cutover trial.** In the supplied November 3 production
+**Adopted in VentiMath frontend source.** Application main `15a83287` pins r7
+and imports the shared `vlx/react` components. Deployed-version verification is
+separate; see the [adoption record](../../docs/ADOPTION.md).
+
+In the supplied November 3 production
 snapshot, all **99,184 formulas accepted by the app's KaTeX 0.16.38 baseline**
 render in VLX, across 99,635 extracted expressions and 15,107 documents. The other
 451 expressions were rejected by that baseline. After source repairs to
