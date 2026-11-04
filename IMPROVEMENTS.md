@@ -5563,10 +5563,12 @@ Built, not released or adopted. See the [contract](packages/vradix-react-context
 [fixtures](scripts/radix-context-conformance/README.md) and
 [measurements](packages/vradix-react-context/bench/results/README.md).
 
-Factory construction takes 95.1% less time on Node 24 and 76.3% less on Bun;
-creating a 16-context scope takes 90.4% and 63.6% less, respectively, beyond
+Factory construction takes 95.5% less time on Node 24 and 76.5% less on Bun;
+creating a 16-context scope takes 90.1% and 61.8% less, respectively, beyond
 identical-code controls. Provider/consumer SSR directions are inconclusive on
 both runtimes. These are construction/renderer microbenchmarks, not app speedups.
+The archive gate now executes a scoped browser bundle, catching the Bun JSX
+import-linking defect addressed by explicit namespace access.
 
 ## vradix-react-use-layout-effect
 

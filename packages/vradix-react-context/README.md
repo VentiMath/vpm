@@ -30,7 +30,14 @@ Built, not released or adopted by VentiMath. The independent implementation was
 informed by upstream's API and source; [provenance](PROVENANCE.json) records the
 reference and MIT attribution. No clean-room claim is made.
 
-Factory construction takes 95.1% less time on Node 24 and 76.3% less on Bun;
-creating a 16-context scope takes 90.4% and 63.6% less, respectively, beyond
+Factory construction takes 95.5% less time on Node 24 and 76.5% less on Bun;
+creating a 16-context scope takes 90.1% and 61.8% less, respectively, beyond
 identical-code controls. Provider/consumer SSR directions are inconclusive on
 both runtimes. These are construction/renderer microbenchmarks, not app speedups.
+The archive gate now executes a scoped browser bundle, catching the Bun JSX
+import-linking defect addressed by explicit namespace access.
+
+Browser builds use an explicit JSX runtime namespace to avoid Bun 1.4.4 linking
+destructured imports to the current module exports. The packed archive check
+now executes a scoped provider/consumer browser bundle, rather than checking
+only that bundling succeeds.

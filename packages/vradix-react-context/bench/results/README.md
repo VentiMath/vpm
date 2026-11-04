@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-03T06:34:59.393Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-04T15:58:44.470Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create context | 573 | 28 | -95.1% | -95.1% | -95.3% | 2.6% | lower time in every pair, beyond control spread |
-| create scope / 16 contexts | 10829 | 1038 | -90.4% | -90.7% | -90.3% | 2.9% | lower time in every pair, beyond control spread |
-| SSR / provider and consumer | 3781 | 3618 | -4.3% | -4.3% | -4.6% | 2.7% | unestablished at this precision |
+| create context | 728 | 33 | -95.5% | -95.3% | -95.5% | 6.2% | lower time in every pair, beyond control spread |
+| create scope / 16 contexts | 13393 | 1319 | -90.1% | -90.3% | -87.8% | 4.3% | lower time in every pair, beyond control spread |
+| SSR / provider and consumer | 4880 | 4718 | -1% | -8.3% | 264.8% | 1.8% | unestablished at this precision |
 
-## Bun 1.4.0
+## Bun 1.4.4
 
-Recorded 2026-11-03T06:35:12.771Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-04T15:58:58.813Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create context | 182 | 43 | -76.3% | -74.4% | -76.8% | 5.5% | lower time in every pair, beyond control spread |
-| create scope / 16 contexts | 4812 | 1780 | -63.6% | -63.7% | -62.9% | 1.6% | lower time in every pair, beyond control spread |
-| SSR / provider and consumer | 1767 | 1679 | -4.5% | -4.4% | -5% | 4% | unestablished at this precision |
+| create context | 226 | 55 | -76.5% | -75.6% | -78.3% | 4.3% | lower time in every pair, beyond control spread |
+| create scope / 16 contexts | 5828 | 2219 | -61.8% | -62.6% | -60.9% | 2.2% | lower time in every pair, beyond control spread |
+| SSR / provider and consumer | 2107 | 2107 | -2.1% | -3.7% | 1.1% | 14.4% | unestablished at this precision |
 
 ## Reproduce
 

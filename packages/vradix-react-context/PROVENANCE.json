@@ -19,6 +19,7 @@
   "changes": [
     "Provider memoization compares property names and values, including changing property counts.",
     "Composed scope results retain identity when their context records do not change.",
-    "No runtime dependencies beyond the React peer; independent runtime and declarations."
+    "No runtime dependencies beyond the React peer; independent runtime and declarations.",
+    "Use an explicit JSX runtime namespace to prevent incorrect CommonJS destructuring in Bun browser bundles."
   ]
 }

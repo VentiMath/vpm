@@ -32,3 +32,7 @@ updates and hydration, then unchanged RovingFocus LTR/RTL ArrowRight behavior.
 `direction-archives.cjs` checks clean mixed-module consumers and declarations.
 Only the direction import is substituted in that caller; no upstream assertions
 or runtime files are patched.
+
+`bundle-smoke.mjs` executes scoped provider/consumer rendering from a production
+browser bundle during the archive check. This detects a JSX import-linking
+failure that a successful build alone does not expose.

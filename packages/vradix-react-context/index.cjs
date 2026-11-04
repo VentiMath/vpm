@@ -1,6 +1,6 @@
 'use client';
 'use strict';
-const React=require('react'),{jsx}=require('react/jsx-runtime');
+const React=require('react'),JSX=require('react/jsx-runtime');
 function sameFields(left,right){
   const keys=Object.keys(left);
   return keys.length===Object.keys(right).length&&keys.every(key=>Object.hasOwn(right,key)&&Object.is(left[key],right[key]));
@@ -16,7 +16,7 @@ function pair(name,fallback,choose,scoped){
     const scope=scoped?fields.scope:undefined;
     if(scoped)delete fields.scope;
     const Context=choose(scope),value=useRecord(fields);
-    return jsx(Context.Provider,{value,children});
+    return JSX.jsx(Context.Provider,{value,children});
   }
   Provider.displayName=name+'Provider';
   function read(consumer,scope,options){

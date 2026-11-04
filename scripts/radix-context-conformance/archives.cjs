@@ -20,6 +20,15 @@ try {
     }
     fs.writeFileSync(path.join(cwd,'browser.js'),`export {createContext,createContextScope} from 'vradix-react-context'`);
     run('bun',['build','browser.js','--target=browser','--outfile=bundle.js'],cwd);
+    fs.copyFileSync(path.join(__dirname,'bundle-smoke.mjs'),path.join(cwd,'bundle-smoke.mjs'));
+    run('bun',['build','bundle-smoke.mjs','--target=browser','--format=iife','--define','process.env.NODE_ENV="production"','--outfile=smoke.js'],cwd);
+    const channels=[];
+    const context={console,TextEncoder,TextDecoder,ReadableStream,TransformStream,setTimeout,clearTimeout,
+      MessageChannel:class extends MessageChannel{constructor(){super();channels.push(this)}}};
+    try {
+      require('node:vm').runInNewContext(fs.readFileSync(path.join(cwd,'smoke.js'),'utf8'),context,{timeout:10000});
+      assert.equal(context.vpmContextMarkup,'<b>42</b>');
+    } finally {for(const channel of channels){channel.port1.close();channel.port2.close()}}
   }
   console.log('Clean npm/Bun archives: Node/Bun CJS/ESM, SSR, contexts and scopes, TS7 NodeNext/Bundler DOM-only types and browser bundle pass.');
 }finally{fs.rmSync(temp,{recursive:true,force:true})}
