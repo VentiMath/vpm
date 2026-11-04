@@ -9,11 +9,11 @@ selector or KaTeX/MathJax fallback.
 **Ready for the frontend cutover trial.** In the supplied November 3 production
 snapshot, all **99,184 formulas accepted by the app's KaTeX 0.16.38 baseline**
 render in VLX, across 99,635 extracted expressions and 15,107 documents. The other
-451 expressions were rejected by that baseline. After canonicalizing legacy
-operator tokens in 163 live statements, **99,629 of 99,635** render. The remaining
-six contain undefined custom macros or damaged string escapes. The audit overlays
-only those verified statement corrections onto the original dump; it is not a
-new full-database snapshot.
+451 expressions were rejected by that baseline. After source repairs to
+165 live statements and two current rubrics, **all 99,635 formulas render**.
+The corrections normalize imported macros and restore damaged TeX; VLX r4's
+implementation is unchanged. The audit overlays only verified repairs onto the
+original dump, not a new full-database snapshot or historical rubric revisions.
 This verifies renderability after the caller's existing preprocessing, not visual
 equivalence, all possible TeX or a completed application deployment. See the
 [aggregate coverage](../../scripts/vlx-conformance/production-coverage.json) and

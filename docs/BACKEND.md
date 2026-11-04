@@ -72,9 +72,9 @@ synthetic cases and page geometry/corruption checks run on Node 24 and Bun.
 
 The separate November 3 frontend dump audit covers 99,635 expressions in 15,107
 documents; all 99,184 accepted by the app's KaTeX baseline render in VLX. This is
-frontend coverage, not a Discord picture migration. After a verified 163-statement
-operator backfill, 99,629 of the 99,635 expressions render; six source errors
-remain. That result overlays only the corrected statements on the original dump.
+frontend coverage, not a Discord picture migration. After verified repairs to 165 statements and two current rubrics, all 99,635
+expressions render in unchanged VLX r4. This overlays only the repaired source
+onto the original dump; historical rubric revisions remain preserved.
 
 KaTeX 0.19.1 and MathJax 4.1.3 remain synthetic test controls. VLX reuses attributed font
 outlines/metrics, the VPM PNG validator and optional native resvg rasterization;

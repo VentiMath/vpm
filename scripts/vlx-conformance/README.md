@@ -6,11 +6,13 @@ cases compare mathematical tokens against both pinned engines and render real
 PNG pixels. Command spellings are documented in
 [KaTeX's supported functions](https://katex.org/docs/supported.html).
 The production audit now checks all 99,184 KaTeX-accepted expressions in the
-supplied November 3 dump. All render. With the verified 163-statement import normalization overlaid on
-that snapshot, 99,629 of all 99,635 expressions render. The six remaining source
-errors are three undefined custom macros and three damaged string escapes.
-The 451 originally baseline-rejected expressions retain their original baseline
-classification; normalization is not counted as new engine capability. [production-coverage.json](production-coverage.json) contains aggregates
+supplied November 3 dump. All render. After source repairs to 165 statements and two current rubrics,
+all 99,635 expressions render using unchanged VLX r4. The follow-up fixed three
+undefined custom macros and three damaged string escapes, plus neighboring
+missing backslashes in the same rubric fields. Historical rubric revisions are
+preserved, not included as current content. The 451 originally baseline-rejected
+expressions retain their original classification; source repairs are not new
+engine capability. [production-coverage.json](production-coverage.json) contains aggregates
 and hashes only. `audit-production.cjs PRIVATE.jsonl --check` verifies a normalized
 inventory with `{site, doc, tex, display, katexOk}` records. The original private
 extractor preserves each caller's preprocessing; its hash is recorded. Private

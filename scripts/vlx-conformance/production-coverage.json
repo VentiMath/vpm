@@ -1,6 +1,6 @@
 {
-  "snapshot": "2026-11-03 supplied production dump, overlaid only with the verified 163-statement Firestore backfill",
-  "scope": "Caller-preprocessed math from ten application surfaces. Baseline classifications are from the original dump, before operator normalization. Renderability, not visual equivalence or a fresh full-database/deployment verification.",
+  "snapshot": "2026-11-03 supplied production dump, overlaid only with verified source repairs to 165 statements and two current rubrics",
+  "scope": "Caller-preprocessed math from ten application surfaces. Baseline classifications are from the original dump, before source repairs. Renderability, not visual equivalence or a fresh full-database/deployment verification. Historical rubric revisions remain unchanged and are outside this current-content inventory.",
   "baseline": {
     "package": "katex",
     "version": "0.16.38",
@@ -17,7 +17,7 @@
     "layout.cjs": "1d9111a6d9a96d4a0fc684da4df317293cc6aeee7f765d26ed14ede5f8d56deb",
     "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78"
   },
-  "inventorySHA256": "b8af169d5c8ef7acae97bc2aa43415ea70de31f9b233462f9a0978ede8b09488",
+  "inventorySHA256": "b8f59d7a64c273d34c190c531c13ffed357a4f4b72aa638499bb35703af89b92",
   "expressions": 99635,
   "documents": 15107,
   "baselineAccepted": 99184,
@@ -28,8 +28,8 @@
       "expressions": 68766,
       "baselineAccepted": 68412,
       "regressions": 0,
-      "vlxAccepted": 68763,
-      "vlxRejected": 3,
+      "vlxAccepted": 68766,
+      "vlxRejected": 0,
       "documents": 12409
     },
     "MathText: answers": {
@@ -76,8 +76,8 @@
       "expressions": 10815,
       "baselineAccepted": 10812,
       "regressions": 0,
-      "vlxAccepted": 10812,
-      "vlxRejected": 3,
+      "vlxAccepted": 10815,
+      "vlxRejected": 0,
       "documents": 378
     },
     "PostContent: blog": {
@@ -107,8 +107,8 @@
   },
   "privacy": "Only aggregates and hashes are public; normalized private formulas and document IDs remain outside this repository.",
   "timing": "Single-pass audit timings are not used as performance evidence. See the isolated balanced benchmark harness.",
-  "vlxAccepted": 99629,
-  "vlxRejected": 6,
+  "vlxAccepted": 99635,
+  "vlxRejected": 0,
   "backfill": {
     "statements": 163,
     "expressions": 334,
@@ -128,9 +128,18 @@
     "undefinedCustomMacro": 3,
     "corruptStringEscapes": 3
   },
-  "remainingFailures": {
-    "undefinedCustomMacro": 3,
-    "corruptStringEscapes": 3,
-    "treatment": "Explicit errors with per-formula source fallback available; no guessed source repairs or global aliases."
+  "remainingFailures": {},
+  "sourceRepairFollowup": {
+    "statements": 2,
+    "rubrics": 2,
+    "previouslyRejectedExpressions": 6,
+    "adjacentMissingBackslashExpressions": 2,
+    "statementNormalization": "Undefined ds becomes standard displaystyle during import.",
+    "rubricRepair": "Restore source-verified fraction, binomial, logarithm, bound and set syntax. Two new immutable rubric revisions preserve original grading history, weights and citations.",
+    "sourceReferences": [
+      "https://web.evanchen.cc/exams/USAMO-2003-notes.pdf",
+      "https://web.evanchen.cc/exams/USAMO-2005-notes.pdf"
+    ],
+    "runtime": "VLX 0.1.0-r4 unchanged."
   }
 }

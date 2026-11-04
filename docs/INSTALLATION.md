@@ -17,9 +17,8 @@ supports the separate Node page-export entry; it is excluded from browser builds
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
 
 Revision **r4** retains the production baseline coverage:
-99,184 KaTeX-accepted expressions render. After the verified statement normalization,
-99,629 of all 99,635 expressions render; the six remaining inputs need source
-repair. Slanted text, array spacing, crossed-o letters and complete outer math
+99,184 KaTeX-accepted expressions render. After verified source repairs to 165 statements and two current rubrics,
+all 99,635 audited expressions render with unchanged r4. Slanted text, array spacing, crossed-o letters and complete outer math
 wrappers are supported. The release also includes `vlx/react` components,
 per-formula source fallback, CSS scaling/centering hooks and safer scroll
 observation. Shared outlines reduce the data from 897 KB to 784 KB, and the React
