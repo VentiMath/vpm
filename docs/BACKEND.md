@@ -67,10 +67,14 @@ needs caller evidence, not merely a package count.
 and complete problem SVG/PNG pages, including prose, figures and choice grids.
 All 28 unchanged application picture tests pass on Bun. Its local corpus audit
 renders 8,470 math spans and 1,275 full normalized statements; that snapshot is
-not a production-wide inventory or proof of visual equivalence. Thirty-four public
+not a production-wide inventory or proof of visual equivalence. Forty-eight public
 synthetic cases and page geometry/corruption checks run on Node 24 and Bun.
 
-KaTeX 0.19.1 and MathJax 4.1.3 remain test controls. VLX reuses attributed font
+The separate November 3 frontend dump audit covers 99,635 expressions in 15,107
+documents; all 99,184 accepted by the app's KaTeX baseline render in VLX. This is
+frontend coverage, not a Discord picture migration.
+
+KaTeX 0.19.1 and MathJax 4.1.3 remain synthetic test controls. VLX reuses attributed font
 outlines/metrics, the VPM PNG validator and optional native resvg rasterization;
 it does not route between upstream math engines. Chrome theme, enlargement, reflow, keyboard and structured-MathML checks now pass.
 Actual screen-reader/other-browser acceptance and application integration are

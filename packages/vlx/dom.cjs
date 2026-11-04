@@ -4,7 +4,7 @@
 const selector='[data-vlx="math"]';
 function observeMath(root,options={}) {
  const view=root?.ownerDocument?.defaultView;
- if(!root?.querySelectorAll||!view?.ResizeObserver||!view?.MutationObserver)throw new TypeError('observeMath needs a browser element or document fragment');
+ if(!root?.querySelectorAll||!view?.getComputedStyle)throw new TypeError('observeMath needs a browser element or document fragment');
  const label=options.scrollLabel??'Scrollable mathematical expression';
  if(typeof label!=='string'||!label.trim())throw new TypeError('scrollLabel must be a nonempty string');
  const records=new Map();let stopped=false;
@@ -13,16 +13,19 @@ function observeMath(root,options={}) {
   record.owned.clear();
  }
  function update(element,record){
-  const overflow=element.clientWidth>0&&element.scrollWidth>element.clientWidth+1;
+  const style=view.getComputedStyle(element),svg=element.querySelector('svg'),scale=element.offsetWidth?element.getBoundingClientRect().width/element.offsetWidth:1;
+  const available=element.clientWidth-(parseFloat(style.paddingLeft)||0)-(parseFloat(style.paddingRight)||0);
+  const visibleOverflow=!svg||svg.getBoundingClientRect().width>available*scale+1;
+  const overflow=/^(auto|scroll)$/.test(style.overflowX)&&element.clientWidth>0&&element.scrollWidth>element.clientWidth+1&&visibleOverflow;
   if(!overflow){restore(element,record);return;}
   for(const [name,value] of [['tabindex','0'],['role','group'],['aria-label',label]])if(!element.hasAttribute(name)){element.setAttribute(name,value);record.owned.set(name,value);}
  }
- const resize=new view.ResizeObserver(entries=>{if(!stopped)for(const {target}of entries){const record=records.get(target);if(record)update(target,record);}});
+ const resize=typeof view.ResizeObserver==='function'?new view.ResizeObserver(entries=>{if(!stopped)for(const {target}of entries){const record=records.get(target);if(record)update(target,record);}}):null;
  function scan(){
   if(stopped)return;
   const found=new Set(root.querySelectorAll(selector));if(root.matches?.(selector))found.add(root);
-  for(const [element,record]of records)if(!found.has(element)){resize.unobserve(element);restore(element,record);records.delete(element);}
-  for(const element of found){let record=records.get(element);if(!record){record={owned:new Map()};records.set(element,record);resize.observe(element);}update(element,record);}
+  for(const [element,record]of records)if(!found.has(element)){resize?.unobserve(element);restore(element,record);records.delete(element);}
+  for(const element of found){let record=records.get(element);if(!record){record={owned:new Map()};records.set(element,record);resize?.observe(element);}update(element,record);}
  }
  function copy(event){
   if(event.defaultPrevented||!event.clipboardData)return;
@@ -46,7 +49,9 @@ function observeMath(root,options={}) {
   event.clipboardData.setData('text/plain',plain(fragment).replace(/\n+$/,''));event.preventDefault();
  }
  root.ownerDocument.addEventListener('copy',copy);
- const mutation=new view.MutationObserver(scan);mutation.observe(root,{subtree:true,childList:true});scan();
- return function disconnect(){if(stopped)return;stopped=true;root.ownerDocument.removeEventListener('copy',copy);mutation.disconnect();resize.disconnect();for(const [element,record]of records)restore(element,record);records.clear();};
+ const mutation=typeof view.MutationObserver==='function'?new view.MutationObserver(scan):null;
+ mutation?.observe(root,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style']});
+ view.addEventListener('resize',scan);view.addEventListener('beforeprint',scan);scan();
+ return function disconnect(){if(stopped)return;stopped=true;root.ownerDocument.removeEventListener('copy',copy);view.removeEventListener('resize',scan);view.removeEventListener('beforeprint',scan);mutation?.disconnect();resize?.disconnect();for(const [element,record]of records)restore(element,record);records.clear();};
 }
 exports.observeMath=observeMath;

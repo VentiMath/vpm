@@ -6,28 +6,29 @@ and problem pictures. One layout produces SVG, accessible MathML and browser
 HTML; a Node entry composes complete pages and exports PNGs. There is no engine
 selector or KaTeX/MathJax fallback.
 
-**Ready for an application integration trial; production cutover is pending.** VLX now renders every math span
-and complete statement in the audited local corpus, and passes the application's
-unchanged problem-picture tests. That is a measured scope, not a claim of complete
-TeX compatibility or a production cutover. Browser visual/accessibility-tree checks
-now pass; actual screen-reader/browser acceptance remains open. See
-[browser integration and accessibility evidence](ACCESSIBILITY.md).
+**Ready for the frontend cutover trial.** In the supplied November 3 production
+snapshot, all **99,184 formulas accepted by the app's KaTeX 0.16.38 baseline**
+render in VLX, across 99,635 extracted expressions and 15,107 documents. The other
+451 expressions are rejected by that baseline and are reported separately.
+This verifies renderability after the caller's existing preprocessing, not visual
+equivalence, all possible TeX or a completed application deployment. See the
+[aggregate coverage](../../scripts/vlx-conformance/production-coverage.json) and
+[browser/accessibility evidence](ACCESSIBILITY.md).
 
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r2/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r3/vlx-0.1.0.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Version 0.1.0 identifies this original API, not upstream engine compatibility.
 
-Release revision **r2** fixes missing contest relations: `\cong`, `\sim`,
-`\nmid`, `\leqslant` and related forms, plus `\not` applied to one mathematical
-symbol. It corrects relation spacing and supplies both outlined glyphs and
-MathML semantics. The original release assets remain unchanged. Production-wide
-coverage is still being evaluated separately from the local corpus below.
+Release revision **r3** closes the production comparison's remaining syntax and
+glyph gaps, adds per-formula error recovery and optional React components, and
+reduces the outline data through shared paths. Existing release assets remain
+unchanged.
 
 An **npm registry mirror is planned** for VentiLaTeX. It will distribute the same
 implementation and versioned API, with the same licenses and provenance. GitHub
@@ -44,7 +45,26 @@ const expression = renderer.renderMath(String.raw`\binom{n}{2}+f''(x)`, {
 // content.html; expression.html, .svg, .mathml, .width, .height, .baseline
 ```
 
+React 19 applications can use the optional entry directly:
+
+```tsx
+import { InlineMath, DisplayMath, MathText } from 'vlx/react';
+
+<InlineMath tex="x^2" />
+<DisplayMath tex={String.raw`\cfrac{1}{2+\cfrac{1}{3}}`} />
+<MathText source={String.raw`Find $x$; unsupported $\unknown$ stays as text.`} />
+```
+
+The React entry loads the renderer and glyph pool on first math use; plain prose
+does not load them. `preloadMath()` can prefetch the renderer. `loadingFallback`
+customizes the loading state; `fallback` accepts a React node or `(error, source)`
+callback for a failed formula. Defaults preserve source as text. Lifecycle and
+copy/scroll observers are mounted and cleaned up by the components. React is an
+optional peer, not a dependency of the core entry.
+
 HTML inherits the surrounding color and font size unless `fontSize` is supplied.
+Set `--vlx-scale` on a parent or the React `style` prop to scale that size. Display
+math is centered when it fits; `--vlx-display-margin: 0` requests left alignment.
 Standalone SVG defaults to 16 px and black ink. Use `observeMath(host)` from
 `vlx/dom` after mounting HTML for keyboard scrolling of oversized expressions and
 copying selected formulas as TeX; call its cleanup function on unmount.
@@ -72,7 +92,9 @@ export needs no native rasterizer. `vlx/png` also exports asynchronous
 
 - `$…$`, `$$…$$`, `\(…\)` and `\[…\]`, brace-aware closing delimiters,
   escaped currency, comments and source spans. Unclosed math is reported by
-  `parse()` and rejected by rendering. Prose is escaped, never interpreted as HTML.
+  `parse()`. Rendering throws by default; `renderText(source, {errorMode: 'source'})`
+  preserves a failed formula as escaped source and renders its valid siblings,
+  with diagnostics and source spans. Prose is escaped, never interpreted as HTML.
 - Fractions and infix `\over`, indexed roots, scripts and primes, binomials,
   common Greek/math symbols, named operators, integrals and display limits.
 - Congruence, similarity, divisibility and slanted inequalities, including
@@ -80,6 +102,11 @@ export needs no native rasterizer. `vlx/png` also exports asynchronous
   `\nsim`, `\ncong` and `\nparallel`. `\not` accepts a single symbol (optionally
   braced), using a dedicated negated glyph when available and a diagonal strike
   otherwise. Negating an arbitrary compound expression remains unsupported.
+- Explicit inline/display line breaks, atom-class wrappers such as `\mathbin`,
+  continued fractions (`\cfrac`), infix `\choose`, operator annotations,
+  delimiter aliases, circled text, cancellation, rules and the production-used
+  Latin, currency and mathematical glyphs. Line breaks are honored in both modes;
+  KaTeX ignores top-level breaks in display mode.
 - Math font variants, nested styled text with inline math, phantom boxes, scoped
   colors, arrows, hats, bars, arcs, braces, enclosures and explicit dimensions.
 - Matrices, arrays, aligned/gathered equations, cases, solid/dashed rules and
@@ -120,7 +147,7 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   including paragraph/image geometry, rules, choices and corruption rejection.
   Private tests are loaded from Git into a temporary directory, never copied here.
 - [Public tests](test/contracts.test.cjs), [page checks](test/problem.test.cjs) and
-  [34 synthetic notation cases](../../scripts/vlx-conformance/corpus.cjs) run on
+  [48 synthetic notation cases](../../scripts/vlx-conformance/README.md) run on
   Node 24 and Bun. MathJax 4.1.3 supplies semantic/visual controls and KaTeX 0.19.1
   supplies capability/performance controls. Token comparison normalizes equivalent
   font characters, double primes and invisible operator markers; it is not a proof
@@ -138,9 +165,12 @@ contains the summary and source hash; the [local benchmark runner](../../scripts
 reproduces these checks without copying application code into VPM. These are
 steady-state local workloads, not deployed latency guarantees.
 
-The font data is an **895 KB subset of New Computer Modern metrics/outlines**,
+The font data is a **784 KB subset of New Computer Modern metrics/outlines**,
 including the needed math variants and Latin prose characters. It comes from
 `@mathjax/mathjax-newcm-font` 4.1.3 and retains its [license and attribution](font/NOTICE).
+Identical outlines share one path pool (784,343 bytes total, down from 896,594
+in r2 despite broader coverage). The React dynamic entry keeps that data out of
+the initial application chunk when the bundler supports code splitting.
 [Extraction](../../scripts/vlx-conformance/build-font.cjs) is reproducible; no
 upstream parser, layout or loader implementation ships. See [provenance](PROVENANCE.json).
 

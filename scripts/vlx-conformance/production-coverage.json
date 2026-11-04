@@ -1,0 +1,90 @@
+{
+  "snapshot": "2026-11-03 supplied production Firestore dump",
+  "scope": "Caller-preprocessed math from problem statements, statement parts, answer choices, answers, rubrics, solutions, chat, lessons, blog and Acorn items. Renderability, not visual equivalence or live deployment verification.",
+  "baseline": {
+    "package": "katex",
+    "version": "0.16.38",
+    "previousVLXRevision": "41c2baaf4abfa6cbf6eb266c4ba3574fa5bcf5b8",
+    "previousRegressions": 648
+  },
+  "dumpSHA256": "a75b2d2ea7e5f89aeae07e13b85cddb81650d532f7b69f145115ac3957441e01",
+  "extractorSHA256": "27ec13772fd8da890501b37bf2de324d193e0451c34111416e6f3492cf989e5e",
+  "originalExtractorSHA256": "359c392855353955605f73fec9ad4f18cd956a5eaa32afe1c5ce48ed37dd41f7",
+  "normalizationSHA256": "978408e84134c4e5a502e8d2e29a64773fc546b981c172d639bd5a50d61372a6",
+  "sourceSHA256": {
+    "index.cjs": "1f516708da419bcc0847192dbea4f0faad23d34eb5b9cd3b391b8de1f53f8305",
+    "tex.cjs": "12786333795fde4236dd9186c78fdcccffb4b935bb6a12b0bf7973b7c4c386b0",
+    "layout.cjs": "bdab9430a3a6def921f31797d27ea2f23efac995da1bf73eeea1c23f9d56537a",
+    "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78"
+  },
+  "inventorySHA256": "7c7fe98587b18f5eb544ebbc85c0a30a56cbb8bccc3aeed16cab775c713331e6",
+  "expressions": 99635,
+  "documents": 15107,
+  "baselineAccepted": 99184,
+  "baselineRejected": 451,
+  "regressions": 0,
+  "sites": {
+    "LaTeX: problem statements": {
+      "expressions": 68766,
+      "baselineAccepted": 68412,
+      "regressions": 0,
+      "documents": 12409
+    },
+    "MathText: answers": {
+      "expressions": 2080,
+      "baselineAccepted": 2068,
+      "regressions": 0,
+      "documents": 2080
+    },
+    "ProblemChoiceContent: choices": {
+      "expressions": 10810,
+      "baselineAccepted": 10728,
+      "regressions": 0,
+      "documents": 2162
+    },
+    "ProblemStatement (statementParts)": {
+      "expressions": 6740,
+      "baselineAccepted": 6740,
+      "regressions": 0,
+      "documents": 643
+    },
+    "Mathy: Acorn items": {
+      "expressions": 155,
+      "baselineAccepted": 155,
+      "regressions": 0,
+      "documents": 89
+    },
+    "LaTeX: solutions": {
+      "expressions": 69,
+      "baselineAccepted": 69,
+      "regressions": 0,
+      "documents": 33
+    },
+    "LaTeX: rubrics": {
+      "expressions": 10815,
+      "baselineAccepted": 10812,
+      "regressions": 0,
+      "documents": 378
+    },
+    "PostContent: blog": {
+      "expressions": 26,
+      "baselineAccepted": 26,
+      "regressions": 0,
+      "documents": 1
+    },
+    "Mathy: chat messages": {
+      "expressions": 61,
+      "baselineAccepted": 61,
+      "regressions": 0,
+      "documents": 13
+    },
+    "ContentBlockRenderer: lessons": {
+      "expressions": 113,
+      "baselineAccepted": 113,
+      "regressions": 0,
+      "documents": 19
+    }
+  },
+  "privacy": "Only aggregates and hashes are public; normalized private formulas and document IDs remain outside this repository.",
+  "timing": "Single-pass audit timings are not used as performance evidence. See the isolated balanced benchmark harness."
+}

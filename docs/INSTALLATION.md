@@ -3,11 +3,11 @@
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r2)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r3)
 provides its `vlx` package for frontend integration:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r2/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r3/vlx-0.1.0.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -16,11 +16,16 @@ are needed. The archive pins `vpngjs` to its sibling release URL. That dependenc
 supports the separate Node page-export entry; it is excluded from browser builds.
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
 
-Revision **r2** adds the reported contest relations (`\cong`, `\sim`, `\nmid`,
-`\leqslant`) and single-symbol `\not` forms with corresponding outlines,
-relation spacing and MathML. Update the URL to select this revision; the first
-release's archives are unchanged. The app's full production-math comparison is
-separate from the verified local corpus and synthetic checks.
+Revision **r3** closes every VLX-only failure in the supplied production snapshot:
+99,184 KaTeX-accepted expressions now render. It adds `vlx/react` components,
+per-formula source fallback, CSS scaling/centering hooks and safer scroll
+observation. Shared outlines reduce the data from 897 KB to 784 KB, and the React
+entry defers loading them until first math use. See the
+[coverage record](../scripts/vlx-conformance/production-coverage.json).
+
+For React 19, import `InlineMath`, `DisplayMath` and `MathText` from `vlx/react`.
+React remains an optional peer supplied by the app. Core imports are synchronous;
+React imports split the renderer into a dynamic chunk with a compatible bundler.
 
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
@@ -43,15 +48,15 @@ records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r2 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r3 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published
 ```
 
 The local checker uses npm's dependency override and Bun's exact extracted
-archives before public URLs exist. The published checker installs only the VLX
-URL with fresh npm/Bun caches and no overrides, verifies both packages against
+archives before public URLs exist. The published checker installs the VLX
+URL plus explicit React test peers with fresh npm/Bun caches and no overrides, verifies both packages against
 the manifest, checks frozen installs, CJS/ESM, TypeScript 7 browser consumers,
 and a browser build without Node/native/image engines. It runs the Chrome visual,
 keyboard and accessibility-tree suite against the installed archive itself.

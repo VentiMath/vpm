@@ -5,9 +5,12 @@ export interface ParsedDocument {source:string;nodes:(TextNode|MathNode)[];diagn
 export interface MathOptions {display?:boolean;fontSize?:number;}
 export interface RenderResult {readonly tex:string;readonly display:boolean;readonly svg:string;readonly html:string;readonly mathml:string;readonly width:number;readonly height:number;readonly baseline:number;}
 export interface SyntaxNode {kind:string;[key:string]:unknown;}
+export interface TextRenderOptions {fontSize?:number;errorMode?:'throw'|'source';}
+export type RenderedTextNode = (TextNode&{html:string})|(MathNode&RenderResult&{error?:never})|(MathNode&{html:string;error:VlxError});
+export interface TextRenderResult {source:string;nodes:RenderedTextNode[];html:string;diagnostics:{code:string;message:string;start:number;end?:number}[];}
 export interface Renderer {
  renderMath(tex:string,options?:MathOptions):RenderResult;
- renderText(source:string,options?:{fontSize?:number}):{source:string;nodes:((TextNode&{html:string})|(MathNode&RenderResult))[];html:string};
+ renderText(source:string,options?:TextRenderOptions):TextRenderResult;
  clearCache():void;
 }
 export declare class VlxError extends Error {readonly code:string;readonly start?:number;constructor(code:string,message:string,details?:{cause?:unknown;start?:number});}

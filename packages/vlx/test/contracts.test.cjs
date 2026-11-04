@@ -46,9 +46,33 @@ test('prime runs, font variants, scoped declarations and nested text retain mean
 
 test('browser output inherits theme and font size without changing standalone export',()=>{
  const r=createRenderer(),implicit=r.renderMath('x'),explicit=r.renderMath('x',{fontSize:16});
- assert.match(implicit.html,/font-size:inherit/);assert.match(explicit.html,/font-size:16px/);assert.notEqual(implicit,explicit);for(const fontSize of [Infinity,NaN,'16',0,-1,257])assert.throws(()=>r.renderMath('x',{fontSize}));
+ assert.match(implicit.html,/font-size:calc\(var\(--vlx-scale,1\) \* 1em\)/);assert.match(explicit.html,/font-size:calc\(var\(--vlx-scale,1\) \* 16px\)/);assert.notEqual(implicit,explicit);for(const fontSize of [Infinity,NaN,'16',0,-1,257])assert.throws(()=>r.renderMath('x',{fontSize}));
  assert.equal(implicit.svg,explicit.svg);assert.match(implicit.svg,/color="black"/);assert.doesNotMatch(implicit.html,/color="black"|<title>/);
  assert.match(implicit.html,/aria-hidden="true"/);assert.match(implicit.html,/data-vlx="math"/);assert.match(implicit.html,/forced-colors:active/);assert.doesNotMatch(implicit.svg,/forced-colors/);
  assert.match(r.renderMath(String.raw`\underline{x}`).mathml,/accentunder="true"/);
  const {observeMath}=require('../dom.cjs');assert.throws(()=>observeMath({}),TypeError);
+});
+
+test('production syntax has independent layout, visible operators and bounded arguments',()=>{
+ for(const [name,tex]of require('../../../scripts/vlx-conformance/production-corpus.cjs')){const r=renderMath(tex,{display:true});assert.match(r.svg,/<path|<rect/,name);assert.match(r.mathml,/<math/,name);assert.ok(Number.isFinite(r.width)&&r.width>0,name);}
+ assert.ok(renderMath(String.raw`a\\b`).height>renderMath('ab').height*1.5);
+ assert.match(renderMath(String.raw`a\\b`).mathml,/<mtable/);assert.doesNotMatch(renderMath('a\\\nb').mathml,/<mtable/);
+ assert.match(renderMath(String.raw`{n\choose2}`).mathml,/<mfrac linethickness="0">/);
+ assert.equal(parseMath(String.raw`a\mathbin{\yen}b`).children[1].class,'bin');
+ assert.match(renderMath(String.raw`\stackrel{+}{=}`).mathml,/<mover>/);
+ assert.match(renderMath(String.raw`\boldsymbol{x+1}`).mathml,/<mi mathvariant="bold-italic">x/);
+ assert.match(renderMath(String.raw`\boldsymbol{\textit{value}}`).mathml,/mathvariant="bold-italic"/);
+ assert.notEqual(renderMath(String.raw`\boldsymbol{x}`).svg,renderMath(String.raw`\mathbf{x}`).svg);
+ assert.ok(renderMath(String.raw`a\\[-2em]b`).height>renderMath('a').height);
+ assert.match(renderMath(String.raw`\text{\char"00A2}`).mathml,/¢/);
+ for(const bad of [String.raw`\rule{-2em}{1em}`,String.raw`\rule{999em}{1pt}`,String.raw`\text{\char"110000}`,String.raw`\textit{\(x}`,String.raw`{1\choose2\over3}`,String.raw`\newcommand{\mathbin}{x}`])assert.throws(()=>renderMath(bad));
+ assert.throws(()=>renderMath(Array(130).fill('x').join('\\\\')),{code:'LIMIT'});
+});
+
+test('source fallback isolates formula errors and keeps all source prose escaped',()=>{
+ const r=createRenderer(),source=String.raw`<img src=x> $x^2$ $\unknown{<b>}$ $y+1$ and $open`;
+ assert.throws(()=>r.renderText(source));const result=r.renderText(source,{errorMode:'source'});
+ assert.equal(result.nodes.filter(n=>n.kind==='math'&&!n.error).length,2);assert.equal(result.nodes.filter(n=>n.error).length,1);assert.equal(result.diagnostics.length,2);
+ assert.doesNotMatch(result.html,/<img|<b>/);assert.match(result.html,/&lt;img/);assert.match(result.html,/\$open/);
+ assert.throws(()=>r.renderText('$x$',{errorMode:'invalid'}),TypeError);assert.throws(()=>r.renderText('$x$',{errorMode:'source',fontSize:NaN}),RangeError);
 });

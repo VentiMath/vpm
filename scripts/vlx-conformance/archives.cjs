@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),assert=require('node:assert/strict'),{spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'../..'),temp=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-vlx-'));
-function run(cmd,args,cwd=temp){const r=spawnSync(cmd,args,{cwd,encoding:'utf8',timeout:120000,env:{...process.env,BUN_INSTALL_CACHE_DIR:path.join(temp,'bun-cache'),npm_config_cache:path.join(temp,'npm-cache')}});assert.equal(r.status,0,r.stdout+r.stderr);return r.stdout}
+function run(cmd,args,cwd=temp){const r=spawnSync(cmd,args,{cwd,encoding:'utf8',timeout:120000,env:{...process.env,BUN_INSTALL_CACHE_DIR:path.join(temp,'bun-cache'),npm_config_cache:path.join(temp,'npm-cache'),VPM_VLX_CONSUMER:cwd}});assert.equal(r.status,0,r.stdout+r.stderr);return r.stdout}
 try{
  run('bun',['pm','pack','--ignore-scripts','--destination',temp,'--quiet'],path.join(root,'packages/vpngjs'));
  const pngArchive=path.join(temp,'vpngjs-7.0.0.tgz');const pkg=path.join(root,'packages/vlx');run('bun',['pm','pack','--ignore-scripts','--destination',temp,'--quiet'],pkg);const archive=path.join(temp,'vlx-0.1.0.tgz'),files=run('tar',['-tzf',archive]);assert.doesNotMatch(files,/\/(test|bench|node_modules)\//);assert.match(files,/font\/NOTICE/);assert.match(files,/font\/LICENSE/);
@@ -14,7 +14,9 @@ try{
   fs.writeFileSync(path.join(cwd,'browser-types.ts'),`import {observeMath} from 'vlx/dom';const root=document.createElement('div');const cleanup:()=>void=observeMath(root,{scrollLabel:'Scrollable expression'});cleanup();\n// @ts-expect-error Browser root required\nobserveMath({});`);
   fs.writeFileSync(path.join(cwd,'tsconfig-browser.json'),JSON.stringify({compilerOptions:{strict:true,noEmit:true,target:'ES2022',module:'ESNext',moduleResolution:'Bundler',lib:['ES2022','DOM'],types:[]},files:['browser-types.ts']}));run('node',[require('../platform-types.cjs').compiler().path,'-p','tsconfig-browser.json'],cwd);
   fs.writeFileSync(path.join(cwd,'browser.js'),`export {renderMath,createRenderer} from 'vlx';export {observeMath} from 'vlx/dom'`);run('bun',['build','browser.js','--target=browser','--outfile=bundle.js'],cwd);
-  const meta=JSON.parse(fs.readFileSync(path.join(cwd,'package.json')));meta.dependencies['@resvg/resvg-js']='2.6.2';fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify(meta));run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund']:[])],cwd);
+  const meta=JSON.parse(fs.readFileSync(path.join(cwd,'package.json')));meta.dependencies['@resvg/resvg-js']='2.6.2';Object.assign(meta.dependencies,{react:'19.1.0','react-dom':'19.1.0','@types/react':'19.2.14'});fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify(meta));run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund']:[])],cwd);
+  require('./react-consumer.cjs')(cwd,run);
+  if(manager==='bun')console.log(run('node',[path.join(__dirname,'react-browser.cjs'),cwd],cwd).trim());
   fs.writeFileSync(path.join(cwd,'png.mjs'),`import assert from 'node:assert/strict';import {createRenderer} from 'vlx';import {renderPng} from 'vlx/png';import {renderProblemPng} from 'vlx/problem';assert.equal(renderProblemPng({statement:'Find $x$.'})[0],137);const p=await renderPng(createRenderer(),'x^2');assert.equal(p.data[0],137);assert.ok(p.width>0&&p.height>0);`);for(const runtime of ['node','bun'])run(runtime,['png.mjs'],cwd);
  }
  console.log('VLX clean npm/Bun archives: independent Node/Bun CJS/ESM, DOM-free TS7, browser bundle, optional PNG rasterization and font notices pass.');

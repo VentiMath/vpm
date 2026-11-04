@@ -19,6 +19,7 @@ try{
  for(const manager of ['npm','bun']){
   const cwd=path.join(temp,manager);fs.mkdirSync(cwd);
   const dependencies=published?{vlx:top.url}:manager==='npm'?{vlx:'file:'+path.join(directory,top.asset)}:{};
+  Object.assign(dependencies,{react:'19.1.0','react-dom':'19.1.0','@types/react':'19.2.14'});
   fs.writeFileSync(path.join(cwd,'package.json'),JSON.stringify({private:true,type:'module',dependencies,...(!published&&manager==='npm'?{overrides:{vpngjs:'file:'+path.join(directory,png.asset)}}:{})}));
   run(manager,['install','--ignore-scripts',...(manager==='npm'?['--no-audit','--no-fund']:[])],cwd);
   // Bun cannot redirect a release URL before publication. Its local check uses
@@ -47,6 +48,8 @@ try{
   assert(inputs.some(p=>p.includes('vlx/index.')));assert(inputs.some(p=>p.includes('vlx/dom.')));
   assert(!inputs.some(p=>/vpngjs|resvg|katex|mathjax|vlx\/(?:problem|png)\./.test(p)),'Browser bundle must exclude Node image paths and upstream engines');
   if(manager==='bun')console.log(run('node',[path.join(__dirname,'vlx-conformance/browser.cjs')],cwd,{VPM_VLX_PACKAGE_DIR:path.join(cwd,'node_modules/vlx')}).trim());
+  require('./vlx-conformance/react-consumer.cjs')(cwd,run);
+  if(manager==='bun')console.log(run('node',[path.join(__dirname,'vlx-conformance/react-browser.cjs'),cwd],cwd).trim());
   if(published){
    const file=path.join(cwd,manager==='bun'?'bun.lock':'package-lock.json'),before=fs.readFileSync(file);
    for(const item of manifest.packages)assert(before.toString().includes(item.url));

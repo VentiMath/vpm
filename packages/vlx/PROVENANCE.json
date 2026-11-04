@@ -3,15 +3,16 @@
     "kind": "independent parser and layout implementation",
     "replacementStatus": "browser integration candidate; actual reader/browser acceptance and application cutover pending",
     "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation.",
-    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks, WebKit/Firefox visual acceptance, application integration and production-corpus inventory. Advanced TeX and automatic equation references remain outside the verified scope."
+    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks, WebKit/Firefox visual acceptance, application integration. Advanced TeX and automatic equation references remain outside the verified scope."
   },
   "fontData": {
     "package": "@mathjax/mathjax-newcm-font",
     "version": "4.1.3",
     "license": "Apache-2.0",
     "source": "https://www.npmjs.com/package/@mathjax/mathjax-newcm-font",
-    "sha256": "3bce921865a7edafcf6bb431ba88c587844d057d9885207871a7d340841a1d52",
-    "approach": "Selected numeric glyph metrics and SVG outlines, flattened to JSON. No upstream executable code ships with the math engine."
+    "sha256": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78",
+    "approach": "Selected numeric glyph metrics with an interned SVG outline pool, reproducibly extracted to JSON. No upstream executable code ships with the math engine.",
+    "bytes": 784343
   },
   "referenceEngines": {
     "katex": "0.19.1",
@@ -31,8 +32,13 @@
     "All 8470 math spans and 1275 normalized full statements render in the audited 89-file local corpus; this is not a production-wide or visual-equivalence claim.",
     "Browser HTML inherits theme and font size, honors forced system colors and keeps enlarged equations within local scroll bounds.",
     "Optional DOM lifecycle adds tab stops only for overflow, selected-TeX copying, replacement observation and owned-attribute cleanup.",
-    "Chrome visual/accessibility-tree gate verifies 34 formulas, reading structure, phantom exclusion, zoom/reflow and real keyboard scrolling. This is not a claim of actual screen-reader acceptance.",
+    "Chrome visual/accessibility-tree gate verifies 48 formulas, reading structure, phantom exclusion, zoom/reflow and real keyboard scrolling. This is not a claim of actual screen-reader acceptance.",
     "Validate font-size/display options before cache lookup; invalid non-finite sizes cannot collide with the inherited-size cache entry.",
-    "Add contest congruence, similarity, divisibility and slanted inequality commands with relation spacing; single-symbol negation uses dedicated glyphs or a visible strike with MathML combining negation. Verified against KaTeX and MathJax controls."
+    "Add contest congruence, similarity, divisibility and slanted inequality commands with relation spacing; single-symbol negation uses dedicated glyphs or a visible strike with MathML combining negation. Verified against KaTeX and MathJax controls.",
+    "The November 3 production snapshot has zero VLX-only failures among 99184 KaTeX-accepted expressions; 451 baseline-rejected inputs are tracked separately. Only aggregate evidence and synthetic regressions are public.",
+    "Add production-used line breaks, class wrappers, delimiter aliases, continued/infix fractions, annotations, text commands, rule geometry and glyphs; semantic controls also verify the black lozenge symbol.",
+    "Optional React 19 components defer renderer/glyph loading, isolate errors per formula and own DOM cleanup. Core rendering stays synchronous and React-free.",
+    "CSS scale and centered display hooks; scroll focus requires actual usable overflow and handles scaled formulas and missing window observers.",
+    "Intern repeated font paths: expanded glyph coverage uses 784343 bytes instead of 896594 bytes in r2. Bold symbols retain italic letter shapes, including nested italic text."
   ]
 }

@@ -5,19 +5,24 @@ and single-symbol `\not`, including negated slanted inequalities. The synthetic
 cases compare mathematical tokens against both pinned engines and render real
 PNG pixels. Command spellings are documented in
 [KaTeX's supported functions](https://katex.org/docs/supported.html).
-Production-wide coverage is a separate consumer audit; these fixtures do not
-claim that every production expression is supported.
+The production audit now checks all 99,184 KaTeX-accepted expressions in the
+supplied November 3 dump. All render; 451 baseline-rejected expressions are kept
+separate. [production-coverage.json](production-coverage.json) contains aggregates
+and hashes only. `audit-production.cjs PRIVATE.jsonl --check` verifies a normalized
+inventory with `{site, doc, tex, display, katexOk}` records. The original private
+extractor preserves each caller's preprocessing; its hash is recorded. Private
+source text and document identifiers are never committed.
 
 KaTeX 0.19.1, MathJax 4.1.3, New Computer Modern font data 4.1.3 and resvg 2.6.2
 are pinned controls. Neither math engine is a VLX runtime dependency.
 `check-lock.cjs` requires every resvg platform binary in the lockfile, including
 Linux CI artifacts when the lock is prepared on macOS.
 
-`run.cjs` covers 34 synthetic notation cases with independent VLX layout,
+`run.cjs` covers 48 synthetic notation cases across `corpus.cjs` and `production-corpus.cjs` with independent VLX layout,
 semantic token comparison, raster ink and rule checks. `VLX_OUTPUT=/path` writes
 a side-by-side SVG/PNG sheet and capability report. Equivalent Unicode font
 characters, double primes, invisible operator markers and existing accent wrapper
-differences are normalized for token comparison. This does not certify spacing,
+differences, equivalent double-vertical glyphs and combining Unicode accents are normalized for token comparison. This does not certify spacing,
 full structural semantics or screen-reader behavior. MathJax's responsive equation
 tag SVG is checked semantically and labeled as such in the static preview.
 Spanning array cells are implemented and tested in VLX even though both controls
@@ -64,8 +69,8 @@ The latest aggregate result is [app-coverage.json](app-coverage.json).
 The shared harness runs four balanced comparison process pairs and two identical
 source control pairs; no samples are discarded. Public expression cases compare
 KaTeX HTML+MathML with VLX SVG+MathML HTML, and initialized MathJax SVG with VLX
-SVG. Three inputs cover a fraction/root, styled text/primes/binomial, and a ruled
-array. VLX computes its three formats together. Results are workload-specific;
+SVG. Five inputs cover a fraction/root, styled text/primes/binomial, a ruled
+array, contest relations and continued fractions/operator wrappers. VLX computes its three formats together. Results are workload-specific;
 initialization and browser paint are excluded.
 
 For complete PNGs, the optional local runner compares the actual application
@@ -85,7 +90,7 @@ packages, or change adoption status.
 ## Browser acceptance
 
 `browser.cjs` bundles the real root/DOM entries and launches an isolated Chrome
-profile. It checks 34 unclipped formula viewports, one exposed MathML root per
+profile. It checks 48 unclipped formula viewports, one exposed MathML root per
 formula, fraction reading order, script/root/limit/table roles, phantom exclusion,
 light/dark colors, 200%/400% text enlargement, 320px reflow, local keyboard scrolling,
 forced colors including authored colors, selected-source copying and lifecycle
@@ -104,3 +109,10 @@ checks against an installed release instead of workspace source. The
 archive's complete source manifest; its `--published` mode installs the root
 public URL with no overrides and checks frozen npm/Bun lockfiles. See the
 [release recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
+
+`react.cjs` verifies source/error isolation, SSR loading, StrictMode cleanup and
+missing-observer windows against clean installed consumers. `react-consumer.cjs`
+compiles both TS7 module modes and checks the emitted dynamic chunk graph.
+`react-browser.cjs` verifies in real Chrome that plain prose requests no glyph
+chunk, then first math fetches it, renders and unmounts. These run for clean
+archives and the release checker, including published-URL installs.

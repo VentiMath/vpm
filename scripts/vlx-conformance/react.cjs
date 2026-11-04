@@ -1,0 +1,28 @@
+'use strict';
+const assert=require('node:assert/strict'),path=require('node:path'),{createRequire}=require('node:module'),{JSDOM}=require('jsdom');
+const selected=createRequire(path.join(process.env.VPM_VLX_CONSUMER,'package.json'));
+const React=selected('react'),api=selected('vlx/react'),h=React.createElement;
+assert(!Object.keys(require.cache).some(p=>p.endsWith('/vlx/font/glyphs.json')),'Importing React entry must not load glyphs');
+assert.equal(selected('react-dom/server').renderToString(h(api.MathText,{source:'<em>plain</em>'})),'<span>&lt;em&gt;plain&lt;/em&gt;</span>');
+assert(!Object.keys(require.cache).some(p=>p.endsWith('/vlx/font/glyphs.json')),'Plain prose must not load glyphs');
+const initial=selected('react-dom/server').renderToString(h(api.InlineMath,{tex:'x',loadingFallback:'Loading math'}));assert.match(initial,/Loading math/);
+const dom=new JSDOM('<!doctype html><body><div id="host"></div></body>',{pretendToBeVisual:true});
+for(const name of ['window','document','navigator','HTMLElement','Element','Node','MutationObserver','getComputedStyle'])Object.defineProperty(globalThis,name,{configurable:true,value:dom.window[name]});
+globalThis.IS_REACT_ACT_ENVIRONMENT=true;
+const container=document.getElementById('host'),root=selected('react-dom/client').createRoot(container),{act}=React;
+let copies=0;const add=document.addEventListener.bind(document),remove=document.removeEventListener.bind(document);
+document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(type,...args);};document.removeEventListener=(type,...args)=>{if(type==='copy')copies--;return remove(type,...args);};
+(async()=>{try{
+ await api.preloadMath();
+ assert(Object.keys(require.cache).some(p=>p.endsWith('/vlx/font/glyphs.json')),'Preload resolves the deferred renderer');
+ const source=String.raw`Before <em>literal</em> $x^2$ then $\missingCommand$ then $y+1$ and $open`;
+ await act(async()=>{root.render(h(React.StrictMode,null,h(api.MathText,{source})));});
+ assert.equal(container.querySelectorAll('math').length,2);assert.equal(container.querySelector('em'),null);assert.match(container.textContent,/\$\\missingCommand\$/);assert.match(container.textContent,/\$open/);assert.equal(copies,2,'StrictMode cleans up its first lifecycle');
+ await act(async()=>root.render(h(api.MathText,{source:String.raw`$\unknown$`,fallback:(_error,raw)=>h('strong',null,'Invalid: '+raw)})));
+ assert.equal(copies,0);assert.match(container.querySelector('strong').textContent,/Invalid/);
+ await act(async()=>root.render(h(api.DisplayMath,{tex:'x+1',style:{'--vlx-scale':1.3}})));assert.equal(copies,1);assert.equal(container.querySelector('.vlx-math').dataset.vlxDisplay,'true');
+ await act(async()=>root.render(h(api.InlineMath,{tex:'x',scrollLabel:'Scrollable formula'})));assert.equal(copies,1);assert.equal(container.querySelector('.vlx-math').dataset.vlxDisplay,'false');
+ await act(async()=>root.render(h(api.InlineMath,{tex:String.raw`\unknown`,fallback:null})));assert.equal(container.textContent,'');assert.equal(copies,0);
+ await act(async()=>root.unmount());assert.equal(copies,0);
+ console.log('React: deferred glyph loading, SSR fallback, StrictMode, source/error isolation, print-window observer fallback and cleanup pass.');
+}finally{dom.window.close();}})().catch(error=>{console.error(error);process.exitCode=1});

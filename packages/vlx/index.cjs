@@ -18,8 +18,8 @@ function renderMath(tex,options={}) {
  const svg=`<svg ${attrs} width="${width}" height="${height}"><title>${escape(tex)}</title><g color="black">${inner}</g></svg>`;
  const mathml=`<math xmlns="http://www.w3.org/1998/Math/MathML" display="${display?'block':'inline'}"><semantics>${b.mml}<annotation encoding="application/x-tex">${escape(tex)}</annotation></semantics></math>`;
  const contrast='<style>@media (forced-colors:active){.vlx-math [color]{color:CanvasText}}</style>';
- const webSvg=`<svg ${attrs} width="${round(w)}em" height="${round(h)}em" style="display:block;max-width:none" aria-hidden="true" focusable="false">${contrast}${inner}</svg>`;
- const html=`<span class="vlx-math" data-vlx="math" data-vlx-display="${display}" style="position:relative;max-width:100%;min-width:0;${display?'display:block;overflow-x:auto;':'display:inline-block;overflow-x:auto;vertical-align:'+round(-(b.d+pad))+'em;'}font-size:${checked.fontSize===undefined?'inherit':fontSize+'px'}">${webSvg}<span style="position:absolute;left:0;top:0;width:1px;height:1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;user-select:none">${mathml}</span></span>`;
+ const webSvg=`<svg ${attrs} width="${round(w)}em" height="${round(h)}em" style="display:block;${display?'margin:var(--vlx-display-margin,0 auto);':''}max-width:none" aria-hidden="true" focusable="false">${contrast}${inner}</svg>`;
+ const html=`<span class="vlx-math" data-vlx="math" data-vlx-display="${display}" style="position:relative;max-width:100%;min-width:0;${display?'display:block;overflow-x:auto;':'display:inline-block;overflow-x:auto;vertical-align:'+round(-(b.d+pad))+'em;'}font-size:calc(var(--vlx-scale,1) * ${checked.fontSize===undefined?'1em':fontSize+'px'})">${webSvg}<span style="position:absolute;left:0;top:0;width:1px;height:1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;user-select:none">${mathml}</span></span>`;
  return Object.freeze({tex,display,svg,html,mathml,width,height,baseline});
 }
 function createRenderer(options={}) {
@@ -37,10 +37,15 @@ function createRenderer(options={}) {
   return value;
  }
  function renderText(source,settings={}){
+  const errorMode=settings.errorMode??'throw';if(errorMode!=='throw'&&errorMode!=='source')throw new TypeError('errorMode must be throw or source');
   const document=parse(source);
-  if(document.diagnostics.length)throw new VlxError('UNCLOSED_MATH',document.diagnostics[0].message,{start:document.diagnostics[0].start});
-  const nodes=document.nodes.map(node=>node.kind==='text'?{...node,html:escape(node.value)}:{...node,...math(node.tex,{...settings,display:node.display})});
-  return {source,nodes,html:nodes.map(n=>n.html).join('')};
+  if(document.diagnostics.length&&errorMode==='throw')throw new VlxError('UNCLOSED_MATH',document.diagnostics[0].message,{start:document.diagnostics[0].start});
+  const diagnostics=[...document.diagnostics],nodes=document.nodes.map(node=>{
+   if(node.kind==='text')return {...node,html:escape(node.value)};
+   try{return {...node,...math(node.tex,{...settings,display:node.display})};}
+   catch(error){if(errorMode==='throw'||!(error instanceof VlxError))throw error;diagnostics.push({code:error.code,message:error.message,start:node.start,end:node.end});return {...node,error,html:escape(node.raw)};}
+  });
+  return {source,nodes,diagnostics,html:nodes.map(n=>n.html).join('')};
  }
  return {renderMath:math,renderText,clearCache(){cache.clear();bytes=0;}};
 }

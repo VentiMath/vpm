@@ -3,4 +3,5 @@ Copyright (c) 2024 MathJax, Inc. (www.mathjax.org). Apache-2.0.
 Based on New Computer Modern. Only selected numeric metrics and glyph outlines
 are retained; no upstream parser, layout, rendering or loader code is shipped.
 Data was subsetted, SMP remaps resolved, and SVG path commands materialized.
+Identical outlines across variants are stored once in a shared path pool.
 Reproduce with scripts/vlx-conformance/build-font.cjs.

@@ -1,14 +1,14 @@
 'use strict';
-const glyphs=require('./font/glyphs.json');
+const {paths,variants:glyphs}=require('./font/glyphs.json');
 const {typography}=require('./typography.cjs');
 const {VlxError,escape}=require('./source.cjs');
 const n=x=>Number(x.toFixed(5));
 const move=(b,x=0,y=0,scale=1)=>`<g transform="translate(${n(x)} ${n(y)}) scale(${n(scale)})">${b.svg}</g>`;
 const box=(w,h,d,svg,mml)=>({w,h:Math.max(0,h),d:Math.max(0,d),svg,mml});
 function glyph(char,font='normal'){
- const metric=glyphs[font]?.[char]||glyphs.normal[char];
+ const metric=glyphs[font]?.[char]||(font==='bold-italic'?glyphs.bold[char]:undefined)||glyphs.normal[char];
  if(!metric)throw new VlxError('UNSUPPORTED_GLYPH','No outline for '+char);
- const [h,d,w,ic,path]=metric;
+ const [h,d,w,ic,id]=metric,path=paths[id];
  return box(w+ic,h,d,path?`<path d="${path}" transform="scale(.001 -.001)" fill="currentColor"/>`:'','');
 }
 function text(value,font='normal'){
@@ -24,22 +24,31 @@ function fence(char,body){
 }
 function joinTag(b){const l=text('('),r=text(')');return box(l.w+b.w+r.w,Math.max(l.h,b.h,r.h),Math.max(l.d,b.d,r.d),l.svg+move(b,l.w)+move(r,l.w+b.w),'<mrow><mo>(</mo>'+b.mml+'<mo>)</mo></mrow>');}
 function layout(ast,options={}){
- const display=!!options.display,font=options.font;
- const child=(a,extra={})=>layout(a,{display,font,...extra});
+ const display=!!options.display,font=options.font,bold=!!options.bold;
+ const weight=style=>bold?(style==='italic'?'bold-italic':style==='normal'?'bold':style):style;
+ const child=(a,extra={})=>layout(a,{display,font,bold,...extra});
  switch(ast.kind){
   case 'symbol':{
    const style=font||((/^[a-zA-Zα-ωϕϵϑς]$/u.test(ast.text))?'italic':'normal');
-   const b=glyph(ast.text,ast.large&&display?'-largeop':style);
-   const identifier=ast.class==='ord'&&/^[\p{L}]$/u.test(ast.text);b.mml=`<${identifier?'mi':'mo'}>${escape(ast.text)}</${identifier?'mi':'mo'}>`;return b;
+   const b=glyph(ast.text,ast.large&&display&&!bold?'-largeop':weight(style));
+   const identifier=ast.class==='ord'&&/^[\p{L}]$/u.test(ast.text);b.mml=`<${identifier?'mi':'mo'}${bold?' mathvariant="'+weight(style)+'"':''}>${escape(ast.text)}</${identifier?'mi':'mo'}>`;return b;
   }
   case 'negation':{
    const b=child(ast.body),h=Math.max(b.h,.7),d=Math.max(b.d,.15),x0=b.w*.18,x1=b.w*.82;
    const tag=ast.body.class==='ord'&&/^[\p{L}]$/u.test(ast.body.text)?'mi':'mo';
    return box(b.w,h+.025,d+.025,b.svg+`<path d="M ${n(x0)} ${n(d)} L ${n(x1)} ${n(-h)}" fill="none" stroke="currentColor" stroke-width=".05"/>`,`<${tag}>${escape(ast.body.text)}&#x338;</${tag}>`);
   }
-  case 'number':{const b=text(ast.text,font||'normal');b.mml='<mn>'+escape(ast.text)+'</mn>';return b;}
-  case 'text':{const value=typography(ast.text);let b;if(ast.font==='small-caps'){b=box(0,0,0,'','');for(const c of value){const small=c!==c.toUpperCase(),part=text(c.toUpperCase(),font||'normal'),scale=small?.8:1;b.svg+=move(part,b.w,0,scale);b.w+=part.w*scale;b.h=Math.max(b.h,part.h*scale);b.d=Math.max(b.d,part.d*scale);}}else b=text(value,ast.font||font||'normal');b.mml=ast.operator?'<mi mathvariant="normal">'+escape(ast.text)+'</mi>':'<mtext>'+escape(ast.text)+'</mtext>';if(ast.font&&ast.font!=='small-caps')b.mml='<mstyle mathvariant="'+ast.font+'">'+b.mml+'</mstyle>';return b;}
+  case 'number':{const b=text(ast.text,weight(font||'normal'));b.mml='<mn'+(bold?' mathvariant="'+weight(font||'normal')+'"':'')+'>'+escape(ast.text)+'</mn>';return b;}
+  case 'text':{const value=typography(ast.text);let b;if(ast.font==='small-caps'){b=box(0,0,0,'','');for(const c of value){const small=c!==c.toUpperCase(),part=text(c.toUpperCase(),weight(font||'normal')),scale=small?.8:1;b.svg+=move(part,b.w,0,scale);b.w+=part.w*scale;b.h=Math.max(b.h,part.h*scale);b.d=Math.max(b.d,part.d*scale);}}else b=text(value,weight(ast.font||font||'normal'));b.mml=ast.operator?'<mi mathvariant="normal">'+escape(ast.text)+'</mi>':'<mtext>'+escape(ast.text)+'</mtext>';if(bold||ast.font&&ast.font!=='small-caps')b.mml='<mstyle mathvariant="'+weight(ast.font==='small-caps'?'normal':ast.font||font||'normal')+'">'+b.mml+'</mstyle>';return b;}
   case 'space':return box(ast.width,0,0,'',`<mspace width="${ast.width}em"/>`);
+  case 'linebreak':return box(0,0,0,'','<mspace linebreak="newline"/>');
+  case 'class':return child(ast.body);
+  case 'boldsymbol':return child(ast.body,{bold:true});
+  case 'rule':return box(ast.width,Math.max(0,ast.height+ast.raise),Math.max(0,-ast.raise),`<rect x="0" y="${n(-ast.height-ast.raise)}" width="${n(ast.width)}" height="${n(ast.height)}" fill="currentColor"/>`,`<mspace width="${ast.width}em" height="${Math.max(0,ast.height+ast.raise)}em" depth="${Math.max(0,-ast.raise)}em" mathbackground="currentColor"/>`);
+  case 'stack':{
+   const b=child(ast.body),mark=child(ast.mark,{display:false}),scale=.7,w=Math.max(b.w,mark.w*scale),y=ast.under?b.d+.12+mark.h*scale:-b.h-.12-mark.d*scale;
+   return box(w,ast.under?b.h:-y+mark.h*scale,ast.under?y+mark.d*scale:b.d,move(b,(w-b.w)/2)+move(mark,(w-mark.w*scale)/2,y,scale),`<${ast.under?'munder':'mover'}>${b.mml}${mark.mml}</${ast.under?'munder':'mover'}>`);
+  }
   case 'font':{
    const variants={mathit:'italic',mathbf:'bold',mathrm:'normal',mathbb:'double-struck',mathcal:'-tex-calligraphic',mathscr:'script',mathsf:'sans-serif',mathtt:'monospace'};
    let body=ast.body;
@@ -59,6 +68,13 @@ function layout(ast,options={}){
   case 'delimiter':{const b=fence(ast.text,{h:ast.size*.75,d:ast.size*.25});b.mml='<mo>'+escape(ast.text)+'</mo>';return b;}
   case 'textrow':
   case 'row':{
+   if(ast.children.some(a=>a.kind==='linebreak')){
+    const lines=[[]],gaps=[];for(const a of ast.children){if(a.kind==='linebreak'){gaps.push(a.gap);lines.push([]);}else lines.at(-1).push(a);}
+    if(lines.length>128)throw new VlxError('LIMIT','At most 128 explicit lines are supported');
+    const boxes=lines.map(children=>child({kind:'row',children}));let y=0,svg='',h=0,d=0;const w=Math.max(...boxes.map(b=>b.w));
+    for(let i=0;i<boxes.length;i++){if(i)y+=Math.max(.2,boxes[i-1].d)+.4+Math.max(.7,boxes[i].h)+(gaps[i-1]||0);svg+=move(boxes[i],0,y);h=Math.max(h,Math.max(.7,boxes[i].h)-y);d=Math.max(d,y+Math.max(.2,boxes[i].d));}
+    return box(w,h,d,svg,'<mtable columnalign="left">'+boxes.map(b=>'<mtr><mtd>'+b.mml+'</mtd></mtr>').join('')+'</mtable>');
+   }
    const boxes=ast.children.map(a=>child(a));let w=0,h=0,d=0,svg='',mml='';
    const type=a=>a.kind==='scripts'?type(a.base):a.class||(a.operator||a.kind==='operator'?'op':'ord');
    const types=ast.children.map(type);for(let i=0;i<types.length;i++)if(types[i]==='bin'&&(!i||['bin','rel','open'].includes(types[i-1])||i===types.length-1||['rel','close','punct'].includes(types[i+1])))types[i]='ord';
@@ -73,7 +89,7 @@ function layout(ast,options={}){
   }
   case 'binomial':
   case 'fraction':{
-   const full=['dfrac','dbinom'].includes(ast.style)||(display&&!['tfrac','tbinom'].includes(ast.style)),scale=full?1:.72;
+   const full=['dfrac','dbinom','cfrac'].includes(ast.style)||(display&&!['tfrac','tbinom'].includes(ast.style)),scale=full?1:.72;
    const a=child(ast.numerator,{display:false}),b=child(ast.denominator,{display:false});
    const w=Math.max(a.w,b.w)*scale+.24,axis=-.25,gap=full?.2:.13,t=.06;
    const y1=axis-gap-a.d*scale-t/2,y2=axis+gap+b.h*scale+t/2;
@@ -102,6 +118,11 @@ function layout(ast,options={}){
   case 'color':{const b=child(ast.body);b.svg=`<g color="${ast.color}">${b.svg}</g>`;b.mml=`<mstyle mathcolor="${ast.color}">${b.mml}</mstyle>`;return b;}
   case 'decoration':{
    const b=child(ast.body),style=ast.style;
+   if(style==='cancel')return box(b.w,b.h+.025,b.d+.025,b.svg+`<path d="M 0 ${n(b.d)} L ${n(b.w)} ${n(-b.h)}" fill="none" stroke="currentColor" stroke-width=".05"/>`,'<menclose notation="updiagonalstrike">'+b.mml+'</menclose>');
+   if(style==='tilde'||style==='widetilde'){
+    const w=Math.max(b.w,.35),y=-b.h-.14;
+    return box(w,b.h+.34,b.d,move(b,(w-b.w)/2)+`<path d="M 0 ${n(y)} C ${n(w*.3)} ${n(y-.25)},${n(w*.7)} ${n(y+.1)},${n(w)} ${n(y-.14)}" fill="none" stroke="currentColor" stroke-width=".045"/>`,'<mover accent="true">'+b.mml+'<mo>~</mo></mover>');
+   }
    if(style==='boxed'||style==='circle'){
     const pad=.18,side=Math.max(b.w+pad*2,b.h+b.d+pad*2),w=style==='circle'?side:b.w+pad*2,extra=style==='circle'?(side-b.h-b.d-pad*2)/2:0,h=b.h+pad+extra,d=b.d+pad+extra;const border=style==='boxed'?`<rect x=".025" y="${n(-h+.025)}" width="${n(w-.05)}" height="${n(h+d-.05)}"/>`:`<ellipse cx="${n(w/2)}" cy="${n((d-h)/2)}" rx="${n(w/2)}" ry="${n((h+d)/2)}"/>`;
     return box(w,h+.03,d+.03,move(b,(w-b.w)/2)+`<g fill="none" stroke="currentColor" stroke-width=".05">${border}</g>`,`<menclose notation="${style==='boxed'?'box':'circle'}">${b.mml}</menclose>`);

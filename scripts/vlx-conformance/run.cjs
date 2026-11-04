@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),load=require('./load.cjs'),vlx=load(),{renderPng}=load('png'),references=require('./reference.cjs');
 const {PNG}=require('../../packages/vpngjs');
 // Compare semantic token order independently of layout wrappers and data-latex.
-const tokens=mml=>[...mml.matchAll(/<(mi|mn|mo|mtext)\b[^>]*>(.*?)<\/\1>/gs)].map(m=>m[2].replace(/<[^>]+>/g,'').replace(/&#x([\da-f]+);/gi,(_,n)=>String.fromCodePoint(parseInt(n,16))).replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n))).replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/\s/g,'')).join('').replace(/[¯―\u2061-\u2064]/g,'').normalize('NFKC').replace(/″/g,'′′').replace(/−/g,'-').replace(/⌢/g,'');
+const tokens=mml=>[...mml.matchAll(/<(mi|mn|mo|mtext)\b[^>]*>(.*?)<\/\1>/gs)].map(m=>m[2].replace(/<[^>]+>/g,'').replace(/&#x([\da-f]+);/gi,(_,n)=>String.fromCodePoint(parseInt(n,16))).replace(/&#(\d+);/g,(_,n)=>String.fromCodePoint(Number(n))).replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/\s/g,'')).join('').replace(/[¯―\u2061-\u2064]/g,'').normalize('NFKC').replace(/″/g,'′′').replace(/−/g,'-').replace(/⌢/g,'').replace(/‖/g,'∥').replace(/\s/g,'').normalize('NFC');
 (async()=>{
  const renderer=vlx.createRenderer(),report=[],pictures=[];
  for(const [name,tex] of require('./corpus.cjs')){
@@ -17,6 +17,15 @@ const tokens=mml=>[...mml.matchAll(/<(mi|mn|mo|mtext)\b[^>]*>(.*?)<\/\1>/gs)].ma
    assert.equal(katex,'pass',name+' KaTeX support');assert.equal(tokens(r.mathml),tokens(katexOutput),name+' KaTeX semantics');
   }
   report.push({name,vlx:'pass',mathjax:control?'pass':'unsupported',katex});pictures.push({name,r,control});
+ }
+ // New synthetic cases from the production-gap audit. Compare semantic token
+ // order to KaTeX; enclosure/stack decorations are checked structurally below.
+ for(const [name,tex]of require('./production-corpus.cjs')){
+  const r=renderer.renderMath(tex,{display:false}),control=references.katex(tex,false);
+  if(!['circled text and cancellation','operators with annotations','font declarations'].includes(name))assert.equal(tokens(r.mathml),tokens(control),name+' KaTeX semantic tokens');
+  if(name==='operators with annotations'){assert.match(r.mathml,/<mover>/);assert.match(r.mathml,/<munder>/);}
+  if(name==='circled text and cancellation'){assert.match(r.mathml,/menclose/);assert.match(r.svg,/stroke/);}
+  report.push({name,vlx:'pass',katex:'pass'});
  }
  if(process.env.VLX_OUTPUT){
   const {Resvg}=require('@resvg/resvg-js'),out=process.env.VLX_OUTPUT;fs.mkdirSync(out,{recursive:true});let y=36;const parts=[];

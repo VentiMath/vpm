@@ -9,15 +9,15 @@ VentiMath has not switched its renderers yet.
 
 | Area | Evidence |
 | --- | --- |
-| Mathematical structure | Chrome exposes exactly one MathML root for each of 34 synthetic formulas, including fraction, root, script, limit and table roles. Numerator/denominator reading order is checked. |
+| Mathematical structure | Chrome exposes exactly one MathML root for each of 48 synthetic formulas, including fraction, root, script, limit and table roles. Numerator/denominator reading order is checked. |
 | Duplicate and invisible content | Decorative SVGs and phantom text are excluded from the accessibility tree. TeX annotations do not create a second spoken expression in that tree. |
 | Themes and sizing | Default HTML inherits its parent's color and font size. Both 200% and 400% text enlargement preserve the enlarged math. Explicit `fontSize` remains supported. |
 | High contrast | System forced colors replace authored formula colors as well as default ink. Normal display preserves authored colors; callers remain responsible for their contrast against ordinary theme backgrounds. |
 | Reflow | At 320 CSS px, prose wraps and oversized formulas scroll inside their own bounds; they do not widen the page or shrink away the user's text enlargement. |
-| Keyboard | With `observeMath`, only overflowing formulas enter the tab order. Tab reaches them, arrow keys scroll, and Tab leaves without a trap. Resizing back to fit removes the added tab stop. |
-| Inline alignment and clipping | Inline math shares the prose baseline; all 34 fixture outline bounds fit their SVG viewports. Light, dark, narrow and enlarged screenshots are generated for inspection. |
+| Keyboard | With `observeMath`, only formulas with usable scrolling overflow enter the tab order. Tab reaches them, arrow keys scroll, and Tab leaves without a trap. Resizing or scaling the SVG to fit removes the added tab stop; hidden overflow gets none. |
+| Inline alignment and clipping | Inline math shares the prose baseline; all 48 fixture outline bounds fit their SVG viewports. Light, dark, narrow and enlarged screenshots are generated for inspection. |
 | Copying | With `observeMath`, mixed prose/formula selections copy each whole formula once as authored TeX. Tests use an in-memory copy event, without touching the OS clipboard. |
-| Lifecycle | Replacement content is observed; cleanup disconnects listeners/observers and removes only attributes VLX added, preserving caller changes. |
+| Lifecycle | Replacement content is observed; cleanup disconnects listeners/observers and removes only attributes VLX added, preserving caller changes. Print windows without ResizeObserver or MutationObserver still render; resize/beforeprint refreshes remain available. |
 
 The [browser suite](../../scripts/vlx-conformance/browser.cjs) runs in an isolated
 Chrome profile and is a CI gate. It uses the Chrome accessibility tree, DOM
@@ -43,38 +43,23 @@ const stop = observeMath(host);
 // Call stop() when the host unmounts. Content replacements are observed.
 ```
 
-For a React frontend, a minimal integration preserves unsupported input as text
-and returns the observer's cleanup function:
+For React 19, use the optional components. They manage observation and cleanup,
+keep prose escaped, and isolate failures to one formula:
 
 ```tsx
-import { useEffect, useMemo, useRef } from 'react';
-import { createRenderer, VlxError } from 'vlx';
-import { observeMath } from 'vlx/dom';
+import { InlineMath, DisplayMath, MathText, preloadMath } from 'vlx/react';
 
-const renderer = createRenderer(); // bounded expression cache
-
-export function MathContent({ source }: { source: string }) {
-  const host = useRef<HTMLDivElement>(null);
-  const content = useMemo(() => {
-    try {
-      return { html: renderer.renderText(source).html };
-    } catch (error) {
-      if (!(error instanceof VlxError)) throw error;
-      return { error };
-    }
-  }, [source]);
-  useEffect(() => {
-    if (host.current) return observeMath(host.current);
-  }, [content]);
-  if ('error' in content) return <div>{source}</div>;
-  return <div ref={host} dangerouslySetInnerHTML={{ __html: content.html }} />;
-}
+<MathText source={String.raw`Compute $x^2$.`} />
+<InlineMath tex="x+1" style={{ '--vlx-scale': 1.2 }} />
+<DisplayMath tex={String.raw`\frac{1}{2}`} />
 ```
 
-Only VLX's generated HTML goes into `dangerouslySetInnerHTML`; source prose is
-escaped by VLX, and the error fallback is a React text child. Feed this component
-the app's normalized text segments and preserve its surrounding list/figure
-components. It is not a replacement for a document or Markdown renderer.
+The renderer and outline pool load on first math use. Plain prose does not fetch
+them. `preloadMath()` is optional for route prefetching; `loadingFallback` changes
+the loading state. `fallback` changes a failed formula's default source-text
+fallback and can be a React node or `(error, source) => ReactNode`. Initial server
+rendering uses Suspense's loading fallback; streaming SSR can wait for the lazy
+renderer. These components do not replace app normalization, lists or figures.
 
 Observe a container once rather
 than installing observers on overlapping ancestors. A localized `scrollLabel`
@@ -84,11 +69,12 @@ need TypeScript's DOM library; the root math declarations remain DOM-free.
 Keep the application's existing legacy normalization, list handling, ordered
 figure descriptions, error fallback, and authorization boundaries. This library
 neither interprets arbitrary source HTML nor authorizes image URLs. `renderText`
-rejects malformed math; callers that display source on errors should render that
-fallback as text, never as untrusted HTML.
+throws on malformed math by default. With `{errorMode: 'source'}`, only failed
+formulas become escaped source text, and diagnostics identify their spans.
 
-Default HTML uses inherited sizing; numeric `width`, `height` and `baseline`
-describe the standalone SVG at 16 px unless `fontSize` is supplied. Do not use
+Default HTML uses inherited sizing, multiplied by `--vlx-scale` (default 1).
+Fitting display math is centered; `--vlx-display-margin: 0` selects left alignment.
+Numeric `width`, `height` and `baseline` describe the standalone SVG at 16 px unless `fontSize` is supplied. Do not use
 those default pixel values to override the browser's inherited size. Formulas
 that require two-dimensional layout retain their size and local scrolling.
 [WCAG's reflow guidance](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html)
@@ -105,7 +91,7 @@ explicit equation labels and mixed prose/figures. This requires those actual
 reader/browser combinations; an accessibility-tree snapshot cannot substitute
 for it. WebKit and Firefox rendering are also not covered by this Chrome gate.
 
-The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r2)
+The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r3)
 ships this browser lifecycle. Application integration and production cutover
 remain separate from these verified package-level checks. A controlled application
 trial can use the documented lifecycle and existing text-on-error behavior while

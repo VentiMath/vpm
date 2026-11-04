@@ -612,9 +612,11 @@
       },
       "peerDependencies": {
         "@resvg/resvg-js": "2.6.2",
+        "react": ">=19 <20",
       },
       "optionalPeers": [
         "@resvg/resvg-js",
+        "react",
       ],
     },
     "packages/vmedia-typer": {

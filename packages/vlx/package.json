@@ -1,7 +1,7 @@
 {
   "name": "vlx",
   "version": "0.1.0",
-  "description": "Independent VentiMath TeX parser and mathematical layout for web, MathML and SVG",
+  "description": "VentiLaTeX: independent math rendering for web, React, MathML, SVG and problem pictures",
   "main": "./index.cjs",
   "module": "./index.mjs",
   "types": "./index.d.ts",
@@ -26,6 +26,11 @@
       "types": "./dom.d.ts",
       "import": "./dom.mjs",
       "require": "./dom.cjs"
+    },
+    "./react": {
+      "types": "./react.d.ts",
+      "import": "./react.mjs",
+      "require": "./react.cjs"
     }
   },
   "files": [
@@ -44,7 +49,8 @@
   "sideEffects": false,
   "license": "MIT",
   "peerDependencies": {
-    "@resvg/resvg-js": "2.6.2"
+    "@resvg/resvg-js": "2.6.2",
+    "react": ">=19 <20"
   },
   "repository": {
     "type": "git",
@@ -53,6 +59,9 @@
   },
   "peerDependenciesMeta": {
     "@resvg/resvg-js": {
+      "optional": true
+    },
+    "react": {
       "optional": true
     }
   },
