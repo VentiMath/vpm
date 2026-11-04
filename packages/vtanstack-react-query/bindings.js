@@ -29,16 +29,13 @@ export function createBindings(React, core) {
   function useQuery(options, providedClient) {
     const client = useQueryClient(providedClient);
     const normalized = client.defaultQueryOptions(options);
+    normalized._optimisticResults = 'optimistic';
     const observer = React.useMemo(() => new core.QueryObserver(client, normalized), [client, normalized.queryHash]);
     const subscribe = React.useCallback(listener => subscribeToObserver(observer, listener), [observer]);
     const snapshot = React.useCallback(() => observer.getCurrentResult(), [observer]);
-    let result = React.useSyncExternalStore(subscribe, snapshot, snapshot);
-    React.useEffect(() => { observer.setOptions(options); }, [observer, options]);
-    // The first render describes the request that subscription will start.
-    // Requests start on subscription; cache entries can schedule collection.
-    if (result.isPending && result.isEnabled && result.fetchStatus === 'idle') {
-      result = {...result, fetchStatus: 'fetching', isFetching: true, isLoading: true, isInitialLoading: true};
-    }
+    const result = observer.getOptimisticResult(normalized);
+    React.useSyncExternalStore(subscribe, snapshot, snapshot);
+    React.useEffect(() => { observer.setOptions(normalized); }, [observer, options]);
     if (result.error && (typeof options.throwOnError === 'function' ? options.throwOnError(result.error, observer.getCurrentQuery()) : options.throwOnError)) throw result.error;
     return result;
   }

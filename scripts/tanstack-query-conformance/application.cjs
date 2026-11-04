@@ -100,6 +100,7 @@ const delay = () => new Promise(resolve => setTimeout(resolve, 0));
       });
       await waitFor(() => assert.equal(rendered.result.current.data, 2)); rendered.unmount();
     }
+    console.log(await require('./first-render.cjs')(React, {...core, ...hooks}, testing), 'first committed query states checked');
     await require('./transitions.cjs')(React, {...core, ...hooks}, testing);
     console.log(`${current ? 'Current upstream 5.105.3' : upstream ? 'Upstream 5.105.0' : 'VPM'}: application scenarios passed, including scheduled query/mutation notifications and three async transition retries.`);
   } finally {cleanup(); clients.forEach(client => client.clear()); dom.window.close();}

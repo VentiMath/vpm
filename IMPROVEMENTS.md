@@ -1084,6 +1084,13 @@ writes. Regression checks cover partial results, empty catalogs and mutation
 refreshes on React 19.1.0 and 19.2.4. TypeScript 7 and a Chrome production bundle
 are checked separately. This change does not deploy the replacements to VentiMath.
 
+Source now predicts first-commit retry/loading state before React effects,
+removing the old-error commit on failed remounts and enabled toggles. Explicit
+refetch remains correct, and retry-disabled/offline/cached states are preserved.
+Paired first-commit and Chrome checks pass; published r2 does not contain this
+followup. VentiMath main adopted r2 in `ab3d22a2`; a revised release and consumer
+update are still needed for this fix.
+
 See the [core](packages/vtanstack-query-core/README.md) and
 [React](packages/vtanstack-react-query/README.md) contracts, the
 [comparison record](scripts/tanstack-query-conformance/README.md), and

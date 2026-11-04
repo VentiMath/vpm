@@ -265,6 +265,7 @@ jobs:
           node scripts/tanstack-query-conformance/sharing.cjs
           node scripts/tanstack-query-conformance/application.cjs --upstream
           node scripts/tanstack-query-conformance/application.cjs --current
+          bun scripts/tanstack-query-conformance/first-render-build.cjs
           node scripts/tanstack-query-conformance/current.cjs
           node scripts/tanstack-query-conformance/application.cjs
           node scripts/tanstack-query-conformance/run.cjs --package=react --upstream
@@ -708,6 +709,7 @@ jobs:
           bun scripts/tanstack-query-conformance/sharing.cjs
           bun scripts/tanstack-query-conformance/application.cjs --upstream
           bun scripts/tanstack-query-conformance/application.cjs --current
+          bun scripts/tanstack-query-conformance/first-render-build.cjs
           bun scripts/tanstack-query-conformance/current.cjs
           bun scripts/tanstack-query-conformance/application.cjs
           bun scripts/tanstack-query-conformance/devtools.cjs --upstream

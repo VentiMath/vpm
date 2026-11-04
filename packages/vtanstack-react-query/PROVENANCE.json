@@ -33,5 +33,10 @@
     "tarball": "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.105.0.tgz",
     "tarballSha256": "cb3e19a62f3cc18cf2673e6ec46562357b5b4425b7091a6e9135ae17ec032568",
     "integrity": "sha512-y+hMuDERvgg6ay1da0V1a6ZC0ZONt7dELxSFkqRZuwm7p1TTZs0MoXrPlBRflIpRoYjvzQVYxycnLImpFLhWrw=="
+  },
+  "firstRenderFollowup": {
+    "checked": "2026-11-04",
+    "change": "Predict retry/loading and stale-refetch state before effects while preserving cached errors and avoiding render-time requests.",
+    "evidence": "Paired upstream 5.105.3 mounted first-commit cases and production Chrome on React 19.1/19.2. Published r2 is unchanged."
   }
 }

@@ -1,4 +1,4 @@
-import {Subscribable, enabled, staleTime, schedule, focusManager, shallowEqualObjects, replaceEqualDeep, isServer} from './runtime.js';
+import {Subscribable, enabled, staleTime, schedule, focusManager, shallowEqualObjects, replaceEqualDeep, isServer, onlineManager} from './runtime.js';
 
 export class QueryObserver extends Subscribable {
   constructor(client, options) {
@@ -38,11 +38,17 @@ export class QueryObserver extends Subscribable {
   fetchOn(option) { return enabled(this.options, this.query) && staleTime(this.options, this.query) !== 'static' && (option === 'always' || option !== false && this.stale()); }
   shouldFetchOnWindowFocus() { return this.fetchOn(typeof this.options.refetchOnWindowFocus === 'function' ? this.options.refetchOnWindowFocus(this.query) : this.options.refetchOnWindowFocus); }
   shouldFetchOnReconnect() { return this.fetchOn(typeof this.options.refetchOnReconnect === 'function' ? this.options.refetchOnReconnect(this.query) : this.options.refetchOnReconnect); }
+  fetchOnMount(query, options) {
+    if (!enabled(options, query)) return false;
+    const value = option => typeof option === 'function' ? option(query) : option;
+    if (query.state.data === undefined) return query.state.status !== 'error' || value(options.retryOnMount) !== false;
+    const policy = value(options.refetchOnMount), time = staleTime(options, query);
+    return time !== 'static' && (policy === 'always' || policy !== false && query.isStaleByTime(time));
+  }
   onSubscribe() {
     if (this.listeners.size !== 1) return;
     this.query.addObserver(this);
-    const mount = typeof this.options.refetchOnMount === 'function' ? this.options.refetchOnMount(this.query) : this.options.refetchOnMount;
-    if (enabled(this.options, this.query) && (this.query.state.data === undefined && (this.query.state.status !== 'error' || this.options.retryOnMount !== false) || this.fetchOn(mount))) this.execute();
+    if (this.fetchOnMount(this.query, this.options)) this.execute();
     this.updateTimers();
   }
   onUnsubscribe() { if (!this.hasListeners()) this.destroy(); }
@@ -76,7 +82,18 @@ export class QueryObserver extends Subscribable {
     }, interval, true);
   }
   createResult(query, options) {
-    const state = query.state;
+    let state = query.state;
+    if (options._optimisticResults === 'optimistic') {
+      const willFetch = this.hasListeners()
+        ? (query !== this.query || !enabled(this.options, query)) && enabled(options, query) && query.isStaleByTime(staleTime(options, query))
+        : this.fetchOnMount(query, options);
+      // Describe the next committed request without starting it or rewriting the
+      // cache during render. Cached-data errors stay visible during refetches.
+      if (willFetch) state = {...state,
+        fetchStatus: options.networkMode === 'always' || onlineManager.isOnline() ? 'fetching' : 'paused',
+        fetchFailureCount: 0, fetchFailureReason: null,
+        ...(state.data === undefined ? {status: 'pending', error: null} : {})};
+    }
     let {data, error, status} = state, placeholder = false;
     if (data === undefined && status === 'pending' && options.placeholderData !== undefined) {
       data = typeof options.placeholderData === 'function' ? options.placeholderData(this.lastData, this.lastDataQuery) : options.placeholderData;

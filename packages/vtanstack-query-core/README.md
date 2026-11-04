@@ -72,10 +72,11 @@ when the values are `undefined`. Both cases match the 5.105.3 comparison baselin
 
 ## Measurements
 
-Against 5.105.3, cache reads took 6% less time on Node and 33% less on Bun;
-request deduplication took 60% and 41% less, respectively. Six Node cases and
-five Bun cases were faster in every pair beyond the measured control spread.
-The unchanged 16-record JSON update remains **18% slower on Bun**; its Node
-direction is inconclusive because one process pair reversed. Bun construction
-is also inconclusive. These are local cache operations with no network, not
-measured application speedups. The report retains every sample and control.
+The refreshed source-verified comparison with 5.105.3 finds all seven Node
+cases faster beyond identical-code controls. Bun cache reads, request sharing,
+active invalidation and mutation cleanup are faster beyond controls; construction
+and fresh cache-hit directions are inconclusive. The unchanged 16-record JSON
+update remains **20.7% slower on Bun**. No JSON-update optimization was made in
+this followup, so the changed percentage from the previous 18% recording is not
+a new performance fix or a measured consequence of the render-state repair.
+These local cache measurements do not measure browser rendering or app latency.

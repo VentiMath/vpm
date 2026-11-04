@@ -44,6 +44,20 @@ keeps the application's `@tanstack/react-query` import name, including Devtools
 imports, while resolving it to this package. This repository does not change
 VentiMath's deployment.
 
+## First committed render
+
+Source now describes the request that subscription or an enabled-state change
+will start. A failed query remounting, or being re-enabled, shows pending/loading
+immediately rather than briefly showing its old error. A stale cached query
+reports fetching on its first render while retaining its data. `refetch()` already
+behaved correctly and keeps that behavior. Retry-disabled and disabled queries
+keep their errors; offline requests report paused rather than active fetching.
+Prediction does not start requests or rewrite cached errors during render.
+
+The app's merged `tanstack-5.105.3-r2` archives do **not** contain this followup.
+It requires a revised release and consumer lockfile update; source completion
+is not an assertion that the installed app is fixed.
+
 ## Evidence
 
 [Mounted comparisons](../../scripts/tanstack-query-conformance/README.md) run the

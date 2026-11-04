@@ -95,3 +95,21 @@ These tests reach private upstream modules and cover APIs outside VPM's subset.
 The runner therefore accepts only `--upstream`; application comparisons test the
 replacement through public APIs. The fixture's TypeScript 6 compiler belongs to
 upstream's suite. VPM declarations are checked with the workspace compiler.
+
+
+## First committed query state
+
+`first-render.cjs` runs through `application.cjs` for the retained upstream,
+current upstream, VPM source and clean installed archives. Eleven cases inspect
+layout-effect commits, not only settled `waitFor` output: failed remounts,
+failed enabled toggles, explicit refetch, retry-disabled and disabled errors,
+offline pauses, fresh/stale data, mount policies and an empty enabled transition.
+The pre-fix VPM source fails the failed-remount assertion; current upstream passes.
+A core test verifies prediction does not start requests or change cached errors.
+
+`bun scripts/tanstack-query-conformance/first-render-build.cjs` compares six first
+committed DOM states in production Chrome on React 19.1.0 and 19.2.4. It uses the
+19.1 peer installed in `scripts/radix-collection-conformance` and the current peer
+here. Both upstream and VPM pass, including the already-correct `refetch()` path.
+This verifies committed output, without claiming every commit would reach a
+painted frame or that installed r2 already contains the source fix.

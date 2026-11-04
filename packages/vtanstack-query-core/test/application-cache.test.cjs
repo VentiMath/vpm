@@ -161,3 +161,20 @@ test('static observers remain cached during invalidation and report their mode t
   await client.invalidateQueries(); assert.equal(calls, 0); assert.equal(observer.getCurrentQuery().isStatic(), true);
   stop(); client.clear();
 });
+
+test('optimistic observer reads predict retry without starting requests or changing cached errors', async () => {
+  const {QueryClient, QueryObserver} = await import('../query-client.js');
+  const client = new QueryClient({defaultOptions:{queries:{retry:false,gcTime:Infinity}}});
+  try {
+    const queryKey = ['render-only'], failure = new Error('cached failure');
+    await client.fetchQuery({queryKey,queryFn:()=>Promise.reject(failure)}).catch(()=>{});
+    const before = client.getQueryState(queryKey); let calls = 0;
+    const options = {queryKey,queryFn:async()=>++calls,enabled:false,_optimisticResults:'optimistic'};
+    const observer = new QueryObserver(client, options);
+    const result = observer.getOptimisticResult({...options,enabled:true});
+    assert.equal(result.status,'pending'); assert.equal(result.fetchStatus,'fetching'); assert.equal(result.error,null);
+    assert.equal(client.getQueryState(queryKey),before); assert.equal(before.error,failure); assert.equal(calls,0);
+    const stopped = observer.getOptimisticResult({...options,enabled:true,retryOnMount:false});
+    assert.equal(stopped.status,'error'); assert.equal(stopped.fetchStatus,'idle'); assert.equal(calls,0);
+  } finally {client.clear();}
+});
