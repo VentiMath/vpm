@@ -43,8 +43,40 @@ const stop = observeMath(host);
 // Call stop() when the host unmounts. Content replacements are observed.
 ```
 
-In React, render the generated HTML in the host and call `observeMath(ref.current)`
-in an effect that returns its cleanup function. Observe a container once rather
+For a React frontend, a minimal integration preserves unsupported input as text
+and returns the observer's cleanup function:
+
+```tsx
+import { useEffect, useMemo, useRef } from 'react';
+import { createRenderer, VlxError } from 'vlx';
+import { observeMath } from 'vlx/dom';
+
+const renderer = createRenderer(); // bounded expression cache
+
+export function MathContent({ source }: { source: string }) {
+  const host = useRef<HTMLDivElement>(null);
+  const content = useMemo(() => {
+    try {
+      return { html: renderer.renderText(source).html };
+    } catch (error) {
+      if (!(error instanceof VlxError)) throw error;
+      return { error };
+    }
+  }, [source]);
+  useEffect(() => {
+    if (host.current) return observeMath(host.current);
+  }, [content]);
+  if ('error' in content) return <div>{source}</div>;
+  return <div ref={host} dangerouslySetInnerHTML={{ __html: content.html }} />;
+}
+```
+
+Only VLX's generated HTML goes into `dangerouslySetInnerHTML`; source prose is
+escaped by VLX, and the error fallback is a React text child. Feed this component
+the app's normalized text segments and preserve its surrounding list/figure
+components. It is not a replacement for a document or Markdown renderer.
+
+Observe a container once rather
 than installing observers on overlapping ancestors. A localized `scrollLabel`
 option can replace the default accessible name. Browser consumers of `vlx/dom`
 need TypeScript's DOM library; the root math declarations remain DOM-free.
@@ -73,7 +105,8 @@ explicit equation labels and mixed prose/figures. This requires those actual
 reader/browser combinations; an accessibility-tree snapshot cannot substitute
 for it. WebKit and Firefox rendering are also not covered by this Chrome gate.
 
-Application integration, public release packaging and production cutover remain
-separate from these verified package-level checks. A controlled application trial
-can now use the documented browser lifecycle and existing error fallback while
+The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0)
+ships this browser lifecycle. Application integration and production cutover
+remain separate from these verified package-level checks. A controlled application
+trial can use the documented lifecycle and existing text-on-error behavior while
 those final reader/browser checks are completed.

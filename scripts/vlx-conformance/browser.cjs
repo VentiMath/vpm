@@ -2,13 +2,14 @@
 // Isolated real-Chrome fixture: no user profile, application state or clipboard.
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),http=require('node:http'),assert=require('node:assert/strict');
 const {spawn,spawnSync}=require('node:child_process');
+const packageDir=path.resolve(process.env.VPM_VLX_PACKAGE_DIR||path.join(__dirname,'../../packages/vlx'));
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vlx-browser-'));
 const chrome=process.env.CHROME_BIN||['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome','/usr/bin/google-chrome','/usr/bin/chromium'].find(p=>fs.existsSync(p));
 assert.ok(chrome,'Set CHROME_BIN to Chrome');
 let server,child,socket,loaded;const errors=[];const pending=new Map();let sequence=0;
 const output=process.env.VLX_BROWSER_OUTPUT; if(output)fs.mkdirSync(output,{recursive:true});
 (async()=>{
- const entry=path.join(temp,'entry.mjs');fs.writeFileSync(entry,`import * as vlx from ${JSON.stringify(path.resolve(__dirname,'../../packages/vlx/index.mjs'))};import {observeMath} from ${JSON.stringify(path.resolve(__dirname,'../../packages/vlx/dom.mjs'))};window.vlx=vlx;window.observeMath=observeMath;window.ready=true;`);
+ const entry=path.join(temp,'entry.mjs');fs.writeFileSync(entry,`import * as vlx from ${JSON.stringify(path.join(packageDir,'index.mjs'))};import {observeMath} from ${JSON.stringify(path.join(packageDir,'dom.mjs'))};window.vlx=vlx;window.observeMath=observeMath;window.ready=true;`);
  const build=spawnSync('bun',['build',entry,'--target=browser','--outfile='+path.join(temp,'bundle.js')],{encoding:'utf8'});assert.equal(build.status,0,build.stdout+build.stderr);
  const html='<!doctype html><html lang="en"><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>VLX browser acceptance</title><style>body{overflow-wrap:anywhere;margin:0;padding:24px;font:20px/1.6 system-ui;background:#fff;color:#172332}*{box-sizing:border-box}main{max-width:100%;min-width:0}section{padding:12px;margin:12px 0;border:1px solid #8b939e;min-width:0}h1{font-size:24px}h2{font-size:18px;margin:0 0 8px}button{font:inherit;max-width:100%}body.dark{background:#131b26;color:#f5f7ff}body.dark section{border-color:#8b939e}</style></head><body><h1>VLX browser acceptance</h1><button id="before">Before formulas</button><main id="fixture"></main><button id="after">After formulas</button><script type="module" src="/bundle.js"></script></body></html>';
  server=http.createServer((req,res)=>{res.setHeader('Content-Type',req.url==='/bundle.js'?'text/javascript':'text/html');res.end(req.url==='/bundle.js'?fs.readFileSync(path.join(temp,'bundle.js')):html)});
@@ -67,7 +68,7 @@ const output=process.env.VLX_BROWSER_OUTPUT; if(output)fs.mkdirSync(output,{recu
  await evaluate(`document.querySelector('#wide').innerHTML=vlx.renderMath(${JSON.stringify(long)},{display:true}).html;true`);await settle();assert.equal(await evaluate('document.querySelector("#wide .vlx-math").getAttribute("tabindex")'),'0');
  await evaluate('document.querySelector("#wide .vlx-math").setAttribute("aria-label","Caller label");window.stop();window.stop();true');
  assert.equal(await evaluate('document.querySelector("#wide .vlx-math").getAttribute("tabindex")'),null);assert.equal(await evaluate('document.querySelector("#wide .vlx-math").getAttribute("aria-label")'),'Caller label');assert.equal(await evaluate(`(()=>{const p=document.querySelector('#prose'),r=document.createRange();r.selectNodeContents(p);getSelection().addRange(r);const event=new ClipboardEvent('copy',{bubbles:true,cancelable:true,clipboardData:new DataTransfer()});document.dispatchEvent(event);getSelection().removeAllRanges();return event.defaultPrevented})()`),false,'Teardown removes copy handling');checks.push('replacement-content observation and idempotent teardown preserve caller attributes');
- const sourceSHA256=Object.fromEntries(['index.cjs','layout.cjs','dom.cjs','font/glyphs.json'].map(file=>[file,require('node:crypto').createHash('sha256').update(fs.readFileSync(path.resolve(__dirname,'../../packages/vlx',file))).digest('hex')]));
+ const sourceSHA256=Object.fromEntries(['index.cjs','layout.cjs','dom.cjs','font/glyphs.json'].map(file=>[file,require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(packageDir,file))).digest('hex')]));
  const report={sourceSHA256,browser:(await send('Browser.getVersion')).product,checks,formulas:cases.length,roles,narrow,forced,manualScreenReaderSpeech:'Not exercised: browser accessibility-tree checks do not certify VoiceOver/NVDA speech or navigation.'};
  if(output){fs.writeFileSync(path.join(output,'browser-report.json'),JSON.stringify(report,null,2));fs.writeFileSync(path.join(output,'accessibility-tree.json'),JSON.stringify(axSummary,null,2));}
  assert.deepEqual(errors,[]);console.log(JSON.stringify(report));

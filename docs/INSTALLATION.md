@@ -1,5 +1,52 @@
 # Installing VPM packages
 
+## VLX math rendering
+
+The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0)
+provides the independent VentiMath math renderer for frontend integration:
+
+```sh
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0/vlx-0.1.0.tgz
+```
+
+Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
+No KaTeX stylesheet, engine selection, registry account or dependency overrides
+are needed. The archive pins `vpngjs` to its sibling release URL. That dependency
+supports the separate Node page-export entry; it is excluded from browser builds.
+The native PNG rasterizer is an optional peer and is not installed by this recipe.
+
+VLX is an original API, so **0.1.0 is its own version**, not a claim of KaTeX or
+MathJax version compatibility. The app must adapt its rendering calls rather than
+aliasing those packages to VLX. Keep existing legacy source normalization, list
+handling, figure descriptions and text-on-error behavior. See the
+[React integration example and accessibility checks](../packages/vlx/ACCESSIBILITY.md).
+
+Commit the app's package.json and bun.lock together and use
+`bun install --frozen-lockfile` in CI. This release makes the package consumable;
+it does not change or deploy the application. Actual reader/browser acceptance
+remains recorded separately from the automated Chrome checks.
+
+The release includes `vlx-0.1.0.tgz`, `vpngjs-7.0.0.tgz`,
+`consumer-package.json`, `release-manifest.json` and `SHA256SUMS`. The manifest
+records the committed source and exact archive/source hashes. Assets are
+immutable; revisions get new tags and URLs.
+
+```sh
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0 --out /absolute/path/to/empty-output
+node scripts/check-vlx-release.cjs /absolute/path/to/output
+# After publication:
+node scripts/check-vlx-release.cjs /absolute/path/to/output --published
+```
+
+The local checker uses npm's dependency override and Bun's exact extracted
+archives before public URLs exist. The published checker installs only the VLX
+URL with fresh npm/Bun caches and no overrides, verifies both packages against
+the manifest, checks frozen installs, CJS/ESM, TypeScript 7 browser consumers,
+and a browser build without Node/native/image engines. It runs the Chrome visual,
+keyboard and accessibility-tree suite against the installed archive itself.
+
+## Calendar
+
 The calendar packages are distributed as public GitHub Release archives. Their
 package versions match the **7.1.3 upstream API baseline**. The current release
 contains `vfullcalendar-react`, `vfullcalendar-core` and

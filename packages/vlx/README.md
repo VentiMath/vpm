@@ -12,6 +12,16 @@ TeX compatibility or a production cutover. Browser visual/accessibility-tree che
 now pass; actual screen-reader/browser acceptance remains open. See
 [browser integration and accessibility evidence](ACCESSIBILITY.md).
 
+Install the public release with no dependency overrides:
+
+```sh
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0/vlx-0.1.0.tgz
+```
+
+The release pins its VPM dependency to a sibling archive. See the
+[installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
+Version 0.1.0 identifies this original API, not upstream engine compatibility.
+
 ```js
 import { createRenderer } from 'vlx';
 const renderer = createRenderer();
@@ -123,5 +133,6 @@ Chrome exposes the expected structured math, and theme, zoom, reflow and keyboar
 checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interactive
 equation exploration still need validation.
 Arbitrary TeX packages, advanced macro programming, automatic equation references
-and every Unicode glyph are outside this verified scope. This package is not yet
-released or adopted by VentiMath; the atlas keeps those engine families in progress.
+and every Unicode glyph are outside this verified scope. The public release is
+available for integration; VentiMath adoption remains unverified, and the atlas
+keeps those engine families in progress.

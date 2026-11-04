@@ -42,7 +42,7 @@ not a decision to recreate an older upstream release.
 | `stripe` | 17.7.0 | Checkout sessions and signed completion webhooks in `functions/src/payments.ts` | [vstripe](../packages/vstripe): independent app-used APIs targeting current 23.1.0 completed; not released or adopted |
 | `mathjax-full` | 3.2.2 | TeX to SVG in `functions/src/problemImage.ts` | [VLX](../packages/vlx) shared engine and page renderer pass the 28 app picture tests; visual/accessibility acceptance and integration remain pending |
 | `@resvg/resvg-js` | 2.6.2 | SVG rasterization in `functions/src/problemImage.ts` | VLX currently reuses this native SVG rasterizer for optional PNG output; no independent rasterizer replacement |
-| `pngjs` | 7.0.0 | PNG image processing in `functions/src/problemImage.ts` | [vpngjs](../packages/vpngjs): independent synchronous reader completed, not released or adopted |
+| `pngjs` | 7.0.0 | PNG image processing in `functions/src/problemImage.ts` | [vpngjs](../packages/vpngjs): independent synchronous reader available in the VLX release; not adopted |
 
 The Stripe replacement covers Checkout session creation and raw-body snapshot
 webhook verification, with Node/Bun controls against both SDK 23.1.0 and the
@@ -76,6 +76,8 @@ it does not route between upstream math engines. Chrome theme, enlargement, refl
 Actual screen-reader/other-browser acceptance and application integration are
 still pending. The app continues to
 use KaTeX in the frontend and MathJax 3 for backend pictures; no cutover is claimed.
+The [VLX release](INSTALLATION.md#vlx-math-rendering) now supplies immutable
+archives for an application integration trial, with the VPM PNG dependency pinned.
 
 ## Reading progress correctly
 

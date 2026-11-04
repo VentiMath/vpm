@@ -79,6 +79,10 @@ jobs:
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: node scripts/vlx-conformance/archives.cjs
       - run: node scripts/vlx-conformance/browser.cjs
+      - name: Check VLX release archives
+        run: |
+          node scripts/pack-vlx-release.cjs --ref "$GITHUB_SHA" --tag vlx-0.1.0-ci --out "$RUNNER_TEMP/vlx-release"
+          node scripts/check-vlx-release.cjs "$RUNNER_TEMP/vlx-release"
       - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/png-conformance/archives.cjs
       - run: npm --prefix scripts/stripe-conformance ci --ignore-scripts --no-audit --no-fund

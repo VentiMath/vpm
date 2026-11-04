@@ -89,3 +89,10 @@ The committed [browser result](browser-coverage.json) records browser-tree evide
 not actual VoiceOver/NVDA speech. See the [acceptance scope](../../packages/vlx/ACCESSIBILITY.md).
 The Node CI job runs this gate. Clean archives also compile the new browser-only
 DOM declarations separately, while keeping root declarations free of DOM types.
+
+`VPM_VLX_PACKAGE_DIR=/absolute/path/to/node_modules/vlx` runs the same browser
+checks against an installed release instead of workspace source. The
+[release checker](../check-vlx-release.cjs) uses this path after verifying the
+archive's complete source manifest; its `--published` mode installs the root
+public URL with no overrides and checks frozen npm/Bun lockfiles. See the
+[release recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
