@@ -897,6 +897,13 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vradix-react-use-is-hydrated": {
+      "name": "vradix-react-use-is-hydrated",
+      "version": "0.1.3",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vradix-react-use-layout-effect": {
       "name": "vradix-react-use-layout-effect",
       "version": "1.1.4",
@@ -1452,6 +1459,8 @@
     "vradix-react-use-controllable-state": ["vradix-react-use-controllable-state@workspace:packages/vradix-react-use-controllable-state"],
 
     "vradix-react-use-effect-event": ["vradix-react-use-effect-event@workspace:packages/vradix-react-use-effect-event"],
+
+    "vradix-react-use-is-hydrated": ["vradix-react-use-is-hydrated@workspace:packages/vradix-react-use-is-hydrated"],
 
     "vradix-react-use-layout-effect": ["vradix-react-use-layout-effect@workspace:packages/vradix-react-use-layout-effect"],
 

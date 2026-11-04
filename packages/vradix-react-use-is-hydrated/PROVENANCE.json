@@ -1,0 +1,23 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-use-is-hydrated",
+    "version": "0.1.3",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/use-is-hydrated",
+    "checked": "2026-11-04",
+    "integrity": "sha512-umO/aJ+82CpOnhDZUTbILCQf7kU/g0iv+oGs/Q8jw7IkhWBzaEP4sA268PhFAJTFetbwp3ICc6ktpI4TqtxcIw=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "87a480430182bfaf3817adece5ac9184cef03f4fd7b7052f5e8d862010ca5093",
+    "dist/index.d.ts": "a14f65d52caea7e63e9ec02c488b89a64b1e965472a9f8b26ddb13a136a72c59",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19 useIsHydrated: false on server and initial hydration, true on client mounts and after hydration; independent roots and Roving Focus caller."
+  },
+  "changes": [
+    "Use the React 19 external-store contract directly, with shared snapshot/subscription callbacks.",
+    "Omit legacy React fallback and process-global hydration state; zero runtime dependencies."
+  ]
+}
