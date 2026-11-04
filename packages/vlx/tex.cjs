@@ -1,15 +1,17 @@
 'use strict';
 const {VlxError}=require('./source.cjs');
 const symbols={alpha:'α',beta:'β',gamma:'γ',delta:'δ',epsilon:'ϵ',varepsilon:'ε',zeta:'ζ',eta:'η',theta:'θ',vartheta:'ϑ',iota:'ι',kappa:'κ',lambda:'λ',mu:'μ',nu:'ν',xi:'ξ',pi:'π',rho:'ρ',sigma:'σ',tau:'τ',upsilon:'υ',phi:'ϕ',varphi:'φ',chi:'χ',psi:'ψ',omega:'ω',Gamma:'Γ',Delta:'Δ',Theta:'Θ',Lambda:'Λ',Xi:'Ξ',Pi:'Π',Sigma:'Σ',Phi:'Φ',Psi:'Ψ',Omega:'Ω',times:'×',div:'÷',pm:'±',mp:'∓',cdot:'⋅',circ:'∘',infty:'∞',le:'≤',leq:'≤',ge:'≥',geq:'≥',ne:'≠',neq:'≠',approx:'≈',equiv:'≡',in:'∈',notin:'∉',subset:'⊂',subseteq:'⊆',supset:'⊃',supseteq:'⊇',cup:'∪',cap:'∩',intersect:'∩',emptyset:'∅',forall:'∀',exists:'∃',neg:'¬',land:'∧',lor:'∨',to:'→',rightarrow:'→',leftarrow:'←',leftrightarrow:'↔',Rightarrow:'⇒',Leftarrow:'⇐',Leftrightarrow:'⇔',ldots:'…',cdots:'⋯',vdots:'⋮',ddots:'⋱',partial:'∂',nabla:'∇',angle:'∠',perp:'⊥',parallel:'∥',prime:'′',langle:'⟨',rangle:'⟩',lceil:'⌈',rceil:'⌉',lfloor:'⌊',rfloor:'⌋',vert:'|',Vert:'‖'};
-Object.assign(symbols,{dots:'…',triangle:'△',ell:'ℓ',leqq:'≦',geqq:'≧',colon:':',bullet:'•',varnothing:'∅',mapsto:'↦',iff:'⇔',Longrightarrow:'⟹',Longleftrightarrow:'⟺',lnot:'¬',mid:'∣',subsetneq:'⊊',setminus:'∖','|':'‖'});
+Object.assign(symbols,{cong:'≅',sim:'∼',simeq:'≃',nmid:'∤',nparallel:'∦',leqslant:'⩽',geqslant:'⩾',nsim:'≁',ncong:'≇',dots:'…',triangle:'△',ell:'ℓ',leqq:'≦',geqq:'≧',colon:':',bullet:'•',varnothing:'∅',mapsto:'↦',iff:'⇔',Longrightarrow:'⟹',Longleftrightarrow:'⟺',lnot:'¬',mid:'∣',subsetneq:'⊊',setminus:'∖','|':'‖'});
+// Prefer dedicated negated glyphs; other single symbols use an explicit strike.
+const negated={'=':'≠','∼':'≁','≃':'≄','≅':'≇','≈':'≉','≡':'≢','∈':'∉','∣':'∤','∥':'∦','≤':'≰','≥':'≱','<':'≮','>':'≯','⊂':'⊄','⊃':'⊅','⊆':'⊈','⊇':'⊉','→':'↛','←':'↚','↔':'↮','⇒':'⇏','⇐':'⇍','⇔':'⇎'};
 const fonts={mathrm:'normal',mathit:'italic',mathbf:'bold',mathbb:'double-struck',mathcal:'calligraphic',mathscr:'script',mathsf:'sans-serif',mathtt:'monospace'};
 const functions='sin cos tan sec csc cot sinh cosh tanh log ln exp min max lim limsup liminf sup inf gcd det deg arcsin arccos arctan'.split(' ');
 const decorations='boxed underline overline overarc arc overgroup bar vec overrightarrow overleftarrow overleftrightarrow hat widehat underbrace overbrace'.split(' ');
-const classify=c=>/[=<>≤≥≠≈≡∈∉⊂⊆⊃⊇→←↔⇒⇐⇔⊥∥]/u.test(c)?'rel':/[+−×÷±∓⋅∪∩∧∨]/u.test(c)?'bin':/[([{⟨⌈⌊]/u.test(c)?'open':/[)\]}⟩⌉⌋]/u.test(c)?'close':/[,;:]/.test(c)?'punct':'ord';
+const classify=c=>/[=<>≤≥≠≈≡∈∉⊂⊆⊃⊇→←↔⇒⇐⇔⊥∥≅∼≃∣∤∦⩽⩾≁≄≇≉≢≰≱≮≯⊄⊅⊈⊉↛↚↮⇏⇍⇎≦≧↦⟹⟺⊊]/u.test(c)?'rel':/[+−×÷±∓⋅∪∩∧∨]/u.test(c)?'bin':/[([{⟨⌈⌊]/u.test(c)?'open':/[)\]}⟩⌉⌋]/u.test(c)?'close':/[,;:]/.test(c)?'punct':'ord';
 function parseMath(source){
  if(typeof source!=='string')throw new TypeError('TeX must be a string');
  if(source.length>16384)throw new VlxError('LIMIT','At most 16384 TeX characters are supported');
- source=require('./macros.cjs').expand(source,new Set([...Object.keys(symbols),...Object.keys(fonts),...functions,...decorations,...'phantom hphantom vphantom binom dbinom tbinom textit textbf texttt textsc emph pmod bmod mod bigcup bigcap iint iiint tt rm bf it displaystyle textstyle scriptstyle scriptscriptstyle multicolumn over tag hspace makebox limits nolimits big bigl bigr bigm Big Bigl Bigr Bigm bigg biggl biggr biggm Bigg Biggl Biggr Biggm substack frac dfrac tfrac sqrt left right begin end text mbox operatorname mathrm mathit mathbf mathbb boxed underline overline overarc arc color textcolor enclose sum prod int sin cos tan log ln exp min max lim arcsin arccos arctan quad qquad'.split(' ')]));
+ source=require('./macros.cjs').expand(source,new Set([...Object.keys(symbols),...Object.keys(fonts),...functions,...decorations,...'not phantom hphantom vphantom binom dbinom tbinom textit textbf texttt textsc emph pmod bmod mod bigcup bigcap iint iiint tt rm bf it displaystyle textstyle scriptstyle scriptscriptstyle multicolumn over tag hspace makebox limits nolimits big bigl bigr bigm Big Bigl Bigr Bigm bigg biggl biggr biggm Bigg Biggl Biggr Biggm substack frac dfrac tfrac sqrt left right begin end text mbox operatorname mathrm mathit mathbf mathbb boxed underline overline overarc arc color textcolor enclose sum prod int sin cos tan log ln exp min max lim arcsin arccos arctan quad qquad'.split(' ')]));
  let i=0,count=0,depth=0,activeStop=()=>false;
  const fail=message=>{throw new VlxError('TEX',message,{start:i})};
  const node=value=>{if(++count>4096)throw new VlxError('LIMIT','Expression has too many nodes');return value};
@@ -53,6 +55,12 @@ function parseMath(source){
   if(c==='\\'){
    const command=word();
    if(Object.hasOwn(symbols,command))return node({kind:'symbol',text:symbols[command],class:classify(symbols[command])});
+   if(command==='not'){
+    let body=group();while(body.kind==='row'&&body.children.length===1)body=body.children[0];
+    if(body.kind!=='symbol')fail('Negation requires a single mathematical symbol');
+    if(Object.hasOwn(negated,body.text))return node({kind:'symbol',text:negated[body.text],class:body.class});
+    return node({kind:'negation',body,class:body.class});
+   }
    if(['binom','dbinom','tbinom'].includes(command))return node({kind:'binomial',numerator:group(),denominator:group(),style:command});
    if(['frac','dfrac','tfrac'].includes(command))return node({kind:'fraction',numerator:group(),denominator:group(),style:command});
    if(command==='sqrt'){skip();let index;if(source[i]==='['){i++;index=row(()=>source[i]===']');if(source[i]!==']')fail('Unclosed root index');i++;}return node({kind:'root',body:group(),index});}

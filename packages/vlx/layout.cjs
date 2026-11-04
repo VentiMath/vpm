@@ -32,6 +32,11 @@ function layout(ast,options={}){
    const b=glyph(ast.text,ast.large&&display?'-largeop':style);
    const identifier=ast.class==='ord'&&/^[\p{L}]$/u.test(ast.text);b.mml=`<${identifier?'mi':'mo'}>${escape(ast.text)}</${identifier?'mi':'mo'}>`;return b;
   }
+  case 'negation':{
+   const b=child(ast.body),h=Math.max(b.h,.7),d=Math.max(b.d,.15),x0=b.w*.18,x1=b.w*.82;
+   const tag=ast.body.class==='ord'&&/^[\p{L}]$/u.test(ast.body.text)?'mi':'mo';
+   return box(b.w,h+.025,d+.025,b.svg+`<path d="M ${n(x0)} ${n(d)} L ${n(x1)} ${n(-h)}" fill="none" stroke="currentColor" stroke-width=".05"/>`,`<${tag}>${escape(ast.body.text)}&#x338;</${tag}>`);
+  }
   case 'number':{const b=text(ast.text,font||'normal');b.mml='<mn>'+escape(ast.text)+'</mn>';return b;}
   case 'text':{const value=typography(ast.text);let b;if(ast.font==='small-caps'){b=box(0,0,0,'','');for(const c of value){const small=c!==c.toUpperCase(),part=text(c.toUpperCase(),font||'normal'),scale=small?.8:1;b.svg+=move(part,b.w,0,scale);b.w+=part.w*scale;b.h=Math.max(b.h,part.h*scale);b.d=Math.max(b.d,part.d*scale);}}else b=text(value,ast.font||font||'normal');b.mml=ast.operator?'<mi mathvariant="normal">'+escape(ast.text)+'</mi>':'<mtext>'+escape(ast.text)+'</mtext>';if(ast.font&&ast.font!=='small-caps')b.mml='<mstyle mathvariant="'+ast.font+'">'+b.mml+'</mstyle>';return b;}
   case 'space':return box(ast.width,0,0,'',`<mspace width="${ast.width}em"/>`);

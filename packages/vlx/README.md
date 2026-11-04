@@ -16,12 +16,18 @@ now pass; actual screen-reader/browser acceptance remains open. See
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r2/vlx-0.1.0.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Version 0.1.0 identifies this original API, not upstream engine compatibility.
+
+Release revision **r2** fixes missing contest relations: `\cong`, `\sim`,
+`\nmid`, `\leqslant` and related forms, plus `\not` applied to one mathematical
+symbol. It corrects relation spacing and supplies both outlined glyphs and
+MathML semantics. The original release assets remain unchanged. Production-wide
+coverage is still being evaluated separately from the local corpus below.
 
 An **npm registry mirror is planned** for VentiLaTeX. It will distribute the same
 implementation and versioned API, with the same licenses and provenance. GitHub
@@ -69,6 +75,11 @@ export needs no native rasterizer. `vlx/png` also exports asynchronous
   `parse()` and rejected by rendering. Prose is escaped, never interpreted as HTML.
 - Fractions and infix `\over`, indexed roots, scripts and primes, binomials,
   common Greek/math symbols, named operators, integrals and display limits.
+- Congruence, similarity, divisibility and slanted inequalities, including
+  `\cong`, `\sim`, `\simeq`, `\mid`, `\nmid`, `\leqslant`, `\geqslant`,
+  `\nsim`, `\ncong` and `\nparallel`. `\not` accepts a single symbol (optionally
+  braced), using a dedicated negated glyph when available and a diagonal strike
+  otherwise. Negating an arbitrary compound expression remains unsupported.
 - Math font variants, nested styled text with inline math, phantom boxes, scoped
   colors, arrows, hats, bars, arcs, braces, enclosures and explicit dimensions.
 - Matrices, arrays, aligned/gathered equations, cases, solid/dashed rules and
@@ -109,7 +120,7 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   including paragraph/image geometry, rules, choices and corruption rejection.
   Private tests are loaded from Git into a temporary directory, never copied here.
 - [Public tests](test/contracts.test.cjs), [page checks](test/problem.test.cjs) and
-  [30 synthetic notation cases](../../scripts/vlx-conformance/corpus.cjs) run on
+  [34 synthetic notation cases](../../scripts/vlx-conformance/corpus.cjs) run on
   Node 24 and Bun. MathJax 4.1.3 supplies semantic/visual controls and KaTeX 0.19.1
   supplies capability/performance controls. Token comparison normalizes equivalent
   font characters, double primes and invisible operator markers; it is not a proof
@@ -127,7 +138,7 @@ contains the summary and source hash; the [local benchmark runner](../../scripts
 reproduces these checks without copying application code into VPM. These are
 steady-state local workloads, not deployed latency guarantees.
 
-The font data is an **875 KB subset of New Computer Modern metrics/outlines**,
+The font data is an **895 KB subset of New Computer Modern metrics/outlines**,
 including the needed math variants and Latin prose characters. It comes from
 `@mathjax/mathjax-newcm-font` 4.1.3 and retains its [license and attribution](font/NOTICE).
 [Extraction](../../scripts/vlx-conformance/build-font.cjs) is reproducible; no

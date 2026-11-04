@@ -3,14 +3,14 @@
     "kind": "independent parser and layout implementation",
     "replacementStatus": "browser integration candidate; actual reader/browser acceptance and application cutover pending",
     "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation.",
-    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks, WebKit/Firefox visual acceptance, application integration/release and production-corpus inventory. Advanced TeX and automatic equation references remain outside the verified scope."
+    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks, WebKit/Firefox visual acceptance, application integration and production-corpus inventory. Advanced TeX and automatic equation references remain outside the verified scope."
   },
   "fontData": {
     "package": "@mathjax/mathjax-newcm-font",
     "version": "4.1.3",
     "license": "Apache-2.0",
     "source": "https://www.npmjs.com/package/@mathjax/mathjax-newcm-font",
-    "sha256": "35a248c30c8574e37f6091cb496516178300cfdb0b47ee1b2ba7f17dc9f3dd76",
+    "sha256": "3bce921865a7edafcf6bb431ba88c587844d057d9885207871a7d340841a1d52",
     "approach": "Selected numeric glyph metrics and SVG outlines, flattened to JSON. No upstream executable code ships with the math engine."
   },
   "referenceEngines": {
@@ -31,7 +31,8 @@
     "All 8470 math spans and 1275 normalized full statements render in the audited 89-file local corpus; this is not a production-wide or visual-equivalence claim.",
     "Browser HTML inherits theme and font size, honors forced system colors and keeps enlarged equations within local scroll bounds.",
     "Optional DOM lifecycle adds tab stops only for overflow, selected-TeX copying, replacement observation and owned-attribute cleanup.",
-    "Chrome visual/accessibility-tree gate verifies 30 formulas, reading structure, phantom exclusion, zoom/reflow and real keyboard scrolling. This is not a claim of actual screen-reader acceptance.",
-    "Validate font-size/display options before cache lookup; invalid non-finite sizes cannot collide with the inherited-size cache entry."
+    "Chrome visual/accessibility-tree gate verifies 34 formulas, reading structure, phantom exclusion, zoom/reflow and real keyboard scrolling. This is not a claim of actual screen-reader acceptance.",
+    "Validate font-size/display options before cache lookup; invalid non-finite sizes cannot collide with the inherited-size cache entry.",
+    "Add contest congruence, similarity, divisibility and slanted inequality commands with relation spacing; single-symbol negation uses dedicated glyphs or a visible strike with MathML combining negation. Verified against KaTeX and MathJax controls."
   ]
 }

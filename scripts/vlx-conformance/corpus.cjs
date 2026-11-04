@@ -31,4 +31,8 @@ module.exports=[
  ['equation label',String.raw`a^2+b^2=c^2\tag{3}`],
  ['explicit spacing',String.raw`a\hspace{12pt}b+\sqrt{\makebox[4mm]{}}`],
  ['extra symbols',String.raw`\triangle ABC,\ell,\mapsto,\subsetneq,\bigcup_{i=1}^3 A_i`],
+ ['contest relations',String.raw`\triangle ABC\cong\triangle DEF,\quad x\sim y,\quad p\nmid n`],
+ ['slanted inequalities',String.raw`a\leqslant b\geqslant c,\quad a\not\leqslant b,\quad b\not\geqslant c`],
+ ['negated relations',String.raw`x\not= y,\quad x\not\in A,\quad A\not\subseteq B,\quad a\not\mid b`],
+ ['negated similarity',String.raw`a\not\cong b,\quad a\not\sim b,\quad a\simeq b,\quad a\nparallel b`],
 ];

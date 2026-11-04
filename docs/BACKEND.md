@@ -67,7 +67,7 @@ needs caller evidence, not merely a package count.
 and complete problem SVG/PNG pages, including prose, figures and choice grids.
 All 28 unchanged application picture tests pass on Bun. Its local corpus audit
 renders 8,470 math spans and 1,275 full normalized statements; that snapshot is
-not a production-wide inventory or proof of visual equivalence. Thirty public
+not a production-wide inventory or proof of visual equivalence. Thirty-four public
 synthetic cases and page geometry/corruption checks run on Node 24 and Bun.
 
 KaTeX 0.19.1 and MathJax 4.1.3 remain test controls. VLX reuses attributed font

@@ -9,13 +9,13 @@ VentiMath has not switched its renderers yet.
 
 | Area | Evidence |
 | --- | --- |
-| Mathematical structure | Chrome exposes exactly one MathML root for each of 30 synthetic formulas, including fraction, root, script, limit and table roles. Numerator/denominator reading order is checked. |
+| Mathematical structure | Chrome exposes exactly one MathML root for each of 34 synthetic formulas, including fraction, root, script, limit and table roles. Numerator/denominator reading order is checked. |
 | Duplicate and invisible content | Decorative SVGs and phantom text are excluded from the accessibility tree. TeX annotations do not create a second spoken expression in that tree. |
 | Themes and sizing | Default HTML inherits its parent's color and font size. Both 200% and 400% text enlargement preserve the enlarged math. Explicit `fontSize` remains supported. |
 | High contrast | System forced colors replace authored formula colors as well as default ink. Normal display preserves authored colors; callers remain responsible for their contrast against ordinary theme backgrounds. |
 | Reflow | At 320 CSS px, prose wraps and oversized formulas scroll inside their own bounds; they do not widen the page or shrink away the user's text enlargement. |
 | Keyboard | With `observeMath`, only overflowing formulas enter the tab order. Tab reaches them, arrow keys scroll, and Tab leaves without a trap. Resizing back to fit removes the added tab stop. |
-| Inline alignment and clipping | Inline math shares the prose baseline; all 30 fixture outline bounds fit their SVG viewports. Light, dark, narrow and enlarged screenshots are generated for inspection. |
+| Inline alignment and clipping | Inline math shares the prose baseline; all 34 fixture outline bounds fit their SVG viewports. Light, dark, narrow and enlarged screenshots are generated for inspection. |
 | Copying | With `observeMath`, mixed prose/formula selections copy each whole formula once as authored TeX. Tests use an in-memory copy event, without touching the OS clipboard. |
 | Lifecycle | Replacement content is observed; cleanup disconnects listeners/observers and removes only attributes VLX added, preserving caller changes. |
 
@@ -105,7 +105,7 @@ explicit equation labels and mixed prose/figures. This requires those actual
 reader/browser combinations; an accessibility-tree snapshot cannot substitute
 for it. WebKit and Firefox rendering are also not covered by this Chrome gate.
 
-The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0)
+The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r2)
 ships this browser lifecycle. Application integration and production cutover
 remain separate from these verified package-level checks. A controlled application
 trial can use the documented lifecycle and existing text-on-error behavior while

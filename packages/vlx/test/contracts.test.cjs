@@ -11,6 +11,24 @@ test('TeX token boundaries, scripts, roots and mathematical semantics',()=>{
  const a=parseMath(String.raw`\frac12`).children[0];assert.equal(a.numerator.text,'1');assert.equal(a.denominator.text,'2');const b=parseMath('x^12').children;assert.equal(b[0].sup.text,'1');assert.equal(b[1].text,'2');assert.equal(parseMath(String.raw`\sqrt12`).children[0].body.text,'1');assert.match(renderMath('x_1^2').mathml,/<msubsup>/);assert.match(renderMath(String.raw`\sqrt[3]{x}`).mathml,/<mroot>/);assert.match(renderMath(String.raw`\mathbb{R}`).mathml,/ℝ/);assert.throws(()=>renderMath(String.raw`\newcommand{\frac}{9}\frac`),{code:'TEX'});for(const bad of [String.raw`\constructor`,String.raw`\toString`,'#','$'])assert.throws(()=>renderMath(bad),{code:'TEX'});
 });
 test('prose escaping and expressions share one output path',()=>{const r=createRenderer(),out=r.renderText('<b> $x$ & $y$');assert.match(out.html,/^&lt;b&gt; /);assert.match(out.html,/ &amp; /);assert.equal(out.nodes[1].svg,r.renderMath('x').svg);assert.throws(()=>r.renderText('$unclosed'),{code:'UNCLOSED_MATH'});const svg=r.renderMath(String.raw`\color{red}{x}`);assert.match(svg.svg,/color="red"/);assert.doesNotMatch(svg.svg,/MathJax|katex|<text|href=/)});
+test('contest relations and single-symbol negation retain glyphs, semantics and spacing',()=>{
+ const relations={cong:'≅',sim:'∼',simeq:'≃',mid:'∣',nmid:'∤',parallel:'∥',nparallel:'∦',leqslant:'⩽',geqslant:'⩾',nsim:'≁',ncong:'≇'};
+ for(const [command,char]of Object.entries(relations)){
+  const tex='a\\'+command+' b',ast=parseMath(tex);assert.equal(ast.children[1].class,'rel');
+  const result=renderMath(tex);assert.ok(result.mathml.includes('<mo>'+char+'</mo>'));assert.match(result.svg,/<path/);
+  assert.ok(result.width>renderMath('ab').width+renderMath('\\'+command).width+6,'Relation spacing around '+command);
+ }
+ for(const [input,output]of Object.entries({'=':'≠','\\sim':'≁','\\cong':'≇','\\in':'∉','\\mid':'∤','\\parallel':'∦','\\leq':'≰','\\geq':'≱','<':'≮','>':'≯','\\subset':'⊄','\\supset':'⊅','\\subseteq':'⊈','\\supseteq':'⊉','\\rightarrow':'↛','\\leftarrow':'↚','\\leftrightarrow':'↮','\\Rightarrow':'⇏','\\Leftarrow':'⇍','\\Leftrightarrow':'⇎'})){
+  assert.equal(renderMath('\\not'+input).svg,renderMath(output).svg.replace(/<title>.*?<\/title>/,()=>'<title>'+('\\not'+input).replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</title>'));
+  assert.ok(renderMath('\\not'+input).mathml.includes('<mo>'+output+'</mo>'));
+ }
+ for(const tex of [String.raw`\not\leqslant`,String.raw`\not\geqslant`]){const result=renderMath(tex);assert.match(result.svg,/stroke-width=".05"/);assert.match(result.mathml,/&#x338;/);assert.equal(parseMath(tex).children[0].class,'rel');}
+ assert.match(renderMath(String.raw`\not{x}`).mathml,/<mi>x&#x338;<\/mi>/);
+ assert.match(renderMath(String.raw`\not{=}_1`).mathml,/<msub><mo>≠<\/mo>/);
+ assert.equal(parseMath(String.raw`\not\in A`).children.length,2);
+ for(const tex of [String.raw`\not`,String.raw`\not{}`,String.raw`\not{xy}`,String.raw`\not\frac12`,String.raw`\newcommand{\not}{x}`])assert.throws(()=>renderMath(tex),{code:'TEX'});
+ assert.throws(()=>renderMath('\\not'.repeat(100)+'='),{code:'LIMIT'});
+});
 test('independent layout against current engines and actual PNG pixels',()=>{const r=spawnSync(process.execPath,[path.resolve(__dirname,'../../../scripts/vlx-conformance/run.cjs')],{encoding:'utf8',timeout:90000});assert.equal(r.status,0,r.stdout+r.stderr)});
 
 test('prime runs, font variants, scoped declarations and nested text retain meaning',()=>{

@@ -39,7 +39,7 @@ const output=process.env.VLX_BROWSER_OUTPUT; if(output)fs.mkdirSync(output,{recu
  const fraction=descendants(findMath[0].nodeId).find(n=>n.role?.value==='MathMLFraction');
  const values=fraction.childIds.map(id=>descendants(id).filter(n=>!n.ignored&&n.role?.value==='StaticText').map(n=>n.name?.value).join(''));
  assert.deepEqual(values,['3','7'],'Numerator and denominator preserve reading order');
- const checks=['30 formulas expose one MathML root each','fraction/root/script/limit/table accessibility structure','phantom content and decorative SVG excluded','light/dark themes','inherited 200% text enlargement','unclipped formula outlines'];
+ const checks=[cases.length+' formulas expose one MathML root each','fraction/root/script/limit/table accessibility structure','phantom content and decorative SVG excluded','light/dark themes','inherited 200% text enlargement','unclipped formula outlines'];
  const screenshot=async name=>{if(output){const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true});fs.writeFileSync(path.join(output,name+'.png'),Buffer.from(shot.data,'base64'));}};
  await evaluate('document.body.style.fontSize="20px";true');
  for(const theme of ['light','dark']){await evaluate('document.body.className='+JSON.stringify(theme==='dark'?'dark':'')+';true');await screenshot(theme);}

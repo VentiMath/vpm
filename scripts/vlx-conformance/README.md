@@ -1,11 +1,19 @@
 # VentiLaTeX (VLX) reference fixtures
 
+Contest-relation regressions cover `\cong`, `\sim`, `\nmid`, `\leqslant`
+and single-symbol `\not`, including negated slanted inequalities. The synthetic
+cases compare mathematical tokens against both pinned engines and render real
+PNG pixels. Command spellings are documented in
+[KaTeX's supported functions](https://katex.org/docs/supported.html).
+Production-wide coverage is a separate consumer audit; these fixtures do not
+claim that every production expression is supported.
+
 KaTeX 0.19.1, MathJax 4.1.3, New Computer Modern font data 4.1.3 and resvg 2.6.2
 are pinned controls. Neither math engine is a VLX runtime dependency.
 `check-lock.cjs` requires every resvg platform binary in the lockfile, including
 Linux CI artifacts when the lock is prepared on macOS.
 
-`run.cjs` covers 30 synthetic notation cases with independent VLX layout,
+`run.cjs` covers 34 synthetic notation cases with independent VLX layout,
 semantic token comparison, raster ink and rule checks. `VLX_OUTPUT=/path` writes
 a side-by-side SVG/PNG sheet and capability report. Equivalent Unicode font
 characters, double primes, invisible operator markers and existing accent wrapper
@@ -77,7 +85,7 @@ packages, or change adoption status.
 ## Browser acceptance
 
 `browser.cjs` bundles the real root/DOM entries and launches an isolated Chrome
-profile. It checks 30 unclipped formula viewports, one exposed MathML root per
+profile. It checks 34 unclipped formula viewports, one exposed MathML root per
 formula, fraction reading order, script/root/limit/table roles, phantom exclusion,
 light/dark colors, 200%/400% text enlargement, 320px reflow, local keyboard scrolling,
 forced colors including authored colors, selected-source copying and lifecycle

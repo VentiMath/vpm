@@ -3,11 +3,11 @@
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r2)
 provides its `vlx` package for frontend integration:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r2/vlx-0.1.0.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -15,6 +15,12 @@ No KaTeX stylesheet, engine selection, registry account or dependency overrides
 are needed. The archive pins `vpngjs` to its sibling release URL. That dependency
 supports the separate Node page-export entry; it is excluded from browser builds.
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
+
+Revision **r2** adds the reported contest relations (`\cong`, `\sim`, `\nmid`,
+`\leqslant`) and single-symbol `\not` forms with corresponding outlines,
+relation spacing and MathML. Update the URL to select this revision; the first
+release's archives are unchanged. The app's full production-math comparison is
+separate from the verified local corpus and synthetic checks.
 
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
@@ -37,7 +43,7 @@ records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r2 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published

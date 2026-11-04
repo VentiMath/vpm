@@ -12,7 +12,10 @@ const tokens=mml=>[...mml.matchAll(/<(mi|mn|mo|mtext)\b[^>]*>(.*?)<\/\1>/gs)].ma
   if(control&&!['overarc','colored formula','text'].includes(name))assert.equal(tokens(r.mathml),tokens(control.mathml),name+' semantic tokens');
   const png=await renderPng(renderer,tex),decoded=PNG.sync.read(png.data);assert.equal(decoded.width,png.width);assert.equal(decoded.height,png.height);assert.ok(decoded.data.some((v,i)=>i%4!==3&&v<240),name+' visible ink');
   if(name==='array rule'){let line=false;for(let y=0;y<decoded.height;y++){let dark=0;for(let x=0;x<decoded.width;x++)if(decoded.data[(y*decoded.width+x)*4]<100)dark++;if(dark>decoded.width*.8)line=true;}assert.ok(line,'array rule remains visible');}
-  let katex='pass';try{references.katex(tex)}catch{ katex='unsupported' }
+  let katex='pass',katexOutput;try{katexOutput=references.katex(tex)}catch{ katex='unsupported' }
+  if(['contest relations','slanted inequalities','negated relations','negated similarity'].includes(name)){
+   assert.equal(katex,'pass',name+' KaTeX support');assert.equal(tokens(r.mathml),tokens(katexOutput),name+' KaTeX semantics');
+  }
   report.push({name,vlx:'pass',mathjax:control?'pass':'unsupported',katex});pictures.push({name,r,control});
  }
  if(process.env.VLX_OUTPUT){
