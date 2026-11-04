@@ -63,7 +63,7 @@ needs caller evidence, not merely a package count.
 
 ## Unified math rendering
 
-[VLX](../packages/vlx) now independently parses TeX and lays out browser formulas
+[VentiLaTeX (VLX)](../packages/vlx), pronounced “Vee Ell Ex,” independently parses TeX and lays out browser formulas
 and complete problem SVG/PNG pages, including prose, figures and choice grids.
 All 28 unchanged application picture tests pass on Bun. Its local corpus audit
 renders 8,470 math spans and 1,275 full normalized statements; that snapshot is

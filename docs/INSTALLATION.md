@@ -2,8 +2,9 @@
 
 ## VLX math rendering
 
-The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0)
-provides the independent VentiMath math renderer for frontend integration:
+**VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0)
+provides its `vlx` package for frontend integration:
 
 ```sh
 bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0/vlx-0.1.0.tgz
@@ -14,6 +15,10 @@ No KaTeX stylesheet, engine selection, registry account or dependency overrides
 are needed. The archive pins `vpngjs` to its sibling release URL. That dependency
 supports the separate Node page-export entry; it is excluded from browser builds.
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
+
+An npm registry mirror is planned for the same implementation and versioned API,
+including its licenses and provenance. GitHub Release archives remain the current
+installation source; the npm mirror has not been published.
 
 VLX is an original API, so **0.1.0 is its own version**, not a claim of KaTeX or
 MathJax version compatibility. The app must adapt its rendering calls rather than

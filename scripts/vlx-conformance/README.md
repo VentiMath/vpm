@@ -1,4 +1,4 @@
-# VLX reference fixtures
+# VentiLaTeX (VLX) reference fixtures
 
 KaTeX 0.19.1, MathJax 4.1.3, New Computer Modern font data 4.1.3 and resvg 2.6.2
 are pinned controls. Neither math engine is a VLX runtime dependency.
@@ -24,7 +24,7 @@ less-than signs that cannot be embedded as XML attributes.
 
 `build-font.cjs --check` reproduces the selected numeric metrics and outlines.
 The JSON contains no executable engine code. Clean archives include attribution.
-`archives.cjs` installs with npm/Bun, explicitly points the unreleased vpngjs
+`archives.cjs` installs with npm/Bun, explicitly points the workspace vpngjs
 sibling to its packed archive, checks CJS/ESM and DOM-free TS7, builds browser math
 without Node dependencies, then explicitly installs the optional native rasterizer
 and renders expression and problem PNGs. Release packaging must pin sibling VPM

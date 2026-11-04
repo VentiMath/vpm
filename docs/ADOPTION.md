@@ -54,7 +54,7 @@ Functions 7.4.0, not VPM archives. Its Admin modular-import migration is complet
 VPM adoption remains separate. [Backend coverage](BACKEND.md) records implemented
 application paths and the remaining payment/image dependencies.
 
-The `vlx-0.1.0` release makes VLX and its pinned `vpngjs` dependency available
+The `vlx-0.1.0` release makes VentiLaTeX (VLX) and its pinned `vpngjs` dependency available
 for the frontend math-rendering cutover. The [installation recipe](INSTALLATION.md#vlx-math-rendering)
 uses one public URL, and browser imports exclude the Node image-export path.
 Publication is not adoption: no VLX application cutover is verified here, so the

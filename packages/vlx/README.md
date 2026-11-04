@@ -1,6 +1,7 @@
-# VLX — VentiMath typesetting
+# VentiLaTeX (VLX)
 
-VLX is an independent TeX parser and layout engine for VentiMath's web formulas
+**VentiLaTeX**, pronounced **“Vee Ell Ex,”** is the math typesetting system
+distributed as `vlx`. It is an independent TeX parser and layout engine for VentiMath's web formulas
 and problem pictures. One layout produces SVG, accessible MathML and browser
 HTML; a Node entry composes complete pages and exports PNGs. There is no engine
 selector or KaTeX/MathJax fallback.
@@ -21,6 +22,11 @@ bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0/vlx-0.1
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Version 0.1.0 identifies this original API, not upstream engine compatibility.
+
+An **npm registry mirror is planned** for VentiLaTeX. It will distribute the same
+implementation and versioned API, with the same licenses and provenance. GitHub
+Release archives are the current distribution channel; npm publication is future
+work. The package name and import paths remain `vlx` and `vlx/*`.
 
 ```js
 import { createRenderer } from 'vlx';

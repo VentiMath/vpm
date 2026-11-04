@@ -1,6 +1,6 @@
-# Browser and accessibility verification
+# VentiLaTeX browser and accessibility verification
 
-VLX's browser output is ready for an application integration trial. The automated
+VentiLaTeX (VLX, pronounced “Vee Ell Ex”) is ready for a browser integration trial. The automated
 checks below pass in Chrome 156.0.8078.76. They do **not** certify screen-reader
 speech, every browser/assistive-technology combination, or WCAG conformance.
 VentiMath has not switched its renderers yet.
