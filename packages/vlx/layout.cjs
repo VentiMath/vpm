@@ -39,7 +39,7 @@ function layout(ast,options={}){
    return box(b.w,h+.025,d+.025,b.svg+`<path d="M ${n(x0)} ${n(d)} L ${n(x1)} ${n(-h)}" fill="none" stroke="currentColor" stroke-width=".05"/>`,`<${tag}>${escape(ast.body.text)}&#x338;</${tag}>`);
   }
   case 'number':{const b=text(ast.text,weight(font||'normal'));b.mml='<mn'+(bold?' mathvariant="'+weight(font||'normal')+'"':'')+'>'+escape(ast.text)+'</mn>';return b;}
-  case 'text':{const value=typography(ast.text);let b;if(ast.font==='small-caps'){b=box(0,0,0,'','');for(const c of value){const small=c!==c.toUpperCase(),part=text(c.toUpperCase(),weight(font||'normal')),scale=small?.8:1;b.svg+=move(part,b.w,0,scale);b.w+=part.w*scale;b.h=Math.max(b.h,part.h*scale);b.d=Math.max(b.d,part.d*scale);}}else b=text(value,weight(ast.font||font||'normal'));b.mml=ast.operator?'<mi mathvariant="normal">'+escape(ast.text)+'</mi>':'<mtext>'+escape(ast.text)+'</mtext>';if(bold||ast.font&&ast.font!=='small-caps')b.mml='<mstyle mathvariant="'+weight(ast.font==='small-caps'?'normal':ast.font||font||'normal')+'">'+b.mml+'</mstyle>';return b;}
+  case 'text':{const value=typography(ast.text);let b;if(ast.font==='small-caps'){b=box(0,0,0,'','');for(const c of value){const small=c!==c.toUpperCase(),part=text(c.toUpperCase(),weight(font||'normal')),scale=small?.8:1;b.svg+=move(part,b.w,0,scale);b.w+=part.w*scale;b.h=Math.max(b.h,part.h*scale);b.d=Math.max(b.d,part.d*scale);}}else if(ast.font==='slanted'){b=text(value,weight(font||'normal'));b.svg=`<g transform="translate(${n(.2*b.d)} 0) skewX(-11.30993)">${b.svg}</g>`;b.w+=.2*(b.h+b.d);}else b=text(value,weight(ast.font||font||'normal'));b.mml=ast.operator?'<mi mathvariant="normal">'+escape(ast.text)+'</mi>':'<mtext>'+escape(ast.text)+'</mtext>';if(ast.font==='slanted')b.mml='<mstyle mathvariant="'+weight(font||'normal')+'" style="font-style:oblique">'+b.mml+'</mstyle>';else if(bold||ast.font&&ast.font!=='small-caps')b.mml='<mstyle mathvariant="'+weight(ast.font==='small-caps'?'normal':ast.font||font||'normal')+'">'+b.mml+'</mstyle>';return b;}
   case 'space':return box(ast.width,0,0,'',`<mspace width="${ast.width}em"/>`);
   case 'linebreak':return box(0,0,0,'','<mspace linebreak="newline"/>');
   case 'class':return child(ast.body);
@@ -151,17 +151,18 @@ function layout(ast,options={}){
      if(count===1)widths[col]=Math.max(widths[col],b.w);heights[r]=Math.max(heights[r],b.h);depths[r]=Math.max(depths[r],b.d);col+=count;
     }
    }
-   const gap=/^align/.test(ast.name)?.35:.7,pad=.3;
-   for(const row of rows)for(const {b,col,count}of row)if(count>1){const available=widths.slice(col,col+count).reduce((a,b)=>a+b,0)+gap*(count-1);if(b.w>available){const extra=(b.w-available)/count;for(let c=col;c<col+count;c++)widths[c]+=extra;}}
-   const positions=[pad];for(let c=0;c<cols;c++)positions.push(positions[c]+widths[c]+gap);
-   const totalW=widths.reduce((a,b)=>a+b,0)+gap*(cols-1)+pad*2,totalH=heights.reduce((a,b)=>a+b,0)+depths.reduce((a,b)=>a+b,0)+.3*(rows.length-1)+pad*2,top=-totalH/2-.25;
+   const gap=/^align/.test(ast.name)?.35:.7,pad=.3,gaps=Array.from({length:cols+1},(_,c)=>ast.gaps?.[c]??(c===0||c===cols?pad:gap)),rowAfter=rows.map((_,r)=>ast.rowAfter?.[r]||0);
+   const between=(col,count)=>gaps.slice(col+1,col+count).reduce((a,b)=>a+b,0);
+   for(const row of rows)for(const {b,col,count}of row)if(count>1){const available=widths.slice(col,col+count).reduce((a,b)=>a+b,0)+between(col,count);if(b.w>available){const extra=(b.w-available)/count;for(let c=col;c<col+count;c++)widths[c]+=extra;}}
+   const positions=[gaps[0]];for(let c=0;c<cols;c++)positions.push(positions[c]+widths[c]+gaps[c+1]);
+   const totalW=widths.reduce((a,b)=>a+b,0)+gaps.reduce((a,b)=>a+b,0),totalH=heights.reduce((a,b)=>a+b,0)+depths.reduce((a,b)=>a+b,0)+.3*(rows.length-1)+rowAfter.reduce((a,b)=>a+b,0)+pad*2,top=-totalH/2-.25;
    let y=top+pad,svg='',mml='',boundaries=[top+.04];
    rows.forEach((row,r)=>{
     y+=heights[r];mml+='<mtr>';let covered=0;
-    for(const {b,col,count,align}of row){const width=widths.slice(col,col+count).reduce((a,b)=>a+b,0)+gap*(count-1),dx=align==='r'?width-b.w:align==='c'?(width-b.w)/2:0;
+    for(const {b,col,count,align}of row){const width=widths.slice(col,col+count).reduce((a,b)=>a+b,0)+between(col,count),dx=align==='r'?width-b.w:align==='c'?(width-b.w)/2:0;
      svg+=move(b,positions[col]+dx,y);mml+=`<mtd${count>1?' columnspan="'+count+'"':''}>${b.mml}</mtd>`;covered+=count;
     }
-    for(;covered<cols;covered++)mml+='<mtd><mrow/></mtd>';mml+='</mtr>';y+=depths[r]+.3;boundaries.push(r===rows.length-1?top+totalH-.04:y-.15);
+    for(;covered<cols;covered++)mml+='<mtd><mrow/></mtd>';mml+='</mtr>';y+=depths[r]+.3+rowAfter[r];boundaries.push(r===rows.length-1?top+totalH-.04:y-.15);
    });
    for(const rule of ast.rules)svg+=`<path d="M .03 ${n(boundaries[rule.row])} H ${n(totalW-.03)}" fill="none" stroke="currentColor" stroke-width=".06"${rule.dashed?' stroke-dasharray=".14 .14"':''}/>`;
    const defaults=new Map();let col=0;for(const char of ast.spec){if(/[lcr]/.test(char))col++;else if(char==='|'||char===':')defaults.set(col,char);}
@@ -172,11 +173,11 @@ function layout(ast,options={}){
      if(/^[:|]/.test(cell.spec))rules.set(cell.col,cell.spec[0]);
      if(/[:|]$/.test(cell.spec))rules.set(cell.col+cell.count,cell.spec.at(-1));
     }
-    for(const [col,char] of rules){const x=col===0?.03:col===cols?totalW-.03:positions[col]-gap/2;
+    for(const [col,char] of rules){const x=col===0?.03:col===cols?totalW-.03:positions[col]-gaps[col]/2;
      svg+=`<path d="M ${n(x)} ${n(boundaries[r])} V ${n(boundaries[r+1])}" fill="none" stroke="currentColor" stroke-width=".06"${char===':'?' stroke-dasharray=".14 .14" stroke-dashoffset="'+n(boundaries[r]-top)+'"':''}/>`;
     }
    }
-   const b=box(totalW,-top,top+totalH,svg,`<mtable columnalign="${ast.align.map(x=>({l:'left',r:'right',c:'center'}[x])).join(' ')}">${mml}</mtable>`);
+   const b=box(totalW,-top,top+totalH,svg,`<mtable columnspacing="${gaps.slice(1,cols).map(x=>n(x)+'em').join(' ')}" rowspacing="${rowAfter.slice(0,-1).map(x=>n(.3+x)+'em').join(' ')}" columnalign="${ast.align.map(x=>({l:'left',r:'right',c:'center'}[x])).join(' ')}">${mml}</mtable>`);
    const delim={pmatrix:['(',')'],bmatrix:['[',']'],Bmatrix:['{','}'],vmatrix:['|','|'],Vmatrix:['‖','‖'],cases:['{','.']}[ast.name];
    if(!delim){if(ast.name==='smallmatrix')return box(b.w*.7,b.h*.7,b.d*.7,move(b,0,0,.7),'<mstyle scriptlevel="1">'+b.mml+'</mstyle>');return b;}const l=fence(delim[0],b),r=fence(delim[1],b);return box(l.w+b.w+r.w,Math.max(b.h,l.h,r.h),Math.max(b.d,l.d,r.d),l.svg+move(b,l.w)+move(r,l.w+b.w),'<mrow><mo>'+escape(delim[0])+'</mo>'+b.mml+'<mo>'+escape(delim[1]==='.'?'':delim[1])+'</mo></mrow>');
   }

@@ -6,8 +6,11 @@ cases compare mathematical tokens against both pinned engines and render real
 PNG pixels. Command spellings are documented in
 [KaTeX's supported functions](https://katex.org/docs/supported.html).
 The production audit now checks all 99,184 KaTeX-accepted expressions in the
-supplied November 3 dump. All render; 451 baseline-rejected expressions are kept
-separate. [production-coverage.json](production-coverage.json) contains aggregates
+supplied November 3 dump. All render. With the verified 163-statement import normalization overlaid on
+that snapshot, 99,629 of all 99,635 expressions render. The six remaining source
+errors are three undefined custom macros and three damaged string escapes.
+The 451 originally baseline-rejected expressions retain their original baseline
+classification; normalization is not counted as new engine capability. [production-coverage.json](production-coverage.json) contains aggregates
 and hashes only. `audit-production.cjs PRIVATE.jsonl --check` verifies a normalized
 inventory with `{site, doc, tex, display, katexOk}` records. The original private
 extractor preserves each caller's preprocessing; its hash is recorded. Private
@@ -18,13 +21,19 @@ are pinned controls. Neither math engine is a VLX runtime dependency.
 `check-lock.cjs` requires every resvg platform binary in the lockfile, including
 Linux CI artifacts when the lock is prepared on macOS.
 
-`run.cjs` covers 48 synthetic notation cases across `corpus.cjs` and `production-corpus.cjs` with independent VLX layout,
+`run.cjs` covers 53 synthetic notation cases across `corpus.cjs`, `production-corpus.cjs` and `extended-corpus.cjs` with independent VLX layout,
 semantic token comparison, raster ink and rule checks. `VLX_OUTPUT=/path` writes
 a side-by-side SVG/PNG sheet and capability report. Equivalent Unicode font
 characters, double primes, invisible operator markers and existing accent wrapper
 differences, equivalent double-vertical glyphs and combining Unicode accents are normalized for token comparison. This does not certify spacing,
 full structural semantics or screen-reader behavior. MathJax's responsive equation
 tag SVG is checked semantically and labeled as such in the static preview.
+Slanted roman text, crossed-o letters, array spacing and whole-expression wrappers
+have independent geometry/semantic tests. MathJax rejects `\textsl`, math-mode
+`\o` and `\vspace` in those fixtures; these are recorded as unsupported controls,
+not skipped VLX assertions. [LaTeX kernel documentation](https://latex-project.org/help/documentation/source2e.pdf)
+provides the command reference.
+
 Spanning array cells are implemented and tested in VLX even though both controls
 reject the synthetic `multicolumn` case.
 
@@ -90,7 +99,7 @@ packages, or change adoption status.
 ## Browser acceptance
 
 `browser.cjs` bundles the real root/DOM entries and launches an isolated Chrome
-profile. It checks 48 unclipped formula viewports, one exposed MathML root per
+profile. It checks 53 unclipped formula viewports, one exposed MathML root per
 formula, fraction reading order, script/root/limit/table roles, phantom exclusion,
 light/dark colors, 200%/400% text enlargement, 320px reflow, local keyboard scrolling,
 forced colors including authored colors, selected-source copying and lifecycle

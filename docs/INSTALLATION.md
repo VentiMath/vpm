@@ -3,11 +3,11 @@
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r3)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r4)
 provides its `vlx` package for frontend integration:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r3/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r4/vlx-0.1.0.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -16,8 +16,11 @@ are needed. The archive pins `vpngjs` to its sibling release URL. That dependenc
 supports the separate Node page-export entry; it is excluded from browser builds.
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
 
-Revision **r3** closes every VLX-only failure in the supplied production snapshot:
-99,184 KaTeX-accepted expressions now render. It adds `vlx/react` components,
+Revision **r4** retains the production baseline coverage:
+99,184 KaTeX-accepted expressions render. After the verified statement normalization,
+99,629 of all 99,635 expressions render; the six remaining inputs need source
+repair. Slanted text, array spacing, crossed-o letters and complete outer math
+wrappers are supported. The release also includes `vlx/react` components,
 per-formula source fallback, CSS scaling/centering hooks and safer scroll
 observation. Shared outlines reduce the data from 897 KB to 784 KB, and the React
 entry defers loading them until first math use. See the
@@ -48,7 +51,7 @@ records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r3 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r4 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published

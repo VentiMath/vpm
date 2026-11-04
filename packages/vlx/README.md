@@ -9,7 +9,11 @@ selector or KaTeX/MathJax fallback.
 **Ready for the frontend cutover trial.** In the supplied November 3 production
 snapshot, all **99,184 formulas accepted by the app's KaTeX 0.16.38 baseline**
 render in VLX, across 99,635 extracted expressions and 15,107 documents. The other
-451 expressions are rejected by that baseline and are reported separately.
+451 expressions were rejected by that baseline. After canonicalizing legacy
+operator tokens in 163 live statements, **99,629 of 99,635** render. The remaining
+six contain undefined custom macros or damaged string escapes. The audit overlays
+only those verified statement corrections onto the original dump; it is not a
+new full-database snapshot.
 This verifies renderability after the caller's existing preprocessing, not visual
 equivalence, all possible TeX or a completed application deployment. See the
 [aggregate coverage](../../scripts/vlx-conformance/production-coverage.json) and
@@ -18,17 +22,18 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r3/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r4/vlx-0.1.0.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Version 0.1.0 identifies this original API, not upstream engine compatibility.
 
-Release revision **r3** closes the production comparison's remaining syntax and
-glyph gaps, adds per-formula error recovery and optional React components, and
-reduces the outline data through shared paths. Existing release assets remain
-unchanged.
+Release revision **r4** adds slanted text, bounded array spacing, crossed-o
+letters and single-expression delimiter handling. It rejects corrupted control
+characters instead of silently skipping them. Legacy `\equal`, `\plus` and
+`\minus` belong to importer normalization; VLX does not define those aliases.
+Existing release assets remain unchanged.
 
 An **npm registry mirror is planned** for VentiLaTeX. It will distribute the same
 implementation and versioned API, with the same licenses and provenance. GitHub
@@ -131,6 +136,17 @@ format, byte, dimension and pixel validation precede embedding. Page input,
 item counts, image totals, SVG size and raster pixels are bounded. Unknown TeX
 or corrupt images cause an error rather than a missing formula or diagram.
 
+`renderMath()` accepts a bare expression or exactly one complete outer `$…$`,
+`$$…$$`, `\(…\)` or `\[…\]` wrapper. Its `display` option still controls layout;
+returned/copied TeX retains the original input. Adjacent expressions, mixed prose
+and unmatched wrappers remain errors. `renderText()` is the prose entry.
+
+`\textsl` uses sheared roman outlines; `\o`/`\O` mean the letters ø/Ø, never the
+empty-set symbol. Array column specs accept `@{}` and bounded, nonnegative
+`@{\hspace{dimension}}` inserts. Row-leading `\vspace{dimension}` adds space
+after that row. General inserted math, negative skips and arbitrary TeX spacing
+programs are not supported. Literal non-whitespace control characters are errors.
+
 `renderMath()` and page methods are synchronous. `parseMath()` is an experimental
 inspection API. `VlxError` distinguishes syntax, glyph and resource-limit failures.
 Existing caller normalization of legacy prose commands/lists remains caller work;
@@ -147,7 +163,7 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   including paragraph/image geometry, rules, choices and corruption rejection.
   Private tests are loaded from Git into a temporary directory, never copied here.
 - [Public tests](test/contracts.test.cjs), [page checks](test/problem.test.cjs) and
-  [48 synthetic notation cases](../../scripts/vlx-conformance/README.md) run on
+  [53 synthetic notation cases](../../scripts/vlx-conformance/README.md) run on
   Node 24 and Bun. MathJax 4.1.3 supplies semantic/visual controls and KaTeX 0.19.1
   supplies capability/performance controls. Token comparison normalizes equivalent
   font characters, double primes and invisible operator markers; it is not a proof
@@ -157,7 +173,7 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   [Benchmarks](bench/results/README.md) keep all balanced process pairs, source
   hashes and identical-source controls.
 
-Local whole-page comparisons against the app renderer measured 45.6% and 26.8%
+Historical r3 whole-page comparisons against the app renderer measured 45.6% and 26.8%
 less time on Node for synthetic prose/choices and array/figure PNGs respectively.
 Bun measured 24.5% less time for the array/figure case; its prose/choices direction
 was unestablished because of control noise. The [coverage record](../../scripts/vlx-conformance/app-coverage.json)

@@ -27,6 +27,15 @@ const tokens=mml=>[...mml.matchAll(/<(mi|mn|mo|mtext)\b[^>]*>(.*?)<\/\1>/gs)].ma
   if(name==='circled text and cancellation'){assert.match(r.mathml,/menclose/);assert.match(r.svg,/stroke/);}
   report.push({name,vlx:'pass',katex:'pass'});
  }
+ for(const [name,tex]of require('./extended-corpus.cjs')){
+  const r=renderer.renderMath(tex,{display:true});let control;
+  // MathJax supplies a semantic control where it supports the same syntax;
+  // wrapper handling is verified against the unwrapped expression.
+  const input=name==='wrapped formula'?tex.slice(1,-1):tex;
+  try{control=await references.mathjax(input);}catch(error){const command={'slanted roman text':'textsl','crossed-o letters':'o','array spacing':'vspace'}[name];assert.ok(command,name+' unexpectedly failed in MathJax');assert.equal(error.id,'UndefinedControlSequence');assert.equal(error.message,'Undefined control sequence '+String.fromCharCode(92)+command);}
+  if(control)assert.equal(tokens(r.mathml),tokens(control.mathml),name+' MathJax semantics');
+  report.push({name,vlx:'pass',mathjax:control?'pass':'unsupported'});pictures.push({name,r,control});
+ }
  if(process.env.VLX_OUTPUT){
   const {Resvg}=require('@resvg/resvg-js'),out=process.env.VLX_OUTPUT;fs.mkdirSync(out,{recursive:true});let y=36;const parts=[];
   for(const {name,r,control} of pictures){const mj=(name==='equation label'?'<svg><text y="20">Responsive reference SVG: semantic check only</text></svg>':control?.svg||'<svg><text y="20">Unsupported by the reference engine</text></svg>').replace(/<svg\b/,`<svg x="570" y="${y+22}"`).replace(/currentColor/g,'black').replace(/\sdata-latex="[^"]*"/g,'');parts.push(`<text x="20" y="${y}" font-family="sans-serif" font-size="14">${name} — VLX (left), MathJax 4 (right)</text><g transform="translate(20 ${y+22})">${r.svg}</g>${mj}`);y+=Math.max(110,r.height+55);}

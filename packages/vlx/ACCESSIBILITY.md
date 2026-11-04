@@ -9,7 +9,7 @@ VentiMath has not switched its renderers yet.
 
 | Area | Evidence |
 | --- | --- |
-| Mathematical structure | Chrome exposes exactly one MathML root for each of 48 synthetic formulas, including fraction, root, script, limit and table roles. Numerator/denominator reading order is checked. |
+| Mathematical structure | Chrome exposes exactly one MathML root for each of 53 synthetic formulas, including fraction, root, script, limit and table roles. Numerator/denominator reading order is checked. |
 | Duplicate and invisible content | Decorative SVGs and phantom text are excluded from the accessibility tree. TeX annotations do not create a second spoken expression in that tree. |
 | Themes and sizing | Default HTML inherits its parent's color and font size. Both 200% and 400% text enlargement preserve the enlarged math. Explicit `fontSize` remains supported. |
 | High contrast | System forced colors replace authored formula colors as well as default ink. Normal display preserves authored colors; callers remain responsible for their contrast against ordinary theme backgrounds. |
@@ -91,7 +91,7 @@ explicit equation labels and mixed prose/figures. This requires those actual
 reader/browser combinations; an accessibility-tree snapshot cannot substitute
 for it. WebKit and Firefox rendering are also not covered by this Chrome gate.
 
-The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r3)
+The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r4)
 ships this browser lifecycle. Application integration and production cutover
 remain separate from these verified package-level checks. A controlled application
 trial can use the documented lifecycle and existing text-on-error behavior while

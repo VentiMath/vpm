@@ -1,6 +1,6 @@
 {
-  "snapshot": "2026-11-03 supplied production Firestore dump",
-  "scope": "Caller-preprocessed math from problem statements, statement parts, answer choices, answers, rubrics, solutions, chat, lessons, blog and Acorn items. Renderability, not visual equivalence or live deployment verification.",
+  "snapshot": "2026-11-03 supplied production dump, overlaid only with the verified 163-statement Firestore backfill",
+  "scope": "Caller-preprocessed math from ten application surfaces. Baseline classifications are from the original dump, before operator normalization. Renderability, not visual equivalence or a fresh full-database/deployment verification.",
   "baseline": {
     "package": "katex",
     "version": "0.16.38",
@@ -13,11 +13,11 @@
   "normalizationSHA256": "978408e84134c4e5a502e8d2e29a64773fc546b981c172d639bd5a50d61372a6",
   "sourceSHA256": {
     "index.cjs": "1f516708da419bcc0847192dbea4f0faad23d34eb5b9cd3b391b8de1f53f8305",
-    "tex.cjs": "12786333795fde4236dd9186c78fdcccffb4b935bb6a12b0bf7973b7c4c386b0",
-    "layout.cjs": "bdab9430a3a6def921f31797d27ea2f23efac995da1bf73eeea1c23f9d56537a",
+    "tex.cjs": "12989fa88452ba7a0fd53d44f3a127e24fff63b5313422b268c3470e12b0fd62",
+    "layout.cjs": "1d9111a6d9a96d4a0fc684da4df317293cc6aeee7f765d26ed14ede5f8d56deb",
     "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78"
   },
-  "inventorySHA256": "7c7fe98587b18f5eb544ebbc85c0a30a56cbb8bccc3aeed16cab775c713331e6",
+  "inventorySHA256": "b8af169d5c8ef7acae97bc2aa43415ea70de31f9b233462f9a0978ede8b09488",
   "expressions": 99635,
   "documents": 15107,
   "baselineAccepted": 99184,
@@ -28,63 +28,109 @@
       "expressions": 68766,
       "baselineAccepted": 68412,
       "regressions": 0,
+      "vlxAccepted": 68763,
+      "vlxRejected": 3,
       "documents": 12409
     },
     "MathText: answers": {
       "expressions": 2080,
       "baselineAccepted": 2068,
       "regressions": 0,
+      "vlxAccepted": 2080,
+      "vlxRejected": 0,
       "documents": 2080
     },
     "ProblemChoiceContent: choices": {
       "expressions": 10810,
       "baselineAccepted": 10728,
       "regressions": 0,
+      "vlxAccepted": 10810,
+      "vlxRejected": 0,
       "documents": 2162
     },
     "ProblemStatement (statementParts)": {
       "expressions": 6740,
       "baselineAccepted": 6740,
       "regressions": 0,
+      "vlxAccepted": 6740,
+      "vlxRejected": 0,
       "documents": 643
     },
     "Mathy: Acorn items": {
       "expressions": 155,
       "baselineAccepted": 155,
       "regressions": 0,
+      "vlxAccepted": 155,
+      "vlxRejected": 0,
       "documents": 89
     },
     "LaTeX: solutions": {
       "expressions": 69,
       "baselineAccepted": 69,
       "regressions": 0,
+      "vlxAccepted": 69,
+      "vlxRejected": 0,
       "documents": 33
     },
     "LaTeX: rubrics": {
       "expressions": 10815,
       "baselineAccepted": 10812,
       "regressions": 0,
+      "vlxAccepted": 10812,
+      "vlxRejected": 3,
       "documents": 378
     },
     "PostContent: blog": {
       "expressions": 26,
       "baselineAccepted": 26,
       "regressions": 0,
+      "vlxAccepted": 26,
+      "vlxRejected": 0,
       "documents": 1
     },
     "Mathy: chat messages": {
       "expressions": 61,
       "baselineAccepted": 61,
       "regressions": 0,
+      "vlxAccepted": 61,
+      "vlxRejected": 0,
       "documents": 13
     },
     "ContentBlockRenderer: lessons": {
       "expressions": 113,
       "baselineAccepted": 113,
       "regressions": 0,
+      "vlxAccepted": 113,
+      "vlxRejected": 0,
       "documents": 19
     }
   },
   "privacy": "Only aggregates and hashes are public; normalized private formulas and document IDs remain outside this repository.",
-  "timing": "Single-pass audit timings are not used as performance evidence. See the isolated balanced benchmark harness."
+  "timing": "Single-pass audit timings are not used as performance evidence. See the isolated balanced benchmark harness.",
+  "vlxAccepted": 99629,
+  "vlxRejected": 6,
+  "backfill": {
+    "statements": 163,
+    "expressions": 334,
+    "operatorTokens": 806,
+    "fields": [
+      "details.statement"
+    ],
+    "verification": "All 163 live revisions matched the source plan; transaction/read-back verified normalized statements and unchanged unrelated fields. No private source or document identifiers are published."
+  },
+  "baselineRejectedBreakdown": {
+    "normalizedImportOperators": 334,
+    "wholeExpressionDelimiters": 94,
+    "slantedText": 11,
+    "arraySpacing": 1,
+    "crossedOLetter": 1,
+    "alreadySupported": 4,
+    "undefinedCustomMacro": 3,
+    "corruptStringEscapes": 3
+  },
+  "remainingFailures": {
+    "undefinedCustomMacro": 3,
+    "corruptStringEscapes": 3,
+    "treatment": "Explicit errors with per-formula source fallback available; no guessed source repairs or global aliases."
+  }
 }

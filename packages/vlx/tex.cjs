@@ -1,8 +1,8 @@
 'use strict';
-const {VlxError}=require('./source.cjs');
+const {VlxError,parse}=require('./source.cjs');
 const symbols={alpha:'α',beta:'β',gamma:'γ',delta:'δ',epsilon:'ϵ',varepsilon:'ε',zeta:'ζ',eta:'η',theta:'θ',vartheta:'ϑ',iota:'ι',kappa:'κ',lambda:'λ',mu:'μ',nu:'ν',xi:'ξ',pi:'π',rho:'ρ',sigma:'σ',tau:'τ',upsilon:'υ',phi:'ϕ',varphi:'φ',chi:'χ',psi:'ψ',omega:'ω',Gamma:'Γ',Delta:'Δ',Theta:'Θ',Lambda:'Λ',Xi:'Ξ',Pi:'Π',Sigma:'Σ',Phi:'Φ',Psi:'Ψ',Omega:'Ω',times:'×',div:'÷',pm:'±',mp:'∓',cdot:'⋅',circ:'∘',infty:'∞',le:'≤',leq:'≤',ge:'≥',geq:'≥',ne:'≠',neq:'≠',approx:'≈',equiv:'≡',in:'∈',notin:'∉',subset:'⊂',subseteq:'⊆',supset:'⊃',supseteq:'⊇',cup:'∪',cap:'∩',intersect:'∩',emptyset:'∅',forall:'∀',exists:'∃',neg:'¬',land:'∧',lor:'∨',to:'→',rightarrow:'→',leftarrow:'←',leftrightarrow:'↔',Rightarrow:'⇒',Leftarrow:'⇐',Leftrightarrow:'⇔',ldots:'…',cdots:'⋯',vdots:'⋮',ddots:'⋱',partial:'∂',nabla:'∇',angle:'∠',perp:'⊥',parallel:'∥',prime:'′',langle:'⟨',rangle:'⟩',lceil:'⌈',rceil:'⌉',lfloor:'⌊',rfloor:'⌋',vert:'|',Vert:'‖'};
 Object.assign(symbols,{cong:'≅',sim:'∼',simeq:'≃',nmid:'∤',nparallel:'∦',leqslant:'⩽',geqslant:'⩾',nsim:'≁',ncong:'≇',dots:'…',triangle:'△',ell:'ℓ',leqq:'≦',geqq:'≧',colon:':',bullet:'•',varnothing:'∅',mapsto:'↦',iff:'⇔',Longrightarrow:'⟹',Longleftrightarrow:'⟺',lnot:'¬',mid:'∣',subsetneq:'⊊',setminus:'∖','|':'‖'});
-Object.assign(symbols,{yen:'¥',S:'§',blacksquare:'■',Im:'ℑ',Re:'ℜ',odot:'⊙',star:'⋆',diamond:'⋄',bigtriangleup:'△',otimes:'⊗',oplus:'⊕',square:'□',Box:'□',Diamond:'◇',blacklozenge:'⧫',diamondsuit:'♢',heartsuit:'♡',measuredangle:'∡',bot:'⊥',top:'⊤',dagger:'†',longrightarrow:'⟶',longleftarrow:'⟵',longmapsto:'⟼',backslash:'\\',wedge:'∧',vee:'∨',ast:'∗',bigcirc:'◯',bigstar:'★',boxdot:'⊡',vdash:'⊢',ni:'∋',varDelta:'Δ',lt:'<',gt:'>',natural:'♮',sharp:'♯',flat:'♭',downarrow:'↓',uparrow:'↑',frown:'⌢',dotsc:'…',dotsb:'⋯',lbrace:'{',rbrace:'}',lbrack:'[',rbrack:']',lvert:'|',rvert:'|',lVert:'‖',rVert:'‖'});
+Object.assign(symbols,{o:'ø',O:'Ø',yen:'¥',S:'§',blacksquare:'■',Im:'ℑ',Re:'ℜ',odot:'⊙',star:'⋆',diamond:'⋄',bigtriangleup:'△',otimes:'⊗',oplus:'⊕',square:'□',Box:'□',Diamond:'◇',blacklozenge:'⧫',diamondsuit:'♢',heartsuit:'♡',measuredangle:'∡',bot:'⊥',top:'⊤',dagger:'†',longrightarrow:'⟶',longleftarrow:'⟵',longmapsto:'⟼',backslash:'\\',wedge:'∧',vee:'∨',ast:'∗',bigcirc:'◯',bigstar:'★',boxdot:'⊡',vdash:'⊢',ni:'∋',varDelta:'Δ',lt:'<',gt:'>',natural:'♮',sharp:'♯',flat:'♭',downarrow:'↓',uparrow:'↑',frown:'⌢',dotsc:'…',dotsb:'⋯',lbrace:'{',rbrace:'}',lbrack:'[',rbrack:']',lvert:'|',rvert:'|',lVert:'‖',rVert:'‖'});
 // Prefer dedicated negated glyphs; other single symbols use an explicit strike.
 const negated={'=':'≠','∼':'≁','≃':'≄','≅':'≇','≈':'≉','≡':'≢','∈':'∉','∣':'∤','∥':'∦','≤':'≰','≥':'≱','<':'≮','>':'≯','⊂':'⊄','⊃':'⊅','⊆':'⊈','⊇':'⊉','→':'↛','←':'↚','↔':'↮','⇒':'⇏','⇐':'⇍','⇔':'⇎'};
 const fonts={mathrm:'normal',mathit:'italic',mathbf:'bold',mathbb:'double-struck',mathcal:'calligraphic',mathscr:'script',mathsf:'sans-serif',mathtt:'monospace'};
@@ -12,7 +12,17 @@ const classify=c=>/[=<>≤≥≠≈≡∈∉⊂⊆⊃⊇→←↔⇒⇐⇔⊥∥
 function parseMath(source){
  if(typeof source!=='string')throw new TypeError('TeX must be a string');
  if(source.length>16384)throw new VlxError('LIMIT','At most 16384 TeX characters are supported');
- source=require('./macros.cjs').expand(source,new Set([...Object.keys(symbols),...Object.keys(fonts),...functions,...decorations,...'newline mathbin mathrel mathord mathopen mathclose mathpunct mathinner cal Bbb textrm textcircled cfrac choose stackrel overset underset rule boldsymbol char Im Re bigoplus bigotimes not phantom hphantom vphantom binom dbinom tbinom textit textbf texttt textsc emph pmod bmod mod bigcup bigcap iint iiint tt rm bf it displaystyle textstyle scriptstyle scriptscriptstyle multicolumn over tag hspace makebox limits nolimits big bigl bigr bigm Big Bigl Bigr Bigm bigg biggl biggr biggm Bigg Biggl Biggr Biggm substack frac dfrac tfrac sqrt left right begin end text mbox operatorname mathrm mathit mathbf mathbb boxed underline overline overarc arc color textcolor enclose sum prod int sin cos tan log ln exp min max lim arcsin arccos arctan quad qquad'.split(' ')]));
+ // Reject damaged string escapes before whitespace handling can hide them.
+ if(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(source))throw new VlxError('TEX','Unexpected control character in TeX');
+ // Some formula-only fields retain one outer math delimiter. Accept exactly
+ // one complete expression; mixed prose, partial wrappers and adjacent math
+ // remain errors. The public result retains the caller's original source.
+ const trimmed=source.trim();
+ if(trimmed[0]==='$'||/^\\[([]/.test(trimmed)){
+  const parts=parse(trimmed);
+  if(!parts.diagnostics.length&&parts.nodes.length===1&&parts.nodes[0].kind==='math')source=parts.nodes[0].tex;
+ }
+ source=require('./macros.cjs').expand(source,new Set([...Object.keys(symbols),...Object.keys(fonts),...functions,...decorations,...'newline mathbin mathrel mathord mathopen mathclose mathpunct mathinner cal Bbb textrm textcircled cfrac choose stackrel overset underset rule boldsymbol char Im Re bigoplus bigotimes not phantom hphantom vphantom binom dbinom tbinom textit textsl textbf texttt textsc emph vspace pmod bmod mod bigcup bigcap iint iiint tt rm bf it displaystyle textstyle scriptstyle scriptscriptstyle multicolumn over tag hspace makebox limits nolimits big bigl bigr bigm Big Bigl Bigr Bigm bigg biggl biggr biggm Bigg Biggl Biggr Biggm substack frac dfrac tfrac sqrt left right begin end text mbox operatorname mathrm mathit mathbf mathbb boxed underline overline overarc arc color textcolor enclose sum prod int sin cos tan log ln exp min max lim arcsin arccos arctan quad qquad'.split(' ')]));
  let i=0,count=0,depth=0,activeStop=()=>false;
  const fail=message=>{throw new VlxError('TEX',message,{start:i})};
  const node=value=>{if(++count>4096)throw new VlxError('LIMIT','Expression has too many nodes');return value};
@@ -30,9 +40,24 @@ function parseMath(source){
  function table(name){
   const supported=['array','tabular','matrix','pmatrix','bmatrix','Bmatrix','vmatrix','Vmatrix','aligned','align','align*','gathered','gather','gather*','equation','equation*','smallmatrix','cases'];if(!supported.includes(name))fail('Unsupported environment '+name);
   skip();let spec=['array','tabular'].includes(name)?(source[i]==='{'?raw():source[i++]||''):'';
-  if(spec&&!/^[lcr|: ]+$/.test(spec))fail('Unsupported array column specification');
-  const rows=[],rules=[];let cells=[];
-  while(true){skip();if(source.startsWith('\\hline',i)||source.startsWith('\\hdashline',i)){if(cells.length)fail('Array rules must appear between rows');const dashed=source.startsWith('\\hdashline',i);i+=dashed?10:6;rules.push({row:rows.length,dashed});continue;}
+  const gaps={};let plain='',column=0;
+  for(let k=0;k<spec.length;){
+   const c=spec[k];if(/[lcr|: ]/.test(c)){plain+=c;if(/[lcr]/.test(c))column++;k++;continue;}
+   const insert=/^@\{(?:\\hspace\{([^{}]+)\})?\}/.exec(spec.slice(k));
+   if(!insert||Object.hasOwn(gaps,column))fail('Unsupported array column specification');
+   const width=insert[1]===undefined?0:dimension(insert[1]);if(width<0)fail('Array spacing must be nonnegative');
+   gaps[column]=width;k+=insert[0].length;
+  }
+  spec=plain;
+  const rows=[],rules=[],rowAfter=[];let cells=[];
+  while(true){skip();
+   if(/^\\vspace(?![A-Za-z])/.test(source.slice(i))){
+    if(cells.length)fail('Array vertical spacing must precede the first cell');
+    i+=7;const amount=dimension(raw());if(amount<0)fail('Array spacing must be nonnegative');
+    rowAfter[rows.length]=(rowAfter[rows.length]||0)+amount;
+    if(rowAfter[rows.length]>64)throw new VlxError('LIMIT','Row spacing exceeds 64em');continue;
+   }
+   if(source.startsWith('\\hline',i)||source.startsWith('\\hdashline',i)){if(cells.length)fail('Array rules must appear between rows');const dashed=source.startsWith('\\hdashline',i);i+=dashed?10:6;rules.push({row:rows.length,dashed});continue;}
    if(source.startsWith('\\end',i)){i+=4;const end=raw();if(end!==name)fail('Mismatched environment '+end);if(cells.length)rows.push(cells);break;}
    if(i>=source.length)fail('Unclosed environment '+name);
    cells.push(row(()=>source[i]==='&'||source.startsWith('\\\\',i)||source.startsWith('\\end',i)));
@@ -46,7 +71,7 @@ function parseMath(source){
   if(spec.replace(/[^lcr]/g,'').length!==columns&&['array','tabular'].includes(name))fail('Array cells must match the column specification');
   const align=spec?spec.replace(/[^lcr]/g,'').split(''):Array.from({length:columns},(_,c)=>/^align/.test(name)?(c%2?'l':'r'):name==='cases'?'l':'c');
   if(rows.some(r=>r.length>columns))fail('Too many array cells');
-  return node({kind:'table',name,rows,align,spec,rules});
+  return node({kind:'table',name,rows,align,spec,rules,gaps,rowAfter});
  }
  function atom(single=false){
   skip();const c=source[i];if(c===undefined)fail('Missing math argument');if(c==='{')return group();
@@ -81,7 +106,7 @@ function parseMath(source){
    if(command==='tag'){let star=false;if(source[i]==='*'){star=true;i++;}return node({kind:'tag',star,body:textGroup()});}
    if(command==='multicolumn'){const span=Number(raw()),spec=raw();if(!Number.isSafeInteger(span)||span<1||span>32||!/^[:|]*[lcr][:|]*$/.test(spec))fail('Invalid multicolumn');return node({kind:'multicolumn',span,spec,body:group()});}
 
-   if(['text','textrm','mbox','textit','textbf','texttt','textsc','emph'].includes(command))return textGroup({textit:'italic',emph:'italic',textbf:'bold',texttt:'monospace',textsc:'small-caps'}[command]);
+   if(['text','textrm','mbox','textit','textsl','textbf','texttt','textsc','emph'].includes(command))return textGroup({textit:'italic',textsl:'slanted',emph:'italic',textbf:'bold',texttt:'monospace',textsc:'small-caps'}[command]);
    if(command==='operatorname'){let limits=false;if(source[i]==='*'){i++;limits=true;}return node({kind:'operator',body:textGroup(),limits});}
    if(Object.hasOwn(fonts,command))return node({kind:'font',font:command,body:group()});
    if(decorations.includes(command))return node({kind:'decoration',limits:command==='underbrace'||command==='overbrace',alwaysLimits:command==='underbrace'||command==='overbrace',style:{arc:'overarc',overgroup:'overarc',bar:'overline',vec:'overrightarrow',hat:'widehat'}[command]||command,body:group()});
@@ -118,8 +143,9 @@ function parseMath(source){
     if(command==='('){children.push(row(()=>source.startsWith('\\)',i)));if(!source.startsWith('\\)',i))fail('Unclosed text math');i+=2;continue;}
     if(command==='char'){skip();const radix=source[i]==='"'?(i++,16):source[i]==="'"?(i++,8):10;const m=(radix===16?/^[0-9A-Fa-f]+/:radix===8?/^[0-7]+/:/^[0-9]+/).exec(source.slice(i));if(!m)fail('Expected character code');i+=m[0].length;const cp=parseInt(m[0],radix);if(cp>0x10ffff||cp>=0xd800&&cp<=0xdfff)fail('Invalid character code');value+=String.fromCodePoint(cp);continue;}
 
-    if(['text','textrm','mbox','textit','textbf','emph','texttt','textsc'].includes(command)){children.push(textGroup({textit:'italic',emph:'italic',textbf:'bold',texttt:'monospace',textsc:'small-caps'}[command]||font));continue;}
+    if(['text','textrm','mbox','textit','textsl','textbf','emph','texttt','textsc'].includes(command)){children.push(textGroup({textit:'italic',textsl:'slanted',emph:'italic',textbf:'bold',texttt:'monospace',textsc:'small-caps'}[command]||font));continue;}
     if('{}$%_#&\\'.includes(command)&&command.length===1){value+=command;continue;}
+    if(command==='o'||command==='O'){value+=symbols[command];continue;}
     if(command==='ldots'||command==='dots'){value+='…';continue;}
     fail('Unsupported text command \\'+command);
    }

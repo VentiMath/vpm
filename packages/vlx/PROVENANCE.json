@@ -32,13 +32,14 @@
     "All 8470 math spans and 1275 normalized full statements render in the audited 89-file local corpus; this is not a production-wide or visual-equivalence claim.",
     "Browser HTML inherits theme and font size, honors forced system colors and keeps enlarged equations within local scroll bounds.",
     "Optional DOM lifecycle adds tab stops only for overflow, selected-TeX copying, replacement observation and owned-attribute cleanup.",
-    "Chrome visual/accessibility-tree gate verifies 48 formulas, reading structure, phantom exclusion, zoom/reflow and real keyboard scrolling. This is not a claim of actual screen-reader acceptance.",
+    "Chrome visual/accessibility-tree gate verifies 53 formulas, reading structure, phantom exclusion, zoom/reflow and real keyboard scrolling. This is not a claim of actual screen-reader acceptance.",
     "Validate font-size/display options before cache lookup; invalid non-finite sizes cannot collide with the inherited-size cache entry.",
     "Add contest congruence, similarity, divisibility and slanted inequality commands with relation spacing; single-symbol negation uses dedicated glyphs or a visible strike with MathML combining negation. Verified against KaTeX and MathJax controls.",
     "The November 3 production snapshot has zero VLX-only failures among 99184 KaTeX-accepted expressions; 451 baseline-rejected inputs are tracked separately. Only aggregate evidence and synthetic regressions are public.",
     "Add production-used line breaks, class wrappers, delimiter aliases, continued/infix fractions, annotations, text commands, rule geometry and glyphs; semantic controls also verify the black lozenge symbol.",
     "Optional React 19 components defer renderer/glyph loading, isolate errors per formula and own DOM cleanup. Core rendering stays synchronous and React-free.",
     "CSS scale and centered display hooks; scroll focus requires actual usable overflow and handles scaled formulas and missing window observers.",
-    "Intern repeated font paths: expanded glyph coverage uses 784343 bytes instead of 896594 bytes in r2. Bold symbols retain italic letter shapes, including nested italic text."
+    "Intern repeated font paths: expanded glyph coverage uses 784343 bytes instead of 896594 bytes in r2. Bold symbols retain italic letter shapes, including nested italic text.",
+    "After verified import canonicalization, 99629 of 99635 expressions render, including 445 of 451 originally baseline-rejected inputs. New renderer support: single complete math wrappers, slanted roman text, crossed-o letters, bounded array spacing. Three undefined custom macros and three damaged string escapes remain explicit source errors; no legacy import aliases were added."
   ]
 }

@@ -67,12 +67,14 @@ needs caller evidence, not merely a package count.
 and complete problem SVG/PNG pages, including prose, figures and choice grids.
 All 28 unchanged application picture tests pass on Bun. Its local corpus audit
 renders 8,470 math spans and 1,275 full normalized statements; that snapshot is
-not a production-wide inventory or proof of visual equivalence. Forty-eight public
+not a production-wide inventory or proof of visual equivalence. Fifty-three public
 synthetic cases and page geometry/corruption checks run on Node 24 and Bun.
 
 The separate November 3 frontend dump audit covers 99,635 expressions in 15,107
 documents; all 99,184 accepted by the app's KaTeX baseline render in VLX. This is
-frontend coverage, not a Discord picture migration.
+frontend coverage, not a Discord picture migration. After a verified 163-statement
+operator backfill, 99,629 of the 99,635 expressions render; six source errors
+remain. That result overlays only the corrected statements on the original dump.
 
 KaTeX 0.19.1 and MathJax 4.1.3 remain synthetic test controls. VLX reuses attributed font
 outlines/metrics, the VPM PNG validator and optional native resvg rasterization;
