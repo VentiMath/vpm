@@ -77,6 +77,10 @@ including upstream conformance and caller controls on both runtimes. The
 [verification record](../IMPROVEMENTS.md#current-verification) links those suites
 and records known limitations.
 
+See the [build-dependency audit](BUILD-DEPENDENCIES.md) before replacing Babel
+packages: unused transforms, tool-only requirements and runtime helpers have
+different removal paths.
+
 ## Replacing a package
 
 Start with its actual callers and check the latest stable upstream release and
