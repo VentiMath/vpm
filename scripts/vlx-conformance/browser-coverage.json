@@ -1,0 +1,68 @@
+{
+  "sourceSHA256": {
+    "index.cjs": "70b6ce87323e0f93306c79c3f668969bfabd87c47b7bcaa6a9540d0dd863c7ab",
+    "layout.cjs": "1bb22788af413663f4960480dcc94ecb0123ff74dc8b7875a4798affd2358718",
+    "dom.cjs": "717b5fe56fba3149c9f5a20421fccd094401a81b9029f0e510aa51714422229e",
+    "font/glyphs.json": "35a248c30c8574e37f6091cb496516178300cfdb0b47ee1b2ba7f17dc9f3dd76"
+  },
+  "browser": "Chrome/156.0.8078.76",
+  "checks": [
+    "30 formulas expose one MathML root each",
+    "fraction/root/script/limit/table accessibility structure",
+    "phantom content and decorative SVG excluded",
+    "light/dark themes",
+    "inherited 200% text enlargement",
+    "unclipped formula outlines",
+    "mixed prose/math copies authored TeX once, without hidden MathML duplication",
+    "320px reflow without page overflow",
+    "inline baseline alignment",
+    "Tab/arrow/Tab access to overflow without a focus trap",
+    "400% text enlargement retains equation size and bounded scrolling",
+    "forced-colors math remains visible",
+    "replacement-content observation and idempotent teardown preserve caller attributes"
+  ],
+  "formulas": 30,
+  "roles": {
+    "RootWebArea": 1,
+    "heading": 31,
+    "button": 2,
+    "main": 1,
+    "StaticText": 239,
+    "generic": 30,
+    "InlineTextBox": 239,
+    "MathMLMath": 30,
+    "MathMLRow": 159,
+    "MathMLTable": 11,
+    "MathMLFraction": 7,
+    "MathMLOperator": 74,
+    "MathMLSquareRoot": 2,
+    "MathMLUnderOver": 2,
+    "MathMLNumber": 44,
+    "MathMLIdentifier": 79,
+    "MathMLOver": 3,
+    "MathMLSup": 7,
+    "MathMLSubSup": 1,
+    "MathMLUnder": 5,
+    "MathMLSub": 3,
+    "MathMLTableCell": 37,
+    "MathMLTableRow": 22,
+    "MathMLText": 9
+  },
+  "narrow": {
+    "page": 320,
+    "width": 320,
+    "wide": 1683,
+    "client": 246,
+    "tab": "0",
+    "label": "Scrollable mathematical expression",
+    "shortTab": null,
+    "baseline": 0.004075000000000273
+  },
+  "forced": {
+    "color": "rgb(255, 255, 255)",
+    "background": "rgb(0, 0, 0)",
+    "ink": "rgb(255, 255, 255)",
+    "active": true
+  },
+  "manualScreenReaderSpeech": "Not exercised: browser accessibility-tree checks do not certify VoiceOver/NVDA speech or navigation."
+}

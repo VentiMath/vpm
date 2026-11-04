@@ -23,33 +23,33 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-03T22:43:37.026Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-04T01:25:01.373Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| HTML / fraction / uncached | 35356 | 17784 | -49.9% | -51.5% | -47.5% | 4.4% | lower time in every pair, beyond control spread |
-| SVG / fraction / uncached | 243888 | 17007 | -93% | -92.4% | -93% | 7.8% | lower time in every pair, beyond control spread |
-| HTML / styled text / uncached | 56769 | 27283 | -51.5% | -50.2% | -57.8% | 22.3% | lower time in every pair, beyond control spread |
-| SVG / styled text / uncached | 1045991 | 26656 | -97.5% | -97.5% | -97.8% | 5.4% | lower time in every pair, beyond control spread |
-| HTML / array / uncached | 55980 | 21354 | -61.3% | -61.3% | -66.8% | 11.7% | lower time in every pair, beyond control spread |
-| SVG / array / uncached | 427892 | 19543 | -95.4% | -95.6% | -95.2% | 26.5% | lower time in every pair, beyond control spread |
+| HTML / fraction / uncached | 34598 | 17530 | -48.3% | -50.8% | -45.2% | 12% | lower time in every pair, beyond control spread |
+| SVG / fraction / uncached | 265302 | 16692 | -94% | -94% | -94.3% | 3.8% | lower time in every pair, beyond control spread |
+| HTML / styled text / uncached | 56212 | 27712 | -51.8% | -49.9% | -60.5% | 41.7% | lower time in every pair, beyond control spread |
+| SVG / styled text / uncached | 1020164 | 26835 | -97.4% | -97.7% | -96.7% | 49.1% | lower time in every pair, beyond control spread |
+| HTML / array / uncached | 56009 | 21584 | -61.5% | -63.7% | -60.2% | 19% | lower time in every pair, beyond control spread |
+| SVG / array / uncached | 398459 | 22146 | -94% | -92.7% | -94% | 29.2% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-03T22:44:18.496Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-04T01:25:54.191Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| HTML / fraction / uncached | 38474 | 17305 | -54.3% | -54.3% | -62.1% | 3.2% | lower time in every pair, beyond control spread |
-| SVG / fraction / uncached | 162848 | 16638 | -89.6% | -92.3% | -88.3% | 16.4% | lower time in every pair, beyond control spread |
-| HTML / styled text / uncached | 57905 | 27575 | -52.4% | -54.5% | -51.6% | 5% | lower time in every pair, beyond control spread |
-| SVG / styled text / uncached | 757922 | 26994 | -96.3% | -97.1% | -95.3% | 3.6% | lower time in every pair, beyond control spread |
-| HTML / array / uncached | 54690 | 23873 | -56.3% | -52.3% | -60.8% | 3% | lower time in every pair, beyond control spread |
-| SVG / array / uncached | 307996 | 23162 | -92.2% | -93% | -78.8% | 21.8% | lower time in every pair, beyond control spread |
+| HTML / fraction / uncached | 38520 | 19223 | -50% | -44.5% | -51.4% | 38.6% | unestablished at this precision |
+| SVG / fraction / uncached | 227274 | 17479 | -92.9% | -94% | -91.2% | 18.3% | lower time in every pair, beyond control spread |
+| HTML / styled text / uncached | 57086 | 28296 | -50.4% | -41.2% | -53.8% | 28.8% | lower time in every pair, beyond control spread |
+| SVG / styled text / uncached | 731011 | 24993 | -96.5% | -98.4% | -96% | 20.1% | lower time in every pair, beyond control spread |
+| HTML / array / uncached | 57228 | 23204 | -57.5% | -65.8% | -54.3% | 20.8% | lower time in every pair, beyond control spread |
+| SVG / array / uncached | 324767 | 23007 | -93.5% | -95.9% | -92.8% | 40.7% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

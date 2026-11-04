@@ -1,9 +1,9 @@
 {
   "implementation": {
     "kind": "independent parser and layout implementation",
-    "replacementStatus": "app-shaped renderer implemented; broader visual and accessibility acceptance pending",
+    "replacementStatus": "browser integration candidate; actual reader/browser acceptance and application cutover pending",
     "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation.",
-    "remainingWork": "Application integration/release, broader typographic and screen-reader acceptance, production-corpus inventory, advanced TeX and equation references."
+    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks, WebKit/Firefox visual acceptance, application integration/release and production-corpus inventory. Advanced TeX and automatic equation references remain outside the verified scope."
   },
   "fontData": {
     "package": "@mathjax/mathjax-newcm-font",
@@ -28,6 +28,10 @@
     "Generated font data retains upstream attribution and reproducible extraction.",
     "Expanded notation, styled text, primes, font variants, spanning table cells and scoped colors against actual caller requirements.",
     "Independent 960px page composition using shared outlines/layout and vpngjs figure validation; 28 unchanged application picture tests pass.",
-    "All 8470 math spans and 1275 normalized full statements render in the audited 89-file local corpus; this is not a production-wide or visual-equivalence claim."
+    "All 8470 math spans and 1275 normalized full statements render in the audited 89-file local corpus; this is not a production-wide or visual-equivalence claim.",
+    "Browser HTML inherits theme and font size, honors forced system colors and keeps enlarged equations within local scroll bounds.",
+    "Optional DOM lifecycle adds tab stops only for overflow, selected-TeX copying, replacement observation and owned-attribute cleanup.",
+    "Chrome visual/accessibility-tree gate verifies 30 formulas, reading structure, phantom exclusion, zoom/reflow and real keyboard scrolling. This is not a claim of actual screen-reader acceptance.",
+    "Validate font-size/display options before cache lookup; invalid non-finite sizes cannot collide with the inherited-size cache entry."
   ]
 }

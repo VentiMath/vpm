@@ -78,6 +78,7 @@ jobs:
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/vlx-conformance/build-font.cjs --check
       - run: node scripts/vlx-conformance/archives.cjs
+      - run: node scripts/vlx-conformance/browser.cjs
       - run: npm --prefix scripts/png-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/png-conformance/archives.cjs
       - run: npm --prefix scripts/stripe-conformance ci --ignore-scripts --no-audit --no-fund

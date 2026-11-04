@@ -5,10 +5,12 @@ and problem pictures. One layout produces SVG, accessible MathML and browser
 HTML; a Node entry composes complete pages and exports PNGs. There is no engine
 selector or KaTeX/MathJax fallback.
 
-**Application integration is still pending.** VLX now renders every math span
+**Ready for an application integration trial; production cutover is pending.** VLX now renders every math span
 and complete statement in the audited local corpus, and passes the application's
 unchanged problem-picture tests. That is a measured scope, not a claim of complete
-TeX compatibility or a production cutover.
+TeX compatibility or a production cutover. Browser visual/accessibility-tree checks
+now pass; actual screen-reader/browser acceptance remains open. See
+[browser integration and accessibility evidence](ACCESSIBILITY.md).
 
 ```js
 import { createRenderer } from 'vlx';
@@ -19,6 +21,11 @@ const expression = renderer.renderMath(String.raw`\binom{n}{2}+f''(x)`, {
 });
 // content.html; expression.html, .svg, .mathml, .width, .height, .baseline
 ```
+
+HTML inherits the surrounding color and font size unless `fontSize` is supplied.
+Standalone SVG defaults to 16 px and black ink. Use `observeMath(host)` from
+`vlx/dom` after mounting HTML for keyboard scrolling of oversized expressions and
+copying selected formulas as TeX; call its cleanup function on unmount.
 
 The browser entry has no executable upstream engine dependency. The package's
 one VPM dependency, `vpngjs`, validates figures in the separate Node page entry;
@@ -112,7 +119,9 @@ upstream parser, layout or loader implementation ships. See [provenance](PROVENA
 
 Typography remains original: spacing, accents, radicals, scripts and delimiter
 sizing differ from the reference engines and need broader visual acceptance.
-Screen-reader behavior and interactive equation exploration still need validation.
+Chrome exposes the expected structured math, and theme, zoom, reflow and keyboard
+checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interactive
+equation exploration still need validation.
 Arbitrary TeX packages, advanced macro programming, automatic equation references
 and every Unicode glyph are outside this verified scope. This package is not yet
 released or adopted by VentiMath; the atlas keeps those engine families in progress.

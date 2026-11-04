@@ -72,8 +72,9 @@ synthetic cases and page geometry/corruption checks run on Node 24 and Bun.
 
 KaTeX 0.19.1 and MathJax 4.1.3 remain test controls. VLX reuses attributed font
 outlines/metrics, the VPM PNG validator and optional native resvg rasterization;
-it does not route between upstream math engines. Broader typography, accessibility
-acceptance and application integration are still pending. The app continues to
+it does not route between upstream math engines. Chrome theme, enlargement, reflow, keyboard and structured-MathML checks now pass.
+Actual screen-reader/other-browser acceptance and application integration are
+still pending. The app continues to
 use KaTeX in the frontend and MathJax 3 for backend pictures; no cutover is claimed.
 
 ## Reading progress correctly

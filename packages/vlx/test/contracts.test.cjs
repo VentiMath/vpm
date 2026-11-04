@@ -25,3 +25,12 @@ test('prime runs, font variants, scoped declarations and nested text retain mean
  assert.equal(parseMath(String.raw`{1 \over 3}`).children[0].kind,'fraction');
  for(const tex of [String.raw`\hspace{999em}`,String.raw`\makebox[999mm]{}`,String.raw`\newcommand{\tag}{bad}x`,String.raw`\multicolumn{2}{c}{x}`,String.raw`1\over2\over3`,String.raw`\textbf{unclosed`,String.raw`x^2^3`])assert.throws(()=>renderMath(tex));
 });
+
+test('browser output inherits theme and font size without changing standalone export',()=>{
+ const r=createRenderer(),implicit=r.renderMath('x'),explicit=r.renderMath('x',{fontSize:16});
+ assert.match(implicit.html,/font-size:inherit/);assert.match(explicit.html,/font-size:16px/);assert.notEqual(implicit,explicit);for(const fontSize of [Infinity,NaN,'16',0,-1,257])assert.throws(()=>r.renderMath('x',{fontSize}));
+ assert.equal(implicit.svg,explicit.svg);assert.match(implicit.svg,/color="black"/);assert.doesNotMatch(implicit.html,/color="black"|<title>/);
+ assert.match(implicit.html,/aria-hidden="true"/);assert.match(implicit.html,/data-vlx="math"/);assert.match(implicit.html,/forced-colors:active/);assert.doesNotMatch(implicit.svg,/forced-colors/);
+ assert.match(r.renderMath(String.raw`\underline{x}`).mathml,/accentunder="true"/);
+ const {observeMath}=require('../dom.cjs');assert.throws(()=>observeMath({}),TypeError);
+});

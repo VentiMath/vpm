@@ -107,11 +107,11 @@ function layout(ast,options={}){
     if(style==='widehat'){path=`M 0 ${n(y)} L ${n(middle)} ${n(y-.22)} L ${n(w)} ${n(y)}`;mark='^';}
     else if(style.endsWith('brace')){const direction=under?1:-1;path=`M 0 ${n(y)} Q 0 ${n(y+direction*.12)} ${n(w*.25)} ${n(y+direction*.12)} Q ${n(middle)} ${n(y+direction*.12)} ${n(middle)} ${n(y+direction*.25)} Q ${n(middle)} ${n(y+direction*.12)} ${n(w*.75)} ${n(y+direction*.12)} Q ${n(w)} ${n(y+direction*.12)} ${n(w)} ${n(y)}`;mark=under?'⏟':'⏞';}
     else{path=`M 0 ${n(y)} H ${n(w)}`;if(style!=='overleftarrow')path+=` M ${n(w-.18)} ${n(y-.1)} L ${n(w)} ${n(y)} L ${n(w-.18)} ${n(y+.1)}`;if(style!=='overrightarrow')path+=` M .18 ${n(y-.1)} L 0 ${n(y)} L .18 ${n(y+.1)}`;mark=style==='overrightarrow'?'→':style==='overleftarrow'?'←':'↔';}
-    return box(w,under?b.h:b.h+.45,under?b.d+.45:b.d,move(b,(w-b.w)/2)+`<path d="${path}" fill="none" stroke="currentColor" stroke-width=".045"/>`,`<${under?'munder':'mover'} accent="true">${b.mml}<mo>${mark}</mo></${under?'munder':'mover'}>`);
+    return box(w,under?b.h:b.h+.45,under?b.d+.45:b.d,move(b,(w-b.w)/2)+`<path d="${path}" fill="none" stroke="currentColor" stroke-width=".045"/>`,`<${under?'munder':'mover'} ${under?'accentunder':'accent'}="true">${b.mml}<mo>${mark}</mo></${under?'munder':'mover'}>`);
    }
    const under=style==='underline',y=under?b.d+.12:-b.h-.12,arc=style==='overarc';
    const mark=arc?`<path d="M 0 ${n(y)} Q ${n(b.w/2)} ${n(y-.3)} ${n(b.w)} ${n(y)}"/>`:`<path d="M 0 ${n(y)} H ${n(b.w)}"/>`;
-   return box(b.w,under?b.h:b.h+(arc?.3:.16),under?b.d+.16:b.d,b.svg+`<g fill="none" stroke="currentColor" stroke-width=".045">${mark}</g>`,`<${under?'munder':'mover'} accent="true">${b.mml}<mo>${arc?'⌢':'¯'}</mo></${under?'munder':'mover'}>`);
+   return box(b.w,under?b.h:b.h+(arc?.3:.16),under?b.d+.16:b.d,b.svg+`<g fill="none" stroke="currentColor" stroke-width=".045">${mark}</g>`,`<${under?'munder':'mover'} ${under?'accentunder':'accent'}="true">${b.mml}<mo>${arc?'⌢':'¯'}</mo></${under?'munder':'mover'}>`);
   }
   case 'table':{
    const cols=ast.align.length,widths=Array(cols).fill(0),heights=[],depths=[],rows=[];

@@ -21,6 +21,11 @@
       "types": "./problem.d.ts",
       "import": "./problem.mjs",
       "require": "./problem.cjs"
+    },
+    "./dom": {
+      "types": "./dom.d.ts",
+      "import": "./dom.mjs",
+      "require": "./dom.cjs"
     }
   },
   "files": [
@@ -28,6 +33,7 @@
     "*.mjs",
     "*.d.ts",
     "README.md",
+    "ACCESSIBILITY.md",
     "LICENSE",
     "PROVENANCE.json",
     "font"

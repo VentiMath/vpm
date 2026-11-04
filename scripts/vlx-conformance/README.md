@@ -73,3 +73,19 @@ OUTPUT=/tmp/vlx-pages-bun.json bun scripts/vlx-conformance/bench-app.cjs /path/t
 
 Both tools are local read-only checks. They do not modify the application, release
 packages, or change adoption status.
+
+## Browser acceptance
+
+`browser.cjs` bundles the real root/DOM entries and launches an isolated Chrome
+profile. It checks 30 unclipped formula viewports, one exposed MathML root per
+formula, fraction reading order, script/root/limit/table roles, phantom exclusion,
+light/dark colors, 200%/400% text enlargement, 320px reflow, local keyboard scrolling,
+forced colors including authored colors, selected-source copying and lifecycle
+cleanup. `VLX_BROWSER_OUTPUT=/path` writes screenshots, the accessibility tree
+and a source-hashed JSON report. It does not use an existing browser profile,
+change a saved theme, alter the OS clipboard, or enable a screen reader.
+
+The committed [browser result](browser-coverage.json) records browser-tree evidence,
+not actual VoiceOver/NVDA speech. See the [acceptance scope](../../packages/vlx/ACCESSIBILITY.md).
+The Node CI job runs this gate. Clean archives also compile the new browser-only
+DOM declarations separately, while keeping root declarations free of DOM types.
