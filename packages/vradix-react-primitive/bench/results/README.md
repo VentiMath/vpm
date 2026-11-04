@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-03T06:11:08.916Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-04T15:24:50.686Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| module initialization / warm dependencies | 45161 | 7249 | -83% | -82.8% | -84% | 14.5% | lower time in every pair, beyond control spread |
-| SSR / native button | 3797 | 3809 | 3.2% | 4.7% | 3.2% | 28.6% | unestablished at this precision |
-| SSR / asChild button | 6110 | 5384 | -11.8% | -40.7% | -11.5% | 3.6% | lower time in every pair, beyond control spread |
+| module initialization / warm dependencies | 59338 | 7887 | -87% | -87.3% | -87% | 77.6% | lower time in every pair, beyond control spread |
+| SSR / native button | 3854 | 3888 | 4.5% | 4.5% | 158.5% | 77.3% | unestablished at this precision |
+| SSR / asChild button | 6944 | 5782 | -16.2% | -10.5% | -46.4% | 50.8% | unestablished at this precision |
 
-## Bun 1.4.0
+## Bun 1.4.4
 
-Recorded 2026-11-03T06:11:23.487Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-04T15:25:04.927Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| module initialization / warm dependencies | 18634 | 4353 | -76.4% | -69.2% | -77.8% | 105.2% | unestablished at this precision |
-| SSR / native button | 2218 | 2181 | -2.1% | -2.1% | 0.6% | 202.3% | unestablished at this precision |
-| SSR / asChild button | 3405 | 3172 | -7.2% | -8.7% | -5.3% | 169.6% | unestablished at this precision |
+| module initialization / warm dependencies | 19676 | 4365 | -77.7% | -77.6% | -79.1% | 15.5% | lower time in every pair, beyond control spread |
+| SSR / native button | 2244 | 2271 | 1.1% | 3% | -3.4% | 9.3% | unestablished at this precision |
+| SSR / asChild button | 3644 | 3467 | -6.7% | -0.5% | -14.1% | 27.8% | unestablished at this precision |
 
 ## Reproduce
 

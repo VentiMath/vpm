@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-03T04:37:41.400Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-04T15:24:22.604Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| compose two refs | 10 | 11 | 6.8% | 16.9% | -7.2% | 18.7% | unestablished at this precision |
-| attach object and plain callback | 13 | 9 | -34% | -28.8% | -38.7% | 5.5% | lower time in every pair, beyond control spread |
-| mixed refs / attach and cleanup | 60 | 42 | -29.6% | -28.6% | -30.5% | 2.6% | lower time in every pair, beyond control spread |
+| compose two refs | 10 | 11 | 2.8% | 16.3% | -11.6% | 18.3% | unestablished at this precision |
+| attach object and plain callback | 14 | 9 | -35.6% | -8.7% | -48.2% | 2.5% | unestablished at this precision |
+| mixed refs / attach and cleanup | 62 | 44 | -29.2% | -25.9% | -42.5% | 30.8% | unestablished at this precision |
 
-## Bun 1.4.0
+## Bun 1.4.4
 
-Recorded 2026-11-03T04:37:53.740Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-04T15:24:34.938Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| compose two refs | 14 | 14 | -0.8% | -3.9% | 8.9% | 3.8% | unestablished at this precision |
-| attach object and plain callback | 27 | 9 | -66.8% | -66.5% | -67% | 3.2% | lower time in every pair, beyond control spread |
-| mixed refs / attach and cleanup | 57 | 36 | -37.4% | -38.2% | -37.4% | 0.9% | lower time in every pair, beyond control spread |
+| compose two refs | 16 | 17 | 7.8% | 10.7% | 3.3% | 34.5% | unestablished at this precision |
+| attach object and plain callback | 29 | 9 | -67.5% | -67.9% | -66.7% | 6.7% | lower time in every pair, beyond control spread |
+| mixed refs / attach and cleanup | 64 | 37 | -42% | -53.5% | -41.4% | 1.6% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

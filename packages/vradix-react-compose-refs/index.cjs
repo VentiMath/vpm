@@ -1,6 +1,6 @@
 'use client';
 'use strict';
-const {useMemo} = require('react');
+const React = require('react');
 
 function composeRefs(...refs) {
   return node => {
@@ -48,6 +48,6 @@ function composeRefs(...refs) {
 }
 function useComposedRefs(...refs) {
   // Recreate the composed callback only when a participating ref changes.
-  return useMemo(() => composeRefs(...refs), refs);
+  return React.useMemo(() => composeRefs(...refs), refs);
 }
 module.exports = {composeRefs, useComposedRefs};

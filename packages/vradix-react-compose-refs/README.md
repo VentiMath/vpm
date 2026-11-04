@@ -51,12 +51,17 @@ Hook identity changes, SSR, clean npm/Bun archives, CJS/ESM identity, TypeScript
 NodeNext/Bundler declarations and browser bundling are checked on Node 24 and Bun.
 
 [Isolated benchmarks](bench/results/README.md) retain balanced process pairs,
-identical-upstream controls and all raw samples. Plain attachment takes 34% less
-time on Node 24 and 66.8% less on Bun; mixed attachment/cleanup takes 29.6% and
-37.4% less, respectively. Those directions hold in every pair beyond control
-spread. Composition creation is inconclusive. Helper timings do not measure
-application rendering speed.
+identical-upstream controls and all raw samples. On Bun 1.4.4, plain attachment
+uses 67.5% less time and mixed attachment/cleanup 42% less, in every pair beyond
+control spread. Node attachment medians are lower, but the controls do not
+establish their direction in this recording. Composition creation is also
+inconclusive. Helper timings do not measure application rendering speed.
 
 Built, but not released or adopted by VentiMath. [Provenance](PROVENANCE.json)
 records the reference package and independent implementation. Upstream MIT
 attribution is retained; no clean-room claim is made.
+
+Browser bundles use explicit React namespace calls. This avoids a Bun 1.4.0/1.4.4
+linking defect that can turn destructured React CommonJS imports into reads from
+the current module’s exports. The [executed packed-bundle check](../../scripts/radix-react-primitive-conformance/bundle-smoke.mjs)
+exercises the primitive, Slot and ref hook together, including server rendering.

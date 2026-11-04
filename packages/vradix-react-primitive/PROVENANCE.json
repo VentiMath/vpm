@@ -20,6 +20,7 @@
     "Create named Slot wrappers only for tags that actually use asChild, retaining stable identities thereafter.",
     "Build the component table once and reuse the copied prop record when forwarding refs.",
     "Load ReactDOM for discrete-event dispatch only when that helper is called.",
-    "Use the independently written VPM Slot/ref stack with React 19 peers."
+    "Use the independently written VPM Slot/ref stack with React 19 peers.",
+    "Use explicit React namespace calls to avoid incorrect destructured CommonJS import linking in Bun browser bundles."
   ]
 }

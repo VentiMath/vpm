@@ -54,12 +54,16 @@ TypeScript 7 DOM-only declarations and browser bundling on Node 24 and Bun.
 already-loaded dependencies and React's development SSR renderer. Initialization
 excludes source compilation, module resolution and cold dependency loading. These
 measurements do not establish browser paint, cold-start or application speedups.
-On Node 24, module initialization takes 83% less time and the slotted-button
-SSR case takes 11.8% less time, beyond the identical-code control spread. The
-ordinary-button direction is inconclusive. Bun's controls were too noisy to
-establish any timing improvement; the full raw results are retained. Lazy Slot
+Module initialization takes 87% less time on Node 24 and 77.7% less on Bun 1.4.4,
+beyond the identical-code control spread. Native/slotted-button SSR directions
+are inconclusive in this recording; the full raw results are retained. Lazy Slot
 creation defers work until `asChild` is used; it does not eliminate that work.
 
 Built, not released or adopted by VentiMath. [Provenance](PROVENANCE.json) records
 the exact upstream reference and independent implementation. MIT attribution is
 retained; no clean-room claim is made.
+
+Browser bundles use explicit React namespace calls. This avoids a Bun 1.4.0/1.4.4
+linking defect that can turn destructured React CommonJS imports into reads from
+the current module’s exports. The [executed packed-bundle check](../../scripts/radix-react-primitive-conformance/bundle-smoke.mjs)
+exercises the primitive, Slot and ref hook together, including server rendering.

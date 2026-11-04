@@ -5494,10 +5494,12 @@ yet released or adopted.
 See the [contract](packages/vradix-react-compose-refs/README.md),
 [caller controls](scripts/compose-refs-conformance/README.md) and
 [isolated measurements](packages/vradix-react-compose-refs/bench/results/README.md).
-Plain attachment uses 34% less time on Node 24 and 66.8% less on Bun; mixed
-attachment/cleanup uses 29.6% and 37.4% less, respectively, beyond control spread
-in every process pair. Creation is inconclusive; no application-rendering
-improvement is claimed.
+On Bun 1.4.4, plain attachment uses 67.5% less time and mixed attachment/cleanup
+42% less, beyond control spread in every process pair. Node medians are lower
+but direction is unestablished against the current controls; composition creation
+is also inconclusive. No application-rendering improvement is claimed.
+Explicit React namespace calls fix Bun browser linking, and an executed packed
+primitive/Slot/ref bundle now checks the complete import path.
 
 
 ## vradix-react-slot
@@ -5540,12 +5542,12 @@ or adopted. See the [contract](packages/vradix-react-primitive/README.md),
 [fixtures](scripts/radix-react-primitive-conformance/README.md) and
 [measurements](packages/vradix-react-primitive/bench/results/README.md).
 
-Node 24 measurements show 83% less time for module initialization with warm
-dependencies and 11.8% less for slotted-button development SSR, beyond the
-identical-code control spread. Native-button results and all Bun directions
-are inconclusive; Bun controls were especially noisy. Lazy Slot creation
-defers work to first use. These measurements do not establish cold-start,
-browser or whole-application speedups.
+Module initialization with warm dependencies uses 87% less time on Node 24 and
+77.7% less on Bun 1.4.4, beyond control spread. Native/slotted-button SSR directions
+are inconclusive. Lazy Slot creation defers work to first use. These measurements
+do not establish cold-start, browser or whole-application speedups. Explicit
+React namespace calls avoid incorrect destructured-import linking in Bun browser
+bundles; the archive test executes a slotted SVG bundle to check the ref hook too.
 
 ## vradix-react-context
 

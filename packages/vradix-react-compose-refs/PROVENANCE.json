@@ -20,6 +20,7 @@
     "Allocate cleanup storage only for callbacks that return cleanup functions.",
     "Idempotent, reentrant-safe cleanup completes all refs before propagating the first thrown error, including non-Error values.",
     "Memoize composition when participating hook refs are unchanged.",
-    "React 19 peer only; no other runtime dependencies. Current 1.1.5 and app 1.1.2 controls are pinned."
+    "React 19 peer only; no other runtime dependencies. Current 1.1.5 and app 1.1.2 controls are pinned.",
+    "Use explicit React namespace calls to avoid incorrect destructured CommonJS import linking in Bun browser bundles."
   ]
 }

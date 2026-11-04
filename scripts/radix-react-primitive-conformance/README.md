@@ -38,3 +38,7 @@ all samples, balanced process order and identical-code controls. The initializat
 case recompiles neither implementation inside timing; it compares module factories
 with warm dependencies. SSR uses the development renderer and the corresponding
 complete Slot/ref dependency stack, not a stubbed React implementation.
+
+The archive check also executes a production browser bundle in an isolated JS
+context and renders a slotted SVG. This catches broken React imports that a
+build-only check misses; both fresh npm and Bun installs run the assertion.

@@ -25,6 +25,15 @@ try {
     fs.writeFileSync(path.join(cwd,'browser.js'),`import {createElement} from 'react';import {Primitive,dispatchDiscreteCustomEvent} from 'vradix-react-primitive';export {dispatchDiscreteCustomEvent};export function Button(props){return createElement(Primitive.button,props)}`);
     run('bun',['build','browser.js','--target=browser','--outfile=bundle.js'],cwd);
     assert.doesNotMatch(fs.readFileSync(path.join(cwd,'bundle.js'),'utf8'),/require\(["'](?:node:|fs["']|path["'])/);
+    fs.copyFileSync(path.join(__dirname,'bundle-smoke.mjs'),path.join(cwd,'bundle-smoke.mjs'));
+    run('bun',['build','bundle-smoke.mjs','--target=browser','--format=iife','--define','process.env.NODE_ENV="production"','--outfile=smoke.js'],cwd);
+    const channels = [];
+    const context = {console,TextEncoder,TextDecoder,ReadableStream,TransformStream,setTimeout,clearTimeout,
+      MessageChannel: class extends MessageChannel { constructor() { super(); channels.push(this); } }};
+    try {
+      require('node:vm').runInNewContext(fs.readFileSync(path.join(cwd,'smoke.js'),'utf8'),context,{timeout:10000});
+      assert.equal(context.vpmPrimitiveMarkup,'<svg class="outer inner"><path d="M0 0L1 1"></path></svg>');
+    } finally { for (const channel of channels) { channel.port1.close(); channel.port2.close(); } }
   }
-  console.log('Three-package clean npm/Bun closure: Node/Bun CJS/ESM, native/asChild SSR, event dispatch, TS7 DOM-only declarations and browser bundle pass.');
+  console.log('Three-package clean npm/Bun closure: Node/Bun CJS/ESM, native/asChild SSR, event dispatch, TS7 DOM-only declarations and executed browser bundle pass.');
 }finally{fs.rmSync(temp,{recursive:true,force:true})}
