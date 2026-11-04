@@ -25,6 +25,7 @@ npm --prefix scripts/radix-effect-event-conformance/current ci --ignore-scripts 
 npm --prefix scripts/radix-id-conformance/current ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/radix-state-conformance/current ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/radix-use-size-conformance/current ci --ignore-scripts --no-audit --no-fund
+npm --prefix scripts/radix-arrow-conformance/current ci --ignore-scripts --no-audit --no-fund
 ```
 
 These separately locked fixtures contain original packages, SDK callers and test

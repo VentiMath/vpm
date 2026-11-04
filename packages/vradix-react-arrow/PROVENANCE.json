@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-arrow",
+    "version": "1.1.17",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/arrow",
+    "checked": "2026-11-04",
+    "integrity": "sha512-67jjcVvxjXCCStnTW3Z+M7jmaFMuMR7M2JgpDzH4w7JSRrikmzhjfYgP/09ECb8n7whnsgh1ifJ+Ie96qEj+pQ=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "95e27948ab5c7d884ee230e9c2aa98814458bca0a2b63e90a70996ece75366b3",
+    "dist/index.d.ts": "229cd98581d898460565883d044f4949f4c07c56f4b046c010bdfc65d34b38f2",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Arrow/Root SVG geometry, dimensions, native SVG props, refs, asChild composition, SSR/hydration and the unchanged Popper 1.4.0 caller on React 19."
+  },
+  "changes": [
+    "Share one immutable polygon React element between default arrows; mounted DOM nodes remain independent.",
+    "Reuse one copied props record while applying fixed geometry and dimension defaults.",
+    "Use the VPM primitive, Slot and ref composition chain; no copied upstream runtime or transpiler helpers."
+  ]
+}

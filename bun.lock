@@ -773,6 +773,17 @@
       "name": "vradix-primitive",
       "version": "1.2.0",
     },
+    "packages/vradix-react-arrow": {
+      "name": "vradix-react-arrow",
+      "version": "1.1.17",
+      "dependencies": {
+        "vradix-react-primitive": "2.2.0",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+      },
+    },
     "packages/vradix-react-compose-refs": {
       "name": "vradix-react-compose-refs",
       "version": "1.1.5",
@@ -1383,6 +1394,8 @@
     "vqs": ["vqs@workspace:packages/vqs"],
 
     "vradix-primitive": ["vradix-primitive@workspace:packages/vradix-primitive"],
+
+    "vradix-react-arrow": ["vradix-react-arrow@workspace:packages/vradix-react-arrow"],
 
     "vradix-react-compose-refs": ["vradix-react-compose-refs@workspace:packages/vradix-react-compose-refs"],
 

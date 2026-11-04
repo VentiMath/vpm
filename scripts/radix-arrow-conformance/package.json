@@ -1,0 +1,13 @@
+{
+  "name": "vpm-radix-arrow-conformance",
+  "private": true,
+  "description": "Pinned Radix Arrow and unchanged Popper controls",
+  "dependencies": {
+    "@radix-ui/react-arrow": "1.1.17",
+    "@radix-ui/react-popper": "1.4.0",
+    "@types/react": "19.2.14",
+    "jsdom": "27.4.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  }
+}
