@@ -1088,8 +1088,8 @@ Source now predicts first-commit retry/loading state before React effects,
 removing the old-error commit on failed remounts and enabled toggles. Explicit
 refetch remains correct, and retry-disabled/offline/cached states are preserved.
 Paired first-commit and Chrome checks pass; published r2 does not contain this
-followup. VentiMath main adopted r2 in `ab3d22a2`; a revised release and consumer
-update are still needed for this fix.
+followup. Revision `tanstack-5.105.3-r3` packages it with verified public install
+URLs. VentiMath main adopted r2 in `ab3d22a2`; a consumer update is still needed.
 
 See the [core](packages/vtanstack-query-core/README.md) and
 [React](packages/vtanstack-react-query/README.md) contracts, the

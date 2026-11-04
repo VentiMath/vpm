@@ -55,8 +55,8 @@ keep their errors; offline requests report paused rather than active fetching.
 Prediction does not start requests or rewrite cached errors during render.
 
 The app's merged `tanstack-5.105.3-r2` archives do **not** contain this followup.
-It requires a revised release and consumer lockfile update; source completion
-is not an assertion that the installed app is fixed.
+The fix is packaged in `tanstack-5.105.3-r3`; the consumer still needs a lockfile
+update. Source completion is not an assertion that the installed app is fixed.
 
 ## Evidence
 

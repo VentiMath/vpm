@@ -15,6 +15,7 @@ const React=from('react'),{render,act,waitFor,fireEvent,screen,cleanup}=from('@t
   fireEvent.click(screen.getByText('["release-record"]'));await waitFor(()=>assert(screen.getByText('Query Details')));fireEvent.click(screen.getByRole('button',{name:'Invalidate'}));await waitFor(()=>assert.equal(client.getQueryData(['release-record']),2));
   fireEvent.click(screen.getByRole('button',{name:'Save record'}));await waitFor(()=>assert.equal(screen.getByRole('button',{name:'Save record'}).textContent,'3'));assert.equal(fetches,3);
   cleanup();
+  console.log(await require('./first-render.cjs')(React, api, from('@testing-library/react')), 'first committed installed-query states checked');
   await require('./transitions.cjs')(React, api, from('@testing-library/react'));
   console.log('Installed app and unchanged React Devtools share one provider: query load, invalidation, mutation refresh, scheduled notifications and async transition retries pass.');
  }finally{await act(async()=>cleanup());client.clear();dom.window.close();}
