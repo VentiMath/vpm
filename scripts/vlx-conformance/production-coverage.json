@@ -12,9 +12,16 @@
   "originalExtractorSHA256": "359c392855353955605f73fec9ad4f18cd956a5eaa32afe1c5ce48ed37dd41f7",
   "normalizationSHA256": "978408e84134c4e5a502e8d2e29a64773fc546b981c172d639bd5a50d61372a6",
   "sourceSHA256": {
-    "index.cjs": "458ee946c719c83038d70232d0db662f957098507206c8302289d213b86fdd1b",
+    "index.cjs": "0e52d318906bdd49daf0c2022334daae7c76ed0906433e62e846061a162181be",
+    "source.cjs": "b82515a633786f451b8ad60c116817170e5bef11ff7e9a04c5d9ce2681459dd8",
     "tex.cjs": "16a06e57325133818ccaa7ce9d6cbc74d0d97f27d7fb9abfb5068c75ac77279e",
-    "layout.cjs": "1d9111a6d9a96d4a0fc684da4df317293cc6aeee7f765d26ed14ede5f8d56deb",
+    "macros.cjs": "5aff2c783f69cdc8fcb28affd779e6f135ffa6a9ac1b9024afe988dd4a27f034",
+    "typography.cjs": "339126be881984ede33a147bb4b4dcf99f224bf93d0efd7a2444c583be91926b",
+    "layout.cjs": "c37ce407c24462eadde94baa78a50bba05b1070e58c2daec57799815339dc2a7",
+    "nodes.cjs": "302724654d5458c1e4337ae6077c3c1a725f709ffb9746dd1690134864669019",
+    "markup.cjs": "2301a9ab9112fcf2a46cbc2efa1b22e2e07a091b67f2e40a212e844fe518a067",
+    "render-tree.cjs": "b973823b1148d980f675aea0758b504ff081596e51ca7e89ad7ca136388a485d",
+    "math-cache.cjs": "85ca276d9daad6fe8d8c2c1e3d45a9cdf843d9606c80c76c985dbff0ea9b58bd",
     "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78"
   },
   "inventorySHA256": "00610dfcb9fc18e119248be7e7d684e353dad519fcb8889090f22c8c81677c5d",
@@ -141,5 +148,11 @@
       "https://web.evanchen.cc/exams/USAMO-2005-notes.pdf"
     ],
     "runtime": "VLX 0.1.0-r4 unchanged."
+  },
+  "structuredOutputVerification": {
+    "release": "vlx-0.1.0-r7",
+    "accepted": 99635,
+    "geometry": "width, height and baseline equal between node and string emitters for every input",
+    "scope": "Same normalized private inventory and verified source repairs, not a fresh database snapshot; direct DOM/SSR parity separately covers 114 synthetic cases."
   }
 }

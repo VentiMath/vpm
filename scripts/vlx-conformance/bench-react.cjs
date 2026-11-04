@@ -23,27 +23,32 @@ async function main(){
  for(const name of ['window','document','navigator','HTMLElement','Element','Node','MutationObserver','getComputedStyle'])Object.defineProperty(globalThis,name,{configurable:true,value:dom.window[name]});
  const h=React.createElement,container=document.getElementById('root');
  const cases=[
+  {name:'first mount / cached formula',count:1,mount:true},
+  {name:'first mount / uncached formula',count:1,mount:true,cold:true},
+  {name:'first mount / 20-formula paper',count:20,mount:true},
+  {name:'first mount / 12x12 matrix',count:1,mount:true,large:true},
   {name:'unchanged single formula',count:1},
   {name:'unchanged 20-formula paper',count:20},
   {name:'changed formula',count:1,changing:true},
- ].map(({name,count,changing})=>({name,async:false,
+ ].map(({name,count,changing,mount,cold,large})=>({name,async:false,
   async make(library){
    if(reactRoot)flushSync(()=>reactRoot.unmount());
    const api=require(library);await api.preloadMath();
    reactRoot=createRoot(container);let tick=0;
    const source=Array.from({length:count},(_,i)=>`Question ${i}: $x_{${i}}^2+1$.`).join(' ');
-   function Paper({tick}){return h('section',{'data-tick':tick},count>1?h(api.MathText,{source}):h(api.InlineMath,{tex:changing&&tick%2?'x^3+1':'x^2+1'}));}
+   const matrix='\\begin{pmatrix}'+Array.from({length:12},(_,r)=>Array.from({length:12},(_,c)=>String(r*12+c)).join('&')).join('\\\\')+'\\end{pmatrix}';
+   function Paper({tick}){const key=mount?tick:0;return h('section',{'data-tick':tick},count>1?h(api.MathText,{source,key}):h(api.InlineMath,{key,tex:large?matrix:cold?'x^{'+(100000+tick)+'}+1':changing&&tick%2?'x^3+1':'x^2+1'}));}
    return ()=>{flushSync(()=>reactRoot.render(h(Paper,{tick:++tick})));return container;};
   },
-  validate(container){assert.equal(container.querySelectorAll('math').length,count);assert.match(container.textContent,/x/);},
+  validate(container){assert.equal(container.querySelectorAll('math').length,count);assert.match(container.textContent,large?/143/:/x/);},
  }));
  const report=await require('../bench-process.cjs').run({root,
   upstream:path.join(directory,'baseline/package/react.cjs'),vpm:path.join(directory,'candidate/package/react.cjs'),cases,
-  files:['react.cjs','react-renderer.cjs','dom.cjs','index.cjs','source.cjs','layout.cjs','styles.cjs','font/glyphs.json','../../scripts/vlx-conformance/bench-react.cjs','../../scripts/vlx-conformance/package.json','../../scripts/vlx-conformance/package-lock.json'],
+  files:['react.cjs','react-renderer.cjs','dom.cjs','index.cjs','source.cjs','tex.cjs','macros.cjs','typography.cjs','layout.cjs','nodes.cjs','markup.cjs','render-tree.cjs','math-cache.cjs','styles.cjs','font/glyphs.json','../../scripts/vlx-conformance/bench-react.cjs','../../scripts/vlx-conformance/package.json','../../scripts/vlx-conformance/package-lock.json'],
  });
  if(owner){
   report.baseline={archive:path.basename(archive),sha256:createHash('sha256').update(fs.readFileSync(archive)).digest('hex')};
-  report.scope='React 19.1 with jsdom 27.4; preloaded parent rerenders. No browser paint, first mount, application suite or production latency is measured.';
+  report.scope='React 19.1 with jsdom 27.4. Preloaded first mounts (fresh component keys), cached/uncached formulas, repeated parent updates. String output is measured separately without jsdom. No module startup, network, browser paint, application suite or production latency is measured.';
   if(process.env.OUTPUT)fs.writeFileSync(process.env.OUTPUT,JSON.stringify(report,null,2)+'\n');
  }
 }

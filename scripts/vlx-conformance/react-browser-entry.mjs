@@ -2,6 +2,7 @@ import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
 import {MathText,InlineMath,DisplayMath,MathProvider,preloadMath} from 'vlx/react';
+import cases from './react-cases.json';
 
 const h=React.createElement,root=createRoot(document.getElementById('root'));
 const wide=Array.from({length:60},(_,i)=>`x_{${i}}`).join('+');
@@ -29,5 +30,7 @@ window.updateMath=changes=>{
  flushSync(()=>root.render(paper()));
 };
 window.unmountMath=()=>flushSync(()=>root.unmount());
+window.mountCases=display=>flushSync(()=>root.render(h('main',null,cases.map(([name,tex],i)=>h('section',{'data-fixture':i,key:i},h('h2',null,name),h(display?DisplayMath:InlineMath,{tex}))))));
+window.cases=cases;
 root.render(h(MathText,{source:'Plain prose'}));
 window.ready=true;

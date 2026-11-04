@@ -1,10 +1,18 @@
 {
   "sourceSHA256": {
-    "index.cjs": "1f516708da419bcc0847192dbea4f0faad23d34eb5b9cd3b391b8de1f53f8305",
-    "layout.cjs": "1d9111a6d9a96d4a0fc684da4df317293cc6aeee7f765d26ed14ede5f8d56deb",
-    "dom.cjs": "286d0382a8d110ef6cabf10395e6fb96c9fe6f28ed22168e3edfad9c94a00031",
-    "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78",
-    "tex.cjs": "12989fa88452ba7a0fd53d44f3a127e24fff63b5313422b268c3470e12b0fd62"
+    "index.cjs": "0e52d318906bdd49daf0c2022334daae7c76ed0906433e62e846061a162181be",
+    "tex.cjs": "16a06e57325133818ccaa7ce9d6cbc74d0d97f27d7fb9abfb5068c75ac77279e",
+    "source.cjs": "b82515a633786f451b8ad60c116817170e5bef11ff7e9a04c5d9ce2681459dd8",
+    "macros.cjs": "5aff2c783f69cdc8fcb28affd779e6f135ffa6a9ac1b9024afe988dd4a27f034",
+    "typography.cjs": "339126be881984ede33a147bb4b4dcf99f224bf93d0efd7a2444c583be91926b",
+    "layout.cjs": "c37ce407c24462eadde94baa78a50bba05b1070e58c2daec57799815339dc2a7",
+    "nodes.cjs": "302724654d5458c1e4337ae6077c3c1a725f709ffb9746dd1690134864669019",
+    "markup.cjs": "2301a9ab9112fcf2a46cbc2efa1b22e2e07a091b67f2e40a212e844fe518a067",
+    "render-tree.cjs": "b973823b1148d980f675aea0758b504ff081596e51ca7e89ad7ca136388a485d",
+    "math-cache.cjs": "85ca276d9daad6fe8d8c2c1e3d45a9cdf843d9606c80c76c985dbff0ea9b58bd",
+    "dom.cjs": "c8e367943888532717f776d818df447c4a967067e24f3df81921b9e4e6bb8c8f",
+    "styles.cjs": "81032b2dbad05650b02f03337d01366bd4f4ceb2e50034e21dec350a8ca7d74f",
+    "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78"
   },
   "browser": "Chrome/156.0.8078.76",
   "checks": [

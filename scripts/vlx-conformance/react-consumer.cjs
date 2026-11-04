@@ -9,6 +9,7 @@ module.exports=function checkReact(cwd,run){
   run('node',[require('../platform-types.cjs').compiler().path,'-p','tsconfig-react.json'],cwd);
  }
  fs.copyFileSync(path.join(__dirname,'react-browser-entry.mjs'),path.join(cwd,'react-browser.js'));
+ fs.writeFileSync(path.join(cwd,'react-cases.json'),JSON.stringify(require('./output-cases.cjs')));
  run('bun',['build','react-browser.js','--target=browser','--splitting','--minify','--metafile=react-meta.json','--outdir=react-dist'],cwd);
  const meta=JSON.parse(fs.readFileSync(path.join(cwd,'react-meta.json'))),entries=Object.entries(meta.outputs),entry=entries.find(([,o])=>o.entryPoint?.endsWith('react-browser.js'));
  assert(entry,'React browser entry');const eager=new Set();

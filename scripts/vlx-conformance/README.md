@@ -150,3 +150,33 @@ packs the current package, loads one implementation per worker, and uses identic
 React/jsdom fixtures. Unchanged single-formula and 20-formula updates plus changed
 TeX are measured; browser paint and application tests are excluded. Set `OUTPUT`
 to record raw samples. Temporary extracted code is removed after the run.
+
+
+## Native React output (r7)
+
+The layout has structured-node and escaped-string emitters, sharing every
+geometry rule. `output-reference.json` records r6 hashes and dimensions for
+114 inline/display cases. The explicit maintenance command `snapshot-output.cjs`
+accepts an extracted immutable baseline, an output filename and the r6 release
+manifest; it verifies every baseline source hash. Ordinary tests never regenerate that
+reference. `react.cjs` compares current string output, native DOM and SSR against
+it while forbidding all `innerHTML` writes by the renderer. The sole presentation
+normalization maps the fixed `vlx-slanted` class to the equivalent oblique MathML
+style; Chrome independently checks its computed value. This avoids relying on
+`MathMLElement.style`, which jsdom lacks. Namespace, attributes, text and child
+structure are otherwise preserved.
+
+`react-browser.cjs` runs the native corpus with Chrome geometry/accessibility
+checks and an enforced Trusted Types policy. No permissive HTML policy is
+installed. Initial mounts, changed formulas and unchanged updates write no HTML.
+SSR/hydration, failed chunks, source fallback, copy/scroll lifecycle and stylesheet
+cleanup remain covered by the clean-archive and public-release gates.
+
+`bench-react.cjs` now also measures cached/uncached first mounts, a 20-formula
+paper and a 12×12 matrix. `bench-output.cjs EXTRACTED_BASELINE_PACKAGE` measures
+string output separately, avoiding jsdom/DOM garbage-collection history.
+`bench-browser.cjs PREVIOUS_RELEASE.tgz` uses production React in fresh Chrome
+processes, four balanced comparison pairs and two identical-baseline controls.
+It includes synchronous DOM updates and forced layout, with 150 ms warmup and
+12 untrimmed samples per case; it excludes network, module startup and paint.
+Use `OUTPUT=/absolute/path/report.json` with each runner to retain measurements.

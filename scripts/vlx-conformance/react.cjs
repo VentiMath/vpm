@@ -12,11 +12,25 @@ const dom=new JSDOM('<!doctype html><body><div id="host"></div></body>',{pretend
 for(const name of ['window','document','navigator','HTMLElement','Element','Node','MutationObserver','getComputedStyle'])Object.defineProperty(globalThis,name,{configurable:true,value:dom.window[name]});
 globalThis.IS_REACT_ACT_ENVIRONMENT=true;
 const container=document.getElementById('host'),root=selected('react-dom/client').createRoot(container),{act}=React;
+const htmlDescriptor=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML');
+Object.defineProperty(Element.prototype,'innerHTML',{...htmlDescriptor,set(){throw Error('Direct React math must not write innerHTML');}});
 let copies=0;const add=document.addEventListener.bind(document),remove=document.removeEventListener.bind(document);
 document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(type,...args);};document.removeEventListener=(type,...args)=>{if(type==='copy')copies--;return remove(type,...args);};
 (async()=>{try{
  await api.preloadMath();
  assert(Object.keys(require.cache).some(p=>p.endsWith('/vlx/font/glyphs.json')),'Preload resolves the deferred renderer');
+ const canonical=require('./canonical-dom.cjs'),digest=value=>require('node:crypto').createHash('sha256').update(JSON.stringify(value)).digest('hex');
+ const control=document.createElement('div');
+ for(const c of require('./output-reference.json').cases){
+  const result=selected('vlx').renderMath(c.tex,{display:c.display});
+  for(const field of ['width','height','baseline'])assert.equal(result[field],c[field],c.name+' '+field);
+  for(const field of ['svg','mathml','html']){htmlDescriptor.set.call(control,result[field]);assert.equal(digest(canonical(control.firstElementChild)),c[field],c.name+' serialized '+field);}
+  act(()=>root.render(h(c.display?api.DisplayMath:api.InlineMath,{tex:c.tex})));
+  assert.equal(digest(canonical(container.querySelector('[data-vlx="math"]'))),c.html,c.name+' direct React DOM');
+  htmlDescriptor.set.call(control,selected('react-dom/server').renderToString(h(c.display?api.DisplayMath:api.InlineMath,{tex:c.tex})));
+  assert.equal(digest(canonical(control.querySelector('[data-vlx="math"]'))),c.html,c.name+' React SSR');
+ }
+ act(()=>root.render(null));assert.equal(copies,0);
  const immediate=selected('react-dom/server').renderToString(h(api.InlineMath,{tex:'x',loadingFallback:'must not suspend'}));assert.match(immediate,/<math/);assert.doesNotMatch(immediate,/must not suspend|<template/);
  act(()=>root.render(h(api.MathProvider,{scrollLabel:'Translated formula'},h(api.InlineMath,{tex:'x'}))));assert.equal(container.querySelectorAll('math').length,1,'Preloaded math renders on its first synchronous pass');
  const formula=container.querySelector('.vlx-math');Object.defineProperties(formula,{clientWidth:{value:100},scrollWidth:{value:200}});formula.querySelector('svg').getBoundingClientRect=()=>({width:200});window.dispatchEvent(new window.Event('resize'));assert.equal(formula.getAttribute('aria-label'),'Translated formula');
@@ -26,7 +40,7 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
  act(()=>root.render(h(api.MathProvider,{scrollLabel:'New label'},h(api.InlineMath,{tex:'x'}))));
  assert.equal(container.querySelector('.vlx-math'),formula,'A provider change preserves formula identity');assert.equal(formula.getAttribute('aria-label'),'New label');assert.equal(copies,1);
  act(()=>root.render(h(api.MathProvider,null,h(api.InlineMath,{tex:'y'}))));
- assert.notEqual(container.querySelector('.vlx-math'),formula,'Changed TeX updates the formula');assert.match(container.querySelector('math').textContent,/y/);assert.equal(copies,1);
+ assert.equal(container.querySelector('.vlx-math'),formula,'Changed TeX reconciles the existing formula');assert.match(container.querySelector('math').textContent,/y/);assert.equal(copies,1);
  const source=String.raw`Before <em>literal</em> $x^2$ then $\missingCommand$ then $y+1$ and $open`;
  await act(async()=>{root.render(h(React.StrictMode,null,h(api.MathText,{source})));});
  assert.equal(document.querySelectorAll('style[data-vlx-styles]').length,1);
@@ -41,12 +55,12 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
  await act(async()=>root.render(h(api.InlineMath,{tex:String.raw`\unknown`,fallback:null})));assert.equal(container.textContent,'');assert.equal(copies,0);
  await act(async()=>root.unmount());assert.equal(copies,0);
  const hydratedHost=document.createElement('div');document.body.append(hydratedHost);
- hydratedHost.innerHTML=selected('react-dom/server').renderToString(h(api.MathText,{source:'Hydrate $x^2$.'}));
+ htmlDescriptor.set.call(hydratedHost,selected('react-dom/server').renderToString(h(api.MathText,{source:'Hydrate $x^2$.'})));
  const serverFormula=hydratedHost.querySelector('[data-vlx="math"]'),errors=[];let hydrated;
  await act(async()=>{hydrated=selected('react-dom/client').hydrateRoot(hydratedHost,h(api.MathText,{source:'Hydrate $x^2$.'}),{onRecoverableError:error=>errors.push(error)});});
  assert.deepEqual(errors,[]);assert.equal(hydratedHost.querySelector('[data-vlx="math"]'),serverFormula,'Hydration reuses server math');
  await act(async()=>hydrated.render(h(api.MathText,{source:'Hydrate $x^2$.',className:'timer-tick'})));
  assert.equal(hydratedHost.querySelector('[data-vlx="math"]'),serverFormula,'Updates after hydration preserve server math');
  await act(async()=>hydrated.unmount());assert.equal(copies,0);hydratedHost.remove();
- console.log('React: stable formula DOM on parent/provider updates, changed TeX/fallbacks, deferred glyph loading, SSR/hydration, immediate preloaded rendering, shared styles, StrictMode and cleanup pass.');
-}finally{dom.window.close();}})().catch(error=>{console.error(error);process.exitCode=1});
+ console.log('React: 114 r6 output/geometry controls match direct DOM and SSR; innerHTML writes prohibited; stable formula DOM, changed TeX/fallbacks, lazy loading, hydration, shared styles, StrictMode and cleanup pass.');
+}finally{Object.defineProperty(Element.prototype,'innerHTML',htmlDescriptor);dom.window.close();}})().catch(error=>{console.error(error);process.exitCode=1});

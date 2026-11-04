@@ -1,8 +1,10 @@
 # vlx measurements
 
-These core-engine measurements were recorded for r5 (commit 1289a87). r6 changes
-the React mounting layer; it does not change the measured parser/layout code.
-[Separate r5/r6 React rerender measurements](react.md) cover that change.
+These are historical core-engine measurements for r5 (commit 1289a87). r6
+changed only the React mounting layer; [r5/r6 React measurements](react.md) cover
+that change. **r7 changes the layout output abstraction**, so the tables below
+do not describe current performance. See the [r6/r7 measurements](react-r7.md)
+for native React gains and the remaining uncached string-output regression.
 
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use

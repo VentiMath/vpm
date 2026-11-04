@@ -22,19 +22,20 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r6/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r7/vlx-0.1.0.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Version 0.1.0 identifies this original API, not upstream engine compatibility.
 
-Release revision **r6** preserves formula DOM nodes, keyboard focus and horizontal
-scroll when a parent re-renders with unchanged math. Both preloaded and initially
-lazy components retain their mounted subtree. Changed TeX still updates normally.
-It retains r5's strict bare-TeX input, shared forced-colors stylesheet, immediate
-preloaded rendering and inherited `MathProvider` defaults.
-Existing release assets remain unchanged.
+Release revision **r7** renders native React SVG and MathML elements. It uses
+no `dangerouslySetInnerHTML`, HTML parser or markup insertion in the React path.
+The same parser and layout rules emit structured nodes for React and escaped
+strings for the HTML, SVG, MathML and image APIs. Unchanged and changed formulas
+retain their outer DOM node; lazy loading, strict bare-TeX input, per-formula
+fallbacks and provider defaults remain supported. Existing release assets are
+unchanged.
 
 An **npm registry mirror is planned** for VentiLaTeX. It will distribute the same
 implementation and versioned API, with the same licenses and provenance. GitHub
@@ -69,11 +70,16 @@ callback for a failed formula. Defaults preserve source as text. Lifecycle and
 copy/scroll observers are mounted and cleaned up by the components. React is an
 optional peer, not a dependency of the core entry.
 
-The React adapter currently mounts generated SVG/MathML markup through a memoized
-`dangerouslySetInnerHTML` value. Unchanged output causes no HTML write. Prose and
-fallbacks remain React text/nodes; caller-provided HTML is not an input API. A
-native React element output path would require a separate layout-output refactor;
-r6 does not claim to implement one. See the [rerender measurements](bench/results/react.md).
+The React adapter uses normal element reconciliation, with a bounded cache of
+rendered expressions. Initial mounts and updates work under Trusted Types
+without a permissive HTML policy. Prose and fallbacks remain React text/nodes;
+caller-provided HTML is not an input API. See the [r6/r7 measurements](bench/results/react-r7.md)
+for initial mounts, changed formulas, unchanged parent updates and string output.
+Changed-formula and unchanged-paper updates improve in the Chrome measurements;
+uncached string generation remains slower than r6. Initial browser mounts do
+not show an established direction across controls.
+The shared stylesheet supplies oblique MathML styling and forced system colors;
+React installs it automatically. Static SSR pages import `vlx/styles.css` once.
 
 ```tsx
 import { MathProvider } from 'vlx/react';
