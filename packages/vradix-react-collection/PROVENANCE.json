@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-collection",
+    "version": "1.2.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/collection",
+    "checked": "2026-11-04",
+    "integrity": "sha512-+yiQzqcc7Sy7/5s0jrMCjpPRFB3538VNrXPWdTLZhE/SCfgEws4aI6lHWN/vvcnyhHndROWBzqmqB4QBrITZ9Q=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "c8428898eac273e573b3cc43d74fc71b837b46cad1bed78cc26c77f8759f6944",
+    "dist/index.d.ts": "eab17aea8a882f14690e32afbb98dd928468468b150062f507f27c3601eaebd1",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Stable createCollection API used by Menu 2.2.1 and Roving Focus 1.2.1: scoped providers, slotted refs and metadata, live DOM ordering, SSR/hydration and keyboard callers. Experimental unstable_createCollection/OrderedDict API is not implemented."
+  },
+  "changes": [
+    "One DOM-order pass replaces repeated indexOf searches during sorting.",
+    "Register committed item data in layout effects, with unchanged-data bailout and node/owner cleanup.",
+    "Omit registered items outside the current collection root, preventing detached or portalled items from appearing in its navigation list.",
+    "Use four VPM dependencies; no copied upstream runtime or unused primitive dependency."
+  ]
+}

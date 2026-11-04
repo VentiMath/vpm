@@ -84,6 +84,10 @@ jobs:
       - run: npm --prefix scripts/radix-popper-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-popper-conformance/build.cjs
       - run: node scripts/radix-popper-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-collection-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-collection-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/radix-collection-conformance/build.cjs
+      - run: node scripts/radix-collection-conformance/archives.cjs
       - run: node scripts/vlx-conformance/check-lock.cjs
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
@@ -538,6 +542,10 @@ jobs:
       - run: npm --prefix scripts/radix-popper-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-popper-conformance/build.cjs
       - run: node scripts/radix-popper-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-collection-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-collection-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/radix-collection-conformance/build.cjs
+      - run: node scripts/radix-collection-conformance/archives.cjs
       - run: node scripts/vlx-conformance/check-lock.cjs
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs

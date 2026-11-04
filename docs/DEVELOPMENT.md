@@ -27,7 +27,10 @@ npm --prefix scripts/radix-state-conformance/current ci --ignore-scripts --no-au
 npm --prefix scripts/radix-use-size-conformance/current ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/radix-arrow-conformance/current ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/radix-popper-conformance/current ci --ignore-scripts --no-audit --no-fund
+npm --prefix scripts/radix-collection-conformance ci --ignore-scripts --no-audit --no-fund
+npm --prefix scripts/radix-collection-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/radix-popper-conformance/build.cjs
+bun scripts/radix-collection-conformance/build.cjs
 ```
 
 These separately locked fixtures contain original packages, SDK callers and test
