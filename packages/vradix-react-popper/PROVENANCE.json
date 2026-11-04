@@ -1,0 +1,26 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-popper",
+    "version": "1.4.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/popper",
+    "checked": "2026-11-04",
+    "integrity": "sha512-yCWRvLeGv9Pz3+efwHqGPp70mZ56r3kfIgQVF56Oj2aAa4uP/Tb+IE59wNcc+758rctqbCKx4LbK8II/r7Bn0Q=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "980699c2ab40fb8a2cc75d6b40aaa36b639bac681e95a6bd04286d5720fc4aec",
+    "dist/index.d.ts": "c9ad12b8f2e08fd325a081263b3104555d30f204a65f2644a912e4fc6672f970",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19 Popper root, scoped/virtual/slotted anchors, content positioning, collision middleware, arrows, CSS variables, portals, hydration and current Dropdown Menu/Popover callers."
+  },
+  "changes": [
+    "Use eight active VPM dependencies; omit unused useRect/rect runtime and declaration dependencies.",
+    "Release owned anchors on removal and hide content with no current anchor.",
+    "Separate positioning subscriptions from middleware configuration so update strategy changes take effect.",
+    "Memoize middleware construction and avoid unchanged sizing CSS writes.",
+    "Read stacking order from the content owner window and refresh explicit z-index changes."
+  ]
+}
