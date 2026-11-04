@@ -1,0 +1,12 @@
+{
+  "name": "vpm-radix-use-size-conformance",
+  "private": true,
+  "dependencies": {
+    "@radix-ui/react-popper": "1.4.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@types/react": "19.2.14",
+    "jsdom": "27.4.0",
+    "@radix-ui/react-use-size": "1.1.5"
+  }
+}

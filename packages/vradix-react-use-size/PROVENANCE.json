@@ -1,0 +1,26 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-use-size",
+    "version": "1.1.5",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/use-size",
+    "checked": "2026-11-04",
+    "integrity": "sha512-V1McDQkMGzgivwqdu7u96APs7oi0Jvj9LTzgq3WWrDZqxWdAqU9yZnZQqk5OizGFR8badUQwZsrlao7MOlWYOA=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "e9fa1ccafa5e32a4a484eff4ecff2406305e3964d6044bef75efb8833c25e55c",
+    "dist/index.d.ts": "e3ae4fa14d11762167e2eac49feecfdd994e688f0c37908933e3525333f502e1",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "useSize for React 19 HTML elements, physical border-box dimensions, and the unchanged Popper 1.4.0 arrow caller."
+  },
+  "changes": [
+    "Ignore stale-target sizes before effect replacement.",
+    "Coalesce notifications into one frame and preserve snapshot identity for identical dimensions.",
+    "Use the target window for observation and scheduling; ignore late notifications after cleanup.",
+    "Map logical border-box dimensions to physical width/height in vertical writing modes; fall back to offsets for missing or empty boxes.",
+    "Without ResizeObserver, provide initial/window-resize measurements without claiming continuous element-size tracking."
+  ]
+}

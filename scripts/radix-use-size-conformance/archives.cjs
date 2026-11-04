@@ -1,0 +1,20 @@
+'use strict';
+const fs = require('node:fs'), path = require('node:path'), os = require('node:os'), assert = require('node:assert/strict'), { spawnSync } = require('node:child_process');
+const root = path.resolve(__dirname, '../..'), temp = fs.mkdtempSync(path.join(os.tmpdir(), 'vpm-use-size-'));
+function run(cmd, args, cwd = temp) { const r = spawnSync(cmd, args, { cwd, encoding: 'utf8', timeout: 120000, env: { ...process.env, BUN_INSTALL_CACHE_DIR: path.join(temp, 'bun-cache'), npm_config_cache: path.join(temp, 'npm-cache') } }); assert.ifError(r.error); assert.equal(r.status, 0, r.stdout + r.stderr); return r.stdout; }
+try {
+  const packages = ['vradix-react-use-size', 'vradix-react-use-layout-effect'], archives = {};
+  for (const name of packages) { const dir = path.join(root, 'packages', name), meta = require(path.join(dir, 'package.json')); run('bun', ['pm', 'pack', '--ignore-scripts', '--destination', temp, '--quiet'], dir); archives[name] = 'file:' + path.join(temp, name + '-' + meta.version + '.tgz'); assert.doesNotMatch(run('tar', ['-tzf', archives[name].slice(5)]), /\/(test|bench|node_modules)\//); }
+  for (const manager of ['npm', 'bun']) for (const react of ['19.1.0', '19.2.4']) {
+    const cwd = path.join(temp, manager + '-' + react); fs.mkdirSync(cwd);
+    fs.writeFileSync(path.join(cwd, 'package.json'), JSON.stringify({ private: true, type: 'module', dependencies: { ...archives, react, 'react-dom': react, '@types/react': '19.2.14', jsdom: '27.4.0' }, overrides: { 'vradix-react-use-layout-effect': archives['vradix-react-use-layout-effect'] } }));
+    run(manager, ['install', '--ignore-scripts', ...(manager === 'npm' ? ['--no-audit', '--no-fund'] : [])], cwd);
+    fs.writeFileSync(path.join(cwd, 'consumer.mjs'), `import assert from 'node:assert/strict';import React from 'react';import {renderToString} from 'react-dom/server';import {createRoot} from 'react-dom/client';import {flushSync} from 'react-dom';import {JSDOM} from 'jsdom';import {createRequire} from 'node:module';const dom=new JSDOM('<div id="root"></div>');globalThis.document=dom.window.document;globalThis.window=dom.window;const {useSize}=await import('vradix-react-use-size');assert.equal(createRequire(import.meta.url)('vradix-react-use-size').useSize,useSize);let value;const element=document.createElement('div');Object.defineProperties(element,{offsetWidth:{value:20},offsetHeight:{value:30}});function Child(){value=useSize(element);return React.createElement('b',null,value?.width??'pending');}assert.match(renderToString(React.createElement(Child)),/pending/);const root=createRoot(document.getElementById('root'));flushSync(()=>root.render(React.createElement(Child)));assert.deepEqual(value,{width:20,height:30});flushSync(()=>root.unmount());dom.window.close();`);
+    for (const runtime of ['node', 'bun']) run(runtime, ['consumer.mjs'], cwd);
+    fs.writeFileSync(path.join(cwd, 'consumer.ts'), `import {useSize} from 'vradix-react-use-size';const result:{width:number;height:number}|undefined=useSize(document.createElement('div'));useSize(null);\n// @ts-expect-error a target must be an HTML element\nuseSize({width:2});`);
+    for (const resolution of ['NodeNext', 'Bundler']) { fs.writeFileSync(path.join(cwd, 'tsconfig.json'), JSON.stringify({ compilerOptions: { strict: true, noEmit: true, target: 'ES2022', module: resolution === 'Bundler' ? 'ESNext' : resolution, moduleResolution: resolution, lib: ['ES2022', 'DOM'], types: [] }, files: ['consumer.ts'] })); run('node', [require('../platform-types.cjs').compiler().path, '-p', 'tsconfig.json'], cwd); }
+    fs.copyFileSync(path.join(__dirname, 'browser-entry.mjs'), path.join(cwd, 'browser.js')); run('bun', ['build', 'browser.js', '--target=browser', '--outfile=bundle.js'], cwd);
+    if (manager === 'npm' && react === '19.1.0') console.log(run('node', [path.join(__dirname, 'browser.cjs'), cwd], cwd).trim());
+  }
+  console.log('Clean npm/Bun archives: Node/Bun CJS/ESM, SSR/client, TS7 DOM types and browser bundles on React 19.1/19.2 pass.');
+} finally { fs.rmSync(temp, { recursive: true, force: true }); }
