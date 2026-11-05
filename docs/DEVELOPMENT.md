@@ -34,6 +34,9 @@ bun scripts/radix-collection-conformance/build.cjs
 npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/radix-hydrated-conformance/build.cjs
+npm --prefix scripts/radix-roving-conformance ci --ignore-scripts --no-audit --no-fund
+npm --prefix scripts/radix-roving-conformance/current ci --ignore-scripts --no-audit --no-fund
+bun scripts/radix-roving-conformance/build.cjs
 ```
 
 These separately locked fixtures contain original packages, SDK callers and test

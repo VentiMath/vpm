@@ -92,6 +92,10 @@ jobs:
       - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs
       - run: node scripts/radix-hydrated-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-roving-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-roving-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/radix-roving-conformance/build.cjs
+      - run: node scripts/radix-roving-conformance/archives.cjs
       - run: node scripts/vlx-conformance/check-lock.cjs
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
@@ -555,6 +559,10 @@ jobs:
       - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs
       - run: node scripts/radix-hydrated-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-roving-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-roving-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/radix-roving-conformance/build.cjs
+      - run: node scripts/radix-roving-conformance/archives.cjs
       - run: node scripts/vlx-conformance/check-lock.cjs
       - run: npm --prefix scripts/vlx-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node --test scripts/vlx-conformance/dom.test.cjs scripts/vlx-conformance/launch-chrome.test.cjs
