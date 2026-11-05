@@ -1,0 +1,4 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),{spawnSync}=require('node:child_process'),path=require('node:path'),fs=require('node:fs'),{createHash}=require('node:crypto');
+const fixture=path.resolve(__dirname,'../../../scripts/dnd-conformance');
+for(const variant of ['upstream','vpm'])for(const version of ['19.1','19.2'])for(const mode of ['server','client'])test(variant+' React'+version+' '+mode,()=>{const r=spawnSync(process.execPath,[path.join(fixture,'run.cjs'),variant,version,mode],{encoding:'utf8',timeout:30000});assert.equal(r.status,0,r.stdout+r.stderr);});
+test('upstream reference hashes',()=>{const p=require('../PROVENANCE.json');for(const [file,expected]of Object.entries(p.sourceSHA256))assert.equal(createHash('sha256').update(fs.readFileSync(path.join(fixture,'node_modules/@hello-pangea/dnd',file))).digest('hex'),expected);});

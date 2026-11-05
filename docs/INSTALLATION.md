@@ -1,5 +1,38 @@
 # Installing VPM packages
 
+## Scrumboard drag and drop
+
+The [DND 18.0.1 release](https://github.com/VentiMath/vpm/releases/tag/dnd-18.0.1)
+provides `vhello-pangea-dnd` for the application's nested column/card lists.
+Keep the existing import name and replace only the dependency location:
+
+```json
+{
+  "dependencies": {
+    "@hello-pangea/dnd": "https://github.com/VentiMath/vpm/releases/download/dnd-18.0.1/vhello-pangea-dnd-18.0.1.tgz"
+  }
+}
+```
+
+React and ReactDOM 19 remain app peers. No overrides, registry authentication or
+transitive runtime packages are needed. Commit package.json and bun.lock together
+and verify the app before adopting; publication does not modify the app.
+
+This release implements the app-used API, including mouse/touch/keyboard moves,
+empty/cross-list drops and scrolling. It uses immediate movement previews and
+has no drop animation. Virtual lists, combining and custom sensors are outside
+its scope. See the [contract and browser evidence](../packages/vhello-pangea-dnd/README.md).
+
+The release includes the archive, consumer-package.json, release-manifest.json
+and SHA256SUMS. Source files are checked against the committed snapshot, and
+public installs are verified from fresh npm/Bun caches using the alias above.
+
+```sh
+node scripts/pack-dnd-release.cjs --ref COMMIT_SHA --tag dnd-18.0.1 --out /absolute/path/to/empty-output
+node scripts/check-dnd-release.cjs /absolute/path/to/output
+node scripts/check-dnd-release.cjs /absolute/path/to/output --published
+```
+
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math

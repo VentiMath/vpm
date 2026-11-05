@@ -6,7 +6,7 @@ production dependencies. This is dependency adoption, not proof that every
 installed module reaches a production bundle or a deployed feature.
 
 Verified November 4, 2026 against the application's main branch, commit
-`15a83287` (VLX migration; Floating UI: PR #406; styling: `245c1541`;
+`ab3d22a2` (TanStack PR #409; VLX: `15a83287`; Floating UI: PR #406; styling: `245c1541`;
 calendar: `63f63f6a`):
 
 | Package | In use | Available update |
@@ -17,6 +17,7 @@ calendar: `63f63f6a`):
 | `vclsx`, `vstylis` and 13 Emotion packages | `styling-11.14.1` | Current published styling release |
 | Five `vfloating-ui-*` packages and `vtabbable` | `floating-0.27.20-r2` | Current published Floating UI release |
 | `vlx` and its `vpngjs` dependency | `vlx-0.1.0-r7` | Native React SVG/MathML output |
+| `vtanstack-react-query`, `vtanstack-query-core` | `tanstack-5.105.3-r2` | `tanstack-5.105.3-r3`: corrected first-render retry state |
 
 Evidence: the top-level calendar release URL in `package.json`, all three
 resolved release archives in `bun.lock`, and v7 calendar imports in the app's
@@ -64,3 +65,7 @@ graph but excluded from the browser math bundle. The Discord problem-image
 caller still uses MathJax. This source verification does not establish which
 application commit is currently deployed, nor complete manual screen-reader or
 Safari/Firefox acceptance. See the [installation recipe](INSTALLATION.md#vlx-math-rendering).
+
+`vhello-pangea-dnd` is packaged for the app-used Scrumboard API in `dnd-18.0.1`.
+The verified app main still depends on upstream `@hello-pangea/dnd` 18.0.1;
+release availability is not adoption. See [installation](INSTALLATION.md).

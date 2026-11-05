@@ -1,0 +1,3 @@
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),{execFileSync}=require('node:child_process'),assert=require('node:assert/strict');
+const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-dnd-pack-'));
+try{execFileSync('bun',['pm','pack','--ignore-scripts','--destination',temp,'--quiet'],{cwd:path.resolve(__dirname,'../../packages/vhello-pangea-dnd'),stdio:'pipe'});const file=path.join(temp,'vhello-pangea-dnd-18.0.1.tgz');const entries=execFileSync('tar',['-tzf',file],{encoding:'utf8'});assert.doesNotMatch(entries,/\/(node_modules|test|bench)\//);require('./consumer.cjs').verify('file:'+file);}finally{fs.rmSync(temp,{recursive:true,force:true});}

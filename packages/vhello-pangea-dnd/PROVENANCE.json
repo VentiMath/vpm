@@ -1,0 +1,34 @@
+{
+  "upstream": {
+    "name": "@hello-pangea/dnd",
+    "version": "18.0.1",
+    "repository": "https://github.com/hello-pangea/dnd",
+    "checked": "2026-11-04",
+    "integrity": "sha512-xojVWG8s/TGrKT1fC8K2tIWeejJYTAeJuj36zM//yEm/ZrnZUSFGS15BpO+jGZT1ybWvyXmeDJwPYb4dhWlbZQ=="
+  },
+  "sourceSHA256": {
+    "dist/dnd.cjs.js": "a63c733aa094370d49220375166fd97eb4458b0aabb624aa29f269654c76a6b9",
+    "dist/dnd.d.ts": "39cec3d65003f318688e3a4d0afe09727ca2d588d4c157a6dcbfeee57a63f5b0",
+    "LICENSE": "98b597ef51f93f0ff73222e87e4c70a6b732ebcdbf787054d54bb31527df3e13"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "VentiMath Scrumboard: horizontal columns, vertical variable-height cards, same-list/cross-list moves, nested handles, keyboard/mouse/touch, clipping/scrolling, announcements, cancellation and React 19 SSR.",
+    "consumerReference": {
+      "repository": "johnclyde-org/ventimath-private",
+      "commit": "ab3d22a2b62931f7ab9aee3d7c18a46dfeeb5c2f",
+      "surfaces": [
+        "Scrumboard BoardView",
+        "BoardList",
+        "BoardCard",
+        "BoardListHeader",
+        "DropResult reorder types"
+      ]
+    }
+  },
+  "changes": [
+    "Board-local external store; zero runtime dependencies, no Redux, React Redux or Babel runtime.",
+    "Owner-document sensors and owned listeners/frames; cleanup, live target eligibility and escaped ID-safe registry lookup."
+  ]
+}

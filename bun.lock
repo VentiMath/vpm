@@ -519,6 +519,14 @@
         "vjws": "workspace:*",
       },
     },
+    "packages/vhello-pangea-dnd": {
+      "name": "vhello-pangea-dnd",
+      "version": "18.0.1",
+      "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+      },
+    },
     "packages/vhoist-non-react-statics": {
       "name": "vhoist-non-react-statics",
       "version": "3.3.2",
@@ -1360,6 +1368,8 @@
     "vgrpc-proto-loader": ["vgrpc-proto-loader@workspace:packages/vgrpc-proto-loader"],
 
     "vgtoken": ["vgtoken@workspace:packages/vgtoken"],
+
+    "vhello-pangea-dnd": ["vhello-pangea-dnd@workspace:packages/vhello-pangea-dnd"],
 
     "vhoist-non-react-statics": ["vhoist-non-react-statics@workspace:packages/vhoist-non-react-statics"],
 
