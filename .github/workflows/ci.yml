@@ -100,6 +100,10 @@ jobs:
       - run: npm --prefix scripts/radix-presence-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-presence-conformance/build.cjs
       - run: node scripts/radix-presence-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-portal-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-portal-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/radix-portal-conformance/build.cjs
+      - run: node scripts/radix-portal-conformance/archives.cjs
       - run: npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/dnd-conformance/build.cjs
@@ -575,6 +579,10 @@ jobs:
       - run: npm --prefix scripts/radix-presence-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-presence-conformance/build.cjs
       - run: node scripts/radix-presence-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-portal-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-portal-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/radix-portal-conformance/build.cjs
+      - run: node scripts/radix-portal-conformance/archives.cjs
       - run: npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/dnd-conformance/build.cjs

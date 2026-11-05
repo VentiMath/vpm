@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-portal",
+    "version": "1.2.0",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/portal",
+    "checked": "2026-11-05",
+    "integrity": "sha512-StX7xXnaRU41VvFtMm9zlhVGz8XF6GmWWTXftkQaY+tqVkbs/R9UmAp5mLzHHapk5hM9RMZQvO/3usyIP/g42g=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "c7633c2344096dc7ea104dd7663d4a477067cc838cbbcea21b9c9ae07ec5ae82",
+    "dist/index.d.ts": "0b08bfb456ca49e6d3ccea44d54938350953df531828251facf09585be0b955f",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Portal/Root, default and explicit containers, asChild/DOM attributes/refs, React context/events, SSR/hydration and current Dropdown Menu callers."
+  },
+  "changes": [
+    "Use React 19 root-local hydration snapshots instead of an unconditional mount state update.",
+    "Omit explicit-container portals during SSR and first hydration rather than attempting unsupported server portals.",
+    "Reuse independent VPM Primitive/Slot and hydration foundations."
+  ]
+}
