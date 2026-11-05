@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-dismissable-layer",
+    "version": "1.2.1",
+    "checked": "2026-11-05",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/dismissable-layer",
+    "integrity": "sha512-KIfDcAsx+oVylFZ4xryVKusJUrLLhTQmfnJW4kwk4Km5myvhHCrj04hnWWUC166+xD4DHdH8tQGylwYX1h6+Pg=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "e1c396c44dc1bfd66e2fc4f7392432198bd93997a19f8d3351e6e3464d363f9e",
+    "dist/index.d.ts": "524f2c218bd082598ebf84d9d524c67245c69e14874b6791d0c0d3e237c612a7",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "DismissableLayer/Root, Branch, surface hook, cancelable pointer/focus/Escape dismissal, deferred gestures, modal pointer blocking and current Dropdown Menu callers."
+  },
+  "changes": [
+    "Document-owned layer ordering, native listeners, body locks and deferred interactions.",
+    "Event-scoped inside tracking, current branch nodes and composed-path containment.",
+    "Owned gesture cancellation, timer cleanup and body style restoration."
+  ]
+}

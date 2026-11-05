@@ -108,6 +108,10 @@ jobs:
       - run: npm --prefix scripts/radix-focus-scope-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-focus-scope-conformance/build.cjs
       - run: node scripts/radix-focus-scope-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-dismissable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-dismissable-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/radix-dismissable-conformance/build.cjs
+      - run: node scripts/radix-dismissable-conformance/archives.cjs
       - run: npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/dnd-conformance/build.cjs
@@ -591,6 +595,10 @@ jobs:
       - run: npm --prefix scripts/radix-focus-scope-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-focus-scope-conformance/build.cjs
       - run: node scripts/radix-focus-scope-conformance/archives.cjs
+      - run: npm --prefix scripts/radix-dismissable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/radix-dismissable-conformance/current ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/radix-dismissable-conformance/build.cjs
+      - run: node scripts/radix-dismissable-conformance/archives.cjs
       - run: npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/dnd-conformance/build.cjs
