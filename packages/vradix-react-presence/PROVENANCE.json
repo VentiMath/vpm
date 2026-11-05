@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-presence",
+    "version": "1.1.11",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/presence",
+    "checked": "2026-11-04",
+    "integrity": "sha512-Z7/atlkab36Z8hm+V8zYc79r0W+tiOB1o0tun1By94JyadkekLQmtEAnBSP9XKXBNQsStoStS4+gX10JpS5akA=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "69322a0601ad31bcb3fcd1d7826c59675166cff00103e6b5ad3f6ecce815147d",
+    "dist/index.d.ts": "235d4104fa8249672085d8ba52463005cabb4770b7c0fee3b7d940d9fa2c244e",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Presence/Root, present and function-child contracts, React 19 refs/cleanup, CSS exit animation retention, SSR/hydration and current Dropdown Menu callers."
+  },
+  "changes": [
+    "Wait for all finite element-owned CSS exit animations; ignore descendant/pseudo/stale completions.",
+    "Use owner-document style reads and native animation identities; exact escaped-name fallback when getAnimations is absent.",
+    "Clean up old child refs on replacement; restore temporary fill styles without unowned timers."
+  ]
+}

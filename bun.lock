@@ -859,6 +859,17 @@
         "react-dom": "^19.0.0",
       },
     },
+    "packages/vradix-react-presence": {
+      "name": "vradix-react-presence",
+      "version": "1.1.11",
+      "dependencies": {
+        "vradix-react-use-layout-effect": "1.1.4",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+      },
+    },
     "packages/vradix-react-primitive": {
       "name": "vradix-react-primitive",
       "version": "2.2.0",
@@ -1480,6 +1491,8 @@
     "vradix-react-id": ["vradix-react-id@workspace:packages/vradix-react-id"],
 
     "vradix-react-popper": ["vradix-react-popper@workspace:packages/vradix-react-popper"],
+
+    "vradix-react-presence": ["vradix-react-presence@workspace:packages/vradix-react-presence"],
 
     "vradix-react-primitive": ["vradix-react-primitive@workspace:packages/vradix-react-primitive"],
 

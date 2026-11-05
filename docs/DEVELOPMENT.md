@@ -37,6 +37,9 @@ bun scripts/radix-hydrated-conformance/build.cjs
 npm --prefix scripts/radix-roving-conformance ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/radix-roving-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/radix-roving-conformance/build.cjs
+npm --prefix scripts/radix-presence-conformance ci --ignore-scripts --no-audit --no-fund
+npm --prefix scripts/radix-presence-conformance/current ci --ignore-scripts --no-audit --no-fund
+bun scripts/radix-presence-conformance/build.cjs
 npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/dnd-conformance/build.cjs
