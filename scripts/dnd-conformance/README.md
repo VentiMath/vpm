@@ -24,7 +24,9 @@ list moves, column handles, focus return, disabled cards, interactive descendant
 mouse/touch transfers, touch pre-lift scrolling, outside drops, Escape,
 container auto-scroll, active teardown, hydration and center-grab stability.
 CSS-gap preview has an explicit paired expectation: upstream shifts the next
-card by 8 pixels, VPM preserves its position. VPM-specific checks exercise the
+card by 8 pixels, VPM preserves its position. A disabled nested card starts an
+ancestor-column drag upstream, while VPM blocks it. The control waits for the
+upstream end callback; an early fixed wait can miss that animated drop. VPM-specific checks exercise the
 actual app's missing droppable data props and a destination disabled mid-drag.
 
 Packed archives install under the upstream name, with no overrides, on npm and

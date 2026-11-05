@@ -66,7 +66,10 @@ should still spread these props for inspection and upstream compatibility.
 CSS `gap` is included in displacement: the paired 8-pixel-gap fixture keeps the
 next card in place on lift, whereas upstream moves it by 8 pixels. Source-slot
 hit-testing also preserves the current order when grabbing the center of a card.
-Registry lookup does not interpolate application IDs into selectors. List
+A disabled nested card cannot start an ancestor-column drag. Upstream can
+select the enclosing column handle; the paired control waits for that drop
+animation to finish before checking the result. Registry lookup does not
+interpolate application IDs into selectors. List
 eligibility is checked again when a pointer drop finishes.
 
 This is the app-used list API, **not the whole upstream library**. Virtual lists,
