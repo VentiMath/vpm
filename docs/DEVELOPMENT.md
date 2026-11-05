@@ -43,6 +43,9 @@ bun scripts/radix-presence-conformance/build.cjs
 npm --prefix scripts/radix-portal-conformance ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/radix-portal-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/radix-portal-conformance/build.cjs
+npm --prefix scripts/radix-focus-scope-conformance ci --ignore-scripts --no-audit --no-fund
+npm --prefix scripts/radix-focus-scope-conformance/current ci --ignore-scripts --no-audit --no-fund
+bun scripts/radix-focus-scope-conformance/build.cjs
 npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/dnd-conformance/build.cjs

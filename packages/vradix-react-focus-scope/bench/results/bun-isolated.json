@@ -1,0 +1,1347 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-05T21:09:57.118Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../packages/vradix-react-compose-refs/index.cjs": "6cbd314c11037ee1b9d76bb3dbe7a33c9be9936bc4a9bf7e41d5893fd44a5c94",
+    "../../packages/vradix-react-compose-refs/index.mjs": "60cb8cf85cb8676c15ad6fe09eb7baa83d5531c31863cbb6176b26e208ea692e",
+    "../../packages/vradix-react-compose-refs/package.json": "882c18c7ab3bdcbb08a1de2f1cb51b168102e97737f30f473c05189de6273548",
+    "../../packages/vradix-react-focus-scope/index.cjs": "431a4262b72c8230f7400af1a7bde91f80a27614f5949eac806affc5306ae6e3",
+    "../../packages/vradix-react-focus-scope/index.mjs": "221f49cf78b3d91efa8c3cbf68d609dc78541388e26dc355de566b8c84f09349",
+    "../../packages/vradix-react-focus-scope/package.json": "29165c6dc932146c14ece06a9fff34bd03060fb9ce0da9c3a20d26e7786c9de9",
+    "../../packages/vradix-react-primitive/index.cjs": "d8d3a8c1d11ebe771a330a64fbe0ef2b9810a3199bcd0f17c39e13abd47f6f4e",
+    "../../packages/vradix-react-primitive/index.mjs": "aea45a4bb143143273b5e97fe179e3d38636fcaf5e3ef64b6639bb0b3f399dcb",
+    "../../packages/vradix-react-primitive/package.json": "f30d44b1e67570b548dfe245dc9781f8f980c38cd8202bedb300f910bb8432dd",
+    "../../packages/vradix-react-slot/index.cjs": "f1e9de66b2580739bc13d9a2d9d50120d987e245f54e0fc08159d8e3cedc1dff",
+    "../../packages/vradix-react-slot/index.mjs": "7756b4b1de44d46257314e7923dddb47456be45978181feda176344a37165558",
+    "../../packages/vradix-react-slot/package.json": "0fed1b3f7f091301e5113dd04473f5a6191fa78bc81b78132203442faf54672c",
+    "../../packages/vtabbable/index.cjs": "f38802af8cae3a627b557924731fb71d3737fcf6277b1226ca4a828e55b02de8",
+    "../../packages/vtabbable/package.json": "081469ad58cd6ee5f2bf037760698187d3684c028f7370086a0d70c4903e6ec1",
+    "../../packages/vtabbable/runtime.mjs": "0d0c9b3627a03c030b75abf869d90fa5269fb3015f94f964a18e5decf88463e5",
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/radix-focus-scope-conformance/build.cjs": "fef7a474a5747cc39051657bcef50689d4b1b3f39cfdc91c2cf3e7652fa78eec",
+    "../../scripts/radix-focus-scope-conformance/check-built.cjs": "cc5ba104bf1fac8a5488d09f857af1d25f8ec5cd52ba0ce61253caab12cc17b2",
+    "../../scripts/radix-focus-scope-conformance/current/package-lock.json": "e160c0c6bcc67179772d715577a2446e7c0f3ccc4e40aa238384f90fff3f8a3b",
+    "../../scripts/radix-focus-scope-conformance/entry.mjs": "fecc7ca06acacb0d57238d7caf93e12d38adda742b982eb6fdb45ff68dceca4f",
+    "../../scripts/radix-focus-scope-conformance/load.cjs": "a5467f4782faffa6d7723bfd62b8ce000f1e3220c87393e890eb31690e704da8",
+    "../../scripts/radix-focus-scope-conformance/node_modules/.vpm-focus-scope-production": "28fe4796473f13a7787124803a22faf86292749f7a75a4c96edfafc2184aa2f8",
+    "../../scripts/radix-focus-scope-conformance/node_modules/@radix-ui/react-focus-scope": "6c4ecf9952d94c08ab4368971e5915629a8e9a1bcdcd8a2f6e51772c9a3c0e92",
+    "../../scripts/radix-focus-scope-conformance/package-lock.json": "62714daaee13c505b0375247fac913e5cec92b38625b8f8139139b35117a6f22",
+    "../../scripts/radix-focus-scope-conformance/sources.cjs": "8539ac0774389ae9b20096c143a8c17653866b6e5ab7ad425df7bb402e48f17d",
+    "PROVENANCE.json": "7237648c202d9d9ecd9189dd82ad074e116a417999e65f2f01d9e3c20aa2463d",
+    "bench/compare.cjs": "044b39dbe3bcb1bae20e34523ce7796b659bd2613c49d70db3f59ca1be2365b7",
+    "index.cjs": "431a4262b72c8230f7400af1a7bde91f80a27614f5949eac806affc5306ae6e3",
+    "index.d.ts": "f98bfe5150b5abb208bd9b1d152ad25da3cfd586472d82f8ff0ebb5f85a0a568",
+    "index.mjs": "221f49cf78b3d91efa8c3cbf68d609dc78541388e26dc355de566b8c84f09349",
+    "package.json": "29165c6dc932146c14ece06a9fff34bd03060fb9ce0da9c3a20d26e7786c9de9"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 12203,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 925,
+            "samples": [
+              12325.90054054047,
+              12688.15243243242,
+              12579.910270270326,
+              12527.88216216219,
+              11140.945945945852,
+              12749.9102702703,
+              12163.062702702642,
+              12061.216216216299,
+              12169.504864864884,
+              12363.8291891891,
+              11254.638918918883,
+              12415.63027027029
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 426,
+            "samples": [
+              24917.744131455394,
+              26430.847417840407,
+              22189.35680751179,
+              25203.443661971858,
+              23086.950704225193,
+              24798.70892018783,
+              25463.321596244263,
+              24272.007042253535,
+              27182.805164319285,
+              25840.276995305234,
+              23342.626760563264,
+              25527.8755868544
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 141,
+            "samples": [
+              61399.5248226958,
+              59202.12765957344,
+              74470.44680851031,
+              58479.31205673847,
+              59466.60992907845,
+              57681.439716311645,
+              63388.59574468045,
+              66216.31205673679,
+              78554.6737588657,
+              46169.91489361771,
+              45309.98581560411,
+              44944.446808509994
+            ]
+          }
+        ],
+        "checksum": 5740046
+      },
+      "vpm": {
+        "pid": 12210,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 925,
+            "samples": [
+              11026.261621621576,
+              11520.810810810799,
+              10344.415135135121,
+              12623.738378378392,
+              11274.819459459477,
+              10270.179459459443,
+              11375.09081081079,
+              9628.1978378378,
+              10999.594594594648,
+              10721.665945945977,
+              10821.305945945873,
+              11523.42378378381
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 426,
+            "samples": [
+              22579.90845070432,
+              21190.04225352121,
+              22121.967136150164,
+              19917.64319248826,
+              21699.629107981305,
+              20157.86384976535,
+              22310.93427230047,
+              20478.38497652583,
+              23333.52816901399,
+              19583.03990610316,
+              22536.190140845054,
+              20325.704225352238
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 141,
+            "samples": [
+              49934.69503546107,
+              46946.21985815521,
+              49815.602836878636,
+              51678.48936170269,
+              50708.03546099251,
+              53821.80851063931,
+              49429.36879432578,
+              45351.3546099283,
+              46671.39007092245,
+              44199.46808510635,
+              53774.234042553384,
+              47000.88652482254
+            ]
+          }
+        ],
+        "checksum": 1493792
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 12213,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 1070,
+            "samples": [
+              10450.233644859834,
+              11217.48411214957,
+              9881.425233644863,
+              10798.13084112147,
+              10667.212149532734,
+              10471.416822429941,
+              10172.041121495302,
+              9650.155140186927,
+              10635.474766355183,
+              10746.456074766429,
+              10791.627102803664,
+              10765.57663551395
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 504,
+            "samples": [
+              20768.84920634915,
+              21328.20833333332,
+              21296.958333333496,
+              19735.283730158793,
+              21608.29960317459,
+              19944.031746031702,
+              22035.13690476177,
+              21456.101190476067,
+              20120.948412698322,
+              21940.14484126976,
+              19950.480158730075,
+              21019.428571428587
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 212,
+            "samples": [
+              53801.68867924447,
+              51837.26415094296,
+              55453.0283018867,
+              47003.933962264666,
+              47384.63207547095,
+              47565.64622641476,
+              65271.42452830182,
+              45259.04245283077,
+              45781.64150943484,
+              44724.24999999943,
+              45877.94811320712,
+              48582.35377358416
+            ]
+          }
+        ],
+        "checksum": 6346896
+      },
+      "upstream": {
+        "pid": 12223,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 1070,
+            "samples": [
+              11744.859813084118,
+              12690.226168224272,
+              11797.54672897197,
+              12644.70467289719,
+              12184.73551401869,
+              12246.261682242986,
+              12668.37943925227,
+              12515.537383177654,
+              12008.52803738314,
+              12111.370093457926,
+              12450.077570093381,
+              12064.329906542018
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 504,
+            "samples": [
+              25248.678571428525,
+              25517.11309523815,
+              22935.928571428572,
+              23851.605158730155,
+              24977.099206349325,
+              24773.480158730068,
+              25712.632936508122,
+              22213.04563492066,
+              24117.146825396783,
+              24527.861111111284,
+              24181.795634920687,
+              23237.9305555555
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 212,
+            "samples": [
+              43600.82547169818,
+              61142.49056603735,
+              43218.160377357824,
+              43214.429245283725,
+              41813.877358490696,
+              42976.61320754716,
+              42261.79245283095,
+              43275.745283018674,
+              49137.575471698954,
+              42678.46226415079,
+              43203.617924528415,
+              43834.707547169804
+            ]
+          }
+        ],
+        "checksum": 1341792
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 12232,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 535,
+            "samples": [
+              12843.691588785046,
+              11918.536448598137,
+              11928.65981308406,
+              12527.958878504633,
+              11592.368224299134,
+              12203.893457943952,
+              12196.571962616847,
+              12818.22429906544,
+              12036.214953271,
+              11613.863551401855,
+              11789.564485981284,
+              12299.53271028044
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 451,
+            "samples": [
+              23531.689578714,
+              25204.545454545485,
+              26509.700665188455,
+              23033.352549889227,
+              25572.800443458913,
+              25555.986696230637,
+              25974.869179600813,
+              23180.802660754012,
+              25453.900221729396,
+              25918.053215077543,
+              22277.07095343684,
+              24884.7937915742
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 246,
+            "samples": [
+              49994.410569106214,
+              45516.260162601175,
+              43246.10569105749,
+              48482.386178862514,
+              43905.15040650397,
+              44438.178861788976,
+              48034.719512195705,
+              42415.14227642274,
+              44896.678861789034,
+              41321.13821138196,
+              46924.796747967455,
+              42856.36991869894
+            ]
+          }
+        ],
+        "checksum": 5437376
+      },
+      "vpm": {
+        "pid": 12237,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 535,
+            "samples": [
+              10263.005607476605,
+              9995.951401869223,
+              10914.252336448537,
+              11129.127102803785,
+              10641.588785046688,
+              10758.64485981309,
+              10057.786915887875,
+              10574.766355140131,
+              9638.317757009336,
+              10884.657943925196,
+              10681.153271028086,
+              10969.392523364502
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 451,
+            "samples": [
+              20587.02882483352,
+              22774.76053215062,
+              20882.113082039854,
+              21254.527716186185,
+              20113.913525498865,
+              21195.86031042137,
+              20749.90687361417,
+              22114.097560975722,
+              20014.873614190656,
+              21389.966740576547,
+              23057.279379157357,
+              20312.63858093114
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 246,
+            "samples": [
+              47242.71951219516,
+              53987.126016260285,
+              45858.23170731697,
+              47310.46747967478,
+              49376.52439024425,
+              45995.089430893895,
+              44964.60162601571,
+              53634.31707317014,
+              45504.06504065117,
+              45283.365853658244,
+              43880.08130081289,
+              50221.37804878011
+            ]
+          }
+        ],
+        "checksum": 2048736
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 12240,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 1114,
+            "samples": [
+              10573.758527827624,
+              10668.985637342945,
+              10815.37971274682,
+              10555.729802513493,
+              10516.943447037687,
+              10694.194793536773,
+              10559.470377019774,
+              10537.2908438061,
+              10057.638240574499,
+              10731.673249551115,
+              10520.870736086246,
+              10540.693895870661
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 504,
+            "samples": [
+              23256.696428571362,
+              20187.58333333328,
+              22313.658730158724,
+              19757.440476190543,
+              20587.136904761825,
+              22932.787698412736,
+              19023.14880952383,
+              21994.212301587184,
+              20086.47420634909,
+              21325.976190476176,
+              21527.77777777782,
+              19560.84722222216
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 221,
+            "samples": [
+              51637.443438914066,
+              49900.64253393626,
+              56553.92307692315,
+              46748.11764705869,
+              47442.68778280482,
+              65275.452488687355,
+              48460.597285068354,
+              48986.425339366615,
+              48653.66063348437,
+              49417.420814480094,
+              48864.253393666084,
+              48547.89140271519
+            ]
+          }
+        ],
+        "checksum": 6144240
+      },
+      "upstream": {
+        "pid": 12241,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 1114,
+            "samples": [
+              12222.434470377018,
+              12480.737881508092,
+              13050.605924596077,
+              12222.508976660698,
+              16441.539497307003,
+              19386.66965888688,
+              17647.40394973073,
+              12568.11041292645,
+              12766.121184919193,
+              11940.11759425493,
+              12001.832136445255,
+              11860.749551167015
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 504,
+            "samples": [
+              24727.84325396812,
+              25649.47023809519,
+              25238.095238095295,
+              22392.857142857258,
+              24156.746031745944,
+              25292.410714285554,
+              25124.339285714395,
+              24068.03968253979,
+              22442.37698412704,
+              23973.46230158709,
+              24971.809523809465,
+              24362.68253968267
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 221,
+            "samples": [
+              46577.674208144934,
+              44473.22624434381,
+              53516.02714932181,
+              44897.6244343896,
+              44166.66515837126,
+              44996.226244343874,
+              43934.95475113207,
+              44969.27149321332,
+              42668.9276018106,
+              51515.08144796412,
+              43303.92307692243,
+              43288.461538462376
+            ]
+          }
+        ],
+        "checksum": 1341856
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 12245,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 929,
+            "samples": [
+              12704.25188374598,
+              11576.247578040875,
+              12923.395048439173,
+              12713.805166846076,
+              12187.298170075352,
+              12464.208826695374,
+              12435.683530678152,
+              10971.968783638353,
+              12449.6770721206,
+              12210.62109795477,
+              12172.946178686776,
+              12051.847147470342
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 458,
+            "samples": [
+              25409.115720523812,
+              22600.253275109135,
+              25739.537117904023,
+              24924.85589519668,
+              23793.305676855896,
+              24604.620087336225,
+              25830.96943231426,
+              23501.45414847174,
+              24886.09825327509,
+              24301.220524017433,
+              22277.38427947594,
+              24260.189956331928
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 216,
+            "samples": [
+              44335.64814814872,
+              45265.43055555555,
+              44384.44907407407,
+              43760.99537036967,
+              50684.22222222298,
+              44893.712962963014,
+              40862.46296296281,
+              42489.199074073746,
+              42943.67129629593,
+              42571.95370370444,
+              42771.99074074066,
+              42629.62962963002
+            ]
+          }
+        ],
+        "checksum": 5487846
+      },
+      "vpm": {
+        "pid": 12274,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 929,
+            "samples": [
+              12139.891280947266,
+              12568.083961248649,
+              12732.015069967687,
+              12245.201291711568,
+              12308.799784714724,
+              11606.700753498382,
+              12209.45532831,
+              12430.346609257222,
+              12517.715823466167,
+              12327.726587728841,
+              12119.079655543652,
+              11191.558665231476
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 458,
+            "samples": [
+              26522.742358078398,
+              27224.528384279507,
+              22807.951965065575,
+              25226.16593886463,
+              24335.971615720624,
+              23961.336244541464,
+              24044.941048035074,
+              25330.786026200843,
+              22199.600436681223,
+              24775.927947598128,
+              24874.543668122133,
+              22826.419213973666
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 216,
+            "samples": [
+              44884.259259258964,
+              45573.49537037049,
+              67560.37499999933,
+              43460.26388888849,
+              43256.754629629344,
+              45159.14351851843,
+              41833.91203703742,
+              43842.0138888889,
+              43343.17129629574,
+              43903.35648148135,
+              43284.33796296357,
+              49273.532407407096
+            ]
+          }
+        ],
+        "checksum": 1442912
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 12276,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 879,
+            "samples": [
+              12186.339021615475,
+              12945.581342434583,
+              11633.579067121711,
+              12701.934015927214,
+              12496.16040955632,
+              13516.307167235487,
+              11480.233219567664,
+              12467.765642775861,
+              12104.427758816837,
+              13746.492605233287,
+              11537.732650739457,
+              12257.01592718997
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 285,
+            "samples": [
+              30672.221052631547,
+              24018.273684210377,
+              26139.03508771919,
+              22629.38596491199,
+              26308.915789473886,
+              22115.7894736842,
+              23803.803508771955,
+              26838.157894737156,
+              23364.32631578933,
+              25002.778947368584,
+              22482.603508772056,
+              25946.343859648856
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 222,
+            "samples": [
+              44559.306306305676,
+              49771.39639639653,
+              45276.27927927926,
+              42651.83783783831,
+              42734.42342342331,
+              67375.74774774759,
+              44678.675675674785,
+              43119.36936936933,
+              41809.68468468412,
+              44475.04054054015,
+              40973.536036036174,
+              40504.88288288278
+            ]
+          }
+        ],
+        "checksum": 5488113
+      },
+      "upstream": {
+        "pid": 12280,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 8 scopes",
+            "iterations": 879,
+            "samples": [
+              11475.82480091017,
+              12784.651877133165,
+              12449.943117178644,
+              11894.718998862303,
+              11754.550625711086,
+              12727.152445961307,
+              12331.48464163818,
+              12185.05915813418,
+              11264.742889647307,
+              12084.565415244626,
+              12049.061433447137,
+              11468.192263936337
+            ]
+          },
+          {
+            "case": "unchanged 8 scopes",
+            "iterations": 285,
+            "samples": [
+              24102.631578947246,
+              25819.736842105125,
+              23883.77192982453,
+              26213.89122807015,
+              22624.12280701778,
+              28230.845614035115,
+              23396.343859649118,
+              22413.15789473678,
+              26677.049122806813,
+              22183.04210526328,
+              25897.65964912299,
+              23278.364912280587
+            ]
+          },
+          {
+            "case": "Tab loop 32 controls",
+            "iterations": 222,
+            "samples": [
+              44769.89639639615,
+              45609.23423423344,
+              65349.47297297225,
+              46912.72522522471,
+              46917.22972973014,
+              46975.6036036036,
+              43742.301801801674,
+              43914.225225224785,
+              43574.69819819823,
+              131163.6621621627,
+              49498.49549549534,
+              52683.369369369226
+            ]
+          }
+        ],
+        "checksum": 1493856
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "SSR 8 scopes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 12344.864864864785,
+          "vpmNs": 11012.928108108112,
+          "changePct": -10.789399246868648
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 12215.498598130838,
+          "vpmNs": 10651.343457943958,
+          "changePct": -12.804677006194575
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 12116.393457943923,
+          "vpmNs": 10661.371028037387,
+          "changePct": -12.008708985532103
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 12524.42414721727,
+          "vpmNs": 10557.600089766634,
+          "changePct": -15.703908094550068
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 12323.152314316461,
+          "vpmNs": 12277.000538213146,
+          "changePct": -0.3745127458150366
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 12066.81342434588,
+          "vpmNs": 12362.390784982916,
+          "changePct": 2.4495063463953137
+        }
+      ]
+    },
+    {
+      "case": "unchanged 8 scopes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 25060.593896713624,
+          "vpmNs": 21444.835680751257,
+          "changePct": -14.428062762058191
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 24354.828373015986,
+          "vpmNs": 21158.19345238104,
+          "changePct": -13.125261536134115
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 25329.22283813744,
+          "vpmNs": 21038.98669623061,
+          "changePct": -16.93789094644922
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 24545.262896825396,
+          "vpmNs": 20956.556547619002,
+          "changePct": -14.620769654378174
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 24452.92030567683,
+          "vpmNs": 24555.949781659376,
+          "changePct": 0.4213381252407222
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 23993.20175438589,
+          "vpmNs": 24510.52631578948,
+          "changePct": 2.156129751666125
+        }
+      ]
+    },
+    {
+      "case": "Tab loop 32 controls",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 59334.36879432594,
+          "vpmNs": 49622.48581560221,
+          "changePct": -16.368056450366197
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 43216.294811320775,
+          "vpmNs": 47475.13915094286,
+          "changePct": 9.854718823573116
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 44667.428861789005,
+          "vpmNs": 46618.90447154453,
+          "changePct": 4.368900694494471
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 44685.4253393667,
+          "vpmNs": 48925.339366516346,
+          "changePct": 9.488360007651963
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 43352.3333333328,
+          "vpmNs": 43872.685185185124,
+          "changePct": 1.2002856867042944
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 46914.97747747743,
+          "vpmNs": 43797.20495495474,
+          "changePct": -6.645580345891555
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "SSR 8 scopes",
+      "upstream_ns": 12280,
+      "vpm_ns": 10656,
+      "change_pct": -12.4,
+      "upstream_first_pct": -11.4,
+      "vpm_first_pct": -14.3,
+      "process_range_pct": "-10.8, -12.8, -12.0, -15.7",
+      "control_max_abs_pct": 2.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "unchanged 8 scopes",
+      "upstream_ns": 24803,
+      "vpm_ns": 21099,
+      "change_pct": -14.5,
+      "upstream_first_pct": -15.7,
+      "vpm_first_pct": -13.9,
+      "process_range_pct": "-14.4, -13.1, -16.9, -14.6",
+      "control_max_abs_pct": 2.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Tab loop 32 controls",
+      "upstream_ns": 44676,
+      "vpm_ns": 48200,
+      "change_pct": 6.9,
+      "upstream_first_pct": -6,
+      "vpm_first_pct": 9.7,
+      "process_range_pct": "-16.4, 9.9, 4.4, 9.5",
+      "control_max_abs_pct": 6.6,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}
