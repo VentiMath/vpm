@@ -85,11 +85,11 @@ node scripts/check-dnd-release.cjs /absolute/path/to/output --published
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.1.0-r7)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.2.0)
 provides its `vlx` package for frontend integration:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r7/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.0/vlx-0.2.0.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -98,7 +98,7 @@ are needed. The archive pins `vpngjs` to its sibling release URL. That dependenc
 supports the separate Node page-export entry; it is excluded from browser builds.
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
 
-Revision **r7** creates native React SVG/MathML elements without HTML insertion.
+Version **0.2.0** retains r7's native React SVG/MathML elements without HTML insertion.
 It preserves formula nodes, focus and scroll across parent updates and keeps the
 same loading boundary after lazy imports. It keeps formula-only input strict
 and renders all **99,635** audited expressions after verified source repairs: 165 statements, two current rubrics,
@@ -115,16 +115,18 @@ React imports split the renderer into a dynamic chunk with a compatible bundler.
 For static HTML without React or `observeMath`, import `vlx/styles.css` once, or
 call `installMathStyles(document)` from `vlx/dom`, for forced-colors support.
 
-The repository's **0.2.0 source** adds `renderDocument` and `MathDocument` for
-automatic equation numbering, labels and forward/back references. It is tested
-but not released yet; those APIs are not available from the r7 URL above. See the
-[document API](../packages/vlx/README.md#automatic-equation-references-020-source).
+**0.2.0** adds `renderDocument` and `MathDocument` for automatic equation
+numbering, labels and forward/back references. Existing formula/text components
+keep their behavior; use `MathDocument` for a complete reference scope. See the
+[document API](../packages/vlx/README.md#automatic-equation-references-020).
+VentiMath's verified frontend still pins r7; upgrading the URL and lockfile,
+and using the new document API, remain application-side work.
 
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
 installation source; the npm mirror has not been published.
 
-VLX is an original API, so **0.1.0 is its own version**, not a claim of KaTeX or
+VLX is an original API, so **0.2.0 is its own version**, not a claim of KaTeX or
 MathJax version compatibility. The app must adapt its rendering calls rather than
 aliasing those packages to VLX. Keep existing legacy source normalization, list
 handling, figure descriptions and text-on-error behavior. See the
@@ -135,13 +137,13 @@ Commit the app's package.json and bun.lock together and use
 it does not change or deploy the application. Actual reader/browser acceptance
 remains recorded separately from the automated Chrome checks.
 
-The release includes `vlx-0.1.0.tgz`, `vpngjs-7.0.0.tgz`,
+The release includes `vlx-0.2.0.tgz`, `vpngjs-7.0.0.tgz`,
 `consumer-package.json`, `release-manifest.json` and `SHA256SUMS`. The manifest
 records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.1.0-r7 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.2.0 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published

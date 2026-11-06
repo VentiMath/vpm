@@ -64,9 +64,9 @@ caller still uses MathJax. This source verification does not establish which
 application commit is currently deployed, nor complete manual screen-reader or
 Safari/Firefox acceptance. See the [installation recipe](INSTALLATION.md#vlx-math-rendering).
 
-VLX's **0.2.0 source** now implements document-scoped equation numbering and
-references with `renderDocument`/`MathDocument`. It has not been released or
-integrated into VentiMath. The existing **IN USE** status refers to r7's rendering
+The [VLX 0.2.0 release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.2.0)
+provides document-scoped equation numbering and references with
+`renderDocument`/`MathDocument`. VentiMath has not yet adopted this version. The existing **IN USE** status refers to r7's rendering
 API, not adoption of this new feature.
 
 `vhello-pangea-dnd` is packaged for the app-used Scrumboard API in `dnd-18.0.1`.

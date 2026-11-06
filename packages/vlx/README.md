@@ -26,17 +26,17 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r7/vlx-0.1.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.0/vlx-0.2.0.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Versions identify this original API, not upstream engine compatibility.
-The source now provides **0.2.0**, adding document-scoped equation references.
-That version has not been released or adopted by VentiMath; the install above
-continues to select r7's 0.1.0 API.
+**0.2.0** adds document-scoped equation references. The install above selects
+that API; VentiMath's verified frontend source still pins r7 until its dependency
+and lockfile are updated. Release availability and application adoption are separate.
 
-Release revision **r7** renders native React SVG and MathML elements. It uses
+The release retains r7's native React SVG and MathML rendering. It uses
 no `dangerouslySetInnerHTML`, HTML parser or markup insertion in the React path.
 The same parser and layout rules emit structured nodes for React and escaped
 strings for the HTML, SVG, MathML and image APIs. Unchanged and changed formulas
@@ -126,7 +126,7 @@ peer. It rasterizes VLX's SVG and performs no TeX parsing or layout. SVG page
 export needs no native rasterizer. `vlx/png` also exports asynchronous
 `renderPng(renderer, tex, {scale: 2, background: 'white'})` for a single expression.
 
-## Automatic equation references (0.2.0 source)
+## Automatic equation references (0.2.0)
 
 Render one complete reference scope with `renderDocument`, or with
 `createRenderer().renderDocument`. Definitions may follow their references:
@@ -293,8 +293,8 @@ Chrome exposes the expected structured math, and theme, zoom, reflow and keyboar
 checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interactive
 equation exploration still need validation.
 Arbitrary TeX packages, advanced macro programming, cross-document references
-and every Unicode glyph are outside this verified scope. The public release is
-adopted by VentiMath frontend source through r7. The Discord problem-image
+and every Unicode glyph are outside this verified scope. VentiMath frontend source
+uses r7; the 0.2.0 release is available for its next dependency update. The Discord problem-image
 caller still uses MathJax; its migration is separate from the completed frontend
 cutover. Browser and assistive-technology acceptance remains open, as recorded
 in [ACCESSIBILITY.md](ACCESSIBILITY.md), without labeling the implementation

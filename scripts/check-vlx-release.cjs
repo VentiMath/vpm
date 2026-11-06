@@ -5,6 +5,7 @@ const directory=path.resolve(process.argv[2]||'.'),published=process.argv.includ
 const manifest=JSON.parse(fs.readFileSync(path.join(directory,'release-manifest.json')));
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-vlx-release-check-'));
 const hash=x=>createHash('sha256').update(x).digest('hex');
+const equation=String.raw`See \eqref{area}. \begin{equation}A=\pi r^2\label{area}\end{equation}`;
 function run(cmd,args,cwd=temp,extra={}){
  const r=spawnSync(cmd,args,{cwd,encoding:'utf8',timeout:180000,maxBuffer:4e6,env:{...process.env,BUN_INSTALL_CACHE_DIR:path.join(temp,'bun-cache'),npm_config_cache:path.join(temp,'npm-cache'),...extra}});
  assert.ifError(r.error);assert.equal(r.status,0,(r.stdout+r.stderr).slice(-12000));return r.stdout;
@@ -35,9 +36,9 @@ try{
    for(const url of Object.values(p.dependencies||{}))assert(url.startsWith('https://github.com/VentiMath/vpm/releases/download/'+manifest.tag+'/'));
   }
   for(const name of ['katex','mathjax-full','@mathjax','@resvg/resvg-js'])assert(!fs.existsSync(path.join(cwd,'node_modules',name)),'Unexpected browser dependency '+name);
-  fs.writeFileSync(path.join(cwd,'consumer.mjs'),`import assert from 'node:assert/strict';import {createRequire} from 'node:module';import {createRenderer,renderMath} from 'vlx';import {observeMath} from 'vlx/dom';import {renderProblemSvg} from 'vlx/problem';const require=createRequire(import.meta.url);assert.equal(require('vlx').renderMath,renderMath);assert.equal(require('vlx/dom').observeMath,observeMath);assert.match(createRenderer().renderText('Find $x^2$.').html,/<math/);assert.match(renderProblemSvg({statement:'Find $x$.'}).svg,/<svg/);`);
+  fs.writeFileSync(path.join(cwd,'consumer.mjs'),`import assert from 'node:assert/strict';import {createRequire} from 'node:module';import {createRenderer,renderMath,renderDocument} from 'vlx';import {observeMath} from 'vlx/dom';import {renderProblemSvg} from 'vlx/problem';const require=createRequire(import.meta.url);assert.equal(require('vlx').renderMath,renderMath);assert.equal(require('vlx').renderDocument,renderDocument);const document=renderDocument(${JSON.stringify(equation)},{idPrefix:'release'});assert.equal(document.equations[0].number,1);assert.equal(document.references[0].id,document.equations[0].id);assert.equal(document.references[0].display,'(1)');assert.match(document.html,/<a /);assert.equal(require('vlx/dom').observeMath,observeMath);assert.match(createRenderer().renderText('Find $x^2$.').html,/<math/);assert.match(renderProblemSvg({statement:'Find $x$.'}).svg,/<svg/);`);
   for(const runtime of ['node','bun'])run(runtime,['consumer.mjs'],cwd);
-  fs.writeFileSync(path.join(cwd,'consumer.ts'),`import {createRenderer,renderMath} from 'vlx';import {observeMath} from 'vlx/dom';const svg:string=renderMath('x').svg;const host=document.createElement('div');host.innerHTML=createRenderer().renderText('Find $x$.').html;const stop:()=>void=observeMath(host);stop();`);
+  fs.writeFileSync(path.join(cwd,'consumer.ts'),`import {createRenderer,renderMath,renderDocument} from 'vlx';import {observeMath} from 'vlx/dom';const documentResult=renderDocument('text',{numbering:'ams',startNumber:1});const next:number=documentResult.nextNumber;const svg:string=renderMath('x').svg;const host=document.createElement('div');host.innerHTML=createRenderer().renderText('Find $x$.').html;const stop:()=>void=observeMath(host);stop();`);
   for(const mode of ['NodeNext','Bundler']){
    fs.writeFileSync(path.join(cwd,'tsconfig.json'),JSON.stringify({compilerOptions:{strict:true,noEmit:true,target:'ES2022',module:mode==='Bundler'?'ESNext':mode,moduleResolution:mode,lib:['ES2022','DOM'],types:[]},files:['consumer.ts']}));
    run('node',[require('./platform-types.cjs').compiler().path,'-p','tsconfig.json'],cwd);
