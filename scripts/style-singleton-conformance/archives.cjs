@@ -8,7 +8,8 @@ const fs = require("node:fs"),
 const root = path.resolve(__dirname, "../.."),
   temp = fs.mkdtempSync(path.join(os.tmpdir(), "vstyle-consumer-"));
 function run(cmd, args, cwd = temp) {
-  const r = spawnSync(cmd, args, { cwd, encoding: "utf8", timeout: 120000 });
+  const r = spawnSync(cmd, args, { cwd, encoding: "utf8", timeout: 180000 });
+  if (r.error) throw Error(cmd + ': ' + r.error.message + '\n' + r.stdout + r.stderr);
   assert.equal(r.status, 0, r.stdout + r.stderr);
   return r.stdout;
 }
@@ -45,14 +46,15 @@ try {
         },
       }),
     );
+    if (manager === "bun" && process.env.VPM_ARCHIVE_OFFLINE) run("npm", ["install", "--package-lock-only", "--ignore-scripts", "--no-audit", "--no-fund", "--offline", "--cache", process.env.VPM_ARCHIVE_NPM_CACHE], cwd);
     run(
       manager,
       [
         "install",
         "--ignore-scripts",
         ...(manager === "npm"
-          ? ["--no-audit", "--no-fund", "--cache", path.join(temp, "cache")]
-          : []),
+          ? ["--no-audit", "--no-fund", "--cache", process.env.VPM_ARCHIVE_NPM_CACHE || path.join(temp, "cache")]
+          : [process.env.VPM_ARCHIVE_OFFLINE ? "--offline" : "--prefer-offline"]),
       ],
       cwd,
     );
@@ -88,6 +90,14 @@ try {
     vm.runInNewContext(result.outputFiles[0].text, ctx);
     assert.deepEqual(Array.from(ctx.observed), [1, "packed", 0]);
     dom.window.close();
+    // Exercise hooks too: plain stylesheet calls do not catch a misbound React import.
+    fs.writeFileSync(path.join(cwd, "hook.mjs"), "import React from 'react';import * as ReactDOM from 'react-dom';import {createRoot} from 'react-dom/client';import {styleSingleton} from 'vreact-style-singleton';const Style=styleSingleton(),host=document.createElement('div');document.body.append(host);const root=createRoot(host);ReactDOM.flushSync(()=>root.render(React.createElement(Style,{styles:'body{color:red}'})));globalThis.hookStyles=[document.head.querySelectorAll('style').length];ReactDOM.flushSync(()=>root.unmount());hookStyles.push(document.head.querySelectorAll('style').length);");
+    run("bun", ["build", "hook.mjs", "--target=browser", "--format=esm", "--define", 'process.env.NODE_ENV="production"', "--outfile=hook-bundle.js"], cwd);
+    const hookDOM = new (from("jsdom").JSDOM)("<!doctype html><head></head><body></body>", { runScripts: "outside-only" });
+    try {
+      vm.runInContext(fs.readFileSync(path.join(cwd, "hook-bundle.js"), "utf8"), hookDOM.getInternalVMContext());
+      assert.deepEqual(Array.from(hookDOM.window.hookStyles), [1, 0], "Bun production hook mount and cleanup");
+    } finally { hookDOM.window.close(); }
     fs.writeFileSync(
       path.join(cwd, "consumer.tsx"),
       "import {styleSingleton,styleHookSingleton,stylesheetSingleton} from 'vreact-style-singleton';const Style=styleSingleton();const node=<Style styles='a{}' dynamic/>;const useStyle=styleHookSingleton();function Hook(){useStyle('a{}',true);return null;}const sheet=stylesheetSingleton();sheet.add('a{}');sheet.remove();\n// @ts-expect-error CSS must be a string\nsheet.add(3);\n// @ts-expect-error dynamic must be boolean\nconst invalid=<Style styles='a{}' dynamic='yes'/>;\n",

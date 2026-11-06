@@ -1,5 +1,5 @@
 "use strict";
-const { useEffect } = require("react");
+const React = require("react");
 const { getNonce } = require("vget-nonce");
 
 function stylesheetSingleton() {
@@ -34,7 +34,7 @@ function stylesheetSingleton() {
 function styleHookSingleton() {
   const sheet = stylesheetSingleton();
   return function useStyles(styles, dynamic = false) {
-    useEffect(() => {
+    React.useEffect(() => {
       sheet.add(styles);
       return () => sheet.remove();
     }, [Boolean(dynamic), dynamic ? styles : null]);

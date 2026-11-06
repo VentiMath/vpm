@@ -14,9 +14,17 @@ Tests are newly authored contract checks, not an upstream test-suite import.
 
 `node scripts/style-singleton-conformance/archives.cjs` packs both VPM packages,
 installs them in clean npm/Bun consumers and checks Node/Bun CJS/ESM identity,
-SSR, a browser bundle with no original runtime, and strict TS7 JSX declarations.
+SSR, an esbuild browser bundle with no original runtime, Bun production hook
+mount/cleanup, and strict TS7 JSX declarations. The hook check covers React import
+binding in the browser bundle, beyond standalone stylesheet calls.
 Local file dependencies here are fixture inputs, not a public release mechanism.
 
 [Benchmarks](../../packages/vreact-style-singleton/bench/results/README.md) use
 separate processes and identical-source controls. DOM measurements use jsdom,
 not a browser rendering engine.
+
+When registry access is unavailable, `VPM_ARCHIVE_OFFLINE=1` uses an offline
+npm-generated lock for the fresh Bun consumer before checking Bun installation
+and runtime behavior. Set `VPM_ARCHIVE_NPM_CACHE` to the populated npm cache;
+Menu also accepts `VPM_ARCHIVE_BUN_CACHE`. This fallback verifies lock migration,
+not independent Bun registry resolution. CI normally resolves without this flag.
