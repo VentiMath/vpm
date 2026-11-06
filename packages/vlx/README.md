@@ -26,13 +26,17 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.2/vlx-0.2.2.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.3/vlx-0.2.3.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Versions identify this original API, not upstream engine compatibility.
-**0.2.2** adds the Unicode fractions, ordinals, accents and custom operator
+**0.2.3** typesets `itemize`/`enumerate` in problem pictures and preserves
+apostrophe/closing-quote context after inline math. Lists use hanging indentation,
+numbered or custom labels, and bounded nesting.
+
+**0.2.2** added the Unicode fractions, ordinals, accents and custom operator
 symbols needed by the problem-picture corpus. It preserves fullwidth punctuation
 and hides unused soft hyphens without silently dropping unknown characters.
 **0.2.1** fixed indexed-root degree placement in all outputs. Problem pictures
@@ -235,6 +239,14 @@ within the 960 px page's 36 px margins; text is 28 px. A stored figure's `width`
 is measured against a 16 px source page. Figure choices replace their text
 placeholder; `includesChoiceLabel: true` suppresses a duplicate label.
 
+Problem prose recognizes `\begin{itemize}` / `\begin{enumerate}`, `\item`
+and matching endings outside math. Bullets and decimal numbers have hanging
+indentation; explicit labels such as `\item[(a)]` and `\item[($N$)]` retain
+their content. Numbering restarts per list. Up to eight levels and 256 characters
+per label are accepted, subject to the page-width budget. List styling options,
+custom counter commands and arbitrary document environments are outside this
+entry. Malformed lists throw instead of printing raw control sequences.
+
 `statementParts`, when supplied, replaces `statement`; adjacent text parts are
 joined before parsing. Figures must be supplied as PNG bytes, not URLs. CRC,
 format, byte, dimension and pixel validation precede embedding. Page input,
@@ -255,7 +267,7 @@ programs are not supported. Literal non-whitespace control characters are errors
 
 `renderMath()` and page methods are synchronous. `parseMath()` is an experimental
 inspection API. `VlxError` distinguishes syntax, glyph and resource-limit failures.
-Existing caller normalization of legacy prose commands/lists remains caller work;
+Legacy prose commands outside the documented page-list support remain caller work;
 `renderText()` segments prose and math and is not a LaTeX document compiler.
 
 ## Evidence
@@ -275,6 +287,10 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   Broken delimiters and corrupt control characters still fail; the package does
   not guess their intended meaning. Figures in this check are synthetic placeholders with
   recorded widths, so this is not visual acceptance of every production picture.
+- All 83 list-bearing statements in the saved corpus render as lists in 0.2.3.
+  This is separate from the corpus-wide no-exception count: literal TeX had
+  previously counted as a successful draw. Synthetic checks now verify markers,
+  hanging wraps, nesting, labels, figures and rejection of malformed lists.
 - [Public tests](test/contracts.test.cjs), [page checks](test/problem.test.cjs) and
   [53 synthetic notation cases](../../scripts/vlx-conformance/README.md) run on
   Node 24 and Bun. MathJax 4.1.3 supplies semantic/visual controls and KaTeX 0.19.1
@@ -285,6 +301,11 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   types, browser bundling, sibling VPM dependencies and optional PNG rasterization.
   [Benchmarks](bench/results/README.md) keep all balanced process pairs, source
   hashes and identical-source controls.
+
+The [0.2.3 prose benchmark](bench/prose-results/README.md) checks existing
+formula and prose/choice paths against 0.2.2. The new list layout is covered by
+geometric/semantic tests; raw control text in the baseline is not a valid
+performance comparator for formatted lists.
 
 The [0.2.2 Unicode benchmark](bench/unicode-results/README.md) checks the existing
 formula and prose/choice paths against 0.2.1. Missing-glyph failures are not
@@ -320,8 +341,8 @@ checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interacti
 equation exploration still need validation.
 Arbitrary TeX packages, advanced macro programming, cross-document references
 and every Unicode glyph are outside this verified scope. VentiMath frontend source
-uses r7; release 0.2.2 is available for its next dependency update. The Discord
-problem-image migration and 0.2.0 adoption exist on an unmerged application branch;
+uses r7; release 0.2.3 is available for its next dependency update. The Discord
+problem-image migration uses 0.2.2 on an unmerged application branch;
 main still uses MathJax for that caller. Browser and assistive-technology acceptance remains open, as recorded
 in [ACCESSIBILITY.md](ACCESSIBILITY.md), without labeling the implementation
 or frontend adoption unfinished.

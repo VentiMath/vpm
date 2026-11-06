@@ -49,7 +49,7 @@ try{
   assert(inputs.some(p=>p.includes('vlx/index.')));assert(inputs.some(p=>p.includes('vlx/dom.')));
   assert(!inputs.some(p=>/vpngjs|resvg|katex|mathjax|vlx\/(?:problem|png)\./.test(p)),'Browser bundle must exclude Node image paths and upstream engines');
   if(manager==='bun')console.log(run('node',[path.join(__dirname,'vlx-conformance/browser.cjs')],cwd,{VPM_VLX_PACKAGE_DIR:path.join(cwd,'node_modules/vlx')}).trim());
-  for(const runtime of ['node','bun'])console.log(run(runtime,[runtime==='bun'?'test':'--test',path.join(__dirname,'../packages/vlx/test/picture-regressions.test.cjs'),path.join(__dirname,'../packages/vlx/test/unicode.test.cjs')],cwd,{VPM_VLX_CONSUMER:cwd}).trim());
+  for(const runtime of ['node','bun'])console.log(run(runtime,[runtime==='bun'?'test':'--test',path.join(__dirname,'../packages/vlx/test/picture-regressions.test.cjs'),path.join(__dirname,'../packages/vlx/test/unicode.test.cjs'),path.join(__dirname,'../packages/vlx/test/prose.test.cjs')],cwd,{VPM_VLX_CONSUMER:cwd}).trim());
   require('./vlx-conformance/react-consumer.cjs')(cwd,run);
   if(manager==='bun')console.log(run('node',[path.join(__dirname,'vlx-conformance/react-browser.cjs'),cwd],cwd).trim());
   if(published){

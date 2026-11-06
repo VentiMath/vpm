@@ -285,3 +285,34 @@ code remains confined to development fixtures. [Measurements](../../packages/vlx
 compare existing formula/prose paths against immutable 0.2.1 source
 `d3c932a8a313ba339d41db2673755d898e900ea4`. Reconstruct that fixture with
 `node scripts/vlx-conformance/prepare-unicode-baseline.cjs`.
+
+## Page lists and quote boundaries (0.2.3)
+
+`test/prose.test.cjs` checks actual emitted geometry: one marker per item,
+hanging wrapped lines, nested indentation, normal margins after lists, counter
+reset, explicit text/math labels and figures split across statement parts.
+Malformed/mismatched/unclosed lists, oversized labels and excessive nesting fail
+explicitly. Page input/output and image limits continue to apply. Default
+`enumerate` labels are decimal at each level; source-provided labels are retained.
+This is bounded page composition, not a general LaTeX document compiler.
+
+An apostrophe or closing quote directly adjacent to inline math keeps the
+preceding formula as context. Tests compare the result to explicit correct curly
+punctuation and retain spaced opening quotes and mathematical primes.
+
+The saved corpus contains 83 statements with `itemize` or `enumerate`. They
+previously drew control sequences as prose, so a successful no-exception count
+did not establish correct presentation. All now exercise actual list layout.
+The previously repaired 20,835-record corpus continues to render without errors.
+Compared with 0.2.2, 141 pictures change: the 83 list-bearing statements and 58
+with inline-math quotation context. All four new regression groups fail against
+the immutable 0.2.2 baseline and pass against the corrected implementation.
+Private corpus text remains outside this repository; only aggregate results and
+synthetic regression cases are committed.
+
+The exact release checker runs the new regression suite against installed
+packages on both Node and Bun. [Benchmarks](../../packages/vlx/bench/prose-results/README.md)
+compare ordinary formula/prose paths to immutable 0.2.2 source
+`e7b8d4303b6418cccc32d3922b588042dd2fb185`; prepare it with
+`node scripts/vlx-conformance/prepare-prose-baseline.cjs`. The old raw-list output
+is not a valid performance control for newly formatted lists.

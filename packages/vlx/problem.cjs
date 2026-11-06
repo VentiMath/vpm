@@ -5,6 +5,7 @@ const {parse,VlxError}=require('./source.cjs');
 const {parseMath}=require('./tex.cjs');
 const {text,layout,move,box}=require('./layout.cjs');
 const {typography}=require('./typography.cjs');
+const problemProse=require('./problem-prose.cjs');
 const {PNG}=require('vpngjs');
 const WIDTH=960,PAD=36,EM=28,CONTENT=WIDTH-2*PAD,PIXELS=16000000;
 function pngSize(bytes){const {width,height}=PNG.sync.read(bytes,{maxPixels:PIXELS,maxBytes:10*1024*1024});return {width,height};}
@@ -13,7 +14,7 @@ function segments(source){
  return result.nodes.map(n=>({kind:n.kind==='text'?'text':n.display?'display':'math',source:n.kind==='text'?n.value:n.tex}));
 }
 function scaled(b,s){return box(b.w*s,b.h*s,b.d*s,move(b,0,0,s),b.mml);}
-function fit(b){return b.w>CONTENT?scaled(b,CONTENT/b.w):b;}
+function fit(b,width=CONTENT){return b.w>width?scaled(b,width/b.w):b;}
 function math(tex,display=false){return scaled(layout(parseMath(tex),{display}),EM);}
 function literal(value,font='normal'){return scaled(text(typography(value),font),EM);}
 function join(parts){let w=0,h=0,d=0,svg='';for(const b of parts){svg+=move(b,w);w+=b.w;h=Math.max(h,b.h);d=Math.max(d,b.d);}return box(w,h,d,svg,'');}
@@ -33,7 +34,8 @@ function renderProblemSvg(problem){
  function prose(source){
   if(typeof source!=='string')throw new TypeError('Statement text must be a string');
   inputBytes+=source.length;if(inputBytes>131072)throw new VlxError('LIMIT','Problem text exceeds the length budget');
-  for(const span of segments(source.replace(/\r\n?/g,'\n'))){
+  for(const span of problemProse(source.replace(/\r\n?/g,'\n'))){
+   if(span.kind.startsWith('list-')){append(span);continue;}
    if(span.kind!=='text'){
     const ast=parseMath(span.source);
     // A formula containing only explicit breaks belongs to the surrounding
@@ -43,7 +45,10 @@ function renderProblemSvg(problem){
     }else append({kind:span.kind,ast});
     continue;
    }
-   const words=typography(span.source).match(/[ \t]*\n(?:[ \t]*\n)+| {2,}\n|\s+|[^\s]+/g)||[];
+   // An adjacent suffix/closing quote follows the formula, not a new sentence.
+   const previous=tokens.at(-1),continuation=previous?.kind==='math'||previous?.kind==='image';
+   const source=continuation?span.source.replace(/^'/,'’').replace(/^"/,'”'):span.source;
+   const words=typography(source).match(/[ \t]*\n(?:[ \t]*\n)+| {2,}\n|\s+|[^\s]+/g)||[];
    for(const word of words){
     if(/\n[ \t]*\n/.test(word))append({kind:'paragraph'});
     else if(/^ {2,}\n$/.test(word))append({kind:'break'});
@@ -62,17 +67,18 @@ function renderProblemSvg(problem){
   }
   flush();
  }else prose(problem.statement??'');
- let y=PAD,bottom=PAD,line=[],lineWidth=0,pendingSpace=false;const output=[];
+ let y=PAD,bottom=PAD,line=[],lineWidth=0,pendingSpace=false,indent=0,marker=null;const output=[],lists=[];
  function check(){if(y>16384||WIDTH*Math.ceil(Math.max(y,bottom)+PAD)>PIXELS)throw new VlxError('LIMIT','Problem page exceeds the pixel budget');}
  function lineOut(center=false){
-  if(!line.length)return;
-  const h=Math.max(EM*.72,...line.map(b=>b.h)),d=Math.max(EM*.22,...line.map(b=>b.d));
-  let x=PAD+(center?(CONTENT-lineWidth)/2:0);for(const b of line){output.push(move(b,x,y+h));x+=b.w;}
+  if(!line.length&&!marker)return;
+  const h=Math.max(EM*.72,marker?.h||0,...line.map(b=>b.h)),d=Math.max(EM*.22,marker?.d||0,...line.map(b=>b.d));
+  if(marker){output.push(move(marker,PAD+indent-EM*.4-marker.w,y+h));marker=null;}
+  let x=PAD+indent+(center?(CONTENT-indent-lineWidth)/2:0);for(const b of line){output.push(move(b,x,y+h));x+=b.w;}
   bottom=y+h+d;y=bottom+EM*.45;line=[];lineWidth=0;pendingSpace=false;check();
  }
- function block(b){lineOut();b=fit(b);line=[b];lineWidth=b.w;lineOut(true);}
- function put(b){b=fit(b);const gap=pendingSpace&&line.length?EM*.3:0;
-  if(line.length&&lineWidth+gap+b.w>CONTENT)lineOut();
+ function block(b){if(line.length)lineOut();b=fit(b,CONTENT-indent);line=[b];lineWidth=b.w;lineOut(true);}
+ function put(b){b=fit(b,CONTENT-indent);const gap=pendingSpace&&line.length?EM*.3:0;
+  if(line.length&&lineWidth+gap+b.w>CONTENT-indent)lineOut();
   else if(gap){line.push(box(gap,0,0,'',''));lineWidth+=gap;}
   line.push(b);lineWidth+=b.w;pendingSpace=false;
  }
@@ -83,7 +89,7 @@ function renderProblemSvg(problem){
   const visible=paragraph.filter(t=>t.box||t.ast);
   // Decide display style before layout. Centering an inline-sized fraction
   // afterwards does not give it the full-size numerator/denominator.
-  if(visible.length===1&&visible[0].kind==='math'&&!paragraph.some(t=>t.kind==='break')){block(scaled(layout(visible[0].ast,{display:true}),EM));paragraph=[];return;}
+  if(!lists.length&&visible.length===1&&visible[0].kind==='math'&&!paragraph.some(t=>t.kind==='break')){block(scaled(layout(visible[0].ast,{display:true}),EM));paragraph=[];return;}
   let unit=[];const flush=()=>{if(unit.length){put(join(unit));unit=[];}};
   for(const t of paragraph){
    if(t.kind==='display'){flush();block(t.box||scaled(layout(t.ast,{display:true}),EM));}
@@ -93,7 +99,28 @@ function renderProblemSvg(problem){
   }
   flush();lineOut();paragraph=[];
  }
- for(const t of tokens){if(t.kind==='paragraph'){paragraphOut();y=Math.max(y,bottom+EM*.8);pendingSpace=false;}else paragraph.push(t);}
+ for(const t of tokens){
+  if(t.kind.startsWith('list-')){
+   paragraphOut();pendingSpace=false;
+   if(t.kind==='list-start'){
+    if(lists.length>=8)throw new VlxError('LIMIT','At most eight nested lists are supported');
+    if(lists.length&&!lists.at(-1).started)throw new VlxError('LIST','Nested list requires a parent item');
+    lists.push({name:t.name,indent,count:0,started:false});
+   }else if(t.kind==='list-end'){
+    const list=lists.pop();if(!list||list.name!==t.name)throw new VlxError('LIST','Mismatched list ending');
+    if(!list.started)throw new VlxError('LIST','List requires an item');indent=list.indent;
+   }else{
+    const list=lists.at(-1);if(!list)throw new VlxError('LIST','Item outside a list');
+    list.started=true;list.count++;
+    const label=t.label===undefined?(list.name==='itemize'?'•':list.count+'.'):t.label.replace(/~/g,' ');
+    marker=join(segments(label).map(span=>span.kind==='text'?literal(span.source):math(span.source)));
+    indent=list.indent+Math.max(EM*1.4,marker.w+EM*.4);
+    if(indent>CONTENT*.6)throw new VlxError('LIMIT','List label or indentation exceeds the page budget');
+   }
+  }else if(t.kind==='paragraph'){paragraphOut();y=Math.max(y,bottom+EM*.8);pendingSpace=false;}
+  else {if(lists.length&&!lists.at(-1).started&&t.kind!=='space')throw new VlxError('LIST','List text requires an item');paragraph.push(t);}
+ }
+ if(lists.length)throw new VlxError('LIST','Unclosed list');
  paragraphOut();
  if(problem.figure){y=Math.max(y,bottom+EM*.8);block(image(problem.figure));}
  const options=problem.options??{},figures=problem.optionFigures??{};

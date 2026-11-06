@@ -97,7 +97,7 @@ explicit equation labels and mixed prose/figures. This requires those actual
 reader/browser combinations; an accessibility-tree snapshot cannot substitute
 for it. WebKit and Firefox rendering are also not covered by this Chrome gate.
 
-The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.2.2)
+The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.2.3)
 ships this browser lifecycle. Application integration and production cutover
 remain separate from these verified package-level checks. A controlled application
 trial can use the documented lifecycle and existing text-on-error behavior while

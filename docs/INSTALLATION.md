@@ -85,11 +85,11 @@ node scripts/check-dnd-release.cjs /absolute/path/to/output --published
 ## VLX math rendering
 
 **VentiLaTeX (VLX)**, pronounced **“Vee Ell Ex,”** is VentiMath's independent math
-renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.2.2)
+renderer. The [VLX release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.2.3)
 provides its `vlx` package for frontend integration:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.2/vlx-0.2.2.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.3/vlx-0.2.3.tgz
 ```
 
 Import browser rendering from `vlx` and its optional DOM lifecycle from `vlx/dom`.
@@ -98,7 +98,7 @@ are needed. The archive pins `vpngjs` to its sibling release URL. That dependenc
 supports the separate Node page-export entry; it is excluded from browser builds.
 The native PNG rasterizer is an optional peer and is not installed by this recipe.
 
-Version **0.2.2** retains r7's native React SVG/MathML elements without HTML insertion.
+Version **0.2.3** retains r7's native React SVG/MathML elements without HTML insertion.
 It preserves formula nodes, focus and scroll across parent updates and keeps the
 same loading boundary after lazy imports. It keeps formula-only input strict
 and renders all **99,635** audited expressions after verified source repairs: 165 statements, two current rubrics,
@@ -124,7 +124,9 @@ standalone paragraph fractions, bold choice labels and break-only paragraph spac
 **0.2.2** adds the needed Unicode glyphs and fullwidth/soft-hyphen handling.
 The saved full-problem corpus renders all 20,835 records after four separately
 verified source repairs; this is renderability with placeholder figures, not
-complete visual acceptance.
+complete visual acceptance. **0.2.3** typesets bounded `itemize`/`enumerate`
+lists in problem pictures and preserves apostrophes/closing quotes across inline
+math boundaries. These are presentation fixes; source records are unchanged.
 
 VentiMath's verified frontend main still pins r7; upgrading the URL and lockfile,
 and using the new document API, remain application-side work.
@@ -133,7 +135,7 @@ An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
 installation source; the npm mirror has not been published.
 
-VLX is an original API, so **0.2.2 is its own version**, not a claim of KaTeX or
+VLX is an original API, so **0.2.3 is its own version**, not a claim of KaTeX or
 MathJax version compatibility. The app must adapt its rendering calls rather than
 aliasing those packages to VLX. Keep existing legacy source normalization, list
 handling, figure descriptions and text-on-error behavior. See the
@@ -144,13 +146,13 @@ Commit the app's package.json and bun.lock together and use
 it does not change or deploy the application. Actual reader/browser acceptance
 remains recorded separately from the automated Chrome checks.
 
-The release includes `vlx-0.2.2.tgz`, `vpngjs-7.0.0.tgz`,
+The release includes `vlx-0.2.3.tgz`, `vpngjs-7.0.0.tgz`,
 `consumer-package.json`, `release-manifest.json` and `SHA256SUMS`. The manifest
 records the committed source and exact archive/source hashes. Assets are
 immutable; revisions get new tags and URLs.
 
 ```sh
-node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.2.2 --out /absolute/path/to/empty-output
+node scripts/pack-vlx-release.cjs --ref COMMIT_SHA --tag vlx-0.2.3 --out /absolute/path/to/empty-output
 node scripts/check-vlx-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-vlx-release.cjs /absolute/path/to/output --published
