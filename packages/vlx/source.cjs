@@ -18,6 +18,27 @@ function parse(source, options = {}) {
   let i = 0, textStart = 0;
   const text = end => { if (end > textStart) nodes.push({kind:'text', raw:source.slice(textStart,end), value:source.slice(textStart,end).replace(/\\\$/g,'$'), start:textStart, end}); };
   while (i < source.length) {
+    if(options.equations&&source[i]==='\\'&&source[i+1]!=='\\') {
+      const reference=/^\\(eqref|ref|label)\s*\{([^{}]*)\}/.exec(source.slice(i));
+      if(reference){
+        if(reference[1]==='label')throw new VlxError('EQUATION_CONTEXT','Labels must be inside display math',{start:i});
+        text(i);const end=i+reference[0].length;
+        nodes.push({kind:'reference',raw:reference[0],label:reference[2],parentheses:reference[1]==='eqref',start:i,end});textStart=i=end;continue;
+      }
+      if(/^\\(?:eqref|ref|label)(?![A-Za-z])/.test(source.slice(i)))throw new VlxError('LABEL','References and labels require one braced key',{start:i});
+      const begin=/^\\begin\s*\{(equation\*?|align\*?|gather\*?)\}/.exec(source.slice(i));
+      if(begin){
+        const start=i,close=new RegExp('^\\\\end\\s*\\{'+begin[1].replace('*','\\*')+'\\}');let j=i+begin[0].length,found=false,closingLength=0;
+        while(j<source.length){
+          if(source[j]==='%'){const nl=source.indexOf('\n',j);j=nl<0?source.length:nl+1;continue;}
+          const match=source[j]==='\\'?close.exec(source.slice(j)):null;if(match){found=true;closingLength=match[0].length;break;}
+          j+=source[j]==='\\'?2:1;
+        }
+        if(!found){diagnostics.push({code:'UNCLOSED_MATH',start,end:source.length,message:'Unclosed '+begin[1]+' environment'});break;}
+        text(start);const end=j+closingLength;
+        nodes.push({kind:'math',tex:source.slice(start,end),raw:source.slice(start,end),display:true,delimiter:begin[0],start,end});textStart=i=end;continue;
+      }
+    }
     let open, close;
     if (source[i] === '$') { open = source[i+1] === '$' ? '$$' : '$'; close = open; }
     else if (source[i] === '\\' && (source[i+1] === '(' || source[i+1] === '[')) { open = source.slice(i,i+2); close = source[i+1] === '(' ? '\\)' : '\\]'; }

@@ -19,8 +19,10 @@ function createRenderer(options={}) {
   });
   return {source,nodes,diagnostics,html:nodes.map(n=>n.html).join('')};
  }
- return {renderMath:math,renderText,clearCache};
+ return {renderMath:math,renderText,renderDocument,clearCache};
 }
+function renderDocument(source,options={}){return require('./equations.cjs').renderDocument(source,options,renderStrings,require('./markup.cjs'));}
+exports.renderDocument=renderDocument;
 exports.parse=parse;
 exports.parseMath=parseMath;
 exports.renderMath=renderMath;

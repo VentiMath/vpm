@@ -2,7 +2,7 @@
 // String emitter for the same layout operations used by the structured output.
 // Only text() escapes source text; element() receives already-rendered children.
 const {escape}=require('./source.cjs');
-const names={className:'class',strokeWidth:'stroke-width',strokeLinejoin:'stroke-linejoin',strokeDasharray:'stroke-dasharray',strokeDashoffset:'stroke-dashoffset'};
+const names={tabIndex:'tabindex',className:'class',strokeWidth:'stroke-width',strokeLinejoin:'stroke-linejoin',strokeDasharray:'stroke-dasharray',strokeDashoffset:'stroke-dashoffset'};
 const cssNames=new Map(),styles=new WeakMap();
 function cssName(name){let value=cssNames.get(name);if(value===undefined){value=name.replace(/[A-Z]/g,c=>'-'+c.toLowerCase());cssNames.set(name,value);}return value;}
 function text(value){return escape(value).replace(/\u0338/g,'&#x338;');}

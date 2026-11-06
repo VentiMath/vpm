@@ -1,5 +1,5 @@
 import type {CSSProperties,ReactNode,ReactElement} from 'react';
-import type {VlxError} from './index';
+import type {VlxError,DocumentOptions} from './index';
 export interface MathProps {
  fontSize?:number;
  className?:string;
@@ -19,3 +19,8 @@ export declare function preloadMath():Promise<void>;
 /** Shared defaults. Nested providers inherit omitted settings; component props win. */
 export interface MathProviderProps {children?:ReactNode;scrollLabel?:string;loadingFallback?:ReactNode}
 export declare function MathProvider(props:MathProviderProps):ReactElement;
+
+/** One self-contained source with automatic equation numbers and references.
+ * React supplies an SSR-stable ID prefix when omitted. Labels never leak between documents.
+ */
+export declare function MathDocument(props:MathProps&Pick<DocumentOptions,'numbering'|'startNumber'|'idPrefix'>&{source:string}):ReactElement;

@@ -115,6 +115,11 @@ React imports split the renderer into a dynamic chunk with a compatible bundler.
 For static HTML without React or `observeMath`, import `vlx/styles.css` once, or
 call `installMathStyles(document)` from `vlx/dom`, for forced-colors support.
 
+The repository's **0.2.0 source** adds `renderDocument` and `MathDocument` for
+automatic equation numbering, labels and forward/back references. It is tested
+but not released yet; those APIs are not available from the r7 URL above. See the
+[document API](../packages/vlx/README.md#automatic-equation-references-020-source).
+
 An npm registry mirror is planned for the same implementation and versioned API,
 including its licenses and provenance. GitHub Release archives remain the current
 installation source; the npm mirror has not been published.

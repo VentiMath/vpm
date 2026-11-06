@@ -98,6 +98,41 @@ OUTPUT=/tmp/vlx-pages-bun.json bun scripts/vlx-conformance/bench-app.cjs /path/t
 Both tools are local read-only checks. They do not modify the application, release
 packages, or change adoption status.
 
+## Document equation references (0.2.0)
+
+`packages/vlx/test/equations.test.cjs` exercises automatic numbers, forward and
+back references, per-row align/gather tags, starred environments, suppressed rows,
+custom tags, local counters, stable IDs, errors/fallbacks and resource bounds.
+`equation-reference.cjs` initializes the pinned MathJax 4.1.3 control and resets
+its counters for each document. Numbering expectations follow the documented
+[AMS/all modes](https://docs.mathjax.org/en/stable/input/tex/eqnumbers.html);
+there is no upstream runtime code in VLX.
+
+`equations-react.cjs` runs against clean installed archives on Node and Bun. It
+checks native output against the string emitter, independent IDs, edited source,
+focus retention, fallback, StrictMode and SSR hydration. The native Chrome React
+gate follows reference links with Enter, checks their accessibility-tree names
+and verifies that renumbering retains the same label target. These checks do not
+establish actual screen-reader speech or non-Chrome behavior.
+
+Reproduce the dedicated benchmark with the shared balanced-process harness:
+
+```sh
+node scripts/vlx-conformance/prepare-equation-baseline.cjs
+OUTPUT=packages/vlx/bench/equation-results/node-isolated.json node packages/vlx/bench/equations.cjs
+OUTPUT=packages/vlx/bench/equation-results/bun-isolated.json bun packages/vlx/bench/equations.cjs
+node scripts/render-bench-report.cjs packages/vlx equation-results equations.cjs
+```
+
+The preparation script extracts commit `235846009f114f0f34189dc8ea4d76e4aa87dc7c`
+to an ignored fixture for the three existing-API controls; no old implementation is
+committed. Two synthetic documents compare complete parse/number/resolve/render
+work against initialized MathJax. VLX returns SVG plus MathML in HTML, while
+MathJax returns SVG in HTML; this is not identical output or browser layout.
+Initialization, network, React commits and assistive technology are outside the
+timing. Raw samples and source hashes are in the
+[equation report](../../packages/vlx/bench/equation-results/README.md).
+
 ## Browser acceptance
 
 `browser.cjs` bundles the real root/DOM entries and launches an isolated Chrome

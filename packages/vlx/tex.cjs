@@ -9,12 +9,12 @@ const fonts={mathrm:'normal',mathit:'italic',mathbf:'bold',mathbb:'double-struck
 const functions='sin cos tan sec csc cot sinh cosh tanh log ln exp min max lim limsup liminf sup inf gcd det deg ker arg dim arcsin arccos arctan'.split(' ');
 const decorations='boxed underline overline overarc arc overgroup bar vec tilde widetilde cancel overrightarrow overleftarrow overleftrightarrow hat widehat underbrace overbrace'.split(' ');
 const classify=c=>/[=<>≤≥≠≈≡∈∉⊂⊆⊃⊇→←↔⇒⇐⇔⊥∥≅∼≃∣∤∦⩽⩾≁≄≇≉≢≰≱≮≯⊄⊅⊈⊉↛↚↮⇏⇍⇎≦≧↦⟹⟺⊊⊢∋⟶⟵⟼]/u.test(c)?'rel':/[+−×÷±∓⋅∪∩∧∨⊙⋆⋄△⊗⊕⊡◯∗]/u.test(c)?'bin':/[([{⟨⌈⌊]/u.test(c)?'open':/[)\]}⟩⌉⌋]/u.test(c)?'close':/[,;:]/.test(c)?'punct':'ord';
-function parseMath(source){
+function parseMath(source,options={}){
  if(typeof source!=='string')throw new TypeError('TeX must be a string');
  if(source.length>16384)throw new VlxError('LIMIT','At most 16384 TeX characters are supported');
  // Reject damaged string escapes before whitespace handling can hide them.
  if(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(source))throw new VlxError('TEX','Unexpected control character in TeX');
- source=require('./macros.cjs').expand(source,new Set([...Object.keys(symbols),...Object.keys(fonts),...functions,...decorations,...'newline mathbin mathrel mathord mathopen mathclose mathpunct mathinner cal Bbb textrm textcircled cfrac choose stackrel overset underset rule boldsymbol char Im Re bigoplus bigotimes not phantom hphantom vphantom binom dbinom tbinom textit textsl textbf texttt textsc emph vspace pmod bmod mod bigcup bigcap iint iiint tt rm bf it displaystyle textstyle scriptstyle scriptscriptstyle multicolumn over tag hspace makebox limits nolimits big bigl bigr bigm Big Bigl Bigr Bigm bigg biggl biggr biggm Bigg Biggl Biggr Biggm substack frac dfrac tfrac sqrt left right begin end text mbox operatorname mathrm mathit mathbf mathbb boxed underline overline overarc arc color textcolor enclose sum prod int sin cos tan log ln exp min max lim arcsin arccos arctan quad qquad'.split(' ')]));
+ source=require('./macros.cjs').expand(source,new Set([...(options.equations?['label','ref','eqref','notag','nonumber']:[]),...Object.keys(symbols),...Object.keys(fonts),...functions,...decorations,...'newline mathbin mathrel mathord mathopen mathclose mathpunct mathinner cal Bbb textrm textcircled cfrac choose stackrel overset underset rule boldsymbol char Im Re bigoplus bigotimes not phantom hphantom vphantom binom dbinom tbinom textit textsl textbf texttt textsc emph vspace pmod bmod mod bigcup bigcap iint iiint tt rm bf it displaystyle textstyle scriptstyle scriptscriptstyle multicolumn over tag hspace makebox limits nolimits big bigl bigr bigm Big Bigl Bigr Bigm bigg biggl biggr biggm Bigg Biggl Biggr Biggm substack frac dfrac tfrac sqrt left right begin end text mbox operatorname mathrm mathit mathbf mathbb boxed underline overline overarc arc color textcolor enclose sum prod int sin cos tan log ln exp min max lim arcsin arccos arctan quad qquad'.split(' ')]));
  let i=0,count=0,depth=0,activeStop=()=>false;
  const fail=message=>{throw new VlxError('TEX',message,{start:i})};
  const node=value=>{if(++count>4096)throw new VlxError('LIMIT','Expression has too many nodes');return value};
@@ -72,6 +72,8 @@ function parseMath(source){
   if(c==='~'){i++;return node({kind:'space',width:.333});}
   if(c==='\\'){
    const command=word();
+   if(options.equations&&['label','ref','eqref'].includes(command))return node({kind:command==='label'?'label':'reference',label:raw(),parentheses:command==='eqref'});
+   if(options.equations&&(command==='notag'||command==='nonumber'))return node({kind:'suppress'});
    if(command==='\\'||command==='newline'){const gap=bracket();return node({kind:'linebreak',gap:gap===undefined?0:dimension(gap)});}
    if(/^[\s]$/.test(command))return node({kind:'space',width:.333});
    if(/^math(?:bin|rel|ord|open|close|punct|inner)$/.test(command))return node({kind:'class',class:command.slice(4),body:group()});
@@ -133,6 +135,7 @@ function parseMath(source){
    if(c==='\\'){
     flush();const command=word();
     if(command==='('){children.push(row(()=>source.startsWith('\\)',i)));if(!source.startsWith('\\)',i))fail('Unclosed text math');i+=2;continue;}
+    if(options.equations&&(command==='ref'||command==='eqref')){children.push(node({kind:'reference',label:raw(),parentheses:command==='eqref'}));continue;}
     if(command==='char'){skip();const radix=source[i]==='"'?(i++,16):source[i]==="'"?(i++,8):10;const m=(radix===16?/^[0-9A-Fa-f]+/:radix===8?/^[0-7]+/:/^[0-9]+/).exec(source.slice(i));if(!m)fail('Expected character code');i+=m[0].length;const cp=parseInt(m[0],radix);if(cp>0x10ffff||cp>=0xd800&&cp<=0xdfff)fail('Invalid character code');value+=String.fromCodePoint(cp);continue;}
 
     if(['text','textrm','mbox','textit','textsl','textbf','emph','texttt','textsc'].includes(command)){children.push(textGroup({textit:'italic',textsl:'slanted',emph:'italic',textbf:'bold',texttt:'monospace',textsc:'small-caps'}[command]||font));continue;}

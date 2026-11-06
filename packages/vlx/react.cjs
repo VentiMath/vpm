@@ -22,7 +22,7 @@ function component(mode){
   const defaults=React.useContext(Defaults);
   const label=props.scrollLabel===undefined?defaults.scrollLabel:props.scrollLabel;
   const loading=loadingFallback===undefined?defaults.loadingFallback:loadingFallback;
-  const source=mode==='text'?props.source:props.tex;
+  const source=mode==='text'||mode==='document'?props.source:props.tex;
   const plain=React.useMemo(()=>{
    if(mode!=='text')return null;
    try{const document=parse(source);return document.nodes.some(n=>n.kind==='math')?null:document.nodes.map(n=>n.value).join('');}
@@ -38,3 +38,6 @@ exports.DisplayMath=component('display');
 exports.MathText=component('text');
 exports.preloadMath=()=>preloadMath().then(()=>undefined);
 exports.MathProvider=MathProvider;
+
+const Document=component('document');
+exports.MathDocument=function MathDocument({idPrefix,...props}){const id=React.useId();return React.createElement(Document,{...props,idPrefix:idPrefix??('vlx-'+id.replace(/[^A-Za-z0-9_-]/g,'_'))});};

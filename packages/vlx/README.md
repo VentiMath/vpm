@@ -31,7 +31,10 @@ bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.1.0-r7/vlx-
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
-Version 0.1.0 identifies this original API, not upstream engine compatibility.
+Versions identify this original API, not upstream engine compatibility.
+The source now provides **0.2.0**, adding document-scoped equation references.
+That version has not been released or adopted by VentiMath; the install above
+continues to select r7's 0.1.0 API.
 
 Release revision **r7** renders native React SVG and MathML elements. It uses
 no `dangerouslySetInnerHTML`, HTML parser or markup insertion in the React path.
@@ -66,8 +69,8 @@ import { InlineMath, DisplayMath, MathText } from 'vlx/react';
 <MathText source={String.raw`Find $x$; unsupported $\unknown$ stays as text.`} />
 ```
 
-The React entry loads the renderer and glyph pool on first math use; plain prose
-does not load them. Once `preloadMath()` resolves, rendering is synchronous on the
+The React entry loads the renderer and glyph pool on first math use; `MathText`
+skips that load for plain prose. Once `preloadMath()` resolves, rendering is synchronous on the
 first pass, including server rendering. `loadingFallback`
 customizes the loading state; `fallback` accepts a React node or `(error, source)`
 callback for a failed formula. Defaults preserve source as text. Lifecycle and
@@ -123,6 +126,69 @@ peer. It rasterizes VLX's SVG and performs no TeX parsing or layout. SVG page
 export needs no native rasterizer. `vlx/png` also exports asynchronous
 `renderPng(renderer, tex, {scale: 2, background: 'white'})` for a single expression.
 
+## Automatic equation references (0.2.0 source)
+
+Render one complete reference scope with `renderDocument`, or with
+`createRenderer().renderDocument`. Definitions may follow their references:
+
+```js
+import { renderDocument } from 'vlx';
+const source = String.raw`See \eqref{area}.
+\begin{equation}A=\pi r^2\label{area}\end{equation}`;
+const result = renderDocument(source, { idPrefix: 'lesson-area' });
+// result.html, .equations, .references, .nextNumber, .diagnostics
+```
+
+React uses the same parser/layout and native SVG/MathML elements:
+
+```tsx
+import { MathDocument } from 'vlx/react';
+<MathDocument source={source} startNumber={1} />
+```
+
+`MathDocument` generates an SSR-stable ID prefix with React's `useId`. The string
+API defaults to `vlx`; supply different `idPrefix` values when inserting multiple
+documents into one page. Separately rendered/hydrated React roots need distinct
+React `identifierPrefix` settings or explicit document prefixes. Prefixes start with an ASCII letter and contain at most
+128 ASCII letters, digits, underscores or hyphens. Label-derived targets survive
+renumbering; unchanged React renders retain their DOM and focus.
+
+- `numbering: 'ams'` (default) numbers unstarred `equation`, `align` and `gather`
+  environments. `align` and `gather` number each row. Starred forms do not get
+  automatic numbers. These top-level environments work directly in prose.
+- `'all'` also numbers ordinary display math; `'none'` keeps only explicit tags.
+  `startNumber` defaults to 1. Numbers are local to this call/component, not shared
+  with other documents or the expression cache.
+- `\label{area}`, `\ref{area}` and `\eqref{area}` work across formulas in the same
+  source. References work in prose or math; `eqref` adds parentheses. Keys contain
+  1–128 ASCII letters, digits or `_ : . / -`, with no whitespace and starting with
+  a letter, digit or underscore. Multiple labels may identify the same equation.
+- `\tag{A}` displays `(A)`; `\tag*{A}` displays `A`. Explicit tags do not advance
+  the automatic counter. `\notag`/`\nonumber` suppress a row's automatic number.
+  A label needs either a number or a tag; duplicate/missing labels are errors.
+- String rendering throws on errors by default. `{errorMode: 'source'}` preserves
+  the affected formula as escaped source, retains valid siblings and reports
+  diagnostics. Invalid definitions do not consume numbers. React has the same
+  per-formula source fallback, with the existing `fallback` customization.
+
+References are keyboard-operable links with accessible names and visible focus.
+They target the containing equation block; a reference to an `align`/`gather` row
+currently focuses that whole block. Import `vlx/styles.css` for static HTML; React
+installs the shared rules. Chrome keyboard and accessibility-tree checks pass;
+actual screen-reader speech and other browser engines still need acceptance.
+
+This is a bounded document feature, not a general LaTeX compiler: at most 1,024
+numbered/tagged equations, 4,096 references, 32 labels per equation and a counter
+up to 1,000,000. Custom tags support text, symbols, font styles and scripts, not
+arbitrary nested math. Cross-document references, arbitrary TeX counters and
+`subequations` are outside this API. The problem-picture entry has not been
+migrated to document numbering. Existing `renderMath`/`renderText` and React
+formula/text components keep their previous behavior.
+
+The [equation tests](test/equations.test.cjs) compare numbering/tag rules with
+MathJax 4.1.3. [Process-isolated benchmarks](bench/equation-results/README.md)
+compare full document rendering and check the existing formula/text paths.
+
 ## Supported scope
 
 - `$…$`, `$$…$$`, `\(…\)` and `\[…\]`, brace-aware closing delimiters,
@@ -145,8 +211,8 @@ export needs no native rasterizer. `vlx/png` also exports asynchronous
 - Math font variants, nested styled text with inline math, phantom boxes, scoped
   colors, arrows, hats, bars, arcs, braces, enclosures and explicit dimensions.
 - Matrices, arrays, aligned/gathered equations, cases, solid/dashed rules and
-  spanning cells. Explicit equation tags are supported; automatic numbering and
-  cross-expression references are not.
+  spanning cells. Explicit tags work in formula rendering; the new document API
+  adds automatic numbering and references within one source.
 - Leading bounded `\newcommand` definitions with braced arguments, scoped to one
   expression. Built-in redefinitions, recursive expansion and unsupported commands
   fail explicitly.
@@ -226,7 +292,7 @@ sizing differ from the reference engines and need broader visual acceptance.
 Chrome exposes the expected structured math, and theme, zoom, reflow and keyboard
 checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interactive
 equation exploration still need validation.
-Arbitrary TeX packages, advanced macro programming, automatic equation references
+Arbitrary TeX packages, advanced macro programming, cross-document references
 and every Unicode glyph are outside this verified scope. The public release is
 adopted by VentiMath frontend source through r7. The Discord problem-image
 caller still uses MathJax; its migration is separate from the completed frontend

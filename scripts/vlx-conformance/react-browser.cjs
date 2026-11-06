@@ -56,6 +56,15 @@ let server,child,socket,loaded,denyGlyph=false,sequence=0;const pending=new Map(
   assert.equal(await evaluate(`(()=>{const i=window.cases.findIndex(c=>c[0]==='colored formula');return getComputedStyle(document.querySelector('[data-fixture="'+i+'"] path')).fill===getComputedStyle(document.body).color;})()`),true,'Native colored math honors forced system colors');
   await send('Emulation.setEmulatedMedia',{features:[]});
  }
+ await evaluate('window.mountEquations();true');await wait('document.querySelectorAll(".vlx-equation-target").length===2');
+ const equationId=await evaluate('document.querySelector("a").getAttribute("href").slice(1)');
+ await evaluate('document.querySelector("a").focus();true');
+ await send('Input.dispatchKeyEvent',{type:'keyDown',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+ await send('Input.dispatchKeyEvent',{type:'keyUp',key:'Enter',code:'Enter',windowsVirtualKeyCode:13});
+ await wait('document.activeElement.id==='+JSON.stringify(equationId));
+ const equationAX=await send('Accessibility.getFullAXTree');assert(equationAX.nodes.some(n=>!n.ignored&&n.role?.value==='link'&&n.name?.value==='Equation 2'),'Reference has an accessible link name');
+ await evaluate('window.updateEquations();true');await wait('document.querySelector("a").getAttribute("aria-label")==="Equation 1"');
+ assert.equal(await evaluate('document.querySelector("a").getAttribute("href").slice(1)'),equationId,'Label target survives renumbering');
  await evaluate('window.unmountMath();true');await wait('!document.getElementById("root").hasChildNodes()');
  }
  console.log('Chrome React: zero HTML writes from initial mounts through changed/unchanged updates under Trusted Types; stable focus/scroll, 114 native formula layouts, MathML accessibility, oblique/forced-color styles, lazy loading, error boundaries and unmount pass.');

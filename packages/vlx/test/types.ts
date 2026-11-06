@@ -1,4 +1,10 @@
 import {parse,parseMath,renderMath,createRenderer} from '../index';
+import {renderDocument} from '../index';
+const document=renderDocument('text',{numbering:'ams',idPrefix:'lesson',startNumber:1});
+const nextNumber:number=document.nextNumber;
+const target:string|undefined=document.references[0]?.id;
+// @ts-expect-error Numbering policies are explicit
+renderDocument('text',{numbering:'auto'});
 import {renderPng} from '../png';
 const renderer=createRenderer();const svg:string=renderMath('x').svg;parseMath('x');
 parse('Find $x$.').nodes.forEach(node=>{if(node.kind==='math'){const x:string=node.tex;}});

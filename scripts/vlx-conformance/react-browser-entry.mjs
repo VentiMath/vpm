@@ -1,7 +1,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 import {flushSync} from 'react-dom';
-import {MathText,InlineMath,DisplayMath,MathProvider,preloadMath} from 'vlx/react';
+import {MathText,MathDocument,InlineMath,DisplayMath,MathProvider,preloadMath} from 'vlx/react';
 import cases from './react-cases.json';
 
 const h=React.createElement,root=createRoot(document.getElementById('root'));
@@ -34,3 +34,6 @@ window.mountCases=display=>flushSync(()=>root.render(h('main',null,cases.map(([n
 window.cases=cases;
 root.render(h(MathText,{source:'Plain prose'}));
 window.ready=true;
+
+window.mountEquations=()=>flushSync(()=>root.render(h(MathDocument,{idPrefix:'browser-paper',source:String.raw`See \eqref{target}. \begin{align}x&=1\label{first}\\y&=2\label{target}\end{align}`})));
+window.updateEquations=()=>flushSync(()=>root.render(h(MathDocument,{idPrefix:'browser-paper',source:String.raw`See \eqref{target}. \begin{equation}y=2\label{target}\end{equation}`})));

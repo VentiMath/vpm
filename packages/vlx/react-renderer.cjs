@@ -20,9 +20,10 @@ const Mounted=React.memo(function Mounted({tree,scrollLabel}){
  React.useEffect(()=>root.current?observeMath(root.current,{scrollLabel}):undefined,[tree,scrollLabel]);
  return React.createElement('span',{ref:root},tree);
 });
-module.exports=function MathRenderer({mode,tex,source,fontSize,fallback,scrollLabel,className,style}){
+module.exports=function MathRenderer({mode,tex,source,fontSize,fallback,scrollLabel,className,style,numbering,startNumber,idPrefix}){
  const result=React.useMemo(()=>{
   try{
+   if(mode==='document'){const result=require('./equations.cjs').renderDocument(source,{fontSize,numbering,startNumber,idPrefix,errorMode:'source'},renderNodes,require('./nodes.cjs'));return {nodes:result.nodes.map(node=>({...node,tree:reactNode(node.html)}))};}
    if(mode!=='text')return renderer.math(tex,{display:mode==='display',fontSize});
    return {nodes:parse(source).nodes.map(node=>{
     if(node.kind==='text')return node;
@@ -30,10 +31,11 @@ module.exports=function MathRenderer({mode,tex,source,fontSize,fallback,scrollLa
     catch(error){if(!(error instanceof VlxError))throw error;return {...node,error};}
    })};
   }catch(error){if(!(error instanceof VlxError))throw error;return {error};}
- },[mode,tex,source,fontSize]);
+ },[mode,tex,source,fontSize,numbering,startNumber,idPrefix]);
  const failed=(error,raw)=>typeof fallback==='function'?fallback(error,raw):fallback===undefined?raw:fallback;
  let children;
- if(result.error)children=failed(result.error,mode==='text'?source:tex);
+ if(result.error)children=failed(result.error,mode==='text'||mode==='document'?source:tex);
+ else if(mode==='document')children=result.nodes.map(node=>React.createElement(React.Fragment,{key:node.equations?.[0]?.id??node.start},node.error&&fallback!==undefined?React.createElement('span',{className:'vlx-equation',style:{position:'relative',display:'block'}},(node.equations||[]).map(eq=>React.createElement('span',{key:eq.id,id:eq.id,tabIndex:-1,className:'vlx-equation-target',role:'group','aria-label':'Equation '+eq.displayTag},'\u200b')),failed(node.error,node.raw)):node.kind==='text'?node.value:React.createElement(Mounted,{tree:node.tree,scrollLabel})));
  else if(mode==='text')children=result.nodes.map(node=>React.createElement(React.Fragment,{key:node.start},node.kind==='text'?node.value:node.error?failed(node.error,node.raw):React.createElement(Mounted,{tree:node.tree,scrollLabel})));
  else children=React.createElement(Mounted,{tree:result.tree,scrollLabel});
  return React.createElement('span',{className,style},children);

@@ -2,7 +2,7 @@
   "implementation": {
     "kind": "independent parser and layout implementation",
     "replacementStatus": "complete for documented application scope",
-    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation."
+    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation. Document-scoped equation numbering, forward/back references and native React/HTML reference navigation."
   },
   "fontData": {
     "package": "@mathjax/mathjax-newcm-font",
@@ -43,11 +43,12 @@
     "Fitting/hidden formulas skip computed-style reads; forced-colors rules are installed once per document or imported as static CSS.",
     "Preloaded React renders immediately, with inherited provider defaults for scroll labels and loading fallbacks.",
     "React creates native SVG and MathML elements from the shared layout, with no HTML parsing or insertion. String and image outputs use an escaped string emitter over the same geometry rules. Fixed glyph outlines are shared from the finite font pool.",
-    "114 inline/display fixtures preserve r6 geometry and canonical DOM/SSR structure. Native Chrome controls verify MathML roles, visual bounds, shared oblique/forced-colors styling and Trusted Types without an HTML policy. Lazy/preloaded mounts and changed/unchanged updates retain formula nodes."
+    "114 inline/display fixtures preserve r6 geometry and canonical DOM/SSR structure. Native Chrome controls verify MathML roles, visual bounds, shared oblique/forced-colors styling and Trusted Types without an HTML policy. Lazy/preloaded mounts and changed/unchanged updates retain formula nodes.",
+    "VLX 0.2.0 adds independent renderDocument/MathDocument APIs: AMS/all/none numbering, equation/align/gather rows, labels, forward references, custom tags, suppression, stable scoped IDs, explicit diagnostics and native SVG links; single-formula APIs retain r7 behavior."
   ],
   "acceptance": {
     "status": "pending",
     "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks and WebKit/Firefox visual acceptance. VentiMath frontend already consumes r7; Discord problem-image migration from MathJax remains a separate backend integration task.",
-    "scopeLimits": "Arbitrary TeX packages, advanced macro programming and automatic equation references are outside the verified application scope."
+    "scopeLimits": "Arbitrary TeX packages and advanced macro programming are outside the verified application scope. Equation references are document-scoped; cross-document references and arbitrary TeX counters are not implemented."
   }
 }

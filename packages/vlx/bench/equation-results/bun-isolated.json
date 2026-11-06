@@ -1,0 +1,1878 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-06T03:45:24.981Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/vlx-conformance/equation-reference.cjs": "d7ff6e6e771256ccf869efdb6aba8e07eb6959d888731fa52f8d05e3f575a136",
+    "../../scripts/vlx-conformance/node_modules/.vlx-before-equations": "f70860fa7ea1fe9f0d99700d2312a25323031518200bb4fe039a36dfe92f3174",
+    "../../scripts/vlx-conformance/node_modules/@mathjax/mathjax-newcm-font/cjs": "46386a6b3d22221996ee51027fb29aa05f95a3d6df03ae9e5538e402fbc5a6b4",
+    "../../scripts/vlx-conformance/node_modules/@mathjax/src/cjs": "9a8c45927e9928f3c65c3e599a0c14a6af7205300485d8041bcb15b7ed850a05",
+    "../../scripts/vlx-conformance/package-lock.json": "1f9931412e6da0e99d3f9ad558df852f6d5bf392a76536db97091ef79dbf1bd0",
+    "../../scripts/vlx-conformance/prepare-equation-baseline.cjs": "c443409d443b64a564882f4992ea997f6e4ed3b93686ee1cb31922bdc06dc8df",
+    "PROVENANCE.json": "a9d0db61b7c17bb9966437b0553840a02e3993adda3e4e5d1e465db5795243a8",
+    "bench/equations.cjs": "151dc94fe048b411fb0a6d75866b064284f946181acbcf522ff8d1869b97ff5a",
+    "equations.cjs": "0150689c44fccb5ad601ab4a41fffd28e28ad2e78e6715705bb66d9bd334ca39",
+    "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78",
+    "index.cjs": "98c697e45af65d830e3e1e8aaa9fd6751d351b285a145690fbf8a21bc9312d0d",
+    "layout.cjs": "2ae7717c416727e99bd33704a8a387788a09d89a85472645a2a24f347bc98c85",
+    "macros.cjs": "5aff2c783f69cdc8fcb28affd779e6f135ffa6a9ac1b9024afe988dd4a27f034",
+    "markup.cjs": "759359064a89773bf9a564f5f14fc8988a20779507b97548d4455a75db61aca9",
+    "math-cache.cjs": "85ca276d9daad6fe8d8c2c1e3d45a9cdf843d9606c80c76c985dbff0ea9b58bd",
+    "nodes.cjs": "302724654d5458c1e4337ae6077c3c1a725f709ffb9746dd1690134864669019",
+    "package.json": "1b3cc06a696f00a87d4c7017bafb4ce2305a630be50e2d99480b0ba7e8eb4204",
+    "render-tree.cjs": "30fa2f7fd50a57bad3fcd8e2a70040800d49befe9b00c9fcc07d208f5ae36206",
+    "source.cjs": "166bd7a5ccb7481a9cacd660e62bbbf92feb58d922d4632888708e900d97d7f6",
+    "tex.cjs": "ea145e3584f0e50146d1d048900620606a1882c4748173293b7eed90f9dbb05c",
+    "typography.cjs": "339126be881984ede33a147bb4b4dcf99f224bf93d0efd7a2444c583be91926b"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 30300,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 293,
+            "samples": [
+              34716.01365187717,
+              32408.98634812288,
+              31346.27303754268,
+              32946.959044368596,
+              31106.938566552857,
+              30414.392491467483,
+              31301.337883959026,
+              34172.35494880542,
+              31226.679180887277,
+              32008.672354948947,
+              34714.447098976125,
+              37344.42662116037
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 79419,
+            "samples": [
+              146.15940769841004,
+              143.8247396718669,
+              130.4568176380959,
+              145.12427756582167,
+              137.10142409247177,
+              138.8327478311243,
+              138.9749304322654,
+              140.5729989045445,
+              138.12237625756978,
+              132.8287311600499,
+              137.49700953172473,
+              145.96737556504098
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2238,
+            "samples": [
+              4294.2176050044645,
+              4479.092493297606,
+              4551.217605004501,
+              4406.911081322603,
+              4227.361036639847,
+              4317.079982126881,
+              4506.73994638071,
+              4627.271671134974,
+              4136.31992850758,
+              3846.3471849865828,
+              4320.431188561219,
+              4066.353887399469
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 5,
+            "samples": [
+              1871233.200000006,
+              1844375.0000000366,
+              2279841.5999999633,
+              2544299.999999976,
+              1695191.5999999982,
+              1687474.9999999949,
+              1603691.600000002,
+              1879041.8000000045,
+              2259866.5999999866,
+              1447600.0000000114,
+              1724266.5999999647,
+              1566049.9999999958
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 2,
+            "samples": [
+              9423812.500000168,
+              11492645.999999922,
+              7676333.499999828,
+              8391562.499999963,
+              10088375.000000041,
+              7986374.9999999525,
+              10919853.999999987,
+              8732875.000000149,
+              8226374.999999962,
+              10437145.999999985,
+              7655812.500000138,
+              8012042.000000065
+            ]
+          }
+        ],
+        "checksum": 78633952
+      },
+      "vpm": {
+        "pid": 30356,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 293,
+            "samples": [
+              30739.474402730364,
+              32084.470989761056,
+              33210.75085324232,
+              35734.35836177476,
+              32338.593856655418,
+              32301.054607508475,
+              35809.72696245738,
+              36553.04095563136,
+              33076.50853242321,
+              36509.52901023892,
+              30722.126279863423,
+              39746.1604095563
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 79419,
+            "samples": [
+              139.6024125209333,
+              144.31423211070344,
+              141.09186718543427,
+              143.60543446782222,
+              141.53676072476412,
+              144.4600788224486,
+              134.80507183419624,
+              138.8553117012298,
+              141.58031453430473,
+              141.73035419735817,
+              143.1715584431937,
+              147.448973167631
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2238,
+            "samples": [
+              4363.698838248467,
+              4199.210902591594,
+              4466.0598748882985,
+              4378.25781948168,
+              4102.230563002679,
+              4080.894548704221,
+              4513.05093833783,
+              4464.216711349456,
+              4499.795352993765,
+              4669.6456657729905,
+              4503.127792672068,
+              4197.721179624662
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 5,
+            "samples": [
+              162066.5999999801,
+              134033.39999999845,
+              232491.60000000303,
+              153375.00000000544,
+              126816.59999998375,
+              127125.00000002366,
+              128449.99999997528,
+              133383.40000000244,
+              129491.80000000524,
+              335858.4000000064,
+              124474.99999998398,
+              125233.19999995692
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 2,
+            "samples": [
+              1070812.4999999881,
+              655833.4999999716,
+              566437.5000000064,
+              554687.5,
+              590166.9999999512,
+              599729.4999999667,
+              698333.0000000478,
+              985083.4999999733,
+              548395.4999999696,
+              532812.4999999773,
+              531978.9999999785,
+              535583.5000000298
+            ]
+          }
+        ],
+        "checksum": 25848768
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 30387,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 272,
+            "samples": [
+              32508.731617647074,
+              31958.639705882422,
+              34678.92279411768,
+              33744.794117647056,
+              29199.908088235286,
+              31896.294117647067,
+              33609.6801470589,
+              29280.636029411802,
+              30415.595588235206,
+              40479.93382352936,
+              35078.43382352922,
+              34669.57720588226
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 84399,
+            "samples": [
+              132.7908624509765,
+              132.91182359980567,
+              142.71742556191427,
+              136.3651702034388,
+              136.98819891231005,
+              134.21219445727985,
+              143.82673965331315,
+              138.98120830815523,
+              142.20645979217727,
+              138.78028175689224,
+              141.03889856514905,
+              143.31281176317265
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2271,
+            "samples": [
+              4367.734478203438,
+              4382.265521796576,
+              6892.52179656539,
+              21983.487450462388,
+              12729.76309995599,
+              10735.06516952883,
+              5472.075737560562,
+              4768.78775869662,
+              4743.321444297645,
+              5065.958168207768,
+              6377.458828709815,
+              4425.473359753415
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 57,
+            "samples": [
+              141078.9473684218,
+              163017.54385965163,
+              148885.96491228032,
+              162087.7192982422,
+              162309.947368421,
+              145498.5438596467,
+              160826.7543859639,
+              159201.75438596393,
+              186017.54385965026,
+              165579.68421052626,
+              159240.49122807113,
+              142979.5263157885
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 16,
+            "samples": [
+              634164.0625000054,
+              686794.2499999913,
+              851036.4374999994,
+              757781.2500000078,
+              711414.0624999976,
+              636546.8750000076,
+              719820.3124999907,
+              742929.6875000091,
+              664994.812499998,
+              667749.999999998,
+              672395.8750000065,
+              649007.8125000024
+            ]
+          }
+        ],
+        "checksum": 88590898
+      },
+      "upstream": {
+        "pid": 30391,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 272,
+            "samples": [
+              31729.165441176498,
+              33055.76102941173,
+              31560.81617647058,
+              30979.474264705834,
+              30394.45220588225,
+              27855.238970588158,
+              28524.05147058815,
+              31959.55882352935,
+              36448.83455882355,
+              33415.595588235316,
+              38649.81617647073,
+              34654.41176470584
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 84399,
+            "samples": [
+              137.21183900283222,
+              137.86300785554306,
+              135.5742840554978,
+              130.60334838090478,
+              132.41370158414148,
+              141.0339577483151,
+              143.86674012725246,
+              159.38379601654006,
+              156.33577412054606,
+              139.83281792438262,
+              137.9104017820116,
+              136.84748634462528
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2271,
+            "samples": [
+              5052.98678996036,
+              4113.000880669329,
+              4157.0523998238505,
+              4402.3372963452175,
+              4327.2972258916525,
+              4681.124174372546,
+              4161.015852047546,
+              4121.587406428853,
+              4309.169969176561,
+              4417.29062087185,
+              4320.691765741996,
+              4532.896521356192
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 57,
+            "samples": [
+              1682092.824561403,
+              1715921.7894736845,
+              1565374.2807017537,
+              1802037.280701761,
+              1614151.3157894735,
+              1574295.3157894735,
+              1584673.245614037,
+              1754851.6140350888,
+              1504168.8596491183,
+              2428908.6315789465,
+              2540160.8245614017,
+              1934616.9649122856
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 16,
+            "samples": [
+              7673619.75,
+              7684140.624999998,
+              7588690.0625000065,
+              7512783.812500004,
+              7463489.562500001,
+              7532270.812500031,
+              7548484.374999987,
+              7301059.874999965,
+              7086606.749999987,
+              7923950.500000047,
+              7092695.312499984,
+              7214044.250000029
+            ]
+          }
+        ],
+        "checksum": 26092514
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 30396,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 312,
+            "samples": [
+              33268.1634615385,
+              30107.10576923077,
+              30274.30448717949,
+              30098.157051281964,
+              30793.269230769285,
+              31354.301282051394,
+              31903.5801282051,
+              32266.426282051205,
+              32325.990384615416,
+              32701.791666666733,
+              34533.78846153845,
+              34554.487179487194
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 71305,
+            "samples": [
+              132.50240516092833,
+              128.77252647079504,
+              148.64724773858762,
+              131.8648762358873,
+              140.71243250823932,
+              135.84075450529343,
+              134.8485379706905,
+              151.63616857162864,
+              140.69139611527999,
+              141.49779117873982,
+              138.333567071033,
+              141.82269125587248
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2125,
+            "samples": [
+              4233.588235294144,
+              4555.549176470563,
+              4170.843294117623,
+              3927.0588235294244,
+              4240.999999999985,
+              4419.764705882378,
+              4200.843294117636,
+              4700.6277647058805,
+              4347.549176470559,
+              4310.568941176451,
+              4154.117647058817,
+              4156.529411764709
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 5,
+            "samples": [
+              2171533.2000000216,
+              1529441.5999999729,
+              1962533.399999984,
+              2521491.5999999903,
+              2397983.199999999,
+              2023849.999999993,
+              1878941.8000000298,
+              1832758.1999999892,
+              2269116.6000000066,
+              1626891.8000000212,
+              1782375.0000000019,
+              2039449.9999999881
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 2,
+            "samples": [
+              9496999.999999844,
+              8174062.499999991,
+              9064312.500000142,
+              10990020.999999842,
+              6915541.500000018,
+              7626917.000000048,
+              7817062.50000002,
+              8213333.500000089,
+              7390979.000000016,
+              6886375.000000044,
+              6189645.999999812,
+              7373791.500000152
+            ]
+          }
+        ],
+        "checksum": 89440032
+      },
+      "vpm": {
+        "pid": 30397,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 312,
+            "samples": [
+              33141.02564102556,
+              31737.314102564083,
+              33473.0256410256,
+              35339.34294871799,
+              27884.88141025643,
+              32121.259615384664,
+              28813.70192307687,
+              32693.24358974356,
+              35579.72756410248,
+              35551.682692307724,
+              36544.336538461575,
+              38427.349358974316
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 71305,
+            "samples": [
+              131.43654722670186,
+              142.46020615664997,
+              141.21846995301826,
+              129.2633756398571,
+              141.18165626533903,
+              140.82696865577395,
+              128.93965360073042,
+              142.88794614683405,
+              134.5873360914388,
+              130.4630390575702,
+              144.03852464764046,
+              129.49652899516144
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2125,
+            "samples": [
+              4134.15717647058,
+              4370.294117647009,
+              4249.13741176469,
+              4221.058823529401,
+              4114.490352941175,
+              3819.4898823529747,
+              4254.3529411764475,
+              4122.7647058823795,
+              4329.529411764698,
+              4267.470588235269,
+              4405.549176470552,
+              4313.196235294152
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 5,
+            "samples": [
+              128191.59999999101,
+              134291.80000002816,
+              126366.59999998301,
+              138041.59999999683,
+              133533.400000033,
+              125658.19999999805,
+              286966.6000000052,
+              148341.60000000338,
+              140516.60000000085,
+              123875.00000004366,
+              124608.39999998824,
+              122441.60000000193
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 2,
+            "samples": [
+              617812.5000000136,
+              641124.9999999881,
+              976042.0000000068,
+              645479.000000023,
+              552791.999999954,
+              548583.0000000078,
+              544457.9999999632,
+              556729.4999999603,
+              606770.9999999807,
+              895208.4999999669,
+              599250.0000000973,
+              567270.4999999496
+            ]
+          }
+        ],
+        "checksum": 26180672
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 30398,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 329,
+            "samples": [
+              33149.820668692955,
+              28863.221884498507,
+              30313.06990881463,
+              27831.05471124622,
+              33296.73252279633,
+              32491.136778115575,
+              31874.367781155048,
+              31785.58966565358,
+              40056.231003039466,
+              39638.297872340416,
+              32466.313069908847,
+              31236.066869300845
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 83000,
+            "samples": [
+              143.77208433734953,
+              136.8187710843372,
+              133.2821204819289,
+              133.3408674698803,
+              136.4658554216873,
+              136.10191566265095,
+              133.98945783132538,
+              137.42871084337432,
+              133.36093975903694,
+              142.5687710843375,
+              138.89759036144588,
+              143.3273132530133
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2121,
+            "samples": [
+              4709.139085337085,
+              4193.658651579465,
+              4149.2220650636755,
+              4125.864686468684,
+              4037.148514851459,
+              4374.7053276756,
+              4310.289957567222,
+              4366.710042432822,
+              4299.68175388964,
+              4504.7538896747255,
+              4248.742574257467,
+              4022.2970297029738
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 65,
+            "samples": [
+              164423.72307692494,
+              168926.29230769322,
+              154141.015384616,
+              172117.9538461526,
+              149215.38461538218,
+              150371.1538461525,
+              152998.72307692358,
+              153147.43076923012,
+              131679.47692307702,
+              173979.47692307545,
+              138401.9230769249,
+              141260.8923076942
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 17,
+            "samples": [
+              798897.0588235268,
+              720321.0588235352,
+              780656.8235294115,
+              626348.0000000072,
+              601129.8823529534,
+              706666.7058823522,
+              681460.7647058759,
+              615252.4117646996,
+              674365.1764705806,
+              599578.4705882323,
+              603870.1176470675,
+              624264.7058823503
+            ]
+          }
+        ],
+        "checksum": 78143766
+      },
+      "upstream": {
+        "pid": 30401,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 329,
+            "samples": [
+              29565.729483282674,
+              32273.17629179331,
+              32545.717325227943,
+              32704.91489361711,
+              31762.662613981855,
+              31589.285714285725,
+              31983.79027355627,
+              33979.86322188447,
+              36167.17325227964,
+              33209.978723404274,
+              31895.00911854113,
+              32966.94528875389
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 83000,
+            "samples": [
+              134.3222891566259,
+              140.52560240963885,
+              140.82078313253027,
+              140.5858433734942,
+              138.25451807228836,
+              138.3022168674692,
+              136.2289156626508,
+              145.44126506024145,
+              139.87750602409616,
+              139.72389156626502,
+              137.71686746988016,
+              146.8067228915669
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2121,
+            "samples": [
+              4038.386138613873,
+              4482.3389910419955,
+              4433.993399339927,
+              4264.419141914156,
+              4557.421499292787,
+              4533.396039603944,
+              4707.291843470096,
+              4290.114568599718,
+              4275.872230080144,
+              4452.597359736003,
+              4399.20273455915,
+              4425.408769448332
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 65,
+            "samples": [
+              1647434.6153846174,
+              1613441.6769230762,
+              1494292.3076923063,
+              1543701.2769230793,
+              1566533.3384615432,
+              1507514.7384615354,
+              1483157.6923076962,
+              1458537.8307692246,
+              1547971.1538461533,
+              1529389.1076923083,
+              1504760.246153847,
+              1558725.0000000005
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 17,
+            "samples": [
+              7536002.47058822,
+              7559367.647058827,
+              7760757.352941201,
+              7848752.4705882175,
+              7595360.294117682,
+              7663294.117647049,
+              7516404.411764704,
+              7655500.000000007,
+              7725637.294117672,
+              7390512.235294141,
+              7162924.058823538,
+              7344291.647058847
+            ]
+          }
+        ],
+        "checksum": 25667744
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 30430,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 397,
+            "samples": [
+              33416.141057934525,
+              30570.214105793417,
+              30727.95969773303,
+              30264.380352644774,
+              33050.69269521412,
+              33395.36020151141,
+              33797.22921914362,
+              36049.118387909235,
+              33431.884130982435,
+              35085.74559193951,
+              31926.848866498745,
+              35772.249370277146
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 74082,
+            "samples": [
+              135.79097486568924,
+              142.95476634000156,
+              143.36085688831272,
+              136.94002591722605,
+              131.7577144245558,
+              147.3271779919555,
+              141.45811398180436,
+              134.3201857401253,
+              142.9418347236849,
+              140.42378715477437,
+              138.24657811614145,
+              132.11205151048765
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2386,
+            "samples": [
+              4391.188181056135,
+              4105.860435875967,
+              4312.2904442581785,
+              4255.1693210393905,
+              4081.7791282480907,
+              4138.237217099744,
+              4236.815171835728,
+              4521.4442581726935,
+              4249.895222129055,
+              4110.365884325219,
+              3908.878038558268,
+              4275.565800502937
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 5,
+            "samples": [
+              1906899.9999999958,
+              1864075.0000000026,
+              1807341.6000000178,
+              1908016.600000019,
+              1989966.5999999798,
+              1735824.999999977,
+              2556508.3999999845,
+              1674491.5999999647,
+              1885991.5999999885,
+              1439699.9999999935,
+              1390533.4000000039,
+              1754933.1999999594
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 2,
+            "samples": [
+              7480979.500000103,
+              7396792.000000005,
+              10022104.499999842,
+              6964979.000000085,
+              6580249.999999979,
+              7823958.49999989,
+              9775770.499999907,
+              7331062.499999916,
+              6463770.500000009,
+              6384937.499999979,
+              8533292.000000075,
+              7299312.500000042
+            ]
+          }
+        ],
+        "checksum": 78554304
+      },
+      "vpm": {
+        "pid": 30431,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 397,
+            "samples": [
+              34566.32997481111,
+              28816.962216624703,
+              30416.350125944566,
+              32073.677581863976,
+              32992.34005037785,
+              32463.685138539175,
+              32867.128463476205,
+              36252.20403022675,
+              33983.6272040303,
+              33217.465994962266,
+              34107.473551637246,
+              33986.7758186398
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 74082,
+            "samples": [
+              143.4823303906482,
+              129.70538052428392,
+              142.01548284333467,
+              134.30894144326584,
+              143.68143408655186,
+              131.23576577306258,
+              146.91940012418715,
+              139.7674198860719,
+              136.90798034610327,
+              142.22246969574215,
+              143.88335898058787,
+              137.4777273831713
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2386,
+            "samples": [
+              4713.85163453479,
+              4053.593880972339,
+              4452.762782900239,
+              4055.898994132432,
+              4457.826906957221,
+              4482.432103939628,
+              4278.709136630321,
+              4203.216680637084,
+              4279.72212908633,
+              4259.500000000019,
+              4547.656328583425,
+              4082.425398155922
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 5,
+            "samples": [
+              1843966.599999976,
+              2279649.999999992,
+              2219666.600000028,
+              1738925.0000000175,
+              2116724.9999999967,
+              2157408.400000031,
+              1834541.5999999656,
+              1579608.1999999841,
+              1889583.3999999922,
+              2115366.5999999703,
+              2483158.4000000022,
+              1700433.4000000197
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 2,
+            "samples": [
+              7206854.000000021,
+              8576021.000000082,
+              6715583.499999866,
+              8968771.000000061,
+              7314020.9999999115,
+              7590479.499999901,
+              9565062.500000067,
+              7854145.499999959,
+              7905062.499999985,
+              8795562.500000188,
+              6875792.000000047,
+              7775145.99999995
+            ]
+          }
+        ],
+        "checksum": 25004160
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 30432,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 291,
+            "samples": [
+              35392.90034364267,
+              32263.030927835058,
+              31266.463917525813,
+              33639.17525773201,
+              31686.855670103214,
+              32378.43642611682,
+              30805.69759450165,
+              35409.36426116838,
+              32247.99656357385,
+              32610.68384879727,
+              31432.56013745712,
+              29464.920962199165
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 80842,
+            "samples": [
+              135.91275574577503,
+              136.0333490017565,
+              136.38588852329246,
+              137.92181044506648,
+              137.44609237772536,
+              138.01045248756753,
+              137.3940278568073,
+              146.00857227678696,
+              144.11289923554514,
+              140.04993691398016,
+              133.33157269735972,
+              135.3581677840729
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2411,
+            "samples": [
+              4482.199502281183,
+              4189.634591455843,
+              4448.517212774776,
+              4444.508087930298,
+              4467.855661551243,
+              4378.266279552069,
+              4521.2911654915115,
+              4436.333471588516,
+              4227.464122770626,
+              4172.197013687268,
+              4330.896308585635,
+              4213.102861883072
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 5,
+            "samples": [
+              2378208.399999994,
+              1685533.4000000313,
+              1884558.1999999923,
+              2011333.19999999,
+              2161441.5999999894,
+              1779449.999999997,
+              1701683.4000000018,
+              1967500.0000000182,
+              1912516.800000003,
+              1722125.0000000056,
+              1839624.999999978,
+              2262633.400000004
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 2,
+            "samples": [
+              6915103.999999928,
+              9808937.499999957,
+              9166812.499999879,
+              7563312.4999999385,
+              7559562.500000084,
+              7314145.999999937,
+              7602479.4999998445,
+              7487562.500000195,
+              6842750.000000023,
+              6497708.500000045,
+              7357312.500000034,
+              8523167.000000058
+            ]
+          }
+        ],
+        "checksum": 72965888
+      },
+      "upstream": {
+        "pid": 30434,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "existing uncached formula / prior VLX",
+            "iterations": 291,
+            "samples": [
+              29952.319587628885,
+              34310.85223367704,
+              29937.140893470747,
+              32612.972508591065,
+              31147.195876288806,
+              33479.096219931234,
+              31720.501718213207,
+              30590.49484536085,
+              34504.29553264606,
+              33265.03436426128,
+              33005.44329896903,
+              36883.591065292
+            ]
+          },
+          {
+            "case": "existing cached formula / prior VLX",
+            "iterations": 80842,
+            "samples": [
+              141.89510403008362,
+              133.9377056480548,
+              143.3366937977784,
+              137.6280275104525,
+              134.3551866603991,
+              131.921414611216,
+              129.29593528116567,
+              137.0435540931699,
+              135.00613542465578,
+              140.5029687538663,
+              136.18746443680308,
+              137.99705598574926
+            ]
+          },
+          {
+            "case": "existing mixed text / prior VLX",
+            "iterations": 2411,
+            "samples": [
+              9125.000000000033,
+              6373.064288676893,
+              4713.6217337204125,
+              4229.918291165464,
+              4070.7693902945216,
+              4508.7449191207,
+              4367.620489423445,
+              3948.6727498963223,
+              4127.31563666529,
+              4724.647449191202,
+              4662.570717544573,
+              4054.213604313528
+            ]
+          },
+          {
+            "case": "2 numbered equations and forward refs / MathJax",
+            "iterations": 5,
+            "samples": [
+              2002033.4000000276,
+              2149466.600000005,
+              2470783.4000000274,
+              1711824.9999999988,
+              1901816.600000029,
+              1803133.3999999787,
+              2463566.800000035,
+              1829091.5999999926,
+              1956666.6000000169,
+              1938516.7999999796,
+              2175541.599999997,
+              1665324.9999999844
+            ]
+          },
+          {
+            "case": "12 numbered equations and forward refs / MathJax",
+            "iterations": 2,
+            "samples": [
+              8556646,
+              7579708.500000152,
+              8811999.999999898,
+              7125728.999999865,
+              9904958.50000002,
+              7513791.500000025,
+              9599562.500000047,
+              6790375.00000004,
+              10509771,
+              7096270.499999946,
+              6580562.500000042,
+              7278125.000000046
+            ]
+          }
+        ],
+        "checksum": 25760800
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "existing uncached formula / prior VLX",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 32208.82935153591,
+          "vpmNs": 33143.629692832765,
+          "changePct": 2.9023108263084962
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 31844.362132352922,
+          "vpmNs": 33059.20588235299,
+          "changePct": 3.814941385702375
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 32085.003205128152,
+          "vpmNs": 33307.02564102558,
+          "changePct": 3.8087028637170617
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 32409.446808510627,
+          "vpmNs": 32170.340425531947,
+          "changePct": -0.7377675539833373
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 33405.75062972297,
+          "vpmNs": 33104.903022670056,
+          "changePct": -0.9005862804508658
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 32809.20790378005,
+          "vpmNs": 32255.513745704455,
+          "changePct": -1.687618182369477
+        }
+      ]
+    },
+    {
+      "case": "existing cached formula / prior VLX",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 138.90383913169484,
+          "vpmNs": 141.65533436583144,
+          "changePct": 1.980863344984951
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 137.88670481877733,
+          "vpmNs": 138.88074503252375,
+          "changePct": 0.7209108485498161
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 139.5124815931565,
+          "vpmNs": 137.7071523736064,
+          "changePct": -1.2940270282158606
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 139.8006987951806,
+          "vpmNs": 136.64231325301225,
+          "changePct": -2.25920583329533
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 139.3351826354579,
+          "vpmNs": 140.8914513647033,
+          "changePct": 1.11692445497924
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 136.61550926498649,
+          "vpmNs": 137.42006011726633,
+          "changePct": 0.5889161901225348
+        }
+      ]
+    },
+    {
+      "case": "existing mixed text / prior VLX",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4318.75558534405,
+          "vpmNs": 4421.237265415568,
+          "changePct": 2.372944660709564
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4323.994495816824,
+          "vpmNs": 5269.016952884165,
+          "changePct": 21.85531128639473
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4237.294117647065,
+          "vpmNs": 4251.745176470569,
+          "changePct": 0.3410445067601131
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4429.70108439413,
+          "vpmNs": 4274.212164073553,
+          "changePct": -3.51014475600544
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4243.355196982391,
+          "vpmNs": 4279.215632858326,
+          "changePct": 0.8450962554687136
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4438.182704272072,
+          "vpmNs": 4407.299875570292,
+          "changePct": -0.6958440145344524
+        }
+      ]
+    },
+    {
+      "case": "2 numbered equations and forward refs / MathJax",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1784320.8000000007,
+          "vpmNs": 131437.60000000385,
+          "changePct": -92.63374612905909
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1699007.3070175438,
+          "vpmNs": 160033.62280701753,
+          "changePct": -90.58075723712206
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1993191.6999999885,
+          "vpmNs": 130862.500000012,
+          "changePct": -93.43452513875043
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1536545.192307694,
+          "vpmNs": 153073.07692307685,
+          "changePct": -90.03784088555308
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1835708.30000001,
+          "vpmNs": 2002474.9999999814,
+          "changePct": 9.084596937322242
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1947591.6999999983,
+          "vpmNs": 1898537.4999999977,
+          "changePct": -2.518710672262603
+        }
+      ]
+    },
+    {
+      "case": "12 numbered equations and forward refs / MathJax",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 8562218.750000056,
+          "vpmNs": 578302.2499999788,
+          "changePct": -93.24588325893946
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7522527.312500017,
+          "vpmNs": 679595.0624999988,
+          "changePct": -90.96586779591041
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 7721989.7500000335,
+          "vpmNs": 603010.500000039,
+          "changePct": -92.1909958505185
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7577363.970588254,
+          "vpmNs": 650356.588235294,
+          "changePct": -91.41711298599789
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7363927.249999961,
+          "vpmNs": 7814645.749999954,
+          "changePct": 6.120626734871615
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7546750.0000000885,
+          "vpmNs": 7523562.50000014,
+          "changePct": -0.3072514658621017
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "existing uncached formula / prior VLX",
+      "upstream_ns": 32147,
+      "vpm_ns": 33101,
+      "change_pct": 3.4,
+      "upstream_first_pct": 3.4,
+      "vpm_first_pct": 1.5,
+      "process_range_pct": "2.9, 3.8, 3.8, -0.7",
+      "control_max_abs_pct": 1.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "existing cached formula / prior VLX",
+      "upstream_ns": 139,
+      "vpm_ns": 138,
+      "change_pct": -0.3,
+      "upstream_first_pct": 0.3,
+      "vpm_first_pct": -0.8,
+      "process_range_pct": "2.0, 0.7, -1.3, -2.3",
+      "control_max_abs_pct": 1.1,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "existing mixed text / prior VLX",
+      "upstream_ns": 4321,
+      "vpm_ns": 4348,
+      "change_pct": 1.4,
+      "upstream_first_pct": 1.4,
+      "vpm_first_pct": 9.2,
+      "process_range_pct": "2.4, 21.9, 0.3, -3.5",
+      "control_max_abs_pct": 0.8,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "2 numbered equations and forward refs / MathJax",
+      "upstream_ns": 1741664,
+      "vpm_ns": 142255,
+      "change_pct": -91.6,
+      "upstream_first_pct": -93,
+      "vpm_first_pct": -90.3,
+      "process_range_pct": "-92.6, -90.6, -93.4, -90.0",
+      "control_max_abs_pct": 9.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "12 numbered equations and forward refs / MathJax",
+      "upstream_ns": 7649677,
+      "vpm_ns": 626684,
+      "change_pct": -91.8,
+      "upstream_first_pct": -92.7,
+      "vpm_first_pct": -91.2,
+      "process_range_pct": "-93.2, -91.0, -92.2, -91.4",
+      "control_max_abs_pct": 6.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

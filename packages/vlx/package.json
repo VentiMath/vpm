@@ -1,6 +1,6 @@
 {
   "name": "vlx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "VentiLaTeX: independent math rendering for web, React, MathML, SVG and problem pictures",
   "main": "./index.cjs",
   "module": "./index.mjs",
