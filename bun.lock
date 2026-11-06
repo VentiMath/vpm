@@ -713,6 +713,10 @@
       "name": "vordered-map",
       "version": "0.1.0",
     },
+    "packages/vorderedmap": {
+      "name": "vorderedmap",
+      "version": "2.1.1",
+    },
     "packages/vp-limit": {
       "name": "vp-limit",
       "version": "0.1.0",
@@ -1524,6 +1528,8 @@
     "vopentelemetry-api": ["vopentelemetry-api@workspace:packages/vopentelemetry-api"],
 
     "vordered-map": ["vordered-map@workspace:packages/vordered-map"],
+
+    "vorderedmap": ["vorderedmap@workspace:packages/vorderedmap"],
 
     "vp-limit": ["vp-limit@workspace:packages/vp-limit"],
 

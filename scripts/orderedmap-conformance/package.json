@@ -1,0 +1,9 @@
+{
+  "name": "vpm-orderedmap-conformance",
+  "private": true,
+  "dependencies": {
+    "orderedmap": "2.1.1",
+    "prosemirror-model": "1.25.12",
+    "prosemirror-model-app": "npm:prosemirror-model@1.25.4"
+  }
+}

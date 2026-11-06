@@ -1,0 +1,27 @@
+{
+  "upstream": {
+    "name": "orderedmap",
+    "version": "2.1.1",
+    "repository": "https://code.haverbeke.berlin/marijn/orderedmap",
+    "checked": "2026-11-06",
+    "integrity": "sha512-TvAWxi0nDe1j/rtMcWcIj94+Ffe6n7zhow33h40SKxmsmozs6dz/e+EajymfoFcHd7sxNn8yHM8839uixMOV6g=="
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "20dd8b5b53dbf713cedeef60171f80f08ea3725888a8176073a22af0c00cbe91",
+    "dist/index.d.ts": "264f935450101e4b000eb351cf75c9d799ca20a278b260a9e5770303b5f2b6a3",
+    "LICENSE": "869c30f368eb08735e779027b9f4bc9fea2f39624351856aebe42741f0bc0884"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "OrderedMap 2.1.1 public string-key API and ProseMirror schema callers. Private backing sequence, lazy large-map lookup index, linear bulk edits."
+  },
+  "changes": [
+    "Copy own enumerable input properties only; inherited properties do not become schema entries.",
+    "Preserve __proto__ as an own data property in ordinary object output.",
+    "Allow explicit empty-string renaming; preserve previous maps through all edits.",
+    "Build bulk subtraction and merge in one pass instead of repeated remove/copy operations.",
+    "Cache lookups for maps with at least 32 entries; ordinary small schemas retain compact scans.",
+    "Avoid allocation for identical-value updates; private storage cannot be modified through the old undocumented content field."
+  ]
+}

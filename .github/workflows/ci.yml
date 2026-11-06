@@ -88,6 +88,8 @@ jobs:
       - run: npm --prefix scripts/radix-collection-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-collection-conformance/build.cjs
       - run: node scripts/radix-collection-conformance/archives.cjs
+      - run: npm --prefix scripts/orderedmap-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/orderedmap-conformance/archives.cjs
       - run: npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs
@@ -587,6 +589,8 @@ jobs:
       - run: npm --prefix scripts/radix-collection-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-collection-conformance/build.cjs
       - run: node scripts/radix-collection-conformance/archives.cjs
+      - run: npm --prefix scripts/orderedmap-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/orderedmap-conformance/archives.cjs
       - run: npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs
