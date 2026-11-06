@@ -50,6 +50,10 @@ npm --prefix scripts/radix-dismissable-conformance ci --ignore-scripts --no-audi
 npm --prefix scripts/radix-dismissable-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/radix-dismissable-conformance/build.cjs
 node scripts/radix-dismissable-conformance/archives.cjs
+npm --prefix scripts/radix-menu-conformance ci --ignore-scripts --no-audit --no-fund
+npm --prefix scripts/radix-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
+bun scripts/radix-menu-conformance/build.cjs
+node scripts/radix-menu-conformance/archives.cjs
 npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/dnd-conformance/build.cjs

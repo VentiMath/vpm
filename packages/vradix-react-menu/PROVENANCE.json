@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-menu",
+    "version": "2.2.1",
+    "checked": "2026-11-05",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/menu",
+    "integrity": "sha512-G34BsU90SBj5foYpz8pQqq/Q0Dlfyyl6KitWEfRwXC0QvfwhWNAwS49DWP2+rRJ0iwv20Z2Qx7Sk+T03bGo5JA=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "3779261983483da7faa69960bfaa3d67d46d52699552458a1d392197069af613",
+    "dist/index.d.ts": "ad20cba2453e4ed62ce2eccefe54a470a02e2f81209814f5f9f1aa5aedad1c41",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Menu composition and scope factory, modal/nonmodal content, selection, checkbox/radio items, typeahead, nested submenus, pointer grace and current Dropdown Menu callers on React 19."
+  },
+  "changes": [
+    "Compose tested VPM foundations with independent menu state and interaction orchestration.",
+    "Document-owned input modality, focus reads, guards, selection events and submenu timers.",
+    "Typeahead matches element identities and rejects stale focus after another interaction.",
+    "Live submenu geometry and owned hover delays."
+  ]
+}

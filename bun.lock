@@ -866,6 +866,29 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vradix-react-menu": {
+      "name": "vradix-react-menu",
+      "version": "2.2.1",
+      "dependencies": {
+        "varia-hidden": "1.2.6",
+        "vradix-react-compose-refs": "1.1.5",
+        "vradix-react-context": "1.3.0",
+        "vradix-react-direction": "1.2.0",
+        "vradix-react-dismissable-layer": "1.2.1",
+        "vradix-react-focus-scope": "1.3.1",
+        "vradix-react-popper": "1.4.0",
+        "vradix-react-portal": "1.2.0",
+        "vradix-react-presence": "1.1.11",
+        "vradix-react-primitive": "2.2.0",
+        "vradix-react-roving-focus": "1.2.1",
+        "vradix-react-use-callback-ref": "1.1.5",
+        "vreact-remove-scroll": "2.7.2",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+      },
+    },
     "packages/vradix-react-popper": {
       "name": "vradix-react-popper",
       "version": "1.4.0",
@@ -1530,6 +1553,8 @@
     "vradix-react-focus-scope": ["vradix-react-focus-scope@workspace:packages/vradix-react-focus-scope"],
 
     "vradix-react-id": ["vradix-react-id@workspace:packages/vradix-react-id"],
+
+    "vradix-react-menu": ["vradix-react-menu@workspace:packages/vradix-react-menu"],
 
     "vradix-react-popper": ["vradix-react-popper@workspace:packages/vradix-react-popper"],
 
