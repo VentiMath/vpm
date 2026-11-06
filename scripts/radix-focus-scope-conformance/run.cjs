@@ -38,7 +38,9 @@ const [variant,version,mode] = process.argv.slice(2);
     await render(scope({trapped:true}));document.getElementById('last').focus();const boundary=await key(document.activeElement);assert(boundary.defaultPrevented);assert.equal(document.activeElement.id,'last');await stop();
     await render(scope({loop:true},[]));assert.equal(document.activeElement.id,'scope');assert((await key(document.activeElement)).defaultPrevented);await stop();
 
-    trigger.focus();await render(scope());await render(null);outside.focus();await tick();assert.equal(document.activeElement,variant==='vpm'?outside:trigger);
+    // Keep the later focus in the same task as unmount; async act can drain
+    // upstream's zero-delay restoration before the simulated later interaction.
+    trigger.focus();await render(scope());React.act(()=>root.render(null));outside.focus();await tick();assert.equal(document.activeElement,variant==='vpm'?outside:trigger);
     trigger.focus();await render(scope({trapped:true}));document.getElementById('first').remove();await tick();assert(host.contains(document.activeElement));await stop();
 
     const branch=document.createElement('aside');branch.innerHTML='<button id="branch">branch</button>';document.body.append(branch);
