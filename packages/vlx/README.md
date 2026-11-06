@@ -26,13 +26,16 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.0/vlx-0.2.0.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.1/vlx-0.2.1.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Versions identify this original API, not upstream engine compatibility.
-**0.2.0** adds document-scoped equation references. The install above selects
+**0.2.1** fixes indexed-root degree placement in all outputs. Problem pictures
+now use display sizing for standalone paragraph formulas, bold choice labels,
+and ordinary paragraph spacing for break-only math. It retains the document-scoped
+equation references introduced in **0.2.0**. The install above selects
 that API; VentiMath's verified frontend source still pins r7 until its dependency
 and lockfile are updated. Release availability and application adoption are separate.
 
@@ -220,7 +223,10 @@ compare full document rendering and check the existing formula/text paths.
 
 The page entry handles paragraphs, soft newlines, two-space hard breaks, outlined
 prose, inline and display math, ordered text/image parts, a main figure, and
-alphabetically ordered text/picture choices. Touching word/math/punctuation
+alphabetically ordered text/picture choices with bold labels. A formula alone in
+a paragraph uses display style unless its TeX explicitly selects another style.
+Break-only math such as `$\\$` advances paragraph flow, retaining repeated breaks
+and explicit extra spacing. Touching word/math/punctuation
 fragments stay together when lines wrap. Figures preserve aspect ratio and fit
 within the 960 px page's 36 px margins; text is 28 px. A stored figure's `width`
 is measured against a 16 px source page. Figure choices replace their text
@@ -259,6 +265,11 @@ Existing caller normalization of legacy prose commands/lists remains caller work
 - All **28 unchanged application problem-picture tests** pass through VLX on Bun,
   including paragraph/image geometry, rules, choices and corruption rejection.
   Private tests are loaded from Git into a temporary directory, never copied here.
+- The 0.2.1 picture checks reproduce all four reported defects on 0.2.0 and pass
+  after the fixes. The saved November 3 full-problem corpus still renders
+  **20,803 of 20,835** records, with no new failures; 32 missing-glyph or malformed
+  source failures remain. Figures in this check are synthetic placeholders with
+  recorded widths, so this is not visual acceptance of every production picture.
 - [Public tests](test/contracts.test.cjs), [page checks](test/problem.test.cjs) and
   [53 synthetic notation cases](../../scripts/vlx-conformance/README.md) run on
   Node 24 and Bun. MathJax 4.1.3 supplies semantic/visual controls and KaTeX 0.19.1
@@ -269,6 +280,12 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   types, browser bundling, sibling VPM dependencies and optional PNG rasterization.
   [Benchmarks](bench/results/README.md) keep all balanced process pairs, source
   hashes and identical-source controls.
+
+The [0.2.1 picture benchmark](bench/picture-results/README.md) compares unchanged
+inputs against 0.2.0 in isolated Node 24 and Bun processes. No measured direction
+is established beyond controls: corrected full-picture PNG medians are +4.9%
+on Node and +1.1% on Bun, with appreciable process variation. Corrected output
+has deliberately different geometry; this is not a throughput claim.
 
 Historical r3 whole-page comparisons against the app renderer measured 45.6% and 26.8%
 less time on Node for synthetic prose/choices and array/figure PNGs respectively.
@@ -294,8 +311,8 @@ checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interacti
 equation exploration still need validation.
 Arbitrary TeX packages, advanced macro programming, cross-document references
 and every Unicode glyph are outside this verified scope. VentiMath frontend source
-uses r7; the 0.2.0 release is available for its next dependency update. The Discord problem-image
-caller still uses MathJax; its migration is separate from the completed frontend
-cutover. Browser and assistive-technology acceptance remains open, as recorded
+uses r7; release 0.2.1 is available for its next dependency update. The Discord
+problem-image migration and 0.2.0 adoption exist on an unmerged application branch;
+main still uses MathJax for that caller. Browser and assistive-technology acceptance remains open, as recorded
 in [ACCESSIBILITY.md](ACCESSIBILITY.md), without labeling the implementation
 or frontend adoption unfinished.

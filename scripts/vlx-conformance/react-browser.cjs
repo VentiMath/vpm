@@ -48,6 +48,8 @@ let server,child,socket,loaded,denyGlyph=false,sequence=0;const pending=new Map(
   await evaluate(`window.mountCases(${display});true`);
   const state=await evaluate(`(()=>({count:document.querySelectorAll('math').length,expected:window.cases.length,writes:window.htmlWrites,slanted:getComputedStyle(document.querySelector('.vlx-slanted')).fontStyle,overflow:[...document.querySelectorAll('.vlx-math svg')].some(s=>{const g=s.querySelector('g'),b=g.getBBox(),v=s.viewBox.baseVal,t=g.transform.baseVal.consolidate().matrix;return b.x+t.e<-.01||b.y+t.f<-.01||b.x+b.width+t.e>v.width+.01||b.y+b.height+t.f>v.height+.01})}))()`);
   assert.equal(state.count,state.expected);assert.equal(state.writes,0);assert.equal(state.slanted,'oblique');assert.equal(state.overflow,false,'Native SVG bounds');
+  const degree=await evaluate(`(()=>{const i=window.cases.findIndex(c=>c[0]==='indexed root after coefficient'),root=document.querySelector('[data-fixture="'+i+'"]'),stroke=root.querySelector('svg path[stroke]'),children=[...stroke.parentElement.children],index=children.at(-1).getBoundingClientRect(),body=children.at(-2).getBoundingClientRect(),hook=stroke.getBoundingClientRect();return {inside:index.left>hook.left&&index.right<body.left,raised:index.bottom<hook.top+hook.height*.5,root:root.querySelectorAll('mroot').length};})()`);
+  assert.deepEqual(degree,{inside:true,raised:true,root:1},'Degree belongs over the radical hook, not beside the previous coefficient');
   const ax=await send('Accessibility.getFullAXTree'),visible=ax.nodes.filter(node=>!node.ignored);
   assert.equal(visible.filter(node=>node.role?.value==='MathMLMath').length,state.expected,'Native MathML remains accessible');
   assert.equal(visible.filter(node=>node.role?.value==='image').length,0,'Native decorative SVG remains hidden');
@@ -67,5 +69,5 @@ let server,child,socket,loaded,denyGlyph=false,sequence=0;const pending=new Map(
  assert.equal(await evaluate('document.querySelector("a").getAttribute("href").slice(1)'),equationId,'Label target survives renumbering');
  await evaluate('window.unmountMath();true');await wait('!document.getElementById("root").hasChildNodes()');
  }
- console.log('Chrome React: zero HTML writes from initial mounts through changed/unchanged updates under Trusted Types; stable focus/scroll, 114 native formula layouts, MathML accessibility, oblique/forced-color styles, lazy loading, error boundaries and unmount pass.');
+ console.log('Chrome React: zero HTML writes from initial mounts through changed/unchanged updates under Trusted Types; stable focus/scroll, 124 native formula layouts including indexed-root degree geometry, MathML accessibility, oblique/forced-color styles, lazy loading, error boundaries and unmount pass.');
 }finally{for(const p of pending.values())clearTimeout(p.timer);socket?.close();if(child&&child.exitCode===null){const ended=new Promise(r=>child.once('exit',r));child.kill();await ended;}await new Promise(r=>server?server.close(r):r());fs.rmSync(profile,{recursive:true,force:true,maxRetries:5,retryDelay:100});}})().catch(e=>{console.error(e);process.exitCode=1});

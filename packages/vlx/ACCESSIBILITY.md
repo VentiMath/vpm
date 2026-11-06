@@ -19,6 +19,7 @@ Application adoption and deployment are tracked separately from these package ch
 | Copying | With `observeMath`, mixed prose/formula selections copy each whole formula once as authored TeX. Tests use an in-memory copy event, without touching the OS clipboard. |
 | Direct React output | 114 inline/display cases match r6 geometry, MathML and SVG structure in DOM and SSR. Native Chrome checks cover SVG bounds, MathML accessibility roles and oblique/forced-colors styling. Initial mounts and formula changes make zero HTML writes under Trusted Types, with no permissive policy. |
 | React parent updates | Real Chrome checks preserve the same InlineMath, DisplayMath and MathText formula nodes, focus and scroll through 60 updates in each of lazy and preloaded modes, with zero HTML writes. Changed TeX and provider defaults still update. Node/Bun jsdom checks verify hydration reuses server math; Chrome verifies failed chunk loads reach the application error boundary. |
+| Indexed roots (0.2.1) | Five new inline/display cases compare native DOM and SSR against the corrected string layout. Chrome verifies the degree stays over the radical hook, distinct from a preceding coefficient; MathML retains `mroot`. The 114 earlier geometry controls remain unchanged. |
 | Equation references (0.2.0) | Native SVG reference links expose an Equation N link name in Chrome. Enter focuses the corresponding HTML equation target, and editing the document renumbers the reference while keeping its target ID. Node/Bun checks cover forward references, isolated documents, hydration, StrictMode, fallback and unchanged-parent focus retention. Multirow targets focus the whole formula block. This feature ships in 0.2.0; VentiMath adoption of it is separate. |
 | Lifecycle | Replacement content is observed; cleanup disconnects listeners/observers and removes only attributes VLX added, preserving caller changes. Print windows without ResizeObserver or MutationObserver still render; resize/beforeprint refreshes remain available. |
 
@@ -95,7 +96,7 @@ explicit equation labels and mixed prose/figures. This requires those actual
 reader/browser combinations; an accessibility-tree snapshot cannot substitute
 for it. WebKit and Firefox rendering are also not covered by this Chrome gate.
 
-The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.2.0)
+The [public release](https://github.com/VentiMath/vpm/releases/tag/vlx-0.2.1)
 ships this browser lifecycle. Application integration and production cutover
 remain separate from these verified package-level checks. A controlled application
 trial can use the documented lifecycle and existing text-on-error behavior while

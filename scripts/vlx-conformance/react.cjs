@@ -30,6 +30,15 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
   htmlDescriptor.set.call(control,selected('react-dom/server').renderToString(h(c.display?api.DisplayMath:api.InlineMath,{tex:c.tex})));
   assert.equal(digest(canonical(control.querySelector('[data-vlx="math"]'))),c.html,c.name+' React SSR');
  }
+ // The historical r6 controls contain no indexed radicals. Check corrected
+ // degree placement through both emitters without rewriting those controls.
+ for(const [name,tex]of require('./picture-corpus.cjs').roots)for(const display of [false,true]){
+  htmlDescriptor.set.call(control,selected('vlx').renderMath(tex,{display}).html);const expected=digest(canonical(control.firstElementChild));
+  act(()=>root.render(h(display?api.DisplayMath:api.InlineMath,{tex})));
+  assert.equal(digest(canonical(container.querySelector('.vlx-math'))),expected,name+' native React');
+  htmlDescriptor.set.call(control,selected('react-dom/server').renderToString(h(display?api.DisplayMath:api.InlineMath,{tex})));
+  assert.equal(digest(canonical(control.querySelector('.vlx-math'))),expected,name+' SSR');
+ }
  act(()=>root.render(null));assert.equal(copies,0);
  const immediate=selected('react-dom/server').renderToString(h(api.InlineMath,{tex:'x',loadingFallback:'must not suspend'}));assert.match(immediate,/<math/);assert.doesNotMatch(immediate,/must not suspend|<template/);
  act(()=>root.render(h(api.MathProvider,{scrollLabel:'Translated formula'},h(api.InlineMath,{tex:'x'}))));assert.equal(container.querySelectorAll('math').length,1,'Preloaded math renders on its first synchronous pass');
@@ -62,5 +71,5 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
  await act(async()=>hydrated.render(h(api.MathText,{source:'Hydrate $x^2$.',className:'timer-tick'})));
  assert.equal(hydratedHost.querySelector('[data-vlx="math"]'),serverFormula,'Updates after hydration preserve server math');
  await act(async()=>hydrated.unmount());assert.equal(copies,0);hydratedHost.remove();
- console.log('React: 114 r6 output/geometry controls match direct DOM and SSR; innerHTML writes prohibited; stable formula DOM, changed TeX/fallbacks, lazy loading, hydration, shared styles, StrictMode and cleanup pass.');
+ console.log('React: 114 unchanged r6 controls and 10 corrected indexed-root cases match string, direct DOM and SSR output; innerHTML writes prohibited; stable formula DOM, changed TeX/fallbacks, lazy loading, hydration, shared styles, StrictMode and cleanup pass.');
 }finally{Object.defineProperty(Element.prototype,'innerHTML',htmlDescriptor);dom.window.close();}})().catch(error=>{console.error(error);process.exitCode=1});

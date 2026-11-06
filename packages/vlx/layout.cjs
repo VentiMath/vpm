@@ -139,9 +139,14 @@ function layout(ast,options={}){
    return box(w,Math.max(base.h,sup?-up+sup.h*s:0),Math.max(base.d,sub?down+sub.d*s:0),[base.svg,sup?move(sup,base.w+.04,up,s):null,sub?move(sub,base.w+.04,down,s):null],E(tag,null,base.mml,sub?.mml,sup?.mml));
   }
   case 'root':{
-   const b=child(ast.body),idx=ast.index?child(ast.index,{display:false}):null,offset=idx?Math.max(.2,idx.w*.5):0,left=.75+offset,top=-Math.max(b.h,.6)-.14,bottom=Math.max(b.d,.06),w=b.w+left+.1;
+   const b=child(ast.body),idx=ast.index?child(ast.index,{display:false}):null;
+   // Nest the degree above the radical's leading hook. A degree at x=0 looks
+   // attached to the previous coefficient, especially in 10\sqrt[3]{10}.
+   const offset=idx ? .12+Math.max(0,idx.w*.5-.35) : 0,left=.75+offset,top=-Math.max(b.h,.6)-.14,bottom=Math.max(b.d,.06),w=b.w+left+.1;
+   // MathML Core's fallback degree-bottom raise is 60% of radical height.
+   const indexX=idx?offset+.36-idx.w*.5:0,indexY=idx?bottom-(bottom-top)*.6-idx.d*.5:0;
    const stroke=E('path',{d:`M ${n(offset+.06)} ${n((bottom+top)*.25)} L ${n(offset+.23)} ${n((bottom+top)*.25-.1)} L ${n(offset+.4)} ${n(bottom)} L ${n(offset+.7)} ${n(top)} H ${n(w)}`,fill:'none',stroke:'currentColor',strokeWidth:'.055',strokeLinejoin:'round'});
-   return box(w,Math.max(-top+.03,idx?b.h*.5+idx.h*.5:0),bottom+.03,[stroke,move(b,left),idx?move(idx,0,-b.h*.5,.5):null],idx?E('mroot',null,b.mml,idx.mml):E('msqrt',null,b.mml));
+   return box(w,Math.max(-top+.03,idx?-indexY+idx.h*.5:0),bottom+.03,[stroke,move(b,left),idx?move(idx,indexX,indexY,.5):null],idx?E('mroot',null,b.mml,idx.mml):E('msqrt',null,b.mml));
   }
   case 'fenced':{
    const b=child(ast.body),left=fence(ast.left,b),right=fence(ast.right,b);return box(left.w+b.w+right.w,Math.max(b.h,left.h,right.h),Math.max(b.d,left.d,right.d),[left.svg,move(b,left.w),move(right,left.w+b.w)],E('mrow',null,E('mo',{stretchy:'true'},T(ast.left==='.'?'':ast.left)),b.mml,E('mo',{stretchy:'true'},T(ast.right==='.'?'':ast.right))));

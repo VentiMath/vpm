@@ -215,3 +215,37 @@ processes, four balanced comparison pairs and two identical-baseline controls.
 It includes synchronous DOM updates and forced layout, with 150 ms warmup and
 12 untrimmed samples per case; it excludes network, module startup and paint.
 Use `OUTPUT=/absolute/path/report.json` with each runner to retain measurements.
+
+## Picture corrections (0.2.1)
+
+`packages/vlx/test/picture-regressions.test.cjs` checks standalone display sizing,
+explicit style overrides, bold choice labels, repeated/explicit paragraph breaks,
+and root-degree geometry/MathML. All four groups fail against immutable 0.2.0
+source `98b7ad6baf3a244a0b5b51c7b43c98e03764eedb` and pass against 0.2.1.
+The release checker runs these tests against both exact installed archives.
+
+`picture-corpus.cjs` supplies five synthetic indexed-root cases and synthetic pages.
+Native React/SSR checks cover all ten inline/display root layouts in addition to
+114 unchanged r6 controls. Chrome checks the degree lies over the hook and before
+the radicand. Root placement uses the 60% default degree-raise proportion from
+[MathML Core radicals](https://w3c.github.io/mathml-core/#radicals-msqrt-mroot);
+ordinary square-root geometry is unchanged.
+
+Prepare the immutable baseline and render the before/after/MathJax controls:
+
+```sh
+node scripts/vlx-conformance/prepare-picture-baseline.cjs
+node scripts/vlx-conformance/picture-preview.cjs /absolute/path/to/preview
+```
+
+The private November 3 full-problem input (SHA-256
+`04d6529bfc8ba18e052ee946e474133226eebe430da7a05a551ba9305432c759`)
+retains 20,803 successes out of 20,835, with no new failures. Of the successful
+SVGs, 18,153 are byte-identical and 2,650 change. The 32 original missing-glyph
+or malformed-source failures remain. This check substitutes placeholder PNGs at
+recorded figure widths; it is not a visual comparison of all real figures.
+
+[Picture measurements](../../packages/vlx/bench/picture-results/README.md) compare
+0.2.0 with 0.2.1 in isolated processes, using identical inputs and retaining all
+pairs and controls. The corrected picture output deliberately changes geometry,
+so the measurements include that work and are not application latency claims.

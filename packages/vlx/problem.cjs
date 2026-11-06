@@ -15,7 +15,7 @@ function segments(source){
 function scaled(b,s){return box(b.w*s,b.h*s,b.d*s,move(b,0,0,s),b.mml);}
 function fit(b){return b.w>CONTENT?scaled(b,CONTENT/b.w):b;}
 function math(tex,display=false){return scaled(layout(parseMath(tex),{display}),EM);}
-function literal(value){return scaled(text(typography(value)),EM);}
+function literal(value,font='normal'){return scaled(text(typography(value),font),EM);}
 function join(parts){let w=0,h=0,d=0,svg='';for(const b of parts){svg+=move(b,w);w+=b.w;h=Math.max(h,b.h);d=Math.max(d,b.d);}return box(w,h,d,svg,'');}
 function renderProblemSvg(problem){
  if(!problem||typeof problem!=='object')throw new TypeError('Expected a problem');
@@ -34,7 +34,15 @@ function renderProblemSvg(problem){
   if(typeof source!=='string')throw new TypeError('Statement text must be a string');
   inputBytes+=source.length;if(inputBytes>131072)throw new VlxError('LIMIT','Problem text exceeds the length budget');
   for(const span of segments(source.replace(/\r\n?/g,'\n'))){
-   if(span.kind!=='text'){append({kind:span.kind,box:math(span.source,span.kind==='display')});continue;}
+   if(span.kind!=='text'){
+    const ast=parseMath(span.source);
+    // A formula containing only explicit breaks belongs to the surrounding
+    // paragraph flow, not an invisible multi-line box beside the next word.
+    if(ast.kind==='row'&&ast.children.some(n=>n.kind==='linebreak')&&ast.children.every(n=>n.kind==='linebreak'||n.kind==='space')){
+     for(const n of ast.children)if(n.kind==='linebreak')append({kind:'break',gap:n.gap});
+    }else append({kind:span.kind,ast});
+    continue;
+   }
    const words=typography(span.source).match(/[ \t]*\n(?:[ \t]*\n)+| {2,}\n|\s+|[^\s]+/g)||[];
    for(const word of words){
     if(/\n[ \t]*\n/.test(word))append({kind:'paragraph'});
@@ -72,14 +80,16 @@ function renderProblemSvg(problem){
  // A paragraph containing only a formula gets display placement automatically.
  let paragraph=[];
  function paragraphOut(){
-  const visible=paragraph.filter(t=>t.box);
-  if(visible.length===1&&visible[0].kind==='math'){block(visible[0].box);paragraph=[];return;}
+  const visible=paragraph.filter(t=>t.box||t.ast);
+  // Decide display style before layout. Centering an inline-sized fraction
+  // afterwards does not give it the full-size numerator/denominator.
+  if(visible.length===1&&visible[0].kind==='math'&&!paragraph.some(t=>t.kind==='break')){block(scaled(layout(visible[0].ast,{display:true}),EM));paragraph=[];return;}
   let unit=[];const flush=()=>{if(unit.length){put(join(unit));unit=[];}};
   for(const t of paragraph){
-   if(t.kind==='display'){flush();block(t.box);}
+   if(t.kind==='display'){flush();block(t.box||scaled(layout(t.ast,{display:true}),EM));}
    else if(t.kind==='space'){flush();pendingSpace=true;}
-   else if(t.kind==='break'){flush();lineOut();pendingSpace=false;}
-   else unit.push(t.box);
+   else if(t.kind==='break'){flush();if(!line.length)line.push(box(0,0,0,'',''));lineOut();y+=(t.gap||0)*EM;pendingSpace=false;check();}
+   else unit.push(t.box||scaled(layout(t.ast,{display:false}),EM));
   }
   flush();lineOut();paragraph=[];
  }
@@ -94,7 +104,7 @@ function renderProblemSvg(problem){
   const pictured=keys.some(key=>Object.hasOwn(figures,key));
   const choices=keys.map(key=>{
    if(!/^[A-Za-z0-9]{1,8}$/.test(key))throw new TypeError('Invalid choice label');
-   const label=literal('('+key+')');
+   const label=literal('('+key+')','bold');
    if(Object.hasOwn(figures,key)){
     const figure=figures[key],b=image(figure);if(figure.includesChoiceLabel===true)return b;
     const labelH=EM*.9,gap=EM*.3,w=Math.max(label.w,b.w),height=labelH+gap+b.h;
