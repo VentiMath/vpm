@@ -45,3 +45,10 @@ its previous DOM outside timing; no shared-process JIT comparison is used.
 registry access is unavailable, `VPM_ARCHIVE_OFFLINE=1` seeds the Bun consumer
 with an offline npm lock. That fallback checks npm-to-Bun lock migration rather
 than independent Bun resolution; normal CI runs without it.
+
+The dedicated release packer/checker additionally preserves the upstream import
+name, pins all internal dependencies to sibling release URLs, and verifies that
+an unchanged caller requiring the older 2.1.16 baseline shares the same instance.
+See the [release recipe](../../docs/INSTALLATION.md#radix-dropdown-menu). Published
+mode downloads and checks every archive, then uses fresh npm/Bun caches and
+repeats frozen installs before checking the caller again.

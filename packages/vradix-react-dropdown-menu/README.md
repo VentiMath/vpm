@@ -60,7 +60,9 @@ focus, typeahead, submenu timer and positioning improvements carry through.
 [Provenance](PROVENANCE.json) records the baseline and inspected source hashes.
 The installed VentiMath family currently comes through Amplify UI; a newer VPM
 replacement counts as built for that family, not as an app migration. This
-package is not yet released or adopted in VentiMath.
+[release installation recipe](../../docs/INSTALLATION.md#radix-dropdown-menu)
+provides the complete closure. VentiMath adoption remains a separate consumer
+change; see the [adoption record](../../docs/ADOPTION.md).
 
 ## Verification
 

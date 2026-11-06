@@ -120,6 +120,10 @@ jobs:
       - run: npm --prefix scripts/radix-dropdown-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-dropdown-menu-conformance/build.cjs
       - run: node scripts/radix-dropdown-menu-conformance/archives.cjs
+      - name: Validate Dropdown Menu release archives
+        run: |
+          node scripts/pack-radix-dropdown-release.cjs --ref HEAD --tag radix-dropdown-2.2.1-ci --out "$RUNNER_TEMP/dropdown-release"
+          node scripts/check-radix-dropdown-release.cjs "$RUNNER_TEMP/dropdown-release"
       - run: npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/dnd-conformance/build.cjs
@@ -615,6 +619,10 @@ jobs:
       - run: npm --prefix scripts/radix-dropdown-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-dropdown-menu-conformance/build.cjs
       - run: node scripts/radix-dropdown-menu-conformance/archives.cjs
+      - name: Validate Dropdown Menu release archives
+        run: |
+          node scripts/pack-radix-dropdown-release.cjs --ref HEAD --tag radix-dropdown-2.2.1-ci --out "$RUNNER_TEMP/dropdown-release"
+          node scripts/check-radix-dropdown-release.cjs "$RUNNER_TEMP/dropdown-release"
       - run: npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/dnd-conformance/build.cjs

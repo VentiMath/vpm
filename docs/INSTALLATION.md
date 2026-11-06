@@ -1,5 +1,54 @@
 # Installing VPM packages
 
+## Radix Dropdown Menu
+
+The [Dropdown Menu 2.2.1 release](https://github.com/VentiMath/vpm/releases/tag/radix-dropdown-2.2.1)
+contains `vradix-react-dropdown-menu` and its complete **35-package VPM closure**.
+Each package retains its own upstream-aligned version; 2.2.1 identifies the
+Dropdown Menu baseline, not the versions of all 35 foundations.
+
+Merge these entries into the application's existing package.json:
+
+```json
+{
+  "dependencies": {
+    "@radix-ui/react-dropdown-menu": "https://github.com/VentiMath/vpm/releases/download/radix-dropdown-2.2.1/vradix-react-dropdown-menu-2.2.1.tgz"
+  },
+  "overrides": {
+    "@radix-ui/react-dropdown-menu": "https://github.com/VentiMath/vpm/releases/download/radix-dropdown-2.2.1/vradix-react-dropdown-menu-2.2.1.tgz"
+  }
+}
+```
+
+Keep existing `@radix-ui/react-dropdown-menu` imports, including Amplify UI's.
+The single upstream-name override routes transitive callers to the same package
+instance as direct consumers. Do not add a duplicate `vradix-react-dropdown-menu`
+dependency. React and ReactDOM 19 remain app peers. All internal VPM dependencies
+are already pinned to immutable sibling release URLs: no 35-entry override
+block, npm registry account or authentication is needed. Other upstream Radix
+or Floating UI families are not globally replaced by this recipe.
+
+The release includes `consumer-package.json`, `release-manifest.json` and
+`SHA256SUMS`. The packer snapshots a committed dependency closure and changes
+only dependency locations. Source/archive hashes identify the exact files.
+Fresh npm/Bun consumers verify the public root URL, transitive caller identity,
+frozen locks, Node/Bun CJS/ESM/SSR, TypeScript 7 and Chrome keyboard/pointer/focus
+behavior. The package [contract](../packages/vradix-react-dropdown-menu/README.md)
+records IME and iframe improvements and the limits of browser/accessibility
+verification. Commit the app dependency and lockfile changes together and run
+its consumer tests before merging; publication itself does not migrate the app.
+
+```sh
+node scripts/pack-radix-dropdown-release.cjs --ref COMMIT_SHA --tag radix-dropdown-2.2.1 --out /absolute/path/to/empty-output
+node scripts/check-radix-dropdown-release.cjs /absolute/path/to/output
+# After publication:
+node scripts/check-radix-dropdown-release.cjs /absolute/path/to/output --published
+```
+
+Before publication, npm redirects internal URLs to the exact local archives;
+Bun checks extracted archives after installing peers. After publication both
+install the public URLs with fresh caches and only the single caller override.
+
 ## Scrumboard drag and drop
 
 The [DND 18.0.1 release](https://github.com/VentiMath/vpm/releases/tag/dnd-18.0.1)
