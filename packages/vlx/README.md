@@ -26,13 +26,16 @@ equivalence, all possible TeX or a completed application deployment. See the
 Install the public release with no dependency overrides:
 
 ```sh
-bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.1/vlx-0.2.1.tgz
+bun add vlx@https://github.com/VentiMath/vpm/releases/download/vlx-0.2.2/vlx-0.2.2.tgz
 ```
 
 The release pins its VPM dependency to a sibling archive. See the
 [installation and verification recipe](../../docs/INSTALLATION.md#vlx-math-rendering).
 Versions identify this original API, not upstream engine compatibility.
-**0.2.1** fixes indexed-root degree placement in all outputs. Problem pictures
+**0.2.2** adds the Unicode fractions, ordinals, accents and custom operator
+symbols needed by the problem-picture corpus. It preserves fullwidth punctuation
+and hides unused soft hyphens without silently dropping unknown characters.
+**0.2.1** fixed indexed-root degree placement in all outputs. Problem pictures
 now use display sizing for standalone paragraph formulas, bold choice labels,
 and ordinary paragraph spacing for break-only math. It retains the document-scoped
 equation references introduced in **0.2.0**. The install above selects
@@ -267,8 +270,10 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   Private tests are loaded from Git into a temporary directory, never copied here.
 - The 0.2.1 picture checks reproduce all four reported defects on 0.2.0 and pass
   after the fixes. The saved November 3 full-problem corpus still renders
-  **20,803 of 20,835** records, with no new failures; 32 missing-glyph or malformed
-  source failures remain. Figures in this check are synthetic placeholders with
+  **20,835 of 20,835** records with 0.2.2 after 28 glyph failures were fixed and
+  four statement-only source repairs were separately applied and verified.
+  Broken delimiters and corrupt control characters still fail; the package does
+  not guess their intended meaning. Figures in this check are synthetic placeholders with
   recorded widths, so this is not visual acceptance of every production picture.
 - [Public tests](test/contracts.test.cjs), [page checks](test/problem.test.cjs) and
   [53 synthetic notation cases](../../scripts/vlx-conformance/README.md) run on
@@ -280,6 +285,10 @@ Existing caller normalization of legacy prose commands/lists remains caller work
   types, browser bundling, sibling VPM dependencies and optional PNG rasterization.
   [Benchmarks](bench/results/README.md) keep all balanced process pairs, source
   hashes and identical-source controls.
+
+The [0.2.2 Unicode benchmark](bench/unicode-results/README.md) checks the existing
+formula and prose/choice paths against 0.2.1. Missing-glyph failures are not
+counted as faster renders.
 
 The [0.2.1 picture benchmark](bench/picture-results/README.md) compares unchanged
 inputs against 0.2.0 in isolated Node 24 and Bun processes. No measured direction
@@ -295,11 +304,11 @@ contains the summary and source hash; the [local benchmark runner](../../scripts
 reproduces these checks without copying application code into VPM. These are
 steady-state local workloads, not deployed latency guarantees.
 
-The font data is a **784 KB subset of New Computer Modern metrics/outlines**,
+The font data is an **823 KB subset of New Computer Modern metrics/outlines**,
 including the needed math variants and Latin prose characters. It comes from
 `@mathjax/mathjax-newcm-font` 4.1.3 and retains its [license and attribution](font/NOTICE).
-Identical outlines share one path pool (784,343 bytes total, down from 896,594
-in r2 despite broader coverage). The React dynamic entry keeps that data out of
+Identical outlines share one path pool (822,689 bytes total, up 38,346 bytes
+from 0.2.1 for the new glyphs and still below the 896,594 bytes in r2). The React dynamic entry keeps that data out of
 the initial application chunk when the bundler supports code splitting.
 [Extraction](../../scripts/vlx-conformance/build-font.cjs) is reproducible; no
 upstream parser, layout or loader implementation ships. See [provenance](PROVENANCE.json).
@@ -311,7 +320,7 @@ checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interacti
 equation exploration still need validation.
 Arbitrary TeX packages, advanced macro programming, cross-document references
 and every Unicode glyph are outside this verified scope. VentiMath frontend source
-uses r7; release 0.2.1 is available for its next dependency update. The Discord
+uses r7; release 0.2.2 is available for its next dependency update. The Discord
 problem-image migration and 0.2.0 adoption exist on an unmerged application branch;
 main still uses MathJax for that caller. Browser and assistive-technology acceptance remains open, as recorded
 in [ACCESSIBILITY.md](ACCESSIBILITY.md), without labeling the implementation

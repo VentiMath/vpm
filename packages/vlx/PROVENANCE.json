@@ -11,7 +11,7 @@
     "source": "https://www.npmjs.com/package/@mathjax/mathjax-newcm-font",
     "sha256": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78",
     "approach": "Selected numeric glyph metrics with an interned SVG outline pool, reproducibly extracted to JSON. No upstream executable code ships with the math engine.",
-    "bytes": 784343
+    "bytes": 822689
   },
   "referenceEngines": {
     "katex": "0.19.1",
@@ -45,7 +45,8 @@
     "React creates native SVG and MathML elements from the shared layout, with no HTML parsing or insertion. String and image outputs use an escaped string emitter over the same geometry rules. Fixed glyph outlines are shared from the finite font pool.",
     "114 inline/display fixtures preserve r6 geometry and canonical DOM/SSR structure. Native Chrome controls verify MathML roles, visual bounds, shared oblique/forced-colors styling and Trusted Types without an HTML policy. Lazy/preloaded mounts and changed/unchanged updates retain formula nodes.",
     "VLX 0.2.0 adds independent renderDocument/MathDocument APIs: AMS/all/none numbering, equation/align/gather rows, labels, forward references, custom tags, suppression, stable scoped IDs, explicit diagnostics and native SVG links; single-formula APIs retain r7 behavior.",
-    "VLX 0.2.1 places indexed-root degrees over their radical hook using the MathML Core default degree-raise proportion. Problem pictures lay out standalone paragraph math in display style, draw bold choice labels, and treat break-only math as paragraph flow. Synthetic negative controls reproduce all four defects on 0.2.0; ordinary square-root geometry and 114 historic React controls are preserved."
+    "VLX 0.2.1 places indexed-root degrees over their radical hook using the MathML Core default degree-raise proportion. Problem pictures lay out standalone paragraph math in display style, draw bold choice labels, and treat break-only math as paragraph flow. Synthetic negative controls reproduce all four defects on 0.2.0; ordinary square-root geometry and 114 historic React controls are preserved.",
+    "VLX 0.2.2 adds real New Computer Modern outlines for application-used Unicode fractions, ordinals, accented letters and custom operators. Fullwidth comma/colon retain one-em cells and original semantic characters; untaken soft hyphens have no ink or advance. The saved 20835-problem corpus has zero failures after these glyph fixes and four independently verified statement-only data repairs. Corrupt controls and malformed delimiters remain errors."
   ],
   "acceptance": {
     "status": "pending",

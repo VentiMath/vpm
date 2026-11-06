@@ -69,5 +69,5 @@ let server,child,socket,loaded,denyGlyph=false,sequence=0;const pending=new Map(
  assert.equal(await evaluate('document.querySelector("a").getAttribute("href").slice(1)'),equationId,'Label target survives renumbering');
  await evaluate('window.unmountMath();true');await wait('!document.getElementById("root").hasChildNodes()');
  }
- console.log('Chrome React: zero HTML writes from initial mounts through changed/unchanged updates under Trusted Types; stable focus/scroll, 124 native formula layouts including indexed-root degree geometry, MathML accessibility, oblique/forced-color styles, lazy loading, error boundaries and unmount pass.');
+ console.log('Chrome React: zero HTML writes from initial mounts through changed/unchanged updates under Trusted Types; stable focus/scroll, 132 native formula layouts including indexed-root degree geometry and Unicode, MathML accessibility, oblique/forced-color styles, lazy loading, error boundaries and unmount pass.');
 }finally{for(const p of pending.values())clearTimeout(p.timer);socket?.close();if(child&&child.exitCode===null){const ended=new Promise(r=>child.once('exit',r));child.kill();await ended;}await new Promise(r=>server?server.close(r):r());fs.rmSync(profile,{recursive:true,force:true,maxRetries:5,retryDelay:100});}})().catch(e=>{console.error(e);process.exitCode=1});

@@ -249,3 +249,39 @@ recorded figure widths; it is not a visual comparison of all real figures.
 0.2.0 with 0.2.1 in isolated processes, using identical inputs and retaining all
 pairs and controls. The corrected picture output deliberately changes geometry,
 so the measurements include that work and are not application latency claims.
+
+## Unicode corpus completion (0.2.2)
+
+The 32 remaining picture failures were 28 missing-glyph cases, three broken
+math-delimiter sequences, and one PDF-extracted U+0002 control character.
+The package now extracts actual New Computer Modern outlines for `½ ¾ ® Ж ᵗ ʰ
+ⁿ ᵈ ő ☺ ◉ ¶ ² ³ º ˚ ●`. Fullwidth comma/colon retain a one-em cell using
+centered punctuation outlines and the original semantic characters. Untaken
+soft hyphens have zero ink and advance, following [Unicode's soft-hyphen
+semantics](https://www.unicode.org/reports/tr14/#SoftHyphen); discretionary word
+hyphenation is not implemented. Unknown characters still throw.
+
+Four statement-only repairs were separately applied and verified in the
+application database: two malformed list-break sequences, one missing opening
+math delimiter around an unchanged numeral, and an angle symbol verified on the
+official PDF page. These are data repairs, not parser exceptions. The saved
+20,835-problem corpus with those four exact replacements now has zero failures;
+all 32 affected live records are verified separately. Placeholder figures and
+snapshot scope still limit the claim; this is not an exhaustive visual review.
+No private problem text or record IDs are included in public fixtures.
+
+`unicode-corpus.cjs` contains four synthetic fixtures (eight inline/display
+layouts). Native React/SSR and Chrome cover these alongside the 114 unchanged
+historic controls and ten indexed-root cases. `test/unicode.test.cjs` verifies
+visible outlines, meaningful semantic characters, fullwidth sizing, untaken soft
+hyphens, and continued rejection of corrupt controls/broken source. The release
+checker repeats these checks against the actual installed package on Node/Bun.
+All three Unicode regression groups fail against the immutable 0.2.1 baseline.
+Generate the synthetic visual sheet with `node scripts/vlx-conformance/unicode-preview.cjs /absolute/output`.
+
+The font data grows from 784,343 to 822,689 bytes (38,346 additional bytes).
+`build-font.cjs --check` proves extraction is deterministic; upstream executable
+code remains confined to development fixtures. [Measurements](../../packages/vlx/bench/unicode-results/README.md)
+compare existing formula/prose paths against immutable 0.2.1 source
+`d3c932a8a313ba339d41db2673755d898e900ea4`. Reconstruct that fixture with
+`node scripts/vlx-conformance/prepare-unicode-baseline.cjs`.

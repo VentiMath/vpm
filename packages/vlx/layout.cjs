@@ -12,7 +12,15 @@ const move=(b,x=0,y=0,scale=1)=>G(transform(x,y,scale),b.svg);
 const box=(w,h,d,svg,mml)=>({w,h:Math.max(0,h),d:Math.max(0,d),svg,mml});
 function glyph(char,font='normal'){
  const metric=glyphs[font]?.[char]||(font==='bold-italic'?glyphs.bold[char]:undefined)||glyphs.normal[char];
- if(!metric)throw new VlxError('UNSUPPORTED_GLYPH','No outline for '+char);
+ if(!metric){
+  // U+00AD is discretionary: without a chosen hyphenation break it has no ink
+  // or advance. Never treat other unsupported/control characters as blank.
+  if(char==='\u00ad')return box(0,0,0,null,null);
+  // Preserve fullwidth punctuation as a one-em cell, using the corresponding
+  // outline. Keep the original Unicode character in semantic/text output.
+  if(char==='，'||char==='：'){const b=glyph(char==='，'?',':':',font);return box(1,b.h,b.d,move(b,(1-b.w)/2),null);}
+  throw new VlxError('UNSUPPORTED_GLYPH','No outline for '+char);
+ }
  const [h,d,w,ic,id]=metric,path=paths[id];
  let outline=null;
  if(path){outline=outlines.get(id);if(outline===undefined){outline=E('path',{d:path,transform:'scale(.001 -.001)',fill:'currentColor'});outlines.set(id,outline);}}

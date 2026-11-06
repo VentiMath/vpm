@@ -30,9 +30,9 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
   htmlDescriptor.set.call(control,selected('react-dom/server').renderToString(h(c.display?api.DisplayMath:api.InlineMath,{tex:c.tex})));
   assert.equal(digest(canonical(control.querySelector('[data-vlx="math"]'))),c.html,c.name+' React SSR');
  }
- // The historical r6 controls contain no indexed radicals. Check corrected
- // degree placement through both emitters without rewriting those controls.
- for(const [name,tex]of require('./picture-corpus.cjs').roots)for(const display of [false,true]){
+ // Check corrected indexed roots and newly supported Unicode through both
+ // emitters without rewriting the historical r6 controls.
+ for(const [name,tex]of [...require('./picture-corpus.cjs').roots,...require('./unicode-corpus.cjs')])for(const display of [false,true]){
   htmlDescriptor.set.call(control,selected('vlx').renderMath(tex,{display}).html);const expected=digest(canonical(control.firstElementChild));
   act(()=>root.render(h(display?api.DisplayMath:api.InlineMath,{tex})));
   assert.equal(digest(canonical(container.querySelector('.vlx-math'))),expected,name+' native React');
@@ -71,5 +71,5 @@ document.addEventListener=(type,...args)=>{if(type==='copy')copies++;return add(
  await act(async()=>hydrated.render(h(api.MathText,{source:'Hydrate $x^2$.',className:'timer-tick'})));
  assert.equal(hydratedHost.querySelector('[data-vlx="math"]'),serverFormula,'Updates after hydration preserve server math');
  await act(async()=>hydrated.unmount());assert.equal(copies,0);hydratedHost.remove();
- console.log('React: 114 unchanged r6 controls and 10 corrected indexed-root cases match string, direct DOM and SSR output; innerHTML writes prohibited; stable formula DOM, changed TeX/fallbacks, lazy loading, hydration, shared styles, StrictMode and cleanup pass.');
+ console.log('React: 114 unchanged r6 controls and 18 indexed-root/Unicode cases match string, direct DOM and SSR output; innerHTML writes prohibited; stable formula DOM, changed TeX/fallbacks, lazy loading, hydration, shared styles, StrictMode and cleanup pass.');
 }finally{Object.defineProperty(Element.prototype,'innerHTML',htmlDescriptor);dom.window.close();}})().catch(error=>{console.error(error);process.exitCode=1});
