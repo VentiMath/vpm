@@ -1,9 +1,8 @@
 {
   "implementation": {
     "kind": "independent parser and layout implementation",
-    "replacementStatus": "browser integration candidate; actual reader/browser acceptance and application cutover pending",
-    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation.",
-    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks, WebKit/Firefox visual acceptance, application integration. Advanced TeX and automatic equation references remain outside the verified scope."
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Independent TeX parsing/layout for web math and complete problem PNG/SVG composition: prose, paragraphs, ordered figures, arrays, choice grids and bounded PNG validation."
   },
   "fontData": {
     "package": "@mathjax/mathjax-newcm-font",
@@ -45,5 +44,10 @@
     "Preloaded React renders immediately, with inherited provider defaults for scroll labels and loading fallbacks.",
     "React creates native SVG and MathML elements from the shared layout, with no HTML parsing or insertion. String and image outputs use an escaped string emitter over the same geometry rules. Fixed glyph outlines are shared from the finite font pool.",
     "114 inline/display fixtures preserve r6 geometry and canonical DOM/SSR structure. Native Chrome controls verify MathML roles, visual bounds, shared oblique/forced-colors styling and Trusted Types without an HTML policy. Lazy/preloaded mounts and changed/unchanged updates retain formula nodes."
-  ]
+  ],
+  "acceptance": {
+    "status": "pending",
+    "remainingWork": "Actual VoiceOver/Safari and NVDA/Chrome speech/navigation checks and WebKit/Firefox visual acceptance. VentiMath frontend already consumes r7; Discord problem-image migration from MathJax remains a separate backend integration task.",
+    "scopeLimits": "Arbitrary TeX packages, advanced macro programming and automatic equation references are outside the verified application scope."
+  }
 }

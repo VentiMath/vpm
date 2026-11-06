@@ -228,5 +228,8 @@ checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interacti
 equation exploration still need validation.
 Arbitrary TeX packages, advanced macro programming, automatic equation references
 and every Unicode glyph are outside this verified scope. The public release is
-available for integration; VentiMath adoption remains unverified, and the atlas
-keeps those engine families in progress.
+adopted by VentiMath frontend source through r7. The Discord problem-image
+caller still uses MathJax; its migration is separate from the completed frontend
+cutover. Browser and assistive-technology acceptance remains open, as recorded
+in [ACCESSIBILITY.md](ACCESSIBILITY.md), without labeling the implementation
+or frontend adoption unfinished.

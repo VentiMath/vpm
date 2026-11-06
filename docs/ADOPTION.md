@@ -5,8 +5,8 @@ Adoption here means a VPM artifact is reachable from VentiMath's committed
 production dependencies. This is dependency adoption, not proof that every
 installed module reaches a production bundle or a deployed feature.
 
-Verified November 4, 2026 against the application's main branch, commit
-`ab3d22a2` (TanStack PR #409; VLX: `15a83287`; Floating UI: PR #406; styling: `245c1541`;
+Verified November 5, 2026 against the application's main branch, commit
+`3c3ab9fa` (TanStack r3 installed; original cutover PR #409; VLX: `15a83287`; Floating UI: PR #406; styling: `245c1541`;
 calendar: `63f63f6a`):
 
 | Package | In use | Available update |
@@ -17,7 +17,7 @@ calendar: `63f63f6a`):
 | `vclsx`, `vstylis` and 13 Emotion packages | `styling-11.14.1` | Current published styling release |
 | Five `vfloating-ui-*` packages and `vtabbable` | `floating-0.27.20-r2` | Current published Floating UI release |
 | `vlx` and its `vpngjs` dependency | `vlx-0.1.0-r7` | Native React SVG/MathML output |
-| `vtanstack-react-query`, `vtanstack-query-core` | `tanstack-5.105.3-r2` | `tanstack-5.105.3-r3`: corrected first-render retry state |
+| `vtanstack-react-query`, `vtanstack-query-core` | `tanstack-5.105.3-r3` | Current published release; corrected first-render retry state |
 
 Evidence: the top-level calendar release URL in `package.json`, all three
 resolved release archives in `bun.lock`, and v7 calendar imports in the app's
@@ -43,13 +43,11 @@ dependency adoption to **24 packages**. The upstream React entry and tabbable
 leave the lockfile; lower upstream Floating UI packages remain for MUI/Radix.
 This does not establish production bundle savings or deployment of a new feature.
 
-The revised `tanstack-5.105.3-r2` release prepares `vtanstack-react-query` and
-`vtanstack-query-core` for the next application cutover. Neither is adopted in
-checked app commit `15a83287`; they must remain available, without an **IN USE**
-badge. The [installation recipe](INSTALLATION.md#tanstack-query) preserves the
-original `@tanstack/react-query` import name while resolving it to the VPM
-archive, including for React Devtools. Adoption should be verified from the
-resolved release URL, not the dependency key alone.
+VentiMath main now consumes `tanstack-5.105.3-r3` through the original
+`@tanstack/react-query` dependency key. Both VPM packages are adopted, bringing
+the current total to **28 packages**. The [installation recipe](INSTALLATION.md#tanstack-query)
+preserves the original import name for the app and React Devtools. Adoption is
+verified from resolved release URLs, not dependency keys alone.
 
 The Functions backend still consumes upstream Firebase Admin 14.5.0 and Firebase
 Functions 7.4.0, not VPM archives. Its Admin modular-import migration is complete;
@@ -58,8 +56,8 @@ application paths and the remaining payment/image dependencies.
 
 VentiMath main now pins `vlx-0.1.0-r7`; its shared math component imports
 `InlineMath`, `DisplayMath`, `MathText` and `preloadMath` from `vlx/react`.
-The lockfile resolves VLX and its sibling `vpngjs` archive, bringing verified
-production-dependency adoption to **26 packages**. VLX therefore receives the
+The lockfile resolves VLX and its sibling `vpngjs` archive, which brought verified
+production-dependency adoption to **26 packages** before the TanStack cutover. VLX therefore receives the
 **IN USE** gradient. The image helper is reachable in the installed dependency
 graph but excluded from the browser math bundle. The Discord problem-image
 caller still uses MathJax. This source verification does not establish which
