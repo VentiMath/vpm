@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "@radix-ui/react-dropdown-menu",
+    "version": "2.2.1",
+    "checked": "2026-11-05",
+    "repository": "https://github.com/radix-ui/primitives/tree/main/packages/react/dropdown-menu",
+    "integrity": "sha512-XsHcmYG2AcqnvTqrOXXWcMrhquEIlqucizuDH1MV/qMRW+DndpBCMvNeTRXOxqmG1H5j89M/+I0/34Zdd+zDcQ=="
+  },
+  "sourceSHA256": {
+    "dist/index.js": "b6310a304dd4011c8d19902f9430a7ace745e5076b293d3c1ef316a4e3937f08",
+    "dist/index.d.ts": "0767f65070b5750593fc54c4fe5ab917ae59feb8646679885994e35109e3036b",
+    "LICENSE": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19 Dropdown Menu composition, controlled/uncontrolled roots and submenus, modal/nonmodal pointer/keyboard interaction, scoped contexts, portals and focus return."
+  },
+  "changes": [
+    "Independent wrapper over VPM Menu and state primitives; no copied upstream runtime.",
+    "Shared scoped part forwarding and CSS variable aliases.",
+    "IME confirmation does not activate a dropdown trigger."
+  ]
+}

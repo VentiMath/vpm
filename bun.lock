@@ -839,6 +839,21 @@
         "react-dom": "^19.0.0",
       },
     },
+    "packages/vradix-react-dropdown-menu": {
+      "name": "vradix-react-dropdown-menu",
+      "version": "2.2.1",
+      "dependencies": {
+        "vradix-react-compose-refs": "1.1.5",
+        "vradix-react-context": "1.3.0",
+        "vradix-react-menu": "2.2.1",
+        "vradix-react-primitive": "2.2.0",
+        "vradix-react-use-controllable-state": "1.3.0",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+      },
+    },
     "packages/vradix-react-focus-guards": {
       "name": "vradix-react-focus-guards",
       "version": "1.2.0",
@@ -1547,6 +1562,8 @@
     "vradix-react-direction": ["vradix-react-direction@workspace:packages/vradix-react-direction"],
 
     "vradix-react-dismissable-layer": ["vradix-react-dismissable-layer@workspace:packages/vradix-react-dismissable-layer"],
+
+    "vradix-react-dropdown-menu": ["vradix-react-dropdown-menu@workspace:packages/vradix-react-dropdown-menu"],
 
     "vradix-react-focus-guards": ["vradix-react-focus-guards@workspace:packages/vradix-react-focus-guards"],
 

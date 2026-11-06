@@ -54,6 +54,10 @@ npm --prefix scripts/radix-menu-conformance ci --ignore-scripts --no-audit --no-
 npm --prefix scripts/radix-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/radix-menu-conformance/build.cjs
 node scripts/radix-menu-conformance/archives.cjs
+npm --prefix scripts/radix-dropdown-menu-conformance ci --ignore-scripts --no-audit --no-fund
+npm --prefix scripts/radix-dropdown-menu-conformance/current ci --ignore-scripts --no-audit --no-fund
+bun scripts/radix-dropdown-menu-conformance/build.cjs
+node scripts/radix-dropdown-menu-conformance/archives.cjs
 npm --prefix scripts/dnd-conformance ci --ignore-scripts --no-audit --no-fund
 npm --prefix scripts/dnd-conformance/current ci --ignore-scripts --no-audit --no-fund
 bun scripts/dnd-conformance/build.cjs
