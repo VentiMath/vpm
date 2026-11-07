@@ -340,29 +340,37 @@ function replaceStep(doc, from, to = from, slice = Slice.empty) {
       newEnd = end + result.content.size - doc.content.size;
       if (newEnd < start) continue;
       const replacement = result.slice(start, newEnd);
-      if (end > to && doc.resolve(to).parent.isTextblock) {
+      if (doc.resolve(to).parent.isTextblock && end >= doc.resolve(to).end()) {
         const gapTo = doc.resolve(to).end(),
           gap = doc.slice(to, gapTo);
-        // An empty surviving text tail still anchors the insertion cursor.
-        // Closing additional list shells must not move that cursor after them.
+        // The source boundary identifies the surviving text, even when it is
+        // empty or equal to newly inserted text. Matching an arbitrary equal
+        // substring can give a valid document but move the cursor before it.
         if (
-          !gap.size &&
           !slice.openStart &&
           !slice.openEnd &&
           slice.content.content.every((n) => n.isInline) &&
           doc.resolve(from).parent.inlineContent
         ) {
           const insert = from - start + slice.size;
-          if (insert >= 0 && insert <= replacement.size) {
-            const around = new ReplaceAroundStep(
-              start,
-              end,
-              to,
-              gapTo,
-              replacement,
-              insert,
-            );
-            if (around.apply(doc).doc?.eq(result)) return around;
+          if (insert >= 0 && insert + gap.size <= replacement.size) {
+            try {
+              const found = result.slice(
+                start + insert,
+                start + insert + gap.size,
+              );
+              if (found.eq(gap)) {
+                const around = new ReplaceAroundStep(
+                  start,
+                  end,
+                  to,
+                  gapTo,
+                  replacement.removeBetween(insert, insert + gap.size),
+                  insert,
+                );
+                if (around.apply(doc).doc?.eq(result)) return around;
+              }
+            } catch {}
           }
         }
         if (gap.size) {

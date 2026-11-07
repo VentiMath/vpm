@@ -97,9 +97,9 @@ test("6000 seeded list edits agree across isolated callers and full VPM lists", 
       let from = ps[random() % ps.length],
         to = random() % 4 === 0 ? ps[random() % ps.length] : from,
         op = random() % 8;
-      // Keep the mixed-command fuzzer's deletions within one textblock;
-      // the dedicated boundary/nested matrices below exercise cross-block
-      // ranges without conflating them with the remaining cursor-mapping gap.
+      // Dedicated matrices cover boundary, nested and repeated-text edits.
+      // The mixed fuzzer still limits deletion to one textblock while a
+      // separate cross-depth structural joining discrepancy remains open.
       if (
         vName === "vpm" &&
         op === 1 &&
@@ -414,7 +414,7 @@ test("nested deletion suffixes retain their wrappers, cursor and undo", () => {
   for (const outer of ["bullet_list", "ordered_list"])
     for (const inner of ["bullet_list", "ordered_list"])
       for (const suffix of ["bullet_list", "ordered_list"])
-        for (const tail of ["a", "🙂"])
+        for (const tail of ["", "a", "🙂"])
           for (const text of ["xxxxx", "🙂xx"])
             for (const nested of [false, true])
               for (const reversed of [false, true]) {
@@ -492,5 +492,69 @@ test("nested deletion suffixes retain their wrappers, cursor and undo", () => {
                 );
                 cases++;
               }
-  assert.equal(cases, 128);
+  assert.equal(cases, 192);
+});
+
+test("repeated text replacements keep their source-boundary cursor and undo", () => {
+  const input = require("../../../scripts/prosemirror-schema-list-conformance/nested-insertion-followup.json");
+  let cases = 0;
+  for (const tail of ["x", "xx", "xxx", "🙂🙂"])
+    for (const text of ["", "x", "xx", "🙂"])
+      for (const prefix of ["t", "🙂"])
+        for (const nested of [false, true])
+          for (const reversed of [false, true])
+            for (const marked of [false, true]) {
+              const json = structuredClone(input.doc),
+                item = json.content[0].content[0];
+              item.content[0].content[0].text = prefix + "x";
+              const right = item.content[1].content[1].content[0].content[0];
+              right.text = tail;
+              if (marked) right.marks = [{ type: "strong" }];
+              if (nested)
+                json.content = [{ type: "blockquote", content: json.content }];
+              const results = ["upstream", "vpm"].map((name) => {
+                const x = make(api(name), json),
+                  before = x.state.doc,
+                  starts = [];
+                before.descendants((node, pos) => {
+                  if (node.isTextblock) starts.push(pos + 1);
+                });
+                const from = starts[0] + prefix.length,
+                  to = starts[2],
+                  selection = reversed ? [to, from] : [from, to];
+                x.state = x.state.apply(
+                  x.state.tr.setSelection(
+                    x.A.S.TextSelection.create(before, ...selection),
+                  ),
+                );
+                x.state = x.state.apply(
+                  x.A.H.closeHistory(x.state.tr.insertText(text)),
+                );
+                x.state.doc.check();
+                const result = snapshot(x);
+                assert.equal(x.state.selection.anchor, from + text.length);
+                assert.equal(x.state.selection.head, from + text.length);
+                assert(
+                  x.A.H.undo(x.state, (tr) => {
+                    x.state = x.state.apply(tr);
+                  }),
+                );
+                assert(x.state.doc.eq(before));
+                return result;
+              });
+              assert.deepEqual(
+                results[0],
+                results[1],
+                JSON.stringify({
+                  tail,
+                  text,
+                  prefix,
+                  nested,
+                  reversed,
+                  marked,
+                }),
+              );
+              cases++;
+            }
+  assert.equal(cases, 256);
 });

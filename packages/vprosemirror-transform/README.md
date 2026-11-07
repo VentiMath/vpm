@@ -66,14 +66,19 @@ paragraph preserves that paragraph and its cursor position. The saved regression
 and 96 list/heading/nesting/direction cases check document, selection and undo.
 
 After joining textblocks, fitting now retains carried list wrappers until their
-original ancestor boundary can accept them. The saved nested deletion and 128
-variants with nonempty text tails match document, cursor and undo, including
+original ancestor boundary can accept them. The saved nested deletion and 192
+variants with empty/nonempty text tails match document, cursor and undo, including
 mixed list types, marks, Unicode, nesting and both selection directions.
 
-Full editor parity remains separate. Empty text tails in deeper deletions and
-repeated text in insertions can still give the wrong cursor even when the
-document matches upstream; a
-[reduced cursor reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
+Cursor mapping now anchors the preserved text tail at its source boundary,
+including an empty tail exactly at the replacement end. It does not select an
+earlier equal substring when inserted text repeats. Both saved cases and 256
+additional replacements check document, cursor and undo with marks, Unicode,
+nesting and both selection directions.
+
+Full editor parity remains separate. Broader cross-depth deletion can still
+attach a surviving list one level too deep; a
+[reduced structural reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
 is recorded for follow-up. A public release and VentiMath adoption are separate.
 Native IME, system clipboard, browser input handling and collaborative-server integration belong to the editor cutover.
 All ProseMirror callers must resolve the same model and transform instances.

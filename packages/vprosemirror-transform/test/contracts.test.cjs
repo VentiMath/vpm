@@ -403,3 +403,48 @@ test("nested deletion retains the suffix list shell after joining textblocks", (
   });
   assert.deepEqual(results[0], results[1]);
 });
+
+test("empty and repeated text tails map the cursor to the source boundary", () => {
+  for (const file of [
+    "cursor-followup.json",
+    "nested-insertion-followup.json",
+  ]) {
+    const input = require(
+      "../../../scripts/prosemirror-schema-list-conformance/" + file,
+    );
+    const results = [model, um].map((m, i) => {
+      const s = new m.Schema({
+          nodes: {
+            ...spec.nodes,
+            bullet_list: { content: "list_item+", group: "block" },
+            ordered_list: {
+              content: "list_item+",
+              group: "block",
+              attrs: { order: { default: 1 } },
+            },
+            list_item: { content: "paragraph block*" },
+          },
+        }),
+        doc = s.nodeFromJSON(input.doc),
+        tr = new [v, u][i].Transform(doc);
+      if (input.operation === "deleteSelection")
+        tr.deleteRange(...input.selection);
+      else tr.replaceRangeWith(...input.selection, s.text("x"));
+      tr.doc.check();
+      let restored = tr.doc,
+        cursor;
+      for (let j = tr.steps.length - 1; j >= 0; j--)
+        restored = tr.steps[j].invert(tr.docs[j]).apply(restored).doc;
+      assert(restored.eq(doc));
+      tr.steps
+        .at(-1)
+        .getMap()
+        .forEach((_a, _b, _c, end) => {
+          cursor ??= end;
+        });
+      assert.equal(cursor, 5);
+      return { doc: tr.doc.toJSON(), cursor };
+    });
+    assert.deepEqual(results[0], results[1], file);
+  }
+});

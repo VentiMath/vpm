@@ -160,6 +160,20 @@ module.exports = function setup(name) {
         run("deleteSelection");
         if (e.state.selection.anchor !== 5 || e.state.selection.head !== 5)
           throw Error("Nested suffix deletion moved its cursor");
+        for (const input of [
+          require("./cursor-followup.json"),
+          require("./nested-insertion-followup.json"),
+        ]) {
+          e.commands.setContent(convert(input.doc));
+          e.commands.setTextSelection({
+            from: input.selection[0],
+            to: input.selection[1],
+          });
+          if (input.operation === "deleteSelection") run("deleteSelection");
+          else run("insertContent", "x");
+          if (e.state.selection.anchor !== 5 || e.state.selection.head !== 5)
+            throw Error("Preserved text tail lost its cursor anchor");
+        }
         return out;
       } finally {
         const host = e.options.element;

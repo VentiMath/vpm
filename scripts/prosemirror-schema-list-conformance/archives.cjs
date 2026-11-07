@@ -215,6 +215,8 @@ try {
         "transform-followup.json",
         "deletion-followup.json",
         "nested-fitting-followup.json",
+        "cursor-followup.json",
+        "nested-insertion-followup.json",
       ]) {
         const diagnosis = JSON.parse(
           run(

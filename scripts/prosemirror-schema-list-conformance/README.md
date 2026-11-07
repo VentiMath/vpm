@@ -16,10 +16,10 @@ node scripts/prosemirror-schema-list-conformance/run.cjs
 node scripts/prosemirror-schema-list-conformance/archives.cjs
 ```
 
-Use Node 24 and Bun 1.4.4. Nine independent groups cover 6,000 seeded edits, immutable
+Use Node 24 and Bun 1.4.4. Ten independent groups cover 6,000 seeded edits, immutable
 schema descriptors, attributes/marks, exact query results, mapped positions,
 inverse steps and appending a range wrap to an existing transaction. Chrome
-compares 15 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
+compares 17 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
 Enter and typing. The five-package archive closure is byte-verified, installed
 fresh/frozen with npm and Bun, then checked for runtime/module/type behavior.
 
@@ -47,7 +47,7 @@ forward/backward selection and history undo. The fourteenth Chrome snapshot
 uses Tiptap's `deleteSelection` with this regression. Current transform 1.12.5
 and VPM agree. The older app transform 1.11.0 leaves an empty list instead; that
 exact document, HTML and cursor remain an explicit negative control. The other
-fourteen snapshots still match all three graphs.
+sixteen snapshots still match all three graphs.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/deletion-followup.json
@@ -59,34 +59,49 @@ node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/
 The fitter previously joined a carried list suffix to a shallower list, removing
 a wrapper. It now preserves that wrapper after joining the textblocks. The
 saved case is a source/archive gate: document, cursor and undo match upstream.
-Another 128 cases cover mixed list types at three levels, marked ASCII/Unicode
+Another 192 cases cover mixed list types at three levels, marked ASCII/Unicode
 text tails, ASCII/Unicode starting text, enclosing quotes and both selection
-directions. These cases retain nonempty text tails. The fifteenth Chrome snapshot
+directions, including empty text tails. The fifteenth Chrome snapshot
 checks the same deletion through Tiptap on current/app/VPM graphs.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/nested-fitting-followup.json
 ```
 
-## Remaining cursor-mapping follow-up
+## Empty and repeated text cursor regressions
 
-`cursor-followup.json` changes the saved nested case to end at an empty text tail.
-The resulting document now matches, but VPM puts the cursor at 9 instead of 5.
-This diagnostic intentionally exits nonzero; it is not a passing gate. Related
-insertion exploration with repeated text also retains a cursor discrepancy after
-its document structure matches. That insertion path is not claimed fixed here.
+`cursor-followup.json` ends the saved nested deletion at an empty text tail.
+`nested-insertion-followup.json` inserts text equal to the surviving text. VPM
+now anchors the preserved tail by its source boundary, instead of choosing an
+earliest equal substring or treating trailing wrappers as inserted text. Both
+saved cases match upstream document and cursor 5; both are source/archive gates.
+Another 256 replacements cover empty/ASCII/Unicode insertion, repeated tails,
+marks, enclosing quotes, both selection directions and undo. The sixteenth and
+seventeenth Chrome snapshots verify these cases through Tiptap; all three graphs
+agree.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/cursor-followup.json
+node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/nested-insertion-followup.json
+```
+
+## Remaining cross-depth structure follow-up
+
+Unrestricted mixed-command exploration still finds a structural mismatch.
+`structure-followup.json` reduces it to two lists with a selection from 9 to 18:
+the cursor agrees at 9, but VPM attaches a surviving list one level deeper than
+upstream. This diagnostic intentionally exits nonzero; it is not a passing gate.
+
+```sh
+node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/structure-followup.json
 ```
 
 Randomized list comparison includes arbitrary text selections on current/app
 upstream foundations (4,000 edits). Full VPM comparison (2,000 edits) permits
-cross-block text insertion for the retained seed and confines its mixed deletion
-operations to one textblock. Dedicated matrices add 96 boundary cases and 128
-nested deletions with nonempty tails. Unrestricted mixed-command exploration
-still finds cursor differences; these results do not establish arbitrary
-replacement parity or complete editor adoption.
+cross-block text insertion for the retained seed and confines mixed deletion
+operations to one textblock. Dedicated matrices add 96 boundary cases, 192 nested
+deletions and 256 repeated-text replacements. These results do not establish
+arbitrary cross-depth replacement parity or complete editor adoption.
 
 [Benchmarks](../../packages/vprosemirror-schema-list/bench/results/README.md) use
 identical foundations for list-only cases and explicitly label complete VPM-stack

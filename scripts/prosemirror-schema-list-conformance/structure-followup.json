@@ -1,0 +1,91 @@
+{
+  "doc": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "ordered_list",
+        "attrs": {
+          "order": 1
+        },
+        "content": [
+          {
+            "type": "list_item",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "x"
+                  }
+                ]
+              },
+              {
+                "type": "bullet_list",
+                "content": [
+                  {
+                    "type": "list_item",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "ax"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ordered_list",
+        "attrs": {
+          "order": 1
+        },
+        "content": [
+          {
+            "type": "list_item",
+            "content": [
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "ordered_list",
+                "attrs": {
+                  "order": 1
+                },
+                "content": [
+                  {
+                    "type": "list_item",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "r"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "selection": [
+    9,
+    18
+  ],
+  "operation": "deleteSelection"
+}

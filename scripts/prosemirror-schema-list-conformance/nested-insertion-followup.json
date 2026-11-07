@@ -1,0 +1,89 @@
+{
+  "doc": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "bullet_list",
+        "content": [
+          {
+            "type": "list_item",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "tx"
+                  }
+                ]
+              },
+              {
+                "type": "bullet_list",
+                "content": [
+                  {
+                    "type": "list_item",
+                    "content": [
+                      {
+                        "type": "paragraph"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "list_item",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "xx"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "bullet_list",
+                        "content": [
+                          {
+                            "type": "list_item",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "xa"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "bullet_list",
+                                "content": [
+                                  {
+                                    "type": "list_item",
+                                    "content": [
+                                      {
+                                        "type": "paragraph"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "selection": [
+    4,
+    13
+  ]
+}

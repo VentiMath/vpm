@@ -30,9 +30,10 @@ UTF-16 text. The schema-list fixture additionally checks actual EditorState
 selection, undo and the Tiptap browser caller. The empty-paragraph deletion
 regression compares steps and mapped boundaries; 96 additional list-package
 cases compare document, actual selection and undo, with a packed browser check.
-A saved nested-suffix deletion and another 128 list-package variants cover
-nonempty text tails, mixed list types, marks, Unicode, nesting and selection
-direction, including undo and a fifteenth packed Tiptap snapshot.
+A saved nested-suffix deletion and another 192 list-package variants cover
+empty/nonempty text tails, mixed list types, marks, Unicode, nesting and selection
+direction. The two cursor regressions and 256 repeated-text replacements also
+check document, mapping and undo; the list fixture has 17 packed Tiptap snapshots.
 A documented correction rejects an incompatible
 empty-block join that upstream suggests but then fails to apply. Archive checks
 verify packed bytes, exclusions, fresh and frozen npm/Bun installs, CJS/ESM
