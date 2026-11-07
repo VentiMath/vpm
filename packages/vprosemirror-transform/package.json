@@ -1,0 +1,40 @@
+{
+  "name": "vprosemirror-transform",
+  "version": "1.12.5",
+  "description": "Independent reversible rich-text editing steps and position mapping",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.cjs",
+    "index.mjs",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "dependencies": {
+    "vprosemirror-model": "1.25.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vprosemirror-transform"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

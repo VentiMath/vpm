@@ -762,6 +762,13 @@
         "vorderedmap": "2.1.1",
       },
     },
+    "packages/vprosemirror-transform": {
+      "name": "vprosemirror-transform",
+      "version": "1.12.5",
+      "dependencies": {
+        "vprosemirror-model": "1.25.12",
+      },
+    },
     "packages/vproto3-json-serializer": {
       "name": "vproto3-json-serializer",
       "version": "0.1.0",
@@ -1555,6 +1562,8 @@
     "vpromisify": ["vpromisify@workspace:packages/vpromisify"],
 
     "vprosemirror-model": ["vprosemirror-model@workspace:packages/vprosemirror-model"],
+
+    "vprosemirror-transform": ["vprosemirror-transform@workspace:packages/vprosemirror-transform"],
 
     "vproto3-json-serializer": ["vproto3-json-serializer@workspace:packages/vproto3-json-serializer"],
 

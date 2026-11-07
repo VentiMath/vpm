@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "prosemirror-transform",
+    "version": "1.12.5",
+    "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-transform",
+    "checked": "2026-11-06",
+    "integrity": "sha512-3EBXZBM4h3MKuWvs9sQ7IA0/v6jCqCZ4wC08PIvzY1VSQWDL90KEyfg5C0Ex52UJesf/QVogxvuBsZdKmLc3NQ=="
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "0869fed208f25f443e57a290fc3dac51240933bee07cb34de41cf70b0ec927f1",
+    "dist/index.d.ts": "4a8856c20fea8d80de4363468b7bea4c231efe5c0a62e7e6497504613ad56256",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "ProseMirror transform 1.12.5 position mapping, reversible steps, mark restoration, schema-aware edits and range fitting; Tiptap 2.11.7 application command controls against transform 1.12.5 and app 1.11.0. Complete editor integration, IME and collaborative server acceptance are separate."
+  },
+  "changes": [
+    "Independent schema-automaton fitting over persistent subtrees and boundary events, preserving untouched content.",
+    "Mirrored mapping supports undo and rebasing; mark inverses restore prior formatting rather than blindly toggling it.",
+    "Serialized step positions must be nonnegative safe integers; step registration uses a Map, so inherited names cannot select constructors.",
+    "One VPM runtime dependency: vprosemirror-model 1.25.12. No upstream runtime files shipped."
+  ]
+}

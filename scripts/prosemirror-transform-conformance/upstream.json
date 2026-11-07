@@ -1,0 +1,15 @@
+{
+  "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-transform",
+  "version": "1.12.5",
+  "commit": "240982c95fb03caf28452b5b27dd38f8a1a0cdd5",
+  "sha256": {
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+    "test-invert.ts": "b78a9984ac915b40622bb6cd4ec948984f32d6827427d5d1ab9ec6671dfbf868",
+    "test-mapping.ts": "b246f851bc73a8363226630233069a52a4a54888711d655ee5312c812cb30b16",
+    "test-replace_step.ts": "bc8cec3bd706fda1c97cd12b8995f19808faaebb1661a54b5ecb849ebe89b7b1",
+    "test-step.ts": "313e813b0625e03512d15e9d7ecfb0cffa17ce385f175bfaa86e8f1fe9780673",
+    "test-structure.ts": "dd5f235f8c36ab0fcd9221287b4503bcc7232b99e1d3be61f87c55727dc2c867",
+    "test-trans.ts": "2e83676723c9c5e8a265928709bc7c7ef956c2c1a0d97daf4e315c1cac82bcdd",
+    "trans.ts": "7ea4e7ad6e5720ca69cfd313c6307948c7264baf8c49815fc713efb99d159b11"
+  }
+}
