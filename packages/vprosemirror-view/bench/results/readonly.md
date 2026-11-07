@@ -1,4 +1,4 @@
-# Read-only rendering measurements
+# Read-only rendering and position measurements
 
 [Node 24 recording](readonly-node24.json) · [Bun recording](readonly-bun.json)
 
@@ -16,27 +16,35 @@ included in its measured work.
 
 | Workload | Node upstream → VPM | Bun upstream → VPM | Recorded direction |
 | --- | ---: | ---: | --- |
-| Create/destroy | 353.94 → 248.53 μs | 157.44 → 195.69 μs | Unestablished on both |
-| Change one paragraph | 68.64 → 17.02 μs | 124.46 → 19.15 μs | Lower in every pair on both |
-| Change one highlight | 63.15 → 31.59 μs | 155.90 → 25.37 μs | Unestablished on Node; lower in every pair on Bun |
-| Repeat identical input | 894 → 465 ns | 301 → 171 ns | Lower in every pair on both |
+| Create/destroy | 287.60 → 290.39 μs | 156.83 → 206.62 μs | Unestablished on Node; higher on Bun |
+| Change one paragraph | 70.78 → 19.70 μs | 163.88 → 21.09 μs | Lower on both |
+| Change one highlight | 67.19 → 27.35 μs | 157.08 → 27.93 μs | Lower on both |
+| Repeat identical input | 928 → 420 ns | 330 → 195 ns | Lower on both |
+| `domAtPos` | 290 → 201 ns | 278 → 135 ns | Lower on both |
+| `posAtDOM` | 300 → 301 ns | 177 → 136 ns | Unestablished on Node; lower on Bun |
+| `nodeDOM` | 189 → 146 ns | 220 → 111 ns | Lower on both |
 
-The supported directions exceed the identical-source control spread in each
-pair, but the recordings are noisy. For example, Bun's paragraph-update control
-varies by up to 71.7%, and Node creation ranges from 43.9% lower to 122.5% higher.
-Do not treat the table's independent medians as precise speedup factors. Creation
-and Node highlight results do not establish a gain or regression. The full JSON
-reports retain paired changes and process-order summaries.
+Every established direction holds across all four pairs beyond the control
+spread. The JSON reports retain paired changes and process-order summaries;
+the table shows independent medians, not precise speedup factors. Node creation
+has a 25.9% control spread and does not establish a gain or regression. Bun
+creation is about 31% slower (roughly 50 μs additional time), an explicit remaining
+renderer optimization before full editor acceptance. This recording does not
+isolate its cause or attribute that cost to the position methods.
 
-The renderer indexes sibling records by identity and skips unchanged subtrees.
-It disables static schema task controls when creating their shells, rather than
-scanning all descendants on every update. Equivalent input returns without DOM
-writes; the correctness suite separately verifies retained nodes and widget focus.
+Lookup cases cycle all document positions after warmup, with an inline wrapper,
+a node wrapper and a widget. Reverse-lookup input boundaries are prepared outside
+timing. Bounds and DOM sibling offsets are cached for one successful update;
+binary search finds the relevant child record. These are repeated lookups within
+a document revision, not first-query-after-update measurements. The correctness
+suite separately verifies invalidation and round trips through 24 updates.
 
-The earlier [decoration-model measurements](README.md) still apply to its unchanged
-runtime. Its bulk creation/mapping/removal regressions remain open; this workload
-neither measures nor resolves those costs. No overall editor performance claim is
-made while editing, selection, input and node views remain unimplemented.
+The renderer skips unchanged subtrees. Equivalent input returns without DOM
+writes; independent tests verify retained nodes and widget focus. The earlier
+[decoration-model measurements](README.md) still apply to its unchanged runtime.
+Bulk creation/mapping/removal regressions remain open; this workload neither
+measures nor resolves those costs. No overall editor performance claim is made
+while editing, selection, input and custom node views remain unimplemented.
 
 To reproduce after installing the pinned conformance fixture:
 

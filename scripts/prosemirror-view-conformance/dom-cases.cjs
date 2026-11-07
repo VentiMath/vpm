@@ -454,6 +454,17 @@ module.exports = function setup(name) {
         x.view.dom.querySelector("strong").ownerDocument === owner,
       "wrong owner document",
     );
+    for (let pos = 0; pos <= x.doc.content.size; pos++) {
+      const point = x.view.domAtPos(pos, 1);
+      check(
+        point.node.ownerDocument === owner,
+        "position lookup owner document",
+      );
+      check(
+        x.view.posAtDOM(point.node, point.offset) === pos,
+        "iframe position round trip",
+      );
+    }
     x.destroy();
     frame.remove();
     return true;
@@ -465,6 +476,9 @@ module.exports = function setup(name) {
     widgets,
     iframe,
     updates,
+    positions() {
+      return require("./position-cases.cjs")({ create, cases, D, set, schema });
+    },
     runComparisons(variants) {
       const snapshots = variants.upstream.baseline();
       const app = variants.app.baseline(),
@@ -473,6 +487,9 @@ module.exports = function setup(name) {
         equal(snapshots[i], app[i], "app/current " + snapshots[i].label);
         equal(snapshots[i], vpm[i], "current/VPM " + snapshots[i].label);
       }
+      const lookups = variants.upstream.positions();
+      equal(lookups, variants.app.positions(), "app position lookup");
+      equal(lookups, variants.vpm.positions(), "VPM position lookup");
       const edits = variants.upstream.updates();
       equal(edits, variants.app.updates(), "app update sequence");
       equal(edits, variants.vpm.updates(), "VPM update sequence");
@@ -496,6 +513,7 @@ module.exports = function setup(name) {
         variants: 3,
         snapshots: snapshots.length,
         updates: 120,
+        positionFixtures: lookups.length,
         identity: true,
         widgets: true,
         iframe: true,

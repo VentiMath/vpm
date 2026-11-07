@@ -83,6 +83,8 @@ class ReadOnlyRenderer {
       class: ["ProseMirror", attributes.class].filter(Boolean).join(" "),
       contenteditable: "false",
     });
+    this.domRecords = new WeakMap();
+    this.revision = 0;
     this.widgetHost = widgetHost;
     this.destroyed = false;
     this.root = {
@@ -92,6 +94,7 @@ class ReadOnlyRenderer {
       children: [],
       position: () => -1,
     };
+    this.domRecords.set(this.dom, this.root);
     try {
       this.update(doc, decorations);
       place.appendChild(this.dom);
@@ -118,6 +121,147 @@ class ReadOnlyRenderer {
     }
     this.doc = doc;
     this.decorations = decorations;
+    this.revision++;
+  }
+  // Cache bounds only within one successful update. Retained position callbacks
+  // recalculate them after an ancestor moves; unchanged DOM needs no rebuilding.
+  bounds(record) {
+    if (record.rangeRevision === this.revision) return record.range;
+    const from = record.kind === "root" ? 0 : record.position();
+    let to = from;
+    if (record.kind === "root") to = this.doc.content.size;
+    else if (record.kind === "model") to += record.node.nodeSize;
+    else if (record.kind === "text") to += record.value.length;
+    else if (record.children.length)
+      to = this.bounds(record.children.at(-1))[1];
+    record.rangeRevision = this.revision;
+    return (record.range = [from, to]);
+  }
+  childAt(record, pos, inclusive) {
+    let low = 0,
+      high = record.children.length;
+    while (low < high) {
+      const mid = (low + high) >>> 1;
+      const end = this.bounds(record.children[mid])[1];
+      if (end < pos || (!inclusive && end === pos)) low = mid + 1;
+      else high = mid;
+    }
+    return low;
+  }
+  domOffset(record) {
+    if (record.offsetRevision === this.revision) return record.offset;
+    let offset = 0;
+    for (
+      let node = record.dom.previousSibling;
+      node;
+      node = node.previousSibling
+    )
+      offset++;
+    record.offsetRevision = this.revision;
+    return (record.offset = offset);
+  }
+  contentBounds(record) {
+    const [from, to] = this.bounds(record);
+    return record.kind === "model" ? [from + 1, to - 1] : [from, to];
+  }
+  assertLive() {
+    if (this.destroyed) throw new Error("Renderer has been destroyed");
+  }
+  domAtPos(pos, side = 0) {
+    this.assertLive();
+    if (!Number.isInteger(pos) || pos < 0 || pos > this.doc.content.size)
+      throw new RangeError("Position outside the document");
+    const find = (record) => {
+      if (record.kind === "text")
+        return { node: record.dom, offset: pos - record.position() };
+      const children = record.children;
+      let index = this.childAt(record, pos, true);
+      for (; index < children.length; index++) {
+        const child = children[index],
+          [from, to] = this.bounds(child);
+        if (from < pos && pos < to) return find(child);
+        if (
+          to > pos ||
+          (from === pos &&
+            (to > from ||
+              child.kind === "break" ||
+              (child.kind === "widget" && child.deco.type.side >= 0)))
+        )
+          break;
+      }
+      const adjacent = children[side < 0 ? index - 1 : index];
+      if (
+        side &&
+        adjacent &&
+        ["text", "inline", "mark"].includes(adjacent.kind)
+      )
+        return find(adjacent);
+      const container = record.contentDOM;
+      if (!container) {
+        const parent = record.dom.parentNode;
+        return {
+          node: parent,
+          offset: this.domOffset(record),
+        };
+      }
+      const next = children[index];
+      return {
+        node: container,
+        offset: next ? this.domOffset(next) : container.childNodes.length,
+      };
+    };
+    return find(this.root);
+  }
+  nodeDOM(pos) {
+    this.assertLive();
+    if (!Number.isInteger(pos) || pos < 0 || pos >= this.doc.content.size)
+      return null;
+    const find = (record) => {
+      const child = record.children[this.childAt(record, pos, false)];
+      if (!child) return null;
+      const [from] = this.bounds(child);
+      if (from > pos) return null;
+      if (from === pos && child.kind === "model") return child.baseDOM;
+      if (child.kind === "text") return from === pos ? child.dom : null;
+      return find(child);
+    };
+    return find(this.root);
+  }
+  posAtDOM(node, offset, bias = -1) {
+    this.assertLive();
+    if (!node || !this.dom.contains(node))
+      throw new RangeError("DOM position outside the renderer");
+    const size =
+      node.nodeType === 3 ? node.nodeValue.length : node.childNodes.length;
+    if (!Number.isInteger(offset) || offset < 0 || offset > size)
+      throw new RangeError("Invalid DOM offset");
+    let owner = node,
+      record;
+    while (owner && !(record = this.domRecords.get(owner)))
+      owner = owner.parentNode;
+    if (!record || (record !== this.root && !record.active))
+      throw new RangeError("DOM position outside the renderer");
+    const [from, to] = this.bounds(record);
+    if (record.kind === "text") return from + offset;
+    if (record.kind === "widget" || record.kind === "break") return from;
+    const content = record.contentDOM;
+    if (!content) return bias > 0 ? to : from;
+    const [start, end] = this.contentBounds(record);
+    if (node === content) {
+      const before = node.childNodes[offset];
+      for (const child of record.children) {
+        if (child.dom === before) return this.bounds(child)[0];
+      }
+      return end;
+    }
+    // A schema may put fixed labels or other markup around its content hole.
+    // Those points map to the nearest edge of the content, not into that markup.
+    if (node.contains(content)) {
+      let branch = content;
+      while (branch.parentNode !== node) branch = branch.parentNode;
+      return offset <= [...node.childNodes].indexOf(branch) ? start : end;
+    }
+    return node.compareDocumentPosition(content) & 4 ? start : end;
   }
   plan(node, source, parent) {
     const local = source.locals(node),
@@ -410,6 +554,9 @@ class ReadOnlyRenderer {
             record.appliedAttrs = record.baseAttrs;
           }
         }
+        this.domRecords.set(record.dom, record);
+        if (record.baseDOM) this.domRecords.set(record.baseDOM, record);
+        if (record.contentDOM) this.domRecords.set(record.contentDOM, record);
         record.initial = true;
       }
       record.position = desired.position;
@@ -470,6 +617,7 @@ class ReadOnlyRenderer {
     for (const wrapper of wrappers) {
       const outer = this.document.createElement(wrapper.tag);
       assignAttrs(outer, wrapper.attrs);
+      this.domRecords.set(outer, record);
       outer.appendChild(dom);
       dom = outer;
     }

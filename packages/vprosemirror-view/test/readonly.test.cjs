@@ -45,6 +45,7 @@ test("current/app/VPM schema, decoration, identity and iframe DOM controls", () 
     );
     const result = window.runChecks();
     assert.equal(result.snapshots, 14);
+    assert.equal(result.positionFixtures, 22);
     assert.equal(result.identity, true);
     assert.equal(result.widgets, true);
     assert.equal(result.taskCheckboxesDisabled, true);
@@ -206,6 +207,62 @@ test("read-only task policy does not disable caller-owned checkbox widgets", () 
     assert.equal(input.disabled, false);
     view.update(doc);
     assert.equal(input.disabled, false);
+    view.destroy();
+  } finally {
+    window.close();
+  }
+});
+
+test("position lookups reject outside/stale DOM and invalid offsets without modifying content", () => {
+  const { window, doc, host } = fixture();
+  try {
+    const view = new ReadOnlyRenderer(host, { doc });
+    const old = view.dom.firstChild.firstChild;
+    const observer = new window.MutationObserver(() => {});
+    observer.observe(view.dom, {
+      subtree: true,
+      childList: true,
+      characterData: true,
+      attributes: true,
+    });
+    for (let pos = 0; pos <= doc.content.size; pos++) {
+      for (const side of [-1, 0, 1]) {
+        const point = view.domAtPos(pos, side);
+        assert.equal(view.posAtDOM(point.node, point.offset), pos);
+      }
+      view.nodeDOM(pos);
+    }
+    assert.equal(observer.takeRecords().length, 0);
+    observer.disconnect();
+    for (const pos of [-1, 0.5, NaN, Infinity, doc.content.size + 1]) {
+      assert.throws(() => view.domAtPos(pos), RangeError);
+      assert.equal(view.nodeDOM(pos), null);
+    }
+    assert.throws(() => view.posAtDOM(host, 0), RangeError);
+    assert.throws(() => view.posAtDOM(old, -1), RangeError);
+    assert.throws(() => view.posAtDOM(old, old.length + 1), RangeError);
+    view.update(doc.copy(doc.content.cut(doc.firstChild.nodeSize)));
+    assert.throws(() => view.posAtDOM(old, 0), /outside/);
+    view.destroy();
+    assert.throws(() => view.domAtPos(0), /destroyed/);
+    assert.throws(() => view.nodeDOM(0), /destroyed/);
+    assert.throws(() => view.posAtDOM(view.dom, 0), /destroyed/);
+  } finally {
+    window.close();
+  }
+});
+
+test("position lookups use a shadow mount's owner document and retained records", () => {
+  const { window, doc, host } = fixture();
+  try {
+    const shadow = host.attachShadow({ mode: "open" });
+    const view = new ReadOnlyRenderer(shadow, { doc });
+    for (let pos = 0; pos <= doc.content.size; pos++) {
+      const point = view.domAtPos(pos, 1);
+      assert.equal(point.node.ownerDocument, window.document);
+      assert.equal(view.posAtDOM(point.node, point.offset), pos);
+    }
+    assert.equal(view.nodeDOM(0), view.dom.firstChild);
     view.destroy();
   } finally {
     window.close();

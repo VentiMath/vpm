@@ -30,6 +30,9 @@ const decorations = DecorationSet.create(doc, [
 ]);
 const renderer = new ReadOnlyRenderer(element, { doc, decorations });
 renderer.update(nextDoc, nextDecorations);
+const point = renderer.domAtPos(3, 1);
+const position = renderer.posAtDOM(point.node, point.offset);
+const node = renderer.nodeDOM(0);
 renderer.destroy();
 ```
 
@@ -40,6 +43,17 @@ attributes and wrappers compose with marks and widgets. Reconciliation preserves
 unchanged model nodes, and equivalent updates make no DOM writes. Widget keys
 preserve their nodes; position callbacks follow shifted ancestors and become
 undefined after removal. Cleanup runs once per mounted widget.
+
+`domAtPos`, `posAtDOM` and `nodeDOM` use those retained records, with bounds cached
+per successful update and binary search across siblings. Document positions
+and text offsets count UTF-16 code units, including boundaries within surrogate
+pairs. Default forward lookup prefers shallow boundaries; its `side` argument
+can prefer preceding/following text. Reverse lookup handles static schema markup,
+mark/decoration wrappers and widget content; positive `bias` chooses the far edge
+inside an opaque leaf. `nodeDOM` returns the underlying schema node or text node
+at a rendered boundary, not its decoration wrapper. Out-of-range DOM offsets,
+foreign DOM, nodes detached from this renderer and queries after destruction are rejected. Queries do not
+write DOM or alter focus.
 
 Boundaries and deliberate behavior:
 
@@ -59,7 +73,9 @@ Boundaries and deliberate behavior:
 Fourteen structural snapshots and 120 update snapshots match current and app
 controls in Chrome, except the named disabled-task-control policy. Native checks
 also cover layout, identity, widget focus/position/cleanup, iframe ownership and
-noneditable input. Seven original DOM groups and the earlier model checks pass
+noneditable input. Twenty-one additional lookup fixtures and 24 update snapshots
+compare every valid document and DOM offset against current/app controls, with
+round trips for all three forward sides. Nine original DOM groups and the earlier model checks pass
 on Node/Bun. Exact archives, clean installs, CJS/ESM and TS7 are verified.
 [Conformance details](../../scripts/prosemirror-view-conformance/README.md) explain
 these controls; [renderer measurements](bench/results/readonly.md) explain their
@@ -67,13 +83,14 @@ limited performance scope.
 
 ## Remaining work
 
-Next: document/DOM position lookup (`nodeDOM`, `domAtPos`, `posAtDOM`) over the
-retained render records, including marks, wrappers, widgets and UTF-16 offsets.
-This prepares the app's later caret-visibility/geometry calls without starting
-input or selection synchronization.
+Next: read-only caret geometry (`coordsAtPos`), starting with the documentation
+editor's caret-visibility caller. Verify wrapped lines, marks, breaks, images,
+scrolling and iframe coordinates in the browser. The position-lookup methods do
+not implement geometry, native selection or input synchronization.
 
 Full `EditorView`, custom node views, DOM selection/input/mutation handling,
 IME/composition, clipboard, accessibility and adoption remain unverified.
 The transform [deep-deletion reproduction](../../scripts/prosemirror-schema-list-conformance/deep-deletion-followup.json)
-(3..42) and bulk decoration costs remain full editing acceptance gaps. This
+(3..42), bulk decoration costs and the recorded Bun create/destroy overhead
+(about 50 μs for 32 paragraphs) remain full editing acceptance gaps. This
 read-only milestone neither repairs nor hides them.

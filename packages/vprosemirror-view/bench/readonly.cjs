@@ -73,6 +73,18 @@ function prepare(file, kind) {
           decorations: () => active,
         })
       : new api.ReadOnlyRenderer(host, { doc, decorations: active });
+  const lookup = ["domAtPos", "posAtDOM", "nodeDOM"].includes(kind);
+  if (lookup)
+    active = decos.DecorationSet.create(doc, [
+      decos.Decoration.inline(2, 5, { nodeName: "em", class: "lookup" }),
+      decos.Decoration.node(0, doc.firstChild.nodeSize, {
+        nodeName: "section",
+      }),
+      decos.Decoration.widget(5, () => window.document.createElement("span"), {
+        key: "lookup",
+        side: -1,
+      }),
+    ]);
   let view;
   if (kind !== "create") view = make();
   cleanup = () => {
@@ -86,6 +98,19 @@ function prepare(file, kind) {
       v.destroy();
       return count;
     };
+  if (lookup) {
+    const positions = Array.from({ length: doc.content.size + 1 }, (_, i) => i);
+    const points =
+      kind === "posAtDOM" ? positions.map((p) => view.domAtPos(p, 1)) : null;
+    return () => {
+      index = (index + 1) % positions.length;
+      if (kind === "domAtPos") return view.domAtPos(positions[index], 1).offset;
+      if (kind === "nodeDOM")
+        return view.nodeDOM(positions[index])?.nodeType || 0;
+      const point = points[index];
+      return view.posAtDOM(point.node, point.offset);
+    };
+  }
   return () => {
     index ^= 1;
     if (kind === "decoration") active = sets[index];
@@ -99,10 +124,16 @@ const cases = [
   ["edit", "change one paragraph of 32"],
   ["decoration", "change one highlight in 32 paragraphs"],
   ["noop", "repeat identical document/decorations"],
+  ["domAtPos", "document to DOM lookup across 32 paragraphs"],
+  ["posAtDOM", "DOM to document lookup across 32 paragraphs"],
+  ["nodeDOM", "node DOM lookup across 32 paragraphs"],
 ].map(([kind, name]) => ({
   name,
   make: (file) => prepare(file, kind),
-  validate: (n) => assert.equal(n, 32),
+  validate: (n) =>
+    ["domAtPos", "posAtDOM", "nodeDOM"].includes(kind)
+      ? assert.ok(Number.isInteger(n) && n >= 0)
+      : assert.equal(n, 32),
 }));
 require("../../../scripts/bench-process.cjs")
   .run({

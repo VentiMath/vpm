@@ -18,9 +18,10 @@
     "targetScope": "Private independent decoration models and read-only schema/decorations DOM renderer. No root export, EditorView, custom node-view lifecycle, input/selection/IME/clipboard, release or application adoption.",
     "independentComponents": {
       "decorations": "Implemented independently from public declarations and test observations.",
-      "readonly": "Schema DOM recipes, mark/decorations composition, keyed record reconciliation, owner-document handling and widget cleanup written independently."
+      "readonly": "Schema DOM recipes, mark/decorations composition, keyed record reconciliation, owner-document handling and widget cleanup written independently.",
+      "positionLookup": "Retained-record DOM/document lookup independently implemented from public API declarations and observed current/app controls; no upstream lookup code copied."
     },
-    "remainingWork": "Document/DOM position lookup next; then geometry, node-view lifecycle, browser input/selection, IME/clipboard and editor acceptance. Transform deep-deletion 3..42 and the recorded bulk decoration creation/mapping/removal costs remain acceptance gaps."
+    "remainingWork": "Read-only coordsAtPos geometry next; then node-view lifecycle, browser input/selection, IME/clipboard and editor acceptance. Transform deep-deletion 3..42 and recorded bulk decoration costs plus Bun read-only creation overhead remain acceptance gaps."
   },
   "appContract": {
     "path": "src/components/tiptap/tiptap-extension/selection-extension.ts",
@@ -37,6 +38,6 @@
     "path": "src/components/tiptap/tiptap-templates/simple/simple-editor.tsx",
     "commit": "f7b9e2f6ae589bd503c8b7ddf1dd86f8d896fc65",
     "sha256": "9b9aad09a8528ff54936a94a9614b4a1b68f68811fbfc9ca1b0e4c33f0367f0d",
-    "scope": "Public extension DOM recipes/configuration; React ImageUploadNode and editing plugins excluded. 14 Chrome structural and 120 update snapshots plus layout/identity/focus/iframe/input checks. Static task controls deliberately disabled."
+    "scope": "Public extension DOM recipes/configuration; React ImageUploadNode and editing plugins excluded. 14 Chrome structural and 120 update snapshots plus layout/identity/focus/iframe/input checks. Static task controls deliberately disabled. Retained-record nodeDOM/domAtPos/posAtDOM: 21 initial full-offset fixtures and 24 updates with current/app parity, round trips, widget affinity and UTF-16 boundaries."
   }
 }

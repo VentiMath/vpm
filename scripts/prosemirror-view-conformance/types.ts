@@ -55,4 +55,12 @@ const readonlyView = new ReadOnlyRenderer(document.createElement("div"), {
   decorations: set,
 });
 readonlyView.update(doc, mapped);
+const point: { node: globalThis.Node; offset: number } = readonlyView.domAtPos(
+  2,
+  1,
+);
+const position: number = readonlyView.posAtDOM(point.node, point.offset, -1);
+const element: globalThis.Node | null = readonlyView.nodeDOM(position);
+// @ts-expect-error Geometry is a separate milestone.
+readonlyView.coordsAtPos(1);
 readonlyView.destroy();

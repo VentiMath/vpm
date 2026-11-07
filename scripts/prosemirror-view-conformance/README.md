@@ -1,4 +1,4 @@
-# ProseMirror decoration model checks
+# ProseMirror internal view checks
 
 These are internal decoration and read-only DOM milestones, not an EditorView implementation or a release.
 Current upstream is 1.42.9 (registry checked 2026-11-07), app upstream is 1.41.6.
@@ -71,6 +71,33 @@ constructor/update failures and rejection of attribute-array DOM recipes.
 The archive gate repeats native Chrome against the exact packed renderer/model
 closure after both npm and Bun installs. Widget factories that need an EditorView
 host, custom node views, browser editing, selection synchronization, IME and
-clipboard remain outside this unit. Next is bounded document/DOM position lookup;
+clipboard remain outside this unit. The retained-record position lookup gate is described below;
 geometry/caret visibility follows later. Bulk decoration performance and the
 saved deep deletion remain full editing acceptance follow-ups.
+
+
+## Document/DOM position lookup
+
+`position-cases.cjs` expresses the public `nodeDOM`, `domAtPos` and `posAtDOM`
+contracts independently. It compares all valid document positions (sides -1/0/1),
+all DOM node/offset pairs (biases -1/0/1), and the exact returned DOM paths across
+current/app/VPM. Every document-to-DOM result must round-trip to the same document
+position. UTF-16 offsets deliberately include surrogate-pair and combining-mark
+boundaries; no grapheme rounding is applied.
+
+The 21 initial fixtures cover the documentation schema, marks, inline/node wrappers,
+static task labels/content holes, leaf nodes, empty blocks, trailing breaks and
+negative/zero/positive widget affinities, including widgets with their own marks.
+A further 24 updates change text lengths, marks and wrappers while retaining the
+second paragraph and moving a keyed widget. Each update repeats the complete
+lookup comparison. The iframe check repeats round trips in its owner document.
+Original tests also verify a ShadowRoot mount, no DOM writes from queries, stale
+and foreign DOM rejection, strict offset validation and destroyed-instance guards.
+These checks run in JSDOM on Node/Bun and native Chrome, including exact archives.
+Bounds and sibling offsets are cached for one successful update only; the update
+sequence warms queries before changing the document/decorations, exercising cache
+invalidation even when an unchanged node is retained and moves.
+
+No geometry APIs, browser selection/input, mutation reconciliation or custom
+node-view mapping are claimed. Next is the app-used `coordsAtPos` geometry contract;
+the deep-deletion and bulk decoration costs remain editing acceptance follow-ups.
