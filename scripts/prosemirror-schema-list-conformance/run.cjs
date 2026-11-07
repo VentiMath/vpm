@@ -24,6 +24,10 @@ const oldFailures = [
   "can sink an item into a nested list of mixed types",
 ];
 for (const runtime of ["node", "bun"]) {
+  const diagnosis = JSON.parse(
+    run(runtime, [path.join(__dirname, "diagnose-transform.cjs")]),
+  );
+  assert.equal(diagnosis.matches, true);
   for (const graph of ["upstream", "app", "vpm", "app-vpm", "current-vpm"]) {
     const rows = JSON.parse(
       run(runtime, [
@@ -48,6 +52,6 @@ for (const runtime of ["node", "bun"]) {
   ]);
   console.log(
     runtime +
-      ": all38 current upstream list tests pass on current/fullVPM/current-VPM/app-VPM; app1.5.1 has exactly8 expected pre1.6.0 differences. Six independent groups and6000 differential list edits pass.",
+      ": all38 current upstream list tests pass on current/fullVPM/current-VPM/app-VPM; app1.5.1 has exactly8 expected pre1.6.0 differences. Seven independent groups and6000 differential list edits pass.",
   );
 }

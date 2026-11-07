@@ -39,8 +39,10 @@ The supported development runtimes are Node 24 and Bun 1.4.4.
 retain 248 upstream tests unchanged, including deterministic runs of their
 randomized inversion checks. Original tests compare 3,000 editor operations,
 selection mapping, undo, mirrored rebasing, composite mark JSON and 18 cross-list
-deletion cases against the current baseline. Real Tiptap extension/command fixtures compare thirteen JSON,
-HTML and selection snapshots against current upstream and VentiMath's installed
+deletion cases against the current baseline. Another 64 mixed-depth list cases
+check compatible list joins, preserved nesting, insertion positions and undo,
+including empty text tails and UTF-16 surrogate pairs. Real Tiptap extension/command
+fixtures compare thirteen JSON, HTML and selection snapshots against current upstream and VentiMath's installed
 transform 1.11.0. Packed npm/Bun installs, TypeScript 7 consumers and Chrome run
 against the complete VPM transform/model/ordered-map closure.
 
@@ -53,7 +55,14 @@ Bun mapping and wrap/lift overhead. All raw samples and source hashes are kept.
 The cross-list deletion path closes surviving ancestors with a validated edit
 step before falling back to general fitting; it preserves the schema checks.
 
-This completes the documented source-package scope. A public release and
-VentiMath adoption are separate. Native IME, system clipboard, browser input
-handling and collaborative-server integration belong to the editor cutover.
+Cross-list text replacement now joins compatible surviving list shells without
+flattening nested lists. An empty trailing text gap retains the insertion cursor
+before reconstructed closing shells. Both document and actual editor selection
+are checked through the list-package caller and packed browser fixtures.
+
+Full editor parity remains separate. Broader deletion testing found a range
+expansion that drops an empty paragraph upstream preserves; its
+[reproduction](../../scripts/prosemirror-schema-list-conformance/README.md) is
+recorded for follow-up. A public release and VentiMath adoption are separate.
+Native IME, system clipboard, browser input handling and collaborative-server integration belong to the editor cutover.
 All ProseMirror callers must resolve the same model and transform instances.

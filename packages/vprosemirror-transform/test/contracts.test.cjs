@@ -280,3 +280,73 @@ test("navigation helpers match valid upstream candidates and reject its incompat
     }
   }
 });
+
+test("mixed-depth list text replacement preserves suffix structure, insertion point and undo", () => {
+  const input = require("../../../scripts/prosemirror-schema-list-conformance/transform-followup.json");
+  for (const left of ["bullet_list", "ordered_list"])
+    for (const right of ["bullet_list", "ordered_list"])
+      for (const inner of ["bullet_list", "ordered_list"])
+        for (const tail of ["", "tail"])
+          for (const nested of [false, true])
+            for (const text of ["x", "😀"]) {
+              const json = structuredClone(input.doc),
+                last = json.content.at(-1);
+              for (const [node, type] of [
+                [json.content[0], left],
+                [last, right],
+                [last.content[0].content[1], inner],
+              ]) {
+                node.type = type;
+                if (type === "ordered_list") node.attrs = { order: 7 };
+                else delete node.attrs;
+              }
+              last.content[0].content[1].content[0].content[0].content[0].text =
+                "x" + tail;
+              const value = nested
+                ? {
+                    type: "doc",
+                    content: [{ type: "quote", content: json.content }],
+                  }
+                : json;
+              const results = [model, um].map((m, i) => {
+                const schema = new m.Schema({
+                  nodes: {
+                    ...spec.nodes,
+                    bullet_list: { content: "list_item+", group: "block" },
+                    ordered_list: {
+                      content: "list_item+",
+                      group: "block",
+                      attrs: { order: { default: 1 } },
+                    },
+                    list_item: { content: "paragraph block*" },
+                  },
+                });
+                const doc = schema.nodeFromJSON(value),
+                  from = 5 + Number(nested),
+                  to = 32 + Number(nested);
+                const tr = new [v, u][i].Transform(doc).replaceRangeWith(
+                  from,
+                  to,
+                  schema.text(text),
+                );
+                tr.doc.check();
+                let restored = tr.doc;
+                for (let j = tr.steps.length - 1; j >= 0; j--)
+                  restored = tr.steps[j].invert(tr.docs[j]).apply(restored).doc;
+                assert(restored.eq(doc));
+                let insertionEnd;
+                tr.steps
+                  .at(-1)
+                  .getMap()
+                  .forEach((_a, _b, _c, end) => {
+                    insertionEnd ??= end;
+                  });
+                return { doc: tr.doc.toJSON(), insertionEnd };
+              });
+              assert.deepEqual(
+                results[0],
+                results[1],
+                JSON.stringify({ left, right, inner, tail, nested, text }),
+              );
+            }
+});

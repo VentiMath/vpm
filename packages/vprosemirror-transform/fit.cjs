@@ -223,13 +223,17 @@ function fitDocument(doc, from, to, slice) {
     }
     let match = -1,
       filler = null;
+    // Sibling suffixes stay at their original nesting level. Only a suffix
+    // already carried as a whole subtree may join a shallower compatible frame.
+    // This also lets ordered/bullet lists share a surviving list-item boundary.
     for (let k = d === 0 ? 0 : stack.length - 1; k >= 0; k--) {
       const f = stack[k];
       if (
         !(d === 0
           ? k === 0
           : k > 0 &&
-            (f.node.type === original.type ||
+            (((k >= d || carry.size) &&
+              f.node.type.compatibleContent(original.type)) ||
               (d === b.depth && f.node.isTextblock && original.isTextblock)))
       )
         continue;
@@ -334,6 +338,28 @@ function replaceStep(doc, from, to = from, slice = Slice.empty) {
       if (end > to && doc.resolve(to).parent.isTextblock) {
         const gapTo = doc.resolve(to).end(),
           gap = doc.slice(to, gapTo);
+        // An empty surviving text tail still anchors the insertion cursor.
+        // Closing additional list shells must not move that cursor after them.
+        if (
+          !gap.size &&
+          !slice.openStart &&
+          !slice.openEnd &&
+          slice.content.content.every((n) => n.isInline) &&
+          doc.resolve(from).parent.inlineContent
+        ) {
+          const insert = from - start + slice.size;
+          if (insert >= 0 && insert <= replacement.size) {
+            const around = new ReplaceAroundStep(
+              start,
+              end,
+              to,
+              gapTo,
+              replacement,
+              insert,
+            );
+            if (around.apply(doc).doc?.eq(result)) return around;
+          }
+        }
         if (gap.size) {
           for (
             let insert = 0;

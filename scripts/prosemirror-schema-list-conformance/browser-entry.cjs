@@ -91,6 +91,28 @@ module.exports = function setup(name) {
         run("splitListItem", "taskItem");
         run("updateAttributes", "taskItem", { checked: true });
         run("undo");
+        const input = require("./transform-followup.json");
+        const names = {
+          bullet_list: "bulletList",
+          ordered_list: "orderedList",
+          list_item: "listItem",
+        };
+        const convert = (node) => ({
+          ...node,
+          type: names[node.type] || node.type,
+          ...(node.type === "ordered_list"
+            ? { attrs: { start: node.attrs.order } }
+            : {}),
+          ...(node.content ? { content: node.content.map(convert) } : {}),
+        });
+        e.commands.setContent(convert(input.doc));
+        e.commands.setTextSelection({
+          from: input.selection[0],
+          to: input.selection[1],
+        });
+        run("insertContent", "x");
+        if (e.state.selection.anchor !== 6 || e.state.selection.head !== 6)
+          throw Error("Cross-list cursor moved past inserted text");
         return out;
       } finally {
         const host = e.options.element;

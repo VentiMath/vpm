@@ -211,6 +211,10 @@ try {
     });
     const built = path.join(__dirname, "node_modules/.vpm-schema-list");
     for (const runtime of ["node", "bun"]) {
+      const diagnosis = JSON.parse(
+        run(runtime, [path.join(__dirname, "diagnose-transform.cjs")], root),
+      );
+      assert.equal(diagnosis.matches, true);
       const results = ["upstream", "vpm"].map((v) =>
         JSON.parse(run(runtime, [path.join(built, v + ".cjs")], root)),
       );

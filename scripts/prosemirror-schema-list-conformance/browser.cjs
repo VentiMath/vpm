@@ -91,7 +91,7 @@ const pending = new Map(),
     );
     assert.deepEqual(result.result.value, {
       variants: 3,
-      snapshots: 12,
+      snapshots: 13,
     });
     const evaluate = async (expression) => {
       const r = await send("Runtime.evaluate", {
@@ -156,7 +156,7 @@ const pending = new Map(),
     assert.deepEqual(snapshots[0], snapshots[2]);
     assert.deepEqual(exceptions, []);
     console.log(
-      "Chrome: current/app/VPM Tiptap list graphs match 12 API snapshots, task-list commands and trusted Tab/Shift-Tab/Enter/typing.",
+      "Chrome: current/app/VPM Tiptap list graphs match 13 API snapshots, task-list commands and trusted Tab/Shift-Tab/Enter/typing.",
     );
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);

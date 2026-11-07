@@ -41,19 +41,22 @@ failure. Undocumented runtime internals are not compatibility contracts.
 All **38 unchanged current upstream tests** pass on current upstream, full VPM,
 VPM lists on current foundations and VPM lists on app foundations on Node 24 and
 Bun 1.4.4. App 1.5.1 is retained as a negative control for its eight pre-1.6.0
-differences. Six independent groups include **6,000 seeded edits**, schema
+differences. Seven independent groups include **6,000 seeded edits**, schema
 attributes, marks, query-only calls, mapping, inversion and range wrapping.
 Actual Tiptap list/task-list commands and trusted keyboard events are checked in
 Chrome. Exact archives, clean npm/Bun installs, CJS/ESM and TS7 are verified by the
 [conformance fixture](../../scripts/prosemirror-schema-list-conformance/README.md).
 
-**Full editor adoption is still separate.** A synthetic cross-list text replacement
-exposed an existing VPM transform fitting discrepancy. The fixture preserves its
-[reproduction](../../scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs).
-The 4,000 isolated caller edits include arbitrary text selections; the 2,000
-full-VPM list edits use text replacements within one textblock while list commands
-still span blocks. This distinguishes verified list behavior from unverified
-whole-editor parity. Resolve the transform discrepancy before an editor release.
+**Full editor adoption is still separate.** The mixed-depth cross-list text
+replacement regression is fixed in VPM transform: both document and cursor now
+match upstream, including undo and the real Tiptap browser caller. Its
+[diagnostic](../../scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs)
+is now a source and packed-package gate. All 6,000 edits permit cross-block text
+insertion; the 2,000 full-VPM edits still restrict deletion to one textblock.
+Broader deletion testing found a separate range expansion that removes an empty
+paragraph upstream preserves. Its
+[recorded reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
+remains a follow-up before complete editor adoption.
 
 [Isolated benchmarks](bench/results/README.md) retain every pair and control.
 List-only cases use identical upstream foundations to isolate this implementation;

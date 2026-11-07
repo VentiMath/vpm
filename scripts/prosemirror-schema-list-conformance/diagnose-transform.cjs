@@ -1,5 +1,9 @@
 "use strict";
-const input = require("./transform-followup.json"),
+const input = require(
+    process.argv[2]
+      ? require("node:path").resolve(process.argv[2])
+      : "./transform-followup.json",
+  ),
   out = {};
 for (const name of ["upstream", "vpm"]) {
   const A = require("./node_modules/.vpm-schema-list/api-" + name + ".cjs");
@@ -18,7 +22,10 @@ for (const name of ["upstream", "vpm"]) {
       doc,
       selection: A.S.TextSelection.create(doc, ...input.selection),
     }),
-    tr = state.tr.insertText("x");
+    tr =
+      input.operation === "deleteSelection"
+        ? state.tr.deleteSelection()
+        : state.tr.insertText("x");
   out[name] = { doc: tr.doc.toJSON(), selection: tr.selection.toJSON() };
 }
 const matches = JSON.stringify(out.upstream) === JSON.stringify(out.vpm);

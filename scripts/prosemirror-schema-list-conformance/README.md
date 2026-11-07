@@ -16,30 +16,42 @@ node scripts/prosemirror-schema-list-conformance/run.cjs
 node scripts/prosemirror-schema-list-conformance/archives.cjs
 ```
 
-Use Node 24 and Bun 1.4.4. Six independent groups cover 6,000 seeded edits, immutable
+Use Node 24 and Bun 1.4.4. Seven independent groups cover 6,000 seeded edits, immutable
 schema descriptors, attributes/marks, exact query results, mapped positions,
 inverse steps and appending a range wrap to an existing transaction. Chrome
-compares 12 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
+compares 13 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
 Enter and typing. The five-package archive closure is byte-verified, installed
 fresh/frozen with npm and Bun, then checked for runtime/module/type behavior.
 
-## Existing transform follow-up
+## Cross-list text replacement regression
 
-`diagnose-transform.cjs` reproduces a synthetic selection spanning differently
-nested bullet and ordered lists. With upstream foundations, text replacement
-joins the trailing list into the leading list. Current VPM fitting instead keeps
-a separate trailing list and places the cursor differently. This is independent
-of the schema-list command runtime. The diagnostic intentionally exits nonzero
-until both document and selection match; it is not a passing conformance gate.
+`diagnose-transform.cjs` replaces text across differently nested bullet and
+ordered lists. VPM now joins the compatible trailing list into the leading list,
+preserves its nested list, and places the cursor immediately after the inserted
+text, matching upstream. The diagnostic is a passing gate in both the source and
+archive suites on Node and Bun. An actual EditorState test also checks backward
+selection and undo; the thirteenth Chrome snapshot uses Tiptap's `insertContent`.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs
 ```
 
+## Remaining deletion follow-up
+
+Broader fuzzing found a separate `deleteRange` expansion issue: deleting a
+backward selection across a list and an empty paragraph removes that paragraph
+in VPM, while upstream preserves it. The diagnostic accepts this saved fixture
+and intentionally exits nonzero; this particular case is not a passing gate.
+
+```sh
+node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/deletion-followup.json
+```
+
 Randomized list comparison includes arbitrary text selections on current/app
-upstream foundations (4,000 edits). Full VPM comparison (2,000 edits) limits text
-replacement to one textblock, while list operations still span blocks. Keep this
-limitation visible and resolve the transform discrepancy before full editor adoption.
+upstream foundations (4,000 edits). Full VPM comparison (2,000 edits) now permits
+cross-block text insertion. Only deletion remains limited to one textblock;
+list operations still span blocks. Keep this limitation visible before full
+editor adoption.
 
 [Benchmarks](../../packages/vprosemirror-schema-list/bench/results/README.md) use
 identical foundations for list-only cases and explicitly label complete VPM-stack

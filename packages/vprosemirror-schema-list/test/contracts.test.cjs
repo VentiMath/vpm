@@ -97,12 +97,15 @@ test("6000 seeded list edits agree across isolated callers and full VPM lists", 
       let from = ps[random() % ps.length],
         to = random() % 4 === 0 ? ps[random() % ps.length] : from,
         op = random() % 8;
+      // Cross-block insertion is covered; deletion range expansion remains a
+      // separately recorded transform follow-up.
       if (
         vName === "vpm" &&
-        op < 2 &&
+        op === 1 &&
         !u.state.doc.resolve(from).sameParent(u.state.doc.resolve(to))
       )
         to = from;
+
       for (const x of [u, v])
         x.state = x.state.apply(
           x.state.tr.setSelection(
@@ -308,5 +311,27 @@ test("lift query refuses an edit that cannot preserve the trailing schema", () =
     );
     assert.equal(calls, 0);
     assert.equal(state.doc, doc);
+  }
+});
+
+test("mixed-depth replacement and empty trailing gaps preserve the actual text cursor", () => {
+  const input = require("../../../scripts/prosemirror-schema-list-conformance/transform-followup.json");
+  for (const selection of [input.selection, [...input.selection].reverse()]) {
+    const results = ["upstream", "vpm"].map((name) => {
+      const x = make(api(name), input.doc, selection),
+        before = x.state.doc;
+      x.state = x.state.apply(x.A.H.closeHistory(x.state.tr.insertText("x")));
+      const after = snapshot(x);
+      assert.equal(x.state.selection.anchor, 6);
+      assert.equal(x.state.selection.head, 6);
+      assert(
+        x.A.H.undo(x.state, (tr) => {
+          x.state = x.state.apply(tr);
+        }),
+      );
+      assert(x.state.doc.eq(before));
+      return after;
+    });
+    assert.deepEqual(results[0], results[1]);
   }
 });
