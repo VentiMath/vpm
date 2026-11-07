@@ -755,6 +755,15 @@
       "name": "vpromisify",
       "version": "0.1.0",
     },
+    "packages/vprosemirror-commands": {
+      "name": "vprosemirror-commands",
+      "version": "1.7.2",
+      "dependencies": {
+        "vprosemirror-model": "1.25.12",
+        "vprosemirror-state": "1.4.4",
+        "vprosemirror-transform": "1.12.5",
+      },
+    },
     "packages/vprosemirror-model": {
       "name": "vprosemirror-model",
       "version": "1.25.12",
@@ -1574,6 +1583,8 @@
     "vprojectify": ["vprojectify@workspace:packages/vprojectify"],
 
     "vpromisify": ["vpromisify@workspace:packages/vpromisify"],
+
+    "vprosemirror-commands": ["vprosemirror-commands@workspace:packages/vprosemirror-commands"],
 
     "vprosemirror-model": ["vprosemirror-model@workspace:packages/vprosemirror-model"],
 

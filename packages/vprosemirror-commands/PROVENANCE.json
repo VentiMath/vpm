@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "prosemirror-commands",
+    "version": "1.7.2",
+    "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-commands",
+    "checked": "2026-11-06",
+    "integrity": "sha512-q6Q6szxqdu9Xd6EcdKsqXghu5nQdZTpB4Q9yd04WRc7/jt763e/rT60Owh0L1GYY+T46o5rD+9lEN36dZS43tw=="
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "3c8d27645c9615dfaea57aa73b7ba0c0f66faf0ba60bc4b2bd3cc24661798218",
+    "dist/index.d.ts": "c60e1b30f06db4bb8955ee847c28592af992e45f2b8db300c1b0edfc3329b9cb",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Commands 1.7.2 editing actions, split/join/lift/wrap, marks, command composition and base keymaps. Current and app 1.7.1 controls, Tiptap 2.11.7 callers, packed browser and TypeScript consumers. Browser view, native input handling and app adoption remain separate."
+  },
+  "changes": [
+    "Independent runtime over the VPM model, transform and state; upstream runtime source is not shipped.",
+    "Split commands resolve their position after selection deletion; list-wrapper deletion preserves the next paragraph instead of inheriting the deleted code block.",
+    "Command capability checks, mark whitespace and inline-atom options, generic-transaction auto-join and platform keymaps retain the public contract."
+  ]
+}

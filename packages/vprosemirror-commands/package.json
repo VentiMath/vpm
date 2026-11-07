@@ -1,0 +1,47 @@
+{
+  "name": "vprosemirror-commands",
+  "version": "1.7.2",
+  "description": "Independent schema-aware editor commands for ProseMirror and Tiptap",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.cjs"
+      }
+    }
+  },
+  "files": [
+    "*.cjs",
+    "index.mjs",
+    "index.d.ts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json",
+    "index.d.mts"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "dependencies": {
+    "vprosemirror-model": "1.25.12",
+    "vprosemirror-transform": "1.12.5",
+    "vprosemirror-state": "1.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vprosemirror-commands"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

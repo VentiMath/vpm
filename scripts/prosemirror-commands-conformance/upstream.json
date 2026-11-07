@@ -1,0 +1,9 @@
+{
+  "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-commands",
+  "version": "1.7.2",
+  "commit": "59fee8d89be2d033b28c2bac68e6736e2989bf9d",
+  "sha256": {
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+    "test-commands.ts": "75fea71d9b71ad61bbc78514254fb23e7bcda1e17d97e7c14b205a4179e4a114"
+  }
+}
