@@ -50,6 +50,12 @@ const config = {
     lib: ["ES2022", "DOM", "DOM.Iterable"],
     types: [],
     paths: {
+      "vprosemirror-model": [
+        path.join(root, "packages/vprosemirror-model/index.d.ts"),
+      ],
+      "vprosemirror-transform": [
+        path.join(root, "packages/vprosemirror-transform/index.d.ts"),
+      ],
       "prosemirror-transform": [
         path.join(root, "packages/vprosemirror-transform/index.d.ts"),
       ],
