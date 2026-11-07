@@ -1,0 +1,17 @@
+{
+  "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-model",
+  "commit": "4211aeeaa3d738454a5d1428a95c1a210e86d787",
+  "version": "1.25.12",
+  "adaptations": "No test source edits. The runner supplies node:test globals and redirects model imports.",
+  "sha256": {
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+    "test-content.ts": "aaf6241cb3953fef06a9b7027dec4da36a5c3f64a0434cbd637451c25d30177a",
+    "test-diff.ts": "fa4135b96fe47be0f1e36b0233ca3c0dd2d612881e2f537b5c39e80d2efb6232",
+    "test-dom.ts": "6c74890011944f7de3f5be432e0d0c72534d752d0c07018248bec30b1195f7d9",
+    "test-mark.ts": "d1c291134f4a3c5e9ffb122a727d87849b1c91a60f9013c4ed9ff058d842672e",
+    "test-node.ts": "0b23ca4ac71873673ed26c9e50dc7253234088ddae3ec495e4953937ddc50476",
+    "test-replace.ts": "634fea596bd8c1968eeb3e93f7fd419450f1bd536525cb72712eda99702760f5",
+    "test-resolve.ts": "44f4e69ad2e24e8db5e609dbf26b30e7ccdd7a8308f07798ba7f815cf797aa23",
+    "test-slice.ts": "b7aa703a80560fef690f120d0c1add2387712c7403997cf9391d6e54aaf1107e"
+  }
+}

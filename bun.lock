@@ -755,6 +755,13 @@
       "name": "vpromisify",
       "version": "0.1.0",
     },
+    "packages/vprosemirror-model": {
+      "name": "vprosemirror-model",
+      "version": "1.25.12",
+      "dependencies": {
+        "vorderedmap": "2.1.1",
+      },
+    },
     "packages/vproto3-json-serializer": {
       "name": "vproto3-json-serializer",
       "version": "0.1.0",
@@ -1546,6 +1553,8 @@
     "vprojectify": ["vprojectify@workspace:packages/vprojectify"],
 
     "vpromisify": ["vpromisify@workspace:packages/vpromisify"],
+
+    "vprosemirror-model": ["vprosemirror-model@workspace:packages/vprosemirror-model"],
 
     "vproto3-json-serializer": ["vproto3-json-serializer@workspace:packages/vproto3-json-serializer"],
 

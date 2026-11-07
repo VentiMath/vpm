@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "prosemirror-model",
+    "version": "1.25.12",
+    "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-model",
+    "checked": "2026-11-06",
+    "integrity": "sha512-Ue2gTmXMa7EhpLNhC7J+h4+ykD8ha12K6rrZFFKKJHBForfIStw5gJ6Zrf1mqqAa9NmpmEB4wp9bKmA4eUVjWg=="
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "6e6b165d02c5e81e9c96597981904f1768cf13d53b49300d387a43a6ee21bcf5",
+    "dist/index.d.ts": "b11a34cfd6b9d74ce796ea9ffe402a981a0e68845ea2da0d86b3ca65777dd2a7",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "ProseMirror model 1.25.12 schemas, persistent documents, marks, positions, slices, replacement, content matching and DOM parsing/serialization. Tiptap 2.11.7 application extension and command fixtures; upstream 1.25.12 and app 1.25.4 controls. Editor browser/IME/clipboard deployment acceptance is separate."
+  },
+  "changes": [
+    "Independent boundary-token replacement preserves untouched subtrees and persistent document history.",
+    "Own-key schema attributes and null-prototype records ignore inherited attribute input.",
+    "Reject fractional/out-of-range resolved positions and negative/fractional serialized slice depths.",
+    "Map DOM source offsets through whitespace normalization and trailing trim, avoiding misplaced or negative cursor positions.",
+    "Content-expression NFA/DFA and breadth-first wrapping/filling; bounded repeat counts.",
+    "DOM construction uses document APIs, preserves attribute-array injection protection, and shares active mark wrappers.",
+    "One VPM runtime dependency: vorderedmap 2.1.1. No upstream runtime files shipped."
+  ]
+}
