@@ -1,0 +1,8 @@
+{
+  "version": "1.6.0",
+  "commit": "1a1c839447b51521637857cdfba0c9b05167f27f",
+  "sha256": {
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+    "test-commands.ts": "92f908a23e155eb0a75c57773c305e8dbdf10e0f590fe14d8ab9ffa2272b5ec9"
+  }
+}

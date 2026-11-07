@@ -1,0 +1,47 @@
+{
+  "name": "vprosemirror-schema-list",
+  "version": "1.6.0",
+  "description": "Independent schema-aware list construction and editing commands",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.cjs"
+      }
+    }
+  },
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "dependencies": {
+    "vprosemirror-model": "1.25.12",
+    "vprosemirror-transform": "1.12.5",
+    "vprosemirror-state": "1.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vprosemirror-schema-list"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

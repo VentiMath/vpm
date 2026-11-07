@@ -1,0 +1,26 @@
+{
+  "upstream": {
+    "name": "prosemirror-schema-list",
+    "version": "1.6.0",
+    "appVersion": "1.5.1",
+    "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-schema-list",
+    "commit": "1a1c839447b51521637857cdfba0c9b05167f27f",
+    "checked": "2026-11-07",
+    "integrity": "sha512-G1srDtan+VqWn+qpmWFj/6j0YsZ5zMU+ZIlGVIW41a5JF2jAI3jzfMRWmSABmEH2Qoq1PmAG/o2mucMMdLOsLg=="
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "9e87c6441fc23f66d0f0442c7ef2ce6f5cd7badb6e8f068235e260ab75552b49",
+    "dist/index.d.ts": "5a05fa8cd2e945458aae40d302246c2467e9f5d8b1a32fb3f85d7ac21ef97e8e",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented list API scope",
+    "targetScope": "List schema descriptors and public list commands, including mixed items, current/app Tiptap callers and native keyboard controls. Full editor adoption remains separate; a pre-existing transform cross-list text replacement discrepancy is documented in the conformance fixture."
+  },
+  "changes": [
+    "Independent range planning, gap-preserving nesting and right-to-left item lifting.",
+    "Current 1.6.0 mixed item types and lists beginning with lists; query-only lift accurately reports infeasibility.",
+    "No copied upstream runtime. Same VPM model/state/transform graph required."
+  ]
+}
