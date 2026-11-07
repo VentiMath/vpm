@@ -1163,6 +1163,10 @@
       "name": "vretry-request",
       "version": "0.1.0",
     },
+    "packages/vrope-sequence": {
+      "name": "vrope-sequence",
+      "version": "1.3.4",
+    },
     "packages/vrouter": {
       "name": "vrouter",
       "version": "0.1.0",
@@ -1687,6 +1691,8 @@
     "vretry": ["vretry@workspace:packages/vretry"],
 
     "vretry-request": ["vretry-request@workspace:packages/vretry-request"],
+
+    "vrope-sequence": ["vrope-sequence@workspace:packages/vrope-sequence"],
 
     "vrouter": ["vrouter@workspace:packages/vrouter"],
 
