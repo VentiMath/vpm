@@ -26,9 +26,9 @@ process.env.NODE_ENV ||= 'development';
 
 const modules = path.resolve(process.argv[2] || path.join(__dirname, 'consumers/node_modules'));
 
-// Upstream name -> VPM package and the upstream versions that package targets.
+// Backend consumer graph: every target must exist in scripts/consumers.
+// Frontend callers are covered by their own conformance fixtures.
 const targets = {
-  'orderedmap': {pkg:'vorderedmap',versions:/^2\.1\.1$/},
   'fast-deep-equal': {pkg:'vfast-deep-equal',versions:/^3\.1\.3$/},
   'functional-red-black-tree': {pkg:'vfunctional-red-black-tree',versions:/^1\.0\.1$/},
   'google-gax': {pkg:'vgoogle-gax',versions:/^6\.14\.0$/},
