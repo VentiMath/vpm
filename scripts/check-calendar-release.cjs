@@ -4,7 +4,7 @@ const {spawnSync}=require('node:child_process'),{createHash}=require('node:crypt
 const args=process.argv.slice(2),directory=path.resolve(args[0]||'.'),published=args.includes('--published');
 const manifest=JSON.parse(fs.readFileSync(path.join(directory,'release-manifest.json')));
 const temp=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-calendar-install-'));
-function run(command,argv){const r=spawnSync(command,argv,{cwd:temp,encoding:'utf8',timeout:180000,env:{...process.env,BUN_INSTALL_CACHE_DIR:path.join(temp,'cache')}});assert.equal(r.status,0,(r.stdout+r.stderr).slice(-6000));return r.stdout;}
+function run(command,argv){const r=spawnSync(command,argv,{cwd:temp,encoding:'utf8',timeout:180000,env:{...process.env,BUN_INSTALL_CACHE_DIR:path.join(temp,'cache'),CALENDAR_PACKAGES_DIR:path.join(temp,'node_modules')}});assert.equal(r.status,0,(r.stdout+r.stderr).slice(-6000));return r.stdout;}
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
 try {
  const top=manifest.packages.find(p=>p.name==='vfullcalendar-react');assert.ok(top);
@@ -38,5 +38,7 @@ try {
  fs.writeFileSync(path.join(temp,'tsconfig.json'),JSON.stringify({compilerOptions:{strict:true,noEmit:true,target:'ES2022',module:'ESNext',moduleResolution:'Bundler',jsx:'react-jsx',lib:['ES2022','DOM','DOM.Iterable'],types:[]},files:['consumer.tsx','css.d.ts']}));
  run('node',[require('./platform-types.cjs').compiler().path,'-p','tsconfig.json']);
  const before=fs.readFileSync(path.join(temp,'bun.lock'));run('bun',['install','--frozen-lockfile','--ignore-scripts']);assert.deepEqual(fs.readFileSync(path.join(temp,'bun.lock')),before);
- console.log((published?'Public URL, no overrides; resolved dependencies':'Local extracted archives; dependency metadata')+': exact source hashes, Node/Bun imports, plugin/CSS browser build, TS7 consumer and frozen install pass.');
+ for(const runtime of ['node','bun'])run(runtime,[path.join(__dirname,'fullcalendar-react-conformance/transitions.cjs')]);
+ run('node',[path.join(__dirname,'fullcalendar-react-conformance/application-browser.cjs')]);
+ console.log((published?'Public URL, no overrides; resolved dependencies':'Local extracted archives; dependency metadata')+': exact source hashes, Node/Bun imports and date regressions, native Chrome interactions/label bounds, plugin/CSS browser build, TS7 consumer and frozen install pass.');
 } finally {fs.rmSync(temp,{recursive:true,force:true});}

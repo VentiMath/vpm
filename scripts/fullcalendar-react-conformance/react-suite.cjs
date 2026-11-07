@@ -24,6 +24,7 @@ if (!upstream) {
   console.log(
     "Independent React calendar: 11 lifecycle, async-source, event, date and safety cases pass.",
   );
+  require('./transitions.cjs');
   process.exit(0);
 }
 const stats = runVitest({

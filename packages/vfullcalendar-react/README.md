@@ -92,8 +92,7 @@ Use stable public IDs for event content that needs state preserved.
 
 ## Time-grid labels and remaining presentation limits
 
-The hour-label correction is on main and has not yet shipped in a calendar
-release. Hour labels sit below their slot lines so the first visible hour is not clipped
+Release r4 places hour labels below their slot lines so the first visible hour is not clipped
 at the default 6am scroll position. Browser checks cover week/day views, a custom
 9am scroll time and a grid beginning at 6am. The pre-fix r3 stylesheet fails the
 same text-bounds assertion. Slot geometry and scroll positions are unchanged.
@@ -107,12 +106,37 @@ the clicked day. All-day and overflow labels remain English; `allDayText` and
 buttons and selects French date formatting, not all calendar text. These are
 separate follow-ups, not claims of pixel or screen-reader parity.
 
+## Event dates and cross-row dragging (r4)
+
+Timed events retain their original instants separately from civil dates used for
+layout. This preserves both occurrences of the repeated daylight-saving hour,
+including a valid event whose local end clock appears earlier than its start.
+Date getters, ISO strings, property edits, `setDates`, snapshots and revert retain
+those instants. Calendar-day movement still uses calendar arithmetic.
+
+Dragging between timed and all-day rows uses the grabbed date instead of its
+clock slot, so a mid-event grab does not move the event to the previous day.
+Like upstream, changing rows resets the duration unless `allDayMaintainDuration`
+is enabled. The event's public `end` is normally null after this reset; the view
+uses a one-hour timed or one-day all-day duration. Applications that persist a
+required start/end pair should pass **`forceEventDuration`**. This produces an
+explicit positive end, with `defaultTimedEventDuration` and
+`defaultAllDayEventDuration` available to configure the defaults.
+
+Seven mounted exact-instant tests pass against upstream 7.1.3 and VPM in local
+Pacific and named Pacific time zones. Nine VPM pointer cases cover both row
+transitions, mid-event grabs, another target date, default/custom/maintained
+durations and revert. A separate VPM test preserves instants on zero movement;
+upstream's zero movement loses fold metadata and is not claimed as a passing
+control. Native Chrome repeats both drag directions and checks visible events.
+The pre-r4 source fails the new date and drag assertions.
+
 ## Adoption
 
 VentiMath's committed frontend uses the three VPM calendar packages from
 [`calendar-7.1.3`](https://github.com/VentiMath/vpm/releases/tag/calendar-7.1.3).
 That immutable release contains the earlier adapted renderer. The independent
-renderer, including the event-identity correction, is distributed as `calendar-7.1.3-r3`; the app must update
+renderer, including the event-identity, hour-label and event-date corrections, is distributed as `calendar-7.1.3-r4`; the app must update
 its release URL and lockfile to adopt it. Source adoption is verified; production
 deployment is not inferred. See [installation](../../docs/INSTALLATION.md) and
 [adoption evidence](../../docs/ADOPTION.md).

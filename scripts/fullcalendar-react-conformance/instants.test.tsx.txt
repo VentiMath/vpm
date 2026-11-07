@@ -1,0 +1,42 @@
+import React, {createRef} from 'react'
+import {render, act, cleanup} from '@testing-library/react'
+import Calendar from '../dist/index'
+import daygrid from '../dist/daygrid'
+afterEach(cleanup)
+for (const timeZone of ['local', 'America/Los_Angeles']) {
+  for (const [name, start, end] of [
+    ['second occurrence', '2026-11-01T09:30:00.000Z', '2026-11-01T10:30:00.000Z'],
+    ['crossing the fold', '2026-11-01T08:45:00.000Z', '2026-11-01T09:15:00.000Z'],
+  ]) it(`${timeZone}: preserves ${name} through input, getters, edits and revert`, () => {
+    for (const convert of [x=>x, x=>new Date(x), x=>Date.parse(x)]) {
+      const ref=createRef<any>(), change=vi.fn()
+      const view=render(<Calendar plugins={[daygrid]} initialView="dayGridMonth" ref={ref} timeZone={timeZone} initialDate="2026-11-01" events={[{id:'fold',start:convert(start),end:convert(end)}]} eventChange={change}/>)
+      let event=ref.current.getApi().getEventById('fold')
+      const check=()=>{expect(event.start.toISOString()).toBe(start);expect(event.end.toISOString()).toBe(end);expect(Date.parse(event.startStr)).toBe(Date.parse(start));expect(Date.parse(event.endStr)).toBe(Date.parse(end))}
+      check();event.start.setFullYear(1999);check()
+      act(()=>event.setProp('title','Unchanged dates'));check()
+      expect(change.mock.lastCall[0].oldEvent.start.toISOString()).toBe(start)
+      act(()=>event.setDates(event.start,event.end));check()
+      act(()=>event.setDates('2026-11-02T12:00:00.000Z','2026-11-02T13:00:00.000Z'))
+      expect(event.start.toISOString()).toBe('2026-11-02T12:00:00.000Z')
+      act(()=>change.mock.lastCall[0].revert());event=ref.current.getApi().getEventById('fold');check()
+      view.unmount()
+    }
+  })
+  it(`${timeZone}: setStart preserves elapsed duration in the fold`,()=>{
+    const ref=createRef<any>()
+    render(<Calendar plugins={[daygrid]} initialView="dayGridMonth" ref={ref} timeZone={timeZone} initialDate="2026-11-01" events={[{id:'fold',start:'2026-11-01T09:30:00.000Z',end:'2026-11-01T10:30:00.000Z'}]}/>)
+    const event=ref.current.getApi().getEventById('fold')
+    act(()=>event.setStart('2026-11-01T09:00:00.000Z',{maintainDuration:true}))
+    expect(event.start.toISOString()).toBe('2026-11-01T09:00:00.000Z');expect(event.end.toISOString()).toBe('2026-11-01T10:00:00.000Z')
+    act(()=>event.moveDates({days:1}))
+    expect(event.start.toISOString()).toBe('2026-11-02T09:00:00.000Z');expect(event.end.toISOString()).toBe('2026-11-02T10:00:00.000Z')
+  })
+}
+it('all-day input still normalizes to local midnight and invalid ends are absent',()=>{
+ const ref=createRef<any>()
+ render(<Calendar plugins={[daygrid]} initialView="dayGridMonth" ref={ref} timeZone="local" initialDate="2026-11-01" events={[{id:'day',allDay:true,start:'2026-11-01T09:30:00.000Z',end:'2026-11-02T09:30:00.000Z'},{id:'bad',start:'2026-11-01T09:30:00.000Z',end:'2026-11-01T08:30:00.000Z'}]}/>)
+ expect(ref.current.getApi().getEventById('day').startStr).toBe('2026-11-01')
+ expect(ref.current.getApi().getEventById('day').endStr).toBe('2026-11-02')
+ expect(ref.current.getApi().getEventById('bad').end).toBeNull()
+})

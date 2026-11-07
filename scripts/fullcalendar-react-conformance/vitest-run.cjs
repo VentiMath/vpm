@@ -5,7 +5,7 @@
 // calendar packages resolve to single copies, so the tests and the calendar
 // share one React.
 const fs = require('node:fs'), os = require('node:os'), path = require('node:path'), {spawnSync} = require('node:child_process');
-const modules = path.join(__dirname, 'node_modules'), packages = path.resolve(__dirname, '../../packages');
+const modules = path.join(__dirname, 'node_modules'), packages = process.env.CALENDAR_PACKAGES_DIR || path.resolve(__dirname, '../../packages');
 
 exports.runVitest = function runVitest({upstream, files, env = {}}) {
   const implementation = upstream ? path.join(modules, '@fullcalendar/react') : path.join(packages, 'vfullcalendar-react');

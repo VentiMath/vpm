@@ -42,20 +42,20 @@ const dayInfo = (api, date) => ({
   isFuture: +date > +startOfDay(api.env.createMarker(api.now())),
   view: api.view,
 });
-const effectiveEnd = (record) =>
-  record.end || new Date(+record.start + (record.allDay ? DAY : 3600000));
+const effectiveEnd = (record, api) =>
+  record.end || api.defaultEnd(record.start, record.allDay);
 function dayEvents(api, date) {
   return [...api.records.values()]
     .filter(
       (r) =>
         r.display !== "none" &&
         +r.start < +date + DAY &&
-        +effectiveEnd(r) > +date,
+        +effectiveEnd(r, api) > +date,
     )
     .sort(
       (a, b) =>
         +a.start - +b.start ||
-        +effectiveEnd(b) - +effectiveEnd(a) ||
+        +effectiveEnd(b, api) - +effectiveEnd(a, api) ||
         a.title.localeCompare(b.title),
     );
 }
@@ -79,9 +79,9 @@ function Event({ api, record, start, end, style, dragging, resize = true }) {
           },
         ),
     isStart: +record.start >= +start,
-    isEnd: +effectiveEnd(record) <= +end,
+    isEnd: +effectiveEnd(record, api) <= +end,
     isMirror: !!dragging,
-    isPast: +effectiveEnd(record) < Date.now(),
+    isPast: +effectiveEnd(record, api) < Date.now(),
     isFuture: +record.start > Date.now(),
     isToday: stamp(record.start) === stamp(api.env.createMarker(api.now())),
     el: ref.current,
@@ -243,11 +243,15 @@ function Month({ api, openMore }) {
         const lanes = [],
           segments = [];
         for (const record of [...api.records.values()].sort(
-          (a, b) => +a.start - +b.start || +effectiveEnd(b) - +effectiveEnd(a),
+          (a, b) =>
+            +a.start - +b.start ||
+            +effectiveEnd(b, api) - +effectiveEnd(a, api),
         )) {
           const covered = days
             .map((d, i) =>
-              +record.start < +d + DAY && +effectiveEnd(record) > +d ? i : -1,
+              +record.start < +d + DAY && +effectiveEnd(record, api) > +d
+                ? i
+                : -1,
             )
             .filter((i) => i >= 0);
           if (!covered.length || record.display === "none") continue;
@@ -373,12 +377,12 @@ function Month({ api, openMore }) {
     ),
   );
 }
-function timedLayout(records, date, min, max) {
+function timedLayout(records, date, min, max, api) {
   const entries = records
       .map((record) => ({
         record,
         start: Math.max(min, (+record.start - +date) / 60000),
-        end: Math.min(max, (+effectiveEnd(record) - +date) / 60000),
+        end: Math.min(max, (+effectiveEnd(record, api) - +date) / 60000),
       }))
       .filter((x) => x.end > x.start)
       .sort((a, b) => a.start - b.start || b.end - a.end),
@@ -406,11 +410,14 @@ function AllDay({ api, days, openMore }) {
   for (const record of [...api.records.values()]
     .filter((e) => e.allDay && e.display !== "none")
     .sort(
-      (a, b) => +a.start - +b.start || +effectiveEnd(b) - +effectiveEnd(a),
+      (a, b) =>
+        +a.start - +b.start || +effectiveEnd(b, api) - +effectiveEnd(a, api),
     )) {
     const covered = days
       .map((date, i) =>
-        +record.start < +date + DAY && +effectiveEnd(record) > +date ? i : -1,
+        +record.start < +date + DAY && +effectiveEnd(record, api) > +date
+          ? i
+          : -1,
       )
       .filter((i) => i >= 0);
     if (!covered.length) continue;
@@ -586,6 +593,7 @@ function TimeGrid({ api, openMore }) {
               date,
               min,
               max,
+              api,
             ).map((e) =>
               h(Event, {
                 key: e.record.key,
@@ -844,15 +852,22 @@ export const Calendar = forwardRef(function Calendar(props, ref) {
         api.suppressClick = false;
       }, 0);
       const previous = g.record;
-      const delta = +point.date - +g.point.date;
       const dayGrid = api.type.startsWith("dayGrid");
       const allDay = g.resize || dayGrid ? previous.allDay : point.allDay;
-      const start = g.resize
+      const switching = allDay !== previous.allDay;
+      // Changing rows anchors to the grabbed date, not the grabbed clock slot.
+      // Retain the day offset when grabbing a later day of a multi-day event.
+      const delta = switching
+        ? +point.date - +startOfDay(g.point.date)
+        : +point.date - +g.point.date;
+      let start = g.resize
         ? previous.start
-        : new Date(+previous.start + delta);
-      const end = g.resize
+        : new Date(
+            +(switching ? startOfDay(previous.start) : previous.start) + delta,
+          );
+      let end = g.resize
         ? dayGrid
-          ? new Date(+effectiveEnd(previous) + delta)
+          ? new Date(+effectiveEnd(previous, api) + delta)
           : new Date(
               +point.date +
                 (allDay ? DAY : minutes(options.snapDuration, 30) * 60000),
@@ -860,12 +875,32 @@ export const Calendar = forwardRef(function Calendar(props, ref) {
         : previous.end
           ? new Date(+previous.end + delta)
           : null;
-      if (end && +end <= +start) return;
+      if (switching) {
+        end =
+          options.allDayMaintainDuration && previous.end
+            ? new Date(
+                +start +
+                  (allDay
+                    ? Math.floor((+previous.end - +previous.start) / DAY) * DAY
+                    : +previous.end - +previous.start),
+              )
+            : null;
+      }
+      if (allDay) {
+        start = startOfDay(start);
+        if (end) end = startOfDay(end);
+      }
+      if (end && +end <= +start) {
+        if (!switching) return;
+        end = null;
+      }
+      if (!end && options.forceEventDuration)
+        end = api.defaultEnd(start, allDay);
       api.change(
         previous,
         {
-          start: allDay ? startOfDay(start) : start,
-          end: allDay && end ? startOfDay(end) : end,
+          start,
+          end,
           allDay,
         },
         (info) =>
@@ -882,7 +917,7 @@ export const Calendar = forwardRef(function Calendar(props, ref) {
               years: 0,
               months: 0,
               days: 0,
-              milliseconds: end ? +end - +effectiveEnd(previous) : 0,
+              milliseconds: end ? +end - +effectiveEnd(previous, api) : 0,
             },
             el: g.el,
             jsEvent: event.nativeEvent,

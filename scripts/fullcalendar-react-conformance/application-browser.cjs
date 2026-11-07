@@ -3,7 +3,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os');
 const {chromium}=require('./node_modules/playwright-core');
 const esbuild=require('./node_modules/esbuild');
-const root=path.resolve(__dirname,'../..'),pkg=path.join(root,'packages/vfullcalendar-react');
+const root=path.resolve(__dirname,'../..'),packages=process.env.CALENDAR_PACKAGES_DIR||path.join(root,'packages'),pkg=path.join(packages,'vfullcalendar-react');
 (async()=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'vpm-calendar-browser-'));
  let browser;
@@ -12,7 +12,7 @@ const root=path.resolve(__dirname,'../..'),pkg=path.join(root,'packages/vfullcal
  const ref=createRef(),root=createRoot(document.getElementById('app'));window.calls={select:[],drop:[],resize:[],click:[]};
  const events=[{id:'a',title:'Algebra seminar',start:'2026-11-03T10:00:00Z',end:'2026-11-03T11:00:00Z',extendedProps:{label:'math'}},{id:'b',title:'Geometry workshop',start:'2026-11-03T10:30:00Z',end:'2026-11-03T11:30:00Z'},{id:'multi',title:'Conference',start:'2026-11-02',end:'2026-11-05'},...Array.from({length:5},(_,i)=>({id:'extra'+i,title:'Study group '+i,start:'2026-11-04'}))];
  let options={initialDate:'2026-11-03',timeZone:'UTC',height:'100%',headerToolbar:false,editable:true,selectable:true,selectMirror:true,dayMaxEvents:true,events,borderless:true,dayHeaderInnerClass:'calendar-day-header-text',dayCellTopInnerClass:'calendar-day-number',eventClass:'calendar-event',eventContent:info=>React.createElement('span',{'data-title':info.event.title},info.timeText+' '+info.event.title),select:info=>calls.select.push({start:info.startStr,end:info.endStr,allDay:info.allDay,pageX:info.jsEvent?.pageX}),eventClick:info=>calls.click.push(info.event.id),eventDrop:info=>{calls.drop.push({id:info.event.id,start:info.event.startStr,allDay:info.event.allDay,old:info.oldEvent.startStr});window.revert=info.revert;},eventResize:info=>calls.resize.push({id:info.event.id,end:info.event.endStr}),views:{timeGridWeek:{titleFormat:{year:'numeric',month:'short',day:'numeric'}}}};
- window.mount=changes=>{options={...options,...changes};flushSync(()=>root.render(React.createElement(StrictMode,null,React.createElement(Calendar,{...options,ref}))));window.api=ref.current.getApi();};window.mount({});window.unmount=()=>flushSync(()=>root.unmount());`,resolveDir:__dirname,loader:'js'},bundle:true,format:'iife',platform:'browser',outfile:path.join(dir,'app.js'),alias:{react:path.join(__dirname,'node_modules/react'),'react-dom':path.join(__dirname,'node_modules/react-dom'),'vfull-ui-headless-calendar':path.join(root,'packages/vfull-ui-headless-calendar/index.js'),'vfullcalendar-core/protected-api':path.join(root,'packages/vfullcalendar-core/protected-api.js')}});
+ window.mount=changes=>{options={...options,...changes};flushSync(()=>root.render(React.createElement(StrictMode,null,React.createElement(Calendar,{...options,ref}))));window.api=ref.current.getApi();};window.mount({});window.unmount=()=>flushSync(()=>root.unmount());`,resolveDir:__dirname,loader:'js'},bundle:true,format:'iife',platform:'browser',outfile:path.join(dir,'app.js'),alias:{react:path.join(__dirname,'node_modules/react'),'react-dom':path.join(__dirname,'node_modules/react-dom'),'vfull-ui-headless-calendar':path.join(packages,'vfull-ui-headless-calendar/index.js'),'vfullcalendar-core/protected-api':path.join(packages,'vfullcalendar-core/protected-api.js')}});
  const css=['skeleton.css','themes/classic/theme.css','themes/classic/palette.css'].map(f=>fs.readFileSync(path.join(pkg,f),'utf8')).join('\n');
  fs.writeFileSync(path.join(dir,'index.html'),`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:24px;background:#f5f6fa;font:14px system-ui;color:#1c2535}#app{height:700px;--fc-classic-background:#fff;--fc-classic-foreground:#1c2535;--fc-classic-border:#d8dce5;--fc-classic-primary:#5d59d4}button{cursor:pointer}.calendar-event{margin:0 6px 4px}.calendar-day-number{border-radius:50%}.calendar-day-header-text{font-weight:600}${css}</style><div id="app"></div><script src="app.js"></script>`);
  const executable=process.env.CHROME_BIN||(['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome','/usr/bin/google-chrome','/usr/bin/chromium'].find(p=>fs.existsSync(p)));
@@ -49,6 +49,23 @@ const root=path.resolve(__dirname,'../..'),pkg=path.join(root,'packages/vfullcal
  await drag({x:one.x+one.width/2,y:one.y+10},{x:one.x+one.width/2,y:one.y+58});assert.equal(await page.evaluate(()=>calls.drop.at(-1).start),'2026-11-03T11:00:00Z');
  const handle=await event('Algebra seminar').locator('.vfc-resize').boundingBox();await drag({x:handle.x+handle.width/2,y:handle.y+2},{x:handle.x+handle.width/2,y:handle.y+26});assert.equal(await page.evaluate(()=>calls.resize.at(-1).end),'2026-11-03T12:30:00Z');
  await page.evaluate(()=>api.changeView('timeGridWeek'));await page.waitForFunction(()=>document.querySelectorAll('.vfc-time-column').length===7);assert.match(await page.evaluate(()=>api.view.title),/Nov/);assert.equal(await page.locator('.vfc-time-column').count(),7);assert.equal(await event('Conference').count(),1);await checkTopTimeLabel(12,288);
+ // Trusted-pointer coverage of both all-day/timed transitions, with explicit
+ // ends for applications that persist a required start/end pair.
+ for(const scenario of [
+  {name:'timed-start',allDay:false,fraction:.1,target:'2026-11-03',start:'2026-11-03',end:'2026-11-04'},
+  {name:'timed-middle-next-day',allDay:false,fraction:.6,target:'2026-11-04',start:'2026-11-04',end:'2026-11-05'},
+  {name:'all-day-to-timed',allDay:true,fraction:.5,target:'2026-11-03',start:'2026-11-03T09:00:00Z',end:'2026-11-03T10:00:00Z'},
+ ]) {
+  await page.evaluate(s=>{mount({slotMinTime:'00:00:00',scrollTime:'06:00:00',forceEventDuration:true,events:[{id:'cross',title:'Cross row',allDay:s.allDay,start:s.allDay?'2026-11-03':'2026-11-03T09:00:00Z',end:s.allDay?'2026-11-04':'2026-11-03T10:00:00Z'}]});api.changeView('timeGridWeek');},scenario);
+  const source=await event('Cross row').boundingBox();
+  let target;
+  if(scenario.allDay){const column=await page.locator('[data-time-column][data-date="'+scenario.target+'"]').boundingBox();target={x:column.x+column.width/2,y:column.y+18*24+5};}
+  else {const cell=await page.locator('.vfc-all-day-cell[data-date="'+scenario.target+'"]').boundingBox();target={x:cell.x+cell.width/2,y:cell.y+cell.height/2};}
+  await drag({x:source.x+source.width/2,y:source.y+source.height*scenario.fraction},target);
+  assert.deepEqual(await page.evaluate(()=>{const e=api.getEventById('cross');return [e.startStr,e.endStr,e.allDay,+e.end>+e.start]}),[scenario.start,scenario.end,!scenario.allDay,true],scenario.name);
+  assert.equal(await event('Cross row').count(),1);
+  await page.evaluate(()=>revert());assert.equal(await page.evaluate(()=>api.getEventById('cross').allDay),scenario.allDay);
+ }
  // Inherited application theme variables change without remounting the calendar.
  const light=await page.locator('.vfc-calendar').evaluate(el=>getComputedStyle(el).backgroundColor);
  await page.evaluate(()=>{document.getElementById('app').style.setProperty('--fc-classic-background','#161b29');document.getElementById('app').style.setProperty('--fc-classic-foreground','#eef3ff');});
@@ -59,6 +76,6 @@ const root=path.resolve(__dirname,'../..'),pkg=path.join(root,'packages/vfullcal
  if(process.env.CALENDAR_SCREENSHOT)await page.screenshot({path:process.env.CALENDAR_SCREENSHOT,fullPage:true});
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>api.changeView('dayGridMonth'));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile view does not overflow');
  await page.evaluate(()=>mount({events:[]}));assert.equal(await page.locator('.vfc-event').count(),0);await page.evaluate(()=>unmount());assert.equal(await page.locator('.vfc-calendar').count(),0);assert.deepEqual(errors,[]);
- console.log('Calendar browser: StrictMode, spanning/overlapping layout, clicks, overflow, selection preview, drag/revert/resize, 3 views, unclipped default/custom scroll labels, theme changes, mobile width, filtering and unmount pass.');
+ console.log('Calendar browser: StrictMode, spanning/overlapping layout, clicks, overflow, selection preview, drag/revert/resize, cross-row duration/target dates, 3 views, unclipped default/custom scroll labels, theme changes, mobile width, filtering and unmount pass.');
  }finally{await browser?.close();fs.rmSync(dir,{recursive:true,force:true});}
 })().catch(e=>{console.error(e);process.exitCode=1;});

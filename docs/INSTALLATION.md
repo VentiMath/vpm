@@ -174,7 +174,7 @@ contains `vfullcalendar-react`, `vfullcalendar-core` and
 Emotion and Stylis replacements.
 
 ```sh
-bun add vfullcalendar-react@https://github.com/VentiMath/vpm/releases/download/calendar-7.1.3-r3/vfullcalendar-react-7.1.3.tgz
+bun add vfullcalendar-react@https://github.com/VentiMath/vpm/releases/download/calendar-7.1.3-r4/vfullcalendar-react-7.1.3.tgz
 ```
 
 The archive pins both VPM dependencies to URLs in the same release. No overrides,
@@ -183,12 +183,15 @@ remain peer dependencies; keep the versions selected by your application.
 Commit the application's `package.json` and `bun.lock`, and use
 `bun install --frozen-lockfile` in CI.
 
-The [calendar release](https://github.com/VentiMath/vpm/releases/tag/calendar-7.1.3-r3)
+The [calendar release](https://github.com/VentiMath/vpm/releases/tag/calendar-7.1.3-r4)
 includes the three archives, `SHA256SUMS` and `release-manifest.json`. The manifest
 records the exact source commit, dependency URLs and hashes of shipped files.
 A new release gets a new tag and URLs; existing assets must not be replaced.
 
-The `calendar-7.1.3-r3` release corrects r2's event remount loop and retains the
+The `calendar-7.1.3-r4` release retains r3's event-identity fix and corrects
+clipped hour labels, cross-row drag dates/durations and repeated-hour DST event
+instants. Use `forceEventDuration` when persisting a required end timestamp;
+otherwise cross-row duration reset returns a null end, as upstream does. It retains the
 replacement of the original renderer with an
 independently written implementation of VentiMath's month/week/day workflow.
 Its package version remains 7.1.3 to identify the upstream API baseline; the
@@ -207,7 +210,7 @@ Set the three workspace package versions to their upstream baselines and use
 `workspace:*` for their local dependencies. From a committed snapshot:
 
 ```sh
-node scripts/pack-calendar-release.cjs --ref COMMIT_SHA --tag calendar-7.1.3-r3 --out /absolute/path/to/empty-output
+node scripts/pack-calendar-release.cjs --ref COMMIT_SHA --tag calendar-7.1.3-r4 --out /absolute/path/to/empty-output
 ```
 
 The packer snapshots only the three committed package directories. It rewrites
@@ -222,7 +225,9 @@ Run `node scripts/check-calendar-release.cjs /absolute/path/to/output` to verify
 the exact extracted archives and a consumer before creating the release. This
 prepublication check installs peers but cannot fetch release URLs until publication.
 Run the same command with `--published` afterwards to verify public URLs without
-overrides. The Node CI job exercises the local archive path on each commit.
+overrides. Both modes run the date regressions on Node/Bun and native Chrome
+label/interaction checks against those exact installed archives. The Node CI
+job exercises the local archive path on each commit.
 After publication, install only the top-level URL in a clean project without
 overrides, verify both downloaded dependencies and hashes, build the app's plugin
 and CSS imports, and repeat installation with the frozen lockfile.

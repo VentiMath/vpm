@@ -10,7 +10,39 @@ import {
   createDuration,
 } from "./dates.js";
 import { requestJson } from "vfullcalendar-core/protected-api";
+import { buildIsoString } from "vfull-ui-headless-calendar";
 let nextId = 0;
+// Civil markers drive layout; exact instants disambiguate the repeated DST hour.
+const instant = (env, value, ms) => ms ?? +env.toDate(value);
+function dateFields(
+  env,
+  startInput,
+  endInput,
+  allDay,
+  first = env.createMarkerMeta(startInput),
+) {
+  if (!first) throw new RangeError("Invalid calendar date");
+  const last = endInput == null ? null : env.createMarkerMeta(endInput);
+  const start = allDay ? startOfDay(first.marker) : first.marker;
+  const startMs = allDay ? undefined : instant(env, start, first.instantMs);
+  let end = last ? (allDay ? startOfDay(last.marker) : last.marker) : null;
+  let endMs = end && !allDay ? instant(env, end, last.instantMs) : undefined;
+  if (end && (endMs ?? +end) <= (startMs ?? +start)) {
+    end = null;
+    endMs = undefined;
+  }
+  return { start, end, startMs, endMs, allDay };
+}
+function dateString(env, record, key) {
+  const value = record[key];
+  if (!value) return "";
+  const ms = record[key + "Ms"];
+  return buildIsoString(
+    value,
+    record.allDay ? null : (+value - instant(env, value, ms)) / 60000,
+    record.allDay,
+  );
+}
 const copy = (r) => ({
   ...r,
   start: new Date(+r.start),
@@ -38,20 +70,20 @@ export class EventApi {
     return this.data.allDay;
   }
   get start() {
-    return this.calendar.env.toDate(this.data.start);
+    return new Date(
+      instant(this.calendar.env, this.data.start, this.data.startMs),
+    );
   }
   get end() {
-    return this.data.end ? this.calendar.env.toDate(this.data.end) : null;
+    return this.data.end
+      ? new Date(instant(this.calendar.env, this.data.end, this.data.endMs))
+      : null;
   }
   get startStr() {
-    return this.calendar.env.formatIso(this.data.start, {
-      omitTime: this.allDay,
-    });
+    return dateString(this.calendar.env, this.data, "start");
   }
   get endStr() {
-    return this.data.end
-      ? this.calendar.env.formatIso(this.data.end, { omitTime: this.allDay })
-      : "";
+    return dateString(this.calendar.env, this.data, "end");
   }
   get extendedProps() {
     return Object.freeze({ ...this.data.extendedProps });
@@ -105,22 +137,22 @@ export class EventApi {
   }
   setDates(start, end, options = {}) {
     const allDay = options.allDay ?? this.allDay;
-    let first = marker(this.calendar.env, start),
-      last = end == null ? null : marker(this.calendar.env, end);
-    if (allDay) {
-      first = startOfDay(first);
-      if (last) last = startOfDay(last);
-    }
-    if (last && +last <= +first) last = null;
-    this.calendar.change(this.data, { start: first, end: last, allDay });
+    this.calendar.change(
+      this.data,
+      dateFields(this.calendar.env, start, end, allDay),
+    );
   }
   setStart(start, options = {}) {
-    const first = marker(this.calendar.env, start),
-      delta = +first - +this.data.start;
+    const meta = this.calendar.env.createMarkerMeta(start);
+    if (!meta) throw new RangeError("Invalid calendar date");
+    const first = new Date(
+        instant(this.calendar.env, meta.marker, meta.instantMs),
+      ),
+      delta = +first - +this.start;
     this.setDates(
-      this.calendar.env.toDate(first),
+      first,
       options.maintainDuration && this.data.end
-        ? this.calendar.env.toDate(new Date(+this.data.end + delta))
+        ? new Date(+this.end + delta)
         : this.end,
     );
   }
@@ -175,24 +207,33 @@ export class CalendarApi {
       ? this.options.now()
       : (this.options.now ?? new Date());
   }
+  defaultEnd(start, allDay) {
+    const value = allDay
+      ? this.options.defaultAllDayEventDuration
+      : this.options.defaultTimedEventDuration;
+    const duration = createDuration(
+      value ?? (allDay ? { days: 1 } : { hours: 1 }),
+    );
+    const end = this.env.add(start, duration);
+    return +end > +start ? end : new Date(+start + (allDay ? DAY : 3600000));
+  }
   normalize(input) {
     const startInput = input.start ?? input.date;
     if (startInput == null) return null;
     const meta = this.env.createMarkerMeta(startInput);
     if (!meta) return null;
     const allDay = input.allDay ?? meta.isTimeUnspecified;
-    const start = allDay ? startOfDay(meta.marker) : meta.marker;
-    let end = input.end == null ? null : this.env.createMarker(input.end);
-    if (allDay && end) end = startOfDay(end);
-    if (end && +end <= +start) end = null;
+    const dates = dateFields(this.env, startInput, input.end, allDay, meta);
+    if (!dates.end && this.options.forceEventDuration) {
+      dates.end = this.defaultEnd(dates.start, allDay);
+      dates.endMs = allDay ? undefined : +this.env.toDate(dates.end);
+    }
     return {
       ...input,
       key: "event-" + ++nextId,
       id: String(input.id ?? ""),
       title: String(input.title ?? ""),
-      start,
-      end,
-      allDay,
+      ...dates,
       extendedProps: { ...input.extendedProps },
       classNames:
         typeof input.className === "string"
@@ -380,6 +421,17 @@ export class CalendarApi {
   }
   change(previous, patch, callback) {
     const next = { ...previous, ...patch };
+    // Recompute changed civil dates, but preserve exact unchanged endpoints.
+    // setDates supplies explicit metadata; title/property edits leave it alone.
+    for (const key of ["start", "end"]) {
+      if (Object.hasOwn(patch, key) && !Object.hasOwn(patch, key + "Ms"))
+        next[key + "Ms"] =
+          next.allDay || !next[key]
+            ? undefined
+            : +next[key] === +previous[key]
+              ? previous[key + "Ms"]
+              : +this.env.toDate(next[key]);
+    }
     this.records.set(previous.key, next);
     this.changed();
     const event = new EventApi(this, next),

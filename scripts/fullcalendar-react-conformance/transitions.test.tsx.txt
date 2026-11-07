@@ -1,0 +1,46 @@
+import React, {createRef} from 'react'
+import {render, act, cleanup} from '@testing-library/react'
+import Calendar from '../dist/index'
+afterEach(()=>{cleanup();vi.restoreAllMocks()})
+const cases=[
+ {name:'timed to all-day from start',grab:540,allDay:false,expectedStart:'2026-11-10',expectedEnd:''},
+ {name:'timed to all-day from middle with forced end',grab:570,allDay:false,forceEventDuration:true,expectedStart:'2026-11-10',expectedEnd:'2026-11-11'},
+ {name:'timed to next-day all-day',grab:570,allDay:false,target:'2026-11-11',forceEventDuration:true,expectedStart:'2026-11-11',expectedEnd:'2026-11-12'},
+ {name:'all-day to timed',grab:0,allDay:true,expectedStart:'2026-11-10T09:00:00Z',expectedEnd:''},
+ {name:'all-day to timed with forced end',grab:0,allDay:true,forceEventDuration:true,expectedStart:'2026-11-10T09:00:00Z',expectedEnd:'2026-11-10T10:00:00Z'},
+ {name:'custom timed duration',grab:0,allDay:true,forceEventDuration:true,defaultTimedEventDuration:'02:00',expectedStart:'2026-11-10T09:00:00Z',expectedEnd:'2026-11-10T11:00:00Z'},
+ {name:'custom all-day duration',grab:570,allDay:false,forceEventDuration:true,defaultAllDayEventDuration:{days:2},expectedStart:'2026-11-10',expectedEnd:'2026-11-12'},
+ {name:'maintain all-day duration',grab:0,allDay:true,allDayMaintainDuration:true,expectedStart:'2026-11-10T09:00:00Z',expectedEnd:'2026-11-11T09:00:00Z'},
+ {name:'maintain subday duration rounds down and uses valid default',grab:570,allDay:false,allDayMaintainDuration:true,forceEventDuration:true,expectedStart:'2026-11-10',expectedEnd:'2026-11-11'},
+]
+for(const spec of cases)it(spec.name,()=>{
+ const ref=createRef<any>(),drop=vi.fn()
+ const source={id:'fixture',title:'Fixture',allDay:spec.allDay,start:spec.allDay?'2026-11-10':'2026-11-10T09:00:00Z',end:spec.allDay?'2026-11-11':'2026-11-10T10:00:00Z'}
+ const view=render(<Calendar ref={ref} timeZone="UTC" initialView="timeGridWeek" initialDate="2026-11-10" editable {...spec} events={[source]} eventDrop={drop}/>)
+ const timed=view.container.querySelector('[data-time-column][data-date="2026-11-10"]')!
+ const day=view.container.querySelector(`.vfc-all-day-cell[data-date="${spec.target||'2026-11-10'}"]`)!
+ Object.assign(timed,{getBoundingClientRect:()=>({left:100,right:200,top:100,bottom:1540,height:1440,width:100})})
+ Object.assign(day,{getBoundingClientRect:()=>({left:100,right:200,top:0,bottom:100,height:100,width:100})})
+ let hit=spec.allDay?day:timed
+ Object.defineProperty(document,'elementFromPoint',{configurable:true,value:()=>hit})
+ const pointer=(type,target,y)=>act(()=>{const e=new MouseEvent(type,{bubbles:true,clientX:150,clientY:y,button:0});Object.defineProperties(e,{pointerId:{value:1},pointerType:{value:'mouse'}});target.dispatchEvent(e)})
+ pointer('pointerdown',view.container.querySelector('[data-event-key]'),spec.allDay?50:100+spec.grab)
+ hit=spec.allDay?timed:day
+ pointer('pointermove',view.container.querySelector('.vfc-calendar'),spec.allDay?640:50)
+ pointer('pointerup',view.container.querySelector('.vfc-calendar'),spec.allDay?640:50)
+ expect(drop).toHaveBeenCalledTimes(1)
+ const {event,oldEvent,revert}=drop.mock.lastCall[0]
+ expect(event.allDay).toBe(!spec.allDay);expect(event.startStr).toBe(spec.expectedStart);expect(event.endStr).toBe(spec.expectedEnd)
+ if(event.end)expect(+event.end).toBeGreaterThan(+event.start)
+ expect(view.container.querySelectorAll('[data-event-key]').length).toBeGreaterThan(0)
+ expect(oldEvent.start.toISOString()).toBe(new Date(source.start).toISOString())
+ act(revert);expect(event.start.toISOString()).toBe(new Date(source.start).toISOString());expect(event.allDay).toBe(spec.allDay)
+})
+
+it('a zero date movement preserves the exact fold instants',()=>{
+ const ref=createRef<any>()
+ render(<Calendar ref={ref} timeZone="America/Los_Angeles" initialDate="2026-11-01" events={[{id:'fold',start:'2026-11-01T08:45:00Z',end:'2026-11-01T09:15:00Z'}]}/>)
+ const event=ref.current.getApi().getEventById('fold')
+ act(()=>event.moveDates({days:0}))
+ expect(event.start.toISOString()).toBe('2026-11-01T08:45:00.000Z');expect(event.end.toISOString()).toBe('2026-11-01T09:15:00.000Z')
+})

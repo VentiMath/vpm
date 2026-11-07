@@ -22,7 +22,11 @@ the checked week view.
 - `react-suite.cjs --upstream`: all 27 unchanged upstream React tests, as a control.
 - `react-suite.cjs`: 11 independent tests for the supported lifecycle, context,
   current callbacks, defensive event values/revert, dates, stale/rejected event
-  sources, selection, safe text, imperative options and excluded views.
+  sources, selection, safe text, imperative options and excluded views. It also
+  runs `transitions.cjs`: seven shared exact-instant tests against upstream/VPM,
+  nine VPM pointer transition/duration/revert cases and a zero-movement case.
+  The zero-movement preservation assertion is VPM-only: upstream loses DST fold
+  metadata on that operation. All other instant assertions pass both controls.
 - `application.cjs`: six common app-shaped cases on both implementations,
   including an upstream failure control for omitted `allDay` edits.
   The event-identity cases preserve DOM nodes across filtered arrays and reproduce
@@ -36,7 +40,14 @@ the checked week view.
   Text-bounds assertions cover the first visible hour in default 6am week/day
   scrolling, custom 9am scrolling and a non-midnight grid start. The r3 negative
   control clips the 6am text by about five pixels; the corrected stylesheet passes
-  without changing scroll positions or slot geometry.
+  without changing scroll positions or slot geometry. Trusted pointers also
+  cover both timed/all-day transitions, a mid-event grab, another target date,
+  positive forced durations, visible event retention and revert.
+
+`CALENDAR_PACKAGES_DIR` selects an installed package directory for both the
+mounted and browser harnesses. The release checker runs these cases against
+the exact packed archives before publication and against fresh public URL
+installs afterwards, with no internal dependency overrides.
 
 The browser harness represents the app's configuration; it is not the entire
 application, a production deployment test, or exhaustive touch/accessibility

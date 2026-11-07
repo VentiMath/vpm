@@ -247,6 +247,10 @@ export interface CalendarOptions {
   editable?: boolean;
   eventStartEditable?: boolean;
   eventDurationEditable?: boolean;
+  allDayMaintainDuration?: boolean;
+  forceEventDuration?: boolean;
+  defaultAllDayEventDuration?: DurationInput;
+  defaultTimedEventDuration?: DurationInput;
   selectable?: boolean;
   selectMirror?: boolean;
   dayMaxEvents?: boolean | number;
