@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "w3c-keyname",
+    "version": "2.2.8",
+    "repository": "https://code.haverbeke.berlin/marijn/w3c-keyname",
+    "checked": "2026-11-06",
+    "integrity": "sha512-dpojBhNsCNN7T82Tm7k26A6G9ML3NkhDsnw9n/eoxSRlVBB4CEtIQ/KTCLI2Fwf3ataSXRhYFkQi3SlnFwPvPQ=="
+  },
+  "sourceSHA256": {
+    "index.cjs": "4da1f0a238777b0066e5a76b7940b3034107e2834cf2c73d29676530d1b936ae",
+    "index.d.ts": "1579edb3e801f25d47773f18ca78a25a5996747d7fb888e7b70190cc38e4ea85",
+    "LICENSE": "869c30f368eb08735e779027b9f4bc9fea2f39624351856aebe42741f0bc0884"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "KeyboardEvent.key normalization, exported legacy key-code tables, Mac/legacy modifier behavior and current/app ProseMirror keymap 1.2.3 compatibility. Tiptap native Chrome keyboard dispatch is checked; operating-system keyboard layouts and full editor adoption remain separate."
+  },
+  "changes": [
+    "Independent implementation with zero dependencies. Upstream runtime source is not shipped.",
+    "Reads event.key once and uses tables without Object.prototype inheritance; exported numeric entries remain mutable.",
+    "Preserves current key values, legacy aliases, key-code fallbacks and platform modifier behavior. Historical fallback tables remain US-layout based."
+  ]
+}

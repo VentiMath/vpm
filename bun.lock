@@ -1302,6 +1302,10 @@
       "name": "vvary",
       "version": "0.1.0",
     },
+    "packages/vw3c-keyname": {
+      "name": "vw3c-keyname",
+      "version": "2.2.8",
+    },
     "packages/vxml-naming": {
       "name": "vxml-naming",
       "version": "0.1.0",
@@ -1715,6 +1719,8 @@
     "vuuid": ["vuuid@workspace:packages/vuuid"],
 
     "vvary": ["vvary@workspace:packages/vvary"],
+
+    "vw3c-keyname": ["vw3c-keyname@workspace:packages/vw3c-keyname"],
 
     "vxml-naming": ["vxml-naming@workspace:packages/vxml-naming"],
 

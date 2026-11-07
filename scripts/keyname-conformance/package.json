@@ -1,0 +1,10 @@
+{
+  "name": "vpm-keyname-conformance",
+  "private": true,
+  "dependencies": {
+    "w3c-keyname": "2.2.8",
+    "prosemirror-keymap": "1.2.3",
+    "prosemirror-state": "1.4.4",
+    "prosemirror-model": "1.25.12"
+  }
+}
