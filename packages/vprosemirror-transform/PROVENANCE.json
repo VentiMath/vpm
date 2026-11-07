@@ -14,11 +14,12 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "complete for documented application scope",
-    "targetScope": "ProseMirror transform 1.12.5 position mapping, reversible steps, mark restoration, schema-aware edits and range fitting; Tiptap 2.11.7 application command controls against transform 1.12.5 and app 1.11.0. Complete editor integration, IME and collaborative server acceptance are separate. A separately reproduced deleteRange expansion drops an empty paragraph; full cross-block deletion parity remains a follow-up."
+    "targetScope": "ProseMirror transform 1.12.5 position mapping, reversible steps, mark restoration, schema-aware edits and range fitting; Tiptap 2.11.7 application command controls against transform 1.12.5 and app 1.11.0. Complete editor integration, IME and collaborative server acceptance are separate. Empty-paragraph range deletion is repaired and checked with 96 caller variants. General nested-list fitting can still misplace surviving suffixes; a reduced interior-deletion reproduction remains a follow-up."
   },
   "changes": [
     "Independent schema-automaton fitting over persistent subtrees and boundary events, preserving untouched content.",
     "Compatible list suffixes join without flattening nested lists; empty text tails retain the insertion cursor before reconstructed shells. Verified by 64 variants, expanded caller fuzzing, EditorState undo and packed Tiptap browser checks.",
+    "Range expansion requires a genuinely shared container or sibling textblocks, preserving an unselected empty paragraph at a nested selection boundary. Document, mapped cursor, undo and packed Tiptap callers verified.",
     "Mirrored mapping supports undo and rebasing; mark inverses restore prior formatting rather than blindly toggling it.",
     "Serialized step positions must be nonnegative safe integers; step registration uses a Map, so inherited names cannot select constructors.",
     "One VPM runtime dependency: vprosemirror-model 1.25.12. No upstream runtime files shipped."

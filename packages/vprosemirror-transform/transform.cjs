@@ -357,6 +357,20 @@ class Transform {
     for (let d = Math.min(a.depth, b.depth); d >= 0; d--) {
       if (from - a.start(d) !== a.depth - d || b.end(d) - to !== b.depth - d)
         continue;
+      // Matching boundary distances do not mean both endpoints cover the same
+      // container. A nested list start and a later empty paragraph can have
+      // those distances while the paragraph itself is outside the selection.
+      if (
+        a.start(d) !== b.start(d) &&
+        !(
+          d === a.depth &&
+          d === b.depth &&
+          a.parent.isTextblock &&
+          b.parent.isTextblock &&
+          a.start(d - 1) === b.start(d - 1)
+        )
+      )
+        continue;
       if (
         a.node(d).type.contentMatch.validEnd &&
         (a.start(d) === b.start(d) ||

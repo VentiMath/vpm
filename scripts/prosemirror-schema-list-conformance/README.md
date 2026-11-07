@@ -16,10 +16,10 @@ node scripts/prosemirror-schema-list-conformance/run.cjs
 node scripts/prosemirror-schema-list-conformance/archives.cjs
 ```
 
-Use Node 24 and Bun 1.4.4. Seven independent groups cover 6,000 seeded edits, immutable
+Use Node 24 and Bun 1.4.4. Eight independent groups cover 6,000 seeded edits, immutable
 schema descriptors, attributes/marks, exact query results, mapped positions,
 inverse steps and appending a range wrap to an existing transaction. Chrome
-compares 13 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
+compares 14 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
 Enter and typing. The five-package archive closure is byte-verified, installed
 fresh/frozen with npm and Bun, then checked for runtime/module/type behavior.
 
@@ -36,22 +36,42 @@ selection and undo; the thirteenth Chrome snapshot uses Tiptap's `insertContent`
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs
 ```
 
-## Remaining deletion follow-up
+## Boundary deletion regression
 
-Broader fuzzing found a separate `deleteRange` expansion issue: deleting a
-backward selection across a list and an empty paragraph removes that paragraph
-in VPM, while upstream preserves it. The diagnostic accepts this saved fixture
-and intentionally exits nonzero; this particular case is not a passing gate.
+`deletion-followup.json` originally deleted an empty paragraph when the selection
+ended at its first editable position. VPM now retains it and places the cursor
+inside it, matching upstream. This saved case is a source/archive gate on both
+runtimes. Another 96 cases exercise both list types, empty/nonempty starting text,
+empty/marked trailing text, paragraphs/headings, zero to two enclosing quotes,
+forward/backward selection and history undo. The fourteenth Chrome snapshot
+uses Tiptap's `deleteSelection` with this regression. Current transform 1.12.5
+and VPM agree. The older app transform 1.11.0 leaves an empty list instead; that
+exact document, HTML and cursor remain an explicit negative control. The other
+thirteen snapshots still match all three graphs.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/deletion-followup.json
 ```
 
+## Remaining general fitting follow-up
+
+Removing the mixed-command fuzzer's cross-block deletion restriction exposed a
+separate interior-to-interior deletion that puts a surviving nested list suffix
+at the wrong level. `nested-fitting-followup.json` reduces it to one list and a
+selection from 5 to 17. This diagnostic intentionally exits nonzero; it is not a
+passing gate. Further mixed-command exploration also exposed the same shape of
+nested suffix mismatch during text insertion.
+
+```sh
+node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/nested-fitting-followup.json
+```
+
 Randomized list comparison includes arbitrary text selections on current/app
-upstream foundations (4,000 edits). Full VPM comparison (2,000 edits) now permits
-cross-block text insertion. Only deletion remains limited to one textblock;
-list operations still span blocks. Keep this limitation visible before full
-editor adoption.
+upstream foundations (4,000 edits). Full VPM comparison (2,000 edits) permits
+cross-block text insertion for the retained seed and confines its mixed deletion
+operations to one textblock. The dedicated 96-case boundary matrix covers the
+newly fixed cross-block deletion contract. These results do not establish
+arbitrary nested replacement parity or complete editor adoption.
 
 [Benchmarks](../../packages/vprosemirror-schema-list/bench/results/README.md) use
 identical foundations for list-only cases and explicitly label complete VPM-stack

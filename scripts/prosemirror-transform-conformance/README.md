@@ -27,7 +27,10 @@ later list item (with empty/nonempty paragraphs and nested containers). Another
 64 mixed-depth list replacements compare document structure, insertion mapping
 and inversion across list types, empty/nonempty tails, enclosing containers and
 UTF-16 text. The schema-list fixture additionally checks actual EditorState
-selection, undo and the Tiptap browser caller. A documented correction rejects an incompatible
+selection, undo and the Tiptap browser caller. The empty-paragraph deletion
+regression compares steps and mapped boundaries; 96 additional list-package
+cases compare document, actual selection and undo, with a packed browser check.
+A documented correction rejects an incompatible
 empty-block join that upstream suggests but then fails to apply. Archive checks
 verify packed bytes, exclusions, fresh and frozen npm/Bun installs, CJS/ESM
 identity, CJS/ESM type consumers under NodeNext and Bundler resolution, and the

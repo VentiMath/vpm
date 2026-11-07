@@ -139,7 +139,14 @@ if (require.main === module)
     fs.writeFileSync(
       path.join(out, "bundle.js"),
       bundles.join("\n") +
-        `\nwindow.runChecks=()=>{const values=Object.values(window.listVariants).map(v=>v.exercise());if(values.some(v=>JSON.stringify(v)!==JSON.stringify(values[0])))throw Error('Tiptap list mismatch');return {variants:3,snapshots:values[0].length}};window.modifier=/Mac|iPhone|iPad|iPod/.test(navigator.platform)?4:2;`,
+        `
+window.runChecks=()=>{
+  const values=Object.fromEntries(Object.entries(window.listVariants).map(([name,v])=>[name,v.exercise()]));
+  if(JSON.stringify(values.vpm)!==JSON.stringify(values.upstream))throw Error('Current Tiptap list mismatch');
+  if(JSON.stringify(values.app.slice(0,13))!==JSON.stringify(values.upstream.slice(0,13)))throw Error('App Tiptap list mismatch');
+  if(values.app.length!==14||values.upstream.length!==14)throw Error('Missing deletion snapshot');
+  return {variants:3,snapshots:14,appDifferences:['transform 1.11.0 boundary deletion']};
+};window.modifier=/Mac|iPhone|iPad|iPod/.test(navigator.platform)?4:2;`,
     );
     console.log("Built list API and unchanged tests on five graphs.");
   })().catch((e) => {

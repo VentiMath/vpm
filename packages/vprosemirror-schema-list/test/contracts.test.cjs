@@ -97,8 +97,9 @@ test("6000 seeded list edits agree across isolated callers and full VPM lists", 
       let from = ps[random() % ps.length],
         to = random() % 4 === 0 ? ps[random() % ps.length] : from,
         op = random() % 8;
-      // Cross-block insertion is covered; deletion range expansion remains a
-      // separately recorded transform follow-up.
+      // Keep the mixed-command fuzzer's deletions within one textblock;
+      // the dedicated boundary-deletion matrix below exercises cross-block
+      // ranges without conflating them with the remaining general fitting gap.
       if (
         vName === "vpm" &&
         op === 1 &&
@@ -334,4 +335,75 @@ test("mixed-depth replacement and empty trailing gaps preserve the actual text c
     });
     assert.deepEqual(results[0], results[1]);
   }
+});
+
+test("cross-list boundary deletion preserves the unselected textblock and cursor", () => {
+  const input = require("../../../scripts/prosemirror-schema-list-conformance/deletion-followup.json");
+  let cases = 0;
+  for (const list of ["bullet_list", "ordered_list"])
+    for (const leftText of ["", "al"])
+      for (const tail of ["", "tail"])
+        for (const boundary of ["paragraph", "heading"])
+          for (const nesting of [0, 1, 2])
+            for (const reversed of [false, true]) {
+              const json = structuredClone(input.doc);
+              json.content[0].type = list;
+              if (list === "ordered_list") json.content[0].attrs = { order: 7 };
+              const first = json.content[0].content[0].content[0];
+              first.content = leftText
+                ? [{ type: "text", text: leftText }]
+                : [];
+              json.content[1] = {
+                type: boundary,
+                ...(boundary === "heading" ? { attrs: { level: 3 } } : {}),
+                content: tail
+                  ? [{ type: "text", text: tail, marks: [{ type: "em" }] }]
+                  : [],
+              };
+              for (let n = 0; n < nesting; n++)
+                json.content = [{ type: "blockquote", content: json.content }];
+              const results = ["upstream", "vpm"].map((name) => {
+                const x = make(api(name), json),
+                  before = x.state.doc,
+                  starts = [];
+                before.descendants((node, pos) => {
+                  if (node.isTextblock) starts.push(pos + 1);
+                });
+                const selection = [starts[0], starts[2]];
+                if (reversed) selection.reverse();
+                x.state = x.state.apply(
+                  x.state.tr.setSelection(
+                    x.A.S.TextSelection.create(before, ...selection),
+                  ),
+                );
+                x.state = x.state.apply(
+                  x.A.H.closeHistory(x.state.tr.deleteSelection()),
+                );
+                x.state.doc.check();
+                const after = snapshot(x);
+                assert.equal(x.state.selection.anchor, nesting + 1);
+                assert.equal(x.state.selection.head, nesting + 1);
+                assert(
+                  x.A.H.undo(x.state, (tr) => {
+                    x.state = x.state.apply(tr);
+                  }),
+                );
+                assert(x.state.doc.eq(before));
+                return after;
+              });
+              assert.deepEqual(
+                results[0],
+                results[1],
+                JSON.stringify({
+                  list,
+                  leftText,
+                  tail,
+                  boundary,
+                  nesting,
+                  reversed,
+                }),
+              );
+              cases++;
+            }
+  assert.equal(cases, 96);
 });

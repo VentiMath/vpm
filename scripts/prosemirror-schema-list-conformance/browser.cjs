@@ -91,7 +91,8 @@ const pending = new Map(),
     );
     assert.deepEqual(result.result.value, {
       variants: 3,
-      snapshots: 13,
+      snapshots: 14,
+      appDifferences: ["transform 1.11.0 boundary deletion"],
     });
     const evaluate = async (expression) => {
       const r = await send("Runtime.evaluate", {
@@ -156,7 +157,7 @@ const pending = new Map(),
     assert.deepEqual(snapshots[0], snapshots[2]);
     assert.deepEqual(exceptions, []);
     console.log(
-      "Chrome: current/app/VPM Tiptap list graphs match 13 API snapshots, task-list commands and trusted Tab/Shift-Tab/Enter/typing.",
+      "Chrome: current/VPM match 14 Tiptap snapshots; app matches 13 plus its explicit 1.11.0 deletion control. Task-list commands and trusted Tab/Shift-Tab/Enter/typing pass.",
     );
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);

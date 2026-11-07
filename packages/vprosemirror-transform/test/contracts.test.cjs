@@ -350,3 +350,30 @@ test("mixed-depth list text replacement preserves suffix structure, insertion po
               );
             }
 });
+
+test("deleteRange preserves an unselected empty paragraph after a nested start", () => {
+  const input = require("../../../scripts/prosemirror-schema-list-conformance/deletion-followup.json");
+  const results = [model, um].map((m, i) => {
+    const s = new m.Schema({
+      nodes: {
+        ...spec.nodes,
+        bullet_list: { content: "list_item+", group: "block" },
+        list_item: { content: "paragraph block*" },
+      },
+    });
+    const doc = s.nodeFromJSON(input.doc);
+    const tr = new [v, u][i].Transform(doc).deleteRange(
+      ...[...input.selection].sort((a, b) => a - b),
+    );
+    tr.doc.check();
+    assert.equal(tr.doc.firstChild.type.name, "paragraph");
+    assert.equal(tr.doc.firstChild.content.size, 0);
+    assert(tr.steps[0].invert(doc).apply(tr.doc).doc.eq(doc));
+    return {
+      doc: tr.doc.toJSON(),
+      steps: tr.steps.map((step) => step.toJSON()),
+      boundary: input.selection.map((pos) => tr.mapping.map(pos)),
+    };
+  });
+  assert.deepEqual(results[0], results[1]);
+});

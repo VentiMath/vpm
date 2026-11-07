@@ -41,7 +41,7 @@ failure. Undocumented runtime internals are not compatibility contracts.
 All **38 unchanged current upstream tests** pass on current upstream, full VPM,
 VPM lists on current foundations and VPM lists on app foundations on Node 24 and
 Bun 1.4.4. App 1.5.1 is retained as a negative control for its eight pre-1.6.0
-differences. Seven independent groups include **6,000 seeded edits**, schema
+differences. Eight independent groups include **6,000 seeded edits**, schema
 attributes, marks, query-only calls, mapping, inversion and range wrapping.
 Actual Tiptap list/task-list commands and trusted keyboard events are checked in
 Chrome. Exact archives, clean npm/Bun installs, CJS/ESM and TS7 are verified by the
@@ -51,12 +51,20 @@ Chrome. Exact archives, clean npm/Bun installs, CJS/ESM and TS7 are verified by 
 replacement regression is fixed in VPM transform: both document and cursor now
 match upstream, including undo and the real Tiptap browser caller. Its
 [diagnostic](../../scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs)
-is now a source and packed-package gate. All 6,000 edits permit cross-block text
-insertion; the 2,000 full-VPM edits still restrict deletion to one textblock.
-Broader deletion testing found a separate range expansion that removes an empty
-paragraph upstream preserves. Its
-[recorded reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
-remains a follow-up before complete editor adoption.
+is now a source and packed-package gate. Range deletion also preserves an
+unselected empty paragraph after a nested selection start, with matching
+selection and undo in **96 boundary cases** across list types, headings, marked
+text, nesting and selection direction. Chrome checks 14 actual caller snapshots.
+Current upstream and VPM agree; the older app transform 1.11.0 retains an empty
+list in the new deletion case, recorded as an explicit negative control.
+
+The 6,000 mixed edits permit cross-block text insertion; their 2,000 full-VPM
+iterations still restrict deletion to one textblock. The dedicated boundary
+matrix supplies broader deletion coverage. A separate, reduced
+[general fitting reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
+shows an interior-to-interior nested-list deletion placing surviving content at
+the wrong level. Broader mixed-command fuzzing also reaches this fitting gap
+through text insertion. Those paths remain unverified for complete editor adoption.
 
 [Isolated benchmarks](bench/results/README.md) retain every pair and control.
 List-only cases use identical upstream foundations to isolate this implementation;

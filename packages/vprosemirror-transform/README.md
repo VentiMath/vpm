@@ -60,9 +60,14 @@ flattening nested lists. An empty trailing text gap retains the insertion cursor
 before reconstructed closing shells. Both document and actual editor selection
 are checked through the list-package caller and packed browser fixtures.
 
-Full editor parity remains separate. Broader deletion testing found a range
-expansion that drops an empty paragraph upstream preserves; its
-[reproduction](../../scripts/prosemirror-schema-list-conformance/README.md) is
-recorded for follow-up. A public release and VentiMath adoption are separate.
+Range deletion now distinguishes a shared container from matching boundary
+offsets in different containers. A selection ending at the start of an empty
+paragraph preserves that paragraph and its cursor position. The saved regression
+and 96 list/heading/nesting/direction cases check document, selection and undo.
+
+Full editor parity remains separate. Interior-to-interior replacements across
+nested lists can still place a surviving nested suffix at the wrong level; a
+[reduced reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
+is recorded for follow-up. A public release and VentiMath adoption are separate.
 Native IME, system clipboard, browser input handling and collaborative-server integration belong to the editor cutover.
 All ProseMirror callers must resolve the same model and transform instances.

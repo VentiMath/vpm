@@ -113,6 +113,44 @@ module.exports = function setup(name) {
         run("insertContent", "x");
         if (e.state.selection.anchor !== 6 || e.state.selection.head !== 6)
           throw Error("Cross-list cursor moved past inserted text");
+        const deletion = require("./deletion-followup.json");
+        const from = Math.min(...deletion.selection),
+          to = Math.max(...deletion.selection);
+        e.commands.setContent(convert(deletion.doc));
+        e.commands.setTextSelection({ from, to });
+        run("deleteSelection");
+        if (name === "app") {
+          // Transform 1.11.0 is an explicit older control for this 1.12.5 behavior.
+          const expected = {
+            type: "doc",
+            content: [
+              {
+                type: "bulletList",
+                content: [
+                  { type: "listItem", content: [{ type: "paragraph" }] },
+                ],
+              },
+              convert(deletion.doc.content[2]),
+            ],
+          };
+          if (
+            JSON.stringify(e.getJSON()) !== JSON.stringify(expected) ||
+            e.getHTML() !==
+              "<ul><li><p></p></li></ul><ul><li><p>a</p></li></ul>" ||
+            e.state.selection.anchor !== 3 ||
+            e.state.selection.head !== 3
+          )
+            throw Error(
+              "Unexpected change in the transform 1.11.0 deletion control",
+            );
+        } else if (
+          e.state.selection.anchor !== 1 ||
+          e.state.selection.head !== 1
+        ) {
+          throw Error(
+            "Cross-list deletion did not retain the empty paragraph cursor",
+          );
+        }
         return out;
       } finally {
         const host = e.options.element;
