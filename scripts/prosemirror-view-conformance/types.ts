@@ -48,3 +48,11 @@ source.forEachSet((set) => set.find(0, 3, (s) => s.key === "key"));
 import { EditorView } from "vprosemirror-view/decorations";
 // @ts-expect-error A full view replacement is deliberately unavailable.
 import * as View from "vprosemirror-view";
+
+import { ReadOnlyRenderer } from "vprosemirror-view/readonly";
+const readonlyView = new ReadOnlyRenderer(document.createElement("div"), {
+  doc,
+  decorations: set,
+});
+readonlyView.update(doc, mapped);
+readonlyView.destroy();

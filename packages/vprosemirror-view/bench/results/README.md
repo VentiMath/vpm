@@ -4,7 +4,7 @@
 
 Four balanced pairs plus two identical-source controls run each implementation
 in a separate process. Both use identical upstream document/mapping dependencies,
-isolating the decoration model. Final runtime hashes are verified. These are
+isolating the decoration model. Recorded at the decoration milestone commit `21e376c`; its runtime hashes were verified then. The decoration runtime is unchanged by the later renderer milestone; the manifest and conformance dependency lock now also describe the renderer. These are
 model microbenchmarks, not browser/editor latency measurements.
 
 | Case | Node upstream → VPM | Bun upstream → VPM |

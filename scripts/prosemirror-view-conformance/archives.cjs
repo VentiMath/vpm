@@ -84,7 +84,7 @@ try {
     );
     fs.writeFileSync(
       path.join(cwd, "check.cjs"),
-      `const assert=require('node:assert/strict');const {Decoration,DecorationSet}=require('vprosemirror-view/decorations');const {Schema}=require('vprosemirror-model');const {Transform}=require('vprosemirror-transform');const s=new Schema({nodes:{doc:{content:'paragraph+'},paragraph:{content:'text*'},text:{}}});const doc=s.node('doc',null,[s.node('paragraph',null,s.text('abcd'))]);const set=DecorationSet.create(doc,[Decoration.inline(1,3,{class:'selection'})]);const tr=new Transform(doc).insert(1,s.text('!'));assert.equal(set.map(tr.mapping,tr.doc).find()[0].from,2);assert.throws(()=>require('vprosemirror-view'),e=>['ERR_PACKAGE_PATH_NOT_EXPORTED','MODULE_NOT_FOUND'].includes(e.code));import('vprosemirror-view/decorations').then(m=>{assert.equal(m.Decoration,Decoration);assert.equal(m.DecorationSet,DecorationSet);console.log('module identity, mapping and root export boundary pass');});`,
+      `const assert=require('node:assert/strict');const {Decoration,DecorationSet}=require('vprosemirror-view/decorations');const {Schema}=require('vprosemirror-model');const {Transform}=require('vprosemirror-transform');const s=new Schema({nodes:{doc:{content:'paragraph+'},paragraph:{content:'text*'},text:{}}});const doc=s.node('doc',null,[s.node('paragraph',null,s.text('abcd'))]);const set=DecorationSet.create(doc,[Decoration.inline(1,3,{class:'selection'})]);const tr=new Transform(doc).insert(1,s.text('!'));assert.equal(set.map(tr.mapping,tr.doc).find()[0].from,2);assert.throws(()=>require('vprosemirror-view'),e=>['ERR_PACKAGE_PATH_NOT_EXPORTED','MODULE_NOT_FOUND'].includes(e.code));import('vprosemirror-view/readonly').then(m=>assert.equal(m.ReadOnlyRenderer,require('vprosemirror-view/readonly').ReadOnlyRenderer));import('vprosemirror-view/decorations').then(m=>{assert.equal(m.Decoration,Decoration);assert.equal(m.DecorationSet,DecorationSet);console.log('module identity, mapping and root export boundary pass');});`,
     );
     for (const runtime of ["node", "bun"])
       console.log(manager + ": " + run(runtime, ["check.cjs"], cwd).trim());
@@ -121,13 +121,27 @@ try {
         cwd,
       );
     }
-    // Repeat the unchanged upstream suite and contract with the archived runtime.
-    run("bun", [path.join(__dirname, "build.cjs")], root, {
+    const packedEnv = {
       VPM_VIEW_ENTRY: path.join(
         cwd,
         "node_modules/vprosemirror-view/decorations.cjs",
       ),
-    });
+      VPM_READONLY_ENTRY: path.join(
+        cwd,
+        "node_modules/vprosemirror-view/readonly.cjs",
+      ),
+      VPM_MODEL_ENTRY: path.join(
+        cwd,
+        "node_modules/vprosemirror-model/index.cjs",
+      ),
+      VPM_TRANSFORM_ENTRY: path.join(
+        cwd,
+        "node_modules/vprosemirror-transform/index.cjs",
+      ),
+    };
+    // Repeat contracts against the exact archived runtime and model closure.
+    run("bun", [path.join(__dirname, "build.cjs")], root, packedEnv);
+    run("bun", [path.join(__dirname, "dom-build.cjs")], root, packedEnv);
     for (const runtime of ["node", "bun"]) {
       const results = JSON.parse(
         run(
@@ -151,6 +165,7 @@ try {
         [
           runtime === "node" ? "--test" : "test",
           path.join(root, "packages/vprosemirror-view/test/contracts.test.cjs"),
+          path.join(root, "packages/vprosemirror-view/test/readonly.test.cjs"),
         ],
         root,
       );
@@ -163,9 +178,17 @@ try {
         root,
       );
     }
+    run(
+      "node",
+      [
+        path.join(__dirname, "browser.cjs"),
+        path.join(__dirname, "node_modules/.vpm-view"),
+      ],
+      root,
+    );
     console.log(
       manager +
-        ": exact archives, fresh/frozen install, Node/Bun, CJS/ESM, TS7 NodeNext/Bundler and decoration contracts pass.",
+        ": exact archives, fresh/frozen install, Node/Bun, CJS/ESM, TS7 NodeNext/Bundler and decoration/read-only contracts plus native Chrome pass.",
     );
   }
 } finally {

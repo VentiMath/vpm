@@ -44,7 +44,9 @@ function resolver(variant) {
                       root,
                       "packages/vprosemirror-view/decorations.cjs",
                     )
-                  : path.join(root, "packages/v" + plain, "index.cjs"),
+                  : process.env[
+                      "VPM_" + plain.slice(12).toUpperCase() + "_ENTRY"
+                    ] || path.join(root, "packages/v" + plain, "index.cjs"),
             };
           return {
             path: require.resolve(

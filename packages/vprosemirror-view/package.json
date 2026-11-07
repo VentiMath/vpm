@@ -2,7 +2,7 @@
   "name": "vprosemirror-view",
   "version": "1.42.9",
   "private": true,
-  "description": "Internal independent ProseMirror decoration model; EditorView is not implemented",
+  "description": "Internal independent decoration model and read-only DOM renderer; EditorView is not implemented",
   "exports": {
     "./decorations": {
       "import": {
@@ -13,6 +13,16 @@
         "types": "./decorations.d.ts",
         "default": "./decorations.cjs"
       }
+    },
+    "./readonly": {
+      "import": {
+        "types": "./readonly.d.mts",
+        "default": "./readonly.mjs"
+      },
+      "require": {
+        "types": "./readonly.d.ts",
+        "default": "./readonly.cjs"
+      }
     }
   },
   "files": [
@@ -22,7 +32,11 @@
     "decorations.d.mts",
     "README.md",
     "LICENSE",
-    "PROVENANCE.json"
+    "PROVENANCE.json",
+    "readonly.cjs",
+    "readonly.mjs",
+    "readonly.d.ts",
+    "readonly.d.mts"
   ],
   "engines": {
     "node": ">=24"

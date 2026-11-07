@@ -1,0 +1,1595 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-07T23:30:07.208Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/prosemirror-view-conformance/package-lock.json": "c7d2f5cfd07ba8220f26f50cc6b856953fac7dea88cc61e8f1df9b45de94facf",
+    "bench/readonly.cjs": "abcc8b98c30c05dca97e32fd1722f66a403a3c9fb2da41f9a37ec4be3b87967a",
+    "decorations.cjs": "e0af034ec38f6ab1ed216392cc152fa5e43ef6faecddf946e8a46eb18cd7024a",
+    "package.json": "4498c8236d299211e95f757b48e2a23893b8d5d6542c8422778f3279320cb8d1",
+    "readonly.cjs": "f7c7274ec333166f55b5316663d3cc8f326d16060b8411836efef2d25ae5fff1",
+    "readonly.d.mts": "9a17516278e36e8e321a2a6660fedc7a0defba100071a6d2be61f4de385efe2f",
+    "readonly.d.ts": "f0a619e7dada78322918a387f859a7980314208ca9b6a22beb26a4ffe9528c12",
+    "readonly.mjs": "ace93dbcde8d8d836b8bb840a1904fadee8a1af75b9e4cb3b75cbae931bcd072"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 89931,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 84,
+            "samples": [
+              141536.20238095263,
+              128765.86904762025,
+              142180.54761904784,
+              136797.13095238066,
+              128091.76190476246,
+              160301.59523809506,
+              139930.05952381005,
+              133313.00000000044,
+              147521.33333333343,
+              160707.83333333337,
+              177001.48809523764,
+              149189.47619047647
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 73,
+            "samples": [
+              87973.16438356212,
+              94134.13698630019,
+              85444.64383561567,
+              93238.01369863174,
+              96176.36986301278,
+              100558.79452054745,
+              112525.6849315071,
+              90315.63013698434,
+              88863.01369863123,
+              106291.09589041185,
+              91259.69863013891,
+              103168.9589041098
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 126,
+            "samples": [
+              118249.99999999991,
+              101545.30952380961,
+              110823.41269841182,
+              117505.9523809523,
+              118575.72222222174,
+              113344.91269841303,
+              116856.15079365186,
+              128422.28571428548,
+              147180.22222222143,
+              127176.25396825433,
+              156817.46031746044,
+              145596.88888888853
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 23583,
+            "samples": [
+              619.4734342534896,
+              948.0628418776229,
+              1315.958529449186,
+              2773.8643090361634,
+              645.3889666285017,
+              494.63774753000405,
+              429.7181020226396,
+              1011.9047619047611,
+              431.06441080439345,
+              426.8558707543581,
+              285.7849722257581,
+              455.66895645168574
+            ]
+          }
+        ],
+        "checksum": 11424
+      },
+      "vpm": {
+        "pid": 89932,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 84,
+            "samples": [
+              187345.23809523837,
+              212614.5833333326,
+              177464.28571428618,
+              157974.7023809532,
+              162870.5357142865,
+              174737.60714285835,
+              196915.1785714289,
+              224525.7857142863,
+              178764.3928571429,
+              170383.42857142788,
+              177183.52380952393,
+              160727.67857142858
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 73,
+            "samples": [
+              17520.547945205428,
+              18563.356164382603,
+              29347.027397260383,
+              17566.219178082076,
+              18948.630136987522,
+              18192.342465753216,
+              19730.027397260266,
+              17354.452054794892,
+              30995.999999999654,
+              17640.41095890356,
+              16018.273972601854,
+              17254.575342466
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 126,
+            "samples": [
+              27598.880952380583,
+              35207.67460317515,
+              36636.24603174708,
+              22370.36507936604,
+              25378.63492063429,
+              40521.50000000128,
+              21511.571428569758,
+              22721.563492062898,
+              29126.31746031611,
+              22894.515873015316,
+              22576.3888888885,
+              31132.27777777815
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 23583,
+            "samples": [
+              171.88758851715264,
+              174.64203027604393,
+              175.72509858795758,
+              171.89997031759978,
+              169.770936691683,
+              169.6260441843727,
+              172.45647288300967,
+              170.8787262010793,
+              168.7815375482379,
+              176.680956621303,
+              170.35754568969378,
+              171.5342407666547
+            ]
+          }
+        ],
+        "checksum": 15488
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 89937,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 56,
+            "samples": [
+              171074.39285714322,
+              183899.55357142794,
+              232854.16071428548,
+              181168.16071428588,
+              303228.4107142849,
+              174495.53571428568,
+              190055.07142857224,
+              181461.3214285714,
+              172608.62499999924,
+              195218.74999999916,
+              232495.5357142845,
+              151425.58928571403
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 443,
+            "samples": [
+              23347.34762979695,
+              23284.896162528174,
+              19223.38148984214,
+              20158.954853273215,
+              18822.79909706536,
+              18550.602708803483,
+              25159.142212189807,
+              17541.291196388327,
+              19924.943566591563,
+              19666.76072234752,
+              18842.925507900825,
+              15468.207674943451
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 360,
+            "samples": [
+              21270.486111111117,
+              24931.366666666894,
+              26371.06666666619,
+              22711.344444444927,
+              24757.75555555515,
+              25166.666666666515,
+              25724.305555555322,
+              20365.394444444795,
+              26531.01944444466,
+              23760.069444444474,
+              22440.62499999965,
+              19523.72777777782
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 57326,
+            "samples": [
+              172.32508809266233,
+              162.5266022398215,
+              200.30760911279197,
+              184.3695181941855,
+              232.299323169242,
+              320.4108955796696,
+              200.27125562572255,
+              250.71520775913103,
+              162.08251055367435,
+              169.8218609357021,
+              179.34125876565685,
+              182.06108920908247
+            ]
+          }
+        ],
+        "checksum": 24256
+      },
+      "upstream": {
+        "pid": 89939,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 56,
+            "samples": [
+              132564.0000000001,
+              158567.69642857063,
+              154358.6250000004,
+              143028.26785714118,
+              159192.6964285721,
+              150959.82142857165,
+              123244.78571428545,
+              144716.51785714406,
+              130758.9285714284,
+              157880.94642857075,
+              172052.82142857113,
+              126430.05357142759
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 443,
+            "samples": [
+              137906.6975169298,
+              136024.45598194125,
+              151197.42437923222,
+              146901.80586907422,
+              165326.09029345374,
+              162965.19864559817,
+              194751.59819413087,
+              200832.3002257336,
+              204579.85327313794,
+              235660.83521444665,
+              239496.42663656952,
+              278315.0857787803
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 360,
+            "samples": [
+              143316.6666666668,
+              139300.3472222214,
+              165940.9722222222,
+              149781.9444444455,
+              183590.04722222305,
+              180993.16944444456,
+              210403.93611111137,
+              195280.0916666661,
+              220550.46388888967,
+              223311.92222222223,
+              229420.25277777828,
+              250619.32777777733
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 57326,
+            "samples": [
+              370.8562955726903,
+              292.75546872274805,
+              316.4976101594355,
+              297.8186163346521,
+              304.2409552384669,
+              287.48007884729304,
+              287.6479782297747,
+              312.61629975927053,
+              311.2701915361272,
+              299.9170010117631,
+              282.53614415797654,
+              291.65068206398837
+            ]
+          }
+        ],
+        "checksum": 5784
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 89955,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 47,
+            "samples": [
+              336162.23404255306,
+              485523.9361702122,
+              717561.1702127657,
+              391399.82978723466,
+              208123.23404255311,
+              274132.97872340324,
+              183769.5106382974,
+              170653.38297872365,
+              165435.27659574378,
+              266554.0851063836,
+              281058.51063829754,
+              138542.5531914884
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 138,
+            "samples": [
+              125598.43478260867,
+              100699.87681159395,
+              105421.19565217411,
+              98650.96376811594,
+              109843.59420289847,
+              103239.43478260844,
+              105519.3260869561,
+              117304.94927536236,
+              108127.11594202767,
+              148451.6956521735,
+              116981.88405797031,
+              133668.17391304235
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 120,
+            "samples": [
+              118364.23333333338,
+              101630.90833333398,
+              100504.16666666705,
+              98522.916666667,
+              120295.83333333372,
+              101397.56666666812,
+              124432.98333333436,
+              127809.02499999912,
+              156305.90000000095,
+              157376.7333333346,
+              131307.64166666608,
+              209198.60833333246
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 36859,
+            "samples": [
+              300.198052036133,
+              293.4131962342962,
+              514.0942510648707,
+              326.07140725467156,
+              312.9346428280769,
+              291.62144930681785,
+              295.32703003337264,
+              298.4526709894468,
+              304.20429203180026,
+              295.5078813858238,
+              324.82454760031504,
+              321.8628286171641
+            ]
+          }
+        ],
+        "checksum": 12304
+      },
+      "vpm": {
+        "pid": 89972,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 47,
+            "samples": [
+              339378.5531914889,
+              282011.53191489395,
+              299309.4042553192,
+              481738.48936170194,
+              357816.4893617015,
+              263874.99999999907,
+              238289.02127659728,
+              233238.48936170034,
+              190299.63829787186,
+              153598.40425532078,
+              176716.29787233987,
+              177276.5957446807
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 138,
+            "samples": [
+              19416.0652173909,
+              18006.94202898473,
+              23363.224637680854,
+              17442.33333333285,
+              17738.826086956316,
+              24399.45652173904,
+              25719.507246377078,
+              17632.55072463723,
+              18301.630434782543,
+              24316.42753623217,
+              19778.681159420452,
+              18286.231884058063
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 120,
+            "samples": [
+              21432.98333333329,
+              23197.225000001254,
+              30571.183333332407,
+              24185.416666667454,
+              22171.524999998837,
+              29048.25833333386,
+              21675.00000000094,
+              21973.958333334544,
+              33584.725000000995,
+              23270.141666667616,
+              23136.808333333647,
+              22952.775000000733
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 36859,
+            "samples": [
+              193.46924767356657,
+              171.4212539678252,
+              176.13633033994418,
+              178.14509346428503,
+              175.2602349493992,
+              177.33004150953602,
+              166.56265769554463,
+              164.89866789657816,
+              166.559293523968,
+              165.91491901570822,
+              170.74188122303832,
+              171.09796793184606
+            ]
+          }
+        ],
+        "checksum": 11274
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 90006,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 47,
+            "samples": [
+              339337.7659574477,
+              260670.21276595912,
+              401609.04255319183,
+              210176.4255319146,
+              163855.51063829678,
+              207211.87234042605,
+              198631.19148936297,
+              213729.61702127696,
+              173618.78723404225,
+              164762.40425531904,
+              190315.6170212769,
+              398971.63829787227
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 180,
+            "samples": [
+              22749.533333333402,
+              19253.238888888467,
+              20744.677777778026,
+              29966.89999999944,
+              18490.744444444037,
+              28648.611111111044,
+              22630.78888888875,
+              27913.19444444424,
+              28709.255555555857,
+              20082.172222222045,
+              23073.84444444425,
+              24776.622222222188
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 399,
+            "samples": [
+              30107.0375939849,
+              37585.734335839916,
+              34277.98746867169,
+              27430.869674185542,
+              35560.15037593979,
+              32998.330827067686,
+              27242.689223057576,
+              33433.0601503762,
+              25766.395989974983,
+              24666.040100250175,
+              23506.160401002533,
+              22270.67669172924
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 59079,
+            "samples": [
+              170.72338732882974,
+              183.2130198547701,
+              168.64494998222787,
+              166.4332165405667,
+              163.92176577125605,
+              181.3828263850117,
+              166.4839960053499,
+              167.80991553682156,
+              176.6194417644145,
+              241.45775994854353,
+              169.4024103319295,
+              170.38978317168556
+            ]
+          }
+        ],
+        "checksum": 22384
+      },
+      "upstream": {
+        "pid": 90028,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 47,
+            "samples": [
+              167920.21276595723,
+              166146.27659574468,
+              238813.8297872337,
+              222933.5106382987,
+              148917.5531914892,
+              180728.72340425578,
+              169695.93617021144,
+              154302.29787234034,
+              143917.5531914877,
+              154909.57446808537,
+              127549.63829787415,
+              186122.34042553185
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 180,
+            "samples": [
+              157818.05555555545,
+              123682.86666666613,
+              120701.616666667,
+              141411.80555555545,
+              135539.1222222219,
+              155968.28888888896,
+              136357.63888888858,
+              142354.1666666665,
+              133303.2444444446,
+              138441.2055555553,
+              165833.33333333285,
+              257639.35555555564
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 399,
+            "samples": [
+              158568.5037593987,
+              185645.98997493746,
+              158202.38095238095,
+              224542.08521303214,
+              230465.0150375941,
+              212630.43107769408,
+              261526.62907268215,
+              302317.04260651604,
+              296266.2907268173,
+              269064.64160401013,
+              259378.44611528754,
+              260440.89473684278
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 59079,
+            "samples": [
+              271.8147226594935,
+              283.7211022529145,
+              308.01765432726,
+              275.7261463464233,
+              271.1108684981134,
+              270.0966671744556,
+              275.45391763570655,
+              279.7398398754209,
+              303.89886423263704,
+              266.4955737233249,
+              267.8941248159299,
+              270.40207180215805
+            ]
+          }
+        ],
+        "checksum": 6624
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 90055,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 57,
+            "samples": [
+              161933.4912280702,
+              244118.42105263204,
+              144246.33333333314,
+              143706.87719298204,
+              127562.87719298399,
+              142863.3157894749,
+              152349.42105263274,
+              146019.73684210534,
+              123717.8421052632,
+              150272.64912280595,
+              144177.63157894713,
+              118532.89473684295
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 126,
+            "samples": [
+              97880.28571428536,
+              127282.0793650796,
+              116250.00000000029,
+              111915.01587301544,
+              116191.46825396834,
+              118383.92857142781,
+              131578.37301587334,
+              116556.8809523806,
+              119874.00793650757,
+              132325.06349206346,
+              138919.97619047618,
+              121958.99206349331
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 123,
+            "samples": [
+              183035.56910569101,
+              692227.9837398385,
+              657407.1788617887,
+              311118.2195121946,
+              262311.3089430891,
+              183644.30894308956,
+              312818.08943089255,
+              255340.10569105696,
+              168242.55284552785,
+              203444.78861788477,
+              221623.98373983693,
+              170136.1788617893
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 39273,
+            "samples": [
+              273.0162452575593,
+              300.449214473047,
+              288.42757110483245,
+              404.54212817966993,
+              295.2431441448334,
+              282.20087591983884,
+              276.0144883253129,
+              281.2778499223372,
+              261.90385251954285,
+              275.45746441575625,
+              277.6886665138898,
+              280.7060066712508
+            ]
+          }
+        ],
+        "checksum": 12176
+      },
+      "vpm": {
+        "pid": 90059,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 57,
+            "samples": [
+              155283.6315789479,
+              149207.59649122742,
+              146402.0350877195,
+              1029519.7368421047,
+              668867.7017543856,
+              137133.03508771994,
+              205994.87719298276,
+              146771.92982456114,
+              238647.64912280592,
+              151448.82456140468,
+              173899.85964912444,
+              155467.84210526137
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 126,
+            "samples": [
+              88980.15873015873,
+              210208.33333333366,
+              421614.08730158734,
+              294164.68253968254,
+              198866.40476190427,
+              231293.32539682553,
+              307457.0079365082,
+              169271.16666666584,
+              304303.90476190514,
+              169670.63492063514,
+              149854.16666666654,
+              179982.47619047764
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 123,
+            "samples": [
+              101808.94308942933,
+              113071.13821138276,
+              133557.58536585295,
+              135651.42276422924,
+              106288.28455284519,
+              110598.57723577207,
+              103054.53658536573,
+              121125.67479674709,
+              113351.96747967441,
+              144818.7642276417,
+              135755.08130081356,
+              187953.58536585365
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 39273,
+            "samples": [
+              346.1050594556053,
+              351.4978483945697,
+              309.02169429378984,
+              370.55356097064293,
+              293.7387008886527,
+              311.950958673893,
+              374.81539480050037,
+              399.8962391464862,
+              288.33315509383357,
+              301.7860107452953,
+              321.11756168360336,
+              300.62215771649426
+            ]
+          }
+        ],
+        "checksum": 7711
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 90065,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 47,
+            "samples": [
+              169294.34042553103,
+              131533.68085106456,
+              141054.0638297876,
+              121945.04255319074,
+              174881.21276595548,
+              116008.87234042486,
+              146239.36170212732,
+              147348.4042553198,
+              118579.7872340432,
+              159032.80851063677,
+              132532.78723404367,
+              157554.95744680832
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 117,
+            "samples": [
+              97374.29059829048,
+              100394.23076923082,
+              113058.04273504294,
+              115186.25641025584,
+              120228.6324786321,
+              117775.64102564132,
+              122520.65811965828,
+              121685.89743589758,
+              119399.57264957244,
+              133409.18803418812,
+              123164.88034188059,
+              157987.52991453023
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 125,
+            "samples": [
+              65867.00000000019,
+              89963.33599999888,
+              126151.32799999992,
+              107432.0000000007,
+              138959.32799999902,
+              105621.67199999931,
+              83750.67200000012,
+              92464.66399999917,
+              100407.66399999848,
+              107118.99999999878,
+              105576.99999999932,
+              102445.66400000076
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 36575,
+            "samples": [
+              257.698783321945,
+              287.9904306220083,
+              286.61766233766735,
+              291.5299521531056,
+              291.4900888585067,
+              281.40123034859784,
+              251.74982911825109,
+              276.8022419685617,
+              279.0442105263165,
+              274.62859876965086,
+              280.61744360902054,
+              269.32787423103025
+            ]
+          }
+        ],
+        "checksum": 13072
+      },
+      "upstream": {
+        "pid": 90067,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create/destroy a read-only 32-paragraph view",
+            "iterations": 47,
+            "samples": [
+              192106.38297872333,
+              207510.63829787204,
+              157273.93617021333,
+              136378.55319149018,
+              172545.21276595612,
+              152452.1276595748,
+              136117.91489361553,
+              152646.27659574585,
+              120768.61702127809,
+              156159.57446808362,
+              130073.59574468159,
+              170609.0425531924
+            ]
+          },
+          {
+            "case": "change one paragraph of 32",
+            "iterations": 117,
+            "samples": [
+              95874.29059829096,
+              117953.35042735098,
+              135372.145299145,
+              153292.37606837598,
+              145598.2905982913,
+              192096.5128205135,
+              228919.87179487204,
+              154407.41025640993,
+              210763.17948717895,
+              207462.25641025676,
+              199447.29059829054,
+              204295.23076923113
+            ]
+          },
+          {
+            "case": "change one highlight in 32 paragraphs",
+            "iterations": 125,
+            "samples": [
+              82345.33600000032,
+              81156.32800000094,
+              83816.00000000071,
+              108368.0000000004,
+              147477.33600000173,
+              95647.66400000008,
+              95363.33600000034,
+              133839.32800000004,
+              120323.3280000004,
+              109796.99999999866,
+              115639.66400000027,
+              108784.33600000062
+            ]
+          },
+          {
+            "case": "repeat identical document/decorations",
+            "iterations": 36575,
+            "samples": [
+              284.14447026657393,
+              277.09727956254466,
+              282.3900478468854,
+              279.50556390977283,
+              282.95737525632177,
+              293.8494053315062,
+              281.8796992481236,
+              285.41580314422373,
+              283.75368421052605,
+              255.4932877648625,
+              278.9975119617229,
+              280.6379494190042
+            ]
+          }
+        ],
+        "checksum": 7345
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "create/destroy a read-only 32-paragraph view",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 141858.37500000023,
+          "vpmNs": 177323.90476190505,
+          "changePct": 25.000659821392123
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 147838.16964285786,
+          "vpmNs": 182680.43749999965,
+          "changePct": 23.567843095807063
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 270343.5319148934,
+          "vpmNs": 251082.01063829818,
+          "changePct": -7.124831557893141
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 167033.24468085094,
+          "vpmNs": 208694.14893617033,
+          "changePct": 24.941684114991915
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 144211.98245614013,
+          "vpmNs": 155375.73684210464,
+          "changePct": 7.741211372196344
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 154402.92553191475,
+          "vpmNs": 143646.71276595746,
+          "changePct": -6.966327049116694
+        }
+      ]
+    },
+    {
+      "case": "change one paragraph of 32",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 93686.07534246596,
+          "vpmNs": 17916.37671232839,
+          "changePct": -80.876158333204
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 180038.8442437923,
+          "vpmNs": 19445.07110609483,
+          "changePct": -89.19951347845576
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 108985.35507246308,
+          "vpmNs": 18858.84782608672,
+          "changePct": -82.69597982816343
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 139926.50555555537,
+          "vpmNs": 22911.688888888828,
+          "changePct": -83.6259121901732
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 119128.96825396769,
+          "vpmNs": 204537.36904761897,
+          "changePct": 71.69406572175754
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 173251.96153846174,
+          "vpmNs": 119814.10256410227,
+          "changePct": -30.844013828089512
+        }
+      ]
+    },
+    {
+      "case": "change one highlight in 32 paragraphs",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 118412.86111111083,
+          "vpmNs": 26488.757936507434,
+          "changePct": -77.63016813549322
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 189435.06944444455,
+          "vpmNs": 24258.912499999813,
+          "changePct": -87.19407521999815
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 122364.40833333404,
+          "vpmNs": 23167.01666666745,
+          "changePct": -81.06719349015445
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 244921.7305764408,
+          "vpmNs": 28768.95363408522,
+          "changePct": -88.25381742715298
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 238482.04471544694,
+          "vpmNs": 117238.82113821074,
+          "changePct": -50.83956057232808
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 108576.1680000005,
+          "vpmNs": 104011.33200000004,
+          "changePct": -4.20427068304754
+        }
+      ]
+    },
+    {
+      "case": "repeat identical document/decorations",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 557.0555908917468,
+          "vpmNs": 171.71091464190368,
+          "changePct": -69.1752641119668
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 298.8678086732076,
+          "vpmNs": 183.21530370163399,
+          "changePct": -38.69687588134728
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 302.2011720339666,
+          "vpmNs": 171.25961094983563,
+          "changePct": -43.32926977179741
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 273.6343201476,
+          "vpmNs": 169.89609675180753,
+          "changePct": -37.911261767104165
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 280.991928296794,
+          "vpmNs": 316.5342601787482,
+          "changePct": 12.648880022067054
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 282.1348735475045,
+          "vpmNs": 279.8308270676685,
+          "changePct": -0.8166471768857986
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "create/destroy a read-only 32-paragraph view",
+      "upstream_ns": 157436,
+      "vpm_ns": 195687,
+      "change_pct": 24.3,
+      "upstream_first_pct": 8.9,
+      "vpm_first_pct": 24.3,
+      "process_range_pct": "25.0, 23.6, -7.1, 24.9",
+      "control_max_abs_pct": 7.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "change one paragraph of 32",
+      "upstream_ns": 124456,
+      "vpm_ns": 19152,
+      "change_pct": -83.2,
+      "upstream_first_pct": -81.8,
+      "vpm_first_pct": -86.4,
+      "process_range_pct": "-80.9, -89.2, -82.7, -83.6",
+      "control_max_abs_pct": 71.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "change one highlight in 32 paragraphs",
+      "upstream_ns": 155900,
+      "vpm_ns": 25374,
+      "change_pct": -84.1,
+      "upstream_first_pct": -79.3,
+      "vpm_first_pct": -87.7,
+      "process_range_pct": "-77.6, -87.2, -81.1, -88.3",
+      "control_max_abs_pct": 50.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "repeat identical document/decorations",
+      "upstream_ns": 301,
+      "vpm_ns": 171,
+      "change_pct": -41,
+      "upstream_first_pct": -56.3,
+      "vpm_first_pct": -38.3,
+      "process_range_pct": "-69.2, -38.7, -43.3, -37.9",
+      "control_max_abs_pct": 12.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

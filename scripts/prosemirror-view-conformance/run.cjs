@@ -16,6 +16,7 @@ function run(cmd, args) {
   return r.stdout;
 }
 console.log(run("bun", [path.join(__dirname, "build.cjs")]).trim());
+console.log(run("bun", [path.join(__dirname, "dom-build.cjs")]).trim());
 for (const runtime of ["node", "bun"]) {
   for (const variant of ["upstream", "app", "vpm"])
     for (const file of ["webtest-decoration.ts", "webtest-decoration-app.ts"]) {
@@ -39,6 +40,7 @@ for (const runtime of ["node", "bun"]) {
     run(runtime, [
       runtime === "node" ? "--test" : "test",
       "packages/vprosemirror-view/test/contracts.test.cjs",
+      "packages/vprosemirror-view/test/readonly.test.cjs",
     ]).trim(),
   );
   const callers = ["upstream", "app", "vpm"].map((v) =>

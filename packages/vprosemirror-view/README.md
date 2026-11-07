@@ -1,61 +1,79 @@
 # vprosemirror-view
 
-**Internal milestone: decoration models only.** This private workspace package
-is not a replacement for `prosemirror-view` yet. It has no root export and no
-`EditorView`. Do not repin an application or publish it as a complete view package.
+**Private internal milestones, not a complete `prosemirror-view` replacement.**
+The package has explicit decoration and read-only rendering entries, no root
+export and no `EditorView`. Do not repin an application or publish it as a full
+view package. References are View **1.42.9** and VentiMath's **1.41.6** baseline.
 
-The explicit `vprosemirror-view/decorations` entry implements `Decoration`,
-`DecorationSet` and the child `DecorationSource` contract independently, targeting
-View **1.42.9** and checking VentiMath's **1.41.6** baseline.
+## Decoration model
+
+`vprosemirror-view/decorations` independently implements `Decoration`,
+`DecorationSet` and child decoration sources: inline/node/widget descriptors,
+create/find/add/remove/map, persistent snapshots, boundary affinity, keys and
+removal callbacks. It retains branches untouched by every mapping step and maps
+affected ranges through the complete mapping before repartitioning. Input arrays
+are retained unchanged; specs and widget factories remain caller-owned references.
+
+The two unchanged 47-test suites, seven original groups with 2,000 seeded mapping
+cases, and the actual documentation editor's Selection contract are checked on
+Node 24 and Bun. [Decoration measurements](bench/results/README.md) remain mixed:
+highlight creation and narrow queries are faster, but bulk creation/mapping/removal
+are slower. Mapping 100 spans still takes roughly 8–9 μs versus 1 μs upstream.
+
+## Read-only DOM renderer
 
 ```js
 const { Decoration, DecorationSet } = require('vprosemirror-view/decorations');
-const highlight = Decoration.inline(2, 8, { class: 'selection' });
-const decorations = DecorationSet.create(doc, [highlight]);
-const next = decorations.map(transaction.mapping, transaction.doc);
+const { ReadOnlyRenderer } = require('vprosemirror-view/readonly');
+const decorations = DecorationSet.create(doc, [
+  Decoration.inline(2, 8, { class: 'selection' }),
+]);
+const renderer = new ReadOnlyRenderer(element, { doc, decorations });
+renderer.update(nextDoc, nextDecorations);
+renderer.destroy();
 ```
 
-Inline, node and widget descriptors preserve attributes/specs, boundary affinity,
-widget keys and removal callbacks. Sets support create/find/add/remove/map, child
-projection and persistent snapshots. They retain branches untouched by every mapping step and map affected ranges
-through the complete supplied mapping before repartitioning. Additions merge
-only their affected branches; narrow queries skip irrelevant child ranges. Input arrays are not consumed, unlike upstream;
-returned arrays cannot mutate the set's private indexing. Specs and DOM factories
-remain caller-owned references, as upstream expects.
+This independent renderer uses the schema's DOM recipes and creates DOM nodes
+directly. It covers the documentation editor's paragraphs/headings, text/marks,
+ordinary and task lists, quotes, code, rules, hard breaks and images. Inline/node
+attributes and wrappers compose with marks and widgets. Reconciliation preserves
+unchanged model nodes, and equivalent updates make no DOM writes. Widget keys
+preserve their nodes; position callbacks follow shifted ancestors and become
+undefined after removal. Cleanup runs once per mounted widget.
 
-Widgets are descriptors in this milestone. Their factories, event handlers and
-teardown hooks are retained, not mounted or invoked by a view. The optional
-upstream peer supplies only the `EditorView` type for widget factory callbacks;
-this package's runtime imports no upstream view. Public types use VPM documents
-and mappings. Full editor plugin/type integration is part of the later view work.
+Boundaries and deliberate behavior:
 
-## Verification
+- The root is always noneditable. Task checkboxes from static schema markup are
+  disabled; caller-owned checkbox widgets retain their own behavior. Upstream's
+  schema-only read-only view leaves those static task controls enabled.
+- Widget factories receive the optional `widgetHost` and a position callback.
+  No `EditorView` host is synthesized. A factory requiring view methods needs a
+  caller-supplied host; its input/selection behavior is not implemented here.
+- The owner document comes from the mount, including iframe mounts. The renderer
+  owns only its root. Schema changes are rejected. Rendering exceptions destroy
+  the partial renderer rather than leave partially updated content mounted.
+- Schema DOM recipes are supported; custom node views, including the React
+  ImageUploadNode component, are not mounted. Arbitrary node-view lifecycle and
+  full Tiptap application integration are separate work.
 
-The unchanged 47-test decoration suites from both reference versions pass on
-Node 24 and Bun, including structural mapping, compound changes and subtree
-identity. Seven additional groups cover 2,000 seeded supplied-mapping cases,
-inclusive edges, widget equality, exact removal callbacks, child layers and
-persistent updates. The documentation Tiptap editor's Selection contract passes
-12 selection/focus/editability combinations against current/app/VPM models;
-the actual app file is also checked locally without changing it.
-
-[Conformance details](../../scripts/prosemirror-view-conformance/README.md) and
-[measurements](bench/results/README.md) record the scope and controls. Packed-file,
-module and TS7 checks are internal verification, not a public release.
-
-Bulk creation, mapping and removal still cost more than upstream in the recorded
-100-decoration cases; the mapping case is about 10× slower (8–9 μs). The
-app-shaped highlight construction and range queries are faster. These are
-model measurements, not an application performance claim.
+Fourteen structural snapshots and 120 update snapshots match current and app
+controls in Chrome, except the named disabled-task-control policy. Native checks
+also cover layout, identity, widget focus/position/cleanup, iframe ownership and
+noneditable input. Seven original DOM groups and the earlier model checks pass
+on Node/Bun. Exact archives, clean installs, CJS/ESM and TS7 are verified.
+[Conformance details](../../scripts/prosemirror-view-conformance/README.md) explain
+these controls; [renderer measurements](bench/results/readonly.md) explain their
+limited performance scope.
 
 ## Remaining work
 
-Next: a read-only document/decorations DOM renderer that preserves unaffected DOM
-nodes on updates, checked against the documentation editor's schema. This does
-not yet imply browser editing support. `EditorView`, DOM selection, input and
-mutation handling, IME/composition, clipboard, accessibility and application
-adoption remain separate milestones.
+Next: document/DOM position lookup (`nodeDOM`, `domAtPos`, `posAtDOM`) over the
+retained render records, including marks, wrappers, widgets and UTF-16 offsets.
+This prepares the app's later caret-visibility/geometry calls without starting
+input or selection synchronization.
 
+Full `EditorView`, custom node views, DOM selection/input/mutation handling,
+IME/composition, clipboard, accessibility and adoption remain unverified.
 The transform [deep-deletion reproduction](../../scripts/prosemirror-schema-list-conformance/deep-deletion-followup.json)
-(selection 3..42) remains a full editing acceptance gap. Decoration models consume
-supplied documents/mappings; they do not decide that deletion's ancestor structure.
+(3..42) and bulk decoration costs remain full editing acceptance gaps. This
+read-only milestone neither repairs nor hides them.

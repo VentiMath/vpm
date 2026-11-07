@@ -1,6 +1,6 @@
 # ProseMirror decoration model checks
 
-This is an internal milestone, not an EditorView implementation or a release.
+These are internal decoration and read-only DOM milestones, not an EditorView implementation or a release.
 Current upstream is 1.42.9 (registry checked 2026-11-07), app upstream is 1.41.6.
 Pinned official tests and their licenses are under `upstream/`; hashes and commits
 are in `upstream.json`. No upstream runtime is copied into the VPM package.
@@ -30,16 +30,47 @@ and isNodeSelection; this is a model contract test, not a mounted React/DOM test
 Archive checks verify exact source bytes, fresh and frozen npm/Bun installs,
 CJS/ESM identity, absent root export, TS7 NodeNext/Bundler declarations without
 skipLibCheck, and the same runtime contracts with archived decoration bytes.
-No package is uploaded. Native DOM rendering and browser editing are outside
-this unit.
+No package is uploaded. The native read-only rendering gate is described below;
+browser editing remains outside this unit.
 
 The [deep deletion discrepancy](../prosemirror-schema-list-conformance/README.md#remaining-deep-deletion-follow-up)
-remains recorded for full editing acceptance; supplied-mapping decoration work
-does not mask or repair it. Next bounded unit: read-only DOM rendering of the app
-schema with inline/node/widget decorations and stable unaffected DOM identity.
-Start with text/marks, paragraphs/headings, blockquotes, ordinary/task lists,
-code blocks, hard breaks, rules and images from the documentation editor schema.
-Its React ImageUploadNode host is a later node-view lifecycle concern. Input,
-selection synchronization, IME and clipboard come later. Bulk decoration
-creation/mapping/removal costs remain recorded optimization work before editor
-acceptance.
+remains a full editing acceptance gap. Neither supplied-mapping decoration work
+nor read-only rendering masks or repairs it.
+
+## Read-only DOM milestone
+
+The `readonly` entry is independently implemented and remains private. `schema.cjs`
+loads the public Tiptap extensions at the versions and configuration used by the
+documentation editor: StarterKit, text alignment, underline, task lists/items,
+multicolor highlighting, images, sub/superscript and link marks. The app's Link
+extension preserves the upstream DOM recipe; its editing plugins, TrailingNode
+behavior and the React ImageUploadNode lifecycle are outside this rendering unit.
+This is schema rendering, not a mounted copy of the complete application editor.
+
+`dom-cases.cjs` compares schema-only upstream EditorView instances with
+`editable: false` against the VPM renderer. Fourteen initial and 120 update
+snapshots cover the nodes/marks above, overlapping and custom decoration wrappers,
+widgets and retained identities. Attribute order is canonicalized. The sole
+intentional markup difference removed from structural comparison is `disabled`
+on static task checkboxes; a separate assertion and native click verify that
+policy. Caller-owned checkbox widgets are not disabled. No other structural
+mismatches are filtered out.
+
+```sh
+bun scripts/prosemirror-view-conformance/dom-build.cjs
+node scripts/prosemirror-view-conformance/browser.cjs scripts/prosemirror-view-conformance/node_modules/.vpm-view
+```
+
+Chrome compares block layout, retains focused widget identity across unrelated
+edits, verifies updated/removed widget positions and cleanup, exercises iframe
+ownership, and attempts native input into the noneditable document. A screenshot
+can be saved with `VPM_DOM_SCREENSHOT`. Seven original DOM test groups also cover
+wrapper/attribute cleanup, equivalent-update mutation counts, literal text,
+constructor/update failures and rejection of attribute-array DOM recipes.
+
+The archive gate repeats native Chrome against the exact packed renderer/model
+closure after both npm and Bun installs. Widget factories that need an EditorView
+host, custom node views, browser editing, selection synchronization, IME and
+clipboard remain outside this unit. Next is bounded document/DOM position lookup;
+geometry/caret visibility follows later. Bulk decoration performance and the
+saved deep deletion remain full editing acceptance follow-ups.
