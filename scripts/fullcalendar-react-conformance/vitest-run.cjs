@@ -27,7 +27,7 @@ exports.runVitest = function runVitest({upstream, files, env = {}}) {
     // installed here sits in node_modules, so it is inlined.
     fs.writeFileSync(path.join(temporary, 'vitest.config.mjs'), `export default {
   resolve: {alias: ${JSON.stringify(alias)}, dedupe: ['react', 'react-dom']},
-  test: {environment: 'jsdom', include: ${JSON.stringify(include)}, globals: true, server: {deps: {inline: [/@fullcalendar[\\\\/]react/]}}},
+  test: {environment: 'jsdom', include: ${JSON.stringify(include)}, globals: true, server: {deps: {inline: [/@fullcalendar[\\\\/]react/, /vfullcalendar-react/]}}},
 };\n`);
     const report = path.join(temporary, 'report.json');
     // UTC, as upstream's CI runs: some tests build dates from the current time,
