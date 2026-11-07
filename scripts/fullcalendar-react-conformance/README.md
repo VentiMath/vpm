@@ -23,8 +23,10 @@ the checked week view.
 - `react-suite.cjs`: 11 independent tests for the supported lifecycle, context,
   current callbacks, defensive event values/revert, dates, stale/rejected event
   sources, selection, safe text, imperative options and excluded views.
-- `application.cjs`: four common app-shaped cases on both implementations,
+- `application.cjs`: six common app-shaped cases on both implementations,
   including an upstream failure control for omitted `allDay` edits.
+  The event-identity cases preserve DOM nodes across filtered arrays and reproduce
+  mount-driven label-state loops from VentiMath; both failed r2 and pass the patch.
 - `regressions.cjs`: mounted Casablanca offset and fragment-safe JSON feed checks.
   Bun's native Temporal also handles the original timezone case correctly.
 - `types.cjs`: strict TypeScript 7 consumers against both declarations.

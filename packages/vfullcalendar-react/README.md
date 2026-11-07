@@ -57,7 +57,7 @@ not pixel-identical to the upstream themes.
 
 ## Verification and measurements
 
-Four app-shaped cases run against the pinned original and VPM on Node 24/Bun.
+Six app-shaped cases run against the pinned original and VPM on Node 24/Bun.
 Eleven additional cases cover lifecycle/StrictMode, context, callback updates,
 reversible edits, stale async sources, option updates and date correctness.
 Real Chromium checks selection, drag/revert/resize, spanning and overlapping
@@ -69,18 +69,32 @@ The original 27-test React suite is retained as an upstream control. The former
 1,542-spec comparison describes the previous fork; it is **not** a parity claim
 for this smaller implementation. See the [conformance record](../../scripts/fullcalendar-react-conformance/README.md).
 
-The application-shaped JS entry is **13,025 bytes gzipped**, versus **82,453**
+The r2 application-shaped JS entry measured **13,025 bytes gzipped**, versus **82,453**
 for upstream (84% smaller; React and CSS excluded). The supported scope is
 smaller. Node timing directions are inconclusive; Bun navigation is 16% faster
 and view switching 11% slower in the isolated jsdom workload.
 [Reproduction and timing results](bench/results/README.md).
+
+The r2 timing recordings above predate the event-identity correction; this patch
+is verified through mount counts and interaction tests, not a new speed claim.
+
+## Event identity correction
+
+Release r3 retains internal keys for surviving, nonempty event IDs when an app
+passes a new filtered or cloned event array. Custom React event content keeps
+its state and mount effects. In r2, those components remounted each time;
+VentiMath's label initialization could consequently trigger an endless update
+cycle. Two mounted regressions reproduce both the lost identity and the cycle,
+pass upstream, and pass with the correction. Duplicate IDs remain distinct
+occurrences; removing an event and later adding it creates a new identity.
+Use stable public IDs for event content that needs state preserved.
 
 ## Adoption
 
 VentiMath's committed frontend uses the three VPM calendar packages from
 [`calendar-7.1.3`](https://github.com/VentiMath/vpm/releases/tag/calendar-7.1.3).
 That immutable release contains the earlier adapted renderer. The independent
-renderer is distributed separately as `calendar-7.1.3-r2`; the app must update
+renderer, including the event-identity correction, is distributed as `calendar-7.1.3-r3`; the app must update
 its release URL and lockfile to adopt it. Source adoption is verified; production
 deployment is not inferred. See [installation](../../docs/INSTALLATION.md) and
 [adoption evidence](../../docs/ADOPTION.md).

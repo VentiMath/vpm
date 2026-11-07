@@ -203,10 +203,26 @@ export class CalendarApi {
   replaceEvents(input) {
     this.inputEvents = input;
     if (!Array.isArray(input)) return;
+    // A new filtered array is not a new set of React components. Retain keys
+    // for surviving public IDs so custom event content keeps its mounted state.
+    // Queues preserve distinct occurrences when a source repeats an ID.
+    const available = new Map();
+    for (const record of this.records.values())
+      if (record.id) {
+        let bucket = available.get(record.id);
+        if (!bucket)
+          available.set(record.id, (bucket = { keys: [], index: 0 }));
+        bucket.keys.push(record.key);
+      }
     const next = new Map();
     for (const item of input) {
       const r = this.normalize(item);
-      if (r) next.set(r.key, r);
+      if (r) {
+        const bucket = r.id && available.get(r.id);
+        if (bucket && bucket.index < bucket.keys.length)
+          r.key = bucket.keys[bucket.index++];
+        next.set(r.key, r);
+      }
     }
     this.records = next;
     this.revision++;

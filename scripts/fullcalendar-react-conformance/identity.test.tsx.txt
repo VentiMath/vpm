@@ -1,0 +1,19 @@
+import React,{useState,useEffect,useMemo} from 'react';
+import {render,cleanup} from '@testing-library/react';
+import Calendar from '../dist/index';
+import dayGrid from '../dist/daygrid';
+import classic from '../dist/themes/classic';
+afterEach(cleanup);
+const data=[{id:'event-a',title:'A',start:'2026-11-03',extendedProps:{label:'math'}}];
+it('preserves event components when the same ID survives a filtered array replacement',()=>{
+ const mounted=vi.fn(); const options={plugins:[dayGrid,classic],initialView:'dayGridMonth',initialDate:'2026-11-03',events:data,eventDidMount:mounted,eventContent:()=> <span data-testid="event">A</span>};
+ const view=render(<Calendar {...options}/>),before=view.getByTestId('event');
+ view.rerender(<Calendar {...options} events={data.filter(()=>true)}/>);
+ expect(view.getByTestId('event')).toBe(before);expect(mounted).toHaveBeenCalledTimes(1);
+});
+it('custom event label initialization settles instead of repeatedly remounting',()=>{
+ let mounts=0;
+ function Content({setLabels}:{setLabels:(labels:string[])=>void}){useEffect(()=>{if(++mounts>6)throw Error('event remount loop');setLabels(['math']);},[setLabels]);return <span data-testid="settled-event">A</span>;}
+ function App(){const [labels,setLabels]=useState<string[]>(['math']);const events=useMemo(()=>data.filter(e=>labels.includes(e.extendedProps.label)),[labels]);return <Calendar plugins={[dayGrid,classic]} initialView="dayGridMonth" initialDate="2026-11-03" events={events} eventContent={()=> <Content setLabels={setLabels}/>}/>;}
+ const view=render(<App/>);expect(view.getByTestId('settled-event')).toBeTruthy();expect(mounts).toBe(1);
+});

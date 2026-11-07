@@ -11,7 +11,7 @@ calendar: `63f63f6a`):
 
 | Package | In use | Available update |
 | --- | --- | --- |
-| `vfullcalendar-react` | `calendar-7.1.3`, package 7.1.3 | `calendar-7.1.3-r2`: independently written application-scope renderer |
+| `vfullcalendar-react` | `calendar-7.1.3`, package 7.1.3 | `calendar-7.1.3-r3`: independent renderer with the r2 event-remount loop corrected |
 | `vfullcalendar-core` | `calendar-7.1.3`, package 7.1.3 | Included in the same replacement release |
 | `vfull-ui-headless-calendar` | `calendar-7.1.3`, package 7.1.3 | Included in the same replacement release |
 | `vclsx`, `vstylis` and 13 Emotion packages | `styling-11.14.1` | Current published styling release |
