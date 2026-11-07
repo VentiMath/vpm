@@ -54,5 +54,6 @@ cases show lower time. Modern letter normalization measures 9 → 6 ns on Node a
 respectively. Getter measurements use synthetic getter-backed objects, while
 actual Chrome events are checked for correctness rather than timed.
 
-This completes the source package. `prosemirror-keymap` itself, public release,
-VentiMath adoption and physical keyboard-layout/IME acceptance remain separate.
+This completes the source package. The independently built shortcut caller is
+[vprosemirror-keymap](../vprosemirror-keymap). Public release, VentiMath adoption
+and physical keyboard-layout/IME acceptance remain separate.

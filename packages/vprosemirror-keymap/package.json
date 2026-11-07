@@ -1,0 +1,46 @@
+{
+  "name": "vprosemirror-keymap",
+  "version": "1.2.3",
+  "description": "Compiled keyboard shortcut bindings and plugins for ProseMirror",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.cjs"
+      }
+    }
+  },
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "dependencies": {
+    "vw3c-keyname": "2.2.8",
+    "vprosemirror-state": "1.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vprosemirror-keymap"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

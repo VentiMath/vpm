@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "prosemirror-keymap",
+    "version": "1.2.3",
+    "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-keymap",
+    "checked": "2026-11-06",
+    "integrity": "sha512-4HucRlpiLd1IPQQXNqeo81BGtkY8Ai5smHhKW9jjPKRc2wQIxksg7Hl1tTI2IfT2B/LgX6bfYvXxEpJl7aKYKw=="
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "3cb2d5b3b2ab5e718158b776b6a7fb5789685ed462a648c0c6e892df2a21a580",
+    "dist/index.d.ts": "c18f616b098332f45b312f3c1385de32e7b3dba6a3da8a778547dcd7ed264649",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Keymap 1.2.3 binding aliases, modifier precedence, platform Mod/AltGraph behavior and Plugin integration with current/app Tiptap keyboard controls. Browser view and full app adoption remain separate."
+  },
+  "changes": [
+    "Independent compiled key/modifier tables avoid modifier-string assembly per keyboard event.",
+    "Only own enumerable binding properties are registered; inherited definitions are ignored.",
+    "Runtime dependencies are vw3c-keyname 2.2.8 and vprosemirror-state 1.4.4. No upstream runtime source shipped.",
+    "Matches the published 1.2.3 Shift-only behavior; one stale upstream source assertion fails both controls and is explicitly checked/documented."
+  ]
+}

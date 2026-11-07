@@ -1,0 +1,13 @@
+{
+  "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-keymap",
+  "version": "1.2.3",
+  "commit": "081f24f65b6a394174a4bdf07b9a55a00361f1b7",
+  "sha256": {
+    "test-keymap.ts": "05f490751489ca241e20183bcfe61f88248da7c9b6d33eb95925233acd931fea",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "knownPublishedMismatch": {
+    "test": "tries both shifted key and base with shift modifier",
+    "reason": "The second assertion expects a Shift-only key-code fallback removed by published 1.2.3. Both upstream and VPM must fail it; separate contracts assert the current behavior."
+  }
+}

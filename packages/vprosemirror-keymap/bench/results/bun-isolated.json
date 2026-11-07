@@ -1,0 +1,2699 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-07T07:45:55.826Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/prosemirror-keymap-conformance/load.cjs": "a287ffeb0313f3e8f6ac6dcd8800e3fb51703276afb8308c5f09693164f1efab",
+    "../../scripts/prosemirror-keymap-conformance/node_modules/prosemirror-keymap": "b47726eca63b16746273d8ea8a020c2a30b22e971f66ca5fb2bd054b181cbf54",
+    "../../scripts/prosemirror-keymap-conformance/node_modules/prosemirror-model": "d8ed6f2001e2ad2d1ddd012688eda15e890e801181a0cf14effb709132448654",
+    "../../scripts/prosemirror-keymap-conformance/node_modules/prosemirror-state": "9bf8f4e6b1cce1d3afffa1cac62dbe62c6735e4e07bcf16f48e3eed6062dcd68",
+    "../../scripts/prosemirror-keymap-conformance/node_modules/prosemirror-transform": "85e8e99435fcfb108edeb4a410eec95e1fdee2f4879a0716fdd6d53c163689c5",
+    "../../scripts/prosemirror-keymap-conformance/node_modules/w3c-keyname": "5c70ba991089d29e0c2f0a2727986c1420aa0190852644d7894589783affc123",
+    "../../scripts/prosemirror-keymap-conformance/package-lock.json": "24e47d480395e31802ba8fcfcad4a8a0b5872ecc52627cc4072263d2c3a04faf",
+    "../vorderedmap/index.cjs": "a051ce209ee990582ed8c7229bcd13046782bd84f0ca05953210ff1ca40d3af6",
+    "../vprosemirror-model/content.cjs": "6b41dfe1933fecc2b0d4b34320550d527716c0df03a3bedb1266a14eadd0edb0",
+    "../vprosemirror-model/core.cjs": "92c70ef9fa799a9d19a3853c1627be35a0c2a0ee074ca994bea06b16ebe8d971",
+    "../vprosemirror-model/dom.cjs": "76839fc815c3baaee04cbf5611a2eebc88ca1d6a8d88a81b857a5cd8620faad4",
+    "../vprosemirror-model/index.cjs": "4c831e8cf0d9bdeb2418d54ba4330b1da80dba97b9d0bcececd127235e2639af",
+    "../vprosemirror-model/schema.cjs": "f1e01c67bd0974258826c01b18ea13dbd332c72f91fb8ec5777237a13dde6eb7",
+    "../vprosemirror-state/index.cjs": "c84e13d119fb67447ec68ddf01ee1ad58635fce4aa25fb4b58e709a0c5cc6dcb",
+    "../vprosemirror-state/plugin.cjs": "4f422aa6ce1180a58ce38949a04f5c889e0e30f4d1cff43044fbc91d0b14e8e2",
+    "../vprosemirror-state/selection.cjs": "610ab2f24450fdc281cf4143fcc5333fcee43f30108e87451db4816697c41929",
+    "../vprosemirror-state/state.cjs": "1693e36a76e990f3f85d632fc21cbc4f980e6401c2e7b58d089ee9a32bac69c6",
+    "../vprosemirror-state/transaction.cjs": "5fe634c45b10b6dae6a7fe7d3c711965b617bf68c8851db52666af1e17a5c347",
+    "../vprosemirror-transform/fit.cjs": "9b438c38db4a4c1fb836900da48e46d4e81b377ca6c7d8ba9bd7b613659b9bdc",
+    "../vprosemirror-transform/index.cjs": "bbde626d38e21181958ac16a99db6d94e5ac128b8ad71834822b2a5789d80692",
+    "../vprosemirror-transform/mapping.cjs": "45252792894a2850971876bdcbef1ec1581cbe0f0a0a7ffd032aef08837f61c9",
+    "../vprosemirror-transform/steps.cjs": "6c46edb0dcff16cda8ad2389b7a2bf9f01d33e8be903b3fee9ec06ffae12ea9b",
+    "../vprosemirror-transform/structure.cjs": "cd5fba5fdf679e9dce32b6da49ad37ccb2013c03df99fe2ece99429de2be2de6",
+    "../vprosemirror-transform/transform.cjs": "e2bb61b6cdbfc67ee44ba3876432585c9b0d3387a4e3d6b1a24079cec6201ed8",
+    "../vw3c-keyname/index.cjs": "3f68b19c2633e043f060fc2b31d7d246c17d590527787f5e41954d0bdfeb4140",
+    "PROVENANCE.json": "86d68fac9335f19d9b7a12b93cb2920ff6e95abb9b78bcab625bb8660644f3bb",
+    "bench/compare.cjs": "4079a7d9399134eba0dfc4ac3182a035771f9a6544d9d03ece4a45e9c15f01ed",
+    "index.cjs": "c33cca9877b32fc3ba04b54157722dda826bbd638abd2eb82a612a3a644208f9",
+    "index.d.mts": "886bc378a439d86d04fb9bf088c076320607cbb69e975569d88c643bc3e54513",
+    "index.d.ts": "0dbeecc7299ca93f287d46a7f01d6366043b68cf770898002e5a7114861c330f",
+    "index.mjs": "566b28c0937cffed147dac3a840f231dc3caf996bae613e32897632a7e5b1b92",
+    "package.json": "49c3ae03c408451a01e611793015cbf73694c830833b2f9cf5904d8ffdb1c34a"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 14990,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 20221,
+            "samples": [
+              402.1809010434707,
+              419.5081845606043,
+              416.23806933386123,
+              401.53390040057354,
+              406.091835220811,
+              410.27065921566737,
+              425.6259828890757,
+              404.35067504079956,
+              424.502991939075,
+              407.19840759606484,
+              411.03926610948974,
+              401.96043716927915
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 525,
+            "samples": [
+              33813.09523809532,
+              32704.285714285536,
+              35164.44380952375,
+              78438.64952380954,
+              20704.285714285626,
+              5526.270476190499,
+              7566.666666666606,
+              4771.19047619042,
+              5837.53904761904,
+              3627.222857142962,
+              30303.41142857153,
+              3941.5885714286214
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 18483,
+            "samples": [
+              507.20705513174573,
+              507.4438132337781,
+              515.845641941247,
+              533.5871882270208,
+              494.2266948006248,
+              504.4252015365493,
+              530.2372450359745,
+              515.3834875290826,
+              515.6270086025017,
+              545.0864578261112,
+              534.4663204025343,
+              526.8692852891829
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 234951,
+            "samples": [
+              40.9956075947753,
+              41.73263786917214,
+              40.906755025515025,
+              40.80602763980654,
+              41.597856574350054,
+              40.85674459781025,
+              40.84628284195409,
+              41.10236602525653,
+              41.563985682120844,
+              40.96669943945725,
+              41.018484705321576,
+              41.72129082234167
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 113951,
+            "samples": [
+              82.36069889689433,
+              82.85249800352832,
+              94.38340163754607,
+              83.05361076252129,
+              82.34241033426683,
+              81.98333494221202,
+              83.14977490324908,
+              87.10468534721144,
+              79.81354266307542,
+              80.42309413695502,
+              82.28609665557988,
+              81.27140613070395
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 87842,
+            "samples": [
+              110.09966758498355,
+              115.56687006215667,
+              111.85187040367923,
+              117.5519683067328,
+              110.87425149700735,
+              109.4612030691451,
+              109.07984790874467,
+              119.58781676191302,
+              114.0285967987973,
+              111.25894219166307,
+              118.53669087680049,
+              117.8379932150923
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 72296,
+            "samples": [
+              128.85971561358755,
+              133.03352882593794,
+              134.87144516985603,
+              132.95341374350005,
+              138.2620338607905,
+              137.52835564899448,
+              130.76103795507464,
+              132.46410589797705,
+              131.06015547194775,
+              128.60728117737975,
+              140.21926524288878,
+              129.63776695806152
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 107431,
+            "samples": [
+              97.81704535934946,
+              94.65804097513566,
+              106.88372071376138,
+              97.38305517029305,
+              97.26475598290683,
+              98.38989677095242,
+              99.08531057143816,
+              99.10741778443604,
+              97.15189284284726,
+              100.2154871498885,
+              100.69176494680497,
+              99.13921493795797
+            ]
+          }
+        ],
+        "checksum": 81184
+      },
+      "vpm": {
+        "pid": 14994,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 20221,
+            "samples": [
+              454.0782849512882,
+              456.8394243608119,
+              458.4713911280362,
+              456.2933583897929,
+              455.8668710746256,
+              462.9819494584817,
+              456.0110775926019,
+              438.19341278868427,
+              461.40151327827425,
+              448.7805251965781,
+              473.86795905247067,
+              459.00301666584215
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 525,
+            "samples": [
+              4244.840000000013,
+              4115.318095238135,
+              4220.078095238153,
+              4787.064761904796,
+              4092.3809523809764,
+              4163.7314285714765,
+              4096.9047619048415,
+              4271.82476190475,
+              4227.380952380978,
+              4719.9219047617935,
+              4243.809523809432,
+              4227.06285714282
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 18483,
+            "samples": [
+              630.5681436996122,
+              645.1851972082487,
+              595.889898825947,
+              627.9509278796713,
+              641.5039225233974,
+              610.0155277822842,
+              608.277390034086,
+              612.4704322891305,
+              614.6639073743416,
+              608.9469783043893,
+              617.0625439593142,
+              606.6272791213573
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 234951,
+            "samples": [
+              12.755497954893432,
+              12.654413047826464,
+              13.128801324531327,
+              13.369276998182064,
+              13.094751671625781,
+              13.22704734178617,
+              13.964081872390087,
+              13.540589314367205,
+              13.324765589421327,
+              12.73368063979361,
+              13.372115887993223,
+              13.435958987193056
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 113951,
+            "samples": [
+              13.193539328308894,
+              13.024238488472669,
+              12.977428894875878,
+              13.137962808576372,
+              13.364665514124551,
+              13.649507244343097,
+              14.050995603372597,
+              13.026800993408518,
+              13.088222130565523,
+              13.412563294750344,
+              13.612210511535276,
+              13.525550455897632
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 87842,
+            "samples": [
+              13.418979531431848,
+              13.460713553882004,
+              13.434632635869962,
+              13.338346121443536,
+              13.679390268890984,
+              13.44934086200235,
+              14.133808428769624,
+              13.774253773820211,
+              14.112463286355661,
+              14.268516199540144,
+              14.36575897634434,
+              13.548473395415407
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 72296,
+            "samples": [
+              17.128070709304666,
+              17.573005422152846,
+              17.612205377892042,
+              17.080820515656114,
+              17.476762199845385,
+              17.545341374350027,
+              17.884239791964735,
+              17.365538895650843,
+              17.008783335178475,
+              17.49002711076668,
+              17.025492420050472,
+              16.86815314816761
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 107431,
+            "samples": [
+              13.836015675176128,
+              14.02683582951064,
+              13.69405478865541,
+              13.74835941208647,
+              13.842605951726021,
+              13.549785443681769,
+              13.548230957545114,
+              13.54784000893511,
+              13.541249732385218,
+              13.588954770969375,
+              13.389217265035903,
+              13.477255168432201
+            ]
+          }
+        ],
+        "checksum": 38112
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 14998,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 24329,
+            "samples": [
+              460.43133708742613,
+              464.6255497554361,
+              469.8336553084801,
+              454.6135065148578,
+              452.32714044966843,
+              445.71120884541284,
+              449.93970159069323,
+              453.71092112294065,
+              445.11180073163854,
+              453.0823708331612,
+              458.6415800073994,
+              464.1511365037627
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 2404,
+            "samples": [
+              4279.2046589018155,
+              4378.8477537437575,
+              4328.7054908485825,
+              4204.572379367727,
+              4012.652662229588,
+              4366.680532445948,
+              4293.867720465883,
+              4271.128119800326,
+              4093.0565723794043,
+              4292.047836938436,
+              4269.550748752036,
+              4227.519966722131
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 14226,
+            "samples": [
+              618.6500773232132,
+              663.682131308873,
+              664.2766765078057,
+              624.2619148038747,
+              625.4861521158405,
+              602.4532546042485,
+              632.6327850414789,
+              627.1117671868406,
+              628.6201321524003,
+              613.1554899479838,
+              612.2943905525032,
+              629.3962463095758
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 958390,
+            "samples": [
+              10.538376861194411,
+              10.461773390790734,
+              10.57959181544045,
+              10.596721585158463,
+              10.517899811141579,
+              10.679368524296088,
+              10.478119554669988,
+              10.535334258495988,
+              10.692367407840287,
+              10.561853733866087,
+              10.52298646688724,
+              10.65119627708979
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 755337,
+            "samples": [
+              13.237689931778954,
+              13.146338654137224,
+              12.649982722943617,
+              14.023597414134477,
+              13.07617129837402,
+              13.044893868564795,
+              12.734713114808244,
+              13.339244602078207,
+              13.038605284793501,
+              13.16388181699047,
+              12.792137813982215,
+              13.41487309637948
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 734447,
+            "samples": [
+              13.542899623798462,
+              13.713038517415164,
+              13.78764158611843,
+              13.62822368394172,
+              13.549650281096012,
+              13.516121653434638,
+              13.662943684159835,
+              13.453885712651998,
+              13.651144330360069,
+              13.822019832608685,
+              13.58578767426356,
+              13.775898056633062
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 562282,
+            "samples": [
+              17.38340370134552,
+              17.711383256089217,
+              17.318861354266392,
+              17.410969940350107,
+              17.412675490234268,
+              17.542501805143836,
+              17.29825959216232,
+              17.342646572360817,
+              17.664549105253634,
+              17.40170768404448,
+              17.14864605304794,
+              17.309597319493946
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 743750,
+            "samples": [
+              13.684424873949675,
+              13.507002352941353,
+              13.507002352941353,
+              13.523361344537806,
+              13.495014453781382,
+              13.454566722688805,
+              13.509691428570928,
+              13.784313277310732,
+              13.51294117647029,
+              13.50369747899125,
+              13.677310924369918,
+              13.505825882352877
+            ]
+          }
+        ],
+        "checksum": 197600
+      },
+      "upstream": {
+        "pid": 15002,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 24329,
+            "samples": [
+              406.49364955402956,
+              397.24024826339036,
+              403.71059229725864,
+              422.328620165235,
+              439.1997616013814,
+              467.78877060298396,
+              399.7527230876742,
+              409.0676969871364,
+              407.3824653705449,
+              427.55045419047065,
+              412.5066792716525,
+              411.6435118582769
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 2404,
+            "samples": [
+              3541.9613144758573,
+              3350.665557404305,
+              3495.389767054909,
+              3361.342346089876,
+              3463.9837770382564,
+              3386.941763727114,
+              3365.224625623926,
+              3449.2337770382787,
+              3300.5582362728637,
+              3478.5428452579245,
+              3381.3435940099703,
+              3467.4846089850166
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 14226,
+            "samples": [
+              482.90693097145856,
+              492.70989737100814,
+              469.93771966820594,
+              509.86159145226975,
+              496.4179671024898,
+              473.45817517221894,
+              495.7706312385828,
+              468.1451567552403,
+              499.2091944327235,
+              486.82574159989275,
+              476.31097989596185,
+              521.8379024321603
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 958390,
+            "samples": [
+              41.017530441678105,
+              41.308731309800706,
+              41.303253372844004,
+              41.10343910099235,
+              40.91797180688445,
+              41.12139421321178,
+              41.22508373417924,
+              41.169043917403044,
+              41.30973090286833,
+              41.27021150053735,
+              41.450375108254505,
+              41.018574901657956
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 755337,
+            "samples": [
+              82.36660192735185,
+              83.05448428979376,
+              83.19090286852112,
+              81.86847989705306,
+              82.94300027669793,
+              81.42232142738986,
+              81.78490792851375,
+              82.94680520085734,
+              82.66613710171734,
+              83.46605554871545,
+              81.32942646792043,
+              83.58890270170812
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 734447,
+            "samples": [
+              111.61175278815226,
+              112.79382038458903,
+              112.32589417616269,
+              110.27157167229215,
+              111.77633103545902,
+              109.95602814090061,
+              111.87357018273599,
+              113.10045653396377,
+              111.17332768736259,
+              111.72992469163968,
+              111.54174501359577,
+              112.3848405671204
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 562282,
+            "samples": [
+              135.11895810287328,
+              134.96111915373407,
+              132.25740642595824,
+              133.17657687779501,
+              133.83512721374615,
+              131.2812503334614,
+              134.3833396765318,
+              133.27587402762276,
+              134.572376494357,
+              132.81302798240102,
+              136.68926979700564,
+              132.41924514745227
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 743750,
+            "samples": [
+              100.11075630252095,
+              99.73282957983207,
+              100.62498554621848,
+              95.80515495798367,
+              98.92935663865592,
+              97.7131092436981,
+              97.05098084033713,
+              97.78397848739503,
+              99.17792672268898,
+              99.31904806722589,
+              100.67871193277274,
+              100.02358453781535
+            ]
+          }
+        ],
+        "checksum": 11616
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 15005,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 25763,
+            "samples": [
+              412.2158521911274,
+              412.71882156581194,
+              395.4103947521641,
+              411.6578814579053,
+              410.39153048946235,
+              412.2724449792338,
+              440.3505026588509,
+              430.8116290804638,
+              422.37899312968256,
+              406.4841051119813,
+              408.0755346815211,
+              408.3375383301627
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 3418,
+            "samples": [
+              3201.6041544763025,
+              3205.297834991211,
+              3195.691925102392,
+              3147.2106495026283,
+              3128.60825043885,
+              3132.606787595098,
+              3097.5593914569836,
+              3261.714745465191,
+              3304.9297834991185,
+              3409.7182562902185,
+              3259.7279110590994,
+              3128.083967232323
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 21733,
+            "samples": [
+              522.7936778171469,
+              548.052914922009,
+              498.2093130262736,
+              504.28689090323326,
+              487.6531541894811,
+              526.1027929876243,
+              495.36994432430174,
+              521.9079280357059,
+              499.4555284590231,
+              485.7436156996302,
+              493.360695716193,
+              484.70643721529547
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 194587,
+            "samples": [
+              42.17950325561375,
+              41.98314892567424,
+              42.68634595322385,
+              41.749962741601564,
+              40.77910651790695,
+              41.04398032756558,
+              41.07267700308861,
+              41.23476902362472,
+              41.92833025844446,
+              41.84182396562991,
+              40.85618772065939,
+              41.46003073175501
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 116151,
+            "samples": [
+              88.56969806544842,
+              82.95666847465878,
+              85.65431205930045,
+              81.9593976806047,
+              86.80618333032008,
+              89.46686640666019,
+              82.62664118259765,
+              86.68995531678578,
+              82.65353720588026,
+              86.16370069994929,
+              82.95738306170414,
+              86.73802205749304
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 94075,
+            "samples": [
+              114.33075737443549,
+              115.56957746478874,
+              112.89396757905918,
+              111.97005580653878,
+              110.80343343077152,
+              109.23554610682866,
+              115.13110815838556,
+              112.27079457879458,
+              111.75303747010436,
+              120.83975551421673,
+              111.78935955354734,
+              109.72538931703403
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 69851,
+            "samples": [
+              128.7997594880519,
+              132.0495196919141,
+              129.5734205666381,
+              135.2551574064816,
+              134.1450516098575,
+              136.60087901389736,
+              129.6790024480669,
+              131.7721435627269,
+              129.22923079125897,
+              131.30149890480746,
+              133.06538202745875,
+              125.68837955075604
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 102193,
+            "samples": [
+              104.42251426222808,
+              111.73384674096917,
+              125.18551172780938,
+              100.3195717906298,
+              106.58549998532187,
+              100.32039376474,
+              97.96821700116325,
+              99.30963960349375,
+              97.5503018797758,
+              102.27625179806705,
+              102.91597271828793,
+              95.41422602331241
+            ]
+          }
+        ],
+        "checksum": 66016
+      },
+      "vpm": {
+        "pid": 15034,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 25763,
+            "samples": [
+              459.20506152233713,
+              434.3131234716456,
+              449.4446298955873,
+              449.69366921554234,
+              455.0065209796993,
+              458.13926949501246,
+              458.7765011838681,
+              461.7603928113972,
+              463.4974187788685,
+              452.24414858517986,
+              445.1620152932496,
+              447.9065326243068
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 3418,
+            "samples": [
+              4317.3396723229935,
+              4306.794909303699,
+              4556.453481568154,
+              4233.518724400218,
+              4211.697776477468,
+              4228.727911059105,
+              4250.80456407257,
+              4214.270040959614,
+              4384.996196606181,
+              4313.097132826214,
+              4303.954651843182,
+              4217.866003510815
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 21733,
+            "samples": [
+              621.1636681544225,
+              662.1669810886641,
+              622.9179128514235,
+              623.8132333318035,
+              626.5510053835201,
+              631.2156168039336,
+              632.6803018451208,
+              608.6749643399344,
+              658.664243316605,
+              627.9371462752515,
+              628.0867344591236,
+              617.7625730455941
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 194587,
+            "samples": [
+              12.68006084681889,
+              12.713464928284699,
+              12.868279998149442,
+              12.65821971663056,
+              12.77770354648656,
+              12.850935571236143,
+              12.714323156223458,
+              12.802967310252209,
+              12.965496153391575,
+              12.911319872345121,
+              13.248356776145648,
+              12.751155010355447
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 116151,
+            "samples": [
+              14.409045122296853,
+              13.427202520856257,
+              12.39621699339769,
+              12.921395424921498,
+              13.613391189057106,
+              13.30165043779281,
+              13.759029194754946,
+              12.905252645262651,
+              13.514011932743562,
+              13.286230854662753,
+              13.726743635439211,
+              13.540210587941832
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 94075,
+            "samples": [
+              13.851533351049856,
+              13.621227743820564,
+              13.41260696253128,
+              13.508721764549973,
+              13.465320223226168,
+              13.445389317035072,
+              13.411724687749121,
+              13.824522986977948,
+              13.371862875364517,
+              13.509168216847543,
+              13.65886792452788,
+              13.481700770660249
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 69851,
+            "samples": [
+              17.16152954145278,
+              16.814361999110286,
+              16.786316588164954,
+              16.893101029334776,
+              17.178222215859904,
+              16.92651501052358,
+              17.18956063620921,
+              17.165108588281758,
+              16.84717470043346,
+              16.797655008517516,
+              17.18181557887453,
+              17.09591845499534
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 102193,
+            "samples": [
+              13.750540643684142,
+              13.49569931404246,
+              13.409274607849433,
+              13.280019179395813,
+              13.518538451754889,
+              13.557269088880563,
+              13.610687620482272,
+              13.371757361072552,
+              13.486324895052363,
+              13.612311997886161,
+              13.585411916667347,
+              13.288992396740175
+            ]
+          }
+        ],
+        "checksum": 35040
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 15039,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 19300,
+            "samples": [
+              449.7258549222799,
+              447.88647668393725,
+              470.6627979274606,
+              464.20336787564764,
+              465.37134715025985,
+              447.0164248704667,
+              444.89424870466274,
+              458.8190673575131,
+              441.97321243523555,
+              442.1243523316041,
+              469.7409326424857,
+              461.65803108808416
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 2504,
+            "samples": [
+              4316.9428913738175,
+              4253.8270766773,
+              4221.62899361023,
+              4173.47244408946,
+              4135.89936102234,
+              4361.3885782747275,
+              4205.1549520766885,
+              4188.431709265139,
+              4262.44688498404,
+              4259.56789137382,
+              4098.176517571848,
+              4188.881389776367
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 14692,
+            "samples": [
+              659.1540294037592,
+              614.9094745439647,
+              623.1736319085213,
+              661.2442145385265,
+              662.1404165532252,
+              638.8255513204467,
+              653.413966784638,
+              636.3610808603333,
+              629.0498230329405,
+              636.9991151647152,
+              652.8978355567698,
+              633.2414239041658
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 968288,
+            "samples": [
+              10.528161042995375,
+              10.510302719851849,
+              10.696498355861099,
+              10.67950134670674,
+              10.47359773125345,
+              10.574375598995385,
+              10.57162228593141,
+              10.605488243167246,
+              10.434955302554547,
+              10.526310353944394,
+              10.455910844707338,
+              10.596021018539929
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 726844,
+            "samples": [
+              13.493037020323442,
+              14.260109459526367,
+              15.42788686430649,
+              15.433562084848905,
+              12.74413766915617,
+              13.968895663993855,
+              13.328743169098143,
+              14.578494147299923,
+              13.091014027769543,
+              13.673726411719723,
+              14.66872533858711,
+              14.75058609550341
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 724446,
+            "samples": [
+              13.816074628060635,
+              13.62725172062514,
+              13.910341143439345,
+              13.721289095391526,
+              13.70823360195241,
+              13.92558313525114,
+              14.026810832001077,
+              13.858980517526627,
+              13.836492989125425,
+              13.962565877925762,
+              13.755166016514853,
+              13.881240285680478
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 593111,
+            "samples": [
+              17.316391029671934,
+              17.398864630735126,
+              17.223238145979188,
+              16.97932596090755,
+              17.10388106104908,
+              16.987405392919733,
+              17.183405804309906,
+              17.094467983227027,
+              17.3523590019412,
+              17.000964406325203,
+              16.946659225676107,
+              17.13605547696808
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 743198,
+            "samples": [
+              13.620305759703589,
+              13.442413730930195,
+              13.279379115659717,
+              13.78249806915514,
+              13.728956482659976,
+              13.601579928901812,
+              13.420212379473753,
+              13.640767332527338,
+              13.559866953355204,
+              13.507335864736097,
+              13.759792141529127,
+              13.483396080183262
+            ]
+          }
+        ],
+        "checksum": 186976
+      },
+      "upstream": {
+        "pid": 15045,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 19300,
+            "samples": [
+              423.07212435233276,
+              399.2595336787572,
+              423.2448186528493,
+              425.99523316062067,
+              406.10751295336775,
+              421.10321243523373,
+              415.9866321243517,
+              405.7858549222788,
+              419.6977720207253,
+              413.3549222797935,
+              418.75217616580477,
+              420.64336787564883
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 2504,
+            "samples": [
+              3033.5295527156536,
+              3106.2300319488895,
+              3121.92172523962,
+              3236.055511182119,
+              3100.855431309906,
+              3240.08266773162,
+              3088.8079073482427,
+              3306.293130990456,
+              3167.4652555910525,
+              3160.2436102236215,
+              3037.8063099041597,
+              3187.2839456868946
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 14692,
+            "samples": [
+              497.6489926490616,
+              484.4445276340902,
+              517.0699700517246,
+              495.2695344405079,
+              525.5609855703784,
+              524.4946229240397,
+              470.9904710046304,
+              505.4989790362088,
+              521.8542744350622,
+              499.00735093928597,
+              504.50925673836684,
+              497.4844813503932
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 968288,
+            "samples": [
+              41.18325332958789,
+              41.197884307148335,
+              41.12232104497839,
+              46.88524075481675,
+              123.40947837833369,
+              52.35529098780521,
+              41.83358566872648,
+              45.1888621980239,
+              63.393932383753516,
+              41.33519675964172,
+              41.32413806636036,
+              41.63469442975636
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 726844,
+            "samples": [
+              82.5905682649923,
+              84.30872649426799,
+              82.47282085289298,
+              82.43349604591954,
+              81.75940642008494,
+              81.93654209156308,
+              83.92969055258071,
+              85.70064553053986,
+              83.33453670938997,
+              82.17851148251908,
+              82.60226128302648,
+              83.93003450534032
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 724446,
+            "samples": [
+              249.38884333683984,
+              118.1479834245765,
+              113.57523542127366,
+              113.3699061075632,
+              131.72657589385582,
+              112.58574276067532,
+              128.43348572564435,
+              113.56424909517001,
+              115.2309268047577,
+              111.26726491691518,
+              111.97113656504398,
+              111.16615317083685
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 593111,
+            "samples": [
+              135.64570206925828,
+              134.6593774183934,
+              131.9210636794797,
+              132.38240059617888,
+              134.0963158666753,
+              133.12797604495628,
+              136.25604313526463,
+              133.1812257739277,
+              133.73122231757608,
+              132.19237208549598,
+              135.13729639140067,
+              132.15837170445238
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 743198,
+            "samples": [
+              101.30398090414725,
+              113.38297465816596,
+              110.64514436260569,
+              100.34921245751471,
+              116.13740080032554,
+              101.97299373787408,
+              98.3580418677126,
+              100.66210484958292,
+              99.05205745978874,
+              99.91432296642333,
+              99.79557937454095,
+              100.2493050304226
+            ]
+          }
+        ],
+        "checksum": 11808
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 15063,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 25719,
+            "samples": [
+              408.6716046502587,
+              400.6004121466622,
+              398.43275399510037,
+              405.340720867841,
+              417.14296823360263,
+              398.77619658618136,
+              410.54764959757375,
+              407.24592713557996,
+              411.75621136125136,
+              420.5645631634186,
+              416.0769470041597,
+              422.9201368637983
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 2907,
+            "samples": [
+              3213.220846233222,
+              3208.318885448926,
+              3104.804609563123,
+              3167.2686618507205,
+              3166.093223254225,
+              3241.514619883048,
+              3028.909872721005,
+              3125.157894736842,
+              3271.2129342965213,
+              3246.001031991726,
+              3119.7254901961064,
+              3201.926384588921
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 21691,
+            "samples": [
+              484.1524134433591,
+              527.4941219860763,
+              515.2808999124067,
+              519.7893135401745,
+              508.4751279332471,
+              547.0049329214893,
+              547.5677469918404,
+              516.4603752708495,
+              556.0428288230117,
+              501.0334701028039,
+              498.72449402977963,
+              499.6081324051445
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 232109,
+            "samples": [
+              41.378188695827674,
+              42.07990642327561,
+              40.63338776178483,
+              41.19903579783602,
+              41.77616981676631,
+              41.27245819851822,
+              41.02598348189875,
+              41.39614146801683,
+              42.530483522828185,
+              41.19239236737889,
+              41.30458965399838,
+              41.58139925638402
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 110224,
+            "samples": [
+              85.74319567426448,
+              83.64142110611115,
+              88.13076099579008,
+              84.96977064886087,
+              85.05369066627848,
+              88.62709573232767,
+              87.10293583974521,
+              87.25602409638547,
+              82.69712585281033,
+              84.76867106982003,
+              86.88670344026707,
+              86.5608488169552
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 88870,
+            "samples": [
+              120.37433329582691,
+              115.6056599527384,
+              114.36133678406611,
+              112.70300438843323,
+              115.26762687071123,
+              118.2813885450657,
+              113.3669067176791,
+              112.27823787554838,
+              109.37324181388577,
+              113.5638235625078,
+              112.7869359738943,
+              108.39756948351506
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 78175,
+            "samples": [
+              135.95778701631286,
+              137.74704189318973,
+              129.26766869203863,
+              136.0238695235072,
+              136.33940518068252,
+              129.253815158293,
+              135.13643748000877,
+              130.72220019187696,
+              130.19187719859656,
+              134.49046370323242,
+              129.96374800128004,
+              141.8303038055629
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 105649,
+            "samples": [
+              96.28581434751041,
+              95.72144554136626,
+              94.76544974396488,
+              98.2206741190183,
+              105.80712548154817,
+              102.11131198591889,
+              99.73118534013724,
+              94.07842951660709,
+              95.3980444680026,
+              96.81942091264271,
+              97.79947751516889,
+              97.94579219869503
+            ]
+          }
+        ],
+        "checksum": 67936
+      },
+      "vpm": {
+        "pid": 15094,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 25719,
+            "samples": [
+              397.3974882382683,
+              417.0311831719743,
+              402.5963295618027,
+              406.52338737898066,
+              406.7874334149849,
+              404.1742680508586,
+              412.04459737936935,
+              401.2516816361425,
+              416.45931023756737,
+              407.3058828103741,
+              427.7592830203341,
+              419.28309809868233
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 2907,
+            "samples": [
+              3380.2745098039222,
+              3403.15067079464,
+              3377.1499828001665,
+              3399.6388028895726,
+              3424.7364981080395,
+              3305.2404540763328,
+              3476.95218438255,
+              3483.273133814913,
+              3451.7399380804686,
+              3324.1885104919493,
+              3458.218782249744,
+              3436.661506707937
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 21691,
+            "samples": [
+              482.1796597667258,
+              504.062744917247,
+              491.6939283573847,
+              496.1869438937805,
+              512.0845050942833,
+              485.8082614909435,
+              521.3798349545904,
+              511.41602507952547,
+              513.5731870361019,
+              484.00064542898104,
+              496.3752247475925,
+              521.0263703840326
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 232109,
+            "samples": [
+              41.00659603893011,
+              41.33061621910299,
+              41.62879078364047,
+              42.82973085920868,
+              41.70580201543245,
+              41.977764757074944,
+              41.285559801645064,
+              41.167981422521,
+              41.41588650160078,
+              41.87310703161048,
+              41.14715500045273,
+              40.94592195907958
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 110224,
+            "samples": [
+              82.89067716649697,
+              84.98073922194855,
+              82.33914573958458,
+              84.64997641167095,
+              85.40147336333244,
+              85.08052692698428,
+              85.53452968500498,
+              84.84238459863467,
+              88.10807991000065,
+              86.56993032370383,
+              83.14886050224962,
+              85.66532697053144
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 88870,
+            "samples": [
+              112.94494205018573,
+              109.88335771351343,
+              113.55631821762177,
+              118.88151232136634,
+              114.62576797569703,
+              111.19800832676923,
+              110.28422414763047,
+              108.66527512096128,
+              111.69450883312696,
+              118.32546416113414,
+              117.23632271857959,
+              107.20059637673162
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 78175,
+            "samples": [
+              131.68052446434146,
+              136.1219443556128,
+              134.2117045091166,
+              129.26287176207282,
+              137.74064598656864,
+              137.13036136872483,
+              134.67594499520263,
+              130.78030060761253,
+              129.9131307962925,
+              136.29836904380903,
+              130.91834985608816,
+              142.27854173329615
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 105649,
+            "samples": [
+              97.64763509356771,
+              98.6406970250557,
+              98.36660072504027,
+              98.12248104572456,
+              97.38931745686189,
+              109.20674119016998,
+              98.82606555670411,
+              99.47443894404715,
+              106.82859279311586,
+              103.04088065197239,
+              93.92618955219793,
+              96.95745345436225
+            ]
+          }
+        ],
+        "checksum": 14112
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 15096,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 20956,
+            "samples": [
+              427.669879748044,
+              396.90503912960503,
+              419.4025577400261,
+              407.7451803779354,
+              409.2542947127317,
+              424.29972322962556,
+              403.4246516510804,
+              410.05759686963137,
+              409.5286791372405,
+              418.2016129032274,
+              417.83575109753804,
+              401.0824107654128
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 3344,
+            "samples": [
+              3213.529306220092,
+              3271.7431220095605,
+              3134.2078349282156,
+              3244.031399521521,
+              3071.097488038257,
+              3086.6976674641105,
+              3133.871710526335,
+              3218.775119617202,
+              3354.0547248803823,
+              3397.3412081339843,
+              3275.530801435422,
+              3054.899521531111
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 21954,
+            "samples": [
+              487.5212262002362,
+              530.6740001821968,
+              530.6360116607456,
+              506.6369682062489,
+              519.007515714674,
+              534.4584130454557,
+              492.15213628495974,
+              517.3867632322117,
+              497.12466976405034,
+              495.1527284321769,
+              536.090644073976,
+              527.371595153501
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 243245,
+            "samples": [
+              41.67488745914561,
+              41.64028448683464,
+              41.31414417562475,
+              41.40287364591269,
+              41.832822874057356,
+              41.12828629570991,
+              41.76070628378809,
+              41.410923143332305,
+              42.11066620074402,
+              41.86468375506205,
+              41.759168739336225,
+              41.145585726325386
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 125186,
+            "samples": [
+              82.99782723307645,
+              85.85757992107898,
+              81.35460834278554,
+              85.05543750898732,
+              85.0015177416011,
+              85.6435623791786,
+              83.30304506893711,
+              90.95831802278208,
+              83.74105730672842,
+              88.65674276676276,
+              82.29088715990568,
+              89.12737846085048
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 94138,
+            "samples": [
+              117.18257239372126,
+              113.81784189169156,
+              109.17261892115818,
+              113.46064288597503,
+              113.02379485436103,
+              115.6161698782637,
+              110.46681467632773,
+              112.81620599545415,
+              111.26218955151118,
+              110.83949096007882,
+              109.24166648962107,
+              112.88613524825179
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 68364,
+            "samples": [
+              131.67687671874506,
+              135.17288338892112,
+              131.25694810134,
+              136.25713825990226,
+              132.4484816570142,
+              135.55197179801942,
+              132.2540664677369,
+              136.327233631738,
+              131.06557544906943,
+              135.55258615645548,
+              133.9545228482886,
+              141.4566438476368
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 102598,
+            "samples": [
+              94.97951227119162,
+              108.68348310883373,
+              102.70139768806546,
+              101.50660831594998,
+              97.18878535644048,
+              91.95598354743605,
+              100.14327764673764,
+              105.93286418838169,
+              106.62773153472456,
+              100.52989337023782,
+              98.63659135655654,
+              103.14732255989196
+            ]
+          }
+        ],
+        "checksum": 65504
+      },
+      "upstream": {
+        "pid": 15100,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "compile eight shortcut bindings",
+            "iterations": 20956,
+            "samples": [
+              414.2966214926521,
+              410.10531589998084,
+              422.98348921549837,
+              398.32864096201564,
+              415.1555640389382,
+              423.3354170643256,
+              424.5781160526804,
+              421.4186867722853,
+              421.21192021378306,
+              417.9451708341267,
+              426.178660049627,
+              422.18615193739225
+            ]
+          },
+          {
+            "case": "compile 48 function-key bindings",
+            "iterations": 3344,
+            "samples": [
+              3067.2473086124514,
+              3085.937499999977,
+              3136.5005980861356,
+              3235.08522727273,
+              3472.924043062212,
+              3516.3104066985748,
+              3808.4255382775045,
+              3559.335227272697,
+              3355.8735047847204,
+              3243.8447966507365,
+              3203.9099880382864,
+              3155.4650119617213
+            ]
+          },
+          {
+            "case": "create an eight-binding plugin",
+            "iterations": 21954,
+            "samples": [
+              498.8403935501511,
+              518.6203880841725,
+              498.37915641795985,
+              526.3543773344244,
+              505.2818620752513,
+              489.8803862621827,
+              505.2913819805044,
+              483.2699735811272,
+              504.7998086908972,
+              536.8554705292871,
+              519.3985150769789,
+              503.72560808964374
+            ]
+          },
+          {
+            "case": "dispatch unmodified keys",
+            "iterations": 243245,
+            "samples": [
+              41.52020802072053,
+              41.1250303192251,
+              41.37169931550574,
+              41.274229686118574,
+              41.42360171843219,
+              41.61390778844342,
+              41.40698061625069,
+              41.89106045345233,
+              41.01540011099846,
+              41.50736089128239,
+              41.56508869658165,
+              41.03766983905169
+            ]
+          },
+          {
+            "case": "dispatch modifier shortcuts",
+            "iterations": 125186,
+            "samples": [
+              88.58318821593484,
+              83.29006438419518,
+              84.64770821018352,
+              83.88650488073797,
+              89.6023437125546,
+              85.92913744348479,
+              86.78053456456863,
+              81.45745530650449,
+              84.91198696339808,
+              83.01380346045156,
+              88.74561053152873,
+              86.34284983943854
+            ]
+          },
+          {
+            "case": "dispatch shifted literal characters",
+            "iterations": 94138,
+            "samples": [
+              118.20633537997392,
+              112.79584227410838,
+              113.41152350804134,
+              109.64089953047642,
+              111.94381652467581,
+              111.19181414519055,
+              113.58502411353574,
+              111.61628672799402,
+              111.96240625464806,
+              108.90926087233451,
+              118.59495634069062,
+              110.84745798721082
+            ]
+          },
+          {
+            "case": "dispatch non-US modifier fallback",
+            "iterations": 68364,
+            "samples": [
+              133.10550874729145,
+              130.45670235796456,
+              135.8298958516183,
+              132.99824469018512,
+              139.65987946872707,
+              136.9355069919803,
+              134.95955473640709,
+              128.95067579427686,
+              134.97966766134243,
+              131.55498507986755,
+              133.69488327189703,
+              129.2834532795043
+            ]
+          },
+          {
+            "case": "leave Windows AltGraph input unhandled",
+            "iterations": 102598,
+            "samples": [
+              105.4292773738266,
+              99.16250804109197,
+              99.8553383106905,
+              99.7343125596976,
+              96.62103549776835,
+              97.23671026725502,
+              97.91654808085872,
+              101.233698512642,
+              105.11373516052916,
+              101.48224136922535,
+              101.13257568373851,
+              99.68680676036676
+            ]
+          }
+        ],
+        "checksum": 14176
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "compile eight shortcut bindings",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 408.7345334058661,
+          "vpmNs": 456.5663913753024,
+          "changePct": 11.702426406417699
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 410.3556044227066,
+          "vpmNs": 454.1622138188992,
+          "changePct": 10.675279909438618
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 411.93686682451636,
+          "vpmNs": 453.6253347824396,
+          "changePct": 10.120110947894933
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 419.224974093265,
+          "vpmNs": 454.2724611398965,
+          "changePct": 8.360066602051841
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 409.6096271239162,
+          "vpmNs": 407.0466581126795,
+          "changePct": -0.6257101497424866
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 421.3153034930342,
+          "vpmNs": 409.79313800343596,
+          "changePct": -2.734808205178041
+        }
+      ]
+    },
+    {
+      "case": "compile 48 function-key bindings",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 14135.476190476116,
+          "vpmNs": 4227.221904761898,
+          "changePct": -70.09494517340688
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3418.0877703826964,
+          "vpmNs": 4275.16638935107,
+          "changePct": 25.074798441246983
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 3198.6480397893474,
+          "vpmNs": 4277.379607957876,
+          "changePct": 33.724609733541364
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3141.082667731621,
+          "vpmNs": 4213.391972843459,
+          "changePct": 34.13820706241464
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3184.5975232198207,
+          "vpmNs": 3413.94358445134,
+          "changePct": 7.201728305046107
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3239.4650119617336,
+          "vpmNs": 3216.152212918647,
+          "changePct": -0.71964966304634
+        }
+      ]
+    },
+    {
+      "case": "create an eight-binding plugin",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 515.7363252718744,
+          "vpmNs": 613.567169831736,
+          "changePct": 18.969159193564522
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 489.76781948545045,
+          "vpmNs": 626.2989596513405,
+          "changePct": 27.876707030145333
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 498.83242074264837,
+          "vpmNs": 627.2440758293858,
+          "changePct": 25.742443703952045
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 501.7583038388264,
+          "vpmNs": 637.912333242581,
+          "changePct": 27.13538139021803
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 515.8706375916281,
+          "vpmNs": 500.2189848324198,
+          "changePct": -3.0340266761990864
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 505.04083538307424,
+          "vpmNs": 518.1971394734428,
+          "changePct": 2.6049980850339605
+        }
+      ]
+    },
+    {
+      "case": "dispatch unmodified keys",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 41.00704615004844,
+          "vpmNs": 13.275906465603748,
+          "changePct": -67.62530415620276
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 41.19706382579115,
+          "vpmNs": 10.55011529753025,
+          "changePct": -74.39109898185166
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 41.60499673667829,
+          "vpmNs": 12.790335428369385,
+          "changePct": -69.25769395123247
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 41.73414004924142,
+          "vpmNs": 10.549891664463392,
+          "changePct": -74.72119551998495
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 41.341389174913026,
+          "vpmNs": 41.37325136035189,
+          "changePct": 0.07707091143951406
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 41.41529116734144,
+          "vpmNs": 41.65758597299012,
+          "changePct": 0.58503706920634
+        }
+      ]
+    },
+    {
+      "case": "dispatch modifier shortcuts",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 82.35155461558058,
+          "vpmNs": 13.279102421216724,
+          "changePct": -83.87510413955881
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 82.80456868920763,
+          "vpmNs": 13.111254976255623,
+          "changePct": -84.16602467254384
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 85.90900637962487,
+          "vpmNs": 13.47060722679991,
+          "changePct": -84.31991266750963
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 82.59641477400939,
+          "vpmNs": 14.114502561760112,
+          "changePct": -82.91148277999892
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 86.15202224560984,
+          "vpmNs": 85.03063307446641,
+          "changePct": -1.3016399869831052
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 85.42056220344143,
+          "vpmNs": 85.02847762529422,
+          "changePct": -0.45900491407843136
+        }
+      ]
+    },
+    {
+      "case": "dispatch shifted literal characters",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 112.94023360123826,
+          "vpmNs": 13.613931832153195,
+          "changePct": -87.94589722541185
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 111.75312786354935,
+          "vpmNs": 13.639684007150894,
+          "changePct": -87.79480783409932
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 112.12042519266669,
+          "vpmNs": 13.49521126760511,
+          "changePct": -87.96364601327986
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 113.56974225822184,
+          "vpmNs": 13.847736753326025,
+          "changePct": -87.8068431978646
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 113.46536514009345,
+          "vpmNs": 112.31972544165635,
+          "changePct": -1.0096822911754733
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 111.95311138966193,
+          "vpmNs": 112.85117062185297,
+          "changePct": 0.8021744291369259
+        }
+      ]
+    },
+    {
+      "case": "dispatch non-US modifier fallback",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 132.70875982073855,
+          "vpmNs": 17.421150547748113,
+          "changePct": -86.87264460064249
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 133.55550062068446,
+          "vpmNs": 17.392555692695,
+          "changePct": -86.97728239431171
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 131.53682123376717,
+          "vpmNs": 17.011216732759458,
+          "changePct": -87.0673347788091
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 133.4562240457519,
+          "vpmNs": 17.11996826900858,
+          "changePct": -87.1718472544679
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 134.8134505916206,
+          "vpmNs": 134.44382475215963,
+          "changePct": -0.27417578723702984
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 133.40019600959425,
+          "vpmNs": 134.56370311860485,
+          "changePct": 0.8721929530949968
+        }
+      ]
+    },
+    {
+      "case": "leave Windows AltGraph input unhandled",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 98.73760367119529,
+          "vpmNs": 13.569370107325572,
+          "changePct": -86.25714053937065
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 99.24848739495744,
+          "vpmNs": 13.50834689075614,
+          "changePct": -86.3893674903075
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 101.29832278140353,
+          "vpmNs": 13.507118882898673,
+          "changePct": -86.66599948347977
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 100.5056586535488,
+          "vpmNs": 13.580723441128509,
+          "changePct": -86.48760316278074
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 97.3094492139058,
+          "vpmNs": 98.50364887504799,
+          "changePct": 1.2272186008545738
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 99.79482543519404,
+          "vpmNs": 101.0182508430939,
+          "changePct": 1.2259407264501254
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "compile eight shortcut bindings",
+      "upstream_ns": 411,
+      "vpm_ns": 454,
+      "change_pct": 10.4,
+      "upstream_first_pct": 10.9,
+      "vpm_first_pct": 9.5,
+      "process_range_pct": "11.7, 10.7, 10.1, 8.4",
+      "control_max_abs_pct": 2.7,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "compile 48 function-key bindings",
+      "upstream_ns": 3308,
+      "vpm_ns": 4251,
+      "change_pct": 29.4,
+      "upstream_first_pct": -18.2,
+      "vpm_first_pct": 29.6,
+      "process_range_pct": "-70.1, 25.1, 33.7, 34.1",
+      "control_max_abs_pct": 7.2,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "create an eight-binding plugin",
+      "upstream_ns": 500,
+      "vpm_ns": 627,
+      "change_pct": 26.4,
+      "upstream_first_pct": 22.4,
+      "vpm_first_pct": 27.5,
+      "process_range_pct": "19.0, 27.9, 25.7, 27.1",
+      "control_max_abs_pct": 3,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "dispatch unmodified keys",
+      "upstream_ns": 41,
+      "vpm_ns": 12,
+      "change_pct": -71.8,
+      "upstream_first_pct": -68.4,
+      "vpm_first_pct": -74.6,
+      "process_range_pct": "-67.6, -74.4, -69.3, -74.7",
+      "control_max_abs_pct": 0.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "dispatch modifier shortcuts",
+      "upstream_ns": 83,
+      "vpm_ns": 13,
+      "change_pct": -84,
+      "upstream_first_pct": -84.1,
+      "vpm_first_pct": -83.5,
+      "process_range_pct": "-83.9, -84.2, -84.3, -82.9",
+      "control_max_abs_pct": 1.3,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "dispatch shifted literal characters",
+      "upstream_ns": 113,
+      "vpm_ns": 14,
+      "change_pct": -87.9,
+      "upstream_first_pct": -88,
+      "vpm_first_pct": -87.8,
+      "process_range_pct": "-87.9, -87.8, -88.0, -87.8",
+      "control_max_abs_pct": 1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "dispatch non-US modifier fallback",
+      "upstream_ns": 133,
+      "vpm_ns": 17,
+      "change_pct": -87,
+      "upstream_first_pct": -87,
+      "vpm_first_pct": -87.1,
+      "process_range_pct": "-86.9, -87.0, -87.1, -87.2",
+      "control_max_abs_pct": 0.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "leave Windows AltGraph input unhandled",
+      "upstream_ns": 100,
+      "vpm_ns": 14,
+      "change_pct": -86.4,
+      "upstream_first_pct": -86.5,
+      "vpm_first_pct": -86.4,
+      "process_range_pct": "-86.3, -86.4, -86.7, -86.5",
+      "control_max_abs_pct": 1.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}
