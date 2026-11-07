@@ -228,7 +228,8 @@ function fitDocument(doc, from, to, slice) {
     }
     let match = -1,
       filler = null;
-    // Sibling suffixes stay at their original nesting level. Only a suffix
+    // Sibling suffixes stay at their original nesting level: a deeper frame
+    // with compatible content is still the wrong parent. Only a suffix
     // already carried as a whole subtree may join a shallower compatible frame.
     // This also lets ordered/bullet lists share a surviving list-item boundary.
     for (let k = d === 0 ? 0 : stack.length - 1; k >= 0; k--) {
@@ -237,7 +238,7 @@ function fitDocument(doc, from, to, slice) {
         !(d === 0
           ? k === 0
           : k > 0 &&
-            (((k >= d || (carry.size && !joiningTextblocks)) &&
+            (((k === d || (carry.size && !joiningTextblocks)) &&
               f.node.type.compatibleContent(original.type)) ||
               (d === b.depth && f.node.isTextblock && original.isTextblock)))
       )

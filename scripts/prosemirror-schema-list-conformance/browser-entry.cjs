@@ -174,6 +174,15 @@ module.exports = function setup(name) {
           if (e.state.selection.anchor !== 5 || e.state.selection.head !== 5)
             throw Error("Preserved text tail lost its cursor anchor");
         }
+        const structural = require("./structure-followup.json");
+        e.commands.setContent(convert(structural.doc));
+        e.commands.setTextSelection({
+          from: structural.selection[0],
+          to: structural.selection[1],
+        });
+        run("deleteSelection");
+        if (e.state.selection.anchor !== 9 || e.state.selection.head !== 9)
+          throw Error("Cross-depth deletion lost its cursor");
         return out;
       } finally {
         const host = e.options.element;

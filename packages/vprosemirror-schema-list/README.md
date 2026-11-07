@@ -41,7 +41,7 @@ failure. Undocumented runtime internals are not compatibility contracts.
 All **38 unchanged current upstream tests** pass on current upstream, full VPM,
 VPM lists on current foundations and VPM lists on app foundations on Node 24 and
 Bun 1.4.4. App 1.5.1 is retained as a negative control for its eight pre-1.6.0
-differences. Ten independent groups include **6,000 seeded edits**, schema
+differences. Eleven independent groups include **6,000 seeded edits**, schema
 attributes, marks, query-only calls, mapping, inversion and range wrapping.
 Actual Tiptap list/task-list commands and trusted keyboard events are checked in
 Chrome. Exact archives, clean npm/Bun installs, CJS/ESM and TS7 are verified by the
@@ -57,18 +57,20 @@ selection and undo in **96 boundary cases** across list types, headings, marked
 text, nesting and selection direction. Another **192 nested-deletion cases**
 with empty/nonempty text tails and **256 repeated-text replacements** preserve
 document, cursor and undo across list types, marks, Unicode, nesting and
-selection direction. Chrome checks 17 actual caller snapshots.
+selection direction. An additional **256 cross-depth cases** verify structural
+suffix attachment across mixed list types. Chrome checks 18 actual caller snapshots.
 Current upstream and VPM agree; the older app transform 1.11.0 retains an empty
 list in the new deletion case, recorded as an explicit negative control.
 
 The 6,000 mixed edits permit cross-block text insertion; their 2,000 full-VPM
 iterations still restrict deletion to one textblock. The dedicated matrices
 supply broader deletion and insertion coverage. The saved cursor discrepancies
-are fixed and gated; unrestricted exploration still finds a structural joining
-difference across unequal list depths. A reduced
-[structural reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
-is retained. General cross-depth replacement remains unverified for complete
-editor adoption.
+and two-list structural discrepancies are fixed and gated. Unrestricted
+exploration still finds different ancestor restructuring in a deeper deletion
+from a textblock boundary. A reduced
+[deep-deletion reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
+is retained. It remains a full editing acceptance gap, while the independent
+view-decoration model can be developed and tested separately.
 
 [Isolated benchmarks](bench/results/README.md) retain every pair and control.
 List-only cases use identical upstream foundations to isolate this implementation;

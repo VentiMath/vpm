@@ -1,0 +1,136 @@
+{
+  "doc": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "bullet_list",
+        "content": [
+          {
+            "type": "list_item",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "axxp"
+                  }
+                ]
+              },
+              {
+                "type": "bullet_list",
+                "content": [
+                  {
+                    "type": "list_item",
+                    "content": [
+                      {
+                        "type": "paragraph"
+                      },
+                      {
+                        "type": "bullet_list",
+                        "content": [
+                          {
+                            "type": "list_item",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "xx"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "list_item",
+                    "content": [
+                      {
+                        "type": "paragraph"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "list_item",
+                    "content": [
+                      {
+                        "type": "paragraph"
+                      },
+                      {
+                        "type": "ordered_list",
+                        "attrs": {
+                          "order": 1
+                        },
+                        "content": [
+                          {
+                            "type": "list_item",
+                            "content": [
+                              {
+                                "type": "paragraph",
+                                "content": [
+                                  {
+                                    "type": "text",
+                                    "text": "axx"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "bullet_list",
+                                "content": [
+                                  {
+                                    "type": "list_item",
+                                    "content": [
+                                      {
+                                        "type": "paragraph"
+                                      },
+                                      {
+                                        "type": "ordered_list",
+                                        "attrs": {
+                                          "order": 1
+                                        },
+                                        "content": [
+                                          {
+                                            "type": "list_item",
+                                            "content": [
+                                              {
+                                                "type": "paragraph",
+                                                "content": [
+                                                  {
+                                                    "type": "text",
+                                                    "text": "xx"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "selection": [
+    3,
+    42
+  ],
+  "operation": "deleteSelection"
+}

@@ -16,7 +16,7 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "complete for documented list API scope",
-    "targetScope": "List schema descriptors and public list commands, including mixed items, current/app Tiptap callers and native keyboard controls. Full editor adoption remains separate; cross-list text replacement document/cursor parity is repaired and gated. Empty-paragraph boundary deletion is also repaired and gated with 96 variants. Nested suffix and cursor regressions are repaired with 192 empty/nonempty-tail deletion and 256 repeated-text replacement variants. General cross-depth structural joining remains a documented follow-up."
+    "targetScope": "List schema descriptors and public list commands, including mixed items, current/app Tiptap callers and native keyboard controls. Full editor adoption remains separate; cross-list text replacement document/cursor parity is repaired and gated. Empty-paragraph boundary deletion is also repaired and gated with 96 variants. Nested suffix and cursor regressions are repaired with 192 empty/nonempty-tail deletion and 256 repeated-text replacement variants. Two-list cross-depth structural joining is repaired with 256 variants. A deeper deletion from a textblock boundary remains a documented full-editing acceptance gap; independent view-decoration model work can proceed."
   },
   "changes": [
     "Independent range planning, gap-preserving nesting and right-to-left item lifting.",

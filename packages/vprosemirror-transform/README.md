@@ -76,9 +76,16 @@ earlier equal substring when inserted text repeats. Both saved cases and 256
 additional replacements check document, cursor and undo with marks, Unicode,
 nesting and both selection directions.
 
-Full editor parity remains separate. Broader cross-depth deletion can still
-attach a surviving list one level too deep; a
-[reduced structural reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
-is recorded for follow-up. A public release and VentiMath adoption are separate.
+Structural suffixes now join at their original depth, rather than a deeper
+container with compatible content. The saved two-list case and 256 mixed-list,
+marked-tail, Unicode, nesting and direction variants match document, cursor and
+undo.
+
+Full editor parity remains separate. A deeper deletion that starts at a textblock
+boundary still changes ancestor structure differently from upstream; a
+[reduced deep-deletion reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
+is recorded for follow-up. This does not block a separate view-decoration model
+working with validated documents and supplied mappings; it remains a full
+editing acceptance requirement. A public release and VentiMath adoption are separate.
 Native IME, system clipboard, browser input handling and collaborative-server integration belong to the editor cutover.
 All ProseMirror callers must resolve the same model and transform instances.

@@ -16,10 +16,10 @@ node scripts/prosemirror-schema-list-conformance/run.cjs
 node scripts/prosemirror-schema-list-conformance/archives.cjs
 ```
 
-Use Node 24 and Bun 1.4.4. Ten independent groups cover 6,000 seeded edits, immutable
+Use Node 24 and Bun 1.4.4. Eleven independent groups cover 6,000 seeded edits, immutable
 schema descriptors, attributes/marks, exact query results, mapped positions,
 inverse steps and appending a range wrap to an existing transaction. Chrome
-compares 17 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
+compares 18 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
 Enter and typing. The five-package archive closure is byte-verified, installed
 fresh/frozen with npm and Bun, then checked for runtime/module/type behavior.
 
@@ -47,7 +47,7 @@ forward/backward selection and history undo. The fourteenth Chrome snapshot
 uses Tiptap's `deleteSelection` with this regression. Current transform 1.12.5
 and VPM agree. The older app transform 1.11.0 leaves an empty list instead; that
 exact document, HTML and cursor remain an explicit negative control. The other
-sixteen snapshots still match all three graphs.
+seventeen snapshots still match all three graphs.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/deletion-followup.json
@@ -85,23 +85,54 @@ node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/nested-insertion-followup.json
 ```
 
-## Remaining cross-depth structure follow-up
+## Cross-depth structure regression
 
-Unrestricted mixed-command exploration still finds a structural mismatch.
-`structure-followup.json` reduces it to two lists with a selection from 9 to 18:
-the cursor agrees at 9, but VPM attaches a surviving list one level deeper than
-upstream. This diagnostic intentionally exits nonzero; it is not a passing gate.
+`structure-followup.json` selects from 9 to 18 across two lists. Its surviving
+list previously attached one level too deep. Structural suffixes now join at
+their original depth, preserving the document, cursor 9 and undo. This case is a
+source/archive gate and the eighteenth Chrome snapshot. Another 256 cases cover
+four list-type choices, Unicode prefixes, empty/marked text tails, enclosing
+quotes and both selection directions.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/structure-followup.json
 ```
 
+## Remaining deep-deletion follow-up
+
+Unrestricted mixed-command exploration still finds a deeper ancestor-restructuring
+difference. `deep-deletion-followup.json` reduces it to one nested list and a
+selection from 3 to 42 starting at a textblock boundary. Upstream retains a chain
+of wrappers and places the cursor at 19; VPM collapses more wrappers and places
+it at 3. This diagnostic intentionally exits nonzero; it is not a passing gate.
+
+```sh
+node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/deep-deletion-followup.json
+```
+
 Randomized list comparison includes arbitrary text selections on current/app
 upstream foundations (4,000 edits). Full VPM comparison (2,000 edits) permits
 cross-block text insertion for the retained seed and confines mixed deletion
-operations to one textblock. Dedicated matrices add 96 boundary cases, 192 nested
-deletions and 256 repeated-text replacements. These results do not establish
-arbitrary cross-depth replacement parity or complete editor adoption.
+operations to one textblock. Dedicated matrices add 96 boundary, 192 nested,
+256 repeated-text and 256 cross-depth cases. These results do not establish
+arbitrary deletion parity or complete editor adoption.
+
+## First view milestone
+
+Begin `vprosemirror-view` with the independently implemented `Decoration` and
+`DecorationSet` model: inline/node/widget descriptions, create/find/add/remove,
+mapping, persistent updates and removal callbacks. The confirmed app caller is
+the documentation Tiptap editor's `Selection` extension, which creates an inline
+selection decoration while the editable editor is unfocused. Its empty,
+node-selection, focused and noneditable paths return no decoration.
+
+Verify that contract with the VPM model/state graph and current/app controls.
+Decoration construction and mapping consume documents and supplied mappings;
+they do not choose `deleteRange`'s ancestor restructuring. The saved transform
+failure therefore does not block this model milestone. Full `EditorView`, DOM
+rendering and selection, composition/IME, clipboard and editing adoption remain
+separate; the deletion discrepancy must be resolved for full editing acceptance.
+Do not publish a partial decoration implementation as a complete view replacement.
 
 [Benchmarks](../../packages/vprosemirror-schema-list/bench/results/README.md) use
 identical foundations for list-only cases and explicitly label complete VPM-stack

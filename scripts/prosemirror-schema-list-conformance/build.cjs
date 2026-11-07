@@ -145,8 +145,8 @@ window.runChecks=()=>{
   if(JSON.stringify(values.vpm)!==JSON.stringify(values.upstream))throw Error('Current Tiptap list mismatch');
   if(JSON.stringify(values.app.slice(0,13))!==JSON.stringify(values.upstream.slice(0,13)))throw Error('App Tiptap list mismatch');
   if(JSON.stringify(values.app.slice(14))!==JSON.stringify(values.upstream.slice(14)))throw Error('App nested deletion mismatch');
-  if(values.app.length!==17||values.upstream.length!==17)throw Error('Missing deletion snapshot');
-  return {variants:3,snapshots:17,appDifferences:['transform 1.11.0 boundary deletion']};
+  if(values.app.length!==18||values.upstream.length!==18)throw Error('Missing deletion snapshot');
+  return {variants:3,snapshots:18,appDifferences:['transform 1.11.0 boundary deletion']};
 };window.modifier=/Mac|iPhone|iPad|iPod/.test(navigator.platform)?4:2;`,
     );
     console.log("Built list API and unchanged tests on five graphs.");
