@@ -38,8 +38,8 @@ The supported development runtimes are Node 24 and Bun 1.4.4.
 [Conformance fixtures](../../scripts/prosemirror-transform-conformance/README.md)
 retain 248 upstream tests unchanged, including deterministic runs of their
 randomized inversion checks. Original tests compare 3,000 editor operations,
-selection mapping, undo, mirrored rebasing and composite mark JSON against the
-current baseline. Real Tiptap extension/command fixtures compare thirteen JSON,
+selection mapping, undo, mirrored rebasing, composite mark JSON and 18 cross-list
+deletion cases against the current baseline. Real Tiptap extension/command fixtures compare thirteen JSON,
 HTML and selection snapshots against current upstream and VentiMath's installed
 transform 1.11.0. Packed npm/Bun installs, TypeScript 7 consumers and Chrome run
 against the complete VPM transform/model/ordered-map closure.
@@ -47,12 +47,11 @@ against the complete VPM transform/model/ordered-map closure.
 [Core measurements](bench/results/README.md) and a separate
 [closed-block paste measurement](bench/fitting-results/README.md) use isolated
 processes, balanced order and identical-source controls. They measure individual
-operations and the model closure, not an editor-wide speedup. In the final
-recordings, text insertion takes about 31% less time on Node and 15% less on Bun;
-closed-block paste takes 38% and 18% less. Bun still takes more time for a
-32-edit mapping chain (7%, 15 ns), split/join (4%, 49 ns) and wrap/lift (36%,
-417 ns). Other cases with insufficient control separation remain unestablished;
-all raw samples and source hashes are retained.
+operations and the model closure, not an editor-wide speedup. The final reports
+retain the faster, slower and inconclusive cases on both runtimes, including
+Bun mapping and wrap/lift overhead. All raw samples and source hashes are kept.
+The cross-list deletion path closes surviving ancestors with a validated edit
+step before falling back to general fitting; it preserves the schema checks.
 
 This completes the documented source-package scope. A public release and
 VentiMath adoption are separate. Native IME, system clipboard, browser input

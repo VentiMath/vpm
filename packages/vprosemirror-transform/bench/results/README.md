@@ -23,35 +23,35 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-07T06:07:53.951Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-07T06:58:19.664Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| map a position through 32 edits | 137 | 136 | -1.1% | -0.7% | -1.5% | 0.3% | unestablished at this precision |
-| recover a mirrored deletion | 46 | 23 | -51% | -49.3% | -51.3% | 6.1% | lower time in every pair, beyond control spread |
-| insert text and map selection | 925 | 643 | -30.7% | -31.5% | -30.2% | 0.6% | lower time in every pair, beyond control spread |
-| apply and invert overlapping marks | 2919 | 2214 | -24.6% | -26.7% | -21.9% | 9.4% | lower time in every pair, beyond control spread |
-| split and join a paragraph | 2878 | 2136 | -24.7% | -20.7% | -25.8% | 5.2% | lower time in every pair, beyond control spread |
-| wrap and lift two paragraphs | 2113 | 2380 | -2.5% | 5.6% | -5.8% | 17.4% | unestablished at this precision |
-| fit an open cross-block paste | 2063 | 1188 | -42.7% | -43.2% | -0.2% | 1.9% | unestablished at this precision |
+| map a position through 32 edits | 136 | 136 | -0.9% | -1.5% | -0.2% | 1.2% | unestablished at this precision |
+| recover a mirrored deletion | 45 | 23 | -50% | -48.8% | -50.8% | 3.2% | lower time in every pair, beyond control spread |
+| insert text and map selection | 926 | 636 | -31.6% | -31.2% | -31.6% | 4.9% | lower time in every pair, beyond control spread |
+| apply and invert overlapping marks | 2846 | 2344 | -17% | -8.9% | -23.8% | 22.3% | unestablished at this precision |
+| split and join a paragraph | 2700 | 2400 | -11% | -11% | -15.1% | 19.9% | unestablished at this precision |
+| wrap and lift two paragraphs | 2634 | 2336 | -11.3% | -7.3% | -15.3% | 17.9% | unestablished at this precision |
+| fit an open cross-block paste | 2080 | 1179 | -43.3% | -43.3% | -41.1% | 3.1% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-07T06:08:21.720Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-07T06:58:47.800Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| map a position through 32 edits | 226 | 241 | 7.2% | 7.3% | 5.8% | 0.2% | higher time in every pair, beyond control spread |
-| recover a mirrored deletion | 37 | 32 | -14.2% | -12% | -14.5% | 2.3% | lower time in every pair, beyond control spread |
-| insert text and map selection | 529 | 450 | -14.9% | -13.5% | -16% | 1.1% | lower time in every pair, beyond control spread |
-| apply and invert overlapping marks | 1287 | 1242 | -3.7% | -3.1% | -5.9% | 1% | unestablished at this precision |
-| split and join a paragraph | 1285 | 1334 | 4.3% | 3.8% | 5.1% | 2% | higher time in every pair, beyond control spread |
-| wrap and lift two paragraphs | 1138 | 1555 | 36.2% | 35% | 39.6% | 5% | higher time in every pair, beyond control spread |
-| fit an open cross-block paste | 1506 | 941 | -36.9% | -36.9% | -35.6% | 12.9% | lower time in every pair, beyond control spread |
+| map a position through 32 edits | 227 | 243 | 7.6% | 7.1% | 7.6% | 3.9% | higher time in every pair, beyond control spread |
+| recover a mirrored deletion | 37 | 32 | -13.2% | -12.4% | -13.2% | 5.4% | lower time in every pair, beyond control spread |
+| insert text and map selection | 529 | 463 | -12.7% | -13.4% | -12.4% | 6.4% | lower time in every pair, beyond control spread |
+| apply and invert overlapping marks | 1308 | 1258 | -3.4% | -5.6% | -3.4% | 2.4% | lower time in every pair, beyond control spread |
+| split and join a paragraph | 1323 | 1384 | 3.9% | 5.6% | 0.9% | 1.8% | unestablished at this precision |
+| wrap and lift two paragraphs | 1169 | 1558 | 33.3% | 33.4% | 32.8% | 3.2% | higher time in every pair, beyond control spread |
+| fit an open cross-block paste | 1523 | 1003 | -33.7% | -27.9% | -37.1% | 3.6% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

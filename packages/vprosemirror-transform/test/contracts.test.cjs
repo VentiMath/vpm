@@ -28,6 +28,44 @@ const spec = {
 function make(m) {
   return new m.Schema(spec);
 }
+test("deleting up to a later list item preserves its paragraph and wrapper", () => {
+  for (const tail of ["", "x", "xy"])
+    for (const left of ["paragraph", "code_block"])
+      for (const nesting of [0, 1, 2]) {
+        const results = [model, um].map((m, i) => {
+          const schema = new m.Schema({
+            nodes: {
+              ...spec.nodes,
+              code_block: { content: "text*", group: "block", code: true },
+              bullet_list: { content: "list_item+", group: "block" },
+              list_item: { content: "paragraph block*" },
+            },
+          });
+          const node = (type, ...children) => schema.node(type, null, children);
+          let doc = node(
+            "bullet_list",
+            node("list_item", node("paragraph"), node(left, schema.text("0"))),
+            node(
+              "list_item",
+              node("paragraph", ...(tail ? [schema.text(tail)] : [])),
+            ),
+          );
+          for (let j = 0; j < nesting; j++) doc = node("quote", doc);
+          doc = node("doc", doc);
+          const tr = new [v, u][i].Transform(doc).deleteRange(
+            5 + nesting,
+            10 + nesting,
+          );
+          tr.doc.check();
+          assert(tr.steps[0].invert(doc).apply(tr.doc).doc.eq(doc));
+          return {
+            doc: tr.doc.toJSON(),
+            steps: tr.steps.map((step) => step.toJSON()),
+          };
+        });
+        assert.deepEqual(results[0], results[1]);
+      }
+});
 test("3,000 deterministic editor operations match current upstream, including mapped selection and undo", () => {
   let seed = 0x503a51;
   const random = (n) =>

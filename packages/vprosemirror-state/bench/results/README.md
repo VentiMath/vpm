@@ -23,37 +23,37 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-07T06:30:33.160Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-07T06:59:31.976Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create state without plugins | 253 | 79 | -69% | -69.7% | -68.1% | 5.8% | lower time in every pair, beyond control spread |
-| create state with eight plugin fields | 802 | 443 | -44.9% | -44.5% | -44.9% | 2.3% | lower time in every pair, beyond control spread |
-| apply metadata with eight plugin fields | 435 | 251 | -42.5% | -44% | -42.5% | 0.5% | lower time in every pair, beyond control spread |
-| type into a text selection | 1788 | 1334 | -31.1% | -24.8% | -39.5% | 37.4% | unestablished at this precision |
-| replace a marked selection | 2225 | 1386 | -35.5% | -38.6% | -33.6% | 22.1% | lower time in every pair, beyond control spread |
-| append a plugin transaction | 4084 | 3348 | -23.6% | -19.9% | -23.6% | 5.9% | lower time in every pair, beyond control spread |
-| serialize and restore plugin state | 2054 | 1794 | -15.9% | 10% | -18.6% | 21% | unestablished at this precision |
-| reconfigure retained plugin fields | 474 | 283 | -40% | -39.9% | -40.4% | 1.6% | lower time in every pair, beyond control spread |
+| create state without plugins | 249 | 78 | -68.4% | -68.4% | -68.5% | 3.4% | lower time in every pair, beyond control spread |
+| create state with eight plugin fields | 807 | 442 | -45.2% | -45.4% | -43.3% | 2% | lower time in every pair, beyond control spread |
+| apply metadata with eight plugin fields | 430 | 248 | -42.2% | -43.1% | -42.1% | 2.8% | lower time in every pair, beyond control spread |
+| type into a text selection | 1789 | 1557 | -15.8% | -20.8% | -15.2% | 3.4% | lower time in every pair, beyond control spread |
+| replace a marked selection | 2310 | 1855 | -26.4% | -15.5% | -28% | 4% | unestablished at this precision |
+| append a plugin transaction | 3794 | 2663 | -25.7% | -32.9% | -20.3% | 62.2% | unestablished at this precision |
+| serialize and restore plugin state | 1801 | 1669 | -17.8% | -4.2% | -17.8% | 11.5% | unestablished at this precision |
+| reconfigure retained plugin fields | 477 | 278 | -41.5% | -40.9% | -42.2% | 0.6% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-07T06:31:05.346Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-07T07:00:05.478Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create state without plugins | 134 | 89 | -32.5% | -38.1% | -31.9% | 24% | lower time in every pair, beyond control spread |
-| create state with eight plugin fields | 663 | 234 | -64.6% | -68.9% | -64.6% | 4.4% | lower time in every pair, beyond control spread |
-| apply metadata with eight plugin fields | 335 | 174 | -48.5% | -53.3% | -47.4% | 16% | lower time in every pair, beyond control spread |
-| type into a text selection | 941 | 978 | 3.8% | 3.5% | 3.8% | 23% | unestablished at this precision |
-| replace a marked selection | 1226 | 1184 | -3.4% | 1.6% | -10.9% | 6.6% | unestablished at this precision |
-| append a plugin transaction | 2283 | 2284 | 0.1% | -0.3% | 0.1% | 1.8% | unestablished at this precision |
-| serialize and restore plugin state | 986 | 735 | -25.4% | -23.7% | -32.8% | 7.2% | lower time in every pair, beyond control spread |
-| reconfigure retained plugin fields | 335 | 123 | -63.5% | -62.8% | -67.9% | 298.1% | unestablished at this precision |
+| create state without plugins | 129 | 90 | -31.1% | -29.9% | -33.4% | 2.8% | lower time in every pair, beyond control spread |
+| create state with eight plugin fields | 699 | 240 | -65.5% | -65.5% | -65.6% | 9% | lower time in every pair, beyond control spread |
+| apply metadata with eight plugin fields | 338 | 181 | -46.5% | -48.1% | -44.6% | 2.3% | lower time in every pair, beyond control spread |
+| type into a text selection | 1000 | 1005 | 2.9% | 0.6% | 5.7% | 4.7% | unestablished at this precision |
+| replace a marked selection | 1269 | 1146 | -9.7% | -16.3% | 0.1% | 2.1% | unestablished at this precision |
+| append a plugin transaction | 2288 | 2280 | -0.8% | -7.6% | 1.7% | 5.1% | unestablished at this precision |
+| serialize and restore plugin state | 970 | 724 | -25.4% | -26.8% | -25.4% | 6.2% | lower time in every pair, beyond control spread |
+| reconfigure retained plugin fields | 337 | 131 | -62.3% | -60.9% | -62.3% | 4.6% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

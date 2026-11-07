@@ -22,7 +22,8 @@ checks real Tiptap/state consumers without `skipLibCheck`.
 
 Original package tests add 3,000 deterministic edit/undo/selection comparisons,
 mirrored mappings, overlapping marks, invalid serialized input and navigation
-helpers across nested documents. A documented correction rejects an incompatible
+helpers across nested documents, plus 18 deletions ending at the start of a
+later list item (with empty/nonempty paragraphs and nested containers). A documented correction rejects an incompatible
 empty-block join that upstream suggests but then fails to apply. Archive checks
 verify packed bytes, exclusions, fresh and frozen npm/Bun installs, CJS/ESM
 identity, CJS/ESM type consumers under NodeNext and Bundler resolution, and the

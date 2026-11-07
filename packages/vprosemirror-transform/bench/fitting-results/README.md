@@ -23,23 +23,23 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-07T06:08:26.369Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-07T06:58:52.407Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| fit a closed blockquote inside paragraph text | 1608 | 1009 | -38.1% | -38.7% | -37.6% | 4% | lower time in every pair, beyond control spread |
+| fit a closed blockquote inside paragraph text | 1640 | 1004 | -39.3% | -39.5% | -38% | 3.4% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-07T06:08:30.654Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-07T06:58:56.590Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| fit a closed blockquote inside paragraph text | 1030 | 842 | -18.3% | -18.1% | -18.3% | 2.3% | lower time in every pair, beyond control spread |
+| fit a closed blockquote inside paragraph text | 1082 | 914 | -15.7% | -14.6% | -15.7% | 0.4% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

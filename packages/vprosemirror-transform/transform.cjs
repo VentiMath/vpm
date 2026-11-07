@@ -371,6 +371,43 @@ class Transform {
         return this.delete(a.before(d), b.after(d));
       if (d === 0) return this.delete(0, this.doc.content.size);
     }
+    // A selection ending at the first editable position of a later branch
+    // does not include that branch. Trim the structural tokens at both ends
+    // before fitting the deletion, so its paragraph does not become an empty
+    // code block inherited from the selection's start.
+    const shared = a.sharedDepth(to);
+    if (
+      from < to &&
+      a.parentOffset === 0 &&
+      b.parentOffset === 0 &&
+      shared < a.depth &&
+      shared < b.depth &&
+      to - b.start(shared + 1) === b.depth - shared - 1
+    ) {
+      let depth = a.depth;
+      while (
+        depth > shared + 1 &&
+        from - a.start(depth - 1) === a.depth - depth + 1 &&
+        !a.node(depth - 1).type.spec.isolating
+      )
+        depth--;
+      if (!a.node(depth).type.spec.isolating) {
+        const start = a.before(depth),
+          end = b.before(shared + 1);
+        let closing = Fragment.empty;
+        for (let level = depth - 1; level > shared; level--)
+          closing = Fragment.from(a.node(level).copy(closing));
+        // Closing only the surviving left ancestors avoids a general paste
+        // search. Step validation still checks the schema before acceptance.
+        const step = new S.ReplaceStep(
+          start,
+          end,
+          new Slice(closing, depth - shared - 1, 0),
+        );
+        if (!this.maybeStep(step).failed) return this;
+        return this.delete(start, end);
+      }
+    }
     if (b.parentOffset < b.parent.content.size) {
       let expand = from;
       for (let d = a.depth; d > 0; d--) {
