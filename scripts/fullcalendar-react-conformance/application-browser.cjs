@@ -21,6 +21,18 @@ const root=path.resolve(__dirname,'../..'),pkg=path.join(root,'packages/vfullcal
  await page.goto('file://'+path.join(dir,'index.html'));await page.waitForFunction(()=>window.api);
  const event=name=>page.locator('.vfc-event').filter({has:page.locator('[data-title="'+name+'"]')});
  const cell=date=>page.locator('.vfc-day-cell[data-date="'+date+'"]');
+ async function checkTopTimeLabel(index, expectedScroll) {
+  const bounds=await page.evaluate(index=>{
+   const scroller=document.querySelector('.vfc-time-scroll'),label=document.querySelectorAll('.vfc-slot-label')[index];
+   const text=document.createRange();text.selectNodeContents(label);const rect=text.getBoundingClientRect(),box=scroller.getBoundingClientRect();
+   return {text:label.textContent,top:rect.top,bottom:rect.bottom,viewportTop:box.top+scroller.clientTop,viewportBottom:box.top+scroller.clientTop+scroller.clientHeight,scroll:scroller.scrollTop};
+  },index);
+  assert.ok(bounds.text.trim(),'time label is present');
+  assert.ok(Math.abs(bounds.scroll-expectedScroll)<=1,'default/custom scroll position unchanged');
+  assert.ok(bounds.top>=bounds.viewportTop-.75,'top visible hour must not be clipped: '+JSON.stringify(bounds));
+  assert.ok(bounds.bottom<=bounds.viewportBottom,'time label is fully inside the viewport');
+ }
+
  assert.equal(await cell('2026-11-03').count(),1);assert.equal(await event('Conference').count(),1,'multi-day event is one spanning segment');
  const box=await event('Conference').boundingBox(),day=await cell('2026-11-02').boundingBox();assert.ok(box.width>day.width*2.5,'multi-day event spans three columns');
  await event('Algebra seminar').click();assert.deepEqual(await page.evaluate(()=>calls.click),['a']);
@@ -32,18 +44,21 @@ const root=path.resolve(__dirname,'../..'),pkg=path.join(root,'packages/vfullcal
  const eb=await event('Conference').boundingBox(),target=await cell('2026-11-03').boundingBox();await drag({x:eb.x+12,y:eb.y+8},{x:target.x+12,y:eb.y+8});
  assert.deepEqual(await page.evaluate(()=>calls.drop.at(-1)),{id:'multi',start:'2026-11-03',allDay:true,old:'2026-11-02'});await page.evaluate(()=>revert());assert.equal(await page.evaluate(()=>api.getEventById('multi').startStr),'2026-11-02');
  const timedMonth=await event('Algebra seminar').boundingBox(),nextDay=await cell('2026-11-04').boundingBox();await drag({x:timedMonth.x+10,y:timedMonth.y+5},{x:nextDay.x+10,y:timedMonth.y+5});assert.deepEqual(await page.evaluate(()=>calls.drop.at(-1)),{id:'a',start:'2026-11-04T10:00:00Z',allDay:false,old:'2026-11-03T10:00:00Z'});await page.evaluate(()=>revert());
- await page.evaluate(()=>api.changeView('timeGridDay'));await page.waitForSelector('.vfc-time-column');
+ await page.evaluate(()=>api.changeView('timeGridDay'));await page.waitForSelector('.vfc-time-column');await checkTopTimeLabel(12,288);
  const one=await event('Algebra seminar').boundingBox(),two=await event('Geometry workshop').boundingBox();assert.ok(one.x+one.width<=two.x+1||two.x+two.width<=one.x+1,'overlapping timed events have separate columns');
  await drag({x:one.x+one.width/2,y:one.y+10},{x:one.x+one.width/2,y:one.y+58});assert.equal(await page.evaluate(()=>calls.drop.at(-1).start),'2026-11-03T11:00:00Z');
  const handle=await event('Algebra seminar').locator('.vfc-resize').boundingBox();await drag({x:handle.x+handle.width/2,y:handle.y+2},{x:handle.x+handle.width/2,y:handle.y+26});assert.equal(await page.evaluate(()=>calls.resize.at(-1).end),'2026-11-03T12:30:00Z');
- await page.evaluate(()=>api.changeView('timeGridWeek'));await page.waitForFunction(()=>document.querySelectorAll('.vfc-time-column').length===7);assert.match(await page.evaluate(()=>api.view.title),/Nov/);assert.equal(await page.locator('.vfc-time-column').count(),7);assert.equal(await event('Conference').count(),1);
+ await page.evaluate(()=>api.changeView('timeGridWeek'));await page.waitForFunction(()=>document.querySelectorAll('.vfc-time-column').length===7);assert.match(await page.evaluate(()=>api.view.title),/Nov/);assert.equal(await page.locator('.vfc-time-column').count(),7);assert.equal(await event('Conference').count(),1);await checkTopTimeLabel(12,288);
  // Inherited application theme variables change without remounting the calendar.
  const light=await page.locator('.vfc-calendar').evaluate(el=>getComputedStyle(el).backgroundColor);
  await page.evaluate(()=>{document.getElementById('app').style.setProperty('--fc-classic-background','#161b29');document.getElementById('app').style.setProperty('--fc-classic-foreground','#eef3ff');});
  const dark=await page.locator('.vfc-calendar').evaluate(el=>getComputedStyle(el).backgroundColor);assert.notEqual(light,dark);
+ // Custom scroll time and a non-midnight grid start keep their first visible label.
+ await page.evaluate(()=>{mount({scrollTime:'09:00:00'});api.changeView('timeGridDay');});await checkTopTimeLabel(18,432);
+ await page.evaluate(()=>{mount({slotMinTime:'06:00:00',scrollTime:'06:00:00'});api.changeView('timeGridWeek');});await checkTopTimeLabel(0,0);
  if(process.env.CALENDAR_SCREENSHOT)await page.screenshot({path:process.env.CALENDAR_SCREENSHOT,fullPage:true});
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>api.changeView('dayGridMonth'));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile view does not overflow');
  await page.evaluate(()=>mount({events:[]}));assert.equal(await page.locator('.vfc-event').count(),0);await page.evaluate(()=>unmount());assert.equal(await page.locator('.vfc-calendar').count(),0);assert.deepEqual(errors,[]);
- console.log('Calendar browser: StrictMode, spanning/overlapping layout, clicks, overflow, selection preview, drag/revert/resize, 3 views, theme changes, mobile width, filtering and unmount pass.');
+ console.log('Calendar browser: StrictMode, spanning/overlapping layout, clicks, overflow, selection preview, drag/revert/resize, 3 views, unclipped default/custom scroll labels, theme changes, mobile width, filtering and unmount pass.');
  }finally{await browser?.close();fs.rmSync(dir,{recursive:true,force:true});}
 })().catch(e=>{console.error(e);process.exitCode=1;});

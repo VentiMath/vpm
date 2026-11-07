@@ -29,11 +29,12 @@
     "Replaces the retained upstream renderer with a small React component and explicit event/navigation model.",
     "Retains headless named-timezone and fragment-safe JSON-feed fixes, and preserves allDay in setDates.",
     "Preserves the v7 imports and theme hooks used by VentiMath.",
-    "Preserve event component identity for surviving event IDs across filtered/cloned input arrays, preventing mount-driven label-state update loops. Duplicate IDs retain separate occurrence keys."
+    "Preserve event component identity for surviving event IDs across filtered/cloned input arrays, preventing mount-driven label-state update loops. Duplicate IDs retain separate occurrence keys.",
+    "Keep time-grid hour labels below slot lines so default/custom scrolling does not clip the first visible label. Slot geometry and scroll targets are unchanged."
   ],
   "verification": {
     "mounted": "Eleven independent lifecycle/event cases; six app-shaped upstream/VPM cases; timezone/feed controls. Node 24 and Bun.",
-    "browser": "Chromium: month/week/day layout, ordinary clicks, selection preview, timed and all-day month dragging, time-grid dragging/resizing, revert, multiday spans, overlapping timed events, overflow, inherited theme variables, narrow width and unmount.",
+    "browser": "Chromium: month/week/day layout, ordinary clicks, selection preview, timed and all-day month dragging, time-grid dragging/resizing, revert, multiday spans, overlapping timed events, overflow, inherited theme variables, narrow width and unmount. Text bounds verify unclipped 6am week/day labels, custom 9am scrolling and a 6am grid start; pre-fix r3 fails the same assertion.",
     "types": "TypeScript 7 strict public consumer and actual VentiMath main-branch frontend typecheck.",
     "adoption": "VentiMath main aa5a96d4 resolves calendar-7.1.3 (earlier adapted renderer); independent renderer requires calendar-7.1.3-r3 URL/lock update."
   }

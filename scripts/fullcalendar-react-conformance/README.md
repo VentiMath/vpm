@@ -33,6 +33,10 @@ the checked week view.
 - `application-browser.cjs`: real mouse selection/preview, clicks, event drag,
   revert and resize under StrictMode; multiday spans, overlapping event layout,
   overflow, month/week/day views, theme changes, mobile width and cleanup.
+  Text-bounds assertions cover the first visible hour in default 6am week/day
+  scrolling, custom 9am scrolling and a non-midnight grid start. The r3 negative
+  control clips the 6am text by about five pixels; the corrected stylesheet passes
+  without changing scroll positions or slot geometry.
 
 The browser harness represents the app's configuration; it is not the entire
 application, a production deployment test, or exhaustive touch/accessibility

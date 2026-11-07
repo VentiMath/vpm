@@ -75,8 +75,9 @@ smaller. Node timing directions are inconclusive; Bun navigation is 16% faster
 and view switching 11% slower in the isolated jsdom workload.
 [Reproduction and timing results](bench/results/README.md).
 
-The r2 timing recordings above predate the event-identity correction; this patch
-is verified through mount counts and interaction tests, not a new speed claim.
+The r2 timing recordings above predate the event-identity and hour-label
+corrections; those changes are verified through mount counts and browser
+geometry/interaction tests, not new speed claims.
 
 ## Event identity correction
 
@@ -88,6 +89,23 @@ cycle. Two mounted regressions reproduce both the lost identity and the cycle,
 pass upstream, and pass with the correction. Duplicate IDs remain distinct
 occurrences; removing an event and later adding it creates a new identity.
 Use stable public IDs for event content that needs state preserved.
+
+## Time-grid labels and remaining presentation limits
+
+The hour-label correction is on main and has not yet shipped in a calendar
+release. Hour labels sit below their slot lines so the first visible hour is not clipped
+at the default 6am scroll position. Browser checks cover week/day views, a custom
+9am scroll time and a grid beginning at 6am. The pre-fix r3 stylesheet fails the
+same text-bounds assertion. Slot geometry and scroll positions are unchanged.
+
+Presentation compatibility remains limited: time-grid day headers use Intl
+ordering without `omitCommas`; no additional full-date/weekday annotation is
+provided. Timed `timeText` contains the start time only (`displayEventEnd` is not
+implemented). The overflow dialog uses a fixed position rather than anchoring to
+the clicked day. All-day and overflow labels remain English; `allDayText` and
+`moreLinkText` are not implemented. The French descriptor translates toolbar
+buttons and selects French date formatting, not all calendar text. These are
+separate follow-ups, not claims of pixel or screen-reader parity.
 
 ## Adoption
 
