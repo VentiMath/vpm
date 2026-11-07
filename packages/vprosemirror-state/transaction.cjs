@@ -101,7 +101,7 @@ class Transaction extends Transform {
         (from === to ? a.marks() : a.marksAcross(b)) ||
         Mark.none;
     this.replaceRangeWith(from, to, this.doc.type.schema.text(text, marks));
-    if (!this.selection.empty)
+    if (!this.selection.empty && this.selection.to === from + text.length)
       this.setSelection(Selection.near(this.selection.$to));
     return this;
   }

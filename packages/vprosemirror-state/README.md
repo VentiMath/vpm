@@ -20,6 +20,9 @@ serialize their fields and supply props to a separate editor view.
 
 ## Scope and compatibility
 
+Explicit-position text insertion preserves an existing selection unless the
+inserted text ends at that selection’s mapped end, matching upstream.
+
 Text, node and all-document selections, selection search and JSON, stored marks,
 transaction metadata, plugin keys, reconfiguration and ordered append/filter hooks
 are implemented. Public declarations retain typed plugin props and view callbacks.

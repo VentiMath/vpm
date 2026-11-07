@@ -241,6 +241,19 @@ test("node/all selection mapping, multirange deletion and mark inheritance match
           .toJSON(),
       });
     }
+    for (const [from, expected] of [
+      [1, [3, 5]],
+      [4, [5, 5]],
+    ]) {
+      const changed = s.tr
+        .setSelection(lib.TextSelection.create(doc, 2, 4))
+        .insertText("X", from);
+      assert.deepEqual(
+        [changed.selection.anchor, changed.selection.head],
+        expected,
+      );
+      out.push(changed.selection.toJSON());
+    }
     const selection = new lib.Selection(doc.resolve(1), doc.resolve(5), [
       new lib.SelectionRange(doc.resolve(1), doc.resolve(3)),
       new lib.SelectionRange(doc.resolve(17), doc.resolve(19)),
