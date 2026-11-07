@@ -207,15 +207,29 @@ export class CalendarApi {
       ? this.options.now()
       : (this.options.now ?? new Date());
   }
-  defaultEnd(start, allDay) {
+  defaultEnd(start, allDay, startMs) {
     const value = allDay
       ? this.options.defaultAllDayEventDuration
       : this.options.defaultTimedEventDuration;
-    const duration = createDuration(
-      value ?? (allDay ? { days: 1 } : { hours: 1 }),
-    );
-    const end = this.env.add(start, duration);
-    return +end > +start ? end : new Date(+start + (allDay ? DAY : 3600000));
+    const duration =
+      createDuration(value) ||
+      createDuration(allDay ? { days: 1 } : { hours: 1 });
+    if (allDay) {
+      const end = this.env.add(start, duration);
+      return { end: +end > +start ? end : addDays(start, 1), endMs: undefined };
+    }
+    // Hours/minutes are elapsed time. Explicit calendar units retain calendar
+    // arithmetic, so { days: 1 } and { hours: 24 } differ on a DST change.
+    const firstMs = instant(this.env, start, startMs);
+    const anchorMs =
+      duration.years || duration.months || duration.days
+        ? +this.env.toDate(
+            this.env.add(start, { ...duration, milliseconds: 0 }),
+          )
+        : firstMs;
+    let endMs = anchorMs + duration.milliseconds;
+    if (endMs <= firstMs) endMs = firstMs + 3600000;
+    return { end: this.env.timestampToMarker(endMs), endMs };
   }
   normalize(input) {
     const startInput = input.start ?? input.date;
@@ -225,8 +239,7 @@ export class CalendarApi {
     const allDay = input.allDay ?? meta.isTimeUnspecified;
     const dates = dateFields(this.env, startInput, input.end, allDay, meta);
     if (!dates.end && this.options.forceEventDuration) {
-      dates.end = this.defaultEnd(dates.start, allDay);
-      dates.endMs = allDay ? undefined : +this.env.toDate(dates.end);
+      Object.assign(dates, this.defaultEnd(dates.start, allDay, dates.startMs));
     }
     return {
       ...input,

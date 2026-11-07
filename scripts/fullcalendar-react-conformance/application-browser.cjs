@@ -17,7 +17,7 @@ const root=path.resolve(__dirname,'../..'),packages=process.env.CALENDAR_PACKAGE
  fs.writeFileSync(path.join(dir,'index.html'),`<!doctype html><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;padding:24px;background:#f5f6fa;font:14px system-ui;color:#1c2535}#app{height:700px;--fc-classic-background:#fff;--fc-classic-foreground:#1c2535;--fc-classic-border:#d8dce5;--fc-classic-primary:#5d59d4}button{cursor:pointer}.calendar-event{margin:0 6px 4px}.calendar-day-number{border-radius:50%}.calendar-day-header-text{font-weight:600}${css}</style><div id="app"></div><script src="app.js"></script>`);
  const executable=process.env.CHROME_BIN||(['/Applications/Google Chrome.app/Contents/MacOS/Google Chrome','/usr/bin/google-chrome','/usr/bin/chromium'].find(p=>fs.existsSync(p)));
  browser=await chromium.launch({...(executable?{executablePath:executable}:{}),headless:true,args:['--no-sandbox']});
- const page=await browser.newPage({viewport:{width:1200,height:820}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const page=await browser.newPage({timezoneId:'America/Los_Angeles',viewport:{width:1200,height:820}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('file://'+path.join(dir,'index.html'));await page.waitForFunction(()=>window.api);
  const event=name=>page.locator('.vfc-event').filter({has:page.locator('[data-title="'+name+'"]')});
  const cell=date=>page.locator('.vfc-day-cell[data-date="'+date+'"]');
@@ -66,6 +66,27 @@ const root=path.resolve(__dirname,'../..'),packages=process.env.CALENDAR_PACKAGE
   assert.equal(await event('Cross row').count(),1);
   await page.evaluate(()=>revert());assert.equal(await page.evaluate(()=>api.getEventById('cross').allDay),scenario.allDay);
  }
+ // A repeated-hour range can run backwards on the clock while moving forwards
+ // in real time. Check rendered bounds and trusted clicks, not just API values.
+ for(const timeZone of ['local','America/Los_Angeles'])for(const view of ['timeGridDay','timeGridWeek']) {
+  await page.evaluate(({timeZone,view})=>{
+   window.dstClicks=[];
+   mount({timeZone,scrollTime:'00:00:00',slotMinTime:'00:00:00',forceEventDuration:true,events:[
+    {id:'fold',title:'Crossing repeated hour',start:'2026-11-01T08:45:00Z',end:'2026-11-01T09:15:00Z'},
+    {id:'forced',title:'Forced repeated hour',start:'2026-11-01T08:30:00Z'},
+   ],eventClick:info=>dstClicks.push([info.event.id,info.event.start.toISOString(),info.event.end.toISOString()])});
+   api.gotoDate('2026-11-01');api.changeView(view);
+  },{timeZone,view});
+  for(const [title,id,start,end,height,minute] of [
+   ['Crossing repeated hour','fold','2026-11-01T08:45:00.000Z','2026-11-01T09:15:00.000Z',24,105],
+   ['Forced repeated hour','forced','2026-11-01T08:30:00.000Z','2026-11-01T09:30:00.000Z',48,90],
+  ]) {
+   assert.equal(await event(title).count(),1,timeZone+' '+view+' '+title);
+   const position=await event(title).evaluate(el=>({top:parseFloat(el.style.top),height:parseFloat(el.style.height),width:el.getBoundingClientRect().width}));
+   assert.ok(Math.abs(position.top-minute/1440*100)<.01);assert.equal(position.height,height);assert.ok(position.width>0);
+   await event(title).click();assert.deepEqual(await page.evaluate(()=>dstClicks.at(-1)),[id,start,end]);
+  }
+ }
  // Inherited application theme variables change without remounting the calendar.
  const light=await page.locator('.vfc-calendar').evaluate(el=>getComputedStyle(el).backgroundColor);
  await page.evaluate(()=>{document.getElementById('app').style.setProperty('--fc-classic-background','#161b29');document.getElementById('app').style.setProperty('--fc-classic-foreground','#eef3ff');});
@@ -76,6 +97,6 @@ const root=path.resolve(__dirname,'../..'),packages=process.env.CALENDAR_PACKAGE
  if(process.env.CALENDAR_SCREENSHOT)await page.screenshot({path:process.env.CALENDAR_SCREENSHOT,fullPage:true});
  await page.setViewportSize({width:390,height:844});await page.evaluate(()=>api.changeView('dayGridMonth'));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile view does not overflow');
  await page.evaluate(()=>mount({events:[]}));assert.equal(await page.locator('.vfc-event').count(),0);await page.evaluate(()=>unmount());assert.equal(await page.locator('.vfc-calendar').count(),0);assert.deepEqual(errors,[]);
- console.log('Calendar browser: StrictMode, spanning/overlapping layout, clicks, overflow, selection preview, drag/revert/resize, cross-row duration/target dates, 3 views, unclipped default/custom scroll labels, theme changes, mobile width, filtering and unmount pass.');
+ console.log('Calendar browser: StrictMode, spanning/overlapping layout, clicks, overflow, selection preview, drag/revert/resize, cross-row duration/target dates, DST rendered bounds/clicks/default durations, 3 views, unclipped default/custom scroll labels, theme changes, mobile width, filtering and unmount pass.');
  }finally{await browser?.close();fs.rmSync(dir,{recursive:true,force:true});}
 })().catch(e=>{console.error(e);process.exitCode=1;});

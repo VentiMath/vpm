@@ -1,0 +1,52 @@
+import React,{createRef} from 'react'
+import {render,act,fireEvent,cleanup} from '@testing-library/react'
+import Calendar from '../dist/index'
+import timegrid from '../dist/timegrid'
+afterEach(cleanup)
+function mount(timeZone,options={}){
+ const ref=createRef<any>(),click=vi.fn()
+ const view=render(<Calendar ref={ref} plugins={[timegrid]} timeZone={timeZone} initialDate="2026-11-01" initialView="timeGridDay" eventClick={click} eventContent={info=><span data-probe={info.event.id}>{info.event.title}</span>} {...options}/>)
+ return {view,api:ref.current.getApi(),click}
+}
+for(const timeZone of ['local','America/Los_Angeles']){
+ for(const initialView of ['timeGridDay','timeGridWeek'])it(`${timeZone} ${initialView}: renders and clicks valid repeated-hour events`,()=>{
+  const events=[
+   {id:'cross',title:'Crossing repeated hour',start:'2026-11-01T08:45:00Z',end:'2026-11-01T09:15:00Z'},
+   {id:'equal',title:'Equal clock labels',start:'2026-11-01T08:30:00Z',end:'2026-11-01T09:30:00Z'},
+   {id:'second',title:'Second occurrence',start:'2026-11-01T09:30:00Z',end:'2026-11-01T10:30:00Z'},
+  ]
+  const {view,api,click}=mount(timeZone,{initialView,events})
+  for(const input of events){
+   const node=view.container.querySelector(`[data-probe="${input.id}"]`)
+   expect(node).not.toBeNull();fireEvent.click(node!)
+   const event=click.mock.lastCall[0].event
+   expect(+event.start).toBe(Date.parse(input.start));expect(+event.end).toBe(Date.parse(input.end))
+  }
+  act(()=>api.getEventById('cross').setProp('title','Updated title'))
+  expect(view.container.querySelector('[data-probe="cross"]')!.textContent).toBe('Updated title')
+ })
+ it(`${timeZone}: forced timed defaults retain one elapsed hour across both DST changes`,()=>{
+  for(const start of ['2026-11-01T08:30:00Z','2026-11-01T09:30:00Z','2026-03-08T09:30:00Z']){
+   const {api,view}=mount(timeZone,{forceEventDuration:true,events:[{id:'default',start}]})
+   const event=api.getEventById('default')
+   expect(+event.start).toBe(Date.parse(start));expect(+event.end-+event.start).toBe(3600000)
+   expect(Date.parse(event.endStr)).toBe(+event.end)
+   act(()=>event.setProp('title','Keep the end'));expect(+event.end-+event.start).toBe(3600000)
+   view.unmount()
+  }
+ })
+ it(`${timeZone}: custom timed defaults preserve clock and calendar duration units`,()=>{
+  for(const [defaultTimedEventDuration,elapsed] of [['00:30',1800000],[{minutes:90},5400000],['24:00',86400000],[{days:1},90000000]]){
+   const {api,view}=mount(timeZone,{forceEventDuration:true,defaultTimedEventDuration,events:[{id:'custom',start:'2026-11-01T08:30:00Z'}]})
+   const event=api.getEventById('custom');expect(+event.end-+event.start).toBe(elapsed)
+   view.unmount()
+  }
+ })
+ it(`${timeZone}: all-day defaults retain the next calendar midnight`,()=>{
+  for(const [start,end,hours] of [['2026-11-01','2026-11-02',25],['2026-03-08','2026-03-09',23]]){
+   const {api,view}=mount(timeZone,{forceEventDuration:true,events:[{id:'day',start,allDay:true}]})
+   const event=api.getEventById('day');expect(event.startStr).toBe(start);expect(event.endStr).toBe(end);expect(+event.end-+event.start).toBe(hours*3600000)
+   view.unmount()
+  }
+ })
+}

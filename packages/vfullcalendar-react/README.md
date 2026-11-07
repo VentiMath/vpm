@@ -131,12 +131,34 @@ upstream's zero movement loses fold metadata and is not claimed as a passing
 control. Native Chrome repeats both drag directions and checks visible events.
 The pre-r4 source fails the new date and drag assertions.
 
+## Repeated-hour rendering and defaults (r5)
+
+Day/week grids keep a positive-duration event visible when its clock labels run
+backward or coincide during the repeated hour. The grid still has one row per
+clock time: for these ranges, the block starts at the local start position and
+extends by the exact elapsed duration. This is a layout projection; getters and
+click callbacks retain the original instants. Existing slot clipping still applies.
+
+Timed default hours/minutes now advance the exact starting instant. With
+`forceEventDuration`, Pacific `2026-11-01T08:30:00Z` gets the default end
+`09:30:00Z`, not `10:30:00Z`. All-day defaults remain calendar days. Explicit
+calendar duration units retain their meaning too: `{ days: 1 }` may span 23 or
+25 hours, while `{ hours: 24 }` is 24 elapsed hours. Keep the same
+`forceEventDuration` setting used with r4; there are no new consumer options.
+
+Ten additional mounted comparisons cover rendered event nodes/click payloads
+in day/week views, local and named Pacific time zones, forced/default/custom
+durations, spring-forward and fall-back, and all-day midnight boundaries. They
+pass upstream and VPM; eight fail against r4. Native Chrome also checks positive
+block geometry and trusted clicks for explicit and forced repeated-hour ranges.
+These run against the exact release archives before and after publication.
+
 ## Adoption
 
 VentiMath's committed frontend uses the three VPM calendar packages from
 [`calendar-7.1.3`](https://github.com/VentiMath/vpm/releases/tag/calendar-7.1.3).
 That immutable release contains the earlier adapted renderer. The independent
-renderer, including the event-identity, hour-label and event-date corrections, is distributed as `calendar-7.1.3-r4`; the app must update
+renderer, including the event-identity, hour-label and event-date corrections, is distributed as `calendar-7.1.3-r5`; the app must update
 its release URL and lockfile to adopt it. Source adoption is verified; production
 deployment is not inferred. See [installation](../../docs/INSTALLATION.md) and
 [adoption evidence](../../docs/ADOPTION.md).

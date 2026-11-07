@@ -32,12 +32,14 @@
     "Preserve event component identity for surviving event IDs across filtered/cloned input arrays, preventing mount-driven label-state update loops. Duplicate IDs retain separate occurrence keys.",
     "Keep time-grid hour labels below slot lines so default/custom scrolling does not clip the first visible label. Slot geometry and scroll targets are unchanged.",
     "Preserve exact event instants through repeated DST hours, date edits, ISO getters and reversible changes.",
-    "Anchor cross-row dragging to the grabbed date and reset durations with explicit forceEventDuration/default-duration options."
+    "Anchor cross-row dragging to the grabbed date and reset durations with explicit forceEventDuration/default-duration options.",
+    "Render valid repeated-hour ranges as positive elapsed-duration blocks from their local start position without changing callback instants.",
+    "Compute timed default clock durations from the exact start instant while preserving explicit calendar-day units and all-day midnight boundaries."
   ],
   "verification": {
-    "mounted": "Eleven independent lifecycle/event cases; six app-shaped upstream/VPM cases; timezone/feed controls. Node 24 and Bun. Seven exact-instant cases pass upstream/VPM; nine cross-row pointer cases plus zero-date-movement preservation pass VPM. Local Pacific and named Pacific time zones; pre-r4 negative controls retained.",
-    "browser": "Chromium: month/week/day layout, ordinary clicks, selection preview, timed and all-day month dragging, time-grid dragging/resizing, revert, multiday spans, overlapping timed events, overflow, inherited theme variables, narrow width and unmount. Text bounds verify unclipped 6am week/day labels, custom 9am scrolling and a 6am grid start; pre-fix r3 fails the same assertion. Trusted pointer tests cover timed-to-all-day from the start/middle, a next-day drop, all-day-to-timed, positive forced ends and revert.",
+    "mounted": "Eleven independent lifecycle/event cases; six app-shaped upstream/VPM cases; timezone/feed controls. Node 24 and Bun. Seven exact-instant cases pass upstream/VPM; nine cross-row pointer cases plus zero-date-movement preservation pass VPM. Local Pacific and named Pacific time zones; pre-r4 negative controls retained. Ten additional shared DST layout/default comparisons (17 shared total): rendered nodes/clicks in day/week, exact one-hour and custom defaults through both DST changes, calendar duration units and all-day boundaries. Eight new assertions fail r4.",
+    "browser": "Chromium: month/week/day layout, ordinary clicks, selection preview, timed and all-day month dragging, time-grid dragging/resizing, revert, multiday spans, overlapping timed events, overflow, inherited theme variables, narrow width and unmount. Text bounds verify unclipped 6am week/day labels, custom 9am scrolling and a 6am grid start; pre-fix r3 fails the same assertion. Trusted pointer tests cover timed-to-all-day from the start/middle, a next-day drop, all-day-to-timed, positive forced ends and revert. Repeated-hour explicit/forced ranges: positive positioned block bounds and trusted exact-instant click payloads in day/week views and local/named Pacific zones.",
     "types": "TypeScript 7 strict public consumer and actual VentiMath main-branch frontend typecheck.",
-    "adoption": "VentiMath main aa5a96d4 resolves calendar-7.1.3 (earlier adapted renderer); independent renderer requires calendar-7.1.3-r4 URL/lock update."
+    "adoption": "VentiMath main aa5a96d4 resolves calendar-7.1.3 (earlier adapted renderer); independent renderer requires calendar-7.1.3-r5 URL/lock update."
   }
 }

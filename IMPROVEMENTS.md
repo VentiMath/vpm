@@ -300,7 +300,7 @@ version-scoped integration aliases remain limited to their tested baselines.
 | [vstylis](packages/vstylis) | stylis 4.4.0 | Vendor prefixes chosen by property name (stylis's hash gave more than 50 unprefixed properties, `flex-wrap` and `grid-gap` among them, invented declarations), IE grid spans on the right axis, `mask-composite: subtract` converted, the same `namespace` result on JavaScriptCore, and bundled declarations; otherwise identical trees and output, and all 113 upstream tests pass. |
 | [vtanstack-query-core](packages/vtanstack-query-core) | @tanstack/query-core 5.105.3, scoped APIs | Independent cache, request and mutation lifecycle; bounded long timers and DOM-independent declarations. The former upstream build is removed. |
 | [vtanstack-react-query](packages/vtanstack-react-query) | @tanstack/react-query 5.105.3, scoped APIs | Independently written provider, query and mutation hooks on the VPM core; mounted application comparisons. |
-| [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | Independent app-used month/week/day renderer, event model, styles and declarations; two VPM dependencies; preserved allDay/timezone/feed fixes; 84% smaller gzipped app-shaped JS entry with narrower supported scope. Release r4 also keeps first-visible hour labels unclipped, preserves exact DST-fold event instants and corrects cross-row drag dates/durations; pre-r4 negative controls fail the new regressions. |
+| [vfullcalendar-react](packages/vfullcalendar-react) | @fullcalendar/react 7.1.3 | Independent app-used month/week/day renderer, event model, styles and declarations; two VPM dependencies; preserved allDay/timezone/feed fixes; 84% smaller gzipped app-shaped JS entry with narrower supported scope. Release r5 retains the hour-label, exact-instant and drag fixes; repeated-hour events stay visible and timed default hours/minutes use elapsed time. Rendered-node, trusted-click and midnight-boundary comparisons cover the DST corrections. |
 | [vfullcalendar-core](packages/vfullcalendar-core) | @fullcalendar/core 7.1.3 | No dependencies (two unused peers removed); JSON feed parameters kept for `#fragment` URLs, declarations that compile without DOM types, and no console output on import; otherwise identical requests and results. |
 | [vfull-ui-headless-calendar](packages/vfull-ui-headless-calendar) | @full-ui/headless-calendar 7.1.3 | Named time zones read through `Intl` instead of `temporal-polyfill` (one 41 KiB module instead of 20 and 411 KiB), correct where the polyfill misses paired offset changes such as Casablanca's Ramadan hours; years 0-99, offsets never printed as ":60", and local-time milliseconds kept. Named-zone conversions take 66-84% less time than the polyfill on Node. |
 | [vfirebase-functions](packages/vfirebase-functions) | firebase-functions 7.4.0 | Independent application runtime: HTTP/callable, logging, parameters/secrets, schedules, task queues, Firestore triggers and CLI discovery. Unused provider runtime removed; attributed declarations/generated protocol retained. Frozen input, CEL escaping, own-key safety and exact trace fixes; current app contracts and clean archives verified. Built, unreleased and unadopted. |
@@ -1140,12 +1140,15 @@ not current claims. The original React suite remains a control; the independent
 renderer uses the documented application-scope verification gates.
 
 VentiMath currently adopts the older `calendar-7.1.3` artifacts. The independent
-renderer is a separate `calendar-7.1.3-r4` update. R4 fixes clipped hour labels,
+renderer is a separate `calendar-7.1.3-r5` update. R4 fixes clipped hour labels,
 cross-row drag dates/durations and exact instants during DST repeated hours. Seven
 new exact-instant cases pass upstream/VPM; nine pointer transition cases and
 zero-movement preservation pass VPM. Native Chrome and the release-archive checker
 exercise the corrections. Apps that persist a required end timestamp should
-pass `forceEventDuration`. The r2 size/timing evidence predates these corrections. See the
+pass `forceEventDuration`. R5 adds visible positive repeated-hour blocks and
+exact elapsed-hour defaults, verified by ten additional upstream/VPM mounted
+cases and native Chrome bounds/click checks. All-day defaults remain calendar
+days. The r2 size/timing evidence predates these corrections. See the
 [package contract](packages/vfullcalendar-react/README.md),
 [conformance record](scripts/fullcalendar-react-conformance/README.md),
 [measurements](packages/vfullcalendar-react/bench/results/README.md) and

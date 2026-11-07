@@ -23,7 +23,8 @@ the checked week view.
 - `react-suite.cjs`: 11 independent tests for the supported lifecycle, context,
   current callbacks, defensive event values/revert, dates, stale/rejected event
   sources, selection, safe text, imperative options and excluded views. It also
-  runs `transitions.cjs`: seven shared exact-instant tests against upstream/VPM,
+  runs `transitions.cjs`: 17 shared exact-instant/rendering/default-duration
+  tests against upstream/VPM,
   nine VPM pointer transition/duration/revert cases and a zero-movement case.
   The zero-movement preservation assertion is VPM-only: upstream loses DST fold
   metadata on that operation. All other instant assertions pass both controls.
@@ -42,7 +43,11 @@ the checked week view.
   control clips the 6am text by about five pixels; the corrected stylesheet passes
   without changing scroll positions or slot geometry. Trusted pointers also
   cover both timed/all-day transitions, a mid-event grab, another target date,
-  positive forced durations, visible event retention and revert.
+  positive forced durations, visible event retention and revert. Repeated-hour
+  ranges also have positive block bounds and exact trusted-click payloads in
+  day/week and local/named Pacific zones. Ten mounted DST tests compare rendered
+  nodes, forced/custom clock durations, explicit calendar units and all-day
+  midnight boundaries with upstream; eight fail r4.
 
 `CALENDAR_PACKAGES_DIR` selects an installed package directory for both the
 mounted and browser harnesses. The release checker runs these cases against

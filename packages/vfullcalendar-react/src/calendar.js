@@ -43,7 +43,7 @@ const dayInfo = (api, date) => ({
   view: api.view,
 });
 const effectiveEnd = (record, api) =>
-  record.end || api.defaultEnd(record.start, record.allDay);
+  record.end || api.defaultEnd(record.start, record.allDay, record.startMs).end;
 function dayEvents(api, date) {
   return [...api.records.values()]
     .filter(
@@ -379,11 +379,23 @@ function Month({ api, openMore }) {
 }
 function timedLayout(records, date, min, max, api) {
   const entries = records
-      .map((record) => ({
-        record,
-        start: Math.max(min, (+record.start - +date) / 60000),
-        end: Math.min(max, (+effectiveEnd(record, api) - +date) / 60000),
-      }))
+      .map((record) => {
+        const start = (+record.start - +date) / 60000;
+        const endpoint = record.end
+          ? { end: record.end, endMs: record.endMs }
+          : api.defaultEnd(record.start, false, record.startMs);
+        let end = (+endpoint.end - +date) / 60000;
+        if (end <= start) {
+          // The grid has one row per clock time, not a duplicate repeated hour.
+          // Project a positive real duration from the start's clock position
+          // rather than dropping a valid fold-crossing or equal-clock event.
+          const elapsed =
+            (endpoint.endMs ?? +api.env.toDate(endpoint.end)) -
+            (record.startMs ?? +api.env.toDate(record.start));
+          if (elapsed > 0) end = start + elapsed / 60000;
+        }
+        return { record, start: Math.max(min, start), end: Math.min(max, end) };
+      })
       .filter((x) => x.end > x.start)
       .sort((a, b) => a.start - b.start || b.end - a.end),
     clusters = [];
@@ -894,14 +906,22 @@ export const Calendar = forwardRef(function Calendar(props, ref) {
         if (!switching) return;
         end = null;
       }
-      if (!end && options.forceEventDuration)
-        end = api.defaultEnd(start, allDay);
+      const forcedEnd =
+        !end && options.forceEventDuration
+          ? api.defaultEnd(
+              start,
+              allDay,
+              +start === +previous.start ? previous.startMs : undefined,
+            )
+          : null;
+      if (forcedEnd) end = forcedEnd.end;
       api.change(
         previous,
         {
           start,
           end,
           allDay,
+          ...forcedEnd,
         },
         (info) =>
           api.emit(g.resize ? "eventResize" : "eventDrop", {

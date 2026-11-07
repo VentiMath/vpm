@@ -11,7 +11,7 @@ calendar: `63f63f6a`):
 
 | Package | In use | Available update |
 | --- | --- | --- |
-| `vfullcalendar-react` | `calendar-7.1.3`, package 7.1.3 | `calendar-7.1.3-r4`: independent renderer with event identity, hour-label clipping, cross-row dragging and DST instant fixes |
+| `vfullcalendar-react` | `calendar-7.1.3`, package 7.1.3 | `calendar-7.1.3-r5`: independent renderer with event identity, hour-label, drag and DST fixes, including repeated-hour visibility and timed defaults |
 | `vfullcalendar-core` | `calendar-7.1.3`, package 7.1.3 | Included in the same replacement release |
 | `vfull-ui-headless-calendar` | `calendar-7.1.3`, package 7.1.3 | Included in the same replacement release |
 | `vclsx`, `vstylis` and 13 Emotion packages | `styling-11.14.1` | Current published styling release |
