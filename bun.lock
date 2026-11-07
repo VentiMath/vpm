@@ -818,6 +818,20 @@
         "vprosemirror-model": "1.25.12",
       },
     },
+    "packages/vprosemirror-view": {
+      "name": "vprosemirror-view",
+      "version": "1.42.9",
+      "dependencies": {
+        "vprosemirror-model": "1.25.12",
+        "vprosemirror-transform": "1.12.5",
+      },
+      "peerDependencies": {
+        "prosemirror-view": "^1.41.6",
+      },
+      "optionalPeers": [
+        "prosemirror-view",
+      ],
+    },
     "packages/vproto3-json-serializer": {
       "name": "vproto3-json-serializer",
       "version": "0.1.0",
@@ -1631,6 +1645,8 @@
     "vprosemirror-state": ["vprosemirror-state@workspace:packages/vprosemirror-state"],
 
     "vprosemirror-transform": ["vprosemirror-transform@workspace:packages/vprosemirror-transform"],
+
+    "vprosemirror-view": ["vprosemirror-view@workspace:packages/vprosemirror-view"],
 
     "vproto3-json-serializer": ["vproto3-json-serializer@workspace:packages/vproto3-json-serializer"],
 

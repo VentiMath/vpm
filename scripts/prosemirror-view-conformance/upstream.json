@@ -1,0 +1,12 @@
+{
+  "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-view",
+  "version": "1.42.9",
+  "commit": "2a07ebc03ccfb526b43e60297465129a2cee8ca6",
+  "appVersion": "1.41.6",
+  "appCommit": "970c6e89cb7833bef1974ec1cea67fc64f007c9f",
+  "sha256": {
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+    "webtest-decoration-app.ts": "a014a1ff03979024f04aa6c811d2ae2df2cceffc52f3e9ef4a03ab127c3a2278",
+    "webtest-decoration.ts": "a014a1ff03979024f04aa6c811d2ae2df2cceffc52f3e9ef4a03ab127c3a2278"
+  }
+}

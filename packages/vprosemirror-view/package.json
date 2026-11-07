@@ -1,0 +1,52 @@
+{
+  "name": "vprosemirror-view",
+  "version": "1.42.9",
+  "private": true,
+  "description": "Internal independent ProseMirror decoration model; EditorView is not implemented",
+  "exports": {
+    "./decorations": {
+      "import": {
+        "types": "./decorations.d.mts",
+        "default": "./decorations.mjs"
+      },
+      "require": {
+        "types": "./decorations.d.ts",
+        "default": "./decorations.cjs"
+      }
+    }
+  },
+  "files": [
+    "decorations.cjs",
+    "decorations.mjs",
+    "decorations.d.ts",
+    "decorations.d.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "dependencies": {
+    "vprosemirror-model": "1.25.12",
+    "vprosemirror-transform": "1.12.5"
+  },
+  "peerDependencies": {
+    "prosemirror-view": "^1.41.6"
+  },
+  "peerDependenciesMeta": {
+    "prosemirror-view": {
+      "optional": true
+    }
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vprosemirror-view"
+  }
+}

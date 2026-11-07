@@ -117,6 +117,9 @@ jobs:
       - run: npm --prefix scripts/prosemirror-schema-list-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-schema-list-conformance/run.cjs
       - run: node scripts/prosemirror-schema-list-conformance/archives.cjs
+      - run: npm --prefix scripts/prosemirror-view-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/prosemirror-view-conformance/run.cjs
+      - run: node scripts/prosemirror-view-conformance/archives.cjs
       - run: npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs
@@ -645,6 +648,9 @@ jobs:
       - run: npm --prefix scripts/prosemirror-schema-list-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-schema-list-conformance/run.cjs
       - run: node scripts/prosemirror-schema-list-conformance/archives.cjs
+      - run: npm --prefix scripts/prosemirror-view-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/prosemirror-view-conformance/run.cjs
+      - run: node scripts/prosemirror-view-conformance/archives.cjs
       - run: npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs

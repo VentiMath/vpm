@@ -1,0 +1,17 @@
+{
+  "name": "vpm-prosemirror-view-conformance",
+  "private": true,
+  "dependencies": {
+    "prosemirror-view": "1.42.9",
+    "prosemirror-view-app": "npm:prosemirror-view@1.41.6",
+    "prosemirror-model": "1.25.12",
+    "prosemirror-model-app": "npm:prosemirror-model@1.25.4",
+    "prosemirror-state": "1.4.4",
+    "prosemirror-transform": "1.12.5",
+    "prosemirror-transform-app": "npm:prosemirror-transform@1.11.0",
+    "prosemirror-test-builder": "1.1.1",
+    "ist": "1.1.7",
+    "jsdom": "27.4.0",
+    "@tiptap/core": "2.27.2"
+  }
+}

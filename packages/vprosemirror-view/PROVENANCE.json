@@ -1,0 +1,35 @@
+{
+  "upstream": {
+    "name": "prosemirror-view",
+    "version": "1.42.9",
+    "appVersion": "1.41.6",
+    "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-view",
+    "commit": "2a07ebc03ccfb526b43e60297465129a2cee8ca6",
+    "checked": "2026-11-07"
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "5afd065f1d3e3893fb41c566df2a1bbd3a5c55dccfcf307b10478f52c433df9a",
+    "dist/index.d.ts": "cbdc0cc415e2abec3178fe51ae107e511c26e350274b2a2183b68b9fe8bcb06a",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "partial; EditorView pending",
+    "targetScope": "Internal Decoration/DecorationSet data model only, including persistent updates, mapping, child projection and removal callbacks. No root export, full view runtime, DOM/IME/clipboard, public release or app adoption.",
+    "independentComponents": {
+      "decorations": "Implemented independently from public declarations and test observations."
+    },
+    "remainingWork": "Read-only document/decorations DOM rendering, then view lifecycle, browser input/selection, IME/clipboard and editor acceptance. Transform deep-deletion 3..42 remains a full editing acceptance gap. Bulk creation, mapping and removal remain slower; map 100 decorations is roughly 10x upstream (8\u20139 microseconds) and must be revisited before full editor acceptance."
+  },
+  "appContract": {
+    "path": "src/components/tiptap/tiptap-extension/selection-extension.ts",
+    "commit": "f7b9e2f6ae589bd503c8b7ddf1dd86f8d896fc65",
+    "sha256": "57e044e0485e95ecb5ba57ef55fff7c9160830c60dd42996b74e74796103c1f3",
+    "scope": "Documentation Tiptap Selection extension; 12 focus/editability/selection cases. Model test, not application integration."
+  },
+  "changes": [
+    "Independent step-validated subtree retention, absolute mapping of affected ranges, persistent branch merges and indexed range queries.",
+    "Input arrays remain intact; no upstream runtime copied.",
+    "Private internal package exposes only ./decorations until later view milestones."
+  ]
+}
