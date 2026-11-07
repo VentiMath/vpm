@@ -98,8 +98,8 @@ test("6000 seeded list edits agree across isolated callers and full VPM lists", 
         to = random() % 4 === 0 ? ps[random() % ps.length] : from,
         op = random() % 8;
       // Keep the mixed-command fuzzer's deletions within one textblock;
-      // the dedicated boundary-deletion matrix below exercises cross-block
-      // ranges without conflating them with the remaining general fitting gap.
+      // the dedicated boundary/nested matrices below exercise cross-block
+      // ranges without conflating them with the remaining cursor-mapping gap.
       if (
         vName === "vpm" &&
         op === 1 &&
@@ -406,4 +406,91 @@ test("cross-list boundary deletion preserves the unselected textblock and cursor
               cases++;
             }
   assert.equal(cases, 96);
+});
+
+test("nested deletion suffixes retain their wrappers, cursor and undo", () => {
+  const input = require("../../../scripts/prosemirror-schema-list-conformance/nested-fitting-followup.json");
+  let cases = 0;
+  for (const outer of ["bullet_list", "ordered_list"])
+    for (const inner of ["bullet_list", "ordered_list"])
+      for (const suffix of ["bullet_list", "ordered_list"])
+        for (const tail of ["a", "🙂"])
+          for (const text of ["xxxxx", "🙂xx"])
+            for (const nested of [false, true])
+              for (const reversed of [false, true]) {
+                const json = structuredClone(input.doc),
+                  list = json.content[0],
+                  middle = list.content[1].content[1];
+                for (const [node, type] of [
+                  [list, outer],
+                  [middle, inner],
+                  [middle.content[0].content[1], suffix],
+                ]) {
+                  node.type = type;
+                  if (type === "ordered_list") node.attrs = { order: 7 };
+                  else delete node.attrs;
+                }
+                list.content[0].content[0].content[0].text = text;
+                middle.content[0].content[0].content = [
+                  { type: "text", text: "x" },
+                  ...(tail
+                    ? [
+                        {
+                          type: "text",
+                          text: tail,
+                          marks: [{ type: "strong" }],
+                        },
+                      ]
+                    : []),
+                ];
+                if (nested)
+                  json.content = [
+                    { type: "blockquote", content: json.content },
+                  ];
+                const results = ["upstream", "vpm"].map((name) => {
+                  const x = make(api(name), json),
+                    before = x.state.doc,
+                    starts = [];
+                  before.descendants((node, pos) => {
+                    if (node.isTextblock) starts.push(pos + 1);
+                  });
+                  const from = starts[0] + 2,
+                    to = starts[2] + 1,
+                    selection = reversed ? [to, from] : [from, to];
+                  x.state = x.state.apply(
+                    x.state.tr.setSelection(
+                      x.A.S.TextSelection.create(before, ...selection),
+                    ),
+                  );
+                  x.state = x.state.apply(
+                    x.A.H.closeHistory(x.state.tr.deleteSelection()),
+                  );
+                  x.state.doc.check();
+                  const result = snapshot(x);
+                  assert.equal(x.state.selection.anchor, from);
+                  assert.equal(x.state.selection.head, from);
+                  assert(
+                    x.A.H.undo(x.state, (tr) => {
+                      x.state = x.state.apply(tr);
+                    }),
+                  );
+                  assert(x.state.doc.eq(before));
+                  return result;
+                });
+                assert.deepEqual(
+                  results[0],
+                  results[1],
+                  JSON.stringify({
+                    outer,
+                    inner,
+                    suffix,
+                    tail,
+                    text,
+                    nested,
+                    reversed,
+                  }),
+                );
+                cases++;
+              }
+  assert.equal(cases, 128);
 });

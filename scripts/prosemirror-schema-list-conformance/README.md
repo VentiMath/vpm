@@ -16,10 +16,10 @@ node scripts/prosemirror-schema-list-conformance/run.cjs
 node scripts/prosemirror-schema-list-conformance/archives.cjs
 ```
 
-Use Node 24 and Bun 1.4.4. Eight independent groups cover 6,000 seeded edits, immutable
+Use Node 24 and Bun 1.4.4. Nine independent groups cover 6,000 seeded edits, immutable
 schema descriptors, attributes/marks, exact query results, mapped positions,
 inverse steps and appending a range wrap to an existing transaction. Chrome
-compares 14 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
+compares 15 actual Tiptap list/task-list snapshots and trusted Tab, Shift-Tab,
 Enter and typing. The five-package archive closure is byte-verified, installed
 fresh/frozen with npm and Bun, then checked for runtime/module/type behavior.
 
@@ -47,31 +47,46 @@ forward/backward selection and history undo. The fourteenth Chrome snapshot
 uses Tiptap's `deleteSelection` with this regression. Current transform 1.12.5
 and VPM agree. The older app transform 1.11.0 leaves an empty list instead; that
 exact document, HTML and cursor remain an explicit negative control. The other
-thirteen snapshots still match all three graphs.
+fourteen snapshots still match all three graphs.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/deletion-followup.json
 ```
 
-## Remaining general fitting follow-up
+## Nested suffix regression
 
-Removing the mixed-command fuzzer's cross-block deletion restriction exposed a
-separate interior-to-interior deletion that puts a surviving nested list suffix
-at the wrong level. `nested-fitting-followup.json` reduces it to one list and a
-selection from 5 to 17. This diagnostic intentionally exits nonzero; it is not a
-passing gate. Further mixed-command exploration also exposed the same shape of
-nested suffix mismatch during text insertion.
+`nested-fitting-followup.json` reproduces an interior deletion from 5 to 17.
+The fitter previously joined a carried list suffix to a shallower list, removing
+a wrapper. It now preserves that wrapper after joining the textblocks. The
+saved case is a source/archive gate: document, cursor and undo match upstream.
+Another 128 cases cover mixed list types at three levels, marked ASCII/Unicode
+text tails, ASCII/Unicode starting text, enclosing quotes and both selection
+directions. These cases retain nonempty text tails. The fifteenth Chrome snapshot
+checks the same deletion through Tiptap on current/app/VPM graphs.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/nested-fitting-followup.json
 ```
 
+## Remaining cursor-mapping follow-up
+
+`cursor-followup.json` changes the saved nested case to end at an empty text tail.
+The resulting document now matches, but VPM puts the cursor at 9 instead of 5.
+This diagnostic intentionally exits nonzero; it is not a passing gate. Related
+insertion exploration with repeated text also retains a cursor discrepancy after
+its document structure matches. That insertion path is not claimed fixed here.
+
+```sh
+node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/cursor-followup.json
+```
+
 Randomized list comparison includes arbitrary text selections on current/app
 upstream foundations (4,000 edits). Full VPM comparison (2,000 edits) permits
 cross-block text insertion for the retained seed and confines its mixed deletion
-operations to one textblock. The dedicated 96-case boundary matrix covers the
-newly fixed cross-block deletion contract. These results do not establish
-arbitrary nested replacement parity or complete editor adoption.
+operations to one textblock. Dedicated matrices add 96 boundary cases and 128
+nested deletions with nonempty tails. Unrestricted mixed-command exploration
+still finds cursor differences; these results do not establish arbitrary
+replacement parity or complete editor adoption.
 
 [Benchmarks](../../packages/vprosemirror-schema-list/bench/results/README.md) use
 identical foundations for list-only cases and explicitly label complete VPM-stack

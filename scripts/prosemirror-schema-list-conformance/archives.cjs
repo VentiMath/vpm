@@ -214,6 +214,7 @@ try {
       for (const fixture of [
         "transform-followup.json",
         "deletion-followup.json",
+        "nested-fitting-followup.json",
       ]) {
         const diagnosis = JSON.parse(
           run(

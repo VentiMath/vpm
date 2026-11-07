@@ -1,0 +1,80 @@
+{
+  "doc": {
+    "type": "doc",
+    "content": [
+      {
+        "type": "ordered_list",
+        "attrs": {
+          "order": 1
+        },
+        "content": [
+          {
+            "type": "list_item",
+            "content": [
+              {
+                "type": "paragraph",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "xxxxx"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "list_item",
+            "content": [
+              {
+                "type": "paragraph"
+              },
+              {
+                "type": "ordered_list",
+                "attrs": {
+                  "order": 1
+                },
+                "content": [
+                  {
+                    "type": "list_item",
+                    "content": [
+                      {
+                        "type": "paragraph",
+                        "content": [
+                          {
+                            "type": "text",
+                            "text": "x"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "ordered_list",
+                        "attrs": {
+                          "order": 1
+                        },
+                        "content": [
+                          {
+                            "type": "list_item",
+                            "content": [
+                              {
+                                "type": "paragraph"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "selection": [
+    5,
+    17
+  ],
+  "operation": "deleteSelection"
+}

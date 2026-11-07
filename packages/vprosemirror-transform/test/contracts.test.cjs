@@ -377,3 +377,29 @@ test("deleteRange preserves an unselected empty paragraph after a nested start",
   });
   assert.deepEqual(results[0], results[1]);
 });
+
+test("nested deletion retains the suffix list shell after joining textblocks", () => {
+  const input = require("../../../scripts/prosemirror-schema-list-conformance/nested-fitting-followup.json");
+  const results = [model, um].map((m, i) => {
+    const s = new m.Schema({
+      nodes: {
+        ...spec.nodes,
+        ordered_list: {
+          content: "list_item+",
+          group: "block",
+          attrs: { order: { default: 1 } },
+        },
+        list_item: { content: "paragraph block*" },
+      },
+    });
+    const doc = s.nodeFromJSON(input.doc),
+      tr = new [v, u][i].Transform(doc).deleteRange(...input.selection);
+    tr.doc.check();
+    let restored = tr.doc;
+    for (let j = tr.steps.length - 1; j >= 0; j--)
+      restored = tr.steps[j].invert(tr.docs[j]).apply(restored).doc;
+    assert(restored.eq(doc));
+    return { doc: tr.doc.toJSON(), cursor: tr.mapping.map(input.selection[0]) };
+  });
+  assert.deepEqual(results[0], results[1]);
+});

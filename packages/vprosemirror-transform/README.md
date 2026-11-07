@@ -55,9 +55,9 @@ Bun mapping and wrap/lift overhead. All raw samples and source hashes are kept.
 The cross-list deletion path closes surviving ancestors with a validated edit
 step before falling back to general fitting; it preserves the schema checks.
 
-Cross-list text replacement now joins compatible surviving list shells without
-flattening nested lists. An empty trailing text gap retains the insertion cursor
-before reconstructed closing shells. Both document and actual editor selection
+The saved cross-list text replacement joins compatible surviving list shells
+without flattening nested lists. Its empty trailing text gap retains the insertion
+cursor before reconstructed closing shells. Both document and actual editor selection
 are checked through the list-package caller and packed browser fixtures.
 
 Range deletion now distinguishes a shared container from matching boundary
@@ -65,9 +65,15 @@ offsets in different containers. A selection ending at the start of an empty
 paragraph preserves that paragraph and its cursor position. The saved regression
 and 96 list/heading/nesting/direction cases check document, selection and undo.
 
-Full editor parity remains separate. Interior-to-interior replacements across
-nested lists can still place a surviving nested suffix at the wrong level; a
-[reduced reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
+After joining textblocks, fitting now retains carried list wrappers until their
+original ancestor boundary can accept them. The saved nested deletion and 128
+variants with nonempty text tails match document, cursor and undo, including
+mixed list types, marks, Unicode, nesting and both selection directions.
+
+Full editor parity remains separate. Empty text tails in deeper deletions and
+repeated text in insertions can still give the wrong cursor even when the
+document matches upstream; a
+[reduced cursor reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
 is recorded for follow-up. A public release and VentiMath adoption are separate.
 Native IME, system clipboard, browser input handling and collaborative-server integration belong to the editor cutover.
 All ProseMirror callers must resolve the same model and transform instances.

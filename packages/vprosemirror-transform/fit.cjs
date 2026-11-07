@@ -212,6 +212,11 @@ function fitDocument(doc, from, to, slice) {
         while (stack.length - 1 >= d) if (!close()) break;
     }
   }
+  // Once textblocks join, later right-hand wrappers remain structural suffixes.
+  // A carried textblock may instead fill a shallower parent when no textblock
+  // was open on the left (for example, deleting from before a paragraph).
+  const joiningTextblocks =
+    b.parent.isTextblock && stack.at(-1).node.isTextblock;
   let carry = Fragment.empty;
   for (let d = b.depth; d >= 0; d--) {
     const original = b.node(d),
@@ -232,7 +237,7 @@ function fitDocument(doc, from, to, slice) {
         !(d === 0
           ? k === 0
           : k > 0 &&
-            (((k >= d || carry.size) &&
+            (((k >= d || (carry.size && !joiningTextblocks)) &&
               f.node.type.compatibleContent(original.type)) ||
               (d === b.depth && f.node.isTextblock && original.isTextblock)))
       )

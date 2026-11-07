@@ -151,6 +151,15 @@ module.exports = function setup(name) {
             "Cross-list deletion did not retain the empty paragraph cursor",
           );
         }
+        const nested = require("./nested-fitting-followup.json");
+        e.commands.setContent(convert(nested.doc));
+        e.commands.setTextSelection({
+          from: nested.selection[0],
+          to: nested.selection[1],
+        });
+        run("deleteSelection");
+        if (e.state.selection.anchor !== 5 || e.state.selection.head !== 5)
+          throw Error("Nested suffix deletion moved its cursor");
         return out;
       } finally {
         const host = e.options.element;
