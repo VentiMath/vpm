@@ -1,0 +1,47 @@
+{
+  "name": "vprosemirror-history",
+  "version": "1.5.1",
+  "description": "Grouped undo and redo over persistent inverse events and a shared map timeline",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.cjs"
+      }
+    }
+  },
+  "files": [
+    "index.cjs",
+    "index.mjs",
+    "index.d.ts",
+    "index.d.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "dependencies": {
+    "vrope-sequence": "1.3.4",
+    "vprosemirror-state": "1.4.4",
+    "vprosemirror-transform": "1.12.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vprosemirror-history"
+  },
+  "vpm": {
+    "platform": "browser"
+  }
+}

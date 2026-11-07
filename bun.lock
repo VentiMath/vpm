@@ -764,6 +764,15 @@
         "vprosemirror-transform": "1.12.5",
       },
     },
+    "packages/vprosemirror-history": {
+      "name": "vprosemirror-history",
+      "version": "1.5.1",
+      "dependencies": {
+        "vprosemirror-state": "1.4.4",
+        "vprosemirror-transform": "1.12.5",
+        "vrope-sequence": "1.3.4",
+      },
+    },
     "packages/vprosemirror-keymap": {
       "name": "vprosemirror-keymap",
       "version": "1.2.3",
@@ -1601,6 +1610,8 @@
     "vpromisify": ["vpromisify@workspace:packages/vpromisify"],
 
     "vprosemirror-commands": ["vprosemirror-commands@workspace:packages/vprosemirror-commands"],
+
+    "vprosemirror-history": ["vprosemirror-history@workspace:packages/vprosemirror-history"],
 
     "vprosemirror-keymap": ["vprosemirror-keymap@workspace:packages/vprosemirror-keymap"],
 

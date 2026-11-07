@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "prosemirror-history",
+    "version": "1.5.1",
+    "appVersion": "1.5.0",
+    "repository": "https://code.haverbeke.berlin/prosemirror/prosemirror-history",
+    "commit": "44956b6a1929d7bc99aca9a8ec01c790260fa45f",
+    "checked": "2026-11-07",
+    "integrity": "sha512-onlwnqKvgtFg6srZOmDOAhlAy1FIHQpOExORybX0S+DvJepE5tPALrB9iGet/2sqqqrelSnB10OoiOJqAvu2DA=="
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "41d06e3bce9f9cad3dbba2bfea7545b33cb4dbd14e1c752f65f0638df55dcbd8",
+    "dist/index.d.ts": "6bc145cfcbe48644fb57e116fb2d41affe804a4e3fb14e1199a44f744a7130fb",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Public history commands and VentiMath Tiptap standalone editing, with upstream rebase contracts. Full collaborative client/server integration is not verified."
+  },
+  "changes": [
+    "Independent inverse-event stacks and shared position-map timeline with persistent VPM sequences.",
+    "Prefix pruning and cancellation-aware compaction avoid map growth during repeated partial undo/redo.",
+    "Current 1.5.1 rebase behavior after depth trimming; app upstream 1.5.0 fails the additional regression.",
+    "Numeric depth/delay validation rejects malformed truthy configuration. Zero/falsy defaults retain upstream behavior.",
+    "State prerequisite preserves selections on explicit-position text inserts. No upstream runtime shipped."
+  ]
+}

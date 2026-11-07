@@ -1,0 +1,8 @@
+{
+  "version": "1.5.1",
+  "commit": "44956b6a1929d7bc99aca9a8ec01c790260fa45f",
+  "sha256": {
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+    "test-history.ts": "449094796a201cbf04ece023e9b5607a2f1801c7f799fff4eb39a3b99dcc6f5c"
+  }
+}
