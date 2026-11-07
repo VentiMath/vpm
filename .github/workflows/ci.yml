@@ -96,6 +96,9 @@ jobs:
       - run: npm --prefix scripts/prosemirror-transform-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-transform-conformance/run.cjs
       - run: node scripts/prosemirror-transform-conformance/archives.cjs
+      - run: npm --prefix scripts/prosemirror-state-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/prosemirror-state-conformance/run.cjs
+      - run: node scripts/prosemirror-state-conformance/archives.cjs
       - run: npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs
@@ -603,6 +606,9 @@ jobs:
       - run: npm --prefix scripts/prosemirror-transform-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-transform-conformance/run.cjs
       - run: node scripts/prosemirror-transform-conformance/archives.cjs
+      - run: npm --prefix scripts/prosemirror-state-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/prosemirror-state-conformance/run.cjs
+      - run: node scripts/prosemirror-state-conformance/archives.cjs
       - run: npm --prefix scripts/radix-hydrated-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/radix-hydrated-conformance/current ci --ignore-scripts --no-audit --no-fund
       - run: bun scripts/radix-hydrated-conformance/build.cjs

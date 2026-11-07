@@ -1,0 +1,25 @@
+{
+  "upstream": {
+    "name": "prosemirror-state",
+    "version": "1.4.4",
+    "repository": "https://github.com/ProseMirror/prosemirror-state",
+    "checked": "2026-11-06",
+    "integrity": "sha512-6jiYHH2CIGbCfnxdHbXZ12gySFY/fz/ulZE333G6bPqIZ4F+TXo9ifiR86nAHpWnfoNjOb3o5ESi7J8Uz1jXHw=="
+  },
+  "sourceSHA256": {
+    "dist/index.cjs": "acfa68178e9acb2ab199711eb9abbc86fdeb16204450c62c8d0e6c5f6ad95beb",
+    "dist/index.d.ts": "02ab5dbcaa58da1d58c46c7cdfa7f94792c5ccf0fc7c0622ef33755fe415366c",
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "State 1.4.4 editor state, transactions, text/node/all selections, bookmarks and plugin lifecycle; real Tiptap 2.11.7 commands and application-shaped link, trailing-node and selection plugins with current/app model and transform controls. Browser view implementation, IME, full application integration and collaborative transport acceptance are separate."
+  },
+  "changes": [
+    "Independent state and transaction implementation, with precomputed plugin field and append-hook lists.",
+    "Selection JSON positions require nonnegative safe integers; selection registration and transaction metadata do not inherit object prototype names. Plugin props use own keys.",
+    "Two VPM runtime dependencies: vprosemirror-model 1.25.12 and vprosemirror-transform 1.12.5. No upstream runtime source shipped.",
+    "Optional prosemirror-view peer supplies consumer view types only. EditorView remains outside this implementation."
+  ]
+}

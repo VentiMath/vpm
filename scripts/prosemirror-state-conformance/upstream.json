@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/ProseMirror/prosemirror-state",
+  "version": "1.4.4",
+  "commit": "d6fdcd19c4f7f68206b0a8d49649860365672585",
+  "sha256": {
+    "LICENSE": "ef0b452ced6304db2ce78ca66de1fc7b97bab05bc1750c95df359ed3fe1d65c8",
+    "state.ts": "543ec589c13a5a0334c44c852ba067d0c502a517c9acac025251d8f8cc659c71",
+    "test-selection.ts": "1542328af714e389f620447fc0600fc582a63741e1960ac53bbb35fa5360219a",
+    "test-state.ts": "ad84f5ab0d180e78ee4148487d6757ae00be6512352f9560521f141047a46d56"
+  }
+}

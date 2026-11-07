@@ -762,6 +762,20 @@
         "vorderedmap": "2.1.1",
       },
     },
+    "packages/vprosemirror-state": {
+      "name": "vprosemirror-state",
+      "version": "1.4.4",
+      "dependencies": {
+        "vprosemirror-model": "1.25.12",
+        "vprosemirror-transform": "1.12.5",
+      },
+      "peerDependencies": {
+        "prosemirror-view": "^1.27.0",
+      },
+      "optionalPeers": [
+        "prosemirror-view",
+      ],
+    },
     "packages/vprosemirror-transform": {
       "name": "vprosemirror-transform",
       "version": "1.12.5",
@@ -1562,6 +1576,8 @@
     "vpromisify": ["vpromisify@workspace:packages/vpromisify"],
 
     "vprosemirror-model": ["vprosemirror-model@workspace:packages/vprosemirror-model"],
+
+    "vprosemirror-state": ["vprosemirror-state@workspace:packages/vprosemirror-state"],
 
     "vprosemirror-transform": ["vprosemirror-transform@workspace:packages/vprosemirror-transform"],
 

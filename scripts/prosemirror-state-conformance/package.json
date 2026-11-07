@@ -1,0 +1,12 @@
+{
+  "name": "vpm-prosemirror-state-conformance",
+  "private": true,
+  "dependencies": {
+    "prosemirror-state": "1.4.4",
+    "prosemirror-model": "1.25.12",
+    "prosemirror-transform": "1.12.5",
+    "prosemirror-test-builder": "1.1.1",
+    "ist": "1.1.7",
+    "jsdom": "27.4.0"
+  }
+}
