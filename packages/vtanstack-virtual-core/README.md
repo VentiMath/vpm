@@ -62,7 +62,8 @@ Count/key changes rebuild estimates while measured overrides follow their keys.
 MRT contains these callers behind its virtualization options. The inspected
 VentiMath call sites do not currently enable them explicitly; this is completion
 of a dependency beneath the existing table stack, not production adoption.
-Consumer release, the independent React wrapper and app cutover are separate.
+The independent [React wrapper](../vtanstack-react-virtual) is available in this
+workspace. Consumer release and app cutover are separate.
 
 [Conformance](../../scripts/virtual-core-conformance/README.md) ·
 [Benchmarks](bench/results/README.md) · [Provenance](PROVENANCE.json)

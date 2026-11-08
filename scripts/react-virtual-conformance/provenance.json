@@ -1,0 +1,8 @@
+{
+  "fixtureFiles": {
+    "node_modules/@tanstack/react-virtual/dist/cjs/index.cjs": "be4609ac3f6697c7796a4bbe74f02868d5e97a75058d6e04a94fd3cffc9cb2d9",
+    "node_modules/@tanstack/virtual-core/dist/cjs/index.cjs": "36ea2912a5f696f26a3045c09c446c24ee42cd1a47178db649b4d6f889bbf207",
+    "node_modules/react-virtual-app/dist/cjs/index.cjs": "3e2985b93f98490cbde1306fb7d94dfd37e8a548121b7b6158131b68b7cf598c"
+  },
+  "callers": "../virtual-core-conformance/provenance.json"
+}

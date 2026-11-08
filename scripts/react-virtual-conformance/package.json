@@ -1,0 +1,13 @@
+{
+  "name": "vpm-react-virtual-conformance",
+  "private": true,
+  "description": "Pinned React virtualizer controls and unchanged Material React Table hook consumers",
+  "dependencies": {
+    "@tanstack/react-virtual": "3.14.26",
+    "react-virtual-app": "npm:@tanstack/react-virtual@3.11.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9"
+  }
+}
