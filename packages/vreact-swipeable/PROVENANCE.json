@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "react-swipeable",
+    "version": "7.0.2",
+    "appVersion": "7.0.2",
+    "repository": "https://github.com/FormidableLabs/react-swipeable",
+    "commit": "9cf9e4ac42ea87e1355b9adb8e9d34ea92cf4dfe",
+    "checked": "2026-11-07"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React19 swipe hook: touch/mouse gestures, direction/threshold/rotation/duration, callbacks, passive scrolling and listener lifecycle. Verified configurator/messenger callback contracts; application adoption separate."
+  },
+  "changes": [
+    "Zero runtime dependencies besides the React19 peer; no upstream runtime copied.",
+    "Touch cancellation, additional or changed fingers, replaced/unmounted targets, disabled mouse tracking and window blur invalidate pending gestures.",
+    "Mouse tracking belongs to the target document; callback data mutations cannot corrupt internal state.",
+    "Expired gestures are not taps; callbacks are refreshed after React commits; stable handlers avoid listener churn."
+  ],
+  "caller": {
+    "appCommit": "21197a2c9ffd91ff1008ead966d2cde0f8705ef5",
+    "hashes": {
+      "src/components/theme-layouts/components/configurator/Configurator.tsx": "f3f5a93c04003a45729e574dcb5f1b9f0d4c12b393d1755fed3ccab157f17060",
+      "src/app/(control-panel)/apps/messenger/components/views/MessengerPanel.tsx": "9b447b00733a149ce44124acc42e34b9bad94f4a5bfdad23156465c5a456cc46",
+      "src/components/theme-layouts/components/configurator/SettingsPanel.tsx": "0be0c8a23e32bd852df2f7e2f28cee837a147e32f4965a0bbaa18d2139c70bcb",
+      "src/components/theme-layouts/components/configurator/ThemesPanel.tsx": "5af393ee917b2b47cda3d3faf2b6f82143770b943efc7b20108512b3e40ce29c"
+    },
+    "contract": "Two direction-gated close callbacks; default touch/passive scrolling; no mouse override; refs forwarded through Dialog or HStack. Browser fixture models this contract, not complete authenticated components."
+  }
+}

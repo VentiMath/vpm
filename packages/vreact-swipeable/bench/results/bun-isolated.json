@@ -1,0 +1,1868 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-08T04:46:22.890Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/swipeable-conformance/harness.cjs": "62fe289aa3ccfe1e8971e76c3bf815ffe81ee2a2ee728182378b9579695f3493",
+    "../../scripts/swipeable-conformance/load.cjs": "5363633a05537eacdbffde33f3f1a701fdd43a4e993b6ad09b27d07f6ed5f2f7",
+    "../../scripts/swipeable-conformance/node_modules/react-swipeable": "c9de1f55a8793ef16e33f293a24d152a39b73bdd1a2e9e87351de943aef1198f",
+    "../../scripts/swipeable-conformance/package-lock.json": "a8722c33dc4248b1efd2c7c18f21e965449eb1b0c8438e17f0a41f23f85eed35",
+    "PROVENANCE.json": "300d2841ce4bf1ce36cee7b929cfa1ac5058ec302b81541c2acba651eef676f2",
+    "bench/compare.cjs": "21d1e3c60f343ed210f6821e1f3f25c39586115c5550a3c37dfd3ad70b5ea484",
+    "gesture.cjs": "b06568ff819478289f22a57d621fb9b4e865bee47e6ab9f30e97784a328cc744",
+    "index.cjs": "e203cd99dd1a793a326babb44071bb0e5c7143fba043634c890700e46dd80873",
+    "index.d.ts": "79b4f2d11f5398a2e8c512fb100ae1a9c6b352f5d9caa198c9cd36a050de82c0",
+    "index.mjs": "f8860c095d2d9466f40230b5a08f6e861a6561604e88ee7f181658e34281be1e",
+    "package.json": "ffe665202373e5290eb6f3d722fd1e5286d687b52bd857173576034ed747e069"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 28373,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 7107,
+            "samples": [
+              1591.3711833403695,
+              1534.813001266357,
+              1518.2097931616718,
+              1541.754608132825,
+              1571.2442662164058,
+              1648.9259884620762,
+              1663.1490080202607,
+              1583.6558322780363,
+              1563.423385394679,
+              1590.257211200219,
+              1639.8678767412403,
+              1633.4892359645455
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 3953,
+            "samples": [
+              2355.0680495825886,
+              2418.247660005069,
+              2392.1811282570106,
+              2535.7113584619105,
+              2509.8133063496066,
+              2529.53453073614,
+              2813.3905894257655,
+              2299.666835314931,
+              2393.4353655451714,
+              2346.3612446243105,
+              2470.8236782190675,
+              2272.946622818114
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 4452,
+            "samples": [
+              2058.0357142857138,
+              1995.0584007187663,
+              2029.8461365678368,
+              2001.3665768194032,
+              2171.392857142841,
+              1978.8297394429487,
+              1963.2654986522887,
+              1964.4166666666692,
+              1954.0561545372723,
+              1951.9503593890295,
+              1983.93980233605,
+              1979.9809074573038
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 28026,
+            "samples": [
+              330.86537500891995,
+              359.6258831085475,
+              352.86430457433096,
+              357.7615428530638,
+              350.22389923641987,
+              363.9090844216023,
+              353.6938913865754,
+              350.66099336330996,
+              341.7466281310188,
+              340.36551773353324,
+              355.6072932277233,
+              352.202740312569
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 7805,
+            "samples": [
+              1372.0425368353785,
+              1474.8504804612296,
+              1480.1622037155726,
+              1437.1716848174406,
+              1469.0903267136382,
+              1468.652658552201,
+              1500.7153106982828,
+              1444.9871877001979,
+              1440.9565663036522,
+              1465.0278026905785,
+              1501.131710442034,
+              1438.0204996796774
+            ]
+          }
+        ],
+        "checksum": 150688
+      },
+      "vpm": {
+        "pid": 28376,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 7107,
+            "samples": [
+              554.2012100745771,
+              527.9359786126341,
+              539.380188546506,
+              569.5324328127184,
+              574.1346559729849,
+              538.4304207119711,
+              511.54959898691783,
+              552.3662586182643,
+              528.9738286196687,
+              527.3322076825659,
+              532.7142254115663,
+              538.4655972984383
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 3953,
+            "samples": [
+              1478.4657222362798,
+              1312.0414874778564,
+              1391.1482418416267,
+              1356.0796863141823,
+              1490.6506450796842,
+              1426.7118644067796,
+              1330.8456868201342,
+              1415.3913483430395,
+              1534.3726283835106,
+              1421.4308120414908,
+              1420.6615228939945,
+              1470.6339488995745
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 4452,
+            "samples": [
+              1094.5923180593154,
+              1162.3333333333355,
+              1023.5473944294916,
+              1073.8057053009836,
+              1123.0626684636063,
+              1095.6311769990996,
+              1122.3140161725014,
+              1158.4400269541784,
+              1105.2336028751004,
+              1107.2832434860707,
+              1075.958445642407,
+              1028.6668912848334
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 28026,
+            "samples": [
+              127.43227717119805,
+              113.50321130379113,
+              116.21055448512254,
+              117.92621137514986,
+              114.20645115250022,
+              131.496931420824,
+              113.40958395775235,
+              125.00892028830482,
+              113.77235424248882,
+              112.69000214086749,
+              119.3712980803545,
+              122.34771283807734
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 7805,
+            "samples": [
+              1083.3173606662522,
+              1109.8280589365745,
+              1048.0781550288132,
+              1091.3089045483616,
+              1053.0376681614403,
+              1148.0995515694915,
+              1102.1086483023662,
+              1162.0167841127575,
+              1082.975656630352,
+              1148.6547085202044,
+              1049.4821268417631,
+              1085.4366431774288
+            ]
+          }
+        ],
+        "checksum": 34976
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 28377,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 22884,
+            "samples": [
+              537.3568869078832,
+              551.970416011187,
+              525.9169288585905,
+              533.1873361300472,
+              562.2468973955612,
+              573.8325030589048,
+              527.4646040901932,
+              545.7889355007878,
+              529.2726359028142,
+              507.4178465303282,
+              533.8427722426144,
+              543.1742702324772
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 7296,
+            "samples": [
+              1517.543859649123,
+              1471.2286184210443,
+              1600.5630482456056,
+              1498.3209978070283,
+              1507.818119517542,
+              1491.0910087719324,
+              1634.0631853070245,
+              1486.1169133771948,
+              1485.848410087729,
+              1561.9973958333214,
+              1439.7330043859602,
+              1477.7103892543896
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 9786,
+            "samples": [
+              1160.369405272837,
+              1136.9729204986777,
+              1166.6879215205354,
+              1191.1276313100375,
+              1204.3991416309009,
+              1223.9254036378425,
+              1210.513284283661,
+              1170.25168608216,
+              1152.3477416717778,
+              1221.0257510729678,
+              1204.6801553239309,
+              1182.0756182301186
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 96117,
+            "samples": [
+              132.0937815370839,
+              133.27853553481592,
+              119.79670609777665,
+              122.30926891184555,
+              126.93600507714636,
+              119.44209661142258,
+              125.3290260827936,
+              130.07844606052913,
+              127.23685716366451,
+              123.39128353985143,
+              121.99152075075169,
+              137.8203127438439
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 10972,
+            "samples": [
+              1145.2067079839578,
+              1369.2239336492833,
+              1150.2043383157138,
+              1110.6680641633222,
+              1148.5296208530722,
+              1268.4218920889484,
+              1347.56653299309,
+              1149.8662960262432,
+              1174.3681188479686,
+              1180.087222019683,
+              1161.5095698140765,
+              1227.040010936939
+            ]
+          }
+        ],
+        "checksum": 228256
+      },
+      "upstream": {
+        "pid": 28379,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 22884,
+            "samples": [
+              2147.01682398182,
+              1812.7312532773979,
+              1619.2208529977286,
+              1570.8755462331744,
+              1646.0500349589204,
+              1611.4752665617928,
+              1619.8981821359903,
+              1592.996198217094,
+              1588.8065897570355,
+              1569.7412602691843,
+              1561.223606012939,
+              1598.4421429819968
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 7296,
+            "samples": [
+              2530.736019736841,
+              2404.3082510964905,
+              2426.655016447355,
+              2557.3715734648995,
+              2358.9867050438816,
+              2426.5751096491394,
+              2506.2876918859383,
+              2344.7835800438397,
+              2432.28029057017,
+              2404.7822094298117,
+              2475.682976973702,
+              2475.214638157895
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 9786,
+            "samples": [
+              2086.616084201944,
+              1952.6705497649589,
+              2108.6076026977503,
+              2010.9553443695204,
+              1957.992642550587,
+              2089.2218475372943,
+              1970.8213774780104,
+              2039.503678724718,
+              2069.4913141222232,
+              2024.839873288367,
+              2029.855610055176,
+              1989.9516656447963
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 96117,
+            "samples": [
+              348.631958966676,
+              347.3722130320338,
+              359.3857902348171,
+              344.24928992790046,
+              342.32584246282914,
+              339.04424815589283,
+              337.10175099098086,
+              343.15166931968685,
+              338.0146904293716,
+              337.31112082149644,
+              343.2500702269097,
+              334.4951153281926
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 10972,
+            "samples": [
+              1515.5243346700381,
+              1439.6418155304202,
+              1468.8563616478039,
+              1486.700966095498,
+              1502.6203062340114,
+              1438.2405213269979,
+              1483.9781261392711,
+              1496.7265767407778,
+              1459.4915238789467,
+              1426.0390083849647,
+              1464.1587677725122,
+              1416.8679365658268
+            ]
+          }
+        ],
+        "checksum": 23776
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 28381,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 6081,
+            "samples": [
+              1683.2346653510929,
+              1713.718960697252,
+              1645.6518664693288,
+              1648.961190593652,
+              1667.7972372964923,
+              1654.9703996053274,
+              1746.4163788850512,
+              1739.3795428383542,
+              1829.0302581812246,
+              1618.83999342213,
+              1721.4754152277617,
+              1731.1708600559089
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 4021,
+            "samples": [
+              2278.288982840104,
+              2429.1738373538847,
+              2309.8525242476976,
+              2486.031832877405,
+              2259.8545138025274,
+              2412.8119870678884,
+              2283.9054961452366,
+              2418.8945535936236,
+              2311.531211141508,
+              2329.1780651578983,
+              2307.8731658791257,
+              2414.7600099477704
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 4542,
+            "samples": [
+              1992.2758696609587,
+              2005.15565830032,
+              2068.3527080581207,
+              1944.8113166006,
+              2090.3786878027336,
+              1893.4205195948687,
+              1977.515411712915,
+              1997.9909731395906,
+              1886.7421840599031,
+              2127.1283575517455,
+              2125.5962131219676,
+              2072.068031704098
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 29503,
+            "samples": [
+              340.3947734128712,
+              348.2541097515507,
+              348.93909093990516,
+              338.90621292749796,
+              338.7678202216702,
+              327.1517811747969,
+              350.5279124156873,
+              339.36098023929304,
+              339.1688980781679,
+              342.2858014439188,
+              348.0295902111615,
+              333.20763990102887
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 8837,
+            "samples": [
+              1428.5297046509131,
+              1403.290143713909,
+              1450.2800724227486,
+              1676.0495643317836,
+              1756.7896344913477,
+              1496.3222813171842,
+              1856.7198144166553,
+              1582.9749915129548,
+              1380.8749575647894,
+              1502.8054769718137,
+              1585.5824374787842,
+              1484.506393572473
+            ]
+          }
+        ],
+        "checksum": 142368
+      },
+      "vpm": {
+        "pid": 28398,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 6081,
+            "samples": [
+              543.4961355040301,
+              525.7495477717467,
+              500.8427890149648,
+              521.7000493339921,
+              541.0157868771541,
+              517.7807926327922,
+              534.1157704324964,
+              562.9281368196035,
+              528.5862522611384,
+              533.4992599901352,
+              580.9144877487223,
+              517.8357178095692
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 4021,
+            "samples": [
+              1461.3178313852334,
+              1438.2409848296422,
+              1597.1671226063193,
+              1488.2387465804443,
+              1472.9338473016637,
+              1514.5277294205323,
+              1633.113653320073,
+              1446.9865705048485,
+              1484.591146480973,
+              1553.811240984835,
+              1681.0907734394525,
+              1459.5560805769717
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 4542,
+            "samples": [
+              1250.1926464112637,
+              1246.1653456627005,
+              1155.016072214883,
+              1164.721928665785,
+              1245.5416116248298,
+              1084.874504623516,
+              1121.110303830912,
+              1215.55306032584,
+              1294.0975341259361,
+              1197.4258036107485,
+              1122.7340378687861,
+              1126.4678555702237
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 29503,
+            "samples": [
+              120.42982069620064,
+              136.61885232010292,
+              131.84252448903283,
+              121.77575161848029,
+              125.92787174185958,
+              131.69986103108508,
+              115.47978171711485,
+              134.94390400975942,
+              131.6885740433188,
+              119.16584754092891,
+              112.20045419109908,
+              133.0966342405847
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 8837,
+            "samples": [
+              1144.803100599738,
+              1261.1415638791486,
+              1202.4159782731613,
+              1176.4456263437828,
+              1078.9059635623005,
+              1115.211610274985,
+              1055.2600430010184,
+              1046.0704990381284,
+              1076.5200860020198,
+              1024.6548602466944,
+              1119.0024895326521,
+              1008.7181170080466
+            ]
+          }
+        ],
+        "checksum": 33568
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 28399,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 22211,
+            "samples": [
+              536.7347710593847,
+              551.4947548511993,
+              538.0592048984732,
+              565.9320156679125,
+              612.0822565395507,
+              594.8685336094728,
+              577.8218000090047,
+              593.2477150961237,
+              582.4216379271537,
+              536.6166313988563,
+              545.8481383098485,
+              559.6419791994954
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 5865,
+            "samples": [
+              1536.8925831202214,
+              1504.9517476555868,
+              1591.659505541356,
+              1523.934356351249,
+              1552.5503836317027,
+              1455.9889173060442,
+              1567.3841432224938,
+              1507.7578857629942,
+              1551.8542199488513,
+              1548.0463768115958,
+              1508.9017902813425,
+              1490.551236146629
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 9966,
+            "samples": [
+              1170.7806542243634,
+              1240.2711218141692,
+              1291.620710415414,
+              1201.9867549668802,
+              1216.6448926349608,
+              1202.1330523780853,
+              1134.5281958659514,
+              1201.5896046558214,
+              1184.8326309452136,
+              1204.1859321693717,
+              1845.3742725265868,
+              2884.0850893036218
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 95196,
+            "samples": [
+              126.70831757636795,
+              123.24309844951492,
+              126.80417244421996,
+              140.21772973654225,
+              121.48707928904409,
+              119.09727299466476,
+              124.45507164166436,
+              123.93858985671649,
+              127.31977183915367,
+              119.53627253245915,
+              121.60524601874005,
+              118.25251060968812
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 8222,
+            "samples": [
+              1057.624787156394,
+              1041.5145949890607,
+              1081.0276088542887,
+              1090.600340549727,
+              1067.8463877402157,
+              1152.1426660180068,
+              1108.2258574555988,
+              1124.5792994405444,
+              1091.472026270988,
+              1085.6442471417965,
+              1139.812819265383,
+              1086.0699343225624
+            ]
+          }
+        ],
+        "checksum": 252960
+      },
+      "upstream": {
+        "pid": 28428,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 22211,
+            "samples": [
+              1559.7245508982053,
+              1598.1926973121424,
+              1575.9233262797716,
+              1579.9735266309476,
+              2616.4757102336694,
+              1621.6064112376766,
+              1580.1048579532637,
+              1575.2667597136551,
+              1547.4370807257628,
+              1589.161901760389,
+              1545.9963531583446,
+              1598.3015172662235
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 5865,
+            "samples": [
+              2363.576300085259,
+              2306.244671781772,
+              2388.121568627458,
+              2463.718329070737,
+              2346.810230179031,
+              2366.3398124467453,
+              2354.1346973572067,
+              2359.583802216566,
+              2413.3844842284907,
+              2340.274339300947,
+              2456.8840579710154,
+              2415.835464620643
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 9966,
+            "samples": [
+              2033.2923941400957,
+              2121.60927152319,
+              2108.590006020475,
+              2071.760585992371,
+              2098.45564920731,
+              2148.362833634377,
+              2271.6653622315966,
+              2307.888420630128,
+              2160.403672486452,
+              2233.5607064017586,
+              2148.7347983142736,
+              2115.7979129038868
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 95196,
+            "samples": [
+              369.54590529013853,
+              359.3174398083946,
+              346.86681163074013,
+              349.0329530652548,
+              346.74907559141184,
+              342.21938947014655,
+              337.60652758519115,
+              347.43231858481676,
+              342.7936467918815,
+              357.6130614731719,
+              355.76993781251696,
+              344.1863838816759
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 8222,
+            "samples": [
+              1520.5850158112387,
+              1481.8120895159707,
+              1354.1920457309855,
+              1575.037460471923,
+              1563.8480904889245,
+              1568.5508392118534,
+              1572.7063974702153,
+              1472.1581123814228,
+              1464.911213816586,
+              1431.6873023595401,
+              1488.6026514229952,
+              1457.1576258818013
+            ]
+          }
+        ],
+        "checksum": 25440
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 28436,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 4869,
+            "samples": [
+              1518.860957075373,
+              1619.1979872663828,
+              1648.8839597453261,
+              1573.047237625801,
+              1464.3748202916422,
+              1568.7512836311355,
+              1586.5765044156922,
+              1607.397206818647,
+              1685.9297597042548,
+              1793.147258163897,
+              1622.5953994660103,
+              1649.3033477100041
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 3810,
+            "samples": [
+              2430.8506561679847,
+              2325.011023622049,
+              2335.2908136482865,
+              2573.698687664041,
+              2427.7010498687423,
+              2302.6028871391095,
+              2503.729133858246,
+              2617.1477690288903,
+              2409.8863517060527,
+              2572.9330708661346,
+              2377.4606299212646,
+              2437.718635170591
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 4797,
+            "samples": [
+              2047.5470085470129,
+              2244.310819262053,
+              2059.759432978949,
+              2100.757556806327,
+              2062.026683343748,
+              2025.1805294976007,
+              2016.6597873670962,
+              1988.9601834479774,
+              2056.927871586404,
+              1998.002084636238,
+              2006.592662080446,
+              2076.6885553471084
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 30393,
+            "samples": [
+              373.2589083012546,
+              367.4598756292584,
+              365.421314118384,
+              368.39347876155426,
+              357.9730530056216,
+              355.0474780377076,
+              375.24953114203805,
+              351.4145362418998,
+              343.16013555752966,
+              370.6212285723672,
+              373.15608857302175,
+              355.66439640706744
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 8723,
+            "samples": [
+              1613.9277771408827,
+              1466.2433795712454,
+              1427.3519431388263,
+              1526.0135274561512,
+              1524.4182047460881,
+              1513.85704459475,
+              1505.3020749742102,
+              1586.5432763957253,
+              1524.3656998738875,
+              1513.044938667881,
+              1480.5734265734104,
+              1463.9793648973894
+            ]
+          }
+        ],
+        "checksum": 136352
+      },
+      "vpm": {
+        "pid": 28437,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 4869,
+            "samples": [
+              1753.1063873485323,
+              1629.5440542205774,
+              1612.4119942493307,
+              1542.1971657424535,
+              1494.7884575888306,
+              1584.5656192236593,
+              1493.684534812077,
+              1712.4922982131836,
+              1581.2624768946373,
+              1734.904497843499,
+              1579.388375436424,
+              1667.9246251797097
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 3810,
+            "samples": [
+              2581.8787401574755,
+              2539.32650918636,
+              2382.51312335957,
+              2493.2742782152195,
+              2313.8559055118085,
+              2359.8860892388507,
+              2555.6102362204865,
+              2338.353018372708,
+              2386.8658792651026,
+              2432.502099737532,
+              2366.404199475056,
+              2330.1619422572244
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 4797,
+            "samples": [
+              2191.178444861392,
+              2375.4777986241434,
+              2128.2397331665584,
+              2115.184907233702,
+              1927.9672712111792,
+              2013.0723368772346,
+              2264.6793829476683,
+              1928.9399624765622,
+              2281.625599332902,
+              2082.1782363977686,
+              2153.933083176978,
+              2282.4855117781894
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 30393,
+            "samples": [
+              950.4477346757493,
+              2217.1552660151997,
+              388.5351890237932,
+              386.4102260388889,
+              384.9104399039285,
+              396.54966604152185,
+              389.06850261573504,
+              368.84726746289886,
+              354.39081367419993,
+              335.07031224295196,
+              354.51831013720476,
+              343.2958575987869
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 8723,
+            "samples": [
+              1521.5378883411684,
+              1478.6340708471782,
+              1511.5164507623583,
+              1574.1430700447145,
+              1593.636592915283,
+              1531.9795941762936,
+              1477.879284649772,
+              1586.1705835148514,
+              1419.3988306775127,
+              1449.0188008712407,
+              1469.286140089423,
+              1472.123466697246
+            ]
+          }
+        ],
+        "checksum": 26976
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 28438,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 6548,
+            "samples": [
+              1583.536957849725,
+              1547.9344838118507,
+              1588.5447464874776,
+              1661.5316127061683,
+              1670.5164935858297,
+              1743.7257177764277,
+              1648.0094685400086,
+              1685.4065363469776,
+              1518.1606597434354,
+              1577.2435858277322,
+              1600.272449602934,
+              1576.136377519852
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 3888,
+            "samples": [
+              2517.6291152263393,
+              2319.980195473251,
+              2419.0457818929813,
+              2262.2492283950546,
+              2298.3004115226317,
+              2490.8263888888987,
+              2321.952160493819,
+              2360.5216049382852,
+              2554.5480967078274,
+              2389.0069444444416,
+              2432.62397119341,
+              2375.7932098765386
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 4557,
+            "samples": [
+              2111.870089971468,
+              2064.680710994062,
+              2042.3249945139326,
+              2174.155145929351,
+              2258.457537853849,
+              2011.666886109272,
+              2015.836515251252,
+              2037.259600614453,
+              2116.7342549923083,
+              2152.7961378099635,
+              2065.256747860439,
+              1981.4296686416412
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 31343,
+            "samples": [
+              341.7070797307161,
+              357.34722266535147,
+              345.2751491561148,
+              349.9864403535064,
+              339.310212806687,
+              345.44131065947477,
+              345.9743802443863,
+              357.04412468493746,
+              356.9816226908664,
+              339.39929170787707,
+              376.17519063267895,
+              337.413202309927
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 8304,
+            "samples": [
+              1568.9978323699272,
+              1478.0628612716857,
+              1463.6018786127377,
+              1500.4666425818896,
+              1512.524084778441,
+              1469.6732899807164,
+              1536.5486512524224,
+              1464.279263005775,
+              1564.5923651252456,
+              1551.7271194604994,
+              1451.6097061657042,
+              1523.9092003853555
+            ]
+          }
+        ],
+        "checksum": 136672
+      },
+      "upstream": {
+        "pid": 28439,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "ten-move touch gesture",
+            "iterations": 6548,
+            "samples": [
+              1891.391722663411,
+              2386.676695174095,
+              2324.9784667073886,
+              2006.9295968234546,
+              2896.13240684178,
+              3048.723579718994,
+              2376.2727550397017,
+              2344.8381185094663,
+              1843.9091325595593,
+              1812.0291692119708,
+              1830.819945021378,
+              2799.0925473426933
+            ]
+          },
+          {
+            "case": "rotated directional touch gesture",
+            "iterations": 3888,
+            "samples": [
+              3279.128086419743,
+              4895.833333333325,
+              4644.718878600826,
+              6484.942901234584,
+              2987.504372427978,
+              3732.542438271626,
+              4508.905606995911,
+              4565.318672839503,
+              3525.6237139917716,
+              2535.718878600826,
+              2776.5774176954806,
+              2904.374742798343
+            ]
+          },
+          {
+            "case": "mouse drag and cleanup",
+            "iterations": 4557,
+            "samples": [
+              2235.81852095677,
+              2161.262892253655,
+              2466.8459512837794,
+              3927.9861751151952,
+              2429.732718893973,
+              2528.472679394335,
+              4305.8571428571495,
+              2115.015360983091,
+              2077.801404432732,
+              2164.0697827518134,
+              2208.4889181478748,
+              2129.3888523151422
+            ]
+          },
+          {
+            "case": "hook callback rerender with unchanged listeners",
+            "iterations": 31343,
+            "samples": [
+              356.8473662380752,
+              348.60121877293454,
+              354.78815046422307,
+              365.6398557891742,
+              355.04603898797455,
+              351.11243339820624,
+              359.1006285294944,
+              339.9908751555376,
+              346.49018919695055,
+              344.4136808856899,
+              337.5221899626656,
+              349.0013719171681
+            ]
+          },
+          {
+            "case": "actual React server hook initialization",
+            "iterations": 8304,
+            "samples": [
+              1504.7768545279553,
+              1481.635356454719,
+              1546.047085741816,
+              1497.3205684007607,
+              1583.7548169556771,
+              1478.9961464354608,
+              1451.3387524084783,
+              1508.4697736030855,
+              1491.0835741811104,
+              1459.4421965318004,
+              1419.5116811175258,
+              1468.5994701348732
+            ]
+          }
+        ],
+        "checksum": 26272
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "ten-move touch gesture",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1586.9565217391278,
+          "vpmNs": 538.4480090052048,
+          "changePct": -66.07039943254868
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1604.9587047718946,
+          "vpmNs": 535.5998295752488,
+          "changePct": -66.62843548667058
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1698.4768130241723,
+          "vpmNs": 531.0427561256367,
+          "changePct": -68.73417687815801
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1580.0391922921058,
+          "vpmNs": 562.786997433704,
+          "changePct": -64.38145330956702
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1613.297597042515,
+          "vpmNs": 1598.488806736495,
+          "changePct": -0.9179205580648775
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2334.9082926084275,
+          "vpmNs": 1594.408598045206,
+          "changePct": -31.714294600237903
+        }
+      ]
+    },
+    {
+      "case": "rotated directional touch gesture",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2405.8415127751205,
+          "vpmNs": 1421.0461674677426,
+          "changePct": -40.933508715269596
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2429.467653508763,
+          "vpmNs": 1494.7060032894803,
+          "changePct": -38.475986657787
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2320.354638149703,
+          "vpmNs": 1486.4149465307087,
+          "changePct": -35.9401825008954
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2364.958056266002,
+          "vpmNs": 1530.4134697357354,
+          "changePct": -35.287923365876395
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2429.2758530183637,
+          "vpmNs": 2384.6895013123362,
+          "changePct": -1.835376235705355
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3629.083076131699,
+          "vpmNs": 2382.40007716049,
+          "changePct": -34.35256159250202
+        }
+      ]
+    },
+    {
+      "case": "mouse drag and cleanup",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1981.960354896677,
+          "vpmNs": 1100.4323899371,
+          "changePct": -44.47757811005925
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2027.3477416717715,
+          "vpmNs": 1186.6016247700782,
+          "changePct": -41.470247043479844
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2001.5733157199552,
+          "vpmNs": 1181.0738661382668,
+          "changePct": -40.99272522958067
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2134.9860525787835,
+          "vpmNs": 1203.1594922737286,
+          "changePct": -43.64555727094941
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2052.2374400667086,
+          "vpmNs": 2141.086408171768,
+          "changePct": 4.3293707818804705
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2222.1537195523224,
+          "vpmNs": 2064.9687294272508,
+          "changePct": -7.0735426060775985
+        }
+      ]
+    },
+    {
+      "case": "hook callback rerender with unchanged listeners",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 352.53352244345,
+          "vpmNs": 117.06838293013621,
+          "changePct": -66.79226925180848
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 342.738755891258,
+          "vpmNs": 126.13251557996998,
+          "changePct": -63.19864228602483
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 339.8778768260821,
+          "vpmNs": 128.80822289258919,
+          "changePct": -62.10161599941344
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 347.14956510777847,
+          "vpmNs": 123.59084415311571,
+          "changePct": -64.39838715778174
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 366.44059487382117,
+          "vpmNs": 385.6603329714087,
+          "changePct": 5.244980596160631
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 350.05690265768715,
+          "vpmNs": 345.70784545193055,
+          "changePct": -1.2423857872071231
+        }
+      ]
+    },
+    {
+      "case": "actual React server hook initialization",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1466.8402306213898,
+          "vpmNs": 1088.3727738628952,
+          "changePct": -25.80154599374237
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1466.507564710158,
+          "vpmNs": 1167.9388443310227,
+          "changePct": -20.359166741710244
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1499.563879144499,
+          "vpmNs": 1097.058786918643,
+          "changePct": -26.84147690030285
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1485.207370469483,
+          "vpmNs": 1088.3351374361446,
+          "changePct": -26.721671392452407
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1513.4509916313154,
+          "vpmNs": 1495.0752608047683,
+          "changePct": -1.2141609426506994
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1486.3594653179148,
+          "vpmNs": 1506.4953636801652,
+          "changePct": 1.3547125599219445
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "ten-move touch gesture",
+      "upstream_ns": 1596,
+      "vpm_ns": 537,
+      "change_pct": -66.3,
+      "upstream_first_pct": -67.4,
+      "vpm_first_pct": -65.5,
+      "process_range_pct": "-66.1, -66.6, -68.7, -64.4",
+      "control_max_abs_pct": 31.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "rotated directional touch gesture",
+      "upstream_ns": 2385,
+      "vpm_ns": 1491,
+      "change_pct": -37.2,
+      "upstream_first_pct": -38.4,
+      "vpm_first_pct": -36.9,
+      "process_range_pct": "-40.9, -38.5, -35.9, -35.3",
+      "control_max_abs_pct": 34.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "mouse drag and cleanup",
+      "upstream_ns": 2014,
+      "vpm_ns": 1184,
+      "change_pct": -42.6,
+      "upstream_first_pct": -42.7,
+      "vpm_first_pct": -42.6,
+      "process_range_pct": "-44.5, -41.5, -41.0, -43.6",
+      "control_max_abs_pct": 7.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "hook callback rerender with unchanged listeners",
+      "upstream_ns": 345,
+      "vpm_ns": 125,
+      "change_pct": -63.8,
+      "upstream_first_pct": -64.4,
+      "vpm_first_pct": -63.8,
+      "process_range_pct": "-66.8, -63.2, -62.1, -64.4",
+      "control_max_abs_pct": 5.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "actual React server hook initialization",
+      "upstream_ns": 1476,
+      "vpm_ns": 1093,
+      "change_pct": -26.3,
+      "upstream_first_pct": -26.3,
+      "vpm_first_pct": -23.5,
+      "process_range_pct": "-25.8, -20.4, -26.8, -26.7",
+      "control_max_abs_pct": 1.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

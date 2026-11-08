@@ -1,0 +1,16 @@
+{
+  "name": "vpm-swipeable-conformance",
+  "private": true,
+  "description": "Pinned swipe hook controls, React19 gesture lifecycle and app caller contracts",
+  "dependencies": {
+    "react-swipeable": "7.0.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@types/react": "19.2.14",
+    "@testing-library/react": "16.3.0",
+    "jsdom": "27.4.0",
+    "expect": "30.2.0",
+    "jest-mock": "30.2.0",
+    "jest-snapshot": "30.2.0"
+  }
+}

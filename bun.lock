@@ -1199,6 +1199,13 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vreact-swipeable": {
+      "name": "vreact-swipeable",
+      "version": "7.0.2",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vreact-themeable": {
       "name": "vreact-themeable",
       "version": "1.1.0",
@@ -1755,6 +1762,8 @@
     "vreact-remove-scroll-bar": ["vreact-remove-scroll-bar@workspace:packages/vreact-remove-scroll-bar"],
 
     "vreact-style-singleton": ["vreact-style-singleton@workspace:packages/vreact-style-singleton"],
+
+    "vreact-swipeable": ["vreact-swipeable@workspace:packages/vreact-swipeable"],
 
     "vreact-themeable": ["vreact-themeable@workspace:packages/vreact-themeable"],
 

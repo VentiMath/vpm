@@ -108,6 +108,8 @@ jobs:
         run: |
           node scripts/pack-autosuggest-release.cjs --ref "$GITHUB_SHA" --tag autosuggest-10.1.0-ci --out "$RUNNER_TEMP/autosuggest-release"
           node scripts/check-autosuggest-release.cjs "$RUNNER_TEMP/autosuggest-release"
+      - run: npm --prefix scripts/swipeable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/swipeable-conformance/archives.cjs
       - run: npm --prefix scripts/highlight-words-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/highlight-words-conformance/archives.cjs
       - run: npm --prefix scripts/themeable-conformance ci --ignore-scripts --no-audit --no-fund
@@ -649,6 +651,8 @@ jobs:
       - run: node scripts/prosemirror-commands-conformance/archives.cjs
       - run: npm --prefix scripts/autosuggest-widget-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/autosuggest-widget-conformance/archives.cjs
+      - run: npm --prefix scripts/swipeable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/swipeable-conformance/archives.cjs
       - run: npm --prefix scripts/highlight-words-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/highlight-words-conformance/archives.cjs
       - run: npm --prefix scripts/themeable-conformance ci --ignore-scripts --no-audit --no-fund
