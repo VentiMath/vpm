@@ -476,6 +476,9 @@ module.exports = function setup(name) {
     widgets,
     iframe,
     updates,
+    geometry(probe) {
+      return require('./geometry-cases.cjs')({ create, D, set, schema }, probe);
+    },
     positions() {
       return require("./position-cases.cjs")({ create, cases, D, set, schema });
     },

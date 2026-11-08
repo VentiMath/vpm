@@ -118,6 +118,44 @@ const pending = new Map(),
       );
       return r.result.value;
     };
+    if (process.env.VPM_GEOMETRY_PROBE) {
+      fs.writeFileSync(
+        process.env.VPM_GEOMETRY_PROBE,
+        JSON.stringify(
+          await evalPage(
+            "Object.fromEntries(Object.entries(window.domVariants).map(([name,v])=>[name,v.geometry(true)]))",
+          ),
+          null,
+          2,
+        ),
+      );
+    }
+    const geometry = await evalPage(`(() => {
+      const results = Object.fromEntries(Object.entries(window.domVariants).map(([name, v]) => [name, v.geometry()]));
+      let comparisons = 0;
+      for (const variant of ['app', 'vpm']) {
+        if(results[variant].length !== results.upstream.length) throw Error('Geometry fixture count');
+        results.upstream.forEach((expected, index) => {
+          const actual = results[variant][index];
+          if(actual.label !== expected.label || actual.rows.length !== expected.rows.length) throw Error('Geometry fixture '+expected.label);
+          expected.rows.forEach((row, i) => {
+            const found = actual.rows[i];
+            for (const key of ['left','right','top','bottom']) {
+              if (!Number.isFinite(found.rect[key]) || Math.abs(found.rect[key]-row.rect[key]) > 0.05)
+                throw Error(variant+' geometry '+expected.label+' pos '+row.pos+' side '+row.side+' '+key+': expected '+row.rect[key]+', received '+found.rect[key]);
+            }
+            comparisons++;
+          });
+        });
+      }
+      return {fixtures:results.upstream.length, comparisons};
+    })()`);
+    console.log(
+      "Chrome caret rectangle comparisons:",
+      JSON.stringify(geometry),
+    );
+    assert.equal(geometry.fixtures, 19);
+    assert.ok(geometry.comparisons > 15000);
     const sizes = await evalPage(
       `Array.from(document.querySelectorAll('#previews .ProseMirror')).map(root=>Array.from(root.children).map(n=>({tag:n.tagName,width:Math.round(n.getBoundingClientRect().width),height:Math.round(n.getBoundingClientRect().height)})))`,
     );

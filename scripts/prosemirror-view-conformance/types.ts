@@ -61,6 +61,8 @@ const point: { node: globalThis.Node; offset: number } = readonlyView.domAtPos(
 );
 const position: number = readonlyView.posAtDOM(point.node, point.offset, -1);
 const element: globalThis.Node | null = readonlyView.nodeDOM(position);
-// @ts-expect-error Geometry is a separate milestone.
-readonlyView.coordsAtPos(1);
+const rectangle: { left: number; right: number; top: number; bottom: number } =
+  readonlyView.coordsAtPos(1);
+// @ts-expect-error Hit testing is a separate milestone.
+readonlyView.posAtCoords({ left: 0, top: 0 });
 readonlyView.destroy();

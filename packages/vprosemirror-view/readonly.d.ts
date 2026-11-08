@@ -20,6 +20,11 @@ export declare class ReadOnlyRenderer {
     pos: number,
     side?: number,
   ): { node: globalThis.Node; offset: number };
+  /** Fresh caret/edge rectangle in the mount document's viewport; requires browser layout. */
+  coordsAtPos(
+    pos: number,
+    side?: number,
+  ): { left: number; right: number; top: number; bottom: number };
   /** Return the rendered document node immediately after pos, or null. */
   nodeDOM(pos: number): globalThis.Node | null;
   /** Resolve a DOM boundary. bias > 0 chooses the end inside an opaque leaf. */

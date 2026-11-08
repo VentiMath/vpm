@@ -212,6 +212,78 @@ class ReadOnlyRenderer {
     };
     return find(this.root);
   }
+  coordsAtPos(pos, side = 1) {
+    const point = this.domAtPos(pos, side < 0 ? -1 : 1);
+    const range = this.document.createRange();
+    if (typeof range.getClientRects !== "function")
+      throw new Error("Caret geometry requires a browser layout engine");
+    const flat = (rect, edge, horizontal = false) =>
+      horizontal
+        ? {
+            left: rect.left,
+            right: rect.right,
+            top: rect[edge],
+            bottom: rect[edge],
+          }
+        : {
+            left: rect[edge],
+            right: rect[edge],
+            top: rect.top,
+            bottom: rect.bottom,
+          };
+    const measureText = (node, offset, direction) => {
+      const text = node.nodeValue;
+      if (
+        offset === 0 ||
+        offset === text.length ||
+        /[\u0590-\u08ff]/.test(text)
+      ) {
+        range.setStart(node, offset);
+        range.setEnd(node, offset);
+        const rectangles = range.getClientRects();
+        if (rectangles.length) {
+          const rect = rectangles[direction < 0 ? 0 : rectangles.length - 1];
+          return flat(rect, direction < 0 ? "left" : "right");
+        }
+      }
+      const before = (direction < 0 && offset > 0) || offset === text.length;
+      const start = before ? Math.max(0, offset - 1) : offset;
+      range.setStart(node, start);
+      range.setEnd(node, Math.min(text.length, start + 1));
+      const rectangles = range.getClientRects();
+      const rect = rectangles.length
+        ? rectangles[before ? rectangles.length - 1 : 0]
+        : range.getBoundingClientRect();
+      return flat(rect, before ? "right" : "left");
+    };
+    const { node, offset } = point;
+    if (node.nodeType === 3) return measureText(node, offset, side);
+    const before = node.childNodes[offset - 1],
+      after = node.childNodes[offset];
+    if (!this.doc.resolve(pos).parent.inlineContent) {
+      const useBefore = !!before && (side < 0 || !after);
+      const target = useBefore ? before : after || node;
+      return flat(
+        target.getBoundingClientRect(),
+        useBefore ? "bottom" : "top",
+        true,
+      );
+    }
+    const useBefore =
+      !!before && (side < 0 || !after) && !(before.nodeName === "BR" && after);
+    const target = useBefore ? before : after || node;
+    if (target.nodeType === 3)
+      return measureText(
+        target,
+        useBefore ? target.nodeValue.length : 0,
+        useBefore ? -1 : 1,
+      );
+    const rectangles = target.getClientRects();
+    const rect = rectangles.length
+      ? rectangles[useBefore ? rectangles.length - 1 : 0]
+      : target.getBoundingClientRect();
+    return flat(rect, useBefore ? "right" : "left");
+  }
   nodeDOM(pos) {
     this.assertLive();
     if (!Number.isInteger(pos) || pos < 0 || pos >= this.doc.content.size)

@@ -2,6 +2,10 @@
 
 [Node 24 recording](readonly-node24.json) · [Bun recording](readonly-bun.json)
 
+These recordings were made and source-verified at commit `4b69883`, before the
+caret-geometry milestone. They do not measure `coordsAtPos` or claim a geometry
+speedup. Re-run the commands below to measure a later revision.
+
 This measures a 32-paragraph read-only workload in JSDOM against upstream View
 1.42.9 with `editable: false`. Upstream still constructs its full EditorView
 lifecycle and input infrastructure; VPM implements only the private read-only
@@ -9,8 +13,8 @@ renderer. These are not feature-equivalent editors, browser frame timings or
 application latency measurements. Documents and states are prepared outside timing.
 
 Four balanced process pairs and two identical-upstream controls use the repository's
-isolated harness. All samples are retained, and the final runtime, declarations,
-manifest, benchmark and fixture-lock hashes are verified. Both sides use the same
+isolated harness. All samples are retained; runtime, declaration,
+manifest, benchmark and fixture-lock hashes were verified at that commit. Both sides use the same
 upstream model/state inputs. VPM's rendering and decoration implementations are
 included in its measured work.
 

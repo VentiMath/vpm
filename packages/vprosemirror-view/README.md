@@ -33,6 +33,7 @@ renderer.update(nextDoc, nextDecorations);
 const point = renderer.domAtPos(3, 1);
 const position = renderer.posAtDOM(point.node, point.offset);
 const node = renderer.nodeDOM(0);
+const caret = renderer.coordsAtPos(3);
 renderer.destroy();
 ```
 
@@ -55,6 +56,17 @@ at a rendered boundary, not its decoration wrapper. Out-of-range DOM offsets,
 foreign DOM, nodes detached from this renderer and queries after destruction are rejected. Queries do not
 write DOM or alter focus.
 
+`coordsAtPos` reads a fresh caret rectangle from the mount document's viewport.
+It follows wrapping, marks, breaks, images, scrolling and reflow without caching
+layout. Inline positions return a vertical caret; boundaries between block nodes
+return a horizontal edge. The optional side chooses the adjacent content and
+matches the current/app controls. Iframe coordinates stay in that iframe's
+viewport. A browser layout engine is required; JSDOM is rejected rather than
+reported as a zero-size measurement. Native Chrome checks cover 19 scenarios,
+including resizing and updates, with more than 15,000 rectangle comparisons.
+Geometry queries preserve DOM, focus and existing selection. Safari/Firefox and
+vertical writing modes remain unverified.
+
 Boundaries and deliberate behavior:
 
 - The root is always noneditable. Task checkboxes from static schema markup are
@@ -75,7 +87,7 @@ controls in Chrome, except the named disabled-task-control policy. Native checks
 also cover layout, identity, widget focus/position/cleanup, iframe ownership and
 noneditable input. Twenty-one additional lookup fixtures and 24 update snapshots
 compare every valid document and DOM offset against current/app controls, with
-round trips for all three forward sides. Nine original DOM groups and the earlier model checks pass
+round trips for all three forward sides. Ten original DOM groups and the earlier model checks pass
 on Node/Bun. Exact archives, clean installs, CJS/ESM and TS7 are verified.
 [Conformance details](../../scripts/prosemirror-view-conformance/README.md) explain
 these controls; [renderer measurements](bench/results/readonly.md) explain their
@@ -83,10 +95,11 @@ limited performance scope.
 
 ## Remaining work
 
-Next: read-only caret geometry (`coordsAtPos`), starting with the documentation
-editor's caret-visibility caller. Verify wrapped lines, marks, breaks, images,
-scrolling and iframe coordinates in the browser. The position-lookup methods do
-not implement geometry, native selection or input synchronization.
+The package remains unfinished and cannot replace VentiMath's Tiptap editor.
+The read-only rendering and lookup foundation is verified. Coordinate hit testing
+(`posAtCoords`), custom component lifecycle, focus and native selection handling,
+and editing behavior still need implementation. Coordinate hit testing is the
+next bounded engineering step; it does not by itself make the editor usable.
 
 Full `EditorView`, custom node views, DOM selection/input/mutation handling,
 IME/composition, clipboard, accessibility and adoption remain unverified.

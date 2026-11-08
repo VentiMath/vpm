@@ -268,3 +268,18 @@ test("position lookups use a shadow mount's owner document and retained records"
     window.close();
   }
 });
+
+test("caret geometry requires actual layout and retains lookup validation", () => {
+  const { window, doc, host } = fixture();
+  try {
+    const view = new ReadOnlyRenderer(host, { doc });
+    const original = view.dom.innerHTML;
+    assert.throws(() => view.coordsAtPos(2), /browser layout engine/);
+    assert.throws(() => view.coordsAtPos(-1), RangeError);
+    assert.equal(view.dom.innerHTML, original);
+    view.destroy();
+    assert.throws(() => view.coordsAtPos(0), /destroyed/);
+  } finally {
+    window.close();
+  }
+});

@@ -99,5 +99,32 @@ sequence warms queries before changing the document/decorations, exercising cach
 invalidation even when an unchanged node is retained and moves.
 
 No geometry APIs, browser selection/input, mutation reconciliation or custom
-node-view mapping are claimed. Next is the app-used `coordsAtPos` geometry contract;
+node-view mapping are claimed. The app-used `coordsAtPos` geometry contract is covered below;
 the deep-deletion and bulk decoration costs remain editing acceptance follow-ups.
+
+
+## Caret geometry
+
+`geometry-cases.cjs` compares every document position and sides -1/0/1, plus the
+default-side call, against current 1.42.9 and app 1.41.6 in native Chrome. Nineteen
+scenarios cover wrapped text, marks and decoration wrappers, hard breaks and
+empty paragraphs, images and rules, code newlines, lists/task content holes,
+widgets and mixed-direction text. They also cover vertical and horizontal
+container scrolling, window scrolling, resize without a model update, document/
+decoration updates, iframe viewport ownership and an existing focused widget/DOM
+selection. Each query run asserts no DOM mutation or focus/selection changes.
+
+The gate compares more than 15,000 rectangles with a 0.05 CSS-pixel tolerance for
+subpixel rounding. Native comparisons run after both exact archive installs.
+The fixture keeps upstream's zero-size `ProseMirror-separator` images separate
+from its sized content images and applies the documented separator CSS; no
+geometry differences or cases are filtered out. JSDOM verifies the explicit
+missing-layout error, not fabricated rectangle results.
+
+The caller reference remains the pinned documentation `simple-editor.tsx` source:
+it uses `coordsAtPos(selection.from).top` to decide whether the toolbar leaves
+space for the caret and to compute a scroll target. This unit verifies that
+geometry contract, not the complete React editor or its `hasFocus`/selection
+lifecycle. Hit testing, native input/selection, IME, clipboard, custom node views,
+other browser engines and vertical writing remain separate acceptance work.
+No geometry performance comparison is claimed.
