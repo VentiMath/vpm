@@ -1142,6 +1142,18 @@
         "viconv-lite": "workspace:*",
       },
     },
+    "packages/vreact-autosuggest": {
+      "name": "vreact-autosuggest",
+      "version": "10.1.0",
+      "dependencies": {
+        "vreact-themeable": "1.1.0",
+        "vsection-iterator": "2.0.0",
+        "vshallow-equal": "3.1.0",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vreact-fast-compare": {
       "name": "vreact-fast-compare",
       "version": "3.2.2",
@@ -1725,6 +1737,8 @@
     "vrange-parser": ["vrange-parser@workspace:packages/vrange-parser"],
 
     "vraw-body": ["vraw-body@workspace:packages/vraw-body"],
+
+    "vreact-autosuggest": ["vreact-autosuggest@workspace:packages/vreact-autosuggest"],
 
     "vreact-fast-compare": ["vreact-fast-compare@workspace:packages/vreact-fast-compare"],
 

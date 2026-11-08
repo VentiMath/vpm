@@ -1,0 +1,11 @@
+{
+  "name": "vpm-autosuggest-widget-conformance",
+  "private": true,
+  "dependencies": {
+    "react-autosuggest": "10.1.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9"
+  }
+}
