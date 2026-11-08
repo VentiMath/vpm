@@ -64,8 +64,8 @@ existing MUI date-picker generic errors remain in both with `skipLibCheck:false`
 [Benchmarks](bench/results/README.md) measure complete SSR paths,
 not browser frame rate or deployed application latency.
 
-Built and verified, not publicly released or adopted. A release must pin the
-three-package VPM closure. The app's two current Table callers are e-commerce
+Distributed as [Table 9.3.1](../../docs/INSTALLATION.md#tanstack-table), with
+the three-package VPM closure pinned to public URLs. App adoption is separate. The app's two current Table callers are e-commerce
 templates on the checked main. Pending app PR #421 moves them to Math Resources
 and Contest Season. Its exact column/DataTable functions also pass isolated
 Chrome comparisons; this verifies the pending consumer contract, not merge,

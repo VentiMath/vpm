@@ -1,5 +1,48 @@
 # Installing VPM packages
 
+## TanStack Table
+
+[Table 9.3.1](https://github.com/VentiMath/vpm/releases/tag/table-9.3.1) contains
+`vtanstack-react-table` 9.3.1, `vtanstack-table-core` 9.3.1 and `vtanstack-store`
+0.11.2. Keep existing Table imports and merge these pins:
+
+```json
+{
+  "dependencies": {
+    "@tanstack/react-table": "https://github.com/VentiMath/vpm/releases/download/table-9.3.1/vtanstack-react-table-9.3.1.tgz"
+  },
+  "overrides": {
+    "@tanstack/react-table": "https://github.com/VentiMath/vpm/releases/download/table-9.3.1/vtanstack-react-table-9.3.1.tgz"
+  }
+}
+```
+
+The override routes Material React Table's transitive import to the same adapter.
+The archive pins its two internal dependencies to sibling URLs; no registry
+account or additional overrides are needed. React/ReactDOM remain app peers.
+This supports current v9 hooks and the app's v8 `useReactTable` contract. Read
+[the documented flat-table scope](../packages/vtanstack-react-table/README.md)
+before changing other callers. Nested source rows/headers, interactive resizing
+and arbitrary feature plugins are outside scope. Publication does not adopt
+Table in the app or replace Material React Table itself.
+
+The release contains exact source/archive hashes, `consumer-package.json`,
+`release-manifest.json` and `SHA256SUMS`. Fresh/frozen npm and Bun installs verify
+CJS/ESM, React19.1/19.2, TypeScript7 and Chrome caller/lifecycle checks. The 37
+resource/contest scenarios cover the pending app columns, including partial
+pagination, custom grouped sorting and select/multi-select filters. Performance
+limitations remain in each package's benchmark report.
+
+```sh
+node scripts/pack-table-release.cjs --ref COMMIT_SHA --tag table-9.3.1 --out /absolute/path/to/empty-output
+node scripts/check-table-release.cjs /absolute/path/to/output
+node scripts/check-table-release.cjs /absolute/path/to/output --published
+```
+
+Before publication, npm redirects internal URLs to local archives; Bun checks
+exact extracted bytes after a frozen peer install. Published checks install only
+the public adapter URL with its upstream-name override and fresh caches.
+
 ## Stylis RTL middleware
 
 The [Stylis RTL 2.1.1 release](https://github.com/VentiMath/vpm/releases/tag/stylis-plugin-rtl-2.1.1) contains `vstylis-plugin-rtl` and its pinned `vcssjanus` foundation. Keep the existing import and replace the direct dependency value:

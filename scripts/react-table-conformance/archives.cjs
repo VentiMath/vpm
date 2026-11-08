@@ -27,6 +27,11 @@ function run(cmd, args, cwd = temp, env = {}) {
 try {
   console.log(run("bun", [path.join(__dirname, "build.cjs")], root).trim());
   const packages = {};
+  const releaseDir = process.env.VPM_TABLE_RELEASE_DIR;
+  const manifest =
+    releaseDir &&
+    JSON.parse(fs.readFileSync(path.join(releaseDir, "release-manifest.json")));
+  const published = process.env.VPM_TABLE_RELEASE_PUBLISHED === "1";
   for (const name of [
     "vtanstack-store",
     "vtanstack-table-core",
@@ -34,12 +39,17 @@ try {
   ]) {
     const source = path.join(root, "packages", name),
       meta = require(path.join(source, "package.json"));
-    run(
-      "bun",
-      ["pm", "pack", "--ignore-scripts", "--destination", temp, "--quiet"],
-      source,
-    );
-    const archive = path.join(temp, name + "-" + meta.version + ".tgz"),
+    if (!releaseDir)
+      run(
+        "bun",
+        ["pm", "pack", "--ignore-scripts", "--destination", temp, "--quiet"],
+        source,
+      );
+    const item = manifest?.packages.find((p) => p.name === name);
+    const archive = path.join(
+        releaseDir || temp,
+        name + "-" + meta.version + ".tgz",
+      ),
       unpack = path.join(temp, name);
     fs.mkdirSync(unpack);
     run("tar", ["-xzf", archive, "-C", unpack]);
@@ -53,9 +63,10 @@ try {
       if (file === "package.json") {
         const expected = structuredClone(meta);
         for (const name of Object.keys(expected.dependencies ?? {}))
-          expected.dependencies[name] = require(
-            path.join(root, "packages", name, "package.json"),
-          ).version;
+          expected.dependencies[name] = item
+            ? item.dependencies[name]
+            : require(path.join(root, "packages", name, "package.json"))
+                .version;
         assert.deepEqual(
           JSON.parse(fs.readFileSync(path.join(packed, file))),
           expected,
@@ -67,7 +78,7 @@ try {
           file,
         );
     }
-    packages[name] = { archive, packed, files };
+    packages[name] = { archive, packed, files, url: item?.url };
   }
   for (const version of ["19.1.0", "19.2.0"])
     for (const manager of ["npm", "bun"]) {
@@ -76,25 +87,43 @@ try {
       const deps = Object.fromEntries(
         Object.entries(packages).map(([name, p]) => [
           name === "vtanstack-react-table" ? "@tanstack/react-table" : name,
-          "file:" + p.archive,
+          published ? p.url : "file:" + p.archive,
         ]),
       );
+      const extracted = releaseDir && !published && manager === "bun";
+      const installDeps = extracted ? {} : deps;
       fs.writeFileSync(
         path.join(cwd, "package.json"),
         JSON.stringify({
           private: true,
           type: "module",
           dependencies: {
-            ...deps,
+            ...(published
+              ? {
+                  "@tanstack/react-table":
+                    packages["vtanstack-react-table"].url,
+                }
+              : installDeps),
             react: version,
             "react-dom": version,
             "@types/react": "19.1.16",
             "@types/react-dom": "19.1.9",
           },
-          overrides: {
-            "vtanstack-table-core": deps["vtanstack-table-core"],
-            "vtanstack-store": deps["vtanstack-store"],
-          },
+          ...(!published && !extracted
+            ? {
+                overrides: {
+                  "vtanstack-table-core": deps["vtanstack-table-core"],
+                  "vtanstack-store": deps["vtanstack-store"],
+                },
+              }
+            : published
+              ? {
+                  overrides: {
+                    "@tanstack/react-table":
+                      packages["vtanstack-react-table"].url,
+                  },
+                }
+              : {}),
         }),
       );
       run(
@@ -120,6 +149,16 @@ try {
         cwd,
       );
       assert.deepEqual(fs.readFileSync(lock), before);
+      if (extracted)
+        for (const [name, p] of Object.entries(packages)) {
+          const dest = path.join(
+            cwd,
+            "node_modules",
+            name === "vtanstack-react-table" ? "@tanstack/react-table" : name,
+          );
+          fs.mkdirSync(path.dirname(dest), { recursive: true });
+          fs.cpSync(p.packed, dest, { recursive: true });
+        }
       const entries = {};
       for (const [name, p] of Object.entries(packages)) {
         const entry = (entries[name] = path.join(
