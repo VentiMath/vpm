@@ -1,0 +1,12 @@
+{
+  "name": "vpm-match-sorter-conformance",
+  "private": true,
+  "dependencies": {
+    "@tanstack/match-sorter-utils": "9.2.6",
+    "match-sorter-app": "npm:@tanstack/match-sorter-utils@8.19.4",
+    "@tanstack/react-table": "8.20.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "description": "Current/app ranking controls for the Material React Table fuzzy filter"
+}

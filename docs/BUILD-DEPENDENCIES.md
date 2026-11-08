@@ -59,5 +59,24 @@ iframe ownership and SVG/class-token checks. See the reproducible
 [caller audit](../scripts/transition-dom-audit/README.md).
 
 The app still installs the original transition package and DOM helpers. The VPM
-replacement no longer requires them; a consumer release and app dependency
-update are still needed. Other callers can still require shared Babel helpers.
+replacement no longer requires them. Its [consumer release](INSTALLATION.md#react-transitions-for-mui)
+is available; app dependency adoption is still separate. Other callers can still require shared Babel helpers.
+
+## Accent removal in table filters
+
+VentiMath's Material React Table 3.2.1 calls `rankItem` from
+`@tanstack/match-sorter-utils` 8.19.4. Both that version and current 9.2.6 embed
+an accent table despite also declaring `remove-accents`.
+
+[vtanstack-match-sorter-utils](../packages/vtanstack-match-sorter-utils) owns its
+ranking and Unicode normalization, so this path needs no separate
+`vremove-accents`. It handles canonical Latin decompositions, retains the
+established non-decomposing letter expansions, and preserves unrelated scripts.
+Only single-character folds from bounded Unicode ranges are cached; caller
+queries and table records are never retained. The unchanged MRT fuzzy filter
+passes against both controls, with deliberate normalization improvements tested
+separately. See [conformance](../scripts/match-sorter-conformance/README.md).
+
+This closes the ranking dependency, not the whole table stack. Consumer
+publication and application adoption remain separate. Other callers may still
+need their own accent-removal implementation.

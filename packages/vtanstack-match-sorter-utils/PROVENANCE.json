@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "@tanstack/match-sorter-utils",
+    "version": "9.2.6",
+    "appVersion": "8.19.4",
+    "repository": "https://github.com/TanStack/table",
+    "checked": "2026-11-08"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "rankItem, compareItems and rankings, including accessors, thresholds and table fuzzy-filter metadata. Native Unicode normalization replaces the embedded accent table and declared remove-accents dependency."
+  },
+  "changes": [
+    "Zero runtime dependencies; independently written rank evaluator, without copied upstream runtime.",
+    "Does not mutate caller options; frozen objects work.",
+    "Canonically equivalent Latin accent spellings rank equally; stacked marks are fully removed and uppercase \u0141 remains uppercase. Unrelated scripts and sharp-s are preserved.",
+    "Types represent fractional subsequence scores and nullable/readonly accessor results."
+  ],
+  "caller": {
+    "name": "material-react-table",
+    "version": "3.2.1",
+    "path": "src/fns/filterFns.ts",
+    "sha256": "b5f2145cea7bbbdfece3736d3479f3b7d35ff4d8f6464f0e00554a6d11d3bd70",
+    "appCommit": "e14f4023823aed0a5e7e23a3758356414b37abd7",
+    "appCallsite": "src/components/data-table/DataTable.tsx",
+    "appSha256": "6b6bc0cf54f029fa206a79694b0ebde413b62817e9d83b23e28a70dd2823c167"
+  }
+}

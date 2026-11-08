@@ -1319,6 +1319,10 @@
       "name": "vtabbable",
       "version": "6.5.1",
     },
+    "packages/vtanstack-match-sorter-utils": {
+      "name": "vtanstack-match-sorter-utils",
+      "version": "9.2.6",
+    },
     "packages/vtanstack-query-core": {
       "name": "vtanstack-query-core",
       "version": "5.105.3",
@@ -1822,6 +1826,8 @@
     "vstylis-plugin-rtl": ["vstylis-plugin-rtl@workspace:packages/vstylis-plugin-rtl"],
 
     "vtabbable": ["vtabbable@workspace:packages/vtabbable"],
+
+    "vtanstack-match-sorter-utils": ["vtanstack-match-sorter-utils@workspace:packages/vtanstack-match-sorter-utils"],
 
     "vtanstack-query-core": ["vtanstack-query-core@workspace:packages/vtanstack-query-core"],
 

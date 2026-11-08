@@ -1,0 +1,17 @@
+{
+  "upstream": {
+    "name": "@tanstack/match-sorter-utils",
+    "version": "9.2.6",
+    "appVersion": "8.19.4",
+    "repository": "https://github.com/TanStack/table",
+    "checked": "2026-11-08"
+  },
+  "fixtureFiles": {
+    "upstream/MRT-filterFns.ts.txt": "b5f2145cea7bbbdfece3736d3479f3b7d35ff4d8f6464f0e00554a6d11d3bd70",
+    "upstream/LICENSE": "786a8886a39b16002b8cbc66c021c8c84868a03719548e642f8a6809b6c2aa62",
+    "node_modules/@tanstack/match-sorter-utils/dist/index.js": "9abc47f7f34d9ded1f743be9cb70d31709c74e06a8dd53769722a959df59da5e",
+    "node_modules/@tanstack/match-sorter-utils/dist/remove-accents.js": "3a7bc5c52dfe691e59e23c15ee5bc42d8473dfd0d63f4b5812b5a957b04ec5bb",
+    "node_modules/match-sorter-app/build/lib/index.js": "d79e4bd0b5ba3cd9dd5bfedeaa979588385d5a29e06af8b1ebf02cd850aeea1f",
+    "node_modules/match-sorter-app/build/lib/remove-accents.js": "5c71009925c49e1d3c5b0c34e50c66e58c79e5ca547828eaf2f71b2973b2259f"
+  }
+}
