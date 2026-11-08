@@ -42,3 +42,20 @@ implemented observer, but it is not a prerequisite for the current Popper port.
 A future VPM Popper package should omit those unused rectangle dependencies.
 This conclusion is specific to the inspected Popper caller, not a claim that
 no application anywhere needs rectangle observation.
+
+## DOM helpers in transitions
+
+The November 7 caller audit found that MUI navigation `Collapse` uses
+`react-transition-group`'s `Transition`, which calls no `dom-helpers` functions.
+The calendar and notes date pickers do use `CSSTransition`, through MUI's
+`PickersSlideTransition`, but only for `addClass` and `removeClass`.
+
+Do not build a broad `vdom-helpers` package for this path. The future independent
+transition caller can own two native class-list operations, eliminating the
+helper dependency and its own Babel runtime edge. Current 6.0.1 and app-pinned
+5.2.1 controls match these operations in unchanged MUI browser callers, including
+iframe ownership and SVG/class-token checks. See the reproducible
+[caller audit](../scripts/transition-dom-audit/README.md).
+
+The app still installs the original transition package and DOM helpers. Removal
+is planned, not completed; other callers can still require shared Babel helpers.

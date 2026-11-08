@@ -1,0 +1,31 @@
+{
+  "checked": "2026-11-07",
+  "versions": {
+    "dom-helpers": "6.0.1",
+    "dom-helpers-app": "5.2.1",
+    "react-transition-group": "4.4.5",
+    "@mui/material": "7.2.0",
+    "@mui/x-date-pickers": "8.7.0"
+  },
+  "upstreamRepository": "https://github.com/react-bootstrap/dom-helpers",
+  "upstreamCommit": "b28d9f380d3e0b698c086c4e12c2e9614842adfa",
+  "fixtureFiles": {
+    "node_modules/dom-helpers/cjs/addClass.js": "76c136158040cda11ca3d3e89445c7682b13e0cee58bc5f9f1206ae0e4ababc0",
+    "node_modules/dom-helpers/cjs/removeClass.js": "ee67aec93e7d17b55cb5c54c84c7e540b8f912f5290cd73cf536d9bef78011df",
+    "node_modules/dom-helpers-app/cjs/addClass.js": "b1ac573b41b34e6935e134a118d378ac8ba433199d607901f337a2c82efaad38",
+    "node_modules/dom-helpers-app/cjs/removeClass.js": "69e01ac049fc8291447dac26ee0eb0454a49aeff99ed01d94d3d5b617516756e",
+    "node_modules/react-transition-group/esm/Transition.js": "c3b1e364895a73f6c2378cc0e70f8b87fb69c042fcab243118bff7048873ecd4",
+    "node_modules/react-transition-group/esm/CSSTransition.js": "2f277afcbbe99334d273b0704ef253c0c8cf90b6bfe382648032e93f753437a4",
+    "node_modules/@mui/material/esm/Collapse/Collapse.js": "4a1a9fb514d44f3f630d5cf8d42fda5c10d88593436724b3a59ea9b0c2c15bbd",
+    "node_modules/@mui/x-date-pickers/esm/DateCalendar/PickersSlideTransition.js": "76d98add5a3e0e4c066d0f69dc1eb506501f7d9058ece160f60c64c49919bf42"
+  },
+  "application": {
+    "commit": "4ffa8d0b9f157067599c46b7f3dc65e26dddbfab",
+    "files": {
+      "src/@fuse/core/FuseNavigation/vertical/shared/FuseNavVerticalItemBase.tsx": "b6f514fc2d480dfe19d1dbd04c23e468ecaf9dbb592a9943534daa145b2c5021",
+      "src/@fuse/core/FuseNavigation/vertical/types/FuseNavVerticalCollapse.tsx": "8d6ce46357e6f321666e9716baa03631d6863c2cf561d91282b50610a69ae8b8",
+      "src/app/(control-panel)/apps/calendar/components/dialogs/event/EventDialog.tsx": "79dbe3de1209d78a3d8f21ffa5bc71b8dddae2e779bb2c6479614f664c879ae5",
+      "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteFormReminder.tsx": "38a272c4272e7fbf18a5424d20ca1e2d2d3a80d64cf58624efa78adf78a7bafc"
+    }
+  }
+}
