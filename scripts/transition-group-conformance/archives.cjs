@@ -26,13 +26,11 @@ function run(command, args, cwd = temp, env = {}) {
   return r.stdout;
 }
 try {
-  run(
-    "bun",
-    ["pm", "pack", "--ignore-scripts", "--destination", temp, "--quiet"],
-    pkg,
-  );
-  const archive = path.join(temp, "vreact-transition-group-4.4.5.tgz"),
-    unpack = path.join(temp, "unpack");
+  const supplied = process.env.VPM_TRANSITION_ARCHIVE;
+  if (!supplied) run("bun", ["pm", "pack", "--ignore-scripts", "--destination", temp, "--quiet"], pkg);
+  const archive = supplied || path.join(temp, "vreact-transition-group-4.4.5.tgz"), unpack = path.join(temp, "unpack");
+  const installName = supplied ? "react-transition-group" : "vreact-transition-group";
+  const location = process.env.VPM_TRANSITION_URL || "file:" + archive;
   assert.doesNotMatch(
     run("tar", ["-tzf", archive]),
     /\/(?:test|bench|node_modules)\//,
@@ -51,10 +49,11 @@ try {
       fs.writeFileSync(
         path.join(cwd, "package.json"),
         JSON.stringify({
+          ...(supplied ? { overrides: { [installName]: location } } : {}),
           private: true,
           type: "module",
           dependencies: {
-            "vreact-transition-group": "file:" + archive,
+            [installName]: location,
             react: version,
             "react-dom": version,
             "@types/react": "19.1.16",
@@ -84,9 +83,11 @@ try {
         cwd,
       );
       assert.deepEqual(fs.readFileSync(lock), before);
-      const entry = path.join(cwd, "node_modules/vreact-transition-group");
+      const entry = path.join(cwd, "node_modules", installName);
+      for (const file of fs.readdirSync(path.join(unpack, "package"))) assert.deepEqual(fs.readFileSync(path.join(entry, file)), fs.readFileSync(path.join(unpack, "package", file)), file);
+      assert.equal(JSON.parse(fs.readFileSync(path.join(entry,"package.json"))).name, "vreact-transition-group");
       for (const name of [
-        "react-transition-group",
+        ...(supplied ? [] : ["react-transition-group"]),
         "dom-helpers",
         "@babel/runtime",
         "prop-types",
@@ -98,24 +99,21 @@ try {
         );
       fs.writeFileSync(
         path.join(cwd, "consumer.mjs"),
-        `import assert from 'node:assert/strict';import {createRequire} from 'node:module';import {Transition,CSSTransition,TransitionGroup} from 'vreact-transition-group';import Sub from 'vreact-transition-group/Transition';import React from 'react';import {renderToStaticMarkup} from 'react-dom/server';const c=createRequire(import.meta.url);assert.equal(Transition,c('vreact-transition-group').Transition);assert.equal(Sub,Transition);assert.equal(c('vreact-transition-group/CSSTransition'),CSSTransition);assert.equal(c('vreact-transition-group/TransitionGroup'),TransitionGroup);assert.equal(renderToStaticMarkup(React.createElement(Transition,{nodeRef:React.createRef(),in:true,timeout:0},phase=>React.createElement('span',null,phase))),'<span>entered</span>');`,
+        `import assert from 'node:assert/strict';import {createRequire} from 'node:module';import {Transition,CSSTransition,TransitionGroup} from 'vreact-transition-group';import Sub from 'vreact-transition-group/Transition';import React from 'react';import {renderToStaticMarkup} from 'react-dom/server';const c=createRequire(import.meta.url);assert.equal(Transition,c('vreact-transition-group').Transition);assert.equal(Sub,Transition);assert.equal(c('vreact-transition-group/CSSTransition'),CSSTransition);assert.equal(c('vreact-transition-group/TransitionGroup'),TransitionGroup);assert.equal(renderToStaticMarkup(React.createElement(Transition,{nodeRef:React.createRef(),in:true,timeout:0},phase=>React.createElement('span',null,phase))),'<span>entered</span>');`.replaceAll('vreact-transition-group', installName),
       );
       for (const runtime of ["node", "bun"]) {
         run(runtime, ["consumer.mjs"], cwd);
         for (const file of ["ssr.cjs", "run.cjs", "improvements.cjs"])
           console.log(
             run(runtime, [path.join(__dirname, file)], cwd, {
-              VPM_TRANSITION_ENTRY: entry,
+              VPM_TRANSITION_ENTRY: path.join(unpack, "package"),
             }).trim(),
           );
       }
-      fs.copyFileSync(
-        path.join(__dirname, "public-types.tsx"),
-        path.join(cwd, "consumer.tsx"),
-      );
+      fs.writeFileSync(path.join(cwd, "consumer.tsx"), fs.readFileSync(path.join(__dirname, "public-types.tsx"), "utf8").replaceAll("vreact-transition-group", installName));
       fs.writeFileSync(
         path.join(cwd, "consumer.cts"),
-        `import api = require('vreact-transition-group');import * as React from 'react';React.createElement(api.Transition,{nodeRef:React.createRef<HTMLDivElement>(),in:true},React.createElement('div'));`,
+        `import api = require('vreact-transition-group');import * as React from 'react';React.createElement(api.Transition,{nodeRef:React.createRef<HTMLDivElement>(),in:true},React.createElement('div'));`.replaceAll('vreact-transition-group',installName),
       );
       for (const mode of ["NodeNext", "Bundler"]) {
         fs.writeFileSync(

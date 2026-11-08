@@ -511,3 +511,33 @@ module identity, Node 24/Bun query and mutation hooks with unchanged React
 Devtools 5.91.3, TypeScript 7 consumers and a Chrome production bundle. The public
 check also repeats frozen installs and requires unchanged locks. Set `CHROME_BIN`
 if Chrome is not installed at a standard location.
+
+## React transitions for MUI
+
+[react-transition-group-4.4.5](https://github.com/VentiMath/vpm/releases/tag/react-transition-group-4.4.5)
+provides the independent explicit-ref transition components used by MUI. Merge
+these entries into the app manifest and regenerate its lockfile:
+
+```json
+{
+  "dependencies": {
+    "react-transition-group": "https://github.com/VentiMath/vpm/releases/download/react-transition-group-4.4.5/vreact-transition-group-4.4.5.tgz"
+  },
+  "overrides": {
+    "react-transition-group": "https://github.com/VentiMath/vpm/releases/download/react-transition-group-4.4.5/vreact-transition-group-4.4.5.tgz"
+  }
+}
+```
+
+The override sends MUI's transitive imports to the same package. Preserve existing
+React peers and imports; no separate `vreact-transition-group` dependency or Vite
+alias is needed. The package adds no runtime dependencies. Unrelated callers may
+still require shared Babel helpers or prop-types.
+
+Verified with MUI7.2.0 navigation Collapse, Fade/Grow/Slide/Zoom, button ripples,
+and MUI X8.7.0 picker animation, including reduced motion and iframe ownership.
+React19.1/19.2, Node24/Bun, TypeScript7 and exact fresh/frozen npm/Bun installs
+are checked. Live transitions require `nodeRef`; legacy `findDOMNode`,
+`SwitchTransition` and `ReplaceTransition` are not implemented. Review the
+[package contract](../packages/vreact-transition-group/README.md) before using
+other callers. App adoption and production deployment remain separate.

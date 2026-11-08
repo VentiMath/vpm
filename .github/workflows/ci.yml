@@ -111,7 +111,8 @@ jobs:
       - name: Verify independent MUI transitions
         run: |
           npm --prefix scripts/transition-group-conformance ci --ignore-scripts --no-audit --no-fund
-          node scripts/transition-group-conformance/archives.cjs
+          node scripts/pack-transition-release.cjs --ref "$GITHUB_SHA" --tag react-transition-group-4.4.5-ci --out "$RUNNER_TEMP/transition-release"
+          node scripts/check-transition-release.cjs "$RUNNER_TEMP/transition-release"
       - name: Verify DOM-helper elimination in MUI callers
         run: |
           npm --prefix scripts/transition-dom-audit ci --ignore-scripts --no-audit --no-fund

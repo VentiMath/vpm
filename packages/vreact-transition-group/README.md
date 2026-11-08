@@ -55,5 +55,5 @@ prop-types or DOM-helper package is installed by this package.
 [Conformance](../../scripts/transition-group-conformance/README.md) covers
 upstream comparisons, cleanup improvements, packed installations and actual MUI
 callers. [Measurements](bench/results/README.md) distinguish server rendering
-and simulated DOM work from browser animation latency. App adoption, full-page
-acceptance and a public consumer release are separate from these package checks.
+and simulated DOM work from browser animation latency. The [consumer release](../../docs/INSTALLATION.md#react-transitions-for-mui)
+is available separately from app adoption, full-page acceptance and deployment.

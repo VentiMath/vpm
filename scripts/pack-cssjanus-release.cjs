@@ -10,8 +10,9 @@ const { execFileSync } = require("node:child_process"),
 const root = path.resolve(__dirname, "..");
 
 const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
-function build({ ref, tag, out }) {
-  assert.match(tag, /^cssjanus-\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?$/);
+function build({ ref, tag, out, packageName = "vcssjanus", tagPrefix = "cssjanus", installName = "cssjanus", direct = false }) {
+  assert.match(tagPrefix, /^[a-z-]+$/);
+  assert.match(tag, new RegExp("^" + tagPrefix + "-\\d+\\.\\d+\\.\\d+(?:-[a-z0-9.-]+)?$"));
   assert.ok(out, "An output directory is required");
   out = path.resolve(out);
   fs.mkdirSync(out, { recursive: true });
@@ -45,7 +46,7 @@ function build({ ref, tag, out }) {
       visit(child);
     names.push(name);
   }
-  visit("vcssjanus");
+  visit(packageName);
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), "vpm-cssjanus-release-"));
   try {
     fs.writeFileSync(
@@ -169,7 +170,7 @@ function build({ ref, tag, out }) {
       });
     }
     const aliases = {
-      cssjanus: "vcssjanus",
+      [installName]: packageName,
     };
     manifest.installNames = Object.fromEntries(
       manifest.packages.map((p) => [
@@ -181,6 +182,7 @@ function build({ ref, tag, out }) {
       path.join(out, "consumer-package.json"),
       JSON.stringify(
         {
+          ...(direct ? { dependencies: { [installName]: manifest.packages.find(p => p.name === packageName).url } } : {}),
           overrides: Object.fromEntries(
             Object.entries(aliases).map(([name, pkg]) => [
               name,
