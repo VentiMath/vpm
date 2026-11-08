@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "section-iterator",
+    "version": "2.0.0",
+    "appVersion": "2.0.0",
+    "repository": "https://github.com/moroshko/section-iterator",
+    "commit": "7f4a37aa714535d0ef4e5888b0a21e42db934573",
+    "checked": "2026-11-07"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Flat/grouped next, prev and isLast, including empty sections and the unhighlighted wraparound sentinel; actual react-autosuggest 10.1.0 keyboard caller verified. Application adoption is separate."
+  },
+  "changes": [
+    "No copied upstream runtime; zero dependencies.",
+    "Counts are validated and snapshotted, so caller mutations cannot invalidate traversal. Invalid cursors are rejected explicitly.",
+    "Only occupied section indices are indexed; binary search crosses long empty-section gaps without scanning them on each navigation. Flat lists allocate no section index."
+  ],
+  "caller": {
+    "name": "react-autosuggest",
+    "version": "10.1.0",
+    "path": "dist/Autowhatever.js",
+    "sha256": "d9136e54dc5c9652fe05d667ab083b55423346431fcf90830212078bd29d377f",
+    "appCallsite": "src/@fuse/core/FuseSearch/FuseSearch.tsx",
+    "keyboardCallbacks": 301,
+    "trustedChromeKeyEvents": 260
+  }
+}

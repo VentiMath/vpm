@@ -1,0 +1,12 @@
+{
+  "name": "vpm-section-iterator-conformance",
+  "private": true,
+  "description": "Pinned section traversal and actual autosuggest keyboard controls",
+  "dependencies": {
+    "section-iterator": "2.0.0",
+    "react-autosuggest": "10.1.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "chai": "4.5.0"
+  }
+}
