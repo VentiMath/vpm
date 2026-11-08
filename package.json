@@ -4,7 +4,7 @@
   "workspaces": ["packages/*"],
   "scripts": {
     "test": "node --test packages/*/test/*.test.cjs scripts/test/*.test.cjs",
-    "test:bun": "bun test",
+    "test:bun": "bun test packages/*/test/*.test.cjs scripts/test/*.test.cjs",
     "typecheck": "tsc --noEmit && node scripts/check-public-types.cjs",
     "test:types": "node scripts/check-platform-types.cjs",
     "check:docs": "node scripts/check-docs.cjs"
