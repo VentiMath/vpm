@@ -1,10 +1,26 @@
-# vlx measurements
+# VLX 0.2.3 versus KaTeX and MathJax
 
-These are historical core-engine measurements for r5 (commit 1289a87). r6
-changed only the React mounting layer; [r5/r6 React measurements](react.md) cover
-that change. **r7 changes the layout output abstraction**, so the tables below
-do not describe current performance. See the [r6/r7 measurements](react-r7.md)
-for native React gains and the remaining uncached string-output regression.
+Refreshed November 8, 2026 against current KaTeX 0.19.1 (HTML + MathML) and
+MathJax 4.1.3 (SVG). This replaces the historical r5 snapshot; the runtime code
+is unchanged. Each engine receives the same five formulas in display mode.
+Renderers and fonts are initialized before timing; MathJax reuses its document
+and resets input state. VLX uses uncached `renderMath`, producing SVG, HTML and
+MathML together before the requested representation is selected. No renderer
+startup, React/browser DOM work, PNG rasterization or network time is measured.
+
+On Node, four HTML cases take 23.1–43.7% less time; the fraction direction is
+unestablished. On Bun, four HTML cases take 9.1–26.2% less time; the array
+direction is unestablished. All five SVG cases take less time beyond the
+controls: 88.7–97.2% on Node and 77.5–95.3% on Bun. These are five small
+workloads, not a corpus-wide speed estimate or proof of equal typography.
+The benchmark validates output shape; semantic/corpus and visual checks are
+separate. MathJax speech/exploration is not enabled in this raw SVG comparison.
+
+VLX has useful performance and React/image integration strengths for its
+documented scope. KaTeX’s broader function catalog and MathJax’s speech, Braille
+and interactive exploration remain separate capabilities. See the
+[scope and acceptance limits](../../README.md) before treating this as a
+general replacement recommendation.
 
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
@@ -29,41 +45,41 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-04T06:59:47.852Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-08T19:26:19.896Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| HTML / fraction / uncached | 35628 | 23587 | -32.6% | -33.8% | -31.7% | 2.1% | lower time in every pair, beyond control spread |
-| SVG / fraction / uncached | 271507 | 20022 | -92.5% | -94.5% | -91.2% | 8.6% | lower time in every pair, beyond control spread |
-| HTML / styled text / uncached | 59235 | 32799 | -43.4% | -50% | -43.4% | 1.6% | lower time in every pair, beyond control spread |
-| SVG / styled text / uncached | 1080371 | 31562 | -97% | -97.5% | -96.6% | 25.3% | lower time in every pair, beyond control spread |
-| HTML / array / uncached | 57064 | 28324 | -50.1% | -53.2% | -50.1% | 1.8% | lower time in every pair, beyond control spread |
-| SVG / array / uncached | 425147 | 26139 | -93.7% | -95.4% | -93.1% | 54.5% | lower time in every pair, beyond control spread |
-| HTML / contest relations / uncached | 67343 | 31858 | -52.7% | -51.2% | -54.7% | 4.8% | lower time in every pair, beyond control spread |
-| SVG / contest relations / uncached | 601789 | 28714 | -95.2% | -95.4% | -95.1% | 4.8% | lower time in every pair, beyond control spread |
-| HTML / continued fraction and operators / uncached | 65591 | 32091 | -51.5% | -51.5% | -49.2% | 3.1% | lower time in every pair, beyond control spread |
-| SVG / continued fraction and operators / uncached | 1497610 | 32955 | -97.7% | -98.3% | -97.6% | 5.9% | lower time in every pair, beyond control spread |
+| HTML / fraction / uncached | 35951 | 30816 | -15.4% | -15.4% | -9.5% | 2.4% | unestablished at this precision |
+| SVG / fraction / uncached | 244033 | 27571 | -88.7% | -90.1% | -88.1% | 2.3% | lower time in every pair, beyond control spread |
+| HTML / styled text / uncached | 55672 | 43947 | -23.1% | -25.1% | -18.7% | 6.1% | lower time in every pair, beyond control spread |
+| SVG / styled text / uncached | 942179 | 38433 | -95.9% | -96% | -95.9% | 1.4% | lower time in every pair, beyond control spread |
+| HTML / array / uncached | 55764 | 39160 | -29% | -24.2% | -29.8% | 5.9% | lower time in every pair, beyond control spread |
+| SVG / array / uncached | 366667 | 37517 | -89.5% | -90.1% | -89.5% | 3.3% | lower time in every pair, beyond control spread |
+| HTML / contest relations / uncached | 66097 | 37180 | -43.7% | -43.7% | -42.4% | 4.2% | lower time in every pair, beyond control spread |
+| SVG / contest relations / uncached | 588039 | 37077 | -93.4% | -93.8% | -93.4% | 2.5% | lower time in every pair, beyond control spread |
+| HTML / continued fraction and operators / uncached | 64018 | 42411 | -34.3% | -34.3% | -32.3% | 2.2% | lower time in every pair, beyond control spread |
+| SVG / continued fraction and operators / uncached | 1452424 | 39517 | -97.2% | -97.4% | -97% | 3.6% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-04T07:02:40.384Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-08T19:27:25.978Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| HTML / fraction / uncached | 40901 | 30575 | -25.3% | -25% | -26.1% | 5% | lower time in every pair, beyond control spread |
-| SVG / fraction / uncached | 170353 | 34152 | -80.9% | -85.2% | -79% | 17.9% | lower time in every pair, beyond control spread |
-| HTML / styled text / uncached | 56720 | 42778 | -25.5% | -20.4% | -25.9% | 7.3% | lower time in every pair, beyond control spread |
-| SVG / styled text / uncached | 800413 | 42310 | -94.6% | -95.4% | -94.2% | 12.5% | lower time in every pair, beyond control spread |
-| HTML / array / uncached | 52643 | 40021 | -23.6% | -20.5% | -26.5% | 17.5% | unestablished at this precision |
-| SVG / array / uncached | 316049 | 36323 | -88.4% | -89.2% | -88.4% | 7% | lower time in every pair, beyond control spread |
-| HTML / contest relations / uncached | 66530 | 39450 | -40% | -40.5% | -38.3% | 9.6% | lower time in every pair, beyond control spread |
-| SVG / contest relations / uncached | 453671 | 37912 | -91.5% | -92.5% | -91.1% | 38.4% | lower time in every pair, beyond control spread |
-| HTML / continued fraction and operators / uncached | 67197 | 46614 | -31.9% | -28.7% | -35.5% | 14.8% | lower time in every pair, beyond control spread |
-| SVG / continued fraction and operators / uncached | 1115230 | 42329 | -96.2% | -96.5% | -96.1% | 5% | lower time in every pair, beyond control spread |
+| HTML / fraction / uncached | 35891 | 32627 | -9.1% | -9.1% | -9.2% | 2.7% | lower time in every pair, beyond control spread |
+| SVG / fraction / uncached | 146506 | 32834 | -77.5% | -79.7% | -75.4% | 7.8% | lower time in every pair, beyond control spread |
+| HTML / styled text / uncached | 51720 | 45836 | -11.4% | -14.7% | -8.4% | 1.9% | lower time in every pair, beyond control spread |
+| SVG / styled text / uncached | 689823 | 40903 | -94% | -95.2% | -92.9% | 6.5% | lower time in every pair, beyond control spread |
+| HTML / array / uncached | 50614 | 43279 | -13.3% | -15% | -12.2% | 9.4% | unestablished at this precision |
+| SVG / array / uncached | 278336 | 40775 | -85.2% | -86.8% | -84.1% | 15.3% | lower time in every pair, beyond control spread |
+| HTML / contest relations / uncached | 59552 | 44811 | -26.2% | -27.2% | -26.2% | 5.3% | lower time in every pair, beyond control spread |
+| SVG / contest relations / uncached | 396100 | 41526 | -89.6% | -91% | -88.1% | 4.4% | lower time in every pair, beyond control spread |
+| HTML / continued fraction and operators / uncached | 61482 | 49976 | -20% | -20.8% | -17.9% | 3.8% | lower time in every pair, beyond control spread |
+| SVG / continued fraction and operators / uncached | 991502 | 47568 | -95.3% | -95.9% | -94.8% | 4.1% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

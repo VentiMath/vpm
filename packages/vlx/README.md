@@ -6,7 +6,7 @@ and problem pictures. One layout produces SVG, accessible MathML and browser
 HTML; a Node entry composes complete pages and exports PNGs. There is no engine
 selector or KaTeX/MathJax fallback.
 
-**Adopted in VentiMath frontend source.** Application main `15a83287` pins r7
+**Adopted in VentiMath frontend source.** Application main `e14f4023` pins 0.2.3
 and imports the shared `vlx/react` components. Deployed-version verification is
 separate; see the [adoption record](../../docs/ADOPTION.md).
 
@@ -43,8 +43,8 @@ and hides unused soft hyphens without silently dropping unknown characters.
 now use display sizing for standalone paragraph formulas, bold choice labels,
 and ordinary paragraph spacing for break-only math. It retains the document-scoped
 equation references introduced in **0.2.0**. The install above selects
-that API; VentiMath's verified frontend source still pins r7 until its dependency
-and lockfile are updated. Release availability and application adoption are separate.
+that API; VentiMath main `e14f4023` pins it in both frontend and Functions
+manifests. Release availability, source adoption and deployment are separate.
 
 The release retains r7's native React SVG and MathML rendering. It uses
 no `dangerouslySetInnerHTML`, HTML parser or markup insertion in the React path.
@@ -53,6 +53,20 @@ strings for the HTML, SVG, MathML and image APIs. Unchanged and changed formulas
 retain their outer DOM node; lazy loading, strict bare-TeX input, per-formula
 fallbacks and provider defaults remain supported. Existing release assets are
 unchanged.
+
+VLX has a useful independent scope for an npm release: native React rendering,
+a shared browser/image layout, document references and verified VentiMath corpus
+coverage. It is not established as universally superior to KaTeX or MathJax.
+The [current performance comparison](bench/results/README.md) measures five
+uncached formulas on each runtime, not typography, complete TeX coverage or
+end-to-end application latency. [KaTeX's supported-function catalog](https://katex.org/docs/supported)
+is broader than the VentiMath corpus contract: direct 0.19.1/0.2.3 probes
+render `\genfrac`, `\mathchoice`, `\raisebox` and `\xleftrightarrow` in KaTeX
+and reject them in VLX. [MathJax's speech, Braille and
+interactive expression exploration](https://docs.mathjax.org/en/latest/basic/accessibility.html)
+provide capabilities VLX does not currently supply. Reader/browser acceptance
+and broader typography evaluation remain explicit work before making a general
+replacement recommendation.
 
 An **npm registry mirror is planned** for VentiLaTeX. It will distribute the same
 implementation and versioned API, with the same licenses and provenance. GitHub
@@ -341,8 +355,7 @@ checks pass. Actual VoiceOver/NVDA behavior, other browser engines and interacti
 equation exploration still need validation.
 Arbitrary TeX packages, advanced macro programming, cross-document references
 and every Unicode glyph are outside this verified scope. VentiMath frontend source
-uses r7; release 0.2.3 is available for its next dependency update. The Discord
-problem-image migration uses 0.2.2 on an unmerged application branch;
-main still uses MathJax for that caller. Browser and assistive-technology acceptance remains open, as recorded
+uses 0.2.3, as does the Discord problem-picture caller on main `e14f4023`.
+The latter calls `renderProblemPng` from `vlx/problem` in Functions. Browser and assistive-technology acceptance remains open, as recorded
 in [ACCESSIBILITY.md](ACCESSIBILITY.md), without labeling the implementation
 or frontend adoption unfinished.
