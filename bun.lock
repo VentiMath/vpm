@@ -36,6 +36,10 @@
         "vretry": "0.1.0",
       },
     },
+    "packages/vautosuggest-highlight": {
+      "name": "vautosuggest-highlight",
+      "version": "3.3.4",
+    },
     "packages/vbody-parser": {
       "name": "vbody-parser",
       "version": "0.1.0",
@@ -1421,6 +1425,8 @@
     "varia-hidden": ["varia-hidden@workspace:packages/varia-hidden"],
 
     "vasync-retry": ["vasync-retry@workspace:packages/vasync-retry"],
+
+    "vautosuggest-highlight": ["vautosuggest-highlight@workspace:packages/vautosuggest-highlight"],
 
     "vbody-parser": ["vbody-parser@workspace:packages/vbody-parser"],
 

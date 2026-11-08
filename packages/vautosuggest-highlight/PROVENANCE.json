@@ -1,0 +1,30 @@
+{
+  "upstream": {
+    "name": "autosuggest-highlight",
+    "version": "3.3.4",
+    "appVersion": "3.3.4",
+    "repository": "https://github.com/moroshko/autosuggest-highlight",
+    "commit": "421036daa7c1145b6ee7ae77a53eb4735caf8c9a",
+    "checked": "2026-11-07"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "match/parse APIs and all three search options used by navigation search. Modern Node 24, Bun and browser bundles; no IE11 compatibility build."
+  },
+  "appContract": {
+    "commit": "21197a2c9ffd91ff1008ead966d2cde0f8705ef5",
+    "path": "src/@fuse/core/FuseSearch/FuseSearch.tsx",
+    "sha256": "d1c18b93a723ecce4f3cd62201ed53f9a454723a3695a6883185df672325d9c9",
+    "scope": "Navigation suggestion filtering, ten-result cap, match/parse highlight parts; NavigationSearch is mounted by all three theme-layout toolbars. Application dependency cutover is separate.",
+    "verifiedQueries": 12,
+    "verifiedRenderOutputs": 40,
+    "verification": "Unchanged app getSuggestions/renderSuggestion functions transpiled with Bun; React element output compared against upstream. Synthetic labels, no live app/UI or data writes."
+  },
+  "changes": [
+    "Zero runtime dependencies. Native Unicode decomposition plus a small independently specified non-decomposing Latin transliteration table replaces remove-accents. No upstream runtime implementation copied.",
+    "UTF-16 source boundaries preserve emoji and decomposed accent clusters. Wider Latin canonical decomposition support is deliberate; Greek accents remain distinct.",
+    "Invalid parse ranges are rejected instead of silently losing or duplicating text. Valid adjacent ranges retain separate parts.",
+    "Independent ASCII index search avoids per-query regular expressions; non-ASCII matching retains case-insensitive literal regex behavior."
+  ]
+}

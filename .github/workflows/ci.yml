@@ -102,6 +102,8 @@ jobs:
       - run: npm --prefix scripts/prosemirror-commands-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-commands-conformance/run.cjs
       - run: node scripts/prosemirror-commands-conformance/archives.cjs
+      - run: npm --prefix scripts/autosuggest-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/autosuggest-conformance/archives.cjs
       - run: npm --prefix scripts/keyname-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/keyname-conformance/run.cjs
       - run: node scripts/keyname-conformance/archives.cjs
@@ -633,6 +635,8 @@ jobs:
       - run: npm --prefix scripts/prosemirror-commands-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-commands-conformance/run.cjs
       - run: node scripts/prosemirror-commands-conformance/archives.cjs
+      - run: npm --prefix scripts/autosuggest-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/autosuggest-conformance/archives.cjs
       - run: npm --prefix scripts/keyname-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/keyname-conformance/run.cjs
       - run: node scripts/keyname-conformance/archives.cjs

@@ -1,0 +1,62 @@
+{
+  "name": "vautosuggest-highlight",
+  "version": "3.3.4",
+  "description": "Dependency-free autocomplete matching with source-safe Unicode highlight ranges",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./match": {
+      "import": {
+        "types": "./match.d.mts",
+        "default": "./match.mjs"
+      },
+      "require": {
+        "types": "./match.d.cts",
+        "default": "./match.cjs"
+      }
+    },
+    "./parse": {
+      "import": {
+        "types": "./parse.d.mts",
+        "default": "./parse.mjs"
+      },
+      "require": {
+        "types": "./parse.d.cts",
+        "default": "./parse.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.d.cts",
+    "*.d.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
+  "sideEffects": false,
+  "license": "MIT",
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vautosuggest-highlight"
+  }
+}
