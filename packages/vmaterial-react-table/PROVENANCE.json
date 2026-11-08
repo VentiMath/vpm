@@ -1,0 +1,27 @@
+{
+  "upstream": {
+    "name": "material-react-table",
+    "version": "3.2.1",
+    "repository": "https://github.com/KevinVandy/material-react-table",
+    "checked": "2026-11-08"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for application scope",
+    "targetScope": "Flat resource/contest DataTable controls and custom toolbar exports: sorting, filters and filter modes, facets, grouping/expansion, selection/actions, pagination, column ordering/hiding/pinning, density, fullscreen and MUI prop callbacks. Editing, nested source/header trees, resizing, virtualization and non-app export families are excluded."
+  },
+  "changes": [
+    "Independent MUI rendering and state composition over VPM Table; no upstream MRT runtime ships.",
+    "Grouped and custom cells render through React components, preserving hooks and stable row identity.",
+    "Column movement is available through keyboard and menu controls as well as drag and drop."
+  ],
+  "caller": {
+    "appRef": "77b3abac5a33d1d8297f21d5d52dd82cdfba83d2",
+    "appCallsite": "src/components/data-table/DataTable.tsx",
+    "routes": [
+      "/apps/math-resources",
+      "/apps/contest-season"
+    ],
+    "note": "Pending PR421 at inspected revision; no claim of app adoption."
+  }
+}

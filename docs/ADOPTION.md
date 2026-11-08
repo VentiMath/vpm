@@ -72,4 +72,11 @@ column functions and DataTable options pass isolated upstream/VPM browser checks
 for undefined-last sorting, custom sort/filter callbacks, select/multi-select,
 facets, grouping and page selection. Synthetic equivalents are permanent VPM
 regressions. This is verification of a pending caller migration, not proof of a
-merged PR, a Table release or application adoption.
+merged PR or application adoption. The three-package Table release is now public.
+
+`vmaterial-react-table` independently implements that same flat DataTable and
+custom toolbar contract. Its exact archives and 37 caller snapshots are verified
+against MRT 3.2.1, including actual Chrome control actions. It is built but has
+not been released or adopted. Its independent markup and the omitted editing,
+nested-header/data, resizing and virtualization APIs are documented in its
+[package README](../packages/vmaterial-react-table/README.md).
