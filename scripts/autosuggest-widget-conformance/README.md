@@ -32,10 +32,17 @@ authenticated application acceptance, pixel-identical styling or app adoption.
 
 `archives.cjs` packs the four-package VPM closure, byte-checks the extracted
 files, installs them with fresh and frozen npm/Bun lockfiles using local archive
-overrides for the unreleased internal dependencies, verifies CJS/ESM
+overrides for workspace-version internal dependencies, verifies CJS/ESM
 and TypeScript 7 NodeNext/Bundler consumers, reruns Node/Bun contracts and Chrome,
 and rejects installation of the old upstream runtime dependencies.
 
 [Package scope](../../packages/vreact-autosuggest/README.md) and
 [controlled benchmarks](../../packages/vreact-autosuggest/bench/results/README.md)
 document differences and limits.
+
+
+The [release checker](../check-autosuggest-release.cjs) separately verifies the
+consumer recipe from [the committed release packer](../pack-autosuggest-release.cjs).
+Public installs use the original `react-autosuggest` and `autosuggest-highlight`
+names, resolve all three helpers transitively from pinned sibling URLs, and need
+no overrides. React 19.1 and 19.2 consumers repeat the browser and type checks.

@@ -62,3 +62,8 @@ unchanged upstream tests on both implementations, 6,000 deterministic match/pars
 comparisons, 3,000 Unicode reconstruction cases, the navigation-search pipeline,
 packed npm/Bun consumers, browser bundling and TypeScript 7.
 [Benchmarks](bench/results/README.md) record isolated process controls and limits.
+
+
+The [Autosuggest release installation recipe](../../docs/INSTALLATION.md#navigation-autosuggest)
+provides this package in the `autosuggest-10.1.0` set with pinned internal URLs.
+Release availability and application adoption are separate milestones.

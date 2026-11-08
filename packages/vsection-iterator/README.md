@@ -53,3 +53,8 @@ VentiMath session or proof of application adoption.
 [Conformance](../../scripts/section-iterator-conformance/README.md) includes exact
 npm/Bun archive installs, CJS/ESM identity and TypeScript 7 consumers.
 [Measurements](bench/results/README.md) retain all isolated process samples and controls.
+
+
+The [Autosuggest release installation recipe](../../docs/INSTALLATION.md#navigation-autosuggest)
+provides this package in the `autosuggest-10.1.0` set with pinned internal URLs.
+Release availability and application adoption are separate milestones.

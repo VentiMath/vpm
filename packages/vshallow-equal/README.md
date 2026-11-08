@@ -28,3 +28,8 @@ are also checked. [Evidence](../../scripts/shallow-equal-conformance/README.md),
 [measurements](bench/results/README.md), [provenance](PROVENANCE.json).
 
 MIT; original test attribution is retained.
+
+
+The [Autosuggest release installation recipe](../../docs/INSTALLATION.md#navigation-autosuggest)
+provides this package in the `autosuggest-10.1.0` set with pinned internal URLs.
+Release availability and application adoption are separate milestones.

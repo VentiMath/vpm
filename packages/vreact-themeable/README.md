@@ -71,3 +71,8 @@ through 12 synthetic autosuggest render cases. No authenticated app run is claim
 [Conformance](../../scripts/themeable-conformance/README.md) covers Node 24/Bun,
 exact archives, fresh/frozen npm/Bun installs, CJS/ESM and TypeScript 7.
 [Measurements](bench/results/README.md) retain all isolated process/control samples.
+
+
+The [Autosuggest release installation recipe](../../docs/INSTALLATION.md#navigation-autosuggest)
+provides this package in the `autosuggest-10.1.0` set with pinned internal URLs.
+Release availability and application adoption are separate milestones.

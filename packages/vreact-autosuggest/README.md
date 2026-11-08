@@ -58,3 +58,8 @@ speech checks remain separate. The current app still uses upstream Autosuggest.
 server output, real Chrome interaction and exact packed installs.
 [Benchmarks](bench/results/README.md) retain comparison/control samples; they
 measure rendering, not network latency or a complete application page.
+
+
+The [Autosuggest release installation recipe](../../docs/INSTALLATION.md#navigation-autosuggest)
+provides this package in the `autosuggest-10.1.0` set with pinned internal URLs.
+Release availability and application adoption are separate milestones.

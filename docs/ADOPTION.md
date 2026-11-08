@@ -72,3 +72,14 @@ API, not adoption of this new feature.
 `vhello-pangea-dnd` is packaged for the app-used Scrumboard API in `dnd-18.0.1`.
 The verified app main still depends on upstream `@hello-pangea/dnd` 18.0.1;
 release availability is not adoption. See [installation](INSTALLATION.md).
+
+
+## Navigation search release
+
+`autosuggest-10.1.0` makes `vreact-autosuggest`, `vautosuggest-highlight`,
+`vreact-themeable`, `vsection-iterator` and `vshallow-equal` consumable together.
+The checked application main `21197a2c` still pins upstream react-autosuggest
+10.1.0 and autosuggest-highlight 3.3.4. These five replacements are available,
+not adopted. The [installation recipe](INSTALLATION.md#navigation-autosuggest)
+changes two dependency URLs while retaining the existing imports; its internal
+VPM dependencies are pinned in the release archives.

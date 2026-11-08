@@ -1,5 +1,61 @@
 # Installing VPM packages
 
+## Navigation Autosuggest
+
+The [Autosuggest 10.1.0 release](https://github.com/VentiMath/vpm/releases/tag/autosuggest-10.1.0)
+contains `vreact-autosuggest` and the four helpers used by navigation search.
+Keep the application's existing imports and replace these two dependency values:
+
+```json
+{
+  "dependencies": {
+    "react-autosuggest": "https://github.com/VentiMath/vpm/releases/download/autosuggest-10.1.0/vreact-autosuggest-10.1.0.tgz",
+    "autosuggest-highlight": "https://github.com/VentiMath/vpm/releases/download/autosuggest-10.1.0/vautosuggest-highlight-3.3.4.tgz"
+  }
+}
+```
+
+These dependency keys install the VPM archives under the existing import names.
+No import changes, Vite aliases, TypeScript paths, registry authentication or
+dependency overrides are needed. The widget archive pins `vreact-themeable`,
+`vsection-iterator` and `vshallow-equal` to sibling release URLs. Do not also add
+a duplicate `vreact-autosuggest` dependency. Keep the app's React/ReactDOM peers;
+the release checks cover React 19.1 and 19.2 on Node 24 and Bun.
+
+| Package | API baseline |
+| --- | --- |
+| `vreact-autosuggest` | react-autosuggest 10.1.0 |
+| `vautosuggest-highlight` | autosuggest-highlight 3.3.4 |
+| `vreact-themeable` | react-themeable 1.1.0 |
+| `vsection-iterator` | section-iterator 2.0.0 |
+| `vshallow-equal` | shallow-equal 3.1.0, including the app's 1.2.1 array/object entry points |
+
+The existing navigation caller was checked with its real MUI input and popup
+using synthetic navigation. The [widget contract](../packages/vreact-autosuggest/README.md)
+documents composition, grouped-list and ref corrections; the
+[highlight contract](../packages/vautosuggest-highlight/README.md) documents
+Unicode behavior. Publication does not adopt or deploy the packages. Commit the
+app's dependency and lockfile changes together, then verify its search before
+merging the separate consumer change.
+
+`consumer-package.json`, `release-manifest.json` and `SHA256SUMS` record the root
+pins, source commit, dependency URLs and archive/source hashes. Existing assets
+are immutable; a correction uses a new revision tag.
+
+```sh
+node scripts/pack-autosuggest-release.cjs --ref COMMIT_SHA --tag autosuggest-10.1.0 --out /absolute/path/to/empty-output
+node scripts/check-autosuggest-release.cjs /absolute/path/to/output
+# After publication:
+node scripts/check-autosuggest-release.cjs /absolute/path/to/output --published
+```
+
+Before publication, npm redirects internal URLs to local archives and Bun tests
+exact extracted archives after installing peers. After publication, both install
+only the two public root URLs using fresh caches and no overrides. The checks
+verify all five packages and frozen locks, unchanged upstream-name imports,
+Node/Bun module identity and server rendering, TypeScript 7, and Chrome keyboard,
+mouse, composition, focus and custom-popup behavior.
+
 ## Radix Dropdown Menu
 
 The [Dropdown Menu 2.2.1 release](https://github.com/VentiMath/vpm/releases/tag/radix-dropdown-2.2.1)
