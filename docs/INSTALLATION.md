@@ -1,5 +1,19 @@
 # Installing VPM packages
 
+## CSS direction conversion
+
+The [CSSJanus 2.3.1 release](https://github.com/VentiMath/vpm/releases/tag/cssjanus-2.3.1) provides the independent `vcssjanus` implementation. VentiMath uses it transitively through `stylis-plugin-rtl`; keep that wrapper and its imports, and merge this override:
+
+```json
+{
+  "overrides": {
+    "cssjanus": "https://github.com/VentiMath/vpm/releases/download/cssjanus-2.3.1/vcssjanus-2.3.1.tgz"
+  }
+}
+```
+
+The package has no dependencies. The release includes its exact consumer fragment, source/archive hashes and a manifest. Fresh and frozen npm/Bun installs verify that the unchanged wrapper resolves the VPM archive. The [contract](../packages/vcssjanus/README.md) documents intentional corrections and [benchmarks](../packages/vcssjanus/bench/results/README.md) retain the whole-stylesheet regression. Verify LTR and RTL in the app before treating this as adopted; publication alone is not adoption.
+
 ## Navigation Autosuggest
 
 The [Autosuggest 10.1.0 release](https://github.com/VentiMath/vpm/releases/tag/autosuggest-10.1.0)

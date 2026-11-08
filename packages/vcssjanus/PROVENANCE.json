@@ -1,0 +1,30 @@
+{
+  "upstream": {
+    "name": "cssjanus",
+    "version": "2.3.1",
+    "appVersion": "2.3.0",
+    "repository": "https://github.com/wikimedia/node-cssjanus",
+    "commit": "05cc64b593e893d2c6f9a651834a48968ffd896d",
+    "checked": "2026-11-07"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "CSS direction conversion through the unchanged stylis-plugin-rtl2.1.1 middleware and RootThemeProvider layer order. App adoption is separate."
+  },
+  "changes": [
+    "No copied upstream runtime; no dependencies.",
+    "Source-span scanning preserves selectors, strings, comments, escaped identifiers and custom properties.",
+    "Flip every shadow/background layer without altering background-size or function percentages.",
+    "Nested @noflip annotations protect their entire rule.",
+    "Exact decimal reflection supports more than100decimal places without toFixed errors."
+  ],
+  "caller": {
+    "name": "stylis-plugin-rtl",
+    "version": "2.1.1",
+    "sha256": "07ad132c83a8f4bac888f890621647a10608f235d9638d5b29d43af459fd111a",
+    "appCallsite": "src/contexts/RootThemeProvider.tsx",
+    "appCommit": "6b3e61f358544d738aa7c78c03ccedf74214a469",
+    "appCallsiteSha256": "fb58862be1968256ed7d8d68890610cab15af1e2514fdfeab71eac1b8815050c"
+  }
+}
