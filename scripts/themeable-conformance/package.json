@@ -1,0 +1,12 @@
+{
+  "name": "vpm-themeable-conformance",
+  "private": true,
+  "description": "Pinned theme composition and actual autosuggest controls",
+  "dependencies": {
+    "react-themeable": "1.1.0",
+    "react-autosuggest": "10.1.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "chai": "4.5.0"
+  }
+}

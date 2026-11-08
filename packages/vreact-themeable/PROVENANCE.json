@@ -1,0 +1,36 @@
+{
+  "upstream": {
+    "name": "react-themeable",
+    "version": "1.1.0",
+    "appVersion": "1.1.0",
+    "repository": "https://github.com/markdalgleish/react-themeable",
+    "commit": "0f15ce521684303b00e749148c5947a03093c522",
+    "checked": "2026-11-07"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Class, style and decorated-theme composition used by react-autosuggest10.1.0 in VentiMath navigation search. Public keys, selected value ordering and native property-copy behavior checked; application adoption is separate."
+  },
+  "changes": [
+    "Zero dependencies and no copied upstream runtime. Native object spread replaces the legacy object-assign shim.",
+    "Preserves enumerable symbols, getter order, later-wins shallow merging and exact key values. A source __proto__ is retained as an own data property instead of changing the output prototype.",
+    "Theme lookups remain live and include inherited entries for compatibility. Falsy resolved values are skipped; supplied property names are not prefiltered."
+  ],
+  "appContract": {
+    "commit": "21197a2c9ffd91ff1008ead966d2cde0f8705ef5",
+    "path": "src/@fuse/core/FuseSearch/FuseSearch.tsx",
+    "sha256": "d1c18b93a723ecce4f3cd62201ed53f9a454723a3695a6883185df672325d9c9",
+    "actualThemeConfigurations": 2,
+    "snapshots": 12,
+    "scope": "Actual FuseSearch theme maps passed through unchanged public Autowhatever component; synthetic suggestions and server-rendered output, not authenticated app/visual validation."
+  },
+  "caller": {
+    "name": "react-autosuggest",
+    "version": "10.1.0",
+    "source": "dist/Autowhatever.js",
+    "sha256": "d9136e54dc5c9652fe05d667ab083b55423346431fcf90830212078bd29d377f",
+    "renderSnapshots": 24,
+    "chromeSnapshots": 9
+  }
+}

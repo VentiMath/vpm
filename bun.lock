@@ -1183,6 +1183,10 @@
         "react": "^19.0.0",
       },
     },
+    "packages/vreact-themeable": {
+      "name": "vreact-themeable",
+      "version": "1.1.0",
+    },
     "packages/vread-package-up": {
       "name": "vread-package-up",
       "version": "0.1.0",
@@ -1731,6 +1735,8 @@
     "vreact-remove-scroll-bar": ["vreact-remove-scroll-bar@workspace:packages/vreact-remove-scroll-bar"],
 
     "vreact-style-singleton": ["vreact-style-singleton@workspace:packages/vreact-style-singleton"],
+
+    "vreact-themeable": ["vreact-themeable@workspace:packages/vreact-themeable"],
 
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
 

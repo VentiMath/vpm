@@ -102,6 +102,8 @@ jobs:
       - run: npm --prefix scripts/prosemirror-commands-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-commands-conformance/run.cjs
       - run: node scripts/prosemirror-commands-conformance/archives.cjs
+      - run: npm --prefix scripts/themeable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/themeable-conformance/archives.cjs
       - run: npm --prefix scripts/section-iterator-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/section-iterator-conformance/archives.cjs
       - run: npm --prefix scripts/autosuggest-conformance ci --ignore-scripts --no-audit --no-fund
@@ -637,6 +639,8 @@ jobs:
       - run: npm --prefix scripts/prosemirror-commands-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/prosemirror-commands-conformance/run.cjs
       - run: node scripts/prosemirror-commands-conformance/archives.cjs
+      - run: npm --prefix scripts/themeable-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/themeable-conformance/archives.cjs
       - run: npm --prefix scripts/section-iterator-conformance ci --ignore-scripts --no-audit --no-fund
       - run: node scripts/section-iterator-conformance/archives.cjs
       - run: npm --prefix scripts/autosuggest-conformance ci --ignore-scripts --no-audit --no-fund
