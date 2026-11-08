@@ -531,6 +531,10 @@
         "react-dom": "^19.0.0",
       },
     },
+    "packages/vhighlight-words": {
+      "name": "vhighlight-words",
+      "version": "2.0.0",
+    },
     "packages/vhoist-non-react-statics": {
       "name": "vhoist-non-react-statics",
       "version": "3.3.2",
@@ -1571,6 +1575,8 @@
     "vgtoken": ["vgtoken@workspace:packages/vgtoken"],
 
     "vhello-pangea-dnd": ["vhello-pangea-dnd@workspace:packages/vhello-pangea-dnd"],
+
+    "vhighlight-words": ["vhighlight-words@workspace:packages/vhighlight-words"],
 
     "vhoist-non-react-statics": ["vhoist-non-react-statics@workspace:packages/vhoist-non-react-statics"],
 

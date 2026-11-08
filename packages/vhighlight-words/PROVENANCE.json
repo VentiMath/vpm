@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "highlight-words",
+    "version": "2.0.0",
+    "appVersion": "2.0.0",
+    "repository": "https://github.com/tricinel/highlight-words",
+    "commit": "f0f76f758be494f7b6084f1627e34dd8c55672ca",
+    "checked": "2026-11-07"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Text/regex highlighting and contextual clipping, with the Material React Table3.2.1 cell caller used by VentiMath. Adoption is separate."
+  },
+  "changes": [
+    "No copied upstream runtime; zero dependencies.",
+    "Deterministic per-list source-range keys preserve unchanged React chunk nodes.",
+    "Match ranges correct adjacent matches and nested/absent regex captures; zero-width matches never consume or duplicate text.",
+    "Bounded one-pattern cache avoids recompiling repeated table filters. No source text or chunks retained."
+  ],
+  "caller": {
+    "name": "material-react-table",
+    "version": "3.2.1",
+    "path": "src/components/body/MRT_TableBodyCellValue.tsx",
+    "sha256": "4ef63cc2e58220e4e1468e85b9fe452f3a3205f656c5482fceaa1fadb409b569",
+    "appCallsite": "src/components/data-table/DataTable.tsx",
+    "appCommit": "21197a2c9ffd91ff1008ead966d2cde0f8705ef5"
+  }
+}
