@@ -35,6 +35,17 @@ try {
     run("tar", ["-tzf", archive]),
     /\/(?:test|bench|node_modules)\//,
   );
+  const unpack = path.join(temp, "unpacked");
+  fs.mkdirSync(unpack);
+  run("tar", ["-xzf", archive, "-C", unpack]);
+  const packed = path.join(unpack, "package");
+  const shippedFiles = fs.readdirSync(packed).sort();
+  for (const file of shippedFiles)
+    assert.deepEqual(
+      fs.readFileSync(path.join(packed, file)),
+      fs.readFileSync(path.join(pkg, file)),
+      file,
+    );
   for (const manager of ["npm", "bun"]) {
     const cwd = path.join(temp, manager);
     fs.mkdirSync(cwd);
@@ -69,7 +80,15 @@ try {
     );
     assert.deepEqual(fs.readFileSync(lock), before);
     const entry = path.join(cwd, "node_modules/@tanstack/match-sorter-utils");
-    for (const file of fs.readdirSync(entry))
+    // Bun may add its own cache marker on Linux. It is not archive content.
+    assert.deepEqual(
+      fs
+        .readdirSync(entry)
+        .filter((file) => !(manager === "bun" && file === ".bun-tag"))
+        .sort(),
+      shippedFiles,
+    );
+    for (const file of shippedFiles)
       assert.deepEqual(
         fs.readFileSync(path.join(entry, file)),
         fs.readFileSync(path.join(pkg, file)),
