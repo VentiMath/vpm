@@ -1,0 +1,15 @@
+{
+  "controls": {
+    "current": "@tanstack/table-core 9.3.1",
+    "app": "@tanstack/table-core 8.20.5",
+    "adapter": "@tanstack/react-table 8.20.6",
+    "caller": "material-react-table 3.2.1"
+  },
+  "fixtureFiles": {
+    "node_modules/@tanstack/table-core/dist": "8b57ba81723d9d333339018ae37cb5d98a8b3654a109146cd4dbf585f2a8499f",
+    "node_modules/@tanstack/store/dist": "c0222e980c3d8279f9d2f8db27f04a1bc7a0a8b4784c73df4a924066f8724884",
+    "node_modules/table-app/build/lib": "31b0e699d183454f386736fbbf0180276143ebb8a69648bfb8566d22e5118fb5",
+    "node_modules/@tanstack/react-table/build/lib": "39d20317982b061d34d31849ea6ef8464b33551e94b047d94a31e51196e26b05",
+    "node_modules/material-react-table/dist": "b53e6137f58d3261254ef20ff07ff7b2c840f7c6c068d8ca7bc3b18c14ddf0d6"
+  }
+}

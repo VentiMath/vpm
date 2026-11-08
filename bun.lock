@@ -1356,6 +1356,13 @@
       "name": "vtanstack-store",
       "version": "0.11.2",
     },
+    "packages/vtanstack-table-core": {
+      "name": "vtanstack-table-core",
+      "version": "9.3.1",
+      "dependencies": {
+        "vtanstack-store": "workspace:*",
+      },
+    },
     "packages/vtanstack-virtual-core": {
       "name": "vtanstack-virtual-core",
       "version": "3.19.11",
@@ -1855,6 +1862,8 @@
     "vtanstack-react-virtual": ["vtanstack-react-virtual@workspace:packages/vtanstack-react-virtual"],
 
     "vtanstack-store": ["vtanstack-store@workspace:packages/vtanstack-store"],
+
+    "vtanstack-table-core": ["vtanstack-table-core@workspace:packages/vtanstack-table-core"],
 
     "vtanstack-virtual-core": ["vtanstack-virtual-core@workspace:packages/vtanstack-virtual-core"],
 

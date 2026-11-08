@@ -83,3 +83,25 @@ The checked application main `21197a2c` still pins upstream react-autosuggest
 not adopted. The [installation recipe](INSTALLATION.md#navigation-autosuggest)
 changes two dependency URLs while retaining the existing imports; its internal
 VPM dependencies are pinned in the release archives.
+
+## Where VentiMath uses TanStack
+
+Checked November 8, 2026 against application main `e14f4023`:
+
+| Library | Actual application use | VPM status |
+| --- | --- | --- |
+| Query | The root `QueryClientProvider` supplies fetching, caching and mutation state. Callers include calendar, notifications, campus-quest, contest data and many other screens. | Main pins `tanstack-5.105.3-r3` under the original `@tanstack/react-query` name. This is committed adoption, not a deployment check. |
+| Table | `src/components/data-table/DataTable.tsx` wraps Material React Table 3.2.1. Its only current screen callers are `ProductsTable` and `OrdersTable`; both use `mock/ecommerce/*` endpoints. | Main still resolves upstream react-table 8.20.6 and table-core 8.20.5. This is a template-screen dependency, not the contest/problem-table engine. |
+| Virtual | Installed through Material React Table. No app source sets `enableRowVirtualization` or `enableColumnVirtualization`. | The independent VPM core and React adapter are built and tested, but not released or adopted. |
+| Store | A dependency of current Table 9.3.1; the installed Table 8 stack has no direct Store dependency. | `vtanstack-store` is built and tested as an upgrade prerequisite, not an app-used replacement yet. |
+
+The shared DataTable exposes sorting, filtering, pagination, grouping, selection,
+column ordering/pinning and faceted values. These are library capabilities of
+the two template callers; their presence does not establish use by a math or
+contest workflow. Query adoption must not be conflated with adoption of the
+Table/Virtual/Store packages.
+
+`vtanstack-table-core` now independently covers that flat-table runtime contract,
+with current 9.3.1 and app 8.20.5 controls. The unchanged MRT runtime passes
+synthetic browser comparisons, but its React adapter/type integration and
+consumer release are still separate work. The app remains on upstream Table.
