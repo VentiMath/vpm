@@ -53,7 +53,8 @@ unchanged MRT/React Table code. The browser fixture uses synthetic product-like
 rows and application options. VentiMath's current Table callers are the products
 and orders template screens; this is a reusable engine, not evidence of a
 migration of math or contest features. No release or application adoption is
-claimed. A consumer release still needs the React adapter/type integration.
+claimed. The [React adapter](../vtanstack-react-table/README.md) and its type
+integration are now verified; the combined consumer release remains pending.
 
 [Benchmarks](bench/results/README.md) report isolated comparisons with current
 and application controls. They measure core operations, not application page speed.

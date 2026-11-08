@@ -1,0 +1,36 @@
+# React Table conformance
+
+Controls are React Table 9.3.1, app React Table 8.20.6/core8.20.5 and Material
+React Table3.2.1. No upstream runtime is copied into VPM. Public declarations and
+black-box behavior supply the contract; installed control hashes are pinned.
+
+`build.cjs` swaps only the React adapter import in the unchanged MRT fixture.
+Eight production Chrome DOM snapshots exercise sorting, filtering, paging,
+selection, pinning, grouping, data replacement and cleanup. Current API checks
+use development React StrictMode: selective state/source subscriptions, source
+replacement, controlled state, focused DOM preservation, SSR hydration, render
+values and removal of controls. Separate regressions distinguish committed
+callbacks and quiet disposal from the upstream control's behavior. Source atoms
+share the reactive implementation of their table; this is not a generic bridge
+between incompatible signal engines.
+
+`ssr.cjs` compares current, legacy and app Table8 markup on Node24 and Bun.
+`types.cjs` checks selected-state inference and the unchanged MRT declarations.
+With strict library checking, both upstream8 and VPM have exactly the same three
+MUI8 DatePicker/DateTimePicker/TimePicker generic-arity diagnostics. They are
+compared explicitly, not hidden with skipLibCheck or counted as VPM errors.
+
+`archives.cjs` verifies exact bytes, clean and frozen npm/Bun installs, CJS/ESM,
+React19.1/19.2, strict public consumers and native browser behavior from packed
+files. Advanced component registry factories and worker/static plugin APIs are
+outside scope, as are the core's unsupported data/header/resizing features.
+No authenticated app data, new app feature, release or deployment is implied.
+
+```sh
+npm --prefix scripts/react-table-conformance ci --ignore-scripts
+bun scripts/react-table-conformance/build.cjs
+node scripts/react-table-conformance/ssr.cjs
+node scripts/react-table-conformance/types.cjs
+node scripts/react-table-conformance/browser.cjs
+node scripts/react-table-conformance/archives.cjs
+```

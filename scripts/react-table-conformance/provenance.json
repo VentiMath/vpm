@@ -1,0 +1,19 @@
+{
+  "controls": {
+    "current": "@tanstack/react-table 9.3.1",
+    "app": "@tanstack/react-table 8.20.6 and table-core 8.20.5",
+    "caller": "material-react-table 3.2.1"
+  },
+  "fixtureFiles": {
+    "node_modules/@tanstack/react-table": "6323262486e053569c64580a75c7435e68ebf279a4a1f2b108fae511c4b8c6bc",
+    "node_modules/@tanstack/react-table/node_modules/@tanstack/react-store": "d39756acb618c1988ad0aec8202592b92162ebef1f45ddbbefbec42409e8fe53",
+    "node_modules/@tanstack/store": "569a92912c7001845156a53ca899200b66ab1ea2d6471db59a6ccec72467bfca",
+    "node_modules/@tanstack/table-core": "648ff68a80d0c50de8f06ab88ccd7eb2212bb3357fa8a152885a0538c2a7ea57",
+    "node_modules/material-react-table": "b1b66af66a8f32cb5f39fe0c4e6f34a52929186637d7778a026d1a154c2a1149",
+    "node_modules/material-react-table/node_modules/@tanstack/react-table": "92a7360c2cbb9e6740190505a737d04d44fc92839270b93f027d539cc1cb0a8c",
+    "node_modules/material-react-table/node_modules/@tanstack/table-core": "c73e211fae082dff102e38befe9a3ff99fd407a527a06762a368c311d843d34d",
+    "node_modules/react-table-app": "c7bfb579139b986ca66e4199783f1135ae934b5c8aeee3eaee25880e818e1104",
+    "node_modules/react-table-app/node_modules/@tanstack/table-core": "c73e211fae082dff102e38befe9a3ff99fd407a527a06762a368c311d843d34d",
+    "node_modules/table-app": "c73e211fae082dff102e38befe9a3ff99fd407a527a06762a368c311d843d34d"
+  }
+}

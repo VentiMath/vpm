@@ -1,0 +1,21 @@
+{
+  "name": "vpm-react-table-conformance",
+  "private": true,
+  "description": "Pinned current React Table and app MRT adapters for independent React lifecycle checks",
+  "dependencies": {
+    "@tanstack/table-core": "9.3.1",
+    "table-app": "npm:@tanstack/table-core@8.20.5",
+    "@tanstack/react-table": "9.3.1",
+    "material-react-table": "3.2.1",
+    "@mui/material": "7.2.0",
+    "@mui/icons-material": "7.2.0",
+    "@mui/x-date-pickers": "8.7.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9",
+    "react-table-app": "npm:@tanstack/react-table@8.20.6"
+  }
+}

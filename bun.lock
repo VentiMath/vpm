@@ -1341,6 +1341,17 @@
         "@types/react",
       ],
     },
+    "packages/vtanstack-react-table": {
+      "name": "vtanstack-react-table",
+      "version": "9.3.1",
+      "dependencies": {
+        "vtanstack-store": "workspace:*",
+        "vtanstack-table-core": "workspace:*",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vtanstack-react-virtual": {
       "name": "vtanstack-react-virtual",
       "version": "3.14.26",
@@ -1858,6 +1869,8 @@
     "vtanstack-query-core": ["vtanstack-query-core@workspace:packages/vtanstack-query-core"],
 
     "vtanstack-react-query": ["vtanstack-react-query@workspace:packages/vtanstack-react-query"],
+
+    "vtanstack-react-table": ["vtanstack-react-table@workspace:packages/vtanstack-react-table"],
 
     "vtanstack-react-virtual": ["vtanstack-react-virtual@workspace:packages/vtanstack-react-virtual"],
 

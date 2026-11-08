@@ -103,5 +103,8 @@ Table/Virtual/Store packages.
 
 `vtanstack-table-core` now independently covers that flat-table runtime contract,
 with current 9.3.1 and app 8.20.5 controls. The unchanged MRT runtime passes
-synthetic browser comparisons, but its React adapter/type integration and
-consumer release are still separate work. The app remains on upstream Table.
+synthetic browser comparisons. `vtanstack-react-table` now also covers the
+current v9 hooks and the app’s v8 adapter contract, including exact React 19.1/19.2
+archives, hydration and strict type comparisons. Its three-package release
+(adapter, core and Store) and application adoption remain separate work.
+The app remains on upstream Table.
