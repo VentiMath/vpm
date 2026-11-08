@@ -94,3 +94,76 @@ test("column helpers preserve accessor functions and typed keys", () => {
   const fn = (r) => r.price;
   assert.equal(h.accessor(fn, { id: "p" }).accessorFn, fn);
 });
+
+test("equivalent presentation columns and row wrappers retain the core model", () => {
+  const data = [
+    { id: "a", price: 2 },
+    { id: "b", price: 1 },
+  ];
+  const t = make({
+    data,
+    columns: [{ accessorKey: "price" }],
+    getRowId: (r) => r.id,
+    getSubRows: (r) => r.children,
+  });
+  const model = t.getCoreRowModel();
+  t.setOptions((o) => ({
+    ...o,
+    columns: [{ accessorKey: "price", header: "New heading" }],
+    getRowId: (r) => r.id,
+    getSubRows: (r) => r.children,
+  }));
+  assert.equal(t.getCoreRowModel(), model);
+  t.setOptions((o) => ({ ...o, getRowId: (r) => "new-" + r.id }));
+  assert.deepEqual(
+    t.getCoreRowModel().rows.map((r) => r.id),
+    ["new-a", "new-b"],
+  );
+  t.setOptions((o) => ({ ...o, getSubRows: () => [{}] }));
+  assert.throws(() => t.getCoreRowModel(), /Nested/);
+  t.setOptions((o) => ({ ...o, getSubRows: () => [], getRowId: () => "same" }));
+  assert.throws(() => t.getCoreRowModel(), /Duplicate/);
+});
+
+test("a custom comparator can order original data when accessor values are both absent", () => {
+  const t = make({
+    data: [{ n: 3 }, { n: 1 }, { n: 2 }],
+    columns: [
+      {
+        id: "custom",
+        accessorFn: () => undefined,
+        sortFn: (a, b) => a.original.n - b.original.n,
+      },
+    ],
+  });
+  t.setSorting([{ id: "custom", desc: false }]);
+  assert.deepEqual(
+    t.getRowModel().rows.map((r) => r.original.n),
+    [1, 2, 3],
+  );
+  t.setSorting([{ id: "custom", desc: true }]);
+  assert.deepEqual(
+    t.getRowModel().rows.map((r) => r.original.n),
+    [3, 2, 1],
+  );
+});
+
+test("explicit first/last ordering keeps multiple absent values stable", () => {
+  for (const position of ["first", "last"])
+    for (const desc of [false, true]) {
+      const t = make({
+        data: [{ id: "empty-a" }, { id: "value", n: 2 }, { id: "empty-b" }],
+        getRowId: (r) => r.id,
+        columns: [
+          { accessorKey: "n", sortFn: "basic", sortUndefined: position },
+        ],
+      });
+      t.setSorting([{ id: "n", desc }]);
+      assert.deepEqual(
+        t.getRowModel().rows.map((r) => r.id),
+        position === "last"
+          ? ["value", "empty-a", "empty-b"]
+          : ["empty-a", "empty-b", "value"],
+      );
+    }
+});

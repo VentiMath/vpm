@@ -1,6 +1,29 @@
 {
- "upstream":{"name":"@tanstack/react-table","version":"9.3.1","repository":"https://github.com/TanStack/table","checked":"2026-11-08"},
- "implementation":{"kind":"independent implementation","replacementStatus":"complete for documented application scope","targetScope":"React19 useTable selectors, source/table subscriptions, FlexRender, current legacy migration hook and Table8 useReactTable compatibility for the flat-data MRT caller. Advanced createTableHook component registries, experimental workers, unsupported core features and a general React Store package are excluded."},
- "changes":["Independent React hooks use useSyncExternalStore and VPM Store directly; no upstream React Table or React Store runtime ships.","Current render views retain selected state snapshots while core/store identities persist; legacy table identity stays stable.","Callbacks are published at commit and suppressed after disposal; abandoned renders cannot replace mounted handlers.","Option-driven subscription notifications are deferred to commit to avoid cross-component updates during render; subscription disposal removes pending notifications.","Removing controlled state/callback props returns ownership to the table."],
- "caller":{"name":"material-react-table","version":"3.2.1","appAdapter":"8.20.6","appCore":"8.20.5","appCallsite":"src/components/data-table/DataTable.tsx","scope":"Reusable DataTable currently mounted by the products/orders templates. User intends to reuse table capabilities in math/contest features; no new app feature or adoption is claimed."}
+  "upstream": {
+    "name": "@tanstack/react-table",
+    "version": "9.3.1",
+    "repository": "https://github.com/TanStack/table",
+    "checked": "2026-11-08"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React19 useTable selectors, source/table subscriptions, FlexRender, current legacy migration hook and Table8 useReactTable compatibility for the flat-data MRT caller. Advanced createTableHook component registries, experimental workers, unsupported core features and a general React Store package are excluded."
+  },
+  "changes": [
+    "Independent React hooks use useSyncExternalStore and VPM Store directly; no upstream React Table or React Store runtime ships.",
+    "Current render views retain selected state snapshots while core/store identities persist; legacy table identity stays stable.",
+    "Callbacks are published at commit and suppressed after disposal; abandoned renders cannot replace mounted handlers.",
+    "Option-driven subscription notifications are deferred to commit to avoid cross-component updates during render; subscription disposal removes pending notifications.",
+    "Removing controlled state/callback props returns ownership to the table.",
+    "The Table8 compatibility hook fills missing controlled pagination fields from initial defaults, preserving page-size-only MRT initialization."
+  ],
+  "caller": {
+    "name": "material-react-table",
+    "version": "3.2.1",
+    "appAdapter": "8.20.6",
+    "appCore": "8.20.5",
+    "appCallsite": "src/components/data-table/DataTable.tsx",
+    "scope": "Reusable DataTable currently mounted by the products/orders templates. User intends to reuse table capabilities in math/contest features; no new app feature or adoption is claimed."
+  }
 }

@@ -10,15 +10,15 @@ const path = require("node:path"),
   const peer = process.env.VPM_REACT_CONSUMER
     ? createRequire(path.join(process.env.VPM_REACT_CONSUMER, "package.json"))
     : require;
-  for (const kind of ["table", "lifecycle"]) {
+  for (const kind of ["table", "caller", "lifecycle"]) {
     const parts = [];
-    for (const variant of kind === "table"
+    for (const variant of kind !== "lifecycle"
       ? ["app", "vpm"]
       : ["current", "vpm"]) {
       const entry = path.join(out, kind + "-" + variant + ".mjs");
       fs.writeFileSync(
         entry,
-        `import setup from ${JSON.stringify(path.join(__dirname, kind === "table" ? "../table-conformance/browser-entry.mjs" : "lifecycle.mjs"))};setup(${JSON.stringify(variant)});`,
+        `import setup from ${JSON.stringify(path.join(__dirname, kind === "table" ? "../table-conformance/browser-entry.mjs" : kind === "caller" ? "caller-regressions.mjs" : "lifecycle.mjs"))};setup(${JSON.stringify(variant)});`,
       );
       const result = await Bun.build({
         entrypoints: [entry],
@@ -26,7 +26,7 @@ const path = require("node:path"),
         target: "browser",
         define: {
           "process.env.NODE_ENV": JSON.stringify(
-            kind === "table" ? "production" : "development",
+            kind !== "lifecycle" ? "production" : "development",
           ),
         },
         plugins: [

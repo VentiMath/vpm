@@ -16,13 +16,16 @@ const pending = new Map(),
   try {
     server = http.createServer((req, res) => {
       if (req.url === "/bundle.js") {
-        res.setHeader("Content-Type", "text/javascript");
+        res.setHeader("Content-Type", "text/javascript; charset=utf-8");
         res.end(fs.readFileSync(path.join(consumer, "table.js")));
+      } else if (req.url === "/caller.js") {
+        res.setHeader("Content-Type", "text/javascript; charset=utf-8");
+        res.end(fs.readFileSync(path.join(consumer, "caller.js")));
       } else if (req.url === "/lifecycle.js") {
-        res.setHeader("Content-Type", "text/javascript");
+        res.setHeader("Content-Type", "text/javascript; charset=utf-8");
         res.end(fs.readFileSync(path.join(consumer, "lifecycle.js")));
       } else {
-        res.setHeader("Content-Type", "text/html");
+        res.setHeader("Content-Type", "text/html; charset=utf-8");
         res.end(
           '<!doctype html><div id="root"></div><script type="module" src="/bundle.js"></script>',
         );
@@ -104,6 +107,33 @@ const pending = new Map(),
       expression: `new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='/lifecycle.js';s.onload=resolve;s.onerror=reject;document.body.append(s)})`,
       awaitPromise: true,
     });
+    await send("Runtime.evaluate", {
+      expression: `new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='/caller.js';s.onload=resolve;s.onerror=reject;document.body.append(s)})`,
+      awaitPromise: true,
+    });
+    assert.deepEqual(exceptions, []);
+    const callers = [];
+    for (const variant of ["app", "vpm"]) {
+      const r = await send("Runtime.evaluate", {
+        expression: `window.callerCases[${JSON.stringify(variant)}]()`,
+        awaitPromise: true,
+        returnByValue: true,
+      });
+      assert.equal(
+        r.exceptionDetails,
+        undefined,
+        JSON.stringify(r.exceptionDetails),
+      );
+      callers.push(r.result.value);
+    }
+    fs.writeFileSync(
+      path.join(consumer, "caller-results.json"),
+      JSON.stringify(callers, null, 2),
+    );
+    assert.deepEqual(callers[1], callers[0]);
+    console.log(
+      `Resource/contest caller: ${callers[0].length} snapshots match, including actual select menus, default pagination, page selection and grouped custom sorting.`,
+    );
     const lifecycle = [];
     for (const variant of ["current", "vpm"]) {
       const result = await send("Runtime.evaluate", {

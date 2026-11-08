@@ -38,7 +38,9 @@ handles component functions/classes, memo/forward-ref/lazy components, elements
 and literal React nodes, including zero. The `flex-render` subpath exports both.
 `useLegacyTable` in `legacy` supports the current v9 migration API with v8-style
 row-model options. The root `useReactTable` retains the app's v8 state/identity
-contract and is an additional compatibility export.
+contract and is an additional compatibility export. Partial controlled pagination
+uses the initial page index/size for missing fields, as required by the DataTable
+caller’s page-size-only defaults.
 
 Replacing an existing callback preserves its last committed handler when the
 replacement render suspends. Unmounted tables do not invoke application
@@ -64,5 +66,7 @@ not browser frame rate or deployed application latency.
 
 Built and verified, not publicly released or adopted. A release must pin the
 three-package VPM closure. The app's two current Table callers are e-commerce
-templates; the engine is available for future math/contest interfaces without
-implying those features have already been built.
+templates on the checked main. Pending app PR #421 moves them to Math Resources
+and Contest Season. Its exact column/DataTable functions also pass isolated
+Chrome comparisons; this verifies the pending consumer contract, not merge,
+deployment or VPM adoption.

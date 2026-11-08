@@ -847,38 +847,86 @@ function build(options, legacy) {
       if (key in row) copy[key] = row[key];
     return copy;
   }
-  table.getCoreRowModel = () =>
-    memo(
-      "core",
-      [
-        table.options.data,
-        columns(),
-        table.options.getRowId,
-        table.options.getSubRows,
-      ],
+  // MRT recreates presentation column objects on each render. Only changes
+  // affecting row values/pipelines invalidate the data model and reset paging.
+  let rowSchema;
+  function dataSchema() {
+    return memo("data schema", [columns()], () => {
+      const next = columns().roots.flatMap((c) => {
+        const d = c.columnDef;
+        return [
+          c.id,
+          d.accessorKey,
+          d.accessorFn,
+          d.getUniqueValues,
+          d.getGroupingValue,
+          d.filterFn,
+          d.sortFn,
+          d.sortingFn,
+          d.aggregationFn,
+          d.sortUndefined,
+          d.invertSorting,
+          d.enableSorting,
+          d.enableColumnFilter,
+          d.enableGlobalFilter,
+          d.enableGrouping,
+        ];
+      });
+      if (
+        !rowSchema ||
+        next.length !== rowSchema.length ||
+        next.some((value, i) => !Object.is(value, rowSchema[i]))
+      )
+        rowSchema = next;
+      return rowSchema;
+    });
+  }
+  let previousInput;
+  function rowInput() {
+    return memo(
+      "row input",
+      [table.options.data, table.options.getRowId, table.options.getSubRows],
       () => {
-        const seen = new Set();
-        function visit(data, depth = 0, parent) {
-          return data.map((original, index) => {
-            const id = String(
-              table.options.getRowId?.(original, index, parent) ??
-                (parent ? parent.id + "." + index : index),
+        const data = table.options.data,
+          ids = [],
+          subRows = [],
+          seen = new Set();
+        for (let i = 0; i < data.length; i++) {
+          const id = String(table.options.getRowId?.(data[i], i) ?? i);
+          if (seen.has(id)) throw new Error("Duplicate row id: " + id);
+          seen.add(id);
+          const sub = table.options.getSubRows?.(data[i], i);
+          if (sub?.length)
+            throw new RangeError(
+              "Nested source rows are outside the flat DataTable contract",
             );
-            if (seen.has(id)) throw new Error("Duplicate row id: " + id);
-            seen.add(id);
-            const row = makeRow(original, index, id, depth, parent?.id);
-            const sub = table.options.getSubRows?.(original, index);
-            row.originalSubRows = sub;
-            if (sub?.length)
-              throw new RangeError(
-                "Nested source rows are outside the flat DataTable contract",
-              );
-            return row;
-          });
+          ids.push(id);
+          subRows.push(sub);
         }
-        return model(visit(table.options.data));
+        // Fresh accessor wrappers with identical flat-row identities do not make
+        // the dataset new. Still evaluate them to reject unsupported child data.
+        if (
+          previousInput?.data === data &&
+          ids.length === previousInput.ids.length &&
+          ids.every((id, i) => previousInput.ids[i] === id)
+        )
+          return previousInput;
+        return (previousInput = { data, ids, subRows });
       },
     );
+  }
+  table.getCoreRowModel = () => {
+    const input = rowInput();
+    return memo("core", [input, dataSchema()], () =>
+      model(
+        input.data.map((original, index) => {
+          const row = makeRow(original, index, input.ids[index], 0);
+          row.originalSubRows = input.subRows[index];
+          return row;
+        }),
+      ),
+    );
+  };
   table.getPreFilteredRowModel = table.getCoreRowModel;
   function filtered(exclude) {
     const core = table.getCoreRowModel();
@@ -1089,13 +1137,19 @@ function build(options, legacy) {
                 undef = rule.undef;
               let result = 0;
               if ((av === undefined || bv === undefined) && undef !== false) {
-                if (av === undefined && bv === undefined) continue;
-                if (undef === "first" || undef === "last")
-                  return (
-                    (av === undefined ? -1 : 1) * (undef === "last" ? -1 : 1)
-                  );
-                result = (av === undefined ? 1 : -1) * undef;
-              } else result = rule.fn(a, b, rule.id);
+                if (av === undefined && bv === undefined) {
+                  // Explicit placement keeps absent values stable. Otherwise a
+                  // custom comparator may order rows using their original data.
+                  if (undef === "first" || undef === "last") continue;
+                } else {
+                  if (undef === "first" || undef === "last")
+                    return (
+                      (av === undefined ? -1 : 1) * (undef === "last" ? -1 : 1)
+                    );
+                  result = (av === undefined ? 1 : -1) * undef;
+                }
+              }
+              if (!result) result = rule.fn(a, b, rule.id);
               if (result) return result * rule.direction;
             }
             return a.index - b.index;
@@ -1242,7 +1296,10 @@ function build(options, legacy) {
       pageIndex: Math.max(
         0,
         Math.min(
-          functionalUpdate(updater, old.pageIndex),
+          functionalUpdate(
+            updater,
+            old.pageIndex ?? initial.pagination?.pageIndex ?? 0,
+          ),
           table.options.pageCount != null && table.options.pageCount !== -1
             ? table.options.pageCount - 1
             : Number.MAX_SAFE_INTEGER,
@@ -1255,7 +1312,11 @@ function build(options, legacy) {
       return {
         ...old,
         pageSize,
-        pageIndex: Math.floor((old.pageSize * old.pageIndex) / pageSize),
+        pageIndex: Math.floor(
+          ((old.pageSize ?? initial.pagination?.pageSize ?? 10) *
+            (old.pageIndex ?? initial.pagination?.pageIndex ?? 0)) /
+            pageSize,
+        ),
       };
     });
   table.resetPageIndex = (defaults = false) =>

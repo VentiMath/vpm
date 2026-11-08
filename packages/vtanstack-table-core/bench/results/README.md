@@ -14,20 +14,26 @@ medians. Negative percentages mean less time.
 
 | Case | Node vs Table 9 | Bun vs Table 9 | Node vs app Table 8 | Bun vs app Table 8 |
 | --- | ---: | ---: | ---: | ---: |
-| Construct and materialize 48 rows | +7.3% uncertain | -64.5% | -3.3% uncertain | -4.2% uncertain |
-| Cached page model | -94.5% | -92.9% | -88.7% | -82.7% |
-| Toggle sort over 500 rows | +61.7% | -4.0% uncertain | -5.5% uncertain | -52.1% |
-| Toggle filter over 500 rows | +5.1% uncertain | +22.8% | +21.1% | -0.8% uncertain |
+| Construct and materialize 48 rows | +29.9% uncertain | -65.0% | -3.9% uncertain | -5.5% uncertain |
+| Cached page model | -94.1% uncertain | -93.5% | -88.1% | -81.5% |
+| Toggle sort over 500 rows | +62.2% | -10.0% uncertain | -11.6% uncertain | -57.1% |
+| Toggle filter over 500 rows | +5.8% uncertain | +12.9% uncertain | +16.1% uncertain | -6.7% uncertain |
 
 “Uncertain” means the process pairs or identical-source controls do not establish
 a change at this precision. No small percentage is treated as a reliable win.
 
-The unchanged row-model fast path avoids repeating the pipeline when options
-and state retain identity. Sorting resolves columns/comparators once per sort
-and reuses the source ID index. These remove substantial avoidable overhead,
-but Node sorting still takes about 63 µs versus 39 µs for current Table 9.
-Filtering retains the measured Node regression against the app control and Bun
-regression against the current control. No across-the-board speedup is claimed.
+Equivalent presentation columns and flat-row accessor wrappers retain the data
+model, so MRT rerenders do not reset the page. Real data/identity changes still
+invalidate it. The cached-model fast path retains a measured win against the
+app control on both runtimes and current Table 9 on Bun. The Node Table 9
+cached-page identical-source control varied by 138%, so that comparison is
+explicitly inconclusive despite every VPM pair being faster.
+
+Node sorting still takes about 65 µs versus 40 µs for current Table 9. Bun
+construction beats Table 9, and Bun sorting beats the app control. Filtering
+and the remaining construction/sorting comparisons are inconclusive in this
+recording. These measurements replace the pre-fix reports; they do not establish
+that a prior regression was eliminated. No across-the-board speedup is claimed.
 
 ```sh
 OUTPUT=packages/vtanstack-table-core/bench/results/node.json node packages/vtanstack-table-core/bench/compare.cjs

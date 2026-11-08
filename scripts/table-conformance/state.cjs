@@ -63,3 +63,81 @@ const v = require(
   console.error(e);
   process.exitCode = 1;
 });
+
+(async () => {
+  for (const [api, latest] of [
+    [app, false],
+    [current, true],
+    [v, false],
+    [v, true],
+  ]) {
+    const t = create(api, latest, { autoResetPageIndex: true });
+    t.getRowModel();
+    await Promise.resolve();
+    t.setPageIndex(1);
+    t.getRowModel();
+    await Promise.resolve();
+    t.setOptions((o) => ({
+      ...o,
+      columns: o.columns.map((c) => ({ ...c, header: "Presentation only" })),
+      getRowId: (r) => r.id,
+      getSubRows: (r) => r.children,
+    }));
+    t.getRowModel();
+    await Promise.resolve();
+    assert.equal(
+      (t.getState?.() ?? t.store.get()).pagination.pageIndex,
+      1,
+      "equivalent row wrappers must not reset the page",
+    );
+    t.setOptions((o) => ({ ...o, data: data.slice(0, 20) }));
+    t.getRowModel();
+    await Promise.resolve();
+    assert.equal(
+      (t.getState?.() ?? t.store.get()).pagination.pageIndex,
+      0,
+      "changed dataset must reset the page",
+    );
+  }
+  for (const [api, latest] of [
+    [app, false],
+    [current, true],
+    [v, false],
+    [v, true],
+  ]) {
+    const sort = (a, b) => a.original.rank - b.original.rank;
+    const t = create(api, latest, {
+      data: [
+        { id: "b", team: "B", rank: 2 },
+        { id: "a", team: "A", rank: 1 },
+        { id: "b2", team: "B", rank: 3 },
+      ],
+      columns: [
+        { accessorKey: "team" },
+        {
+          id: "rank",
+          accessorFn: (r) => r.rank,
+          sortingFn: sort,
+          sortFn: sort,
+        },
+      ],
+    });
+    t.setGrouping(["team"]);
+    t.setSorting([{ id: "rank", desc: false }]);
+    assert.deepEqual(
+      t.getSortedRowModel().rows.map((r) => r.id),
+      ["team:A", "team:B"],
+    );
+    t.setSorting([{ id: "rank", desc: true }]);
+    assert.deepEqual(
+      t.getSortedRowModel().rows.map((r) => r.id),
+      ["team:B", "team:A"],
+    );
+  }
+  console.log(
+    "Equivalent row definitions preserve pages; data changes reset; custom grouped comparators match both controls.",
+  );
+})().catch((e) => {
+  console.error(e);
+  process.exitCode = 1;
+});

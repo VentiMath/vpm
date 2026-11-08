@@ -48,6 +48,13 @@ throw, and prototype-like row IDs remain ordinary selectable IDs. Table 8 and 9
 have separate behavior where their contracts differ, including pinned header
 ordering and aggregation flags.
 
+Presentation-only column updates and fresh equivalent row callbacks preserve
+the data model and current page. Real accessor/row-ID/data changes still rebuild
+it, and changed child callbacks still undergo nested-data validation. Custom
+sorting functions run when both accessor values are absent, allowing grouped
+rows to be ordered by their original records. Explicit first/last placement
+retains stable order between absent values.
+
 [Conformance](../../scripts/table-conformance/README.md) checks both controls and
 unchanged MRT/React Table code. The browser fixture uses synthetic product-like
 rows and application options. VentiMath's current Table callers are the products

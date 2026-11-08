@@ -5,7 +5,7 @@ React Table3.2.1. No upstream runtime is copied into VPM. Public declarations an
 black-box behavior supply the contract; installed control hashes are pinned.
 
 `build.cjs` swaps only the React adapter import in the unchanged MRT fixture.
-Eight production Chrome DOM snapshots exercise sorting, filtering, paging,
+Eight production-mode Chrome DOM snapshots exercise sorting, filtering, paging,
 selection, pinning, grouping, data replacement and cleanup. Current API checks
 use development React StrictMode: selective state/source subscriptions, source
 replacement, controlled state, focused DOM preservation, SSR hydration, render
@@ -13,6 +13,16 @@ values and removal of controls. Separate regressions distinguish committed
 callbacks and quiet disposal from the upstream control's behavior. Source atoms
 share the reactive implementation of their table; this is not a generic bridge
 between incompatible signal engines.
+
+`caller-regressions.mjs` adds 37 synthetic resource/contest snapshots: page-size-only
+initial pagination, fresh MRT column/callback objects, missing values last in both
+sort directions, custom sorting with grouped rows, custom multi-select filtering,
+actual select-menu clicks, combined filters/facets, paging, selection and pinning.
+These run from both source and exact archives in the regular Chrome gate. They
+encode the contract without including private application source. A separate local
+check extracted the exact factory/DataTable functions at pending app PR #421 head
+`77b3abac`; all 37 snapshots matched after the fixes. Routes are `/apps/math-resources`
+and `/apps/contest-season`; that check did not establish merge or adoption.
 
 `ssr.cjs` compares current, legacy and app Table8 markup on Node24 and Bun.
 `types.cjs` checks selected-state inference and the unchanged MRT declarations.

@@ -1,17 +1,21 @@
 # vtanstack-react-table measurements
 
-Measured November 8, 2026. `useTable` and `useLegacyTable` compare current
-React Table 9.3.1; `useReactTable` compares the application’s 8.20.6. All use
-React 19.1.0, the same rows/sort state, and assert identical complete HTML.
-These timings include core construction, sorting and React server rendering;
-they do not isolate adapter overhead or measure browser responsiveness.
+Measured November 8, 2026 after the resource/contest caller fixes. `useTable`
+and `useLegacyTable` compare current React Table 9.3.1; `useReactTable` compares
+the application's 8.20.6. All use React 19.1.0, identical rows/sort state and
+assert identical complete HTML. Timings include core construction, sorting
+and React server rendering; they do not isolate adapter overhead or measure
+browser responsiveness.
 
-Most current/v8 differences are inconclusive under the identical-source control
-spread. The ten-row v9 legacy path is faster on both runtimes; the hundred-row
-v9 legacy path and ten-row current path are also faster on Bun. There is no general speedup claim.
+The app's v8 path shows no established difference on either runtime. Current
+v9's 100-row path takes 23% more time on Node (683 µs versus 558 µs). Bun's
+10-row current path and both legacy paths are faster. Other differences are
+inconclusive, including a Node legacy case with a 90.5% identical-source
+control spread. No general speedup is claimed.
 
 Build the pinned SSR controls first with
 `bun scripts/react-table-conformance/build.cjs`.
+
 
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
@@ -36,33 +40,33 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-08T19:21:59.162Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-08T21:23:53.981Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| useTable SSR 10 rows | 146995 | 142548 | -3% | 4.5% | -14% | 13.5% | unestablished at this precision |
-| useTable SSR 100 rows | 610918 | 761854 | 27.8% | 31.8% | 14.9% | 6.4% | unestablished at this precision |
-| useReactTable SSR 10 rows | 166441 | 156011 | -6.4% | -11.8% | -5.8% | 64.8% | unestablished at this precision |
-| useReactTable SSR 100 rows | 644562 | 688004 | 8.4% | 9.1% | 6.8% | 19.1% | unestablished at this precision |
-| useLegacyTable SSR 10 rows | 381378 | 160792 | -52.8% | -44% | -57.7% | 26.6% | lower time in every pair, beyond control spread |
-| useLegacyTable SSR 100 rows | 762831 | 861688 | 13% | -0.5% | 23.8% | 4.9% | unestablished at this precision |
+| useTable SSR 10 rows | 130403 | 129696 | 0.6% | 0.6% | 0.9% | 7.3% | unestablished at this precision |
+| useTable SSR 100 rows | 557998 | 683161 | 23% | 21.4% | 23% | 9.7% | higher time in every pair, beyond control spread |
+| useReactTable SSR 10 rows | 91155 | 105511 | 15.5% | 26% | 7.6% | 65.6% | unestablished at this precision |
+| useReactTable SSR 100 rows | 601350 | 679188 | 8.8% | -9.6% | 12.9% | 2% | unestablished at this precision |
+| useLegacyTable SSR 10 rows | 303090 | 136298 | -54.4% | -59.7% | -52.7% | 90.5% | unestablished at this precision |
+| useLegacyTable SSR 100 rows | 715182 | 668877 | -6.7% | -6.7% | -5.5% | 3.6% | unestablished at this precision |
 
 ## Bun 1.4.0
 
-Recorded 2026-11-08T19:22:31.702Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-08T21:24:30.262Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| useTable SSR 10 rows | 101084 | 60956 | -39.9% | -34.9% | -39.9% | 16% | lower time in every pair, beyond control spread |
-| useTable SSR 100 rows | 318858 | 317704 | 0.4% | 0.4% | -4.2% | 9.8% | unestablished at this precision |
-| useReactTable SSR 10 rows | 66516 | 59458 | -10.4% | -1.1% | -11.6% | 17.3% | unestablished at this precision |
-| useReactTable SSR 100 rows | 336941 | 314778 | -3.3% | -5.9% | 0.4% | 25.4% | unestablished at this precision |
-| useLegacyTable SSR 10 rows | 262001 | 76216 | -71% | -73.3% | -53.6% | 29.3% | lower time in every pair, beyond control spread |
-| useLegacyTable SSR 100 rows | 505809 | 339042 | -31.6% | -34.2% | -31.6% | 25.3% | lower time in every pair, beyond control spread |
+| useTable SSR 10 rows | 86109 | 57717 | -33% | -32.8% | -33.2% | 20.2% | lower time in every pair, beyond control spread |
+| useTable SSR 100 rows | 271692 | 273829 | 1.5% | 3% | -0.9% | 3.2% | unestablished at this precision |
+| useReactTable SSR 10 rows | 54277 | 53382 | -1.1% | -3.9% | 0.2% | 10.7% | unestablished at this precision |
+| useReactTable SSR 100 rows | 310097 | 277794 | -10.4% | -11.6% | -7.7% | 6.7% | unestablished at this precision |
+| useLegacyTable SSR 10 rows | 232266 | 63359 | -72.7% | -74.3% | -71.4% | 12.1% | lower time in every pair, beyond control spread |
+| useLegacyTable SSR 100 rows | 457925 | 293804 | -35.6% | -38.9% | -34.1% | 8.8% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

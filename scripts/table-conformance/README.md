@@ -8,7 +8,10 @@ Material React Table 3.2.1, React 19.1.0 and the application's MUI versions.
 - `matrix.cjs`: 1,152 seeded state transitions against Table 8 and 9, comparing
   rows, values, depth, cell flags, selection and pagination.
 - `state.cjs`: owned/controlled state, creation-time external-atom ownership,
-  automatic page reset and manual pagination. Dynamic `atoms` option replacement
+  automatic page reset and manual pagination. Equivalent presentation columns
+  and row-accessor wrappers preserve the current page; changed data resets it.
+  Grouped custom comparators can read original records when aggregate values
+  are absent. Dynamic `atoms` option replacement
   is ignored by the current control and VPM; new atoms belong in a new instance.
 - `functions.cjs`: 2,646 comparator checks across numbers, natural names, missing
   values, booleans and dates. Comparator sign, not magnitude, is the contract.
@@ -16,15 +19,16 @@ Material React Table 3.2.1, React 19.1.0 and the application's MUI versions.
   the core import changed. Eight Chrome transitions compare table DOM, sort,
   page, filter, checkbox selection, pin/hide, group/expand and replacement.
   This uses synthetic rows and the application DataTable options, not signed-in
-  application data. No claim is made about a future Table 9 React adapter.
+  application data. The [React adapter checks](../react-table-conformance/README.md)
+  also exercise 37 resource/contest caller snapshots with the VPM adapter.
 - `archives.cjs`: exact package contents, fresh and frozen npm/Bun installs,
   Node/Bun conformance, CJS/ESM and TS7 consumers; browser rerun from packed bytes.
 
 The declared application contract is flat source rows/columns. Nested headers,
 nested source trees, interactive resizing, cell selection/spanning and custom
-feature plugins are excluded. Framework typings and a consumer release are a
-separate adapter task; a runtime browser comparison does not certify all MRT
-public TypeScript declarations against these independently scoped declarations.
+feature plugins are excluded. The adapter has separate framework typing checks;
+a runtime browser comparison alone does not certify all MRT public declarations.
+The three-package consumer release remains unpublished.
 
 ```sh
 npm --prefix scripts/table-conformance ci --ignore-scripts

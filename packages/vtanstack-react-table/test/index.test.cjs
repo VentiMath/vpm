@@ -41,3 +41,22 @@ test("current and legacy hooks render without a browser", () => {
     assert.equal(renderToString(React.createElement(C)), "0");
   }
 });
+
+test("MRT partial controlled pagination inherits the initial page index", () => {
+  function C() {
+    const t = api.useReactTable({
+      data: [{ n: 1 }, { n: 2 }, { n: 3 }],
+      columns: [{ accessorKey: "n" }],
+      initialState: { pagination: { pageSize: 2 } },
+      state: { pagination: { pageSize: 2 } },
+      getCoreRowModel: api.getCoreRowModel(),
+      getPaginationRowModel: api.getPaginationRowModel(),
+    });
+    assert.deepEqual(t.getState().pagination, { pageIndex: 0, pageSize: 2 });
+    return t
+      .getRowModel()
+      .rows.map((r) => r.getValue("n"))
+      .join(",");
+  }
+  assert.equal(renderToString(React.createElement(C)), "1,2");
+});

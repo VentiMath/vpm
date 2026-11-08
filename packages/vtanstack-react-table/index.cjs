@@ -182,10 +182,20 @@ function useReactTable(options) {
     },
     [binding],
   );
+  const mergedState = { ...state, ...options.state };
+  if (
+    mergedState.pagination?.pageIndex == null ||
+    mergedState.pagination?.pageSize == null
+  )
+    mergedState.pagination = {
+      pageIndex:
+        mergedState.pagination?.pageIndex ?? state.pagination.pageIndex,
+      pageSize: mergedState.pagination?.pageSize ?? state.pagination.pageSize,
+    };
   table.setOptions((old) => ({
     ...old,
     ...prepared,
-    state: { ...state, ...options.state },
+    state: mergedState,
     onStateChange: change,
   }));
   return table;

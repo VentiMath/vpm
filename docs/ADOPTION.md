@@ -64,3 +64,12 @@ current v9 hooks and the app’s v8 adapter contract, including exact React 19.1
 archives, hydration and strict type comparisons. Its three-package release
 (adapter, core and Store) and application adoption remain separate work.
 The app remains on upstream Table.
+
+App PR #421 was still open when its head `77b3abac` was checked. It replaces
+those template screens with `/apps/math-resources` and `/apps/contest-season`,
+plus detail routes, retaining the shared DataTable and flat rows. Its exact
+column functions and DataTable options pass isolated upstream/VPM browser checks
+for undefined-last sorting, custom sort/filter callbacks, select/multi-select,
+facets, grouping and page selection. Synthetic equivalents are permanent VPM
+regressions. This is verification of a pending caller migration, not proof of a
+merged PR, a Table release or application adoption.
