@@ -1,0 +1,27 @@
+{
+  "upstream": {
+    "name": "@tanstack/store",
+    "version": "0.11.2",
+    "repository": "https://github.com/TanStack/store",
+    "checked": "2026-11-08"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Framework-agnostic writable/computed/async atoms, subscriptions, batching, shallow comparison and Store/ReadonlyStore actions; current TanStack Table9.3.1 unchanged caller verified. Private signal-node structures and framework hooks excluded."
+  },
+  "changes": [
+    "Independent dependency graph: observed branches propagate invalidations; detached computations validate cached dependency versions on demand.",
+    "Listener failures drain remaining notifications and permit future updates; computation errors reach error observers and recover when inputs change.",
+    "Reentrant writes are delivered in coherent successive notification waves rather than losing a subscriber update.",
+    "Async completions are guarded by request identity; circular dependencies report an explicit error."
+  ],
+  "caller": {
+    "name": "@tanstack/table-core",
+    "version": "9.3.1",
+    "appTableVersion": "8.20.5",
+    "appParent": "material-react-table 3.2.1",
+    "appCallsite": "src/components/data-table/DataTable.tsx",
+    "note": "Prerequisite for the current Table upgrade, not an existing direct app Store import or a claim of adoption."
+  }
+}

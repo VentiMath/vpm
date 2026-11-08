@@ -1352,6 +1352,10 @@
         "react-dom": "^19.0.0",
       },
     },
+    "packages/vtanstack-store": {
+      "name": "vtanstack-store",
+      "version": "0.11.2",
+    },
     "packages/vtanstack-virtual-core": {
       "name": "vtanstack-virtual-core",
       "version": "3.19.11",
@@ -1849,6 +1853,8 @@
     "vtanstack-react-query": ["vtanstack-react-query@workspace:packages/vtanstack-react-query"],
 
     "vtanstack-react-virtual": ["vtanstack-react-virtual@workspace:packages/vtanstack-react-virtual"],
+
+    "vtanstack-store": ["vtanstack-store@workspace:packages/vtanstack-store"],
 
     "vtanstack-virtual-core": ["vtanstack-virtual-core@workspace:packages/vtanstack-virtual-core"],
 

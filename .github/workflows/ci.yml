@@ -20,6 +20,7 @@ jobs:
           bun-version: 1.4.4
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/store-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/react-virtual-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/retry-request-conformance ci --ignore-scripts --no-audit --no-fund
@@ -113,6 +114,8 @@ jobs:
         run: |
           npm --prefix scripts/virtual-core-conformance ci --ignore-scripts --no-audit --no-fund
           node scripts/virtual-core-conformance/archives.cjs
+      - name: Verify independent table reactive store
+        run: node scripts/store-conformance/archives.cjs
       - name: Verify independent React table virtualization
         run: node scripts/react-virtual-conformance/archives.cjs
       - name: Verify independent table ranking
@@ -604,6 +607,7 @@ jobs:
           bun-version: 1.4.4
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/store-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/react-virtual-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/retry-request-conformance ci --ignore-scripts --no-audit --no-fund
