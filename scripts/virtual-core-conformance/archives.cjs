@@ -120,7 +120,7 @@ try {
         );
     }
     const types = fs
-      .readFileSync(path.join(pkg, "test/types.ts"), "utf8")
+      .readFileSync(path.join(__dirname, "types.ts"), "utf8")
       .replaceAll("vtanstack-virtual-core", "@tanstack/virtual-core");
     fs.writeFileSync(
       path.join(cwd, "consumer.mts"),
