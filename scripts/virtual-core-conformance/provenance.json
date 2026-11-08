@@ -1,0 +1,12 @@
+{
+  "fixtureFiles": {
+    "upstream/LICENSE.txt": "786a8886a39b16002b8cbc66c021c8c84868a03719548e642f8a6809b6c2aa62",
+    "upstream/src/utils/utils.ts.txt": "bc5e0b8af5108ccbc1d53e7c4479d2eaeb36c78ccd086bc7c88fe1849c484b48",
+    "upstream/src/utils/virtualization.utils.ts.txt": "e100ce48fe1467057518b6134e007007d0c09a052db12862642a80739c358882",
+    "upstream/src/hooks/useMRT_RowVirtualizer.ts.txt": "a1f2105627b9456080e293cc9692ee7d86ecc33ff12c8918f00ed3ccf6b14f11",
+    "upstream/src/hooks/useMRT_ColumnVirtualizer.ts.txt": "91183385fd8ec94677bb14d7d7f28d6b576e6aed8bf1aeb4841e656db4c12d87",
+    "node_modules/@tanstack/virtual-core/dist/cjs/index.cjs": "36ea2912a5f696f26a3045c09c446c24ee42cd1a47178db649b4d6f889bbf207",
+    "node_modules/virtual-core-app/dist/cjs/index.cjs": "77c903738d25e47009a461d9a8d6cf00e1ee6c62ef872090266672534bb56d11",
+    "node_modules/@tanstack/react-virtual/dist/esm/index.js": "bd65bc8bdb71a2a75d699b761044ddfd9086cfdbaba7069d56e26afbf471fcda"
+  }
+}

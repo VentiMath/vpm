@@ -1,0 +1,14 @@
+{
+  "name": "vpm-virtual-core-conformance",
+  "private": true,
+  "description": "Pinned current and application virtualizer controls with unchanged MRT callers",
+  "dependencies": {
+    "@tanstack/virtual-core": "3.19.11",
+    "virtual-core-app": "npm:@tanstack/virtual-core@3.11.2",
+    "@tanstack/react-virtual": "3.11.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9"
+  }
+}
