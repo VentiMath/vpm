@@ -1,5 +1,21 @@
 # Installing VPM packages
 
+## Stylis RTL middleware
+
+The [Stylis RTL 2.1.1 release](https://github.com/VentiMath/vpm/releases/tag/stylis-plugin-rtl-2.1.1) contains `vstylis-plugin-rtl` and its pinned `vcssjanus` foundation. Keep the existing import and replace the direct dependency value:
+
+```json
+{
+  "dependencies": {
+    "stylis-plugin-rtl": "https://github.com/VentiMath/vpm/releases/download/stylis-plugin-rtl-2.1.1/vstylis-plugin-rtl-2.1.1.tgz"
+  }
+}
+```
+
+Internal dependency URLs are pinned in the archive; no additional override is needed. If the previous `cssjanus` override was added solely for this wrapper, it becomes unnecessary after this change. Verify the refreshed lockfile before removing an override shared by other callers. The middleware operates on the existing Stylis 4 tree, so it does not install a second Stylis engine.
+
+The [package contract](../packages/vstylis-plugin-rtl/README.md) covers nested-layer and noflip corrections. Fresh/frozen npm and Bun consumers verify exact archive bytes, original-name imports, Node/Bun/TypeScript7 and Chrome computed styles. Apply the app pin and lockfile together, and check both theme directions; publication does not establish app adoption.
+
 ## CSS direction conversion
 
 The [CSSJanus 2.3.1 release](https://github.com/VentiMath/vpm/releases/tag/cssjanus-2.3.1) provides the independent `vcssjanus` implementation. VentiMath uses it transitively through `stylis-plugin-rtl`; keep that wrapper and its imports, and merge this override:

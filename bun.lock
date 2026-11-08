@@ -1301,6 +1301,13 @@
       "name": "vstylis",
       "version": "4.4.0",
     },
+    "packages/vstylis-plugin-rtl": {
+      "name": "vstylis-plugin-rtl",
+      "version": "2.1.1",
+      "dependencies": {
+        "vcssjanus": "2.3.1",
+      },
+    },
     "packages/vtabbable": {
       "name": "vtabbable",
       "version": "6.5.1",
@@ -1802,6 +1809,8 @@
     "vstrnum": ["vstrnum@workspace:packages/vstrnum"],
 
     "vstylis": ["vstylis@workspace:packages/vstylis"],
+
+    "vstylis-plugin-rtl": ["vstylis-plugin-rtl@workspace:packages/vstylis-plugin-rtl"],
 
     "vtabbable": ["vtabbable@workspace:packages/vtabbable"],
 

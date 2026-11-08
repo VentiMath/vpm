@@ -1,0 +1,27 @@
+{
+  "upstream": {
+    "name": "stylis-plugin-rtl",
+    "version": "2.1.1",
+    "appVersion": "2.1.1",
+    "repository": "https://github.com/styled-components/stylis-plugin-rtl",
+    "commit": "6c590ec0409177048004683319d1330542c37dbf",
+    "checked": "2026-11-07"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Stylis4 middleware for RootThemeProvider LTR/RTL styling, nesting, annotations, layers and prefixing. Changes declaration nodes in place; does not depend on or reparse through a second Stylis runtime."
+  },
+  "changes": [
+    "Keeps AST identity and source positions; no serialize/compile round trip.",
+    "Transforms nested rules even when app middleware wraps their parent in @layer.",
+    "Supports declarations inside @layer, @container and @scope.",
+    "Binds noflip by source order, including lifted nested rules; repeated serialization cannot flip twice.",
+    "Uses vcssjanus for directional semantics; retains no DOM or source CSS cache."
+  ],
+  "caller": {
+    "appCallsite": "src/contexts/RootThemeProvider.tsx",
+    "appCommit": "4ffa8d0b9f157067599c46b7f3dc65e26dddbfab",
+    "sha256": "fb58862be1968256ed7d8d68890610cab15af1e2514fdfeab71eac1b8815050c"
+  }
+}
