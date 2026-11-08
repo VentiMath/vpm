@@ -1214,6 +1214,13 @@
       "name": "vreact-themeable",
       "version": "1.1.0",
     },
+    "packages/vreact-transition-group": {
+      "name": "vreact-transition-group",
+      "version": "4.4.5",
+      "peerDependencies": {
+        "react": "^19.0.0",
+      },
+    },
     "packages/vread-package-up": {
       "name": "vread-package-up",
       "version": "0.1.0",
@@ -1779,6 +1786,8 @@
     "vreact-swipeable": ["vreact-swipeable@workspace:packages/vreact-swipeable"],
 
     "vreact-themeable": ["vreact-themeable@workspace:packages/vreact-themeable"],
+
+    "vreact-transition-group": ["vreact-transition-group@workspace:packages/vreact-transition-group"],
 
     "vread-package-up": ["vread-package-up@workspace:packages/vread-package-up"],
 

@@ -1,0 +1,1597 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-08T06:40:52.680Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/transition-group-conformance/load.cjs": "9beb96e2501f45efe554f30eabbde4bbbe810c28b04014793525aa0415e3d152",
+    "../../scripts/transition-group-conformance/node_modules/react-transition-group/cjs": "0851b614220f1657eaea8c71269fb58fd8d0c5767659b3fbb325fe1dcb5c9102",
+    "../../scripts/transition-group-conformance/package-lock.json": "169a7020545824c9b72e3c6f2b0dc12654e5a86ffbf41093cf5bcc5da55a86ee",
+    "PROVENANCE.json": "90eb38b4cf9df34e943385e066e7bdc65c05a85001accb7b344eb765bdca1ef5",
+    "bench/compare.cjs": "be6ada1969faf8fdab1a0c099afd1b21d40e9cec05632bbc6230c3d582a173f8",
+    "index.cjs": "86b893835acdbafd5eb15c9dd689fbc01a9efef44b52e7ee5aec87a96ef6ed1a",
+    "index.d.cts": "7110308bcfa15f09aebfe17cb53ba7671fd028d7649c848231a4f8c94423771e",
+    "index.d.mts": "7110308bcfa15f09aebfe17cb53ba7671fd028d7649c848231a4f8c94423771e",
+    "index.mjs": "304b40718e8b3466f5d990c92b40f1de0aac71e7fd35c188aaf68583d80959cb",
+    "package.json": "92f49ff1c0e7d7fb16b7eaee621360b99f667987c8d6bcbf34bc75f84632f3fc"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 89093,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 3539,
+            "samples": [
+              3011.6323820288194,
+              3026.843741169827,
+              2855.66770274089,
+              2695.0881604973133,
+              2589.9499858717054,
+              2775.3955919751265,
+              2613.9211641706756,
+              2583.0743147781723,
+              2622.52755015542,
+              2749.8352641989145,
+              2613.885560892907,
+              2644.7208250918343
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 767,
+            "samples": [
+              13060.734028683259,
+              13160.582790091226,
+              13517.003911342987,
+              13120.110821382024,
+              12999.61929595821,
+              12897.490221642784,
+              12980.117340286788,
+              13352.5645371577,
+              13114.569752281692,
+              12853.868318122431,
+              13467.24250325934,
+              13098.97783572361
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 755,
+            "samples": [
+              14039.072847681862,
+              12852.206622516638,
+              13889.459602649138,
+              13226.103311258488,
+              14401.434437086029,
+              12803.255629139268,
+              13317.715231788132,
+              12675.937748344228,
+              13790.894039735178,
+              13043.046357616002,
+              13900.607947020011,
+              12695.088741721695
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 268,
+            "samples": [
+              36663.86940298467,
+              41245.48880596948,
+              36135.884328358836,
+              40236.16417910476,
+              38865.20522388112,
+              41875.000000000306,
+              38850.74626865685,
+              41325.402985074536,
+              37606.033582089345,
+              41331.30970149323,
+              37846.39552238803,
+              41535.291044776364
+            ]
+          }
+        ],
+        "checksum": 810624
+      },
+      "vpm": {
+        "pid": 89094,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 3539,
+            "samples": [
+              2137.9155128567368,
+              2049.872845436558,
+              2067.391918621077,
+              2083.227182820009,
+              1985.247527550155,
+              2031.553263633791,
+              2020.415371573891,
+              2053.134218705849,
+              1872.5275501554067,
+              1864.2740887256298,
+              2104.926250353213,
+              1889.1282848262265
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 767,
+            "samples": [
+              9940.460234680546,
+              9697.359843546235,
+              9392.057366362458,
+              9892.546284224245,
+              9041.395045632346,
+              9829.204693611457,
+              8835.289439374152,
+              9157.050847457633,
+              9247.174706649272,
+              9299.27249022157,
+              9513.471968709247,
+              8555.62842242509
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 755,
+            "samples": [
+              9022.295364238382,
+              10026.434437086149,
+              8756.40264900663,
+              10121.909933774914,
+              8763.299337748256,
+              9899.060927152324,
+              8756.401324503322,
+              10347.185430463474,
+              9082.063576158893,
+              10150.219867549647,
+              8755.62913907285,
+              10124.888741721792
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 268,
+            "samples": [
+              39555.813432835785,
+              32721.705223881356,
+              39142.41417910421,
+              31963.929104477556,
+              37944.182835821295,
+              30754.973880596706,
+              41479.63432835814,
+              31685.944029850907,
+              38783.89179104529,
+              32948.69402985151,
+              32554.880597015643,
+              40161.38059701482
+            ]
+          }
+        ],
+        "checksum": 550272
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 89095,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 3422,
+            "samples": [
+              1908.9348334307429,
+              2030.52542372881,
+              1903.7478082992388,
+              1947.4476914085315,
+              2046.73202805377,
+              1953.6212741087095,
+              2010.5078901227316,
+              1944.8176504967796,
+              2057.739333722969,
+              2041.021332554062,
+              1983.6718293395782,
+              2061.355639976611
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 1057,
+            "samples": [
+              8783.230842005645,
+              9992.431409649964,
+              9640.926206244065,
+              8946.940397351027,
+              9364.632923368017,
+              9492.70766319768,
+              9411.462630085112,
+              9621.175969725628,
+              9760.564806054861,
+              9153.263954588416,
+              9505.912961210928,
+              9753.547776726544
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 1090,
+            "samples": [
+              10030.160550458684,
+              8846.330275229395,
+              9894.380733944901,
+              9976.413761467758,
+              9190.481651376103,
+              9822.018348623764,
+              10017.316513761532,
+              9234.70917431182,
+              9959.479816513829,
+              10101.643119266197,
+              9046.253211009162,
+              9600.61192660547
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 285,
+            "samples": [
+              34150.00000000043,
+              38650.729824561684,
+              34001.315789474145,
+              32274.122807017957,
+              37629.82456140283,
+              31790.05614035081,
+              41669.88070175425,
+              32475.43859649117,
+              40202.04912280781,
+              33634.64912280697,
+              37703.508771929795,
+              32672.224561403647
+            ]
+          }
+        ],
+        "checksum": 997120
+      },
+      "upstream": {
+        "pid": 89096,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 3422,
+            "samples": [
+              2563.9611338398527,
+              2771.0768556399803,
+              2599.7834599649395,
+              2733.4041496201,
+              2608.4646405610824,
+              2615.3445353594348,
+              2755.0163646990027,
+              2494.7033898305112,
+              2595.253945061373,
+              2589.7624196376387,
+              2770.395090590287,
+              2623.660432495613
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 1057,
+            "samples": [
+              13440.909176915802,
+              13651.293282876011,
+              13406.06244087039,
+              13333.727530747397,
+              13791.54872280029,
+              13051.087984862781,
+              13064.371807000927,
+              13301.442762535462,
+              13004.257332071895,
+              13497.949858088938,
+              12898.533585619643,
+              13408.743614001902
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 1090,
+            "samples": [
+              13927.522935779853,
+              13817.584403669787,
+              14119.456880733973,
+              13409.709174311918,
+              13465.25229357792,
+              13363.417431192713,
+              13697.935779816711,
+              13368.425688073421,
+              13504.128440366903,
+              12990.481651376153,
+              13241.399082568825,
+              13552.599082568915
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 285,
+            "samples": [
+              39560.37894736893,
+              37533.18596491226,
+              40233.62456140396,
+              41192.98245614038,
+              40344.007017544456,
+              36258.477192982435,
+              40791.519298245636,
+              39127.19298245575,
+              35345.76140350909,
+              42478.070175438756,
+              43675.73333333335,
+              37067.39649122809
+            ]
+          }
+        ],
+        "checksum": 424704
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 89097,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 2765,
+            "samples": [
+              2657.8358047016286,
+              2626.5066907775686,
+              2624.1262206148267,
+              2714.8282097649144,
+              2436.4528028933123,
+              2694.725497287525,
+              2703.224593128398,
+              2704.701627486437,
+              2746.8506329114052,
+              2478.450994575042,
+              2724.367088607591,
+              2509.4336347197077
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 768,
+            "samples": [
+              13050.890624999978,
+              13046.983072916739,
+              12579.317708333241,
+              13637.369791666593,
+              12529.134114583378,
+              13605.19661458337,
+              12659.179687500042,
+              12769.80208333341,
+              12752.006510416673,
+              13377.496093749978,
+              13581.164062500022,
+              12722.438802083236
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 725,
+            "samples": [
+              14856.437241379228,
+              13007.815172413757,
+              13832.816551724074,
+              14162.700689655203,
+              13396.666206896543,
+              14152.988965517328,
+              13566.43724137939,
+              14043.851034482566,
+              14258.333793103671,
+              13185.228965517283,
+              14226.78206896527,
+              13267.068965517332
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 232,
+            "samples": [
+              38855.06465517327,
+              43443.96551724117,
+              36163.43103448214,
+              39790.051724137666,
+              41711.568965516904,
+              38256.823275862094,
+              42180.49568965532,
+              38282.68965517231,
+              41168.28448275885,
+              36239.043103447875,
+              40902.65948275864,
+              36352.3706896558
+            ]
+          }
+        ],
+        "checksum": 793034
+      },
+      "vpm": {
+        "pid": 89098,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 2765,
+            "samples": [
+              2290.3406871609445,
+              1997.212296564193,
+              1914.571790235081,
+              1892.0282097649094,
+              2081.555153707057,
+              1944.7862567812003,
+              1857.5197106690791,
+              2010.066184448469,
+              1852.832911392408,
+              1902.7576853526298,
+              1978.2701627486472,
+              1955.726220614824
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 768,
+            "samples": [
+              10900.390625000035,
+              9376.192708333268,
+              9578.395833333308,
+              10015.190104166664,
+              9099.664062499995,
+              9875.7604166666,
+              9212.835937500035,
+              9850.585937499989,
+              8976.996093750096,
+              9699.27343749995,
+              9882.865885416573,
+              9054.199218749984
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 725,
+            "samples": [
+              9082.413793103427,
+              10339.252413793067,
+              9463.103448275935,
+              10304.022068965518,
+              10112.873103448223,
+              8989.081379310283,
+              10861.782068965615,
+              9604.99999999997,
+              10331.4937931034,
+              9023.620689655092,
+              10011.379310344793,
+              9291.666206896667
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 232,
+            "samples": [
+              41882.90086206876,
+              33954.74137931058,
+              42140.0862068963,
+              35247.48706896499,
+              42772.26724137947,
+              34209.05172413803,
+              39599.31896551732,
+              34700.6120689653,
+              39365.66379310346,
+              32542.741379310082,
+              38926.905172414095,
+              32041.487068966035
+            ]
+          }
+        ],
+        "checksum": 557568
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 89127,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 3932,
+            "samples": [
+              2198.4570193285904,
+              2235.0798575788385,
+              1925.2182095625599,
+              2022.7619532044737,
+              1976.9519328585927,
+              1930.9618514750784,
+              1934.03484231943,
+              2005.4572736520781,
+              1898.2812817904392,
+              1959.001017293995,
+              1985.8321464903343,
+              1852.9903357070177
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 994,
+            "samples": [
+              9418.05030181085,
+              10172.577464788717,
+              9105.465794768623,
+              9022.846076458743,
+              8976.903420523147,
+              9192.069416499033,
+              9133.802816901474,
+              9207.578470824948,
+              8903.882293762576,
+              9966.381287726428,
+              9206.656941649937,
+              8798.582494969873
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 1036,
+            "samples": [
+              8899.895752895836,
+              9635.89961389963,
+              9897.92471042467,
+              9200.932432432395,
+              9598.294401544441,
+              8933.518339768469,
+              9819.980694980795,
+              10113.05501930491,
+              8991.192084942113,
+              10035.955598455585,
+              8924.10714285733,
+              9571.790540540556
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 305,
+            "samples": [
+              34440.026229508396,
+              37509.01639344222,
+              33111.75081967196,
+              39511.885245901496,
+              33919.537704918424,
+              38193.8524590161,
+              32949.72786885246,
+              40090.43606557408,
+              33102.45901639362,
+              39812.704918032796,
+              34360.24590163932,
+              38166.118032786915
+            ]
+          }
+        ],
+        "checksum": 1012480
+      },
+      "upstream": {
+        "pid": 89128,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 3932,
+            "samples": [
+              2795.269582909464,
+              2595.8270600203477,
+              2633.2550864699906,
+              2573.245167853508,
+              2554.3509664292933,
+              2688.8987792471985,
+              2601.549338758898,
+              2554.3934384537024,
+              2857.091556459816,
+              2630.1286876907507,
+              2528.6963377416087,
+              2637.6632756866693
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 994,
+            "samples": [
+              13422.912474849156,
+              12812.919517102613,
+              13331.698189134817,
+              12357.226358148813,
+              12438.715291750554,
+              12851.023138832981,
+              12702.046277665935,
+              13816.817907444687,
+              13270.791750502967,
+              13331.44668008044,
+              13332.661971830961,
+              12917.37927565393
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 1036,
+            "samples": [
+              13814.35038610033,
+              13821.428571428534,
+              13926.037644787628,
+              13284.587837837838,
+              13112.089768339632,
+              13788.40830115834,
+              13823.278957528966,
+              12788.81177606162,
+              14068.009652509701,
+              13413.851351351459,
+              13567.889961390063,
+              13797.297297297171
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 305,
+            "samples": [
+              39966.25573770528,
+              40003.14426229512,
+              38118.03278688517,
+              40686.47540983592,
+              36307.24262295084,
+              42118.986885246115,
+              39140.98360655771,
+              35442.622950819496,
+              41128.554098360364,
+              38043.17049180323,
+              40201.22950819686,
+              41754.78032786904
+            ]
+          }
+        ],
+        "checksum": 435712
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 89131,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 3989,
+            "samples": [
+              2654.4873401855043,
+              2704.4895963900713,
+              2673.007019303081,
+              2512.931311105545,
+              2812.588618701435,
+              2691.422160942594,
+              2495.1428929556278,
+              2701.220105289549,
+              2639.8220105289606,
+              2444.033592379047,
+              2666.781398846827,
+              2604.9761845073986
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 725,
+            "samples": [
+              12790.228965517254,
+              13049.081379310399,
+              13127.644137931102,
+              13567.126896551788,
+              13145.517241379257,
+              13279.885517241257,
+              14880.976551724198,
+              13421.321379310342,
+              13662.471724137975,
+              14036.264827586192,
+              14511.03448275858,
+              13346.206896551628
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 769,
+            "samples": [
+              14340.48504551349,
+              14408.810143042918,
+              13314.964889467086,
+              14280.45123537063,
+              13047.139141742462,
+              14030.342002600704,
+              12857.76983094908,
+              13577.048114434303,
+              14118.443433029746,
+              12768.421326397847,
+              13689.097529258519,
+              12979.19375812743
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 261,
+            "samples": [
+              37924.329501915556,
+              39373.88122605392,
+              37912.51724137893,
+              39661.55555555564,
+              41806.19157088091,
+              36778.73563218471,
+              42007.34099616917,
+              35829.18007662825,
+              40798.532567049355,
+              36037.199233716914,
+              39492.65517241388,
+              38120.37164750973
+            ]
+          }
+        ],
+        "checksum": 1066880
+      },
+      "vpm": {
+        "pid": 89147,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 3989,
+            "samples": [
+              2674.647029330663,
+              2785.232389069939,
+              2523.8049636500346,
+              2658.38355477563,
+              2781.2003008272704,
+              2590.216846327404,
+              2742.9074956129384,
+              2642.746803710206,
+              2523.0634244171497,
+              2597.5913762847927,
+              2704.437202306345,
+              2632.4058661318677
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 725,
+            "samples": [
+              12739.597241379357,
+              13368.677241379248,
+              13193.907586206982,
+              13745.230344827556,
+              13250.172413793045,
+              13144.023448275973,
+              13089.482758620667,
+              12941.148965517265,
+              12632.3572413793,
+              12951.034482758618,
+              13365.97655172415,
+              12393.907586206924
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 769,
+            "samples": [
+              13254.604681404346,
+              14079.59427828339,
+              12870.01560468118,
+              14604.681404421319,
+              12702.319895968849,
+              14756.773732119565,
+              12853.543563069039,
+              13933.029908972747,
+              12455.895968790755,
+              13617.035110533003,
+              12597.638491547483,
+              13524.32769830952
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 261,
+            "samples": [
+              43452.429118774475,
+              37538.79310344886,
+              40332.69348659051,
+              36632.026819923034,
+              40720.463601532334,
+              36741.54022988482,
+              41115.743295019296,
+              38073.75478927271,
+              37662.99616858256,
+              40337.4827586204,
+              37472.70114942547,
+              43674.969348659135
+            ]
+          }
+        ],
+        "checksum": 489856
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 89148,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 4356,
+            "samples": [
+              2726.4882920110217,
+              2592.334251606983,
+              2850.436179981631,
+              2695.0470615243316,
+              2661.6258034894404,
+              2773.1960514233224,
+              2637.119146005503,
+              2609.236225895319,
+              2592.6212121212093,
+              2713.938705234169,
+              2625.4207988980693,
+              2751.406106519752
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 769,
+            "samples": [
+              13038.41482444727,
+              13463.318595578688,
+              13439.261378413514,
+              13539.119635890702,
+              12951.669700910274,
+              13642.609882964915,
+              13591.894668400413,
+              13321.576072821961,
+              15050.499349804984,
+              13518.963589076691,
+              13020.589076723018,
+              12462.126137841266
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 789,
+            "samples": [
+              12914.185044359978,
+              14010.614702154546,
+              14316.7515842838,
+              13147.073510773203,
+              14051.384030418263,
+              13133.871989860845,
+              14102.449936628685,
+              14395.542458808717,
+              12632.498098859453,
+              13645.80608365014,
+              13500.845373890954,
+              12833.75665399232
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 273,
+            "samples": [
+              41369.659340659215,
+              38405.219780219966,
+              40774.26739926716,
+              39102.10622710597,
+              38035.86813186845,
+              41663.615384616016,
+              38520.75824175823,
+              40882.63369963388,
+              38047.465201465384,
+              41033.72893772867,
+              42615.38461538467,
+              38217.03296703313
+            ]
+          }
+        ],
+        "checksum": 805248
+      },
+      "upstream": {
+        "pid": 89156,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR 1 explicit-ref transitions",
+            "iterations": 4356,
+            "samples": [
+              2847.997015610654,
+              2648.502066115698,
+              2621.8243801652848,
+              2809.228650137746,
+              2648.2821395776036,
+              2604.616161616162,
+              2636.2869605142396,
+              2742.2233700642832,
+              2689.1834251607015,
+              2809.8599632690575,
+              2665.8631772268163,
+              2671.5355831037614
+            ]
+          },
+          {
+            "case": "SSR 10 explicit-ref transitions",
+            "iterations": 769,
+            "samples": [
+              13320.166449934955,
+              12620.990897269228,
+              13397.431729518901,
+              14057.487646293874,
+              12909.840052015661,
+              13422.680104031226,
+              13724.750325097437,
+              13968.195058517531,
+              13280.992197659423,
+              13858.257477243224,
+              16050.769830949244,
+              13393.368010403077
+            ]
+          },
+          {
+            "case": "DOM disabled transition open-close cycle (jsdom)",
+            "iterations": 789,
+            "samples": [
+              13225.972116603156,
+              13967.415716096379,
+              13649.714828897218,
+              14668.462610899953,
+              13139.416983523397,
+              14107.202788339817,
+              12893.904942965859,
+              12853.348542458834,
+              13795.205323193897,
+              13046.471482889772,
+              14251.003802281413,
+              12977.134347274772
+            ]
+          },
+          {
+            "case": "DOM CSS transition open-close cycle (jsdom)",
+            "iterations": 273,
+            "samples": [
+              37193.37728937754,
+              45213.981684981845,
+              39036.47619047631,
+              42387.51648351633,
+              39129.578754579095,
+              37391.025641025764,
+              40697.34432234423,
+              37900.64102564086,
+              43687.27106227128,
+              39719.78021978087,
+              42150.33699633683,
+              37809.827838827914
+            ]
+          }
+        ],
+        "checksum": 473216
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "SSR 1 explicit-ref transitions",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2669.904492794574,
+          "vpmNs": 2040.7130545351743,
+          "changePct": -23.566065376399603
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2611.9045879602586,
+          "vpmNs": 1997.0898597311548,
+          "changePct": -23.53894284895136
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2676.2806509945767,
+          "vpmNs": 1950.256238698012,
+          "changePct": -27.12811199478481
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2615.839013224824,
+          "vpmNs": 1967.9764750762938,
+          "changePct": -24.766911681993797
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2660.634369516166,
+          "vpmNs": 2650.565179242918,
+          "changePct": -0.3784507329760989
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2668.699380165289,
+          "vpmNs": 2678.336432506886,
+          "changePct": 0.3611141971712195
+        }
+      ]
+    },
+    {
+      "case": "SSR 10 explicit-ref transitions",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13106.77379400265,
+          "vpmNs": 9345.664928292015,
+          "changePct": -28.695916514799624
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13369.894985808893,
+          "vpmNs": 9499.310312204303,
+          "changePct": -28.95000056255427
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 12908.392578125075,
+          "vpmNs": 9638.83463541663,
+          "changePct": -25.328931723451998
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13094.085513078448,
+          "vpmNs": 9162.936116700253,
+          "changePct": -30.022328725833813
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13383.764137930986,
+          "vpmNs": 13116.75310344832,
+          "changePct": -1.9950369098774567
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13410.055916775063,
+          "vpmNs": 13451.2899869961,
+          "changePct": 0.3074861915337346
+        }
+      ]
+    },
+    {
+      "case": "DOM disabled transition open-close cycle (jsdom)",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13271.90927152331,
+          "vpmNs": 9490.562251655609,
+          "changePct": -28.491356763424356
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13484.690366972412,
+          "vpmNs": 9858.199541284332,
+          "changePct": -26.893393374239572
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 13938.33379310332,
+          "vpmNs": 9808.189655172382,
+          "changePct": -29.63154849953824
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13792.852799227756,
+          "vpmNs": 9585.0424710425,
+          "changePct": -30.507179257512608
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13633.07282184641,
+          "vpmNs": 13389.466189856932,
+          "changePct": -1.7868798558686505
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13437.843472750188,
+          "vpmNs": 13573.325728770547,
+          "changePct": 1.0082142740767575
+        }
+      ]
+    },
+    {
+      "case": "DOM CSS transition open-close cycle (jsdom)",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 39550.68470149294,
+          "vpmNs": 35446.4384328364,
+          "changePct": -10.377181329813002
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 39897.001754386445,
+          "vpmNs": 34075.65789473729,
+          "changePct": -14.590930655607803
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 39322.558189655465,
+          "vpmNs": 37087.19612068954,
+          "changePct": -5.684681190335105
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 39984.7000000002,
+          "vpmNs": 35974.52131147531,
+          "changePct": -10.029282922029847
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 38747.12643678182,
+          "vpmNs": 39203.22413793161,
+          "changePct": 1.1771136161385698
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 39424.67948717998,
+          "vpmNs": 39938.18681318656,
+          "changePct": 1.3025022211621717
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "SSR 1 explicit-ref transitions",
+      "upstream_ns": 2643,
+      "vpm_ns": 1983,
+      "change_pct": -24.2,
+      "upstream_first_pct": -25.3,
+      "vpm_first_pct": -24.2,
+      "process_range_pct": "-23.6, -23.5, -27.1, -24.8",
+      "control_max_abs_pct": 0.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "SSR 10 explicit-ref transitions",
+      "upstream_ns": 13100,
+      "vpm_ns": 9422,
+      "change_pct": -28.8,
+      "upstream_first_pct": -27,
+      "vpm_first_pct": -29.5,
+      "process_range_pct": "-28.7, -29.0, -25.3, -30.0",
+      "control_max_abs_pct": 2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "DOM disabled transition open-close cycle (jsdom)",
+      "upstream_ns": 13639,
+      "vpm_ns": 9697,
+      "change_pct": -29.1,
+      "upstream_first_pct": -29.1,
+      "vpm_first_pct": -28.7,
+      "process_range_pct": "-28.5, -26.9, -29.6, -30.5",
+      "control_max_abs_pct": 1.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "DOM CSS transition open-close cycle (jsdom)",
+      "upstream_ns": 39724,
+      "vpm_ns": 35710,
+      "change_pct": -10.2,
+      "upstream_first_pct": -8,
+      "vpm_first_pct": -12.3,
+      "process_range_pct": "-10.4, -14.6, -5.7, -10.0",
+      "control_max_abs_pct": 1.3,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

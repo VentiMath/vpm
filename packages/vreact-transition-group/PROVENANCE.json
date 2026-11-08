@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "react-transition-group",
+    "version": "4.4.5",
+    "appVersion": "4.4.5",
+    "repository": "https://github.com/reactjs/react-transition-group",
+    "commit": "4cb51a9be0ebf508cb8f6506452097f7ebb874fe",
+    "checked": "2026-11-08"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React19 explicit-ref Transition, CSSTransition and TransitionGroup used by MUI7.2.0 navigation Collapse, Fade/Grow/Slide/Zoom, ButtonBase ripple and MUI X8.7.0 date-calendar transitions. SwitchTransition, ReplaceTransition and legacy implicit findDOMNode are outside scope."
+  },
+  "changes": [
+    "No runtime dependencies beyond the React peer; class operations use native classList directly.",
+    "Each transition owns a cancellable operation and timer; obsolete completions cannot win after reversal or unmount.",
+    "CSS bookkeeping uses the actual owner node and removes its managed classes on unmount.",
+    "Types require explicit refs for live React19 transitions; CJS/ESM root and component subpaths are provided.",
+    "Group exit callbacks keep their identity across parent renders, preserving effect-driven MUI ripple completion."
+  ],
+  "appContract": {
+    "commit": "4ffa8d0b9f157067599c46b7f3dc65e26dddbfab",
+    "files": {
+      "src/@fuse/core/FuseNavigation/vertical/shared/FuseNavVerticalItemBase.tsx": "b6f514fc2d480dfe19d1dbd04c23e468ecaf9dbb592a9943534daa145b2c5021",
+      "src/@fuse/core/FuseNavigation/vertical/types/FuseNavVerticalCollapse.tsx": "8d6ce46357e6f321666e9716baa03631d6863c2cf561d91282b50610a69ae8b8",
+      "src/app/(control-panel)/apps/calendar/components/dialogs/event/EventDialog.tsx": "79dbe3de1209d78a3d8f21ffa5bc71b8dddae2e779bb2c6479614f664c879ae5",
+      "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteFormReminder.tsx": "38a272c4272e7fbf18a5424d20ca1e2d2d3a80d64cf58624efa78adf78a7bafc"
+    }
+  }
+}

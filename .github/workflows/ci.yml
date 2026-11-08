@@ -108,6 +108,10 @@ jobs:
         run: |
           node scripts/pack-autosuggest-release.cjs --ref "$GITHUB_SHA" --tag autosuggest-10.1.0-ci --out "$RUNNER_TEMP/autosuggest-release"
           node scripts/check-autosuggest-release.cjs "$RUNNER_TEMP/autosuggest-release"
+      - name: Verify independent MUI transitions
+        run: |
+          npm --prefix scripts/transition-group-conformance ci --ignore-scripts --no-audit --no-fund
+          node scripts/transition-group-conformance/archives.cjs
       - name: Verify DOM-helper elimination in MUI callers
         run: |
           npm --prefix scripts/transition-dom-audit ci --ignore-scripts --no-audit --no-fund

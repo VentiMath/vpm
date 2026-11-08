@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "react-transition-group",
+    "version": "4.4.5",
+    "appVersion": "4.4.5",
+    "repository": "https://github.com/reactjs/react-transition-group",
+    "commit": "4cb51a9be0ebf508cb8f6506452097f7ebb874fe",
+    "checked": "2026-11-08"
+  },
+  "application": {
+    "commit": "4ffa8d0b9f157067599c46b7f3dc65e26dddbfab",
+    "files": {
+      "src/@fuse/core/FuseNavigation/vertical/shared/FuseNavVerticalItemBase.tsx": "b6f514fc2d480dfe19d1dbd04c23e468ecaf9dbb592a9943534daa145b2c5021",
+      "src/@fuse/core/FuseNavigation/vertical/types/FuseNavVerticalCollapse.tsx": "8d6ce46357e6f321666e9716baa03631d6863c2cf561d91282b50610a69ae8b8",
+      "src/app/(control-panel)/apps/calendar/components/dialogs/event/EventDialog.tsx": "79dbe3de1209d78a3d8f21ffa5bc71b8dddae2e779bb2c6479614f664c879ae5",
+      "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteFormReminder.tsx": "38a272c4272e7fbf18a5424d20ca1e2d2d3a80d64cf58624efa78adf78a7bafc"
+    }
+  },
+  "fixtureFiles": {
+    "node_modules/react-transition-group/cjs/Transition.js": "86f89d8af290d1f68ec1e3f24d7658ae07f8f23fa9c8bf0a77bbe679f500f25b",
+    "node_modules/react-transition-group/cjs/CSSTransition.js": "d1d44b5b191ed4d7af303a6f62923b6ff40a587219ba9a6c629b0521128766c6",
+    "node_modules/react-transition-group/cjs/TransitionGroup.js": "9f09369d9eef711d350573bd1a28d0ec18559d4a29bd829973b60019f363da6e",
+    "node_modules/@mui/material/esm/Collapse/Collapse.js": "4a1a9fb514d44f3f630d5cf8d42fda5c10d88593436724b3a59ea9b0c2c15bbd",
+    "node_modules/@mui/material/esm/Fade/Fade.js": "fd27997e17983b36cb4e8c23527ff80e8160da521e906ba6bc2fc07c9a2f953e",
+    "node_modules/@mui/material/esm/Grow/Grow.js": "37f1b482f3320ac74b7f7e4370e957e27ccaae477a0e03a32c03ee47050ea225",
+    "node_modules/@mui/material/esm/Slide/Slide.js": "780d69957a9ce9a8c740cacf43f883ed5fc487909a1d1e536ac6dce9eeac4a4d",
+    "node_modules/@mui/material/esm/Zoom/Zoom.js": "7157692d663cdc1c1a84f750ea5ee21c2fc86af2e914069ca8aaa198ea6e0d66",
+    "node_modules/@mui/material/esm/ButtonBase/Ripple.js": "7e822c883e76508da6bb5733b05a9fa1c1256e60fa738e520ed278e71e163c00",
+    "node_modules/@mui/x-date-pickers/esm/DateCalendar/PickersSlideTransition.js": "76d98add5a3e0e4c066d0f69dc1eb506501f7d9058ece160f60c64c49919bf42"
+  }
+}

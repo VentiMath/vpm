@@ -50,12 +50,14 @@ The November 7 caller audit found that MUI navigation `Collapse` uses
 The calendar and notes date pickers do use `CSSTransition`, through MUI's
 `PickersSlideTransition`, but only for `addClass` and `removeClass`.
 
-Do not build a broad `vdom-helpers` package for this path. The future independent
-transition caller can own two native class-list operations, eliminating the
-helper dependency and its own Babel runtime edge. Current 6.0.1 and app-pinned
+Do not build a broad `vdom-helpers` package for this path. The independent
+[vreact-transition-group](../packages/vreact-transition-group) caller now owns
+two native class-list operations, eliminating the helper dependency and its own
+Babel runtime edge. Current 6.0.1 and app-pinned
 5.2.1 controls match these operations in unchanged MUI browser callers, including
 iframe ownership and SVG/class-token checks. See the reproducible
 [caller audit](../scripts/transition-dom-audit/README.md).
 
-The app still installs the original transition package and DOM helpers. Removal
-is planned, not completed; other callers can still require shared Babel helpers.
+The app still installs the original transition package and DOM helpers. The VPM
+replacement no longer requires them; a consumer release and app dependency
+update are still needed. Other callers can still require shared Babel helpers.
