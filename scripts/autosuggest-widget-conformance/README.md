@@ -18,7 +18,10 @@ closed/always-visible, default/custom themes, present/absent section titles, lit
 fixtures exercise controlled values, highlight/wrap/restoration, Enter/Escape,
 fetch/clear/selection callbacks, custom input and portaled suggestions, focus,
 minimum query length, automatic focus and delayed results. Parent rerenders must
-retain input/result DOM identity. Additional assertions cover composition,
+retain input/result DOM identity. Twelve additional query/action cases type `usamts`,
+`amc`, `putnam`, `arml`, `usam` and `a` one character at a time (80ms apart), then
+check immediate Enter or arrow traversal/restoration against upstream. This
+regression fails with the original release. Additional assertions cover composition,
 empty leading groups, result delivery after blur and ref forwarding. Grouped
 null-highlight corrections and redundant upstream notifications are explicitly
 distinguished in comparisons, not treated as identical behavior.

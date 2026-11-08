@@ -32,15 +32,17 @@ The package has no dependencies. The release includes its exact consumer fragmen
 
 ## Navigation Autosuggest
 
-The [Autosuggest 10.1.0 release](https://github.com/VentiMath/vpm/releases/tag/autosuggest-10.1.0)
+The [Autosuggest 10.1.0 release](https://github.com/VentiMath/vpm/releases/tag/autosuggest-10.1.0-r2)
 contains `vreact-autosuggest` and the four helpers used by navigation search.
+Revision r2 fixes first-result highlighting during incremental typing, including
+immediate Enter selection and arrow-key restoration.
 Keep the application's existing imports and replace these two dependency values:
 
 ```json
 {
   "dependencies": {
-    "react-autosuggest": "https://github.com/VentiMath/vpm/releases/download/autosuggest-10.1.0/vreact-autosuggest-10.1.0.tgz",
-    "autosuggest-highlight": "https://github.com/VentiMath/vpm/releases/download/autosuggest-10.1.0/vautosuggest-highlight-3.3.4.tgz"
+    "react-autosuggest": "https://github.com/VentiMath/vpm/releases/download/autosuggest-10.1.0-r2/vreact-autosuggest-10.1.0.tgz",
+    "autosuggest-highlight": "https://github.com/VentiMath/vpm/releases/download/autosuggest-10.1.0-r2/vautosuggest-highlight-3.3.4.tgz"
   }
 }
 ```
@@ -73,7 +75,7 @@ pins, source commit, dependency URLs and archive/source hashes. Existing assets
 are immutable; a correction uses a new revision tag.
 
 ```sh
-node scripts/pack-autosuggest-release.cjs --ref COMMIT_SHA --tag autosuggest-10.1.0 --out /absolute/path/to/empty-output
+node scripts/pack-autosuggest-release.cjs --ref COMMIT_SHA --tag autosuggest-10.1.0-r2 --out /absolute/path/to/empty-output
 node scripts/check-autosuggest-release.cjs /absolute/path/to/output
 # After publication:
 node scripts/check-autosuggest-release.cjs /absolute/path/to/output --published

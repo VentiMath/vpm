@@ -28,6 +28,9 @@ Custom input renderers must forward the supplied input props and ref. Custom
 suggestion containers must forward `containerProps`, including its ref; portals
 are supported. The component ref exposes `.input`. Existing theme keys support
 classes, inline styles and decorated style maps through `vreact-themeable`.
+With `highlightFirstSuggestion`, incremental typing reapplies the first-result
+policy even when consecutive characters retain the same filtered items; Enter
+and arrow navigation start from that highlighted result.
 Grouped lists, always-visible suggestions, first-result highlighting, selection
 focus policy and custom render predicates are included. No styles are imposed.
 
@@ -61,5 +64,5 @@ measure rendering, not network latency or a complete application page.
 
 
 The [Autosuggest release installation recipe](../../docs/INSTALLATION.md#navigation-autosuggest)
-provides this package in the `autosuggest-10.1.0` set with pinned internal URLs.
+provides this package in the `autosuggest-10.1.0-r2` set with pinned internal URLs.
 Release availability and application adoption are separate milestones.

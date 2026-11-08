@@ -16,7 +16,8 @@
     "Independent React runtime using vreact-themeable, vsection-iterator and vshallow-equal; no copied upstream runtime, legacy Promise shim or prop-types runtime.",
     "Composition Enter cannot select a suggestion. Keyboard scrolling cannot let a stationary pointer overwrite the highlight.",
     "Caller input refs are forwarded; unchanged rendered suggestion content retains DOM identity. Empty grouped results clear the active descendant and notify null.",
-    "Empty sections are omitted as documented upstream. shouldKeepSuggestionsOnSelect keeps the menu open on Enter; redundant unchanged-highlight notifications are suppressed."
+    "Empty sections are omitted as documented upstream. shouldKeepSuggestionsOnSelect keeps the menu open on Enter; redundant unchanged-highlight notifications are suppressed.",
+    "Incremental typing reapplies first-result highlighting even when consecutive characters preserve the same filtered list; immediate Enter and arrow restoration are compared against upstream."
   ],
   "appContract": {
     "commit": "21197a2c9ffd91ff1008ead966d2cde0f8705ef5",
@@ -31,6 +32,14 @@
       ],
       "checksPerVariant": 8,
       "scope": "Unchanged FuseSearch with real MUI TextField/Popper and synthetic navigation in MemoryRouter. Ten-result cap, controlled value, rerender DOM/focus retention, arrow navigation, Enter and mouse route selection, no-results feedback and Escape. No authenticated app or deployment claim."
+    }
+  },
+  "regressions": {
+    "autosuggest-10.1.0-r2": {
+      "reported": "2026-11-07",
+      "symptom": "The first-result highlight could disappear during character-by-character navigation searches, leaving Enter without a selection.",
+      "cause": "The input-change handler cleared the highlight, while unchanged filtered contents skipped the new-list highlight logic.",
+      "verification": "Six navigation queries typed at80ms per character, immediate Enter and ArrowDown/ArrowUp restoration; packed React19.1/19.2 browser controls and unchanged FuseSearch basic/full with synthetic routes."
     }
   }
 }

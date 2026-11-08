@@ -121,6 +121,56 @@ const pending = new Map(),
       });
       await evaluate(settle);
     };
+    // Type each key separately: replacing the entire input in one event missed
+    // highlight resets when filtering changes and then retains a nonempty list.
+    let typingCases = 0;
+    for (const query of ["usamts", "amc", "putnam", "arml", "usam", "a"])
+      for (const action of ["enter", "arrows"]) {
+        const pairs = [];
+        for (const variant of ["upstream", "vpm"]) {
+          const v = JSON.stringify(variant),
+            states = [];
+          await evaluate(`window['mount_'+${v}]({navigation:true});${settle}`);
+          await evaluate(
+            `document.getElementById(${v}+'-input').focus();${settle}`,
+          );
+          for (const character of query) {
+            await send("Input.insertText", { text: character });
+            await evaluate("new Promise(r=>setTimeout(r,80))");
+            const state = await evaluate(`window.snapshot(${v})`);
+            delete state.forwarded;
+            states.push(state);
+          }
+          if (action === "arrows")
+            for (const [name, code] of [
+              ["ArrowDown", 40],
+              ["ArrowUp", 38],
+              ["ArrowUp", 38],
+            ]) {
+              await key(name, code);
+              const state = await evaluate(`window.snapshot(${v})`);
+              delete state.forwarded;
+              states.push(state);
+            }
+          // Return to the automatic first result, then verify Enter selection.
+          if (action === "arrows") await key("ArrowDown", 40);
+          await key("Enter", 13);
+          states.push(
+            await evaluate(`window.logs[${v}].filter(x=>x[0]==='select')`),
+          );
+          pairs.push(states);
+        }
+        assert.deepEqual(
+          pairs[1],
+          pairs[0],
+          "incremental navigation query: " + query + " " + action,
+        );
+        assert.equal(
+          pairs[1][query.length - 1].active,
+          pairs[1][query.length - 1].options[0].text,
+        );
+        typingCases++;
+      }
     const reports = [];
     for (const options of [
       {},
@@ -338,7 +388,10 @@ const pending = new Map(),
     await evaluate(`window.controls.vpm.root.render(null);${settle}`);
     assert.deepEqual(
       await evaluate(`window.logs.vpm.filter(x=>x[0].includes('ref'))`),
-      [["input-ref", true, 0], ["ref-cleanup", 0]],
+      [
+        ["input-ref", true, 0],
+        ["ref-cleanup", 0],
+      ],
     );
     await evaluate(`window.mount_vpm({cleanupRef:true});${settle}`);
     await evaluate(`window.controls.vpm.swapRef();${settle}`);
@@ -360,7 +413,7 @@ const pending = new Map(),
     edgeCases += 6;
     assert.deepEqual(exceptions, []);
     console.log(
-      `Chrome: ${snapshots} controlled-input, keyboard, ARIA, custom portal and result-update snapshots/callback traces match; ${edgeCases} mouse, IME, delayed-result and empty-group cases pass.`,
+      `Chrome: ${typingCases} incremental navigation queries; ${snapshots} controlled-input, keyboard, ARIA, custom portal and result-update snapshots/callback traces match; ${edgeCases} mouse, IME, delayed-result and empty-group cases pass.`,
     );
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);

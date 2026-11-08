@@ -19,14 +19,15 @@ per full server render (lower is better).
 
 | Case | Node upstream → VPM | Bun upstream → VPM |
 | --- | ---: | ---: |
-| Closed navigation widget | 11,765 → 3,985 (66.0% lower) | 7,873 → 3,602 (54.3% lower) |
-| Ten suggestions | 79,832 → 22,139 (71.7% lower) | 43,180 → 22,071 (49.5% lower) |
-| Two sections, ten suggestions | 86,378 → 28,463 (67.7% lower) | 47,627 → 25,930 (45.7% lower) |
+| Closed navigation widget | 10,624 → 3,683 (65.2% lower) | 7,375 → 3,299 (55.4% lower) |
+| Ten suggestions | 69,580 → 19,730 (71.2% lower) | 40,704 → 21,114 (47.7% lower) |
+| Two sections, ten suggestions | 75,886 → 23,576 (68.4% lower) | 44,977 → 24,460 (45.2% lower) |
 
-All six results were lower in every comparison pair and exceeded their
-identical-source control spread. The Node closed-widget control varied by up to
-14.9%; that noise is retained in the report and is smaller than the measured
-improvement. No samples were discarded. These numbers do not estimate end-user
-search latency; the app also pays for MUI, filtering, layout and routing.
+The measurements were refreshed for the r2 incremental-highlight repair. All
+six results are lower in every comparison pair and exceed their identical-source
+control spread. Maximum control spread is 4.6% on Node and 4.4% on Bun. No samples
+were discarded. These numbers do not estimate end-user search latency; the app
+also pays for MUI, filtering, layout and routing. The interaction repair is
+verified by the separate browser regression, not by this server-render benchmark.
 
 Reports: [Node](node-isolated.json), [Bun](bun-isolated.json).

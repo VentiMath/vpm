@@ -14,6 +14,18 @@ const h = React.createElement,
     "Campus",
     "Contest",
   ].map((title, index) => ({ title, index }));
+const navigationRows = [
+  "AMC Series",
+  "AMC 8",
+  "AMC 10",
+  "AMC 12",
+  "AIME",
+  "ARML",
+  "ARML Local",
+  "Putnam",
+  "USAMO",
+  "USAMTS",
+].map((title, index) => ({ title, index }));
 window.controls = {};
 window.logs = {};
 window.refs = {};
@@ -29,10 +41,11 @@ for (const variant of Object.keys(components)) {
   const root = createRoot(host);
   function mount(options = {}) {
     window.logs[variant] = [];
+    const choices = options.navigation ? navigationRows : rows;
     function Harness() {
       const [value, setValue] = React.useState(options.value || ""),
         [suggestions, setSuggestions] = React.useState(
-          options.always ? rows : [],
+          options.always ? choices : [],
         ),
         [tick, setTick] = React.useState(0);
       const record = (...args) => window.logs[variant].push(args);
@@ -70,7 +83,7 @@ for (const variant of Object.keys(components)) {
         rerender: () => setTick((x) => x + 1),
         inputRef,
         swapRef: () => setRefMode((x) => x + 1),
-        rows,
+        rows: choices,
         root,
       };
       const props = {
@@ -94,7 +107,7 @@ for (const variant of Object.keys(components)) {
           if (!options.async)
             setItems(
               group(
-                rows.filter((x) =>
+                choices.filter((x) =>
                   x.title.toLowerCase().startsWith(value.trim().toLowerCase()),
                 ),
               ),

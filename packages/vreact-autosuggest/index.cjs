@@ -146,7 +146,16 @@ class Autosuggest extends React.Component {
     this.change = (event) => {
       const value = event.target.value,
         eligible = this.allowed(value, "input-changed");
-      this.setState({ before: null, position: empty, collapsed: !eligible });
+      // Filtering may return the same items for several consecutive keystrokes.
+      // Apply the first-result policy here as well as when a new list arrives.
+      this.setState({
+        before: null,
+        position:
+          eligible && this.props.highlightFirstSuggestion
+            ? first(this.props)
+            : empty,
+        collapsed: !eligible,
+      });
       this.changeValue(event, value, "type");
       if (eligible) this.fetch(value, "input-changed");
       else this.props.onSuggestionsClearRequested?.();
