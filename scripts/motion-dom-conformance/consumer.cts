@@ -86,3 +86,26 @@ animateValue({ keyframes: [0, 1], type: spring, visualDuration: 0.3 });
 // @ts-expect-error inertia is not built yet
 animateValue({ keyframes: [0, 1], type: "inertia" });
 void settlingTime;
+
+import {
+  styleEffect,
+  attrEffect,
+  svgEffect,
+  propEffect,
+  resolveElements,
+  releaseElement,
+} from "vmotion-dom";
+const targets: Element[] = resolveElements(null);
+const detach = styleEffect(targets, { opacity: position });
+attrEffect(targets, { dataProgress: position });
+svgEffect(targets, { pathLength: position });
+propEffect({ progress: 0 }, { progress: position });
+const effectValue = styleEffect.get(targets, "opacity");
+if (targets[0]) {
+  styleEffect.flush(targets[0]);
+  releaseElement(targets[0]);
+}
+detach();
+// @ts-expect-error effects bind MotionValues, not plain values
+styleEffect(targets, { opacity: 1 });
+void effectValue;

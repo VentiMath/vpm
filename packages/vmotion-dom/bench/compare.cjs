@@ -65,6 +65,7 @@ require("../../../scripts/bench-process.cjs")
       "mapping.cjs",
       "playback.cjs",
       "spring.cjs",
+      "effects.cjs",
       "index.mjs",
       "frame.cjs",
       "value.cjs",

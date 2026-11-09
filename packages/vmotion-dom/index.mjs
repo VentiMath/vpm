@@ -1,5 +1,13 @@
 import api from "./index.cjs";
 export const {
+  styleEffect,
+  attrEffect,
+  propEffect,
+  svgEffect,
+  resolveElements,
+  releaseElement,
+  styleSubjectEffect,
+  svgSubjectEffect,
   spring,
   calcGeneratorDuration,
   maxGeneratorDuration,

@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 76 package tests
+easings come from the verified `vmotion-utils` foundation. All 97 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -41,6 +41,8 @@ node scripts/motion-dom-conformance/playback.cjs
 bun scripts/motion-dom-conformance/playback.cjs
 node scripts/motion-dom-conformance/spring.cjs
 bun scripts/motion-dom-conformance/spring.cjs
+node scripts/motion-dom-conformance/effects.cjs
+bun scripts/motion-dom-conformance/effects.cjs
 node scripts/motion-dom-conformance/types.cjs
 node scripts/motion-dom-conformance/browser.cjs
 node scripts/motion-dom-conformance/archives.cjs
@@ -53,7 +55,8 @@ renderer remains pending; these checks do not establish full Motion compatibilit
 [Motion value](https://motion.dev/docs/motion-value) and
 [frame](https://motion.dev/docs/frame) documentation, public declarations and
 black-box API observations define the current contract. The remaining
-inertia engine, effects and React renderer are explicitly outside this unit.
+inertia engine, element animation adapters and React renderer are explicitly
+outside this unit.
 
 `playback.cjs` runs 25,084 numeric generator/controller comparisons on each runtime.
 The current control tolerance is 0.0002 over the tested 0–100 value scale; the
@@ -82,3 +85,18 @@ write before checking stable frames; VPM must still stop immediately.
 Public [spring documentation](https://motion.dev/docs/spring), declarations and
 API probes define the contracts; no upstream spring runtime was copied. Standalone
 visualDuration and settled repeat-gap corrections are explicitly reproduced.
+
+`effects.cjs` compares 1,215 effect snapshots against current/app controls:
+CSS units and strings, transform composition, origins, attributes, properties,
+SVG drawing, cleanup and current-state release. Chrome checks computed styles,
+the actual calendar spring parameters through effect bindings, selectors, SVG
+and replacement cleanup. It explicitly reproduces both controls silently skipping
+a directly supplied iframe element, while VPM renders it. Array-wrapped iframe
+elements work in all three implementations.
+
+The implementation follows public [styleEffect](https://motion.dev/docs/style-effect),
+[attrEffect](https://motion.dev/docs/attr-effect),
+[propEffect](https://motion.dev/docs/prop-effect) and
+[svgEffect](https://motion.dev/docs/svg-effect) contracts and public declarations,
+with black-box probes. No upstream effects runtime was copied. Custom effect
+registration and element animation/keyframe resolution remain separate work.

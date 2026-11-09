@@ -263,3 +263,46 @@ export declare function calcGeneratorDuration(
   maxDuration?: number,
 ): number;
 export declare const maxGeneratorDuration: 20000;
+
+/** DOM bindings are deferred to the render phase; cleanup leaves the last paint. */
+export type ElementOrSelector =
+  | Element
+  | readonly Element[]
+  | NodeListOf<Element>
+  | string
+  | null
+  | undefined;
+export interface EffectBindingState {
+  get(key: string): MotionValue<any> | undefined;
+  flush(): void;
+  release(): Map<string, MotionValue<any>>;
+}
+export interface DOMEffect {
+  (
+    subject: ElementOrSelector,
+    values: Record<string, MotionValue<any>>,
+  ): () => void;
+  get(subject: ElementOrSelector, key: string): MotionValue<any> | undefined;
+  flush(subject: Element): void;
+  state(subject: Element): EffectBindingState | undefined;
+}
+export interface PropertyEffect {
+  (subject: object, values: Record<string, MotionValue<any>>): () => void;
+  get(subject: object, key: string): MotionValue<any> | undefined;
+  flush(subject: object): void;
+  state(subject: object): EffectBindingState | undefined;
+}
+export declare const styleEffect: DOMEffect;
+export declare const styleSubjectEffect: DOMEffect;
+export declare const attrEffect: DOMEffect;
+export declare const svgEffect: DOMEffect;
+export declare const svgSubjectEffect: DOMEffect;
+export declare const propEffect: PropertyEffect;
+export declare function releaseElement(
+  element: Element,
+): Map<string, MotionValue<any>> | undefined;
+export declare function resolveElements(
+  subject: ElementOrSelector,
+  scope?: { readonly current: ParentNode | null },
+  selectorCache?: Record<string, NodeListOf<Element>>,
+): Element[];

@@ -90,6 +90,7 @@ require("../../../scripts/bench-process.cjs")
       "value.cjs",
       "playback.cjs",
       "spring.cjs",
+      "effects.cjs",
       "package.json",
       "PROVENANCE.json",
       "bench/playback.cjs",

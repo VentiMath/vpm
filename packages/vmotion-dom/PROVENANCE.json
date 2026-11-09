@@ -7,9 +7,9 @@
   },
   "implementation": {
     "kind": "independent implementation",
-    "replacementStatus": "partial; DOM rendering and inertia pending",
-    "targetScope": "Independent numeric tween and spring playback, mapping, MotionValue lifecycle and frame scheduling. Not a drop-in replacement for motion-dom yet.",
-    "remainingWork": "DOM/WAAPI effects and animation adapters; inertia, color/complex-value mixers and grid/random stagger; gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. The remaining runtime is unimplemented, not retained upstream code.",
+    "replacementStatus": "partial; element animation adapters and full renderer pending",
+    "targetScope": "Independent DOM style/attribute/property/SVG effects, numeric tween/spring playback, MotionValue lifecycle, frame scheduling and mapping. Not a drop-in replacement for motion-dom yet.",
+    "remainingWork": "Element animation adapters, effect registration/read helpers and computed-style/keyframe resolution; inertia, color/complex-value mixers and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
@@ -17,7 +17,8 @@
       "MotionValue": "State, velocity, mutation-safe subscriptions, passive effects and owned external-animation lifecycle",
       "frame scheduling": "Eight ordered phases, dedupe/cancellation/keep-alive, microtasks and manual frame processing",
       "numeric playback": "Owned numeric keyframes, offsets and easing; millisecond generators and tween controllers with delays, repeats, seeking, speed, pause/resume and lifecycle cleanup",
-      "spring playback": "Analytic under/critical/overdamped oscillator, velocity and retargeting; duration/visual-duration calibration; bounded settling estimates and playback integration"
+      "spring playback": "Analytic under/critical/overdamped oscillator, velocity and retargeting; duration/visual-duration calibration; bounded settling estimates and playback integration",
+      "DOM effects": "Deferred and coalesced style/attribute/property/SVG bindings, unit-aware transform composition, path drawing, selectors, scoped flush/release and cleanup ownership"
     }
   },
   "changes": [
@@ -30,7 +31,9 @@
     "Reversing delayed playback preserves the current value instead of reapplying a signed delay and jumping.",
     "Paused animations release their frame callback; explicit seek, completion and cancellation apply values immediately, and callback failures clean up driver ownership.",
     "Standalone visualDuration is honored rather than silently ignored without a bounce option.",
-    "Settled spring repeat gaps retain the endpoint; invalid retarget operations preserve the previous trajectory."
+    "Settled spring repeat gaps retain the endpoint; invalid retarget operations preserve the previous trajectory.",
+    "Direct element effects work across document/window boundaries; both controls silently skip a directly supplied iframe element.",
+    "Binding maps validate before attachment, stale cleanup cannot detach replacements, and queued writes are suppressed after cleanup. Nonfinite numeric styling rejects without losing other writes or future frames."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

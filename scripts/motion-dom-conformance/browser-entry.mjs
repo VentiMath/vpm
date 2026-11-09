@@ -1,3 +1,4 @@
+import { checkEffects } from "./effects-browser.mjs";
 import * as vpm from "../../packages/vmotion-dom/index.mjs";
 import current from "../motion-utils-conformance/node_modules/motion-dom/dist/cjs/index.js";
 import app from "../motion-utils-conformance/node_modules/motion-dom-app/dist/cjs/index.js";
@@ -144,5 +145,6 @@ window.runMotionDom = async () => {
       }).finished;
     node.remove();
   }
+  await checkEffects([current, app, vpm]);
   return rows;
 };

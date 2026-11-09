@@ -1,8 +1,8 @@
 # vmotion-dom
 
-Independent numeric animation playback, values and scheduling targeting **motion-dom 14.7.0**, with
+Independent DOM effects, numeric animation playback, values and scheduling targeting **motion-dom 14.7.0**, with
 12.36.0 as the application's comparison control. This is a partial implementation
-of Motion DOM; DOM rendering and inertia are still to be built.
+of Motion DOM; element animation adapters, inertia and the React renderer remain to be built.
 
 ```js
 import { interpolate, stagger } from "vmotion-dom";
@@ -139,55 +139,92 @@ The generator's own physical `calculatedDuration` stays null. CSS `toString` and
 
 [Spring measurements](bench/spring/README.md) cover the calendar configuration,
 combined value/velocity sampling, time calibration, controller setup and playback.
-Calendar spring construction takes about 80% less time on Node and 52% less on
-Bun; duration calibration takes 92% and 83% less. Repeated spring playback takes
-21% and 45% less time. Node controller setup is 26% lower, while Bun's difference
-is unestablished. Combined value/velocity sampling still costs about 24 ns more
-on Node (68 ns versus 44 ns, 54%); Bun's sampling difference is unestablished.
-All process samples and identical-source controls are retained.
+
+## DOM effects
+
+`styleEffect`, `attrEffect`, `svgEffect` and `propEffect` bind MotionValues to
+styles, attributes, SVG drawing properties or object properties. Initial values
+and subsequent changes paint during the render phase. Repeated changes coalesce;
+transforms and SVG path properties share one composed write per element.
+
+```js
+import { motionValue, styleEffect, animateValue } from "vmotion-dom";
+const scale = motionValue(0);
+const detach = styleEffect(element, { scale });
+const animation = animateValue({
+  keyframes: [0, 1], type: "spring", stiffness: 550, damping: 30, restSpeed: 10,
+  onUpdate: value => scale.set(value),
+});
+// When the owning view unmounts:
+animation.stop();
+detach();
+```
+
+Style bindings handle numeric units, opacity bounds, CSS variables, explicit
+transform strings, independent transforms in a stable order, and transform
+origins. String values pass through, including CSS expressions and colors;
+color-object conversion and interpolation are not implemented here. SVG bindings
+route supported styles through `.style`, use `attrWidth`/`attrX` for forced
+attributes, and normalize `pathLength`, `pathSpacing` and `pathOffset` for drawing.
+Attribute bindings use an existing JavaScript setter when available and normalize
+camel-case `aria`/`data` names. Object-property bindings preserve the exact value.
+
+DOM effects accept an element, element collection or selector. `resolveElements`
+also accepts a scoped root and selector cache. Elements from another document
+work directly: both controls require wrapping those elements in an array.
+
+Each effect exposes `get(subject, key)`, `flush(subject)` and `state(subject)`;
+the state exposes `get`, `flush` and `release`. `releaseElement(element)` detaches
+style/SVG bindings, returns their MotionValues and clears retained transform
+components for the next renderer. `styleSubjectEffect` and `svgSubjectEffect`
+share the corresponding binding stores. Public effect registration, custom
+`createEffect`/`MotionValueState` construction and computed-style reads are not
+implemented yet; the declarations expose this bounded surface.
+
+Cleanup is idempotent and preserves the last paint. Removing a transform binding
+freezes that component while other components continue. A stale cleanup cannot
+remove a newer binding, even if it reused the same MotionValue. Cancelling before
+first paint suppresses queued writes. Invalid maps are checked before attachment;
+nonfinite numeric styling rejects without preventing other queued writes or
+future frames. As with upstream, cleanup stops observation; it does not restore
+styles that predated the effect.
+
+[DOM effect measurements](bench/effects/README.md) cover binding/initial paint,
+scalar updates, composed transforms, 32-element fan-out and SVG path updates.
+These measure JavaScript scheduling and serialization with lightweight element
+sinks; Chrome conformance checks real styles separately. They do not measure
+browser layout, paint or application frame rate.
+
+In the current recording, Node's 32-element update takes 29% less time; its scalar
+and transform differences are unestablished against process/control variation.
+Bun remains slower: one opacity update is 130 ns versus 81 ns, three transforms
+are 344 ns versus 172 ns, and a 32-element update is 3.56 μs versus 1.72 μs.
+SVG path updates take 29% more time on Node and 48% more on Bun (about 133 ns and
+106 ns extra). Binding/initial-paint/disposal medians are higher on both runtimes,
+with too much process variation to establish a direction. These remaining costs
+are retained in the reports; this unit does not claim universal speed gains.
 
 ## Still to build
 
-DOM effects and animation adapters come next. Inertia, CSS spring serialization,
-color/complex-string mixers,
-grid/random staggering, WAAPI, gestures/layout and the React renderer remain
+Element animation adapters and computed-style/keyframe resolution come next.
+Inertia, CSS spring serialization, color/complex-string mixers, grid/random
+staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject
 explicitly. This package must not replace `motion-dom` under Framer Motion yet.
 VentiMath's timed contest fades and spring-based calendar/header transforms are
 the playback targets. Application adoption is not claimed.
 
-[Conformance](../../scripts/motion-dom-conformance/README.md) compares numeric
+[Conformance](../../scripts/motion-dom-conformance/README.md) compares the implemented
 contracts against current and application controls, with separate correctness
-checks, strict types and packed installs. [Measurements](bench/results/README.md)
-use isolated processes and identical-source controls. These scalar timings do not
+checks, strict types, Chrome and packed installs. Each benchmark suite uses fresh
+processes, balanced order and identical-source controls, retaining all samples and
+reporting remaining costs alongside improvements. These primitive timings do not
 establish an application frame-rate improvement.
 
-[Value and frame measurements](bench/values/README.md) are recorded separately
-from the numeric mapping suite. Both use fresh processes, balanced order and
-identical-source controls. These primitive timings do not establish application
-frame-rate gains; remaining costs are reported alongside improvements.
-
-The value/frame recording finds lower creation time on Bun (about 33%) and lower
-schedule/cancel time on Node/Bun (16%/10%). Node creation and subscriber-update
-differences are unestablished against process/control variation. Dispatching 32
-callbacks costs about 0.21 microseconds more on Node and 0.15 microseconds more on
-Bun (20%/13%); cancellation and exception recovery remain enabled. The report keeps
-all samples and does not turn these microbenchmarks into an application claim.
-
-Numeric mapping and timeline preparation remain lower-time cases on both
-runtimes. The re-recorded Bun list-stagger case is 11% higher (about 9 ns per
-20-item batch); the full numeric report includes this remaining regression.
-
-[Playback measurements](bench/playback/README.md) cover numeric generator
-construction/sampling, creation and disposal of paused controllers, and repeated
-frame delivery. Each worker uses the same clock and driver contract; the
-construction case disposes controllers instead of accumulating queued work.
-
-The playback recording finds 51% lower per-frame time on Node and 60% on Bun.
-Node generator construction and controller creation/disposal are 90% and 57%
-lower. Bun generator sampling is 22% lower; its construction difference is
-unestablished against control variation. Bun controller creation/disposal has a
-higher paired median (43%, 118 ns versus 84 ns), but the controls are too noisy to
-establish a direction in this recording. Node sampling is also unestablished.
-These measurements describe numeric primitives, not application frame-rate
-gains; all control noise and outliers remain in the reports.
+| Measurements | Work covered |
+| --- | --- |
+| [DOM effects](bench/effects/README.md) | Binding, painting, cleanup, transforms, fan-out and SVG paths |
+| [Springs](bench/spring/README.md) | Construction, calibration, value/velocity sampling and repeated playback |
+| [Numeric playback](bench/playback/README.md) | Keyframe generators, controller lifetime and frame delivery |
+| [Values and frames](bench/values/README.md) | Value creation/notification, scheduling, dispatch and cancellation |
+| [Numeric mapping](bench/results/README.md) | Interpolation, timeline lookup/preparation and list staggering |
