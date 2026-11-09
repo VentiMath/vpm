@@ -4,4 +4,5 @@ module.exports = {
   ...require("./frame.cjs"),
   ...require("./value.cjs"),
   ...require("./playback.cjs"),
+  ...require("./spring.cjs"),
 };

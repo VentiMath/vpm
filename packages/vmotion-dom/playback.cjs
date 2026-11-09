@@ -2,6 +2,7 @@
 const { easingDefinitionToFunction } = require("vmotion-utils");
 const { frame, cancelFrame, time } = require("./frame.cjs");
 const { interpolate } = require("./mapping.cjs");
+const { spring, calcGeneratorDuration } = require("./spring.cjs");
 
 function finite(value, name, minimum = -Infinity) {
   if (!Number.isFinite(value) || value < minimum)
@@ -90,7 +91,7 @@ function keyframes({
 class JSAnimation {
   constructor(options) {
     const {
-      duration = 300,
+      duration,
       delay = 0,
       repeat = 0,
       repeatDelay = 0,
@@ -98,9 +99,9 @@ class JSAnimation {
       type = "keyframes",
       autoplay = true,
     } = options;
-    if (!["keyframes", "tween", false].includes(type))
+    if (!["keyframes", "tween", "spring", spring, false].includes(type))
       throw new TypeError(
-        "only numeric keyframe/tween playback is implemented",
+        "only numeric keyframe/tween and spring playback are implemented",
       );
     finite(delay, "delay");
     finite(repeatDelay, "repeatDelay", 0);
@@ -120,34 +121,62 @@ class JSAnimation {
       onStop: options.onStop,
       finalKeyframe: options.finalKeyframe,
     };
+    const isSpring = type === "spring" || type === spring;
     const generatorOptions = {
       keyframes: options.keyframes,
       duration: type === false ? 0 : duration,
       times: options.times,
       ease: options.ease,
     };
-    this.generator = keyframes(generatorOptions);
+    if (isSpring) {
+      for (const name of [
+        "stiffness",
+        "damping",
+        "mass",
+        "velocity",
+        "restDelta",
+        "restSpeed",
+        "bounce",
+        "visualDuration",
+      ])
+        generatorOptions[name] = options[name];
+    }
+    const generate = isSpring ? spring : keyframes;
+    this.generator = generate(generatorOptions);
     this.first = options.keyframes[0];
     this.mirrored =
       repeatType === "mirror" && repeat
-        ? keyframes({
+        ? generate({
             ...generatorOptions,
+            ...(isSpring ? { velocity: -(options.velocity ?? 0) } : {}),
             keyframes: options.keyframes.toReversed(),
           })
         : undefined;
-    this.length = this.generator.calculatedDuration;
+    this.isSpring = isSpring;
+    this.last = options.keyframes.at(-1);
+    this.length =
+      this.generator.calculatedDuration ??
+      calcGeneratorDuration(this.generator);
     this.delay = delay;
     this.cycle = this.length + repeatDelay;
     if (
-      !Number.isFinite(this.cycle) ||
+      (!Number.isFinite(this.cycle) && !(isSpring && repeat === 0)) ||
       (repeat === Infinity && this.cycle === 0)
     )
       throw new RangeError(
         "repeating animation requires a finite, positive cycle",
       );
     this.total =
-      repeat === Infinity ? Infinity : this.length + this.cycle * repeat;
-    if (repeat !== Infinity && !Number.isFinite(this.total))
+      repeat === 0
+        ? this.length
+        : repeat === Infinity
+          ? Infinity
+          : this.length + this.cycle * repeat;
+    if (
+      repeat !== Infinity &&
+      !Number.isFinite(this.total) &&
+      !(isSpring && repeat === 0)
+    )
       throw new RangeError("animation duration overflow");
     this.repeat = repeat;
     this.repeatType = repeatType;
@@ -239,6 +268,12 @@ class JSAnimation {
   evaluate(raw, finalOverride = true, target = this.result) {
     const elapsed = raw - this.delay;
     const end = elapsed >= this.total;
+    if (!Number.isFinite(this.length)) {
+      const value = this.generator.next(Math.max(0, elapsed));
+      target.value = elapsed < 0 ? this.first : value.value;
+      target.done = elapsed >= 0 && value.done;
+      return target;
+    }
     const bounded = Math.max(0, Math.min(elapsed, this.total));
     let iteration = this.cycle ? Math.floor(bounded / this.cycle) : this.repeat;
     if (bounded > 0 && bounded === iteration * this.cycle) iteration--;
@@ -253,7 +288,10 @@ class JSAnimation {
     target.value = elapsed < 0 ? this.first : result.value;
     if (end && finalOverride && this.options.finalKeyframe !== undefined)
       target.value = this.options.finalKeyframe;
-    target.done = end;
+    target.done =
+      this.isSpring && this.repeat === 0
+        ? elapsed >= 0 && (end || result.done)
+        : end;
     return target;
   }
   sampleAt(stamp, resolved = false) {
@@ -303,6 +341,12 @@ class JSAnimation {
   }
   play() {
     if (this.stopped || this.state === "running") return;
+    if (
+      this.state === "finished" &&
+      this.playbackSpeed < 0 &&
+      !Number.isFinite(this.total)
+    )
+      throw new RangeError("a non-settling spring cannot restart from its end");
     if (this.state === "finished")
       this.rawTime = this.playbackSpeed < 0 ? this.total + this.delay : 0;
     if (this.settled) this.newPromise();
@@ -348,11 +392,20 @@ class JSAnimation {
     if (this.stopped || this.state === "finished" || this.completing) return;
     // Infinite loops complete at the forward endpoint of the current cycle.
     this.rawTime =
-      this.delay + (Number.isFinite(this.total) ? this.total : this.length);
+      this.delay +
+      (Number.isFinite(this.total)
+        ? this.total
+        : Number.isFinite(this.length)
+          ? this.length
+          : 0);
     const revision = this.revision;
     this.completing = true;
     try {
-      this.publish(this.evaluate(this.rawTime));
+      if (!Number.isFinite(this.length)) {
+        this.result.value = this.options.finalKeyframe ?? this.last;
+        this.result.done = true;
+        this.publish(this.result);
+      } else this.publish(this.evaluate(this.rawTime));
     } finally {
       this.completing = false;
     }

@@ -84,7 +84,6 @@ test("invalid keyframes, offsets, timings and unsupported physics reject", () =>
     { repeat: -1 },
     { repeatDelay: -1 },
     { repeatType: "bad" },
-    { type: "spring" },
     { type: "inertia" },
     { duration: 0, repeat: Infinity },
     { finalKeyframe: Infinity },

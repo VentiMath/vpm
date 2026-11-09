@@ -182,7 +182,15 @@ export interface AnimationDriverControls {
   stop(): void;
 }
 export interface NumericAnimationOptions extends NumericKeyframeOptions {
-  type?: "keyframes" | "tween" | false;
+  type?: "keyframes" | "tween" | "spring" | typeof spring | false;
+  stiffness?: number;
+  damping?: number;
+  mass?: number;
+  velocity?: number;
+  restDelta?: number;
+  restSpeed?: number;
+  bounce?: number;
+  visualDuration?: number;
   delay?: number;
   repeat?: number;
   repeatDelay?: number;
@@ -224,3 +232,34 @@ export declare class JSAnimation implements MotionValueAnimation<number> {
 export declare function animateValue(
   options: NumericAnimationOptions,
 ): JSAnimation;
+
+export interface SpringOptions {
+  keyframes?: number[];
+  stiffness?: number;
+  damping?: number;
+  mass?: number;
+  velocity?: number;
+  restDelta?: number;
+  restSpeed?: number;
+  /** Milliseconds, bounded to 10–10000 for duration-calibrated springs. */
+  duration?: number;
+  /** Seconds; overrides duration when physics coefficients are absent. */
+  visualDuration?: number;
+  bounce?: number;
+}
+export interface SpringGenerator {
+  calculatedDuration: number | null;
+  next(milliseconds: number): NumericAnimationState;
+  velocity(milliseconds: number): number;
+  retarget(keyframes: number[], velocity?: number): void;
+}
+export declare function spring(
+  options?: SpringOptions | number,
+  bounce?: number,
+): SpringGenerator;
+export declare function calcGeneratorDuration(
+  generator: { next(milliseconds: number): NumericAnimationState },
+  timeStep?: number,
+  maxDuration?: number,
+): number;
+export declare const maxGeneratorDuration: 20000;

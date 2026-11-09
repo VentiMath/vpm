@@ -78,10 +78,19 @@ window.runMotionDom = async () => {
     });
     await new Promise(requestAnimationFrame);
     animation.pause();
+    const atPause = node.style.opacity;
+    // Upstream publishes its pause-time value on the next frame. Compare stable
+    // paused frames after that delivery; VPM must stop publishing immediately.
+    await new Promise(requestAnimationFrame);
     const paused = node.style.opacity;
+    if (api === vpm && paused !== atPause)
+      throw Error("VPM changed after pause");
     await new Promise(requestAnimationFrame);
     await new Promise(requestAnimationFrame);
-    if (node.style.opacity !== paused) throw Error("paused playback moved");
+    if (node.style.opacity !== paused)
+      throw Error(
+        `paused playback moved: variant ${index}, ${paused} => ${node.style.opacity}`,
+      );
     animation.play();
     await animation.finished;
     if (getComputedStyle(node).opacity !== "1" || writes < 2)
@@ -102,6 +111,37 @@ window.runMotionDom = async () => {
       paused: true,
       stopped: true,
     };
+    node.remove();
+  }
+  for (const api of [current, app, vpm]) {
+    const node = document.createElement("div");
+    document.body.append(node);
+    const samples = [];
+    const animation = api.animateValue({
+      keyframes: [0, 1],
+      type: "spring",
+      stiffness: 550,
+      damping: 30,
+      restSpeed: 10,
+      onUpdate: (value) => {
+        samples.push(value);
+        node.style.transform = `scale(${value})`;
+      },
+    });
+    await animation.finished;
+    if (samples.at(-1) !== 1 || !samples.some((x) => x > 0 && x < 1))
+      throw Error("calendar spring did not render");
+    if (getComputedStyle(node).transform !== "matrix(1, 0, 0, 1, 0, 0)")
+      throw Error("spring final transform");
+    // The unchanged upstream controller also accepts the VPM spring generator.
+    if (api !== vpm)
+      await api.animateValue({
+        keyframes: [0, 1],
+        type: vpm.spring,
+        stiffness: 550,
+        damping: 30,
+        restSpeed: 10,
+      }).finished;
     node.remove();
   }
   return rows;

@@ -80,6 +80,7 @@ require("../../../scripts/bench-process.cjs")
       "index.cjs",
       "mapping.cjs",
       "playback.cjs",
+      "spring.cjs",
       "index.mjs",
       "frame.cjs",
       "value.cjs",

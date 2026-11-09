@@ -1,0 +1,1873 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-09T19:36:18.040Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "6e2f12493ed8b305329e5257e7ca9f93e9db8ccf15fa8f09752cd145aa88fbe1",
+    "bench/spring.cjs": "e248eafaaa20fda8512f28becb664f55bbb8e8f6216f754040464d15810d67f5",
+    "frame.cjs": "7d4a5592be70d708e2dc10db8926cef0aab233dbc7ca510d0176b2de8cf85b77",
+    "index.cjs": "73ab3a9359040babe2dc65628691edf0206b998131145cd78e80a8290d1306ad",
+    "index.mjs": "e75048cbe177f22f9f277f55fe0469589683686e2a3c1c9bde7b84cf56075fe2",
+    "mapping.cjs": "57c8efdb499434d4b2b617377b488679335c110b7fdfccb0134099f27f207a74",
+    "package.json": "2e64c92812af1cd0444bf21370285d7ef07dd7d3e3b916987da0dde8bc71d693",
+    "playback.cjs": "46f125f0863383a37ec5a23da45dbfdcef0f199158b7a1c8510a7c730b04771d",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "value.cjs": "a1e0d68ff67654341cae321113fdcf2b0c1a45d9645bca7a50c95c570d2d2480"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 15829,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 66034,
+            "samples": [
+              107.79106218008944,
+              113.04152406336132,
+              113.67756004482587,
+              114.35586213162928,
+              105.89935487779003,
+              108.71672168882743,
+              112.51149407880753,
+              114.61709119544473,
+              110.9794499803132,
+              113.59174061846952,
+              117.64394100009113,
+              110.26642335766451
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 244188,
+            "samples": [
+              40.49884924730158,
+              40.05349566727267,
+              39.87057922584227,
+              40.57188313922043,
+              40.29374907857877,
+              40.437593165921285,
+              40.53058708863642,
+              41.36771667731415,
+              40.31473700591353,
+              40.083697806608036,
+              40.30313528920342,
+              39.896514161219635
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 14597,
+            "samples": [
+              613.2624511886052,
+              586.4189902034623,
+              611.8922381311289,
+              596.9548537370617,
+              606.7428238679186,
+              595.4305679249173,
+              590.1526341028988,
+              611.2814276906275,
+              609.4488593546607,
+              615.5203123929549,
+              601.6219086113593,
+              616.1796944577646
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 26341,
+            "samples": [
+              417.61417561975054,
+              426.7285980031126,
+              415.405945104596,
+              424.78296192247853,
+              419.05045366538627,
+              418.22159371321993,
+              434.1315060172413,
+              427.81375042708703,
+              431.3411791503724,
+              413.4555635700972,
+              433.62693139972555,
+              416.4008959416853
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 100972,
+            "samples": [
+              104.04906310660361,
+              108.11496256387741,
+              103.04713187814392,
+              105.04397258646057,
+              103.2130194509364,
+              104.829388345285,
+              104.41879927108474,
+              106.08593471457361,
+              108.90890543913184,
+              98.02593788376862,
+              99.15083389454675,
+              99.87216257972513
+            ]
+          }
+        ],
+        "checksum": 117860
+      },
+      "vpm": {
+        "pid": 15858,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 66034,
+            "samples": [
+              55.254353817730134,
+              51.18133082957341,
+              51.19015961474391,
+              50.88602840960717,
+              53.035814883241756,
+              53.073038131871094,
+              53.10521852379094,
+              53.89394857194768,
+              58.37144501317548,
+              58.107686949147514,
+              49.677696338249994,
+              54.679528727624984
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 244188,
+            "samples": [
+              41.418226939898986,
+              41.673321375333586,
+              41.48050682261219,
+              41.384269497272655,
+              41.33973413927004,
+              41.391264107982465,
+              41.395871213982765,
+              41.4282888594036,
+              41.34519304797944,
+              41.41122823398362,
+              41.25697413468286,
+              42.276000458662686
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 14597,
+            "samples": [
+              101.20805644995832,
+              103.37740631636737,
+              101.45344933890384,
+              97.5514146742461,
+              102.46112214838011,
+              96.78070836472921,
+              120.51853120504593,
+              96.89210111666368,
+              102.74371446188003,
+              98.35637459751845,
+              102.53250667944704,
+              94.22593683633438
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 26341,
+            "samples": [
+              457.44910975285677,
+              471.5652404995985,
+              444.6869898637131,
+              420.27322425116387,
+              411.9544436429922,
+              412.87031623704377,
+              412.9620363691587,
+              425.45366538856086,
+              422.05117497437504,
+              419.78759348543775,
+              465.01810865190834,
+              461.7595763258732
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 100972,
+            "samples": [
+              53.734777958245715,
+              54.56463177910823,
+              53.79255635225642,
+              53.42281028403849,
+              53.511121895179315,
+              53.27301628174184,
+              53.14303965455745,
+              53.08154735966257,
+              53.61222913282967,
+              53.78801053757422,
+              54.302588836508704,
+              53.55361882502092
+            ]
+          }
+        ],
+        "checksum": 17753
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 15859,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 258552,
+            "samples": [
+              53.329376682447005,
+              51.973587518178235,
+              52.29492713264646,
+              53.87891023855934,
+              55.13736114978806,
+              54.5821846282374,
+              55.95811674247361,
+              54.98232850645141,
+              55.30786070113557,
+              54.572035799375016,
+              50.57283641201778,
+              93.51809693988048
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 134663,
+            "samples": [
+              47.53471257880774,
+              42.07169007076974,
+              42.59150620437686,
+              43.26696271433133,
+              42.6410149781314,
+              44.34248457259937,
+              42.63203701090855,
+              43.42414026124469,
+              43.49004552104128,
+              43.788011554769845,
+              43.549141189487926,
+              43.87000883687472
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 105565,
+            "samples": [
+              100.58613176715782,
+              99.74344716525331,
+              100.12471936721435,
+              101.67787619002581,
+              102.91052905792623,
+              116.280253872022,
+              108.66646142187246,
+              101.87482593662665,
+              101.69721972244622,
+              102.3749159285743,
+              102.55292947473141,
+              100.48785108700966
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 24911,
+            "samples": [
+              442.0687648026984,
+              442.07880052988924,
+              440.55336999719236,
+              434.9600979487013,
+              447.0732608084717,
+              439.13500060214454,
+              435.55224599574603,
+              442.1339970294297,
+              501.9619846654081,
+              442.5655332985444,
+              441.9951828509489,
+              448.71406206094076
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 180224,
+            "samples": [
+              54.87199263139302,
+              54.36914617365002,
+              55.62799627130662,
+              54.57652698863644,
+              54.617681329899554,
+              55.60117409445963,
+              55.640713778408326,
+              55.28490656072436,
+              54.85673384232993,
+              54.77812610973026,
+              55.84878262606598,
+              55.53737016157634
+            ]
+          }
+        ],
+        "checksum": 114404
+      },
+      "upstream": {
+        "pid": 15860,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 258552,
+            "samples": [
+              105.38757000525993,
+              111.00217364398655,
+              110.50823432036871,
+              113.79174402054524,
+              113.9743339831062,
+              107.87368885175886,
+              107.7695860020423,
+              109.86958136080958,
+              116.07142857142892,
+              113.57241483337972,
+              117.69102540301381,
+              108.0814149571459
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 134663,
+            "samples": [
+              42.316434358360944,
+              41.36839369388758,
+              41.2257561468253,
+              41.502060699672604,
+              42.300037872318036,
+              43.009520061189704,
+              42.3173700274016,
+              40.94140186985273,
+              42.495585275837456,
+              41.3482768095171,
+              41.09301738413703,
+              41.20254264348769
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 105565,
+            "samples": [
+              640.8058163216983,
+              600.8403163927433,
+              597.9964950504434,
+              601.784833988537,
+              606.9104343295586,
+              596.1481078008798,
+              599.6380618576233,
+              597.5469236963003,
+              606.2351063325924,
+              601.7591815469134,
+              604.0618765689395,
+              585.7856107611441
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 24911,
+            "samples": [
+              438.2501706073609,
+              434.1254867327668,
+              429.8887238569373,
+              440.31921641042595,
+              451.1828910922796,
+              435.45855244671986,
+              437.44060856650856,
+              440.1820480911953,
+              445.3337080004951,
+              438.925896190442,
+              452.2316245835211,
+              443.6678174300489
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 180224,
+            "samples": [
+              100.98936878551054,
+              102.1441872336639,
+              99.74531693892165,
+              95.46661376953126,
+              98.58356822620657,
+              102.3818525834507,
+              101.09757302024185,
+              100.28538374467286,
+              106.5098155628542,
+              107.57562255859422,
+              103.29483309659295,
+              101.82952880859565
+            ]
+          }
+        ],
+        "checksum": 8919
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 15864,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 125523,
+            "samples": [
+              110.89601108960125,
+              111.41118360778506,
+              121.28354962835513,
+              126.26835719350235,
+              130.0033938003395,
+              120.87990248799017,
+              117.81639221497237,
+              121.81964261529738,
+              123.2260940226095,
+              116.82454211578771,
+              119.94083952741742,
+              112.12818367948488
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 243060,
+            "samples": [
+              41.56483995721227,
+              43.310466551468984,
+              43.0529869168108,
+              41.1870196659259,
+              41.57975397021341,
+              41.36238788776431,
+              42.07603060972589,
+              42.38631202172299,
+              41.437813708549236,
+              41.36272936723447,
+              41.069077594009805,
+              41.633238706492186
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 13792,
+            "samples": [
+              598.5806989559171,
+              597.0731583526668,
+              606.7738544083492,
+              589.0582221577788,
+              618.3475928074297,
+              598.1637906032464,
+              594.7499274941947,
+              642.1113689095124,
+              579.5086281902528,
+              594.2062064965277,
+              615.6316705336303,
+              574.8410672853857
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 26090,
+            "samples": [
+              433.2487159831431,
+              419.48221540820316,
+              436.27983901877906,
+              436.634419317751,
+              445.7343426600209,
+              433.74377155998883,
+              433.9673438098906,
+              432.2457646607891,
+              432.41820620927984,
+              421.9608279034159,
+              448.1905327711784,
+              439.786929858181
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 96688,
+            "samples": [
+              99.97923216945212,
+              100.98761997352264,
+              100.25503681946131,
+              100.33905965580038,
+              101.25653648849814,
+              103.8822501241107,
+              100.32053615753884,
+              103.69348833360968,
+              104.80963511501125,
+              101.37935421148492,
+              94.01114926361177,
+              96.09905055436111
+            ]
+          }
+        ],
+        "checksum": 107928
+      },
+      "vpm": {
+        "pid": 15894,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 125523,
+            "samples": [
+              54.104291643762565,
+              58.21011288767807,
+              52.13520231352036,
+              52.28424272842443,
+              55.33083179974981,
+              54.3403041673639,
+              54.647355464735746,
+              57.527640352764124,
+              53.2850553285058,
+              52.65634983230199,
+              54.53914422058098,
+              58.311353297801915
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 243060,
+            "samples": [
+              40.39040566115342,
+              41.00925285937634,
+              40.43720069118782,
+              40.19017937957724,
+              40.25994816094781,
+              41.155648810993114,
+              40.37052168188968,
+              40.282234839134595,
+              40.23115280177744,
+              41.6584382457006,
+              42.68904797169413,
+              41.677120875504016
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 13792,
+            "samples": [
+              90.69272041763736,
+              113.10303074246238,
+              93.40559744780032,
+              95.83758700695762,
+              94.42067865429756,
+              98.14870939675804,
+              105.05785962876652,
+              94.98557134570443,
+              92.13971867749646,
+              94.76203596287766,
+              95.97353538283066,
+              108.97020011601109
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 26090,
+            "samples": [
+              444.54610962054863,
+              448.72717516289964,
+              450.9470295132159,
+              438.4390571100058,
+              422.5725182062077,
+              428.58853967037146,
+              439.3717516289768,
+              437.89766193943666,
+              440.12552702185315,
+              435.7033346109645,
+              435.925335377539,
+              449.7269068608672
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 96688,
+            "samples": [
+              59.36965290418865,
+              58.3306615091826,
+              58.3138548734093,
+              58.191037150422524,
+              57.99065033923518,
+              58.39486802912318,
+              59.15505543604108,
+              58.16862485520389,
+              58.79780324342048,
+              58.94733576038569,
+              59.02361203044695,
+              59.00853259970343
+            ]
+          }
+        ],
+        "checksum": 16666
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 15895,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 255466,
+            "samples": [
+              53.750138961740525,
+              55.89507409988,
+              57.415174622063375,
+              59.25201396663343,
+              59.543309090055104,
+              54.868358215966104,
+              55.55256276764801,
+              56.81072236618579,
+              55.992938394933084,
+              58.00266180235327,
+              52.41581267174484,
+              52.94132291576952
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 242541,
+            "samples": [
+              42.82729517895952,
+              41.54108789854046,
+              41.32377206327987,
+              41.397297776458245,
+              41.48267715561481,
+              41.75239237902045,
+              41.63746335671084,
+              41.43629324526557,
+              41.36173265550989,
+              41.39798631983868,
+              41.34386763475062,
+              42.08789854086517
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 101948,
+            "samples": [
+              99.8585062973283,
+              102.5490151842124,
+              102.28866677129538,
+              101.28243810570135,
+              102.6851139796766,
+              100.55003531211943,
+              102.10720171067608,
+              103.61409738297883,
+              103.7567289206278,
+              106.20650723898343,
+              106.72760623062756,
+              106.74273158865294
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 19365,
+            "samples": [
+              421.38956880970284,
+              412.0341853860024,
+              419.33684482313964,
+              424.15440227214657,
+              409.5920475084014,
+              414.9711851278041,
+              434.82659437129064,
+              425.9208882003694,
+              434.2907823392766,
+              411.717893106122,
+              413.2153885876549,
+              431.9563129357074
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 183803,
+            "samples": [
+              57.75363840633697,
+              57.01031539202346,
+              56.8368960245478,
+              57.1787457223218,
+              56.86999124062148,
+              56.776592329831274,
+              56.45446483463192,
+              56.16974151673253,
+              55.7204343781113,
+              56.91487625338019,
+              56.38940604886769,
+              55.14554713470435
+            ]
+          }
+        ],
+        "checksum": 120147
+      },
+      "upstream": {
+        "pid": 15897,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 255466,
+            "samples": [
+              107.3642559088097,
+              107.54350089640104,
+              106.72424510502368,
+              109.55812123726844,
+              112.74070130663188,
+              106.34862564881472,
+              105.42123805124767,
+              107.25709879201136,
+              109.8717637572122,
+              108.26881072236615,
+              112.46212803269302,
+              106.32742517595304
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 242541,
+            "samples": [
+              41.75977669754813,
+              41.393343805789506,
+              41.16108204386062,
+              41.120882654891574,
+              41.034814732354576,
+              41.219150576603646,
+              42.12432124877839,
+              41.164001137952056,
+              42.25144614724928,
+              41.24852705315801,
+              42.45089696175061,
+              42.98774640163928
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 101948,
+            "samples": [
+              610.103523364853,
+              613.4340546160796,
+              591.3925824930357,
+              593.8452250166741,
+              596.050192254876,
+              631.1134107584265,
+              600.7527464982147,
+              599.4363204771054,
+              594.2543355436114,
+              604.0857495978352,
+              612.3158374857776,
+              634.7492447129919
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 19365,
+            "samples": [
+              471.54014975470875,
+              505.5555899819368,
+              453.5545571907921,
+              457.885824941903,
+              438.6909372579366,
+              452.40986315515664,
+              465.65324038215107,
+              441.9678801962316,
+              447.95378259747514,
+              449.28561838368876,
+              474.44704363543235,
+              447.5965917893079
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 183803,
+            "samples": [
+              103.7188402800827,
+              103.90042055896815,
+              99.34753513272523,
+              99.96164371637077,
+              100.03690364139908,
+              100.27515872972701,
+              99.01361784084085,
+              102.02499415134713,
+              101.85474665810888,
+              102.72433529376613,
+              98.93586067691916,
+              104.26811314287598
+            ]
+          }
+        ],
+        "checksum": 8411
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 15928,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 121236,
+            "samples": [
+              111.13792107954755,
+              110.0515358474378,
+              110.07284964861908,
+              112.73328879210783,
+              110.08625325810793,
+              107.04465670262958,
+              108.27538849846614,
+              106.00639249067926,
+              109.26003827246012,
+              106.457306410637,
+              111.70430400211141,
+              109.18064766241054
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 222406,
+            "samples": [
+              45.13311241603188,
+              45.19156407650881,
+              45.03194608059164,
+              45.17245487981417,
+              45.21854176595951,
+              45.52185192845508,
+              45.2586351087655,
+              45.3125904876669,
+              45.14491515516697,
+              45.266503601521556,
+              45.85101571000783,
+              46.40837027778034
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 15020,
+            "samples": [
+              606.2777629826934,
+              624.9445406125159,
+              586.592876165118,
+              610.9382157123828,
+              634.8646471371572,
+              589.247669773636,
+              587.7968042609857,
+              588.4903462050577,
+              594.4462716378241,
+              585.8078561917556,
+              574.4146471371495,
+              588.307256990685
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 20920,
+            "samples": [
+              448.30702676863933,
+              454.401720841305,
+              445.66606118546514,
+              435.89866156787355,
+              534.1161089866226,
+              505.70822179732494,
+              503.10310707456784,
+              460.2354206500935,
+              463.80057361376817,
+              461.8208413001914,
+              433.2078871892945,
+              442.42949330783983
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 104452,
+            "samples": [
+              101.65953739516871,
+              102.79123425113957,
+              99.87681423046183,
+              101.65355378547116,
+              104.4594646344738,
+              101.37431547505186,
+              104.31107111400532,
+              106.62792478841999,
+              100.1779956343585,
+              95.86819783249767,
+              96.70868915865634,
+              98.03028185195232
+            ]
+          }
+        ],
+        "checksum": 103488
+      },
+      "vpm": {
+        "pid": 15957,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 121236,
+            "samples": [
+              106.1723910389653,
+              110.17183014946089,
+              107.42752977663415,
+              112.08029793130751,
+              103.31605298756185,
+              104.9767313339274,
+              106.76111880959441,
+              108.00662344518129,
+              108.09771025108029,
+              107.20446896961319,
+              111.40427760731147,
+              106.71094394404301
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 222406,
+            "samples": [
+              40.7947627312217,
+              40.54915335017937,
+              40.51299875003398,
+              40.592241216514005,
+              40.56357742147228,
+              40.61641322626225,
+              40.49463593608045,
+              40.46653417623625,
+              40.560767245488265,
+              40.55102829959607,
+              40.467096211432754,
+              40.532103450446556
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 15020,
+            "samples": [
+              668.7749667110492,
+              632.8312250332904,
+              649.0651131824245,
+              649.2509986684431,
+              644.8402130492707,
+              630.3706391478025,
+              617.47390146472,
+              611.8536617842841,
+              618.397669773633,
+              594.1023302263629,
+              587.0838881491334,
+              599.9889480692349
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 20920,
+            "samples": [
+              440.184847036323,
+              432.9748087954037,
+              444.16429254301073,
+              435.83293499043316,
+              430.9472275334697,
+              448.514196940733,
+              427.953728489475,
+              435.22347036328836,
+              438.3843212237117,
+              432.2976577437926,
+              442.17652963672003,
+              443.69823135755604
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 104452,
+            "samples": [
+              99.99130701183445,
+              96.91733044843649,
+              97.00947803775898,
+              98.45232259794092,
+              99.32114272584724,
+              99.89914984873319,
+              105.27762034235893,
+              104.89188335311962,
+              96.5914104086107,
+              95.79918048481545,
+              98.06537931298551,
+              96.75018190173641
+            ]
+          }
+        ],
+        "checksum": 10010
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 15958,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 76146,
+            "samples": [
+              106.89443962913367,
+              114.86814803141361,
+              108.72150868069228,
+              110.82273527171513,
+              106.63287631655044,
+              110.82437685498896,
+              109.14778189268002,
+              109.60030730438874,
+              115.70917710713621,
+              106.70838914716501,
+              108.1486092506497,
+              107.00988889764383
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 221207,
+            "samples": [
+              42.14848987599891,
+              41.1339831018009,
+              40.94034998892433,
+              40.804540543472875,
+              40.808120900332895,
+              41.051105977658814,
+              40.869149710452014,
+              40.81358184867548,
+              40.66345549643553,
+              41.74031563196462,
+              40.72260371507208,
+              40.84089563169311
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 14513,
+            "samples": [
+              592.6784262385444,
+              591.3806931716409,
+              607.5960862674837,
+              598.9974505615679,
+              568.7601460759314,
+              603.3154413284609,
+              621.494522152556,
+              604.6733962654243,
+              581.2776820781328,
+              597.1398745951907,
+              605.9251016330226,
+              581.6681595810624
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 20179,
+            "samples": [
+              449.04559195202853,
+              442.7148025174681,
+              436.39223945686257,
+              439.7744189503917,
+              435.8801229000432,
+              457.81505525546896,
+              447.9347341295387,
+              442.85727736755496,
+              446.3675107785378,
+              438.93404033896735,
+              439.62163635462076,
+              443.25576093958773
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 106201,
+            "samples": [
+              99.09824766245204,
+              102.36682328791592,
+              97.93888946431763,
+              101.68296908692065,
+              102.25068502179782,
+              99.33600436907359,
+              104.85934219075257,
+              104.25082626340746,
+              96.96785341004234,
+              99.62397717535582,
+              101.35341475127436,
+              98.5489778815632
+            ]
+          }
+        ],
+        "checksum": 107767
+      },
+      "upstream": {
+        "pid": 15960,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create calendar scale spring",
+            "iterations": 76146,
+            "samples": [
+              100.08295905234706,
+              108.54367924776113,
+              107.51002022430615,
+              108.17979933286057,
+              106.92014025687519,
+              111.95653087489802,
+              107.37323037323105,
+              110.64927901662595,
+              110.43969479683753,
+              107.07938696714261,
+              109.97130512436632,
+              109.70756178919441
+            ]
+          },
+          {
+            "case": "sample spring value and velocity",
+            "iterations": 221207,
+            "samples": [
+              40.641421835655876,
+              40.67683210748325,
+              40.621454113116,
+              41.119105634089195,
+              41.19407161617823,
+              40.82563842916384,
+              40.737860917602376,
+              40.59696573797433,
+              40.662515200694244,
+              40.824503745360666,
+              41.38035866857755,
+              40.75424828328222
+            ]
+          },
+          {
+            "case": "create duration-calibrated spring",
+            "iterations": 14513,
+            "samples": [
+              604.2513608488937,
+              567.8471715014061,
+              600.5104389168305,
+              598.9084269275821,
+              637.0150899193828,
+              596.4996899331583,
+              767.4154206573447,
+              3878.1006683662918,
+              753.9849789843596,
+              631.4396747743403,
+              645.0682147040465,
+              691.325570178449
+            ]
+          },
+          {
+            "case": "create, measure and dispose spring playback",
+            "iterations": 20179,
+            "samples": [
+              480.8051439615401,
+              495.00510431637287,
+              521.7552901531355,
+              532.796075127604,
+              486.00857326923716,
+              482.8080182367792,
+              469.02101194311007,
+              473.93121562020326,
+              485.87640616482287,
+              461.71351404926423,
+              480.9723474899555,
+              515.3934783685955
+            ]
+          },
+          {
+            "case": "advance repeating scale spring",
+            "iterations": 106201,
+            "samples": [
+              104.79970056779305,
+              103.81532188962369,
+              103.5850321560055,
+              106.92539618271142,
+              103.78471954124673,
+              105.19046901629932,
+              106.507556426022,
+              105.15868965452302,
+              96.53746198246749,
+              98.21157051251856,
+              99.66674513422532,
+              100.08930236061829
+            ]
+          }
+        ],
+        "checksum": 10521
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "create calendar scale spring",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 112.77650907108443,
+          "vpmNs": 53.08912832783102,
+          "changePct": -52.925366492441896
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 110.75520398217763,
+          "vpmNs": 54.57711021380621,
+          "changePct": -50.72275771115136
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 120.41037100770379,
+          "vpmNs": 54.43972419397244,
+          "changePct": -54.78817668414175
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 107.45387840260537,
+          "vpmNs": 55.94400624740654,
+          "changePct": -47.93672682730259
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 109.65578705994896,
+          "vpmNs": 107.31599937312367,
+          "changePct": -2.133756684949173
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 108.36173929031085,
+          "vpmNs": 108.93464528668615,
+          "changePct": 0.5286976751456729
+        }
+      ]
+    },
+    {
+      "case": "sample spring value and velocity",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 40.30893614755847,
+          "vpmNs": 41.40354972398319,
+          "changePct": 2.715560570533748
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 41.43522719678009,
+          "vpmNs": 43.457092891142985,
+          "changePct": 4.8795815327881575
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 41.572296963712844,
+          "vpmNs": 40.41380317617062,
+          "changePct": -2.786696603638328
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 41.32093542947376,
+          "vpmNs": 41.459485200440184,
+          "changePct": 0.33530163227524223
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 45.23858843736251,
+          "vpmNs": 40.55009082488772,
+          "changePct": -10.363934363174266
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 40.7460546004423,
+          "vpmNs": 40.85502267107256,
+          "changePct": 0.2674322009794672
+        }
+      ]
+    },
+    {
+      "case": "create duration-calibrated spring",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 608.0958416112896,
+          "vpmNs": 101.33075289443107,
+          "changePct": -83.33638450380914
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 601.2997489698283,
+          "vpmNs": 101.78602282953644,
+          "changePct": -83.07233239263438
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 597.6184744779566,
+          "vpmNs": 95.41157917633103,
+          "changePct": -84.03470052366156
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 602.4192480480249,
+          "vpmNs": 102.6170645819445,
+          "changePct": -82.96583900424046
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 588.8690079893468,
+          "vpmNs": 624.3841544607178,
+          "changePct": 6.0310775383875415
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 634.2273823468615,
+          "vpmNs": 598.0686625783793,
+          "changePct": -5.701223374286113
+        }
+      ]
+    },
+    {
+      "case": "create, measure and dispose spring playback",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 421.9167077939324,
+          "vpmNs": 423.752420181468,
+          "changePct": 0.43508881104374897
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 439.5539721408187,
+          "vpmNs": 442.0737826662938,
+          "changePct": 0.5732653292160217
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 433.85555768493975,
+          "vpmNs": 438.9054043694913,
+          "changePct": 1.163946524391113
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 452.98221017297436,
+          "vpmNs": 420.3632068164212,
+          "changePct": -7.200945781976154
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 457.3185707456993,
+          "vpmNs": 437.10862810707243,
+          "changePct": -4.419226318684744
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 484.34221220080104,
+          "vpmNs": 442.78603994251154,
+          "changePct": -8.5799195716315
+        }
+      ]
+    },
+    {
+      "case": "advance repeating scale spring",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 104.23393118884417,
+          "vpmNs": 53.582923978925294,
+          "changePct": -48.59358812645445
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 101.46355091441876,
+          "vpmNs": 55.07844959605869,
+          "changePct": -45.71602403062397
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 100.66333981466151,
+          "vpmNs": 58.59633563627183,
+          "changePct": -41.78979582422186
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 101.06495269391795,
+          "vpmNs": 56.806744177189536,
+          "changePct": -43.791846072265415
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 101.5139346302615,
+          "vpmNs": 98.25885095546322,
+          "changePct": -3.2065387738679396
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 103.80002071543521,
+          "vpmNs": 100.48869596331508,
+          "changePct": -3.1901002806136503
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "create calendar scale spring",
+      "upstream_ns": 112,
+      "vpm_ns": 55,
+      "change_pct": -51.8,
+      "upstream_first_pct": -53.9,
+      "vpm_first_pct": -49.3,
+      "process_range_pct": "-52.9, -50.7, -54.8, -47.9",
+      "control_max_abs_pct": 2.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "sample spring value and velocity",
+      "upstream_ns": 41,
+      "vpm_ns": 41,
+      "change_pct": 1.5,
+      "upstream_first_pct": 0,
+      "vpm_first_pct": 2.6,
+      "process_range_pct": "2.7, 4.9, -2.8, 0.3",
+      "control_max_abs_pct": 10.4,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "create duration-calibrated spring",
+      "upstream_ns": 602,
+      "vpm_ns": 102,
+      "change_pct": -83.2,
+      "upstream_first_pct": -83.7,
+      "vpm_first_pct": -83,
+      "process_range_pct": "-83.3, -83.1, -84.0, -83.0",
+      "control_max_abs_pct": 6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "create, measure and dispose spring playback",
+      "upstream_ns": 437,
+      "vpm_ns": 431,
+      "change_pct": 0.5,
+      "upstream_first_pct": 0.8,
+      "vpm_first_pct": -3.3,
+      "process_range_pct": "0.4, 0.6, 1.2, -7.2",
+      "control_max_abs_pct": 8.6,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "advance repeating scale spring",
+      "upstream_ns": 101,
+      "vpm_ns": 56,
+      "change_pct": -44.8,
+      "upstream_first_pct": -45.2,
+      "vpm_first_pct": -44.8,
+      "process_range_pct": "-48.6, -45.7, -41.8, -43.8",
+      "control_max_abs_pct": 3.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

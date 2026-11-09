@@ -7,16 +7,17 @@
   },
   "implementation": {
     "kind": "independent implementation",
-    "replacementStatus": "partial; physics animation and DOM rendering pending",
-    "targetScope": "Independent numeric keyframes and tween playback, MotionValue state/subscriptions/velocity and animation lifecycle, plus frame scheduling and numeric mapping. Not a drop-in replacement for motion-dom yet.",
-    "remainingWork": "Spring/inertia generators and playback; color/complex-value mixers and grid/random stagger; DOM/WAAPI effects, gestures/layout and full unchanged Framer Motion caller acceptance. The remaining runtime is unimplemented, not retained upstream code.",
+    "replacementStatus": "partial; DOM rendering and inertia pending",
+    "targetScope": "Independent numeric tween and spring playback, mapping, MotionValue lifecycle and frame scheduling. Not a drop-in replacement for motion-dom yet.",
+    "remainingWork": "DOM/WAAPI effects and animation adapters; inertia, color/complex-value mixers and grid/random stagger; gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. The remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
       "list stagger": "First/last/center/edges/numeric origins, delay and easing",
       "MotionValue": "State, velocity, mutation-safe subscriptions, passive effects and owned external-animation lifecycle",
       "frame scheduling": "Eight ordered phases, dedupe/cancellation/keep-alive, microtasks and manual frame processing",
-      "numeric playback": "Owned numeric keyframes, offsets and easing; millisecond generators and tween controllers with delays, repeats, seeking, speed, pause/resume and lifecycle cleanup"
+      "numeric playback": "Owned numeric keyframes, offsets and easing; millisecond generators and tween controllers with delays, repeats, seeking, speed, pause/resume and lifecycle cleanup",
+      "spring playback": "Analytic under/critical/overdamped oscillator, velocity and retargeting; duration/visual-duration calibration; bounded settling estimates and playback integration"
     }
   },
   "changes": [
@@ -27,7 +28,9 @@
     "Synchronous animation completion reports start before completion; late completion after cancellation does not emit a success event. Failed start hooks and throwing stop handlers release owned resources.",
     "MotionValue retains vmotion-utils subscription lifetime protections and stops unobserved animations on the next frame, allowing same-frame resubscription.",
     "Reversing delayed playback preserves the current value instead of reapplying a signed delay and jumping.",
-    "Paused animations release their frame callback; explicit seek, completion and cancellation apply values immediately, and callback failures clean up driver ownership."
+    "Paused animations release their frame callback; explicit seek, completion and cancellation apply values immediately, and callback failures clean up driver ownership.",
+    "Standalone visualDuration is honored rather than silently ignored without a bounce option.",
+    "Settled spring repeat gaps retain the endpoint; invalid retarget operations preserve the previous trajectory."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

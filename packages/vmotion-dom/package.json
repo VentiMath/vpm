@@ -30,7 +30,8 @@
     "frame.cjs",
     "value.cjs",
     "playback.cjs",
-    "mapping.cjs"
+    "mapping.cjs",
+    "spring.cjs"
   ],
   "sideEffects": false,
   "engines": {

@@ -23,29 +23,29 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T19:07:44.084Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T19:36:39.443Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create numeric keyframe generator | 238 | 23 | -90.2% | -90.1% | -90.2% | 6.9% | lower time in every pair, beyond control spread |
-| sample numeric keyframe generator | 10 | 11 | 5.4% | 12.8% | -1% | 9.7% | unestablished at this precision |
-| create and dispose paused playback | 488 | 179 | -63.3% | -64.7% | -63.3% | 3.3% | lower time in every pair, beyond control spread |
-| advance repeating numeric playback | 69 | 32 | -53.8% | -52.2% | -55.7% | 6.2% | lower time in every pair, beyond control spread |
+| create numeric keyframe generator | 248 | 24 | -90.2% | -90.2% | -90.1% | 5.3% | lower time in every pair, beyond control spread |
+| sample numeric keyframe generator | 10 | 11 | 11.4% | 22% | 4.5% | 6.7% | unestablished at this precision |
+| create and dispose paused playback | 490 | 212 | -56.6% | -49.6% | -62.6% | 33.1% | lower time in every pair, beyond control spread |
+| advance repeating numeric playback | 71 | 35 | -51.3% | -49.7% | -51.3% | 12.2% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T19:08:02.599Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T19:36:55.770Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create numeric keyframe generator | 44 | 23 | -43.9% | -50.4% | -2.9% | 17.5% | unestablished at this precision |
-| sample numeric keyframe generator | 4 | 3 | -24.2% | -25.8% | -19.1% | 4.5% | lower time in every pair, beyond control spread |
-| create and dispose paused playback | 90 | 136 | 53.6% | 58.6% | 39.5% | 11% | higher time in every pair, beyond control spread |
-| advance repeating numeric playback | 55 | 26 | -53.4% | -51.3% | -57.3% | 4.1% | lower time in every pair, beyond control spread |
+| create numeric keyframe generator | 42 | 21 | -49.7% | -51.2% | -45.9% | 46.5% | unestablished at this precision |
+| sample numeric keyframe generator | 4 | 3 | -22.3% | -22.3% | -21.3% | 2.5% | lower time in every pair, beyond control spread |
+| create and dispose paused playback | 84 | 118 | 43.4% | 46% | 36.3% | 43.9% | unestablished at this precision |
+| advance repeating numeric playback | 56 | 23 | -59.5% | -57.2% | -61.2% | 2.1% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

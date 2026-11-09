@@ -68,8 +68,21 @@ position.start((done) =>
     onComplete: done,
   }),
 );
-// @ts-expect-error spring playback is not built yet
-animateValue({ keyframes: [0, 1], type: "spring" });
+animateValue({
+  keyframes: [0, 1],
+  type: "spring",
+  stiffness: 550,
+  damping: 30,
+});
 // @ts-expect-error string interpolation is not built yet
 keyframes({ keyframes: ["red", "blue"] });
 void generated;
+
+import { spring, calcGeneratorDuration } from "vmotion-dom";
+const physics = spring({ keyframes: [0, 1], stiffness: 550, damping: 30 });
+physics.retarget([0.5, 2], physics.velocity(50));
+const settlingTime: number = calcGeneratorDuration(physics);
+animateValue({ keyframes: [0, 1], type: spring, visualDuration: 0.3 });
+// @ts-expect-error inertia is not built yet
+animateValue({ keyframes: [0, 1], type: "inertia" });
+void settlingTime;

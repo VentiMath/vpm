@@ -1,5 +1,8 @@
 import api from "./index.cjs";
 export const {
+  spring,
+  calcGeneratorDuration,
+  maxGeneratorDuration,
   keyframes,
   JSAnimation,
   animateValue,

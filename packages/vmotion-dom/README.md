@@ -2,7 +2,7 @@
 
 Independent numeric animation playback, values and scheduling targeting **motion-dom 14.7.0**, with
 12.36.0 as the application's comparison control. This is a partial implementation
-of Motion DOM; physics animation and DOM rendering are still to be built.
+of Motion DOM; DOM rendering and inertia are still to be built.
 
 ```js
 import { interpolate, stagger } from "vmotion-dom";
@@ -104,14 +104,57 @@ Deliberate differences from the controls:
 - Sampling reports completion for the entire repeated animation. Both controls'
   `sample()` reports individual generator completion during repeat gaps.
 
+## Springs
+
+`spring(options)` solves the damped oscillator directly: stiffness, damping, mass,
+initial velocity and both rest thresholds. It supports underdamped, critically
+damped and overdamped motion, without numerical integration drift. `next(ms)`
+returns value/completion; `velocity(ms)` returns the analytic derivative in units
+per second. Sampling order is independent. `retarget([from, to], velocity)`
+starts a new trajectory at time zero and keeps the physical configuration.
+
+`animateValue({ keyframes: [0, 1], type: "spring", stiffness: 550, damping: 30,
+restSpeed: 10 })` supports the calendar's scale transition. `type: spring` also
+works. Springs share tween playback controls, delays and repeat modes. A repeat
+gap holds the settled endpoint instead of resuming an oscillation. Undamped
+springs can be cancelled or explicitly completed; ones with no detected settling
+point cannot repeat or restart backwards from their endpoint.
+
+Without explicit physical coefficients, `duration` (milliseconds) and `bounce`
+select a duration-calibrated spring. Duration is bounded to 10–10000 ms, as in the
+controls. `visualDuration` uses seconds; negative bounce produces an overdamped
+curve. Physics coefficients take precedence. Time-calibrated springs start with
+zero velocity, matching the controls. Standalone `visualDuration` is honored;
+both controls ignore it unless another time option is present. The numeric
+shorthand `spring(0.3, 0.3)` means a 0.3-second visual-duration generator.
+
+Default physics coefficients are stiffness 100, damping 10 and mass 1. For a
+travel distance below 5, rest thresholds are 0.005 distance and 0.01 speed;
+otherwise they are 0.5 and 2, matching the controls. Rest requires both thresholds.
+`calcGeneratorDuration(generator)` samples every 50 ms up to 20 seconds and
+returns Infinity if no rest point is detected. Playback uses that bounded estimate
+for repeat timing; a single spring can finish on its actual frame's rest condition.
+The generator's own physical `calculatedDuration` stays null. CSS `toString` and
+`toTransition` serialization are outside this implementation.
+
+[Spring measurements](bench/spring/README.md) cover the calendar configuration,
+combined value/velocity sampling, time calibration, controller setup and playback.
+Calendar spring construction takes about 80% less time on Node and 52% less on
+Bun; duration calibration takes 92% and 83% less. Repeated spring playback takes
+21% and 45% less time. Node controller setup is 26% lower, while Bun's difference
+is unestablished. Combined value/velocity sampling still costs about 24 ns more
+on Node (68 ns versus 44 ns, 54%); Bun's sampling difference is unestablished.
+All process samples and identical-source controls are retained.
+
 ## Still to build
 
-Spring/inertia playback and DOM effects come next. Color/complex-string mixers,
+DOM effects and animation adapters come next. Inertia, CSS spring serialization,
+color/complex-string mixers,
 grid/random staggering, WAAPI, gestures/layout and the React renderer remain
-unimplemented. Unsupported animation types and grid/random staggering reject
+unimplemented. Unsupported inertia and grid/random staggering reject
 explicitly. This package must not replace `motion-dom` under Framer Motion yet.
-VentiMath's timed contest fades are the current playback target; spring-based
-calendar/header transforms remain pending. Application adoption is not claimed.
+VentiMath's timed contest fades and spring-based calendar/header transforms are
+the playback targets. Application adoption is not claimed.
 
 [Conformance](../../scripts/motion-dom-conformance/README.md) compares numeric
 contracts against current and application controls, with separate correctness
@@ -124,15 +167,15 @@ from the numeric mapping suite. Both use fresh processes, balanced order and
 identical-source controls. These primitive timings do not establish application
 frame-rate gains; remaining costs are reported alongside improvements.
 
-The value/frame recording finds lower creation time on Bun (about 30%) and lower
-schedule/cancel time on Node/Bun (16%/12%). Node creation and subscriber-update
+The value/frame recording finds lower creation time on Bun (about 33%) and lower
+schedule/cancel time on Node/Bun (16%/10%). Node creation and subscriber-update
 differences are unestablished against process/control variation. Dispatching 32
-callbacks costs about 0.25 microseconds more on Node and 0.17 microseconds more on
-Bun (23%/14%); cancellation and exception recovery remain enabled. The report keeps
+callbacks costs about 0.21 microseconds more on Node and 0.15 microseconds more on
+Bun (20%/13%); cancellation and exception recovery remain enabled. The report keeps
 all samples and does not turn these microbenchmarks into an application claim.
 
 Numeric mapping and timeline preparation remain lower-time cases on both
-runtimes. The re-recorded Bun list-stagger case is 9% higher (about 8 ns per
+runtimes. The re-recorded Bun list-stagger case is 11% higher (about 9 ns per
 20-item batch); the full numeric report includes this remaining regression.
 
 [Playback measurements](bench/playback/README.md) cover numeric generator
@@ -140,10 +183,11 @@ construction/sampling, creation and disposal of paused controllers, and repeated
 frame delivery. Each worker uses the same clock and driver contract; the
 construction case disposes controllers instead of accumulating queued work.
 
-The playback recording finds roughly 54% lower per-frame time on both runtimes.
-Node generator construction and controller creation/disposal are 90% and 63%
-lower. Bun generator sampling is 24% lower; its construction difference is
-unestablished because one process reverses direction. Bun controller
-creation/disposal remains 54% higher (136 ns versus 90 ns). Node sampling is
-unestablished. These measurements describe numeric primitives, not application
-frame-rate gains; all control noise and outliers remain in the reports.
+The playback recording finds 51% lower per-frame time on Node and 60% on Bun.
+Node generator construction and controller creation/disposal are 90% and 57%
+lower. Bun generator sampling is 22% lower; its construction difference is
+unestablished against control variation. Bun controller creation/disposal has a
+higher paired median (43%, 118 ns versus 84 ns), but the controls are too noisy to
+establish a direction in this recording. Node sampling is also unestablished.
+These measurements describe numeric primitives, not application frame-rate
+gains; all control noise and outliers remain in the reports.

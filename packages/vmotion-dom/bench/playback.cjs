@@ -50,6 +50,7 @@ const specs = [
       let update,
         stamp = 1000,
         value = 0;
+      api.time.set(1000);
       api.animateValue({
         keyframes: [0, 100],
         duration: 300,
@@ -60,7 +61,7 @@ const specs = [
         },
         driver: (fn) => (
           (update = fn),
-          { now: () => api.time.now(), start() {}, stop() {} }
+          { now: () => 1000, start() {}, stop() {} }
         ),
       });
       return () => {
@@ -88,6 +89,7 @@ require("../../../scripts/bench-process.cjs")
       "frame.cjs",
       "value.cjs",
       "playback.cjs",
+      "spring.cjs",
       "package.json",
       "PROVENANCE.json",
       "bench/playback.cjs",

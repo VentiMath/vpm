@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 59 package tests
+easings come from the verified `vmotion-utils` foundation. All 76 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -39,6 +39,8 @@ node scripts/motion-dom-conformance/values.cjs
 bun scripts/motion-dom-conformance/values.cjs
 node scripts/motion-dom-conformance/playback.cjs
 bun scripts/motion-dom-conformance/playback.cjs
+node scripts/motion-dom-conformance/spring.cjs
+bun scripts/motion-dom-conformance/spring.cjs
 node scripts/motion-dom-conformance/types.cjs
 node scripts/motion-dom-conformance/browser.cjs
 node scripts/motion-dom-conformance/archives.cjs
@@ -51,7 +53,7 @@ renderer remains pending; these checks do not establish full Motion compatibilit
 [Motion value](https://motion.dev/docs/motion-value) and
 [frame](https://motion.dev/docs/frame) documentation, public declarations and
 black-box API observations define the current contract. The remaining
-spring/inertia engines, effects and React renderer are explicitly outside this unit.
+inertia engine, effects and React renderer are explicitly outside this unit.
 
 `playback.cjs` runs 25,084 numeric generator/controller comparisons on each runtime.
 The current control tolerance is 0.0002 over the tested 0–100 value scale; the
@@ -67,3 +69,16 @@ Public [playback documentation](https://motion.dev/docs/animate) and declaration
 inform the implementation; the runtime is independently authored. Public Motion
 uses seconds, while the low-level Motion DOM generator/controller options tested
 here use milliseconds. See the package README for explicit behavior differences.
+
+`spring.cjs` runs 128,741 comparisons per runtime: physical and time-calibrated
+spring values, analytic velocity, settling, repeat modes and retargeting. Current
+14.7.0 negative-bounce behavior is checked explicitly. Separate analytical tests
+check oscillator energy, critical solutions, near-critical continuity, late-time
+stability, invalid retargeting and nonsettling controllers. Browser checks use
+the calendar's exact scale coefficients and unchanged upstream controllers with
+the VPM spring factory. The pause fixture allows upstream's queued pause-time
+write before checking stable frames; VPM must still stop immediately.
+
+Public [spring documentation](https://motion.dev/docs/spring), declarations and
+API probes define the contracts; no upstream spring runtime was copied. Standalone
+visualDuration and settled repeat-gap corrections are explicitly reproduced.

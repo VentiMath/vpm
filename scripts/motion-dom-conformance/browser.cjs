@@ -120,7 +120,7 @@ const pending = new Map(),
     assert.deepEqual(rows[0].batched, { writes: 1, opacity: "1" });
     assert.deepEqual(exceptions, []);
     console.log(
-      "Chrome: numeric mappings, batched values, unchanged producers and native playback pause/resume/cleanup pass.",
+      "Chrome: numeric mappings, batched values, unchanged producers native playback and calendar scale springs pass.",
     );
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);
