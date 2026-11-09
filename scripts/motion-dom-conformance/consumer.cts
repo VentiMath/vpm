@@ -15,3 +15,37 @@ import { animate } from "vmotion-dom";
 void point;
 void bad;
 void animate;
+
+import {
+  motionValue,
+  frame,
+  cancelFrame,
+  createRenderBatcher,
+  processFrame,
+  MotionValue,
+} from "vmotion-dom";
+const position = motionValue(0);
+position.on("change", (x) => x.toFixed());
+position.setWithVelocity(0, 10, 16);
+position.attach(
+  (x, set) => set(x + 1),
+  () => {},
+);
+const completion: Promise<void> = position.start((done) => {
+  done();
+  return { stop() {} };
+});
+const callback = frame.render((data) => data.timestamp.toFixed());
+cancelFrame(callback);
+createRenderBatcher((callback) => callback(), false);
+processFrame(100);
+// @ts-expect-error numeric values reject strings
+position.set("bad");
+// @ts-expect-error unsupported subscription event
+position.on("bogus", () => {});
+// @ts-expect-error a frame callback receives FrameData, not a number
+frame.update((data: number) => {});
+const optional = new MotionValue<number | undefined>(undefined);
+const maybe: number | undefined = optional.getCurrent();
+void completion;
+void maybe;

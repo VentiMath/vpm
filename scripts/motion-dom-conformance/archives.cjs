@@ -88,7 +88,7 @@ try {
     });
     fs.writeFileSync(
       path.join(dir, "check.mjs"),
-      `import assert from 'node:assert/strict';import {createRequire} from 'node:module';import * as api from 'vmotion-dom';const req=createRequire(import.meta.url);assert.equal(api.interpolate,req('vmotion-dom').interpolate);assert.equal(api.interpolate([0,1],[0,100])(.25),25);`,
+      `import assert from 'node:assert/strict';import {createRequire} from 'node:module';import * as api from 'vmotion-dom';const req=createRequire(import.meta.url);assert.equal(api.interpolate,req('vmotion-dom').interpolate);assert.equal(api.MotionValue,req('vmotion-dom').MotionValue);assert.equal(api.frameData,req('vmotion-dom').frameData);assert.equal(api.interpolate([0,1],[0,100])(.25),25);`,
     );
     for (const runtime of ["node", "bun"]) {
       run(runtime, [path.join(dir, "check.mjs")], dir);
@@ -96,7 +96,10 @@ try {
         runtime,
         [
           runtime === "node" ? "--test" : "test",
-          path.join(root, "packages/vmotion-dom/test/index.test.cjs"),
+          ...fs
+            .readdirSync(path.join(root, "packages/vmotion-dom/test"))
+            .filter((name) => name.endsWith(".test.cjs"))
+            .map((name) => path.join(root, "packages/vmotion-dom/test", name)),
         ],
         dir,
         {

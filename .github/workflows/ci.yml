@@ -32,9 +32,10 @@ jobs:
           node scripts/motion-utils-conformance/browser.cjs
           node scripts/motion-utils-conformance/types.cjs
           node scripts/motion-utils-conformance/archives.cjs
-      - name: Motion DOM numeric foundation and local archives
+      - name: Motion values, frames, mapping and local archives
         run: |
           node scripts/motion-dom-conformance/run.cjs
+          node scripts/motion-dom-conformance/values.cjs
           node scripts/motion-dom-conformance/types.cjs
           node scripts/motion-dom-conformance/browser.cjs
           node scripts/motion-dom-conformance/archives.cjs
@@ -665,6 +666,7 @@ jobs:
           bun scripts/motion-utils-conformance/build-browser.cjs
           bun scripts/motion-utils-conformance/callers.cjs
           bun scripts/motion-dom-conformance/run.cjs
+          bun scripts/motion-dom-conformance/values.cjs
       - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Word diff contracts on Bun
         run: |

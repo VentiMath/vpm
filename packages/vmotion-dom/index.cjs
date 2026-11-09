@@ -145,4 +145,10 @@ function stagger(
     );
   };
 }
-module.exports = { interpolate, mixNumber, stagger };
+module.exports = {
+  interpolate,
+  mixNumber,
+  stagger,
+  ...require("./frame.cjs"),
+  ...require("./value.cjs"),
+};

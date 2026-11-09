@@ -109,11 +109,13 @@ const pending = new Map(),
     for (const row of rows.slice(1)) {
       assert.deepEqual(row.samples, rows[0].samples);
       assert.deepEqual(row.delays, rows[0].delays);
+      assert.deepEqual(row.batched, { writes: 1, opacity: "1" });
     }
     assert.equal(rows[0].samples.at(-1)[0], "1");
+    assert.deepEqual(rows[0].batched, { writes: 1, opacity: "1" });
     assert.deepEqual(exceptions, []);
     console.log(
-      "Chrome: numeric mappings and applied opacity/transform styles match current/app controls.",
+      "Chrome: numeric mappings, batched value renders and unchanged current/app animation producers pass.",
     );
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);

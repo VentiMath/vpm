@@ -1,7 +1,7 @@
 {
   "name": "vmotion-dom",
   "version": "14.7.0",
-  "description": "Independent numeric keyframe mapping foundation for VentiMath animations",
+  "description": "Independent animation values, frame scheduling and numeric keyframe mapping",
   "type": "commonjs",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -26,7 +26,9 @@
     "index.d.mts",
     "README.md",
     "LICENSE",
-    "PROVENANCE.json"
+    "PROVENANCE.json",
+    "frame.cjs",
+    "value.cjs"
   ],
   "sideEffects": false,
   "engines": {

@@ -1,0 +1,1870 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-09T18:36:23.971Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "96bbd0fe79b35e54b963c349cea59fc4fe6b75a86a77ecb6c0a654762ac73dbf",
+    "bench/values.cjs": "0e8b93855816ff025590a2991ac2fdd4f6a9c643f264be0882e02b2204d573e2",
+    "frame.cjs": "7d4a5592be70d708e2dc10db8926cef0aab233dbc7ca510d0176b2de8cf85b77",
+    "index.cjs": "6949a5da97ba7f7fbb40c7a044fa9b6ec38e53b0525a1941d5e61a66c62620f7",
+    "index.mjs": "e765ece0bc017d5ecc1c3938e208f535038d14a1a7e625c50cbf17fdf1f5c594",
+    "package.json": "36d9a161fa7d65ccf6facc89f45112c236057a807b3cfeff111fd4a77e54a49e",
+    "value.cjs": "a1e0d68ff67654341cae321113fdcf2b0c1a45d9645bca7a50c95c570d2d2480"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 91980,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 339748,
+            "samples": [
+              27.0750909497628,
+              27.022113448791398,
+              26.311536786088414,
+              26.89174623544508,
+              25.62377114802752,
+              26.30981786500589,
+              26.75782050225459,
+              27.45637943416893,
+              26.784557966492876,
+              25.8136177402073,
+              26.58097766579927,
+              27.552530110552446
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              9.041749999999979,
+              8.735916999999972,
+              8.88554099999999,
+              8.827792000000045,
+              8.908709000000044,
+              8.760917000000063,
+              8.758709000000067,
+              8.88962499999991,
+              8.862375000000043,
+              8.722208000000021,
+              8.701208999999949,
+              8.919499999999971
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 87606,
+            "samples": [
+              129.53213250234032,
+              120.01318402849103,
+              116.25345295984245,
+              112.62261717233929,
+              111.74129625824749,
+              115.28414720452867,
+              111.67708832728377,
+              111.8017030796974,
+              112.51893705910467,
+              114.73814578910087,
+              111.98672465356225,
+              113.24377325753959
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 13049,
+            "samples": [
+              1075.8838225151462,
+              1131.4883132806983,
+              1122.215648708719,
+              1163.8567706337685,
+              1155.1268296421117,
+              1163.5470150969438,
+              1181.779599969342,
+              1128.419802283689,
+              1193.2492144992013,
+              1142.05433366542,
+              1153.9805349069022,
+              1121.6024982757244
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2658,
+            "samples": [
+              4278.890519187399,
+              4264.1553799849835,
+              4442.516553799862,
+              4179.724981188803,
+              4438.064334085826,
+              4173.94055680959,
+              4181.809631301668,
+              4425.476674191127,
+              4163.688111361893,
+              4211.531226486084,
+              4537.998495109152,
+              4184.019939804409
+            ]
+          }
+        ],
+        "checksum": 146816
+      },
+      "vpm": {
+        "pid": 91981,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 339748,
+            "samples": [
+              16.37831569280764,
+              16.99887269387896,
+              17.504150134805805,
+              17.5467052050343,
+              16.661001683600848,
+              16.61685131332645,
+              17.498507717484756,
+              16.655114967564227,
+              18.790765508553516,
+              17.64273226038119,
+              17.14812743562868,
+              17.35268787454225
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              8.183084000000008,
+              8.196207999999956,
+              8.218082999999979,
+              8.472624999999994,
+              8.191125000000056,
+              8.172459000000003,
+              8.153916999999979,
+              8.475791000000072,
+              8.216749999999934,
+              8.181791999999973,
+              8.181125000000065,
+              8.523415999999997
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 87606,
+            "samples": [
+              111.58672921945983,
+              110.00102732689548,
+              110.01005638883116,
+              110.69495240052049,
+              110.96890623929868,
+              110.04859256215263,
+              111.33845855306716,
+              111.1948268383437,
+              112.10562061959156,
+              109.70852453028348,
+              111.43595187544274,
+              109.54158390977778
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 13049,
+            "samples": [
+              1315.3913709862811,
+              1399.4654762817145,
+              1263.9059698061235,
+              1345.09027511687,
+              1317.751015403471,
+              1331.9858993026362,
+              1293.7773009425962,
+              1288.1830025289348,
+              1339.5439497279451,
+              1324.175569009113,
+              1298.2444631772453,
+              1340.7477201318177
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2658,
+            "samples": [
+              3729.0880361173886,
+              4031.7437923250454,
+              3933.6279157260847,
+              3838.0519187358123,
+              4017.337471783301,
+              4004.937923250567,
+              3742.2874341609813,
+              3842.942814145951,
+              3799.488713318263,
+              3796.463506395746,
+              3820.338224228776,
+              3845.5293453724507
+            ]
+          }
+        ],
+        "checksum": 8576
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 91982,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 738830,
+            "samples": [
+              17.842794688900025,
+              17.84155353734958,
+              17.47667393040345,
+              17.064085107534897,
+              18.02968883234303,
+              17.18454583598393,
+              17.748050295737873,
+              17.652798343326612,
+              17.52263714250905,
+              17.82666513270978,
+              17.88565434538389,
+              18.700062260601232
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              8.100916999999981,
+              8.104458999999906,
+              8.113166999999976,
+              8.104625000000055,
+              8.156000000000063,
+              8.39570900000001,
+              8.235290999999961,
+              8.273666999999932,
+              8.126958000000059,
+              8.150666999999999,
+              8.327625000000012,
+              8.205542000000037
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 85576,
+            "samples": [
+              110.84883612227716,
+              109.24987145928726,
+              109.54736140974016,
+              112.5778021875293,
+              109.78740534729381,
+              110.39213097130019,
+              110.00115686641101,
+              111.96139104421738,
+              109.94563896419479,
+              109.20848134991034,
+              111.70723099934635,
+              109.59556417687033
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 9494,
+            "samples": [
+              1378.4144722982971,
+              1337.7352011796952,
+              1262.4903096692656,
+              1329.4361702127542,
+              1324.4022540551973,
+              1325.3151464082687,
+              1353.385401306082,
+              1302.7043395828853,
+              1245.2250895302095,
+              1406.1907520539273,
+              1298.4779860964738,
+              1358.4369075205325
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2311,
+            "samples": [
+              3898.4928602336586,
+              3963.922544353086,
+              3872.36737343145,
+              3897.9156209432895,
+              4051.961488533075,
+              3767.0921678927216,
+              3628.443530938964,
+              3818.6932064041735,
+              3960.911726525233,
+              3818.3686715707017,
+              3869.82561661624,
+              3927.033751622628
+            ]
+          }
+        ],
+        "checksum": 104768
+      },
+      "upstream": {
+        "pid": 91983,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 738830,
+            "samples": [
+              26.42872379302413,
+              25.25377962454152,
+              26.02933015714033,
+              25.55859670018816,
+              27.041234113395525,
+              26.221075213513224,
+              25.85269953845946,
+              26.438422911901256,
+              25.507840775279906,
+              26.442709418946126,
+              27.061254957161943,
+              28.881926830258678
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              10.611165999999912,
+              10.759833999999955,
+              10.717457999999965,
+              10.73920899999996,
+              10.746041999999989,
+              10.881457999999952,
+              11.033165999999937,
+              11.204583999999953,
+              11.339833999999996,
+              10.81070800000009,
+              10.883332999999993,
+              10.468417000000045
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 85576,
+            "samples": [
+              84.72828830513265,
+              85.31841871552739,
+              85.62710339347362,
+              86.67489716743252,
+              86.89595213611119,
+              85.17575021034185,
+              85.59545900719993,
+              85.64072870898278,
+              87.6365219220319,
+              85.00290969430598,
+              85.16649527905216,
+              85.62710339347362
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 9494,
+            "samples": [
+              1114.190541394565,
+              1189.5934274278593,
+              1187.0874236359712,
+              1195.67621655783,
+              1203.6944385928045,
+              1157.6566252369976,
+              1180.6272382557443,
+              1196.9226880134765,
+              1157.4722982936755,
+              1224.3653886665074,
+              1121.1159679797745,
+              1258.759953654947
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2311,
+            "samples": [
+              4300.158805711877,
+              4282.254868022509,
+              4380.156642146286,
+              4390.415404586763,
+              4587.389874513238,
+              4402.260926006015,
+              4313.157940285647,
+              4369.3569883167875,
+              4517.795326698478,
+              4377.235395932473,
+              4245.312418866299,
+              4438.067935958529
+            ]
+          }
+        ],
+        "checksum": 7808
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 91999,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 514176,
+            "samples": [
+              25.461126151356726,
+              26.641332928802566,
+              26.879171723300985,
+              26.312002116006962,
+              27.658655791013256,
+              26.67131488050785,
+              27.16239186582027,
+              26.859157175752962,
+              26.776337285287486,
+              27.249019790888795,
+              26.956075351630552,
+              27.42916238797606
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              9.03212499999995,
+              8.980457999999999,
+              8.846707999999921,
+              9.005416999999966,
+              9.080917,
+              8.877749999999992,
+              8.832709000000023,
+              8.953457999999955,
+              9.011833000000024,
+              8.859291999999982,
+              8.879249999999956,
+              8.894333000000074
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 87753,
+            "samples": [
+              119.932264424008,
+              112.85607329663941,
+              110.8964935671713,
+              114.7738538853367,
+              113.89734823880629,
+              111.10398504894354,
+              112.3537087051155,
+              114.38686996456187,
+              111.37273939352596,
+              111.71081330552916,
+              113.3598509452684,
+              114.54926897086172
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 3741,
+            "samples": [
+              1155.6848436247162,
+              1184.4092488639442,
+              1140.715316760201,
+              1132.0724405239325,
+              1146.1507618284381,
+              1224.0376904570908,
+              1189.2207965784667,
+              1202.2964448008572,
+              1156.08580593428,
+              1305.2881582464427,
+              1205.9275594760877,
+              1014.7244052391973
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2717,
+            "samples": [
+              4198.319101950683,
+              4534.474052263516,
+              4206.35517114461,
+              4741.8262789841865,
+              4415.7618697092275,
+              4523.601398601432,
+              4561.9094589621045,
+              4215.019506808953,
+              4621.7795362531715,
+              4167.9241810821195,
+              4165.424365108571,
+              4688.581155686422
+            ]
+          }
+        ],
+        "checksum": 175296
+      },
+      "vpm": {
+        "pid": 92028,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 514176,
+            "samples": [
+              17.151065004978744,
+              17.061035520911037,
+              17.849675986432608,
+              16.900827732138406,
+              17.225862350634795,
+              17.216542584640255,
+              17.743031568956933,
+              16.695158856111522,
+              16.92659711849633,
+              17.284126446975392,
+              17.834035427557847,
+              16.866874377645047
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              8.262124999999969,
+              8.210042000000044,
+              8.197541999999999,
+              8.338584000000083,
+              8.238209000000097,
+              8.185208999999986,
+              8.18833399999994,
+              8.265874999999937,
+              8.294750000000022,
+              8.172584000000029,
+              8.232334000000037,
+              8.258125000000064
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 87753,
+            "samples": [
+              112.95815527674274,
+              113.729262817226,
+              114.4884847241699,
+              113.78101033582955,
+              112.53176529577337,
+              111.05697810901064,
+              113.24399165840484,
+              112.40546761934083,
+              115.47895798434301,
+              112.09540414572642,
+              109.42266361264014,
+              112.48760726129028
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 3741,
+            "samples": [
+              1130.4798182304376,
+              1313.1181502272416,
+              1410.5519914461424,
+              1315.5463779737806,
+              1325.4365143010061,
+              1431.9925153702181,
+              1318.3753007217083,
+              1332.3309275594693,
+              1444.3108794440434,
+              1355.9321037155532,
+              1162.300721732124,
+              1309.0641539695202
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2717,
+            "samples": [
+              3842.7953625322066,
+              4193.18181818182,
+              3466.645196908381,
+              3925.6993006992875,
+              3783.278248067691,
+              3744.4946632314395,
+              3795.0250276039947,
+              3846.4604343024935,
+              3769.3533308796245,
+              3710.158262789853,
+              3716.8443135811062,
+              3776.7298490982857
+            ]
+          }
+        ],
+        "checksum": 9344
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 92031,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 682493,
+            "samples": [
+              17.672587118109643,
+              17.00554730964278,
+              17.022702064343473,
+              17.560681208451985,
+              18.042309591453726,
+              17.511107073625674,
+              17.140590452942362,
+              17.66648156098306,
+              16.726423567714225,
+              16.67037903685456,
+              18.582058717085722,
+              17.253352049032056
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              8.115916999999968,
+              8.200874999999996,
+              8.147917000000007,
+              8.32487500000002,
+              8.100333999999975,
+              8.130166999999915,
+              8.086124999999925,
+              8.454083999999966,
+              8.134625000000028,
+              8.103291000000013,
+              8.12925000000007,
+              8.37250000000006
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 90699,
+            "samples": [
+              114.22856922347526,
+              108.47694020882263,
+              109.93001025369654,
+              111.05185283189394,
+              109.84089129979346,
+              108.91933758916976,
+              111.15751000562264,
+              111.24709202968094,
+              108.66345825202085,
+              110.6893791552273,
+              113.66305030926465,
+              109.00800449839622
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 9843,
+            "samples": [
+              1298.702123336374,
+              1353.4788174337154,
+              1284.533881946543,
+              1327.4195875241278,
+              1316.8072742050038,
+              1305.5005587727348,
+              1296.919943106764,
+              1299.184699786649,
+              1273.51071827696,
+              1332.266585390626,
+              1273.8621355277771,
+              1351.6966372041059
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2688,
+            "samples": [
+              3981.5383184524085,
+              3796.7976190476093,
+              3793.0465029762195,
+              3788.7057291666592,
+              3733.5379464285743,
+              3790.6283482142453,
+              3949.978422619032,
+              3752.4181547618623,
+              3704.349702380972,
+              3829.504464285686,
+              3713.6037946428164,
+              3908.8697916667347
+            ]
+          }
+        ],
+        "checksum": 111936
+      },
+      "upstream": {
+        "pid": 92032,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 682493,
+            "samples": [
+              25.748249432594967,
+              25.75160624358051,
+              26.37475256156474,
+              25.232493227036766,
+              26.185494942805203,
+              25.934942922491533,
+              26.39843925139159,
+              26.150939277032933,
+              27.1124876006054,
+              26.072428581685138,
+              26.48262766065,
+              27.02469768920706
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              10.548000000000002,
+              10.531749999999988,
+              10.563457999999969,
+              10.583708999999999,
+              10.544165999999905,
+              10.343665999999985,
+              10.672415999999998,
+              10.532916999999998,
+              10.36470799999995,
+              10.342500000000086,
+              10.62679199999991,
+              10.354333999999994
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 90699,
+            "samples": [
+              86.89639356552934,
+              85.11899800438766,
+              86.50178061500297,
+              87.10174312836827,
+              87.12702455374492,
+              84.98622917562618,
+              84.68762610392807,
+              87.53496730945373,
+              87.34615596643917,
+              85.690944773372,
+              85.54256386509155,
+              85.41439266144137
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 9843,
+            "samples": [
+              1155.4445799045066,
+              1128.2637407294644,
+              1106.154119678972,
+              1199.5877273189083,
+              1118.2396627044513,
+              1200.993091537132,
+              1166.80219445292,
+              1149.399776490917,
+              1179.6581326831204,
+              1206.6527481458759,
+              1147.7233567001965,
+              1234.9807985370246
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2688,
+            "samples": [
+              4279.777529761915,
+              4233.832589285753,
+              4674.153645833288,
+              4320.390252976226,
+              4479.755580357123,
+              4377.154761904817,
+              4261.718750000011,
+              4406.606398809489,
+              4302.532738095232,
+              4452.42745535718,
+              4398.7008928571895,
+              4326.0788690475465
+            ]
+          }
+        ],
+        "checksum": 7744
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 92033,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 334539,
+            "samples": [
+              26.331883577101557,
+              27.06921763979696,
+              28.32380081246148,
+              25.726324882898645,
+              25.791336735029315,
+              31.692741354520738,
+              27.685734697598765,
+              26.809777036459067,
+              25.677625030265553,
+              26.79607758736653,
+              26.930342949551328,
+              26.819243795192783
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              8.830791999999974,
+              8.843208000000004,
+              9.105542000000014,
+              9.037666000000058,
+              8.857958000000053,
+              8.900957999999946,
+              9.174082999999996,
+              8.81004100000007,
+              8.842250000000035,
+              8.93320899999992,
+              9.031374999999912,
+              8.852459000000067
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 87971,
+            "samples": [
+              110.67663207193343,
+              111.69447886235233,
+              113.75435086562575,
+              110.43458639779067,
+              110.61884029964342,
+              112.28369576337636,
+              112.25574336997347,
+              110.4587534528426,
+              110.68324788850946,
+              113.40242807288793,
+              110.11819804253739,
+              110.57999795387153
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 11986,
+            "samples": [
+              1134.7787418655175,
+              1178.4617053228867,
+              1104.3404805606544,
+              1112.5201902219135,
+              1117.887535458044,
+              1166.367762389457,
+              1112.7599699649675,
+              1171.7975971967385,
+              1115.7114133155278,
+              1128.6883864508686,
+              1128.2990155181199,
+              1208.319456032022
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2700,
+            "samples": [
+              4391.296296296332,
+              4430.509259259284,
+              4228.719259259226,
+              4516.5585185185155,
+              4161.157407407464,
+              4106.8362962962765,
+              4504.244074074045,
+              4204.552592592605,
+              4532.484444444486,
+              4261.188518518489,
+              4187.561851851856,
+              4320.432222222179
+            ]
+          }
+        ],
+        "checksum": 172480
+      },
+      "vpm": {
+        "pid": 92034,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 334539,
+            "samples": [
+              27.21817486152591,
+              27.761086151390458,
+              27.48745288292249,
+              28.43141457348768,
+              27.546489348028164,
+              28.62894909113732,
+              25.92087021244173,
+              26.651101964195565,
+              28.926998048060184,
+              27.883645852949904,
+              28.738054457028856,
+              27.707531857272247
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              10.637124999999969,
+              10.365042000000017,
+              10.40583300000003,
+              10.669791000000032,
+              10.377375000000029,
+              10.394042000000013,
+              10.64920799999993,
+              10.382458000000042,
+              10.412833999999975,
+              10.530999999999949,
+              10.723666999999978,
+              10.413291999999956
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 87971,
+            "samples": [
+              84.86081776949199,
+              85.33256414045562,
+              84.6453263007125,
+              88.25683463868795,
+              85.10144252083165,
+              85.02517875208838,
+              85.31788884973439,
+              85.90141069215973,
+              87.598947380386,
+              85.36193745666289,
+              85.2833206397568,
+              85.54523649839112
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 11986,
+            "samples": [
+              1134.9803937927595,
+              1212.19547805774,
+              1168.613382279312,
+              1134.288586684468,
+              1140.0279492741586,
+              1143.9040547305171,
+              1184.8927915901907,
+              1155.4104788920308,
+              1156.9991656933096,
+              1166.5206073752674,
+              1209.5882696479287,
+              1146.7789087268532
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2700,
+            "samples": [
+              4347.685185185178,
+              4245.833333333377,
+              4295.077037036966,
+              4417.592592592596,
+              4300.63296296297,
+              4221.450740740744,
+              4516.51222222221,
+              4187.222222222284,
+              4540.509259259209,
+              4202.515555555574,
+              4352.9474074074205,
+              4423.41074074075
+            ]
+          }
+        ],
+        "checksum": 8000
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 92035,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 322102,
+            "samples": [
+              26.256949661908415,
+              25.02701007755299,
+              25.63124414005502,
+              27.272804887892672,
+              26.082315539798095,
+              26.769989009692512,
+              25.84158123824128,
+              25.683634376688047,
+              25.893713792525354,
+              24.803608794729552,
+              25.945843242202823,
+              26.363282438482248
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              9.202499999999986,
+              9.089292,
+              8.828750000000014,
+              8.92304200000001,
+              9.094249999999988,
+              9.046624999999949,
+              8.838166000000001,
+              8.976540999999997,
+              9.025083999999993,
+              8.917917000000102,
+              8.845750000000066,
+              8.842584000000102
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 90784,
+            "samples": [
+              113.35193426154343,
+              112.69239072964321,
+              110.80559349665063,
+              114.23313579485377,
+              113.47172409234999,
+              110.81660865350747,
+              111.11630904124068,
+              112.41242950299713,
+              112.05856758900278,
+              111.904818029609,
+              114.96059878392714,
+              111.91307939725006
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 11632,
+            "samples": [
+              1157.621991059148,
+              1238.0323246217254,
+              1123.2268741402943,
+              1180.3609869326003,
+              1152.3670048143013,
+              1141.4381877579165,
+              1151.5753954607985,
+              1194.431310178811,
+              1217.8544532324488,
+              1148.0506361760717,
+              1129.1050550206296,
+              1172.4374140302605
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2048,
+            "samples": [
+              4431.925292968764,
+              4397.419921874924,
+              4453.308105468734,
+              4196.350097656287,
+              4397.888183593768,
+              4441.264160156222,
+              4493.02197265633,
+              4477.905273437499,
+              4134.439941406276,
+              4354.878417968777,
+              4386.271484374982,
+              4329.976562500005
+            ]
+          }
+        ],
+        "checksum": 166272
+      },
+      "upstream": {
+        "pid": 92037,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create MotionValue",
+            "iterations": 322102,
+            "samples": [
+              29.61044327573248,
+              30.199803167940598,
+              28.690964352906885,
+              29.753385573513928,
+              30.883074305654702,
+              27.403456048084134,
+              26.65938739902266,
+              26.746704460077996,
+              27.759840050667066,
+              26.948631178943295,
+              25.114584820957273,
+              26.382947016783646
+            ]
+          },
+          {
+            "case": "publish to 1 value subscriber",
+            "iterations": 1000000,
+            "samples": [
+              10.506541999999968,
+              10.380458999999973,
+              10.353708000000097,
+              10.430459000000042,
+              10.425291000000016,
+              10.324041999999963,
+              10.41700000000003,
+              10.44337500000006,
+              10.31837500000006,
+              10.361000000000104,
+              10.516334000000029,
+              10.38900000000001
+            ]
+          },
+          {
+            "case": "publish to 32 value subscribers",
+            "iterations": 90784,
+            "samples": [
+              85.89114821995089,
+              85.39867157208329,
+              87.12713694042912,
+              85.50744624603426,
+              86.25647691223078,
+              85.6846140289045,
+              85.0819968276355,
+              85.13982640112789,
+              87.22581071554501,
+              86.34460918223469,
+              85.04664918928547,
+              85.20223827987326
+            ]
+          },
+          {
+            "case": "schedule and run 32 frame callbacks",
+            "iterations": 11632,
+            "samples": [
+              1155.304332874826,
+              1116.8185178817112,
+              1143.0608665749517,
+              1131.3259112792393,
+              1130.659645804668,
+              1143.365285419522,
+              1135.3737104539334,
+              1154.8923658872097,
+              1124.802957359,
+              1097.2174174690508,
+              1214.1936038514375,
+              1124.2441540577654
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 frame callbacks",
+            "iterations": 2048,
+            "samples": [
+              4335.124023437497,
+              4457.682617187597,
+              4317.138671874998,
+              3994.6289062499086,
+              4405.965332031192,
+              4628.784179687484,
+              4427.6533203124745,
+              4474.446289062462,
+              4343.566894531193,
+              4137.7363281249745,
+              4407.369140625006,
+              4471.211914062523
+            ]
+          }
+        ],
+        "checksum": 8128
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "create MotionValue",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 26.771189234373733,
+          "vpmNs": 17.250407655085468,
+          "changePct": -35.56353621774766
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 26.324899503268675,
+          "vpmNs": 17.787357714223827,
+          "changePct": -32.431431648902475
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 26.869164449526973,
+          "vpmNs": 17.1838037948095,
+          "changePct": -36.04637826721844
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 26.16821710991907,
+          "vpmNs": 17.382229561328863,
+          "changePct": -33.57503307040308
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 26.814510415825925,
+          "vpmNs": 27.73430900433135,
+          "changePct": 3.4302270458854256
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 27.5816480493756,
+          "vpmNs": 25.919778517364087,
+          "changePct": -6.025272779336833
+        }
+      ]
+    },
+    {
+      "case": "publish to 1 value subscriber",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 8.845083500000044,
+          "vpmNs": 8.193666500000006,
+          "changePct": -7.36473544879519
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 10.785271000000023,
+          "vpmNs": 8.15333350000003,
+          "changePct": -24.403072486541944
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 8.923895500000015,
+          "vpmNs": 8.235271500000067,
+          "changePct": -7.716630030012639
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 10.538541499999951,
+          "vpmNs": 8.132395999999972,
+          "changePct": -22.83186435238681
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 8.879458,
+          "vpmNs": 10.413062999999966,
+          "changePct": 17.271380753194233
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 10.40300000000002,
+          "vpmNs": 8.949791500000003,
+          "changePct": -13.969129097375887
+        }
+      ]
+    },
+    {
+      "case": "publish to 32 value subscribers",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 112.93319521493945,
+          "vpmNs": 110.83192931990959,
+          "changePct": -1.8606273301934206
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 85.61128120033678,
+          "vpmNs": 109.9733979153029,
+          "changePct": 28.4566664268894
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 113.10796212095391,
+          "vpmNs": 112.74496028625805,
+          "changePct": -0.3209339359396157
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 86.09636269418749,
+          "vpmNs": 110.30969470446192,
+          "changePct": 28.123524911592
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 110.67993998022143,
+          "vpmNs": 85.325226495095,
+          "changePct": -22.908138086863204
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 85.59603013746938,
+          "vpmNs": 112.23549854599995,
+          "changePct": 31.122317665605404
+        }
+      ]
+    },
+    {
+      "case": "schedule and run 32 frame callbacks",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1148.017434286161,
+          "vpmNs": 1320.963292206292,
+          "changePct": 15.064741418989769
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1188.3404255319151,
+          "vpmNs": 1327.3756583105114,
+          "changePct": 11.699949761143792
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1170.2475273991122,
+          "vpmNs": 1321.9059075113573,
+          "changePct": 12.959512971525555
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1161.1233871787133,
+          "vpmNs": 1302.342629279692,
+          "changePct": 12.162294176513978
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1128.4937009844944,
+          "vpmNs": 1156.20482229267,
+          "changePct": 2.4555849345016867
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1133.3498108665863,
+          "vpmNs": 1154.9944979367247,
+          "changePct": 1.909797563171467
+        }
+      ]
+    },
+    {
+      "case": "schedule and cancel 32 frame callbacks",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4237.843303235533,
+          "vpmNs": 3840.4973664408817,
+          "changePct": -9.376135651152639
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4378.696019039379,
+          "vpmNs": 3885.1414971873696,
+          "changePct": -11.271723812430533
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4469.681634155329,
+          "vpmNs": 3780.0040485829886,
+          "changePct": -15.430127736663168
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4351.616815476182,
+          "vpmNs": 3791.837425595232,
+          "changePct": -12.86371051536841
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4290.810370370335,
+          "vpmNs": 4324.159074074074,
+          "changePct": 0.7772122472254894
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4406.6672363280995,
+          "vpmNs": 4397.654052734346,
+          "changePct": -0.20453515344770468
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "create MotionValue",
+      "upstream_ns": 27,
+      "vpm_ns": 17,
+      "change_pct": -34.6,
+      "upstream_first_pct": -35.8,
+      "vpm_first_pct": -33,
+      "process_range_pct": "-35.6, -32.4, -36.0, -33.6",
+      "control_max_abs_pct": 6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "publish to 1 value subscriber",
+      "upstream_ns": 10,
+      "vpm_ns": 8,
+      "change_pct": -15.3,
+      "upstream_first_pct": -7.5,
+      "vpm_first_pct": -23.6,
+      "process_range_pct": "-7.4, -24.4, -7.7, -22.8",
+      "control_max_abs_pct": 17.3,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "publish to 32 value subscribers",
+      "upstream_ns": 100,
+      "vpm_ns": 111,
+      "change_pct": 13.9,
+      "upstream_first_pct": -1.1,
+      "vpm_first_pct": 28.3,
+      "process_range_pct": "-1.9, 28.5, -0.3, 28.1",
+      "control_max_abs_pct": 31.1,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "schedule and run 32 frame callbacks",
+      "upstream_ns": 1166,
+      "vpm_ns": 1321,
+      "change_pct": 12.6,
+      "upstream_first_pct": 14,
+      "vpm_first_pct": 11.9,
+      "process_range_pct": "15.1, 11.7, 13.0, 12.2",
+      "control_max_abs_pct": 2.5,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "schedule and cancel 32 frame callbacks",
+      "upstream_ns": 4365,
+      "vpm_ns": 3816,
+      "change_pct": -12.1,
+      "upstream_first_pct": -12.4,
+      "vpm_first_pct": -12.1,
+      "process_range_pct": "-9.4, -11.3, -15.4, -12.9",
+      "control_max_abs_pct": 0.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

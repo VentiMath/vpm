@@ -63,6 +63,8 @@ require("../../../scripts/bench-process.cjs")
     files: [
       "index.cjs",
       "index.mjs",
+      "frame.cjs",
+      "value.cjs",
       "package.json",
       "PROVENANCE.json",
       "bench/compare.cjs",
