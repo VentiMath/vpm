@@ -1,5 +1,7 @@
 "use strict";
 module.exports = {
+  ...require("./reads.cjs"),
+  ...require("./resolver.cjs"),
   ...require("./transition.cjs"),
   ...require("./mapping.cjs"),
   ...require("./frame.cjs"),

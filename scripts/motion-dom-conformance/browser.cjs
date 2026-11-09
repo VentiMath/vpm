@@ -120,7 +120,7 @@ const pending = new Map(),
     assert.deepEqual(rows[0].batched, { writes: 1, opacity: "1" });
     assert.deepEqual(exceptions, []);
     console.log(
-      "Chrome: mapping, values, playback, DOM effects, calendar scale springs, transition adapters, SVG and iframe cleanup pass.",
+      "Chrome: mapping, values, playback, DOM effects, calendar scale springs, transition adapters, element reads/keyframe measurement, SVG and iframe cleanup pass.",
     );
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);

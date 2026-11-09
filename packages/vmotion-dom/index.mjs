@@ -1,5 +1,17 @@
 import api from "./index.cjs";
 export const {
+  defaultTransformValue,
+  parseValueFromTransform,
+  readTransformValue,
+  getComputedStyle,
+  readStyleValue,
+  readSVGValue,
+  getVariableValue,
+  fillWildcards,
+  applyPxDefaults,
+  KeyframeResolver,
+  DOMKeyframesResolver,
+  flushKeyframeResolvers,
   animateMotionValue,
   getDefaultTransition,
   getValueTransition,

@@ -33,7 +33,9 @@
     "mapping.cjs",
     "spring.cjs",
     "effects.cjs",
-    "transition.cjs"
+    "transition.cjs",
+    "reads.cjs",
+    "resolver.cjs"
   ],
   "sideEffects": false,
   "engines": {

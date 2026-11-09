@@ -1,3 +1,4 @@
+import { checkReads } from "./reads-browser.mjs";
 import { checkTransitions } from "./browser-transitions.mjs";
 import { checkEffects } from "./effects-browser.mjs";
 import * as vpm from "../../packages/vmotion-dom/index.mjs";
@@ -148,5 +149,6 @@ window.runMotionDom = async () => {
   }
   await checkEffects([current, app, vpm]);
   await checkTransitions([current, app, vpm]);
+  await checkReads([current, app, vpm]);
   return rows;
 };

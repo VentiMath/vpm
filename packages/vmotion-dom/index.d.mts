@@ -332,3 +332,82 @@ export declare function getValueTransition(
   key: string,
 ): NumericValueTransition;
 export declare function isTransitionDefined(transition: object): boolean;
+
+export declare function defaultTransformValue(name: string): number;
+export declare function parseValueFromTransform(
+  transform: string | undefined,
+  name: string,
+): number;
+export declare function readTransformValue(
+  element: HTMLElement | SVGElement,
+  name: string,
+): number;
+export declare function getComputedStyle(
+  element: HTMLElement | SVGElement,
+  name: string,
+): string;
+export declare function readStyleValue(
+  element: HTMLElement | SVGElement,
+  name: string,
+): string | number;
+export declare function readSVGValue(
+  element: SVGElement,
+  name: string,
+): string | number | undefined;
+export declare function getVariableValue(
+  token: string,
+  element: Element,
+  depth?: number,
+): string | number | undefined;
+export declare function fillWildcards(frames: (string | number | null)[]): void;
+export declare function applyPxDefaults(
+  frames: (string | number | null)[],
+  name: string,
+): void;
+export interface ResolverElement {
+  current?: HTMLElement | SVGElement;
+  readValue?: (
+    name: string,
+    keyframe: string | number | null,
+  ) => string | number | undefined;
+  render?: () => void;
+  getValue?: (name: string) => MotionValue<any> | undefined;
+  measureViewportBox?: () => {
+    x: { min: number; max: number };
+    y: { min: number; max: number };
+  };
+}
+export declare class KeyframeResolver<
+  T extends string | number = string | number,
+> {
+  constructor(
+    keyframes: (T | null)[],
+    complete: (
+      keyframes: T[],
+      finalKeyframe: T | undefined,
+      forced: boolean,
+    ) => void,
+    name?: string,
+    value?: MotionValue<T>,
+    element?: ResolverElement,
+    isAsync?: boolean,
+  );
+  name?: string;
+  element?: ResolverElement;
+  finalKeyframe?: T;
+  state: "pending" | "scheduled" | "complete";
+  needsMeasurement: boolean;
+  scheduleResolve(): void;
+  readKeyframes(): void;
+  setFinalKeyframe(): void;
+  measureInitialState(): void;
+  renderEndStyles(): void;
+  measureEndState(): void;
+  complete(forced?: boolean): void;
+  cancel(): void;
+  resume(): void;
+}
+export declare class DOMKeyframesResolver<
+  T extends string | number = string | number,
+> extends KeyframeResolver<T> {}
+export declare function flushKeyframeResolvers(): void;

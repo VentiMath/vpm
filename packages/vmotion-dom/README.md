@@ -2,7 +2,7 @@
 
 Independent DOM effects, numeric transition adapters, playback, values and scheduling targeting **motion-dom 14.7.0**, with
 12.36.0 as the application's comparison control. This is a partial implementation
-of Motion DOM; element animation adapters, inertia and the React renderer remain to be built.
+of Motion DOM; element animation APIs, inertia and the React renderer remain to be built.
 
 ```js
 import { interpolate, stagger } from "vmotion-dom";
@@ -218,7 +218,7 @@ the state exposes `get`, `flush` and `release`. `releaseElement(element)` detach
 style/SVG bindings, returns their MotionValues and clears retained transform
 components for the next renderer. `styleSubjectEffect` and `svgSubjectEffect`
 share the corresponding binding stores. Public effect registration, custom
-`createEffect`/`MotionValueState` construction and computed-style reads are not
+`createEffect`/`MotionValueState` construction are not
 implemented yet; the declarations expose this bounded surface.
 
 Cleanup is idempotent and preserves the last paint. Removing a transform binding
@@ -255,9 +255,63 @@ scheduler benchmark still shows 32-callback dispatch taking 19% more time on Nod
 and 14% more on Bun; that workload is separate from coalesced DOM effects. The
 reports retain all samples and do not claim universal speed gains.
 
+## Element reads and DOM keyframes
+
+`readStyleValue`, `readSVGValue`, `readTransformValue` and `getComputedStyle`
+read through the element's own window, including iframe elements. CSS units and
+custom-property strings are preserved. SVG reads honor forced attribute names,
+dash casing, literal SVG names and transform defaults. `parseValueFromTransform`
+handles computed 2D/3D matrices; `defaultTransformValue` supplies identity values.
+
+Unlike the controls, rotated 2D scale retains its magnitude and absent axes have
+identity defaults. The decomposition is canonical: 2D rotation plus X skew,
+positive X scale and reflection sign on Y. A matrix does not uniquely identify
+its original transform function list. Simple 3D translation, scale, rotations
+and perspective are supported; arbitrary combined 3D skew/reflection recovery
+is outside this contract. Invalid matrices reject. A single-entry matrix cache
+avoids repeated parsing without retaining an unbounded list of strings.
+
+`KeyframeResolver` snapshots keyframes, resolves an initial null from a MotionValue
+or element read, and fills later nulls from their predecessors. `DOMKeyframesResolver`
+also resolves CSS variables (with bounded nested fallbacks), numeric strings and
+mixed numeric/pixel endpoints. A final variable token is returned separately so
+a caller can restore the CSS expression after playback. `fillWildcards` and
+`applyPxDefaults` expose their corresponding in-place helpers.
+
+DOM reads are scheduled; `flushKeyframeResolvers()` can force completion.
+Resolvers support cancellation and resume, and completion is idempotent. A failed
+read or callback does not strand other resolvers. New work queued by a completion
+callback belongs to a later batch. Pure resolved endpoints can complete immediately.
+VPM normalizes numeric strings; upstream's immediate path sometimes leaves them
+as strings. Missing initial values fall back to the final target; entirely
+unresolvable keyframes reject rather than silently retaining nulls.
+
+Two-endpoint width/height/position changes can measure percentages, `auto` and
+browser-resolved CSS lengths. Initial writes, reads, end writes and end reads are
+batched, with conflicting measurements isolated. Owned inline properties and
+`!important` priorities are restored before callbacks, including after failures.
+Explicit percentage starting points are honored. X/Y translation percentages
+use the untransformed border box; their mixed-unit measurement supports numbers,
+pixels and percentages. More than two mixed-unit layout keyframes reject.
+Non-positional colors/strings pass through for future mixers; complex `none`
+normalization and general color/string interpolation remain unimplemented.
+
+[Read/resolution benchmarks](bench/reads/README.md) measure JavaScript work with
+computed-style sinks, not browser layout cost. Chrome separately verifies real
+styles, SVG, percentages, auto dimensions, restoration and iframe reads. Earlier
+suite recordings retain their recorded source hashes and dates; they are
+historical measurements rather than new measurements of this addition.
+
+Reading three components from a repeated matrix takes 97% less time on Node and
+90% less on Bun. Changing matrices are unestablished on Node and 22% slower on
+Bun (276 versus 228 ns). Scalar CSS reads add about 9 ns on Node and 2 ns on Bun;
+owned numeric resolution adds about 14 ns and 11 ns. Variable endpoint resolution
+is unestablished on Node and 27% slower on Bun (764 versus 599 ns). Those costs
+remain visible alongside the caching gain; this is not a universal speedup.
+
 ## Still to build
 
-Element animation adapters and computed-style/keyframe resolution come next.
+Element animation APIs and effect registration come next.
 Inertia, CSS spring serialization, color/complex-string mixers, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject

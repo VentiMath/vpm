@@ -133,3 +133,32 @@ animateMotionValue("x", position, "10px");
 animateMotionValue("x", position, 1, {}, document.body);
 // @ts-expect-error inertia is not built yet
 animateMotionValue("x", position, 1, { type: "inertia" });
+
+import {
+  readStyleValue,
+  readSVGValue,
+  DOMKeyframesResolver,
+  flushKeyframeResolvers,
+} from "vmotion-dom";
+readStyleValue(document.body, "opacity");
+readSVGValue(
+  document.createElementNS("http://www.w3.org/2000/svg", "svg"),
+  "strokeWidth",
+);
+const resolver = new DOMKeyframesResolver<number | string>(
+  [null, "50%"],
+  (frames, final, forced) => {
+    void frames;
+    void final;
+    void forced;
+  },
+  "width",
+  undefined,
+  { current: document.body },
+);
+resolver.scheduleResolve();
+resolver.cancel();
+resolver.resume();
+flushKeyframeResolvers();
+// @ts-expect-error invalid keyframe object
+new DOMKeyframesResolver([{}], () => {});

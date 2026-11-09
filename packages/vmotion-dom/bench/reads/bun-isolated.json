@@ -1,0 +1,1877 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-09T21:12:36.013Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "c6936a8d8ad1c8751236a99453093040693978f688a957e4d27b0656ee37ac97",
+    "bench/reads.cjs": "c324a5d90937794fb4251bdeeebb6e3b6296c7bc757ec4811d9eb9eb1e7641e8",
+    "effects.cjs": "3aa86de29f07f161c481bcb97b28a040946c2552a25ba70b1ee27ea94885d163",
+    "frame.cjs": "4b82b639ed380b1c902191bbe7469796ef95f31be6ec65e284e936cefd7b2f97",
+    "index.cjs": "87024b76fbc29d116d652c8b35faaabe2eaa206aa49a1d017ffe2410f337987f",
+    "index.mjs": "3c887f40b3975dd9af632c82b901519573967f3ea805b67a87d454b0b9ad008e",
+    "mapping.cjs": "57c8efdb499434d4b2b617377b488679335c110b7fdfccb0134099f27f207a74",
+    "package.json": "102828b5c583cf6216f8e9d26686138f04745b75328643309726790bc66a1eb3",
+    "playback.cjs": "46f125f0863383a37ec5a23da45dbfdcef0f199158b7a1c8510a7c730b04771d",
+    "reads.cjs": "8a891924e668b08fee6c9067625de042ac4c5c46f741f5c6adb110847f65d7ad",
+    "resolver.cjs": "d69adba4a022243abd4340283e16c8247ccba9956ffd2a046935d4b3b5402bb5",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "transition.cjs": "2bc8a2d8274a95df5208f3fcc26bbfbd41f52ccfd6422745a699fb24e622824d",
+    "value.cjs": "a1e0d68ff67654341cae321113fdcf2b0c1a45d9645bca7a50c95c570d2d2480"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 56849,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 24555,
+            "samples": [
+              317.05693341478235,
+              306.84687436367363,
+              287.33964569334233,
+              298.34046019140817,
+              304.64944003258154,
+              305.90002036245113,
+              315.78599063327175,
+              298.7850539604959,
+              298.2352270413364,
+              314.01107717369075,
+              310.22871105681065,
+              305.8830380777853
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 44169,
+            "samples": [
+              233.35278136249417,
+              219.91761189975045,
+              228.07758835382415,
+              220.3440195612292,
+              234.12160112295933,
+              236.71391700061153,
+              234.66306685684734,
+              228.90771808281633,
+              229.01242953202606,
+              226.40125427335872,
+              224.14759220267473,
+              237.06201181824267
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              7.3204999999999245,
+              7.4537499999999,
+              7.359749999999963,
+              7.4553339999999935,
+              7.4725839999999835,
+              7.367666999999983,
+              7.395291000000043,
+              7.338957999999934,
+              7.422374999999988,
+              7.332333000000062,
+              7.443750000000023,
+              7.412333999999987
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 146550,
+            "samples": [
+              49.74553394745902,
+              52.98846127601477,
+              53.478901398839604,
+              50.34317297850562,
+              47.65807574206745,
+              48.420907540088834,
+              49.45553053565406,
+              47.95575571477315,
+              49.369955646537335,
+              50.476799727054136,
+              48.75583077448058,
+              48.481460252474406
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 19142,
+            "samples": [
+              606.2388987566577,
+              609.9218994880357,
+              606.6459617594844,
+              605.0721972625668,
+              629.5362553547153,
+              606.2628252011361,
+              629.3839201755208,
+              615.1133632849226,
+              604.6781945460242,
+              616.604430049107,
+              627.1462752063563,
+              618.3414481245406
+            ]
+          }
+        ],
+        "checksum": 362922
+      },
+      "vpm": {
+        "pid": 57224,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 24555,
+            "samples": [
+              30.45204642638959,
+              30.323070657706264,
+              30.518224394218823,
+              30.679413561392703,
+              32.06406027285643,
+              31.62797800855321,
+              30.43506414172372,
+              31.001832620648266,
+              31.33781307269369,
+              30.98827122785609,
+              35.32205253512416,
+              28.505762573815325
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 44169,
+            "samples": [
+              286.4037220675137,
+              279.70504199778094,
+              291.162919694808,
+              278.7852792682653,
+              292.521338495323,
+              292.2694650093967,
+              278.43906359663936,
+              280.21159636849376,
+              279.4267472661844,
+              293.5109013108758,
+              281.49833593696894,
+              285.62453304353585
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              11.312124999999924,
+              8.903749999999945,
+              9.044667000000004,
+              8.927834000000075,
+              9.247124999999983,
+              8.765582999999992,
+              9.331542000000013,
+              9.150957999999946,
+              9.136833000000024,
+              9.343083999999976,
+              9.470500000000015,
+              9.278249999999957
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 146550,
+            "samples": [
+              56.875359945411475,
+              56.51426816786053,
+              55.55128625042707,
+              57.48010235414633,
+              61.991354486522624,
+              58.61679972705623,
+              56.578246332309355,
+              55.920054588877186,
+              57.9122620266119,
+              57.07153190037607,
+              54.976970317297784,
+              56.905493005800366
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 19142,
+            "samples": [
+              843.8621356180159,
+              714.140842127264,
+              734.7804304670344,
+              811.4921638282262,
+              731.6372374882515,
+              724.5215755929362,
+              829.9681329014729,
+              687.6719256086144,
+              726.6286176992949,
+              765.4611848291727,
+              724.6565144707943,
+              796.5860411660275
+            ]
+          }
+        ],
+        "checksum": 23012
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 57404,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 312797,
+            "samples": [
+              29.2792386116235,
+              28.860970533604863,
+              28.862834362222163,
+              28.769988203211675,
+              29.177604005153498,
+              28.9424930546008,
+              28.74095020092912,
+              28.702187041435824,
+              28.695662042794467,
+              29.55950664488472,
+              29.150560906914194,
+              28.801826743862758
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 36043,
+            "samples": [
+              289.0170629525823,
+              291.60655328357666,
+              278.35618566711906,
+              284.7559304164474,
+              271.1021002691237,
+              281.96065810282346,
+              276.7643092972282,
+              271.38764808700614,
+              276.82906528313447,
+              268.81319534999665,
+              273.9470909746691,
+              265.6942263407594
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              8.867666999999983,
+              8.904750000000035,
+              8.944541999999956,
+              9.233334000000013,
+              9.084249999999997,
+              8.954166999999984,
+              8.884791999999948,
+              8.872875000000022,
+              10.837541999999985,
+              9.343582999999967,
+              8.914583000000107,
+              8.948624999999993
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 209900,
+            "samples": [
+              56.866164840400565,
+              57.53811338732645,
+              56.22379704621252,
+              57.62148642210565,
+              56.293873272986275,
+              58.007584564078144,
+              58.26167222486931,
+              57.47737017627419,
+              60.28445926631646,
+              57.254845164363374,
+              58.97669842782251,
+              56.98706050500192
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 8858,
+            "samples": [
+              786.3277263490863,
+              825.9482953262424,
+              569.0477534432255,
+              912.8424023481475,
+              773.5098216301691,
+              578.6342289455855,
+              804.0754120568915,
+              603.8656581621194,
+              846.7345902009313,
+              849.2134793406965,
+              601.0150146760022,
+              913.5809437796312
+            ]
+          }
+        ],
+        "checksum": 327922
+      },
+      "upstream": {
+        "pid": 57405,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 312797,
+            "samples": [
+              302.33199806903514,
+              299.4900334721879,
+              322.91403689933077,
+              298.1840746554474,
+              301.8834899311692,
+              299.7962736215499,
+              298.7953592905301,
+              297.89235190874604,
+              299.53545270574824,
+              300.005143911227,
+              320.4943365825121,
+              301.4706822635767
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 36043,
+            "samples": [
+              227.16502510889254,
+              232.7185583885885,
+              223.32699830757858,
+              224.52115528675228,
+              221.72935105291947,
+              226.94767361208184,
+              217.91449102460913,
+              229.20306300808008,
+              226.5488444358146,
+              234.45836917015302,
+              232.79485614405016,
+              230.40765197125913
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              7.02966699999979,
+              7.119333999999981,
+              7.251208000000133,
+              7.110333999999966,
+              7.158500000000004,
+              7.227374999999938,
+              7.096332999999959,
+              7.214457999999922,
+              7.1433750000001055,
+              7.027332999999999,
+              7.035541999999623,
+              7.164667000000009
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 209900,
+            "samples": [
+              47.785254883278824,
+              48.11576941400575,
+              46.88403049070878,
+              47.17802286803379,
+              46.32722248689827,
+              49.03208194378327,
+              46.677584564076696,
+              46.929094807051484,
+              45.9020200095303,
+              45.84405431157739,
+              48.217008099092844,
+              49.674449737971315
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 8858,
+            "samples": [
+              589.5377060284238,
+              528.9898396929577,
+              609.322081734027,
+              598.6209076541007,
+              739.0353352901218,
+              669.8370964100462,
+              595.6104086701214,
+              625.9031384059517,
+              546.4456988033421,
+              603.9408444344313,
+              597.2002709415177,
+              614.8585459471275
+            ]
+          }
+        ],
+        "checksum": 12958
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 57406,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 35788,
+            "samples": [
+              295.22465630937705,
+              294.92659550687307,
+              310.6104001341235,
+              307.450570023473,
+              302.4128199396442,
+              302.44892142617533,
+              288.5732088968379,
+              306.71825751648595,
+              302.79934614954783,
+              302.5141108751533,
+              301.4697664021456,
+              299.8106907343243
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 44870,
+            "samples": [
+              226.92406953421067,
+              233.50327613104346,
+              229.92255404501742,
+              228.1015600624024,
+              226.88136839759267,
+              227.5908179184308,
+              228.92986405170385,
+              225.24051704925319,
+              235.71985736572458,
+              222.7202808112306,
+              231.27831513260634,
+              231.51326053041944
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              7.234417000000008,
+              7.316290999999978,
+              7.482290999999918,
+              7.87012500000003,
+              7.388500000000022,
+              7.239291999999978,
+              7.246665999999891,
+              7.129458,
+              7.233875000000012,
+              7.405959000000053,
+              7.33420799999999,
+              7.389749999999935
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 229523,
+            "samples": [
+              47.89534382175237,
+              46.60044962814234,
+              48.92029556950728,
+              46.60226643952832,
+              46.25734675827689,
+              45.691499326864424,
+              49.76643735050527,
+              48.19633326507603,
+              47.81692030863928,
+              47.345651634041786,
+              47.52065370355066,
+              48.313968534744184
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 19679,
+            "samples": [
+              578.3216626861085,
+              591.3749174246641,
+              574.33258803802,
+              604.7012551450824,
+              607.6697494791422,
+              602.5542964581473,
+              573.091874587123,
+              581.7390111286136,
+              635.9062960516349,
+              603.6045530768837,
+              682.3242542812134,
+              591.4850348086826
+            ]
+          }
+        ],
+        "checksum": 367913
+      },
+      "vpm": {
+        "pid": 57420,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 35788,
+            "samples": [
+              30.241757013523955,
+              38.796775455460256,
+              34.179277970269354,
+              29.096093662680257,
+              29.629345031854864,
+              29.86104280764516,
+              32.81594389180746,
+              31.403682798703425,
+              31.566670392310098,
+              33.469095786296876,
+              31.601626243434065,
+              30.454817257181567
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 44870,
+            "samples": [
+              279.64954312458286,
+              281.84383775351074,
+              278.77664363717435,
+              273.9803877869399,
+              268.91203476710353,
+              323.90238466681535,
+              275.3138622687769,
+              273.3758636059712,
+              273.80303097838373,
+              263.44624470693094,
+              276.20717628705154,
+              273.1121462001341
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              8.720499999999902,
+              8.739207999999962,
+              8.738375000000019,
+              9.107833000000028,
+              8.735667000000035,
+              8.806916000000001,
+              8.709333000000015,
+              8.993875000000003,
+              11.312792000000059,
+              18.619957999999997,
+              14.148124999999936,
+              17.192084000000023
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 229523,
+            "samples": [
+              63.54664674128522,
+              64.57867838952986,
+              71.79000797305747,
+              68.64689813221324,
+              65.51140844272646,
+              64.4223759710357,
+              66.09541091742459,
+              62.81868919454677,
+              60.63063396696612,
+              56.43044052229966,
+              56.6165133777451,
+              59.868183145044334
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 19679,
+            "samples": [
+              680.3149042126132,
+              833.5958636109649,
+              696.0147873367596,
+              712.1169774886972,
+              788.7595914426513,
+              720.459220488845,
+              832.8230601148508,
+              729.2715076985595,
+              647.064535799581,
+              921.0601148432337,
+              731.9731693683673,
+              749.1424869149876
+            ]
+          }
+        ],
+        "checksum": 19364
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 57421,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 311066,
+            "samples": [
+              29.333405129457997,
+              29.696807108459257,
+              29.00563224524704,
+              28.805783981534542,
+              28.760510631184367,
+              28.678399439347167,
+              29.30808895861336,
+              29.03871847132122,
+              28.701706390283807,
+              28.652414600117094,
+              28.75019449248703,
+              29.095783531469152
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 37785,
+            "samples": [
+              288.76760619293265,
+              270.3993912928409,
+              282.9506947201264,
+              267.11327246261874,
+              278.4405187243597,
+              278.8805081381507,
+              275.4951171099642,
+              272.4008733624468,
+              273.11872436151936,
+              264.89236469498496,
+              277.5792774910682,
+              276.3905518062741
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              8.941707999999949,
+              8.902249999999981,
+              9.109332999999992,
+              8.909833000000049,
+              9.223582999999962,
+              9.095458000000008,
+              8.983000000000061,
+              9.048667000000023,
+              8.866333000000054,
+              8.881250000000023,
+              9.018916999999988,
+              9.182542000000012
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 106958,
+            "samples": [
+              57.947596252735494,
+              58.10224574131943,
+              60.5183062510523,
+              59.294302436471305,
+              60.97175526842457,
+              57.50310402214011,
+              57.263514650610134,
+              56.31766674769571,
+              56.31144000448681,
+              57.06639989528478,
+              58.164971297145094,
+              60.30248321771067
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 8945,
+            "samples": [
+              824.2873113471069,
+              737.7026271660267,
+              906.3349357182791,
+              586.8547792062727,
+              1117.7519284516356,
+              872.0746785913902,
+              612.0458356623654,
+              809.7121296813765,
+              603.2792621576202,
+              983.0725544997216,
+              965.1760760201132,
+              624.5062045835598
+            ]
+          }
+        ],
+        "checksum": 263352
+      },
+      "upstream": {
+        "pid": 57422,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 311066,
+            "samples": [
+              310.8192216442813,
+              300.6394398616369,
+              302.3596021423108,
+              300.6067554795443,
+              299.0800183883807,
+              301.39249869802524,
+              302.43327139578116,
+              302.2354291372246,
+              304.49218493824435,
+              299.6793027846178,
+              301.01060868111534,
+              303.49976853786654
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 37785,
+            "samples": [
+              229.33042212518234,
+              223.8222839751199,
+              225.20841603811343,
+              230.385735080057,
+              222.38652904591754,
+              232.6981606457594,
+              233.5781394733352,
+              219.04086277623816,
+              226.36186317321128,
+              222.7206563451002,
+              226.58570861453046,
+              228.22879449516265
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              7.238624999999956,
+              7.388249999999971,
+              7.176875000000109,
+              7.219582999999602,
+              7.133375000000342,
+              7.298208000000158,
+              7.147749999999633,
+              7.14816699999983,
+              7.163416999999754,
+              7.285125000000335,
+              7.230749999999716,
+              7.2512499999998
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 106958,
+            "samples": [
+              50.51281811552382,
+              47.52371959086511,
+              46.15441575197778,
+              45.99664354232301,
+              45.80691486377594,
+              47.18596084444158,
+              47.212849903698626,
+              46.887180014586,
+              46.68070644551985,
+              47.457487985941725,
+              46.86379700443307,
+              46.78082985844954
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 8945,
+            "samples": [
+              531.1533817775177,
+              596.1245388485381,
+              561.4868641699314,
+              583.053884851911,
+              582.7557294577626,
+              571.7906092789582,
+              603.6006707657705,
+              577.5899385131287,
+              543.4087199552384,
+              574.3991056456031,
+              579.7140301844794,
+              627.7017328116101
+            ]
+          }
+        ],
+        "checksum": 13919
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 57452,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 34415,
+            "samples": [
+              298.7408688072073,
+              301.9601336626468,
+              300.696149934623,
+              303.6515182333291,
+              303.6224611361338,
+              304.51718727299163,
+              298.3062036902515,
+              300.2118843527534,
+              299.9382536684592,
+              296.8497166933031,
+              300.4770303646663,
+              292.12189452273765
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 44665,
+            "samples": [
+              225.0746445762924,
+              227.93014664726414,
+              237.5844173290053,
+              223.03349378708043,
+              228.35273704242766,
+              235.79796261054318,
+              231.22225456173726,
+              238.7812828836897,
+              293.66488301802264,
+              274.04567334601916,
+              237.9678495466245,
+              226.26029329452547
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              7.2121250000000146,
+              7.1113339999999425,
+              7.155292000000031,
+              7.22950000000003,
+              7.273207999999954,
+              7.309417000000053,
+              7.3894579999999905,
+              7.267624999999953,
+              7.446083000000044,
+              7.0650419999999485,
+              7.051000000000045,
+              7.089249999999993
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 233213,
+            "samples": [
+              48.2963385403043,
+              47.65296960289522,
+              48.456775565684076,
+              48.3897767277129,
+              47.694952682740464,
+              46.73338536016418,
+              47.2366849189363,
+              48.42908414196384,
+              47.29545951555095,
+              46.71141402923484,
+              48.21700762821958,
+              59.82192244857736
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 18610,
+            "samples": [
+              601.5784524449227,
+              615.9614185921472,
+              562.311929070396,
+              570.9497581945232,
+              596.204997313278,
+              572.2058033315334,
+              602.9105857066128,
+              586.2663084363336,
+              596.2654486835092,
+              605.2324019344436,
+              577.2657710908073,
+              586.9559376679233
+            ]
+          }
+        ],
+        "checksum": 305315
+      },
+      "vpm": {
+        "pid": 57453,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 34415,
+            "samples": [
+              303.50986488449786,
+              295.7189306988231,
+              299.51329362196714,
+              290.40267325294076,
+              308.9435420601484,
+              299.08711317739426,
+              298.8244079616446,
+              293.0117681243645,
+              303.669678919077,
+              300.43463605985704,
+              377.13691704198806,
+              406.9833793404034
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 44665,
+            "samples": [
+              251.2369864547183,
+              265.2356431210104,
+              252.8014105003922,
+              236.72524347923283,
+              235.26156946154774,
+              251.4832643009084,
+              255.54496809582383,
+              235.03674017687044,
+              231.7138699205202,
+              234.08149557819272,
+              309.51807903279905,
+              239.48001791111582
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              7.055082999999968,
+              7.075874999999996,
+              7.006541999999968,
+              7.054083999999989,
+              7.050291999999899,
+              7.125792000000047,
+              7.486457999999857,
+              7.248708000000079,
+              7.024791999999934,
+              7.080625000000055,
+              7.000667000000021,
+              7.123583000000053
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 233213,
+            "samples": [
+              60.49816262386758,
+              66.78658565345906,
+              54.6176285198508,
+              52.49242537937399,
+              51.01220343634403,
+              52.289464995518976,
+              55.039453203723625,
+              46.71534176911195,
+              54.753238455831905,
+              53.33339479360118,
+              58.34776792031298,
+              138.54341310304397
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 18610,
+            "samples": [
+              575.4814078452432,
+              592.286835034935,
+              567.1032240730815,
+              569.3780225685132,
+              589.6180010746865,
+              576.8157979580827,
+              576.8359484148306,
+              572.5662547017707,
+              591.415905427197,
+              617.6876410531992,
+              594.3936593229479,
+              595.1817839871026
+            ]
+          }
+        ],
+        "checksum": 12007
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 57454,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 35367,
+            "samples": [
+              303.6258093703172,
+              295.1586224446517,
+              296.62657279384734,
+              299.1831085475161,
+              311.34837560437705,
+              302.46181468600616,
+              297.37351203098876,
+              302.7751859077661,
+              301.82562841066533,
+              303.3406848191818,
+              307.11066813696374,
+              304.8934317301438
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 44723,
+            "samples": [
+              250.44254634080988,
+              229.34973056369185,
+              221.06913668582231,
+              226.22028933658325,
+              231.52890011850866,
+              234.29125953089002,
+              240.11879793394897,
+              232.6860004919177,
+              227.72211166513745,
+              224.4110189388013,
+              228.8009972497371,
+              231.08820964604152
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              7.198750000000018,
+              7.389042000000018,
+              7.3813749999999345,
+              7.364416000000006,
+              7.1696660000000065,
+              7.181375000000003,
+              7.161875000000009,
+              7.326415999999995,
+              7.351750000000038,
+              7.239624999999933,
+              7.1277919999999995,
+              7.086542000000009
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 242463,
+            "samples": [
+              46.10308376948259,
+              46.03228121404125,
+              47.374411765919334,
+              46.65247893493038,
+              46.888424213178794,
+              46.080226673760336,
+              48.13380598276795,
+              47.639912069057615,
+              46.25172912980495,
+              46.09775512139958,
+              50.870305984830594,
+              49.498616283721574
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 18195,
+            "samples": [
+              623.8527067875726,
+              598.4267655949435,
+              639.2782082989891,
+              613.0713382797502,
+              623.9214069799348,
+              652.7388293487213,
+              832.6234679857106,
+              624.8282495190912,
+              605.9814784281477,
+              626.8846935971349,
+              643.4070348997014,
+              598.5321242099502
+            ]
+          }
+        ],
+        "checksum": 311143
+      },
+      "upstream": {
+        "pid": 57455,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "read three components of one matrix",
+            "iterations": 35367,
+            "samples": [
+              299.79101987728683,
+              309.5953289789915,
+              301.14230780105646,
+              301.4179885203726,
+              309.33378573246205,
+              303.4926626516233,
+              300.87957700681443,
+              303.63284983176425,
+              304.38448270986976,
+              298.3725224078949,
+              291.8092289422349,
+              300.42248423671805
+            ]
+          },
+          {
+            "case": "read changing transform matrices",
+            "iterations": 44723,
+            "samples": [
+              222.65668671600872,
+              229.60595219462135,
+              227.23580707913024,
+              223.03307023231815,
+              219.82351362833555,
+              222.70326230351083,
+              227.47897055206488,
+              228.04447376070559,
+              234.63506473179473,
+              224.08680097489017,
+              227.9643583838316,
+              229.69724750128765
+            ]
+          },
+          {
+            "case": "read computed opacity",
+            "iterations": 1000000,
+            "samples": [
+              7.0038339999999835,
+              7.1352920000000495,
+              7.173291999999947,
+              7.05154200000004,
+              7.051917000000003,
+              7.007208999999989,
+              7.014167000000043,
+              6.98174999999992,
+              7.002375000000029,
+              7.328791999999908,
+              7.0434999999999945,
+              6.998290999999995
+            ]
+          },
+          {
+            "case": "resolve current numeric keyframe and wildcards",
+            "iterations": 242463,
+            "samples": [
+              45.68377443156243,
+              46.66622536222078,
+              48.11850880340515,
+              46.68410025447132,
+              46.80164396217155,
+              47.49676445478281,
+              46.520326812751655,
+              50.853293079769074,
+              47.068695017384115,
+              46.74493427863191,
+              46.549885961982596,
+              48.08791856901874
+            ]
+          },
+          {
+            "case": "resolve DOM start and CSS variable endpoint",
+            "iterations": 18195,
+            "samples": [
+              561.6813410277603,
+              605.3082165430022,
+              575.1282220390299,
+              587.8675460291269,
+              586.4385820280239,
+              569.7192635339312,
+              621.4710634789737,
+              578.9846111569116,
+              611.667600989287,
+              581.2219291014014,
+              558.8531464688142,
+              608.0035724100042
+            ]
+          }
+        ],
+        "checksum": 12385
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "read three components of one matrix",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 305.8915292201182,
+          "vpmNs": 30.833842394624398,
+          "changePct": -89.92000776443976
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 299.90070876638845,
+          "vpmNs": 28.861902447913515,
+          "changePct": -90.37618064771034
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 302.43087068290976,
+          "vpmNs": 31.48517659550676,
+          "changePct": -89.58929803547797
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 301.81396391762496,
+          "vpmNs": 28.90570811339079,
+          "changePct": -90.4226737099281
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 300.34445735870986,
+          "vpmNs": 299.9739648409121,
+          "changePct": -0.12335586980892765
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 301.28014816071453,
+          "vpmNs": 302.61850029688617,
+          "changePct": 0.4442218129346198
+        }
+      ]
+    },
+    {
+      "case": "read changing transform matrices",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 228.9600738074212,
+          "vpmNs": 283.5614344902524,
+          "changePct": 23.84754676868095
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 227.0563493604872,
+          "vpmNs": 276.79668729018135,
+          "changePct": 21.906605153209636
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 228.51571205705312,
+          "vpmNs": 274.6471250278584,
+          "changePct": 20.187414053738117
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 226.47378589387085,
+          "vpmNs": 275.94283445811914,
+          "changePct": 21.84316757411837
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 233.51010858614023,
+          "vpmNs": 245.35850218291705,
+          "changePct": 5.074038836484052
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 227.35738881559757,
+          "vpmNs": 230.21897010486668,
+          "changePct": 1.258626915173644
+        }
+      ]
+    },
+    {
+      "case": "read computed opacity",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7.403812500000015,
+          "vpmNs": 9.199041499999964,
+          "changePct": 24.24735904643649
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7.131354500000043,
+          "vpmNs": 8.946583499999974,
+          "changePct": 25.454196674697926
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 7.325249499999984,
+          "vpmNs": 8.900395500000002,
+          "changePct": 21.502967236815905
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7.225166499999659,
+          "vpmNs": 9.000958500000024,
+          "changePct": 24.577869589585923
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7.220812500000022,
+          "vpmNs": 7.065478999999982,
+          "changePct": -2.151191434482469
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7.028833500000019,
+          "vpmNs": 7.219187499999975,
+          "changePct": 2.708187638815973
+        }
+      ]
+    },
+    {
+      "case": "resolve current numeric keyframe and wildcards",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 49.4127430910957,
+          "vpmNs": 56.89042647560592,
+          "changePct": 15.133107204197538
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 47.05355883754264,
+          "vpmNs": 57.50774178180032,
+          "changePct": 22.217624346655374
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 47.66878700609497,
+          "vpmNs": 63.98451135616047,
+          "changePct": 34.227269823289916
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 46.87548850950954,
+          "vpmNs": 58.024920997027465,
+          "changePct": 23.785208094964318
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 47.95598015548002,
+          "vpmNs": 54.68543348784135,
+          "changePct": 14.032563427008471
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 46.77328912040173,
+          "vpmNs": 46.77045157405459,
+          "changePct": -0.006066595701303967
+        }
+      ]
+    },
+    {
+      "case": "resolve DOM start and CSS variable endpoint",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 612.5176313864791,
+          "vpmNs": 733.2088339776429,
+          "changePct": 19.704118935804395
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 601.280876044266,
+          "vpmNs": 795.2015692029889,
+          "changePct": 32.251265736987534
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 597.0196656334149,
+          "vpmNs": 730.6223385334633,
+          "changePct": 22.378270028726966
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 578.651984348804,
+          "vpmNs": 816.9997205142417,
+          "changePct": 41.19017001793686
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 591.5804674906007,
+          "vpmNs": 583.2269747447585,
+          "changePct": -1.4120636506604778
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 583.8302555647126,
+          "vpmNs": 624.374828249513,
+          "changePct": 6.944582316239067
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "read three components of one matrix",
+      "upstream_ns": 302,
+      "vpm_ns": 30,
+      "change_pct": -90.1,
+      "upstream_first_pct": -89.8,
+      "vpm_first_pct": -90.4,
+      "process_range_pct": "-89.9, -90.4, -89.6, -90.4",
+      "control_max_abs_pct": 0.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "read changing transform matrices",
+      "upstream_ns": 228,
+      "vpm_ns": 276,
+      "change_pct": 21.9,
+      "upstream_first_pct": 22,
+      "vpm_first_pct": 21.9,
+      "process_range_pct": "23.8, 21.9, 20.2, 21.8",
+      "control_max_abs_pct": 5.1,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "read computed opacity",
+      "upstream_ns": 7,
+      "vpm_ns": 9,
+      "change_pct": 24.4,
+      "upstream_first_pct": 22.9,
+      "vpm_first_pct": 25,
+      "process_range_pct": "24.2, 25.5, 21.5, 24.6",
+      "control_max_abs_pct": 2.7,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "resolve current numeric keyframe and wildcards",
+      "upstream_ns": 47,
+      "vpm_ns": 58,
+      "change_pct": 23,
+      "upstream_first_pct": 24.7,
+      "vpm_first_pct": 23,
+      "process_range_pct": "15.1, 22.2, 34.2, 23.8",
+      "control_max_abs_pct": 14,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "resolve DOM start and CSS variable endpoint",
+      "upstream_ns": 599,
+      "vpm_ns": 764,
+      "change_pct": 27.3,
+      "upstream_first_pct": 21,
+      "vpm_first_pct": 36.7,
+      "process_range_pct": "19.7, 32.3, 22.4, 41.2",
+      "control_max_abs_pct": 6.9,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

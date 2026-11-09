@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 107 package tests
+easings come from the verified `vmotion-utils` foundation. All 121 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -41,6 +41,8 @@ node scripts/motion-dom-conformance/playback.cjs
 bun scripts/motion-dom-conformance/playback.cjs
 node scripts/motion-dom-conformance/spring.cjs
 bun scripts/motion-dom-conformance/spring.cjs
+node scripts/motion-dom-conformance/reads.cjs
+bun scripts/motion-dom-conformance/reads.cjs
 node scripts/motion-dom-conformance/transitions.cjs
 bun scripts/motion-dom-conformance/transitions.cjs
 node scripts/motion-dom-conformance/effects.cjs
@@ -116,3 +118,14 @@ Public [animate](https://motion.dev/docs/animate) documentation, exported types 
 black-box observations define the independently written adapter. No upstream
 runtime was copied. Target/option mutation, explicit unsupported inputs, lifecycle
 ownership, cancellation and callback failures have separate package regressions.
+
+`reads.cjs` runs 2,551 comparisons per runtime of base keyframe lifecycles, axis-aligned transforms, CSS/SVG
+reads and pixel defaults against the public APIs. The application control lacks
+`readStyleValue`/`readSVGValue` and `scaleZ` matrix extraction; those comparisons
+use current 14.7.0. Separate analytical regressions cover rotated scale, missing
+axes, snapshots, variable cycles, cancellation, failure isolation and conflicting
+measurements. Chrome compares real CSS/SVG reads and DOM-resolved keyframes,
+checks percentage/auto width against current upstream, then checks explicit
+percentage origins, untransformed translation bases, iframe reads and complete
+style restoration. Public declarations and black-box observations define the
+independently written implementation; no upstream runtime was copied.
