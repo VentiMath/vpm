@@ -64,10 +64,9 @@ exact controls and caller scope. [Benchmarks](bench/results/README.md) retain
 isolated-process samples and identical-source controls. Utility timings are not
 claims of a faster application or complete Motion compatibility.
 
-The recorded four-stage pipeline uses 63% less time on Node and 34% less on Bun;
-a 32-listener registration/removal cycle uses 37% and 21% less. There are also
-regressions: easing evaluation uses about 6% more time on Node and 12% on Bun
-(roughly 0.14 / 0.24 microseconds per 100 samples). Bezier construction and single
-listener notification add roughly 1 ns on Node and 4 ns on Bun. The 32-listener
-notification difference is unestablished against the controls. These measurements
-include validation and the subscription fixes; no overall performance win is claimed.
+Listener registration/removal uses less time on both runtimes. Bun's pipeline
+also improves; the Node pipeline result is inconclusive against its control
+noise. Bun curve construction and single-listener notification regress by a
+few nanoseconds per call. Other differences are unestablished. The complete
+report includes percentages, absolute times and controls; these utility timings
+do not establish an overall application speedup.

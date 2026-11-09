@@ -59,7 +59,10 @@ function pipe(...functions) {
       return (value) => d(c(b(a(value))));
     default:
       return (value) => {
-        for (let i = 0; i < functions.length; i++) value = functions[i](value);
+        for (let i = 0; i < functions.length; i++) {
+          const transform = functions[i];
+          value = transform(value);
+        }
         return value;
       };
   }

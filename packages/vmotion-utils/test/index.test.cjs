@@ -248,3 +248,10 @@ test("removing between notifications preserves later addition order", () => {
   m.notify();
   assert.deepEqual(seen, ["a", "c", "b"]);
 });
+test("long pipelines invoke transforms without an incidental array receiver", () => {
+  const transform = function (value) {
+    assert.equal(this, undefined);
+    return value + 1;
+  };
+  assert.equal(api.pipe(...Array(6).fill(transform))(0), 6);
+});
