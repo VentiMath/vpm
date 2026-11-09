@@ -1,0 +1,59 @@
+{
+  "name": "vky",
+  "version": "2.2.0",
+  "description": "Independent fetch client for VentiMath requests, retries and cancellation",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./legacy": {
+      "import": {
+        "types": "./legacy.d.mts",
+        "default": "./legacy.mjs"
+      },
+      "require": {
+        "types": "./legacy.d.cts",
+        "default": "./legacy.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "client.cjs",
+    "index.cjs",
+    "index.mjs",
+    "index.d.cts",
+    "index.d.mts",
+    "legacy.cjs",
+    "legacy.mjs",
+    "legacy.d.cts",
+    "legacy.d.mts",
+    "README.md",
+    "LICENSE",
+    "PROVENANCE.json"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vky"
+  }
+}

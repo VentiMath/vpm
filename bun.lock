@@ -616,6 +616,10 @@
         "vjwa": "workspace:*",
       },
     },
+    "packages/vky": {
+      "name": "vky",
+      "version": "2.2.0",
+    },
     "packages/vlodash.camelcase": {
       "name": "vlodash.camelcase",
       "version": "0.1.0",
@@ -1843,6 +1847,8 @@
     "vjwks-rsa": ["vjwks-rsa@workspace:packages/vjwks-rsa"],
 
     "vjws": ["vjws@workspace:packages/vjws"],
+
+    "vky": ["vky@workspace:packages/vky"],
 
     "vlodash.camelcase": ["vlodash.camelcase@workspace:packages/vlodash.camelcase"],
 

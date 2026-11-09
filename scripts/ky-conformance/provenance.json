@@ -1,0 +1,11 @@
+{
+  "controls": {
+    "current": "ky 2.2.0",
+    "application": "ky 1.8.1"
+  },
+  "fixtureFiles": {
+    "package-lock.json": "1a0e2aa5f3ad7e0a3f66a804a1d1057bc9a8290f4c35cbf6d6280b9fe3818949",
+    "node_modules/ky": "07d8ca80413fb93f6edaa29afc7859086e7816cc0b15f5f0f676863bb204d969",
+    "node_modules/ky-app": "24cb39715fca65f02d5b2f6dfc167870e8e7018b28a542bf954e9d4672ee7da3"
+  }
+}

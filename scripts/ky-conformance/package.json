@@ -1,0 +1,10 @@
+{
+  "name": "vpm-ky-conformance",
+  "private": true,
+  "type": "module",
+  "description": "Pinned current and application Ky controls for independent HTTP client checks",
+  "dependencies": {
+    "ky": "2.2.0",
+    "ky-app": "npm:ky@1.8.1"
+  }
+}

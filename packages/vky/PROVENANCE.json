@@ -1,0 +1,30 @@
+{
+  "upstream": {
+    "name": "ky",
+    "version": "2.2.0",
+    "repository": "https://github.com/sindresorhus/ky",
+    "checked": "2026-11-09"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Native Fetch request preparation, fluent body readers, JSON, create/extend, hooks, retries, deadlines, cancellation and response-size limits. Root targets the used Ky2.2 contract; vky/legacy preserves the app's Ky1.8 URL, hook and HTTP error-body conventions. Progress callbacks, Standard Schema validation and forced-retry APIs are excluded."
+  },
+  "changes": [
+    "No upstream runtime ships; one independent request pipeline serves both entry points.",
+    "Cancellation remains effective during hooks, backoff, ignored-signal custom fetches and shortcut body reads.",
+    "Finite size limits count actual bytes; invalid configuration rejects before transport.",
+    "App migration explicitly selects the legacy entry rather than silently changing hook arguments or consuming error.response."
+  ],
+  "caller": {
+    "revision": "d8b5ccfa284121ba092869a6aa8993c844033cd4",
+    "upstreamVersion": "1.8.1",
+    "paths": [
+      "src/utils/api.ts",
+      "src/utils/apiConfig.ts",
+      "src/@mock-utils/ensureMockWorker.ts",
+      "src/hooks/useSignedScoresheet.ts"
+    ],
+    "scope": "Catalog/problem queries, signup validation, signed scoresheet errors, JSON mutations, mock worker request preparation and raw status inspection; no application adoption claimed."
+  }
+}

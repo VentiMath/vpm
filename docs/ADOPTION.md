@@ -81,3 +81,14 @@ against MRT 3.2.1, including actual Chrome control actions. It is available in t
 has not been verified. Its independent markup and the omitted editing,
 nested-header/data, resizing and virtualization APIs are documented in its
 [package README](../packages/vmaterial-react-table/README.md).
+
+## Ky HTTP client
+
+Checked November 9, 2026 against application main `d8b5ccfa`: the shared API
+factories and their problem/contest callers still use upstream Ky 1.8.1.
+`vky` 2.2.0 is independently built and verified, but is not released or adopted.
+Its root follows the current URL, hook and HTTP-error-data contracts. The explicit
+`vky/legacy` entry preserves `prefixUrl`, positional hooks and readable error
+responses for the existing callers. Publishing an archive and selecting that
+entry are separate migration steps; changing the dependency URL alone would not
+preserve those APIs. See [vky coverage](../packages/vky/README.md).
