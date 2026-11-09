@@ -35,7 +35,8 @@
     "effects.cjs",
     "transition.cjs",
     "reads.cjs",
-    "resolver.cjs"
+    "resolver.cjs",
+    "single.cjs"
   ],
   "sideEffects": false,
   "engines": {

@@ -23,31 +23,31 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T21:12:13.143Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T21:28:12.451Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| read three components of one matrix | 1181 | 39 | -96.7% | -96.8% | -96.2% | 2.8% | lower time in every pair, beyond control spread |
-| read changing transform matrices | 410 | 400 | -4.1% | -4.4% | -1.8% | 2% | unestablished at this precision |
-| read computed opacity | 15 | 24 | 62% | 105% | 52.3% | 5.6% | higher time in every pair, beyond control spread |
-| resolve current numeric keyframe and wildcards | 37 | 51 | 39.2% | 39.2% | 42.9% | 1.5% | higher time in every pair, beyond control spread |
-| resolve DOM start and CSS variable endpoint | 855 | 846 | -6.1% | -12.3% | -6.1% | 2.5% | unestablished at this precision |
+| read three components of one matrix | 1250 | 38 | -97% | -97% | -96.9% | 4.1% | lower time in every pair, beyond control spread |
+| read changing transform matrices | 411 | 393 | -4.6% | -3.3% | -5.4% | 2.8% | unestablished at this precision |
+| read computed opacity | 11 | 23 | 105.4% | 113.2% | 105.4% | 4.1% | higher time in every pair, beyond control spread |
+| resolve current numeric keyframe and wildcards | 36 | 49 | 36.2% | 35.4% | 36.2% | 0.7% | higher time in every pair, beyond control spread |
+| resolve DOM start and CSS variable endpoint | 928 | 737 | -20.7% | -15.9% | -24.6% | 2.4% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T21:12:36.013Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T21:28:36.213Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| read three components of one matrix | 302 | 30 | -90.1% | -89.8% | -90.4% | 0.4% | lower time in every pair, beyond control spread |
-| read changing transform matrices | 228 | 276 | 21.9% | 22% | 21.9% | 5.1% | higher time in every pair, beyond control spread |
-| read computed opacity | 7 | 9 | 24.4% | 22.9% | 25% | 2.7% | higher time in every pair, beyond control spread |
-| resolve current numeric keyframe and wildcards | 47 | 58 | 23% | 24.7% | 23% | 14% | higher time in every pair, beyond control spread |
-| resolve DOM start and CSS variable endpoint | 599 | 764 | 27.3% | 21% | 36.7% | 6.9% | higher time in every pair, beyond control spread |
+| read three components of one matrix | 308 | 30 | -90.1% | -89.7% | -90.1% | 5.4% | lower time in every pair, beyond control spread |
+| read changing transform matrices | 232 | 279 | 20.1% | 12% | 23.9% | 15.9% | unestablished at this precision |
+| read computed opacity | 7 | 9 | 27.1% | 40.4% | 27.1% | 1.3% | higher time in every pair, beyond control spread |
+| resolve current numeric keyframe and wildcards | 48 | 59 | 23.6% | 22.4% | 24.3% | 9.1% | higher time in every pair, beyond control spread |
+| resolve DOM start and CSS variable endpoint | 607 | 783 | 29% | 29% | 39.3% | 6.2% | higher time in every pair, beyond control spread |
 
 ## Reproduce
 

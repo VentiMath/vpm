@@ -150,5 +150,17 @@ window.runMotionDom = async () => {
   await checkEffects([current, app, vpm]);
   await checkTransitions([current, app, vpm]);
   await checkReads([current, app, vpm]);
+  for (const api of [current, app, vpm]) {
+    const node = document.createElement("div");
+    document.body.append(node);
+    const value = api.motionValue(0), detach = api.styleEffect(node, {opacity:value});
+    await api.animateSingleValue(value, 1, {duration:.05, ease:"linear"}).finished;
+    await new Promise(requestAnimationFrame);
+    if(getComputedStyle(node).opacity!=="1")throw Error("single MotionValue animation did not paint");
+    let scalar;
+    await api.animateSingleValue(0, 10, {duration:.05,onUpdate:x=>scalar=x}).finished;
+    if(scalar!==10)throw Error("scalar animation did not complete");
+    detach();node.remove();
+  }
   return rows;
 };

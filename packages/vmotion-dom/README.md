@@ -1,6 +1,6 @@
 # vmotion-dom
 
-Independent DOM effects, numeric transition adapters, playback, values and scheduling targeting **motion-dom 14.7.0**, with
+Independent element reads, keyframe resolution, DOM effects, numeric transitions, playback and scheduling targeting **motion-dom 14.7.0**, with
 12.36.0 as the application's comparison control. This is a partial implementation
 of Motion DOM; element animation APIs, inertia and the React renderer remain to be built.
 
@@ -136,13 +136,39 @@ The existing stop, callback-failure and first-frame spring-rest behavior remains
 No temporary browser globals are required by the VPM implementation.
 
 This adapter supports finite numeric values only. DOM measurement, complex
-strings, handoff, `animateSingleValue` and full element animation remain outside
+strings, handoff and full element animation remain outside
 its declared surface. Unsupported element/handoff arguments reject explicitly.
 [Transition measurements](bench/transitions/README.md) cover controller creation
 and repeating value delivery; they do not measure the full React caller. Repeating
 opacity delivery takes 61% less time on Node and 57% less on Bun in the current
 recording. Node calendar-scale setup takes 27% less time; other setup differences
 are unestablished against process/control variation. All samples are retained.
+
+## Single-value animations
+
+`animateSingleValue(numberOrMotionValue, target, options)` is the public numeric
+entry above the transition adapter. It returns the same playback controls and
+accepts transition times in seconds:
+
+```js
+const progress = motionValue(0);
+await animateSingleValue(progress, 1, { duration: 0.3 }).finished;
+```
+
+It validates the replacement controller before stopping an existing animation.
+MotionValue start/completion events retain their ordering, and listener failures
+are observable through `finished`. Stopping or cancelling settles playback even
+though a cancelled `MotionValue.start()` promise does not report successful
+completion. Replays use a fresh completion promise. Paused construction has no
+frame side effects. Strings, objects and color interpolation remain unsupported.
+
+[Single-value benchmarks](bench/single/README.md) cover creation/replacement and
+repeated value delivery; they do not measure React rendering or browser paint.
+Repeating updates take 48% less time on Node and 58% less on Bun. Node scalar
+setup takes 27% less time; replacement is unestablished. Bun setup remains slower:
+518 versus 390 ns for a scalar, and 499 versus 353 ns for reset/replacement.
+Lifecycle bookkeeping stays in a wrapper so it does not deoptimize the numeric
+controller's hot object shape.
 
 ## Springs
 
@@ -289,7 +315,8 @@ unresolvable keyframes reject rather than silently retaining nulls.
 Two-endpoint width/height/position changes can measure percentages, `auto` and
 browser-resolved CSS lengths. Initial writes, reads, end writes and end reads are
 batched, with conflicting measurements isolated. Owned inline properties and
-`!important` priorities are restored before callbacks, including after failures.
+`!important` priorities and window scroll positions are restored before callbacks,
+including after failures.
 Explicit percentage starting points are honored. X/Y translation percentages
 use the untransformed border box; their mixed-unit measurement supports numbers,
 pixels and percentages. More than two mixed-unit layout keyframes reject.
@@ -303,11 +330,11 @@ suite recordings retain their recorded source hashes and dates; they are
 historical measurements rather than new measurements of this addition.
 
 Reading three components from a repeated matrix takes 97% less time on Node and
-90% less on Bun. Changing matrices are unestablished on Node and 22% slower on
-Bun (276 versus 228 ns). Scalar CSS reads add about 9 ns on Node and 2 ns on Bun;
-owned numeric resolution adds about 14 ns and 11 ns. Variable endpoint resolution
-is unestablished on Node and 27% slower on Bun (764 versus 599 ns). Those costs
-remain visible alongside the caching gain; this is not a universal speedup.
+90% less on Bun. Changing-matrix differences are unestablished on both runtimes.
+Scalar CSS reads add about 12 ns on Node and 2 ns on Bun; owned numeric resolution
+adds about 13 ns and 11 ns. Variable endpoint resolution takes 21% less time on
+Node and 29% more on Bun (783 versus 607 ns). Those costs remain visible alongside
+the caching gain; this is not a universal speedup.
 
 ## Still to build
 

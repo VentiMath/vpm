@@ -104,6 +104,7 @@ require("../../../scripts/bench-process.cjs")
     })),
     files: [
       "index.cjs",
+      "single.cjs",
       "index.mjs",
       "reads.cjs",
       "resolver.cjs",

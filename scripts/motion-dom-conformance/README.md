@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 121 package tests
+easings come from the verified `vmotion-utils` foundation. All 133 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -41,6 +41,8 @@ node scripts/motion-dom-conformance/playback.cjs
 bun scripts/motion-dom-conformance/playback.cjs
 node scripts/motion-dom-conformance/spring.cjs
 bun scripts/motion-dom-conformance/spring.cjs
+node scripts/motion-dom-conformance/single.cjs
+bun scripts/motion-dom-conformance/single.cjs
 node scripts/motion-dom-conformance/reads.cjs
 bun scripts/motion-dom-conformance/reads.cjs
 node scripts/motion-dom-conformance/transitions.cjs
@@ -129,3 +131,9 @@ checks percentage/auto width against current upstream, then checks explicit
 percentage origins, untransformed translation bases, iframe reads and complete
 style restoration. Public declarations and black-box observations define the
 independently written implementation; no upstream runtime was copied.
+
+`single.cjs` adds 1,872 comparisons per runtime for scalar/MotionValue callers,
+seconds-based options, delays, repeats, update samples and completion. Separate
+regressions cover validation before replacement, cancelled playback promises,
+replay, and throwing start/play/stop/completion callbacks. Chrome runs both public
+call forms and paints the MotionValue through each implementation's DOM effect.

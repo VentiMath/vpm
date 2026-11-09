@@ -20,7 +20,8 @@
       "spring playback": "Analytic under/critical/overdamped oscillator, velocity and retargeting; duration/visual-duration calibration; bounded settling estimates and playback integration",
       "DOM effects": "Deferred and coalesced style/attribute/property/SVG bindings, unit-aware transform composition, path drawing, selectors, scoped flush/release and cleanup ownership",
       "numeric transition adapters": "Seconds-based animateMotionValue, property defaults/overrides, owned keyframe wildcards/options and current velocity integration",
-      "element reads and resolution": "Owner-document CSS/SVG reads, matrix extraction, bounded variable fallbacks, owned keyframes, cancellation/resume, grouped layout measurement and transactional style restoration"
+      "element reads and resolution": "Owner-document CSS/SVG reads, matrix extraction, bounded variable fallbacks, owned keyframes, cancellation/resume, grouped layout measurement and transactional style restoration",
+      "single-value animation": "Public animateSingleValue entry for numeric scalars and MotionValues; validates replacements before stopping existing playback and preserves lifecycle errors through finished"
     }
   },
   "changes": [
@@ -39,7 +40,9 @@
     "Avoids unavailable-frame wakeup setup in manual/server timing; composes transforms directly from owned binding slots without per-frame lookup arrays or unit-string helpers.",
     "Numeric transition factories snapshot targets/options and resolve current values at start; updates and completion preserve MotionValue lifecycle ownership. DOM measurement and handoff reject explicitly until implemented.",
     "Rotated 2D scale readings retain magnitude, absent axes return identity defaults, and malformed matrices reject. Matrix decomposition uses a documented canonical convention, not recovery of the original transform function list.",
-    "DOM measurement restores owned styles and priorities before callbacks, including on failure; conflicting same-property measurements are isolated. Failed reads/callbacks do not strand unrelated queued work."
+    "DOM measurement restores owned styles and priorities before callbacks, including on failure; conflicting same-property measurements are isolated. Failed reads/callbacks do not strand unrelated queued work.",
+    "Single-value animation validates paused controllers before replacement; start/completion listener failures reject finished, while stop and cancellation settle playback and replays use fresh promises.",
+    "Resolver batches preserve any thrown value, including falsy exceptions, and restore window scroll after temporary layout measurements."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

@@ -1,5 +1,6 @@
 import api from "./index.cjs";
 export const {
+  animateSingleValue,
   defaultTransformValue,
   parseValueFromTransform,
   readTransformValue,

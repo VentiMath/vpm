@@ -1,5 +1,6 @@
 "use strict";
 module.exports = {
+  ...require("./single.cjs"),
   ...require("./reads.cjs"),
   ...require("./resolver.cjs"),
   ...require("./transition.cjs"),

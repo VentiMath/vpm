@@ -411,3 +411,12 @@ export declare class DOMKeyframesResolver<
   T extends string | number = string | number,
 > extends KeyframeResolver<T> {}
 export declare function flushKeyframeResolvers(): void;
+
+export type SingleValueAnimation = Omit<JSAnimation, "finished"> & {
+  readonly finished: Promise<void>;
+};
+export declare function animateSingleValue(
+  value: number | MotionValue<number>,
+  target: number | (number | null)[],
+  options?: NumericValueTransition,
+): SingleValueAnimation;

@@ -162,3 +162,9 @@ resolver.resume();
 flushKeyframeResolvers();
 // @ts-expect-error invalid keyframe object
 new DOMKeyframesResolver([{}], () => {});
+
+import { animateSingleValue } from "vmotion-dom";
+animateSingleValue(position, [null, 1], { duration: 0.3 });
+animateSingleValue(0, 10, { onUpdate: (x) => x.toFixed(2) });
+// @ts-expect-error string mixing is not implemented
+animateSingleValue("red", "blue");
