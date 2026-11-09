@@ -1,7 +1,8 @@
 # Motion DOM foundations
 
-The implemented units cover numeric mapping, list staggering, MotionValue and
-frame scheduling. Controls are unmodified `motion-dom` 14.7.0 and application 12.36.0,
+The implemented units cover numeric mapping, list staggering, MotionValue,
+frame scheduling and numeric tween playback. Controls are unmodified
+`motion-dom` 14.7.0 and application 12.36.0,
 installed and hashed by the shared [Motion fixture](../motion-utils-conformance/README.md).
 The independent runtime was written from public declarations, documented contracts
 and public API observations; it contains no copied upstream runtime.
@@ -13,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 36 package tests
+easings come from the verified `vmotion-utils` foundation. All 59 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -36,6 +37,8 @@ node scripts/motion-dom-conformance/run.cjs
 bun scripts/motion-dom-conformance/run.cjs
 node scripts/motion-dom-conformance/values.cjs
 bun scripts/motion-dom-conformance/values.cjs
+node scripts/motion-dom-conformance/playback.cjs
+bun scripts/motion-dom-conformance/playback.cjs
 node scripts/motion-dom-conformance/types.cjs
 node scripts/motion-dom-conformance/browser.cjs
 node scripts/motion-dom-conformance/archives.cjs
@@ -47,5 +50,20 @@ renderer remains pending; these checks do not establish full Motion compatibilit
 
 [Motion value](https://motion.dev/docs/motion-value) and
 [frame](https://motion.dev/docs/frame) documentation, public declarations and
-black-box API observations define the current contract. The remaining playback
-engine, effects and React renderer are explicitly outside this unit.
+black-box API observations define the current contract. The remaining
+spring/inertia engines, effects and React renderer are explicitly outside this unit.
+
+`playback.cjs` runs 25,084 numeric generator/controller comparisons on each runtime.
+The current control tolerance is 0.0002 over the tested 0–100 value scale; the
+older application's approximate Bezier solver uses 0.06. Separate analytical
+linear and quadratic checks avoid deriving expectations only from upstream.
+Delay reversal reproduces an upstream discontinuity explicitly. Repeat boundaries,
+negative delays, seeking and speed changes are compared with both versions.
+Chrome also drives all three implementations with real animation frames and
+checks pause/resume and stopped-driver cleanup. Package tests cover reentrant
+callbacks, failure cleanup, overflow rejection and MotionValue ownership.
+
+Public [playback documentation](https://motion.dev/docs/animate) and declarations
+inform the implementation; the runtime is independently authored. Public Motion
+uses seconds, while the low-level Motion DOM generator/controller options tested
+here use milliseconds. See the package README for explicit behavior differences.

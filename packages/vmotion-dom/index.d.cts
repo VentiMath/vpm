@@ -160,3 +160,67 @@ export declare function isMotionValue(
 export declare const collectMotionValues: {
   current: MotionValue<any>[] | undefined;
 };
+
+/** Low-level generator and playback timings use milliseconds. Control.time uses seconds. */
+export interface NumericKeyframeOptions {
+  keyframes: number[];
+  duration?: number;
+  times?: number[];
+  ease?: Easing | Easing[];
+}
+export interface NumericAnimationState {
+  value: number;
+  done: boolean;
+}
+export interface KeyframeGenerator {
+  calculatedDuration: number;
+  next(milliseconds: number): NumericAnimationState;
+}
+export interface AnimationDriverControls {
+  now(): number;
+  start(): void;
+  stop(): void;
+}
+export interface NumericAnimationOptions extends NumericKeyframeOptions {
+  type?: "keyframes" | "tween" | false;
+  delay?: number;
+  repeat?: number;
+  repeatDelay?: number;
+  repeatType?: "loop" | "reverse" | "mirror";
+  autoplay?: boolean;
+  finalKeyframe?: number;
+  driver?: (update: (timestamp: number) => void) => AnimationDriverControls;
+  onUpdate?: (value: number) => void;
+  onPlay?: () => void;
+  onComplete?: () => void;
+  onStop?: () => void;
+}
+export declare function keyframes(
+  options: NumericKeyframeOptions,
+): KeyframeGenerator;
+export declare class JSAnimation implements MotionValueAnimation<number> {
+  constructor(options: NumericAnimationOptions);
+  state: "idle" | "running" | "paused" | "finished";
+  startTime: number | null;
+  readonly duration: number;
+  readonly iterationDuration: number;
+  time: number;
+  speed: number;
+  finished: Promise<void>;
+  then<T = void, U = never>(
+    resolve?: ((value: void) => T | PromiseLike<T>) | null,
+    reject?: ((reason: any) => U | PromiseLike<U>) | null,
+  ): Promise<T | U>;
+  play(): void;
+  pause(): void;
+  stop: () => void;
+  complete(): void;
+  cancel(): void;
+  at(timestamp: number): number;
+  sampleAt(timestamp: number, resolved?: boolean): number;
+  sample(milliseconds: number): NumericAnimationState;
+  tick(timestamp: number): NumericAnimationState;
+}
+export declare function animateValue(
+  options: NumericAnimationOptions,
+): JSAnimation;

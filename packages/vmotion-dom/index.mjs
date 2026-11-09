@@ -1,5 +1,8 @@
 import api from "./index.cjs";
 export const {
+  keyframes,
+  JSAnimation,
+  animateValue,
   interpolate,
   mixNumber,
   stagger,

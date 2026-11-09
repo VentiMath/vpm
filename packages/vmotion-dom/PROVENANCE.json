@@ -7,15 +7,16 @@
   },
   "implementation": {
     "kind": "independent implementation",
-    "replacementStatus": "partial; animation playback and DOM rendering pending",
-    "targetScope": "Independent numeric keyframe mapping, MotionValue state/subscriptions/velocity and externally supplied animation lifecycle, plus eight-phase frame and microtask scheduling. Not a drop-in replacement for motion-dom yet.",
-    "remainingWork": "Numeric keyframe generators and animation playback; Color/complex-value mixers and grid/random stagger; DOM/WAAPI effects, gestures/layout and full unchanged Framer Motion caller acceptance. The remaining runtime is unimplemented, not retained upstream code.",
+    "replacementStatus": "partial; physics animation and DOM rendering pending",
+    "targetScope": "Independent numeric keyframes and tween playback, MotionValue state/subscriptions/velocity and animation lifecycle, plus frame scheduling and numeric mapping. Not a drop-in replacement for motion-dom yet.",
+    "remainingWork": "Spring/inertia generators and playback; color/complex-value mixers and grid/random stagger; DOM/WAAPI effects, gestures/layout and full unchanged Framer Motion caller acceptance. The remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
       "list stagger": "First/last/center/edges/numeric origins, delay and easing",
       "MotionValue": "State, velocity, mutation-safe subscriptions, passive effects and owned external-animation lifecycle",
-      "frame scheduling": "Eight ordered phases, dedupe/cancellation/keep-alive, microtasks and manual frame processing"
+      "frame scheduling": "Eight ordered phases, dedupe/cancellation/keep-alive, microtasks and manual frame processing",
+      "numeric playback": "Owned numeric keyframes, offsets and easing; millisecond generators and tween controllers with delays, repeats, seeking, speed, pause/resume and lifecycle cleanup"
     }
   },
   "changes": [
@@ -24,7 +25,9 @@
     "Binary segment lookup bounds the cost of long numeric timelines.",
     "Cancellation suppresses callbacks already queued in the active phase. Callback failures release processing state and allow remaining work and future frames to proceed.",
     "Synchronous animation completion reports start before completion; late completion after cancellation does not emit a success event. Failed start hooks and throwing stop handlers release owned resources.",
-    "MotionValue retains vmotion-utils subscription lifetime protections and stops unobserved animations on the next frame, allowing same-frame resubscription."
+    "MotionValue retains vmotion-utils subscription lifetime protections and stops unobserved animations on the next frame, allowing same-frame resubscription.",
+    "Reversing delayed playback preserves the current value instead of reapplying a signed delay and jumping.",
+    "Paused animations release their frame callback; explicit seek, completion and cancellation apply values immediately, and callback failures clean up driver ownership."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

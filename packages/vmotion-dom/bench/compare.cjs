@@ -62,6 +62,8 @@ require("../../../scripts/bench-process.cjs")
     })),
     files: [
       "index.cjs",
+      "mapping.cjs",
+      "playback.cjs",
       "index.mjs",
       "frame.cjs",
       "value.cjs",

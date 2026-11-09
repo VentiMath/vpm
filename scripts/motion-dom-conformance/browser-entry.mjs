@@ -63,5 +63,46 @@ window.runMotionDom = async () => {
     value.destroy();
     node.remove();
   }
+  for (const [index, api] of [current, app, vpm].entries()) {
+    const node = document.createElement("div");
+    document.body.append(node);
+    let writes = 0;
+    const animation = api.animateValue({
+      keyframes: [0, 1],
+      duration: 120,
+      ease: "linear",
+      onUpdate: (value) => {
+        node.style.opacity = String(value);
+        writes++;
+      },
+    });
+    await new Promise(requestAnimationFrame);
+    animation.pause();
+    const paused = node.style.opacity;
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
+    if (node.style.opacity !== paused) throw Error("paused playback moved");
+    animation.play();
+    await animation.finished;
+    if (getComputedStyle(node).opacity !== "1" || writes < 2)
+      throw Error("numeric playback failed");
+    const stopped = api.animateValue({
+      keyframes: [1, 0],
+      duration: 1000,
+      onUpdate: () => writes++,
+    });
+    await new Promise(requestAnimationFrame);
+    stopped.stop();
+    const count = writes;
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
+    if (writes !== count) throw Error("stopped animation retained frame work");
+    rows[index].playback = {
+      opacity: getComputedStyle(node).opacity,
+      paused: true,
+      stopped: true,
+    };
+    node.remove();
+  }
   return rows;
 };

@@ -110,12 +110,17 @@ const pending = new Map(),
       assert.deepEqual(row.samples, rows[0].samples);
       assert.deepEqual(row.delays, rows[0].delays);
       assert.deepEqual(row.batched, { writes: 1, opacity: "1" });
+      assert.deepEqual(row.playback, {
+        opacity: "1",
+        paused: true,
+        stopped: true,
+      });
     }
     assert.equal(rows[0].samples.at(-1)[0], "1");
     assert.deepEqual(rows[0].batched, { writes: 1, opacity: "1" });
     assert.deepEqual(exceptions, []);
     console.log(
-      "Chrome: numeric mappings, batched value renders and unchanged current/app animation producers pass.",
+      "Chrome: numeric mappings, batched values, unchanged producers and native playback pause/resume/cleanup pass.",
     );
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);

@@ -1,7 +1,7 @@
 {
   "name": "vmotion-dom",
   "version": "14.7.0",
-  "description": "Independent animation values, frame scheduling and numeric keyframe mapping",
+  "description": "Independent numeric animation playback, values, frame scheduling and keyframe mapping",
   "type": "commonjs",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -28,7 +28,9 @@
     "LICENSE",
     "PROVENANCE.json",
     "frame.cjs",
-    "value.cjs"
+    "value.cjs",
+    "playback.cjs",
+    "mapping.cjs"
   ],
   "sideEffects": false,
   "engines": {

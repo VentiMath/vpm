@@ -49,3 +49,27 @@ const optional = new MotionValue<number | undefined>(undefined);
 const maybe: number | undefined = optional.getCurrent();
 void completion;
 void maybe;
+
+import { animateValue, keyframes, JSAnimation } from "vmotion-dom";
+const generator = keyframes({ keyframes: [0, 1], ease: [0.2, 0.1, 0.7, 1] });
+const generated: number = generator.next(20).value;
+const playback: JSAnimation = animateValue({
+  keyframes: [0, 1],
+  duration: 300,
+  autoplay: false,
+  repeatType: "reverse",
+});
+playback.time = 0.15;
+playback.speed = -1;
+position.start((done) =>
+  animateValue({
+    keyframes: [0, 1],
+    onUpdate: (x) => position.set(x),
+    onComplete: done,
+  }),
+);
+// @ts-expect-error spring playback is not built yet
+animateValue({ keyframes: [0, 1], type: "spring" });
+// @ts-expect-error string interpolation is not built yet
+keyframes({ keyframes: ["red", "blue"] });
+void generated;
