@@ -697,6 +697,13 @@
       "name": "vminimist",
       "version": "0.1.0",
     },
+    "packages/vmotion-dom": {
+      "name": "vmotion-dom",
+      "version": "14.7.0",
+      "dependencies": {
+        "vmotion-utils": "14.7.0",
+      },
+    },
     "packages/vmotion-utils": {
       "name": "vmotion-utils",
       "version": "14.7.0",
@@ -1881,6 +1888,8 @@
     "vmime-types": ["vmime-types@workspace:packages/vmime-types"],
 
     "vminimist": ["vminimist@workspace:packages/vminimist"],
+
+    "vmotion-dom": ["vmotion-dom@workspace:packages/vmotion-dom"],
 
     "vmotion-utils": ["vmotion-utils@workspace:packages/vmotion-utils"],
 

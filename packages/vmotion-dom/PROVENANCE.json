@@ -1,0 +1,35 @@
+{
+  "upstream": {
+    "name": "motion-dom",
+    "version": "14.7.0",
+    "repository": "https://github.com/motiondivision/motion",
+    "checked": "2026-11-09"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "partial; Motion values, animation and DOM rendering pending",
+    "targetScope": "First implementation unit: numeric keyframe interpolation (or caller-supplied mixers), mixNumber, one-dimensional stagger. Not a drop-in replacement for motion-dom yet.",
+    "remainingWork": "MotionValue and frame scheduling; Color/complex-value mixers and grid/random stagger; Animation playback, DOM/WAAPI effects, gestures/layout and unchanged Framer Motion caller acceptance. This is a newly authored partial implementation, not retained upstream code.",
+    "independentComponents": {
+      "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
+      "scalar blending": "Numeric mixNumber operation",
+      "list stagger": "First/last/center/edges/numeric origins, delay and easing"
+    }
+  },
+  "changes": [
+    "No upstream runtime copied; depends only on vmotion-utils.",
+    "Owns range and easing-array snapshots; rejects malformed ranges before animation starts.",
+    "Binary segment lookup bounds the cost of long numeric timelines."
+  ],
+  "caller": {
+    "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",
+    "upstreamVersion": "12.36.0",
+    "paths": [
+      "src/app/(control-panel)/apps/contests/components/views/Amc10ExamsView.tsx",
+      "src/app/(control-panel)/apps/contests/components/views/PutnamExamView.tsx",
+      "src/app/(control-panel)/apps/calendar/components/ui/CalendarHeader.tsx",
+      "src/app/(control-panel)/apps/math-directory/shared/DirectoryHeader.tsx"
+    ],
+    "scope": "Fade/transform animation and Motion value subscriptions beneath motion/react. Built foundation only; application adoption not claimed."
+  }
+}
