@@ -129,7 +129,7 @@ getValueTransition({ duration: 0.2, default: { duration: 0.3 } }, "x");
 isTransitionDefined({ repeat: 1 });
 // @ts-expect-error strings are outside the numeric adapter
 animateMotionValue("x", position, "10px");
-// @ts-expect-error DOM measurement is not implemented
+// @ts-expect-error a DOM node alone is not an animation owner
 animateMotionValue("x", position, 1, {}, document.body);
 // @ts-expect-error inertia is not built yet
 animateMotionValue("x", position, 1, { type: "inertia" });
@@ -190,3 +190,15 @@ handOffElementState(document.body, renderer);
 animateElement(document.body, {opacity: [0,1]}, {duration: .3}, renderer);
 // @ts-expect-error renderer must support ownership and value transfer
 handOffElementState(document.body, {current: document.body});
+
+import {KeyframeResolver, type AnimationElement} from 'vmotion-dom';
+class CustomResolver extends KeyframeResolver<number | string> {
+  readKeyframes() {
+    this.unresolvedKeyframes = this.unresolvedKeyframes.map(x => x === 'token' ? 20 : x);
+    super.readKeyframes();
+  }
+}
+const customOwner: AnimationElement = {current:document.body, getProps:()=>({}),KeyframeResolver:CustomResolver};
+const stringValue = motionValue<number|string>(0);
+stringValue.start(animateMotionValue('x', stringValue, 'token', {duration:.3}, customOwner));
+animateMotionValue('x', position, [0,1], {duration:.3}, undefined, true);

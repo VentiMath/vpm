@@ -197,8 +197,8 @@ test("invalid and unsupported targets fail explicitly", () => {
       api.animateMotionValue("x", api.motionValue(0), 1, options),
     );
   assert.throws(
-    () => api.animateMotionValue("x", api.motionValue(0), 1, {}, {}),
-    /not implemented/,
+    () => api.animateMotionValue("x", api.motionValue(0), 1, {}, null),
+    /element/,
   );
   assert.throws(
     () => api.animateMotionValue("x", api.motionValue("0px"), 1)(() => {}),

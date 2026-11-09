@@ -323,6 +323,32 @@ export declare function animateMotionValue(
   target: number | (number | null)[],
   transition?: NumericTransition,
 ): (complete: () => void) => JSAnimation;
+export type KeyframeResolverConstructor = new (
+  ...args: ConstructorParameters<typeof KeyframeResolver<any>>
+) => KeyframeResolver<any>;
+export interface AnimationElement
+  extends Omit<ResolverElement, "current">,
+    Owner {
+  KeyframeResolver?: KeyframeResolverConstructor;
+  shouldSkipAnimations?: boolean;
+  shouldReduceMotion?: boolean | null;
+}
+export declare function animateMotionValue<V extends number | string>(
+  name: string,
+  value: MotionValue<V>,
+  target: V | (V | null)[],
+  transition: ElementTransition | undefined,
+  element: AnimationElement,
+  isHandoff?: boolean,
+): (complete: () => void) => ElementAnimation;
+export declare function animateMotionValue(
+  name: string,
+  value: MotionValue<number>,
+  target: number | (number | null)[],
+  transition: NumericTransition | undefined,
+  element: undefined,
+  isHandoff: true,
+): (complete: () => void) => ElementAnimation;
 export declare function getDefaultTransition(
   name: string,
   options: { keyframes: (number | null)[] },
@@ -365,6 +391,7 @@ export declare function applyPxDefaults(
   name: string,
 ): void;
 export interface ResolverElement {
+  KeyframeResolver?: KeyframeResolverConstructor;
   current?: HTMLElement | SVGElement;
   readValue?: (
     name: string,
@@ -392,6 +419,9 @@ export declare class KeyframeResolver<
     element?: ResolverElement,
     isAsync?: boolean,
   );
+  protected unresolvedKeyframes: (T | null)[];
+  protected motionValue?: MotionValue<T>;
+  protected isAsync: boolean;
   name?: string;
   element?: ResolverElement;
   finalKeyframe?: T;
@@ -451,12 +481,15 @@ export interface ElementAnimation extends PromiseLike<void> {
   complete(): void;
 }
 /** Renderer destination for transferred values; the full VisualElement is not implemented. */
-export interface ElementRenderer extends Owner {
+export interface ElementRenderer extends AnimationElement {
   current: HTMLElement | SVGElement;
   getValue(key: string): MotionValue<any> | undefined;
   addValue(key: string, value: MotionValue<any>): void;
   removeValue(key: string): void;
-  readValue?(key: string): number | string | undefined;
+  readValue?(
+    key: string,
+    target: string | number | null,
+  ): number | string | undefined;
   shouldSkipAnimations?: boolean;
   shouldReduceMotion?: boolean | null;
 }

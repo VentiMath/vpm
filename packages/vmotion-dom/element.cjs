@@ -1,7 +1,12 @@
 "use strict";
-const { motionValue } = require("./value.cjs");
+const { motionValue, failAnimation } = require("./value.cjs");
 const {
   DOMKeyframesResolver,
+  KeyframeResolver,
+  trackResolver,
+  untrackResolver,
+  noteResolverRead,
+  resetResolverRead,
   flushKeyframeResolvers,
 } = require("./resolver.cjs");
 const { readStyleValue, readSVGValue } = require("./reads.cjs");
@@ -35,7 +40,7 @@ function snapshot(value) {
     result.ease = result.ease.map((x) => (Array.isArray(x) ? x.slice() : x));
   return result;
 }
-function prepareFrames(input) {
+function prepareFrames(input, custom = false) {
   const frames = Array.isArray(input) ? input.slice() : [null, input];
   if (!frames.length) throw new TypeError("keyframes must not be empty");
   for (const v of frames)
@@ -44,7 +49,8 @@ function prepareFrames(input) {
       !Number.isFinite(v) &&
       !(
         typeof v === "string" &&
-        (scalar.test(v.trim()) ||
+        (custom ||
+          scalar.test(v.trim()) ||
           v.trim().startsWith("var(") ||
           v === "auto" ||
           v.startsWith("calc("))
@@ -75,8 +81,11 @@ function decode(frames) {
   return { numbers: frames, format: unit ? (n) => n + unit : undefined };
 }
 
-class ElementResolver extends DOMKeyframesResolver {}
-for (const method of [
+const resolverClasses = new WeakMap(),
+  resolverOwners = new WeakMap();
+const resolverMethods = [
+  "scheduleResolve",
+  "resume",
   "readKeyframes",
   "prepareMeasurement",
   "renderStartStyles",
@@ -84,18 +93,44 @@ for (const method of [
   "renderEndStyles",
   "measureEndState",
   "restore",
-]) {
-  ElementResolver.prototype[method] = function (...args) {
-    try {
-      return DOMKeyframesResolver.prototype[method].apply(this, args);
-    } catch (error) {
-      this.failure(error);
-      throw error;
-    }
-  };
+];
+function guardedResolver(Base) {
+  if (typeof Base !== "function")
+    throw new TypeError("KeyframeResolver must be a constructor");
+  let Guarded = resolverClasses.get(Base);
+  if (Guarded) return Guarded;
+  Guarded = class extends Base {};
+  for (const method of resolverMethods) {
+    if (typeof Base.prototype[method] !== "function") continue;
+    Guarded.prototype[method] = function (...args) {
+      try {
+        const result = Base.prototype[method].apply(this, args);
+        if (method === "readKeyframes") noteResolverRead(this);
+        return result;
+      } catch (error) {
+        resolverOwners.get(this)?.fail(error);
+        throw error;
+      }
+    };
+  }
+  resolverClasses.set(Base, Guarded);
+  return Guarded;
 }
+const ElementResolver = guardedResolver(DOMKeyframesResolver);
 class ElementAnimation {
-  constructor(value, key, frames, options, element, bind, owned) {
+  constructor(
+    value,
+    key,
+    frames,
+    options,
+    element,
+    bind,
+    owned,
+    externalComplete,
+    Resolver,
+  ) {
+    this.externalComplete = externalComplete;
+    this.customResolver = !!Resolver && Resolver !== DOMKeyframesResolver;
     this.value = value;
     this.key = key;
     this.options = options;
@@ -106,24 +141,109 @@ class ElementAnimation {
     this.cancelled = false;
     this.completed = false;
     this.wait();
-    this.resolver = new ElementResolver(
+    const Resolve = Resolver ? guardedResolver(Resolver) : ElementResolver;
+    this.resolver = new Resolve(
       frames,
-      (resolved, final) => this.start(resolved, final),
+      (resolved, final) => {
+        if (!this.ready) {
+          this.earlyResolution = [resolved, final];
+          return;
+        }
+        untrackResolver(this.resolver);
+        this.start(resolved, final);
+      },
       key,
       value,
       element,
     );
-    this.resolver.failure = (error) => this.fail(error);
+    resolverOwners.set(this.resolver, this);
+    trackResolver(this.resolver, (error) => this.fail(error));
+    if (this.customResolver)
+      for (const method of resolverMethods) {
+        if (
+          !Object.hasOwn(this.resolver, method) ||
+          typeof this.resolver[method] !== "function"
+        )
+          continue;
+        const original = this.resolver[method];
+        this.resolver[method] = (...args) => {
+          try {
+            const result = original.apply(this.resolver, args);
+            if (method === "readKeyframes") noteResolverRead(this.resolver);
+            return result;
+          } catch (error) {
+            this.fail(error);
+            throw error;
+          }
+        };
+      }
+    // Foreign public resolvers can measure by changing renderer-owned values.
+    // Supply the render boundary and restoration when they have no transaction
+    // hooks; VPM DOM resolvers keep their own grouped DOM transaction.
+    if (
+      this.customResolver &&
+      typeof this.resolver.prepareMeasurement !== "function"
+    ) {
+      const r = this.resolver,
+        renderEnd = r.renderEndStyles?.bind(r);
+      let saved;
+      r.prepareMeasurement = () => {
+        const node = r.element?.current,
+          view = node?.ownerDocument?.defaultView;
+        saved = {
+          value: this.value.get(),
+          node,
+          css: node?.style?.cssText,
+          view,
+          x: view?.scrollX,
+          y: view?.scrollY,
+        };
+      };
+      r.renderEndStyles = () => {
+        renderEnd?.();
+        r.element?.render?.();
+      };
+      const restore = r.restore?.bind(r);
+      r.restore = () => {
+        try {
+          restore?.();
+          if (saved) this.value.set(saved.value);
+        } finally {
+          if (saved?.css !== undefined) saved.node.style.cssText = saved.css;
+          if (
+            saved?.view?.scrollTo &&
+            (saved.x !== saved.view.scrollX || saved.y !== saved.view.scrollY)
+          )
+            saved.view.scrollTo(saved.x, saved.y);
+          saved = undefined;
+        }
+      };
+    }
     this.stop = () => {
       if (this.stopped) return;
       this.stopped = true;
       this.resolver.cancel();
+      untrackResolver(this.resolver);
       try {
         this.animation?.stop();
       } finally {
         if (!this.animation) this.resolveReady();
       }
     };
+  }
+  schedule() {
+    this.ready = true;
+    try {
+      if (this.earlyResolution) {
+        const [frames, final] = this.earlyResolution;
+        this.earlyResolution = undefined;
+        this.start(frames, final);
+      } else this.resolver.scheduleResolve();
+      trackResolver(this.resolver);
+    } catch (error) {
+      this.fail(error);
+      throw error;
+    }
   }
   wait() {
     this.waitState = { settled: false, failed: false };
@@ -147,6 +267,10 @@ class ElementAnimation {
   }
   fail(error) {
     this.failed = true;
+    untrackResolver(this.resolver);
+    try {
+      this.resolver.cancel();
+    } catch {}
     if (requests.get(this.value) === this) {
       if (this.previous?.animation) requests.set(this.value, this.previous);
       else requests.delete(this.value);
@@ -155,10 +279,14 @@ class ElementAnimation {
     this.waitState.failed = true;
     this.waitState.error = error;
     this.waitState.reject?.(error);
+    failAnimation(this.value, this, error);
   }
   start(frames, final) {
     if (this.stopped || this.cancelled || !this.owned()) return;
     try {
+      if (!Array.isArray(frames) || !frames.length)
+        throw new TypeError("resolver must return a nonempty array");
+      if (this.customResolver) frames = frames.slice();
       const { numbers, format } = decode(frames);
       const options = this.options;
       if (!isTransitionDefined(options)) {
@@ -189,7 +317,7 @@ class ElementAnimation {
           this.value.set(final);
         onComplete?.();
       };
-      let complete;
+      let complete = this.externalComplete;
       // Validate before replacing the currently running value. This facade owns
       // the lifecycle directly instead of allocating a second control wrapper.
       this.animation = prepareMotionValue(
@@ -204,12 +332,14 @@ class ElementAnimation {
         complete?.();
       });
       this.completionState = this.animation.completion;
-      this.withLifecycle = true;
-      this.lifecycle = this.value.start((done) => {
-        complete = done;
-        return this;
-      });
-      this.lifecycle.catch(() => {});
+      this.withLifecycle = !this.externalComplete;
+      if (!this.externalComplete) {
+        this.lifecycle = this.value.start((done) => {
+          complete = done;
+          return this;
+        });
+        this.lifecycle.catch(() => {});
+      }
       if (this.stopped || !this.owned()) {
         this.animation.stop();
         if (this.waitState.promise) {
@@ -241,11 +371,10 @@ class ElementAnimation {
     return this.animation;
   }
   get finished() {
-    if (this.failed || !this.animation || !this.lifecycle)
-      return this.waitingPromise();
+    if (this.failed || !this.animation) return this.waitingPromise();
     if (this.completionState !== this.animation.completion) {
       this.completionState = this.animation.completion;
-      this.withLifecycle = !this.lifecycleCompleted;
+      this.withLifecycle = !this.externalComplete && !this.lifecycleCompleted;
       this.combined = undefined;
     }
     if (!this.withLifecycle) return this.animation.finished;
@@ -302,7 +431,14 @@ class ElementAnimation {
     else if (this.cancelled) {
       this.cancelled = false;
       this.wait();
-      this.resolver.resume();
+      resetResolverRead(this.resolver);
+      try {
+        this.resolver.resume();
+        trackResolver(this.resolver);
+      } catch (error) {
+        this.fail(error);
+        throw error;
+      }
     }
   }
   cancel() {
@@ -312,6 +448,7 @@ class ElementAnimation {
     else {
       this.cancelled = true;
       this.resolver.cancel();
+      untrackResolver(this.resolver);
       this.resolveReady();
     }
   }
@@ -337,7 +474,7 @@ function plan(getValue, keyframes, transition, element, bind, registry) {
     if (options.delay == null && transition.delay !== undefined)
       options.delay = transition.delay;
     if (transition.elapsed !== undefined) options.elapsed = transition.elapsed;
-    const frames = prepareFrames(keyframes[key]);
+    const frames = prepareFrames(keyframes[key], !!element?.KeyframeResolver);
     if (options.from !== undefined) {
       if (frames[0] === null) frames[0] = options.from;
       options.from = undefined;
@@ -368,6 +505,8 @@ function plan(getValue, keyframes, transition, element, bind, registry) {
         element,
         () => bind(key, value),
         owned,
+        undefined,
+        element?.KeyframeResolver,
       );
       const previous = requests.get(value);
       if (previous && !previous.animation) previous.stop();
@@ -376,7 +515,7 @@ function plan(getValue, keyframes, transition, element, bind, registry) {
       registry.set(key, handle);
       handles.push(handle);
     }
-    for (const h of handles) h.resolver.scheduleResolve();
+    for (const h of handles) h.schedule();
   } catch (error) {
     for (const h of handles) h.stop();
     throw error;
@@ -451,9 +590,13 @@ function validateRenderer(element, renderer) {
 function rendererReader(element, renderer) {
   return {
     current: element,
-    readValue: (key) =>
+    KeyframeResolver: renderer.KeyframeResolver,
+    render: renderer.render?.bind(renderer),
+    getValue: renderer.getValue.bind(renderer),
+    measureViewportBox: renderer.measureViewportBox?.bind(renderer),
+    readValue: (key, target) =>
       renderer.readValue
-        ? renderer.readValue(key)
+        ? renderer.readValue(key, target)
         : element.namespaceURI === "http://www.w3.org/2000/svg"
           ? readSVGValue(element, key)
           : readStyleValue(element, key),
@@ -562,3 +705,80 @@ module.exports = {
   releaseElement,
   handOffElementState,
 };
+
+function prepareRendererMotionValue(
+  name,
+  value,
+  target,
+  transition = {},
+  element,
+  isHandoff = false,
+) {
+  if (typeof name !== "string" || unsafe.has(name))
+    throw new TypeError("invalid animation property");
+  if (
+    !value ||
+    typeof value.get !== "function" ||
+    typeof value.set !== "function" ||
+    typeof value.getVelocity !== "function"
+  )
+    throw new TypeError("expected a MotionValue");
+  object(transition, "transition");
+  if (element !== undefined) object(element, "element");
+  if (typeof isHandoff !== "boolean")
+    throw new TypeError("isHandoff must be boolean");
+  const Resolver = isHandoff
+    ? KeyframeResolver
+    : element?.KeyframeResolver || DOMKeyframesResolver;
+  guardedResolver(Resolver);
+  const options = snapshot(getValueTransition(transition, name));
+  if (options.delay == null && transition.delay !== undefined)
+    options.delay = transition.delay;
+  if (transition.elapsed !== undefined) options.elapsed = transition.elapsed;
+  if (
+    element?.shouldSkipAnimations ||
+    (element?.shouldReduceMotion &&
+      /^(?:x|y|z|scale.*|rotate.*|translate.*|skew.*|transformPerspective)$/.test(
+        name,
+      ))
+  )
+    options.type = false;
+  const frames = prepareFrames(
+    target,
+    !!element?.KeyframeResolver && !isHandoff,
+  );
+  if (options.from !== undefined) {
+    if (frames[0] === null || isHandoff) frames[0] = options.from;
+    options.from = undefined;
+  }
+  return (complete) => {
+    if (typeof complete !== "function")
+      throw new TypeError("completion must be a function");
+    let handle;
+    handle = new ElementAnimation(
+      value,
+      name,
+      frames.slice(),
+      snapshot(options),
+      element,
+      () => {},
+      () => requests.get(value) === handle,
+      complete,
+      Resolver,
+    );
+    const previous = requests.get(value);
+    if (previous && !previous.animation) previous.stop();
+    handle.previous = previous?.animation ? previous : undefined;
+    requests.set(value, handle);
+    try {
+      handle.schedule();
+    } catch (error) {
+      handle.stop();
+      throw error;
+    }
+    return handle;
+  };
+}
+Object.defineProperty(module.exports, "prepareRendererMotionValue", {
+  value: prepareRendererMotionValue,
+});

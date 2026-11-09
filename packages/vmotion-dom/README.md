@@ -135,9 +135,15 @@ velocity are read when the factory runs. Updates reach the MotionValue before
 The existing stop, callback-failure and first-frame spring-rest behavior remains.
 No temporary browser globals are required by the VPM implementation.
 
-This adapter supports finite numeric values only. Its element-aware resolver and
-optimized-appearance handoff arguments remain unimplemented and reject explicitly.
-The separate element APIs and renderer state-transfer bridge are described below.
+Without an owner the adapter retains its fast finite-numeric path. Supply an
+`AnimationElement` as the fifth argument to resolve DOM units, variables and
+measured lengths, or its custom `KeyframeResolver` class. This returns a factory
+for the caller's `MotionValue.start()`; it never starts a second lifecycle.
+Reusable factories own target/options snapshots and resolve fresh origins on each
+start. Renderer skip/reduced-motion flags are honored. The optional sixth
+`isHandoff` argument uses immediate base resolution without custom DOM reads;
+like upstream, its explicit `from` overrides the first keyframe. This is a JS
+playback path, not WAAPI or a complete optimized-appearance/hydration system.
 [Transition measurements](bench/transitions/README.md) cover controller creation
 and repeating value delivery; they do not measure the full React caller. Repeating
 opacity delivery takes 61% less time on Node and 57% less on Bun in the current
@@ -422,8 +428,17 @@ Pass the renderer as `animateElement`'s fourth argument for subsequent animation
 its values and renderer are reused, with no additional style effect. Newly created
 values read from the DOM. Renderer `shouldSkipAnimations` and
 `shouldReduceMotion` settings are honored. This does not implement VisualElement,
-WAAPI or the full React integration. Custom renderer keyframe-resolver classes
-and the element-aware `animateMotionValue` adapter remain future work.
+WAAPI or the full React integration. Custom resolver classes can extend the public `KeyframeResolver` or
+`DOMKeyframesResolver`, including their protected keyframe/value state. Returned
+arrays are copied before numeric conversion, so frozen or retained output stays
+unchanged. Resolution can be synchronous or queued; stop/cancel suppress late
+callbacks, and forced reads cooperate with the shared queue. Custom measurement
+hooks restore state on failure. Foreign resolvers without transaction hooks get
+an intermediate renderer paint and source value/style/scroll restoration.
+Failures reject the controller's `finished` and, for VPM MotionValues, its owning
+`start()` promise. Arbitrary resolvers must still honor the public constructor,
+state, cancellation and measurement contract; complex resolved strings remain
+outside the implemented mixers.
 
 The bridge is verified with unchanged upstream HTML/SVG renderers in Chrome,
 including iframe elements, plus 712 black-box comparisons per runtime and
@@ -438,8 +453,7 @@ this separate addition, and retain that commit's source hashes.
 
 ## Still to build
 
-Custom effect registration, element-aware `animateMotionValue`, custom renderer
-keyframe resolvers, `transitionEnd`, and the
+Custom effect registration, `transitionEnd`, and the
 high-level selector/group `animate` wrapper remain unimplemented.
 Inertia, CSS spring serialization, color/complex-string mixers, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
@@ -463,3 +477,8 @@ establish an application frame-rate improvement.
 | [Numeric playback](bench/playback/README.md) | Keyframe generators, controller lifetime and frame delivery |
 | [Values and frames](bench/values/README.md) | Value creation/notification, scheduling, dispatch and cancellation |
 | [Numeric mapping](bench/results/README.md) | Interpolation, timeline lookup/preparation and list staggering |
+
+[Renderer-aware adapter measurements](bench/renderer/README.md) cover the complete
+create/resolve/seek/stop lifecycle with synchronous and deferred custom classes.
+Conformance adds 440 upstream comparisons; Chrome exercises actual percentage,
+variable and auto measurement through unchanged upstream renderer/resolver classes.

@@ -76,8 +76,13 @@ function animateMotionValue(
   isHandoff,
 ) {
   if (element !== undefined || isHandoff)
-    throw new TypeError(
-      "element measurement and animation handoff are not implemented",
+    return require("./element.cjs").prepareRendererMotionValue(
+      name,
+      value,
+      target,
+      transition,
+      element,
+      isHandoff,
     );
   return prepareMotionValue(name, value, target, transition);
 }

@@ -7,6 +7,16 @@ const {
   fillWildcards,
 } = require("./reads.cjs");
 const pending = new Set();
+const alreadyRead = new WeakSet();
+const resolverFailures = new WeakMap();
+function rejectResolver(resolver, error) {
+  try {
+    resolverFailures.get(resolver)?.(error);
+  } catch {}
+  try {
+    resolver.cancel();
+  } catch {}
+}
 const positions = new Set([
   "width",
   "height",
@@ -40,10 +50,10 @@ function flush(forced) {
     for (const r of batch)
       if (r.state === "scheduled")
         try {
-          r.readKeyframes();
+          if (!alreadyRead.has(r)) r.readKeyframes();
           active.push(r);
         } catch (e) {
-          r.cancel();
+          rejectResolver(r, e);
           failure ??= { error: e };
         }
     // Conflicting measurements of the same property get separate transactions.
@@ -51,7 +61,10 @@ function flush(forced) {
     let passes, seen;
     for (const r of active)
       if (r.state === "scheduled" && r.needsMeasurement) {
-        if (!passes) { passes = [[]]; seen = new Map(); }
+        if (!passes) {
+          passes = [[]];
+          seen = new Map();
+        }
         const node = r.element?.current;
         let keys = seen.get(node);
         if (keys?.has(r.name)) {
@@ -77,7 +90,7 @@ function flush(forced) {
               try {
                 r[phase]?.();
               } catch (e) {
-                r.cancel();
+                rejectResolver(r, e);
                 failure ??= { error: e };
               }
       } finally {
@@ -85,7 +98,7 @@ function flush(forced) {
           try {
             pass[i].restore?.();
           } catch (e) {
-            pass[i].cancel();
+            rejectResolver(pass[i], e);
             failure ??= { error: e };
           }
       }
@@ -110,6 +123,25 @@ function readBatch() {
 }
 function flushKeyframeResolvers() {
   flush(true);
+}
+// Custom classes can schedule through another runtime's queue. Also register
+// them here so synchronous control reads can force the same batched phases.
+function trackResolver(resolver, failure) {
+  if (failure) resolverFailures.set(resolver, failure);
+  if (resolver.state === "scheduled" && !pending.has(resolver)) {
+    pending.add(resolver);
+    frame.read(readBatch);
+  }
+}
+function untrackResolver(resolver) {
+  pending.delete(resolver);
+  if (!pending.size) frameSteps.read.cancel(readBatch);
+}
+function noteResolverRead(resolver) {
+  alreadyRead.add(resolver);
+}
+function resetResolverRead(resolver) {
+  alreadyRead.delete(resolver);
 }
 class KeyframeResolver {
   constructor(frames, onComplete, name, motionValue, element, isAsync = false) {
@@ -385,3 +417,9 @@ module.exports = {
   DOMKeyframesResolver,
   flushKeyframeResolvers,
 };
+Object.defineProperties(module.exports, {
+  trackResolver: { value: trackResolver },
+  untrackResolver: { value: untrackResolver },
+  noteResolverRead: { value: noteResolverRead },
+  resetResolverRead: { value: resetResolverRead },
+});

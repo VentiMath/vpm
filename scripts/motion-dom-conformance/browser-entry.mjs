@@ -1,3 +1,4 @@
+import {checkRendererAnimations} from "./renderer-browser.mjs";
 import {checkHandoff} from "./handoff-browser.mjs";
 import {checkElements} from "./elements-browser.mjs";
 import { checkReads } from "./reads-browser.mjs";
@@ -154,6 +155,7 @@ window.runMotionDom = async () => {
   await checkReads([current, app, vpm]);
   await checkElements(current,vpm);
   await checkHandoff(current,vpm);
+  await checkRendererAnimations(current,vpm);
   for (const api of [current, app, vpm]) {
     const node = document.createElement("div");
     document.body.append(node);

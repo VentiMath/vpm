@@ -152,6 +152,7 @@ class MotionValue {
     };
     this.activeRun = run;
     return new Promise((resolve, reject) => {
+      run.reject = reject;
       const finish = () => {
         if (run.finished) return;
         run.complete = true;
@@ -251,3 +252,14 @@ module.exports = {
   isMotionValue,
   collectMotionValues,
 };
+Object.defineProperty(module.exports, "failAnimation", {
+  value(value, animation, error) {
+    if (!(value instanceof MotionValue) || value.animation !== animation)
+      return;
+    const reject = value.activeRun?.reject;
+    try {
+      value.stop();
+    } catch {}
+    reject?.(error);
+  },
+});

@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 168 package tests
+easings come from the verified `vmotion-utils` foundation. All 180 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -65,7 +65,7 @@ renderer remains pending; these checks do not establish full Motion compatibilit
 [Motion value](https://motion.dev/docs/motion-value) and
 [frame](https://motion.dev/docs/frame) documentation, public declarations and
 black-box API observations define the current contract. The remaining
-inertia engine, element-aware animateMotionValue and React renderer are explicitly
+inertia engine and React renderer are explicitly
 outside this unit.
 
 `playback.cjs` runs 25,084 numeric generator/controller comparisons on each runtime.
@@ -163,3 +163,11 @@ not only inline declarations. Public declarations and black-box observations
 informed this independent bridge; no upstream runtime was copied.
 Separate regressions cover preserving velocity and pending work, failed transfer
 rollback, source release, stale/reentrant cleanup and reduced/skip motion.
+
+`renderer.cjs` adds 440 current-upstream comparisons per runtime for custom
+sync/deferred resolution, wildcards, delays, elapsed time, repeats, easing and
+immediate handoff. Chrome uses unchanged upstream HTML renderer/DOM resolver
+classes with VPM values for variable, percentage and auto widths, then drives a
+custom token resolver on real frames. Separate regressions cover reusable factory
+snapshots, frozen output, pending cancellation, callback failures, instance-field
+resolvers, lifecycle rejection and failed measurement restoration.
