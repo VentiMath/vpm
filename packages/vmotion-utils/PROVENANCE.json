@@ -1,0 +1,30 @@
+{
+  "upstream": {
+    "name": "motion-utils",
+    "version": "14.7.0",
+    "repository": "https://github.com/motiondivision/motion",
+    "checked": "2026-11-09"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "The root motion-utils utility exports: easing/Bezier curves, scalar and array helpers, memo/pipe, diagnostics, shared configuration and SubscriptionManager. Verified beneath unchanged current14 and application12 Motion callers. Motion renderer, gesture/layout engine and React components are not implemented by this leaf."
+  },
+  "changes": [
+    "No upstream runtime ships; no runtime dependencies.",
+    "Safeguarded polynomial inversion is checked against analytical curves and current14; older12 outputs differ slightly.",
+    "Subscriptions retain unaffected listeners when a callback removes itself and protect new registrations from stale disposers.",
+    "Invalid Bezier controls and step counts reject explicitly in production as well as development."
+  ],
+  "caller": {
+    "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",
+    "upstreamVersion": "12.36.0",
+    "paths": [
+      "src/app/(control-panel)/apps/contests/components/views/Amc10ExamsView.tsx",
+      "src/app/(control-panel)/apps/contests/components/views/PutnamExamView.tsx",
+      "src/app/(control-panel)/apps/calendar/components/ui/CalendarHeader.tsx",
+      "src/app/(control-panel)/apps/math-directory/shared/DirectoryHeader.tsx"
+    ],
+    "scope": "Fade/transform animation and Motion value subscriptions beneath motion/react. Built foundation only; application adoption not claimed."
+  }
+}

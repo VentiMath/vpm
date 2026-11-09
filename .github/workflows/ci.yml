@@ -21,6 +21,17 @@ jobs:
       - run: node scripts/check-bun.cjs
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/motion-utils-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Motion utilities and unchanged animation callers
+        run: |
+          node scripts/motion-utils-conformance/check-controls.cjs
+          node scripts/motion-utils-conformance/run.mjs
+          node scripts/motion-utils-conformance/diagnostics.cjs
+          bun scripts/motion-utils-conformance/build-browser.cjs
+          node scripts/motion-utils-conformance/callers.cjs
+          node scripts/motion-utils-conformance/browser.cjs
+          node scripts/motion-utils-conformance/types.cjs
+          node scripts/motion-utils-conformance/archives.cjs
       - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Word diffs, frontend caller and consumer archives
         run: |
@@ -639,6 +650,14 @@ jobs:
       - run: node scripts/check-bun.cjs
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/motion-utils-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Motion utility contracts on Bun
+        run: |
+          bun scripts/motion-utils-conformance/check-controls.cjs
+          bun scripts/motion-utils-conformance/run.mjs
+          bun scripts/motion-utils-conformance/diagnostics.cjs
+          bun scripts/motion-utils-conformance/build-browser.cjs
+          bun scripts/motion-utils-conformance/callers.cjs
       - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Word diff contracts on Bun
         run: |

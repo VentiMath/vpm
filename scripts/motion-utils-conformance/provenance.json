@@ -1,0 +1,83 @@
+{
+  "basis": "Independent runtime based on public declarations, documentation and public API observations. No upstream runtime copied.",
+  "controls": [
+    {
+      "name": "node_modules/framer-motion",
+      "version": "14.7.0",
+      "integrity": "sha512-bpUaqixw1ONSEnByQIvKHphxFsk0SwObX83HkzKyCCPfvfdmesChbL7erWDkdR3gV01GSo5j/b0X71X4/zhLsA=="
+    },
+    {
+      "name": "node_modules/framer-motion-app",
+      "version": "12.36.0",
+      "integrity": "sha512-4PqYHAT7gev0ke0wos+PyrcFxI0HScjm3asgU8nSYa8YzJFuwgIvdj3/s3ZaxLq0bUSboIn19A2WS/MHwLCvfw=="
+    },
+    {
+      "name": "node_modules/framer-motion-app/node_modules/motion-dom",
+      "version": "12.43.0",
+      "integrity": "sha512-azKON4d9S65PEoFUiQTMTgPheEmzf2QngdRc50AKfJp9Q9mmcBVw22c8eMq9k8kxOFHdL7+WZY7N/5F/lwiDag=="
+    },
+    {
+      "name": "node_modules/framer-motion-app/node_modules/motion-utils",
+      "version": "12.39.0",
+      "integrity": "sha512-8nadJAJjTtqRkmRF36FoJTrywK9nnFmnPwnSMyxaOCU7GDjN9RTMJIxx9De8ErM+vpPhMccr/6fo5WciyQLnMQ=="
+    },
+    {
+      "name": "node_modules/motion-dom",
+      "version": "14.7.0",
+      "integrity": "sha512-eIATYjj1f3VW0YULvJYy/NKD5OiC3T7rcsTBZ/5cjATAENtsJgMHPtikwPcVzBlE9cQZQc9SiJ3/cokYqhiz0A=="
+    },
+    {
+      "name": "node_modules/motion-dom-app",
+      "version": "12.36.0",
+      "integrity": "sha512-Ep1pq8P88rGJ75om8lTCA13zqd7ywPGwCqwuWwin6BKc0hMLkVfcS6qKlRqEo2+t0DwoUcgGJfXwaiFn4AOcQA=="
+    },
+    {
+      "name": "node_modules/motion-dom-app/node_modules/motion-utils",
+      "version": "12.39.0",
+      "integrity": "sha512-8nadJAJjTtqRkmRF36FoJTrywK9nnFmnPwnSMyxaOCU7GDjN9RTMJIxx9De8ErM+vpPhMccr/6fo5WciyQLnMQ=="
+    },
+    {
+      "name": "node_modules/motion-utils",
+      "version": "14.7.0",
+      "integrity": "sha512-woO0/Nb7ys75f94fjvQi/6leiHGvZUYkeHUPEZ3vxsV+9OpEVhkxp01x8MlRwX0zt31EqgXsKDAoBoJLC148Tw=="
+    },
+    {
+      "name": "node_modules/motion-utils-app",
+      "version": "12.36.0",
+      "integrity": "sha512-eHWisygbiwVvf6PZ1vhaHCLamvkSbPIeAYxWUuL3a2PD/TROgE7FvfHWTIH4vMl798QLfMw15nRqIaRDXTlYRg=="
+    },
+    {
+      "name": "node_modules/react",
+      "version": "19.3.1",
+      "integrity": "sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw=="
+    },
+    {
+      "name": "node_modules/react-dom",
+      "version": "19.3.1",
+      "integrity": "sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ=="
+    },
+    {
+      "name": "node_modules/scheduler",
+      "version": "0.28.0",
+      "integrity": "sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw=="
+    },
+    {
+      "name": "node_modules/tslib",
+      "version": "2.9.1",
+      "integrity": "sha512-a4Ux9VKuIMHsOS7ENbEq6hK2ZGYIT27Rtl0E4eD9KqwxhKiQeMZE/9xb3IdYwWaSOyIBQLExhQgXDTYoiCxnWA=="
+    }
+  ],
+  "fixtureFiles": {
+    "package-lock.json": "41435291c50ceb43c1b92507078bbb84cb744a01ad2dad3a74972afdcf78667e",
+    "node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "node_modules/motion-utils-app": "ec77f09c07c4903a9f20eb73dfba67fdeda468ffe9971bb56a6d482f8da1a8dc",
+    "node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "node_modules/motion-dom-app": "3723f53fb152c89d56b2d1f115dfc5a86f91e128336d0571b26b8876242dfd26",
+    "node_modules/framer-motion": "232f323ed94ab3815755b8392639f2fb33bac1a7ccff0524d6892cc67219103e",
+    "node_modules/framer-motion-app": "4e8bf3d1dc428f47354bd7fef46f722a8d9002b268d60a8f669ef36622c50143",
+    "node_modules/react": "27c045392bedb10c5e82004e0cad0f329107a8e4e2e797eedfc14a9f2aababd7",
+    "node_modules/react-dom": "16f6df3015c7b1b0e6960dc5da8ebf0989341fc6f33454ca51f40696b1a431e4",
+    "node_modules/scheduler": "94b31de8785de556caca149bcce63bf245b8d50e65f2185c4268d47a42cba37d",
+    "node_modules/tslib": "2883be5994447b850e60678be4cf5b5d2f6601829152fe9d90072a872b986324"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "vpm-motion-utils-conformance",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "motion-utils": "14.7.0",
+    "motion-utils-app": "npm:motion-utils@12.36.0",
+    "motion-dom": "14.7.0",
+    "motion-dom-app": "npm:motion-dom@12.36.0",
+    "framer-motion": "14.7.0",
+    "framer-motion-app": "npm:framer-motion@12.36.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}
