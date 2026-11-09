@@ -59,3 +59,45 @@ export async function wire(api, root, legacy = false) {
   }
   return out;
 }
+
+// VPM guarantees, including legacy bodies; these are not claims about Ky1.x.
+export async function bodyBoundaries(api, root) {
+  const out = { headers: false };
+  try {
+    await api
+      .default(root + "body-slow", {
+        timeout: 100,
+        retry: 0,
+        hooks: {
+          afterResponse: [
+            () => {
+              out.headers = true;
+            },
+          ],
+        },
+      })
+      .json();
+  } catch (e) {
+    out.timeout = e.name;
+  }
+  const c = new AbortController(),
+    reason = new Error("stop body");
+  const pending = api
+    .default(root + "body-slow", {
+      signal: c.signal,
+      hooks: {
+        afterResponse: [
+          () => {
+            setTimeout(() => c.abort(reason), 10);
+          },
+        ],
+      },
+    })
+    .json();
+  try {
+    await pending;
+  } catch (e) {
+    out.abortIdentity = e === reason;
+  }
+  return out;
+}

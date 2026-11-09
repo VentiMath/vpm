@@ -14,7 +14,8 @@
     "No upstream runtime ships; one independent request pipeline serves both entry points.",
     "Cancellation remains effective during hooks, backoff, ignored-signal custom fetches and shortcut body reads.",
     "Finite size limits count actual bytes; invalid configuration rejects before transport.",
-    "App migration explicitly selects the legacy entry rather than silently changing hook arguments or consuming error.response."
+    "App migration explicitly selects the legacy entry rather than silently changing hook arguments or consuming error.response.",
+    "A single per-attempt cancellation scope spans transport and shortcut body reads; no unused total-timeout controller is allocated. Body timeouts now abort the transport as well as its stream reader, and every retry starts with a fresh scope."
   ],
   "caller": {
     "revision": "d8b5ccfa284121ba092869a6aa8993c844033cd4",

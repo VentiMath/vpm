@@ -10,6 +10,13 @@ exports.server = (extra) => {
       res.end();
       return;
     }
+    if (u.pathname === "/body-slow") {
+      res.writeHead(200, { "content-type": "application/json" });
+      res.write('{"id":');
+      const t = setTimeout(() => res.end("3}"), 500);
+      res.on("close", () => clearTimeout(t));
+      return;
+    }
     if (u.pathname === "/slow") {
       const t = setTimeout(() => res.end("late"), 500);
       res.on("close", () => clearTimeout(t));

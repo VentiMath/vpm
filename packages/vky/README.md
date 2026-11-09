@@ -87,10 +87,20 @@ Benchmarks measure client overhead with a deterministic Fetch fixture, not serve
 latency. A smaller dependency-free implementation does not by itself establish an
 application speedup; upstream Ky also has no runtime dependencies.
 
-The recorded Node run uses about 30% less time for GET+JSON and 57% less for
-client creation. Node POST/error differences are unestablished. On Bun, client
-creation uses 59% less time, but GET/POST JSON remain slower: about 39/51 µs versus
-16/18 µs upstream. Reading streams with explicit cancellation ownership is a
-known cost here; the package is not uniformly faster. Zero-delay retries avoid a
-timer turn, so their large improvement must not be extrapolated to real server
-backoff or network latency. All process samples and control spreads are retained.
+Current measurements use Node 24 and Bun 1.4.4, matching CI. GET/POST JSON use
+about 45%/21% less time than Ky on Node and 27%/24% less on Bun in this fixture.
+These are client-overhead measurements, not network or application latency.
+Zero-delay retries avoid a timer turn, so their large improvement must not be
+extrapolated to real server backoff.
+
+The earlier 2.5–2.8× Bun JSON regression was measured on Bun 1.4.0, whose stream
+reader path was substantially more expensive. It should not have been used as
+the current baseline while CI used 1.4.4. The original recordings remain in
+[repository history](https://github.com/VentiMath/vpm/tree/552f1a3df695e4cc0f4846c22d272aa9742ffd04/packages/vky/bench/results).
+Runtime improvements are separate from VPM code improvements: the
+[before/after comparison](bench/previous/README.md) runs both implementations on
+Bun 1.4.4. Reusing the attempt's cancellation scope and omitting an unused total
+controller reduce GET+JSON time by about 11% there. POST's same-runtime change is
+unestablished against control noise. Body-reader cancellation, size checks,
+strict JSON, retry isolation and caller abort remain tested; a body timeout now
+also aborts the transport's signal.

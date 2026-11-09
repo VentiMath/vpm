@@ -23,31 +23,31 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T10:02:20.445Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T10:27:51.838Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create client | 1656 | 708 | -57.2% | -58.4% | -56.3% | 2% | lower time in every pair, beyond control spread |
-| GET JSON | 41747 | 27751 | -29.7% | -36% | -27.1% | 8.5% | lower time in every pair, beyond control spread |
-| POST JSON | 52172 | 46317 | -10.8% | -3.6% | -11% | 11% | unestablished at this precision |
-| HTTP error JSON | 39091 | 36175 | -5.7% | 1.3% | -6.6% | 10.5% | unestablished at this precision |
-| retry 503 | 1357263 | 57357 | -95.9% | -95.7% | -96.1% | 4.1% | lower time in every pair, beyond control spread |
+| create client | 1571 | 695 | -56.1% | -56.4% | -56.1% | 1% | lower time in every pair, beyond control spread |
+| GET JSON | 37212 | 20485 | -45.3% | -47.7% | -42.2% | 5.7% | lower time in every pair, beyond control spread |
+| POST JSON | 48938 | 38464 | -21.2% | -25.5% | -19.3% | 14% | lower time in every pair, beyond control spread |
+| HTTP error JSON | 38175 | 27410 | -28.2% | -32.7% | -25.4% | 2.4% | lower time in every pair, beyond control spread |
+| retry 503 | 1642918 | 43531 | -97.3% | -97.2% | -97.5% | 17.4% | lower time in every pair, beyond control spread |
 
-## Bun 1.4.0
+## Bun 1.4.4
 
-Recorded 2026-11-09T10:02:47.523Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T10:28:39.503Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create client | 1057 | 435 | -58.8% | -56.3% | -59.7% | 10.6% | lower time in every pair, beyond control spread |
-| GET JSON | 15622 | 38970 | 146.1% | 141.4% | 146.1% | 3.5% | higher time in every pair, beyond control spread |
-| POST JSON | 17929 | 50754 | 167.8% | 164.5% | 175.1% | 15.2% | higher time in every pair, beyond control spread |
-| HTTP error JSON | 46978 | 41471 | -12% | -13.6% | -12% | 11.6% | unestablished at this precision |
-| retry 503 | 1261366 | 60675 | -95.5% | -96.5% | -94.1% | 5% | lower time in every pair, beyond control spread |
+| create client | 913 | 353 | -61.6% | -62.3% | -61.1% | 40.4% | lower time in every pair, beyond control spread |
+| GET JSON | 14445 | 10365 | -27.2% | -26.3% | -28.5% | 1.8% | lower time in every pair, beyond control spread |
+| POST JSON | 14925 | 11485 | -23.5% | -23.5% | -23% | 2.7% | lower time in every pair, beyond control spread |
+| HTTP error JSON | 22489 | 13958 | -37.8% | -47.7% | -36.5% | 7.7% | lower time in every pair, beyond control spread |
+| retry 503 | 1648926 | 18667 | -98.8% | -98.9% | -98.8% | 18.5% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

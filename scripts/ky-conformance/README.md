@@ -11,6 +11,7 @@ No upstream runtime is packaged in vky.
   exactly against each pinned control.
 - `wire.mjs`: 22 native HTTP scenarios against a local server, including redirects,
   multipart uploads, replayed PUT bodies, HTTP errors, timeouts and cancellation.
+  Four additional VPM checks exercise body deadlines and caller abort after headers.
 - `browser.cjs`: bundles the same public API and native HTTP cases and compares
   upstream/VPM in real Chrome. No live app account or backend is used.
 - `types.cjs`: strict TypeScript 7 ESM/CJS NodeNext and Bundler consumers, including
@@ -19,7 +20,9 @@ No upstream runtime is packaged in vky.
   CJS/ESM class identity, both public entry points, unit tests and installed types.
 - Package unit tests separately cover timeout/abort ownership, infinite backoff,
   all input/default/call signals, body size/cancellation, configuration validation,
-  hook responses, query layers and API entry boundaries.
+  hook responses, query layers and API entry boundaries. Follow-up tests ensure a
+  body timeout aborts the transport too, timed-out attempts cannot poison retries,
+  hook-produced bodies stay bounded, and asynchronous JSON parsers respect abort.
 
 Only generated wire fields such as Content-Length are omitted from synthetic
 request snapshots. Runtime-specific Fetch defaults are compared within the same
@@ -46,3 +49,11 @@ node scripts/ky-conformance/archives.cjs
 [Measurements](../../packages/vky/bench/results/README.md) use the process-isolated
 AB/BA harness and identical-source controls. React is unrelated to this package;
 VPM's current React integration baseline remains 19.3.
+
+Performance recordings use Bun 1.4.4 or newer, matching the CI baseline. The
+initial Bun 1.4.0 recording exercised a substantially more expensive stream
+reader path. Its numbers remain in repository history, not relabeled as current
+runtime evidence. The benchmark driver rejects older Bun versions. The
+[previous-implementation comparison](../../packages/vky/bench/previous/README.md)
+runs both VPM versions on the same Bun version and reconstructs the old source
+from commit `552f1a3`; no old runtime copy is committed.

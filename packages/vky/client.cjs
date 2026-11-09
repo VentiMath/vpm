@@ -394,10 +394,13 @@ function combine(signals) {
 function checkSignal(signal) {
   if (signal?.aborted) throw signal.reason;
 }
-async function timed(job, timeout, work) {
-  checkSignal(job.signal);
+function timeScope(job) {
   const controller = new AbortController();
-  const signal = combine([job.signal, controller.signal]);
+  return { controller, signal: combine([job.signal, controller.signal]) };
+}
+async function timed(job, timeout, work, scope = timeScope(job)) {
+  const { controller, signal } = scope;
+  checkSignal(signal);
   const budget = Math.min(
     timeout === false ? Infinity : timeout,
     job.deadline === undefined
@@ -552,6 +555,7 @@ async function body(job, response, type, errorData = false) {
         });
         return parsed?.then ? await awaitSignal(parsed, signal) : parsed;
       },
+      job.responseScope,
     );
     checkSignal(job.signal);
     return result;
@@ -709,17 +713,27 @@ async function dispatch(job, template, shortcut) {
     try {
       let response = cached;
       cached = undefined;
-      if (!response)
-        response = await timed(job, o.timeout, (signal) => {
-          job.request = new Request(
-            template.body ? template.clone() : template,
-            { signal },
-          );
-          const extra = {};
-          for (const k of ["dispatcher", "next"])
-            if (o[k] !== undefined) extra[k] = o[k];
-          return (o.fetch ?? globalThis.fetch)(job.request, extra);
-        });
+      // Every attempt owns one signal through headers and body consumption.
+      // Retry/cached responses must not inherit a previous attempt's timeout.
+      job.responseScope = undefined;
+      if (!response) {
+        job.responseScope = timeScope(job);
+        response = await timed(
+          job,
+          o.timeout,
+          (signal) => {
+            job.request = new Request(
+              template.body ? template.clone() : template,
+              { signal },
+            );
+            const extra = {};
+            for (const k of ["dispatcher", "next"])
+              if (o[k] !== undefined) extra[k] = o[k];
+            return (o.fetch ?? globalThis.fetch)(job.request, extra);
+          },
+          job.responseScope,
+        );
+      }
       if (!(response instanceof Response))
         throw new TypeError("fetch must return a Response");
       response = limitResponse(response, job);
@@ -823,13 +837,17 @@ function makeClient(defaults = {}, legacy = false) {
             ? "text/*"
             : undefined,
       );
-      const total = new AbortController();
+      const total =
+        o.totalTimeout === false ? undefined : new AbortController();
       job = {
         options: o,
         legacy,
         request,
         count: 0,
-        signal: combine([request.signal, o.signal, total.signal]),
+        // prepare() already combines the input and configured signals.
+        signal: total
+          ? combine([request.signal, total.signal])
+          : request.signal,
         totalTimer: null,
         deadline:
           o.totalTimeout === false

@@ -539,3 +539,121 @@ test("beforeError runs once on final failure with current and legacy arguments",
     assert.deepEqual(seen, old ? [503] : [[1, 503]]);
   }
 });
+test("body deadline aborts the transport as well as canceling its reader", async () => {
+  for (const api of [ky, legacy]) {
+    let transportSignal,
+      cancelReason,
+      calls = 0;
+    await assert.rejects(
+      api
+        .post(endpoint, {
+          timeout: 20,
+          json: { x: 1 },
+          fetch: async (request) => {
+            calls++;
+            transportSignal = request.signal;
+            return new Response(
+              new ReadableStream({
+                cancel(reason) {
+                  cancelReason = reason;
+                },
+              }),
+            );
+          },
+        })
+        .json(),
+      (e) => {
+        assert.ok(e instanceof ky.TimeoutError);
+        assert.equal(transportSignal.reason, e);
+        assert.equal(cancelReason, e);
+        return true;
+      },
+    );
+    assert.equal(calls, 1, "a body failure must not replay a mutation");
+  }
+});
+test("a timed-out attempt cannot poison a later request or cached retry response", async () => {
+  for (const cached of [false, true]) {
+    const signals = [];
+    let calls = 0;
+    const hooks = cached
+      ? { beforeRetry: [() => new Response('{"ok":true}')] }
+      : {};
+    const data = await ky(endpoint, {
+      timeout: 20,
+      retry: { limit: 1, retryOnTimeout: true, delay: () => 0 },
+      hooks,
+      fetch: async (r) => {
+        signals.push(r.signal);
+        if (++calls === 1) return pending();
+        return Response.json({ ok: true });
+      },
+    }).json();
+    assert.deepEqual(data, { ok: true });
+    assert.equal(signals[0].aborted, true);
+    assert.equal(calls, cached ? 1 : 2);
+    if (!cached) assert.equal(signals[1].aborted, false);
+  }
+});
+test("async JSON parsers remain bounded and preserve caller abort reasons", async () => {
+  const c = new AbortController(),
+    reason = new Error("stop parsing");
+  let started;
+  const ready = new Promise((r) => (started = r));
+  let signal;
+  const p = ky(endpoint, {
+    signal: c.signal,
+    parseJson: () => {
+      started();
+      return pending();
+    },
+    fetch: async (r) => {
+      signal = r.signal;
+      return new Response("{}");
+    },
+  }).json();
+  await ready;
+  c.abort(reason);
+  await assert.rejects(p, (e) => e === reason);
+  assert.equal(signal.reason, reason);
+  await assert.rejects(
+    ky(endpoint, {
+      timeout: 20,
+      parseJson: pending,
+      fetch: async () => new Response("{}"),
+    }).json(),
+    ky.TimeoutError,
+  );
+});
+test("hook-produced bodies preserve byte limits, deadlines and response identity", async () => {
+  let canceled = false;
+  const api = ky.create({
+    hooks: {
+      afterResponse: [
+        () =>
+          new Response(
+            new ReadableStream({
+              cancel() {
+                canceled = true;
+              },
+            }),
+          ),
+      ],
+    },
+  });
+  await assert.rejects(
+    api(endpoint, {
+      timeout: 20,
+      fetch: async () => new Response("replaced"),
+    }).text(),
+    ky.TimeoutError,
+  );
+  assert.equal(canceled, true);
+  await assert.rejects(
+    ky(endpoint, {
+      maxResponseSize: 3,
+      hooks: { beforeRequest: [() => new Response("1234")] },
+    }).text(),
+    ky.ResponseSizeError,
+  );
+});

@@ -5,6 +5,19 @@ const path = require("node:path"),
 const root = path.resolve(__dirname, ".."),
   fixture = path.resolve(root, "../../scripts/ky-conformance");
 require(path.join(fixture, "check-controls.cjs")).check();
+// The supported benchmark baseline matches CI. Old Bun measurements stay in
+// repository history; a runtime upgrade is not a package-code improvement.
+if (process.versions.bun) {
+  const [major, minor, patch] = process.versions.bun.split(".").map(Number);
+  if (major < 1 || (major === 1 && (minor < 4 || (minor === 4 && patch < 4))))
+    throw Error(
+      "Record vky measurements on Bun >=1.4.4, matching the CI baseline.",
+    );
+}
+const previous =
+  process.env.BENCH_PREVIOUS === "1"
+    ? require(path.join(fixture, "baseline.cjs")).prepare()
+    : undefined;
 const cases = [];
 for (const name of [
   "create client",
@@ -81,7 +94,9 @@ for (const name of [
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/ky/distribution/index.js"),
+    upstream: previous
+      ? path.join(previous, "index.mjs")
+      : path.join(fixture, "node_modules/ky/distribution/index.js"),
     vpm: path.join(root, "index.mjs"),
     cases,
     files: [
@@ -95,6 +110,12 @@ require("../../../scripts/bench-process.cjs")
       "../../scripts/ky-conformance/provenance.json",
       "../../scripts/ky-conformance/package-lock.json",
       "../../scripts/ky-conformance/node_modules/ky",
+      ...(previous
+        ? [
+            "../../scripts/ky-conformance/baseline.cjs",
+            path.relative(root, previous),
+          ]
+        : []),
     ],
   })
   .catch((e) => {

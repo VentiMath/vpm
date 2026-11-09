@@ -1,5 +1,5 @@
 import { scenarios } from "./cases.mjs";
-import { wire } from "./wire-cases.mjs";
+import { wire, bodyBoundaries } from "./wire-cases.mjs";
 import * as upstream from "ky";
 import * as app from "ky-app";
 import * as vpm from "../../packages/vky/index.mjs";
@@ -22,3 +22,8 @@ window.runKy = async () => {
     });
   return out;
 };
+
+window.runKyBody = async () => [
+  await bodyBoundaries(vpm, location.origin + "/"),
+  await bodyBoundaries(legacy, location.origin + "/"),
+];

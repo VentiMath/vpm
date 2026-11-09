@@ -158,6 +158,11 @@ oracle in a timed worker can reintroduce setup bias even when its timer covers
 only one implementation. Process isolation limits
 shared JIT feedback; machine load, GC and runtime variation can still matter.
 
+Use the current CI runtime versions for new performance recordings. A runtime
+upgrade can change a library comparison substantially; distinguish that effect
+from a package-code improvement by comparing old and new package code on the
+same runtime. Retain the older recording in history with its original version.
+
 Run one recording per runtime, with `OUTPUT` set to a JSON path. Each recording
 already includes its controls. `CALIBRATION=1` records only control pairs.
 `BENCH_FIRST=vpm` reverses the starting order without changing the balance.

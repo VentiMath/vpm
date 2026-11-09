@@ -108,9 +108,27 @@ const pending = new Map(),
       JSON.stringify(rows, null, 2),
     );
     for (const row of rows) assert.deepEqual(row.vpm, row.upstream);
+    const boundaries = await send("Runtime.evaluate", {
+      expression: "window.runKyBody()",
+      awaitPromise: true,
+      returnByValue: true,
+    });
+    assert.equal(
+      boundaries.exceptionDetails,
+      undefined,
+      JSON.stringify(boundaries.exceptionDetails),
+    );
+    assert.deepEqual(boundaries.result.value, [
+      { headers: true, timeout: "TimeoutError", abortIdentity: true },
+      { headers: true, timeout: "TimeoutError", abortIdentity: true },
+    ]);
+    fs.writeFileSync(
+      path.join(consumer, "body-results.json"),
+      JSON.stringify(boundaries.result.value, null, 2),
+    );
     assert.deepEqual(exceptions, []);
     console.log(
-      "Chrome: current and application public API plus native HTTP scenarios match.",
+      "Chrome: current and application public API plus native HTTP scenarios match; body deadline and caller-abort checks pass.",
     );
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);
