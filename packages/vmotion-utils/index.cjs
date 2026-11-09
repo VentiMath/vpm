@@ -121,24 +121,10 @@ class SubscriptionManager {
     this.dirty = false;
   }
   notify(a, b, c) {
-    const handlers = this.handlers,
-      length = handlers.length;
-    if (length === 1) {
-      const fn = handlers[0];
-      if (fn) fn(a, b, c);
-      return;
-    }
-    if (!length) return;
-    this.depth++;
-    try {
-      for (let i = 0; i < length; i++) {
-        const fn = handlers[i];
-        if (fn) fn(a, b, c);
-      }
-    } finally {
-      this.depth--;
-      if (!this.depth && this.dirty) this.compact();
-    }
+    const handlers = this.handlers;
+    if (handlers.length > 1) return notifyMany(this, a, b, c);
+    const fn = handlers[0];
+    if (fn) fn(a, b, c);
   }
   getSize() {
     return this.size;
@@ -149,6 +135,23 @@ class SubscriptionManager {
     this.ids = [];
     this.size = 0;
     this.dirty = false;
+  }
+}
+
+// Keep the common dispatch out of the iteration's exception-cleanup region.
+// The mutation-safe path still captures the original array and boundary.
+function notifyMany(manager, a, b, c) {
+  const handlers = manager.handlers,
+    length = handlers.length;
+  manager.depth++;
+  try {
+    for (let i = 0; i < length; i++) {
+      const fn = handlers[i];
+      if (fn) fn(a, b, c);
+    }
+  } finally {
+    manager.depth--;
+    if (!manager.depth && manager.dirty) manager.compact();
   }
 }
 
@@ -169,13 +172,16 @@ function cubicBezier(x1, y1, x2, y2) {
       "Bezier controls require finite values and x in [0, 1]",
     );
   if (x1 === y1 && x2 === y2) return noop;
-  const ax = 1 + 3 * x1 - 3 * x2,
-    bx = 3 * x2 - 6 * x1,
-    cx = 3 * x1,
-    ay = 1 + 3 * y1 - 3 * y2,
-    by = 3 * y2 - 6 * y1,
-    cy = 3 * y1;
+  // Capture only the four controls. Computing coefficients in the evaluator
+  // avoids allocating a larger closure for every curve; JITs can hoist the
+  // invariant arithmetic when repeatedly sampling the same curve.
   return (input) => {
+    const ax = 1 + 3 * x1 - 3 * x2,
+      bx = 3 * x2 - 6 * x1,
+      cx = 3 * x1,
+      ay = 1 + 3 * y1 - 3 * y2,
+      by = 3 * y2 - 6 * y1,
+      cy = 3 * y1;
     if (input <= 0) return 0;
     if (input >= 1) return 1;
     if (Number.isNaN(input)) return NaN;
@@ -185,12 +191,14 @@ function cubicBezier(x1, y1, x2, y2) {
     if (x1 === 0 && x2 === 0) t = Math.cbrt(input);
     else if (x1 === 1 && x2 === 1) t = 1 - Math.cbrt(1 - input);
     for (let i = 0; i < 40; i++) {
-      const error = ((ax * t + bx) * t + cx) * t - input;
-      const derivative = (3 * ax * t + 2 * bx) * t + cx;
-      if (error === 0 || Math.abs(error / derivative) < 1e-11) break;
+      const at = ax * t;
+      const error = ((at + bx) * t + cx) * t - input;
+      const derivative = (3 * at + 2 * bx) * t + cx;
+      const step = error / derivative;
+      if (error === 0 || Math.abs(step) < 1e-11) break;
       if (error < 0) lo = t;
       else hi = t;
-      const candidate = t - error / derivative;
+      const candidate = t - step;
       t = candidate > lo && candidate < hi ? candidate : (lo + hi) / 2;
     }
     return ((ay * t + by) * t + cy) * t;

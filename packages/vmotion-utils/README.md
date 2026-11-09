@@ -64,9 +64,20 @@ exact controls and caller scope. [Benchmarks](bench/results/README.md) retain
 isolated-process samples and identical-source controls. Utility timings are not
 claims of a faster application or complete Motion compatibility.
 
-Listener registration/removal uses less time on both runtimes. Bun's pipeline
-also improves; the Node pipeline result is inconclusive against its control
-noise. Bun curve construction and single-listener notification regress by a
-few nanoseconds per call. Other differences are unestablished. The complete
-report includes percentages, absolute times and controls; these utility timings
-do not establish an overall application speedup.
+The Bun follow-up reduces captured Bezier state from eight values to four and
+moves the multiple-listener loop's exception cleanup outside the single-listener
+path. Validation, numerical tolerances and mutation-safe subscriptions stay intact.
+Against the previous implementation on the same Bun 1.4.4 runtime, construction
+uses **38.7% less time** and single-listener notification **33.7% less time**, both
+beyond identical-source control spread. [Before/after evidence](bench/previous/README.md)
+reconstructs the prior code from immutable commit `453b9dfd`; it does not ship a
+second runtime copy.
+
+Against upstream, construction is now level within measurement noise. Single
+notification still takes about 5 ns versus 4 ns on Bun (7.4% by paired medians).
+Node's single/multiple notification cases are about 11.5%/10.1% slower than
+upstream (roughly 1/9 ns); splitting the dispatch path has a small Node tradeoff.
+Curve sampling's direction is unestablished in the final controls, with raw medians
+still slightly higher. Pipelines and registration/removal use less time on both
+runtimes. Full samples and control variation remain in the reports; no overall
+application speedup is claimed.

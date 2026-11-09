@@ -53,3 +53,9 @@ node scripts/motion-utils-conformance/archives.cjs
 current 14.7.0 against VPM on Node 24 and Bun 1.4.4, with one timed implementation
 per fresh process, balanced AB/BA order and identical-source controls. Pure
 utility timings do not establish browser frame-rate or application latency gains.
+
+The Bun performance follow-up keeps all correctness gates and adds reflected
+analytic curves, strict control-type validation, fresh function identities and
+single-listener recursive lifecycle tests. [Previous-code measurements](../../packages/vmotion-utils/bench/previous/README.md)
+reconstruct commit `453b9dfd` with `baseline.cjs`; run the same benchmark with
+`VMOTION_BENCH_PREVIOUS=1` to compare the optimization directly.

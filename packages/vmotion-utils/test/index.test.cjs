@@ -255,3 +255,43 @@ test("long pipelines invoke transforms without an incidental array receiver", ()
   };
   assert.equal(api.pipe(...Array(6).fill(transform))(0), 6);
 });
+
+test("curve factories retain strict controls and independent function identities", () => {
+  for (const invalid of [
+    undefined,
+    null,
+    "0",
+    new Number(0),
+    NaN,
+    Infinity,
+    -Infinity,
+  ]) {
+    for (let position = 0; position < 4; position++) {
+      const args = [0.42, 0, 0.58, 1];
+      args[position] = invalid;
+      assert.throws(() => api.cubicBezier(...args), TypeError);
+    }
+  }
+  const a = api.cubicBezier(0.42, 0, 0.58, 1),
+    b = api.cubicBezier(0.42, 0, 0.58, 1);
+  assert.notEqual(a, b);
+  a.custom = true;
+  assert.equal(b.custom, undefined);
+  const reflected = api.cubicBezier(1, 1 / 3, 1, 2 / 3);
+  for (const x of [0.001, 0.1, 0.5, 0.99, 1 - 1e-9])
+    near(reflected(x), 1 - Math.cbrt(1 - x));
+});
+test("single listener may clear, re-register and recursively notify", () => {
+  const m = new api.SubscriptionManager(),
+    seen = [];
+  m.add(() => {
+    seen.push("old");
+    m.clear();
+    m.add(() => seen.push("new"));
+    m.notify();
+  });
+  m.notify();
+  assert.deepEqual(seen, ["old", "new"]);
+  m.notify();
+  assert.deepEqual(seen, ["old", "new", "new"]);
+});

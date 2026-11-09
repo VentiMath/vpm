@@ -5,6 +5,10 @@ const root = path.resolve(__dirname, ".."),
   fixture = path.resolve(root, "../../scripts/motion-utils-conformance");
 require(path.join(fixture, "check-controls.cjs")).check();
 require("../../../scripts/check-bun.cjs");
+const previous = process.env.VMOTION_BENCH_PREVIOUS === "1";
+const control = previous
+  ? require(path.join(fixture, "baseline.cjs")).prepare()
+  : path.join(fixture, "node_modules/motion-utils/dist/cjs/index.js");
 const specs = [
   {
     name: "Bezier creation",
@@ -74,10 +78,12 @@ const cases = specs.map(({ name, setup, validate }) => ({
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/motion-utils/dist/cjs/index.js"),
+    upstream: control,
     vpm: path.join(root, "index.cjs"),
     cases,
     files: [
+      path.relative(root, control),
+      "../../scripts/motion-utils-conformance/baseline.cjs",
       "index.cjs",
       "index.mjs",
       "package.json",
