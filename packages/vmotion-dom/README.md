@@ -164,11 +164,16 @@ frame side effects. Strings, objects and color interpolation remain unsupported.
 
 [Single-value benchmarks](bench/single/README.md) cover creation/replacement and
 repeated value delivery; they do not measure React rendering or browser paint.
-Repeating updates take 48% less time on Node and 58% less on Bun. Node scalar
-setup takes 27% less time; replacement is unestablished. Bun setup remains slower:
-518 versus 390 ns for a scalar, and 499 versus 353 ns for reset/replacement.
-Lifecycle bookkeeping stays in a wrapper so it does not deoptimize the numeric
-controller's hot object shape.
+Repeating updates take 38% less time on Node and 58% less on Bun. Node scalar
+setup takes 27% less time; replacement differences are unestablished. Both Bun
+setup workloads are now near upstream parity, with differences inside process
+and control variation. Against the previous VPM implementation, setup takes
+[25–26% less time on Bun](bench/single-previous/README.md).
+
+Preparation avoids redundant option copies, while preserving owned snapshots and
+validation before replacement. Playback completion promises are created only
+when observed; late access, cancellation and replay keep distinct lifetimes.
+Lifecycle bookkeeping stays off the numeric controller's hot object shape.
 
 ## Springs
 
@@ -329,12 +334,16 @@ styles, SVG, percentages, auto dimensions, restoration and iframe reads. Earlier
 suite recordings retain their recorded source hashes and dates; they are
 historical measurements rather than new measurements of this addition.
 
-Reading three components from a repeated matrix takes 97% less time on Node and
-90% less on Bun. Changing-matrix differences are unestablished on both runtimes.
-Scalar CSS reads add about 12 ns on Node and 2 ns on Bun; owned numeric resolution
-adds about 13 ns and 11 ns. Variable endpoint resolution takes 21% less time on
-Node and 29% more on Bun (783 versus 607 ns). Those costs remain visible alongside
-the caching gain; this is not a universal speedup.
+Reading three components from a repeated matrix takes 96% less time on Node and
+91% less on Bun. Variable endpoint resolution takes 37% less on Node and is now
+near upstream parity on Bun (635 versus 646 ns, direction unestablished).
+Variable syntax uses a bounded one-entry cache; computed values are always read
+fresh. Layout bookkeeping is allocated only when measurement is needed, and
+resolver cancellation targets its own read phase. The [before/after recording](bench/reads-previous/README.md)
+has a 23% lower median for variable resolution, but control variation prevents a
+firm directional claim. Scalar reads and owned numeric resolution still have
+small overheads; see the complete report rather than treating this as a universal
+speedup.
 
 ## Still to build
 

@@ -148,7 +148,10 @@ function readSVGValue(element, name) {
     element.getAttribute(dash(key)) ?? element.getAttribute(key) ?? undefined
   );
 }
+let lastVariableToken, lastVariableParts;
 function variableParts(text) {
+  // Cache syntax only. The element's current computed value is always read.
+  if (text === lastVariableToken) return lastVariableParts;
   if (typeof text !== "string" || !text.trim().startsWith("var(")) return;
   text = text.trim();
   if (!text.endsWith(")")) throw new TypeError("invalid CSS variable token");
@@ -167,7 +170,8 @@ function variableParts(text) {
   const name = (comma < 0 ? inner : inner.slice(0, comma)).trim();
   if (!/^--[^\s,()]+$/.test(name))
     throw new TypeError("invalid CSS variable name");
-  return [name, comma < 0 ? undefined : inner.slice(comma + 1).trim()];
+  lastVariableToken = text;
+  return (lastVariableParts = [name, comma < 0 ? undefined : inner.slice(comma + 1).trim()]);
 }
 function getVariableValue(token, element, depth = 0) {
   if (!Number.isInteger(depth) || depth < 0 || depth > 32)

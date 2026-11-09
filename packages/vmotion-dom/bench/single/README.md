@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T21:27:27.774Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T21:42:06.908Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create and stop a scalar animation | 1536 | 1142 | -26.7% | -19.7% | -31% | 13.1% | lower time in every pair, beyond control spread |
-| reset, replace and stop a MotionValue animation | 1490 | 1569 | 7.9% | 19.1% | 0.4% | 6.2% | unestablished at this precision |
-| deliver repeating single-value updates | 86 | 43 | -47.7% | -53.4% | -45.2% | 5.6% | lower time in every pair, beyond control spread |
+| create and stop a scalar animation | 1800 | 1379 | -27.3% | -23.5% | -32.7% | 4.7% | lower time in every pair, beyond control spread |
+| reset, replace and stop a MotionValue animation | 1436 | 1379 | -1.3% | -5.7% | 44.5% | 63.7% | unestablished at this precision |
+| deliver repeating single-value updates | 82 | 49 | -37.8% | -37.8% | -26.4% | 3.9% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T21:27:41.752Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T21:41:24.312Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create and stop a scalar animation | 390 | 518 | 31.9% | 31.9% | 31.6% | 12.4% | higher time in every pair, beyond control spread |
-| reset, replace and stop a MotionValue animation | 353 | 499 | 40.5% | 40.5% | 32.4% | 6.6% | higher time in every pair, beyond control spread |
-| deliver repeating single-value updates | 73 | 31 | -57.5% | -57% | -57.8% | 2.2% | lower time in every pair, beyond control spread |
+| create and stop a scalar animation | 381 | 385 | 1.8% | 0% | 3.4% | 1.7% | unestablished at this precision |
+| reset, replace and stop a MotionValue animation | 350 | 365 | 4.2% | 1.3% | 6.1% | 14.5% | unestablished at this precision |
+| deliver repeating single-value updates | 73 | 31 | -57.8% | -57.8% | -58.1% | 6% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

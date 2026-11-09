@@ -219,13 +219,21 @@ class JSAnimation {
   }
   newPromise() {
     this.settled = false;
-    this.finished = new Promise((resolve) => {
-      this.resolvePromise = resolve;
+    this.completion = { settled: false, promise: undefined, resolve: undefined };
+  }
+  promiseFor(completion = this.completion) {
+    return completion.promise ??= new Promise((resolve) => {
+      if (completion.settled) resolve();
+      else completion.resolve = resolve;
     });
+  }
+  get finished() {
+    return this.promiseFor();
   }
   resolve() {
     this.settled = true;
-    this.resolvePromise();
+    this.completion.settled = true;
+    this.completion.resolve?.();
   }
   then(resolve, reject) {
     return this.finished.then(resolve, reject);

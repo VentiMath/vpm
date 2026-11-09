@@ -221,3 +221,33 @@ test("finished read inside animationStart stays pending and preserves failure", 
     assert.equal(a.finished, observed);
   }
 });
+
+test('paused preparation preserves default easing and owns option arrays', () => {
+  const value = api.motionValue(0), options = Object.freeze({delay: .1});
+  const a = api.animateSingleValue(value, 1, options);
+  assert.equal(a.duration, .3);
+  const control = api.animateMotionValue('', api.motionValue(0), 1, options)(()=>{});
+  assert.equal(a.sample(250).value, control.sample(250).value);
+  a.stop();control.stop();
+  const offsets=[0, .4, 1], ease=['linear','easeIn'], frames=[0, 4, 10];
+  const b=api.animateSingleValue(0,frames,{times:offsets,ease,duration:1,autoplay:false});
+  const before=b.sample(500).value;
+  offsets[1]=.9;ease[1]='linear';frames[1]=90;
+  assert.equal(b.sample(500).value,before);
+  b.stop();
+});
+
+test('late finished access and replay retain independent completion lifetimes', async () => {
+  const a=api.animateSingleValue(0,1,{autoplay:false});
+  a.complete();
+  await a.finished;
+  const completed=a.finished;
+  a.play();
+  const replay=a.finished;
+  assert.notEqual(completed,replay);
+  a.stop();
+  await replay;
+  const b=new api.JSAnimation({keyframes:[0,1],autoplay:false});
+  b.stop();
+  await b.finished;
+});

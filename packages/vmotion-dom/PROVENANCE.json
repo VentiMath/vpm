@@ -42,7 +42,8 @@
     "Rotated 2D scale readings retain magnitude, absent axes return identity defaults, and malformed matrices reject. Matrix decomposition uses a documented canonical convention, not recovery of the original transform function list.",
     "DOM measurement restores owned styles and priorities before callbacks, including on failure; conflicting same-property measurements are isolated. Failed reads/callbacks do not strand unrelated queued work.",
     "Single-value animation validates paused controllers before replacement; start/completion listener failures reject finished, while stop and cancellation settle playback and replays use fresh promises.",
-    "Resolver batches preserve any thrown value, including falsy exceptions, and restore window scroll after temporary layout measurements."
+    "Resolver batches preserve any thrown value, including falsy exceptions, and restore window scroll after temporary layout measurements.",
+    "Setup owns one prepared option snapshot, creates playback promises only when observed, and caches CSS variable syntax without caching computed values. Resolver cancellation targets its read phase and allocates layout transactions only when needed."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

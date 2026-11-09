@@ -50,7 +50,9 @@ function getValueTransition(transition, key) {
   return transition[key] || transition.default || transition;
 }
 function isTransitionDefined(transition) {
-  return Object.keys(transition).some((key) => !orchestration.has(key));
+  for (const key in transition)
+    if (Object.hasOwn(transition, key) && !orchestration.has(key)) return true;
+  return false;
 }
 function optionsObject(value) {
   if (!value || typeof value !== "object" || Array.isArray(value))
@@ -77,6 +79,11 @@ function animateMotionValue(
     throw new TypeError(
       "element measurement and animation handoff are not implemented",
     );
+  return prepareMotionValue(name, value, target, transition);
+}
+// Internal preparation mode pauses playback without changing transition defaults
+// or copying user options just to add autoplay:false.
+function prepareMotionValue(name, value, target, transition = {}, paused = false) {
   if (
     !value ||
     typeof value.get !== "function" ||
@@ -114,6 +121,10 @@ function animateMotionValue(
     ? {}
     : getDefaultTransition(name, { keyframes: frames });
   if (defaults.duration !== undefined) defaults.duration *= 1000;
+  if (!Object.hasOwn(options, "ease")) options.ease = defaults.ease ?? "easeOut";
+  for (const key of Object.keys(defaults))
+    if (!Object.hasOwn(options, key)) options[key] = defaults[key];
+  if (paused) options.autoplay = false;
   return (complete) => {
     if (typeof complete !== "function")
       throw new TypeError("completion must be a function");
@@ -126,10 +137,8 @@ function animateMotionValue(
       resolved.push(resolved[0]);
     // from only replaces an unresolved start, never an explicit first keyframe.
     return new JSAnimation({
-      ease: "easeOut",
-      velocity: value.getVelocity(),
-      ...defaults,
       ...options,
+      velocity: Object.hasOwn(options, "velocity") ? options.velocity : value.getVelocity(),
       keyframes: resolved,
       onUpdate(next) {
         value.set(next);
@@ -148,3 +157,5 @@ module.exports = {
   getValueTransition,
   isTransitionDefined,
 };
+
+Object.defineProperty(module.exports, "prepareMotionValue", {value: prepareMotionValue});

@@ -5,6 +5,10 @@ const path = require("node:path"),
   fixture = path.resolve(root, "../../scripts/motion-utils-conformance");
 require(path.join(fixture, "check-controls.cjs")).check();
 require("../../../scripts/check-bun.cjs");
+const previous = process.env.VMOTION_DOM_SETUP_PREVIOUS === "1";
+const control = previous
+  ? require("../../../scripts/motion-dom-conformance/setup-baseline.cjs").prepare()
+  : path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js");
 const specs = [
   {
     name: "create and stop a scalar animation",
@@ -72,7 +76,7 @@ const specs = [
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
+    upstream: control,
     vpm: path.join(root, "index.cjs"),
     cases: specs.map(({ name, setup, validate }) => ({
       name,
@@ -84,6 +88,8 @@ require("../../../scripts/bench-process.cjs")
       validate,
     })),
     files: [
+      "../../scripts/motion-dom-conformance/setup-baseline.cjs",
+      path.relative(root, previous ? path.dirname(control) : control),
       "index.cjs",
       "index.mjs",
       "single.cjs",

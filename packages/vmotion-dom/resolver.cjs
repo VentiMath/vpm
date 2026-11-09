@@ -1,5 +1,5 @@
 "use strict";
-const { frame, cancelFrame } = require("./frame.cjs");
+const { frame, frameSteps } = require("./frame.cjs");
 const {
   getComputedStyle,
   readStyleValue,
@@ -31,7 +31,7 @@ let flushing = false;
 function flush(forced) {
   if (flushing) return;
   flushing = true;
-  cancelFrame(readBatch);
+  frameSteps.read.cancel(readBatch);
   const batch = Array.from(pending);
   pending.clear();
   let failure;
@@ -48,10 +48,10 @@ function flush(forced) {
         }
     // Conflicting measurements of the same property get separate transactions.
     // Otherwise the last temporary write would supply both endpoints.
-    const passes = [[]];
-    let seen = new Map();
+    let passes, seen;
     for (const r of active)
       if (r.state === "scheduled" && r.needsMeasurement) {
+        if (!passes) { passes = [[]]; seen = new Map(); }
         const node = r.element?.current;
         let keys = seen.get(node);
         if (keys?.has(r.name)) {
@@ -63,7 +63,7 @@ function flush(forced) {
         keys.add(r.name);
         passes.at(-1).push(r);
       }
-    for (const pass of passes) {
+    for (const pass of passes || []) {
       try {
         for (const phase of [
           "prepareMeasurement",
@@ -186,7 +186,7 @@ class KeyframeResolver {
   cancel() {
     pending.delete(this);
     if (this.state !== "complete") this.state = "pending";
-    if (!pending.size) cancelFrame(readBatch);
+    if (!pending.size) frameSteps.read.cancel(readBatch);
   }
   resume() {
     if (this.state === "complete") return;

@@ -367,3 +367,16 @@ test("temporary layout measurements restore their window scroll position", () =>
   assert.equal(view.scrollX, 5);
   assert.equal(view.scrollY, 200);
 });
+
+test('cached variable syntax still reads each element and every current value', () => {
+  let current = '12px';
+  const make = (read) => ({ownerDocument:{defaultView:{getComputedStyle: () => ({getPropertyValue: read})}}});
+  const a = make(() => current), b = make(() => '44px');
+  assert.equal(api.getVariableValue('var(--size)', a), '12px');
+  current = '30px';
+  assert.equal(api.getVariableValue('var(--size)', a), '30px');
+  assert.equal(api.getVariableValue('var(--size)', b), '44px');
+  current = '';
+  assert.equal(api.getVariableValue('var(--size)', a), undefined);
+  assert.equal(api.getVariableValue('var(--size, 7)', a), 7);
+});
