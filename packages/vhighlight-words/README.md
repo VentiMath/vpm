@@ -59,5 +59,6 @@ session, screen-reader acceptance or proof of VentiMath adoption.
 npm/Bun installs, frozen locks, CJS/ESM and TypeScript 7 NodeNext/Bundler consumers.
 [Isolated measurements](bench/results/README.md) retain all raw samples and identical-source controls.
 
-This package is built in the workspace; no consumer release or application cutover
-is claimed. VentiMath’s `DataTable` still reaches upstream through Material React Table.
+Included in the [Material React Table release](../../docs/INSTALLATION.md#material-react-table),
+with its dependency URL pinned by the widget. Application adoption remains
+separate from publication.

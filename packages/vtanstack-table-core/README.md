@@ -56,12 +56,12 @@ rows to be ordered by their original records. Explicit first/last placement
 retains stable order between absent values.
 
 [Conformance](../../scripts/table-conformance/README.md) checks both controls and
-unchanged MRT/React Table code. The browser fixture uses synthetic product-like
-rows and application options. VentiMath's current Table callers are the products
-and orders template screens; this is a reusable engine, not evidence of a
-migration of math or contest features. No release or application adoption is
-claimed. The [React adapter](../vtanstack-react-table/README.md) and its type
-integration are now verified; the combined consumer release remains pending.
+unchanged MRT/React Table code. Browser fixtures use synthetic rows with the
+shared DataTable options and resource/contest column behavior. The
+[React adapter](../vtanstack-react-table/README.md) and its type integration are
+verified. Distributed in the [Table release](../../docs/INSTALLATION.md#tanstack-table)
+and the [Material React Table release](../../docs/INSTALLATION.md#material-react-table).
+Publication does not establish application adoption or deployment.
 
 [Benchmarks](bench/results/README.md) report isolated comparisons with current
 and application controls. They measure core operations, not application page speed.

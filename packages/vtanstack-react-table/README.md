@@ -65,8 +65,8 @@ existing MUI date-picker generic errors remain in both with `skipLibCheck:false`
 not browser frame rate or deployed application latency.
 
 Distributed as [Table 9.3.1](../../docs/INSTALLATION.md#tanstack-table), with
-the three-package VPM closure pinned to public URLs. App adoption is separate. The app's two current Table callers are e-commerce
-templates on the checked main. Pending app PR #421 moves them to Math Resources
-and Contest Season. Its exact column/DataTable functions also pass isolated
-Chrome comparisons; this verifies the pending consumer contract, not merge,
-deployment or VPM adoption.
+the three-package VPM closure pinned to public URLs. Also included in the
+[Material React Table release](../../docs/INSTALLATION.md#material-react-table).
+The exact resource/contest column and shared DataTable functions inspected at
+app PR #421 revision `77b3abac` pass isolated Chrome comparisons. This verifies
+the consumer contract, not PR merge, deployment or VPM adoption.

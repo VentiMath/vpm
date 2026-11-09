@@ -76,7 +76,8 @@ merged PR or application adoption. The three-package Table release is now public
 
 `vmaterial-react-table` independently implements that same flat DataTable and
 custom toolbar contract. Its exact archives and 37 caller snapshots are verified
-against MRT 3.2.1, including actual Chrome control actions. It is built but has
-not been released or adopted. Its independent markup and the omitted editing,
+against MRT 3.2.1, including actual Chrome control actions. It is available in the
+[Material React Table release](INSTALLATION.md#material-react-table); adoption
+has not been verified. Its independent markup and the omitted editing,
 nested-header/data, resizing and virtualization APIs are documented in its
 [package README](../packages/vmaterial-react-table/README.md).

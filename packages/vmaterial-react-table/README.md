@@ -56,6 +56,10 @@ end-to-end check. Synthetic equivalents are retained in public CI.
 identical peers, isolated processes, balanced order and identical-source controls.
 They do not measure browser interaction latency or application performance.
 
-The widget is built but not yet published for application installation. The
-underlying [Table 9.3.1 release](https://github.com/VentiMath/vpm/releases/tag/table-9.3.1)
-is published separately.
+Install the [Material React Table 3.2.1 release](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1)
+under the existing `material-react-table` dependency name. Its internal VPM
+URLs are pinned; no overrides are required. See the
+[installation recipe](../../docs/INSTALLATION.md#material-react-table).
+Application adoption and its visual acceptance remain separate work. The
+[Table-only release](https://github.com/VentiMath/vpm/releases/tag/table-9.3.1)
+remains available for callers keeping upstream MRT.

@@ -33,15 +33,25 @@ function run(cmd, args, cwd = temp, env = {}) {
 }
 try {
   const archives = {};
+  const releaseDir = process.env.VPM_MATERIAL_RELEASE_DIR;
+  const manifest =
+    releaseDir &&
+    JSON.parse(fs.readFileSync(path.join(releaseDir, "release-manifest.json")));
+  const published = process.env.VPM_MATERIAL_RELEASE_PUBLISHED === "1";
   for (const name of names) {
     const source = path.join(root, "packages", name),
       meta = require(path.join(source, "package.json"));
-    run(
-      "bun",
-      ["pm", "pack", "--ignore-scripts", "--destination", temp, "--quiet"],
-      source,
-    );
-    const archive = path.join(temp, name + "-" + meta.version + ".tgz"),
+    if (!releaseDir)
+      run(
+        "bun",
+        ["pm", "pack", "--ignore-scripts", "--destination", temp, "--quiet"],
+        source,
+      );
+    const item = manifest?.packages.find((p) => p.name === name);
+    const archive = path.join(
+        releaseDir || temp,
+        name + "-" + meta.version + ".tgz",
+      ),
       unpack = path.join(temp, name);
     fs.mkdirSync(unpack);
     run("tar", ["-xzf", archive, "-C", unpack]);
@@ -53,9 +63,9 @@ try {
       files = fs.readdirSync(packed);
     const expected = structuredClone(meta);
     for (const dep of Object.keys(expected.dependencies || {}))
-      expected.dependencies[dep] = require(
-        path.join(root, "packages", dep, "package.json"),
-      ).version;
+      expected.dependencies[dep] = item
+        ? item.dependencies[dep]
+        : require(path.join(root, "packages", dep, "package.json")).version;
     for (const file of files) {
       if (file === "package.json")
         assert.deepEqual(
@@ -68,7 +78,7 @@ try {
           fs.readFileSync(path.join(source, file)),
         );
     }
-    archives[name] = { archive, packed, files };
+    archives[name] = { archive, packed, files, url: item?.url };
   }
   for (const version of ["19.1.0", "19.2.0"])
     for (const manager of ["npm", "bun"]) {
@@ -77,16 +87,26 @@ try {
       const deps = Object.fromEntries(
         names.map((n) => [
           n === "vmaterial-react-table" ? "material-react-table" : n,
-          "file:" + archives[n].archive,
+          published ? archives[n].url : "file:" + archives[n].archive,
         ]),
       );
+      // Before upload Bun cannot redirect a URL dependency with a file override.
+      // Test exact extracted bytes with installed peers; public mode then tests
+      // the actual untouched URL dependency graph with both package managers.
+      const extracted = releaseDir && !published && manager === "bun";
       fs.writeFileSync(
         path.join(cwd, "package.json"),
         JSON.stringify({
           private: true,
           type: "module",
           dependencies: {
-            ...deps,
+            ...(published
+              ? {
+                  "material-react-table": archives["vmaterial-react-table"].url,
+                }
+              : extracted
+                ? {}
+                : deps),
             react: version,
             "react-dom": version,
             "@types/react": "19.1.16",
@@ -97,11 +117,15 @@ try {
             "@emotion/react": "11.14.0",
             "@emotion/styled": "11.14.0",
           },
-          overrides: Object.fromEntries(
-            names
-              .filter((n) => n !== "vmaterial-react-table")
-              .map((n) => [n, deps[n]]),
-          ),
+          ...(!published && !extracted
+            ? {
+                overrides: Object.fromEntries(
+                  names
+                    .filter((n) => n !== "vmaterial-react-table")
+                    .map((n) => [n, deps[n]]),
+                ),
+              }
+            : {}),
         }),
       );
       run(
@@ -127,11 +151,27 @@ try {
         cwd,
       );
       assert.deepEqual(fs.readFileSync(lock), before);
+      if (extracted)
+        for (const [name, p] of Object.entries(archives)) {
+          const dest = path.join(
+            cwd,
+            "node_modules",
+            name === "vmaterial-react-table" ? "material-react-table" : name,
+          );
+          fs.cpSync(p.packed, dest, { recursive: true });
+        }
       for (const [name, p] of Object.entries(archives)) {
         const installed = path.join(
           cwd,
           "node_modules",
           name === "vmaterial-react-table" ? "material-react-table" : name,
+        );
+        assert.deepEqual(
+          fs
+            .readdirSync(installed)
+            .filter((f) => f !== ".bun-tag")
+            .sort(),
+          p.files.toSorted(),
         );
         for (const file of p.files)
           assert.deepEqual(
@@ -181,7 +221,10 @@ try {
         manager +
           " React" +
           version +
-          ": exact six-package closure, frozen locks, Node/Bun, CJS/ESM, TS7 pass.",
+          (extracted
+            ? ": exact extracted release bytes and frozen peer install"
+            : ": exact six-package closure and frozen dependency install") +
+          ", Node/Bun, CJS/ESM, TS7 pass.",
       );
     }
 } finally {

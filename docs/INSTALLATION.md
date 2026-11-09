@@ -1,5 +1,53 @@
 # Installing VPM packages
 
+## Material React Table
+
+[Material React Table 3.2.1](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1)
+contains the independent `vmaterial-react-table` widget and its five VPM helpers.
+Keep existing `material-react-table` imports and replace the direct dependency:
+
+```json
+{
+  "dependencies": {
+    "material-react-table": "https://github.com/VentiMath/vpm/releases/download/material-react-table-3.2.1/vmaterial-react-table-3.2.1.tgz"
+  }
+}
+```
+
+No overrides, import renames or registry authentication are needed. The widget
+archive pins React Table 9.3.1, match-sorter-utils 9.2.6 and highlight-words 2.0.0;
+Table in turn pins Table core 9.3.1 and Store 0.11.2, all to this release’s URLs.
+React, ReactDOM, MUI and Emotion stay application peers. The release has no runtime
+imports of upstream MRT, Table, React Virtual, MUI icons or date pickers.
+
+This is the [flat DataTable contract](../packages/vmaterial-react-table/README.md),
+including VentiMath’s custom toolbar, filters, sorting, grouping, selection/actions,
+pagination and column visibility/order/pinning. Its independently designed markup
+is not pixel-identical. Editing, nested data/headers, resizing, virtualization and
+unlisted exports are outside scope. The package does not change application routes
+or implement the resource/contest screens. Verify those screens’ styling and
+business actions when adopting it; publication is not adoption.
+
+The earlier [Table-only release](#tanstack-table) remains available for callers
+keeping upstream MRT. Its `@tanstack/react-table` override is not needed by this
+widget, which imports `vtanstack-react-table` directly. Only remove an existing
+Table dependency or override after checking for other application callers.
+
+The release includes `consumer-package.json`, `release-manifest.json` and
+`SHA256SUMS`. Published checks install the single root URL with fresh npm/Bun
+caches and frozen locks, compare all six packages to their archives, and run
+React 19.1/19.2, Node/Bun SSR, CJS/ESM, strict TypeScript 7 and Chrome controls.
+
+```sh
+node scripts/pack-material-table-release.cjs --ref COMMIT_SHA --tag material-react-table-3.2.1 --out /absolute/path/to/empty-output
+node scripts/check-material-table-release.cjs /absolute/path/to/output
+node scripts/check-material-table-release.cjs /absolute/path/to/output --published
+```
+
+Before publication npm redirects internal URLs to local archives; Bun checks
+exact extracted bytes after a frozen peer install. The published check then uses
+unchanged public dependency URLs with both managers, without overrides.
+
 ## TanStack Table
 
 [Table 9.3.1](https://github.com/VentiMath/vpm/releases/tag/table-9.3.1) contains

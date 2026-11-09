@@ -54,3 +54,10 @@ records production-mode whole-widget SSR with shared peers and separate process
 heaps. Output checks run outside timing. Balanced order and independently
 repeated identical-source controls accompany every case; browser interaction and
 application load time are not inferred from SSR.
+
+The release gate accepts `VPM_MATERIAL_RELEASE_DIR` and optional
+`VPM_MATERIAL_RELEASE_PUBLISHED=1`. Local release checks preserve archive bytes:
+npm overrides internal URLs with local tarballs; Bun installs/freeze-checks peers
+and copies the exact extracted release files. Published mode instead installs
+only the root public URL, with no overrides, then verifies the full resolved
+closure and repeats the same runtime, type and browser checks.
