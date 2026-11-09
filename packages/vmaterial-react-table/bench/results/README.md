@@ -1,5 +1,10 @@
 # vmaterial-react-table measurements
 
+These recordings used the former React 19.1 fixture at commit
+[`afc35d2`](https://github.com/VentiMath/vpm/commit/afc35d2a3536f535a88736e53be616809934967c).
+Current correctness/release checks use React 19.3.1. Reproduce these historical
+measurements from that revision; they do not establish current-baseline speedups.
+
 These are whole-widget server renders in production mode, using Material React
 Table 3.2.1 as the control and identical React 19.1/MUI 7.2/Emotion peers. Cases
 render 10 rows, page 100 rows to 15, or sort 50 rows and render 15. Expected row

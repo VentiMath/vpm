@@ -1,7 +1,7 @@
 # Material React Table conformance
 
 This gate compares the independent widget with Material React Table 3.2.1,
-React Table 8.20.6 and Table core 8.20.5. The control and React 19.1/MUI 7.2/Emotion
+React Table 8.20.6 and Table core 8.20.5. The control and React 19.3.1/MUI 7.2/Emotion
 11.14 peers come from the existing locked
 [React Table fixture](../react-table-conformance/README.md). `build.cjs` verifies
 its control hashes before building either implementation. The VPM side uses its
@@ -33,9 +33,9 @@ the CJS declarations used by the runtime, avoiding MUI 7.2’s unresolved ESM
 transition-type subpath under NodeNext.
 
 `archives.cjs` packs the six packages, verifies bytes and workspace dependency
-versions, then tests clean and frozen npm/Bun installs on React 19.1 and 19.2.
-Every install checks CJS/ESM identity, Node/Bun SSR and strict consumers; both npm
-installs also run the full Chrome matrix. Icons and date pickers are installed
+versions, then tests clean and frozen npm/Bun installs on React 19.3.1.
+Every install checks CJS/ESM identity, Node/Bun SSR and strict consumers; the npm
+install also runs the full Chrome matrix. Icons and date pickers are installed
 only as peers for the upstream control: the VPM widget does not import them.
 
 ```sh

@@ -1,5 +1,10 @@
 # vtanstack-react-table measurements
 
+These recordings used the former React 19.1 fixture at commit
+[`afc35d2`](https://github.com/VentiMath/vpm/commit/afc35d2a3536f535a88736e53be616809934967c).
+Current correctness/release checks use React 19.3.1. Reproduce these historical
+measurements from that revision; they do not establish current-baseline speedups.
+
 Measured November 8, 2026 after the resource/contest caller fixes. `useTable`
 and `useLegacyTable` compare current React Table 9.3.1; `useReactTable` compares
 the application's 8.20.6. All use React 19.1.0, identical rows/sort state and

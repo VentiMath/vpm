@@ -58,7 +58,7 @@ exports stand in for these features. The adapter owns the small subscription
 bridge it needs instead of introducing a general React Store replacement.
 
 [Conformance](../../scripts/react-table-conformance/README.md) covers current and
-app controls, React 19.1/19.2, native Chrome, SSR/hydration, exact npm/Bun archives
+app controls, React 19.3.1, native Chrome, SSR/hydration, exact npm/Bun archives
 and TS7. Unchanged MRT declarations add no errors versus the app control; three
 existing MUI date-picker generic errors remain in both with `skipLibCheck:false`.
 [Benchmarks](bench/results/README.md) measure complete SSR paths,

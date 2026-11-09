@@ -31,7 +31,7 @@ MUI8 DatePicker/DateTimePicker/TimePicker generic-arity diagnostics. They are
 compared explicitly, not hidden with skipLibCheck or counted as VPM errors.
 
 `archives.cjs` verifies exact bytes, clean and frozen npm/Bun installs, CJS/ESM,
-React19.1/19.2, strict public consumers and native browser behavior from packed
+React19.3.1, strict public consumers and native browser behavior from packed
 files. Advanced component registry factories and worker/static plugin APIs are
 outside scope, as are the core's unsupported data/header/resizing features.
 No authenticated app data, new app feature, release or deployment is implied.

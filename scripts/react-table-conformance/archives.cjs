@@ -80,7 +80,7 @@ try {
     }
     packages[name] = { archive, packed, files, url: item?.url };
   }
-  for (const version of ["19.1.0", "19.2.0"])
+  for (const version of ["19.3.1"])
     for (const manager of ["npm", "bun"]) {
       const cwd = path.join(temp, manager + "-" + version);
       fs.mkdirSync(cwd);
@@ -106,8 +106,8 @@ try {
               : installDeps),
             react: version,
             "react-dom": version,
-            "@types/react": "19.1.16",
-            "@types/react-dom": "19.1.9",
+            "@types/react": "19.3.0",
+            "@types/react-dom": "19.3.0",
           },
           ...(!published && !extracted
             ? {

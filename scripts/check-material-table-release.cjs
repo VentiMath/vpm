@@ -78,7 +78,7 @@ const hash = (bytes) => createHash("sha256").update(bytes).digest("hex");
   assert.equal(r.status, 0);
   console.log(
     (published ? "Public root URL and " : "Local ") +
-      "Material React Table release: exact closure, frozen installs, React19.1/19.2, Node/Bun, TS7 and Chrome pass.",
+      "Material React Table release: exact closure, frozen installs, React19.3.1, Node/Bun, TS7 and Chrome pass.",
   );
 })().catch((error) => {
   console.error(error);

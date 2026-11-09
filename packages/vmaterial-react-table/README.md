@@ -18,7 +18,7 @@ Column movement is available through menus and keyboard controls as well as drag
 The six-package VPM dependency closure contains this widget, React Table, Table
 core, Store, match-sorter-utils and highlight-words. It has no runtime dependency
 on upstream Table, React Virtual, MUI icons or date pickers. React, MUI and Emotion
-remain peers. Verified peers are React 19.1/19.2, MUI 7.2 and Emotion 11.14;
+remain peers. Verified peers are React 19.3.1, MUI 7.2 and Emotion 11.14;
 SSR is checked on Node 24 and Bun.
 
 ## Boundaries and differences

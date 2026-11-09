@@ -7,6 +7,14 @@ where packages state one.
 Every runtime package declares `engines.node: ">=24"`; earlier Node versions are
 outside the support contract. Browser compatibility remains package-specific.
 The documentation gate checks the runtime declaration on every package.
+New frontend support and release checks target the **current stable React**,
+pinned to **19.3.1** with ReactDOM 19.3.1 (checked November 9, 2026).
+React 19.1 is no longer a support target. Update a package’s active consumer
+matrix to the current stable baseline when working on it; do not add older
+React versions to new matrices. Older upstream comparison fixtures and recorded
+benchmark samples remain historical evidence, not a promise to support those
+runtimes. Table/widget source and archive checks now use the current baseline.
+
 Package archives use standard metadata and can be installed with existing tools.
 [Calendar installation and release packaging](INSTALLATION.md) use public GitHub
 Release URLs, with internal dependencies pinned inside the published archives.

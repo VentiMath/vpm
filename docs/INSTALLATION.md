@@ -36,7 +36,7 @@ Table dependency or override after checking for other application callers.
 The release includes `consumer-package.json`, `release-manifest.json` and
 `SHA256SUMS`. Published checks install the single root URL with fresh npm/Bun
 caches and frozen locks, compare all six packages to their archives, and run
-React 19.1/19.2, Node/Bun SSR, CJS/ESM, strict TypeScript 7 and Chrome controls.
+React 19.3.1, Node/Bun SSR, CJS/ESM, strict TypeScript 7 and Chrome controls.
 
 ```sh
 node scripts/pack-material-table-release.cjs --ref COMMIT_SHA --tag material-react-table-3.2.1 --out /absolute/path/to/empty-output
@@ -76,7 +76,7 @@ Table in the app or replace Material React Table itself.
 
 The release contains exact source/archive hashes, `consumer-package.json`,
 `release-manifest.json` and `SHA256SUMS`. Fresh/frozen npm and Bun installs verify
-CJS/ESM, React19.1/19.2, TypeScript7 and Chrome caller/lifecycle checks. The 37
+CJS/ESM, React19.3.1, TypeScript7 and Chrome caller/lifecycle checks. The 37
 resource/contest scenarios cover the pending app columns, including partial
 pagination, custom grouped sorting and select/multi-select filters. Performance
 limitations remain in each package's benchmark report.

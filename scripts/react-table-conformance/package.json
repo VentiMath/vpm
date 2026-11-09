@@ -12,10 +12,10 @@
     "@mui/x-date-pickers": "8.7.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "@types/react": "19.1.16",
-    "@types/react-dom": "19.1.9",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "react-table-app": "npm:@tanstack/react-table@8.20.6"
   }
 }
