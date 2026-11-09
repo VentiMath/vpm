@@ -1,6 +1,10 @@
 # Developing VPM
 
 Use **Node.js 24**, **Bun 1.4.4**, and the workspace's **TypeScript 7.1** compiler.
+The root `.bun-version` and `packageManager` pin Bun 1.4.4. Run `bun run check:bun`
+before local checks or new benchmark recordings; CI checks that the executable
+and every workflow pin agree. Historical measurement versions remain intact.
+
 TypeScript 7.1.0 is due in November 2026; until it is released the workspace pins
 7.1.0-beta, and moves to 7.1.0 when it ships. 7.0.2 remains the declared minimum
 where packages state one.
