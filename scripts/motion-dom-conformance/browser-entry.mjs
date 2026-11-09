@@ -1,3 +1,4 @@
+import {checkHandoff} from "./handoff-browser.mjs";
 import {checkElements} from "./elements-browser.mjs";
 import { checkReads } from "./reads-browser.mjs";
 import { checkTransitions } from "./browser-transitions.mjs";
@@ -152,6 +153,7 @@ window.runMotionDom = async () => {
   await checkTransitions([current, app, vpm]);
   await checkReads([current, app, vpm]);
   await checkElements(current,vpm);
+  await checkHandoff(current,vpm);
   for (const api of [current, app, vpm]) {
     const node = document.createElement("div");
     document.body.append(node);

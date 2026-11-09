@@ -384,10 +384,31 @@ function plan(getValue, keyframes, transition, element, bind, registry) {
   return handles;
 }
 function animateElement(element, keyframes, transition = {}, visualElement) {
-  if (visualElement !== undefined)
-    throw new TypeError("VisualElement renderer handoff is not implemented");
   if (element?.nodeType !== 1 || !element.style)
     throw new TypeError("animateElement requires one HTML or SVG element");
+  if (visualElement !== undefined) {
+    validateRenderer(element, visualElement);
+    object(transition, "transition");
+    const reader = rendererReader(element, visualElement);
+    const options = { ...transition };
+    if (visualElement.shouldSkipAnimations) options.skipAnimations = true;
+    if (visualElement.shouldReduceMotion) options.reduceMotion = true;
+    return plan(
+      (key) => {
+        let value = visualElement.getValue(key);
+        if (!value) {
+          value = motionValue(undefined, { owner: visualElement });
+          visualElement.addValue(key, value);
+        }
+        return value;
+      },
+      keyframes,
+      options,
+      reader,
+      () => {},
+      new Map(),
+    );
+  }
   const svg = element.namespaceURI === "http://www.w3.org/2000/svg";
   const effect = svg ? svgEffect : styleEffect;
   let registry = owners.get(element);
@@ -418,6 +439,95 @@ function animateValues(getValue, keyframes, transition = {}, element) {
     throw new TypeError("getValue must be a function");
   return plan(getValue, keyframes, transition, element, () => {}, new Map());
 }
+function validateRenderer(element, renderer) {
+  if (element?.nodeType !== 1 || !element.style)
+    throw new TypeError("handoff requires one HTML or SVG element");
+  if (!renderer || renderer.current !== element)
+    throw new TypeError("renderer must own the supplied element");
+  for (const name of ["getValue", "addValue", "removeValue"])
+    if (typeof renderer[name] !== "function")
+      throw new TypeError("renderer requires " + name + "()");
+}
+function rendererReader(element, renderer) {
+  return {
+    current: element,
+    readValue: (key) =>
+      renderer.readValue
+        ? renderer.readValue(key)
+        : element.namespaceURI === "http://www.w3.org/2000/svg"
+          ? readSVGValue(element, key)
+          : readStyleValue(element, key),
+  };
+}
+function handOffElementState(element, renderer) {
+  validateRenderer(element, renderer);
+  const states = [styleEffect.state(element), svgEffect.state(element)],
+    bindings = [],
+    values = new Map(),
+    handles = [],
+    registry = owners.get(element);
+  // Capture identities before invoking the destination. Reentrant additions are
+  // separate work and must not be removed by cleanup of this transfer.
+  for (const state of states)
+    if (state)
+      for (const [key, binding] of state.bindings) {
+        bindings.push({ state, key, binding });
+        values.set(key, binding.value);
+      }
+  if (registry)
+    for (const [key, handle] of registry) {
+      if (
+        !handle.stopped &&
+        !handle.failed &&
+        requests.get(handle.value) === handle
+      ) {
+        handles.push({ key, handle });
+        values.set(key, handle.value);
+      }
+    }
+  const changes = [];
+  try {
+    for (const [key, value] of values) {
+      const previous = renderer.getValue(key),
+        owner = value.owner;
+      changes.push({ key, value, previous, owner });
+      value.owner = renderer;
+      renderer.addValue(key, value);
+    }
+  } catch (error) {
+    // The source renderer stays attached until every destination value accepts.
+    // Restore destination entries even when addValue throws after attaching.
+    for (let i = changes.length - 1; i >= 0; i--) {
+      const { key, value, previous, owner } = changes[i];
+      value.owner = owner;
+      try {
+        if (renderer.getValue(key) === value) {
+          if (previous) renderer.addValue(key, previous);
+          else renderer.removeValue(key);
+        }
+      } catch {
+        /* Preserve the original destination error. */
+      }
+    }
+    throw error;
+  }
+  const reader = rendererReader(element, renderer);
+  for (const { key, handle } of handles) {
+    handle.bind = () => {};
+    handle.resolver.element = reader;
+    if (registry.get(key) === handle) registry.delete(key);
+  }
+  for (const { state, key, binding } of bindings) {
+    binding.off();
+    state.retained?.delete(key);
+    if (state.transformKeys)
+      state.transformKeys = state.transformKeys.filter(
+        (slot) => slot.binding !== binding,
+      );
+  }
+  if (registry && !registry.size && owners.get(element) === registry)
+    owners.delete(element);
+}
 function releaseElement(element) {
   const registry = owners.get(element);
   let failure;
@@ -446,4 +556,9 @@ function releaseElement(element) {
   if (failure) throw failure.error;
   return result;
 }
-module.exports = { animateElement, animateValues, releaseElement };
+module.exports = {
+  animateElement,
+  animateValues,
+  releaseElement,
+  handOffElementState,
+};

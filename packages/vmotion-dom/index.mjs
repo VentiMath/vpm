@@ -1,6 +1,7 @@
 import api from "./index.cjs";
 export const {
   animateElement,
+  handOffElementState,
   animateValues,
   animateSingleValue,
   defaultTransformValue,

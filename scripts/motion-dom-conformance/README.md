@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 157 package tests
+easings come from the verified `vmotion-utils` foundation. All 168 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -43,6 +43,8 @@ node scripts/motion-dom-conformance/spring.cjs
 bun scripts/motion-dom-conformance/spring.cjs
 node scripts/motion-dom-conformance/elements.cjs
 bun scripts/motion-dom-conformance/elements.cjs
+node scripts/motion-dom-conformance/handoff.cjs
+bun scripts/motion-dom-conformance/handoff.cjs
 node scripts/motion-dom-conformance/single.cjs
 bun scripts/motion-dom-conformance/single.cjs
 node scripts/motion-dom-conformance/reads.cjs
@@ -63,7 +65,7 @@ renderer remains pending; these checks do not establish full Motion compatibilit
 [Motion value](https://motion.dev/docs/motion-value) and
 [frame](https://motion.dev/docs/frame) documentation, public declarations and
 black-box API observations define the current contract. The remaining
-inertia engine, VisualElement handoff and React renderer are explicitly
+inertia engine, element-aware animateMotionValue and React renderer are explicitly
 outside this unit.
 
 `playback.cjs` runs 25,084 numeric generator/controller comparisons on each runtime.
@@ -107,7 +109,7 @@ The implementation follows public [styleEffect](https://motion.dev/docs/style-ef
 [propEffect](https://motion.dev/docs/prop-effect) and
 [svgEffect](https://motion.dev/docs/svg-effect) contracts and public declarations,
 with black-box probes. No upstream effects runtime was copied. Custom effect
-registration and VisualElement handoff remain separate work.
+registration remains separate work; renderer handoff is now covered below.
 
 `transitions.cjs` runs 40,096 comparisons of numeric `animateMotionValue` defaults,
 per-property options, seconds/milliseconds, wildcards, from/velocity, repeats and
@@ -150,3 +152,14 @@ Package regressions separately check snapshots, shared values, reentrant starts,
 failed replacements, pending cancellation/replay and lifecycle errors. Every test
 file honors VMOTION_DOM_ENTRY so packed-install runs exercise the installed
 runtime, including reads, transitions, single values and the new element APIs.
+
+`handoff.cjs` runs 712 identity, ownership, value and queued-write checks per
+runtime against current 14.7.0, for HTML/SVG and existing/empty destinations.
+The browser fixture hands VPM values and controllers to unchanged upstream
+HTMLVisualElement/SVGVisualElement instances and verifies actual computed output,
+including iframe elements and the optional animateElement renderer argument.
+Upstream can use native animation here, so assertions compare computed styles,
+not only inline declarations. Public declarations and black-box observations
+informed this independent bridge; no upstream runtime was copied.
+Separate regressions cover preserving velocity and pending work, failed transfer
+rollback, source release, stale/reentrant cleanup and reduced/skip motion.

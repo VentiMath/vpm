@@ -2,7 +2,7 @@
 
 Independent element reads, keyframe resolution, DOM effects, numeric transitions, playback and scheduling targeting **motion-dom 14.7.0**, with
 12.36.0 as the application's comparison control. This is a partial implementation
-of Motion DOM; renderer handoff, inertia and the React renderer remain to be built.
+of Motion DOM; inertia and the React renderer remain to be built.
 
 ```js
 import { interpolate, stagger } from "vmotion-dom";
@@ -135,9 +135,9 @@ velocity are read when the factory runs. Updates reach the MotionValue before
 The existing stop, callback-failure and first-frame spring-rest behavior remains.
 No temporary browser globals are required by the VPM implementation.
 
-This adapter supports finite numeric values only. DOM measurement, complex
-strings, handoff and full element animation remain outside
-its declared surface. Unsupported element/handoff arguments reject explicitly.
+This adapter supports finite numeric values only. Its element-aware resolver and
+optimized-appearance handoff arguments remain unimplemented and reject explicitly.
+The separate element APIs and renderer state-transfer bridge are described below.
 [Transition measurements](bench/transitions/README.md) cover controller creation
 and repeating value delivery; they do not measure the full React caller. Repeating
 opacity delivery takes 61% less time on Node and 57% less on Bun in the current
@@ -348,7 +348,7 @@ than treating this as a universal speedup.
 
 ## Element animation APIs
 
-`animateElement(element, keyframes, transition)` connects the readers, resolvers,
+`animateElement(element, keyframes, transition, renderer?)` connects the readers, resolvers,
 controllers and HTML/SVG effects. It returns one playback controller per animated
 property. `animateValues(getValue, keyframes, transition, resolverElement?)` uses
 the same path with caller-owned MotionValues.
@@ -403,9 +403,43 @@ control variation. Sixteen-element update timings are inconclusive on both
 runtimes. These are setup microbenchmarks, not application frame-rate results.
 
 
+## Renderer ownership transfer
+
+`handOffElementState(element, renderer)` transfers the MotionValues currently
+bound by `styleEffect`, `svgEffect` or a pending element animation into an existing
+renderer. It preserves each value's identity, velocity, subscriptions and running
+controller. Queued writes from the source effect are cancelled, and releasing the
+old source does not stop the transferred animation. Pending DOM reads finish
+through the destination without reattaching source bindings.
+
+The destination must own the same element and provide `getValue`, `addValue` and
+`removeValue`. Existing entries are replaced by the source values. Invalid
+owners reject before detaching anything. If attachment throws, source bindings
+remain active and previous destination entries are restored where its methods
+permit rollback. Reentrant source additions are separate work and survive cleanup.
+
+Pass the renderer as `animateElement`'s fourth argument for subsequent animations:
+its values and renderer are reused, with no additional style effect. Newly created
+values read from the DOM. Renderer `shouldSkipAnimations` and
+`shouldReduceMotion` settings are honored. This does not implement VisualElement,
+WAAPI or the full React integration. Custom renderer keyframe-resolver classes
+and the element-aware `animateMotionValue` adapter remain future work.
+
+The bridge is verified with unchanged upstream HTML/SVG renderers in Chrome,
+including iframe elements, plus 712 black-box comparisons per runtime and
+regressions for pending transfer, replacement, rollback and stale cleanup.
+[Handoff measurements](bench/handoff/README.md) time binding, ownership transfer
+and disposal. Node transfer still takes 1.23 μs versus 0.50 μs for one value
+and 8.15 versus 3.18 μs for eight values; Bun eight-value transfer also has
+overhead (7.87 versus 4.83 μs). These one-time transfer costs remain documented
+follow-up work. The setup recordings above belong to commit `81abce79`, before
+this separate addition, and retain that commit's source hashes.
+
+
 ## Still to build
 
-Custom effect registration, VisualElement handoff, `transitionEnd`, and the
+Custom effect registration, element-aware `animateMotionValue`, custom renderer
+keyframe resolvers, `transitionEnd`, and the
 high-level selector/group `animate` wrapper remain unimplemented.
 Inertia, CSS spring serialization, color/complex-string mixers, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain

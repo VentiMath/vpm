@@ -450,10 +450,25 @@ export interface ElementAnimation extends PromiseLike<void> {
   cancel(): void;
   complete(): void;
 }
+/** Renderer destination for transferred values; the full VisualElement is not implemented. */
+export interface ElementRenderer extends Owner {
+  current: HTMLElement | SVGElement;
+  getValue(key: string): MotionValue<any> | undefined;
+  addValue(key: string, value: MotionValue<any>): void;
+  removeValue(key: string): void;
+  readValue?(key: string): number | string | undefined;
+  shouldSkipAnimations?: boolean;
+  shouldReduceMotion?: boolean | null;
+}
+export declare function handOffElementState(
+  element: HTMLElement | SVGElement,
+  renderer: ElementRenderer,
+): void;
 export declare function animateElement(
   element: HTMLElement | SVGElement,
   keyframes: ElementKeyframes,
   transition?: ElementTransition,
+  renderer?: ElementRenderer,
 ): ElementAnimation[];
 export declare function animateValues(
   getValue: (key: string) => MotionValue<any>,

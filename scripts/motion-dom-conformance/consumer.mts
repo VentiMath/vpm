@@ -183,3 +183,10 @@ animateValues(() => position, { x: 10 }, { x: { type: "spring" } });
 animateElement(".selector", { opacity: 1 });
 // @ts-expect-error object and color mixing is not implemented
 animateElement(document.body, { value: { nested: 1 } });
+
+import {handOffElementState, type ElementRenderer} from 'vmotion-dom';
+declare const renderer: ElementRenderer;
+handOffElementState(document.body, renderer);
+animateElement(document.body, {opacity: [0,1]}, {duration: .3}, renderer);
+// @ts-expect-error renderer must support ownership and value transfer
+handOffElementState(document.body, {current: document.body});
