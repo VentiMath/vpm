@@ -39,6 +39,7 @@ function buildBatcher(
   request,
   allowKeepAlive,
   state = { delta: 0, timestamp: 0, isProcessing: false },
+  canRequest,
 ) {
   let requested = false,
     continuing = false,
@@ -48,7 +49,8 @@ function buildBatcher(
     queues = [];
   const hasWork = () => queues.some((q) => q.pending.size !== 0);
   function wake() {
-    if (state.isProcessing || requested) return;
+    if (state.isProcessing || requested || (canRequest && !canRequest()))
+      return;
     requested = true;
     const token = ++generation;
     try {
@@ -170,17 +172,18 @@ function createRenderBatcher(request, allowKeepAlive, state) {
 }
 // Server imports do not create timers. An explicit processFrame call can drive
 // the same queues without a browser; browser requests are coalesced per batch.
+let browserRequest;
 const main = buildBatcher(
-  (callback) => {
-    if (
-      !MotionGlobalConfig.useManualTiming &&
-      typeof requestAnimationFrame === "function"
-    )
-      requestAnimationFrame(callback);
-    else return false;
-  },
+  (callback) => browserRequest.call(globalThis, callback),
   true,
   frameData,
+  () => {
+    browserRequest = globalThis.requestAnimationFrame;
+    return (
+      !MotionGlobalConfig.useManualTiming &&
+      typeof browserRequest === "function"
+    );
+  },
 );
 const micro = buildBatcher((callback) => queueMicrotask(callback), false);
 module.exports = {

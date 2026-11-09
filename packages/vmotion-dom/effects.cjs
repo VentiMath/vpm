@@ -137,13 +137,13 @@ const transformInfo = new Map(
       key,
       order,
       defaultValue: key.startsWith("scale") ? 1 : 0,
-      name:
-        key === "transformPerspective"
+      prefix:
+        (key === "transformPerspective"
           ? "perspective"
           : key.length === 1
             ? "translate" + key.toUpperCase()
-            : key,
-      format: converter(key),
+            : key) + "(",
+      numericSuffix: pixels.has(key) ? "px)" : angles.has(key) ? "deg)" : ")",
     },
   ]),
 );
@@ -273,19 +273,26 @@ class BindingState {
         e.style.transform = direct;
         return;
       }
-      const parts = [];
-      for (const info of this.transformKeys ?? []) {
-        const value = this.read(info.key);
+      let transform = "";
+      for (const slot of this.transformKeys ?? []) {
+        const { info, binding } = slot;
+        const value = binding.active ? binding.value.get() : binding.written;
+        if (binding.active) binding.written = value;
         if (
           value === undefined ||
           (typeof value === "string" ? parseFloat(value) : value) ===
             info.defaultValue
         )
           continue;
-        parts.push(info.name + "(" + info.format(value) + ")");
+        // Compose directly, retaining validation but avoiding an array and a
+        // separate unit string for every component on every paint.
+        if (typeof value === "number" && !Number.isFinite(value))
+          throw new RangeError("effect values must be finite");
+        const suffix = typeof value === "number" ? info.numericSuffix : ")";
+        transform += (transform ? " " : "") + info.prefix + value + suffix;
       }
       if (!e.style.transformBox) e.style.transformBox = "fill-box";
-      e.style.transform = parts.join(" ") || "none";
+      e.style.transform = transform || "none";
     } else if (group === "origin") {
       e.style.transformOrigin =
         formatted("originX", this.read("originX", 0.5)) +
@@ -341,11 +348,6 @@ class BindingState {
       active: true,
     };
     const info = transformInfo.get(key);
-    if (info) this.transformKeys ??= [];
-    if (info && !this.transformKeys.includes(info)) {
-      this.transformKeys.push(info);
-      this.transformKeys.sort((a, b) => a.order - b.order);
-    }
     const job = group
       ? this.group(group)
       : {
@@ -366,6 +368,15 @@ class BindingState {
     // Subscribe first: a rejected subscription must not detach its predecessor.
     this.bindings.get(key)?.off();
     this.bindings.set(key, binding);
+    if (info) {
+      this.transformKeys ??= [];
+      const slot = this.transformKeys.find((slot) => slot.info === info);
+      if (slot) slot.binding = binding;
+      else {
+        this.transformKeys.push({ info, binding });
+        this.transformKeys.sort((a, b) => a.info.order - b.info.order);
+      }
+    }
     if (group) job.users++;
     binding.off = () => {
       if (this.bindings.get(key) !== binding) return;

@@ -195,14 +195,22 @@ These measure JavaScript scheduling and serialization with lightweight element
 sinks; Chrome conformance checks real styles separately. They do not measure
 browser layout, paint or application frame rate.
 
-In the current recording, Node's 32-element update takes 29% less time; its scalar
-and transform differences are unestablished against process/control variation.
-Bun remains slower: one opacity update is 130 ns versus 81 ns, three transforms
-are 344 ns versus 172 ns, and a 32-element update is 3.56 μs versus 1.72 μs.
-SVG path updates take 29% more time on Node and 48% more on Bun (about 133 ns and
-106 ns extra). Binding/initial-paint/disposal medians are higher on both runtimes,
-with too much process variation to establish a direction. These remaining costs
-are retained in the reports; this unit does not claim universal speed gains.
+The Bun scheduling bottleneck was a repeated lookup of an absent browser global,
+plus wakeup setup in manual/server frames. The scheduler now checks the global
+property directly and skips unavailable requests. Transforms compose from owned
+binding slots without per-frame lookup arrays or temporary unit strings. Finite
+value validation, cancellation, replacement ownership and late browser setup
+remain tested.
+
+[Before/after measurements](bench/effects-previous/README.md) against commit
+`88dea27f` show Bun transforms falling from 349 to 173 ns (50% less time), and
+32-element updates from 3.76 to 1.74 μs (54% less). Both improvements hold across
+all process pairs beyond control variation. Against upstream, the current Bun
+transform and fan-out differences are unestablished; their medians are near
+parity. Node transforms and fan-out take 36% and 26% less time than upstream.
+Bun SVG path updates still take 19% more time (273 versus 230 ns). Binding and
+most other differences are unestablished at this precision; the reports retain
+all samples and do not claim universal speed gains.
 
 ## Still to build
 

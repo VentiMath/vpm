@@ -33,7 +33,8 @@
     "Standalone visualDuration is honored rather than silently ignored without a bounce option.",
     "Settled spring repeat gaps retain the endpoint; invalid retarget operations preserve the previous trajectory.",
     "Direct element effects work across document/window boundaries; both controls silently skip a directly supplied iframe element.",
-    "Binding maps validate before attachment, stale cleanup cannot detach replacements, and queued writes are suppressed after cleanup. Nonfinite numeric styling rejects without losing other writes or future frames."
+    "Binding maps validate before attachment, stale cleanup cannot detach replacements, and queued writes are suppressed after cleanup. Nonfinite numeric styling rejects without losing other writes or future frames.",
+    "Avoids unavailable-frame wakeup setup in manual/server timing; composes transforms directly from owned binding slots without per-frame lookup arrays or unit-string helpers."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

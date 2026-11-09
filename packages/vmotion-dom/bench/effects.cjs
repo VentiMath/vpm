@@ -19,6 +19,10 @@ function element() {
     },
   };
 }
+const previous = process.env.VMOTION_DOM_BENCH_PREVIOUS === "1";
+const control = previous
+  ? require("../../../scripts/motion-dom-conformance/baseline.cjs").prepare()
+  : path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js");
 const data = { timestamp: 100, delta: 16, isProcessing: true };
 const specs = [
   {
@@ -103,7 +107,7 @@ const specs = [
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
+    upstream: control,
     vpm: path.join(root, "index.cjs"),
     cases: specs.map(({ name, setup, validate }) => ({
       name,
@@ -111,6 +115,8 @@ require("../../../scripts/bench-process.cjs")
       validate,
     })),
     files: [
+      path.relative(root, previous ? path.dirname(control) : control),
+      "../../scripts/motion-dom-conformance/baseline.cjs",
       "index.cjs",
       "index.mjs",
       "effects.cjs",

@@ -383,3 +383,20 @@ test("unit-string identity transforms collapse to none", () => {
   assert.equal(e.style.transform, "none");
   off();
 });
+
+test("optimized transforms retain finite validation and replacement ownership", () => {
+  const e = element(),
+    x = api.motionValue(2),
+    old = api.styleEffect(e, { x });
+  flush();
+  const next = api.motionValue(4),
+    off = api.styleEffect(e, { x: next });
+  old();
+  next.set(Infinity);
+  assert.throws(flush, RangeError);
+  assert.equal(e.style.transform, "translateX(2px)");
+  next.set(6);
+  flush();
+  assert.equal(e.style.transform, "translateX(6px)");
+  off();
+});

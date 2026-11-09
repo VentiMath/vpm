@@ -1,0 +1,1876 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-09T20:39:10.694Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-dom-conformance/baseline.cjs": "673db83824644f833433a019bd1df8cb2c3427bbfb0bcfbca4c5aead2a04b585",
+    "../../scripts/motion-dom-conformance/node_modules/.effects-before-88dea27f": "c36ccb5c81228daca4e179e797e45c40c203bcab8475f34d556d87cd0e77853e",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "228fa461fb6748d9912d21157ab2891cb16973b6fbc154f8fb267a70290c5e5d",
+    "bench/effects.cjs": "0162ab5e3e90e645483e9c693968e58844ba2372e76c54eb495e8a19fa7eb2d7",
+    "effects.cjs": "3aa86de29f07f161c481bcb97b28a040946c2552a25ba70b1ee27ea94885d163",
+    "frame.cjs": "4b82b639ed380b1c902191bbe7469796ef95f31be6ec65e284e936cefd7b2f97",
+    "index.cjs": "d247ed37c548f9cd424a316899714bc485c621ba4386ecc63f27c0529926373b",
+    "index.mjs": "9cbcde741d1664c73edfeb13652b5977ce26b8be1669a974ecec27ad108ee572",
+    "mapping.cjs": "57c8efdb499434d4b2b617377b488679335c110b7fdfccb0134099f27f207a74",
+    "package.json": "fd84ab77e43a4cf7ef09496662a7aa413e32c3c1edcab71fabaef7379dfc15ff",
+    "playback.cjs": "46f125f0863383a37ec5a23da45dbfdcef0f199158b7a1c8510a7c730b04771d",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "value.cjs": "a1e0d68ff67654341cae321113fdcf2b0c1a45d9645bca7a50c95c570d2d2480"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40716,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 4634,
+            "samples": [
+              3142.7941303409625,
+              3201.652783772117,
+              2763.397280966782,
+              3147.227017695295,
+              2862.816573154946,
+              3051.8359948208854,
+              3223.1694000863336,
+              2707.4341821320645,
+              3300.2714717306835,
+              2931.044238239096,
+              2754.3968493741877,
+              3457.46115666811
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 90835,
+            "samples": [
+              135.62135740628608,
+              141.54877525183,
+              137.2823361039251,
+              131.03887268123526,
+              139.89926790334158,
+              137.84564319920733,
+              138.5552595365229,
+              136.21951890791033,
+              134.68514339186382,
+              131.32603071503246,
+              144.31341443276244,
+              136.52135190180053
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 31959,
+            "samples": [
+              494.6624425044609,
+              489.8254951656795,
+              763.5681654619981,
+              656.4048311899609,
+              415.36553083638125,
+              527.2197815951729,
+              467.11020369848745,
+              395.51847679839636,
+              417.33158108826507,
+              421.4123408116631,
+              393.0752213773885,
+              377.9947432648078
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 2606,
+            "samples": [
+              4120.251343054462,
+              3945.846124328513,
+              4064.4508825786984,
+              3904.163468917893,
+              4105.541442824282,
+              4006.731005372186,
+              4005.7398311588477,
+              3897.0326170376907,
+              4191.2252494243985,
+              3656.721795855705,
+              4115.422870299301,
+              3951.714121258604
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 26909,
+            "samples": [
+              368.78925266639146,
+              361.7237727154427,
+              332.5033631870404,
+              382.6693671262431,
+              400.43914675387646,
+              319.62042439332737,
+              296.43271767810563,
+              316.96644245419077,
+              318.8555130253841,
+              329.25786911442736,
+              316.9029692667811,
+              302.70697536140244
+            ]
+          }
+        ],
+        "checksum": 405289
+      },
+      "vpm": {
+        "pid": 40734,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 4634,
+            "samples": [
+              3019.9072075960216,
+              2605.9290030211473,
+              2975.5880448856196,
+              3127.508631851513,
+              2474.6078981441638,
+              2855.3895123003767,
+              2581.8946914112926,
+              3130.8534743202417,
+              3187.1223564954753,
+              2777.280103582216,
+              3668.9054812257245,
+              2747.572291756562
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 90835,
+            "samples": [
+              89.61394836791989,
+              83.37782792976267,
+              86.6580503110033,
+              92.00932459954855,
+              86.25345956954922,
+              81.76043375350866,
+              87.41399240380902,
+              87.90344030384837,
+              91.08090493752383,
+              87.78095447789907,
+              83.50396873451923,
+              78.58021687675453
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 31959,
+            "samples": [
+              169.50755655684122,
+              183.04443192840841,
+              222.00969992803144,
+              194.68562846146892,
+              179.0627679213993,
+              178.1996933571123,
+              204.83406865045822,
+              203.85625332457192,
+              178.87890735004405,
+              186.14474795831666,
+              191.9660189617983,
+              188.44194123721084
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 2606,
+            "samples": [
+              2185.4854182655463,
+              1683.0709900230618,
+              1981.5007674597753,
+              1707.5498848810512,
+              2066.608979278587,
+              1757.7547966232041,
+              1925.6841903300888,
+              1654.5310821181708,
+              1710.4439754412317,
+              1908.0966999232855,
+              1705.4075211051927,
+              2799.805065234073
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 26909,
+            "samples": [
+              278.34709576721184,
+              268.72206325020954,
+              290.3984912111202,
+              281.5600728380801,
+              281.86045560964976,
+              328.2157642424462,
+              307.13701735478173,
+              269.1168753948454,
+              330.0088446244765,
+              308.3045449477858,
+              248.79222564941517,
+              275.0210338548432
+            ]
+          }
+        ],
+        "checksum": 153929
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40746,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 2000,
+            "samples": [
+              3439.5414999999903,
+              3070.2084999999784,
+              2394.2084999999906,
+              3138.833000000005,
+              3204.374999999999,
+              3538.479000000024,
+              1892.770999999982,
+              3035.6874999999945,
+              3381.020499999977,
+              2065.3540000000135,
+              3725.0834999999825,
+              2898.9579999999933
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 151242,
+            "samples": [
+              87.15888443686299,
+              78.14958807738631,
+              79.25873765223957,
+              78.11708387881652,
+              80.58139934674277,
+              76.00154057735313,
+              82.88757752476215,
+              80.38882717763616,
+              81.4200089922111,
+              86.34947302997914,
+              81.08418296504931,
+              83.05508390526445
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 54408,
+            "samples": [
+              180.98441405676016,
+              168.10717173945073,
+              173.7581421849734,
+              171.62687472430414,
+              170.75231583590897,
+              168.2396522570215,
+              171.99906263784686,
+              177.81467798852856,
+              164.49404499338544,
+              175.02097118070958,
+              174.58217541537718,
+              179.20618291427405
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 6068,
+            "samples": [
+              1656.0028015820535,
+              1626.1468358602594,
+              1799.226763348706,
+              1655.130850362551,
+              1675.737475280153,
+              1764.220665787737,
+              1747.184574818696,
+              1681.4436387607077,
+              1839.0051087673055,
+              1854.2147330257171,
+              1748.2420896506103,
+              1715.6736980883136
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 25423,
+            "samples": [
+              249.02973685245783,
+              295.15596113755583,
+              293.24823978287293,
+              263.0295401801478,
+              296.4507335876993,
+              291.5601227235177,
+              268.71336978326735,
+              293.5596113755261,
+              300.26778900994543,
+              262.6132242457624,
+              290.5489124021503,
+              293.3596743106631
+            ]
+          }
+        ],
+        "checksum": 480719
+      },
+      "upstream": {
+        "pid": 40758,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 2000,
+            "samples": [
+              3013.708500000007,
+              3131.2084999999856,
+              2144.875000000013,
+              3467.6455000000033,
+              3307.5000000000045,
+              2540.7919999999817,
+              2754.4169999999895,
+              3073.5830000000137,
+              3567.166500000013,
+              2282.04199999999,
+              3605.333000000002,
+              3204.5420000000036
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 151242,
+            "samples": [
+              142.27419632112844,
+              138.20345538937647,
+              140.20521416008722,
+              140.94629798600923,
+              134.41840890757845,
+              145.45645389508238,
+              139.87434046098346,
+              140.48126181880696,
+              133.43460149958287,
+              141.29507676439056,
+              136.87225109427268,
+              144.04867034289407
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 54408,
+            "samples": [
+              342.7031318923693,
+              345.3207065137489,
+              336.78181517423894,
+              351.2274481693856,
+              351.8324511101295,
+              333.83724819879393,
+              324.549404499341,
+              338.4872996618128,
+              358.0899500073528,
+              348.42684899279584,
+              345.8935266872526,
+              350.8521908542899
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 6068,
+            "samples": [
+              3499.711601845736,
+              3345.960942649958,
+              3414.2427488464073,
+              3601.9968688200133,
+              3437.07432432431,
+              3363.402274225429,
+              3506.2554383651855,
+              3264.9143045484548,
+              3348.1514502307245,
+              3492.831245880037,
+              3237.461601845761,
+              3313.3172379696493
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 25423,
+            "samples": [
+              336.2293199071749,
+              344.5419895370453,
+              304.34712661762273,
+              325.8171734256363,
+              323.9340361090431,
+              300.12520158911275,
+              359.3055500924237,
+              369.66691578491145,
+              333.22518978878765,
+              373.68556031939306,
+              366.04979742751954,
+              306.6416237265557
+            ]
+          }
+        ],
+        "checksum": 117658
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40770,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 3229,
+            "samples": [
+              2978.076184577277,
+              2776.943326107151,
+              2871.59337256115,
+              2917.144007432648,
+              3273.394859089504,
+              2830.8429854444203,
+              2783.2663363270535,
+              2742.489934964387,
+              3194.371322390826,
+              2841.101269742943,
+              3072.1071539176332,
+              2868.7674202539747
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 95682,
+            "samples": [
+              130.55529775715425,
+              134.19713216696942,
+              129.13827052110034,
+              135.62330427875702,
+              135.57714094605086,
+              133.79301226981093,
+              132.8005790012754,
+              131.93138730377737,
+              133.42330845927137,
+              139.19545996112092,
+              128.6936518885476,
+              133.2203653769782
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 27233,
+            "samples": [
+              346.188447839021,
+              356.6399221532723,
+              364.22263430396373,
+              333.92086806448407,
+              357.81342488891676,
+              326.1514706422343,
+              369.03602247273756,
+              322.41214702750426,
+              366.4594793081998,
+              361.1962692321813,
+              342.8974038849921,
+              345.5366650754629
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 2562,
+            "samples": [
+              3906.046448087391,
+              3763.791569086648,
+              3919.3341139734603,
+              3606.8661202185576,
+              3836.0327868853187,
+              3700.0390320062124,
+              3731.150663544067,
+              3854.117876658889,
+              3876.6748633879884,
+              3873.4875097579834,
+              3583.4960967993397,
+              3852.8653395784063
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 36582,
+            "samples": [
+              329.01656552403017,
+              309.32562462413154,
+              306.9474058280026,
+              326.12579957355814,
+              322.65983270461174,
+              335.79014269312376,
+              313.62987261495033,
+              316.37370838117374,
+              333.86979935487034,
+              288.7086818653992,
+              308.03857088185583,
+              294.5733694166522
+            ]
+          }
+        ],
+        "checksum": 414250
+      },
+      "vpm": {
+        "pid": 40820,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 3229,
+            "samples": [
+              2747.0318984205765,
+              2559.396407556523,
+              2587.8367915763456,
+              2637.078042737693,
+              2460.0622483741217,
+              2613.4382161660064,
+              2520.555899659332,
+              2983.8572313409795,
+              2569.6035924434696,
+              2397.20749458037,
+              2453.4041498916176,
+              2471.947042427982
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 95682,
+            "samples": [
+              75.37075939048124,
+              83.31416567379473,
+              78.05587257791508,
+              76.84874898099913,
+              80.22494304048774,
+              80.60162831044516,
+              84.30182270437439,
+              74.66834932380151,
+              78.70471980100736,
+              76.79736000501643,
+              84.8300411780692,
+              76.15809661169315
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 27233,
+            "samples": [
+              172.92134542650803,
+              154.51841515807916,
+              184.95332868211358,
+              164.65626262255125,
+              178.1386553078962,
+              190.23945213527702,
+              165.08463995887504,
+              195.15995299820122,
+              166.64524657584357,
+              172.69948224580472,
+              167.1119230345591,
+              191.16208276723088
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 2562,
+            "samples": [
+              1770.1174863388337,
+              1871.665886026543,
+              1741.1690085870364,
+              1666.5202966432994,
+              1916.9430132708774,
+              1656.12802498046,
+              2040.6584699453495,
+              1659.185792349792,
+              1703.0476190476136,
+              1964.9199843871597,
+              1611.8590944574205,
+              1853.825136612071
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 36582,
+            "samples": [
+              274.69337379039035,
+              268.2945164288449,
+              275.006615275269,
+              277.4007708709232,
+              274.9724454649853,
+              274.82436717511376,
+              259.5231261276007,
+              273.838007763376,
+              277.02148597671027,
+              262.45374774479296,
+              284.8611612268331,
+              266.3092504510411
+            ]
+          }
+        ],
+        "checksum": 171235
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40834,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 5038,
+            "samples": [
+              1640.8380309646716,
+              3033.296943231439,
+              4007.253275109167,
+              9048.506351726872,
+              1988.1566097657865,
+              1968.332473203636,
+              1720.1683207622264,
+              1703.280071456936,
+              1690.8414053195727,
+              5084.664946407301,
+              3232.350932909884,
+              3243.5158793171845
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 173411,
+            "samples": [
+              80.70998956236906,
+              78.13397650668088,
+              87.38511974442231,
+              88.86811678613235,
+              92.01766323935603,
+              77.11135971766468,
+              86.97136859830151,
+              85.82452670245844,
+              88.43801719614119,
+              79.0737035136175,
+              84.8667789240594,
+              88.54446373067478
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 81787,
+            "samples": [
+              170.4738039052648,
+              179.4804431022046,
+              173.81888319659507,
+              163.90339540513642,
+              170.33422182009446,
+              172.80659518016301,
+              173.3613899519501,
+              175.9356621467953,
+              173.55906195361288,
+              176.65450499468113,
+              178.61946275080237,
+              169.13648868401935
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 6864,
+            "samples": [
+              1645.7482517482385,
+              1667.5467657342876,
+              1741.9871794871622,
+              1736.7546620046714,
+              1649.3419289044355,
+              1752.0821678321697,
+              1691.190705128191,
+              1714.6767191142362,
+              1647.7878787878833,
+              1694.9240967365972,
+              1708.4305069929935,
+              1722.3132284382277
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 28222,
+            "samples": [
+              272.29643540499944,
+              267.22648997236473,
+              267.75504925235794,
+              270.96913755226404,
+              273.95588547941327,
+              274.0341577492734,
+              270.9942597973181,
+              280.3885266813057,
+              270.79051803557877,
+              284.75866345404023,
+              268.6851746864207,
+              278.9298419672578
+            ]
+          }
+        ],
+        "checksum": 555484
+      },
+      "upstream": {
+        "pid": 40846,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 5038,
+            "samples": [
+              2813.4015482334294,
+              2876.1578007145636,
+              2638.356887653827,
+              3104.3898372370045,
+              2849.254069075037,
+              2828.346367606206,
+              2488.5619293370382,
+              2960.5664946407137,
+              2965.3300913060807,
+              2964.304485907107,
+              2485.832671695125,
+              3052.3769352917857
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 173411,
+            "samples": [
+              129.1947511980213,
+              137.51410233491586,
+              133.51277023948847,
+              137.6690809694887,
+              132.49759819157953,
+              135.94605301855105,
+              131.7981558263314,
+              136.98718074401216,
+              137.79907272318326,
+              130.91249690042756,
+              139.36207045689216,
+              137.06454607839254
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 81787,
+            "samples": [
+              330.7208602834194,
+              346.17766882267296,
+              339.3367283309097,
+              334.41389218335496,
+              344.580544585326,
+              355.06763911135096,
+              341.2757161896161,
+              340.530891217432,
+              332.36639074669625,
+              340.2491594018592,
+              353.87449105603537,
+              349.2206340861011
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 6864,
+            "samples": [
+              3672.585227272725,
+              3718.6407342657403,
+              3604.761655011682,
+              3690.401660839194,
+              3680.409819347338,
+              3667.370775058287,
+              3651.9401223776376,
+              3796.8082750583217,
+              3632.6242715617936,
+              3674.928321678349,
+              3757.4239510489574,
+              3688.0099067599
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 28222,
+            "samples": [
+              341.2217064701251,
+              330.2343916093715,
+              337.731486074691,
+              336.1369853306042,
+              681.9723974204601,
+              718.7714194599957,
+              420.2454113811897,
+              432.41974346253534,
+              403.57844943661183,
+              383.6324498618009,
+              337.7713485932855,
+              328.47601162213994
+            ]
+          }
+        ],
+        "checksum": 103720
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 40858,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 5841,
+            "samples": [
+              3007.4045540147176,
+              2750.506591337104,
+              3021.3506248929916,
+              2996.468926553677,
+              2726.973121040926,
+              3292.187467899343,
+              3355.0689950350925,
+              2875.406608457458,
+              2712.592021914054,
+              2781.2588597842764,
+              2715.0816640986122,
+              2983.229241568218
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 90415,
+            "samples": [
+              138.18780069678664,
+              139.78921639108574,
+              134.80433556378853,
+              135.67208980810716,
+              140.00349499529932,
+              131.19136205275686,
+              129.1742741801683,
+              129.99272244649657,
+              131.18906154952256,
+              139.16753857214013,
+              135.07346126195887,
+              128.73048719792118
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 19519,
+            "samples": [
+              349.3219939546119,
+              347.6100210051786,
+              352.8975869665494,
+              367.2853117475276,
+              335.8159741790003,
+              371.66565910139497,
+              394.2824939802199,
+              387.37466058711806,
+              379.4336800040978,
+              410.642604641634,
+              366.26917362568867,
+              405.09887801630094
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 2451,
+            "samples": [
+              3516.5238678090227,
+              3696.0081599347013,
+              3648.290085679313,
+              3694.614443084523,
+              3954.576499388016,
+              4178.974704202359,
+              3905.650754793978,
+              4263.5658914728865,
+              4148.2219502243415,
+              3841.850265197885,
+              3975.84332925335,
+              4188.12035903713
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 32349,
+            "samples": [
+              360.53664719156734,
+              334.5260440817311,
+              328.4619926427392,
+              334.03014003523907,
+              332.1818294228583,
+              330.5911156449938,
+              330.4893505208826,
+              349.9940956443818,
+              322.78691767906184,
+              325.4647129741259,
+              327.0116541469621,
+              307.1269591022905
+            ]
+          }
+        ],
+        "checksum": 314166
+      },
+      "vpm": {
+        "pid": 40870,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 5841,
+            "samples": [
+              2886.8914569423005,
+              2751.0058209210747,
+              2761.0926211265205,
+              2852.5937339496527,
+              2874.065570963877,
+              2809.5502482451784,
+              2737.908748501967,
+              2830.5298750214074,
+              2762.768875192606,
+              2840.367060434863,
+              2789.1842150316647,
+              2853.699366546822
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 90415,
+            "samples": [
+              147.57737101144727,
+              173.2700215672176,
+              644.9068185588677,
+              136.8287894707743,
+              138.52190455123701,
+              145.4612066581862,
+              134.7610131062317,
+              133.05867389260715,
+              132.62641154675612,
+              134.52782171099892,
+              132.3494442293889,
+              139.93899242382273
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 19519,
+            "samples": [
+              310.951329473837,
+              352.6457298017308,
+              311.99943644653996,
+              367.57559301193754,
+              340.6723192786577,
+              315.8204826066955,
+              324.39546083303867,
+              349.60382191711483,
+              362.50361186536594,
+              328.75229263793744,
+              340.6723192786577,
+              353.19001998053125
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 2451,
+            "samples": [
+              3331.8372093022826,
+              3689.650346797256,
+              3311.8792329660632,
+              3295.049775601771,
+              3778.7637698898893,
+              3365.173806609478,
+              3319.393308853456,
+              3508.2280701754294,
+              3463.26356589144,
+              3280.021623826986,
+              3548.874337005367,
+              3270.416972664186
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 32349,
+            "samples": [
+              338.6941481962379,
+              306.2665615629508,
+              324.7318309685016,
+              311.91328943707845,
+              304.7324801384867,
+              316.30937586942855,
+              336.8947726359378,
+              339.2171009923034,
+              307.3781260626313,
+              323.0187331911349,
+              323.7065751646147,
+              327.7252156171789
+            ]
+          }
+        ],
+        "checksum": 145635
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 40894,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 1979,
+            "samples": [
+              3210.522991409814,
+              3058.152602324396,
+              2111.4623547246088,
+              3373.694795351179,
+              3008.9060131379592,
+              2864.8519454269726,
+              2985.745831227897,
+              2749.4734714502365,
+              3456.627589691763,
+              2236.862051541167,
+              3157.6134411318876,
+              2881.61091460335
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 85314,
+            "samples": [
+              137.4652343108986,
+              136.7165178048146,
+              139.69913496026388,
+              133.9341491431642,
+              134.61057974072202,
+              135.16636191012108,
+              133.15761774151886,
+              135.85744426471655,
+              140.81120331950152,
+              144.03458986801616,
+              134.87967977119786,
+              130.62920505427005
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 31323,
+            "samples": [
+              359.3591929253269,
+              343.08520895189076,
+              361.96111483574435,
+              355.490885291958,
+              361.7841841458326,
+              354.76991348210777,
+              340.90629888580406,
+              365.44363566708415,
+              372.3195734763542,
+              365.18561440475105,
+              369.452957890367,
+              362.4027711266443
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 2792,
+            "samples": [
+              3790.398280802266,
+              3542.353151862437,
+              3625.402936962704,
+              3797.113538681948,
+              3660.532951289383,
+              3688.007163323786,
+              3680.142550143256,
+              3672.098853868214,
+              3698.5730659026176,
+              3756.5218481375705,
+              3530.220272206329,
+              3734.300143266545
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 36074,
+            "samples": [
+              329.08396629151036,
+              328.3089482729956,
+              317.29799855852053,
+              346.1276265454353,
+              320.09666241614303,
+              323.2741309530408,
+              337.35862393968085,
+              326.92057991905733,
+              344.8778898929993,
+              331.0255585740392,
+              318.804180296058,
+              337.45101735322277
+            ]
+          }
+        ],
+        "checksum": 392868
+      },
+      "upstream": {
+        "pid": 40906,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, paint and dispose opacity/width/scale",
+            "iterations": 1979,
+            "samples": [
+              3519.938352703386,
+              2915.2561899949505,
+              3115.3991915108554,
+              2241.514906518429,
+              3047.4355735219997,
+              3365.48357756444,
+              2254.7372410308026,
+              2935.5528044466632,
+              3336.933804951995,
+              2207.870136432537,
+              3389.885295603828,
+              3229.38807478525
+            ]
+          },
+          {
+            "case": "update one opacity binding",
+            "iterations": 85314,
+            "samples": [
+              131.73394753498818,
+              141.2048432848064,
+              130.59892866352575,
+              132.4655507888502,
+              126.4524814215726,
+              143.60187073633904,
+              139.91010854021596,
+              138.20905126942793,
+              139.17655953301878,
+              129.65242515882585,
+              133.4091239421431,
+              134.17395738097028
+            ]
+          },
+          {
+            "case": "compose three changing transforms",
+            "iterations": 31323,
+            "samples": [
+              337.5514797433161,
+              355.03728889314397,
+              330.4746671774764,
+              361.192254892571,
+              339.2315550873209,
+              367.76624205855126,
+              351.5866934840172,
+              360.1719822494643,
+              327.68783322159214,
+              356.3236280049758,
+              353.6339111834745,
+              345.6312613734301
+            ]
+          },
+          {
+            "case": "publish opacity to 32 elements",
+            "iterations": 2792,
+            "samples": [
+              3575.4387535816973,
+              3262.327005730711,
+              3437.350644699099,
+              3208.452722063067,
+              3443.6633237822575,
+              3293.9795845271665,
+              3551.0684097421176,
+              3244.1647564470086,
+              3546.5168338108138,
+              3607.6737106017254,
+              3294.0544412607865,
+              3500.8209169054653
+            ]
+          },
+          {
+            "case": "update SVG path length and offset",
+            "iterations": 36074,
+            "samples": [
+              331.63660808338574,
+              311.74807340467083,
+              322.0474857237921,
+              316.1140987969208,
+              309.34675943892984,
+              316.3531906636375,
+              316.536840938073,
+              314.66801574541086,
+              334.29777679215437,
+              309.34675943892984,
+              336.04535122248564,
+              318.55122803126784
+            ]
+          }
+        ],
+        "checksum": 129696
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "bind, paint and dispose opacity/width/scale",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3097.315062580924,
+          "vpmNs": 2915.488778592998,
+          "changePct": -5.8704484469337075
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3102.3957499999997,
+          "vpmNs": 3104.5207499999915,
+          "changePct": 0.06849545226432774
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2870.1803964075625,
+          "vpmNs": 2564.4999999999964,
+          "changePct": -10.65021546346594
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2862.7059348948005,
+          "vpmNs": 2510.7267764986127,
+          "changePct": -12.295330585854336
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2929.317925012838,
+          "vpmNs": 2820.0400616332927,
+          "changePct": -3.7304883313089454
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3081.4173825164276,
+          "vpmNs": 2997.325922182928,
+          "changePct": -2.7289863687608107
+        }
+      ]
+    },
+    {
+      "case": "update one opacity binding",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 136.90184400286282,
+          "vpmNs": 87.03602135740616,
+          "changePct": -36.42450765266091
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 140.3432379894471,
+          "vpmNs": 80.83279115589605,
+          "changePct": -42.40350136286997
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 133.3218369181248,
+          "vpmNs": 78.38029618946122,
+          "changePct": -41.20970877591802
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 136.4666168812816,
+          "vpmNs": 86.39794765037998,
+          "changePct": -36.68931668061985
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 134.9388984128737,
+          "vpmNs": 137.67534701100567,
+          "changePct": 2.027916805545016
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 133.7915406615567,
+          "vpmNs": 135.51190308741883,
+          "changePct": 1.2858529151809517
+        }
+      ]
+    },
+    {
+      "case": "compose three changing transforms",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 444.26127225507526,
+          "vpmNs": 187.29334459776373,
+          "changePct": -57.84162242027971
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 345.6071166005007,
+          "vpmNs": 172.87860241141013,
+          "changePct": -49.9782862945943
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 351.4141849961467,
+          "vpmNs": 172.81041383615639,
+          "changePct": -50.82429189986987
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 340.90330370352405,
+          "vpmNs": 173.46022595278149,
+          "changePct": -49.11746994871133
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 369.4754854244613,
+          "vpmNs": 340.6723192786577,
+          "changePct": -7.795690724301741
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 352.61030233374584,
+          "vpmNs": 361.8726494907885,
+          "changePct": 2.6267942529585753
+        }
+      ]
+    },
+    {
+      "case": "publish opacity to 32 elements",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4006.2354182655167,
+          "vpmNs": 1832.9257482732448,
+          "changePct": -54.2481767317907
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3388.8225115359182,
+          "vpmNs": 1731.4291364535047,
+          "changePct": -48.90764769888264
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 3844.4490632318625,
+          "vpmNs": 1755.643247462935,
+          "changePct": -54.33303397738241
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3677.6690705128435,
+          "vpmNs": 1701.6773018647955,
+          "changePct": -53.72946099178249
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3930.1136270909974,
+          "vpmNs": 3348.5055079558806,
+          "changePct": -14.798760909251707
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3440.5069842406783,
+          "vpmNs": 3684.074856733521,
+          "changePct": 7.079418051133479
+        }
+      ]
+    },
+    {
+      "case": "update SVG path length and offset",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 324.43914675387737,
+          "vpmNs": 281.7102642238649,
+          "changePct": -13.170076101336504
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 334.72725484798127,
+          "vpmNs": 292.4041812531953,
+          "changePct": -12.644047648288236
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 315.00179049806206,
+          "vpmNs": 274.75887048275206,
+          "changePct": -12.775457546346104
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 362.42707816596305,
+          "vpmNs": 271.64534760115873,
+          "changePct": -25.048274821020257
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 330.54023308293824,
+          "vpmNs": 323.3626541778748,
+          "changePct": -2.1714690638771628
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 316.44501580085523,
+          "vpmNs": 328.696457282253,
+          "changePct": 3.8715861744233804
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "bind, paint and dispose opacity/width/scale",
+      "upstream_ns": 2984,
+      "vpm_ns": 2740,
+      "change_pct": -8.3,
+      "upstream_first_pct": -8.3,
+      "vpm_first_pct": -6.1,
+      "process_range_pct": "-5.9, 0.1, -10.7, -12.3",
+      "control_max_abs_pct": 3.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "update one opacity binding",
+      "upstream_ns": 137,
+      "vpm_ns": 84,
+      "change_pct": -38.9,
+      "upstream_first_pct": -38.8,
+      "vpm_first_pct": -39.5,
+      "process_range_pct": "-36.4, -42.4, -41.2, -36.7",
+      "control_max_abs_pct": 2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "compose three changing transforms",
+      "upstream_ns": 349,
+      "vpm_ns": 173,
+      "change_pct": -50.4,
+      "upstream_first_pct": -54.3,
+      "vpm_first_pct": -49.5,
+      "process_range_pct": "-57.8, -50.0, -50.8, -49.1",
+      "control_max_abs_pct": 7.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "publish opacity to 32 elements",
+      "upstream_ns": 3761,
+      "vpm_ns": 1744,
+      "change_pct": -54,
+      "upstream_first_pct": -54.3,
+      "vpm_first_pct": -51.3,
+      "process_range_pct": "-54.2, -48.9, -54.3, -53.7",
+      "control_max_abs_pct": 14.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "update SVG path length and offset",
+      "upstream_ns": 330,
+      "vpm_ns": 278,
+      "change_pct": -13,
+      "upstream_first_pct": -13,
+      "vpm_first_pct": -18.8,
+      "process_range_pct": "-13.2, -12.6, -12.8, -25.0",
+      "control_max_abs_pct": 3.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

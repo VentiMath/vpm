@@ -237,3 +237,42 @@ test("last observer stops animation next frame, while same-frame resubscription 
     MotionGlobalConfig.useManualTiming = old;
   }
 });
+
+test("browser frame driver can appear after a server import and retains its receiver", () => {
+  const { createRequire } = require("node:module");
+  const { MotionGlobalConfig } = createRequire(
+    require.resolve(process.env.VMOTION_DOM_ENTRY || "../index.cjs"),
+  )("vmotion-utils");
+  const descriptor = Object.getOwnPropertyDescriptor(
+      globalThis,
+      "requestAnimationFrame",
+    ),
+    manual = MotionGlobalConfig.useManualTiming;
+  const callbacks = [],
+    seen = [];
+  try {
+    delete globalThis.requestAnimationFrame;
+    MotionGlobalConfig.useManualTiming = false;
+    api.processFrame();
+    api.frame.render(() => seen.push("server queued"));
+    globalThis.requestAnimationFrame = function (callback) {
+      assert.equal(this, globalThis);
+      callbacks.push(callback);
+    };
+    api.frame.render(() => seen.push("browser queued"));
+    api.frame.render(() => seen.push("coalesced"));
+    assert.equal(callbacks.length, 1);
+    callbacks.shift()();
+    assert.deepEqual(seen, ["server queued", "browser queued", "coalesced"]);
+    MotionGlobalConfig.useManualTiming = true;
+    api.frame.render(() => seen.push("manual"));
+    assert.equal(callbacks.length, 0);
+    api.processFrame(1000);
+    assert.equal(seen.at(-1), "manual");
+  } finally {
+    MotionGlobalConfig.useManualTiming = manual;
+    if (descriptor)
+      Object.defineProperty(globalThis, "requestAnimationFrame", descriptor);
+    else delete globalThis.requestAnimationFrame;
+  }
+});
