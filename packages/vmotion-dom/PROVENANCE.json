@@ -51,7 +51,8 @@
     "Element controls reuse prepared numeric playback, make completion waiting lazy, and index shared render jobs once per binding. Explicit stop removes a redundant deferred unobserved-value check. Packed tests now route every test file to the installed runtime.",
     "Element setup reuses one internal option snapshot and one lifecycle facade, avoiding duplicate controller/configuration allocations. Public factories and caller arrays remain independently snapshotted. Synchronous start-hook completion does not restart finished playback.",
     "Renderer handoff preserves value identities, current velocity and active controllers, suppresses queued source writes and transfers pending reads. Destination validation precedes detachment, failed destination updates restore prior entries where the renderer accepts rollback, and stale source cleanup cannot detach later work.",
-    "Custom resolver output is snapshotted before conversion; constructor/prototype/instance-field errors release pending work and reject owned lifecycle promises. Resolver measurement renders between phases and restores source state, including foreign public resolver classes. isHandoff uses immediate base resolution without custom DOM reads."
+    "Custom resolver output is snapshotted before conversion; constructor/prototype/instance-field errors release pending work and reject owned lifecycle promises. Resolver measurement renders between phases and restores source state, including foreign public resolver classes. isHandoff uses immediate base resolution without custom DOM reads.",
+    "Measurement guards live once per custom resolver class; source snapshots allocate only when measurement occurs. Resolved-value handoffs avoid constructing unused renderer readers. Prepared element options skip duplicate default selection while public factory snapshots and validation remain intact."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

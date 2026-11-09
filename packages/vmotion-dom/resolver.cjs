@@ -8,11 +8,7 @@ const {
 } = require("./reads.cjs");
 const pending = new Set();
 const alreadyRead = new WeakSet();
-const resolverFailures = new WeakMap();
 function rejectResolver(resolver, error) {
-  try {
-    resolverFailures.get(resolver)?.(error);
-  } catch {}
   try {
     resolver.cancel();
   } catch {}
@@ -126,8 +122,7 @@ function flushKeyframeResolvers() {
 }
 // Custom classes can schedule through another runtime's queue. Also register
 // them here so synchronous control reads can force the same batched phases.
-function trackResolver(resolver, failure) {
-  if (failure) resolverFailures.set(resolver, failure);
+function trackResolver(resolver) {
   if (resolver.state === "scheduled" && !pending.has(resolver)) {
     pending.add(resolver);
     frame.read(readBatch);

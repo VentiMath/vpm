@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 180 package tests
+easings come from the verified `vmotion-utils` foundation. All 182 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -45,6 +45,8 @@ node scripts/motion-dom-conformance/elements.cjs
 bun scripts/motion-dom-conformance/elements.cjs
 node scripts/motion-dom-conformance/handoff.cjs
 bun scripts/motion-dom-conformance/handoff.cjs
+node scripts/motion-dom-conformance/renderer.cjs
+bun scripts/motion-dom-conformance/renderer.cjs
 node scripts/motion-dom-conformance/single.cjs
 bun scripts/motion-dom-conformance/single.cjs
 node scripts/motion-dom-conformance/reads.cjs

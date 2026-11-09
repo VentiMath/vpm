@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T22:40:41.469Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T23:25:06.945Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| bind, transfer and release 1 renderer values | 502 | 1227 | 133.7% | 110.6% | 150.3% | 17.8% | higher time in every pair, beyond control spread |
-| bind, transfer and release 8 renderer values | 3179 | 8146 | 156.6% | 161.8% | 148.5% | 30.5% | higher time in every pair, beyond control spread |
+| bind, transfer and release 1 renderer values | 496 | 1163 | 132.8% | 126.5% | 145.9% | 22% | higher time in every pair, beyond control spread |
+| bind, transfer and release 8 renderer values | 3188 | 7483 | 138.5% | 163.7% | 104.2% | 26.8% | higher time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T22:40:51.536Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T23:25:16.663Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| bind, transfer and release 1 renderer values | 872 | 800 | -8.5% | -8.5% | -1.4% | 3.3% | unestablished at this precision |
-| bind, transfer and release 8 renderer values | 4825 | 7866 | 65.8% | 66.6% | 63.2% | 2.2% | higher time in every pair, beyond control spread |
+| bind, transfer and release 1 renderer values | 801 | 781 | -2.3% | -3.4% | 1.3% | 5.9% | unestablished at this precision |
+| bind, transfer and release 8 renderer values | 4741 | 7755 | 63.6% | 65.7% | 56.8% | 4.5% | higher time in every pair, beyond control spread |
 
 ## Reproduce
 
@@ -58,18 +58,4 @@ The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
 
-## Workload and remaining cost
-
-Both variants bind the same pre-existing values through array-wrapped elements,
-transfer them to an independently written renderer with change subscriptions,
-remove the destination bindings, and drain read-phase disposal. Array wrapping
-keeps cross-runtime subject selection equivalent. No browser layout is timed.
-
-The one-value Node path costs 1.23 μs versus 0.50 μs upstream; eight values cost
-8.15 versus 3.18 μs. Bun eight-value transfer costs 7.87 versus 4.83 μs; its
-one-value direction is inconclusive. These are remaining costs, not a speedup.
-VPM validates destination ownership and stages attachment before releasing source
-bindings, allowing restoration on attachment failure. The comparison does not
-isolate the cost of these protections from binding, disposal, allocation or GC.
-Chrome separately verifies real unchanged upstream HTML/SVG renderers and iframe
-ownership; these timings do not establish application frame-rate improvements.
+Both variants bind the same pre-existing values through array-wrapped elements, transfer to an independent renderer with change subscriptions, remove destination bindings and drain read-phase disposal. This combines binding, ownership transfer and cleanup; it does not isolate validation/rollback overhead. See the [prior VPM comparison](../handoff-previous/README.md), whose directions remain inconclusive. No application frame-rate claim is made.

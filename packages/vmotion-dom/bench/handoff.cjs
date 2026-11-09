@@ -6,10 +6,18 @@ const path = require("node:path"),
 require(path.join(fixture, "check-controls.cjs")).check();
 require("../../../scripts/check-bun.cjs");
 const helper = require("../../../scripts/motion-dom-conformance/handoff-fixture.cjs");
+const previous = process.env.VMOTION_HANDOFF_PREVIOUS === "1";
+const baseline = previous
+  ? require("../../../scripts/motion-dom-conformance/setup-baseline.cjs").prepare(
+      "112782a62e5d4a63e395dfb1af6b999c8b9f2b50",
+    )
+  : undefined;
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
+    upstream:
+      baseline ||
+      path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
     vpm: path.join(root, "index.cjs"),
     cases: [1, 8].map((count) => ({
       name: `bind, transfer and release ${count} renderer values`,
@@ -39,6 +47,12 @@ require("../../../scripts/bench-process.cjs")
       validate: (x) => assert.equal(x, (count * (count + 1)) / 2),
     })),
     files: [
+      ...(previous
+        ? [
+            "../../scripts/motion-dom-conformance/setup-baseline.cjs",
+            "../../scripts/motion-dom-conformance/node_modules/.setup-before-112782a6",
+          ]
+        : []),
       "index.cjs",
       "index.mjs",
       "element.cjs",

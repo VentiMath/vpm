@@ -399,14 +399,13 @@ validation before replacement and callback-failure propagation are retained.
 A new regression covers completing synchronously inside an animation-start hook
 without restarting playback or losing a responsive CSS endpoint.
 
-The [before/after measurements](bench/elements-previous/README.md) retain all
-samples. Node medians fell from 5.67 to 3.40 μs for fades and 6.72 to 4.80 μs
-for variable-width setup; process/control variation prevents a firm percentage
-speedup claim. The current upstream comparison also has inconclusive Node
-directions (4.53 versus 2.61 μs for fades, 5.91 versus 3.82 μs for variables).
-Bun variable setup still costs 59% more than upstream in every pair beyond
-control variation. Sixteen-element update timings are inconclusive on both
-runtimes. These are setup microbenchmarks, not application frame-rate results.
+The [earlier before/after measurements](bench/elements-previous/README.md) remain
+historical recordings from commit `81abce79`. The refreshed element workload
+records Node medians of 3.86 μs versus 2.56 μs upstream for fades and 4.65 versus
+4.17 μs for variable widths. None of the Node directions is established beyond
+process/control variation. Bun variable setup remains 67.5% more than upstream;
+its fade and sixteen-element update directions are inconclusive. These setup
+microbenchmarks do not establish application frame-rate changes.
 
 
 ## Renderer ownership transfer
@@ -444,11 +443,19 @@ The bridge is verified with unchanged upstream HTML/SVG renderers in Chrome,
 including iframe elements, plus 712 black-box comparisons per runtime and
 regressions for pending transfer, replacement, rollback and stale cleanup.
 [Handoff measurements](bench/handoff/README.md) time binding, ownership transfer
-and disposal. Node transfer still takes 1.23 μs versus 0.50 μs for one value
-and 8.15 versus 3.18 μs for eight values; Bun eight-value transfer also has
-overhead (7.87 versus 4.83 μs). These one-time transfer costs remain documented
-follow-up work. The setup recordings above belong to commit `81abce79`, before
-this separate addition, and retain that commit's source hashes.
+and disposal. Remaining Node medians are 1.16 μs versus 0.50 μs for one value and
+7.48 versus 3.19 μs for eight values. Bun eight-value transfer takes 7.76 versus
+4.74 μs. The balanced [before/after comparison](bench/handoff-previous/README.md)
+with commit `112782a6` does not establish a speed change on either runtime.
+
+Measurement guards now live once per resolver class, and snapshots allocate only
+when layout measurement actually occurs. Handoffs avoid unused renderer-reader
+objects; factories share already-owned easing/offset snapshots and avoid repeated
+default selection. Validation, snapshot isolation, forced-completion flags and
+both prototype/instance-field error restoration remain tested. The
+[custom-adapter benchmark](bench/renderer/README.md) has inconclusive Node
+directions; Bun synchronous setup remains 34.8% more than upstream and deferred
+setup 173.5% more. These costs remain follow-up work, not a parity claim.
 
 
 ## Still to build

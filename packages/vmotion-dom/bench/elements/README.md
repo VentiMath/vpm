@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T22:32:09.265Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T23:24:40.085Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, seek and release an element fade | 2613 | 4529 | 30.8% | 20.6% | 56.9% | 10% | unestablished at this precision |
-| resolve, seek and release a variable width animation | 3817 | 5906 | 45.1% | 77.7% | 10.6% | 3% | unestablished at this precision |
-| seek and paint sixteen element transforms | 3406 | 3501 | 3.1% | 5.6% | 0% | 2.1% | unestablished at this precision |
+| create, seek and release an element fade | 2558 | 3858 | 21% | 19.4% | 51.5% | 54.2% | unestablished at this precision |
+| resolve, seek and release a variable width animation | 4168 | 4645 | 11% | 14.6% | 5.9% | 6.3% | unestablished at this precision |
+| seek and paint sixteen element transforms | 3307 | 3600 | 5.6% | -1.6% | 9.2% | 12.5% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T22:32:24.162Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T23:24:56.708Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, seek and release an element fade | 2089 | 1933 | -7.4% | -5.4% | -9.9% | 6.1% | unestablished at this precision |
-| resolve, seek and release a variable width animation | 3408 | 5357 | 59.1% | 59% | 59.1% | 4.4% | higher time in every pair, beyond control spread |
-| seek and paint sixteen element transforms | 2933 | 2897 | -0.6% | -0.6% | 1.2% | 8.1% | unestablished at this precision |
+| create, seek and release an element fade | 2128 | 1876 | -10% | -9.6% | -14.1% | 11% | unestablished at this precision |
+| resolve, seek and release a variable width animation | 3412 | 5595 | 67.5% | 73.6% | 59.6% | 5.3% | higher time in every pair, beyond control spread |
+| seek and paint sixteen element transforms | 2973 | 3142 | 2% | 11.9% | -3.4% | 374.4% | unestablished at this precision |
 
 ## Reproduce
 
@@ -60,4 +60,4 @@ The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
 
-The first two workloads create, seek, paint, stop and release a controller and drain read-phase cleanup. The last reuses sixteen paused controllers. Style sinks measure JavaScript work, not browser layout or application frame rates. See the [before/after control](../elements-previous/README.md) for the comparison with the prior VPM commit.
+The first two cases include creation, resolution, seek, painting, stop/release and read-phase disposal. The third reuses sixteen paused controllers. JavaScript style sinks exclude browser layout; Chrome separately checks actual DOM and measurements. All directions are inconclusive except the remaining Bun variable-setup overhead.

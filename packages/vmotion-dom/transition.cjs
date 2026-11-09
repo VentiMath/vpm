@@ -133,14 +133,18 @@ function prepareMotionValue(
   for (const key of ["onUpdate", "onComplete"])
     if (options[key] !== undefined && typeof options[key] !== "function")
       throw new TypeError(`${key} must be a function`);
-  const defaults = isTransitionDefined(selected)
-    ? {}
-    : getDefaultTransition(name, { keyframes: frames });
-  if (defaults.duration !== undefined) defaults.duration *= 1000;
+  // Element adapters already selected defaults before attaching their owned
+  // callbacks; avoid scanning the same configuration and allocating an empty map.
+  const defaults =
+    owned || isTransitionDefined(selected)
+      ? undefined
+      : getDefaultTransition(name, { keyframes: frames });
+  if (defaults?.duration !== undefined) defaults.duration *= 1000;
   if (!Object.hasOwn(options, "ease"))
-    options.ease = defaults.ease ?? "easeOut";
-  for (const key of Object.keys(defaults))
-    if (!Object.hasOwn(options, key)) options[key] = defaults[key];
+    options.ease = defaults?.ease ?? "easeOut";
+  if (defaults)
+    for (const key of Object.keys(defaults))
+      if (!Object.hasOwn(options, key)) options[key] = defaults[key];
   if (paused) options.autoplay = false;
   return (complete) => {
     if (typeof complete !== "function")
@@ -149,7 +153,7 @@ function prepareMotionValue(
     for (let i = 0; i < resolved.length; i++)
       if (resolved[i] === null)
         resolved[i] = i ? resolved[i - 1] : (options.from ?? value.get());
-    const type = options.type ?? defaults.type;
+    const type = options.type ?? defaults?.type;
     if (resolved.length === 1 && (type === "spring" || type === spring))
       resolved.push(resolved[0]);
     // from only replaces an unresolved start, never an explicit first keyframe.

@@ -93,6 +93,7 @@ const resolverMethods = [
   "renderEndStyles",
   "measureEndState",
   "restore",
+  "complete",
 ];
 function guardedResolver(Base) {
   if (typeof Base !== "function")
@@ -100,13 +101,55 @@ function guardedResolver(Base) {
   let Guarded = resolverClasses.get(Base);
   if (Guarded) return Guarded;
   Guarded = class extends Base {};
+  const tracksReads =
+    (Base !== KeyframeResolver &&
+      !(Base.prototype instanceof KeyframeResolver)) ||
+    (Base.prototype.scheduleResolve !==
+      KeyframeResolver.prototype.scheduleResolve &&
+      Base.prototype.scheduleResolve !==
+        DOMKeyframesResolver.prototype.scheduleResolve);
   for (const method of resolverMethods) {
     if (typeof Base.prototype[method] !== "function") continue;
-    Guarded.prototype[method] = function (...args) {
+    Guarded.prototype[method] = function (forced) {
       try {
-        const result = Base.prototype[method].apply(this, args);
-        if (method === "readKeyframes") noteResolverRead(this);
+        const result =
+          method === "complete"
+            ? Base.prototype[method].call(this, forced)
+            : Base.prototype[method].call(this);
+        if (method === "readKeyframes" && tracksReads) noteResolverRead(this);
         return result;
+      } catch (error) {
+        resolverOwners.get(this)?.fail(error);
+        throw error;
+      }
+    };
+  }
+  if (typeof Base.prototype.prepareMeasurement !== "function") {
+    Guarded.prototype.prepareMeasurement = function () {
+      try {
+        resolverOwners.get(this)?.captureMeasurement();
+      } catch (error) {
+        resolverOwners.get(this)?.fail(error);
+        throw error;
+      }
+    };
+    Guarded.prototype.renderEndStyles = function () {
+      try {
+        Base.prototype.renderEndStyles?.call(this);
+        if (!Object.hasOwn(this, "prepareMeasurement"))
+          this.element?.render?.();
+      } catch (error) {
+        resolverOwners.get(this)?.fail(error);
+        throw error;
+      }
+    };
+    Guarded.prototype.restore = function () {
+      try {
+        try {
+          Base.prototype.restore?.call(this);
+        } finally {
+          resolverOwners.get(this)?.restoreMeasurement();
+        }
       } catch (error) {
         resolverOwners.get(this)?.fail(error);
         throw error;
@@ -149,7 +192,7 @@ class ElementAnimation {
           this.earlyResolution = [resolved, final];
           return;
         }
-        untrackResolver(this.resolver);
+        if (this.customResolver) untrackResolver(this.resolver);
         this.start(resolved, final);
       },
       key,
@@ -157,7 +200,6 @@ class ElementAnimation {
       element,
     );
     resolverOwners.set(this.resolver, this);
-    trackResolver(this.resolver, (error) => this.fail(error));
     if (this.customResolver)
       for (const method of resolverMethods) {
         if (
@@ -168,8 +210,18 @@ class ElementAnimation {
         const original = this.resolver[method];
         this.resolver[method] = (...args) => {
           try {
-            const result = original.apply(this.resolver, args);
-            if (method === "readKeyframes") noteResolverRead(this.resolver);
+            let result;
+            try {
+              result = original.apply(this.resolver, args);
+              if (method === "readKeyframes") noteResolverRead(this.resolver);
+              if (
+                method === "renderEndStyles" &&
+                !Object.hasOwn(this.resolver, "prepareMeasurement")
+              )
+                this.resolver.element?.render?.();
+            } finally {
+              if (method === "restore") this.restoreMeasurement();
+            }
             return result;
           } catch (error) {
             this.fail(error);
@@ -177,48 +229,6 @@ class ElementAnimation {
           }
         };
       }
-    // Foreign public resolvers can measure by changing renderer-owned values.
-    // Supply the render boundary and restoration when they have no transaction
-    // hooks; VPM DOM resolvers keep their own grouped DOM transaction.
-    if (
-      this.customResolver &&
-      typeof this.resolver.prepareMeasurement !== "function"
-    ) {
-      const r = this.resolver,
-        renderEnd = r.renderEndStyles?.bind(r);
-      let saved;
-      r.prepareMeasurement = () => {
-        const node = r.element?.current,
-          view = node?.ownerDocument?.defaultView;
-        saved = {
-          value: this.value.get(),
-          node,
-          css: node?.style?.cssText,
-          view,
-          x: view?.scrollX,
-          y: view?.scrollY,
-        };
-      };
-      r.renderEndStyles = () => {
-        renderEnd?.();
-        r.element?.render?.();
-      };
-      const restore = r.restore?.bind(r);
-      r.restore = () => {
-        try {
-          restore?.();
-          if (saved) this.value.set(saved.value);
-        } finally {
-          if (saved?.css !== undefined) saved.node.style.cssText = saved.css;
-          if (
-            saved?.view?.scrollTo &&
-            (saved.x !== saved.view.scrollX || saved.y !== saved.view.scrollY)
-          )
-            saved.view.scrollTo(saved.x, saved.y);
-          saved = undefined;
-        }
-      };
-    }
     this.stop = () => {
       if (this.stopped) return;
       this.stopped = true;
@@ -231,6 +241,33 @@ class ElementAnimation {
       }
     };
   }
+  captureMeasurement() {
+    const node = this.resolver.element?.current,
+      view = node?.ownerDocument?.defaultView;
+    this.savedMeasurement = {
+      value: this.value.get(),
+      node,
+      css: node?.style?.cssText,
+      view,
+      x: view?.scrollX,
+      y: view?.scrollY,
+    };
+  }
+  restoreMeasurement() {
+    const saved = this.savedMeasurement;
+    if (!saved) return;
+    this.savedMeasurement = undefined;
+    try {
+      this.value.set(saved.value);
+    } finally {
+      if (saved.css !== undefined) saved.node.style.cssText = saved.css;
+      if (
+        saved.view?.scrollTo &&
+        (saved.x !== saved.view.scrollX || saved.y !== saved.view.scrollY)
+      )
+        saved.view.scrollTo(saved.x, saved.y);
+    }
+  }
   schedule() {
     this.ready = true;
     try {
@@ -239,7 +276,7 @@ class ElementAnimation {
         this.earlyResolution = undefined;
         this.start(frames, final);
       } else this.resolver.scheduleResolve();
-      trackResolver(this.resolver);
+      if (this.customResolver) trackResolver(this.resolver);
     } catch (error) {
       this.fail(error);
       throw error;
@@ -588,6 +625,8 @@ function validateRenderer(element, renderer) {
       throw new TypeError("renderer requires " + name + "()");
 }
 function rendererReader(element, renderer) {
+  if (renderer.KeyframeResolver || typeof renderer.readValue === "function")
+    return renderer;
   return {
     current: element,
     KeyframeResolver: renderer.KeyframeResolver,
@@ -654,7 +693,7 @@ function handOffElementState(element, renderer) {
     }
     throw error;
   }
-  const reader = rendererReader(element, renderer);
+  const reader = handles.length ? rendererReader(element, renderer) : undefined;
   for (const { key, handle } of handles) {
     handle.bind = () => {};
     handle.resolver.element = reader;
@@ -759,7 +798,7 @@ function prepareRendererMotionValue(
       value,
       name,
       frames.slice(),
-      snapshot(options),
+      { ...options },
       element,
       () => {},
       () => requests.get(value) === handle,

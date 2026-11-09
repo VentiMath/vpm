@@ -212,6 +212,7 @@ test("custom resolver receives full owner context through animateElement", () =>
   let calls = 0;
   class R extends api.KeyframeResolver {
     readKeyframes() {
+      assert.equal(this.element, o);
       assert.equal(this.element.current, o.current);
       assert.equal(this.element.getValue("x"), values.get("x"));
       calls++;
@@ -376,4 +377,67 @@ test("foreign-style measurement rendering failures restore values and reject", a
   assert.throws(() => api.flushKeyframeResolvers(), /paint failure/);
   await p;
   assert.equal(v.get(), 0);
+});
+test("instance-field measurement hooks retain framework rendering and restoration", async () => {
+  let paints = 0,
+    restores = 0;
+  const v = api.motionValue(0),
+    element = owner({ render: () => paints++ });
+  class R extends api.KeyframeResolver {
+    constructor(...args) {
+      super(...args);
+      this.isAsync = true;
+    }
+    readKeyframes() {
+      super.readKeyframes();
+      this.needsMeasurement = true;
+    }
+    measureInitialState() {
+      this.motionValue.set(100);
+    }
+    renderEndStyles = () => {};
+    measureEndState() {
+      throw Error("end");
+    }
+    restore = () => {
+      restores++;
+    };
+  }
+  const a = api.animateMotionValue(
+      "x",
+      v,
+      10,
+      {},
+      { ...element, KeyframeResolver: R },
+    )(() => {}),
+    p = assert.rejects(a.finished, /end/);
+  assert.throws(() => api.flushKeyframeResolvers(), /end/);
+  await p;
+  assert.equal(v.get(), 0);
+  assert.equal(paints, 1);
+  assert.equal(restores, 1);
+});
+
+test("forced completion flags survive custom resolver guards", () => {
+  let forced;
+  class R extends api.KeyframeResolver {
+    constructor(...args) {
+      super(...args);
+      this.isAsync = true;
+    }
+    complete(flag) {
+      forced = flag;
+      super.complete(flag);
+    }
+  }
+  const a = api.animateMotionValue(
+    "x",
+    api.motionValue(0),
+    10,
+    { autoplay: false },
+    owner({ KeyframeResolver: R }),
+  )(() => {});
+  void a.duration;
+  assert.equal(forced, true);
+  a.stop();
 });
