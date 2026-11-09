@@ -1,0 +1,20 @@
+{
+  "readme": "Independent word differ; public docs, declarations and public API oracle controls. No upstream runtime copied.",
+  "controls": [
+    {
+      "name": "diff",
+      "version": "9.0.0",
+      "integrity": "sha512-svtcdpS8CgJyqAjEQIXdb3OjhFVVYjzGAPO8WGCmRbrml64SPw/jJD4GoE98aR7r25A0XcgrK3F02yw9R/vhQw=="
+    },
+    {
+      "name": "diff-app",
+      "version": "8.0.2",
+      "integrity": "sha512-sSuxWU5j5SR9QQji/o2qMvqRNYRDOcBTgsJ/DeCf4iSN4gW+gNMXM7wFIP+fdXZxoNiAnHUTGjCr+TSWXdRDKg=="
+    }
+  ],
+  "fixtureFiles": {
+    "package-lock.json": "c6bb1c86ef7354df148887fe41cca49177502d667a27db463078db8b3414a4cd",
+    "node_modules/diff": "edf3f1e928cd9427b00cb710644f2ff5ddefe92cadad039ba00ad4f255edcb79",
+    "node_modules/diff-app": "9dfc410c49458fcdce046c31aad7b65e8a30ba10798d8ecc0ea49fe4008d905c"
+  }
+}

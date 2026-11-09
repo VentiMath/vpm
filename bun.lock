@@ -108,6 +108,10 @@
       "name": "vdepd",
       "version": "0.1.0",
     },
+    "packages/vdiff": {
+      "name": "vdiff",
+      "version": "9.0.0",
+    },
     "packages/vduplexify": {
       "name": "vduplexify",
       "version": "0.1.0",
@@ -1715,6 +1719,8 @@
     "vdebug": ["vdebug@workspace:packages/vdebug"],
 
     "vdepd": ["vdepd@workspace:packages/vdepd"],
+
+    "vdiff": ["vdiff@workspace:packages/vdiff"],
 
     "vduplexify": ["vduplexify@workspace:packages/vduplexify"],
 

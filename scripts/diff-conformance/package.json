@@ -1,0 +1,10 @@
+{
+  "name": "vpm-diff-conformance",
+  "private": true,
+  "type": "module",
+  "description": "Pinned current and application word-diff controls",
+  "dependencies": {
+    "diff": "9.0.0",
+    "diff-app": "npm:diff@8.0.2"
+  }
+}

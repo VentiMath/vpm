@@ -1,0 +1,195 @@
+[
+  {
+    "name": "short problem wording",
+    "a": "Find the sum of x and y.",
+    "b": "Find the product of x and y.",
+    "expected": [
+      {
+        "count": 2,
+        "added": false,
+        "removed": false,
+        "value": "Find the "
+      },
+      {
+        "count": 1,
+        "added": false,
+        "removed": true,
+        "value": "sum"
+      },
+      {
+        "count": 1,
+        "added": true,
+        "removed": false,
+        "value": "product"
+      },
+      {
+        "count": 5,
+        "added": false,
+        "removed": false,
+        "value": " of x and y."
+      }
+    ]
+  },
+  {
+    "name": "contest statement with TeX",
+    "a": "If $\\frac{x+1}{2}=5$, find the integer x.",
+    "b": "If $\\frac{x-1}{2}=5$, find the integer x.",
+    "expected": [
+      {
+        "count": 6,
+        "added": false,
+        "removed": false,
+        "value": "If $\\frac{x"
+      },
+      {
+        "count": 1,
+        "added": false,
+        "removed": true,
+        "value": "+"
+      },
+      {
+        "count": 1,
+        "added": true,
+        "removed": false,
+        "value": "-"
+      },
+      {
+        "count": 14,
+        "added": false,
+        "removed": false,
+        "value": "1}{2}=5$, find the integer x."
+      }
+    ]
+  },
+  {
+    "name": "long single-word correction",
+    "a": "A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.",
+    "b": "A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 18. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.",
+    "expected": [
+      {
+        "count": 504,
+        "added": false,
+        "removed": false,
+        "value": "A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area "
+      },
+      {
+        "count": 1,
+        "added": false,
+        "removed": true,
+        "value": "12"
+      },
+      {
+        "count": 1,
+        "added": true,
+        "removed": false,
+        "value": "18"
+      },
+      {
+        "count": 495,
+        "added": false,
+        "removed": false,
+        "value": ". Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height.A triangle has area 12. Find its height."
+      }
+    ]
+  },
+  {
+    "name": "unchanged problem",
+    "a": "A triangle has area 12. Find its height.",
+    "b": "A triangle has area 12. Find its height.",
+    "expected": [
+      {
+        "count": 10,
+        "added": false,
+        "removed": false,
+        "value": "A triangle has area 12. Find its height."
+      }
+    ]
+  },
+  {
+    "name": "space-aware edit",
+    "mode": "diffWordsWithSpace",
+    "a": "Find  x.\nThen find y.",
+    "b": "Find x.\r\nThen  find y.",
+    "expected": [
+      {
+        "count": 1,
+        "added": false,
+        "removed": false,
+        "value": "Find"
+      },
+      {
+        "count": 1,
+        "added": false,
+        "removed": true,
+        "value": "  "
+      },
+      {
+        "count": 1,
+        "added": true,
+        "removed": false,
+        "value": " "
+      },
+      {
+        "count": 2,
+        "added": false,
+        "removed": false,
+        "value": "x."
+      },
+      {
+        "count": 1,
+        "added": false,
+        "removed": true,
+        "value": "\n"
+      },
+      {
+        "count": 1,
+        "added": true,
+        "removed": false,
+        "value": "\r\n"
+      },
+      {
+        "count": 1,
+        "added": false,
+        "removed": false,
+        "value": "Then"
+      },
+      {
+        "count": 1,
+        "added": false,
+        "removed": true,
+        "value": " "
+      },
+      {
+        "count": 1,
+        "added": true,
+        "removed": false,
+        "value": "  "
+      },
+      {
+        "count": 4,
+        "added": false,
+        "removed": false,
+        "value": "find y."
+      }
+    ]
+  },
+  {
+    "name": "disjoint word replacement",
+    "a": "alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha ",
+    "b": "beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta ",
+    "expected": [
+      {
+        "count": 300,
+        "added": false,
+        "removed": true,
+        "value": "alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha alpha "
+      },
+      {
+        "count": 300,
+        "added": true,
+        "removed": false,
+        "value": "beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta beta "
+      }
+    ]
+  }
+]

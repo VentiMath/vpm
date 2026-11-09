@@ -21,6 +21,16 @@ jobs:
       - run: node scripts/check-bun.cjs
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Word diffs, frontend caller and consumer archives
+        run: |
+          node scripts/diff-conformance/check-controls.cjs
+          node scripts/diff-conformance/run.mjs
+          node scripts/diff-conformance/generated.mjs
+          node scripts/diff-conformance/options.mjs
+          node scripts/diff-conformance/types.cjs
+          node scripts/diff-conformance/browser.cjs
+          node scripts/diff-conformance/archives.cjs
       - run: npm --prefix scripts/ky-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Ky contracts, native HTTP and consumer archives
         run: |
@@ -629,6 +639,13 @@ jobs:
       - run: node scripts/check-bun.cjs
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Word diff contracts on Bun
+        run: |
+          bun scripts/diff-conformance/check-controls.cjs
+          bun scripts/diff-conformance/run.mjs
+          bun scripts/diff-conformance/generated.mjs
+          bun scripts/diff-conformance/options.mjs
       - run: npm --prefix scripts/ky-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Ky contracts and native HTTP on Bun
         run: |

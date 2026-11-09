@@ -1,0 +1,27 @@
+{
+  "upstream": {
+    "name": "diff",
+    "version": "9.0.0",
+    "repository": "https://github.com/kpdecker/jsdiff",
+    "checked": "2026-11-09"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "diffWords and diffWordsWithSpace, case folding, word Intl.Segmenter, oneChangePerToken, bounded edits and cooperative callback execution. No patch, character, line, array, CSS, JSON or sentence diff APIs."
+  },
+  "changes": [
+    "No upstream runtime ships; token spans and an independent edit frontier preserve source text.",
+    "Disjoint large inputs avoid exploring every edit distance.",
+    "Invalid bounds reject explicitly; timeout zero permits unchanged matches but no changed search.",
+    "Current diff9 punctuation and soft-hyphen tokenization replaces app8 behavior."
+  ],
+  "caller": {
+    "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",
+    "upstreamVersion": "8.0.2",
+    "paths": [
+      "src/app/(control-panel)/apps/problem-admin/ProblemAdminView.tsx"
+    ],
+    "scope": "InlineDiff renders proposed problem wording using diffWords, added/removed/value fields and React text children. No application adoption claimed."
+  }
+}
