@@ -164,11 +164,12 @@ frame side effects. Strings, objects and color interpolation remain unsupported.
 
 [Single-value benchmarks](bench/single/README.md) cover creation/replacement and
 repeated value delivery; they do not measure React rendering or browser paint.
-Repeating updates take 38% less time on Node and 58% less on Bun. Node scalar
-setup takes 27% less time; replacement differences are unestablished. Both Bun
-setup workloads are now near upstream parity, with differences inside process
-and control variation. Against the previous VPM implementation, setup takes
-[25–26% less time on Bun](bench/single-previous/README.md).
+Repeating updates take 38% less time on Node and 51% less on Bun in the final
+recording. Final setup comparisons on both runtimes are unestablished against
+process/control variation. The focused optimization in commit `780bbd7f` reduced
+Bun setup by [25–26% against the preceding VPM implementation](bench/single-previous/README.md).
+That before/after report retains its own source hashes; it is not a new timing of
+the later element API integration.
 
 Preparation avoids redundant option copies, while preserving owned snapshots and
 validation before replacement. Playback completion promises are created only
@@ -334,20 +335,70 @@ styles, SVG, percentages, auto dimensions, restoration and iframe reads. Earlier
 suite recordings retain their recorded source hashes and dates; they are
 historical measurements rather than new measurements of this addition.
 
-Reading three components from a repeated matrix takes 96% less time on Node and
-91% less on Bun. Variable endpoint resolution takes 37% less on Node and is now
-near upstream parity on Bun (635 versus 646 ns, direction unestablished).
+Reading three components from a repeated matrix takes 97% less time on Node and
+91% less on Bun. Variable endpoint resolution takes 46% less on Node. Its final
+Bun comparison is unestablished (1,165 versus 1,043 ns, with 59% control variation).
 Variable syntax uses a bounded one-entry cache; computed values are always read
 fresh. Layout bookkeeping is allocated only when measurement is needed, and
-resolver cancellation targets its own read phase. The [before/after recording](bench/reads-previous/README.md)
-has a 23% lower median for variable resolution, but control variation prevents a
-firm directional claim. Scalar reads and owned numeric resolution still have
-small overheads; see the complete report rather than treating this as a universal
-speedup.
+resolver cancellation targets its own read phase. The earlier focused
+[before/after recording](bench/reads-previous/README.md) has a 23% lower median,
+but control variation prevents a firm directional claim. Scalar reads and owned
+numeric resolution still have small overheads; see the complete report rather
+than treating this as a universal speedup.
+
+## Element animation APIs
+
+`animateElement(element, keyframes, transition)` connects the readers, resolvers,
+controllers and HTML/SVG effects. It returns one playback controller per animated
+property. `animateValues(getValue, keyframes, transition, resolverElement?)` uses
+the same path with caller-owned MotionValues.
+
+```js
+const controls = animateElement(card, { opacity: 1, x: "40px" }, {
+  duration: 0.3,
+  ease: "easeOut",
+});
+await Promise.all(controls.map((animation) => animation.finished));
+releaseElement(card);
+```
+
+Supported targets are numbers, matching CSS units, variables and two-keyframe
+measured lengths such as percentage/auto widths. HTML styles and SVG attributes,
+transforms and path drawing share the existing effect bindings. Completed
+forward animations restore responsive variable/percentage/auto endpoints instead
+of leaving a measured pixel constant. Per-property options, delays, repeats,
+from/current origins, snapshots, tween/spring playback, seek, speed, pause,
+cancel/replay and terminal stop are covered. The **element** controller's `time`
+is total elapsed seconds including delay, matching upstream's element controls;
+the low-level numeric controller retains its existing timing contract.
+
+Pending reads can be cancelled without painting. A newer request supersedes an
+older pending request; a failed deferred replacement leaves prior playback intact.
+Reentrant start callbacks cannot reattach superseded controllers. `releaseElement`
+cancels pending work, detaches effects and stops attached values. Explicit stopping
+also removes a redundant deferred unobserved-value check. Promises and completion
+handlers are allocated when observed, and shared render jobs are indexed once at
+binding time rather than deduplicated on every explicit flush.
+
+The implementation follows the public 14.7.0 API declarations and documented
+contracts, with black-box comparison tests. The application control 12.36.0 does
+not export these two APIs. [Element measurements](bench/elements/README.md) cover
+setup, variable resolution and sixteen-element seeking using JavaScript style
+sinks; Chrome separately verifies real DOM animation and layout. This does not
+establish React integration or application frame-rate improvements.
+
+The final element benchmarks have substantial process/control variation. Most
+directions, including sixteen-element seeking on both runtimes, are unestablished.
+One remaining regression is established: Node variable-width animation setup,
+seek and release takes 24.0 μs versus 7.3 μs upstream (259% more by paired change).
+The lower-level resolver and repeating numeric updates are faster on Node; this
+cost belongs to the new combined element setup path and remains follow-up work.
+
 
 ## Still to build
 
-Element animation APIs and effect registration come next.
+Custom effect registration, VisualElement handoff, `transitionEnd`, and the
+high-level selector/group `animate` wrapper remain unimplemented.
 Inertia, CSS spring serialization, color/complex-string mixers, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject

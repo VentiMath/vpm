@@ -1,8 +1,6 @@
 "use strict";
 const { motionValue, isMotionValue } = require("./value.cjs");
-const {
-  prepareMotionValue,
-} = require("./transition.cjs");
+const { prepareMotionValue } = require("./transition.cjs");
 // Keep lifecycle bookkeeping off the hot JSAnimation object. Installing an
 // accessor on each controller changes its object shape and deoptimizes ticks.
 class SingleValueAnimation {
@@ -81,6 +79,15 @@ function animateSingleValue(subject, target, options = {}) {
   const value = isMotionValue(subject) ? subject : motionValue(subject);
   if (typeof value.start !== "function" || !Number.isFinite(value.get()))
     throw new TypeError("animateSingleValue requires a finite numeric value");
+  return animatePreparedValue(value, target, options);
+}
+function animatePreparedValue(
+  value,
+  target,
+  options = {},
+  name = "",
+  proxy = value,
+) {
   if (!options || typeof options !== "object" || Array.isArray(options))
     throw new TypeError("transition must be an options object");
   const autoplay = options.autoplay !== false;
@@ -89,7 +96,13 @@ function animateSingleValue(subject, target, options = {}) {
     startFailed = false,
     animation;
   // Construct and validate while paused, before replacing an existing animation.
-  const controller = prepareMotionValue("", value, target, options, true)(() => {
+  const controller = prepareMotionValue(
+    name,
+    proxy,
+    target,
+    options,
+    true,
+  )(() => {
     animation.completed = true;
     complete?.();
   });
@@ -123,3 +136,7 @@ function animateSingleValue(subject, target, options = {}) {
   return animation;
 }
 module.exports = { animateSingleValue };
+
+Object.defineProperty(module.exports, "animatePreparedValue", {
+  value: animatePreparedValue,
+});

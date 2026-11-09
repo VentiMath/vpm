@@ -1,7 +1,7 @@
 "use strict";
 const { test } = require("node:test"),
   assert = require("node:assert/strict"),
-  api = require("..");
+  api = require(process.env.VMOTION_DOM_ENTRY || "../index.cjs");
 function fixture(values = {}) {
   const style = new Map(),
     priorities = new Map(),

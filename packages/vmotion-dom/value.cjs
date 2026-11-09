@@ -1,6 +1,6 @@
 "use strict";
 const { SubscriptionManager } = require("vmotion-utils");
-const { time, frame, cancelFrame } = require("./frame.cjs");
+const { time, frame, cancelFrame, frameSteps } = require("./frame.cjs");
 const collectMotionValues = { current: undefined };
 const events = new Set([
   "change",
@@ -197,6 +197,11 @@ class MotionValue {
     });
   }
   stop() {
+    // Explicit disposal makes the queued unobserved-value check redundant.
+    if (this.stopScheduled) {
+      frameSteps.read.cancel(this.stopIfUnobserved);
+      this.stopScheduled = false;
+    }
     const animation = this.animation;
     if (this.activeRun) this.activeRun.active = false;
     this.activeRun = undefined;

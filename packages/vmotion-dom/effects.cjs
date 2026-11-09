@@ -1,5 +1,5 @@
 "use strict";
-const { frame, cancelFrame } = require("./frame.cjs");
+const { frame, frameSteps } = require("./frame.cjs");
 const transformOrder = [
   "transformPerspective",
   "x",
@@ -205,19 +205,19 @@ class BindingState {
     this.subject = subject;
     this.kind = kind;
     this.bindings = new Map();
+    this.jobs = new Set();
     this.retained = undefined;
     this.groups = undefined;
     this.transformKeys = undefined;
     this.flush = () => {
       if (this.flushing) return;
       this.flushing = true;
-      const ready = Array.from(
-        new Set(Array.from(this.bindings.values(), (binding) => binding.job)),
-      ).filter((job) => job.queued);
+      const ready = [];
+      for (const job of this.jobs) if (job.queued) ready.push(job);
       let failure;
       for (const job of ready) {
         try {
-          cancelFrame(job.run);
+          frameSteps.render.cancel(job.run);
           if (job.queued) job.run();
         } catch (e) {
           failure ??= { error: e };
@@ -378,6 +378,7 @@ class BindingState {
       }
     }
     if (group) job.users++;
+    this.jobs.add(job);
     binding.off = () => {
       if (this.bindings.get(key) !== binding) return;
       this.bindings.delete(key);
@@ -387,8 +388,9 @@ class BindingState {
       if (group && binding.written !== undefined)
         (this.retained ??= new Map()).set(key, binding.written);
       if (!group || !job.active()) {
+        this.jobs.delete(job);
         job.queued = false;
-        cancelFrame(job.run);
+        frameSteps.render.cancel(job.run);
       }
     };
     this.queue(job);

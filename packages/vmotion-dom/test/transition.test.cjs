@@ -1,7 +1,7 @@
 "use strict";
 const test = require("node:test"),
   assert = require("node:assert/strict");
-const api = require("..");
+const api = require(process.env.VMOTION_DOM_ENTRY || "../index.cjs");
 function harness(target, options = {}, name = "opacity", initial = 0) {
   let now = 1000,
     update,

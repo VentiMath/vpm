@@ -38,6 +38,7 @@ jobs:
           node scripts/motion-dom-conformance/values.cjs
           node scripts/motion-dom-conformance/playback.cjs
           node scripts/motion-dom-conformance/spring.cjs
+          node scripts/motion-dom-conformance/elements.cjs
           node scripts/motion-dom-conformance/single.cjs
           node scripts/motion-dom-conformance/reads.cjs
           node scripts/motion-dom-conformance/transitions.cjs
@@ -675,6 +676,7 @@ jobs:
           bun scripts/motion-dom-conformance/values.cjs
           bun scripts/motion-dom-conformance/playback.cjs
           bun scripts/motion-dom-conformance/spring.cjs
+          bun scripts/motion-dom-conformance/elements.cjs
           bun scripts/motion-dom-conformance/single.cjs
           bun scripts/motion-dom-conformance/reads.cjs
           bun scripts/motion-dom-conformance/transitions.cjs

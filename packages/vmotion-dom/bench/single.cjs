@@ -91,6 +91,7 @@ require("../../../scripts/bench-process.cjs")
       "../../scripts/motion-dom-conformance/setup-baseline.cjs",
       path.relative(root, previous ? path.dirname(control) : control),
       "index.cjs",
+      "element.cjs",
       "index.mjs",
       "single.cjs",
       "reads.cjs",

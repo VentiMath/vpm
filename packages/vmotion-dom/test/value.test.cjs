@@ -274,3 +274,10 @@ test("explicit-velocity updates preserve attached passive effects", () => {
   assert.deepEqual(seen, [10]);
   v.destroy();
 });
+
+test('explicit stop removes the redundant unobserved-value frame check',()=>{
+ const value=api.motionValue(0),off=value.on('change',()=>{});off();
+ let calls=0;const stop=value.stop.bind(value);value.stop=()=>{calls++;stop()};
+ value.stop();api.frameSteps.read.process({timestamp:1000,delta:16,isProcessing:true});
+ assert.equal(calls,1);
+});

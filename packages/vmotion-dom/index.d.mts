@@ -420,3 +420,44 @@ export declare function animateSingleValue(
   target: number | (number | null)[],
   options?: NumericValueTransition,
 ): SingleValueAnimation;
+
+/** Numeric values, matching CSS units, variables and two-frame measured lengths. */
+export type ElementKeyframes = Record<
+  string,
+  number | string | (number | string | null)[] | undefined
+>;
+export interface ElementValueTransition
+  extends Omit<NumericValueTransition, "from" | "onUpdate"> {
+  from?: number | string;
+  onUpdate?: (value: number | string) => void;
+}
+export type ElementTransition = ElementValueTransition & {
+  default?: ElementValueTransition;
+  skipAnimations?: boolean;
+  reduceMotion?: boolean;
+  [property: string]: unknown;
+};
+export interface ElementAnimation extends PromiseLike<void> {
+  readonly finished: Promise<void>;
+  readonly duration: number;
+  readonly iterationDuration: number;
+  readonly state: string;
+  time: number;
+  speed: number;
+  play(): void;
+  pause(): void;
+  stop(): void;
+  cancel(): void;
+  complete(): void;
+}
+export declare function animateElement(
+  element: HTMLElement | SVGElement,
+  keyframes: ElementKeyframes,
+  transition?: ElementTransition,
+): ElementAnimation[];
+export declare function animateValues(
+  getValue: (key: string) => MotionValue<any>,
+  keyframes: ElementKeyframes,
+  transition?: ElementTransition,
+  element?: ResolverElement,
+): ElementAnimation[];

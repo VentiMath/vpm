@@ -168,3 +168,18 @@ animateSingleValue(position, [null, 1], { duration: 0.3 });
 animateSingleValue(0, 10, { onUpdate: (x) => x.toFixed(2) });
 // @ts-expect-error string mixing is not implemented
 animateSingleValue("red", "blue");
+
+import { animateElement, animateValues } from "vmotion-dom";
+const elementControls = animateElement(
+  document.body,
+  { opacity: 1, x: [null, "20px"] },
+  { duration: 0.3 },
+);
+elementControls[0]!.pause();
+elementControls[0]!.time = 0.1;
+void elementControls[0]!.finished;
+animateValues(() => position, { x: 10 }, { x: { type: "spring" } });
+// @ts-expect-error selectors belong to the future high-level animate wrapper
+animateElement(".selector", { opacity: 1 });
+// @ts-expect-error object and color mixing is not implemented
+animateElement(document.body, { value: { nested: 1 } });

@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T21:42:06.908Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T22:01:29.557Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create and stop a scalar animation | 1800 | 1379 | -27.3% | -23.5% | -32.7% | 4.7% | lower time in every pair, beyond control spread |
-| reset, replace and stop a MotionValue animation | 1436 | 1379 | -1.3% | -5.7% | 44.5% | 63.7% | unestablished at this precision |
-| deliver repeating single-value updates | 82 | 49 | -37.8% | -37.8% | -26.4% | 3.9% | lower time in every pair, beyond control spread |
+| create and stop a scalar animation | 2982 | 1604 | -43.1% | 21.1% | -69.5% | 99.2% | unestablished at this precision |
+| reset, replace and stop a MotionValue animation | 2427 | 1579 | -34.7% | 9% | -42% | 32.7% | unestablished at this precision |
+| deliver repeating single-value updates | 119 | 70 | -37.6% | -35.1% | -46.6% | 15.8% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T21:41:24.312Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T22:01:10.995Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create and stop a scalar animation | 381 | 385 | 1.8% | 0% | 3.4% | 1.7% | unestablished at this precision |
-| reset, replace and stop a MotionValue animation | 350 | 365 | 4.2% | 1.3% | 6.1% | 14.5% | unestablished at this precision |
-| deliver repeating single-value updates | 73 | 31 | -57.8% | -57.8% | -58.1% | 6% | lower time in every pair, beyond control spread |
+| create and stop a scalar animation | 1118 | 908 | -7.4% | -1% | -29.2% | 49.1% | unestablished at this precision |
+| reset, replace and stop a MotionValue animation | 769 | 890 | 24.1% | 1.1% | 51.6% | 22.7% | unestablished at this precision |
+| deliver repeating single-value updates | 130 | 57 | -51.3% | -46.4% | -58.1% | 16.2% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

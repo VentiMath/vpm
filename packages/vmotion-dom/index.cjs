@@ -10,4 +10,5 @@ module.exports = {
   ...require("./playback.cjs"),
   ...require("./spring.cjs"),
   ...require("./effects.cjs"),
+  ...require("./element.cjs"),
 };
