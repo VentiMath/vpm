@@ -44,7 +44,7 @@ function flush(forced) {
           active.push(r);
         } catch (e) {
           r.cancel();
-          failure ??= e;
+          failure ??= { error: e };
         }
     // Conflicting measurements of the same property get separate transactions.
     // Otherwise the last temporary write would supply both endpoints.
@@ -78,7 +78,7 @@ function flush(forced) {
                 r[phase]?.();
               } catch (e) {
                 r.cancel();
-                failure ??= e;
+                failure ??= { error: e };
               }
       } finally {
         for (let i = pass.length - 1; i >= 0; i--)
@@ -86,7 +86,7 @@ function flush(forced) {
             pass[i].restore?.();
           } catch (e) {
             pass[i].cancel();
-            failure ??= e;
+            failure ??= { error: e };
           }
       }
     }
@@ -100,10 +100,10 @@ function flush(forced) {
       try {
         r.complete(forced);
       } catch (e) {
-        failure ??= e;
+        failure ??= { error: e };
       }
   if (pending.size) frame.read(readBatch);
-  if (failure) throw failure;
+  if (failure) throw failure.error;
 }
 function readBatch() {
   flush(false);
@@ -317,6 +317,9 @@ class DOMKeyframesResolver extends KeyframeResolver {
       this.finalKeyframe ??= this.source.at(-1);
       return;
     }
+    const view = node.ownerDocument?.defaultView;
+    if (Number.isFinite(view?.scrollX) && Number.isFinite(view?.scrollY))
+      this.scroll = { view, x: view.scrollX, y: view.scrollY };
     const property = cssName(key);
     this.saved = {
       property,
@@ -368,6 +371,13 @@ class DOMKeyframesResolver extends KeyframeResolver {
     this.saved = undefined;
     if (value) this.node.style.setProperty(property, value, priority);
     else this.node.style.removeProperty(property);
+    const scroll = this.scroll;
+    this.scroll = undefined;
+    if (
+      scroll &&
+      (scroll.view.scrollX !== scroll.x || scroll.view.scrollY !== scroll.y)
+    )
+      scroll.view.scrollTo(scroll.x, scroll.y);
   }
 }
 module.exports = {

@@ -303,3 +303,67 @@ test("conflicting measurements resolve independently and restore styles", () => 
   ]);
   assert.equal(style.get("width"), "20px");
 });
+test("falsy thrown values propagate after other resolvers finish", () => {
+  for (const error of [undefined, null, 0, false, ""]) {
+    let completed = false,
+      caught = false;
+    new api.KeyframeResolver(
+      [0, 1],
+      () => {
+        throw error;
+      },
+      undefined,
+      undefined,
+      undefined,
+      true,
+    ).scheduleResolve();
+    new api.KeyframeResolver(
+      [0, 1],
+      () => (completed = true),
+      undefined,
+      undefined,
+      undefined,
+      true,
+    ).scheduleResolve();
+    try {
+      api.flushKeyframeResolvers();
+    } catch (actual) {
+      caught = true;
+      assert.equal(actual, error);
+    }
+    assert.equal(caught, true);
+    assert.equal(completed, true);
+  }
+});
+test("temporary layout measurements restore their window scroll position", () => {
+  const { node, style } = fixture();
+  node.style.setProperty("height", "20px");
+  const view = node.ownerDocument.defaultView;
+  view.scrollX = 5;
+  view.scrollY = 200;
+  view.scrollTo = (x, y) => {
+    view.scrollX = x;
+    view.scrollY = y;
+  };
+  view.getComputedStyle = () => ({
+    height: style.get("height") === "auto" ? "100px" : style.get("height"),
+  });
+  const set = node.style.setProperty;
+  node.style.setProperty = (...args) => {
+    set(...args);
+    view.scrollY = 0;
+  };
+  let frames;
+  new api.DOMKeyframesResolver(
+    [null, "auto"],
+    (x) => (frames = x),
+    "height",
+    undefined,
+    { current: node },
+  ).scheduleResolve();
+  api.flushKeyframeResolvers();
+  assert.deepEqual(frames, [20, 100]);
+  assert.equal(style.get("height"), "20px");
+  assert.equal(view.scrollX, 5);
+  assert.equal(view.scrollY, 200);
+});
