@@ -2,7 +2,7 @@
 
 Independent element reads, keyframe resolution, DOM effects, numeric transitions, playback and scheduling targeting **motion-dom 14.7.0**, with
 12.36.0 as the application's comparison control. This is a partial implementation
-of Motion DOM; element animation APIs, inertia and the React renderer remain to be built.
+of Motion DOM; renderer handoff, inertia and the React renderer remain to be built.
 
 ```js
 import { interpolate, stagger } from "vmotion-dom";
@@ -387,12 +387,20 @@ setup, variable resolution and sixteen-element seeking using JavaScript style
 sinks; Chrome separately verifies real DOM animation and layout. This does not
 establish React integration or application frame-rate improvements.
 
-The final element benchmarks have substantial process/control variation. Most
-directions, including sixteen-element seeking on both runtimes, are unestablished.
-One remaining regression is established: Node variable-width animation setup,
-seek and release takes 24.0 μs versus 7.3 μs upstream (259% more by paired change).
-The lower-level resolver and repeating numeric updates are faster on Node; this
-cost belongs to the new combined element setup path and remains follow-up work.
+Element setup now owns one option snapshot and one lifecycle facade, avoiding
+repeated configuration copies and a second control wrapper. Caller snapshots,
+validation before replacement and callback-failure propagation are retained.
+A new regression covers completing synchronously inside an animation-start hook
+without restarting playback or losing a responsive CSS endpoint.
+
+The [before/after measurements](bench/elements-previous/README.md) retain all
+samples. Node medians fell from 5.67 to 3.40 μs for fades and 6.72 to 4.80 μs
+for variable-width setup; process/control variation prevents a firm percentage
+speedup claim. The current upstream comparison also has inconclusive Node
+directions (4.53 versus 2.61 μs for fades, 5.91 versus 3.82 μs for variables).
+Bun variable setup still costs 59% more than upstream in every pair beyond
+control variation. Sixteen-element update timings are inconclusive on both
+runtimes. These are setup microbenchmarks, not application frame-rate results.
 
 
 ## Still to build

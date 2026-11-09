@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T22:00:48.523Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T22:32:09.265Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, seek and release an element fade | 6435 | 13651 | 248.4% | 137.1% | 364.4% | 544.7% | unestablished at this precision |
-| resolve, seek and release a variable width animation | 7330 | 24010 | 259.2% | 114.2% | 424.9% | 63.9% | higher time in every pair, beyond control spread |
-| seek and paint sixteen element transforms | 4742 | 5982 | 27.8% | -3.1% | 54.3% | 75.8% | unestablished at this precision |
+| create, seek and release an element fade | 2613 | 4529 | 30.8% | 20.6% | 56.9% | 10% | unestablished at this precision |
+| resolve, seek and release a variable width animation | 3817 | 5906 | 45.1% | 77.7% | 10.6% | 3% | unestablished at this precision |
+| seek and paint sixteen element transforms | 3406 | 3501 | 3.1% | 5.6% | 0% | 2.1% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T22:00:26.851Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T22:32:24.162Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, seek and release an element fade | 4734 | 4133 | 1.8% | 44.1% | -33.7% | 66.9% | unestablished at this precision |
-| resolve, seek and release a variable width animation | 7955 | 10295 | 38.7% | 50.1% | 29% | 19.4% | unestablished at this precision |
-| seek and paint sixteen element transforms | 4114 | 3796 | -1.8% | -16.3% | -1.8% | 50% | unestablished at this precision |
+| create, seek and release an element fade | 2089 | 1933 | -7.4% | -5.4% | -9.9% | 6.1% | unestablished at this precision |
+| resolve, seek and release a variable width animation | 3408 | 5357 | 59.1% | 59% | 59.1% | 4.4% | higher time in every pair, beyond control spread |
+| seek and paint sixteen element transforms | 2933 | 2897 | -0.6% | -0.6% | 1.2% | 8.1% | unestablished at this precision |
 
 ## Reproduce
 
@@ -60,12 +60,4 @@ The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
 
-## Workloads
-
-The first two cases create, seek, paint, stop and release an element animation,
-then drain deferred read-phase cleanup for both implementations. The third reuses
-sixteen paused controllers and seeks/flushes their transforms. These are explicit
-JavaScript control and serialization workloads with style sinks; no browser paint,
-layout or application frame rate is timed. Chrome separately verifies actual
-frames, calendar spring coefficients, SVG and responsive layout endpoints.
-All final control variation and inconclusive directions are retained.
+The first two workloads create, seek, paint, stop and release a controller and drain read-phase cleanup. The last reuses sixteen paused controllers. Style sinks measure JavaScript work, not browser layout or application frame rates. See the [before/after control](../elements-previous/README.md) for the comparison with the prior VPM commit.

@@ -411,7 +411,9 @@ function effect(kind) {
   const states = new WeakMap();
   function apply(subject, values) {
     const subjects =
-      kind === "prop" ? [subject] : [...new Set(resolveElements(subject))];
+      kind === "prop" || subject?.nodeType === 1
+        ? [subject]
+        : [...new Set(resolveElements(subject))];
     const entries = Object.entries(values);
     // Validate every binding before changing any subject.
     for (const [key, value] of entries) {
@@ -457,7 +459,11 @@ function effect(kind) {
   }
   apply.get = (subject, key) =>
     states
-      .get(kind === "prop" ? subject : resolveElements(subject)[0])
+      .get(
+        kind === "prop" || subject?.nodeType === 1
+          ? subject
+          : resolveElements(subject)[0],
+      )
       ?.get(key);
   apply.flush = (subject) => states.get(subject)?.flush();
   apply.state = (subject) => states.get(subject);
@@ -471,7 +477,10 @@ function releaseElement(element) {
   const style = styleEffect.state(element),
     svg = svgEffect.state(element);
   if (!style && !svg) return undefined;
-  return new Map([...(style?.release() ?? []), ...(svg?.release() ?? [])]);
+  if (!style) return svg.release();
+  const values = style.release();
+  if (svg) for (const [key, value] of svg.release()) values.set(key, value);
+  return values;
 }
 module.exports = {
   styleEffect,

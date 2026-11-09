@@ -368,3 +368,27 @@ test("skip and reduced-motion settings make transform playback instantaneous", (
     api.releaseElement(e);
   }
 });
+
+test("synchronous start-hook completion preserves responsive endpoints and lifecycle order", async () => {
+  const e = node({ width: "20px", "--size": "40px" }),
+    value = api.motionValue("20px"),
+    events = [];
+  api.styleEffect(e, { width: value });
+  value.on("animationStart", () => {
+    events.push("start");
+    value.animation.complete();
+  });
+  value.on("animationComplete", () => events.push("complete"));
+  const [a] = api.animateElement(
+    e,
+    { width: "var(--size)" },
+    { duration: 1, onComplete: () => events.push("callback") },
+  );
+  const finished = a.finished;
+  api.flushKeyframeResolvers();
+  await finished;
+  flush(e);
+  assert.equal(e.style.width, "var(--size)");
+  assert.deepEqual(events, ["start", "callback", "complete"]);
+  api.releaseElement(e);
+});

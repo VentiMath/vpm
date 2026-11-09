@@ -83,7 +83,14 @@ function animateMotionValue(
 }
 // Internal preparation mode pauses playback without changing transition defaults
 // or copying user options just to add autoplay:false.
-function prepareMotionValue(name, value, target, transition = {}, paused = false) {
+function prepareMotionValue(
+  name,
+  value,
+  target,
+  transition = {},
+  paused = false,
+  owned = false,
+) {
   if (
     !value ||
     typeof value.get !== "function" ||
@@ -92,9 +99,9 @@ function prepareMotionValue(name, value, target, transition = {}, paused = false
   )
     throw new TypeError("expected a MotionValue");
   optionsObject(transition);
-  const selected = getValueTransition(transition, name);
+  const selected = owned ? transition : getValueTransition(transition, name);
   optionsObject(selected);
-  const options = snapshot(selected);
+  const options = owned ? selected : snapshot(selected);
   const delay = selected.delay ?? transition.delay ?? 0;
   const elapsed = transition.elapsed ?? 0;
   if (!Number.isFinite(delay) || !Number.isFinite(elapsed))
@@ -107,7 +114,11 @@ function prepareMotionValue(name, value, target, transition = {}, paused = false
       options[key] *= 1000;
     }
   }
-  const frames = Array.isArray(target) ? target.slice() : [null, target];
+  const frames = owned
+    ? target
+    : Array.isArray(target)
+      ? target.slice()
+      : [null, target];
   if (!frames.length || frames.some((x) => x !== null && !Number.isFinite(x)))
     throw new TypeError(
       "numeric targets must contain finite numbers or null wildcards",
@@ -121,14 +132,15 @@ function prepareMotionValue(name, value, target, transition = {}, paused = false
     ? {}
     : getDefaultTransition(name, { keyframes: frames });
   if (defaults.duration !== undefined) defaults.duration *= 1000;
-  if (!Object.hasOwn(options, "ease")) options.ease = defaults.ease ?? "easeOut";
+  if (!Object.hasOwn(options, "ease"))
+    options.ease = defaults.ease ?? "easeOut";
   for (const key of Object.keys(defaults))
     if (!Object.hasOwn(options, key)) options[key] = defaults[key];
   if (paused) options.autoplay = false;
   return (complete) => {
     if (typeof complete !== "function")
       throw new TypeError("completion must be a function");
-    const resolved = frames.slice();
+    const resolved = owned ? frames : frames.slice();
     for (let i = 0; i < resolved.length; i++)
       if (resolved[i] === null)
         resolved[i] = i ? resolved[i - 1] : (options.from ?? value.get());
@@ -136,19 +148,21 @@ function prepareMotionValue(name, value, target, transition = {}, paused = false
     if (resolved.length === 1 && (type === "spring" || type === spring))
       resolved.push(resolved[0]);
     // from only replaces an unresolved start, never an explicit first keyframe.
-    return new JSAnimation({
-      ...options,
-      velocity: Object.hasOwn(options, "velocity") ? options.velocity : value.getVelocity(),
-      keyframes: resolved,
-      onUpdate(next) {
-        value.set(next);
-        options.onUpdate?.(next);
-      },
-      onComplete() {
-        complete();
-        options.onComplete?.();
-      },
-    });
+    const prepared = owned ? options : { ...options };
+    const onUpdate = options.onUpdate,
+      onComplete = options.onComplete;
+    if (!Object.hasOwn(prepared, "velocity"))
+      prepared.velocity = value.getVelocity();
+    prepared.keyframes = resolved;
+    prepared.onUpdate = (next) => {
+      value.set(next);
+      onUpdate?.(next);
+    };
+    prepared.onComplete = () => {
+      complete();
+      onComplete?.();
+    };
+    return new JSAnimation(prepared);
   };
 }
 module.exports = {
@@ -158,4 +172,6 @@ module.exports = {
   isTransitionDefined,
 };
 
-Object.defineProperty(module.exports, "prepareMotionValue", {value: prepareMotionValue});
+Object.defineProperty(module.exports, "prepareMotionValue", {
+  value: prepareMotionValue,
+});

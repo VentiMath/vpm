@@ -14,8 +14,8 @@ const {
   getValueTransition,
   getDefaultTransition,
   isTransitionDefined,
+  prepareMotionValue,
 } = require("./transition.cjs");
-const { animatePreparedValue } = require("./single.cjs");
 const owners = new WeakMap(),
   requests = new WeakMap();
 const scalar = /^([+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?)([a-z%]*)$/i;
@@ -56,9 +56,12 @@ function prepareFrames(input) {
   return frames;
 }
 function decode(frames) {
+  // The resolver hands this callback an owned snapshot, so numeric conversion
+  // can reuse it without changing the caller's data or the resolver's source.
   let unit;
-  const numbers = frames.map((value) => {
-    if (typeof value === "number") return value;
+  for (let i = 0; i < frames.length; i++) {
+    const value = frames[i];
+    if (typeof value === "number") continue;
     const match = scalar.exec(value.trim());
     if (!match || !Number.isFinite(Number(match[1])))
       throw new TypeError(
@@ -67,10 +70,11 @@ function decode(frames) {
     if (unit !== undefined && unit !== match[2])
       throw new TypeError("resolved keyframes have incompatible CSS units");
     unit = match[2];
-    return Number(match[1]);
-  });
-  return { numbers, format: unit ? (n) => n + unit : undefined };
+    frames[i] = Number(match[1]);
+  }
+  return { numbers: frames, format: unit ? (n) => n + unit : undefined };
 }
+
 class ElementResolver extends DOMKeyframesResolver {}
 for (const method of [
   "readKeyframes",
@@ -156,13 +160,14 @@ class ElementAnimation {
     if (this.stopped || this.cancelled || !this.owned()) return;
     try {
       const { numbers, format } = decode(frames);
-      const configured = isTransitionDefined(this.options)
-        ? this.options
-        : {
-            ...getDefaultTransition(this.key, { keyframes: numbers }),
-            ...this.options,
-          };
-      const { onUpdate, onComplete, ...options } = configured;
+      const options = this.options;
+      if (!isTransitionDefined(options)) {
+        const defaults = getDefaultTransition(this.key, { keyframes: numbers });
+        for (const key of Object.keys(defaults))
+          if (!Object.hasOwn(options, key)) options[key] = defaults[key];
+      }
+      const onUpdate = options.onUpdate,
+        onComplete = options.onComplete;
       const reverse =
         (options.repeatType === "reverse" || options.repeatType === "mirror") &&
         options.repeat % 2 === 1;
@@ -175,37 +180,52 @@ class ElementAnimation {
             },
           }
         : this.value;
-      this.animation = animatePreparedValue(
-        this.value,
-        numbers,
-        {
-          ...options,
-          autoplay: false,
-          onUpdate:
-            onUpdate && (format ? (n) => onUpdate(format(n)) : onUpdate),
-          onComplete: () => {
-            this.completed = true;
-            if (final !== undefined && !reverse && this.animation.speed >= 0)
-              this.value.set(final);
-            onComplete?.();
-          },
-        },
+      options.autoplay = false;
+      options.onUpdate =
+        onUpdate && (format ? (n) => onUpdate(format(n)) : onUpdate);
+      options.onComplete = () => {
+        this.completed = true;
+        if (final !== undefined && !reverse && this.animation.speed >= 0)
+          this.value.set(final);
+        onComplete?.();
+      };
+      let complete;
+      // Validate before replacing the currently running value. This facade owns
+      // the lifecycle directly instead of allocating a second control wrapper.
+      this.animation = prepareMotionValue(
         this.key,
         proxy,
-      );
+        numbers,
+        options,
+        true,
+        true,
+      )(() => {
+        this.lifecycleCompleted = true;
+        complete?.();
+      });
+      this.completionState = this.animation.completion;
+      this.withLifecycle = true;
+      this.lifecycle = this.value.start((done) => {
+        complete = done;
+        return this;
+      });
+      this.lifecycle.catch(() => {});
       if (this.stopped || !this.owned()) {
         this.animation.stop();
-        this.resolveReady();
+        if (this.waitState.promise) {
+          const state = this.waitState;
+          this.finished.then(state.resolve, state.reject);
+        }
         return;
       }
       this.previous = undefined;
       this.bind();
       if (this.pendingSpeed !== undefined)
         this.animation.speed = this.pendingSpeed;
-      if (this.autoplay) this.animation.play();
+      if (this.autoplay && !this.completed) this.animation.play();
       if (this.waitState.promise) {
         const state = this.waitState;
-        this.animation.finished.then(state.resolve, state.reject);
+        this.finished.then(state.resolve, state.reject);
       }
     } catch (error) {
       try {
@@ -221,9 +241,24 @@ class ElementAnimation {
     return this.animation;
   }
   get finished() {
-    if (this.failed) return this.waitingPromise();
-    return this.animation ? this.animation.finished : this.waitingPromise();
+    if (this.failed || !this.animation || !this.lifecycle)
+      return this.waitingPromise();
+    if (this.completionState !== this.animation.completion) {
+      this.completionState = this.animation.completion;
+      this.withLifecycle = !this.lifecycleCompleted;
+      this.combined = undefined;
+    }
+    if (!this.withLifecycle) return this.animation.finished;
+    if (!this.combined) {
+      this.combined = Promise.race([
+        this.lifecycle,
+        this.animation.finished.then(() => {}),
+      ]);
+      this.combined.catch(() => {});
+    }
+    return this.combined;
   }
+
   then(resolve, reject) {
     return this.finished.then(resolve, reject);
   }
@@ -240,12 +275,12 @@ class ElementAnimation {
     return this.ensure()?.iterationDuration ?? 0;
   }
   get time() {
-    return (this.ensure()?.controller.rawTime ?? 0) / 1000;
+    return (this.ensure()?.rawTime ?? 0) / 1000;
   }
   set time(t) {
     if (!Number.isFinite(t)) throw new RangeError("time must be finite");
     const a = this.ensure();
-    if (a) a.controller.time = t - a.controller.delay / 1000;
+    if (a) a.time = t - a.delay / 1000;
   }
   get speed() {
     return this.animation?.speed ?? this.pendingSpeed ?? 1;
@@ -299,13 +334,13 @@ function plan(getValue, keyframes, transition, element, bind, registry) {
       continue;
     if (unsafe.has(key)) throw new TypeError("unsafe animation property");
     const options = snapshot(getValueTransition(transition, key));
-    options.delay ??= transition.delay;
+    if (options.delay == null && transition.delay !== undefined)
+      options.delay = transition.delay;
     if (transition.elapsed !== undefined) options.elapsed = transition.elapsed;
-    if (options.delay === undefined) delete options.delay;
     const frames = prepareFrames(keyframes[key]);
     if (options.from !== undefined) {
       if (frames[0] === null) frames[0] = options.from;
-      delete options.from;
+      options.from = undefined;
     }
     if (
       transition.skipAnimations ||
@@ -357,7 +392,6 @@ function animateElement(element, keyframes, transition = {}, visualElement) {
   const effect = svg ? svgEffect : styleEffect;
   let registry = owners.get(element);
   if (!registry) owners.set(element, (registry = new Map()));
-  const values = new Map();
   const reader = {
     current: element,
     readValue: (key) =>
@@ -365,9 +399,8 @@ function animateElement(element, keyframes, transition = {}, visualElement) {
   };
   const handles = plan(
     (key) => {
-      let value =
-        effect.get(element, key) || registry.get(key)?.value || values.get(key);
-      if (!value) values.set(key, (value = motionValue(undefined)));
+      let value = effect.get(element, key) || registry.get(key)?.value;
+      if (!value) value = motionValue(undefined);
       return value;
     },
     keyframes,

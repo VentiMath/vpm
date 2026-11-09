@@ -5,6 +5,12 @@ const path = require("node:path"),
   fixture = path.resolve(root, "../../scripts/motion-utils-conformance");
 require(path.join(fixture, "check-controls.cjs")).check();
 require("../../../scripts/check-bun.cjs");
+const previous = process.env.VMOTION_ELEMENT_PREVIOUS === "1";
+const baseline = previous
+  ? require("../../../scripts/motion-dom-conformance/setup-baseline.cjs").prepare(
+      "5182639e6750dad8188cc3d35837e4236a2e963a",
+    )
+  : undefined;
 function makeElement() {
   return Object.assign(new HTMLElement(), {
     nodeType: 1,
@@ -108,7 +114,9 @@ const specs = [
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
+    upstream:
+      baseline ||
+      path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
     vpm: path.join(root, "index.cjs"),
     cases: specs.map(({ name, setup, validate }) => ({
       name,
@@ -128,6 +136,12 @@ require("../../../scripts/bench-process.cjs")
       },
     })),
     files: [
+      ...(previous
+        ? [
+            "../../scripts/motion-dom-conformance/setup-baseline.cjs",
+            "../../scripts/motion-dom-conformance/node_modules/.setup-before-5182639e",
+          ]
+        : []),
       "index.cjs",
       "index.mjs",
       "single.cjs",

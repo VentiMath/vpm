@@ -46,7 +46,8 @@
     "Resolver batches preserve any thrown value, including falsy exceptions, and restore window scroll after temporary layout measurements.",
     "Setup owns one prepared option snapshot, creates playback promises only when observed, and caches CSS variable syntax without caching computed values. Resolver cancellation targets its read phase and allocates layout transactions only when needed.",
     "Element animations reject unsupported targets, preserve responsive variable/percentage endpoints, share direct effect values and cancel unresolved work on release. Failed deferred resolution retains prior playback; reentrant replacement cannot reattach stale controllers.",
-    "Element controls reuse prepared numeric playback, make completion waiting lazy, and index shared render jobs once per binding. Explicit stop removes a redundant deferred unobserved-value check. Packed tests now route every test file to the installed runtime."
+    "Element controls reuse prepared numeric playback, make completion waiting lazy, and index shared render jobs once per binding. Explicit stop removes a redundant deferred unobserved-value check. Packed tests now route every test file to the installed runtime.",
+    "Element setup reuses one internal option snapshot and one lifecycle facade, avoiding duplicate controller/configuration allocations. Public factories and caller arrays remain independently snapshotted. Synchronous start-hook completion does not restart finished playback."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",
