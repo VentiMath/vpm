@@ -1,0 +1,1335 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-09T20:49:31.245Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "4b8332606fdfa7ae048d6b6ed4922be16eabf8ad6310e854aedf7e3b9bf90fe1",
+    "bench/transitions.cjs": "c2c44319561c84e7093ae9d1ae794c456fcb0f59235b14e90ac43436b20eb4f9",
+    "effects.cjs": "3aa86de29f07f161c481bcb97b28a040946c2552a25ba70b1ee27ea94885d163",
+    "frame.cjs": "4b82b639ed380b1c902191bbe7469796ef95f31be6ec65e284e936cefd7b2f97",
+    "index.cjs": "dbb33f670e848b7de2751f23ad2c7454e9f00d85aea18997d6c8e77ce4ceb519",
+    "index.mjs": "42d9fdaeef4fff905224aea83ba4a008bdb16204b997b516754bb122caecbc9c",
+    "mapping.cjs": "57c8efdb499434d4b2b617377b488679335c110b7fdfccb0134099f27f207a74",
+    "package.json": "1fc2493fbbb0374fe514ef547cf42c53a4c72f7bbc5fddf31b068153fc1ad3e8",
+    "playback.cjs": "46f125f0863383a37ec5a23da45dbfdcef0f199158b7a1c8510a7c730b04771d",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "transition.cjs": "2bc8a2d8274a95df5208f3fcc26bbfbd41f52ccfd6422745a699fb24e622824d",
+    "value.cjs": "a1e0d68ff67654341cae321113fdcf2b0c1a45d9645bca7a50c95c570d2d2480"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 45965,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 39238,
+            "samples": [
+              323.9461746266378,
+              324.792497069168,
+              309.7401498547318,
+              318.50290534685723,
+              299.73920689127885,
+              307.8924257097706,
+              301.33735154696944,
+              310.2785310158522,
+              296.12979764513915,
+              322.51898669657044,
+              316.0201845150118,
+              293.4155920281357
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 12137,
+            "samples": [
+              685.0368295295303,
+              662.5950399604527,
+              702.6104473922663,
+              664.1021669275759,
+              693.4889181840656,
+              727.5720524017498,
+              694.0725055615037,
+              673.8829199967007,
+              700.5575512894527,
+              683.1554749938234,
+              703.5167669110997,
+              681.1368542473372
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 161002,
+            "samples": [
+              61.81677867355692,
+              62.05202419845715,
+              63.620073042570446,
+              63.273282319474525,
+              63.05330368566841,
+              64.77585371610279,
+              65.10840238009452,
+              66.81361101104318,
+              62.6904758947095,
+              64.53154619197232,
+              64.21917740152172,
+              66.50745953466446
+            ]
+          }
+        ],
+        "checksum": 54240
+      },
+      "vpm": {
+        "pid": 45979,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 39238,
+            "samples": [
+              299.3632957846987,
+              292.52043936999826,
+              294.80455171007713,
+              303.85937101789136,
+              295.70080024466097,
+              305.15594576685976,
+              304.21507212396216,
+              297.4603700494427,
+              304.6950660074417,
+              308.72281971558095,
+              295.8887557979503,
+              303.7298027422385
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 12137,
+            "samples": [
+              630.9185960286741,
+              619.871055450275,
+              618.2404218505435,
+              634.2863969679437,
+              612.9775891900794,
+              631.5535964406359,
+              631.9072258383426,
+              604.3434950976368,
+              626.0332866441453,
+              660.792782400922,
+              618.7449946444793,
+              623.26291505314
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 161002,
+            "samples": [
+              28.566669979254875,
+              28.49602489410037,
+              28.642762201711694,
+              28.668383001453588,
+              28.569520875517608,
+              28.518024620812078,
+              29.156215450739747,
+              28.988509459509572,
+              28.584272245065286,
+              28.57728475422665,
+              28.5850486329364,
+              28.79156780661097
+            ]
+          }
+        ],
+        "checksum": 7072
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 45985,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 35902,
+            "samples": [
+              316.31942510166516,
+              306.0971533619287,
+              307.86354520639463,
+              308.52275639240065,
+              310.3726811876784,
+              304.7729652944125,
+              318.6614394741241,
+              314.6969528160006,
+              308.99623976380053,
+              311.5193303994207,
+              316.06760069076813,
+              311.94989137095337
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 17432,
+            "samples": [
+              656.4890431390578,
+              636.7002065167466,
+              658.9150986691162,
+              643.9283501606184,
+              645.0349931161063,
+              635.3139054612209,
+              638.5311496099097,
+              655.8221661312572,
+              639.0665442863651,
+              641.2082377237274,
+              638.1057251032598,
+              656.2643414410311
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 354181,
+            "samples": [
+              28.551079815122502,
+              28.531668835990583,
+              28.59178216787462,
+              28.718132819095374,
+              28.466730287621502,
+              28.609665679412615,
+              28.92271183377991,
+              29.000592917180906,
+              28.67895793393751,
+              28.44484882023589,
+              28.591194897524026,
+              28.857773285410502
+            ]
+          }
+        ],
+        "checksum": 82848
+      },
+      "upstream": {
+        "pid": 45986,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 35902,
+            "samples": [
+              306.71920784357326,
+              298.71709096986206,
+              302.3624310623361,
+              295.2319369394451,
+              295.97585092752496,
+              294.2477577850827,
+              293.2902902345265,
+              294.2013536850326,
+              309.4326221380433,
+              297.70625591889143,
+              303.44757952203133,
+              323.0437580079103
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 17432,
+            "samples": [
+              736.7198256080756,
+              739.3275585130809,
+              732.6636071592477,
+              764.0761243689788,
+              760.1944125745758,
+              861.5859339146356,
+              849.2809775126203,
+              790.4763079394219,
+              834.6575263882524,
+              814.4360945387823,
+              761.148118402936,
+              765.9476824231285
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 354181,
+            "samples": [
+              74.80191484015273,
+              81.96209565165825,
+              79.90335449953555,
+              75.6958758374954,
+              75.62917547807486,
+              76.83065720634359,
+              70.39609126407083,
+              72.00143711830982,
+              73.28467930239034,
+              74.06441339315245,
+              73.02480934889233,
+              74.85838314308255
+            ]
+          }
+        ],
+        "checksum": 5088
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 45987,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 22187,
+            "samples": [
+              298.3672871501346,
+              294.15874160544456,
+              301.0415558660483,
+              296.9456438454941,
+              322.34529228827773,
+              334.30049127867665,
+              1003.258304412492,
+              733.1376481723527,
+              338.3644476495222,
+              333.92675891287763,
+              309.7459323026984,
+              311.0680578717281
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 17135,
+            "samples": [
+              665.066588853221,
+              679.9119346367041,
+              655.009220892907,
+              681.6822293551189,
+              654.5398891158464,
+              663.0751094251553,
+              687.6860227604321,
+              667.330551502772,
+              663.8119054566673,
+              665.1930551502797,
+              659.2573679603158,
+              656.8329734461673
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 155672,
+            "samples": [
+              63.82329513335761,
+              65.40594968908982,
+              65.78388534868135,
+              67.55415874402605,
+              66.85852304846097,
+              67.00440027750642,
+              68.46820879798565,
+              69.07338506603628,
+              70.51899506654965,
+              66.26539775939203,
+              67.81004291073582,
+              69.60602420473931
+            ]
+          }
+        ],
+        "checksum": 61152
+      },
+      "vpm": {
+        "pid": 45988,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 22187,
+            "samples": [
+              298.6827872177394,
+              300.4086627304276,
+              303.68382386082044,
+              289.87321404426064,
+              313.2934150628735,
+              309.2238698336888,
+              302.23216297832056,
+              303.95235948979075,
+              304.8519403254165,
+              310.384459368099,
+              305.7064046513731,
+              295.60666155857064
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 17135,
+            "samples": [
+              623.0960023344081,
+              646.2625620075872,
+              642.6976947767702,
+              620.6765100671171,
+              641.532944266121,
+              635.5729209220882,
+              621.6175663845951,
+              628.7885614239829,
+              632.0275459585642,
+              614.8258535161937,
+              631.7673767143273,
+              648.7841844178615
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 155672,
+            "samples": [
+              29.878526645768055,
+              29.54582712369615,
+              30.142973688267496,
+              29.843465748496296,
+              29.1151716429409,
+              30.338892029395492,
+              29.494167223392655,
+              29.907433578292167,
+              28.849118659746036,
+              33.261177347243404,
+              28.679691916336626,
+              29.35258106788583
+            ]
+          }
+        ],
+        "checksum": 7328
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 45991,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 26470,
+            "samples": [
+              358.38685304117786,
+              326.24197204382335,
+              342.4080846241021,
+              336.60902908953665,
+              326.3584435209653,
+              341.6556479032875,
+              332.88156403475625,
+              335.03180959576866,
+              319.89988666414683,
+              345.50748016622543,
+              319.52523611636,
+              309.9373252738956
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 12001,
+            "samples": [
+              631.8986751104027,
+              625.1354053828851,
+              646.2447296058664,
+              649.2340638280077,
+              615.7264394633751,
+              622.930672443969,
+              638.8946754437125,
+              616.5215398716754,
+              620.7329389217506,
+              623.3508040996552,
+              671.9440046662843,
+              617.0665777851896
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 354898,
+            "samples": [
+              27.70960388618692,
+              27.834521468139865,
+              27.689057137543625,
+              27.85307327739235,
+              27.657005674870042,
+              27.664991067856217,
+              27.715475995920087,
+              28.14728738961619,
+              28.51934640375533,
+              29.47748367136473,
+              27.912363552344498,
+              27.798832340559958
+            ]
+          }
+        ],
+        "checksum": 74976
+      },
+      "upstream": {
+        "pid": 45992,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 26470,
+            "samples": [
+              304.18870419342636,
+              302.9341518700413,
+              289.6817151492248,
+              284.72327162825894,
+              286.3540234227427,
+              297.8167359274659,
+              303.2552323384951,
+              297.59633547412056,
+              290.69229316207145,
+              310.95579901775574,
+              290.12406497922086,
+              302.3989421987158
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 12001,
+            "samples": [
+              699.9694192150598,
+              717.0721606532809,
+              686.3178068494275,
+              761.5823681359927,
+              780.053078910097,
+              688.7238563453003,
+              703.6115323722996,
+              679.1030747437682,
+              694.7962669777532,
+              674.5618698441795,
+              688.3801349887525,
+              794.6872760603319
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 354898,
+            "samples": [
+              66.27056506376466,
+              65.95709753224877,
+              68.06110488083878,
+              66.27185839311556,
+              67.52456480453509,
+              61.038782974263114,
+              63.2889590812009,
+              63.51284876217947,
+              66.92509678837294,
+              65.83698978298017,
+              66.74476328409825,
+              68.59106841965841
+            ]
+          }
+        ],
+        "checksum": 5728
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46021,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 40792,
+            "samples": [
+              293.9996567954505,
+              292.65336340458845,
+              303.1476760149059,
+              301.0322612276924,
+              294.10894292998665,
+              300.32643655618796,
+              303.3121445381444,
+              295.0650127475977,
+              302.3172435771711,
+              298.45825161796307,
+              303.0363306530685,
+              335.466120808001
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 11280,
+            "samples": [
+              678.4242021276647,
+              694.5848404255336,
+              668.67987588652,
+              678.8711879432677,
+              669.8397163120565,
+              681.2795212765981,
+              690.067198581569,
+              683.0377659574445,
+              685.9966312056795,
+              666.1901595744702,
+              657.3656028368775,
+              682.5539893617118
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 153856,
+            "samples": [
+              62.17745814267883,
+              62.43635607321082,
+              63.26288867512495,
+              63.98786527662236,
+              62.683073783277386,
+              65.10958298668838,
+              64.73341956114783,
+              67.95450291181345,
+              65.82399126455933,
+              65.42617122504132,
+              65.98540193427534,
+              66.13354045341148
+            ]
+          }
+        ],
+        "checksum": 57056
+      },
+      "vpm": {
+        "pid": 46022,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 40792,
+            "samples": [
+              280.22854971563055,
+              289.29692096489475,
+              289.44810256913104,
+              281.37870170621716,
+              282.9006422828015,
+              294.2182290645228,
+              282.5778584036079,
+              285.773975289272,
+              289.19376348303683,
+              280.6177191606196,
+              285.1774367523051,
+              326.03409982349444
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 11280,
+            "samples": [
+              689.8418439716243,
+              681.5195921985825,
+              707.424645390068,
+              687.3448581560266,
+              679.4695921985777,
+              677.6595744680856,
+              683.6695035460945,
+              681.6341312056777,
+              683.3628546099326,
+              700.047960992914,
+              687.6957446808503,
+              759.881117021277
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 153856,
+            "samples": [
+              60.82500519966726,
+              61.72194779534061,
+              63.09471193843656,
+              63.30323809276232,
+              63.39234089018294,
+              63.316510243344425,
+              64.78460378535756,
+              62.407647410566035,
+              61.82539517470873,
+              63.594100977537074,
+              64.13437240016601,
+              65.58621698211299
+            ]
+          }
+        ],
+        "checksum": 6048
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46023,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 39188,
+            "samples": [
+              289.9441920996218,
+              290.71718383178546,
+              293.69426865366853,
+              295.05631826069146,
+              299.28059610084705,
+              298.1301673981836,
+              297.0669082372155,
+              303.0700214351334,
+              297.25403184648405,
+              296.2460702255789,
+              297.20087781974195,
+              300.9977544146168
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 12554,
+            "samples": [
+              666.2418352716202,
+              657.3801178907114,
+              660.4501354150073,
+              676.3747012904275,
+              654.870957463761,
+              669.8993946152581,
+              656.1554086346924,
+              668.6580372789608,
+              683.4242472518706,
+              664.6851999362688,
+              678.4358770113074,
+              682.1331846423432
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 157047,
+            "samples": [
+              62.85538724076252,
+              63.273516845275594,
+              67.8334638675048,
+              69.70206371341072,
+              68.81485797245443,
+              74.84966920730723,
+              75.06882016211743,
+              91.00539965742702,
+              95.03524422625046,
+              70.37516157583295,
+              65.00867256298945,
+              69.02976179105612
+            ]
+          }
+        ],
+        "checksum": 55328
+      },
+      "upstream": {
+        "pid": 46024,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create and dispose opacity transition",
+            "iterations": 39188,
+            "samples": [
+              287.2584209451879,
+              292.21743901194225,
+              286.11544350311294,
+              289.41469327345146,
+              281.4094875982442,
+              292.1334337041953,
+              288.26638256609164,
+              287.2116464223739,
+              292.1621414718793,
+              292.76819434520803,
+              288.434393181587,
+              305.8982596713271
+            ]
+          },
+          {
+            "case": "create and dispose calendar scale transition",
+            "iterations": 12554,
+            "samples": [
+              712.9865381551688,
+              683.2284530826867,
+              694.4466305559964,
+              703.1291221921223,
+              704.7255854707668,
+              745.5293133662577,
+              735.7183367850911,
+              723.0265254102346,
+              765.5129839095162,
+              733.2855663533494,
+              708.8776485582326,
+              751.8984387446169
+            ]
+          },
+          {
+            "case": "advance repeating opacity transition",
+            "iterations": 157047,
+            "samples": [
+              60.130616949066535,
+              60.55564894585703,
+              64.27242799926141,
+              61.810585366163714,
+              62.23640693550345,
+              63.10982699446653,
+              66.31533872025572,
+              64.96807325195633,
+              61.72010926665178,
+              63.29315427865578,
+              63.295274662999034,
+              65.95849013352661
+            ]
+          }
+        ],
+        "checksum": 5920
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "create and dispose opacity transition",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 310.00934043529196,
+          "vpmNs": 301.5465492634686,
+          "changePct": -2.729850384488597
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 298.21167344437674,
+          "vpmNs": 310.94600579354955,
+          "changePct": 4.2702326847537275
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 316.7066750800029,
+          "vpmNs": 303.8180916753056,
+          "changePct": -4.069564811490489
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 297.7065357007932,
+          "vpmNs": 333.95668681526246,
+          "changePct": 12.176471379486964
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 300.6793488919402,
+          "vpmNs": 285.47570602078855,
+          "changePct": -5.056430688432689
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 288.9245432275192,
+          "vpmNs": 297.1338930284787,
+          "changePct": 2.84134733216308
+        }
+      ]
+    },
+    {
+      "case": "create and dispose calendar scale transition",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 689.262873856798,
+          "vpmNs": 624.6481008486426,
+          "changePct": -9.37447459582451
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 765.0119033960536,
+          "vpmNs": 642.5682939421729,
+          "changePct": -16.005451537463276
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 664.4392471549442,
+          "vpmNs": 631.8974613364458,
+          "changePct": -4.897631492696853
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 697.3828430964065,
+          "vpmNs": 624.2431047412701,
+          "changePct": -10.487745587544595
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 680.0753546099329,
+          "vpmNs": 685.5071808510605,
+          "changePct": 0.798709467165315
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 718.0065317827017,
+          "vpmNs": 667.4499362752905,
+          "changePct": -7.041244510949896
+        }
+      ]
+    },
+    {
+      "case": "advance repeating opacity transition",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 63.91962522204608,
+          "vpmNs": 28.584660439000842,
+          "changePct": -55.280306572977366
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 74.83014899161765,
+          "vpmNs": 28.600723923643617,
+          "changePct": -61.779143421393655
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 67.27927951076623,
+          "vpmNs": 29.69464643609622,
+          "changePct": -55.86360815391254
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 66.27121172844011,
+          "vpmNs": 27.81667690434991,
+          "changePct": -58.02600227330315
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 64.9215012739181,
+          "vpmNs": 63.30987416805337,
+          "changePct": -2.482424272761219
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 63.201490636561154,
+          "vpmNs": 69.36591275223341,
+          "changePct": 9.753602412830165
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "create and dispose opacity transition",
+      "upstream_ns": 304,
+      "vpm_ns": 307,
+      "change_pct": 0.8,
+      "upstream_first_pct": -3.4,
+      "vpm_first_pct": 8.2,
+      "process_range_pct": "-2.7, 4.3, -4.1, 12.2",
+      "control_max_abs_pct": 5.1,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "create and dispose calendar scale transition",
+      "upstream_ns": 693,
+      "vpm_ns": 628,
+      "change_pct": -9.9,
+      "upstream_first_pct": -7.1,
+      "vpm_first_pct": -13.2,
+      "process_range_pct": "-9.4, -16.0, -4.9, -10.5",
+      "control_max_abs_pct": 7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "advance repeating opacity transition",
+      "upstream_ns": 67,
+      "vpm_ns": 29,
+      "change_pct": -56.9,
+      "upstream_first_pct": -55.6,
+      "vpm_first_pct": -59.9,
+      "process_range_pct": "-55.3, -61.8, -55.9, -58.0",
+      "control_max_abs_pct": 9.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

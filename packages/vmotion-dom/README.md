@@ -1,6 +1,6 @@
 # vmotion-dom
 
-Independent DOM effects, numeric animation playback, values and scheduling targeting **motion-dom 14.7.0**, with
+Independent DOM effects, numeric transition adapters, playback, values and scheduling targeting **motion-dom 14.7.0**, with
 12.36.0 as the application's comparison control. This is a partial implementation
 of Motion DOM; element animation adapters, inertia and the React renderer remain to be built.
 
@@ -70,8 +70,8 @@ negative delay), loop/reverse/mirror repeats, repeat gaps and infinite repeats.
 
 These are low-level Motion DOM APIs: **duration, delay, repeatDelay and generator
 samples use milliseconds**. The controller's `time`, `duration` and
-`iterationDuration` use seconds. The higher-level Motion/React transition API is
-not implemented yet.
+`iterationDuration` use seconds. The numeric `animateMotionValue` adapter below accepts public transition options
+in seconds; the full Motion/React renderer is not implemented yet.
 
 ```js
 import { animateValue, motionValue } from "vmotion-dom";
@@ -103,6 +103,46 @@ Deliberate differences from the controls:
   completion/cancellation is bounded, and an overflowing seek leaves state intact.
 - Sampling reports completion for the entire repeated animation. Both controls'
   `sample()` reports individual generator completion during repeat gaps.
+
+## Numeric transition adapter
+
+`animateMotionValue(name, value, target, transition)` returns a factory for
+`MotionValue.start()`. It connects public Motion transitions to the numeric
+controllers without a DOM resolver:
+
+```js
+const scale = motionValue(0);
+const detach = styleEffect(element, { scale });
+await scale.start(animateMotionValue("scale", scale, 1, { delay: 0.3 }));
+detach();
+```
+
+`duration`, `delay` and `repeatDelay` use **seconds**; `elapsed` uses milliseconds.
+Property-specific and `default` options select the transition; an outer delay is
+inherited unless the selected options override it. `getValueTransition`,
+`getDefaultTransition` and `isTransitionDefined` expose those selection rules.
+Transform properties default to springs; opacity and other numeric properties
+use a 0.3-second eased tween, and longer keyframe lists use 0.8 seconds. Explicit
+transition options use Motion's ease-out fallback. These rules are compared with
+both current and app-pinned Motion, including scale-to-zero critical damping.
+
+Targets can be a number or numeric keyframe array. An initial `null` resolves
+from `from` or the value at start; subsequent nulls repeat the preceding keyframe.
+An explicit first keyframe takes precedence over `from`. Targets, offsets, easing
+arrays and selected options are captured before starting; current value and
+velocity are read when the factory runs. Updates reach the MotionValue before
+`onUpdate`; its completion callback runs before transition `onComplete`.
+The existing stop, callback-failure and first-frame spring-rest behavior remains.
+No temporary browser globals are required by the VPM implementation.
+
+This adapter supports finite numeric values only. DOM measurement, complex
+strings, handoff, `animateSingleValue` and full element animation remain outside
+its declared surface. Unsupported element/handoff arguments reject explicitly.
+[Transition measurements](bench/transitions/README.md) cover controller creation
+and repeating value delivery; they do not measure the full React caller. Repeating
+opacity delivery takes 61% less time on Node and 57% less on Bun in the current
+recording. Node calendar-scale setup takes 27% less time; other setup differences
+are unestablished against process/control variation. All samples are retained.
 
 ## Springs
 
@@ -203,14 +243,17 @@ value validation, cancellation, replacement ownership and late browser setup
 remain tested.
 
 [Before/after measurements](bench/effects-previous/README.md) against commit
-`88dea27f` show Bun transforms falling from 349 to 173 ns (50% less time), and
-32-element updates from 3.76 to 1.74 μs (54% less). Both improvements hold across
+`88dea27f` show Bun transforms falling from 351 to 174 ns (52% less time), and
+32-element updates from 3.64 to 1.74 μs (52% less). Both improvements hold across
 all process pairs beyond control variation. Against upstream, the current Bun
 transform and fan-out differences are unestablished; their medians are near
-parity. Node transforms and fan-out take 36% and 26% less time than upstream.
-Bun SVG path updates still take 19% more time (273 versus 230 ns). Binding and
-most other differences are unestablished at this precision; the reports retain
-all samples and do not claim universal speed gains.
+parity. Node transforms and fan-out take 35% and 33% less time than upstream.
+Bun SVG path updates still have a higher median (274 versus 229 ns), although
+this recording does not establish the direction beyond control variation.
+Binding and most other effect differences are also unestablished. The broader
+scheduler benchmark still shows 32-callback dispatch taking 19% more time on Node
+and 14% more on Bun; that workload is separate from coalesced DOM effects. The
+reports retain all samples and do not claim universal speed gains.
 
 ## Still to build
 
@@ -231,6 +274,7 @@ establish an application frame-rate improvement.
 
 | Measurements | Work covered |
 | --- | --- |
+| [Numeric transitions](bench/transitions/README.md) | Public seconds-based options, property defaults and value delivery |
 | [DOM effects](bench/effects/README.md) | Binding, painting, cleanup, transforms, fan-out and SVG paths |
 | [Springs](bench/spring/README.md) | Construction, calibration, value/velocity sampling and repeated playback |
 | [Numeric playback](bench/playback/README.md) | Keyframe generators, controller lifetime and frame delivery |

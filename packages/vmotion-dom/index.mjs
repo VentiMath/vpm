@@ -1,5 +1,9 @@
 import api from "./index.cjs";
 export const {
+  animateMotionValue,
+  getDefaultTransition,
+  getValueTransition,
+  isTransitionDefined,
   styleEffect,
   attrEffect,
   propEffect,

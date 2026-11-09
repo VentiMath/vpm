@@ -306,3 +306,29 @@ export declare function resolveElements(
   scope?: { readonly current: ParentNode | null },
   selectorCache?: Record<string, NodeListOf<Element>>,
 ): Element[];
+
+/** Public transition timings use seconds; elapsed alone uses milliseconds. */
+export interface NumericValueTransition
+  extends Omit<NumericAnimationOptions, "keyframes"> {
+  from?: number;
+  elapsed?: number;
+}
+export type NumericTransition = NumericValueTransition & {
+  default?: NumericValueTransition;
+  [property: string]: unknown;
+};
+export declare function animateMotionValue(
+  name: string,
+  value: MotionValue<number>,
+  target: number | (number | null)[],
+  transition?: NumericTransition,
+): (complete: () => void) => JSAnimation;
+export declare function getDefaultTransition(
+  name: string,
+  options: { keyframes: (number | null)[] },
+): Partial<NumericValueTransition>;
+export declare function getValueTransition(
+  transition: NumericTransition,
+  key: string,
+): NumericValueTransition;
+export declare function isTransitionDefined(transition: object): boolean;

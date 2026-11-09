@@ -109,3 +109,27 @@ detach();
 // @ts-expect-error effects bind MotionValues, not plain values
 styleEffect(targets, { opacity: 1 });
 void effectValue;
+
+import {
+  animateMotionValue,
+  getDefaultTransition,
+  getValueTransition,
+  isTransitionDefined,
+} from "vmotion-dom";
+position.start(
+  animateMotionValue("scale", position, [null, 1], { delay: 0.3 }),
+);
+position.start(
+  animateMotionValue("opacity", position, 1, {
+    opacity: { duration: 0.3, ease: "linear" },
+  }),
+);
+getDefaultTransition("scale", { keyframes: [0, 1] });
+getValueTransition({ duration: 0.2, default: { duration: 0.3 } }, "x");
+isTransitionDefined({ repeat: 1 });
+// @ts-expect-error strings are outside the numeric adapter
+animateMotionValue("x", position, "10px");
+// @ts-expect-error DOM measurement is not implemented
+animateMotionValue("x", position, 1, {}, document.body);
+// @ts-expect-error inertia is not built yet
+animateMotionValue("x", position, 1, { type: "inertia" });

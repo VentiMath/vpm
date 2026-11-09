@@ -62,6 +62,7 @@ require("../../../scripts/bench-process.cjs")
     })),
     files: [
       "index.cjs",
+      "transition.cjs",
       "mapping.cjs",
       "playback.cjs",
       "spring.cjs",

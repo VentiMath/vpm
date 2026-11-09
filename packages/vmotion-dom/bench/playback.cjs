@@ -84,6 +84,7 @@ require("../../../scripts/bench-process.cjs")
     })),
     files: [
       "index.cjs",
+      "transition.cjs",
       "index.mjs",
       "mapping.cjs",
       "frame.cjs",

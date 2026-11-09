@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 99 package tests
+easings come from the verified `vmotion-utils` foundation. All 107 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -41,6 +41,8 @@ node scripts/motion-dom-conformance/playback.cjs
 bun scripts/motion-dom-conformance/playback.cjs
 node scripts/motion-dom-conformance/spring.cjs
 bun scripts/motion-dom-conformance/spring.cjs
+node scripts/motion-dom-conformance/transitions.cjs
+bun scripts/motion-dom-conformance/transitions.cjs
 node scripts/motion-dom-conformance/effects.cjs
 bun scripts/motion-dom-conformance/effects.cjs
 node scripts/motion-dom-conformance/types.cjs
@@ -100,3 +102,17 @@ The implementation follows public [styleEffect](https://motion.dev/docs/style-ef
 [svgEffect](https://motion.dev/docs/svg-effect) contracts and public declarations,
 with black-box probes. No upstream effects runtime was copied. Custom effect
 registration and element animation/keyframe resolution remain separate work.
+
+`transitions.cjs` runs 40,096 comparisons of numeric `animateMotionValue` defaults,
+per-property options, seconds/milliseconds, wildcards, from/velocity, repeats and
+callback order. Upstream browser type guards need inert HTMLElement/SVGElement
+classes in the Node/Bun fixture; VPM needs neither. Chrome drives calendar scale
+and opacity fades through each implementation's own values, adapter and DOM effect.
+The pre-existing first-frame rest difference is explicit: a non-repeating VPM
+spring stops once both rest thresholds are met, while upstream can resume moving
+until its sampled duration expires. Measurements retain this distinction.
+
+Public [animate](https://motion.dev/docs/animate) documentation, exported types and
+black-box observations define the independently written adapter. No upstream
+runtime was copied. Target/option mutation, explicit unsupported inputs, lifecycle
+ownership, cancellation and callback failures have separate package regressions.

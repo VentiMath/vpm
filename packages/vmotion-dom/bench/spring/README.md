@@ -23,31 +23,31 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T20:21:29.111Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T20:52:53.967Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create calendar scale spring | 310 | 64 | -78.8% | -79.3% | -78.8% | 2.1% | lower time in every pair, beyond control spread |
-| sample spring value and velocity | 43 | 68 | 60.7% | 61.3% | 57.6% | 5.6% | higher time in every pair, beyond control spread |
-| create duration-calibrated spring | 1523 | 113 | -92.5% | -92.6% | -92.5% | 2.1% | lower time in every pair, beyond control spread |
-| create, measure and dispose spring playback | 960 | 695 | -26.9% | -26.9% | -27.3% | 1.6% | lower time in every pair, beyond control spread |
-| advance repeating scale spring | 116 | 98 | -15% | -18.6% | -12.8% | 0.7% | lower time in every pair, beyond control spread |
+| create calendar scale spring | 295 | 62 | -78.9% | -78.9% | -78.9% | 2.2% | lower time in every pair, beyond control spread |
+| sample spring value and velocity | 43 | 68 | 59.3% | 60.5% | 56.8% | 1.9% | higher time in every pair, beyond control spread |
+| create duration-calibrated spring | 1488 | 111 | -92.4% | -92.4% | -92.4% | 2.1% | lower time in every pair, beyond control spread |
+| create, measure and dispose spring playback | 930 | 683 | -26.4% | -25.3% | -26.9% | 9.9% | lower time in every pair, beyond control spread |
+| advance repeating scale spring | 116 | 97 | -15.9% | -18.4% | -14.6% | 6% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T20:21:51.296Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T20:53:16.351Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create calendar scale spring | 109 | 54 | -51.7% | -51.7% | -50.8% | 11.3% | lower time in every pair, beyond control spread |
-| sample spring value and velocity | 41 | 41 | 0.3% | -10.7% | 4.6% | 10.4% | unestablished at this precision |
-| create duration-calibrated spring | 558 | 102 | -81.2% | -83.2% | -79.2% | 23.2% | lower time in every pair, beyond control spread |
-| create, measure and dispose spring playback | 464 | 442 | -5% | -6% | -3.5% | 7.9% | unestablished at this precision |
-| advance repeating scale spring | 102 | 59 | -41.3% | -41.3% | -44.1% | 1.4% | lower time in every pair, beyond control spread |
+| create calendar scale spring | 111 | 54 | -51.6% | -51.6% | -51.7% | 7.7% | lower time in every pair, beyond control spread |
+| sample spring value and velocity | 41 | 41 | -1.3% | -0.1% | -4.5% | 3.3% | unestablished at this precision |
+| create duration-calibrated spring | 598 | 103 | -82.7% | -83% | -82.6% | 8.8% | lower time in every pair, beyond control spread |
+| create, measure and dispose spring playback | 445 | 444 | -1.2% | 2.3% | -1.2% | 8.8% | unestablished at this precision |
+| advance repeating scale spring | 100 | 61 | -39.1% | -37.5% | -41.3% | 4.1% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

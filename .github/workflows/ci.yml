@@ -38,6 +38,7 @@ jobs:
           node scripts/motion-dom-conformance/values.cjs
           node scripts/motion-dom-conformance/playback.cjs
           node scripts/motion-dom-conformance/spring.cjs
+          node scripts/motion-dom-conformance/transitions.cjs
           node scripts/motion-dom-conformance/effects.cjs
           node scripts/motion-dom-conformance/types.cjs
           node scripts/motion-dom-conformance/browser.cjs
@@ -672,6 +673,7 @@ jobs:
           bun scripts/motion-dom-conformance/values.cjs
           bun scripts/motion-dom-conformance/playback.cjs
           bun scripts/motion-dom-conformance/spring.cjs
+          bun scripts/motion-dom-conformance/transitions.cjs
           bun scripts/motion-dom-conformance/effects.cjs
       - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Word diff contracts on Bun

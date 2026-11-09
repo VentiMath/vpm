@@ -32,7 +32,8 @@
     "playback.cjs",
     "mapping.cjs",
     "spring.cjs",
-    "effects.cjs"
+    "effects.cjs",
+    "transition.cjs"
   ],
   "sideEffects": false,
   "engines": {

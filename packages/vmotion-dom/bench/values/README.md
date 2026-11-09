@@ -23,31 +23,31 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T20:39:55.514Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T20:51:28.628Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create MotionValue | 19 | 17 | -8% | -9.4% | -7.9% | 8.5% | unestablished at this precision |
-| publish to 1 value subscriber | 8 | 8 | 5.3% | 16.4% | -0.2% | 13.2% | unestablished at this precision |
-| publish to 32 value subscribers | 106 | 106 | 0.5% | 0.5% | 1.8% | 1.5% | unestablished at this precision |
-| schedule and run 32 frame callbacks | 1093 | 1290 | 18.3% | 18.4% | 18.3% | 134.1% | unestablished at this precision |
-| schedule and cancel 32 frame callbacks | 6214 | 5170 | -16.8% | -16.8% | -15.2% | 3.4% | lower time in every pair, beyond control spread |
+| create MotionValue | 19 | 18 | -5.9% | -7.6% | -5.9% | 3% | lower time in every pair, beyond control spread |
+| publish to 1 value subscriber | 8 | 9 | 13% | 23.9% | 1.1% | 12.2% | unestablished at this precision |
+| publish to 32 value subscribers | 106 | 107 | 1.2% | 1.9% | 0.5% | 1.4% | unestablished at this precision |
+| schedule and run 32 frame callbacks | 1090 | 1296 | 18.9% | 21.9% | 18.4% | 7.1% | higher time in every pair, beyond control spread |
+| schedule and cancel 32 frame callbacks | 6197 | 5280 | -15.7% | -15.7% | -15.1% | 1.9% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T20:40:16.605Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T20:51:49.739Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create MotionValue | 26 | 18 | -33.2% | -34% | -32.6% | 2% | lower time in every pair, beyond control spread |
-| publish to 1 value subscriber | 10 | 8 | -14.3% | -7.1% | -21.9% | 19.7% | unestablished at this precision |
-| publish to 32 value subscribers | 100 | 111 | 12.7% | -2.4% | 29.6% | 33.8% | unestablished at this precision |
-| schedule and run 32 frame callbacks | 1157 | 1343 | 15% | 15% | 16.8% | 3.7% | higher time in every pair, beyond control spread |
-| schedule and cancel 32 frame callbacks | 4365 | 3858 | -11.6% | -10.9% | -11.9% | 0.9% | lower time in every pair, beyond control spread |
+| create MotionValue | 27 | 17 | -35% | -35% | -35.8% | 5.4% | lower time in every pair, beyond control spread |
+| publish to 1 value subscriber | 10 | 8 | -16.5% | -8.7% | -24.6% | 16.1% | unestablished at this precision |
+| publish to 32 value subscribers | 102 | 110 | 9.4% | -2.2% | 23.7% | 28.9% | unestablished at this precision |
+| schedule and run 32 frame callbacks | 1200 | 1351 | 13.6% | 17% | 10.3% | 3.8% | higher time in every pair, beyond control spread |
+| schedule and cancel 32 frame callbacks | 4418 | 3864 | -11.6% | -11.6% | -13.8% | 7% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

@@ -23,31 +23,31 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T20:38:46.658Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T20:49:56.129Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| bind, paint and dispose opacity/width/scale | 2514 | 3699 | 39.5% | 58.6% | 15.5% | 73.3% | unestablished at this precision |
-| update one opacity binding | 122 | 115 | -5.7% | -5.4% | -8.3% | 28.7% | unestablished at this precision |
-| compose three changing transforms | 327 | 209 | -36.1% | -36.1% | -36.3% | 14.7% | lower time in every pair, beyond control spread |
-| publish opacity to 32 elements | 2463 | 1818 | -25.5% | -19.2% | -25.5% | 4.8% | lower time in every pair, beyond control spread |
-| update SVG path length and offset | 360 | 446 | 23.7% | 25.6% | 23.7% | 39.6% | unestablished at this precision |
+| bind, paint and dispose opacity/width/scale | 2266 | 3257 | 71% | 71% | 79.7% | 38.6% | unestablished at this precision |
+| update one opacity binding | 118 | 113 | -1.9% | -18.4% | 8.9% | 25.6% | unestablished at this precision |
+| compose three changing transforms | 313 | 202 | -35.3% | -35.3% | -35.2% | 5.5% | lower time in every pair, beyond control spread |
+| publish opacity to 32 elements | 2710 | 1797 | -33.4% | -42.5% | -28.3% | 20.7% | lower time in every pair, beyond control spread |
+| update SVG path length and offset | 372 | 425 | 17.7% | 13.4% | 19.3% | 9.9% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T20:38:22.093Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-09T20:50:18.448Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| bind, paint and dispose opacity/width/scale | 2238 | 2668 | 23.3% | 23.3% | 21.6% | 49.9% | unestablished at this precision |
-| update one opacity binding | 80 | 79 | -1.3% | 5.2% | -2% | 28.4% | unestablished at this precision |
-| compose three changing transforms | 189 | 171 | -9.2% | -9.2% | -9.1% | 34.5% | unestablished at this precision |
-| publish opacity to 32 elements | 1757 | 1679 | -4.5% | 16.7% | -13.9% | 9.6% | unestablished at this precision |
-| update SVG path length and offset | 230 | 273 | 19% | 19.2% | 15.3% | 7.1% | higher time in every pair, beyond control spread |
+| bind, paint and dispose opacity/width/scale | 2318 | 2621 | 22% | -6.8% | 39.4% | 7.7% | unestablished at this precision |
+| update one opacity binding | 87 | 80 | -8.1% | -8.1% | -6.4% | 9.4% | unestablished at this precision |
+| compose three changing transforms | 195 | 178 | -9% | -25.8% | -6.4% | 33.1% | unestablished at this precision |
+| publish opacity to 32 elements | 1799 | 1781 | -2.3% | -5.3% | -1.1% | 8.3% | unestablished at this precision |
+| update SVG path length and offset | 229 | 274 | 21.6% | 48.7% | 16% | 14.6% | unestablished at this precision |
 
 ## Reproduce
 
