@@ -185,3 +185,26 @@ test("complex playback keeps multiframe, spring, cancellation and end-write cont
   assert.equal(value.get(), "rgba(255, 255, 255, 1)");
   spring.stop();
 });
+
+test("syntax caches never expose mutable colors or token arrays and evict safely", () => {
+  const css = "1px 2px #f00",
+    expected = "2px 3px rgba(180, 0, 180, 1)";
+  const f = api.mixComplex(css, "3px 4px #00f");
+  const parsed = api.analyseComplexValue(css);
+  parsed.values[2].red = 0;
+  parsed.split[0] = "broken";
+  parsed.types[0] = "color";
+  parsed.indexes.number.length = 0;
+  api.color.parse("#f00").red = 0;
+  for (let i = 0; i < 300; i++) {
+    api.mixComplex(`${i}px #000`, `${i + 1}px #fff`)(0.5);
+    api.mixColor(`rgb(${i % 256}, ${i % 5}, 0)`, "#fff")(0.5);
+  }
+  assert.equal(f(0.5), expected);
+  assert.equal(api.mixComplex(css, "3px 4px #00f")(0.5), expected);
+  const c = { red: 255, green: 0, blue: 0, alpha: 1 },
+    a = api.mixColor(c, "#00f");
+  c.red = 0;
+  assert.equal(a(0.5), "rgba(180, 0, 180, 1)");
+  assert.equal(api.mixColor(c, "#00f")(0.5), "rgba(0, 0, 180, 1)");
+});

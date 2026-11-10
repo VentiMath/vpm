@@ -32,7 +32,7 @@ function endFunction(text, start) {
   }
   throw new TypeError("unclosed CSS function");
 }
-function tokenize(source) {
+function scan(source) {
   if (typeof source !== "string" && !Number.isFinite(source))
     throw new TypeError("complex values require a string or finite number");
   const text = String(source),
@@ -125,8 +125,35 @@ function tokenize(source) {
   split.push(text.slice(literal));
   return { info: { values, split, indexes, types }, opaque };
 }
+const syntaxKeys = [],
+  syntaxValues = [];
+let syntaxSlot = 0;
+function tokenize(source) {
+  const cacheable = typeof source === "string" && source.length <= 4096;
+  if (cacheable) {
+    const index = syntaxKeys.indexOf(source);
+    if (index !== -1) return syntaxValues[index];
+  }
+  const parsed = scan(source);
+  if (cacheable) {
+    syntaxKeys[syntaxSlot] = source;
+    syntaxValues[syntaxSlot] = parsed;
+    syntaxSlot = (syntaxSlot + 1) & 7;
+  }
+  return parsed;
+}
 function analyseComplexValue(value) {
-  return tokenize(value).info;
+  const info = tokenize(value).info;
+  return {
+    values: info.values.map((v) => (v && typeof v === "object" ? { ...v } : v)),
+    split: info.split.slice(),
+    types: info.types.slice(),
+    indexes: {
+      color: info.indexes.color.slice(),
+      number: info.indexes.number.slice(),
+      var: info.indexes.var.slice(),
+    },
+  };
 }
 const parseComplexValue = (value) => analyseComplexValue(value).values;
 function buildTransformer({ split, types }) {
@@ -151,7 +178,7 @@ function createTransformer(value) {
 }
 function hasComplexValues(value) {
   if (typeof value !== "string") return false;
-  return analyseComplexValue(value).values.length > 0;
+  return tokenize(value).info.values.length > 0;
 }
 const complex = {
   test: (value) =>
@@ -161,7 +188,7 @@ const complex = {
   parse: parseComplexValue,
   createTransformer,
   getAnimatableNone(value) {
-    const info = analyseComplexValue(value);
+    const info = tokenize(value).info;
     return buildTransformer(info)(
       info.values.map((v, i) =>
         info.types[i] === "number"
@@ -209,14 +236,15 @@ function mixComplex(a, b) {
         ? mixColor(origin, y.values[i])
         : type === "var"
           ? mixImmediate(origin, y.values[i])
-          : (p) => origin + (y.values[i] - origin) * p;
+          : (p) => round(origin + (y.values[i] - origin) * p);
     }),
-    values = y.values.slice(),
-    render = buildTransformer(y);
+    split = y.split;
   return (p) => {
     progress(p);
-    for (let i = 0; i < mixers.length; i++) values[i] = mixers[i](p);
-    return render(values);
+    let result = split[0];
+    for (let i = 0; i < mixers.length; i++)
+      result += mixers[i](p) + split[i + 1];
+    return result;
   };
 }
 function own(value) {

@@ -214,17 +214,33 @@ function mixLinearColor(from, to, p) {
   finite(p);
   return Math.sqrt(Math.max(0, from * from + (to * to - from * from) * p));
 }
-function mixColor(from, to) {
-  const start = parse(from),
-    end = parse(to),
-    a = Object.hasOwn(start, "hue") ? hslaToRgba(start) : start,
-    b = Object.hasOwn(end, "hue") ? hslaToRgba(end) : end;
-  for (const c of [a, b]) {
-    c.red = clamp(c.red, 0, 255);
-    c.green = clamp(c.green, 0, 255);
-    c.blue = clamp(c.blue, 0, 255);
-    c.alpha = clamp(c.alpha, 0, 1);
+// Cache only immutable string syntax, never caller-owned objects or computed CSS.
+// Bounds limit retention when callers generate arbitrary color strings.
+const colorKeys = [],
+  colorValues = [];
+let colorSlot = 0;
+function prepareColor(value) {
+  const cacheable = typeof value === "string" && value.length <= 256;
+  if (cacheable) {
+    const index = colorKeys.indexOf(value);
+    if (index !== -1) return colorValues[index];
   }
+  const parsed = parse(value),
+    c = Object.hasOwn(parsed, "hue") ? hslaToRgba(parsed) : parsed;
+  c.red = clamp(c.red, 0, 255);
+  c.green = clamp(c.green, 0, 255);
+  c.blue = clamp(c.blue, 0, 255);
+  c.alpha = clamp(c.alpha, 0, 1);
+  if (cacheable) {
+    colorKeys[colorSlot] = value;
+    colorValues[colorSlot] = c;
+    colorSlot = (colorSlot + 1) & 7;
+  }
+  return c;
+}
+function mixColor(from, to) {
+  const a = prepareColor(from),
+    b = prepareColor(to);
   const r = a.red * a.red,
     g = a.green * a.green,
     bl = a.blue * a.blue,

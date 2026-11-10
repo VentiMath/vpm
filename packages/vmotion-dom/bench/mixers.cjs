@@ -5,9 +5,15 @@ const path = require("node:path"),
   fixture = path.resolve(root, "../../scripts/motion-utils-conformance");
 require(path.join(fixture, "check-controls.cjs")).check();
 require("../../../scripts/check-bun.cjs");
+const previous = process.env.VMOTION_MIXERS_PREVIOUS === "1";
+const baseline = previous
+  ? require("../../../scripts/motion-dom-conformance/setup-baseline.cjs").prepare(
+      "a3c16a0876979122c03d73850152369113e0e170",
+    )
+  : undefined;
 const cases = [
   {
-    name: "prepare and sample a color mixer",
+    name: "prepare and sample a repeated color mixer",
     make(file) {
       const api = require(file);
       return () => api.mixColor("#ff000080", "rgba(0,0,255,.25)")(0.5);
@@ -24,7 +30,7 @@ const cases = [
     validate: (x) => assert.match(x, /^rgba\(/),
   },
   {
-    name: "prepare and sample a complex shadow mixer",
+    name: "prepare and sample a repeated complex shadow mixer",
     make(file) {
       const api = require(file);
       return () =>
@@ -45,6 +51,33 @@ const cases = [
     validate: (x) => assert.match(x, /px rgba\(/),
   },
   {
+    name: "prepare color mixers with changing uncached endpoints",
+    make(file) {
+      const api = require(file);
+      let n = 0;
+      return () => {
+        const v = n++ % 512;
+        return api.mixColor(
+          `rgb(${v % 256}, ${Math.floor(v / 256)}, 0)`,
+          `rgb(0, ${v % 256}, ${Math.floor(v / 256)})`,
+        )(0.5);
+      };
+    },
+    validate: (x) => assert.match(x, /^rgba\(/),
+  },
+  {
+    name: "prepare shadow mixers with changing uncached endpoints",
+    make(file) {
+      const api = require(file);
+      let n = 0;
+      return () => {
+        const v = n++ % 512;
+        return api.mixComplex(`${v}px 2px #000`, `${v + 10}px 20px #fff`)(0.5);
+      };
+    },
+    validate: (x) => assert.match(x, /px rgba\(/),
+  },
+  {
     name: "sample a prepared numeric interpolation",
     make(file) {
       const fn = require(file).interpolate([0, 0.5, 1], [0, 20, 30]);
@@ -57,10 +90,18 @@ const cases = [
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
+    upstream:
+      baseline ||
+      path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
     vpm: path.join(root, "index.cjs"),
     cases,
     files: [
+      ...(previous
+        ? [
+            "../../scripts/motion-dom-conformance/setup-baseline.cjs",
+            "../../scripts/motion-dom-conformance/node_modules/.setup-before-a3c16a08",
+          ]
+        : []),
       ...require("node:fs")
         .readdirSync(root)
         .filter((x) => x.endsWith(".cjs")),

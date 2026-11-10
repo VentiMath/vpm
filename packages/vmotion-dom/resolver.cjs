@@ -6,7 +6,8 @@ const {
   getVariableValue,
   fillWildcards,
 } = require("./reads.cjs");
-const pending = new Set();
+let pending = new Set(),
+  spareBatch;
 const alreadyRead = new WeakSet();
 let attachResolverOwner, resolverOwner;
 function rejectResolver(resolver, error) {
@@ -37,20 +38,48 @@ function cssName(name) {
 }
 let flushing = false;
 function flush(forced) {
-  if (flushing) return;
+  if (flushing || !pending.size) return;
   flushing = true;
   frameSteps.read.cancel(readBatch);
-  const batch = Array.from(pending);
-  pending.clear();
+  // Most forced control reads resolve one non-layout animation. Keep it out of
+  // batch/transaction allocation, but leave newly scheduled work for its frame.
+  let measuredOnly;
+  if (pending.size === 1) {
+    const only = pending.values().next().value;
+    pending.delete(only);
+    try {
+      if (only.state === "scheduled" && !alreadyRead.has(only))
+        only.readKeyframes();
+      if (!only.needsMeasurement || only.state !== "scheduled") {
+        flushing = false;
+        if (only.state === "scheduled") only.complete(forced);
+        if (pending.size) frame.read(readBatch);
+        return;
+      }
+    } catch (error) {
+      flushing = false;
+      rejectResolver(only, error);
+      if (pending.size) frame.read(readBatch);
+      throw error;
+    }
+    // Measurement still uses the ordinary restoration/error pipeline. Do not
+    // include work enqueued by the read in this batch or read this item twice.
+    measuredOnly = only;
+  }
+  const batch = measuredOnly ? new Set([measuredOnly]) : pending;
+  if (!measuredOnly) {
+    pending = spareBatch || new Set();
+    spareBatch = undefined;
+  }
   let failure;
-  const active = [];
+  const active = batch;
   try {
     for (const r of batch)
       if (r.state === "scheduled")
         try {
-          if (!alreadyRead.has(r)) r.readKeyframes();
-          active.push(r);
+          if (r !== measuredOnly && !alreadyRead.has(r)) r.readKeyframes();
         } catch (e) {
+          active.delete(r);
           rejectResolver(r, e);
           failure ??= { error: e };
         }
@@ -131,6 +160,8 @@ function flush(forced) {
         rejectResolver(r, e);
         failure ??= { error: e };
       }
+  batch.clear();
+  spareBatch ??= batch;
   if (pending.size) frame.read(readBatch);
   if (failure) throw failure.error;
 }
@@ -149,8 +180,8 @@ function trackResolver(resolver) {
   }
 }
 function untrackResolver(resolver) {
-  pending.delete(resolver);
-  if (!pending.size) frameSteps.read.cancel(readBatch);
+  if (pending.delete(resolver) && !pending.size)
+    frameSteps.read.cancel(readBatch);
 }
 function noteResolverRead(resolver) {
   alreadyRead.add(resolver);
@@ -239,9 +270,9 @@ class KeyframeResolver {
     );
   }
   cancel() {
-    pending.delete(this);
+    const removed = pending.delete(this);
     if (this.state !== "complete") this.state = "pending";
-    if (!pending.size) frameSteps.read.cancel(readBatch);
+    if (removed && !pending.size) frameSteps.read.cancel(readBatch);
   }
   resume() {
     if (this.state === "complete") return;

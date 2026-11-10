@@ -9,7 +9,7 @@ const helper = require("../../../scripts/motion-dom-conformance/handoff-fixture.
 const previous = process.env.VMOTION_RENDERER_PREVIOUS === "1";
 const baseline = previous
   ? require("../../../scripts/motion-dom-conformance/setup-baseline.cjs").prepare(
-      "3365200d5149723e870fb93bf217f8be82346226",
+      "a3c16a0876979122c03d73850152369113e0e170",
     )
   : undefined;
 require("../../../scripts/bench-process.cjs")
@@ -71,7 +71,7 @@ require("../../../scripts/bench-process.cjs")
       ...(previous
         ? [
             "../../scripts/motion-dom-conformance/setup-baseline.cjs",
-            "../../scripts/motion-dom-conformance/node_modules/.setup-before-3365200d",
+            "../../scripts/motion-dom-conformance/node_modules/.setup-before-a3c16a08",
           ]
         : []),
       "index.cjs",
