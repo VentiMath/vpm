@@ -31,14 +31,12 @@ function parseHex(value) {
     !/^#(?:[a-f\d]{3}|[a-f\d]{4}|[a-f\d]{6}|[a-f\d]{8})$/i.test(value)
   )
     throw new TypeError("invalid hexadecimal color");
-  const raw = value.slice(1),
-    text = raw.length < 5 ? [...raw].map((c) => c + c).join("") : raw;
-  return {
-    red: parseInt(text.slice(0, 2), 16),
-    green: parseInt(text.slice(2, 4), 16),
-    blue: parseInt(text.slice(4, 6), 16),
-    alpha: text.length === 8 ? parseInt(text.slice(6), 16) / 255 : 1,
-  };
+  const raw = value.slice(1), n = parseInt(raw, 16);
+  if (raw.length === 3) return { red: (n >> 8) * 17, green: ((n >> 4) & 15) * 17, blue: (n & 15) * 17, alpha: 1 };
+  if (raw.length === 4) return { red: (n >> 12) * 17, green: ((n >> 8) & 15) * 17, blue: ((n >> 4) & 15) * 17, alpha: ((n & 15) * 17) / 255 };
+  return raw.length === 6
+    ? { red: n >>> 16, green: (n >> 8) & 255, blue: n & 255, alpha: 1 }
+    : { red: n >>> 24, green: (n >> 16) & 255, blue: (n >> 8) & 255, alpha: (n & 255) / 255 };
 }
 function parse(value) {
   if (value && typeof value === "object") {
@@ -63,6 +61,10 @@ function parse(value) {
   if (value.toLowerCase() === "transparent")
     return { red: 0, green: 0, blue: 0, alpha: 0 };
   if (value[0] === "#") return parseHex(value);
+  // Strict common RGB grammar: one scan validates and captures the channels.
+  // Other CSS forms retain the general parser below.
+  const simple = /^rgba?\(\s*([+-]?(?:\d+\.?\d*|\.\d+))\s*,\s*([+-]?(?:\d+\.?\d*|\.\d+))\s*,\s*([+-]?(?:\d+\.?\d*|\.\d+))(?:\s*,\s*([+-]?(?:\d+\.?\d*|\.\d+)))?\s*\)$/i.exec(value);
+  if (simple) return { red: finite(Number(simple[1])), green: finite(Number(simple[2])), blue: finite(Number(simple[3])), alpha: simple[4] === undefined ? 1 : finite(Number(simple[4])) };
   const match = /^(rgba?|hsla?)\(([^()]*)\)$/i.exec(value);
   if (!match) throw new TypeError("expected hexadecimal, RGB or HSL color");
   const hsl = match[1].toLowerCase().startsWith("hsl"),
@@ -252,12 +254,15 @@ function mixColor(from, to) {
     da = b.alpha - a.alpha;
   return (p) => {
     finite(p);
-    return rgbTransform({
-      red: Math.sqrt(Math.max(0, r + dr * p)),
-      green: Math.sqrt(Math.max(0, g + dg * p)),
-      blue: Math.sqrt(Math.max(0, bl + db * p)),
-      alpha: a.alpha + da * p,
-    });
+    // Clamped endpoints and finite progress inside [0,1] bound every channel.
+    // Extrapolation still takes the fully checked/clamped path below.
+    if (p >= 0 && p <= 1)
+      return `rgba(${Math.round(Math.sqrt(Math.max(0, r + dr * p)))}, ${Math.round(Math.sqrt(Math.max(0, g + dg * p)))}, ${Math.round(Math.sqrt(Math.max(0, bl + db * p)))}, ${tidy(a.alpha + da * p)})`;
+    const red = Math.round(clamp(finite(Math.sqrt(Math.max(0, r + dr * p))), 0, 255)),
+      green = Math.round(clamp(finite(Math.sqrt(Math.max(0, g + dg * p))), 0, 255)),
+      blue = Math.round(clamp(finite(Math.sqrt(Math.max(0, bl + db * p))), 0, 255)),
+      alpha = tidy(clamp(finite(a.alpha + da * p), 0, 1));
+    return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
   };
 }
 const rgbUnit = {

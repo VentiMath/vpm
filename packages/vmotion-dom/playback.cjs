@@ -1,6 +1,6 @@
 "use strict";
 const { easingDefinitionToFunction } = require("vmotion-utils");
-const { frame, cancelFrame, time } = require("./frame.cjs");
+const { frame, frameSteps, time } = require("./frame.cjs");
 const { interpolate } = require("./mapping.cjs");
 const { spring, calcGeneratorDuration } = require("./spring.cjs");
 
@@ -195,7 +195,7 @@ class JSAnimation {
       : {
           now: () => time.now(),
           start: () => frame.update(this.frameUpdate, true),
-          stop: () => cancelFrame(this.frameUpdate),
+          stop: () => frameSteps.update.cancel(this.frameUpdate),
         };
     if (!options.driver) this.frameUpdate = (data) => update(data.timestamp);
     for (const name of ["now", "start", "stop"])

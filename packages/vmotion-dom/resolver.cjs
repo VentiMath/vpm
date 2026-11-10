@@ -7,8 +7,29 @@ const {
   getVariableValue,
   fillWildcards,
 } = require("./reads.cjs");
-let pending = new Set(),
-  spareBatch;
+// The common queue contains one resolver. Keep that entry inline so forced
+// resolution does not allocate an iterator or churn a hash table on every seek.
+class ResolverQueue {
+  constructor() { this.first = undefined; this.rest = new Set(); }
+  get size() { return (this.first === undefined ? 0 : 1) + this.rest.size; }
+  has(value) { return this.first === value || this.rest.has(value); }
+  add(value) {
+    if (this.first === undefined) this.first = value;
+    else if (this.first !== value) this.rest.add(value);
+  }
+  delete(value) {
+    if (this.first !== value) return this.rest.size ? this.rest.delete(value) : false;
+    this.first = undefined;
+    if (this.rest.size) {
+      this.first = this.rest.values().next().value;
+      this.rest.delete(this.first);
+    }
+    return true;
+  }
+  clear() { this.first = undefined; this.rest.clear(); }
+  *[Symbol.iterator]() { if (this.first !== undefined) yield this.first; yield* this.rest; }
+}
+let pending = new ResolverQueue(), spareBatch;
 const alreadyRead = new WeakSet();
 let attachResolverOwner, resolverOwner;
 function rejectResolver(resolver, error) {
@@ -41,12 +62,12 @@ let flushing = false;
 function flush(forced) {
   if (flushing || !pending.size) return;
   flushing = true;
-  frameSteps.read.cancel(readBatch);
+  if (forced) frameSteps.read.cancel(readBatch);
   // Most forced control reads resolve one non-layout animation. Keep it out of
   // batch/transaction allocation, but leave newly scheduled work for its frame.
   let measuredOnly;
   if (pending.size === 1) {
-    const only = pending.values().next().value;
+    const only = pending.first;
     pending.delete(only);
     try {
       if (only.state === "scheduled" && !alreadyRead.has(only))
@@ -67,15 +88,18 @@ function flush(forced) {
     // include work enqueued by the read in this batch or read this item twice.
     measuredOnly = only;
   }
+  return flushBatch(measuredOnly, forced);
+}
+function flushBatch(measuredOnly, forced) {
   const batch = measuredOnly ? new Set([measuredOnly]) : pending;
   if (!measuredOnly) {
-    pending = spareBatch || new Set();
+    pending = spareBatch || new ResolverQueue();
     spareBatch = undefined;
   }
   let failure;
-  const active = batch;
+  const active = new Set(batch);
   try {
-    for (const r of batch)
+    for (const r of active)
       if (r.state === "scheduled")
         try {
           if (r !== measuredOnly && !alreadyRead.has(r)) r.readKeyframes();
@@ -162,7 +186,7 @@ function flush(forced) {
         failure ??= { error: e };
       }
   batch.clear();
-  spareBatch ??= batch;
+  if (!measuredOnly) spareBatch ??= batch;
   if (pending.size) frame.read(readBatch);
   if (failure) throw failure.error;
 }
@@ -271,6 +295,7 @@ class KeyframeResolver {
     );
   }
   cancel() {
+    if (this.state === "complete") return;
     const removed = pending.delete(this);
     if (this.state !== "complete") this.state = "pending";
     if (removed && !pending.size) frameSteps.read.cancel(readBatch);

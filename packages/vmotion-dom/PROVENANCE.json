@@ -67,7 +67,9 @@
     "Color and complex syntax caches are bounded to two entries each and restricted by input length; caller objects, parsed public results and mutable computed styles are never shared. Complex sampling formats components in one pass. Benchmarks include repeated and changing uncached endpoints.",
     "Neutral filter multipliers use one (or 100%), drop shadows fade from transparent zero-length shadows and scale/matrix identities stay visible. Backdrop filters share the filter semantics. URL filters remain discrete and URL bytes are preserved. Unsupported CSS calculations/variables in neutral functions and perspective identities reject explicitly.",
     "Empty filter arguments expand to CSS defaults, distinct from interpolation identities. Omitted shadow color is read from the owner document on each resolution. Bounded neutral-result caches retain only immutable string syntax; mutable DOM values are not cached.",
-    "Cold color parsing validates without regex match arrays or temporary channel arrays; scientific notation, percentage rules and finite checks are retained. Mixed-case none keywords keep discrete URL-filter timing."
+    "Cold color parsing validates without regex match arrays or temporary channel arrays; scientific notation, percentage rules and finite checks are retained. Mixed-case none keywords keep discrete URL-filter timing.",
+    "Single pending resolvers use an inline queue slot; multi-resolver reads retain isolated transactional batches. Numeric playback cancels only its own update phase. Forced reads retain restoration and reentrant scheduling guards.",
+    "Strict common RGB parsing captures channels in one scan; hexadecimal channels use numeric extraction. The complex scanner avoids per-character substring/regex work. Prepared numeric components use fixed deltas, with a specialized two/three-length trailing-color formatter that retains finite checks and the generic parser."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

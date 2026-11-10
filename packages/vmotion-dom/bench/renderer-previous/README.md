@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-10T04:23:45.926Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T06:45:09.753Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 2302 | 1994 | -5.9% | -5.6% | -14% | 18% | unestablished at this precision |
-| create, resolve, seek and stop a deferred custom animation | 2207 | 2231 | 1.9% | -9.3% | 1.9% | 117.8% | unestablished at this precision |
+| create, resolve, seek and stop a synchronous custom animation | 2093 | 1865 | -10.8% | -13% | -9.4% | 13.6% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 2252 | 2087 | -3.7% | -3.6% | -8.3% | 11.5% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-10T04:24:00.929Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T06:45:22.853Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 1535 | 1452 | -4.5% | -8.5% | -1.6% | 4.2% | unestablished at this precision |
-| create, resolve, seek and stop a deferred custom animation | 2887 | 2263 | -21.8% | 137.9% | -25.2% | 8.8% | unestablished at this precision |
+| create, resolve, seek and stop a synchronous custom animation | 1511 | 1315 | -13.3% | -9.8% | -14.6% | 16.4% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 1964 | 1892 | -8.4% | 1% | -14.7% | 25.9% | unestablished at this precision |
 
 ## Reproduce
 
@@ -58,4 +58,4 @@ The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
 
-This before/after suite uses immutable VPM commit `a3c16a08` as the column labelled “Upstream”; it is not the upstream package. The environment flag in the reproduction commands selects that baseline. Historical source hashes identify the recorded implementation.
+“Upstream” in this before/after report means immutable VPM commit `ca65b070`, reconstructed by `setup-baseline.cjs`. It is not the upstream Motion package.

@@ -32,6 +32,8 @@ function endFunction(text, start) {
   }
   throw new TypeError("unclosed CSS function");
 }
+function word(code) { return (code >= 48 && code <= 57) || (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || code === 95 || code === 45; }
+function letter(code) { return (code >= 65 && code <= 90) || (code >= 97 && code <= 122) || code === 95; }
 function scan(source) {
   if (typeof source !== "string" && !Number.isFinite(source))
     throw new TypeError("complex values require a string or finite number");
@@ -45,8 +47,7 @@ function scan(source) {
     i = 0,
     depth = 0;
   while (i < text.length) {
-    const c = text[i],
-      rest = text.slice(i);
+    const c = text[i], code = text.charCodeAt(i);
     let end, value, type;
     if (c === '"' || c === "'") {
       const start = i++;
@@ -66,32 +67,32 @@ function scan(source) {
       opaque.push(text.slice(start, i));
       continue;
     }
-    const boundary = i === 0 || !/[\w-]/.test(text[i - 1]);
-    if (boundary && /^url\(/i.test(rest)) {
+    const boundary = i === 0 || !word(text.charCodeAt(i - 1));
+    if (boundary && (code === 117 || code === 85) && /^url\(/i.test(text.slice(i))) {
       end = endFunction(text, i + 3);
       opaque.push(text.slice(i, end));
       i = end;
       continue;
     }
-    if (boundary && /^var\(/.test(rest)) {
+    if (boundary && code === 118 && text.startsWith("var(", i)) {
       end = endFunction(text, i + 3);
       value = text.slice(i, end);
       type = "var";
-    } else if (boundary && /^(?:rgba?|hsla?)\(/i.test(rest)) {
+    } else if (boundary && (code === 114 || code === 82 || code === 104 || code === 72) && /^(?:rgba?|hsla?)\(/i.test(text.slice(i))) {
       const opening = text.indexOf("(", i);
       end = endFunction(text, opening);
       value = color.parse(text.slice(i, end));
       type = "color";
-    } else if (boundary && /^transparent(?![\w-])/i.test(rest)) {
+    } else if (boundary && (code === 116 || code === 84) && /^transparent(?![\w-])/i.test(text.slice(i))) {
       end = i + 11;
       value = color.parse("transparent");
       type = "color";
-    } else if (c === "#" && hex.test(rest)) {
-      const match = hex.exec(rest)[0];
+    } else if (c === "#" && hex.test(text.slice(i))) {
+      const match = hex.exec(text.slice(i))[0];
       end = i + match.length;
       value = color.parse(match);
       type = "color";
-    } else if (boundary || !/[a-zA-Z_]/.test(text[i - 1] || "")) {
+    } else if (((code >= 48 && code <= 57) || code === 43 || code === 45 || code === 46) && (boundary || !letter(text.charCodeAt(i - 1)))) {
       number.lastIndex = i;
       const match = number.exec(text);
       if (match) {
@@ -110,9 +111,9 @@ function scan(source) {
       literal = end;
       i = end;
     } else {
-      if (/[a-zA-Z_]/.test(c)) {
+      if (letter(code)) {
         i++;
-        while (i < text.length && /[\w-]/.test(text[i])) i++;
+        while (i < text.length && word(text.charCodeAt(i))) i++;
         continue;
       }
       if (c === "(") depth++;
@@ -230,20 +231,31 @@ function mixComplex(a, b) {
     return mixImmediate(a, b);
   if (!y.values.length) return mixImmediate(a, b);
   const used = { color: 0, number: 0, var: 0 },
-    mixers = y.types.map((type, i) => {
-      const origin = x.values[x.indexes[type][used[type]++]];
-      return type === "color"
-        ? mixColor(origin, y.values[i])
-        : type === "var"
-          ? mixImmediate(origin, y.values[i])
-          : (p) => round(origin + (y.values[i] - origin) * p);
-    }),
-    split = y.split;
+    starts = [], deltas = [], mixers = [], split = y.split, types = y.types;
+  for (let i = 0; i < types.length; i++) {
+    const type = types[i], origin = x.values[x.indexes[type][used[type]++]];
+    if (type === "number") { starts[i] = origin; deltas[i] = y.values[i] - origin; }
+    else mixers[i] = type === "color" ? mixColor(origin, y.values[i]) : mixImmediate(origin, y.values[i]);
+  }
+  // Common two/three-dimensional shadows have numeric lengths followed by one
+  // color. Specialize this shape without changing the generic CSS grammar.
+  if ((types.length === 3 || types.length === 4) && types.at(-1) === "color" && types.slice(0,-1).every(type => type === "number")) {
+    const a = starts[0], da = deltas[0], b = starts[1], db = deltas[1],
+      c = starts[2], dc = deltas[2], colorAt = mixers[types.length - 1],
+      s0 = split[0], s1 = split[1], s2 = split[2], s3 = split[3], s4 = split[4];
+    return types.length === 3 ? p => {
+      progress(p);
+      return s0 + round(a + da*p) + s1 + round(b + db*p) + s2 + colorAt(p) + s3;
+    } : p => {
+      progress(p);
+      return s0 + round(a + da*p) + s1 + round(b + db*p) + s2 + round(c + dc*p) + s3 + colorAt(p) + s4;
+    };
+  }
   return (p) => {
     progress(p);
     let result = split[0];
-    for (let i = 0; i < mixers.length; i++)
-      result += mixers[i](p) + split[i + 1];
+    for (let i = 0; i < types.length; i++)
+      result += (types[i] === "number" ? round(starts[i] + deltas[i] * p) : mixers[i](p)) + split[i + 1];
     return result;
   };
 }

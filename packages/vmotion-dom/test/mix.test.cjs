@@ -208,3 +208,22 @@ test("syntax caches never expose mutable colors or token arrays and evict safely
   assert.equal(a(0.5), "rgba(180, 0, 180, 1)");
   assert.equal(api.mixColor(c, "#00f")(0.5), "rgba(0, 0, 180, 1)");
 });
+
+test("optimized RGB/hex parsing keeps strict grammar and exact channel values", () => {
+  for (let a = 0; a < 16; a++) {
+    assert.deepEqual(api.color.parse("#abc" + a.toString(16)), {red:170, green:187, blue:204, alpha:a*17/255});
+    assert.deepEqual(api.color.parse("#123456" + (a*17).toString(16).padStart(2,"0")), {red:18, green:52, blue:86, alpha:a*17/255});
+  }
+  assert.deepEqual(api.color.parse("RGB( +1.5 , -2, .3, .25 )"), {red:1.5, green:-2, blue:.3, alpha:.25});
+  assert.deepEqual(api.color.parse("rgb(1e2, 2e1, 3e0)"), {red:100, green:20, blue:3, alpha:1});
+  for (const text of ["rgb(1,2,3,)","rgb(1,,3)","rgb(1 2,3)","rgba(1,2,3,1/2)", "rgb(1%,2,3)", "rgb(1e999,2,3)"])
+    assert.throws(() => api.color.parse(text));
+});
+test("optimized complex scan preserves identifiers, literals and overflow rejection", () => {
+  const text = 'translate3d(1e2px, -.2px, +3px) url("icon42.svg") var(--x2, 3px)';
+  const info = api.analyseComplexValue(text);
+  assert.deepEqual(info.values, [100, -.2, 3, "var(--x2, 3px)"]);
+  assert.throws(() => api.mixComplex("1e308px", "-1e308px")(.5), /finite/);
+  assert.throws(() => api.mixColor("#fff", "#000")(Infinity), /finite/);
+  assert.throws(() => api.mixComplex("0px", "1px")(NaN), /finite/);
+});

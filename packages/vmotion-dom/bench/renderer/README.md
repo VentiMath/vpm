@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-10T04:24:12.572Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T06:43:42.088Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 1697 | 2090 | 23.1% | 31.6% | 12.5% | 22.4% | unestablished at this precision |
-| create, resolve, seek and stop a deferred custom animation | 2122 | 2036 | -5.4% | -4.3% | -5.4% | 8.6% | unestablished at this precision |
+| create, resolve, seek and stop a synchronous custom animation | 1674 | 1455 | 0.6% | -15% | 1.7% | 15% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 2164 | 1628 | -24.7% | -23.8% | -30.3% | 8.2% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-10T04:24:23.049Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T06:43:51.755Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 1293 | 1417 | 11.7% | 15.3% | 8.5% | 3.1% | higher time in every pair, beyond control spread |
-| create, resolve, seek and stop a deferred custom animation | 1529 | 2175 | 42.2% | 45% | 42.2% | 4.1% | higher time in every pair, beyond control spread |
+| create, resolve, seek and stop a synchronous custom animation | 1242 | 1266 | 1.9% | 10.8% | -1.2% | 357.1% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 1475 | 1848 | 25.5% | 45.7% | 6.9% | 2.5% | higher time in every pair, beyond control spread |
 
 ## Reproduce
 

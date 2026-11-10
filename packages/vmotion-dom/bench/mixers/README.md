@@ -23,35 +23,35 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-10T04:36:29.857Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T06:44:22.815Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| prepare and sample a repeated color mixer | 484 | 90 | -81.3% | -81.3% | -81.6% | 0.8% | lower time in every pair, beyond control spread |
-| sample a prepared color mixer | 101 | 103 | 1.2% | 0.4% | 2.6% | 0.5% | unestablished at this precision |
-| prepare and sample a repeated complex shadow mixer | 2327 | 368 | -84.1% | -84.1% | -83.9% | 2% | lower time in every pair, beyond control spread |
-| sample a prepared complex shadow mixer | 433 | 444 | 2.9% | 5.1% | 1.6% | 1.8% | unestablished at this precision |
-| prepare color mixers with changing uncached endpoints | 691 | 930 | 34.4% | 34.4% | 37.7% | 0.3% | higher time in every pair, beyond control spread |
-| prepare shadow mixers with changing uncached endpoints | 2173 | 2982 | 36.6% | 37.4% | 35.5% | 1.2% | higher time in every pair, beyond control spread |
-| sample a prepared numeric interpolation | 14 | 14 | -3.2% | -0.8% | -7.8% | 3.6% | unestablished at this precision |
+| prepare and sample a repeated color mixer | 477 | 87 | -81.5% | -82.2% | -81.5% | 1.3% | lower time in every pair, beyond control spread |
+| sample a prepared color mixer | 98 | 109 | 11% | 8.7% | 11.1% | 3.5% | higher time in every pair, beyond control spread |
+| prepare and sample a repeated complex shadow mixer | 2300 | 365 | -84.3% | -84.4% | -84.1% | 5.1% | lower time in every pair, beyond control spread |
+| sample a prepared complex shadow mixer | 439 | 369 | -16.2% | -16.7% | -14.1% | 6.9% | lower time in every pair, beyond control spread |
+| prepare color mixers with changing uncached endpoints | 660 | 612 | -7.9% | -7.9% | -6.9% | 2.7% | lower time in every pair, beyond control spread |
+| prepare shadow mixers with changing uncached endpoints | 2128 | 1572 | -26.2% | -26.7% | -25.4% | 4.3% | lower time in every pair, beyond control spread |
+| sample a prepared numeric interpolation | 14 | 14 | -3% | 1.4% | -8.5% | 4.5% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-10T04:37:02.947Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T06:44:54.054Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| prepare and sample a repeated color mixer | 431 | 44 | -89.7% | -89.7% | -89.7% | 49.7% | lower time in every pair, beyond control spread |
-| sample a prepared color mixer | 55 | 33 | -40.7% | -39.6% | -41% | 15.4% | lower time in every pair, beyond control spread |
-| prepare and sample a repeated complex shadow mixer | 1724 | 300 | -82.6% | -82.6% | -82.6% | 6.3% | lower time in every pair, beyond control spread |
-| sample a prepared complex shadow mixer | 234 | 291 | 23.4% | 24.9% | 23.4% | 7.7% | higher time in every pair, beyond control spread |
-| prepare color mixers with changing uncached endpoints | 551 | 736 | 33.7% | 33.7% | 35.9% | 2.6% | higher time in every pair, beyond control spread |
-| prepare shadow mixers with changing uncached endpoints | 1758 | 1913 | 11% | 11% | 14.7% | 9.3% | unestablished at this precision |
-| sample a prepared numeric interpolation | 11 | 4 | -62.7% | -47.2% | -75.5% | 3% | lower time in every pair, beyond control spread |
+| prepare and sample a repeated color mixer | 423 | 52 | -87.7% | -86% | -88% | 18.1% | lower time in every pair, beyond control spread |
+| sample a prepared color mixer | 54 | 31 | -42.8% | -43.1% | -42.4% | 23.5% | lower time in every pair, beyond control spread |
+| prepare and sample a repeated complex shadow mixer | 1720 | 230 | -86.6% | -86.2% | -86.9% | 5.2% | lower time in every pair, beyond control spread |
+| sample a prepared complex shadow mixer | 233 | 213 | -8.3% | -9.9% | -8.3% | 83.6% | unestablished at this precision |
+| prepare color mixers with changing uncached endpoints | 563 | 323 | -42% | -42% | -42.4% | 19.9% | lower time in every pair, beyond control spread |
+| prepare shadow mixers with changing uncached endpoints | 1763 | 1109 | -37.1% | -37.1% | -38.8% | 2.7% | lower time in every pair, beyond control spread |
+| sample a prepared numeric interpolation | 10 | 5 | -56% | -57.4% | -50.8% | 2.2% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 
@@ -67,5 +67,3 @@ node scripts/render-bench-report.cjs packages/vmotion-dom mixers mixers.cjs
 The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
-
-Repeated cases reuse identical endpoint syntax. Changing-endpoint cases cycle beyond the two-slot cache capacity. Setup, prepared sampling and numeric interpolation are separate; validation stays outside timing. Cold setup and Bun shadow sampling retain the reported upstream costs.

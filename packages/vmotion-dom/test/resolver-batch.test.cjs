@@ -97,3 +97,18 @@ test("single resolver failures preserve falsy errors and subsequent work", () =>
   api.flushKeyframeResolvers();
   assert.equal(calls, 1);
 });
+
+test("inline pending queue preserves cancellation order and later batches", () => {
+  const seen = [], resolvers = [];
+  for (const name of ["a", "b", "c"]) {
+    const r = new api.KeyframeResolver([0, 1], () => seen.push(name), "x", undefined, undefined, true);
+    resolvers.push(r); r.scheduleResolve();
+  }
+  resolvers[0].cancel();
+  resolvers[0].resume();
+  api.flushKeyframeResolvers();
+  assert.deepEqual(seen, ["b", "c", "a"]);
+  const last = new api.KeyframeResolver([0, 2], () => seen.push("d"), "x", undefined, undefined, true);
+  last.scheduleResolve(); api.flushKeyframeResolvers();
+  assert.deepEqual(seen, ["b", "c", "a", "d"]);
+});
