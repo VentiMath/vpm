@@ -62,6 +62,8 @@ function prepareFrames(input, custom = false) {
           scalar.test(v.trim()) ||
           v.trim().startsWith("var(") ||
           v === "auto" ||
+          v.trim().toLowerCase() === "none" ||
+          /^url\(/i.test(v.trim()) ||
           v.startsWith("calc(") ||
           color.test(v) ||
           hasComplexValues(v))
@@ -84,7 +86,12 @@ function decode(frames) {
       !match &&
       i === 0 &&
       frames.every(
-        (v) => typeof v === "string" && (color.test(v) || hasComplexValues(v)),
+        (v) =>
+          typeof v === "string" &&
+          (v.trim().toLowerCase() === "none" ||
+            /^url\(/i.test(v.trim()) ||
+            color.test(v) ||
+            hasComplexValues(v)),
       )
     ) {
       const numbers = frames.map((_, index) => index);

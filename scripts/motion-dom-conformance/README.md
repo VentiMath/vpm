@@ -212,3 +212,25 @@ numeric interpolation control. Every runtime module participates in source hashe
 node scripts/motion-dom-conformance/mixers.cjs
 bun scripts/motion-dom-conformance/mixers.cjs
 ```
+
+## Neutral keyframes and filters
+
+`neutral.cjs` adds 174 comparisons for public neutral construction and protected
+resolver frame state against both controls. Independent tests check omitted
+arguments, invalid/nonfinite units, backdrop identities, transparent drop shadows,
+scale/matrix identities, preserved URLs, wildcard/zero/none origins and playback.
+`neutral-browser.mjs` compares actual CSS midpoints with native Chrome animation and
+verifies that omitted shadow color reads current DOM state. Source arrays remain
+owned, unsupported neutral functions reject and final `none` is preserved.
+
+```sh
+node scripts/motion-dom-conformance/neutral.cjs
+bun scripts/motion-dom-conformance/neutral.cjs
+```
+
+Renderer/mixer before-after suites now use immutable `a3c16a08`. Mixer setup cases
+include changing uncached endpoints alongside repeated endpoints; eight-entry
+syntax/result caches never store computed styles. Every new runtime module is
+included in the final benchmark source manifest. Older recordings remain in git
+history. Resolver regressions include single-item measurement, newly enqueued work,
+falsy errors and reentrant completion.

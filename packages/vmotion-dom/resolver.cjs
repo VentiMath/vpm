@@ -1,4 +1,5 @@
 "use strict";
+const { resolveNeutralFrames } = require("./neutral.cjs");
 const { frame, frameSteps } = require("./frame.cjs");
 const {
   getComputedStyle,
@@ -335,6 +336,7 @@ class DOMKeyframesResolver extends KeyframeResolver {
       }
       frames[i] = normalize(value);
     }
+    this.resolveNoneKeyframes();
     const allNumeric = frames.every((v) => typeof v === "number");
     const numericPx = frames.every(
       (v) => typeof v === "number" || (typeof v === "string" && pixels.test(v)),
@@ -357,6 +359,21 @@ class DOMKeyframesResolver extends KeyframeResolver {
           "mixed-unit layout resolution requires two keyframes",
         );
     }
+  }
+  resolveNoneKeyframes() {
+    const frames = this.unresolvedKeyframes,
+      end = frames.at(-1);
+    const changed = resolveNeutralFrames(this.name, frames, () =>
+      this.element?.current
+        ? getComputedStyle(this.element.current, "color")
+        : undefined,
+    );
+    if (
+      changed &&
+      typeof end === "string" &&
+      end.trim().toLowerCase() === "none"
+    )
+      this.finalKeyframe ??= end;
   }
   prepareMeasurement() {
     const node = this.element?.current;

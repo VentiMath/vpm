@@ -9,6 +9,7 @@ export const {
   hslaToRgba,
   mixLinearColor,
   mixColor,
+  getAnimatableNone,
   mix,
   getMixer,
   mixArray,

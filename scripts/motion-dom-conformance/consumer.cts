@@ -222,3 +222,7 @@ const mixedNumber: number = mix(0, 10)(.5);
 const mixedRecord: number = mixObject({x:0},{x:10})(.5).x;
 color.transform(color.parse("hsl(.5turn 100% 50%)"));
 analyseComplexValue("0px #fff");
+
+import {getAnimatableNone} from "vmotion-dom";
+const neutralFilter: string = getAnimatableNone("filter", "brightness(.5)");
+resolver.resolveNoneKeyframes();

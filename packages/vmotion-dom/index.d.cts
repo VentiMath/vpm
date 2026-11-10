@@ -557,7 +557,9 @@ export declare class KeyframeResolver<
 }
 export declare class DOMKeyframesResolver<
   T extends string | number = string | number,
-> extends KeyframeResolver<T> {}
+> extends KeyframeResolver<T> {
+  resolveNoneKeyframes(): void;
+}
 export declare function flushKeyframeResolvers(): void;
 
 export type SingleValueAnimation = Omit<JSAnimation, "finished"> & {
@@ -689,3 +691,6 @@ export declare class GroupAnimationWithThen extends GroupAnimation {
     onReject?: (reason: unknown) => void,
   ): Promise<void>;
 }
+
+/** Builds a neutral color/complex/filter/transform value; URL filters remain discrete. */
+export declare function getAnimatableNone(key: string, value: string): string;

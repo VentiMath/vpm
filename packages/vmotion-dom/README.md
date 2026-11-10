@@ -457,16 +457,18 @@ Targets coordinate successful completion through an internal barrier instead of
 materializing every controller's public promises. Listener failures and cancelled
 or replaced targets still suppress end writes.
 
-Against commit `3365200d`, the balanced [resolver before/after](bench/renderer-previous/README.md)
-finds Bun deferred setup takes 42.9% less time. Other resolver directions are
-inconclusive. The [target before/after](bench/groups-previous/README.md) finds Bun
-target completion takes 32.3% less time; Node's direction remains inconclusive.
-The latest [upstream target comparison](bench/groups/README.md) no longer establishes
-the old Node regression: medians are 11.39 versus 11.19 μs, with overlapping controls.
-Bun target completion is also inconclusive (10.29 versus 11.25 μs).
-[Deferred Bun setup](bench/renderer/README.md) still costs 2.51 versus 1.43 μs,
-about 1.75× upstream; synchronous setup costs 14% more. Those remaining
-regressions are not declared fixed.
+A single deferred resolver with no layout measurement now avoids batch allocation;
+measurement still runs through the complete restoration pipeline, and new work
+queued during a read waits for the next batch. Empty pending queues return
+immediately, reusable batch sets avoid allocation, and completed resolvers do not
+repeatedly cancel the same absent frame callback. The [before/after recording](bench/renderer-previous/README.md)
+compares this with immutable commit `a3c16a08`; the [current upstream comparison](bench/renderer/README.md)
+reports residual costs separately. Neither experiment permits removal of validation,
+cancellation or failure restoration.
+
+The earlier [target recording](bench/groups/README.md), from `a3c16a08`, no longer
+established the original 80% Node regression: 11.39 versus 11.19 μs, with overlapping
+controls. That target workload is separate from deferred resolver setup.
 
 ## Groups and target completion
 
@@ -539,24 +541,61 @@ Renderer-owned `animateElement`, `animateValues`, `animateTarget` and
 progress, retaining cancellation, restoration and failure ownership. Owner-free
 `animateMotionValue`, `animateSingleValue` and raw keyframe controllers remain
 numeric. Named colors other than `transparent`, `currentColor`, lab/oklab and
-other extended color spaces, automatic `none` keyframes and full CSS grammar
+other extended color spaces and full CSS grammar
 are outside this verified scope.
 
-There are 211 unit tests per runtime and 2,538 exact color/complex/interpolation
+There are 222 unit tests per runtime and 2,538 exact color/complex/interpolation
 comparisons against both current 14.7.0 and app 12.36.0. Chrome checks computed
 colors, shadows, filters and transforms, CSS percentages and animations through
 an unchanged upstream HTML renderer. [Measurements](bench/mixers/README.md)
 separate preparation from sampling and include unchanged numeric interpolation.
-Color preparation costs 55% more on Node and 44% more on Bun; shadow preparation
-costs 40%/17% more. Bun prepared color sampling takes 42% less time, while shadow
-sampling costs 17% more; both Node sampling directions are inconclusive. These
-setup/sampling costs remain follow-up work; no general performance win is claimed.
+Parsed color/complex syntax uses eight-entry caches with input-length bounds.
+Only immutable string syntax is cached: public parsed objects are fresh snapshots,
+and object endpoints and computed DOM styles are read normally. Complex sampling
+formats in one pass. [Before/after measurements](bench/mixers-previous/README.md)
+include both repeated and changing uncached endpoints so cache hits cannot hide
+cold-input costs. Reported setup gains do not imply a general frame-rate gain.
+
+## Neutral keyframes and filter defaults
+
+`getAnimatableNone(property, value)` and `DOMKeyframesResolver.resolveNoneKeyframes()`
+provide property-aware neutral values. `none`, numeric zero and string zero can use
+a neighboring complex keyframe as a template. The renderer resolves wildcard origins
+first, leaves input arrays unchanged and restores a literal final `none` after
+forward completion. All-none timelines remain valid; cancellation/replay keep the
+same controller ownership rules.
+
+Filters and backdrop filters use one (100%) for brightness, contrast, saturation
+and opacity, and zero for blur, hue rotation, grayscale, inversion and sepia.
+Omitted filter arguments expand to their actual CSS defaults: for example,
+`grayscale()` means `grayscale(1)` although its neutral value is zero.
+Drop shadows use zero lengths and transparent color. If their color is omitted,
+DOM-backed animation reads the element's current color on each resolution; an
+owner-free value animation needs an explicit color. These identities follow
+[Filter Effects](https://www.w3.org/TR/filter-effects-1/#FilterProperty).
+
+Transform neutrality keeps scale and matrix identities instead of collapsing
+scale to zero. Translation, rotation and skew start at zero; rotate3d retains its
+axis. URL filters remain discrete and preserve the URL bytes. This deliberately
+fixes upstream's malformed URL neutralization, non-neutral drop shadows,
+zeroed backdrop multipliers and zero scale. Generic `complex.getAnimatableNone`
+remains the lower-level zero-component operation.
+
+Neutral function calculations containing unresolved `calc()`/`var()`, named shadow
+colors other than `transparent`, perspective identities and full CSS grammar remain
+outside this scope and reject explicitly. Low-level complex mixing still preserves
+opaque nested variables; this restriction concerns generating a neutral function.
+
+174 current/app comparisons cover common neutral filters, shadows and frame arrays.
+Independent regressions cover the CSS corrections; Chrome compares midpoint styles
+against native animations and checks live shadow color reads and final `none`.
+[Neutral-value measurements](bench/neutral/README.md) cover identity construction
+and multiframe normalization.
 
 ## Still to build
 
-Neutral `none` keyframe resolution and filter-specific identities are the next
-bounded unit. Custom effect registration and the high-level selector `animate`
-wrapper remain unimplemented.
+The high-level selector `animate` wrapper is the next bounded unit. Custom effect
+registration and variant propagation remain unimplemented.
 Inertia, CSS spring serialization, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject

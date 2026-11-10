@@ -1,0 +1,2425 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-10T04:25:37.164Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-dom-conformance/node_modules/.setup-before-a3c16a08": "441f102d85308257a2f4dcd02c3b6de7f416102a7c6939fa3328f5bd8446f267",
+    "../../scripts/motion-dom-conformance/setup-baseline.cjs": "a69088fa9aedacc25e5020a596c584476a67bd4839193299e8a5b9805f6847d0",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "f02be45e5d9bd76cb685556fa653d9249d9fe036b80aac57a5d192b41778467a",
+    "bench/mixers.cjs": "2debf5bb0596a1aadc52f68b8453546b838c76f724062eb2c81099ac9bb68d64",
+    "color.cjs": "a7f35b210a5f7b48e1aed23e454ed56457c401de32da0da2316212eac4340775",
+    "effects.cjs": "d1605f3a788bcaea5ac6cf36f54d4dca0f9f2a0c2970cae04553ef22c5dd4e6e",
+    "element.cjs": "d26e73e900dbdb3e502a2068a1ae5e5c8674d22563d6f452016a2a3bf5304876",
+    "frame.cjs": "4a9ac2eb27ef3126006a33429c8b5a0e78f02855e61b78edaac8628a6b990b41",
+    "group.cjs": "3b65d4545349738c925f0af35aff881a361dffc51733d446c6fcf48deea9abd7",
+    "index.cjs": "a5a6a16859665010a7ac28636e7ffdeaae0866793bc55bd9944b013a60db3303",
+    "mapping.cjs": "ec4d0473369ab23544d410649c02ac3c71c0f13cf7e665d56bb15995bc93e1af",
+    "mix.cjs": "a1be0dbfecf6acc26b09b5a1501d412833cb03d1fffbdc2930ec0ce7fb499d96",
+    "neutral.cjs": "fa13eaaf5b06dc31f797daace639578ccecf8c57ac59ea4e498b5e082415dc9f",
+    "package.json": "dbf864796d4f065ddba0eff4dc10cc2f1be750c9b2a7547a36f178a180f6ee82",
+    "playback.cjs": "d0062157fd369f44af8a14347a9d55eb38f38c7946cb10162cd7da3d8edc9a73",
+    "reads.cjs": "ef7f79eb94a5e6155a75042fe6a114f1013aa5e7a86a148df67818d8d9cd1875",
+    "resolver.cjs": "be335357e3e34ff65c311120365bb4a99cbca7cd9f2acf4bd9769421155d7960",
+    "single.cjs": "c4cc282c6af46380af906524bdfe7e449ec0172fab28040a566cf735a62d6035",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "target.cjs": "8cbb6dc93ddc6000bb2ef6abf390b774e9ca91b4066ed10f9dc11bf0fad23aac",
+    "transition.cjs": "6c4af02321c65c6a02c94066566c3ce88ec95a4d3c9923f96ed01c8ac230d08c",
+    "value.cjs": "634004c6e40c6853412d0471ddc586ce57ffbac4a43fe4e366198af7149102ec"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 54288,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 14120,
+            "samples": [
+              629.9929178470234,
+              613.3351274787553,
+              650.1327903682666,
+              624.6134560906564,
+              638.8662889518433,
+              632.7873937677091,
+              630.6155807365477,
+              653.0453257790371,
+              623.5186260623223,
+              625.4839235127452,
+              612.9308073654393,
+              637.8038951841392
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 383554,
+            "samples": [
+              31.682850393946996,
+              32.92821871235878,
+              31.404203840919408,
+              30.79640154971638,
+              30.901231638830613,
+              31.953018349436878,
+              31.068311111342904,
+              31.679265501076785,
+              33.43521120885224,
+              32.475654014819426,
+              33.96653404735714,
+              32.125312211578965
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 5132,
+            "samples": [
+              2118.236944660983,
+              2262.324629773958,
+              2204.468628215132,
+              2077.6905689789683,
+              2173.3973109898616,
+              2107.4142634450272,
+              2031.4772018706287,
+              1949.645946999243,
+              2060.113016367886,
+              2102.8838659391886,
+              2078.8111847233017,
+              2034.3595089633689
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 39639,
+            "samples": [
+              288.48376598804464,
+              283.83241252302173,
+              267.4386336688586,
+              284.42420343600867,
+              294.24410302984455,
+              286.88286788264134,
+              277.4845228184323,
+              285.70453341406613,
+              272.0374126491577,
+              297.54262216504054,
+              276.8275183531369,
+              284.8236585181258
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 10170,
+            "samples": [
+              856.5060963618319,
+              859.197836774823,
+              873.9921337266492,
+              937.647492625372,
+              870.3253687315561,
+              928.4250737463038,
+              1006.9361848574357,
+              970.145034414952,
+              947.9596853490684,
+              876.6019665683243,
+              922.7957718780797,
+              927.1509341199718
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5011,
+            "samples": [
+              1966.5402115346685,
+              1818.7487527439596,
+              1908.1436838954662,
+              1788.4653761724185,
+              2090.1183396527563,
+              2015.382957493504,
+              2924.1917780881695,
+              2349.456196368023,
+              2101.3687886649295,
+              2042.8557174216783,
+              2052.908601077596,
+              1869.703252843753
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 552007,
+            "samples": [
+              8.977393402620386,
+              8.74883289523488,
+              4.0136103346516085,
+              3.9619805545938385,
+              3.9810781385020886,
+              3.9339030120995653,
+              4.1897113623551805,
+              4.172803968064946,
+              3.9905146130394082,
+              3.9736814931700377,
+              4.315238756030599,
+              4.038974143443902
+            ]
+          }
+        ],
+        "checksum": 2214931
+      },
+      "vpm": {
+        "pid": 54310,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 14120,
+            "samples": [
+              37.05148725212068,
+              52.723654390935465,
+              38.58002832861345,
+              49.48951841359151,
+              38.07839943343172,
+              37.765580736540564,
+              52.22202549575373,
+              38.15509915014519,
+              64.40630311614463,
+              40.421388101981265,
+              51.909206798870635,
+              37.547167138802735
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 383554,
+            "samples": [
+              34.294931091841015,
+              34.48525631332216,
+              35.16030337318885,
+              33.66757483952707,
+              35.70803068146863,
+              36.15179870370279,
+              33.19860567221285,
+              34.057569468706056,
+              32.038187582452466,
+              33.57284763032081,
+              31.160973422256014,
+              33.12408422282134
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 5132,
+            "samples": [
+              315.4308261886401,
+              303.39867498049693,
+              303.73148869839156,
+              251.78624318005907,
+              324.99512860485083,
+              320.7083008573524,
+              315.7802026500405,
+              325.1819953234725,
+              263.98908807484185,
+              337.149259547948,
+              321.179267342183,
+              294.8411925175264
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 39639,
+            "samples": [
+              309.5152501324448,
+              282.44279623603245,
+              276.416534221344,
+              296.49882691288946,
+              305.6144201417817,
+              300.45957264310846,
+              334.0512626453794,
+              294.64774590681105,
+              291.44489013345503,
+              311.93289437170625,
+              299.66490072907743,
+              293.37584197381193
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 10170,
+            "samples": [
+              966.7691248770897,
+              991.6872173057917,
+              896.9067846607759,
+              921.1242871189679,
+              1100.5080629301797,
+              1010.6767944936112,
+              934.4886922320632,
+              924.9795476892867,
+              984.562438544754,
+              942.2689282202614,
+              912.8072763028692,
+              985.6604719764044
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5011,
+            "samples": [
+              1884.4292556375892,
+              1786.8938335661496,
+              2182.581720215525,
+              1889.102175214519,
+              2004.9722610257452,
+              1897.0764318499573,
+              1894.1578527239842,
+              1967.7210137697423,
+              1863.4172819797113,
+              2105.7922570344654,
+              2024.471163440412,
+              2033.4847335861355
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 552007,
+            "samples": [
+              4.02916086209003,
+              4.0942270659609115,
+              4.165255150749952,
+              4.06720385792194,
+              3.9829657957235916,
+              3.942810507838216,
+              4.017762455911166,
+              4.044709577958255,
+              3.9743608323806296,
+              3.9348087977147874,
+              4.006592307706304,
+              4.117927852364488
+            ]
+          }
+        ],
+        "checksum": 851229
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 54335,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 278630,
+            "samples": [
+              45.57776621325781,
+              45.23591860172969,
+              45.28720884326891,
+              45.577769802246785,
+              44.86565337544399,
+              45.17819330294643,
+              44.88763234396897,
+              46.36629939346083,
+              45.40729282561105,
+              43.43678713706357,
+              45.66509708215188,
+              46.07334457883201
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 350818,
+            "samples": [
+              33.36369000450364,
+              34.87290275869552,
+              31.409092463898602,
+              34.923971974071875,
+              33.3411255978885,
+              33.015814467900704,
+              35.53753798265743,
+              34.47300309562223,
+              35.51806064683079,
+              36.453967584330954,
+              35.12694901629941,
+              34.00267375106191
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 33089,
+            "samples": [
+              330.67635770195403,
+              360.858835262475,
+              374.1651304058692,
+              330.02659494091375,
+              349.3167215691047,
+              342.91353622050053,
+              339.9480794221589,
+              332.3033032125482,
+              307.00284082323043,
+              312.9552117017769,
+              319.9854936685897,
+              353.82855329565524
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 37234,
+            "samples": [
+              306.3127786431762,
+              300.73768598592443,
+              310.6423967341649,
+              301.3173443626759,
+              291.8558038352092,
+              299.4082290379807,
+              297.42192619648705,
+              322.13165386474634,
+              308.74893914164403,
+              294.8738518558306,
+              295.0764086587542,
+              315.8168609335564
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 9248,
+            "samples": [
+              996.2740051903318,
+              1051.7544333910048,
+              1016.9180363321775,
+              1007.2674091695359,
+              956.7834126297729,
+              975.4136029411884,
+              1001.2029628027724,
+              997.4408520761125,
+              1037.3234212802763,
+              994.2465397923884,
+              1018.9950259515476,
+              955.0533088235609
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5372,
+            "samples": [
+              2081.634772896503,
+              2141.032204020826,
+              1913.052308265104,
+              2192.9525316455856,
+              1861.9307520476777,
+              1986.1628816083614,
+              1916.6433358153772,
+              2045.4206999255925,
+              2198.033134772846,
+              2067.673492181634,
+              2196.9782204020526,
+              1891.6604616529796
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 644257,
+            "samples": [
+              9.042133806850766,
+              4.025891841298988,
+              4.174833956014077,
+              4.024339665692438,
+              4.097873985071354,
+              4.016383213531238,
+              4.098778903449503,
+              4.319447052961929,
+              4.008752718247731,
+              4.000797818261957,
+              4.246688821386642,
+              3.985792936669971
+            ]
+          }
+        ],
+        "checksum": 3577760
+      },
+      "upstream": {
+        "pid": 54400,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 278630,
+            "samples": [
+              624.0722463482039,
+              624.1494096113121,
+              621.006499659046,
+              637.6674873488137,
+              621.7667695510172,
+              628.9022790080047,
+              627.8879409970214,
+              625.9024799913877,
+              648.5195420450048,
+              626.5223271004556,
+              648.6212288698268,
+              614.278344040484
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 350818,
+            "samples": [
+              32.58776630617547,
+              32.06042734409272,
+              30.130058890934492,
+              30.388383720333987,
+              32.992771180498295,
+              31.558030089675952,
+              32.0562713429748,
+              31.638082994601113,
+              31.076891721633434,
+              28.925611000575973,
+              32.56603138949448,
+              32.50712050122957
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 33089,
+            "samples": [
+              2144.7082111880204,
+              2100.1427966998267,
+              2063.46519991536,
+              2206.220345129798,
+              2193.644413551308,
+              2148.6231375985894,
+              2205.401855601557,
+              2166.1340022363825,
+              2124.9294931850313,
+              2222.3649551210174,
+              2175.85273051466,
+              2091.4969022938217
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 37234,
+            "samples": [
+              294.97792340335604,
+              278.6532470322966,
+              269.48823655798816,
+              279.45786109469947,
+              291.8669764193965,
+              287.0125423000313,
+              290.5834183810365,
+              283.1428801632954,
+              284.067223505398,
+              286.0714132244926,
+              286.2773271740802,
+              286.8905570177712
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 9248,
+            "samples": [
+              892.9903762976148,
+              834.0992647058706,
+              883.7225346021183,
+              881.7311851211615,
+              871.8236375432061,
+              828.3096885813407,
+              880.6995025951717,
+              866.7098832180236,
+              927.5428200692243,
+              876.2886029411176,
+              843.8400735294053,
+              870.5666089964832
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5372,
+            "samples": [
+              1840.8413998511026,
+              2001.7297096054222,
+              1949.8790022338633,
+              1954.5793000744602,
+              2035.066083395443,
+              1976.7233804914408,
+              2027.1159717052071,
+              2010.9441548770474,
+              1929.2008562918138,
+              2002.3734177214365,
+              1906.7386448249226,
+              1887.0765078183633
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 644257,
+            "samples": [
+              10.287691092220507,
+              10.199927979051115,
+              10.134736603560492,
+              10.319639522736004,
+              9.99070867681692,
+              10.21350951561178,
+              10.104534370601039,
+              10.398865670066902,
+              10.034880490238852,
+              10.032421844078021,
+              9.853145561476692,
+              10.147670882894168
+            ]
+          }
+        ],
+        "checksum": 315187
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 54455,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 17301,
+            "samples": [
+              624.9349748569454,
+              648.5005491012062,
+              665.9754349459537,
+              664.2896364371951,
+              645.4804924570841,
+              636.1964048320922,
+              642.9927171839774,
+              617.2957054505537,
+              619.4656378244067,
+              641.1117854459256,
+              625.7056239523727,
+              639.5608346338397
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 367175,
+            "samples": [
+              30.90352011983381,
+              31.383648124191385,
+              31.598011847211755,
+              33.358638251515025,
+              32.29795056853009,
+              33.3363981752569,
+              32.807470552189194,
+              30.219129842717894,
+              31.69095118131741,
+              31.910192687410696,
+              32.17244365765635,
+              32.084270443249046
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 5129,
+            "samples": [
+              2049.408656658206,
+              2091.262234353656,
+              2094.82023786315,
+              2095.0152076428294,
+              2203.1259504776826,
+              2060.7330863716243,
+              2096.81048937415,
+              2096.7781243907157,
+              1992.396178592328,
+              2073.9097289919764,
+              2090.660947553121,
+              2093.512380581006
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 29997,
+            "samples": [
+              290.3526352635294,
+              308.75034170083956,
+              282.4171083775091,
+              312.4187418741872,
+              718.5371203787034,
+              1031.0586391972538,
+              330.0274360769392,
+              369.24805813915015,
+              306.6653998733194,
+              318.74994166083,
+              286.84258425842626,
+              303.0858752541969
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 13728,
+            "samples": [
+              862.7076048950975,
+              908.2349941724867,
+              866.914335664324,
+              889.6233974359077,
+              859.6177884615392,
+              831.9584061771616,
+              895.8151223776189,
+              884.7215909090881,
+              876.9030448717975,
+              868.231570512804,
+              869.0996503496532,
+              865.8489947552479
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5086,
+            "samples": [
+              2201.7384978371974,
+              1971.8263861581129,
+              2108.8118364137054,
+              2298.1877703500018,
+              1787.070585922085,
+              2049.12170664567,
+              1977.7493118364237,
+              2069.9223358238637,
+              2095.400707825419,
+              1890.5082579629977,
+              2060.337200157253,
+              2128.744003145949
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 1000000,
+            "samples": [
+              4.095458000000235,
+              4.086957999999868,
+              4.1587499999996,
+              3.9502910000001066,
+              4.025958000000173,
+              4.156792000000223,
+              4.159708000000137,
+              4.068250000000262,
+              4.064624999999978,
+              4.018291999999747,
+              4.06991700000026,
+              3.955916000000343
+            ]
+          }
+        ],
+        "checksum": 2454076
+      },
+      "vpm": {
+        "pid": 54477,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 17301,
+            "samples": [
+              47.74533263972694,
+              36.1973296341202,
+              51.72388879255282,
+              39.26796138951138,
+              51.95029189063971,
+              38.19386162649644,
+              51.14345991561595,
+              54.259869371714196,
+              43.04664470262224,
+              70.87983353563712,
+              37.03063406739539,
+              56.328593722902205
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 367175,
+            "samples": [
+              35.18962347654388,
+              32.98801661333163,
+              32.136697759923806,
+              32.887813712807386,
+              32.08415605637628,
+              33.80597262885563,
+              34.21029754204387,
+              32.96271260298214,
+              32.96736433580742,
+              33.17786614012401,
+              32.48643834683745,
+              32.858762170627195
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 5129,
+            "samples": [
+              319.16552934294083,
+              329.85630727238987,
+              326.5256385260097,
+              284.74517449795616,
+              321.8625463053072,
+              301.20393838955886,
+              339.2799766036125,
+              328.8570871514824,
+              250.15441606551434,
+              326.7855332423596,
+              314.81107428347497,
+              326.476896081123
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 29997,
+            "samples": [
+              276.4915491549143,
+              304.61936193619243,
+              286.3286328632844,
+              304.6040937427071,
+              290.86241957528784,
+              286.2188885555245,
+              286.46614661465725,
+              291.00410041003653,
+              290.5026836016929,
+              294.4877821115448,
+              279.89742307564387,
+              278.7653765376573
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 13728,
+            "samples": [
+              1016.4050844988355,
+              983.1154574592174,
+              990.9946824009244,
+              1001.3991841491842,
+              986.9821532634061,
+              933.3509615384613,
+              951.926136363644,
+              918.2297494172493,
+              950.9457313519881,
+              1017.4369900932363,
+              996.5733537295894,
+              926.716127622392
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5086,
+            "samples": [
+              1980.7725127802025,
+              1880.7265041289625,
+              2053.4309870232278,
+              2034.1458906802864,
+              2075.0918206842225,
+              2026.510617381065,
+              1967.8037750688338,
+              1733.7955171057802,
+              1759.7406606370091,
+              2068.349390483662,
+              1943.275658670844,
+              1991.5043255997034
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 1000000,
+            "samples": [
+              4.202792000000045,
+              3.943832999999813,
+              3.9506670000000668,
+              4.013374999999996,
+              4.0115420000001905,
+              4.026958000000377,
+              4.061749999999847,
+              3.98174999999992,
+              4.08920900000021,
+              4.012250000000222,
+              4.081125000000156,
+              4.084582999999839
+            ]
+          }
+        ],
+        "checksum": 758087
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 54499,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 122465,
+            "samples": [
+              44.44875678765417,
+              46.21184011758418,
+              46.19687257583821,
+              45.18366063773312,
+              45.789948148450534,
+              44.26026211570583,
+              53.272706487567945,
+              68.61790715714665,
+              54.5720491569022,
+              47.76772955538315,
+              50.5817988813126,
+              48.7350100028582
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 316866,
+            "samples": [
+              32.46324944929417,
+              30.6708261536421,
+              32.53925634179732,
+              33.8909034102744,
+              34.64490036797897,
+              33.75441038167538,
+              33.42159461728322,
+              34.2613281323968,
+              33.972562534320296,
+              33.1190219209381,
+              34.20110393667993,
+              34.54154753113322
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 39913,
+            "samples": [
+              307.4802194773611,
+              303.61661614010444,
+              313.32523238042256,
+              298.85731465938557,
+              298.9606393906773,
+              319.3612607421142,
+              349.4673915766745,
+              374.28178788865824,
+              330.5491694435403,
+              313.05902838673904,
+              315.4277303134308,
+              308.5032946658995
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 36687,
+            "samples": [
+              285.244091912663,
+              294.4685038296923,
+              308.7151579578625,
+              291.07722081390705,
+              290.2390492545081,
+              297.96884454984183,
+              301.3408564341595,
+              305.26821489900834,
+              314.2598195546057,
+              333.0266852018433,
+              315.79872979529716,
+              309.2739662550787
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 3129,
+            "samples": [
+              2049.323426014698,
+              877.0508149568103,
+              1130.2866730585106,
+              1082.3745605625184,
+              887.3042505592573,
+              1013.0233301374311,
+              1219.2125279642182,
+              876.6912751678124,
+              1134.0150207733961,
+              935.2297858741529,
+              989.4534995206149,
+              1190.2630233301015
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5184,
+            "samples": [
+              1947.3620756172502,
+              2024.2654320987187,
+              1962.8101851852068,
+              2051.030478395117,
+              1945.2802854938739,
+              1917.9205246913791,
+              1891.3402777778008,
+              2136.799189814799,
+              1804.8562885802166,
+              1989.1975308641777,
+              2112.3329475308856,
+              2033.9506172839256
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 1000000,
+            "samples": [
+              4.0637910000000375,
+              4.014333000000079,
+              4.038000000000011,
+              4.041124999999738,
+              4.0875419999997575,
+              4.204624999999851,
+              4.097291999999925,
+              3.9442920000001322,
+              4.204625000000306,
+              4.034666999999899,
+              3.9991249999998217,
+              4.138040999999703
+            ]
+          }
+        ],
+        "checksum": 3422960
+      },
+      "upstream": {
+        "pid": 54534,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 122465,
+            "samples": [
+              627.7552116931372,
+              620.0434818111297,
+              615.1114604172609,
+              629.5142122238992,
+              629.0164536806437,
+              612.7757563385449,
+              615.3319315722852,
+              627.8610215163504,
+              626.3333768831897,
+              605.6107867553992,
+              618.4920181276287,
+              624.7781651900534
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 316866,
+            "samples": [
+              33.582807874621764,
+              31.408781630089926,
+              32.288229093685935,
+              30.50842627482926,
+              29.442388896253064,
+              30.72592199857386,
+              32.55240385525744,
+              33.50877342472883,
+              33.17937550888949,
+              34.9360360530959,
+              34.96864605227447,
+              33.3805646550909
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 39913,
+            "samples": [
+              2145.039410718315,
+              2155.6030366046252,
+              2250.019843158869,
+              2255.914965048988,
+              2464.9257885901857,
+              2123.2670809009674,
+              2159.78398015684,
+              2088.422518978777,
+              2141.6330518878517,
+              2124.7129256132007,
+              2171.0595545311025,
+              2102.3068924911727
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 36687,
+            "samples": [
+              291.2180608935001,
+              337.38449587047404,
+              386.95131790552017,
+              295.8745604710106,
+              299.3192411480974,
+              274.1036606972449,
+              302.20966554909904,
+              288.07092430561755,
+              285.2463542944367,
+              269.65385558917916,
+              305.85880557145924,
+              288.27879085234036
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 3129,
+            "samples": [
+              864.5867689356487,
+              974.5659955257834,
+              883.8552253117077,
+              869.5937999361523,
+              846.969319271554,
+              964.2726110577305,
+              942.1275167786564,
+              853.0150207734457,
+              787.7785234899034,
+              861.9367209971609,
+              746.338127197109,
+              900.1943112813615
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5184,
+            "samples": [
+              2080.608603395156,
+              1922.6786265432795,
+              2072.032600308677,
+              2108.056905864203,
+              2125.0723379629926,
+              1905.1248070986576,
+              2063.110918209849,
+              1973.1867283951137,
+              1983.6356095679982,
+              1988.3856095679357,
+              2181.495949074195,
+              2179.655285493814
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 1000000,
+            "samples": [
+              11.197417000000314,
+              10.876832999999351,
+              11.094625000000633,
+              11.177917000000889,
+              11.235834000000068,
+              10.957292000000052,
+              11.008334000000104,
+              11.115999999999985,
+              11.500041000000238,
+              11.755584000000454,
+              11.363499999999476,
+              11.167875000000095
+            ]
+          }
+        ],
+        "checksum": 357351
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 54558,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 16159,
+            "samples": [
+              625.6987437341372,
+              609.3792313880791,
+              630.1287208366896,
+              619.120923324462,
+              603.4124636425519,
+              639.1329909029047,
+              614.340305711983,
+              634.3961878829148,
+              619.3065783773764,
+              616.4727396497319,
+              647.1445634011956,
+              636.2269323596771
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 320259,
+            "samples": [
+              31.56429639760315,
+              32.45836338713354,
+              30.64459702927945,
+              32.84125660793322,
+              32.13974314539175,
+              31.15720401300171,
+              31.632210179885604,
+              32.594971569885764,
+              31.79353897938836,
+              30.754405028430142,
+              30.875269703583825,
+              32.60511960631871
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 3944,
+            "samples": [
+              2091.9541075050765,
+              2115.7664807302376,
+              2115.6186612576194,
+              2117.541328600378,
+              2117.3301217038697,
+              2159.5778397565673,
+              2096.190415821476,
+              2084.5905172414127,
+              2093.855730223113,
+              2077.89249492903,
+              2226.0712474644765,
+              2052.632606490823
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 38485,
+            "samples": [
+              257.55489151617604,
+              267.60966610367893,
+              276.18443549434875,
+              290.37718591659063,
+              277.3309860984775,
+              275.9754969468614,
+              282.5786929972719,
+              293.93051838378284,
+              280.9362868650118,
+              289.9809276341449,
+              279.6100298817731,
+              280.8778225282571
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 11456,
+            "samples": [
+              882.1432437150903,
+              865.3762220670336,
+              803.178072625714,
+              836.654067737428,
+              864.5105621508446,
+              817.1737081005673,
+              921.1112081005749,
+              872.1121682960966,
+              895.727828212286,
+              858.6584322625653,
+              853.9048533519547,
+              863.1394029329562
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 4719,
+            "samples": [
+              2108.2945539308616,
+              2019.1248145794232,
+              2068.2347955074724,
+              2051.7501589319895,
+              1881.3043017587786,
+              1888.0235219325402,
+              1893.7804619623441,
+              1884.0680228862411,
+              1879.317652044933,
+              2036.7221869040154,
+              1998.7196439923973,
+              2033.9671540580187
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 1000000,
+            "samples": [
+              5.8132080000000315,
+              5.997000000000298,
+              5.858958999999686,
+              5.8146670000000995,
+              5.822167000000263,
+              5.884708000000046,
+              5.827708000000257,
+              5.75387499999988,
+              5.8501249999999345,
+              6.045292000000245,
+              5.90216700000019,
+              6.0938750000000255
+            ]
+          }
+        ],
+        "checksum": 2381639
+      },
+      "vpm": {
+        "pid": 54589,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 16159,
+            "samples": [
+              619.1930812550278,
+              596.9841574354836,
+              623.7906429853338,
+              633.6484312147994,
+              609.6705860511183,
+              613.0175134599921,
+              635.1362708088343,
+              617.3546630360837,
+              643.047218268462,
+              608.8557460238848,
+              617.5299832910507,
+              670.2688904016333
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 320259,
+            "samples": [
+              31.590056797779535,
+              30.391286427547595,
+              31.753855473226242,
+              31.22732850599029,
+              30.572392969440575,
+              30.706006700826627,
+              31.03594902875473,
+              31.813966196110076,
+              32.239662273347676,
+              32.23888165516036,
+              33.212312534542235,
+              33.917860231874684
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 3944,
+            "samples": [
+              2235.568711967523,
+              1999.7043610547435,
+              2052.146805273858,
+              2001.6584685598675,
+              2132.004310344835,
+              2155.8062880324683,
+              2099.7084178498985,
+              1980.9310344827447,
+              2239.7735801217304,
+              2118.5555273833734,
+              1918.230223123772,
+              1965.4538539553505
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 38485,
+            "samples": [
+              282.5798103157019,
+              307.7855008444862,
+              275.99929842795694,
+              274.1479277640629,
+              275.8130960114344,
+              270.62276211511136,
+              294.7328049889546,
+              275.95600883461185,
+              276.922827075484,
+              265.4215928283772,
+              275.28907366506826,
+              277.10687280758657
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 11456,
+            "samples": [
+              882.91794692736,
+              859.4732018156451,
+              909.1705656424532,
+              878.9207402234588,
+              836.6212465083812,
+              847.7726082402141,
+              835.9083449720721,
+              841.7386522346287,
+              837.2396124301757,
+              928.4909217877108,
+              868.3659217876977,
+              860.2479050279346
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 4719,
+            "samples": [
+              1904.4024157659674,
+              1902.5833863106377,
+              2059.8554778555276,
+              1874.7967789786003,
+              2004.2470862470334,
+              1934.8200890019004,
+              1835.3729603729782,
+              1924.3396906124917,
+              1907.9343081161105,
+              1929.8493324856397,
+              1750.308963763519,
+              2053.3303666031397
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 1000000,
+            "samples": [
+              5.867749999999887,
+              5.810958000000028,
+              6.046875,
+              5.992957999999817,
+              5.859707999999955,
+              5.970208999999613,
+              5.829124999999749,
+              5.872707999999875,
+              6.004957999999988,
+              6.026792000000114,
+              6.065625000000182,
+              6.0287500000004
+            ]
+          }
+        ],
+        "checksum": 370833
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 54630,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 13018,
+            "samples": [
+              638.9422338300762,
+              624.7760024581341,
+              591.6551697649433,
+              582.7732370563841,
+              616.0636810570039,
+              614.6265171301203,
+              620.5990167460395,
+              622.4554463051143,
+              637.2010293439835,
+              619.8693347672405,
+              653.6750652942089,
+              634.041941926564
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 379071,
+            "samples": [
+              33.59759781149169,
+              33.204642402083216,
+              33.82314922534328,
+              31.33461013899784,
+              35.15502372906384,
+              34.7753666199735,
+              34.011768243943756,
+              32.70088716889435,
+              32.735511289441845,
+              34.26128086822801,
+              32.0566595703704,
+              32.296720139499236
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 4748,
+            "samples": [
+              2149.668281381641,
+              2199.7946503790777,
+              2090.9241786015036,
+              2110.0726621735316,
+              2283.1543807919365,
+              2086.5713984835584,
+              2125.8072872788607,
+              2243.9888374052416,
+              2180.4793597304233,
+              2218.2234625105207,
+              2227.227253580459,
+              2129.52822240941
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 36752,
+            "samples": [
+              283.3848225946936,
+              284.16029059643216,
+              289.8889856334348,
+              273.0338757074442,
+              264.88014257727133,
+              279.5414671310389,
+              290.8141053548134,
+              267.3108674357888,
+              283.37799303439317,
+              269.3674357858058,
+              291.48642250762225,
+              274.757156073137
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 10223,
+            "samples": [
+              940.2246894258217,
+              895.0242590237644,
+              862.1409566663305,
+              904.7246405164848,
+              887.394404773547,
+              888.3685806514673,
+              906.1266751442703,
+              881.2196028563111,
+              868.6906974469343,
+              839.0230852000345,
+              933.2510026411123,
+              844.077081091669
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5478,
+            "samples": [
+              2117.0363271266483,
+              2131.3663745892395,
+              2122.246622855102,
+              2142.22051843737,
+              2080.3364366557303,
+              1909.0680905440047,
+              2050.7789339174183,
+              2050.2389558232994,
+              1917.1078860897396,
+              1962.6232201533041,
+              1884.2415115005642,
+              2030.9801022270744
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 1000000,
+            "samples": [
+              5.856083000000126,
+              5.961707999999817,
+              5.886250000000018,
+              6.004625000000033,
+              5.972250000000258,
+              6.258499999999913,
+              6.047042000000147,
+              5.864250000000084,
+              5.908459000000221,
+              6.027583999999933,
+              6.084958999999799,
+              6.065040999999837
+            ]
+          }
+        ],
+        "checksum": 2165445
+      },
+      "upstream": {
+        "pid": 54652,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "prepare and sample a repeated color mixer",
+            "iterations": 13018,
+            "samples": [
+              624.7567214625858,
+              645.9549085881089,
+              640.5649869411607,
+              629.6026271316684,
+              607.348133353821,
+              594.1580888001288,
+              622.7339068981436,
+              615.7147795360319,
+              636.8810109079676,
+              611.8003533568838,
+              649.1940390228964,
+              744.4371639268654
+            ]
+          },
+          {
+            "case": "sample a prepared color mixer",
+            "iterations": 379071,
+            "samples": [
+              32.073036449636106,
+              30.936157078753293,
+              31.029588124652182,
+              31.181604501531528,
+              30.073411049644974,
+              30.684555136109328,
+              32.99656528724183,
+              32.72144268487947,
+              34.8940778904217,
+              33.43557803155628,
+              35.71450730865742,
+              33.96911924151414
+            ]
+          },
+          {
+            "case": "prepare and sample a repeated complex shadow mixer",
+            "iterations": 4748,
+            "samples": [
+              1994.5414911541557,
+              2016.2525273799522,
+              2323.6010951979583,
+              2155.389848357226,
+              2041.3157118787183,
+              2133.9949452400992,
+              2508.4245998315255,
+              2010.2586352148544,
+              1971.9003791070104,
+              2457.043386689097,
+              2196.4159646166577,
+              2082.087194608286
+            ]
+          },
+          {
+            "case": "sample a prepared complex shadow mixer",
+            "iterations": 36752,
+            "samples": [
+              269.22118524161885,
+              276.38291793644026,
+              266.5399161950377,
+              266.3437908141062,
+              290.6361014366509,
+              269.53066499782074,
+              272.0362157161521,
+              285.99804092294823,
+              286.147692642576,
+              289.16453526338785,
+              284.8348389203343,
+              277.8068676534649
+            ]
+          },
+          {
+            "case": "prepare color mixers with changing uncached endpoints",
+            "iterations": 10223,
+            "samples": [
+              894.8816394404761,
+              864.349995109074,
+              875.8273500929259,
+              877.6982294825292,
+              821.3831556294566,
+              889.5953242688062,
+              926.8478920082335,
+              933.0634843000896,
+              933.5852489484487,
+              865.4993641788083,
+              896.8869216472729,
+              852.6157683654683
+            ]
+          },
+          {
+            "case": "prepare shadow mixers with changing uncached endpoints",
+            "iterations": 5478,
+            "samples": [
+              2016.9998174516254,
+              1943.6228550566261,
+              1837.5091274187255,
+              1963.5359620300042,
+              1956.3253012048278,
+              1753.5368747718503,
+              1912.4224169404363,
+              1978.299561883902,
+              1957.8159912377,
+              2023.5184373859488,
+              2089.152062796648,
+              1971.3322380431382
+            ]
+          },
+          {
+            "case": "sample a prepared numeric interpolation",
+            "iterations": 1000000,
+            "samples": [
+              5.808541000000332,
+              5.867999999999938,
+              6.048749999999927,
+              6.042957999999999,
+              5.984833999999864,
+              5.926166999999623,
+              5.8316249999998035,
+              5.833125000000109,
+              5.772208000000319,
+              5.812249999999949,
+              5.844625000000178,
+              6.009207999999944
+            ]
+          }
+        ],
+        "checksum": 364953
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "prepare and sample a repeated color mixer",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 630.3042492917855,
+          "vpmNs": 39.50070821529736,
+          "changePct": -93.73307283590732
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 626.2124035459217,
+          "vpmNs": 45.347250834439976,
+          "changePct": -92.75848728360192
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 640.3363100398826,
+          "vpmNs": 49.444396277671444,
+          "changePct": -92.27837067765346
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 622.4108235005915,
+          "vpmNs": 46.989784836483665,
+          "changePct": -92.45035865986367
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 622.5026610557568,
+          "vpmNs": 618.3615322730393,
+          "changePct": -0.6652387277661043
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 627.1796742971271,
+          "vpmNs": 621.5272315255769,
+          "changePct": -0.9012477609203207
+        }
+      ]
+    },
+    {
+      "case": "sample a prepared color mixer",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 31.817934371691937,
+          "vpmNs": 33.86257215411656,
+          "changePct": 6.426054433765249
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 31.847177168787958,
+          "vpmNs": 34.672952927158875,
+          "changePct": 8.872923786602783
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 31.99723156532987,
+          "vpmNs": 32.96503846939478,
+          "changePct": 3.024658249226664
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 32.865889682073465,
+          "vpmNs": 33.82265689597489,
+          "changePct": 2.9111252522194375
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 31.71287457963698,
+          "vpmNs": 31.67195613550289,
+          "changePct": -0.12902786226880458
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 32.397239567257785,
+          "vpmNs": 33.40112010678745,
+          "changePct": 3.098660728317837
+        }
+      ]
+    },
+    {
+      "case": "prepare and sample a repeated complex shadow mixer",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2090.8475253312454,
+          "vpmNs": 315.6055144193403,
+          "changePct": -84.90537877125497
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2157.378569917486,
+          "vpmNs": 336.1256913173536,
+          "changePct": -84.4197167801565
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2092.387307467331,
+          "vpmNs": 324.1697211932151,
+          "changePct": -84.50718373045396
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2150.32122366147,
+          "vpmNs": 313.1921303835808,
+          "changePct": -85.43510025677506
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2105.9045385395475,
+          "vpmNs": 2075.927611561878,
+          "changePct": -1.4234703629281475
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2108.041069924193,
+          "vpmNs": 2165.073820556032,
+          "changePct": 2.705485744349856
+        }
+      ]
+    },
+    {
+      "case": "sample a prepared complex shadow mixer",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 284.62393097706723,
+          "vpmNs": 298.0818638209835,
+          "changePct": 4.728320910233141
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 286.1743701992864,
+          "vpmNs": 301.02751517430016,
+          "changePct": 5.190242915419141
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 310.5845417875134,
+          "vpmNs": 288.4844151081751,
+          "changePct": -7.115655709117075
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 293.54631068225535,
+          "vpmNs": 303.3045356665839,
+          "changePct": 3.3242540032775825
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 280.2439262050151,
+          "vpmNs": 275.9776536312844,
+          "changePct": -1.5223425647447164
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 277.09489279495256,
+          "vpmNs": 281.4597300827161,
+          "changePct": 1.5752139073142102
+        }
+      ]
+    },
+    {
+      "case": "prepare color mixers with changing uncached endpoints",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 924.9733529990258,
+          "vpmNs": 954.5190265486756,
+          "changePct": 3.1942188879122035
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 874.0561202421618,
+          "vpmNs": 999.3219074394424,
+          "changePct": 14.331549690719525
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 868.6656104312285,
+          "vpmNs": 985.0488053613117,
+          "changePct": 13.397928216855215
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 867.0902844359005,
+          "vpmNs": 1047.6989453499748,
+          "changePct": 20.829279736604622
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 863.8249825419005,
+          "vpmNs": 859.8605534217899,
+          "changePct": -0.4589389286293599
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 883.6467768756677,
+          "vpmNs": 887.8814927125071,
+          "changePct": 0.4792317414218594
+        }
+      ]
+    },
+    {
+      "case": "prepare shadow mixers with changing uncached endpoints",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2029.119337457591,
+          "vpmNs": 1932.39872280985,
+          "changePct": -4.766630176070786
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1965.6513402829505,
+          "vpmNs": 2056.547096053613,
+          "changePct": 4.62420541771047
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2065.1297679905583,
+          "vpmNs": 1986.1384191899529,
+          "changePct": -3.8250065455918913
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2067.5717592592628,
+          "vpmNs": 1976.0038580246924,
+          "changePct": -4.4287653294014735
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2008.9222292859104,
+          "vpmNs": 1916.1369993643011,
+          "changePct": -4.618657137095372
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1960.675976633852,
+          "vpmNs": 2050.508944870359,
+          "changePct": 4.581734529676584
+        }
+      ]
+    },
+    {
+      "case": "sample a prepared numeric interpolation",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4.026292239047756,
+          "vpmNs": 4.023461659000597,
+          "changePct": -0.07030239930689852
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 10.14120374322733,
+          "vpmNs": 4.061882913185171,
+          "changePct": -59.946737921542635
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4.069083500000261,
+          "vpmNs": 4.020166500000187,
+          "changePct": -1.2021626000073726
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 11.172896000000492,
+          "vpmNs": 4.052457999999888,
+          "changePct": -63.72956483261181
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 5.85454199999981,
+          "vpmNs": 5.981583499999715,
+          "changePct": 2.1699647897292174
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5.856312500000058,
+          "vpmNs": 5.9884375000001455,
+          "changePct": 2.256112528149523
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "prepare and sample a repeated color mixer",
+      "upstream_ns": 628,
+      "vpm_ns": 46,
+      "change_pct": -92.6,
+      "upstream_first_pct": -93,
+      "vpm_first_pct": -92.6,
+      "process_range_pct": "-93.7, -92.8, -92.3, -92.5",
+      "control_max_abs_pct": 0.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "sample a prepared color mixer",
+      "upstream_ns": 32,
+      "vpm_ns": 34,
+      "change_pct": 4.7,
+      "upstream_first_pct": 4.7,
+      "vpm_first_pct": 5.9,
+      "process_range_pct": "6.4, 8.9, 3.0, 2.9",
+      "control_max_abs_pct": 3.1,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "prepare and sample a repeated complex shadow mixer",
+      "upstream_ns": 2121,
+      "vpm_ns": 320,
+      "change_pct": -84.7,
+      "upstream_first_pct": -84.7,
+      "vpm_first_pct": -84.9,
+      "process_range_pct": "-84.9, -84.4, -84.5, -85.4",
+      "control_max_abs_pct": 2.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "sample a prepared complex shadow mixer",
+      "upstream_ns": 290,
+      "vpm_ns": 300,
+      "change_pct": 4,
+      "upstream_first_pct": -1.2,
+      "vpm_first_pct": 4.3,
+      "process_range_pct": "4.7, 5.2, -7.1, 3.3",
+      "control_max_abs_pct": 1.6,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "prepare color mixers with changing uncached endpoints",
+      "upstream_ns": 871,
+      "vpm_ns": 992,
+      "change_pct": 13.9,
+      "upstream_first_pct": 8.3,
+      "vpm_first_pct": 17.6,
+      "process_range_pct": "3.2, 14.3, 13.4, 20.8",
+      "control_max_abs_pct": 0.5,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "prepare shadow mixers with changing uncached endpoints",
+      "upstream_ns": 2047,
+      "vpm_ns": 1981,
+      "change_pct": -4.1,
+      "upstream_first_pct": -4.3,
+      "vpm_first_pct": 0.1,
+      "process_range_pct": "-4.8, 4.6, -3.8, -4.4",
+      "control_max_abs_pct": 4.6,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "sample a prepared numeric interpolation",
+      "upstream_ns": 7,
+      "vpm_ns": 4,
+      "change_pct": -30.6,
+      "upstream_first_pct": -0.6,
+      "vpm_first_pct": -61.8,
+      "process_range_pct": "-0.1, -59.9, -1.2, -63.7",
+      "control_max_abs_pct": 2.3,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

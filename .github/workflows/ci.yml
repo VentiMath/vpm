@@ -44,6 +44,7 @@ jobs:
           node scripts/motion-dom-conformance/groups.cjs
           node scripts/motion-dom-conformance/targets.cjs
           node scripts/motion-dom-conformance/mixers.cjs
+          node scripts/motion-dom-conformance/neutral.cjs
           node scripts/motion-dom-conformance/single.cjs
           node scripts/motion-dom-conformance/reads.cjs
           node scripts/motion-dom-conformance/transitions.cjs
@@ -687,6 +688,7 @@ jobs:
           bun scripts/motion-dom-conformance/groups.cjs
           bun scripts/motion-dom-conformance/targets.cjs
           bun scripts/motion-dom-conformance/mixers.cjs
+          bun scripts/motion-dom-conformance/neutral.cjs
           bun scripts/motion-dom-conformance/single.cjs
           bun scripts/motion-dom-conformance/reads.cjs
           bun scripts/motion-dom-conformance/transitions.cjs

@@ -1,3 +1,4 @@
+import {checkNeutral} from "./neutral-browser.mjs";
 import {checkMixers} from "./mixers-browser.mjs";
 import {checkGroups} from "./groups-browser.mjs";
 import {checkRendererAnimations} from "./renderer-browser.mjs";
@@ -160,6 +161,7 @@ window.runMotionDom = async () => {
   await checkRendererAnimations(current,vpm);
   await checkGroups(current,vpm);
   await checkMixers(current,app,vpm);
+  await checkNeutral(vpm);
   for (const api of [current, app, vpm]) {
     const node = document.createElement("div");
     document.body.append(node);

@@ -2,6 +2,7 @@
 module.exports = {
   ...require("./color.cjs"),
   ...require("./mix.cjs"),
+  ...require("./neutral.cjs"),
   ...require("./group.cjs"),
   ...require("./target.cjs"),
   ...require("./single.cjs"),

@@ -1,0 +1,1343 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-10T04:29:23.295Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "f02be45e5d9bd76cb685556fa653d9249d9fe036b80aac57a5d192b41778467a",
+    "bench/neutral.cjs": "975c0d6f44269852bbf6c337e99b3fa35bb27cdbb71be3c68e5954987d3eae22",
+    "color.cjs": "a7f35b210a5f7b48e1aed23e454ed56457c401de32da0da2316212eac4340775",
+    "effects.cjs": "d1605f3a788bcaea5ac6cf36f54d4dca0f9f2a0c2970cae04553ef22c5dd4e6e",
+    "element.cjs": "d26e73e900dbdb3e502a2068a1ae5e5c8674d22563d6f452016a2a3bf5304876",
+    "frame.cjs": "4a9ac2eb27ef3126006a33429c8b5a0e78f02855e61b78edaac8628a6b990b41",
+    "group.cjs": "3b65d4545349738c925f0af35aff881a361dffc51733d446c6fcf48deea9abd7",
+    "index.cjs": "a5a6a16859665010a7ac28636e7ffdeaae0866793bc55bd9944b013a60db3303",
+    "mapping.cjs": "ec4d0473369ab23544d410649c02ac3c71c0f13cf7e665d56bb15995bc93e1af",
+    "mix.cjs": "a1be0dbfecf6acc26b09b5a1501d412833cb03d1fffbdc2930ec0ce7fb499d96",
+    "neutral.cjs": "fa13eaaf5b06dc31f797daace639578ccecf8c57ac59ea4e498b5e082415dc9f",
+    "package.json": "dbf864796d4f065ddba0eff4dc10cc2f1be750c9b2a7547a36f178a180f6ee82",
+    "playback.cjs": "d0062157fd369f44af8a14347a9d55eb38f38c7946cb10162cd7da3d8edc9a73",
+    "reads.cjs": "ef7f79eb94a5e6155a75042fe6a114f1013aa5e7a86a148df67818d8d9cd1875",
+    "resolver.cjs": "be335357e3e34ff65c311120365bb4a99cbca7cd9f2acf4bd9769421155d7960",
+    "single.cjs": "c4cc282c6af46380af906524bdfe7e449ec0172fab28040a566cf735a62d6035",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "target.cjs": "8cbb6dc93ddc6000bb2ef6abf390b774e9ca91b4066ed10f9dc11bf0fad23aac",
+    "transition.cjs": "6c4af02321c65c6a02c94066566c3ce88ec95a4d3c9923f96ed01c8ac230d08c",
+    "value.cjs": "634004c6e40c6853412d0471ddc586ce57ffbac4a43fe4e366198af7149102ec"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 56576,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 8974,
+            "samples": [
+              1017.6018497882766,
+              1015.6330510363313,
+              981.3025406730582,
+              1014.0731000668625,
+              1025.8432137285492,
+              977.0541564519709,
+              1018.2239803877865,
+              955.5613995988384,
+              1110.3373077780227,
+              821.6235792288817,
+              815.5041230220629,
+              819.4738132382413
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 12885,
+            "samples": [
+              843.1412495149405,
+              825.0743500194015,
+              834.9178890182399,
+              835.0795498641825,
+              853.5991462941453,
+              830.1222351571547,
+              889.5841676367908,
+              855.8401241754002,
+              828.6023282887111,
+              849.1527357392305,
+              856.1796662786196,
+              865.1791230112527
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 4438,
+            "samples": [
+              2374.220820189272,
+              2237.240874267702,
+              2270.97408742679,
+              2155.3627760252207,
+              2144.4438936458,
+              2360.109734114458,
+              2008.1304641730371,
+              1952.221270842743,
+              1980.8190626408355,
+              1836.5723298782998,
+              1824.2825597115907,
+              1890.3503830554241
+            ]
+          }
+        ],
+        "checksum": 1059040
+      },
+      "vpm": {
+        "pid": 56577,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 8974,
+            "samples": [
+              4.345888121237716,
+              4.359817249834269,
+              4.3551370626259285,
+              4.350568308446057,
+              4.364497437036275,
+              4.359817249827936,
+              4.359817249834269,
+              4.410853576999472,
+              4.4806106529980365,
+              4.3504568754175885,
+              4.350568308446057,
+              4.359817249827936
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 12885,
+            "samples": [
+              5.665502522315555,
+              5.662320527743028,
+              5.66224291811963,
+              5.668684516879259,
+              5.675203725257873,
+              5.665502522311143,
+              5.668762126502656,
+              5.665502522311143,
+              5.675203725262285,
+              5.675203725262285,
+              5.665502522311143,
+              5.675203725262285
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 4438,
+            "samples": [
+              972.003154574113,
+              918.046867958543,
+              910.6579540333322,
+              973.2424515547569,
+              950.0337990085501,
+              918.2814330779631,
+              961.8634520053976,
+              913.2210455159918,
+              977.5518251464462,
+              951.1698963496955,
+              996.5356016223357,
+              975.805543037391
+            ]
+          }
+        ],
+        "checksum": 12884896
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 56578,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 1000000,
+            "samples": [
+              4.481124999999963,
+              4.40870799999999,
+              4.461708000000044,
+              4.361249999999984,
+              4.594249999999988,
+              4.371499999999969,
+              4.48837500000002,
+              4.3419999999999845,
+              4.515832999999986,
+              4.405500000000018,
+              4.450041999999996,
+              4.605083000000036
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 1000000,
+            "samples": [
+              5.8145000000000095,
+              6.163333000000024,
+              6.006625000000099,
+              5.834416999999917,
+              6.044250000000034,
+              5.997833000000014,
+              5.945290999999997,
+              5.9201249999999845,
+              5.870917000000077,
+              5.852041999999983,
+              5.683333999999945,
+              5.739207999999962
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 10688,
+            "samples": [
+              1006.7638473053939,
+              951.0119760479005,
+              1001.652881736533,
+              972.6249999999958,
+              1021.6403443113811,
+              991.8249438622789,
+              943.3203592814406,
+              954.715568862271,
+              954.9026946107693,
+              991.1192926646687,
+              1003.5242327844353,
+              939.4765157185595
+            ]
+          }
+        ],
+        "checksum": 6972064
+      },
+      "upstream": {
+        "pid": 56579,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 1000000,
+            "samples": [
+              987.0881249999993,
+              1086.11575,
+              1055.7002499999999,
+              906.0798340000001,
+              862.1863750000012,
+              960.1627499999995,
+              1080.2338330000002,
+              1067.2997080000005,
+              1117.606584000001,
+              1021.5850420000006,
+              1075.0147079999988,
+              952.0509999999995
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 1000000,
+            "samples": [
+              908.7774169999975,
+              958.8497499999976,
+              933.3651659999996,
+              913.2773340000022,
+              915.390625,
+              916.9549999999981,
+              914.8922080000011,
+              914.4978750000009,
+              973.8139579999988,
+              1048.0456660000018,
+              917.0852500000001,
+              928.6680410000008
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 10688,
+            "samples": [
+              2331.9883046409986,
+              2356.404378742727,
+              2302.29378742555,
+              2349.359842814457,
+              2263.348241017493,
+              2270.724176646908,
+              2302.2665606280943,
+              2449.530595059993,
+              2233.7902320361786,
+              2332.0273203591546,
+              2340.3622754489074,
+              2351.402694610791
+            ]
+          }
+        ],
+        "checksum": 252128
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 56666,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 9139,
+            "samples": [
+              1077.9307364044248,
+              1115.7220702483894,
+              1082.941240835983,
+              1056.2835102308768,
+              1067.3122879965042,
+              1096.2815406499603,
+              1159.9099463836299,
+              1084.8333515701863,
+              1091.9775686617845,
+              981.5625341941147,
+              897.9830397198735,
+              897.1988182514436
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 7259,
+            "samples": [
+              1043.1533269045553,
+              910.3526656564262,
+              973.5156357624957,
+              1006.222206915554,
+              942.4967626394837,
+              1032.4769251963173,
+              993.1578729852617,
+              929.0479404876886,
+              972.2012673922106,
+              1043.9224411075982,
+              895.3596914175345,
+              1031.0132249621402
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 3941,
+            "samples": [
+              2494.639685359041,
+              2468.2608475006787,
+              2282.7328089317225,
+              2492.472468916533,
+              2282.976148185768,
+              2444.5148439482027,
+              2371.9761481856976,
+              2620.9824917533933,
+              2464.708703374762,
+              2083.238264399881,
+              2146.599847754373,
+              2133.214920071087
+            ]
+          }
+        ],
+        "checksum": 835808
+      },
+      "vpm": {
+        "pid": 56667,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 9139,
+            "samples": [
+              4.463508042456546,
+              4.399606083817366,
+              4.340409235147013,
+              4.335813546339962,
+              4.34489550278607,
+              4.335813546339962,
+              4.417879417883797,
+              4.472589998902653,
+              6.843308895941588,
+              4.54097822518711,
+              4.340299813985237,
+              4.344895502792289
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 7259,
+            "samples": [
+              6.027000964318589,
+              6.078660972586883,
+              6.130320980847348,
+              7.7490012398448975,
+              6.032786885245389,
+              6.032786885245389,
+              6.0442209670772975,
+              6.893787023000712,
+              6.032786885245389,
+              6.038572806172191,
+              5.963906874218385,
+              5.849015015843855
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 3941,
+            "samples": [
+              1190.7300177619966,
+              1233.6018776960173,
+              1172.8832783557539,
+              1268.5759959401178,
+              1146.208576503421,
+              1151.6216696270005,
+              1358.7708703374785,
+              1238.1585891905672,
+              1274.464856635361,
+              1105.2397868561134,
+              1260.0228368434298,
+              1165.6305506216697
+            ]
+          }
+        ],
+        "checksum": 15530016
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 56668,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 1000000,
+            "samples": [
+              4.757124999999974,
+              4.99433300000004,
+              4.605582999999967,
+              4.889666000000034,
+              4.552291000000025,
+              4.653541000000018,
+              4.529125000000022,
+              4.788250000000005,
+              4.781499999999994,
+              4.650958000000003,
+              4.905250000000024,
+              4.484207999999967
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 1000000,
+            "samples": [
+              6.0010409999999865,
+              6.133583000000044,
+              5.875958000000082,
+              5.9090419999999995,
+              6.288708000000043,
+              6.103542000000061,
+              5.912082999999939,
+              6.416916000000015,
+              5.92833399999995,
+              6.417332999999985,
+              6.1254579999999805,
+              6.201915999999983
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 10420,
+            "samples": [
+              1060.2247600767773,
+              972.628790786954,
+              988.0957773512515,
+              1030.1783109405008,
+              970.6413627639095,
+              919.0578694817685,
+              945.0815738963549,
+              995.917370441463,
+              977.7310940499023,
+              961.208445297508,
+              947.0769673704461,
+              938.9875239923266
+            ]
+          }
+        ],
+        "checksum": 11220000
+      },
+      "upstream": {
+        "pid": 56697,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 1000000,
+            "samples": [
+              1002.0076250000002,
+              1017.0869590000002,
+              1002.525834,
+              1369.5732090000001,
+              878.9227090000004,
+              1109.4372920000005,
+              1043.9988749999993,
+              1015.6595420000012,
+              1056.7105420000007,
+              1033.6064999999999,
+              1023.2390839999989,
+              915.8249170000017
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 1000000,
+            "samples": [
+              887.7606669999986,
+              903.8397919999989,
+              901.3197080000027,
+              898.5176670000001,
+              896.9195839999993,
+              926.4800409999989,
+              893.6987499999996,
+              972.0702500000007,
+              913.2175420000021,
+              919.3819999999978,
+              965.2918329999993,
+              1020.1397090000028
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 10420,
+            "samples": [
+              2286.960172744062,
+              2331.2339731285697,
+              2196.105278311378,
+              2331.130038387414,
+              2316.6026871396903,
+              2228.226967370386,
+              2210.1287907873184,
+              2223.0566218811546,
+              2213.1638195777196,
+              2160.568618042003,
+              2229.658541266779,
+              2224.0122840687836
+            ]
+          }
+        ],
+        "checksum": 244640
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 56768,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 11715,
+            "samples": [
+              979.2182671788306,
+              942.3958173282114,
+              983.2230473751608,
+              957.5117370892049,
+              930.1500640204856,
+              834.7417840375583,
+              816.2967989756794,
+              819.3661971830907,
+              806.988903115667,
+              803.6206572770017,
+              945.0739223218117,
+              952.7244558258624
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 12237,
+            "samples": [
+              841.406472174543,
+              852.1355724442379,
+              869.8006047233763,
+              848.5774291084341,
+              873.5766936340551,
+              839.9934624499466,
+              858.9454931764282,
+              885.480509928899,
+              857.4541145705542,
+              877.3120045762787,
+              832.437770695416,
+              837.2695105009326
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 4381,
+            "samples": [
+              1989.5001141292219,
+              2080.5466788404437,
+              2050.036293083779,
+              2074.6309061857614,
+              2365.165943848419,
+              2101.9744350604906,
+              2221.2583884958176,
+              2113.415886783837,
+              2259.406299931523,
+              2041.0958685231722,
+              2042.731796393517,
+              2403.12325952977
+            ]
+          }
+        ],
+        "checksum": 924000
+      },
+      "vpm": {
+        "pid": 56770,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 11715,
+            "samples": [
+              1025.953222364491,
+              1077.1980367050783,
+              1020.735467349548,
+              1048.5452838241563,
+              999.7296628254386,
+              1019.7360648740942,
+              957.7216389244529,
+              860.3784037558703,
+              897.5992317541618,
+              872.9193341869392,
+              866.8160478019663,
+              875.8785317968421
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 12237,
+            "samples": [
+              858.1590259050449,
+              843.4938301871347,
+              868.4182397646508,
+              878.725096020269,
+              846.4799378932764,
+              837.8006864427543,
+              833.3809757293451,
+              880.8395031461929,
+              848.7680804118692,
+              862.3573588297728,
+              862.7250960202705,
+              869.7086704257541
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 4381,
+            "samples": [
+              2295.4423647569033,
+              2259.1111618351906,
+              2277.914174845934,
+              2034.8664688427618,
+              2023.6153846154075,
+              2103.8671536178936,
+              2074.7165030815167,
+              2158.7822414973766,
+              2135.271627482349,
+              2022.7021228030321,
+              2076.399908696653,
+              2146.665601460852
+            ]
+          }
+        ],
+        "checksum": 363744
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 56771,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 12453,
+            "samples": [
+              980.2423512406637,
+              997.6511683931569,
+              1001.7933831205361,
+              975.5045370593444,
+              839.6269975106394,
+              811.8224524211029,
+              821.2545571348263,
+              860.2009957439981,
+              877.800529992771,
+              916.9209025937508,
+              1029.9158435718334,
+              1031.6991889504552
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 8284,
+            "samples": [
+              857.3556253017916,
+              872.0073635924656,
+              857.0688073394514,
+              851.0532351520981,
+              894.8122887493886,
+              849.770642201832,
+              854.6545147271889,
+              877.8920811202215,
+              851.5864316755291,
+              871.0869145340444,
+              849.8662481892833,
+              847.7637614678898
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 4452,
+            "samples": [
+              2073.431491464505,
+              2044.109389038631,
+              1959.0444743935373,
+              2059.3459119496715,
+              1954.954851752011,
+              1874.9813566936098,
+              1997.2109164420415,
+              2008.0300988319864,
+              1905.2859389038722,
+              2000.935983827504,
+              1985.1190476190538,
+              1991.0247079963897
+            ]
+          }
+        ],
+        "checksum": 853792
+      },
+      "upstream": {
+        "pid": 56772,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "build neutral filter identity",
+            "iterations": 12453,
+            "samples": [
+              945.4481651007782,
+              992.6322974383669,
+              947.9376053962897,
+              1016.9035573757327,
+              847.0482614631015,
+              824.995262185818,
+              848.6575925479801,
+              850.9061270376626,
+              824.3763751706379,
+              940.3423271500842,
+              1061.1967397414319,
+              1001.9774351561864
+            ]
+          },
+          {
+            "case": "build neutral shadow identity",
+            "iterations": 8284,
+            "samples": [
+              904.8516417189692,
+              911.370231772094,
+              956.8042008691413,
+              942.2380492515618,
+              870.7498792853723,
+              856.56591018831,
+              857.5768952197096,
+              844.3334138097548,
+              821.0204007725737,
+              844.222839208104,
+              828.6506518590088,
+              823.0474408498321
+            ]
+          },
+          {
+            "case": "construct and normalize three filter keyframes",
+            "iterations": 4452,
+            "samples": [
+              2127.480233602875,
+              1945.6516172506838,
+              1983.4905660377426,
+              2174.041554357604,
+              1989.6864330638086,
+              1976.8829739443086,
+              2113.376010781658,
+              2028.6949685534566,
+              2091.7097933512932,
+              2021.9375561545373,
+              2002.3490566037665,
+              2057.015723270461
+            ]
+          }
+        ],
+        "checksum": 372128
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "build neutral filter identity",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 997.6878203699603,
+          "vpmNs": 4.359817249827936,
+          "changePct": -99.56300787071739
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1038.6426460000002,
+          "vpmNs": 4.45587500000002,
+          "changePct": -99.57099055992353
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1080.435988620204,
+          "vpmNs": 4.372250793304827,
+          "changePct": -99.59532532798278
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1020.1630214999996,
+          "vpmNs": 4.705332999999996,
+          "changePct": -99.53876655977184
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 936.2729406743485,
+          "vpmNs": 978.7256508749458,
+          "changePct": 4.534223767058876
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 942.8952461254312,
+          "vpmNs": 946.2127198265476,
+          "changePct": 0.3518390526146664
+        }
+      ]
+    },
+    {
+      "case": "build neutral shadow identity",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 846.1469926270854,
+          "vpmNs": 5.667093519597407,
+          "changePct": -99.33024715930237
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 917.0201249999991,
+          "vpmNs": 5.895521000000031,
+          "changePct": -99.35710015088273
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 983.3367543738786,
+          "vpmNs": 6.03567984570879,
+          "changePct": -99.38620418499949
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 908.5286670000005,
+          "vpmNs": 6.114500000000021,
+          "changePct": -99.32698876523177
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 854.7948435073961,
+          "vpmNs": 860.2581923674088,
+          "changePct": 0.6391415322061889
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 857.0714027040099,
+          "vpmNs": 855.8616610333202,
+          "changePct": -0.14114829486470137
+        }
+      ]
+    },
+    {
+      "case": "construct and normalize three filter keyframes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2076.287178909419,
+          "vpmNs": 956.5166741775465,
+          "changePct": -53.931388495113566
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2332.0078125000764,
+          "vpmNs": 981.8721463323322,
+          "changePct": -57.895846614694825
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2408.24549606695,
+          "vpmNs": 1212.1659477290068,
+          "changePct": -49.666014129013526
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2226.1196257195847,
+          "vpmNs": 971.6350767754318,
+          "changePct": -56.35297108252417
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2091.260556950467,
+          "vpmNs": 2119.569390550121,
+          "changePct": 1.3536731951246939
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2025.316262353997,
+          "vpmNs": 1994.1178122192155,
+          "changePct": -1.5404236224578538
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "build neutral filter identity",
+      "upstream_ns": 1029,
+      "vpm_ns": 4,
+      "change_pct": -99.6,
+      "upstream_first_pct": -99.6,
+      "vpm_first_pct": -99.6,
+      "process_range_pct": "-99.6, -99.6, -99.6, -99.5",
+      "control_max_abs_pct": 4.5,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "build neutral shadow identity",
+      "upstream_ns": 913,
+      "vpm_ns": 6,
+      "change_pct": -99.3,
+      "upstream_first_pct": -99.4,
+      "vpm_first_pct": -99.3,
+      "process_range_pct": "-99.3, -99.4, -99.4, -99.3",
+      "control_max_abs_pct": 0.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "construct and normalize three filter keyframes",
+      "upstream_ns": 2279,
+      "vpm_ns": 977,
+      "change_pct": -55.1,
+      "upstream_first_pct": -51.8,
+      "vpm_first_pct": -57.1,
+      "process_range_pct": "-53.9, -57.9, -49.7, -56.4",
+      "control_max_abs_pct": 1.5,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

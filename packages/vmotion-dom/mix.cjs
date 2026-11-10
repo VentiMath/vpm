@@ -332,3 +332,7 @@ module.exports = {
   buildTransformer,
   createTransformer,
 };
+
+Object.defineProperty(module.exports, "readFunctionEnd", {
+  value: endFunction,
+});

@@ -7,9 +7,9 @@
   },
   "implementation": {
     "kind": "independent implementation",
-    "replacementStatus": "partial; color/complex mixers and renderer targets built, full renderer pending",
-    "targetScope": "Independent grouped playback controls and color/complex and scalar renderer targets with transitionEnd, numeric/CSS-unit element animations and renderer ownership transfer, DOM reads/keyframe resolution, MotionValue transitions, DOM effects, tween/spring playback, values, scheduling and mapping. Not a drop-in replacement for motion-dom yet.",
-    "remainingWork": "Custom effect registration and high-level selector animate wrapper; none keyframes and variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
+    "replacementStatus": "partial; neutral keyframes and filter defaults built, full renderer pending",
+    "targetScope": "Independent neutral keyframes, filter defaults, grouped playback controls and color/complex and scalar renderer targets with transitionEnd, numeric/CSS-unit element animations and renderer ownership transfer, DOM reads/keyframe resolution, MotionValue transitions, DOM effects, tween/spring playback, values, scheduling and mapping. Not a drop-in replacement for motion-dom yet.",
+    "remainingWork": "Custom effect registration and high-level selector animate wrapper; variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
@@ -27,7 +27,8 @@
       "renderer-aware adapter": "animateMotionValue returns an externally owned StartAnimation factory for numeric/CSS-unit values and custom keyframe resolvers; reused factories own snapshots, shared queues support forced resolution and restoration, skip/reduced motion and immediate handoff are honored.",
       "group controls": "GroupAnimation and GroupAnimationWithThen snapshot members, forward playback controls, aggregate completion, expose longest durations and dispose timeline observers; child failures do not strand remaining cleanup.",
       "target completion": "animateTarget resolves scalar, color and complex renderer values and per-property transitions, waits for all controllers, preserves existing end-only styles until completion, then applies owned transitionEnd snapshots in a frame; cancelled, stopped, failed (including throwing completion callbacks) or replaced targets cannot apply stale completion writes.",
-      "color and complex mixers": "Independent hex/RGB/HSL parser, Motion gamma-two blending, balanced CSS token scanner, flat containers, automatic interpolation and renderer-owned string animation through numeric progress."
+      "color and complex mixers": "Independent hex/RGB/HSL parser, Motion gamma-two blending, balanced CSS token scanner, flat containers, automatic interpolation and renderer-owned string animation through numeric progress.",
+      "neutral keyframes": "Property-aware neutral filter, shadow and transform values; omitted filter defaults, none/zero origins, live DOM shadow color and literal final none restoration."
     }
   },
   "changes": [
@@ -63,7 +64,9 @@
     "Empty frame phases return without swapping/clearing queues. Target completion uses one internal success barrier and a deferred frame write instead of materializing per-handle public lifecycle/playback promises. MotionValue completion-listener failures remain visible and suppress end writes.",
     "CSS RGB/alpha percentages and scientific notation parse numerically; nested variables, URLs, quoted literals and identifier digits are preserved. Invalid/nonfinite colors and malformed functions reject. Flat container endpoints are snapshotted, while output containers are reused. Renderer-owned color/complex keyframes share numeric tween/spring lifecycle protections.",
     "A single non-layout resolver bypasses batch allocation; layout reads retain isolated measurement/restoration and newly enqueued work stays out of the current transaction. Pending sets are reused and redundant cancellation of absent read callbacks is avoided.",
-    "Color and complex syntax caches are bounded to eight entries each and restricted by input length; caller objects, parsed public results and mutable computed styles are never shared. Complex sampling formats components in one pass. Benchmarks include repeated and changing uncached endpoints."
+    "Color and complex syntax caches are bounded to eight entries each and restricted by input length; caller objects, parsed public results and mutable computed styles are never shared. Complex sampling formats components in one pass. Benchmarks include repeated and changing uncached endpoints.",
+    "Neutral filter multipliers use one (or 100%), drop shadows fade from transparent zero-length shadows and scale/matrix identities stay visible. Backdrop filters share the filter semantics. URL filters remain discrete and URL bytes are preserved. Unsupported CSS calculations/variables in neutral functions and perspective identities reject explicitly.",
+    "Empty filter arguments expand to CSS defaults, distinct from interpolation identities. Omitted shadow color is read from the owner document on each resolution. Bounded neutral-result caches retain only immutable string syntax; mutable DOM values are not cached."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",
@@ -79,6 +82,7 @@
   "designReferences": [
     "Motion 14.7.0 public declarations and black-box public calls only; no upstream runtime source used.",
     "https://www.w3.org/TR/css-color-4/#rgb-functions",
-    "https://www.w3.org/TR/css-values-4/#numbers"
+    "https://www.w3.org/TR/css-values-4/#numbers",
+    "https://www.w3.org/TR/filter-effects-1/#FilterProperty"
   ]
 }
