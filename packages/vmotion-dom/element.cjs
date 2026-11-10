@@ -74,13 +74,17 @@ function prepareFrames(input, custom = false) {
       );
   return frames;
 }
-function decode(frames) {
+function decode(frames, copyOnWrite = false) {
   // The resolver hands this callback an owned snapshot, so numeric conversion
   // can reuse it without changing the caller's data or the resolver's source.
   let unit;
   for (let i = 0; i < frames.length; i++) {
     const value = frames[i];
-    if (typeof value === "number") continue;
+    if (typeof value === "number") {
+      if (!Number.isFinite(value)) throw new TypeError("resolved keyframes must be finite");
+      continue;
+    }
+    if (typeof value !== "string") throw new TypeError("resolved keyframes must be numbers or strings");
     const match = scalar.exec(value.trim());
     if (
       !match &&
@@ -104,6 +108,7 @@ function decode(frames) {
     if (unit !== undefined && unit !== match[2])
       throw new TypeError("resolved keyframes have incompatible CSS units");
     unit = match[2];
+    if (copyOnWrite) { frames = frames.slice(); copyOnWrite = false; }
     frames[i] = Number(match[1]);
   }
   return { numbers: frames, format: unit ? (n) => n + unit : undefined };
@@ -395,8 +400,10 @@ class ElementAnimation {
     try {
       if (!Array.isArray(frames) || !frames.length)
         throw new TypeError("resolver must return a nonempty array");
-      if (this.customResolver) frames = frames.slice();
-      const { numbers, format, complex } = decode(frames);
+      // Numeric generators capture their inputs without mutating the array.
+      // Unit conversion and the one-keyframe spring expansion still own copies.
+      if (this.customResolver && frames.length === 1) frames = frames.slice();
+      const { numbers, format, complex } = decode(frames, this.customResolver);
       const options = this.options;
       if (!isTransitionDefined(options)) {
         const defaults = getDefaultTransition(this.key, { keyframes: numbers });
@@ -439,10 +446,11 @@ class ElementAnimation {
         options,
         true,
         true,
-      )(() => {
-        this.lifecycleCompleted = true;
-        complete?.();
-      });
+        () => {
+          this.lifecycleCompleted = true;
+          complete?.();
+        },
+      );
       this.completionState = this.animation.completion;
       this.withLifecycle = !this.externalComplete;
       if (!this.externalComplete) {

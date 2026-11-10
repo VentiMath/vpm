@@ -95,6 +95,7 @@ function prepareMotionValue(
   transition = {},
   paused = false,
   owned = false,
+  immediateComplete,
 ) {
   if (
     !value ||
@@ -124,7 +125,7 @@ function prepareMotionValue(
     : Array.isArray(target)
       ? target.slice()
       : [null, target];
-  if (!frames.length || frames.some((x) => x !== null && !Number.isFinite(x)))
+  if (!owned && (!frames.length || frames.some((x) => x !== null && !Number.isFinite(x))))
     throw new TypeError(
       "numeric targets must contain finite numbers or null wildcards",
     );
@@ -146,34 +147,38 @@ function prepareMotionValue(
     for (const key of Object.keys(defaults))
       if (!Object.hasOwn(options, key)) options[key] = defaults[key];
   if (paused) options.autoplay = false;
-  return (complete) => {
-    if (typeof complete !== "function")
-      throw new TypeError("completion must be a function");
-    const resolved = owned ? frames : frames.slice();
-    for (let i = 0; i < resolved.length; i++)
-      if (resolved[i] === null)
-        resolved[i] = i ? resolved[i - 1] : (options.from ?? value.get());
-    const type = options.type ?? defaults?.type;
-    if (resolved.length === 1 && (type === "spring" || type === spring))
-      resolved.push(resolved[0]);
-    // from only replaces an unresolved start, never an explicit first keyframe.
-    const prepared = owned ? options : { ...options };
-    const onUpdate = options.onUpdate,
-      onComplete = options.onComplete;
-    if (!Object.hasOwn(prepared, "velocity"))
-      prepared.velocity = value.getVelocity();
-    prepared.keyframes = resolved;
-    prepared.onUpdate = (next) => {
-      value.set(next);
-      onUpdate?.(next);
-    };
-    prepared.onComplete = () => {
-      complete();
-      onComplete?.();
-    };
-    return new JSAnimation(prepared);
-  };
+  if (immediateComplete !== undefined)
+    return startPreparedValue(value, frames, options, defaults, owned, immediateComplete);
+  return complete => startPreparedValue(value, frames, options, defaults, owned, complete);
 }
+function startPreparedValue(value, frames, options, defaults, owned, complete) {
+  if (typeof complete !== "function")
+    throw new TypeError("completion must be a function");
+  const resolved = owned ? frames : frames.slice();
+  for (let i = 0; i < resolved.length; i++)
+    if (resolved[i] === null)
+      resolved[i] = i ? resolved[i - 1] : (options.from ?? value.get());
+  const type = options.type ?? defaults?.type;
+  if (resolved.length === 1 && (type === "spring" || type === spring))
+    resolved.push(resolved[0]);
+  // from only replaces an unresolved start, never an explicit first keyframe.
+  const prepared = owned ? options : { ...options };
+  const onUpdate = options.onUpdate,
+    onComplete = options.onComplete;
+  if (!Object.hasOwn(prepared, "velocity"))
+    prepared.velocity = value.getVelocity();
+  prepared.keyframes = resolved;
+  prepared.onUpdate = (next) => {
+    value.set(next);
+    onUpdate?.(next);
+  };
+  prepared.onComplete = () => {
+    complete();
+    onComplete?.();
+  };
+  return new JSAnimation(prepared);
+}
+
 module.exports = {
   animateMotionValue,
   getDefaultTransition,

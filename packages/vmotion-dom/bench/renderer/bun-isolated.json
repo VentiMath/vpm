@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "recordedAt": "2026-11-10T06:43:51.755Z",
+  "recordedAt": "2026-11-10T07:09:47.774Z",
   "runtime": {
     "node": "26.3.0",
     "bun": "1.4.4",
@@ -53,24 +53,24 @@
     "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
     "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
     "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
-    "PROVENANCE.json": "cc2c9930470f9c24c0e74d5dd7c2b372f62de39ee5fef0a411e7debba3a2a063",
-    "bench/renderer.cjs": "003825349667a85d360f37d566da2f71a9f5a796d9b578e41490533c2f511a94",
-    "color.cjs": "fdd8738819d47b1face9439ced8a090e840dd4982b0a1cf000384f580c7f03bd",
+    "PROVENANCE.json": "eed98b231d393016a0845fa0c8414766ee804a8d894a7b339f3519f3eaf99943",
+    "bench/renderer.cjs": "47782aa1025bc775274e24937dc184fe8d952d87e21bb93585b095d74d60ab27",
+    "color.cjs": "7562b3c534e7e83d22c351e1a3269437bfd1798ff5bb1906f4498fac5e4cf995",
     "effects.cjs": "d1605f3a788bcaea5ac6cf36f54d4dca0f9f2a0c2970cae04553ef22c5dd4e6e",
-    "element.cjs": "d26e73e900dbdb3e502a2068a1ae5e5c8674d22563d6f452016a2a3bf5304876",
+    "element.cjs": "7c93ddac66764792df46837cb37b5c24ee26e90e299fe463d9279aec8d4cf15f",
     "frame.cjs": "4a9ac2eb27ef3126006a33429c8b5a0e78f02855e61b78edaac8628a6b990b41",
-    "index.cjs": "a5a6a16859665010a7ac28636e7ffdeaae0866793bc55bd9944b013a60db3303",
-    "index.mjs": "8cf16bbb125bbbb146662721e67df0ea4ed4fe70149ba1622b16da961e516361",
+    "index.cjs": "ea06a81e777f0057a657bbb2503c33840e317c11ba6fe781eb74572fd41d5803",
+    "index.mjs": "a7a46a77cdb5b9667fde3c9ce5f46cfa5f90f90761d7786e3f33970586bd7903",
     "mapping.cjs": "ec4d0473369ab23544d410649c02ac3c71c0f13cf7e665d56bb15995bc93e1af",
     "mix.cjs": "867df2291c976da0c8249abdcb6990c02c505a9b54e007837ad9f9ea1fb9cdae",
     "neutral.cjs": "62a9b2f23fd00f614765ea70a9ea9d0c369e7c85f3ba06e8381e1882e2378d17",
-    "package.json": "dbf864796d4f065ddba0eff4dc10cc2f1be750c9b2a7547a36f178a180f6ee82",
+    "package.json": "fc0d4d68fbc3eeb98b63b669451e35c177d25bac9b2fe8d997064d079b636523",
     "playback.cjs": "c60ebb90008f77f1dd20614a5caafead7aa6a516ff475a75c30bb43638354784",
     "reads.cjs": "ef7f79eb94a5e6155a75042fe6a114f1013aa5e7a86a148df67818d8d9cd1875",
     "resolver.cjs": "992bb4732adcac355d0f66e0fc8048fa8078c0d9a823874534a6d8cb6107b038",
     "single.cjs": "c4cc282c6af46380af906524bdfe7e449ec0172fab28040a566cf735a62d6035",
     "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
-    "transition.cjs": "6c4af02321c65c6a02c94066566c3ce88ec95a4d3c9923f96ed01c8ac230d08c",
+    "transition.cjs": "0296ca047dae2cffa136ff7a87f2797faa7e5fef81a1211924a8a4186fc578a7",
     "value.cjs": "634004c6e40c6853412d0471ddc586ce57ffbac4a43fe4e366198af7149102ec"
   },
   "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
@@ -80,7 +80,7 @@
       "control": false,
       "first": "upstream",
       "upstream": {
-        "pid": 97525,
+        "pid": 13578,
         "runtime": {
           "node": "26.3.0",
           "bun": "1.4.4",
@@ -113,45 +113,45 @@
         "rows": [
           {
             "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 5720,
+            "iterations": 5113,
             "samples": [
-              1392.2349650349695,
-              1183.187762237761,
-              1502.4328671328733,
-              1221.532692307692,
-              1251.2603146853187,
-              1230.2958041958007,
-              1292.2131118881114,
-              1071.5180069930036,
-              1210.5550699300695,
-              1101.2090909090944,
-              1248.1498251748217,
-              1159.6664335664307
+              1215.0645413651482,
+              1155.8447095638548,
+              1297.941521611587,
+              1294.7633483277866,
+              1260.9200078231881,
+              1186.8114609818033,
+              1264.179542343048,
+              1215.9446508898793,
+              1264.8233913553784,
+              1294.7960101701558,
+              1324.1003324858218,
+              1252.958145902606
             ]
           },
           {
             "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 14554,
+            "iterations": 10071,
             "samples": [
-              1437.0935138106402,
-              1322.3426549402204,
-              1565.3571526728103,
-              1395.9993816133,
-              1589.1163941184582,
-              1441.8860107186986,
-              1571.6785076267658,
-              1427.860588154457,
-              1568.6752782740161,
-              1514.8498694516927,
-              1622.712518895146,
-              1458.379139755399
+              1477.18290140006,
+              1397.7923741435836,
+              1473.053817892966,
+              1481.0553073180413,
+              1681.1926323105936,
+              1318.60867838348,
+              1484.8905769039839,
+              1637.9869923542747,
+              1523.5411577797604,
+              1545.3199285076043,
+              1336.9410187667572,
+              1450.323503127785
             ]
           }
         ],
-        "checksum": 25984
+        "checksum": 39104
       },
       "vpm": {
-        "pid": 97582,
+        "pid": 13579,
         "runtime": {
           "node": "26.3.0",
           "bun": "1.4.4",
@@ -184,42 +184,42 @@
         "rows": [
           {
             "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 5720,
+            "iterations": 5113,
             "samples": [
-              3866.9069930069977,
-              1404.1739510489435,
-              1328.7076923076938,
-              1599.6284965034881,
-              1334.4187062937085,
-              1365.2024475524508,
-              1721.7293706293733,
-              1275.9615384615367,
-              1517.0236013985984,
-              1562.449125874135,
-              1394.8500000000008,
-              1512.2888111888174
+              1177.72501466849,
+              1179.7297085859525,
+              1172.4443575200476,
+              1210.5744181498226,
+              1233.0007823195747,
+              1220.3532172892626,
+              1273.616272247213,
+              1200.9747701936221,
+              1257.4320359867054,
+              1158.8679835712803,
+              1232.4629376100236,
+              1252.8034422061364
             ]
           },
           {
             "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 14554,
+            "iterations": 10071,
             "samples": [
-              1665.6532224817881,
-              1821.4523155146342,
-              1904.1614676377628,
-              1827.6676515047407,
-              1825.8869726535702,
-              2212.942627456371,
-              2096.5885667170587,
-              2298.712312766251,
-              2515.2707159543784,
-              2125.5611515734527,
-              2992.318812697532,
-              2549.3364023636086
+              1718.8172971899498,
+              1952.3425677688342,
+              1694.6554463310476,
+              2190.0796345943786,
+              1495.3910237315026,
+              1805.8079634594362,
+              2248.113394896228,
+              2008.3986694469272,
+              2011.6589216562393,
+              1932.9882831893567,
+              2028.3032469466816,
+              2121.284778075655
             ]
           }
         ],
-        "checksum": 3648
+        "checksum": 4160
       }
     },
     {
@@ -227,7 +227,7 @@
       "control": false,
       "first": "vpm",
       "vpm": {
-        "pid": 97583,
+        "pid": 13580,
         "runtime": {
           "node": "26.3.0",
           "bun": "1.4.4",
@@ -260,45 +260,45 @@
         "rows": [
           {
             "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 5196,
+            "iterations": 5533,
             "samples": [
-              1340.951501154743,
-              1313.0130869899986,
-              1372.9389915319537,
-              1237.7230561970684,
-              1245.0521555042337,
-              1259.6308698999276,
-              1320.9199384141625,
-              1268.2992686682157,
-              1233.6093148575808,
-              1382.9549653579677,
-              1268.4195535026956,
-              1254.2500000000027
+              1188.723838785466,
+              1225.9172239291552,
+              1208.476414241826,
+              1321.6457617928752,
+              1282.7278149286087,
+              1222.1744080968742,
+              1279.4896078076956,
+              1207.5199710826,
+              1275.453461051866,
+              1215.4646665461778,
+              1224.0872944153261,
+              1194.8536056388969
             ]
           },
           {
             "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 5877,
+            "iterations": 8571,
             "samples": [
-              1448.9464012251092,
-              1716.89790709545,
-              1452.0660200782625,
-              1536.4131359537346,
-              1559.4337246894538,
-              1449.1875106346822,
-              1670.5376892972683,
-              1534.5344563552846,
-              1558.6750042538774,
-              1455.539901310195,
-              1711.5308831036268,
-              1464.8558788497583
+              1539.9116789172774,
+              1709.7383035818493,
+              2025.8332749970862,
+              1620.4643565511487,
+              1885.8067903395242,
+              1566.571461906433,
+              2288.623497841552,
+              2156.778672266953,
+              1768.5848792439638,
+              1702.169175125423,
+              1679.6562828141434,
+              2035.7017850892519
             ]
           }
         ],
-        "checksum": 18560
+        "checksum": 32320
       },
       "upstream": {
-        "pid": 97584,
+        "pid": 13581,
         "runtime": {
           "node": "26.3.0",
           "bun": "1.4.4",
@@ -331,42 +331,42 @@
         "rows": [
           {
             "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 5196,
+            "iterations": 5533,
             "samples": [
-              1413.563317936875,
-              1325.8997305619655,
-              1354.8162047729024,
-              1299.0280985373374,
-              1241.2030408006192,
-              939.1037336412674,
-              1206.8658583525769,
-              1214.2272902232476,
-              1267.0723633564285,
-              1206.7215165511946,
-              1301.1210546574298,
-              1088.794264819092
+              1276.7034158684296,
+              1437.662027833004,
+              1468.973974335805,
+              1295.7332369419817,
+              1258.8709560816997,
+              1349.3358033616553,
+              1238.335080426527,
+              1074.5526838966273,
+              1182.0289174046627,
+              1263.509849990971,
+              1101.7457075727543,
+              1144.0598228808967
             ]
           },
           {
             "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 5877,
+            "iterations": 8571,
             "samples": [
-              1341.4723498383498,
-              1546.5232261357705,
-              1300.9826442062356,
-              1590.3450740173532,
-              1394.8868470308053,
-              1664.4618002382247,
-              1244.0445805683125,
-              1362.1390165050293,
-              1799.1322103113775,
-              1461.0629572911407,
-              1464.9552492768476,
-              1628.800238216774
+              1487.0883210827278,
+              1496.6115972465266,
+              1455.2998483257536,
+              1534.637148524091,
+              1490.8849609147105,
+              1500.9285964298228,
+              1550.7428538093468,
+              1464.060086337661,
+              1449.9766654999487,
+              1457.8909112122153,
+              1469.0234511725596,
+              1439.1892427954845
             ]
           }
         ],
-        "checksum": 4544
+        "checksum": 4032
       }
     },
     {
@@ -374,7 +374,7 @@
       "control": false,
       "first": "upstream",
       "upstream": {
-        "pid": 97585,
+        "pid": 13582,
         "runtime": {
           "node": "26.3.0",
           "bun": "1.4.4",
@@ -407,45 +407,45 @@
         "rows": [
           {
             "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 13991,
+            "iterations": 12660,
             "samples": [
-              1304.0704738760633,
-              1263.3716675005328,
-              1116.2056321921266,
-              1263.6724322778944,
-              1220.3559431062833,
-              1085.7634908155212,
-              1259.91408762776,
-              1241.342648845689,
-              1094.2689586162523,
-              1377.8649131584564,
-              1188.7672074905306,
-              1075.8583375026824
+              1230.486413902051,
+              1159.2910742496051,
+              1349.147551342814,
+              1188.0199842022098,
+              1107.8824644549782,
+              1331.8950236966857,
+              1203.5577409162697,
+              1218.549289099525,
+              1086.1308056872015,
+              1592.7428909952616,
+              1189.1225118483394,
+              1157.34597156398
             ]
           },
           {
             "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 5855,
+            "iterations": 7768,
             "samples": [
-              1506.739197267292,
-              1244.0792485055522,
-              1620.5094790777048,
-              1276.4517506404732,
-              1334.7069171648347,
-              1658.1412467975988,
-              1384.8703672075208,
-              1272.5518360375715,
-              1614.012297181905,
-              1281.696498719039,
-              1313.2934244235753,
-              1559.4719043552564
+              1514.6166323377936,
+              1514.3966271884626,
+              1547.9639546858914,
+              1219.7422760041213,
+              1493.6170185375831,
+              1551.300205973216,
+              1514.364572605566,
+              1421.4405252317172,
+              1228.0027033985452,
+              1560.2524459320307,
+              1547.4329299691133,
+              1338.4719361482987
             ]
           }
         ],
-        "checksum": 17024
+        "checksum": 18112
       },
       "vpm": {
-        "pid": 97586,
+        "pid": 13583,
         "runtime": {
           "node": "26.3.0",
           "bun": "1.4.4",
@@ -478,332 +478,38 @@
         "rows": [
           {
             "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 13991,
+            "iterations": 12660,
             "samples": [
-              1220.6209706239747,
-              1242.4028303909645,
-              1242.7900078621976,
-              1251.9863483668087,
-              1270.7782860410284,
-              1244.579872775355,
-              1285.5169037238209,
-              1283.0033593024111,
-              1269.5631477378301,
-              1297.6824387106024,
-              1258.8866414123336,
-              1328.255664355656
+              1325.9643759873597,
+              1539.1357030015793,
+              1323.6637440758302,
+              1268.5327804107412,
+              1250.0066350710904,
+              1360.8971563981024,
+              1240.3402843601918,
+              1346.4553712480224,
+              1290.090205371247,
+              1286.7462875197432,
+              1399.190363349127,
+              1352.896287519745
             ]
           },
           {
             "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 5855,
+            "iterations": 7768,
             "samples": [
-              2026.7222886421991,
-              1815.9337318531182,
-              2397.9718189581536,
-              2144.128949615704,
-              1826.1456874466116,
-              2204.6114432109334,
-              1435.9735269000944,
-              2543.5666951323756,
-              2034.842015371475,
-              2083.610760034151,
-              1659.7993168232258,
-              1910.5892399658453
-            ]
-          }
-        ],
-        "checksum": 3520
-      }
-    },
-    {
-      "pair": 3,
-      "control": false,
-      "first": "vpm",
-      "vpm": {
-        "pid": 97589,
-        "runtime": {
-          "node": "26.3.0",
-          "bun": "1.4.4",
-          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
-          "openssl": "1.1.0",
-          "llhttp": "9.4.2",
-          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
-          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
-          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
-          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
-          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
-          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
-          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
-          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
-          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
-          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
-          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
-          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
-          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
-          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
-          "v8": "14.6.202.34-node.20",
-          "uv": "1.48.0",
-          "napi": "10",
-          "icu": "78.1",
-          "unicode": "17.0",
-          "sqlite": "3.51.0",
-          "typescript": "7.0.2",
-          "modules": "147"
-        },
-        "rows": [
-          {
-            "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 5422,
-            "samples": [
-              1222.8268166728094,
-              1184.6104758391728,
-              1231.4260420508997,
-              1292.6733677609718,
-              1293.411102914045,
-              1207.1960531169284,
-              1193.570822574696,
-              1324.1115824419005,
-              1262.018996680193,
-              1263.1484691995583,
-              1225.424197713021,
-              1310.8400959055682
-            ]
-          },
-          {
-            "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 4892,
-            "samples": [
-              1752.49550286182,
-              1657.944807849558,
-              1526.1821340964893,
-              1729.40515126737,
-              1526.6165167620613,
-              1652.6982829108824,
-              1960.3008994276347,
-              1624.1312346688444,
-              1690.4384709730211,
-              1671.6747751431067,
-              1721.5521259198676,
-              1571.7412101389937
-            ]
-          }
-        ],
-        "checksum": 20224
-      },
-      "upstream": {
-        "pid": 97590,
-        "runtime": {
-          "node": "26.3.0",
-          "bun": "1.4.4",
-          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
-          "openssl": "1.1.0",
-          "llhttp": "9.4.2",
-          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
-          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
-          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
-          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
-          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
-          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
-          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
-          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
-          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
-          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
-          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
-          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
-          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
-          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
-          "v8": "14.6.202.34-node.20",
-          "uv": "1.48.0",
-          "napi": "10",
-          "icu": "78.1",
-          "unicode": "17.0",
-          "sqlite": "3.51.0",
-          "typescript": "7.0.2",
-          "modules": "147"
-        },
-        "rows": [
-          {
-            "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 5422,
-            "samples": [
-              1499.1777941718888,
-              1308.4040944300941,
-              1176.5261895979427,
-              1277.0040575433457,
-              1495.035595721128,
-              1365.9627443747695,
-              1273.5920324603474,
-              1224.7172630025846,
-              1309.1724455920266,
-              1308.5730357801526,
-              1245.5274806344592,
-              1237.8579859830284
-            ]
-          },
-          {
-            "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 4892,
-            "samples": [
-              1315.182951757984,
-              1689.5613246116216,
-              1564.6122240392506,
-              1455.8121422731067,
-              1340.232420278007,
-              1597.1142681929693,
-              1528.8481193785678,
-              1585.990596892899,
-              1827.6864268193049,
-              1471.3137775960802,
-              1528.1668029435725,
-              1371.4568683565194
-            ]
-          }
-        ],
-        "checksum": 4672
-      }
-    },
-    {
-      "pair": 0,
-      "control": true,
-      "first": "upstream",
-      "upstream": {
-        "pid": 97591,
-        "runtime": {
-          "node": "26.3.0",
-          "bun": "1.4.4",
-          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
-          "openssl": "1.1.0",
-          "llhttp": "9.4.2",
-          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
-          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
-          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
-          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
-          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
-          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
-          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
-          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
-          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
-          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
-          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
-          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
-          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
-          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
-          "v8": "14.6.202.34-node.20",
-          "uv": "1.48.0",
-          "napi": "10",
-          "icu": "78.1",
-          "unicode": "17.0",
-          "sqlite": "3.51.0",
-          "typescript": "7.0.2",
-          "modules": "147"
-        },
-        "rows": [
-          {
-            "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 16222,
-            "samples": [
-              1178.145419800271,
-              1171.3901491801266,
-              1183.8758476143512,
-              1198.9761435088153,
-              1158.973924300334,
-              1246.1832079891492,
-              1231.7146467759815,
-              1221.122056466529,
-              1199.9034644310193,
-              1276.409628899026,
-              1195.8220318086571,
-              1168.1589816298797
-            ]
-          },
-          {
-            "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 9602,
-            "samples": [
-              1324.7370339512656,
-              1362.845448864822,
-              1582.9514684440683,
-              1275.3636742345334,
-              1437.1875650905988,
-              1363.8911685065634,
-              1533.6735055196905,
-              1321.0095813372134,
-              1411.8282649448033,
-              1395.4644865653042,
-              1601.3634659445868,
-              1355.3426369506362
-            ]
-          }
-        ],
-        "checksum": 17600
-      },
-      "vpm": {
-        "pid": 97592,
-        "runtime": {
-          "node": "26.3.0",
-          "bun": "1.4.4",
-          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
-          "openssl": "1.1.0",
-          "llhttp": "9.4.2",
-          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
-          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
-          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
-          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
-          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
-          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
-          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
-          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
-          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
-          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
-          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
-          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
-          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
-          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
-          "v8": "14.6.202.34-node.20",
-          "uv": "1.48.0",
-          "napi": "10",
-          "icu": "78.1",
-          "unicode": "17.0",
-          "sqlite": "3.51.0",
-          "typescript": "7.0.2",
-          "modules": "147"
-        },
-        "rows": [
-          {
-            "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 16222,
-            "samples": [
-              1253.2645789668331,
-              1172.237763531009,
-              1184.7953396621858,
-              1134.038651214399,
-              1181.523055110345,
-              1193.6618789298486,
-              1207.4164098138322,
-              1266.2254345949939,
-              1223.9423005794583,
-              1260.8802860313126,
-              1150.204968561215,
-              1289.8326963383006
-            ]
-          },
-          {
-            "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 9602,
-            "samples": [
-              1367.006873568004,
-              1360.9708394084555,
-              1260.705269735468,
-              1535.7259945844605,
-              1383.8176421578844,
-              1356.7008956467457,
-              1395.5252030826853,
-              1483.37148510727,
-              1307.752759841702,
-              1363.149135596744,
-              1339.2001666319557,
-              1599.8315975838364
+              1971.6571833161686,
+              2101.4042224510827,
+              1733.2433058702395,
+              1910.4927909371863,
+              1821.1412203913455,
+              1661.8873583934076,
+              1580.002445932029,
+              1947.6162461380068,
+              1572.846936148307,
+              1962.297245108146,
+              1949.4239186405691,
+              2364.6101956745765
             ]
           }
         ],
@@ -811,11 +517,305 @@
       }
     },
     {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 13598,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, resolve, seek and stop a synchronous custom animation",
+            "iterations": 6625,
+            "samples": [
+              1146.8993207547169,
+              1230.1382641509385,
+              1181.9747924528288,
+              1221.817660377357,
+              1209.0061886792425,
+              1180.201207547176,
+              1281.4528301886776,
+              1181.0313962264102,
+              1260.4967547169833,
+              1197.4528301886733,
+              1244.1258867924485,
+              1164.892981132069
+            ]
+          },
+          {
+            "case": "create, resolve, seek and stop a deferred custom animation",
+            "iterations": 5152,
+            "samples": [
+              1792.4431288819987,
+              1567.5869565217297,
+              1780.530279503095,
+              1825.2781444099307,
+              1619.0718167701841,
+              1948.199728260881,
+              1901.8503493788737,
+              2005.1436335403785,
+              2336.649068322978,
+              1955.6079192546565,
+              1457.9289596273106,
+              1555.439635093177
+            ]
+          }
+        ],
+        "checksum": 18048
+      },
+      "upstream": {
+        "pid": 13623,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, resolve, seek and stop a synchronous custom animation",
+            "iterations": 6625,
+            "samples": [
+              1131.2766792452835,
+              1299.6855849056578,
+              1350.2390943396229,
+              1452.0502641509393,
+              1344.018867924523,
+              1166.1948679245297,
+              1205.9056603773586,
+              1424.3018867924582,
+              1160.4967547169886,
+              1263.333283018873,
+              1416.6353207547131,
+              1267.993660377352
+            ]
+          },
+          {
+            "case": "create, resolve, seek and stop a deferred custom animation",
+            "iterations": 5152,
+            "samples": [
+              1755.2488354037296,
+              1380.264945652177,
+              1518.9409937888295,
+              1307.251358695653,
+              1597.745147515528,
+              1619.193128881988,
+              1318.2259316770267,
+              1412.0083462732962,
+              1380.6855590062114,
+              1600.4706909937925,
+              1409.8893633540513,
+              1556.6770186335368
+            ]
+          }
+        ],
+        "checksum": 4352
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 13651,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, resolve, seek and stop a synchronous custom animation",
+            "iterations": 15014,
+            "samples": [
+              1306.6527241241515,
+              1239.8677900626103,
+              1274.024843479421,
+              1194.3214333288915,
+              1242.0324363927002,
+              1247.6466631144267,
+              1222.3619288663895,
+              1224.6597842014087,
+              1176.127281204208,
+              1235.7772079392541,
+              1238.8826428666596,
+              1264.4337285200456
+            ]
+          },
+          {
+            "case": "create, resolve, seek and stop a deferred custom animation",
+            "iterations": 4913,
+            "samples": [
+              1570.8324852432268,
+              1555.2530022389487,
+              1644.929981681257,
+              1241.8328923264858,
+              1372.8288214940076,
+              1195.8493791980547,
+              1471.7754935884311,
+              1591.6615102788555,
+              1440.8797069000525,
+              1437.8351312843665,
+              1323.2749847343837,
+              1504.7408915123115
+            ]
+          }
+        ],
+        "checksum": 17472
+      },
+      "vpm": {
+        "pid": 13652,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, resolve, seek and stop a synchronous custom animation",
+            "iterations": 15014,
+            "samples": [
+              1188.893166378049,
+              1222.625549487144,
+              1213.695017983216,
+              1304.7350472891967,
+              1284.8813773811098,
+              1219.334154788866,
+              1327.4415878513382,
+              1135.9231384041532,
+              1282.7999200745999,
+              1095.7328493406176,
+              1278.7342480351706,
+              1244.2748101771704
+            ]
+          },
+          {
+            "case": "create, resolve, seek and stop a deferred custom animation",
+            "iterations": 4913,
+            "samples": [
+              1399.8237329533697,
+              1263.5015265621819,
+              1501.1278241400387,
+              1689.8957866883782,
+              1395.2015062080309,
+              1425.0881335233198,
+              1468.5019336454498,
+              1256.69997964584,
+              1371.8790962751916,
+              1671.2548341135737,
+              1690.938937512726,
+              1372.5151638510017
+            ]
+          }
+        ],
+        "checksum": 3840
+      }
+    },
+    {
       "pair": 1,
       "control": true,
       "first": "vpm",
       "vpm": {
-        "pid": 97593,
+        "pid": 13653,
         "runtime": {
           "node": "26.3.0",
           "bun": "1.4.4",
@@ -848,45 +848,45 @@
         "rows": [
           {
             "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 1427,
+            "iterations": 20754,
             "samples": [
-              6349.451296426086,
-              5042.396636299917,
-              1561.7259985984285,
-              9038.775753328688,
-              1272.4828311142242,
-              7054.777154870386,
-              5430.652417659441,
-              4781.651716888582,
-              5976.9327259986085,
-              540.6152768044818,
-              3594.837421163293,
-              551.4779257183072
+              1228.809289775467,
+              1231.810735279946,
+              1237.102871735568,
+              1189.1843981883019,
+              1233.9950371012828,
+              1222.633805531462,
+              1239.092464103307,
+              1181.0594584176545,
+              1229.1285053483705,
+              1242.372940156116,
+              1206.522453502939,
+              1188.7587934855894
             ]
           },
           {
             "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 4679,
+            "iterations": 11529,
             "samples": [
-              1574.802308185494,
-              1372.301773883319,
-              1607.5727719598237,
-              1435.5631545201932,
-              1297.864714682607,
-              1729.7319940158254,
-              1424.6099593930333,
-              1340.421885018169,
-              1674.2004701859316,
-              1588.2667236589075,
-              1543.1094250908216,
-              1610.2620217995222
+              1575.4004683840822,
+              1412.4635267586132,
+              1666.9594067134983,
+              1453.3025414172973,
+              1537.2105126203558,
+              1483.6462832856284,
+              1316.6760343481703,
+              1522.1253361089432,
+              1516.978922716625,
+              1335.3318587908745,
+              1450.2523202359282,
+              1479.0022551825944
             ]
           }
         ],
-        "checksum": 14720
+        "checksum": 18624
       },
       "upstream": {
-        "pid": 97594,
+        "pid": 13654,
         "runtime": {
           "node": "26.3.0",
           "bun": "1.4.4",
@@ -919,42 +919,42 @@
         "rows": [
           {
             "case": "create, resolve, seek and stop a synchronous custom animation",
-            "iterations": 1427,
+            "iterations": 20754,
             "samples": [
-              2651.8339173090576,
-              813.4491941135353,
-              1088.7351086194892,
-              817.7995795374725,
-              2458.158374211629,
-              626.9271198317886,
-              979.210231254382,
-              1255.1093202522825,
-              1884.1681850034777,
-              1060.616678346196,
-              502.9488437281121,
-              2671.57182901189
+              1244.8282740676477,
+              1201.3065915004336,
+              1296.3364652597104,
+              1200.9713308277921,
+              1296.0373421990948,
+              1196.7632745494818,
+              1237.4702707911727,
+              1243.7401464777884,
+              1217.6909511419449,
+              1211.6058109280084,
+              1329.8661462850548,
+              1241.0037101281646
             ]
           },
           {
             "case": "create, resolve, seek and stop a deferred custom animation",
-            "iterations": 4679,
+            "iterations": 11529,
             "samples": [
-              1418.3763624706075,
-              1467.728147039955,
-              1606.1568711263153,
-              1344.3667450309943,
-              1457.7010044881504,
-              1626.7721735413575,
-              3109.0777944005104,
-              2028.3626843342674,
-              1503.9895276768443,
-              1536.412695020315,
-              1652.596708698431,
-              1408.5808933532714
+              1508.4496487119393,
+              1558.0528233151217,
+              1342.3576199149977,
+              1548.023766154915,
+              1382.7123774828674,
+              1384.6459363344684,
+              1480.7514962269086,
+              1447.9211553473751,
+              1403.1789400641824,
+              1435.1635007372754,
+              1539.259692948228,
+              1337.8870673952513
             ]
           }
         ],
-        "checksum": 6976
+        "checksum": 3072
       }
     }
   ],
@@ -964,41 +964,41 @@
       "processes": [
         {
           "first": "upstream",
-          "upstreamNs": 1225.9142482517464,
-          "vpmNs": 1458.2313811188806,
-          "changePct": 18.950520658230175
+          "upstreamNs": 1262.5497750831182,
+          "vpmNs": 1215.4638177195425,
+          "changePct": -3.7294337453329995
         },
         {
           "first": "vpm",
-          "upstreamNs": 1254.137702078524,
-          "vpmNs": 1268.3594110854556,
-          "changePct": 1.1339830533251272
+          "upstreamNs": 1261.1904030363353,
+          "vpmNs": 1223.1308512561002,
+          "changePct": -3.0177482867460914
         },
         {
           "first": "upstream",
-          "upstreamNs": 1230.849295975986,
-          "vpmNs": 1264.2248945750819,
-          "changePct": 2.7115909891008316
+          "upstreamNs": 1196.3401263823046,
+          "vpmNs": 1324.814060031595,
+          "changePct": 10.738913693197905
         },
         {
           "first": "vpm",
-          "upstreamNs": 1292.70407598672,
-          "vpmNs": 1246.7225193655463,
-          "changePct": -3.5570056190993293
+          "upstreamNs": 1283.8396226415048,
+          "vpmNs": 1203.229509433958,
+          "changePct": -6.278830454047779
         }
       ],
       "controls": [
         {
           "first": "upstream",
-          "upstreamNs": 1197.3990876587363,
-          "vpmNs": 1200.5391443718404,
-          "changePct": 0.26223977832184886
+          "upstreamNs": 1239.3752164646348,
+          "vpmNs": 1233.4501798321571,
+          "changePct": -0.47806641231532554
         },
         {
           "first": "vpm",
-          "upstreamNs": 1074.6758934828426,
-          "vpmNs": 4912.02417659425,
-          "changePct": 357.0702856909921
+          "upstreamNs": 1239.2369904596685,
+          "vpmNs": 1228.9688975619188,
+          "changePct": -0.8285818593859906
         }
       ]
     },
@@ -1007,41 +1007,41 @@
       "processes": [
         {
           "first": "upstream",
-          "upstreamNs": 1486.6145046035458,
-          "vpmNs": 2111.0748591452557,
-          "changePct": 42.00553355345087
+          "upstreamNs": 1479.1191043590507,
+          "vpmNs": 1980.3706186078807,
+          "changePct": 33.8885159938515
         },
         {
           "first": "vpm",
-          "upstreamNs": 1463.0091032839941,
-          "vpmNs": 1535.4737961545097,
-          "changePct": 4.953126587377699
+          "upstreamNs": 1478.0558861276436,
+          "vpmNs": 1739.1615914129065,
+          "changePct": 17.665482593444647
         },
         {
           "first": "upstream",
-          "upstreamNs": 1359.7886421861776,
-          "vpmNs": 2030.7821520068371,
-          "changePct": 49.34542685559433
+          "upstreamNs": 1514.3805998970142,
+          "vpmNs": 1929.0545185375966,
+          "changePct": 27.38241091234148
         },
         {
           "first": "vpm",
-          "upstreamNs": 1528.5074611610703,
-          "vpmNs": 1664.8097914963323,
-          "changePct": 8.91734805348776
+          "upstreamNs": 1465.474670031063,
+          "vpmNs": 1808.8606366459649,
+          "changePct": 23.431723088576017
         }
       ],
       "controls": [
         {
           "first": "upstream",
-          "upstreamNs": 1379.6778275359338,
-          "vpmNs": 1365.078004582374,
-          "changePct": -1.0582052318427682
+          "upstreamNs": 1456.3276002442417,
+          "vpmNs": 1412.4559332383446,
+          "changePct": -3.0124861328274855
         },
         {
           "first": "vpm",
-          "upstreamNs": 1520.2011113485796,
-          "vpmNs": 1558.9558666381577,
-          "changePct": 2.54931765279387
+          "upstreamNs": 1441.5423280423252,
+          "vpmNs": 1481.3242692341114,
+          "changePct": 2.7596790200265398
         }
       ]
     }
@@ -1049,24 +1049,24 @@
   "summary": [
     {
       "case": "create, resolve, seek and stop a synchronous custom animation",
-      "upstream_ns": 1242,
-      "vpm_ns": 1266,
-      "change_pct": 1.9,
-      "upstream_first_pct": 10.8,
-      "vpm_first_pct": -1.2,
-      "process_range_pct": "19.0, 1.1, 2.7, -3.6",
-      "control_max_abs_pct": 357.1,
+      "upstream_ns": 1262,
+      "vpm_ns": 1219,
+      "change_pct": -3.4,
+      "upstream_first_pct": 3.5,
+      "vpm_first_pct": -4.6,
+      "process_range_pct": "-3.7, -3.0, 10.7, -6.3",
+      "control_max_abs_pct": 0.8,
       "evidence": "unestablished at this precision"
     },
     {
       "case": "create, resolve, seek and stop a deferred custom animation",
-      "upstream_ns": 1475,
-      "vpm_ns": 1848,
-      "change_pct": 25.5,
-      "upstream_first_pct": 45.7,
-      "vpm_first_pct": 6.9,
-      "process_range_pct": "42.0, 5.0, 49.3, 8.9",
-      "control_max_abs_pct": 2.5,
+      "upstream_ns": 1479,
+      "vpm_ns": 1869,
+      "change_pct": 25.4,
+      "upstream_first_pct": 30.6,
+      "vpm_first_pct": 20.5,
+      "process_range_pct": "33.9, 17.7, 27.4, 23.4",
+      "control_max_abs_pct": 3,
       "evidence": "higher time in every pair, beyond control spread"
     }
   ]

@@ -1,4 +1,6 @@
-# vmotion-dom measurements
+# vmotion-dom before/after measurements
+
+The **Upstream** column is immutable VPM commit `a518e8ef`, not Motion.
 
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
@@ -23,25 +25,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-10T06:45:09.753Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T07:10:03.415Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 2093 | 1865 | -10.8% | -13% | -9.4% | 13.6% | unestablished at this precision |
-| create, resolve, seek and stop a deferred custom animation | 2252 | 2087 | -3.7% | -3.6% | -8.3% | 11.5% | unestablished at this precision |
+| create, resolve, seek and stop a synchronous custom animation | 2040 | 1695 | -8.4% | -19.1% | -5.7% | 2.5% | lower time in every pair, beyond control spread |
+| create, resolve, seek and stop a deferred custom animation | 1952 | 1765 | -4% | -14.2% | -1% | 16.1% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-10T06:45:22.853Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T07:10:16.746Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 1511 | 1315 | -13.3% | -9.8% | -14.6% | 16.4% | unestablished at this precision |
-| create, resolve, seek and stop a deferred custom animation | 1964 | 1892 | -8.4% | 1% | -14.7% | 25.9% | unestablished at this precision |
+| create, resolve, seek and stop a synchronous custom animation | 1369 | 1242 | -8.7% | -10.7% | -7.6% | 3.4% | lower time in every pair, beyond control spread |
+| create, resolve, seek and stop a deferred custom animation | 1876 | 1893 | -0.1% | 0.9% | -1.6% | 3.2% | unestablished at this precision |
 
 ## Reproduce
 
@@ -57,5 +59,3 @@ node scripts/render-bench-report.cjs packages/vmotion-dom renderer-previous rend
 The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
-
-“Upstream” in this before/after report means immutable VPM commit `ca65b070`, reconstructed by `setup-baseline.cjs`. It is not the upstream Motion package.

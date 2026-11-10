@@ -242,6 +242,15 @@ function prepareColor(value) {
   }
   return c;
 }
+// Rounded alpha is a bounded five-decimal integer. Formatting that integer
+// avoids a generic binary-float-to-shortest-decimal conversion on every sample.
+function alphaText(units) {
+  if (units === 0) return "0";
+  if (units === 100000) return "1";
+  const prefix = units >= 10000 ? "0." : units >= 1000 ? "0.0" : units >= 100 ? "0.00" : units >= 10 ? "0.000" : "0.0000";
+  while (units % 10 === 0) units = (units / 10) | 0;
+  return prefix + units;
+}
 function mixColor(from, to) {
   const a = prepareColor(from),
     b = prepareColor(to);
@@ -251,20 +260,25 @@ function mixColor(from, to) {
     dr = b.red * b.red - r,
     dg = b.green * b.green - g,
     db = b.blue * b.blue - bl,
-    da = b.alpha - a.alpha;
+    alphaStart = a.alpha,
+    da = b.alpha - alphaStart;
   return (p) => {
     finite(p);
     // Clamped endpoints and finite progress inside [0,1] bound every channel.
     // Extrapolation still takes the fully checked/clamped path below.
     if (p >= 0 && p <= 1)
-      return `rgba(${Math.round(Math.sqrt(Math.max(0, r + dr * p)))}, ${Math.round(Math.sqrt(Math.max(0, g + dg * p)))}, ${Math.round(Math.sqrt(Math.max(0, bl + db * p)))}, ${tidy(a.alpha + da * p)})`;
-    const red = Math.round(clamp(finite(Math.sqrt(Math.max(0, r + dr * p))), 0, 255)),
-      green = Math.round(clamp(finite(Math.sqrt(Math.max(0, g + dg * p))), 0, 255)),
-      blue = Math.round(clamp(finite(Math.sqrt(Math.max(0, bl + db * p))), 0, 255)),
-      alpha = tidy(clamp(finite(a.alpha + da * p), 0, 1));
-    return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+      return `rgba(${(Math.sqrt(Math.max(0, r + dr * p)) + 0.5) | 0}, ${(Math.sqrt(Math.max(0, g + dg * p)) + 0.5) | 0}, ${(Math.sqrt(Math.max(0, bl + db * p)) + 0.5) | 0}, ${alphaText(Math.round((alphaStart + da * p) * 1e5) | 0)})`;
+    return extrapolateColor(p, r, g, bl, dr, dg, db, alphaStart, da);
   };
 }
+function extrapolateColor(p, r, g, bl, dr, dg, db, alphaStart, da) {
+  const red = Math.round(clamp(finite(Math.sqrt(Math.max(0, r + dr * p))), 0, 255)),
+    green = Math.round(clamp(finite(Math.sqrt(Math.max(0, g + dg * p))), 0, 255)),
+    blue = Math.round(clamp(finite(Math.sqrt(Math.max(0, bl + db * p))), 0, 255)),
+    alpha = alphaText(Math.round(clamp(finite(alphaStart + da * p), 0, 1) * 1e5));
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+}
+
 const rgbUnit = {
   test: (v) => typeof v === "number",
   parse: parseFloat,

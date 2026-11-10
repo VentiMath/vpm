@@ -8,7 +8,7 @@ require("../../../scripts/check-bun.cjs");
 const previous = process.env.VMOTION_MIXERS_PREVIOUS === "1";
 const baseline = previous
   ? require("../../../scripts/motion-dom-conformance/setup-baseline.cjs").prepare(
-      "ca65b070cb796674f7ee01a2b1bcab81d19dad6f",
+      "a518e8ef394f7d596b9db57864f4a79f464f54f3",
     )
   : undefined;
 const cases = [
@@ -99,7 +99,7 @@ require("../../../scripts/bench-process.cjs")
       ...(previous
         ? [
             "../../scripts/motion-dom-conformance/setup-baseline.cjs",
-            "../../scripts/motion-dom-conformance/node_modules/.setup-before-ca65b070",
+            "../../scripts/motion-dom-conformance/node_modules/.setup-before-a518e8ef",
           ]
         : []),
       ...require("node:fs")

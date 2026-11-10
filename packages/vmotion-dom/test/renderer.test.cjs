@@ -506,3 +506,33 @@ test("constructor-time failures keep the original error before guard ownership a
     (e) => e === failure,
   );
 });
+
+test("custom numeric output is captured before its producer changes it", () => {
+  for (const type of ["keyframes", "spring"]) {
+    const result = [0, 20];
+    class R extends api.KeyframeResolver {
+      constructor(frames, done, ...rest) { super(frames, () => done(result), ...rest); }
+    }
+    const v = api.motionValue(0);
+    const a = api.animateMotionValue("x", v, 20,
+      { type, duration: 1, ease: "linear", autoplay: false },
+      owner({ KeyframeResolver: R }))(() => {});
+    a.time = .5;
+    const before = v.get();
+    result[0] = 900; result[1] = 1000;
+    a.time = .5;
+    assert.equal(v.get(), before);
+    a.stop();
+  }
+});
+test("custom one-frame spring output stays frozen and invalid output rejects", () => {
+  for (const result of [Object.freeze([20]), [0, Infinity], [0, {}]]) {
+    class R extends api.KeyframeResolver {
+      constructor(frames, done, ...rest) { super(frames, () => done(result), ...rest); }
+    }
+    const start = () => api.animateMotionValue("x", api.motionValue(0), 20,
+      { type: "spring", autoplay: false }, owner({ KeyframeResolver: R }))(() => {});
+    if (result.length === 1) { const a = start(); a.complete(); a.stop(); assert.deepEqual(result, [20]); }
+    else assert.throws(start, TypeError);
+  }
+});

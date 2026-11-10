@@ -460,14 +460,17 @@ or replaced targets still suppress end writes.
 A single deferred resolver uses an inline queue slot, avoiding iterator allocation
 and hash-table churn. Multi-resolver work keeps a separate transactional batch;
 measurement restoration and reentrant scheduling remain intact. Numeric playback
-cancels only its own update phase. [Before/after measurements](bench/renderer-previous/README.md)
-compare immutable commit `ca65b070`; their final directions are inconclusive
-against process/control variation. The [upstream recording at `9a9e2663`](bench/renderer/README.md)
-measures deferred Bun at 1.85 versus 1.48 μs (25.5% more), so that regression is
-reduced in magnitude but not closed. Deferred Node takes 24.7% less time than
-upstream in this recording; synchronous directions are inconclusive. These are
-setup/seek/stop microbenchmarks, not application frame rates. Validation, lifecycle
-errors, cancellation and restoration remain covered by the same regression suite.
+cancels only its own update phase. Numeric resolver output is captured by the
+playback generator without another unconditional copy; unit conversion still uses
+copy-on-write, frozen outputs remain untouched, and nonfinite outputs reject.
+Element playback starts directly without allocating a one-use factory.
+[Before/after measurements](bench/renderer-previous/README.md) compare immutable
+commit `a518e8ef`: synchronous setup takes 8.4% less time on Node and 8.7% less on
+Bun; deferred changes are inconclusive. The [upstream comparison](bench/renderer/README.md)
+still measures deferred Bun at 1.87 versus 1.48 μs (25.4% more). This gap is **not
+fixed**. Node directions versus upstream are inconclusive in this recording.
+These are setup/seek/stop microbenchmarks, not application frame rates. Validation,
+lifecycle errors, cancellation and restoration remain covered by regression tests.
 
 The earlier [target recording](bench/groups/README.md), from `a3c16a08`, no longer
 established the original 80% Node regression: 11.39 versus 11.19 μs, with overlapping
@@ -547,31 +550,25 @@ numeric. Named colors other than `transparent`, `currentColor`, lab/oklab and
 other extended color spaces and full CSS grammar
 are outside this verified scope.
 
-There are 237 unit tests per runtime and 2,538 exact color/complex/interpolation
+There are 241 unit tests per runtime and 2,538 exact color/complex/interpolation
 comparisons against both current 14.7.0 and app 12.36.0. Chrome checks computed
 colors, shadows, filters and transforms, CSS percentages and animations through
-an unchanged upstream HTML renderer. [Measurements at `9a9e2663`](bench/mixers/README.md)
+an unchanged upstream HTML renderer. [Measurements](bench/mixers/README.md)
 separate preparation from sampling and include unchanged numeric interpolation.
 Parsed color/complex syntax uses two-entry caches with input-length bounds.
-Only immutable string syntax is cached: public parsed objects are fresh snapshots,
-and object endpoints and computed DOM styles are read normally. Complex sampling
-formats in one pass. Strict common RGB parsing captures channels together; hex
-channels use numeric extraction. The CSS scanner gates syntax work by character
-and preserves identifiers, quoted literals, variables and URL contents. Numeric
-mixing stores prepared deltas; common two/three-length trailing-color shapes have
-a direct formatter. Bounded color interpolation avoids redundant clamps while
-extrapolation retains full finite checks and clamping.
+Only immutable string syntax is cached, never objects, CSS variables or DOM reads.
 
-[Before/after measurements](bench/mixers-previous/README.md), against `ca65b070`,
-include repeated and changing uncached endpoints. Uncached color setup takes
-32% less time on Node and 55% less on Bun; uncached shadow setup takes 45%/46% less.
-Prepared shadow sampling takes 13%/25% less. Remaining before/after directions are
-inconclusive except repeated Bun shadow setup, which takes 24% less time.
-Against upstream, uncached color setup now takes 8%/42% less time and uncached
-shadow setup takes 26%/37% less. Prepared Node shadow sampling is 16% faster;
-Bun shadow sampling no longer establishes a regression. Prepared Node color
-sampling still costs 109 versus 98 ns (11% more). These measurements do not imply
-a general frame-rate gain.
+Color sampling now formats rounded alpha from bounded decimal integers and rounds
+bounded nonnegative channels directly. Extrapolation retains finite checks and
+clamping in a separate helper. All 100,001 five-decimal alpha outputs are checked,
+including zero padding/trailing zeros; fractional channels and extrapolation have
+separate regressions. Node prepared-color sampling takes 91 versus upstream's 100 ns
+(9% less), and 15.9% less than the [previous VPM version](bench/mixers-previous/README.md).
+Bun takes 32 versus 54 ns (40.3% less). All measured color/complex cases beat upstream
+on both runtimes. Relative to previous VPM, Node repeated mixer creation increases
+from 88 to 95 ns (7.2%); that setup cost remains far below upstream's 476 ns.
+The before/after Bun prepared-color difference is inconclusive. Measurements describe
+these workloads, not application frame rates.
 
 ## Neutral keyframes and filter defaults
 

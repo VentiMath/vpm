@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-10T06:43:42.088Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T07:09:37.339Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 1674 | 1455 | 0.6% | -15% | 1.7% | 15% | unestablished at this precision |
-| create, resolve, seek and stop a deferred custom animation | 2164 | 1628 | -24.7% | -23.8% | -30.3% | 8.2% | lower time in every pair, beyond control spread |
+| create, resolve, seek and stop a synchronous custom animation | 1736 | 1586 | -9.1% | -21.9% | -7.5% | 25.5% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 2167 | 1512 | -26.1% | -31.9% | -26.1% | 31.6% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-10T06:43:51.755Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T07:09:47.774Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 1242 | 1266 | 1.9% | 10.8% | -1.2% | 357.1% | unestablished at this precision |
-| create, resolve, seek and stop a deferred custom animation | 1475 | 1848 | 25.5% | 45.7% | 6.9% | 2.5% | higher time in every pair, beyond control spread |
+| create, resolve, seek and stop a synchronous custom animation | 1262 | 1219 | -3.4% | 3.5% | -4.6% | 0.8% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 1479 | 1869 | 25.4% | 30.6% | 20.5% | 3% | higher time in every pair, beyond control spread |
 
 ## Reproduce
 
