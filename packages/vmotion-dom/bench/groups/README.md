@@ -23,27 +23,27 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-10T03:09:21.601Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T03:44:24.824Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| group, seek, read and stop 1 prepared playback controls | 63 | 55 | -14.4% | -7.2% | -20.5% | 3.1% | lower time in every pair, beyond control spread |
-| group, seek, read and stop 8 prepared playback controls | 257 | 121 | -52.5% | -51.9% | -53.9% | 1.8% | lower time in every pair, beyond control spread |
-| create and complete a renderer target with transitionEnd | 10745 | 19402 | 80.3% | 106.8% | 58% | 7.2% | higher time in every pair, beyond control spread |
+| group, seek, read and stop 1 prepared playback controls | 64 | 55 | -14.8% | -5.9% | -22.3% | 3.6% | lower time in every pair, beyond control spread |
+| group, seek, read and stop 8 prepared playback controls | 264 | 121 | -54.6% | -55.8% | -53.5% | 1% | lower time in every pair, beyond control spread |
+| create and complete a renderer target with transitionEnd | 12045 | 9661 | -19.3% | -29.5% | -4.8% | 7.9% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-10T03:09:36.700Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T03:44:38.882Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| group, seek, read and stop 1 prepared playback controls | 36 | 49 | 30.8% | 30.8% | 36.6% | 3.1% | higher time in every pair, beyond control spread |
-| group, seek, read and stop 8 prepared playback controls | 97 | 108 | 10.9% | 15.1% | 6.1% | 1.7% | higher time in every pair, beyond control spread |
-| create and complete a renderer target with transitionEnd | 10471 | 13440 | 27.8% | 33.1% | 19.6% | 7.4% | higher time in every pair, beyond control spread |
+| group, seek, read and stop 1 prepared playback controls | 37 | 50 | 33.7% | 26.4% | 39.9% | 8.7% | higher time in every pair, beyond control spread |
+| group, seek, read and stop 8 prepared playback controls | 101 | 108 | 10.3% | 8.1% | 14.7% | 11.4% | unestablished at this precision |
+| create and complete a renderer target with transitionEnd | 11431 | 9540 | -18.3% | -15.5% | -19.3% | 13.6% | unestablished at this precision |
 
 ## Reproduce
 
@@ -60,14 +60,4 @@ The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
 
-The first two cases isolate forwarding through prepared controls; they exclude
-animation construction. Node takes 14.4% and 52.5% less time for one and eight
-members. Bun takes 30.8% and 10.9% more (49/108 ns versus 36/97 ns).
-
-The target case constructs two numeric property animations, completes them,
-applies display:none through transitionEnd and drains the same twelve frame/
-microtask rounds on each implementation. It includes validation, owned snapshots,
-completion promises and stale-write protection. Node takes 19.40 μs versus
-10.75 μs (80.3% more); Bun takes 13.44 versus 10.47 μs (27.8% more).
-These remaining costs are not an application frame-rate measurement. Deferred
-custom setup remains a separate unresolved cost in the renderer benchmark.
+Forwarding cases use prepared controls. The target case includes two numeric animations, completion, display:none and the same twelve frame/microtask drains for both implementations. Target differences on both runtimes are inconclusive; the previous established Node regression is not reproduced. Remaining deferred custom setup overhead is measured separately.

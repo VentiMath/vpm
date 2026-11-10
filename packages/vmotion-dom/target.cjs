@@ -1,5 +1,9 @@
 "use strict";
-const { animateValues, getAnimationRequest } = require("./element.cjs"),
+const {
+    animateValues,
+    getAnimationRequest,
+    observeCompletion,
+  } = require("./element.cjs"),
   { motionValue } = require("./value.cjs"),
   { frame } = require("./frame.cjs"),
   { readStyleValue, readSVGValue } = require("./reads.cjs");
@@ -104,25 +108,36 @@ function animateTarget(renderer, target, options = {}) {
       [...names].every((name) => keys.get(name) === token) &&
       handles.every(
         (h) =>
-          h.completed && !h.stopped && !h.cancelled && !h.failed && h.owned(),
+          h.completed &&
+          !h.stopped &&
+          !h.cancelled &&
+          !h.failed &&
+          !h.run?.failed &&
+          h.owned(),
       ) &&
       values.every(
         (item) =>
           getAnimationRequest(item.slot) === item.request &&
           renderer.getValue(item.key) === item.slot,
       );
-    Promise.all(handles.map((h) => h.finished)).then(
-      () => {
+    let remaining = handles.length;
+    const scheduleEnd = () =>
+      queueMicrotask(() =>
         frame.update(() => {
           if (!current()) return;
           for (const { value, slot } of values) {
             if (!current()) break;
             slot.set(value);
           }
-        });
-      },
-      () => {},
-    );
+        }),
+      );
+    if (!remaining) scheduleEnd();
+    else {
+      const completed = () => {
+        if (--remaining === 0) scheduleEnd();
+      };
+      for (const handle of handles) observeCompletion(handle, completed);
+    }
   }
   return handles;
 }

@@ -194,3 +194,38 @@ test("end-only properties retain their existing renderer value during playback",
   await settle();
   assert.equal(o.getValue("display").get(), "none");
 });
+
+test("completion barriers preserve MotionValue lifecycle listener failures", async () => {
+  const o = owner(),
+    value = api.motionValue(1);
+  o.addValue("opacity", value);
+  value.on("animationComplete", () => {
+    throw Error("listener");
+  });
+  const [a] = api.animateTarget(o, {
+    opacity: 0,
+    transitionEnd: { display: "none" },
+  });
+  const rejected = assert.rejects(a.finished, /listener/);
+  a.complete();
+  await rejected;
+  await settle();
+  assert.equal(o.getValue("display").get(), "block");
+});
+
+test("end writes remain deferred when completion happens in the same call stack", async () => {
+  const o = owner(),
+    [a] = api.animateTarget(o, {
+      opacity: 0,
+      transitionEnd: { display: "none" },
+    });
+  a.complete();
+  api.frameSteps.update.process({
+    timestamp: 1000,
+    delta: 16,
+    isProcessing: true,
+  });
+  assert.equal(o.getValue("display").get(), "block");
+  await settle();
+  assert.equal(o.getValue("display").get(), "none");
+});

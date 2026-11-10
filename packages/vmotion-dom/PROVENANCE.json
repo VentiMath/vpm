@@ -57,7 +57,9 @@
     "Measurement guards live once per custom resolver class; source snapshots allocate only when measurement occurs. Resolved-value handoffs avoid constructing unused renderer readers. Prepared element options skip duplicate default selection while public factory snapshots and validation remain intact.",
     "Resolver failure ownership lives in a private instance field on the cached guard class, avoiding a per-instance weak-map entry while retaining independent error routing, snapshot isolation and measurement restoration.",
     "Grouped controls have neutral empty getters and forward every cleanup even if a child throws. Failed timeline attachment unwinds observers and returned cleanup is idempotent.",
-    "Target completion validates scalar endpoints before animation starts, owns end snapshots and suppresses stale completion after cancellation, failure, replacement or reentrant playback callbacks. Variant-state propagation is explicitly outside the implemented target contract."
+    "Target completion validates scalar endpoints before animation starts, owns end snapshots and suppresses stale completion after cancellation, failure, replacement or reentrant playback callbacks. Variant-state propagation is explicitly outside the implemented target contract.",
+    "Owned resolver schedulers attach failure ownership directly instead of constructing a redundant guarded subclass and scanning per-instance hooks. Foreign/custom schedulers retain guards; native read/measurement/completion failures route through the same owner and transactional restoration.",
+    "Empty frame phases return without swapping/clearing queues. Target completion uses one internal success barrier and a deferred frame write instead of materializing per-handle public lifecycle/playback promises. MotionValue completion-listener failures remain visible and suppress end writes."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

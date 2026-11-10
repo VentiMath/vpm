@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-10T02:52:04.309Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T03:42:52.999Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 3231 | 1864 | -39.9% | -39.5% | -42.2% | 13.2% | lower time in every pair, beyond control spread |
-| create, resolve, seek and stop a deferred custom animation | 3453 | 2917 | -11.2% | 3.5% | -27.9% | 23.8% | unestablished at this precision |
+| create, resolve, seek and stop a synchronous custom animation | 1925 | 1846 | -1.8% | -8.8% | -1.8% | 10.1% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 2481 | 2230 | -9.6% | -3.2% | -9.6% | 11.1% | unestablished at this precision |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-10T02:51:47.540Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T03:43:09.804Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 2064 | 1714 | -16.7% | -12.1% | -21.5% | 5.5% | lower time in every pair, beyond control spread |
-| create, resolve, seek and stop a deferred custom animation | 4677 | 4507 | -14.5% | -14.5% | -14.4% | 21.4% | unestablished at this precision |
+| create, resolve, seek and stop a synchronous custom animation | 1751 | 1417 | -18.7% | -14.8% | -18.7% | 6.2% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 4818 | 2684 | -42.9% | -40.9% | -42.9% | 14.3% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 
@@ -58,4 +58,4 @@ The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
 
-The upstream columns in this report are VPM commit `d45f59d3bbba2917e2d60fd0a025f2c7b6491bfe`, reconstructed from git history. Synchronous setup improves on both runtimes; deferred improvements remain unestablished. Measurements experienced variable host load, which is reflected in pair and identical-source controls.
+The upstream columns here are immutable VPM commit `3365200d5149723e870fb93bf217f8be82346226`, reconstructed from git history. This is a before/after comparison, not the upstream package. All pairs and controls are retained.

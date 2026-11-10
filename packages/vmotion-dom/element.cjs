@@ -1,5 +1,10 @@
 "use strict";
-const { motionValue, failAnimation } = require("./value.cjs");
+const {
+  MotionValue,
+  motionValue,
+  failAnimation,
+  getAnimationRun,
+} = require("./value.cjs");
 const {
   DOMKeyframesResolver,
   KeyframeResolver,
@@ -7,6 +12,7 @@ const {
   untrackResolver,
   noteResolverRead,
   resetResolverRead,
+  attachResolverOwner,
   flushKeyframeResolvers,
 } = require("./resolver.cjs");
 const { readStyleValue, readSVGValue } = require("./reads.cjs");
@@ -173,6 +179,28 @@ function guardedResolver(Base) {
   resolverClasses.set(Base, Guarded);
   return Guarded;
 }
+function guardInstanceMethod(resolver, handle, method, original) {
+  return (...args) => {
+    try {
+      let result;
+      try {
+        result = original.apply(resolver, args);
+        if (method === "readKeyframes") noteResolverRead(resolver);
+        if (
+          method === "renderEndStyles" &&
+          !Object.hasOwn(resolver, "prepareMeasurement")
+        )
+          resolver.element?.render?.();
+      } finally {
+        if (method === "restore") handle.restoreMeasurement();
+      }
+      return result;
+    } catch (error) {
+      handle.fail(error);
+      throw error;
+    }
+  };
+}
 const ElementResolver = guardedResolver(DOMKeyframesResolver);
 class ElementAnimation {
   constructor(
@@ -198,7 +226,20 @@ class ElementAnimation {
     this.cancelled = false;
     this.completed = false;
     this.wait();
-    const Resolve = Resolver ? guardedResolver(Resolver) : ElementResolver;
+    const Base = Resolver || DOMKeyframesResolver;
+    const native =
+      (Base === KeyframeResolver ||
+        Base.prototype instanceof KeyframeResolver) &&
+      (Base.prototype.scheduleResolve ===
+        KeyframeResolver.prototype.scheduleResolve ||
+        Base.prototype.scheduleResolve ===
+          DOMKeyframesResolver.prototype.scheduleResolve) &&
+      Base.prototype.resume === KeyframeResolver.prototype.resume;
+    const Resolve = native
+      ? Base
+      : Resolver
+        ? guardedResolver(Resolver)
+        : ElementResolver;
     this.resolver = new Resolve(
       frames,
       (resolved, final) => {
@@ -213,39 +254,33 @@ class ElementAnimation {
       value,
       element,
     );
-    Resolve.own(this.resolver, this);
-    if (this.customResolver)
+    if (native) attachResolverOwner(this.resolver, this);
+    else Resolve.own(this.resolver, this);
+    // Owned schedulers already guard every read/measurement/completion phase.
+    // A custom scheduler may call phases elsewhere and still needs method guards.
+    const instanceScheduler =
+      native &&
+      (Object.hasOwn(this.resolver, "scheduleResolve") ||
+        Object.hasOwn(this.resolver, "resume"));
+    if ((!native && this.customResolver) || instanceScheduler)
       for (const method of resolverMethods) {
         if (
-          !Object.hasOwn(this.resolver, method) ||
+          (!instanceScheduler && !Object.hasOwn(this.resolver, method)) ||
           typeof this.resolver[method] !== "function"
         )
           continue;
         const original = this.resolver[method];
-        this.resolver[method] = (...args) => {
-          try {
-            let result;
-            try {
-              result = original.apply(this.resolver, args);
-              if (method === "readKeyframes") noteResolverRead(this.resolver);
-              if (
-                method === "renderEndStyles" &&
-                !Object.hasOwn(this.resolver, "prepareMeasurement")
-              )
-                this.resolver.element?.render?.();
-            } finally {
-              if (method === "restore") this.restoreMeasurement();
-            }
-            return result;
-          } catch (error) {
-            this.fail(error);
-            throw error;
-          }
-        };
+        this.resolver[method] = guardInstanceMethod(
+          this.resolver,
+          this,
+          method,
+          original,
+        );
       }
     this.stop = () => {
       if (this.stopped) return;
       this.stopped = true;
+      this.completionObserver = undefined;
       this.resolver.cancel();
       untrackResolver(this.resolver);
       try {
@@ -318,6 +353,7 @@ class ElementAnimation {
   }
   fail(error) {
     this.failed = true;
+    this.completionObserver = undefined;
     untrackResolver(this.resolver);
     try {
       this.resolver.cancel();
@@ -367,6 +403,9 @@ class ElementAnimation {
           this.value.set(final);
         onComplete?.();
         this.completed = true;
+        const notify = this.completionObserver;
+        this.completionObserver = undefined;
+        notify?.();
       };
       let complete = this.externalComplete;
       // Validate before replacing the currently running value. This facade owns
@@ -387,6 +426,7 @@ class ElementAnimation {
       if (!this.externalComplete) {
         this.lifecycle = this.value.start((done) => {
           complete = done;
+          this.run = getAnimationRun(this.value);
           return this;
         });
         this.lifecycle.catch(() => {});
@@ -498,6 +538,7 @@ class ElementAnimation {
   cancel() {
     if (this.stopped) return;
     this.completed = false;
+    this.completionObserver = undefined;
     if (this.animation) this.animation.cancel();
     else {
       this.cancelled = true;
@@ -786,7 +827,8 @@ function prepareRendererMotionValue(
   const Resolver = isHandoff
     ? KeyframeResolver
     : element?.KeyframeResolver || DOMKeyframesResolver;
-  guardedResolver(Resolver);
+  if (typeof Resolver !== "function")
+    throw new TypeError("KeyframeResolver must be a constructor");
   const options = snapshot(getValueTransition(transition, name));
   if (options.delay == null && transition.delay !== undefined)
     options.delay = transition.delay;
@@ -841,4 +883,17 @@ Object.defineProperty(module.exports, "prepareRendererMotionValue", {
 
 Object.defineProperty(module.exports, "getAnimationRequest", {
   value: (value) => requests.get(value),
+});
+
+// A target barrier observes owned completion without materializing public
+// playback/lifecycle promises. Public finished semantics remain unchanged.
+Object.defineProperty(module.exports, "observeCompletion", {
+  value(handle, notify) {
+    if (!(handle.value instanceof MotionValue)) {
+      handle.finished.then(notify, () => {});
+      return;
+    }
+    if (handle.completed) notify();
+    else handle.completionObserver = notify;
+  },
 });

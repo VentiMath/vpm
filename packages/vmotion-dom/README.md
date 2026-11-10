@@ -448,21 +448,23 @@ and disposal. Remaining Node medians are 1.16 μs versus 0.50 μs for one value 
 4.74 μs. The balanced [before/after comparison](bench/handoff-previous/README.md)
 with commit `112782a6` does not establish a speed change on either runtime.
 
-Measurement guards live once per resolver class, with ownership stored in a private
-instance field rather than a per-instance WeakMap entry. Guards capture their
-phase method once; error routing remains independent for every resolver,
-including constructor-time and instance-field failures. The balanced
-[before/after comparison](bench/renderer-previous/README.md) against `d45f59d3`
-finds lower synchronous setup time on Node and Bun (39.9% and 16.7% respectively).
-Deferred setup changes are **unestablished** on both runtimes.
+Owned resolver schedulers now attach failure ownership directly. They reuse their
+existing read/measurement/completion guards; foreign or custom schedulers retain
+method guards. This removes a redundant derived class and repeated instance-method
+scanning without removing error restoration. Empty frame phases return immediately.
+Targets coordinate successful completion through an internal barrier instead of
+materializing every controller's public promises. Listener failures and cancelled
+or replaced targets still suppress end writes.
 
-The [upstream comparison](bench/renderer/README.md) still finds deferred setup
-costs: Node 2.71 versus 2.03 μs; Bun 4.01 versus 1.54 μs (about 2.6×).
-The deferred facade, guarded resolver queue and owned playback lifecycle still
-allocate more state; removing a weak-map entry did not close that gap.
-Both synchronous upstream comparisons are inconclusive. These are local
-microbenchmarks, not application frame-rate measurements.
-
+Against commit `3365200d`, the balanced [resolver before/after](bench/renderer-previous/README.md)
+finds Bun deferred setup takes 42.9% less time. Other resolver directions are
+inconclusive. The [target before/after](bench/groups-previous/README.md) finds Bun
+target completion takes 32.3% less time; Node's direction remains inconclusive.
+The latest [upstream target comparison](bench/groups/README.md) no longer establishes
+the old Node regression: medians are 9.66 versus 12.05 μs, with overlapping controls.
+Bun target completion is also inconclusive (9.54 versus 11.43 μs).
+[Deferred Bun setup](bench/renderer/README.md) still costs 3.00 versus 1.49 μs,
+about 2× upstream. That remaining regression is not declared fixed.
 
 ## Groups and target completion
 
@@ -537,8 +539,6 @@ create/resolve/seek/stop lifecycle with synchronous and deferred custom classes.
 Conformance adds 440 upstream comparisons; Chrome exercises actual percentage,
 variable and auto measurement through unchanged upstream renderer/resolver classes.
 
-The group benchmark finds lower forwarding time on Node (14.4% for one member,
-52.5% for eight), with Bun overhead of 30.8%/10.9% at 49/108 ns. Complete target
-setup, completion and frame draining still cost more: Node 19.40 versus 10.75 μs,
-Bun 13.44 versus 10.47 μs. Snapshot validation and stale-write/error guards remain
-in place; target setup and deferred custom resolution still need performance work.
+Group forwarding takes less time on Node (-14.8%/-54.6% for one/eight members).
+Bun's one-member group remains slower (50 versus 37 ns); eight-member direction
+is inconclusive. These local microbenchmarks do not establish app frame-rate gains.

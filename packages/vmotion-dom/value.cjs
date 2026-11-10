@@ -165,6 +165,7 @@ class MotionValue {
           try {
             this.events?.animationComplete?.notify();
           } catch (error) {
+            run.failed = true;
             reject(error);
             return;
           }
@@ -183,6 +184,7 @@ class MotionValue {
         run.ready = true;
         if (run.complete) finish();
       } catch (error) {
+        run.failed = true;
         run.active = false;
         if (this.activeRun === run) {
           this.activeRun = undefined;
@@ -262,4 +264,9 @@ Object.defineProperty(module.exports, "failAnimation", {
     } catch {}
     reject?.(error);
   },
+});
+
+Object.defineProperty(module.exports, "getAnimationRun", {
+  value: (value) =>
+    value instanceof MotionValue ? value.activeRun : undefined,
 });

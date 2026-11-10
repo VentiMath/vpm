@@ -7,10 +7,18 @@ require(path.join(fixture, "check-controls.cjs")).check();
 require("../../../scripts/check-bun.cjs");
 const helpers = require("../../../scripts/motion-dom-conformance/handoff-fixture.cjs"),
   targets = require("../../../scripts/motion-dom-conformance/target-fixture.cjs");
+const previous = process.env.VMOTION_GROUPS_PREVIOUS === "1";
+const baseline = previous
+  ? require("../../../scripts/motion-dom-conformance/setup-baseline.cjs").prepare(
+      "3365200d5149723e870fb93bf217f8be82346226",
+    )
+  : undefined;
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
+    upstream:
+      baseline ||
+      path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
     vpm: path.join(root, "index.cjs"),
     cases: [
       ...[1, 8].map((count) => ({
@@ -64,6 +72,12 @@ require("../../../scripts/bench-process.cjs")
       },
     ],
     files: [
+      ...(previous
+        ? [
+            "../../scripts/motion-dom-conformance/setup-baseline.cjs",
+            "../../scripts/motion-dom-conformance/node_modules/.setup-before-3365200d",
+          ]
+        : []),
       "index.cjs",
       "index.mjs",
       "group.cjs",

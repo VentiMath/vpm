@@ -8,7 +8,9 @@ const {
 } = require("./reads.cjs");
 const pending = new Set();
 const alreadyRead = new WeakSet();
+let attachResolverOwner, resolverOwner;
 function rejectResolver(resolver, error) {
+  resolverOwner(resolver)?.fail(error);
   try {
     resolver.cancel();
   } catch {}
@@ -84,7 +86,19 @@ function flush(forced) {
           for (const r of pass)
             if (r.state === "scheduled")
               try {
-                r[phase]?.();
+                const owner = resolverOwner(r);
+                if (
+                  phase === "prepareMeasurement" &&
+                  typeof r.prepareMeasurement !== "function"
+                )
+                  owner?.captureMeasurement();
+                else r[phase]?.();
+                if (
+                  phase === "renderEndStyles" &&
+                  typeof r.prepareMeasurement !== "function" &&
+                  owner
+                )
+                  r.element?.render?.();
               } catch (e) {
                 rejectResolver(r, e);
                 failure ??= { error: e };
@@ -92,7 +106,12 @@ function flush(forced) {
       } finally {
         for (let i = pass.length - 1; i >= 0; i--)
           try {
-            pass[i].restore?.();
+            try {
+              pass[i].restore?.();
+            } finally {
+              if (typeof pass[i].prepareMeasurement !== "function")
+                resolverOwner(pass[i])?.restoreMeasurement();
+            }
           } catch (e) {
             rejectResolver(pass[i], e);
             failure ??= { error: e };
@@ -109,6 +128,7 @@ function flush(forced) {
       try {
         r.complete(forced);
       } catch (e) {
+        rejectResolver(r, e);
         failure ??= { error: e };
       }
   if (pending.size) frame.read(readBatch);
@@ -139,6 +159,14 @@ function resetResolverRead(resolver) {
   alreadyRead.delete(resolver);
 }
 class KeyframeResolver {
+  #owner;
+  static {
+    attachResolverOwner = (resolver, owner) => {
+      resolver.#owner = owner;
+    };
+    resolverOwner = (resolver) =>
+      #owner in resolver ? resolver.#owner : undefined;
+  }
   constructor(frames, onComplete, name, motionValue, element, isAsync = false) {
     if (!Array.isArray(frames) || !frames.length)
       throw new TypeError("keyframes must be a nonempty array");
@@ -417,4 +445,8 @@ Object.defineProperties(module.exports, {
   untrackResolver: { value: untrackResolver },
   noteResolverRead: { value: noteResolverRead },
   resetResolverRead: { value: resetResolverRead },
+});
+
+Object.defineProperty(module.exports, "attachResolverOwner", {
+  value: attachResolverOwner,
 });

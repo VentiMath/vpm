@@ -94,7 +94,7 @@ function buildBatcher(
         if (repeat.size) repeat.delete(callback);
       },
       process(data) {
-        if (processing) return;
+        if (processing || !queue.pending.size) return;
         processing = true;
         const ready = queue.pending;
         queue.pending = queue.current;

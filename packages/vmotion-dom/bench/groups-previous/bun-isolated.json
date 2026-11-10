@@ -1,0 +1,1345 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-10T03:43:47.069Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-dom-conformance/handoff-fixture.cjs": "7226dcea882b67597769c6aa2c9fca96a6b81389fc7fae78345e5be67349ef15",
+    "../../scripts/motion-dom-conformance/node_modules/.setup-before-3365200d": "39532c1329d8db5354eb13c3b6d6c6d8defc36e3a6b770fd697bc56abd1484b2",
+    "../../scripts/motion-dom-conformance/setup-baseline.cjs": "a69088fa9aedacc25e5020a596c584476a67bd4839193299e8a5b9805f6847d0",
+    "../../scripts/motion-dom-conformance/target-fixture.cjs": "751462083c84b50a9f1d8df0beb7e40d15dea14e3433dc7ee2f469ef4cb14e77",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "2a8c673f1d9d8ae84eae41c82aafb3d1da92cb98500cb77fd076204aa7efc00a",
+    "bench/groups.cjs": "d8898654b77d6aae82279a2ccc5d84c94a4d48bf6bdecf911b6cae450e93291f",
+    "effects.cjs": "d1605f3a788bcaea5ac6cf36f54d4dca0f9f2a0c2970cae04553ef22c5dd4e6e",
+    "element.cjs": "7962bd2cffcc242ad63690a1bd9d27b1f6f830ab960280758bd27f28289dbcf5",
+    "frame.cjs": "4a9ac2eb27ef3126006a33429c8b5a0e78f02855e61b78edaac8628a6b990b41",
+    "group.cjs": "3b65d4545349738c925f0af35aff881a361dffc51733d446c6fcf48deea9abd7",
+    "index.cjs": "0ef69a9da91951e575c18ec4dab34fee66fcce6e91c6be1d8dc1ce3682d8a2ab",
+    "index.mjs": "5482ca3363f55a2d88cb8667982052a612c26fc35fe8f0528f147c2d6035ca85",
+    "mapping.cjs": "57c8efdb499434d4b2b617377b488679335c110b7fdfccb0134099f27f207a74",
+    "package.json": "fbb5ab7b7d6d085814940979e752359730855aa60224094e69ca45cf8dd69c26",
+    "playback.cjs": "d0062157fd369f44af8a14347a9d55eb38f38c7946cb10162cd7da3d8edc9a73",
+    "reads.cjs": "ef7f79eb94a5e6155a75042fe6a114f1013aa5e7a86a148df67818d8d9cd1875",
+    "resolver.cjs": "b0f43a91f340fc5dea2c9685462fbf1c6f3f1185b46a794f1ed79fa4c20e3d00",
+    "single.cjs": "c4cc282c6af46380af906524bdfe7e449ec0172fab28040a566cf735a62d6035",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "target.cjs": "8cbb6dc93ddc6000bb2ef6abf390b774e9ca91b4066ed10f9dc11bf0fad23aac",
+    "transition.cjs": "6c4af02321c65c6a02c94066566c3ce88ec95a4d3c9923f96ed01c8ac230d08c",
+    "value.cjs": "634004c6e40c6853412d0471ddc586ce57ffbac4a43fe4e366198af7149102ec"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 23908,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 264509,
+            "samples": [
+              59.48427085656845,
+              65.45114154905876,
+              103.10739143091578,
+              70.5300500172018,
+              71.42242797031491,
+              70.19531282489469,
+              66.14078537970386,
+              69.97288939128731,
+              60.27693197584972,
+              60.777391317497475,
+              54.05077710021169,
+              54.64054531225765
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 108898,
+            "samples": [
+              118.66838693088901,
+              114.99483920733132,
+              112.38345975132597,
+              111.0940237653568,
+              114.10333523113448,
+              110.14168304284702,
+              109.30909658579601,
+              111.17781777442987,
+              109.04623592719672,
+              110.80513875369623,
+              109.36418483351385,
+              110.5399915517266
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 375,
+            "samples": [
+              14471.778666666674,
+              12603.66666666717,
+              14584.221333333215,
+              11852.333333333567,
+              11899.66666666684,
+              17179.66666666689,
+              12006.890666666854,
+              15908.778666666572,
+              11473.112000000281,
+              12494.442666666751,
+              14116.890666666828,
+              12622.557333333438
+            ]
+          }
+        ],
+        "checksum": 57184
+      },
+      "vpm": {
+        "pid": 23928,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 264509,
+            "samples": [
+              56.021091909916116,
+              58.93671670907228,
+              60.30213716735546,
+              65.32921753135057,
+              54.52665504765419,
+              54.97024675908944,
+              53.669565118767395,
+              52.17749490565544,
+              53.32080571927613,
+              55.45951933582592,
+              53.86552820508954,
+              51.37537853154332
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 108898,
+            "samples": [
+              128.6119487961211,
+              109.7980862825759,
+              127.11206817388782,
+              128.32918878216293,
+              146.57676908666696,
+              132.40410292199937,
+              161.53227791144135,
+              117.3713015849678,
+              112.44926444930111,
+              123.28470678984152,
+              103.89883193447221,
+              104.83702180021614
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 375,
+            "samples": [
+              9571.778666666432,
+              8599.109333332914,
+              8502.666666666604,
+              9654.445333332964,
+              8756.00000000001,
+              9536.778666666578,
+              10528.333333333043,
+              10441.778666666627,
+              8095.44533333307,
+              9244.333333333392,
+              9710.887999999613,
+              9019.89066666647
+            ]
+          }
+        ],
+        "checksum": 6496
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 23948,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 97330,
+            "samples": [
+              53.59643480941135,
+              57.876985513203245,
+              55.6102126785167,
+              57.41977807459263,
+              54.78526661872028,
+              53.51810335970336,
+              56.0061954176517,
+              53.29592109318768,
+              53.49112298366346,
+              57.84872084660401,
+              56.27419089694861,
+              51.43755265591228
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 109372,
+            "samples": [
+              115.46564020041657,
+              107.29665727974209,
+              108.78393921661754,
+              105.14268734228078,
+              113.86216764802627,
+              106.48177778590482,
+              116.4744358702414,
+              114.33722524960632,
+              112.91395421131502,
+              112.63318765314654,
+              114.67133269941115,
+              113.90026697875228
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 2060,
+            "samples": [
+              9042.77912621357,
+              9654.328640776706,
+              9360.578640776686,
+              9421.055825242718,
+              9239.320388349577,
+              9048.483009708774,
+              9826.962135922298,
+              10149.83786407769,
+              9963.025728155324,
+              9166.12038834951,
+              9736.893203883492,
+              8982.787378640727
+            ]
+          }
+        ],
+        "checksum": 80288
+      },
+      "upstream": {
+        "pid": 23968,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 97330,
+            "samples": [
+              55.210366793383955,
+              54.52198705435173,
+              56.6085276893049,
+              57.29605465940651,
+              56.931316140963375,
+              55.28785574848459,
+              53.70903113120275,
+              56.977982122675236,
+              51.72780232199629,
+              50.464491934656195,
+              59.148001643892286,
+              65.56218021165112
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 109372,
+            "samples": [
+              112.95891087298429,
+              117.21007204769101,
+              101.15514939838337,
+              112.65033098050674,
+              109.8380572724277,
+              110.5756043594341,
+              109.49824452327842,
+              108.91918406904934,
+              108.28868448963172,
+              110.9702757561346,
+              114.94334930329441,
+              114.7479062282851
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 2060,
+            "samples": [
+              13656.027184465993,
+              14072.633495145708,
+              13957.099514563157,
+              13011.165048543633,
+              13449.635922330075,
+              14091.060194174725,
+              13385.719902912657,
+              13833.272330097077,
+              12932.848058252473,
+              13601.314563106826,
+              13599.939320388265,
+              13252.467961165034
+            ]
+          }
+        ],
+        "checksum": 5984
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 23988,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 258539,
+            "samples": [
+              54.9615686608209,
+              57.636051040655325,
+              58.77836612658013,
+              55.928699345166436,
+              69.82747283775377,
+              56.98479533068518,
+              59.024619109689546,
+              58.39705808407992,
+              55.16076104572235,
+              58.383841509404924,
+              56.959491604748415,
+              59.34791269402295
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 84281,
+            "samples": [
+              118.45888159846233,
+              113.11613530926321,
+              111.4332767764976,
+              115.05658452082935,
+              111.89304825524057,
+              109.23922354979122,
+              108.81407434653036,
+              110.66106239840576,
+              106.18199831515977,
+              106.91763268114987,
+              105.72766103866721,
+              112.86251942905257
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 433,
+            "samples": [
+              13892.321016166163,
+              16826.886836027603,
+              12349.692840646538,
+              14925.808314087622,
+              13046.478060046513,
+              16037.720554272322,
+              14233.930715935234,
+              12960.258660507905,
+              13378.464203232948,
+              12223.441108545194,
+              14446.593533487201,
+              12986.048498845352
+            ]
+          }
+        ],
+        "checksum": 57952
+      },
+      "vpm": {
+        "pid": 24008,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 258539,
+            "samples": [
+              54.988640011758534,
+              56.78930451498595,
+              55.965927771052,
+              54.80927055492605,
+              52.149288888716924,
+              55.03151168682446,
+              54.24713486166532,
+              52.911746390292755,
+              54.484364061127984,
+              57.511953709111324,
+              57.07859162447428,
+              56.60687169053801
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 84281,
+            "samples": [
+              103.34229541652321,
+              108.08733878335512,
+              117.82558346483705,
+              108.96337252761582,
+              108.51793405393812,
+              111.0664562594186,
+              114.74709602401413,
+              109.57540845504964,
+              102.16666864417891,
+              109.26790142499482,
+              107.36257282187123,
+              112.34688719877678
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 433,
+            "samples": [
+              12423.498845265545,
+              8411.374133949372,
+              9035.411085450323,
+              7697.653579676903,
+              11070.244803695103,
+              8269.533487298351,
+              12164.838337182222,
+              8811.103926096961,
+              12588.434180138256,
+              9043.39953810626,
+              8904.926096997864,
+              10451.309468822314
+            ]
+          }
+        ],
+        "checksum": 6688
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 24028,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 236227,
+            "samples": [
+              55.401512104882414,
+              60.754943338398945,
+              54.34320801601825,
+              54.48149449470215,
+              54.66934347047522,
+              54.23861370630802,
+              52.213722394137875,
+              53.407138049418684,
+              53.69940777303186,
+              54.65646602632219,
+              54.21903508066391,
+              55.33625284154642
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 93110,
+            "samples": [
+              107.22084631081535,
+              105.75394694447473,
+              109.5259263237028,
+              105.61879497368683,
+              107.60973042637742,
+              112.20688433036204,
+              109.4766942326275,
+              108.79470518741242,
+              103.13159703576517,
+              103.11682955643909,
+              107.93908280528406,
+              105.20218021694686
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 1603,
+            "samples": [
+              9036.701809107895,
+              9308.587648159675,
+              8723.955084217108,
+              8573.898315658082,
+              8584.814722395477,
+              8158.530879600748,
+              8688.162819713138,
+              9306.378665003209,
+              8605.089831565725,
+              9344.61447286339,
+              8836.86837180291,
+              9531.399875233912
+            ]
+          }
+        ],
+        "checksum": 49632
+      },
+      "upstream": {
+        "pid": 24050,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 236227,
+            "samples": [
+              55.23130294166226,
+              53.609981077522946,
+              55.83347796822565,
+              53.38421094963719,
+              54.856841089291194,
+              50.633323032506894,
+              55.641924928141286,
+              54.42910844230332,
+              54.52523631930331,
+              56.060661990373916,
+              53.29760780943747,
+              51.06440415363215
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 93110,
+            "samples": [
+              111.34097304263847,
+              111.05233594673021,
+              111.60723874986577,
+              107.99815272258598,
+              107.1255396842447,
+              107.556470840941,
+              111.51774245516066,
+              113.20212651702303,
+              114.46899366340828,
+              113.9221565889811,
+              117.03630114917945,
+              110.72790248093567
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 1603,
+            "samples": [
+              14734.845913911413,
+              13097.6812227075,
+              13447.442295695484,
+              12972.29132875864,
+              13754.366812227106,
+              13248.882719900215,
+              13225.90455396121,
+              12756.913911416108,
+              13962.31004366818,
+              13587.466001247663,
+              13986.53587024318,
+              12794.161572052419
+            ]
+          }
+        ],
+        "checksum": 5024
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 24072,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 249146,
+            "samples": [
+              52.33577902113589,
+              55.79175262697388,
+              52.46020405705886,
+              51.25375081277655,
+              55.68756070737631,
+              54.74333523315657,
+              53.33686673677294,
+              59.38435696338707,
+              55.84727428897118,
+              54.244129947902195,
+              59.44155234280295,
+              55.66030359708748
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 103642,
+            "samples": [
+              106.71028154609236,
+              105.28108295864553,
+              103.9049516605236,
+              112.13198317284485,
+              107.18989405839221,
+              106.91691592211686,
+              107.15129966615942,
+              113.54912101271694,
+              108.11857162154391,
+              106.2169873217436,
+              106.78385210628849,
+              106.70424152370641
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 495,
+            "samples": [
+              11002.189898990213,
+              14710.35353535369,
+              16953.1151515154,
+              18074.157575757465,
+              13865.571717171792,
+              17966.331313131504,
+              14463.55151515123,
+              19567.004040403972,
+              23208.250505050648,
+              25117.088888888855,
+              16717.844444444538,
+              16335.943434343348
+            ]
+          }
+        ],
+        "checksum": 55136
+      },
+      "vpm": {
+        "pid": 24092,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 249146,
+            "samples": [
+              56.663061016431826,
+              61.31963186244227,
+              68.01450555096181,
+              62.778952903117,
+              68.31720758109728,
+              76.45884742279608,
+              68.27288417233305,
+              66.59114334566877,
+              81.59556645501029,
+              62.48795886749134,
+              59.003889285800504,
+              68.55418108257825
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 103642,
+            "samples": [
+              125.11418150942558,
+              109.67440805850849,
+              114.14291503444699,
+              132.44550471816623,
+              156.53080797360136,
+              155.5096678952562,
+              144.56534030605312,
+              136.19920495551864,
+              124.6490322456132,
+              220.27467628953494,
+              124.20679840219272,
+              135.3726481542224
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 495,
+            "samples": [
+              13825.925252525518,
+              17185.773737373616,
+              20047.054545454896,
+              20245.791919192336,
+              16343.349494949543,
+              15198.737373737347,
+              11777.610101010148,
+              13954.040404040357,
+              15316.329292929111,
+              15514.224242424645,
+              14066.41414141448,
+              11330.050505050553
+            ]
+          }
+        ],
+        "checksum": 5408
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 24112,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 240002,
+            "samples": [
+              65.45292955892045,
+              56.28338513845697,
+              58.332155565370144,
+              79.65176956858689,
+              54.90943825468152,
+              55.8712344063801,
+              53.93184223464814,
+              54.19503587470076,
+              54.585132623894886,
+              57.79465587786794,
+              55.02002899975843,
+              54.68183598470001
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 108696,
+            "samples": [
+              111.68457900934642,
+              113.37506439979347,
+              107.81790498270313,
+              114.61208324133416,
+              112.21165452270547,
+              114.9612957238553,
+              111.48945683373947,
+              122.53095790093575,
+              111.20425774637494,
+              112.59498969603467,
+              114.64313314197453,
+              124.29888864355668
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 846,
+            "samples": [
+              14485.37234042557,
+              14046.001182032987,
+              13640.661938534235,
+              13229.905437352376,
+              13223.306146572097,
+              13221.5815602836,
+              13345.498817967064,
+              12901.940898344987,
+              13178.141843971564,
+              13382.782505909992,
+              13548.955082742139,
+              13015.366430260008
+            ]
+          }
+        ],
+        "checksum": 81696
+      },
+      "upstream": {
+        "pid": 24160,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "group, seek, read and stop 1 prepared playback controls",
+            "iterations": 240002,
+            "samples": [
+              53.33305972450262,
+              52.96744193798358,
+              55.91047157940359,
+              52.29522253981232,
+              51.637244689627266,
+              55.93772551895397,
+              54.37958017016514,
+              52.936363030308115,
+              52.50789576753517,
+              52.73741052157874,
+              57.44049632919735,
+              57.99170423579817
+            ]
+          },
+          {
+            "case": "group, seek, read and stop 8 prepared playback controls",
+            "iterations": 108696,
+            "samples": [
+              116.65601310075873,
+              105.69386177964272,
+              106.51648634724332,
+              110.68829579745369,
+              109.45703613748478,
+              104.02675351438839,
+              106.84845808493444,
+              106.12472400088355,
+              107.70635533966332,
+              109.15075071759638,
+              107.91066828586169,
+              106.53834547729538
+            ]
+          },
+          {
+            "case": "create and complete a renderer target with transitionEnd",
+            "iterations": 846,
+            "samples": [
+              13977.343971631086,
+              15508.963356973874,
+              13264.13593380626,
+              14348.946808510833,
+              12791.568557919545,
+              13972.369976359145,
+              13264.086288416045,
+              13825.897163120633,
+              12970.942080378165,
+              13416.814420803556,
+              12643.715130023544,
+              12886.033096926663
+            ]
+          }
+        ],
+        "checksum": 5344
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "group, seek, read and stop 1 prepared playback controls",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 65.79596346438132,
+          "vpmNs": 54.74845090337182,
+          "changePct": -16.790562793400042
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 55.94819171889475,
+          "vpmNs": 55.197739648618494,
+          "changePct": -1.3413339148596881
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 58.009946275030124,
+          "vpmNs": 55.010075849291496,
+          "changePct": -5.171303575279984
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 54.47717238080331,
+          "vpmNs": 54.4123512553602,
+          "changePct": -0.11898768348327371
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 55.201819415122024,
+          "vpmNs": 67.30282444831529,
+          "changePct": 21.921388029247304
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 53.1502508312431,
+          "vpmNs": 55.44563170306927,
+          "changePct": 4.318664231922842
+        }
+      ]
+    },
+    {
+      "case": "group, seek, read and stop 8 prepared playback controls",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 110.94958125952651,
+          "vpmNs": 125.19838748186467,
+          "changePct": 12.84259576339295
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 110.77294005778435,
+          "vpmNs": 113.38806092967064,
+          "changePct": 2.3607939543015766
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 111.04716958745169,
+          "vpmNs": 109.11563697630532,
+          "changePct": -1.7393803176813494
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 111.42935774889956,
+          "vpmNs": 107.41528836859638,
+          "changePct": -3.6023445359423922
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 106.85038401420267,
+          "vpmNs": 133.9090764361943,
+          "changePct": 25.323907510145172
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 107.27740671229887,
+          "vpmNs": 112.98502704791407,
+          "changePct": 5.3204309374499825
+        }
+      ]
+    },
+    {
+      "case": "create and complete a renderer target with transitionEnd",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 12613.112000000303,
+          "vpmNs": 9390.555999999986,
+          "changePct": -25.549253824117635
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13600.626941747545,
+          "vpmNs": 9390.817233009702,
+          "changePct": -30.953056258132495
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 13635.392609699556,
+          "vpmNs": 9039.405311778291,
+          "changePct": -33.7063070311001
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13348.16250779785,
+          "vpmNs": 8780.411728010009,
+          "changePct": -34.22007169241018
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 16835.47979797997,
+          "vpmNs": 15257.53333333323,
+          "changePct": -9.372744249534682
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13340.475177304907,
+          "vpmNs": 13287.702127659719,
+          "changePct": -0.3955859813371987
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "group, seek, read and stop 1 prepared playback controls",
+      "upstream_ns": 57,
+      "vpm_ns": 55,
+      "change_pct": -3.3,
+      "upstream_first_pct": -11,
+      "vpm_first_pct": -0.7,
+      "process_range_pct": "-16.8, -1.3, -5.2, -0.1",
+      "control_max_abs_pct": 21.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "group, seek, read and stop 8 prepared playback controls",
+      "upstream_ns": 111,
+      "vpm_ns": 111,
+      "change_pct": 0.3,
+      "upstream_first_pct": 5.6,
+      "vpm_first_pct": -0.6,
+      "process_range_pct": "12.8, 2.4, -1.7, -3.6",
+      "control_max_abs_pct": 25.3,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "create and complete a renderer target with transitionEnd",
+      "upstream_ns": 13474,
+      "vpm_ns": 9215,
+      "change_pct": -32.3,
+      "upstream_first_pct": -29.6,
+      "vpm_first_pct": -32.6,
+      "process_range_pct": "-25.5, -31.0, -33.7, -34.2",
+      "control_max_abs_pct": 9.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}
