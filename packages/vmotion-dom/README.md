@@ -17,7 +17,8 @@ delay(0, 5); // .1 seconds
 - `mixNumber(from, to, progress)` blends two numbers, including extrapolation.
 - `interpolate(input, output, options)` maps numeric keyframes, supporting
   descending ranges, duplicate boundaries, clamping, extrapolation and per-segment
-  easing. Non-numeric outputs need an explicit `mixer` factory.
+  easing. Colors, complex strings and flat scalar/color containers mix automatically;
+  custom output types can supply a `mixer` factory.
 - `stagger(duration, options)` maps list indices to delays: first, last, center,
   edges or a numeric origin, optional starting delay and Motion easing definitions.
 
@@ -332,7 +333,7 @@ including after failures.
 Explicit percentage starting points are honored. X/Y translation percentages
 use the untransformed border box; their mixed-unit measurement supports numbers,
 pixels and percentages. More than two mixed-unit layout keyframes reject.
-Non-positional colors/strings pass through for future mixers; complex `none`
+Non-positional colors/strings pass through to mixers; complex `none`
 normalization and general color/string interpolation remain unimplemented.
 
 [Read/resolution benchmarks](bench/reads/README.md) measure JavaScript work with
@@ -368,7 +369,7 @@ await Promise.all(controls.map((animation) => animation.finished));
 releaseElement(card);
 ```
 
-Supported targets are numbers, matching CSS units, variables and two-keyframe
+Supported targets are numbers, matching CSS units, colors, complex strings, variables and two-keyframe
 measured lengths such as percentage/auto widths. HTML styles and SVG attributes,
 transforms and path drawing share the existing effect bindings. Completed
 forward animations restore responsive variable/percentage/auto endpoints instead
@@ -436,8 +437,8 @@ hooks restore state on failure. Foreign resolvers without transaction hooks get
 an intermediate renderer paint and source value/style/scroll restoration.
 Failures reject the controller's `finished` and, for VPM MotionValues, its owning
 `start()` promise. Arbitrary resolvers must still honor the public constructor,
-state, cancellation and measurement contract; complex resolved strings remain
-outside the implemented mixers.
+state, cancellation and measurement contract. Supported color/complex resolved
+strings use the same lifecycle with a numeric progress controller.
 
 The bridge is verified with unchanged upstream HTML/SVG renderers in Chrome,
 including iframe elements, plus 712 black-box comparisons per runtime and
@@ -461,10 +462,11 @@ finds Bun deferred setup takes 42.9% less time. Other resolver directions are
 inconclusive. The [target before/after](bench/groups-previous/README.md) finds Bun
 target completion takes 32.3% less time; Node's direction remains inconclusive.
 The latest [upstream target comparison](bench/groups/README.md) no longer establishes
-the old Node regression: medians are 9.66 versus 12.05 μs, with overlapping controls.
-Bun target completion is also inconclusive (9.54 versus 11.43 μs).
-[Deferred Bun setup](bench/renderer/README.md) still costs 3.00 versus 1.49 μs,
-about 2× upstream. That remaining regression is not declared fixed.
+the old Node regression: medians are 11.39 versus 11.19 μs, with overlapping controls.
+Bun target completion is also inconclusive (10.29 versus 11.25 μs).
+[Deferred Bun setup](bench/renderer/README.md) still costs 2.51 versus 1.43 μs,
+about 1.75× upstream; synchronous setup costs 14% more. Those remaining
+regressions are not declared fixed.
 
 ## Groups and target completion
 
@@ -507,11 +509,55 @@ regression check: upstream applies delay again on the next driver tick, whereas
 VPM preserves the requested controller time. [Measurements](bench/groups/README.md)
 separate control forwarding from complete renderer-target setup and completion.
 
+## Colors and complex values
+
+`mixColor` parses hex (including alpha), RGB/RGBA and HSL/HSLA, with modern
+space/slash syntax and CSS percentages. `transparent` is supported. RGB channels
+use Motion's gamma-two blending and alpha is linear; this is Motion compatibility,
+not a claim to implement every CSS Color 4 interpolation space.
+`color`, `rgba`, `hsla`, `hex`, `rgbUnit`, `parseHex` and `hslaToRgba` expose the
+corresponding value helpers.
+
+`mixComplex` and automatic `interpolate` blend numbers, colors and opaque nested
+CSS variables in transforms, shadows and filters. The scanner preserves identifier
+digits, URLs and quoted strings; differing URLs/literals switch discretely instead
+of generating an intermediate resource name. Scientific notation is parsed as a
+number. RGB/alpha percentages follow [CSS Color](https://www.w3.org/TR/css-color-4/#rgb-functions),
+where upstream treats their numeric parts as channel/alpha values.
+Malformed functions, invalid colors and nonfinite components reject.
+
+`mix`, `mixArray` and `mixObject` prepare flat scalar/color containers, snapshot
+endpoints and reuse the output container. Copy returned containers if retaining
+samples. Nested containers and prototype keys reject. `mixImmediate`,
+`mixVisibility`, `complex` and its parsing/transformer helpers are also exposed.
+`complex.getAnimatableNone` zeroes numbers and color alpha; it is not a
+filter-specific identity generator. Incompatible component counts switch
+discretely. Low-level mixers do not convert CSS units.
+
+Renderer-owned `animateElement`, `animateValues`, `animateTarget` and
+`animateMotionValue` now animate these strings through numeric tween/spring
+progress, retaining cancellation, restoration and failure ownership. Owner-free
+`animateMotionValue`, `animateSingleValue` and raw keyframe controllers remain
+numeric. Named colors other than `transparent`, `currentColor`, lab/oklab and
+other extended color spaces, automatic `none` keyframes and full CSS grammar
+are outside this verified scope.
+
+There are 211 unit tests per runtime and 2,538 exact color/complex/interpolation
+comparisons against both current 14.7.0 and app 12.36.0. Chrome checks computed
+colors, shadows, filters and transforms, CSS percentages and animations through
+an unchanged upstream HTML renderer. [Measurements](bench/mixers/README.md)
+separate preparation from sampling and include unchanged numeric interpolation.
+Color preparation costs 55% more on Node and 44% more on Bun; shadow preparation
+costs 40%/17% more. Bun prepared color sampling takes 42% less time, while shadow
+sampling costs 17% more; both Node sampling directions are inconclusive. These
+setup/sampling costs remain follow-up work; no general performance win is claimed.
+
 ## Still to build
 
-Color/complex-string mixing is the next bounded unit. Custom effect registration
-and the high-level selector `animate` wrapper remain unimplemented.
-Inertia, CSS spring serialization, color/complex-string mixers, grid/random
+Neutral `none` keyframe resolution and filter-specific identities are the next
+bounded unit. Custom effect registration and the high-level selector `animate`
+wrapper remain unimplemented.
+Inertia, CSS spring serialization, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject
 explicitly. This package must not replace `motion-dom` under Framer Motion yet.
@@ -539,6 +585,6 @@ create/resolve/seek/stop lifecycle with synchronous and deferred custom classes.
 Conformance adds 440 upstream comparisons; Chrome exercises actual percentage,
 variable and auto measurement through unchanged upstream renderer/resolver classes.
 
-Group forwarding takes less time on Node (-14.8%/-54.6% for one/eight members).
-Bun's one-member group remains slower (50 versus 37 ns); eight-member direction
+Group forwarding takes less time on Node (-12.2%/-53.5% for one/eight members).
+Bun's eight-member group costs 13.3% more (108 versus 97 ns); one-member direction
 is inconclusive. These local microbenchmarks do not establish app frame-rate gains.

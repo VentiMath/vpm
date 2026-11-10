@@ -15,6 +15,124 @@ export declare function interpolate<T>(
   output: T[],
   options: InterpolateOptions<T> & { mixer: MixerFactory<T> },
 ): (value: number) => T;
+export interface RGBA {
+  red: number;
+  green: number;
+  blue: number;
+  alpha?: number;
+}
+export interface HSLA {
+  hue: number;
+  saturation: number;
+  lightness: number;
+  alpha?: number;
+}
+export type Color = RGBA | HSLA;
+export type MixScalar = number | string | Color;
+export type Mixable = MixScalar | MixScalar[] | Record<string, MixScalar>;
+export type Mixed<T> = T extends number
+  ? number
+  : T extends string
+    ? string
+    : T extends Color
+      ? Color | string
+      : T extends MixScalar[]
+        ? (number | string | Color)[]
+        : {
+            [K in keyof T]: T[K] extends number
+              ? number
+              : T[K] extends string
+                ? string
+                : Color | string;
+          };
+export declare function interpolate<T extends Mixable>(
+  input: number[],
+  output: T[],
+  options?: Omit<InterpolateOptions<T>, "mixer">,
+): (value: number) => Mixed<T>;
+export declare function mix(from: number, to: number, progress: number): number;
+export declare function mix<T extends Mixable>(
+  from: T,
+  to: T,
+): (progress: number) => Mixed<T>;
+export declare function mixColor(
+  from: string | Color,
+  to: string | Color,
+): (progress: number) => string;
+export declare function mixLinearColor(
+  from: number,
+  to: number,
+  progress: number,
+): number;
+export declare function mixComplex(
+  from: string,
+  to: string,
+): (progress: number) => string;
+export declare function mixArray(
+  from: MixScalar[],
+  to: MixScalar[],
+): (progress: number) => MixScalar[];
+export declare function mixObject<
+  T extends Record<string, MixScalar>,
+  U extends Record<string, MixScalar>,
+>(from: T, to: U): (progress: number) => Mixed<T & U>;
+export declare function mixImmediate<T>(
+  from: T,
+  to: T,
+): (progress: number) => T;
+export declare function mixVisibility<T extends string>(
+  from: T,
+  to: T,
+): (progress: number) => T;
+export declare function getMixer(
+  value: Mixable,
+): (from: Mixable, to: Mixable) => (progress: number) => Mixable;
+export declare const invisibleValues: Set<string>;
+export declare function parseHex(value: string): RGBA;
+export declare function hslaToRgba(value: HSLA): RGBA;
+export interface ColorType<T extends Color> {
+  test(value: unknown): boolean;
+  parse(value: string | Color): T;
+  transform(value: T): string;
+}
+export declare const rgba: ColorType<RGBA>;
+export declare const hsla: ColorType<HSLA>;
+export declare const hex: ColorType<RGBA>;
+export declare const color: Omit<ColorType<Color>, "transform"> & {
+  transform(value: Color | string): string;
+  getAnimatableNone(value: Color | string): string;
+};
+export declare const rgbUnit: {
+  test(value: unknown): boolean;
+  parse(value: string): number;
+  transform(value: number): number;
+};
+export interface ComplexValueInfo {
+  values: (number | string | Color)[];
+  split: string[];
+  indexes: { color: number[]; number: number[]; var: number[] };
+  types: ("color" | "number" | "var")[];
+}
+export declare function analyseComplexValue(
+  value: string | number,
+): ComplexValueInfo;
+export declare function parseComplexValue(
+  value: string | number,
+): ComplexValueInfo["values"];
+export declare function buildTransformer(
+  info: Pick<ComplexValueInfo, "split" | "types">,
+): (values: ComplexValueInfo["values"]) => string;
+export declare function createTransformer(
+  value: string | number,
+): (values: ComplexValueInfo["values"]) => string;
+export declare function hasComplexValues(value: unknown): boolean;
+export declare const complex: {
+  test(value: unknown): boolean;
+  parse: typeof parseComplexValue;
+  createTransformer: typeof createTransformer;
+  getAnimatableNone(value: string | number): string;
+};
+
 export declare function mixNumber(
   from: number,
   to: number,
@@ -511,7 +629,7 @@ export declare function animateValues(
   element?: ResolverElement,
 ): ElementAnimation[];
 
-/** Scalar renderer targets; variant propagation and complex mixers are not implemented. */
+/** Renderer targets support numeric, unit, color and complex values; variant propagation is not implemented. */
 export type TargetAndTransition = {
   transition?: ElementTransition;
   transitionEnd?: Record<string, string | number | undefined>;

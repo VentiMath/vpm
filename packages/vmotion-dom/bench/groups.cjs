@@ -92,6 +92,8 @@ require("../../../scripts/bench-process.cjs")
       "frame.cjs",
       "playback.cjs",
       "mapping.cjs",
+      "color.cjs",
+      "mix.cjs",
       "spring.cjs",
       "package.json",
       "PROVENANCE.json",

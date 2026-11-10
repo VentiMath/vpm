@@ -1,3 +1,4 @@
+import {checkMixers} from "./mixers-browser.mjs";
 import {checkGroups} from "./groups-browser.mjs";
 import {checkRendererAnimations} from "./renderer-browser.mjs";
 import {checkHandoff} from "./handoff-browser.mjs";
@@ -158,6 +159,7 @@ window.runMotionDom = async () => {
   await checkHandoff(current,vpm);
   await checkRendererAnimations(current,vpm);
   await checkGroups(current,vpm);
+  await checkMixers(current,app,vpm);
   for (const api of [current, app, vpm]) {
     const node = document.createElement("div");
     document.body.append(node);

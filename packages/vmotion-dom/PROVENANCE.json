@@ -7,9 +7,9 @@
   },
   "implementation": {
     "kind": "independent implementation",
-    "replacementStatus": "partial; grouped controls and scalar target completion built, full renderer pending",
-    "targetScope": "Independent grouped playback controls and scalar renderer targets with transitionEnd, numeric/CSS-unit element animations and renderer ownership transfer, DOM reads/keyframe resolution, MotionValue transitions, DOM effects, tween/spring playback, values, scheduling and mapping. Not a drop-in replacement for motion-dom yet.",
-    "remainingWork": "Color/complex-string mixers, custom effect registration and high-level selector animate wrapper; none keyframes and variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
+    "replacementStatus": "partial; color/complex mixers and renderer targets built, full renderer pending",
+    "targetScope": "Independent grouped playback controls and color/complex and scalar renderer targets with transitionEnd, numeric/CSS-unit element animations and renderer ownership transfer, DOM reads/keyframe resolution, MotionValue transitions, DOM effects, tween/spring playback, values, scheduling and mapping. Not a drop-in replacement for motion-dom yet.",
+    "remainingWork": "Custom effect registration and high-level selector animate wrapper; none keyframes and variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
@@ -26,7 +26,8 @@
       "renderer handoff": "Transfers direct and pending HTML/SVG values into an existing renderer without restarting controllers; animateElement fourth argument shares renderer values and honors reduced/skip motion.",
       "renderer-aware adapter": "animateMotionValue returns an externally owned StartAnimation factory for numeric/CSS-unit values and custom keyframe resolvers; reused factories own snapshots, shared queues support forced resolution and restoration, skip/reduced motion and immediate handoff are honored.",
       "group controls": "GroupAnimation and GroupAnimationWithThen snapshot members, forward playback controls, aggregate completion, expose longest durations and dispose timeline observers; child failures do not strand remaining cleanup.",
-      "target completion": "animateTarget resolves scalar renderer values and per-property transitions, waits for all controllers, preserves existing end-only styles until completion, then applies owned transitionEnd snapshots in a frame; cancelled, stopped, failed (including throwing completion callbacks) or replaced targets cannot apply stale completion writes."
+      "target completion": "animateTarget resolves scalar, color and complex renderer values and per-property transitions, waits for all controllers, preserves existing end-only styles until completion, then applies owned transitionEnd snapshots in a frame; cancelled, stopped, failed (including throwing completion callbacks) or replaced targets cannot apply stale completion writes.",
+      "color and complex mixers": "Independent hex/RGB/HSL parser, Motion gamma-two blending, balanced CSS token scanner, flat containers, automatic interpolation and renderer-owned string animation through numeric progress."
     }
   },
   "changes": [
@@ -59,7 +60,8 @@
     "Grouped controls have neutral empty getters and forward every cleanup even if a child throws. Failed timeline attachment unwinds observers and returned cleanup is idempotent.",
     "Target completion validates scalar endpoints before animation starts, owns end snapshots and suppresses stale completion after cancellation, failure, replacement or reentrant playback callbacks. Variant-state propagation is explicitly outside the implemented target contract.",
     "Owned resolver schedulers attach failure ownership directly instead of constructing a redundant guarded subclass and scanning per-instance hooks. Foreign/custom schedulers retain guards; native read/measurement/completion failures route through the same owner and transactional restoration.",
-    "Empty frame phases return without swapping/clearing queues. Target completion uses one internal success barrier and a deferred frame write instead of materializing per-handle public lifecycle/playback promises. MotionValue completion-listener failures remain visible and suppress end writes."
+    "Empty frame phases return without swapping/clearing queues. Target completion uses one internal success barrier and a deferred frame write instead of materializing per-handle public lifecycle/playback promises. MotionValue completion-listener failures remain visible and suppress end writes.",
+    "CSS RGB/alpha percentages and scientific notation parse numerically; nested variables, URLs, quoted literals and identifier digits are preserved. Invalid/nonfinite colors and malformed functions reject. Flat container endpoints are snapshotted, while output containers are reused. Renderer-owned color/complex keyframes share numeric tween/spring lifecycle protections."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",
@@ -71,5 +73,10 @@
       "src/app/(control-panel)/apps/math-directory/shared/DirectoryHeader.tsx"
     ],
     "scope": "Fade/transform animation and Motion value subscriptions beneath motion/react. Built foundation only; application adoption not claimed."
-  }
+  },
+  "designReferences": [
+    "Motion 14.7.0 public declarations and black-box public calls only; no upstream runtime source used.",
+    "https://www.w3.org/TR/css-color-4/#rgb-functions",
+    "https://www.w3.org/TR/css-values-4/#numbers"
+  ]
 }

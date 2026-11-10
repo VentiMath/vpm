@@ -15,6 +15,9 @@ const {
   attachResolverOwner,
   flushKeyframeResolvers,
 } = require("./resolver.cjs");
+const { interpolate } = require("./mapping.cjs");
+const { color } = require("./color.cjs");
+const { hasComplexValues } = require("./mix.cjs");
 const { readStyleValue, readSVGValue } = require("./reads.cjs");
 const {
   styleEffect,
@@ -59,11 +62,13 @@ function prepareFrames(input, custom = false) {
           scalar.test(v.trim()) ||
           v.trim().startsWith("var(") ||
           v === "auto" ||
-          v.startsWith("calc("))
+          v.startsWith("calc(") ||
+          color.test(v) ||
+          hasComplexValues(v))
       )
     )
       throw new TypeError(
-        "element animations currently support numeric values and CSS units, variables or measured lengths",
+        "element animations support numeric, CSS-unit, color and complex values, variables or measured lengths",
       );
   return frames;
 }
@@ -75,9 +80,19 @@ function decode(frames) {
     const value = frames[i];
     if (typeof value === "number") continue;
     const match = scalar.exec(value.trim());
+    if (
+      !match &&
+      i === 0 &&
+      frames.every(
+        (v) => typeof v === "string" && (color.test(v) || hasComplexValues(v)),
+      )
+    ) {
+      const numbers = frames.map((_, index) => index);
+      return { numbers, format: interpolate(numbers, frames), complex: true };
+    }
     if (!match || !Number.isFinite(Number(match[1])))
       throw new TypeError(
-        "resolved keyframes require finite numbers or matching CSS units",
+        "resolved keyframes require finite numbers, matching CSS units, or supported color/complex strings",
       );
     if (unit !== undefined && unit !== match[2])
       throw new TypeError("resolved keyframes have incompatible CSS units");
@@ -374,7 +389,7 @@ class ElementAnimation {
       if (!Array.isArray(frames) || !frames.length)
         throw new TypeError("resolver must return a nonempty array");
       if (this.customResolver) frames = frames.slice();
-      const { numbers, format } = decode(frames);
+      const { numbers, format, complex } = decode(frames);
       const options = this.options;
       if (!isTransitionDefined(options)) {
         const defaults = getDefaultTransition(this.key, { keyframes: numbers });
@@ -389,7 +404,7 @@ class ElementAnimation {
       const proxy = format
         ? {
             get: () => numbers[0],
-            getVelocity: () => this.value.getVelocity(),
+            getVelocity: () => (complex ? 0 : this.value.getVelocity()),
             set: (n) => {
               this.value.set(format(n));
             },

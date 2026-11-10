@@ -1,5 +1,6 @@
 "use strict";
 const { easingDefinitionToFunction } = require("vmotion-utils");
+const { mix } = require("./mix.cjs");
 const mixNumber = (from, to, progress) => from + (to - from) * progress;
 
 // Prepare and own the ranges once. Lookups never reread caller arrays, and
@@ -27,12 +28,18 @@ function interpolate(input, output, { clamp = true, ease, mixer } = {}) {
       throw new TypeError("input keyframes must be monotonic");
   if (mixer !== undefined && typeof mixer !== "function")
     throw new TypeError("mixer must be a function");
-  if (!mixer)
-    for (const value of values)
-      if (!Number.isFinite(value))
-        throw new TypeError(
-          "non-numeric outputs require a custom mixer in this implementation stage",
-        );
+  if (!mixer) {
+    let nonNumeric = false;
+    for (const value of values) {
+      if (typeof value === "number") {
+        if (!Number.isFinite(value))
+          throw new TypeError("output keyframes must be finite");
+      } else if (value === undefined || value === null)
+        throw new TypeError("invalid output keyframe");
+      else nonNumeric = true;
+    }
+    if (nonNumeric) mixer = mix;
+  }
   const easings = Array.isArray(ease) ? ease.slice() : undefined;
   if (
     easings

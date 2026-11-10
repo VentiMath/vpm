@@ -39,7 +39,9 @@
     "single.cjs",
     "element.cjs",
     "group.cjs",
-    "target.cjs"
+    "target.cjs",
+    "color.cjs",
+    "mix.cjs"
   ],
   "sideEffects": false,
   "engines": {

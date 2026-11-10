@@ -74,7 +74,7 @@ test("bad configurations and unfinished capabilities reject explicitly", () => {
     ],
   ])
     assert.throws(() => api.interpolate(a, b), TypeError);
-  assert.throws(() => api.interpolate([0, 1], ["red", "blue"]), /custom mixer/);
+  assert.equal(api.interpolate([0, 1], ["red", "blue"])(.5), "blue");
   assert.throws(
     () => api.interpolate([0, 1], [0, 1], { mixer: () => null }),
     /return a function/,

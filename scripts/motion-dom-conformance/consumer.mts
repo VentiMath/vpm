@@ -4,8 +4,9 @@ const point: { x: number } = interpolate([0, 1], [{ x: 0 }, { x: 2 }], {
   mixer: (a, b) => (p) => ({ x: mixNumber(a.x, b.x, p) }),
 })(0.5);
 stagger(0.05, { from: "center", ease: "easeIn" })(0, 4);
-// @ts-expect-error string mixing needs an explicit mixer at this stage
-interpolate([0, 1], ["red", "blue"]);
+const colorSample: string = interpolate([0, 1], ["#000", "#fff"])(.5);
+// @ts-expect-error booleans are not supported mix values
+interpolate([0, 1], [true, false]);
 // @ts-expect-error numeric results remain numbers
 const bad: string = opacity;
 // @ts-expect-error grid staggering is not built yet
@@ -239,3 +240,11 @@ void new GroupAnimationWithThen([undefined]).then(() => {});
 animateTarget(targetOwner, { transitionEnd: { opacity: [] } });
 // @ts-expect-error variant state is outside the verified renderer scope
 animateTarget(targetOwner, { opacity: 0 }, { type: "whileHover" });
+
+import {mixColor, mixComplex, mix, color, analyseComplexValue, mixObject} from "vmotion-dom";
+const mixedColor: string = mixColor("#000", "#fff")(.5);
+const mixedCSS: string = mixComplex("0px", "20px")(.5);
+const mixedNumber: number = mix(0, 10)(.5);
+const mixedRecord: number = mixObject({x:0},{x:10})(.5).x;
+color.transform(color.parse("hsl(.5turn 100% 50%)"));
+analyseComplexValue("0px #fff");

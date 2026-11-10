@@ -196,3 +196,19 @@ bun scripts/motion-dom-conformance/groups.cjs
 node scripts/motion-dom-conformance/targets.cjs
 bun scripts/motion-dom-conformance/targets.cjs
 ```
+
+## Color and complex mixing
+
+`mixers.cjs` compares 2,538 public samples against 14.7.0 and 12.36.0: hex,
+RGB/HSL, alpha, extrapolation, shadows, transforms, filters, nested variables,
+component counts and automatic multi-segment interpolation. Separate unit tests
+cover CSS percentages/scientific notation, opaque URLs/literals, malformed input,
+finite components, container ownership and renderer-driven string animation.
+`mixers-browser.mjs` checks computed styles and unchanged HTML renderer targets.
+`bench/mixers.cjs` separates color/shadow preparation and sampling and retains a
+numeric interpolation control. Every runtime module participates in source hashes.
+
+```sh
+node scripts/motion-dom-conformance/mixers.cjs
+bun scripts/motion-dom-conformance/mixers.cjs
+```
