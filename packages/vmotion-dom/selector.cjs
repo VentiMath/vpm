@@ -2,6 +2,7 @@
 const { resolveElements } = require("./effects.cjs");
 const { animateElement, prepareFrames, snapshotTransition } = require("./element.cjs");
 const { animateSingleValue } = require("./single.cjs");
+const { findEffect, addEffect, removeEffect, animateEffectSubject } = require("./custom-effects.cjs");
 const { isMotionValue } = require("./value.cjs");
 const { GroupAnimationWithThen } = require("./group.cjs");
 const blocked = new Set(["__proto__", "constructor", "prototype", "transition", "transitionEnd"]);
@@ -50,6 +51,48 @@ function animateElements(subject, keyframes, options = {}, scope) {
   }
   return animations;
 }
+function animateSubjects(subject, keyframes, options, scope) {
+  // DOM selectors, nodes and collections keep the established renderer. Only
+  // explicitly registered non-DOM subjects enter the custom-effect path.
+  if (subject == null || typeof subject === "string" || subject.nodeType === 1)
+    return animateElements(subject, keyframes, options, scope);
+  const subjects = Array.isArray(subject) ? subject.slice()
+    : typeof subject[Symbol.iterator] === "function" || typeof subject.length === "number"
+      ? Array.from(subject) : [subject];
+  if (subjects.every(item => item?.nodeType === 1))
+    return animateElements(subjects, keyframes, options, scope);
+  record(keyframes, "keyframes");
+  const entries = subjects.map(item => {
+    const dom = item?.nodeType === 1;
+    const effect = dom ? undefined : findEffect(item);
+    if (!dom && !effect) throw new TypeError("subject requires a registered effect");
+    return { item, effect };
+  });
+  const keys = Object.keys(keyframes), frames = Object.create(null);
+  for (const key of keys) {
+    if (blocked.has(key)) throw new TypeError("unsupported animation property: " + key);
+    if (keyframes[key] !== undefined) frames[key] = prepareFrames(keyframes[key]);
+  }
+  const captured = transitionSnapshot(options, keys);
+  const transitions = entries.map(({ item }, index) => {
+    const result = transitionSnapshot(captured, keys);
+    if (result.reduceMotion === undefined && item?.nodeType === 1)
+      result.reduceMotion = item.ownerDocument?.defaultView?.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    if (typeof captured.delay === "function") result.delay = captured.delay(index, entries.length);
+    if (result.delay !== undefined && !Number.isFinite(result.delay)) throw new RangeError("delay must be finite");
+    return result;
+  });
+  const animations = [];
+  try {
+    entries.forEach(({ item, effect }, index) => animations.push(...(effect
+      ? animateEffectSubject(effect, item, frames, transitions[index])
+      : animateElement(item, frames, transitions[index]))));
+  } catch (error) {
+    for (const animation of animations) try { animation.stop(); } catch {}
+    throw error;
+  }
+  return animations;
+}
 function createScopedAnimate(options = {}) {
   record(options, "scoped animation options");
   const { scope, reduceMotion, skipAnimations } = options;
@@ -67,7 +110,7 @@ function createScopedAnimate(options = {}) {
     if (scalar && settings.skipAnimations) settings.type = false;
     const animations = scalar
       ? [animateSingleValue(subject, keyframes, settings)]
-      : animateElements(subject, keyframes, settings, scope);
+      : animateSubjects(subject, keyframes, settings, scope);
     const group = new GroupAnimationWithThen(animations);
     if (scope) {
       try { scope.animations.push(group); }
@@ -77,4 +120,6 @@ function createScopedAnimate(options = {}) {
   };
 }
 const animate = createScopedAnimate();
+animate.addEffect = addEffect;
+animate.removeEffect = removeEffect;
 module.exports = { animate, createScopedAnimate, animateElements };

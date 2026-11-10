@@ -88,7 +88,7 @@ try {
     });
     fs.writeFileSync(
       path.join(dir, "check.mjs"),
-      `import assert from 'node:assert/strict';import {createRequire} from 'node:module';import * as api from 'vmotion-dom';const req=createRequire(import.meta.url);assert.equal(api.interpolate,req('vmotion-dom').interpolate);assert.equal(api.MotionValue,req('vmotion-dom').MotionValue);assert.equal(api.frameData,req('vmotion-dom').frameData);assert.equal(api.interpolate([0,1],[0,100])(.25),25);`,
+      `import assert from 'node:assert/strict';import {createRequire} from 'node:module';import * as api from 'vmotion-dom';const req=createRequire(import.meta.url);assert.equal(api.interpolate,req('vmotion-dom').interpolate);assert.equal(api.MotionValue,req('vmotion-dom').MotionValue);assert.equal(api.frameData,req('vmotion-dom').frameData);assert.equal(api.createEffect,req('vmotion-dom').createEffect);assert.equal(api.MotionValueState,req('vmotion-dom').MotionValueState);assert.equal(api.animate.addEffect,api.addEffect);assert.equal(api.interpolate([0,1],[0,100])(.25),25);`,
     );
     for (const runtime of ["node", "bun"]) {
       run(runtime, [path.join(dir, "check.mjs")], dir);

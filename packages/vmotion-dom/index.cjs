@@ -1,5 +1,6 @@
 "use strict";
 module.exports = {
+  ...require("./custom-effects.cjs"),
   ...require("./selector.cjs"),
   ...require("./color.cjs"),
   ...require("./mix.cjs"),

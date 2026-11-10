@@ -33,7 +33,7 @@ test("selector captures keyframes and nested options before delay callbacks muta
   group.stop();dispose(nodes);
 });
 test("invalid elements and failed dynamic delays do not start earlier elements", () => {
-  const a=element();assert.throws(()=>api.animate([a,{}],{opacity:[0,1]},options),/elements/);
+  const a=element();assert.throws(()=>api.animate([a,{}],{opacity:[0,1]},options),/elements|registered effect/);
   assert.throws(()=>api.animate([a,element()],{opacity:[0,1]},{...options,delay:i=>i?Infinity:0}),/finite/);
   assert.equal(api.styleEffect.get(a,"opacity"),undefined);
   assert.throws(()=>api.animate(a,JSON.parse('{"__proto__":1}'),options),/unsupported/);
@@ -64,7 +64,7 @@ test("scoped skip/reduce settings affect current calls and retain opacity transi
 test("invalid selector syntax propagates and unsupported sequences reject", () => {
   const animate=api.createScopedAnimate({scope:{current:{querySelectorAll(){throw new SyntaxError("selector")}},animations:[]}});
   assert.throws(()=>animate("[",{opacity:1},options),SyntaxError);
-  assert.throws(()=>api.animate([[element(),{opacity:1}]],options),/elements/);
+  assert.throws(()=>api.animate([[element(),{opacity:1}]],options),/elements|registered effect/);
 });
 
 test("selector group reports deferred read failures and stopped work stays stopped", async () => {

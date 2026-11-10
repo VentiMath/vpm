@@ -232,9 +232,31 @@ scopedAnimate(".item", {opacity:[0,1],x:20}, {duration:1, delay:(i,total)=>i/tot
 animate(document.querySelectorAll("div"), {opacity:1}).stop();
 animate(motionValue(0), 10, {duration:1}).time = .5;
 animateElements(document.body, {opacity:1});
-// @ts-expect-error object subjects are not implemented
+// Object subjects require a registered effect at runtime.
 animate({x:0}, {x:10});
 // @ts-expect-error sequences are not implemented
 animate([[document.body, {opacity:1}]]);
 // @ts-expect-error dynamic delays must return numbers
 animate(".item", {opacity:1}, {delay:()=>"later"});
+
+import effectsApi = require("vmotion-dom");
+const { createEffect, MotionValueState, animateEffectSubject, addEffect, removeEffect, findEffect } = effectsApi;
+
+interface CustomSubject { custom: true; x: number }
+const custom = createEffect<CustomSubject>((subject, state, key, value) => state.set(key, value, () => { subject.x = value.get(); }), {
+  test: (subject): subject is CustomSubject => typeof subject === "object" && subject !== null && "custom" in subject,
+  read: subject => subject.x,
+  step: frame.preRender,
+});
+const subject: CustomSubject = { custom: true, x: 0 };
+addEffect(custom); animate.addEffect(custom);
+animate(subject, { x: 10 }, { duration: 1 }).stop();
+animateEffectSubject(custom, subject, { x: [0, 10] }).forEach(a => a.stop());
+custom.state(subject)?.release(); removeEffect(custom); animate.removeEffect(custom); findEffect(subject);
+const customState = new MotionValueState();
+customState.set("x", motionValue(0), () => {});
+const justBinding = createEffect<CustomSubject>((subject, state, key, value) => state.set(key, value));
+// @ts-expect-error registration requires a test and read implementation
+addEffect(justBinding);
+// @ts-expect-error custom transitionEnd is not implemented yet
+animateEffectSubject(custom, subject, { x: 10, transitionEnd: { x: 20 } });

@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 237 package tests
+easings come from the verified `vmotion-utils` foundation. All 256 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -230,7 +230,7 @@ bun scripts/motion-dom-conformance/neutral.cjs
 bun scripts/motion-dom-conformance/selectors.cjs
 ```
 
-Renderer/mixer before-after suites now use immutable `a3c16a08`. Mixer setup cases
+Renderer/mixer before-after suites now use immutable `a518e8ef`. Mixer setup cases
 include changing uncached endpoints alongside repeated endpoints; bounded
 syntax/result caches never store computed styles. Every new runtime module is
 included in the final benchmark source manifest. Older recordings remain in git
@@ -249,4 +249,19 @@ callback failures, error cleanup, empty groups and reduced-motion preferences.
 The wrapper follows public [animate documentation](https://motion.dev/docs/animate)
 and public declarations; no upstream runtime was copied. It returns grouped
 controls for supported DOM/numeric calls, without claiming current Motion's
-editable Timeline, object subjects, single-string overload or custom effects.
+editable Timeline, unregistered object subjects or the single-string overload.
+
+
+`custom-effects.cjs` checks 488 binding, coalescing, explicit flush/release and
+animation results against the current 14.7.0 public API. Color comparison parses
+equivalent hex/RGBA endpoint spellings; numeric tolerance is 1e-10. The 12.36.0
+control lacks registration APIs and is not claimed as a comparison. Independent
+regressions cover replacement cleanup, reentrant writes, falsy failures, binding
+rollback, computed cycles, scheduler customization, registration precedence,
+DOM routing, owned read targets and deferred custom resolvers. Chrome animates a
+real DOM output via an object effect and verifies that release stops writes.
+
+```sh
+node scripts/motion-dom-conformance/custom-effects.cjs
+bun scripts/motion-dom-conformance/custom-effects.cjs
+```

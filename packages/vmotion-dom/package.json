@@ -43,7 +43,8 @@
     "color.cjs",
     "mix.cjs",
     "neutral.cjs",
-    "selector.cjs"
+    "selector.cjs",
+    "custom-effects.cjs"
   ],
   "sideEffects": false,
   "engines": {

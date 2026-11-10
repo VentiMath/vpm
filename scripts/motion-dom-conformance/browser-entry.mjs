@@ -1,3 +1,4 @@
+import {checkCustomEffects} from "./custom-effects-browser.mjs";
 import {checkSelectors} from "./selectors-browser.mjs";
 import {checkNeutral} from "./neutral-browser.mjs";
 import {checkMixers} from "./mixers-browser.mjs";
@@ -164,6 +165,7 @@ window.runMotionDom = async () => {
   await checkMixers(current,app,vpm);
   await checkNeutral(vpm);
   await checkSelectors(vpm);
+  await checkCustomEffects(current, vpm);
   for (const api of [current, app, vpm]) {
     const node = document.createElement("div");
     document.body.append(node);

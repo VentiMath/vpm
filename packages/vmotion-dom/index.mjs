@@ -1,5 +1,6 @@
 import api from "./index.cjs";
 export const {
+  MotionValueState, createEffect, addEffect, removeEffect, findEffect, animateEffectSubject,
   color,
   rgba,
   hsla,

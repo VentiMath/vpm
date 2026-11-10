@@ -695,7 +695,7 @@ export declare class GroupAnimationWithThen extends GroupAnimation {
 /** Builds a neutral color/complex/filter/transform value; URL filters remain discrete. */
 export declare function getAnimatableNone(key: string, value: string): string;
 
-/** Element selector orchestration. Sequence timelines and object subjects are not implemented. */
+/** Element selectors and explicitly registered object subjects. Sequence timelines are not implemented. */
 export interface AnimationScope {
   readonly current: ParentNode | null;
   animations: GroupAnimationWithThen[];
@@ -710,6 +710,7 @@ export type SelectorTransition = Omit<ElementValueTransition, "delay"> & {
   delay?: number | ((index: number, total: number) => number);
 };
 export interface ScopedAnimate {
+  (subject: object | object[], keyframes: ElementKeyframes, options?: SelectorTransition): GroupAnimationWithThen;
   (subject: number | MotionValue<number>, keyframes: number | (number | null)[], options?: NumericValueTransition): GroupAnimationWithThen;
   (subject: Element | Iterable<Element> | ArrayLike<Element> | string | null | undefined, keyframes: ElementKeyframes, options?: SelectorTransition): GroupAnimationWithThen;
 }
@@ -718,10 +719,50 @@ export declare function createScopedAnimate(options?: {
   reduceMotion?: boolean;
   skipAnimations?: boolean;
 }): ScopedAnimate;
-export declare const animate: ScopedAnimate;
+export declare const animate: ScopedAnimate & { addEffect: typeof addEffect; removeEffect: typeof removeEffect };
 export declare function animateElements(
   subject: Element | Iterable<Element> | ArrayLike<Element> | string | null | undefined,
   keyframes: ElementKeyframes,
   options?: SelectorTransition,
   scope?: Pick<AnimationScope, "current">,
 ): ElementAnimation[];
+
+/** Per-subject subscriptions and deferred writes for custom renderers. */
+export declare class MotionValueState implements EffectBindingState {
+  constructor(step?: Schedule);
+  set(key: string, value: MotionValue<any>, render?: () => void, computed?: MotionValue<any>): () => void;
+  get(key: string): MotionValue<any> | undefined;
+  flush: () => void;
+  release(): Map<string, MotionValue<any>>;
+}
+export type EffectTest<Subject extends object> = (subject: unknown) => subject is Subject;
+export type EffectRead<Subject extends object> = (subject: Subject, key: string, keyframes?: number | string | (number | string | null)[]) => number | string | undefined;
+export interface EffectOptions<Subject extends object> {
+  test?: EffectTest<Subject>;
+  read?: EffectRead<Subject>;
+  step?: Schedule;
+}
+export interface Effect<Subject extends object = object> extends EffectOptions<Subject> {
+  (subject: Subject, values: Record<string, MotionValue<any>>): () => void;
+  get(subject: Subject, key: string): MotionValue<any> | undefined;
+  state(subject: Subject): MotionValueState | undefined;
+  flush(subject: Subject): void;
+}
+export interface AnimateEffect<Subject extends object = object> extends Effect<Subject> {
+  test: EffectTest<Subject>;
+  read: EffectRead<Subject>;
+}
+export type AddEffectValue<Subject extends object> = (subject: Subject, state: MotionValueState, key: string, value: MotionValue<any>) => () => void;
+export declare function createEffect<Subject extends object>(addValue: AddEffectValue<Subject>, options: EffectOptions<Subject> & { test: EffectTest<Subject>; read: EffectRead<Subject> }): AnimateEffect<Subject>;
+export declare function createEffect<Subject extends object>(addValue: AddEffectValue<Subject>, options?: EffectOptions<Subject>): Effect<Subject>;
+export declare function addEffect(effect: AnimateEffect<any>): void;
+export declare function removeEffect(effect: AnimateEffect<any>): void;
+export declare function findEffect(subject: unknown): AnimateEffect | undefined;
+export interface EffectKeyframes {
+  [key: string]: number | string | (number | string | null)[] | ElementTransition | undefined;
+  transition?: ElementTransition;
+  /** Custom effect transitionEnd is not implemented yet. */
+  transitionEnd?: never;
+}
+export type EffectTransition = ElementTransition;
+export declare function animateEffectSubject<Subject extends object>(effect: AnimateEffect<Subject>, subject: Subject, keyframes: EffectKeyframes, transition?: EffectTransition, element?: AnimationElement): ElementAnimation[];

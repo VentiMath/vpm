@@ -1,0 +1,1617 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-10T07:26:46.963Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-dom-conformance/custom-effect-fixture.cjs": "5176e34c2c9884fe53a8ffc927090be3c5ed39af072e7e0f08c1d140c2442fb8",
+    "../../scripts/motion-dom-conformance/handoff-fixture.cjs": "7226dcea882b67597769c6aa2c9fca96a6b81389fc7fae78345e5be67349ef15",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "e4f961ef6cc5ec1b84e2dd7c410bb408e04839de15cd88df5c068dfd68cfff39",
+    "bench/custom-effects.cjs": "e9f788ef196243e62dc101f4e0ec43cce6287149f48bef2953a2330cedc9f985",
+    "color.cjs": "7562b3c534e7e83d22c351e1a3269437bfd1798ff5bb1906f4498fac5e4cf995",
+    "custom-effects.cjs": "fe8bcc82c5d2cd8e05201d6bf08d058b84a357704e8ce0f2be9e103d20ed5553",
+    "effects.cjs": "d1605f3a788bcaea5ac6cf36f54d4dca0f9f2a0c2970cae04553ef22c5dd4e6e",
+    "element.cjs": "7c93ddac66764792df46837cb37b5c24ee26e90e299fe463d9279aec8d4cf15f",
+    "frame.cjs": "4a9ac2eb27ef3126006a33429c8b5a0e78f02855e61b78edaac8628a6b990b41",
+    "group.cjs": "3b65d4545349738c925f0af35aff881a361dffc51733d446c6fcf48deea9abd7",
+    "index.cjs": "1119b7f08a4de407811513aa445619cd8bf4aaa38a8f8fac512655c59eed2600",
+    "mapping.cjs": "ec4d0473369ab23544d410649c02ac3c71c0f13cf7e665d56bb15995bc93e1af",
+    "mix.cjs": "867df2291c976da0c8249abdcb6990c02c505a9b54e007837ad9f9ea1fb9cdae",
+    "neutral.cjs": "62a9b2f23fd00f614765ea70a9ea9d0c369e7c85f3ba06e8381e1882e2378d17",
+    "package.json": "df13a79898d17cadfbd2cd787b80d8a9ef8fbc064ecb16ae3f5f4b01c7851bda",
+    "playback.cjs": "c60ebb90008f77f1dd20614a5caafead7aa6a516ff475a75c30bb43638354784",
+    "reads.cjs": "ef7f79eb94a5e6155a75042fe6a114f1013aa5e7a86a148df67818d8d9cd1875",
+    "resolver.cjs": "992bb4732adcac355d0f66e0fc8048fa8078c0d9a823874534a6d8cb6107b038",
+    "selector.cjs": "a997a990c2698802977e259cea6840b36b0434e20e557e767f2da70251e6da6b",
+    "single.cjs": "c4cc282c6af46380af906524bdfe7e449ec0172fab28040a566cf735a62d6035",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "target.cjs": "8cbb6dc93ddc6000bb2ef6abf390b774e9ca91b4066ed10f9dc11bf0fad23aac",
+    "transition.cjs": "0296ca047dae2cffa136ff7a87f2797faa7e5fef81a1211924a8a4186fc578a7",
+    "value.cjs": "634004c6e40c6853412d0471ddc586ce57ffbac4a43fe4e366198af7149102ec"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 23589,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 40145,
+            "samples": [
+              520.9334910947824,
+              383.1776310873092,
+              325.051886909952,
+              318.53177232532107,
+              328.3181716278495,
+              617.1835346867608,
+              433.2513388965003,
+              364.12484742807345,
+              449.51842072487307,
+              362.01477145348053,
+              327.6591107236275,
+              310.9737700834472
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 1596,
+            "samples": [
+              1222.5614035087415,
+              2080.98370927316,
+              1528.2211779448464,
+              1826.8847117794455,
+              1793.233082706746,
+              2335.8132832080564,
+              2121.135964912318,
+              1261.6697994987053,
+              2401.2111528821733,
+              1386.3565162907287,
+              1996.5281954887303,
+              1396.5382205513886
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 3922,
+            "samples": [
+              2118.4877613462572,
+              2195.2343192248736,
+              2297.3824579296424,
+              2562.2345741968365,
+              3330.6562978072584,
+              7069.416114227419,
+              7305.881438041826,
+              18924.220040795506,
+              3651.644569097416,
+              2795.4487506374016,
+              5439.911779704201,
+              2410.526262111159
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 594,
+            "samples": [
+              9609.006734006789,
+              9040.404040403857,
+              10060.04377104385,
+              9210.648148148197,
+              8353.393939394278,
+              8668.98148148142,
+              10131.664983165101,
+              18460.297979798175,
+              14070.144781144963,
+              16001.893939394165,
+              16376.614478114485,
+              13742.14309764287
+            ]
+          }
+        ],
+        "checksum": 45931
+      },
+      "vpm": {
+        "pid": 23618,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 40145,
+            "samples": [
+              469.9703325445263,
+              471.059060904222,
+              478.7208867854032,
+              466.23387719516825,
+              461.41591729978734,
+              482.3826130277744,
+              473.34455100261647,
+              472.1904097646027,
+              459.73448748287524,
+              461.6203761365049,
+              484.0858139245238,
+              475.0384107609891
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 1596,
+            "samples": [
+              2765.5858395989735,
+              2697.264411027515,
+              2743.7600250626037,
+              2557.696741854642,
+              2556.7562656641185,
+              2114.453007518825,
+              2523.626566416016,
+              2770.859649122788,
+              2659.1998746866743,
+              2716.4523809523916,
+              2681.7305764410903,
+              2866.228070175403
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 3922,
+            "samples": [
+              5207.483426823031,
+              5114.832993370677,
+              6026.750892401847,
+              5271.4813870474,
+              5480.866649668558,
+              4981.992605813377,
+              5819.554309026011,
+              5320.542325344181,
+              4889.820244773039,
+              5973.259816420176,
+              4926.291942886284,
+              5227.71111677717
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 594,
+            "samples": [
+              17107.042087542195,
+              18522.375420875444,
+              19250.56060606065,
+              17551.346801346896,
+              19175.855218855355,
+              17074.70538720522,
+              16542.718855218638,
+              14003.787878787936,
+              17426.698653198615,
+              17449.284511784484,
+              15825.267676767517,
+              17597.993265993107
+            ]
+          }
+        ],
+        "checksum": 7808
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 23619,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 25993,
+            "samples": [
+              491.28449967298786,
+              463.48536144346724,
+              440.91516946870354,
+              575.1644673565975,
+              489.0339322125184,
+              475.67452775747387,
+              458.8751586965728,
+              484.97353133535864,
+              487.87973685222806,
+              463.41965144462114,
+              456.1805101373431,
+              468.0378563459391
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 7772,
+            "samples": [
+              2773.0367987648006,
+              2599.3255275347387,
+              2429.1742151312424,
+              2558.6239063304174,
+              2605.4426145136404,
+              2538.4231857951577,
+              2619.5048893463704,
+              2472.395522388061,
+              2823.5653628409677,
+              2521.117472979923,
+              2671.8239835306176,
+              2493.7810087493563
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 3388,
+            "samples": [
+              5526.994982290436,
+              5216.6714876033375,
+              5696.600649350675,
+              5460.60832349472,
+              5306.523022432096,
+              5530.733471074404,
+              5269.0008854782145,
+              5422.717532467529,
+              5510.072314049563,
+              5308.134002361284,
+              5520.685655253794,
+              5289.502361275093
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 719,
+            "samples": [
+              16151.65785813623,
+              19679.299026425553,
+              16773.237830319646,
+              17285.002781641455,
+              16313.687065368467,
+              17884.214186369783,
+              16488.236439499182,
+              17527.353268428385,
+              15921.59248956887,
+              18417.24617524334,
+              17371.349095966634,
+              19112.25173852591
+            ]
+          }
+        ],
+        "checksum": 39936
+      },
+      "upstream": {
+        "pid": 23620,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 25993,
+            "samples": [
+              653.6904166506368,
+              574.1898203362442,
+              363.3430154272296,
+              382.4939791482317,
+              344.1214942484515,
+              309.9808794675478,
+              332.49655676528306,
+              327.371792405649,
+              343.41938214134484,
+              2272.4387335051742,
+              381.663678682723,
+              325.7271188396862
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 7772,
+            "samples": [
+              1771.1389603705668,
+              1702.9239577972112,
+              1827.3021101389547,
+              1857.5012866700863,
+              1834.8130468347947,
+              1869.1939011837371,
+              1669.824369531657,
+              1875.6487390633035,
+              1821.5227740607324,
+              1763.8638703036554,
+              1873.4238291302106,
+              1741.0039886772988
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 3388,
+            "samples": [
+              2480.199527744984,
+              2202.516233766238,
+              2090.46635183005,
+              2067.714580873628,
+              2274.154073199496,
+              2425.3122786304534,
+              4053.091794569051,
+              6996.298110979983,
+              6639.573494687159,
+              20338.769185360117,
+              3796.1803423848787,
+              3141.024793388399
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 719,
+            "samples": [
+              16548.563282336414,
+              16579.856745480036,
+              13672.344923504887,
+              16528.685674548036,
+              16387.169680111267,
+              14848.865090403333,
+              15402.178025034915,
+              16762.226703755103,
+              14889.892906815316,
+              15947.32267037541,
+              16242.987482614624,
+              13241.24895688451
+            ]
+          }
+        ],
+        "checksum": 7744
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 23621,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 40660,
+            "samples": [
+              542.2210526315795,
+              361.30514018691633,
+              416.4873339891783,
+              308.492179045744,
+              322.7363256271518,
+              1790.2832513526819,
+              493.4353910477129,
+              337.84943433349764,
+              312.9734382685689,
+              326.06780619773787,
+              326.8988932611896,
+              324.1351205115602
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 4435,
+            "samples": [
+              1598.703494926738,
+              1299.8780157835345,
+              1155.8813979706974,
+              1142.7282976324652,
+              1243.0665163472454,
+              1246.054114994364,
+              1150.2818489289712,
+              1174.7650507328194,
+              2057.2904171363984,
+              1924.8590755355349,
+              1781.6421645997912,
+              1843.0947012401361
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 1537,
+            "samples": [
+              2564.546519193126,
+              2161.7059206246663,
+              2163.874430709171,
+              2116.4606376058273,
+              2447.1372804164075,
+              2295.3259596616817,
+              2653.519193233467,
+              5805.031229668172,
+              6727.8789850356825,
+              10923.037735849008,
+              2458.3604424203786,
+              2356.728692257655
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 613,
+            "samples": [
+              13974.239804241552,
+              16852.706362153087,
+              15534.461663947528,
+              17919.112561174567,
+              16735.453507341103,
+              15061.515497552833,
+              16602.365415986882,
+              14949.225122349038,
+              17146.81892332821,
+              13086.18760195761,
+              16648.585644371833,
+              14638.050570962449
+            ]
+          }
+        ],
+        "checksum": 46528
+      },
+      "vpm": {
+        "pid": 23622,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 40660,
+            "samples": [
+              487.1484997540579,
+              478.4339645843581,
+              469.6579439252337,
+              476.3731923266105,
+              473.0447614363006,
+              469.9950811608464,
+              468.1966305951797,
+              463.5452533202169,
+              495.41214953271054,
+              481.3360796851927,
+              466.49040826364916,
+              473.14109690113224
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 4435,
+            "samples": [
+              2418.5738444194085,
+              2602.377001127407,
+              2901.747463359631,
+              2420.039458850039,
+              2633.915896279597,
+              2387.3639233370814,
+              2781.3134160090076,
+              2516.5350620067697,
+              2881.7643742953746,
+              2381.5952649379874,
+              2822.087711386712,
+              2444.2597519729375
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 1537,
+            "samples": [
+              5083.875731945313,
+              6158.262849707349,
+              5865.430709173727,
+              5453.046844502303,
+              6037.057905009826,
+              6054.109954456723,
+              5204.321405335015,
+              4965.137931034371,
+              4992.491216655736,
+              5550.856213402788,
+              6013.690305790392,
+              5985.523747560179
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 613,
+            "samples": [
+              18722.336052202176,
+              17292.00652528533,
+              17386.487765089718,
+              18838.63621533445,
+              17868.135399673563,
+              15867.79445350766,
+              16251.019575856382,
+              16424.41435562809,
+              16481.443719412873,
+              17456.02283849925,
+              15996.533442088115,
+              18382.680261011476
+            ]
+          }
+        ],
+        "checksum": 7360
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 23623,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 28575,
+            "samples": [
+              476.96559930008823,
+              466.73522309711217,
+              458.74596675415467,
+              507.0282764654422,
+              464.33214348206593,
+              470.9769728783903,
+              482.17700787401594,
+              480.84573928258914,
+              461.9539107611549,
+              479.6325459317596,
+              470.58036745406906,
+              482.5984251968489
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 7982,
+            "samples": [
+              2577.690428464039,
+              2589.6861688799827,
+              2716.0955900776653,
+              2591.889000250574,
+              2706.099223252322,
+              2492.1751440741727,
+              2637.731771485849,
+              2538.1064896016096,
+              2613.46880481083,
+              2810.954898521676,
+              2557.342645953403,
+              2574.4225757955387
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 1831,
+            "samples": [
+              6244.379027853618,
+              5382.054068814816,
+              5116.284543965065,
+              5308.801747678926,
+              5802.93118514481,
+              5240.351174221823,
+              5144.479519388363,
+              5188.853631895104,
+              5357.250136537408,
+              5765.838339705116,
+              5976.515565264874,
+              6095.0300382305195
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 510,
+            "samples": [
+              18906.699999999597,
+              17681.6999999997,
+              22362.827450980574,
+              16429.16666666643,
+              18922.629411764658,
+              17103.59411764713,
+              18477.941176470445,
+              15623.692156862704,
+              16955.309803921748,
+              18439.052941176655,
+              14918.054901960988,
+              17620.998039215723
+            ]
+          }
+        ],
+        "checksum": 33984
+      },
+      "upstream": {
+        "pid": 23624,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 28575,
+            "samples": [
+              289.0580227471571,
+              355.82533683289597,
+              580.4126334208219,
+              371.62873140857306,
+              370.8442694663171,
+              369.2519685039373,
+              363.4951881014884,
+              337.0705511811031,
+              321.7687139107617,
+              769.4590376202984,
+              340.30621172353597,
+              566.1461067366591
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 7982,
+            "samples": [
+              1817.9079178150826,
+              1762.4394888499191,
+              1861.130293159611,
+              1680.3119518917529,
+              1714.8532949135526,
+              1792.809822099723,
+              1767.6908043096912,
+              1885.5810573791157,
+              1792.78376346781,
+              1721.2112252568245,
+              1769.9511400651456,
+              1797.4818341267812
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 1831,
+            "samples": [
+              2897.93828509015,
+              2582.3096668487747,
+              4370.22119060631,
+              8915.392681594803,
+              2089.2954669579026,
+              3381.5761878754456,
+              2670.8312397597188,
+              2296.445658110321,
+              2163.5264882577735,
+              2403.5816493718985,
+              2210.244675040909,
+              2330.397596941524
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 510,
+            "samples": [
+              14870.262745098087,
+              16318.627450980373,
+              15672.794117646987,
+              15884.641176470652,
+              17514.133333333673,
+              14641.829411764364,
+              15321.48627450972,
+              14088.805882352954,
+              19906.209803921494,
+              15577.123529412043,
+              16022.549019607693,
+              14807.84313725472
+            ]
+          }
+        ],
+        "checksum": 8000
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 23625,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 45242,
+            "samples": [
+              366.9599045135046,
+              355.0148755581094,
+              324.3538526148271,
+              327.57908580522536,
+              1163.35299058397,
+              348.085473674904,
+              329.4191901330628,
+              347.8755139030106,
+              333.5635692498127,
+              344.47433800450733,
+              389.8912293886234,
+              647.6402899960203
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 4780,
+            "samples": [
+              1230.2389121338895,
+              1032.0171548117155,
+              992.6953974895439,
+              1087.1338912133922,
+              1156.8864016736309,
+              1172.9949790795124,
+              1242.6169456066932,
+              2253.155439330544,
+              3224.546652719658,
+              3260.617154811707,
+              3134.3443514644127,
+              2981.7468619246847
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 1727,
+            "samples": [
+              8853.478865084,
+              8008.951360741166,
+              8943.061378112323,
+              7601.741748697213,
+              2349.112333526411,
+              2204.810654313867,
+              2238.2258251302073,
+              2274.343949044691,
+              3914.1574985523685,
+              2402.166763173079,
+              2254.0046323103434,
+              2530.158077591153
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 1007,
+            "samples": [
+              15430.444885799396,
+              16324.478649453851,
+              14127.27606752734,
+              15516.178748758759,
+              16154.501489573047,
+              14748.800397219447,
+              16671.425024826254,
+              14195.713008937415,
+              15137.082423038788,
+              15129.261171797354,
+              15183.093346574045,
+              20112.918570009777
+            ]
+          }
+        ],
+        "checksum": 28800
+      },
+      "vpm": {
+        "pid": 23626,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 45242,
+            "samples": [
+              377.65792847354254,
+              315.71696653551965,
+              329.5941823968876,
+              329.5739357234422,
+              1701.135007294108,
+              334.11798771053367,
+              307.527673400822,
+              314.7922947703471,
+              314.47917863931735,
+              362.1975597895752,
+              658.8697007205694,
+              381.4910260377522
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 4780,
+            "samples": [
+              1027.083472803341,
+              2255.6050209205014,
+              2650.0173640167463,
+              3243.7935146443647,
+              3223.6140167364183,
+              2755.4479079498033,
+              2812.517573221765,
+              7628.129288702923,
+              1653.5564853556477,
+              1606.5115062761504,
+              1523.8843096234361,
+              1605.9797071129813
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 1727,
+            "samples": [
+              2211.97625940942,
+              1937.970469021398,
+              1980.4093804284842,
+              2321.9936305731876,
+              2403.252460914917,
+              2400.332947307372,
+              2664.447017950195,
+              3287.686160972697,
+              16911.551823972313,
+              2253.257093225203,
+              2370.3433700057053,
+              3304.381586566388
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 1007,
+            "samples": [
+              9185.782522343501,
+              18196.913604766647,
+              15341.277060575972,
+              15461.23038728903,
+              16262.20556107248,
+              15052.010923535256,
+              17913.977159880673,
+              15834.119165839169,
+              18630.834160873903,
+              16200.80238331679,
+              14480.345580933401,
+              15089.539225422019
+            ]
+          }
+        ],
+        "checksum": 8384
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 23655,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 32678,
+            "samples": [
+              571.7761184895041,
+              486.51615765958707,
+              368.15671093702144,
+              326.58950976192017,
+              333.4085623355165,
+              329.8587734867484,
+              318.51450517167467,
+              2003.409541587613,
+              388.0299283921909,
+              349.1276087887877,
+              319.3203378419734,
+              310.1487545137402
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 6314,
+            "samples": [
+              1874.4588216661373,
+              1773.9349065568492,
+              2297.0779220779173,
+              1873.5350015837723,
+              1762.3930947101667,
+              1835.6167247386654,
+              1822.860627177702,
+              2067.779220779226,
+              1840.4537535634947,
+              1894.1506176750029,
+              1783.5828318023562,
+              1806.4683243585619
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 2748,
+            "samples": [
+              8278.368995633153,
+              4043.243449781644,
+              2169.9872634643343,
+              2181.7685589519624,
+              2487.036026200923,
+              2368.2529112081615,
+              2245.3453420669166,
+              2909.2066957787542,
+              6696.400291120768,
+              6967.157933042261,
+              7105.970887918476,
+              15280.310043668105
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 635,
+            "samples": [
+              15761.351181102391,
+              17111.417322834543,
+              16151.18110236234,
+              14740.814173228142,
+              14532.349606299149,
+              14019.291338582469,
+              16480.708661417273,
+              15601.508661417372,
+              18377.755905511884,
+              14857.546456693215,
+              14761.351181102405,
+              19075.85196850408
+            ]
+          }
+        ],
+        "checksum": 34944
+      },
+      "upstream": {
+        "pid": 23656,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "bind, update, flush and detach 1 custom values",
+            "iterations": 32678,
+            "samples": [
+              654.5152702123744,
+              399.44941550890456,
+              362.1205398127177,
+              311.5908868351794,
+              331.5469734989903,
+              366.77963767672526,
+              535.9237713446342,
+              1512.7085806964938,
+              350.41798763694266,
+              304.28474814860186,
+              308.1647897668166,
+              348.3663626904951
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 custom property animations",
+            "iterations": 6314,
+            "samples": [
+              1746.053690212228,
+              1941.367120684193,
+              1899.258314855867,
+              1664.389927146026,
+              1719.6507760532206,
+              1915.1884700665144,
+              1705.7728856509218,
+              1770.4505859993683,
+              1867.07459613556,
+              1831.2613240418143,
+              1795.4743427304445,
+              1818.485429204952
+            ]
+          },
+          {
+            "case": "bind, update, flush and detach 8 custom values",
+            "iterations": 2748,
+            "samples": [
+              2715.70232896649,
+              2353.105167394414,
+              2275.7609170305186,
+              2390.450509461368,
+              3041.894104803475,
+              4345.812227074218,
+              11906.917030567669,
+              2625.5913391557287,
+              2624.9694323143467,
+              2418.9563318776854,
+              2436.211062591055,
+              2644.696142649265
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 custom property animations",
+            "iterations": 635,
+            "samples": [
+              16846.06299212589,
+              17803.478740157643,
+              15474.21259842527,
+              16945.40629921287,
+              14498.096062992428,
+              16742.388976378043,
+              13700.851968504025,
+              18819.620472440805,
+              14946.587401574989,
+              16653.41259842542,
+              13984.119685039517,
+              16499.148031496185
+            ]
+          }
+        ],
+        "checksum": 7936
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "bind, update, flush and detach 1 custom values",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 363.069809440777,
+          "vpmNs": 471.6247353344123,
+          "changePct": 29.89918827479443
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 353.7322548378405,
+          "vpmNs": 471.85619205170644,
+          "changePct": 33.39360083745171
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 332.3741637973436,
+          "vpmNs": 473.0929291687164,
+          "changePct": 42.3374560055072
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 366.3735783027129,
+          "vpmNs": 473.97128608923924,
+          "changePct": 29.368304418946046
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 347.9804937889573,
+          "vpmNs": 331.8560850537107,
+          "changePct": -4.633710516264089
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 356.2692637248302,
+          "vpmNs": 341.2680855621521,
+          "changePct": -4.210629344176164
+        }
+      ]
+    },
+    {
+      "case": "create, seek, flush and stop 1 custom property animations",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1810.0588972430958,
+          "vpmNs": 2689.4974937343027,
+          "changePct": 48.5861867716394
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1824.4124420998437,
+          "vpmNs": 2578.9747169325783,
+          "changePct": 41.359193646161295
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1272.9660653889491,
+          "vpmNs": 2559.4560315670883,
+          "changePct": 101.06239287573295
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1781.3674517664779,
+          "vpmNs": 2590.7875845652784,
+          "changePct": 45.43813417024916
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1236.4279288702915,
+          "vpmNs": 2452.8111924686236,
+          "changePct": 98.37882461210062
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1806.9798859676982,
+          "vpmNs": 1838.03523915108,
+          "changePct": 1.718633030978678
+        }
+      ]
+    },
+    {
+      "case": "bind, update, flush and detach 8 custom values",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3063.0525242223302,
+          "vpmNs": 5249.596251912285,
+          "changePct": 71.38446730504859
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2810.6121605666913,
+          "vpmNs": 5441.662927981124,
+          "changePct": 93.61130661599164
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2452.748861418393,
+          "vpmNs": 5708.143461288258,
+          "changePct": 132.72433436121594
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2492.945658110337,
+          "vpmNs": 5369.652102676112,
+          "changePct": 115.39386890391867
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2466.1624203821157,
+          "vpmNs": 2385.3381586565383,
+          "changePct": -3.277329224449632
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2625.2803857350377,
+          "vpmNs": 3476.2250727801993,
+          "changePct": 32.413478258129366
+        }
+      ]
+    },
+    {
+      "case": "create, seek, flush and stop 8 custom property animations",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 10095.854377104475,
+          "vpmNs": 17437.99158249155,
+          "changePct": 72.72427801690249
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 16095.155076495017,
+          "vpmNs": 17328.175938804045,
+          "changePct": 7.66082001974433
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 16068.413539967205,
+          "vpmNs": 17339.247145187524,
+          "changePct": 7.9088928229246624
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 15624.958823529516,
+          "vpmNs": 17651.34901960771,
+          "changePct": 12.968931431849073
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 15306.76911618672,
+          "vpmNs": 15647.6747765641,
+          "changePct": 2.2271562195112393
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 16576.2803149608,
+          "vpmNs": 15681.429921259882,
+          "changePct": -5.398378747814004
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "bind, update, flush and detach 1 custom values",
+      "upstream_ns": 358,
+      "vpm_ns": 472,
+      "change_pct": 31.6,
+      "upstream_first_pct": 36.1,
+      "vpm_first_pct": 31.4,
+      "process_range_pct": "29.9, 33.4, 42.3, 29.4",
+      "control_max_abs_pct": 4.6,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "create, seek, flush and stop 1 custom property animations",
+      "upstream_ns": 1796,
+      "vpm_ns": 2585,
+      "change_pct": 47,
+      "upstream_first_pct": 74.8,
+      "vpm_first_pct": 43.4,
+      "process_range_pct": "48.6, 41.4, 101.1, 45.4",
+      "control_max_abs_pct": 98.4,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "bind, update, flush and detach 8 custom values",
+      "upstream_ns": 2652,
+      "vpm_ns": 5406,
+      "change_pct": 104.5,
+      "upstream_first_pct": 102.1,
+      "vpm_first_pct": 104.5,
+      "process_range_pct": "71.4, 93.6, 132.7, 115.4",
+      "control_max_abs_pct": 32.4,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "create, seek, flush and stop 8 custom property animations",
+      "upstream_ns": 15847,
+      "vpm_ns": 17389,
+      "change_pct": 10.4,
+      "upstream_first_pct": 40.3,
+      "vpm_first_pct": 10.3,
+      "process_range_pct": "72.7, 7.7, 7.9, 13.0",
+      "control_max_abs_pct": 5.4,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

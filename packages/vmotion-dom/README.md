@@ -466,7 +466,7 @@ copy-on-write, frozen outputs remain untouched, and nonfinite outputs reject.
 Element playback starts directly without allocating a one-use factory.
 [Before/after measurements](bench/renderer-previous/README.md) compare immutable
 commit `a518e8ef`: synchronous setup takes 8.4% less time on Node and 8.7% less on
-Bun; deferred changes are inconclusive. The [upstream comparison](bench/renderer/README.md)
+Bun; deferred changes are inconclusive. The [upstream comparison at `e2cc10f5`](bench/renderer/README.md)
 still measures deferred Bun at 1.87 versus 1.48 μs (25.4% more). This gap is **not
 fixed**. Node directions versus upstream are inconclusive in this recording.
 These are setup/seek/stop microbenchmarks, not application frame rates. Validation,
@@ -550,10 +550,10 @@ numeric. Named colors other than `transparent`, `currentColor`, lab/oklab and
 other extended color spaces and full CSS grammar
 are outside this verified scope.
 
-There are 241 unit tests per runtime and 2,538 exact color/complex/interpolation
+There are 256 unit tests per runtime and 2,538 exact color/complex/interpolation
 comparisons against both current 14.7.0 and app 12.36.0. Chrome checks computed
 colors, shadows, filters and transforms, CSS percentages and animations through
-an unchanged upstream HTML renderer. [Measurements](bench/mixers/README.md)
+an unchanged upstream HTML renderer. [Measurements at `e2cc10f5`](bench/mixers/README.md)
 separate preparation from sampling and include unchanged numeric interpolation.
 Parsed color/complex syntax uses two-entry caches with input-length bounds.
 Only immutable string syntax is cached, never objects, CSS variables or DOM reads.
@@ -607,11 +607,74 @@ against native animations and checks live shadow color reads and final `none`.
 and multiframe normalization at `cc53e8da`. The subsequent parser and mixed-case
 keyword correction has separate regression checks.
 
+## Custom effects
+
+`createEffect(addValue, { test, read, step })` builds a renderer for a custom
+object. `MotionValueState` owns its subscriptions and pending writes. A binding
+hook returns `state.set(key, value, render)`; `render` reads the current value.
+Changes coalesce until the render frame (or the supplied scheduler), and
+`effect.flush(subject)` writes pending values immediately. `state.release()`
+detaches bindings and returns their MotionValues for another renderer.
+
+```js
+import { createEffect, animate } from "vmotion-dom";
+const effect = createEffect((subject, state, key, value) =>
+  state.set(key, value, () => { subject[key] = value.get(); }), {
+  test: subject => subject?.kind === "gauge",
+  read: (subject, key) => subject[key],
+});
+animate.addEffect(effect);
+const gauge = { kind: "gauge", level: 0 };
+await animate(gauge, { level: 100 }, { duration: 0.5 });
+effect.flush(gauge);
+effect.state(gauge).release();
+animate.removeEffect(effect);
+```
+
+`addEffect`, `removeEffect` and `findEffect` also exist as named exports. The newest
+matching registration wins; duplicate registrations do not accumulate. Removal
+changes future selection and does not detach existing subjects. HTML/SVG elements
+always use the existing DOM renderer. Registered subjects and their collections
+work with scoped `animate`, dynamic delays, reduced/skip motion and grouped controls.
+Unregistered objects reject instead of being silently mutated.
+
+`animateEffectSubject(effect, subject, keyframes, transition, element?)` exposes
+the same lower-level operation. A new MotionValue starts at the first explicit
+keyframe or the effect's `read()` result; existing bindings retain their values.
+An optional renderer owns deferred resolution and measurement. Numeric, matching
+unit and supported color/complex targets share the established playback engine.
+Color endpoints may serialize as equivalent RGBA instead of their input spelling.
+Custom-effect `transitionEnd` is explicitly rejected in this unit; renderer
+`animateTarget` still supports it. Successful animations keep their bindings until
+cleanup, allowing later animation to continue from the current value.
+
+Computed bindings can queue a renderer already attached to another MotionValue
+in the same state. Flush deduplicates shared renderer callbacks; changes during a
+flush wait for the next batch. Stale cleanup cannot remove a replacement. Invalid
+maps reject before hooks run, failed hook setup restores existing subscriptions,
+and throwing renders/cleanup still process siblings before rethrowing the first
+error. Custom hook side effects outside the state must be undone by the hook.
+
+The current-API fixture checks 488 binding/release/playback results against Motion
+DOM 14.7.0. These APIs are absent from the app's 12.36.0 control. Chrome exercises
+real DOM output through a custom renderer, pre-render scheduling and release.
+Strict ESM/CJS/Bundler declarations and packed npm/Bun consumers cover the public
+exports. [Custom-effect measurements](bench/custom-effects/README.md) separate
+binding/flush from animation setup. Custom bindings are still slower: one binding
+plus update/flush/detach measures 0.84 versus 0.33 μs on Node and 0.47 versus 0.36 μs
+on Bun. Eight bindings measure 4.97 versus 2.10 μs and 5.41 versus 2.65 μs. One-property
+animation setup takes 81.4% more time on Node; the Bun direction is inconclusive
+because of control variation. Eight-property Bun setup takes 10.4% more, while
+Node's direction is inconclusive. The implementation
+preserves transactional subscriptions and failure cleanup, but those costs have not
+been isolated sufficiently to attribute the whole difference to correctness work.
+No speed advantage is claimed for this unit; application adoption remains pending.
+
 ## Still to build
 
-Custom effect registration is the next bounded unit. Editable sequence timelines,
-object subjects, single-string-value overloads and variant propagation remain
-unimplemented.
+Default object animation and single-string-value overloads are the next bounded
+unit. Registered object subjects are implemented below. Custom-effect
+`transitionEnd`, editable sequence timelines and variant propagation remain unimplemented.
 Inertia, CSS spring serialization, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject
@@ -680,7 +743,7 @@ propagate the DOM error. Scope-less selectors use the current document; server
 imports do not require a document.
 
 This is grouped JavaScript playback. The high-level sequence/Timeline editing
-API, object subjects, single string-value overload, effect registration and WAAPI
+API, unregistered object subjects, single string-value overload and WAAPI
 are not implemented. They are not silently routed to an upstream runtime.
 The complete React/Motion renderer remains separate; VentiMath still uses upstream
 Motion. [Selector benchmarks](bench/selectors/README.md) measure mocked DOM setup,
