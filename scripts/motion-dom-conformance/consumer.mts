@@ -11,8 +11,6 @@ interpolate([0, 1], [true, false]);
 const bad: string = opacity;
 // @ts-expect-error grid staggering is not built yet
 stagger(0.1, { grid: [2, 2] });
-// @ts-expect-error renderer has not been implemented
-import { animate } from "vmotion-dom";
 void point;
 void bad;
 void animate;
@@ -180,9 +178,9 @@ elementControls[0]!.pause();
 elementControls[0]!.time = 0.1;
 void elementControls[0]!.finished;
 animateValues(() => position, { x: 10 }, { x: { type: "spring" } });
-// @ts-expect-error selectors belong to the future high-level animate wrapper
+// @ts-expect-error low-level animateElement still requires one actual element
 animateElement(".selector", { opacity: 1 });
-// @ts-expect-error object and color mixing is not implemented
+// @ts-expect-error element endpoints cannot be nested objects
 animateElement(document.body, { value: { nested: 1 } });
 
 import { handOffElementState, type ElementRenderer } from "vmotion-dom";
@@ -252,3 +250,17 @@ analyseComplexValue("0px #fff");
 import {getAnimatableNone} from "vmotion-dom";
 const neutralFilter: string = getAnimatableNone("filter", "brightness(.5)");
 resolver.resolveNoneKeyframes();
+
+import {animate, createScopedAnimate, animateElements, type AnimationScope} from "vmotion-dom";
+const animateScope: AnimationScope = {current: document.body, animations: []};
+const scopedAnimate = createScopedAnimate({scope: animateScope, reduceMotion: true});
+scopedAnimate(".item", {opacity:[0,1],x:20}, {duration:1, delay:(i,total)=>i/total});
+animate(document.querySelectorAll("div"), {opacity:1}).stop();
+animate(motionValue(0), 10, {duration:1}).time = .5;
+animateElements(document.body, {opacity:1});
+// @ts-expect-error object subjects are not implemented
+animate({x:0}, {x:10});
+// @ts-expect-error sequences are not implemented
+animate([[document.body, {opacity:1}]]);
+// @ts-expect-error dynamic delays must return numbers
+animate(".item", {opacity:1}, {delay:()=>"later"});

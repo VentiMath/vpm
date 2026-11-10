@@ -7,9 +7,9 @@
   },
   "implementation": {
     "kind": "independent implementation",
-    "replacementStatus": "partial; neutral keyframes and filter defaults built, full renderer pending",
-    "targetScope": "Independent neutral keyframes, filter defaults, grouped playback controls and color/complex and scalar renderer targets with transitionEnd, numeric/CSS-unit element animations and renderer ownership transfer, DOM reads/keyframe resolution, MotionValue transitions, DOM effects, tween/spring playback, values, scheduling and mapping. Not a drop-in replacement for motion-dom yet.",
-    "remainingWork": "Custom effect registration and high-level selector animate wrapper; variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
+    "replacementStatus": "partial; selector animation wrapper and neutral keyframes built, full renderer pending",
+    "targetScope": "Independent selector/scoped DOM animation wrapper with grouped controls, neutral keyframes/filter defaults, color/complex mixers, renderer targets and transitionEnd, element animations, renderer handoff, keyframe reads/resolution and numeric Motion foundations. Partial Motion implementation; not an application replacement yet.",
+    "remainingWork": "Custom effect registration, object subjects and editable sequence timelines; variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
@@ -28,7 +28,8 @@
       "group controls": "GroupAnimation and GroupAnimationWithThen snapshot members, forward playback controls, aggregate completion, expose longest durations and dispose timeline observers; child failures do not strand remaining cleanup.",
       "target completion": "animateTarget resolves scalar, color and complex renderer values and per-property transitions, waits for all controllers, preserves existing end-only styles until completion, then applies owned transitionEnd snapshots in a frame; cancelled, stopped, failed (including throwing completion callbacks) or replaced targets cannot apply stale completion writes.",
       "color and complex mixers": "Independent hex/RGB/HSL parser, Motion gamma-two blending, balanced CSS token scanner, flat containers, automatic interpolation and renderer-owned string animation through numeric progress.",
-      "neutral keyframes": "Property-aware neutral filter, shadow and transform values; omitted filter defaults, none/zero origins, live DOM shadow color and literal final none restoration."
+      "neutral keyframes": "Property-aware neutral filter, shadow and transform values; omitted filter defaults, none/zero origins, live DOM shadow color and literal final none restoration.",
+      "selector animation": "Fresh scoped element resolution, collection/keyframe/option snapshots, root stagger delays, grouped playback and cleanup, live owner-window reduced-motion preferences and numeric single-value forwarding."
     }
   },
   "changes": [
@@ -69,7 +70,8 @@
     "Empty filter arguments expand to CSS defaults, distinct from interpolation identities. Omitted shadow color is read from the owner document on each resolution. Bounded neutral-result caches retain only immutable string syntax; mutable DOM values are not cached.",
     "Cold color parsing validates without regex match arrays or temporary channel arrays; scientific notation, percentage rules and finite checks are retained. Mixed-case none keywords keep discrete URL-filter timing.",
     "Single pending resolvers use an inline queue slot; multi-resolver reads retain isolated transactional batches. Numeric playback cancels only its own update phase. Forced reads retain restoration and reentrant scheduling guards.",
-    "Strict common RGB parsing captures channels in one scan; hexadecimal channels use numeric extraction. The complex scanner avoids per-character substring/regex work. Prepared numeric components use fixed deltas, with a specialized two/three-length trailing-color formatter that retains finite checks and the generic parser."
+    "Strict common RGB parsing captures channels in one scan; hexadecimal channels use numeric extraction. The complex scanner avoids per-character substring/regex work. Prepared numeric components use fixed deltas, with a specialized two/three-length trailing-color formatter that retains finite checks and the generic parser.",
+    "Selector wrapper snapshots targets/options and resolves dynamic delays before starting. Failed element setup or scope bookkeeping stops owned controllers; cross-window HTML/SVG elements work directly. Sequence timelines, object subjects, string single-value overloads and effect registration remain explicit unfinished APIs."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

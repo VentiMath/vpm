@@ -694,3 +694,34 @@ export declare class GroupAnimationWithThen extends GroupAnimation {
 
 /** Builds a neutral color/complex/filter/transform value; URL filters remain discrete. */
 export declare function getAnimatableNone(key: string, value: string): string;
+
+/** Element selector orchestration. Sequence timelines and object subjects are not implemented. */
+export interface AnimationScope {
+  readonly current: ParentNode | null;
+  animations: GroupAnimationWithThen[];
+  reduceMotion?: boolean;
+  skipAnimations?: boolean;
+}
+export type SelectorTransition = Omit<ElementValueTransition, "delay"> & {
+  default?: ElementValueTransition;
+  skipAnimations?: boolean;
+  reduceMotion?: boolean;
+  [property: string]: unknown;
+  delay?: number | ((index: number, total: number) => number);
+};
+export interface ScopedAnimate {
+  (subject: number | MotionValue<number>, keyframes: number | (number | null)[], options?: NumericValueTransition): GroupAnimationWithThen;
+  (subject: Element | Iterable<Element> | ArrayLike<Element> | string | null | undefined, keyframes: ElementKeyframes, options?: SelectorTransition): GroupAnimationWithThen;
+}
+export declare function createScopedAnimate(options?: {
+  scope?: AnimationScope;
+  reduceMotion?: boolean;
+  skipAnimations?: boolean;
+}): ScopedAnimate;
+export declare const animate: ScopedAnimate;
+export declare function animateElements(
+  subject: Element | Iterable<Element> | ArrayLike<Element> | string | null | undefined,
+  keyframes: ElementKeyframes,
+  options?: SelectorTransition,
+  scope?: Pick<AnimationScope, "current">,
+): ElementAnimation[];

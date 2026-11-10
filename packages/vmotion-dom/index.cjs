@@ -1,5 +1,6 @@
 "use strict";
 module.exports = {
+  ...require("./selector.cjs"),
   ...require("./color.cjs"),
   ...require("./mix.cjs"),
   ...require("./neutral.cjs"),

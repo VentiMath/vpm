@@ -462,7 +462,7 @@ and hash-table churn. Multi-resolver work keeps a separate transactional batch;
 measurement restoration and reentrant scheduling remain intact. Numeric playback
 cancels only its own update phase. [Before/after measurements](bench/renderer-previous/README.md)
 compare immutable commit `ca65b070`; their final directions are inconclusive
-against process/control variation. The [upstream recording](bench/renderer/README.md)
+against process/control variation. The [upstream recording at `9a9e2663`](bench/renderer/README.md)
 measures deferred Bun at 1.85 versus 1.48 μs (25.5% more), so that regression is
 reduced in magnitude but not closed. Deferred Node takes 24.7% less time than
 upstream in this recording; synchronous directions are inconclusive. These are
@@ -547,10 +547,10 @@ numeric. Named colors other than `transparent`, `currentColor`, lab/oklab and
 other extended color spaces and full CSS grammar
 are outside this verified scope.
 
-There are 226 unit tests per runtime and 2,538 exact color/complex/interpolation
+There are 237 unit tests per runtime and 2,538 exact color/complex/interpolation
 comparisons against both current 14.7.0 and app 12.36.0. Chrome checks computed
 colors, shadows, filters and transforms, CSS percentages and animations through
-an unchanged upstream HTML renderer. [Measurements](bench/mixers/README.md)
+an unchanged upstream HTML renderer. [Measurements at `9a9e2663`](bench/mixers/README.md)
 separate preparation from sampling and include unchanged numeric interpolation.
 Parsed color/complex syntax uses two-entry caches with input-length bounds.
 Only immutable string syntax is cached: public parsed objects are fresh snapshots,
@@ -612,8 +612,9 @@ keyword correction has separate regression checks.
 
 ## Still to build
 
-The high-level selector `animate` wrapper is the next bounded unit. Custom effect
-registration and variant propagation remain unimplemented.
+Custom effect registration is the next bounded unit. Editable sequence timelines,
+object subjects, single-string-value overloads and variant propagation remain
+unimplemented.
 Inertia, CSS spring serialization, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject
@@ -645,3 +646,45 @@ variable and auto measurement through unchanged upstream renderer/resolver class
 Group forwarding takes less time on Node (-12.2%/-53.5% for one/eight members).
 Bun's eight-member group costs 13.3% more (108 versus 97 ns); one-member direction
 is inconclusive. These local microbenchmarks do not establish app frame-rate gains.
+
+## Selector animation
+
+`animate(subject, keyframes, options)` resolves an HTML/SVG element, selector,
+NodeList, array or iterable and returns grouped playback controls. Numeric values
+and numeric MotionValues use `animateSingleValue`. A root `delay(index, total)`
+accepts `stagger(...)`; numeric per-property delays override the root delay.
+
+```js
+const controls = animate(".contest-card", { opacity: [0, 1], y: [12, 0] }, {
+  duration: 0.3,
+  delay: stagger(0.04),
+});
+await controls;
+```
+
+`createScopedAnimate({ scope, reduceMotion, skipAnimations })` takes a scope with
+`current` and `animations`. Selectors resolve beneath the current root on each
+call; results are not cached between calls. The invocation snapshots its element
+list, keyframes and nested transition options before running delay callbacks.
+Every dynamic delay is evaluated before any controller starts. Invalid elements
+and delays therefore cannot leave earlier elements running. A later setup failure
+stops controllers already created by that invocation. Scope bookkeeping records
+the returned group; callers can stop those groups on cleanup. A failed bookkeeping
+write also stops the group. Scope flags are read per call. Reduced-motion options
+fall back to the owning window’s current media preference; explicit false keeps
+transform animation enabled. Opacity remains animated under reduced motion.
+
+`animateElements(subject, keyframes, options, scope)` is the corresponding lower
+level entry returning individual controllers. All three entries retain the
+existing resolver ownership, frame coalescing, CSS-variable/measurement, neutral
+keyframe and playback-error handling. HTML/SVG elements from other windows work
+directly. Empty matches return empty, already-finished controls. Malformed selectors
+propagate the DOM error. Scope-less selectors use the current document; server
+imports do not require a document.
+
+This is grouped JavaScript playback. The high-level sequence/Timeline editing
+API, object subjects, single string-value overload, effect registration and WAAPI
+are not implemented. They are not silently routed to an upstream runtime.
+The complete React/Motion renderer remains separate; VentiMath still uses upstream
+Motion. [Selector benchmarks](bench/selectors/README.md) measure mocked DOM setup,
+seeking, rendering and stopping, not browser paint or application frame rates.

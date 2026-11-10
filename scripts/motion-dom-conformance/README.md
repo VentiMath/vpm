@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 182 package tests
+easings come from the verified `vmotion-utils` foundation. All 237 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -225,7 +225,9 @@ owned, unsupported neutral functions reject and final `none` is preserved.
 
 ```sh
 node scripts/motion-dom-conformance/neutral.cjs
+node scripts/motion-dom-conformance/selectors.cjs
 bun scripts/motion-dom-conformance/neutral.cjs
+bun scripts/motion-dom-conformance/selectors.cjs
 ```
 
 Renderer/mixer before-after suites now use immutable `a3c16a08`. Mixer setup cases
@@ -234,3 +236,17 @@ syntax/result caches never store computed styles. Every new runtime module is
 included in the final benchmark source manifest. Older recordings remain in git
 history. Resolver regressions include single-item measurement, newly enqueued work,
 falsy errors and reentrant completion.
+
+`selectors.cjs` compares 2,688 collection/stagger/per-property samples against the
+public `animate()` exports of current Framer Motion 14.7.0 and app 12.36.0 on each
+runtime. Numeric outputs allow 1e-12 opacity and 1e-10 transform rounding; function
+names and order match exactly. Mock frame timestamps advance between samples,
+including the app renderer's once-per-frame write coalescing. Chrome compares
+real computed styles against both versions and checks fresh scoped queries,
+NodeLists, SVG and iframe elements. Package regressions cover input snapshots,
+callback failures, error cleanup, empty groups and reduced-motion preferences.
+
+The wrapper follows public [animate documentation](https://motion.dev/docs/animate)
+and public declarations; no upstream runtime was copied. It returns grouped
+controls for supported DOM/numeric calls, without claiming current Motion's
+editable Timeline, object subjects, single-string overload or custom effects.

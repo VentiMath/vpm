@@ -919,3 +919,8 @@ Object.defineProperty(module.exports, "observeCompletion", {
     else handle.completionObserver = notify;
   },
 });
+
+Object.defineProperties(module.exports, {
+  prepareFrames: { value: prepareFrames },
+  snapshotTransition: { value: snapshot },
+});
