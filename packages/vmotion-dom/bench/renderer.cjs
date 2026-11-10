@@ -6,10 +6,18 @@ const path = require("node:path"),
 require(path.join(fixture, "check-controls.cjs")).check();
 require("../../../scripts/check-bun.cjs");
 const helper = require("../../../scripts/motion-dom-conformance/handoff-fixture.cjs");
+const previous = process.env.VMOTION_RENDERER_PREVIOUS === "1";
+const baseline = previous
+  ? require("../../../scripts/motion-dom-conformance/setup-baseline.cjs").prepare(
+      "d45f59d3bbba2917e2d60fd0a025f2c7b6491bfe",
+    )
+  : undefined;
 require("../../../scripts/bench-process.cjs")
   .run({
     root,
-    upstream: path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
+    upstream:
+      baseline ||
+      path.join(fixture, "node_modules/motion-dom/dist/cjs/index.js"),
     vpm: path.join(root, "index.cjs"),
     cases: [false, true].map((async) => ({
       name: `create, resolve, seek and stop a ${async ? "deferred" : "synchronous"} custom animation`,
@@ -60,6 +68,12 @@ require("../../../scripts/bench-process.cjs")
       validate: (x) => assert.equal(x, 10),
     })),
     files: [
+      ...(previous
+        ? [
+            "../../scripts/motion-dom-conformance/setup-baseline.cjs",
+            "../../scripts/motion-dom-conformance/node_modules/.setup-before-d45f59d3",
+          ]
+        : []),
       "index.cjs",
       "index.mjs",
       "element.cjs",

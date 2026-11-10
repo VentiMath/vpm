@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T23:25:27.534Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T02:52:26.740Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 1689 | 1922 | 4.4% | 4.4% | 36.3% | 33.9% | unestablished at this precision |
-| create, resolve, seek and stop a deferred custom animation | 2161 | 3097 | 40.2% | 39.5% | 49.5% | 52.9% | unestablished at this precision |
+| create, resolve, seek and stop a synchronous custom animation | 1449 | 2159 | 49.7% | 59.2% | 42.8% | 49.1% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 2030 | 2711 | 32.5% | 59.3% | 26.6% | 13% | higher time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T23:25:38.763Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-10T02:52:14.355Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| create, resolve, seek and stop a synchronous custom animation | 1308 | 1762 | 34.8% | 34.8% | 34.3% | 6.4% | higher time in every pair, beyond control spread |
-| create, resolve, seek and stop a deferred custom animation | 1471 | 4023 | 173.5% | 185.9% | 167.3% | 1.4% | higher time in every pair, beyond control spread |
+| create, resolve, seek and stop a synchronous custom animation | 1440 | 1700 | 17.1% | 20.9% | 17.1% | 22.5% | unestablished at this precision |
+| create, resolve, seek and stop a deferred custom animation | 1543 | 4006 | 161.5% | 193.2% | 146.3% | 9.3% | higher time in every pair, beyond control spread |
 
 ## Reproduce
 
@@ -58,4 +58,4 @@ The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
 
-Both cases own a MotionValue lifecycle, resolve a custom token, seek, stop and drain read-phase disposal. They use equivalent independent resolver subclasses and value sinks. Final Node directions remain inconclusive; both Bun cases retain established overhead. Initial measurements are retained in commit `39547fce`; those sequential recordings alone are not a controlled before/after speedup claim. These workloads exclude browser layout and full React rendering.
+Both cases include an owned MotionValue lifecycle, custom token resolution, seek, stop and read-phase disposal. Node deferred setup remains 32.5% more than upstream; Bun deferred setup remains 161.5% more. Synchronous differences are inconclusive. The separate before/after report measures the guard change against immutable VPM history.

@@ -448,14 +448,20 @@ and disposal. Remaining Node medians are 1.16 μs versus 0.50 μs for one value 
 4.74 μs. The balanced [before/after comparison](bench/handoff-previous/README.md)
 with commit `112782a6` does not establish a speed change on either runtime.
 
-Measurement guards now live once per resolver class, and snapshots allocate only
-when layout measurement actually occurs. Handoffs avoid unused renderer-reader
-objects; factories share already-owned easing/offset snapshots and avoid repeated
-default selection. Validation, snapshot isolation, forced-completion flags and
-both prototype/instance-field error restoration remain tested. The
-[custom-adapter benchmark](bench/renderer/README.md) has inconclusive Node
-directions; Bun synchronous setup remains 34.8% more than upstream and deferred
-setup 173.5% more. These costs remain follow-up work, not a parity claim.
+Measurement guards live once per resolver class, with ownership stored in a private
+instance field rather than a per-instance WeakMap entry. Guards capture their
+phase method once; error routing remains independent for every resolver,
+including constructor-time and instance-field failures. The balanced
+[before/after comparison](bench/renderer-previous/README.md) against `d45f59d3`
+finds lower synchronous setup time on Node and Bun (39.9% and 16.7% respectively).
+Deferred setup changes are **unestablished** on both runtimes.
+
+The [upstream comparison](bench/renderer/README.md) still finds deferred setup
+costs: Node 2.71 versus 2.03 μs; Bun 4.01 versus 1.54 μs (about 2.6×).
+The deferred facade, guarded resolver queue and owned playback lifecycle still
+allocate more state; removing a weak-map entry did not close that gap.
+Both synchronous upstream comparisons are inconclusive. These are local
+microbenchmarks, not application frame-rate measurements.
 
 
 ## Still to build

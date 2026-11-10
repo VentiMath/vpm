@@ -441,3 +441,68 @@ test("forced completion flags survive custom resolver guards", () => {
   assert.equal(forced, true);
   a.stop();
 });
+
+test("cached resolver guards keep failure ownership local to each instance", async () => {
+  class R extends api.KeyframeResolver {
+    constructor(...args) {
+      super(...args);
+      this.isAsync = true;
+    }
+    readKeyframes() {
+      if (this.element.broken) throw Error("only this owner");
+      super.readKeyframes();
+    }
+  }
+  const badValue = api.motionValue(0),
+    goodValue = api.motionValue(0);
+  const bad = badValue.start(
+    api.animateMotionValue(
+      "x",
+      badValue,
+      10,
+      {},
+      owner({ KeyframeResolver: R, broken: true }),
+    ),
+  );
+  const rejected = assert.rejects(bad, /only this owner/);
+  goodValue.start(
+    api.animateMotionValue(
+      "x",
+      goodValue,
+      20,
+      { duration: 1, ease: "linear", autoplay: false },
+      owner({ KeyframeResolver: R }),
+    ),
+  );
+  const good = goodValue.animation;
+  assert.throws(() => api.flushKeyframeResolvers(), /only this owner/);
+  await rejected;
+  good.time = 0.5;
+  assert.equal(goodValue.get(), 10);
+  assert.equal(badValue.isAnimating(), false);
+  goodValue.stop();
+});
+
+test("constructor-time failures keep the original error before guard ownership attaches", () => {
+  const failure = Error("construction phase");
+  class R extends api.KeyframeResolver {
+    constructor(...args) {
+      super(...args);
+      this.readKeyframes();
+    }
+    readKeyframes() {
+      throw failure;
+    }
+  }
+  assert.throws(
+    () =>
+      api.animateMotionValue(
+        "x",
+        api.motionValue(0),
+        10,
+        {},
+        owner({ KeyframeResolver: R }),
+      )(() => {}),
+    (e) => e === failure,
+  );
+});

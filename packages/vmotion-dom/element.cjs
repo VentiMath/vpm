@@ -81,8 +81,7 @@ function decode(frames) {
   return { numbers: frames, format: unit ? (n) => n + unit : undefined };
 }
 
-const resolverClasses = new WeakMap(),
-  resolverOwners = new WeakMap();
+const resolverClasses = new WeakMap();
 const resolverMethods = [
   "scheduleResolve",
   "resume",
@@ -100,7 +99,21 @@ function guardedResolver(Base) {
     throw new TypeError("KeyframeResolver must be a constructor");
   let Guarded = resolverClasses.get(Base);
   if (Guarded) return Guarded;
-  Guarded = class extends Base {};
+  Guarded = class extends Base {
+    #owner;
+    static own(resolver, owner) {
+      resolver.#owner = owner;
+    }
+    static fail(resolver, error) {
+      if (#owner in resolver) resolver.#owner?.fail(error);
+    }
+    static capture(resolver) {
+      if (#owner in resolver) resolver.#owner?.captureMeasurement();
+    }
+    static restore(resolver) {
+      if (#owner in resolver) resolver.#owner?.restoreMeasurement();
+    }
+  };
   const tracksReads =
     (Base !== KeyframeResolver &&
       !(Base.prototype instanceof KeyframeResolver)) ||
@@ -109,17 +122,18 @@ function guardedResolver(Base) {
       Base.prototype.scheduleResolve !==
         DOMKeyframesResolver.prototype.scheduleResolve);
   for (const method of resolverMethods) {
-    if (typeof Base.prototype[method] !== "function") continue;
+    const original = Base.prototype[method];
+    if (typeof original !== "function") continue;
     Guarded.prototype[method] = function (forced) {
       try {
         const result =
           method === "complete"
-            ? Base.prototype[method].call(this, forced)
-            : Base.prototype[method].call(this);
+            ? original.call(this, forced)
+            : original.call(this);
         if (method === "readKeyframes" && tracksReads) noteResolverRead(this);
         return result;
       } catch (error) {
-        resolverOwners.get(this)?.fail(error);
+        Guarded.fail(this, error);
         throw error;
       }
     };
@@ -127,9 +141,9 @@ function guardedResolver(Base) {
   if (typeof Base.prototype.prepareMeasurement !== "function") {
     Guarded.prototype.prepareMeasurement = function () {
       try {
-        resolverOwners.get(this)?.captureMeasurement();
+        Guarded.capture(this);
       } catch (error) {
-        resolverOwners.get(this)?.fail(error);
+        Guarded.fail(this, error);
         throw error;
       }
     };
@@ -139,7 +153,7 @@ function guardedResolver(Base) {
         if (!Object.hasOwn(this, "prepareMeasurement"))
           this.element?.render?.();
       } catch (error) {
-        resolverOwners.get(this)?.fail(error);
+        Guarded.fail(this, error);
         throw error;
       }
     };
@@ -148,10 +162,10 @@ function guardedResolver(Base) {
         try {
           Base.prototype.restore?.call(this);
         } finally {
-          resolverOwners.get(this)?.restoreMeasurement();
+          Guarded.restore(this);
         }
       } catch (error) {
-        resolverOwners.get(this)?.fail(error);
+        Guarded.fail(this, error);
         throw error;
       }
     };
@@ -199,7 +213,7 @@ class ElementAnimation {
       value,
       element,
     );
-    resolverOwners.set(this.resolver, this);
+    Resolve.own(this.resolver, this);
     if (this.customResolver)
       for (const method of resolverMethods) {
         if (
