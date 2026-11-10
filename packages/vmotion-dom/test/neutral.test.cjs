@@ -172,3 +172,17 @@ test("opaque URL filters switch discretely and all-none timelines remain valid",
     a.stop();
   }
 });
+
+test("mixed-case none endpoints retain discrete URL filter timing", () => {
+  const value = api.motionValue("url(file10.svg#filter2)"),
+    [a] = api.animateValues(
+      () => value,
+      { filter: ["url(file10.svg#filter2)", "NoNe"] },
+      { duration: 1, ease: "linear", autoplay: false },
+    );
+  a.time = 0.5;
+  assert.equal(value.get(), "url(file10.svg#filter2)");
+  a.time = 1;
+  assert.equal(value.get(), "none");
+  a.stop();
+});

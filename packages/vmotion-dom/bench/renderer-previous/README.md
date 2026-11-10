@@ -49,11 +49,13 @@ Run these commands from the repository root after installing the pinned
 fixtures used by bench/renderer.cjs:
 
 ```sh
-OUTPUT=packages/vmotion-dom/bench/renderer-previous/node-isolated.json node packages/vmotion-dom/bench/renderer.cjs
-OUTPUT=packages/vmotion-dom/bench/renderer-previous/bun-isolated.json bun packages/vmotion-dom/bench/renderer.cjs
+VMOTION_RENDERER_PREVIOUS=1 OUTPUT=packages/vmotion-dom/bench/renderer-previous/node-isolated.json node packages/vmotion-dom/bench/renderer.cjs
+VMOTION_RENDERER_PREVIOUS=1 OUTPUT=packages/vmotion-dom/bench/renderer-previous/bun-isolated.json bun packages/vmotion-dom/bench/renderer.cjs
 node scripts/render-bench-report.cjs packages/vmotion-dom renderer-previous renderer.cjs
 ```
 
 The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
+
+This before/after suite uses immutable VPM commit `a3c16a08` as the column labelled “Upstream”; it is not the upstream package. The environment flag in the reproduction commands selects that baseline. Historical source hashes identify the recorded implementation.

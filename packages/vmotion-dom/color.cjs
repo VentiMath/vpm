@@ -7,12 +7,13 @@ function finite(value) {
   return value;
 }
 const tidy = (value) => Math.round(value * 1e5) / 1e5;
+const colorNumber = /^[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?$/i;
 function component(text, scale = 1) {
-  const found = unit.exec(text);
-  if (!found || (found[1] && found[1] !== "%"))
-    throw new TypeError("invalid color component");
-  const value = finite(parseFloat(text));
-  return found[1] === "%" ? (value / 100) * scale : value;
+  const percent = text.endsWith("%"),
+    raw = percent ? text.slice(0, -1) : text;
+  if (!colorNumber.test(raw)) throw new TypeError("invalid color component");
+  const value = finite(Number(raw));
+  return percent ? (value / 100) * scale : value;
 }
 function hue(text) {
   const found = unit.exec(text);
@@ -92,12 +93,13 @@ function parse(value) {
       alpha,
     };
   }
-  if (
-    legacy &&
-    parts.slice(0, 3).some((p) => p.endsWith("%")) &&
-    !parts.slice(0, 3).every((p) => p.endsWith("%"))
-  )
-    throw new TypeError("legacy RGB channels require consistent units");
+  if (legacy) {
+    const a = parts[0].endsWith("%"),
+      b = parts[1].endsWith("%"),
+      c = parts[2].endsWith("%");
+    if ((a || b || c) && !(a && b && c))
+      throw new TypeError("legacy RGB channels require consistent units");
+  }
   return {
     red: component(parts[0], 255),
     green: component(parts[1], 255),
@@ -234,7 +236,7 @@ function prepareColor(value) {
   if (cacheable) {
     colorKeys[colorSlot] = value;
     colorValues[colorSlot] = c;
-    colorSlot = (colorSlot + 1) & 7;
+    colorSlot = (colorSlot + 1) & 1;
   }
   return c;
 }

@@ -462,8 +462,11 @@ measurement still runs through the complete restoration pipeline, and new work
 queued during a read waits for the next batch. Empty pending queues return
 immediately, reusable batch sets avoid allocation, and completed resolvers do not
 repeatedly cancel the same absent frame callback. The [before/after recording](bench/renderer-previous/README.md)
-compares this with immutable commit `a3c16a08`; the [current upstream comparison](bench/renderer/README.md)
-reports residual costs separately. Neither experiment permits removal of validation,
+compares this with immutable commit `a3c16a08`; the [upstream recording at `cc53e8da`](bench/renderer/README.md)
+reports residual costs separately: deferred Bun is 2.18 versus 1.53 μs (42% more),
+while the final before/after direction is inconclusive because of process outliers.
+Node directions are also inconclusive. The subsequent color-parser allocation and
+keyword-normalization correction does not change this resolver workload. Neither experiment permits removal of validation,
 cancellation or failure restoration.
 
 The earlier [target recording](bench/groups/README.md), from `a3c16a08`, no longer
@@ -544,17 +547,25 @@ numeric. Named colors other than `transparent`, `currentColor`, lab/oklab and
 other extended color spaces and full CSS grammar
 are outside this verified scope.
 
-There are 222 unit tests per runtime and 2,538 exact color/complex/interpolation
+There are 223 unit tests per runtime and 2,538 exact color/complex/interpolation
 comparisons against both current 14.7.0 and app 12.36.0. Chrome checks computed
 colors, shadows, filters and transforms, CSS percentages and animations through
 an unchanged upstream HTML renderer. [Measurements](bench/mixers/README.md)
 separate preparation from sampling and include unchanged numeric interpolation.
-Parsed color/complex syntax uses eight-entry caches with input-length bounds.
+Parsed color/complex syntax uses two-entry caches with input-length bounds.
 Only immutable string syntax is cached: public parsed objects are fresh snapshots,
 and object endpoints and computed DOM styles are read normally. Complex sampling
 formats in one pass. [Before/after measurements](bench/mixers-previous/README.md)
 include both repeated and changing uncached endpoints so cache hits cannot hide
-cold-input costs. Reported setup gains do not imply a general frame-rate gain.
+cold-input costs. Relative to `a3c16a08`, repeated color setup takes 88% less time
+on Node and 93% less on Bun; repeated shadow setup takes 89%/85% less. Uncached
+color setup also improves, by 14%/16%, after removing regex match arrays,
+temporary channel arrays and the wider cache lookup. Uncached shadow changes
+remain inconclusive. Against upstream, repeated setup now takes 81–90% less time,
+but uncached color setup still costs about 34% more on both runtimes, uncached
+Node shadow setup costs 37% more, and Bun prepared shadow sampling costs 23% more.
+Those residual costs remain open. Reported setup gains do not imply a general
+frame-rate gain.
 
 ## Neutral keyframes and filter defaults
 
@@ -590,7 +601,8 @@ opaque nested variables; this restriction concerns generating a neutral function
 Independent regressions cover the CSS corrections; Chrome compares midpoint styles
 against native animations and checks live shadow color reads and final `none`.
 [Neutral-value measurements](bench/neutral/README.md) cover identity construction
-and multiframe normalization.
+and multiframe normalization at `cc53e8da`. The subsequent parser and mixed-case
+keyword correction has separate regression checks.
 
 ## Still to build
 

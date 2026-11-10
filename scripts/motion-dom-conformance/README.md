@@ -229,7 +229,7 @@ bun scripts/motion-dom-conformance/neutral.cjs
 ```
 
 Renderer/mixer before-after suites now use immutable `a3c16a08`. Mixer setup cases
-include changing uncached endpoints alongside repeated endpoints; eight-entry
+include changing uncached endpoints alongside repeated endpoints; bounded
 syntax/result caches never store computed styles. Every new runtime module is
 included in the final benchmark source manifest. Older recordings remain in git
 history. Resolver regressions include single-item measurement, newly enqueued work,

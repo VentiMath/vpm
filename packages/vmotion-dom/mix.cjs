@@ -138,7 +138,7 @@ function tokenize(source) {
   if (cacheable) {
     syntaxKeys[syntaxSlot] = source;
     syntaxValues[syntaxSlot] = parsed;
-    syntaxSlot = (syntaxSlot + 1) & 7;
+    syntaxSlot = (syntaxSlot + 1) & 1;
   }
   return parsed;
 }

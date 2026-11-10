@@ -163,8 +163,11 @@ function resolveNeutralFrames(key, frames, getColor) {
   const filters = key === "filter" || key === "backdropFilter";
   if (filters)
     for (let i = 0; i < frames.length; i++)
-      if (typeof frames[i] === "string" && !neutral(frames[i]))
-        frames[i] = filterValue(frames[i], false, getColor);
+      if (typeof frames[i] === "string") {
+        if (frames[i].trim().toLowerCase() === "none") frames[i] = "none";
+        else if (!neutral(frames[i]))
+          frames[i] = filterValue(frames[i], false, getColor);
+      }
   if (!frames.some(neutral)) return false;
   if (
     frames.every(neutral) &&
@@ -180,7 +183,15 @@ function resolveNeutralFrames(key, frames, getColor) {
   );
   if (source === undefined) return false;
   const empty = getAnimatableNone(key, source);
-  if (empty === "none") return false;
+  if (empty === "none") {
+    for (let i = 0; i < frames.length; i++)
+      if (
+        typeof frames[i] === "string" &&
+        frames[i].trim().toLowerCase() === "none"
+      )
+        frames[i] = "none";
+    return false;
+  }
   for (let i = 0; i < frames.length; i++)
     if (neutral(frames[i])) frames[i] = empty;
   return true;

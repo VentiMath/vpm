@@ -59,3 +59,5 @@ node scripts/render-bench-report.cjs packages/vmotion-dom neutral neutral.cjs
 The renderer verifies the source hashes and recording structure before writing
 this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
+
+Recorded at cc53e8da before the subsequent parser/keyword correction. Identity cases reuse endpoint syntax and benefit from the bounded neutral-result cache; they do not measure cold parsing. The multiframe case includes construction and normalization.

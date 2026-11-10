@@ -61,3 +61,5 @@ this page. File hashes are SHA-256; directory hashes cover a sorted recursive
 name/hash manifest. Historical reports remain in repository history.
 
 The upstream columns here are immutable VPM commit `3365200d5149723e870fb93bf217f8be82346226`, reconstructed from git history. This is a before/after comparison, not the upstream package. All pairs and controls are retained.
+
+This before/after suite uses immutable VPM commit `3365200d` as the column labelled “Upstream”; it is not the upstream package. The environment flag in the reproduction commands selects that baseline. Historical source hashes identify the recorded implementation.
