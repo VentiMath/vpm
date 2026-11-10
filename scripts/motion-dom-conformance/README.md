@@ -173,3 +173,26 @@ classes with VPM values for variable, percentage and auto widths, then drives a
 custom token resolver on real frames. Separate regressions cover reusable factory
 snapshots, frozen output, pending cancellation, callback failures, instance-field
 resolvers, lifecycle rejection and failed measurement restoration.
+
+## Group controls and target completion
+
+`groups.cjs` runs 219 public-control comparisons with real numeric controllers;
+`targets.cjs` compares 36 multi-property/end-only completions against 14.7.0.
+The explicit test driver delivers a tick after upstream complete(), which only
+marks completion until delivery. Delay-seek behavior is checked separately: VPM
+preserves the requested time rather than applying the delay twice.
+
+The Chrome harness also drives GroupAnimation and animateTarget through unchanged
+upstream HTML renderers and checks painted seek, cancel and transitionEnd values.
+Regressions cover partial completion, cancelled/stopped/failed/replaced targets,
+reentrant callbacks, input snapshots, child failures, empty groups, promise
+rejection and timeline-observer disposal. Installed archives run all package tests
+and strict TypeScript consumers. Variant propagation and full Framer acceptance
+remain outside this bounded target implementation.
+
+```sh
+node scripts/motion-dom-conformance/groups.cjs
+bun scripts/motion-dom-conformance/groups.cjs
+node scripts/motion-dom-conformance/targets.cjs
+bun scripts/motion-dom-conformance/targets.cjs
+```

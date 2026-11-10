@@ -464,10 +464,51 @@ Both synchronous upstream comparisons are inconclusive. These are local
 microbenchmarks, not application frame-rate measurements.
 
 
+## Groups and target completion
+
+`GroupAnimation` and `GroupAnimationWithThen` accept arrays of playback controls
+and omit `undefined` entries. Time and speed setters reach every member; getters
+read the first member, while duration and iteration duration take the maximum.
+`finished` waits for all current members. The thenable form can be awaited.
+Groups own the input array, expose neutral empty-group getters and continue
+cleanup after a child throws, then report the first error. Timeline attachment
+forwards child adapters or uses `observe()` on paused controls; failed attachment
+unwinds observers, and returned cleanup runs once. Native WAAPI/scroll timelines
+are not implemented.
+
+```js
+import { animateTarget, GroupAnimation } from "vmotion-dom";
+const group = new GroupAnimation(animateTarget(renderer, {
+  opacity: 0,
+  x: 30,
+  transition: { duration: 0.2 },
+  transitionEnd: { display: "none" },
+}));
+await group.finished;
+```
+
+`renderer` supplies `getValue`, `addValue`, optional initial `latestValues`, and
+the existing renderer/keyframe-resolution contract. End values are scalar
+strings or finite numbers. They are snapshotted and applied in an update frame
+after every property completes. `finished` covers playback; the subsequent end
+write and renderer paint run on their frames. Stop, cancel, failure and newer
+requests suppress stale end writes, including replacement after completion but
+before that frame. End-only targets work, and existing renderer/DOM values are preserved until completion. The lower-level `animateElement` and
+`animateValues` still do not accept `transitionEnd`.
+
+Renderer defaults, per-property options, `transitionOverride`, outer delay and
+reduced/skip motion are supported. Variant-state arbitration/propagation is not;
+passing a variant `type` rejects explicitly. Chrome checks use unchanged upstream
+HTML renderers, alongside 219 grouped-playback and 36 target-completion black-box
+comparisons on each runtime. Delayed low-level seek stability is a separate VPM
+regression check: upstream applies delay again on the next driver tick, whereas
+VPM preserves the requested controller time. [Measurements](bench/groups/README.md)
+separate control forwarding from complete renderer-target setup and completion.
+
 ## Still to build
 
-Custom effect registration, `transitionEnd`, and the
-high-level selector/group `animate` wrapper remain unimplemented.
+Color/complex-string mixing is the next bounded unit. Custom effect registration
+and the high-level selector `animate` wrapper remain unimplemented.
 Inertia, CSS spring serialization, color/complex-string mixers, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject
@@ -495,3 +536,9 @@ establish an application frame-rate improvement.
 create/resolve/seek/stop lifecycle with synchronous and deferred custom classes.
 Conformance adds 440 upstream comparisons; Chrome exercises actual percentage,
 variable and auto measurement through unchanged upstream renderer/resolver classes.
+
+The group benchmark finds lower forwarding time on Node (14.4% for one member,
+52.5% for eight), with Bun overhead of 30.8%/10.9% at 49/108 ns. Complete target
+setup, completion and frame draining still cost more: Node 19.40 versus 10.75 μs,
+Bun 13.44 versus 10.47 μs. Snapshot validation and stale-write/error guards remain
+in place; target setup and deferred custom resolution still need performance work.

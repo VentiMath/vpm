@@ -1,5 +1,8 @@
 import api from "./index.cjs";
 export const {
+  GroupAnimation,
+  GroupAnimationWithThen,
+  animateTarget,
   animateElement,
   handOffElementState,
   animateValues,

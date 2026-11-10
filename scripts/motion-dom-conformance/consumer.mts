@@ -184,21 +184,58 @@ animateElement(".selector", { opacity: 1 });
 // @ts-expect-error object and color mixing is not implemented
 animateElement(document.body, { value: { nested: 1 } });
 
-import {handOffElementState, type ElementRenderer} from 'vmotion-dom';
+import { handOffElementState, type ElementRenderer } from "vmotion-dom";
 declare const renderer: ElementRenderer;
 handOffElementState(document.body, renderer);
-animateElement(document.body, {opacity: [0,1]}, {duration: .3}, renderer);
+animateElement(document.body, { opacity: [0, 1] }, { duration: 0.3 }, renderer);
 // @ts-expect-error renderer must support ownership and value transfer
-handOffElementState(document.body, {current: document.body});
+handOffElementState(document.body, { current: document.body });
 
-import {KeyframeResolver, type AnimationElement} from 'vmotion-dom';
+import { KeyframeResolver, type AnimationElement } from "vmotion-dom";
 class CustomResolver extends KeyframeResolver<number | string> {
   readKeyframes() {
-    this.unresolvedKeyframes = this.unresolvedKeyframes.map(x => x === 'token' ? 20 : x);
+    this.unresolvedKeyframes = this.unresolvedKeyframes.map((x) =>
+      x === "token" ? 20 : x,
+    );
     super.readKeyframes();
   }
 }
-const customOwner: AnimationElement = {current:document.body, getProps:()=>({}),KeyframeResolver:CustomResolver};
-const stringValue = motionValue<number|string>(0);
-stringValue.start(animateMotionValue('x', stringValue, 'token', {duration:.3}, customOwner));
-animateMotionValue('x', position, [0,1], {duration:.3}, undefined, true);
+const customOwner: AnimationElement = {
+  current: document.body,
+  getProps: () => ({}),
+  KeyframeResolver: CustomResolver,
+};
+const stringValue = motionValue<number | string>(0);
+stringValue.start(
+  animateMotionValue("x", stringValue, "token", { duration: 0.3 }, customOwner),
+);
+animateMotionValue("x", position, [0, 1], { duration: 0.3 }, undefined, true);
+
+import {
+  GroupAnimation,
+  GroupAnimationWithThen,
+  animateTarget,
+  type TargetRenderer,
+} from "vmotion-dom";
+declare const targetOwner: TargetRenderer;
+const group = new GroupAnimation(
+  animateTarget(targetOwner, {
+    opacity: 0,
+    transition: { duration: 0.2 },
+    transitionEnd: { display: "none" },
+  }),
+);
+group.time = 0.1;
+group.speed = 0.5;
+const groupFinished: Promise<unknown[]> = group.finished;
+group.attachTimeline({
+  observe(animation) {
+    animation.time = 0.2;
+    return () => animation.stop();
+  },
+});
+void new GroupAnimationWithThen([undefined]).then(() => {});
+// @ts-expect-error transitionEnd only accepts scalar endpoints
+animateTarget(targetOwner, { transitionEnd: { opacity: [] } });
+// @ts-expect-error variant state is outside the verified renderer scope
+animateTarget(targetOwner, { opacity: 0 }, { type: "whileHover" });

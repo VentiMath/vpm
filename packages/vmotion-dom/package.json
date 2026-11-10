@@ -37,7 +37,9 @@
     "reads.cjs",
     "resolver.cjs",
     "single.cjs",
-    "element.cjs"
+    "element.cjs",
+    "group.cjs",
+    "target.cjs"
   ],
   "sideEffects": false,
   "engines": {

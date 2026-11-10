@@ -468,6 +468,7 @@ export type ElementTransition = ElementValueTransition & {
   [property: string]: unknown;
 };
 export interface ElementAnimation extends PromiseLike<void> {
+  readonly startTime: number | null;
   readonly finished: Promise<void>;
   readonly duration: number;
   readonly iterationDuration: number;
@@ -509,3 +510,64 @@ export declare function animateValues(
   transition?: ElementTransition,
   element?: ResolverElement,
 ): ElementAnimation[];
+
+/** Scalar renderer targets; variant propagation and complex mixers are not implemented. */
+export type TargetAndTransition = {
+  transition?: ElementTransition;
+  transitionEnd?: Record<string, string | number | undefined>;
+  [property: string]: unknown;
+};
+export interface TargetRenderer extends ResolverElement {
+  latestValues?: Record<string, string | number | undefined>;
+  getValue(key: string): MotionValue<any> | undefined;
+  addValue(key: string, value: MotionValue<any>): void;
+  getDefaultTransition?(): ElementTransition | undefined;
+  shouldSkipAnimations?: boolean;
+  shouldReduceMotion?: boolean | null;
+}
+export declare function animateTarget(
+  renderer: TargetRenderer,
+  target: TargetAndTransition,
+  options?: { delay?: number; transitionOverride?: ElementTransition },
+): ElementAnimation[];
+export interface GroupMember {
+  time: number;
+  speed: number;
+  readonly state: string;
+  readonly startTime?: number | null;
+  readonly duration: number;
+  readonly iterationDuration: number;
+  readonly finished: Promise<unknown>;
+  play(): void;
+  pause(): void;
+  stop(): void;
+  cancel(): void;
+  complete(): void;
+  attachTimeline?(timeline: GroupTimeline): () => void;
+}
+export interface GroupTimeline {
+  observe(animation: GroupMember): () => void;
+}
+export declare class GroupAnimation {
+  animations: GroupMember[];
+  constructor(animations: (GroupMember | undefined)[]);
+  readonly finished: Promise<unknown[]>;
+  readonly duration: number;
+  readonly iterationDuration: number;
+  readonly state: string;
+  readonly startTime: number | null;
+  time: number;
+  speed: number;
+  play(): void;
+  pause(): void;
+  stop: () => void;
+  cancel(): void;
+  complete(): void;
+  attachTimeline(timeline: GroupTimeline): () => void;
+}
+export declare class GroupAnimationWithThen extends GroupAnimation {
+  then(
+    onResolve: () => void,
+    onReject?: (reason: unknown) => void,
+  ): Promise<void>;
+}

@@ -7,9 +7,9 @@
   },
   "implementation": {
     "kind": "independent implementation",
-    "replacementStatus": "partial; element animation and renderer handoff built, full renderer pending",
-    "targetScope": "Independent numeric and CSS-unit element animation APIs and renderer ownership transfer, DOM reads/keyframe resolution, MotionValue transitions, DOM effects, tween/spring playback, values, scheduling and mapping. Not a drop-in replacement for motion-dom yet.",
-    "remainingWork": "Custom effect registration, transitionEnd and high-level selector/group animate wrapper; complex none/color/string keyframes, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
+    "replacementStatus": "partial; grouped controls and scalar target completion built, full renderer pending",
+    "targetScope": "Independent grouped playback controls and scalar renderer targets with transitionEnd, numeric/CSS-unit element animations and renderer ownership transfer, DOM reads/keyframe resolution, MotionValue transitions, DOM effects, tween/spring playback, values, scheduling and mapping. Not a drop-in replacement for motion-dom yet.",
+    "remainingWork": "Color/complex-string mixers, custom effect registration and high-level selector animate wrapper; none keyframes and variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
@@ -24,7 +24,9 @@
       "single-value animation": "Public animateSingleValue entry for numeric scalars and MotionValues; validates replacements before stopping existing playback and preserves lifecycle errors through finished",
       "element animation": "animateElement and animateValues connect owned values, deferred DOM keyframe resolution, numeric controllers and shared HTML/SVG effects; public controls use seconds including delay.",
       "renderer handoff": "Transfers direct and pending HTML/SVG values into an existing renderer without restarting controllers; animateElement fourth argument shares renderer values and honors reduced/skip motion.",
-      "renderer-aware adapter": "animateMotionValue returns an externally owned StartAnimation factory for numeric/CSS-unit values and custom keyframe resolvers; reused factories own snapshots, shared queues support forced resolution and restoration, skip/reduced motion and immediate handoff are honored."
+      "renderer-aware adapter": "animateMotionValue returns an externally owned StartAnimation factory for numeric/CSS-unit values and custom keyframe resolvers; reused factories own snapshots, shared queues support forced resolution and restoration, skip/reduced motion and immediate handoff are honored.",
+      "group controls": "GroupAnimation and GroupAnimationWithThen snapshot members, forward playback controls, aggregate completion, expose longest durations and dispose timeline observers; child failures do not strand remaining cleanup.",
+      "target completion": "animateTarget resolves scalar renderer values and per-property transitions, waits for all controllers, preserves existing end-only styles until completion, then applies owned transitionEnd snapshots in a frame; cancelled, stopped, failed (including throwing completion callbacks) or replaced targets cannot apply stale completion writes."
     }
   },
   "changes": [
@@ -53,7 +55,9 @@
     "Renderer handoff preserves value identities, current velocity and active controllers, suppresses queued source writes and transfers pending reads. Destination validation precedes detachment, failed destination updates restore prior entries where the renderer accepts rollback, and stale source cleanup cannot detach later work.",
     "Custom resolver output is snapshotted before conversion; constructor/prototype/instance-field errors release pending work and reject owned lifecycle promises. Resolver measurement renders between phases and restores source state, including foreign public resolver classes. isHandoff uses immediate base resolution without custom DOM reads.",
     "Measurement guards live once per custom resolver class; source snapshots allocate only when measurement occurs. Resolved-value handoffs avoid constructing unused renderer readers. Prepared element options skip duplicate default selection while public factory snapshots and validation remain intact.",
-    "Resolver failure ownership lives in a private instance field on the cached guard class, avoiding a per-instance weak-map entry while retaining independent error routing, snapshot isolation and measurement restoration."
+    "Resolver failure ownership lives in a private instance field on the cached guard class, avoiding a per-instance weak-map entry while retaining independent error routing, snapshot isolation and measurement restoration.",
+    "Grouped controls have neutral empty getters and forward every cleanup even if a child throws. Failed timeline attachment unwinds observers and returned cleanup is idempotent.",
+    "Target completion validates scalar endpoints before animation starts, owns end snapshots and suppresses stale completion after cancellation, failure, replacement or reentrant playback callbacks. Variant-state propagation is explicitly outside the implemented target contract."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

@@ -1,5 +1,7 @@
 "use strict";
 module.exports = {
+  ...require("./group.cjs"),
+  ...require("./target.cjs"),
   ...require("./single.cjs"),
   ...require("./reads.cjs"),
   ...require("./resolver.cjs"),

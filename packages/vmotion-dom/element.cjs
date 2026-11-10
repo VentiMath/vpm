@@ -363,10 +363,10 @@ class ElementAnimation {
       options.onUpdate =
         onUpdate && (format ? (n) => onUpdate(format(n)) : onUpdate);
       options.onComplete = () => {
-        this.completed = true;
         if (final !== undefined && !reverse && this.animation.speed >= 0)
           this.value.set(final);
         onComplete?.();
+        this.completed = true;
       };
       let complete = this.externalComplete;
       // Validate before replacing the currently running value. This facade owns
@@ -447,6 +447,9 @@ class ElementAnimation {
       this.animation?.state ??
       (this.stopped || this.cancelled ? "idle" : "paused")
     );
+  }
+  get startTime() {
+    return this.ensure()?.startTime ?? null;
   }
   get duration() {
     return this.ensure()?.duration ?? 0;
@@ -834,4 +837,8 @@ function prepareRendererMotionValue(
 }
 Object.defineProperty(module.exports, "prepareRendererMotionValue", {
   value: prepareRendererMotionValue,
+});
+
+Object.defineProperty(module.exports, "getAnimationRequest", {
+  value: (value) => requests.get(value),
 });
