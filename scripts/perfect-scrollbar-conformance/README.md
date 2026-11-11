@@ -45,3 +45,9 @@ The benchmark uses the repository's isolated-process harness, balanced ordering,
 identical-source controls, fixed jsdom dimensions and retained validated results.
 It times construction/destruction, explicit geometry refresh and native scroll
 callbacks. Browser layout/paint and touch inertia are outside the measurement.
+
+The fixed-layout DOM fixture restores the original global property descriptors
+when it closes, including overlapping fixtures closed out of order. This keeps
+Bun's shared-process suite from leaking a browser document or Event constructor
+into later native-event and server-rendering tests. The regression lives in
+`scripts/test/perfect-scrollbar-fixture.test.cjs`.
