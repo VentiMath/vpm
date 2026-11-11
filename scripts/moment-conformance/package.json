@@ -1,0 +1,8 @@
+{
+  "name": "vpm-moment-conformance",
+  "private": true,
+  "dependencies": {
+    "moment": "2.31.0",
+    "moment-app": "npm:moment@2.30.1"
+  }
+}

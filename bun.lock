@@ -701,6 +701,10 @@
       "name": "vminimist",
       "version": "0.1.0",
     },
+    "packages/vmoment": {
+      "name": "vmoment",
+      "version": "2.31.0",
+    },
     "packages/vmotion-dom": {
       "name": "vmotion-dom",
       "version": "14.7.0",
@@ -1911,6 +1915,8 @@
     "vmime-types": ["vmime-types@workspace:packages/vmime-types"],
 
     "vminimist": ["vminimist@workspace:packages/vminimist"],
+
+    "vmoment": ["vmoment@workspace:packages/vmoment"],
 
     "vmotion-dom": ["vmotion-dom@workspace:packages/vmotion-dom"],
 

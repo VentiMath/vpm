@@ -55,6 +55,15 @@ jobs:
           node scripts/motion-dom-conformance/types.cjs
           node scripts/motion-dom-conformance/browser.cjs
           node scripts/motion-dom-conformance/archives.cjs
+      - run: npm --prefix scripts/moment-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Moment countdown dates, durations, DST and exact archives
+        run: |
+          node --test packages/vmoment/test/countdown.test.cjs
+          for tz in UTC America/Los_Angeles Europe/Berlin; do
+            TZ="$tz" node scripts/moment-conformance/run.cjs || exit
+          done
+          node scripts/moment-conformance/types.cjs
+          node scripts/moment-conformance/archives.cjs
       - run: npm --prefix scripts/perfect-scrollbar-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Desktop scrollbars, native input and packed consumers
         run: |
@@ -724,6 +733,13 @@ jobs:
           bun scripts/motion-dom-conformance/reads.cjs
           bun scripts/motion-dom-conformance/transitions.cjs
           bun scripts/motion-dom-conformance/effects.cjs
+      - run: npm --prefix scripts/moment-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Moment countdown dates, durations and DST on Bun
+        run: |
+          bun test packages/vmoment/test/countdown.test.cjs
+          for tz in UTC America/Los_Angeles Europe/Berlin; do
+            TZ="$tz" bun scripts/moment-conformance/run.cjs || exit
+          done
       - run: npm --prefix scripts/perfect-scrollbar-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Desktop scrollbar geometry and lifecycle
         run: |

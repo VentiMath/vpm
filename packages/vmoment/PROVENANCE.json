@@ -1,0 +1,24 @@
+{
+  "upstream": {
+    "name": "moment",
+    "version": "2.31.0",
+    "repository": "https://github.com/moment/moment",
+    "checked": "2026-11-11"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "FuseCountdown: strict ISO/local dates and exact instants, calendar-day addition, elapsed-second differences and fixed-unit duration fields. Formatting, locale data, calendar months/years, timezone modes and plugins are outside scope."
+  },
+  "changes": [
+    "Zero runtime dependencies and no upstream runtime copied.",
+    "Native Date storage with explicit ISO validation; no ambiguous host-dependent string parser fallback.",
+    "Calendar-day additions preserve local clock time across DST; hour/second differences remain elapsed time. Clones and returned Dates own their data."
+  ],
+  "caller": {
+    "revision": "47b9d38c77ad02722131d564ba497d16feda38a9",
+    "upstreamVersion": "2.30.1",
+    "paths": ["src/@fuse/core/FuseCountdown/FuseCountdown.tsx"],
+    "scope": "Five coming-soon template pages use the date 2071-07-28. This is not the contest timer. The representative countdown tick preserves the caller rounding of asDays(). Release and adoption are separate."
+  }
+}

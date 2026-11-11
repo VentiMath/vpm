@@ -1,0 +1,1594 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-11T18:59:37.542Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/moment-conformance/node_modules/moment": "3d398f0e643df2b6fcdd4dcc6d508be060bdb335ec2aa561f46559ee141f405e",
+    "../../scripts/moment-conformance/package-lock.json": "cde2ee8f8906cf513e34fea9ea56923435f3e10d86e9cad3b05b48ecc5732465",
+    "PROVENANCE.json": "26796bb9a1a973d750cbc7f6b1ed0fbd33529ad546dba6a475018c23d22d52aa",
+    "bench/run.cjs": "16b25a2ec9d3d639c2cbb3a49c9c035088dd7067d37d3850cb6ef050abfd34f2",
+    "index.cjs": "eaef2c0e739338605127497d1116818555e5196a15b0801958cf060603976c90",
+    "index.mjs": "8736221e417d8d7d462da54b06ca7caebabc0c93533655c0257690eecf587466",
+    "package.json": "7bbb28db900238f9e935b944a00f044706e56e93b5c2d2ebbbb6c1c3171f7ffb"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 98977,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 9602,
+            "samples": [
+              1143.1602791085204,
+              1176.1612164132466,
+              1186.606123724226,
+              1150.250781087269,
+              1182.5270776921473,
+              1169.1357008956477,
+              1141.1989168923124,
+              1164.5750885232194,
+              1167.5735263486797,
+              1165.408248281613,
+              1187.6822536971488,
+              1214.2999375130146
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 20377,
+            "samples": [
+              357.6295332973453,
+              314.8627374000065,
+              336.00790106492354,
+              315.0344996810167,
+              317.95858075281194,
+              315.7726848898247,
+              320.15669627521066,
+              331.3846493595704,
+              311.57265544486023,
+              333.90999656475384,
+              336.7010845561163,
+              327.53432791873246
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 12721,
+            "samples": [
+              641.5802216806898,
+              606.14338495401,
+              618.9143149123566,
+              643.2899929250885,
+              635.99882084742,
+              691.5958651049415,
+              669.3197861803301,
+              669.5850169011861,
+              659.9094410816789,
+              658.8220265702339,
+              642.6283311060396,
+              648.2817388570014
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 78579,
+            "samples": [
+              135.37119332136956,
+              137.22070782270154,
+              129.99338245587364,
+              135.9873503098805,
+              135.27839499102964,
+              134.48780208452743,
+              132.18703470392813,
+              136.61728960663729,
+              135.5981496328522,
+              136.67189707173569,
+              138.47370162511754,
+              135.43006401201393
+            ]
+          }
+        ],
+        "checksum": 49216
+      },
+      "vpm": {
+        "pid": 98992,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 9602,
+            "samples": [
+              284.0119766715261,
+              309.25848781503964,
+              278.8091022703593,
+              309.2324515725878,
+              289.93959591751633,
+              340.37606748594095,
+              280.50145802957456,
+              277.07769214747066,
+              300.102374505312,
+              277.0429077275571,
+              300.5840449906251,
+              280.0110393667998
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 20377,
+            "samples": [
+              41.10433331697478,
+              43.194140452472325,
+              38.93890170290248,
+              39.47872601462487,
+              39.67708691171325,
+              37.67728321146563,
+              55.93929430240063,
+              42.43554006968665,
+              41.16567698876015,
+              41.87726358148994,
+              42.4784806399378,
+              51.745448299553466
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 12721,
+            "samples": [
+              180.42339438723332,
+              166.0312082383448,
+              186.3454130964541,
+              158.07845295181713,
+              182.14959515761595,
+              183.72179860074007,
+              168.9332599638394,
+              178.7202263972968,
+              163.2340224825011,
+              179.3491077745411,
+              185.51348164452446,
+              180.2826035688994
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 78579,
+            "samples": [
+              11.10772598276908,
+              8.784688020972517,
+              12.182542409550289,
+              8.357830972653023,
+              10.91310655518611,
+              8.602272871885914,
+              11.884536581019658,
+              8.705671998881387,
+              8.448504053245292,
+              11.511765229896058,
+              8.72847707402754,
+              11.518662747044353
+            ]
+          }
+        ],
+        "checksum": 33344
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 98993,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 35400,
+            "samples": [
+              304.42327683615775,
+              305.29542372881343,
+              298.8112146892651,
+              312.2716384180792,
+              339.3608757062154,
+              288.75587570621553,
+              295.23070621468923,
+              317.0774293785307,
+              297.33403954802395,
+              303.5193220338976,
+              319.68573446327633,
+              317.962570621469
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 259234,
+            "samples": [
+              41.44742973529676,
+              39.640344244967785,
+              41.522655207264144,
+              40.44897660029183,
+              40.801137196509735,
+              44.05945593556431,
+              38.84151770215315,
+              40.865750634561415,
+              41.36658385859868,
+              40.816567271268525,
+              41.01329686692316,
+              42.32308647785402
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 44055,
+            "samples": [
+              174.59141981613735,
+              175.94200431279089,
+              174.38996708659758,
+              198.84424015435272,
+              184.02944047213578,
+              180.64351378958168,
+              177.70968108046648,
+              177.82885030076292,
+              180.128044489841,
+              173.31649075019797,
+              173.52266485075484,
+              179.53033707864984
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 813127,
+            "samples": [
+              10.213707083887355,
+              10.403099392837861,
+              9.649015467448478,
+              10.5675374203538,
+              10.116911626351332,
+              9.958213169652652,
+              9.468437279785277,
+              10.350678307324719,
+              10.045837858046918,
+              10.54801402486939,
+              10.000692388765735,
+              10.030465105696983
+            ]
+          }
+        ],
+        "checksum": 64000
+      },
+      "upstream": {
+        "pid": 98994,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 35400,
+            "samples": [
+              1797.0538983050844,
+              4428.298022598872,
+              2582.705988700567,
+              1370.782711864407,
+              1854.2937853107328,
+              1407.8107344632767,
+              1293.389830508473,
+              1332.4905932203387,
+              1282.2657909604513,
+              1258.90418079096,
+              1290.5249435028243,
+              1289.1031073446347
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 259234,
+            "samples": [
+              334.2713532947071,
+              347.2858151322746,
+              349.04034578797524,
+              335.671794594845,
+              330.6251957690735,
+              339.63442681129715,
+              330.0504216267937,
+              336.57252520888414,
+              343.38972511321896,
+              338.6337247428961,
+              329.08122391353106,
+              356.0930163481638
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 44055,
+            "samples": [
+              635.2901600272412,
+              634.8239019407614,
+              636.3579616388663,
+              634.9317217114935,
+              631.9420724094898,
+              638.2958801498108,
+              633.3087277267042,
+              626.5652706843723,
+              618.0815798433812,
+              657.969220292822,
+              656.1258653955255,
+              686.7854727045669
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 813127,
+            "samples": [
+              132.87986747457674,
+              134.21519639613493,
+              133.39470218059398,
+              132.66213764885424,
+              145.94870665959976,
+              138.30542461386779,
+              136.4274891868054,
+              133.65234828015838,
+              136.10855622799335,
+              147.16392273285751,
+              134.90773888949658,
+              144.60031089854317
+            ]
+          }
+        ],
+        "checksum": 5056
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 99023,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 8360,
+            "samples": [
+              1270.0059808612423,
+              1303.6782296650726,
+              1336.4283492822995,
+              1382.1122009569358,
+              1420.8233253588521,
+              1323.8187799043103,
+              1399.0779904306187,
+              1293.9443779904338,
+              1360.5212918660238,
+              1339.8773923444958,
+              1284.9581339712934,
+              1303.9025119617213
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 31571,
+            "samples": [
+              337.80339552120734,
+              349.2498178708305,
+              339.6576921858675,
+              333.85068575591407,
+              325.28798580975933,
+              335.2404105033111,
+              330.7056475879754,
+              344.01298660163025,
+              351.9844160780449,
+              331.8525545595628,
+              343.7793544708766,
+              342.15077127743905
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 16991,
+            "samples": [
+              635.9003590135942,
+              655.9599788123164,
+              658.8807015478817,
+              642.42834441763,
+              649.1917485727771,
+              639.2035783650194,
+              614.2884468247947,
+              652.7549290801011,
+              648.9465010888119,
+              616.8780530869326,
+              716.5141545524123,
+              644.2356541698587
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 48338,
+            "samples": [
+              139.2417352807323,
+              136.06359385990095,
+              131.02873515660775,
+              139.20640076130647,
+              143.74301791550988,
+              135.29469568455332,
+              129.21943398568695,
+              135.40674003889086,
+              131.97432661674006,
+              131.76573296371095,
+              137.054884355993,
+              134.27582854069544
+            ]
+          }
+        ],
+        "checksum": 46464
+      },
+      "vpm": {
+        "pid": 99024,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 8360,
+            "samples": [
+              303.58851674640937,
+              306.8979665071793,
+              315.8144736842104,
+              278.9025119617228,
+              313.4767942583732,
+              280.76160287081495,
+              318.22165071770434,
+              277.8808612440185,
+              276.37057416267737,
+              332.40131578947364,
+              284.1008373205729,
+              303.5885167464128
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 31571,
+            "samples": [
+              44.95027081815616,
+              40.57654176301079,
+              38.60875486997486,
+              46.123562763295226,
+              39.8572424060053,
+              39.33331221690714,
+              37.77200595483182,
+              47.290234709068294,
+              40.10405118621482,
+              49.783313800639775,
+              47.79439992398076,
+              41.161192233379474
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 16991,
+            "samples": [
+              174.5066211523771,
+              184.18086045553466,
+              174.87687599317042,
+              157.88505679477547,
+              172.42216467541564,
+              171.5712435995525,
+              172.5030898711106,
+              166.92660820434054,
+              187.43987993643802,
+              179.02860337825936,
+              162.72585486433763,
+              165.13889706315192
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 48338,
+            "samples": [
+              8.478505523603221,
+              8.271608258511815,
+              12.029004096156187,
+              9.668045843848258,
+              8.519011957465995,
+              14.033989821671561,
+              9.16634945591463,
+              8.841387728081088,
+              8.15265422648896,
+              11.407526169887353,
+              8.260395548014984,
+              8.16299805536041
+            ]
+          }
+        ],
+        "checksum": 37376
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 99025,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 32788,
+            "samples": [
+              307.7929730389166,
+              311.97642430157384,
+              339.9795656947668,
+              309.7258753202392,
+              299.1427351470048,
+              306.83988044406567,
+              298.63947175796164,
+              307.16777479565684,
+              307.71422471635987,
+              303.8789801146769,
+              295.0342503354888,
+              289.02342320361066
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 255797,
+            "samples": [
+              41.7689613248007,
+              40.30197774016112,
+              41.156495189545126,
+              42.948767968350005,
+              41.73556765716569,
+              40.590128109399274,
+              40.00144645949727,
+              40.312892645339836,
+              40.18893497578163,
+              42.8477777299968,
+              39.06401560612495,
+              42.161850999034165
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 59173,
+            "samples": [
+              169.46002399742974,
+              177.26763895695694,
+              175.03971405877655,
+              180.76798539874463,
+              167.2349044327655,
+              173.47650110692203,
+              179.82159092829488,
+              174.34260558024766,
+              176.65151335913293,
+              172.51041860307842,
+              165.83647947543636,
+              173.36454126037256
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 837174,
+            "samples": [
+              10.020069901836317,
+              10.93773934689815,
+              10.006183899643382,
+              12.105408194712174,
+              10.413556799422897,
+              10.640858411751863,
+              10.690230465829176,
+              10.107316997422302,
+              10.72860480616922,
+              9.754841884721746,
+              11.273244271800303,
+              9.909478794133511
+            ]
+          }
+        ],
+        "checksum": 62784
+      },
+      "upstream": {
+        "pid": 99026,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 32788,
+            "samples": [
+              1249.5120165914357,
+              1243.1504513846535,
+              1280.685769183848,
+              1255.3652555813098,
+              1242.0079907283155,
+              1245.989386360862,
+              1259.2449981700634,
+              1236.9375381237023,
+              1230.2684518726392,
+              1218.0904599243636,
+              1281.3809015493505,
+              1252.7525314139314
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 255797,
+            "samples": [
+              328.4999120396249,
+              322.7587031904204,
+              336.4034761940129,
+              336.2397721630817,
+              341.24309120122587,
+              347.69970328033537,
+              333.04518035786236,
+              331.53552230870525,
+              334.0140502038722,
+              329.64827969053624,
+              325.79447765220095,
+              326.7475459055415
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 59173,
+            "samples": [
+              698.0619032328897,
+              706.8842039443638,
+              781.8078515539169,
+              971.5410744765354,
+              711.2020516113777,
+              676.5796900613439,
+              642.5030503777076,
+              640.1321717675298,
+              641.6897571527526,
+              642.7241647372922,
+              667.1581633515289,
+              663.4515065992957
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 837174,
+            "samples": [
+              132.4881386665139,
+              203.1957120025231,
+              150.2143425381113,
+              134.95720961233891,
+              137.33634465475558,
+              133.961199225012,
+              132.4902290324353,
+              135.82202385645084,
+              136.07620279655094,
+              134.55172759784753,
+              132.93199263235675,
+              132.4794284103428
+            ]
+          }
+        ],
+        "checksum": 4992
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 99040,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 8291,
+            "samples": [
+              1237.0742974309499,
+              1268.1974430104926,
+              1367.8134121336357,
+              1292.857676999157,
+              1275.8514051380969,
+              1273.1727174044163,
+              1243.6376794114076,
+              1235.6470872029856,
+              1278.7560004824522,
+              1244.5071764563947,
+              1291.2797008804748,
+              1349.6362320588612
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 14988,
+            "samples": [
+              370.09887910328484,
+              340.4751801441202,
+              412.22978382706066,
+              361.5475713904504,
+              392.99499599679166,
+              346.30204163330785,
+              357.3358686949598,
+              354.416866826788,
+              357.3442087002915,
+              353.1408460101478,
+              337.3643581531899,
+              455.2586068855052
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 15660,
+            "samples": [
+              626.0270114942531,
+              617.5819284802046,
+              668.6489144316738,
+              635.1851851851853,
+              618.8031928480154,
+              673.4062579821172,
+              631.0052362707515,
+              664.7270114942532,
+              718.2391443167286,
+              660.839719029374,
+              631.0584291187755,
+              641.3872924648791
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 73966,
+            "samples": [
+              134.11622907822627,
+              131.2325933537038,
+              134.6029527080013,
+              139.4266690100851,
+              134.66660357461484,
+              133.47742205878387,
+              131.3131438769167,
+              137.318727523457,
+              132.4459886975117,
+              128.54329016034555,
+              135.58482275640213,
+              132.52766135792146
+            ]
+          }
+        ],
+        "checksum": 35584
+      },
+      "vpm": {
+        "pid": 99041,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 8291,
+            "samples": [
+              1289.9931250753837,
+              1485.3907851887575,
+              1452.4333614762993,
+              1379.8998914485562,
+              1447.1565553009298,
+              1448.7898926546839,
+              1447.3174526595099,
+              1506.905077795197,
+              1492.7180074779883,
+              1478.0635628995337,
+              2725.9176215173043,
+              1846.2138463394049
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 14988,
+            "samples": [
+              350.58046437149767,
+              329.05217507339074,
+              353.2854283426719,
+              330.04176674672647,
+              356.1460501734686,
+              360.5300907392603,
+              338.687616760072,
+              322.71370429676784,
+              339.2158393381434,
+              333.5807312516641,
+              331.51240992794186,
+              347.28062449960294
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 15660,
+            "samples": [
+              643.2178799489177,
+              636.0100255427853,
+              608.0459770114901,
+              649.8775862068991,
+              626.8678160919513,
+              630.5901660280975,
+              679.6668582375502,
+              647.4483397190306,
+              638.4392081736934,
+              646.4160280970567,
+              613.745210727972,
+              647.4005108556892
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 73966,
+            "samples": [
+              131.35482518995326,
+              137.08606657112628,
+              132.87299570072724,
+              132.97607008625675,
+              129.2389881837605,
+              140.54880620825838,
+              136.5548495254576,
+              138.07469648216812,
+              134.74434199497063,
+              139.00362328637408,
+              129.2153286645202,
+              138.66281805153923
+            ]
+          }
+        ],
+        "checksum": 8704
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 99042,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 7674,
+            "samples": [
+              1273.01602814699,
+              1352.0926505082089,
+              1238.8150899139944,
+              1188.5424811050316,
+              1213.676048996608,
+              1158.592780818344,
+              1148.8522283033665,
+              1186.3272087568434,
+              1166.1508991399558,
+              1160.2814698983575,
+              1151.4908782903324,
+              1143.8623924941312
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 21082,
+            "samples": [
+              345.2807134048022,
+              352.23176169243874,
+              346.57726970875797,
+              349.6506024096408,
+              336.69519020965754,
+              328.65914049900056,
+              345.52385921639586,
+              347.4745754672243,
+              347.81448629162355,
+              332.62380229579827,
+              341.2053410492384,
+              341.4445498529519
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 11739,
+            "samples": [
+              700.6772297469938,
+              667.5291762501097,
+              620.1088678763077,
+              639.3254962092174,
+              632.8016866854055,
+              668.384530198487,
+              647.1236050770941,
+              629.9052730215509,
+              621.9617514268654,
+              622.3805264502995,
+              632.4218417241655,
+              639.350285373537
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 73157,
+            "samples": [
+              254.32118594256005,
+              327.51934879779094,
+              162.90706289213557,
+              148.1135229711463,
+              141.1057725166401,
+              130.45003212269293,
+              136.5994915045721,
+              134.34007682108438,
+              137.67707806498368,
+              140.76005030277082,
+              134.4334786828326,
+              135.95076342660118
+            ]
+          }
+        ],
+        "checksum": 42688
+      },
+      "upstream": {
+        "pid": 99043,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "parse local countdown end date",
+            "iterations": 7674,
+            "samples": [
+              1242.0185040396143,
+              1208.213969246809,
+              1199.0540787073226,
+              1175.1421683607,
+              1167.3236903831125,
+              1456.7425071670589,
+              1170.8040135522567,
+              1134.5887412040602,
+              1161.1557206150633,
+              1176.532186604117,
+              1191.3388063591356,
+              1183.2323429762848
+            ]
+          },
+          {
+            "case": "create default fifteen-day deadline",
+            "iterations": 21082,
+            "samples": [
+              335.6319134806961,
+              330.39242007399616,
+              342.08685134237567,
+              324.4533251114722,
+              318.2908642443775,
+              316.0357651076722,
+              332.34512854568226,
+              319.43126838061323,
+              318.67038231666834,
+              318.2533440850029,
+              321.55393226449087,
+              341.2429086424481
+            ]
+          },
+          {
+            "case": "FuseCountdown tick and fields",
+            "iterations": 11739,
+            "samples": [
+              599.7245932362208,
+              636.9189028026182,
+              601.5134168157388,
+              671.9162620325375,
+              595.4261862168797,
+              653.4167305562601,
+              659.8021126160639,
+              628.3790782860623,
+              2801.299769997444,
+              3383.8238350796505,
+              3868.4655422097294,
+              1831.8993951784685
+            ]
+          },
+          {
+            "case": "duration construction and fields",
+            "iterations": 73157,
+            "samples": [
+              168.18565550801654,
+              152.7155022759265,
+              167.6195305985748,
+              184.56596087865992,
+              176.00274751561474,
+              208.00982817775397,
+              215.87647115108422,
+              155.46017469278465,
+              144.77766994272588,
+              143.32930546632753,
+              147.65732602485141,
+              134.81849993848743
+            ]
+          }
+        ],
+        "checksum": 7744
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "parse local countdown end date",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1168.3546136221637,
+          "vpmNs": 286.9757862945212,
+          "changePct": -75.4376126093403
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1351.6366525423728,
+          "vpmNs": 304.8593502824856,
+          "changePct": -77.44516991981108
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1330.1235645933048,
+          "vpmNs": 303.5885167464111,
+          "changePct": -77.17591622104405
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1247.7507014761488,
+          "vpmNs": 307.0038276198612,
+          "changePct": -75.39541935286745
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1274.5120612712567,
+          "vpmNs": 1465.2484621879166,
+          "changePct": 14.96544495047074
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1179.882264790201,
+          "vpmNs": 1176.2390539483995,
+          "changePct": -0.3087774899683926
+        }
+      ]
+    },
+    {
+      "case": "create default fifteen-day deadline",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 323.84551209697156,
+          "vpmNs": 41.52147028512505,
+          "changePct": -87.17861797242014
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 337.6031249758901,
+          "vpmNs": 40.93952375074229,
+          "changePct": -87.87347606641201
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 338.7305438535374,
+          "vpmNs": 40.86886699819513,
+          "changePct": -87.93469684391194
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 332.2903513332838,
+          "vpmNs": 40.8733116494722,
+          "changePct": -87.69951896422154
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 357.3400386976257,
+          "vpmNs": 338.9517280491077,
+          "changePct": -5.145885894997004
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 323.0036286879815,
+          "vpmNs": 345.40228631059904,
+          "changePct": 6.93449101906356
+        }
+      ]
+    },
+    {
+      "case": "FuseCountdown tick and fields",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 645.785865891045,
+          "vpmNs": 179.81585567172024,
+          "changePct": -72.15549841376394
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 635.1109408693674,
+          "vpmNs": 177.7692656906147,
+          "changePct": -72.00973022960737
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 646.5910776293354,
+          "vpmNs": 172.46262727326314,
+          "changePct": -73.32740378887055
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 671.8689267064364,
+          "vpmNs": 173.90955334358483,
+          "changePct": -74.11555343151446
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 638.2862388250322,
+          "vpmNs": 640.8285440613056,
+          "changePct": 0.39830174640036464
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 656.609421586162,
+          "vpmNs": 636.0635914473114,
+          "changePct": -3.1290793984067866
+        }
+      ]
+    },
+    {
+      "case": "duration construction and fields",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 135.51410682243306,
+          "vpmNs": 9.848897288079314,
+          "changePct": -92.73219776227096
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 135.50814755874495,
+          "vpmNs": 10.081374742199124,
+          "changePct": -92.5603183839343
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 135.3507178617221,
+          "vpmNs": 8.680199842773542,
+          "changePct": -93.58688303992486
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 134.75446860509322,
+          "vpmNs": 10.52720760558738,
+          "changePct": -92.18786010248161
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 133.79682556850508,
+          "vpmNs": 135.6495957602141,
+          "changePct": 1.3847639387829735
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 161.53985264567973,
+          "vpmNs": 139.21856418387725,
+          "changePct": -13.817821482579795
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "parse local countdown end date",
+      "upstream_ns": 1289,
+      "vpm_ns": 304,
+      "change_pct": -76.3,
+      "upstream_first_pct": -76.3,
+      "vpm_first_pct": -76.4,
+      "process_range_pct": "-75.4, -77.4, -77.2, -75.4",
+      "control_max_abs_pct": 15,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "create default fifteen-day deadline",
+      "upstream_ns": 335,
+      "vpm_ns": 41,
+      "change_pct": -87.8,
+      "upstream_first_pct": -87.6,
+      "vpm_first_pct": -87.8,
+      "process_range_pct": "-87.2, -87.9, -87.9, -87.7",
+      "control_max_abs_pct": 6.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "FuseCountdown tick and fields",
+      "upstream_ns": 646,
+      "vpm_ns": 176,
+      "change_pct": -72.7,
+      "upstream_first_pct": -72.7,
+      "vpm_first_pct": -73.1,
+      "process_range_pct": "-72.2, -72.0, -73.3, -74.1",
+      "control_max_abs_pct": 3.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "duration construction and fields",
+      "upstream_ns": 135,
+      "vpm_ns": 10,
+      "change_pct": -92.6,
+      "upstream_first_pct": -93.2,
+      "vpm_first_pct": -92.4,
+      "process_range_pct": "-92.7, -92.6, -93.6, -92.2",
+      "control_max_abs_pct": 13.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}
