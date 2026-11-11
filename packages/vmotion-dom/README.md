@@ -696,7 +696,7 @@ No speed advantage is claimed for this unit; application adoption remains pendin
 
 ## Still to build
 
-Custom-effect `transitionEnd` is the next bounded unit. Editable sequence
+Custom-effect `transitionEnd` remains unimplemented. Editable sequence
 timelines and variant propagation remain unimplemented.
 Inertia, CSS spring serialization, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
