@@ -1,5 +1,5 @@
 "use strict";
-const { resolveElements } = require("./effects.cjs");
+const { resolveElements, propEffect } = require("./effects.cjs");
 const { animateElement, prepareFrames, snapshotTransition } = require("./element.cjs");
 const { animateSingleValue } = require("./single.cjs");
 const { findEffect, addEffect, removeEffect, animateEffectSubject } = require("./custom-effects.cjs");
@@ -52,20 +52,20 @@ function animateElements(subject, keyframes, options = {}, scope) {
   return animations;
 }
 function animateSubjects(subject, keyframes, options, scope) {
-  // DOM selectors, nodes and collections keep the established renderer. Only
-  // explicitly registered non-DOM subjects enter the custom-effect path.
+  // DOM selectors keep their renderer. Custom effects take priority over
+  // property animation, which is the fallback for ordinary objects.
   if (subject == null || typeof subject === "string" || subject.nodeType === 1)
     return animateElements(subject, keyframes, options, scope);
   const subjects = Array.isArray(subject) ? subject.slice()
-    : typeof subject[Symbol.iterator] === "function" || typeof subject.length === "number"
+    : typeof subject?.[Symbol.iterator] === "function"
       ? Array.from(subject) : [subject];
   if (subjects.every(item => item?.nodeType === 1))
     return animateElements(subjects, keyframes, options, scope);
   record(keyframes, "keyframes");
   const entries = subjects.map(item => {
     const dom = item?.nodeType === 1;
-    const effect = dom ? undefined : findEffect(item);
-    if (!dom && !effect) throw new TypeError("subject requires a registered effect");
+    const effect = dom ? undefined : (findEffect(item) || (propEffect.test(item) && !Array.isArray(item) ? propEffect : undefined));
+    if (!dom && !effect) throw new TypeError("subject requires an object, DOM element or registered effect");
     return { item, effect };
   });
   const keys = Object.keys(keyframes), frames = Object.create(null);
@@ -106,7 +106,8 @@ function createScopedAnimate(options = {}) {
     if (skipAnimations || scope?.skipAnimations) settings.skipAnimations = true;
     if (settings.reduceMotion === undefined)
       settings.reduceMotion = scope?.reduceMotion ?? reduceMotion;
-    const scalar = typeof subject === "number" || isMotionValue(subject);
+    const scalar = typeof subject === "number" || isMotionValue(subject) ||
+      (typeof subject === "string" && (typeof keyframes === "string" || typeof keyframes === "number" || Array.isArray(keyframes)));
     if (scalar && settings.skipAnimations) settings.type = false;
     const animations = scalar
       ? [animateSingleValue(subject, keyframes, settings)]

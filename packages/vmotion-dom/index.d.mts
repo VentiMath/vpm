@@ -405,6 +405,8 @@ export interface DOMEffect {
   state(subject: Element): EffectBindingState | undefined;
 }
 export interface PropertyEffect {
+  test(subject: unknown): subject is object;
+  read(subject: object, key: string, keyframes?: number | string | (number | string | null)[]): number | string | undefined;
   (subject: object, values: Record<string, MotionValue<any>>): () => void;
   get(subject: object, key: string): MotionValue<any> | undefined;
   flush(subject: object): void;
@@ -562,14 +564,28 @@ export declare class DOMKeyframesResolver<
 }
 export declare function flushKeyframeResolvers(): void;
 
-export type SingleValueAnimation = Omit<JSAnimation, "finished"> & {
+export type SingleValueAnimation<T extends number | string = number> = Omit<JSAnimation, "finished" | "sample" | "sampleAt" | "tick"> & {
   readonly finished: Promise<void>;
+  sample(milliseconds: number): { done: boolean; value: T };
+  sampleAt(timestamp: number, resolved?: boolean): T;
+  tick(timestamp: number): { done: boolean; value: T };
 };
+export interface StringValueTransition extends Omit<NumericValueTransition, "from" | "onUpdate" | "finalKeyframe"> {
+  from?: number | string;
+  onUpdate?: (value: string) => void;
+  finalKeyframe?: never;
+}
 export declare function animateSingleValue(
-  value: number | MotionValue<number>,
-  target: number | (number | null)[],
-  options?: NumericValueTransition,
-): SingleValueAnimation;
+  value: number | MotionValue<number>, target: number | (number | null)[], options?: NumericValueTransition,
+): SingleValueAnimation<number>;
+export declare function animateSingleValue(
+  value: string | MotionValue<string>, target: string | (string | null)[], options?: StringValueTransition,
+): SingleValueAnimation<string>;
+export declare function animateSingleValue(
+  value: number | string | MotionValue<number> | MotionValue<string> | MotionValue<number | string>,
+  target: number | string | (number | string | null)[],
+  options?: Omit<StringValueTransition, "onUpdate"> & { onUpdate?: (value: number | string) => void },
+): SingleValueAnimation<number | string>;
 
 /** Numeric values, matching CSS units, variables and two-frame measured lengths. */
 export type ElementKeyframes = Record<
@@ -710,6 +726,7 @@ export type SelectorTransition = Omit<ElementValueTransition, "delay"> & {
   delay?: number | ((index: number, total: number) => number);
 };
 export interface ScopedAnimate {
+  (subject: string | MotionValue<string>, keyframes: string | (string | null)[], options?: StringValueTransition): GroupAnimationWithThen;
   (subject: object | object[], keyframes: ElementKeyframes, options?: SelectorTransition): GroupAnimationWithThen;
   (subject: number | MotionValue<number>, keyframes: number | (number | null)[], options?: NumericValueTransition): GroupAnimationWithThen;
   (subject: Element | Iterable<Element> | ArrayLike<Element> | string | null | undefined, keyframes: ElementKeyframes, options?: SelectorTransition): GroupAnimationWithThen;
@@ -755,9 +772,9 @@ export interface AnimateEffect<Subject extends object = object> extends Effect<S
 export type AddEffectValue<Subject extends object> = (subject: Subject, state: MotionValueState, key: string, value: MotionValue<any>) => () => void;
 export declare function createEffect<Subject extends object>(addValue: AddEffectValue<Subject>, options: EffectOptions<Subject> & { test: EffectTest<Subject>; read: EffectRead<Subject> }): AnimateEffect<Subject>;
 export declare function createEffect<Subject extends object>(addValue: AddEffectValue<Subject>, options?: EffectOptions<Subject>): Effect<Subject>;
-export declare function addEffect(effect: AnimateEffect<any>): void;
-export declare function removeEffect(effect: AnimateEffect<any>): void;
-export declare function findEffect(subject: unknown): AnimateEffect | undefined;
+export declare function addEffect(effect: AnimateEffect<any> | PropertyEffect): void;
+export declare function removeEffect(effect: AnimateEffect<any> | PropertyEffect): void;
+export declare function findEffect(subject: unknown): AnimateEffect | PropertyEffect | undefined;
 export interface EffectKeyframes {
   [key: string]: number | string | (number | string | null)[] | ElementTransition | undefined;
   transition?: ElementTransition;
@@ -765,4 +782,4 @@ export interface EffectKeyframes {
   transitionEnd?: never;
 }
 export type EffectTransition = ElementTransition;
-export declare function animateEffectSubject<Subject extends object>(effect: AnimateEffect<Subject>, subject: Subject, keyframes: EffectKeyframes, transition?: EffectTransition, element?: AnimationElement): ElementAnimation[];
+export declare function animateEffectSubject<Subject extends object>(effect: AnimateEffect<Subject> | PropertyEffect, subject: Subject, keyframes: EffectKeyframes, transition?: EffectTransition, element?: AnimationElement): ElementAnimation[];

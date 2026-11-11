@@ -210,6 +210,7 @@ function animateEffectSubject(effect, subject, keyframes, transition = {}, eleme
     let value = effect.get(subject, key);
     if (!value) {
       const source = frames[key], initial = element ? undefined : source[0] ?? effect.read(subject, key, Array.isArray(keyframes[key]) ? source.slice() : keyframes[key]);
+      if (!element && (initial === undefined || initial === null)) throw new TypeError(key + " cannot be read; provide explicit [from, to] keyframes");
       value = motionValue(initial);
       created[key] = value;
     }

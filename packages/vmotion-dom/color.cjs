@@ -152,6 +152,10 @@ function hslTransform({ hue, saturation, lightness, alpha = 1 }) {
   return `hsla(${tidy(finite(hue))}, ${tidy(clamp(finite(saturation), 0, 100))}%, ${tidy(clamp(finite(lightness), 0, 100))}%, ${tidy(clamp(finite(alpha), 0, 1))})`;
 }
 function test(value) {
+  // Non-colors are routine inputs when selecting a string mixer. Reject them
+  // without constructing an exception; candidate colors still use the strict
+  // parser, including all finite-component and separator validation.
+  if (typeof value === "string" && !/^\s*(?:#|rgba?\(|hsla?\(|transparent\s*$)/i.test(value)) return false;
   try {
     parse(value);
     return true;

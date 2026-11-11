@@ -14,7 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 256 package tests
+easings come from the verified `vmotion-utils` foundation. All 271 package tests
 run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
@@ -249,7 +249,7 @@ callback failures, error cleanup, empty groups and reduced-motion preferences.
 The wrapper follows public [animate documentation](https://motion.dev/docs/animate)
 and public declarations; no upstream runtime was copied. It returns grouped
 controls for supported DOM/numeric calls, without claiming current Motion's
-editable Timeline, unregistered object subjects or the single-string overload.
+editable Timeline API. Default object and single-string calls are checked separately.
 
 
 `custom-effects.cjs` checks 488 binding, coalescing, explicit flush/release and
@@ -264,4 +264,21 @@ real DOM output via an object effect and verifies that release stops writes.
 ```sh
 node scripts/motion-dom-conformance/custom-effects.cjs
 bun scripts/motion-dom-conformance/custom-effects.cjs
+```
+
+
+`subjects.cjs` adds 1,200 current/app comparisons for single-string and object
+playback: colors, units, complex strings, multi-frame offsets, delays, repeats,
+reverse/mirror and spring overshoot. Equivalent hex/RGBA spellings are parsed;
+string token structure matches and numeric token tolerance is 2e-5 (five-decimal
+serialization). Object tests use the frame runtime resolved by each public
+Framer Motion entry, advancing its clock between samples. Independent tests cover
+numeric-string interpolation, discrete text, rejected cross-unit conversion,
+original endpoints, reentrant callbacks, unsafe keys and unreadable origins.
+The browser fixture draws through string callbacks and object setters and keeps
+iframe nodes on the DOM path. No upstream runtime was read or copied.
+
+```sh
+node scripts/motion-dom-conformance/subjects.cjs
+bun scripts/motion-dom-conformance/subjects.cjs
 ```

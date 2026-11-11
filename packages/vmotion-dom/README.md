@@ -153,8 +153,8 @@ are unestablished against process/control variation. All samples are retained.
 
 ## Single-value animations
 
-`animateSingleValue(numberOrMotionValue, target, options)` is the public numeric
-entry above the transition adapter. It returns the same playback controls and
+`animateSingleValue(valueOrMotionValue, target, options)` accepts numbers, colors,
+matching-unit strings and supported complex strings above the transition adapter. It returns the same playback controls and
 accepts transition times in seconds:
 
 ```js
@@ -167,7 +167,31 @@ MotionValue start/completion events retain their ordering, and listener failures
 are observable through `finished`. Stopping or cancelling settles playback even
 though a cancelled `MotionValue.start()` promise does not report successful
 completion. Replays use a fresh completion promise. Paused construction has no
-frame side effects. Strings, objects and color interpolation remain unsupported.
+frame side effects. String playback maps numeric progress through the existing
+mixers, including spring overshoot. `onUpdate`, `sample`, `sampleAt` and `tick`
+return strings for string-only inputs. Completion restores the original endpoint
+spelling; reverse/mirror completion restores the corresponding first endpoint.
+Null keyframes resolve from `from` or the current value, then the preceding frame.
+
+A string with a scalar or keyframe-array target also works through root `animate`:
+`animate("#000", "#fff", { onUpdate: color => ... })`. A string with a property map
+remains a DOM selector. Matching units require no DOM reads. Conflicting scalar
+units, malformed syntax and nonfinite values reject before replacing playback.
+Unitless numeric strings interpolate; upstream treats string-only numeric targets
+as nonanimatable. Nonanimatable text switches discretely, with one final update
+rather than upstream's duplicate final notification. String `finalKeyframe`
+overrides are not implemented and reject explicitly; normal endpoint restoration
+is automatic. Colors use the existing supported color grammar, not all CSS colors.
+
+[Subject measurements](bench/subjects/README.md) compare string construction/ticks
+and default-object animation against current Motion. The numeric case remains as
+a control. Bun complex-string construction and two updates take 54% less time
+than upstream; unit strings still take 42.8% more (1.00 versus 0.72 μs), and one/eight
+object properties take 42.9%/47% more. Bun color and numeric differences are
+unestablished. Node results have substantial process/control variation, so none
+establishes a direction. Non-color classification now avoids exception allocation;
+candidate colors retain strict validation. These are local primitive workloads,
+not application frame rates.
 
 [Single-value benchmarks](bench/single/README.md) cover creation/replacement and
 repeated value delivery; they do not measure React rendering or browser paint.
@@ -550,7 +574,7 @@ numeric. Named colors other than `transparent`, `currentColor`, lab/oklab and
 other extended color spaces and full CSS grammar
 are outside this verified scope.
 
-There are 256 unit tests per runtime and 2,538 exact color/complex/interpolation
+There are 271 unit tests per runtime and 2,538 exact color/complex/interpolation
 comparisons against both current 14.7.0 and app 12.36.0. Chrome checks computed
 colors, shadows, filters and transforms, CSS percentages and animations through
 an unchanged upstream HTML renderer. [Measurements at `e2cc10f5`](bench/mixers/README.md)
@@ -636,7 +660,7 @@ matching registration wins; duplicate registrations do not accumulate. Removal
 changes future selection and does not detach existing subjects. HTML/SVG elements
 always use the existing DOM renderer. Registered subjects and their collections
 work with scoped `animate`, dynamic delays, reduced/skip motion and grouped controls.
-Unregistered objects reject instead of being silently mutated.
+Unclaimed object subjects use the existing `propEffect` as the fallback.
 
 `animateEffectSubject(effect, subject, keyframes, transition, element?)` exposes
 the same lower-level operation. A new MotionValue starts at the first explicit
@@ -659,8 +683,8 @@ The current-API fixture checks 488 binding/release/playback results against Moti
 DOM 14.7.0. These APIs are absent from the app's 12.36.0 control. Chrome exercises
 real DOM output through a custom renderer, pre-render scheduling and release.
 Strict ESM/CJS/Bundler declarations and packed npm/Bun consumers cover the public
-exports. [Custom-effect measurements](bench/custom-effects/README.md) separate
-binding/flush from animation setup. Custom bindings are still slower: one binding
+exports. [Custom-effect measurements](bench/custom-effects/README.md), recorded at
+`2d59e984`, separate binding/flush from animation setup. Custom bindings are still slower: one binding
 plus update/flush/detach measures 0.84 versus 0.33 μs on Node and 0.47 versus 0.36 μs
 on Bun. Eight bindings measure 4.97 versus 2.10 μs and 5.41 versus 2.65 μs. One-property
 animation setup takes 81.4% more time on Node; the Bun direction is inconclusive
@@ -672,9 +696,8 @@ No speed advantage is claimed for this unit; application adoption remains pendin
 
 ## Still to build
 
-Default object animation and single-string-value overloads are the next bounded
-unit. Registered object subjects are implemented below. Custom-effect
-`transitionEnd`, editable sequence timelines and variant propagation remain unimplemented.
+Custom-effect `transitionEnd` is the next bounded unit. Editable sequence
+timelines and variant propagation remain unimplemented.
 Inertia, CSS spring serialization, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
 unimplemented. Unsupported inertia and grid/random staggering reject
@@ -710,8 +733,8 @@ is inconclusive. These local microbenchmarks do not establish app frame-rate gai
 ## Selector animation
 
 `animate(subject, keyframes, options)` resolves an HTML/SVG element, selector,
-NodeList, array or iterable and returns grouped playback controls. Numeric values
-and numeric MotionValues use `animateSingleValue`. A root `delay(index, total)`
+NodeList, array or iterable and returns grouped playback controls. Numeric/string
+values and MotionValues use `animateSingleValue`; plain objects use property bindings. A root `delay(index, total)`
 accepts `stagger(...)`; numeric per-property delays override the root delay.
 
 ```js
@@ -743,8 +766,30 @@ propagate the DOM error. Scope-less selectors use the current document; server
 imports do not require a document.
 
 This is grouped JavaScript playback. The high-level sequence/Timeline editing
-API, unregistered object subjects, single string-value overload and WAAPI
-are not implemented. They are not silently routed to an upstream runtime.
+API and WAAPI are not implemented. They are not silently routed to an upstream runtime.
 The complete React/Motion renderer remains separate; VentiMath still uses upstream
 Motion. [Selector benchmarks](bench/selectors/README.md) measure mocked DOM setup,
 seeking, rendering and stopping, not browser paint or application frame rates.
+
+## Default object animation
+
+`animate({ x: 0, color: "#000" }, { x: 20, color: "#fff" })` binds values through
+`propEffect` unless a custom registered effect claims the subject first. The
+existing `propEffect.get/flush/state` APIs see those same bindings, including values
+that were attached manually. `propEffect.test/read` expose property eligibility and
+current values. Remove bindings with `propEffect.state(subject)?.release()` when
+finished; after release the next animation reads the object's current properties.
+Objects with a `length` field remain objects. Arrays and iterable collections are
+snapshotted, and their dynamic delays are resolved before playback starts.
+
+Missing or null origins require explicit `[from, to]` keyframes. Unsafe prototype
+keys reject. Readable inherited properties are permitted and normal assignments
+create own properties or call existing setters. DOM nodes—including iframe nodes—
+retain their HTML/SVG renderer. Scope flags and grouped controls apply to objects.
+Custom-effect `transitionEnd` and timeline sequences are still outside this unit.
+
+The fixture checks 1,200 string/object samples against current 14.7.0 and app
+12.36.0, with separate tests for deliberate differences, reentrancy, snapshots,
+replacement errors, cleanup and unreadable properties. Chrome verifies color
+callbacks, object setters drawing real DOM output, and unchanged iframe routing.
+Strict TypeScript and fresh packed npm/Bun consumers cover the public entries.

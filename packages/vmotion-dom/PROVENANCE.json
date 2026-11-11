@@ -3,13 +3,13 @@
     "name": "motion-dom",
     "version": "14.7.0",
     "repository": "https://github.com/motiondivision/motion",
-    "checked": "2026-11-09"
+    "checked": "2026-11-10"
   },
   "implementation": {
     "kind": "independent implementation",
-    "replacementStatus": "partial; custom effect registration and selector animation built, full renderer pending",
-    "targetScope": "Independent custom effect registration, MotionValueState and registered object animation, selector/scoped DOM animation, grouped controls, neutral keyframes/filter defaults, color/complex mixers, renderer targets and transitionEnd, element animations, renderer handoff, keyframe reads/resolution and numeric Motion foundations. Partial Motion implementation; not an application replacement yet.",
-    "remainingWork": "Default object and single-string animation, custom effect transitionEnd and editable sequence timelines; variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
+    "replacementStatus": "partial; single-string and default-object animation built, full renderer pending",
+    "targetScope": "Independent single-string and default-object animation over existing playback, property effects, custom effect registration and scoped DOM selectors, grouped controls, neutral keyframes/filter defaults, color/complex mixers, renderer targets and transitionEnd, renderer handoff and keyframe reads/resolution. Partial Motion implementation; not an application replacement yet.",
+    "remainingWork": "Custom effect transitionEnd and editable sequence timelines; variant propagation, arbitrary multi-axis 3D decomposition, inertia and grid/random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
@@ -21,7 +21,7 @@
       "DOM effects": "Deferred and coalesced style/attribute/property/SVG bindings, unit-aware transform composition, path drawing, selectors, scoped flush/release and cleanup ownership",
       "numeric transition adapters": "Seconds-based animateMotionValue, property defaults/overrides, owned keyframe wildcards/options and current velocity integration",
       "element reads and resolution": "Owner-document CSS/SVG reads, matrix extraction, bounded variable fallbacks, owned keyframes, cancellation/resume, grouped layout measurement and transactional style restoration",
-      "single-value animation": "Public animateSingleValue entry for numeric scalars and MotionValues; validates replacements before stopping existing playback and preserves lifecycle errors through finished",
+      "single-value animation": "Numeric and string scalar/MotionValue playback with owned keyframes and options, progress mapping for colors/complex strings, finite inputs, matching-unit validation, original completion endpoints, spring overshoot, replacement safety and lifecycle error propagation.",
       "element animation": "animateElement and animateValues connect owned values, deferred DOM keyframe resolution, numeric controllers and shared HTML/SVG effects; public controls use seconds including delay.",
       "renderer handoff": "Transfers direct and pending HTML/SVG values into an existing renderer without restarting controllers; animateElement fourth argument shares renderer values and honors reduced/skip motion.",
       "renderer-aware adapter": "animateMotionValue returns an externally owned StartAnimation factory for numeric/CSS-unit values and custom keyframe resolvers; reused factories own snapshots, shared queues support forced resolution and restoration, skip/reduced motion and immediate handoff are honored.",
@@ -30,7 +30,8 @@
       "color and complex mixers": "Independent hex/RGB/HSL parser, Motion gamma-two blending, balanced CSS token scanner, flat containers, automatic interpolation and renderer-owned string animation through numeric progress.",
       "neutral keyframes": "Property-aware neutral filter, shadow and transform values; omitted filter defaults, none/zero origins, live DOM shadow color and literal final none restoration.",
       "selector animation": "Fresh scoped element resolution, collection/keyframe/option snapshots, root stagger delays, grouped playback and cleanup, live owner-window reduced-motion preferences and numeric single-value forwarding.",
-      "custom effect registration": "MotionValueState, createEffect, newest-first effect registration/removal, synchronous custom origins or optional deferred renderer resolution, scalar/color/unit animation of registered subjects and collections, grouped/scoped playback, computed rendering, explicit flush/release and subscription rollback."
+      "custom effect registration": "MotionValueState, createEffect, newest-first effect registration/removal, synchronous custom origins or optional deferred renderer resolution, scalar/color/unit animation of registered subjects and collections, grouped/scoped playback, computed rendering, explicit flush/release and subscription rollback.",
+      "default object animation": "Unclaimed object subjects animate through existing propEffect bindings; explicit/custom effects retain priority, DOM routing stays separate, missing origins require explicit keyframes, and length fields do not turn objects into collections."
     }
   },
   "changes": [
@@ -72,9 +73,10 @@
     "Cold color parsing validates without regex match arrays or temporary channel arrays; scientific notation, percentage rules and finite checks are retained. Mixed-case none keywords keep discrete URL-filter timing.",
     "Single pending resolvers use an inline queue slot; multi-resolver reads retain isolated transactional batches. Numeric playback cancels only its own update phase. Forced reads retain restoration and reentrant scheduling guards.",
     "Strict common RGB parsing captures channels in one scan; hexadecimal channels use numeric extraction. The complex scanner avoids per-character substring/regex work. Prepared numeric components use fixed deltas, with a specialized two/three-length trailing-color formatter that retains finite checks and the generic parser.",
-    "Selector wrapper snapshots targets/options and resolves dynamic delays before starting. Failed element setup or scope bookkeeping stops owned controllers; cross-window HTML/SVG elements work directly. Sequence timelines, default object animation and string single-value overloads remain explicit unfinished APIs. Custom registration and registered object subjects are implemented in the subsequent unit.",
+    "Selector wrapper snapshots targets/options and resolves dynamic delays before starting. Failed element setup or scope bookkeeping stops owned controllers; cross-window HTML/SVG elements work directly. Selector animation is extended by the subsequent custom-effect and default-object/single-string units. Sequence timelines remain unfinished.",
     "Color sampling formats rounded alpha from bounded integers; 100,001 alpha outputs, fractional channels and checked extrapolation are covered. Avoids redundant numeric resolver copies and one-use playback factories; deferred Bun setup remains slower.",
-    "Custom effects validate binding maps before invoking hooks, preserve replacement cleanup ownership and restore subscriptions after failed setup; throwing renders and teardown do not strand siblings. DOM elements retain the established renderer even when a custom predicate matches them."
+    "Custom effects validate binding maps before invoking hooks, preserve replacement cleanup ownership and restore subscriptions after failed setup; throwing renders and teardown do not strand siblings. DOM elements retain the established renderer even when a custom predicate matches them.",
+    "Single-string playback snapshots frames, preserves raw completion endpoints and reentrant onUpdate arguments, and rejects nonfinite/unsafe input before replacement. Cross-unit conversion is unsupported without a DOM renderer; numeric strings interpolate rather than jumping. Default object origins that cannot be read reject instead of guessing. String mixer classification rejects obvious non-colors without exception allocation; candidate colors retain strict parsing."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

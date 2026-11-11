@@ -1,3 +1,6 @@
+import { checkSubjects } from "./subjects-browser.mjs";
+import { animate as subjectCurrentAnimate } from "../motion-utils-conformance/node_modules/framer-motion/dom";
+import { animate as subjectAppAnimate } from "../motion-utils-conformance/node_modules/framer-motion-app/dom";
 import {checkCustomEffects} from "./custom-effects-browser.mjs";
 import {checkSelectors} from "./selectors-browser.mjs";
 import {checkNeutral} from "./neutral-browser.mjs";
@@ -166,6 +169,7 @@ window.runMotionDom = async () => {
   await checkNeutral(vpm);
   await checkSelectors(vpm);
   await checkCustomEffects(current, vpm);
+  await checkSubjects(current, app, vpm, subjectCurrentAnimate, subjectAppAnimate);
   for (const api of [current, app, vpm]) {
     const node = document.createElement("div");
     document.body.append(node);

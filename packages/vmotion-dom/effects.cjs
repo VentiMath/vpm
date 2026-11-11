@@ -473,6 +473,9 @@ const styleEffect = effect("style"),
   attrEffect = effect("attr"),
   propEffect = effect("prop"),
   svgEffect = effect("svg");
+// Object animation reuses the same bindings as explicit propEffect calls.
+propEffect.test = subject => subject !== null && typeof subject === "object";
+propEffect.read = (subject, key) => subject[key] ?? undefined;
 function releaseElement(element) {
   const style = styleEffect.state(element),
     svg = svgEffect.state(element);

@@ -84,7 +84,8 @@ test("registration is newest-first, deduplicated and removal does not stop activ
     g.time = .5; b.flush(s); assert.equal(s.x, 10);
     g.stop(); b.state(s).release();
     api.removeEffect(a); assert.equal(api.findEffect(s), undefined);
-    assert.throws(() => api.animate(s, { x: 20 }), /registered effect/);
+    const fallback = api.animate(s, { x: 20 }, { autoplay: false });
+    fallback.stop(); api.propEffect.state(s).release();
   } finally { api.removeEffect(a); api.removeEffect(b); }
 });
 test("custom animation reads missing origins once, snapshots frames and supports colors", async () => {

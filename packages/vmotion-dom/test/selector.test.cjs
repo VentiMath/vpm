@@ -33,7 +33,7 @@ test("selector captures keyframes and nested options before delay callbacks muta
   group.stop();dispose(nodes);
 });
 test("invalid elements and failed dynamic delays do not start earlier elements", () => {
-  const a=element();assert.throws(()=>api.animate([a,{}],{opacity:[0,1]},options),/elements|registered effect/);
+  const a=element();assert.throws(()=>api.animate([a,null],{opacity:[0,1]},options),/elements|registered effect/);
   assert.throws(()=>api.animate([a,element()],{opacity:[0,1]},{...options,delay:i=>i?Infinity:0}),/finite/);
   assert.equal(api.styleEffect.get(a,"opacity"),undefined);
   assert.throws(()=>api.animate(a,JSON.parse('{"__proto__":1}'),options),/unsupported/);

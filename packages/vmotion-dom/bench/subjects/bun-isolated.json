@@ -1,0 +1,2158 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-11T06:47:24.637Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-dom-conformance/handoff-fixture.cjs": "7226dcea882b67597769c6aa2c9fca96a6b81389fc7fae78345e5be67349ef15",
+    "../../scripts/motion-dom-conformance/selector-fixture.cjs": "998ca908a371c5ec9572e02dee661c1ef01bb7938497eb646202fce88d2ffa1f",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/framer-motion": "232f323ed94ab3815755b8392639f2fb33bac1a7ccff0524d6892cc67219103e",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "addf9ef3234144ae42279ea04453685e39743f1bbd43f1203d6779628a982366",
+    "bench/subjects.cjs": "71dee38914460290a2e46cadf9f472a8244f85f2d296a9ae6974107361239c94",
+    "color.cjs": "8ae294e7a0ad74a868d6462c639ed60250553f493bcceaf7a77b12b81ee8cd94",
+    "custom-effects.cjs": "920d7aa7b309fcc18cb9bcbf4f8d2108af5172e17719083ca55ae3712a6de69e",
+    "effects.cjs": "07f81e95772ab6683ad62015f96ca518ad5616f66aad4094c9c7271f3f219349",
+    "element.cjs": "7c93ddac66764792df46837cb37b5c24ee26e90e299fe463d9279aec8d4cf15f",
+    "frame.cjs": "4a9ac2eb27ef3126006a33429c8b5a0e78f02855e61b78edaac8628a6b990b41",
+    "group.cjs": "3b65d4545349738c925f0af35aff881a361dffc51733d446c6fcf48deea9abd7",
+    "index.cjs": "1119b7f08a4de407811513aa445619cd8bf4aaa38a8f8fac512655c59eed2600",
+    "mapping.cjs": "ec4d0473369ab23544d410649c02ac3c71c0f13cf7e665d56bb15995bc93e1af",
+    "mix.cjs": "867df2291c976da0c8249abdcb6990c02c505a9b54e007837ad9f9ea1fb9cdae",
+    "neutral.cjs": "62a9b2f23fd00f614765ea70a9ea9d0c369e7c85f3ba06e8381e1882e2378d17",
+    "package.json": "df13a79898d17cadfbd2cd787b80d8a9ef8fbc064ecb16ae3f5f4b01c7851bda",
+    "playback.cjs": "c60ebb90008f77f1dd20614a5caafead7aa6a516ff475a75c30bb43638354784",
+    "reads.cjs": "ef7f79eb94a5e6155a75042fe6a114f1013aa5e7a86a148df67818d8d9cd1875",
+    "resolver.cjs": "992bb4732adcac355d0f66e0fc8048fa8078c0d9a823874534a6d8cb6107b038",
+    "selector.cjs": "5749f0583a4a32ea88150e1a5ef0225ce5231f5684b97a22d8a2d8b816d880ce",
+    "single.cjs": "6ba315c69bf6528559934fb26ddec3220ba59a5a85f7249551529f18a3c90ede",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "target.cjs": "8cbb6dc93ddc6000bb2ef6abf390b774e9ca91b4066ed10f9dc11bf0fad23aac",
+    "transition.cjs": "0296ca047dae2cffa136ff7a87f2797faa7e5fef81a1211924a8a4186fc578a7",
+    "value.cjs": "634004c6e40c6853412d0471ddc586ce57ffbac4a43fe4e366198af7149102ec"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 41686,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 12080,
+            "samples": [
+              1026.9591887417214,
+              1067.2668046357617,
+              983.2229304635732,
+              975.572599337749,
+              1010.1717715231792,
+              1044.743377483443,
+              999.1032284768206,
+              948.6410596026496,
+              1073.7100165562913,
+              975.3897350993342,
+              1043.898344370862,
+              974.9275662251619
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 14175,
+            "samples": [
+              783.7419400352758,
+              1079.153439153441,
+              696.8400705467361,
+              716.4373897707203,
+              688.7801763668439,
+              690.620176366842,
+              700.4320987654329,
+              707.2839506172851,
+              743.5037742504425,
+              1097.1252204585596,
+              1210.5643738977094,
+              914.6913580246963
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 4459,
+            "samples": [
+              2592.9769006503507,
+              2524.6597891903602,
+              2574.5216416236512,
+              2663.9100695223156,
+              2588.678178963866,
+              2646.052926665155,
+              2543.5169320475707,
+              2681.711145996817,
+              3018.090827539836,
+              2536.5552814532,
+              2563.08409957388,
+              2433.1408387530855
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 21496,
+            "samples": [
+              527.7551637513934,
+              491.870580573126,
+              498.9125883885402,
+              494.3381094157016,
+              485.29572943804015,
+              502.26981764049566,
+              490.5117696315643,
+              472.1944547822867,
+              490.8335969482657,
+              493.65775027911695,
+              497.2960085597334,
+              507.30563825828494
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 6713,
+            "samples": [
+              2471.6906003277168,
+              1815.5940712051251,
+              3063.1920154923328,
+              2175.1885893043495,
+              3357.447043050798,
+              2482.8939371368892,
+              1708.563086548479,
+              3148.778489498003,
+              2550.5735140771744,
+              2307.9472664978384,
+              2481.3235513183304,
+              1606.2367049009304
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 982,
+            "samples": [
+              16024.43991853348,
+              11790.605906313696,
+              18479.29429735232,
+              15429.480651731154,
+              14218.983706720835,
+              19636.32892057014,
+              11945.77393075374,
+              9472.63238289222,
+              15847.165987780036,
+              11351.960285132445,
+              14459.648676170764,
+              10905.97352342179
+            ]
+          }
+        ],
+        "checksum": 1062464
+      },
+      "vpm": {
+        "pid": 41687,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 12080,
+            "samples": [
+              935.5373344370855,
+              1005.4739238410582,
+              927.4696192052959,
+              943.4361754966876,
+              935.1372516556316,
+              986.1099337748361,
+              928.9803807947019,
+              930.2014072847675,
+              922.4682119205299,
+              991.0285596026504,
+              1022.0060430463551,
+              999.8930463576118
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 14175,
+            "samples": [
+              1083.8418342151622,
+              1405.6467019400404,
+              1358.442045855384,
+              1355.405643738973,
+              1007.0222927689595,
+              1014.1446208112867,
+              992.6308289241656,
+              1007.3192239858869,
+              1062.063492063493,
+              1006.7225396825426,
+              1056.1904761904757,
+              1036.4991181657826
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 4459,
+            "samples": [
+              1904.7618300067043,
+              1409.331240188391,
+              1443.4850863422344,
+              1279.9114151155266,
+              1241.6833370710851,
+              1328.9600807355935,
+              1229.8161022650531,
+              1271.351872617173,
+              1225.3868580399064,
+              1247.9910293788125,
+              1300.7212379457142,
+              1319.2419825072743
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 21496,
+            "samples": [
+              499.9399423148497,
+              459.7560941570587,
+              494.95836434685634,
+              503.7739579456632,
+              479.79856717528975,
+              496.9064011909258,
+              479.6551451432809,
+              488.6800800148831,
+              524.9755768515099,
+              490.69594343133616,
+              480.3141979903242,
+              504.3147562337106
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 6713,
+            "samples": [
+              3448.005213764311,
+              3266.6903023983364,
+              3347.329807835532,
+              3168.4232086995244,
+              3638.1461343661517,
+              3360.0600327722586,
+              3693.5361239386452,
+              3308.207954714711,
+              4151.875763444077,
+              3292.9141963354646,
+              3384.4157604647444,
+              3103.1519439893077
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 982,
+            "samples": [
+              24233.24032586573,
+              20261.24439918529,
+              21928.54684317761,
+              21111.040733197904,
+              21228.74236252513,
+              20561.14154786155,
+              20495.077393075368,
+              20681.89918533638,
+              20866.76883910354,
+              20045.061099796123,
+              20050.237270875565,
+              20258.443991853666
+            ]
+          }
+        ],
+        "checksum": 132160
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 41728,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 8968,
+            "samples": [
+              949.8355263157893,
+              964.0342328278342,
+              989.6949152542377,
+              999.6840990187279,
+              1046.5450490633386,
+              993.9925289919729,
+              982.3260481712773,
+              939.7394067796577,
+              948.9620874219438,
+              974.3300624442477,
+              1037.201717216771,
+              1031.672836752901
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 8709,
+            "samples": [
+              933.2443449305277,
+              1021.9218050292753,
+              959.0653347112141,
+              951.8793202434332,
+              1008.2529567114522,
+              939.1672981972691,
+              946.0567229302977,
+              987.7233895969678,
+              1035.5857159260524,
+              971.6241818808219,
+              948.0661384774376,
+              974.3751291767088
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 8542,
+            "samples": [
+              1323.3239288222828,
+              1259.1654179349018,
+              1202.6505502224345,
+              1135.3801217513403,
+              1166.7203231093326,
+              1163.520487005376,
+              1197.1435261062984,
+              1175.0126434090407,
+              1208.1089908686467,
+              1183.597752282833,
+              1242.8246312338931,
+              1190.4413486303026
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 19494,
+            "samples": [
+              536.2312506412188,
+              485.2497178619083,
+              522.0003590848534,
+              507.0021545090869,
+              470.60634041243344,
+              509.69954857905276,
+              510.90294449574515,
+              478.8353339489149,
+              482.6955473479084,
+              837.1443521083362,
+              1406.0950548886747,
+              1193.097876269626
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 775,
+            "samples": [
+              4691.290322580537,
+              3747.6335483872035,
+              3257.258064516082,
+              2211.9896774192084,
+              4516.2374193548585,
+              3856.021935483905,
+              4486.1290322581135,
+              3491.129032258135,
+              5066.881290322565,
+              3140.752258064646,
+              3946.9896774194385,
+              2855.6451612903106
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 507,
+            "samples": [
+              20524.65483234704,
+              21877.138067061216,
+              23097.05719921098,
+              22649.654832347187,
+              26774.82051282053,
+              21328.321499013742,
+              20486.43984220926,
+              23846.646942800726,
+              19172.17357001967,
+              23060.32149901388,
+              24099.195266272225,
+              19870.562130177354
+            ]
+          }
+        ],
+        "checksum": 1012378
+      },
+      "upstream": {
+        "pid": 41729,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 8968,
+            "samples": [
+              928.268064228366,
+              980.2956066012491,
+              926.9671052631577,
+              972.4111284567388,
+              981.0483942908128,
+              1074.0828501338117,
+              890.1047056199765,
+              899.8011819803795,
+              905.4973238180188,
+              929.5597680642301,
+              1000.8641837644966,
+              1101.3835860838533
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 8709,
+            "samples": [
+              744.1679871397387,
+              699.5254334596415,
+              720.6577104145134,
+              663.8965438052605,
+              718.8684119875995,
+              737.2545642438854,
+              722.7245378344271,
+              667.8387874612425,
+              987.7138592260852,
+              728.360546561018,
+              731.0014927086971,
+              729.059019405214
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 8542,
+            "samples": [
+              2662.7838913603364,
+              2529.076914071636,
+              2649.447787403416,
+              2667.022711308838,
+              2519.765043315379,
+              2834.3966284242683,
+              2577.6115663779133,
+              2614.14668695855,
+              2535.8229922734527,
+              4039.7740575977505,
+              3769.638258019184,
+              2713.118590494035
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 19494,
+            "samples": [
+              504.61039294141597,
+              479.85703293321,
+              476.67872165794563,
+              483.8646763106595,
+              611.243664717353,
+              485.42500256490035,
+              498.00579665537515,
+              530.6547142710607,
+              473.8979686057236,
+              518.1658459012983,
+              477.0570431927723,
+              523.2807017543853
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 775,
+            "samples": [
+              3693.709677419329,
+              2541.5587096775257,
+              3645.000000000026,
+              4951.505806451561,
+              1443.3329032257343,
+              4154.570322580478,
+              2517.1496774193306,
+              2357.09677419348,
+              3353.3329032258234,
+              1609.4619354839047,
+              5124.193548387167,
+              2244.4090322580682
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 507,
+            "samples": [
+              20305.145956607517,
+              15934.254437869815,
+              14280.571992110572,
+              8826.019723865837,
+              27045.52859960576,
+              12399.491124260014,
+              19845.248520710124,
+              10762.984220907221,
+              14010.355029586028,
+              12255.589743589459,
+              16095.497041420222,
+              13495.48126232769
+            ]
+          }
+        ],
+        "checksum": 106112
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 41730,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 11471,
+            "samples": [
+              924.2619649551006,
+              931.1234417226068,
+              956.7205997733402,
+              950.8107401272814,
+              915.8456978467407,
+              950.4111237032537,
+              910.4371894342253,
+              966.3535001307636,
+              950.9487403016276,
+              922.4021445384054,
+              919.5289861389576,
+              934.1019091622345
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 13489,
+            "samples": [
+              745.5333975832181,
+              699.7615835124985,
+              655.5279857661766,
+              713.4300541181724,
+              686.2505004077417,
+              685.9663429461074,
+              713.8872414559952,
+              719.6202831937123,
+              699.2858625546769,
+              714.2734079620483,
+              709.3124768329811,
+              726.7618800504157
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 4635,
+            "samples": [
+              2531.5533980582495,
+              2512.9719525350724,
+              2430.1959007551245,
+              2486.9829557713224,
+              2657.317583603032,
+              2408.9354908306227,
+              2545.028910463857,
+              2555.9240560949374,
+              2564.8686084142787,
+              2377.840776699008,
+              2484.1335490830393,
+              2514.0416396979613
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 17270,
+            "samples": [
+              500.91436016213237,
+              503.30775911986296,
+              495.461783439487,
+              527.2702953097915,
+              481.0123335263417,
+              486.42397220612975,
+              508.78448176028314,
+              532.2524609148817,
+              486.58801389693673,
+              509.4093804284829,
+              521.7911407064228,
+              524.2521134916069
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 7198,
+            "samples": [
+              1882.936232286741,
+              3830.2132536815657,
+              2245.004306751874,
+              2249.4616560155505,
+              2699.563489858297,
+              1941.986107252004,
+              2562.2800777994103,
+              3094.395387607654,
+              2561.42914698528,
+              2127.6396221172554,
+              1958.3680188941632,
+              2265.316754654069
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 917,
+            "samples": [
+              15009.450381679204,
+              13081.924754634809,
+              17547.346782987996,
+              9448.291166848054,
+              15062.25081788456,
+              14669.665212650089,
+              16231.41657579093,
+              14401.218102507932,
+              12895.81025081816,
+              16835.968375136432,
+              11036.758996728377,
+              15342.648854962079
+            ]
+          }
+        ],
+        "checksum": 713152
+      },
+      "vpm": {
+        "pid": 41731,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 11471,
+            "samples": [
+              969.6118036788409,
+              941.9696626274919,
+              933.4953360648589,
+              921.4613372853241,
+              975.1619736727396,
+              994.1700810740147,
+              936.7317583471361,
+              949.5103303983927,
+              978.2277046464997,
+              988.5290733153191,
+              965.6852061720828,
+              912.4204515735306
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 13489,
+            "samples": [
+              989.2968344577027,
+              1016.3219660464067,
+              1059.7739639706442,
+              995.8237823411696,
+              1021.9438060641982,
+              1022.3793461338889,
+              1006.4373934316841,
+              985.1731040106744,
+              1008.4049966639438,
+              1031.6492697753752,
+              1007.2003113648101,
+              1014.8886500111219
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 4635,
+            "samples": [
+              1140.0215749730294,
+              1106.184681769145,
+              1182.524271844659,
+              1141.5139158575882,
+              1223.1212513484393,
+              1164.707011866234,
+              1176.087594390495,
+              1114.5270765911832,
+              1145.3883495146001,
+              1174.9372168285015,
+              1158.890830636502,
+              1091.7296655878888
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 17270,
+            "samples": [
+              460.248986682119,
+              483.6807759119852,
+              493.8042848870886,
+              480.65043427909734,
+              490.7136653155796,
+              505.05691951360365,
+              497.872032426173,
+              475.8854661262346,
+              501.29797336421603,
+              465.5544296467857,
+              470.7030110017322,
+              469.65593514765385
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 7198,
+            "samples": [
+              3421.56390664072,
+              3522.5989163656627,
+              3398.814392886924,
+              3626.846624062224,
+              3376.2966101694797,
+              3422.5652959155173,
+              3222.8281467074135,
+              3392.5337593775844,
+              3155.558210614059,
+              3045.73617671576,
+              3337.234787440962,
+              4738.081133648246
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 917,
+            "samples": [
+              32806.70665212626,
+              24248.636859324244,
+              24371.682660850616,
+              20484.00545256266,
+              47386.4045801526,
+              25650.535441657656,
+              20993.184296619576,
+              21465.103598691487,
+              23080.697928026133,
+              21097.14612868038,
+              20711.28680479802,
+              19695.747001090676
+            ]
+          }
+        ],
+        "checksum": 134144
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 41732,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 5533,
+            "samples": [
+              1124.0587384782152,
+              1026.9445147297984,
+              999.3448400506084,
+              984.6676305801478,
+              1048.4064702692954,
+              1049.6264232785147,
+              1020.0388577625123,
+              1042.4196638351655,
+              961.0216880534905,
+              1024.5272004337676,
+              982.9958431230809,
+              1002.0482559190406
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 9219,
+            "samples": [
+              1010.7115739234241,
+              1033.9832953682594,
+              972.2131467621267,
+              999.5118776440007,
+              939.0163792168344,
+              951.3323570886267,
+              1033.0431717106019,
+              1046.7105976787086,
+              963.8835014643645,
+              958.527606031027,
+              1025.9201648768806,
+              976.8594207614727
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 8923,
+            "samples": [
+              1134.1570099742264,
+              1209.7668945421967,
+              1188.4082707609505,
+              1128.4181329149444,
+              1190.0471814412178,
+              1164.8828869214453,
+              1153.848593522359,
+              1222.066569539391,
+              1159.363442788303,
+              1145.6535918413092,
+              1173.1853636669316,
+              1164.7007732825232
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 18252,
+            "samples": [
+              474.23345386807557,
+              465.581360946746,
+              456.40888669734846,
+              476.28342099495995,
+              476.7993644532103,
+              466.117904887133,
+              478.17822704361186,
+              510.6586675432917,
+              494.02120315582005,
+              482.2348235809696,
+              486.0472277010702,
+              517.3223208415476
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 1347,
+            "samples": [
+              4524.5293244245995,
+              4062.700816629518,
+              3769.2397921306856,
+              2978.532293986693,
+              5214.922048997764,
+              4811.556050482576,
+              3421.152190051887,
+              4013.455827765386,
+              4285.263548626566,
+              3896.684484038595,
+              2947.754268745306,
+              4163.480326651897
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 402,
+            "samples": [
+              19614.636815920414,
+              21351.05721393062,
+              23849.60447761219,
+              24820.27363184083,
+              26908.27114427869,
+              29696.72388059703,
+              18360.9029850746,
+              19214.241293532235,
+              26324.728855721376,
+              23248.340796019544,
+              19685.427860696534,
+              23005.492537313377
+            ]
+          }
+        ],
+        "checksum": 721920
+      },
+      "upstream": {
+        "pid": 41749,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 5533,
+            "samples": [
+              1003.4415326224523,
+              932.4959334899658,
+              940.9604193023725,
+              1006.9732514006824,
+              925.4247243809912,
+              972.1669980119319,
+              903.8798120368714,
+              929.9732514006828,
+              1043.3385143683424,
+              942.3911078980648,
+              951.6838966202797,
+              880.5877462497667
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 9219,
+            "samples": [
+              734.8456448638677,
+              685.2604403948346,
+              714.4438659290588,
+              674.5669812344091,
+              666.3954875799998,
+              717.5398633257413,
+              670.2913548107113,
+              679.7374986440992,
+              666.5175181690009,
+              698.9776548432515,
+              659.376505043921,
+              676.1308167914088
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 8923,
+            "samples": [
+              2488.9704135380434,
+              2488.6061862602246,
+              2593.844559004814,
+              2474.714221674334,
+              2528.5731256303925,
+              2485.7345063319503,
+              2434.7705928499386,
+              2527.4758489297496,
+              2549.105345735729,
+              2528.7785498151,
+              2530.3103216407,
+              2527.7185924016494
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 18252,
+            "samples": [
+              541.8081854043407,
+              508.6405873329038,
+              508.2479180363769,
+              683.1603111987697,
+              571.0150668419993,
+              551.5309007232098,
+              728.5822375630141,
+              518.2993644532127,
+              674.0037804076268,
+              576.4436774052164,
+              509.35513916283,
+              523.4243918474622
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 1347,
+            "samples": [
+              2200.011878247828,
+              2693.3303637714484,
+              4081.106161841219,
+              2508.011878248034,
+              2583.8285077950914,
+              1357.8010393467384,
+              3868.13288789895,
+              2097.6555308092366,
+              2275.5508537490527,
+              3171.553823310942,
+              2705.2086117297627,
+              4034.922791388237
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 402,
+            "samples": [
+              10511.194029850774,
+              20233.310945273566,
+              9193.509950249003,
+              18210.820895522043,
+              12237.977611940025,
+              19556.696517412744,
+              17327.736318408137,
+              15946.62189054689,
+              16875.621890547525,
+              12754.66417910455,
+              19498.654228855863,
+              16648.218905472946
+            ]
+          }
+        ],
+        "checksum": 123968
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 41752,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 12639,
+            "samples": [
+              908.9821188385167,
+              954.8091621172567,
+              964.9959648706364,
+              913.528206345435,
+              962.1046760028511,
+              1073.5356436426941,
+              1077.5937969776094,
+              929.8072632328532,
+              953.5003560408254,
+              1021.2371231901267,
+              954.0541973257375,
+              923.0160613972621
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 17826,
+            "samples": [
+              714.4690339952887,
+              743.8455626612784,
+              701.0289464826645,
+              684.6553349040712,
+              1130.9463704700947,
+              734.0939638729947,
+              814.4260630539671,
+              748.4783462358388,
+              714.5157634915333,
+              743.5300684393547,
+              695.2671939863105,
+              684.17149108044
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 4695,
+            "samples": [
+              2396.23706070289,
+              2574.1480298189426,
+              2646.3525026624293,
+              2730.8396166133884,
+              2524.6362087327398,
+              2519.8261980830766,
+              2394.76400425988,
+              2447.035782747628,
+              2363.0903088391833,
+              2609.22960596383,
+              2439.0308839190297,
+              2543.1576144835103
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 22124,
+            "samples": [
+              478.11010667148935,
+              495.6532724642911,
+              502.59898752486066,
+              512.9911860423026,
+              487.0728620502549,
+              529.7301572952439,
+              495.80396854094965,
+              496.1278701862159,
+              499.9604501898367,
+              466.4504610377818,
+              520.1402549267793,
+              478.46610016272615
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 5906,
+            "samples": [
+              2374.2734507280393,
+              2435.8562478835274,
+              2687.2108025736775,
+              1550.9439552997046,
+              3810.6234337961573,
+              2323.745682356934,
+              1376.2629529292194,
+              4187.690484253314,
+              2426.9740941415507,
+              2556.524381984425,
+              2206.492041991186,
+              1730.394344734163
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 566,
+            "samples": [
+              10720.406360423509,
+              16435.14487632483,
+              11811.984098939844,
+              12883.833922261427,
+              21779.961130742417,
+              12628.82862190854,
+              18914.164310954286,
+              14077.371024734837,
+              12071.185512367789,
+              23469.302120141394,
+              12271.494699646773,
+              14737.558303886706
+            ]
+          }
+        ],
+        "checksum": 924864
+      },
+      "vpm": {
+        "pid": 41781,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 12639,
+            "samples": [
+              930.7896194319173,
+              884.3131576865292,
+              928.3895877838454,
+              877.1032518395406,
+              987.1693963129992,
+              927.9610728696888,
+              918.110610016614,
+              887.979033151356,
+              952.6301131418643,
+              922.2347495846216,
+              900.578922383098,
+              924.8621726402386
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 17826,
+            "samples": [
+              734.6946033883044,
+              689.7555817345431,
+              711.643105576124,
+              697.2259620778659,
+              762.3345113878614,
+              715.8060136878707,
+              719.3916189835032,
+              723.7344889487274,
+              714.1721642544576,
+              771.5555929541166,
+              758.9195557051502,
+              798.9593851677332
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 4695,
+            "samples": [
+              2320.7578274760035,
+              2512.5488817891414,
+              2426.189350372751,
+              2422.2487752928273,
+              2410.8626198082984,
+              2399.183386581504,
+              2388.365282215131,
+              2494.000638977639,
+              2381.9309904153415,
+              2412.1050053248405,
+              2577.795527156553,
+              2528.1150159744443
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 22124,
+            "samples": [
+              545.4182787922605,
+              520.3192008678342,
+              527.3666154402463,
+              1082.5329054420506,
+              842.0380582173185,
+              517.539369011021,
+              527.9805640932894,
+              548.2715150967217,
+              533.2180889531683,
+              514.0062827698447,
+              550.8007593563611,
+              541.5838003977567
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 5906,
+            "samples": [
+              3079.304944124619,
+              1601.3658990856588,
+              3399.7277345072844,
+              2842.6600067727627,
+              1431.7924144937247,
+              3423.263122248547,
+              2240.8213681002344,
+              2271.136640704363,
+              2161.276667795462,
+              2303.6882831019343,
+              2162.483068066349,
+              2767.327124957673
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 566,
+            "samples": [
+              15437.425795053156,
+              15766.268551236406,
+              16695.157243816135,
+              21654.077738515527,
+              9290.194346289509,
+              25289.090106006668,
+              13430.65371024782,
+              8541.814487632651,
+              19315.74028268579,
+              11473.93992932816,
+              16193.021201413454,
+              14502.136042402644
+            ]
+          }
+        ],
+        "checksum": 108160
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 41783,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 12081,
+            "samples": [
+              977.2335899346059,
+              906.6785034351492,
+              920.005297574707,
+              918.701514775268,
+              1193.820213558482,
+              1111.1559473553475,
+              940.6023507987771,
+              940.1574372982378,
+              1018.1034682559399,
+              945.644648621802,
+              922.1849184670147,
+              999.4171012333419
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 17564,
+            "samples": [
+              742.5273286267353,
+              727.3162719198365,
+              688.0527214757475,
+              730.4524595764047,
+              716.467888863582,
+              697.8336369847422,
+              737.9512070143461,
+              727.0411068093854,
+              829.9196082896865,
+              733.6692666818492,
+              698.1277613299891,
+              717.3076178547032
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 3520,
+            "samples": [
+              2508.605681818178,
+              2625.5210227272514,
+              2473.484943181797,
+              2323.224431818199,
+              2550.9349431817827,
+              2453.906249999963,
+              2653.4329545454357,
+              2689.5715909090386,
+              2444.673295454565,
+              2572.2775568181983,
+              2532.6823863636605,
+              2669.826988636391
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 21568,
+            "samples": [
+              543.3802392433317,
+              506.7229228486582,
+              482.1436850890249,
+              502.0767340504515,
+              499.60589762612176,
+              512.8431008902041,
+              486.58313241839954,
+              465.8444918397563,
+              485.98038761127106,
+              508.3998052670548,
+              480.45136313057105,
+              481.6626483679536
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 4175,
+            "samples": [
+              2145.868263473068,
+              3110.3494610778544,
+              1795.3492215568615,
+              2434.920239520961,
+              2841.137724550905,
+              1637.7643113772215,
+              2360.019880239514,
+              2232.894371257474,
+              2319.1616766467346,
+              1953.313532934129,
+              2704.541077844319,
+              3251.0079041916647
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 1227,
+            "samples": [
+              15560.988590057073,
+              11156.105949470146,
+              11728.979625101922,
+              20175.80114099404,
+              12001.087204564143,
+              14977.554197228865,
+              22785.18092909542,
+              18905.766096169307,
+              14897.004889975486,
+              12148.19315403444,
+              11866.511002444791,
+              14069.409942950435
+            ]
+          }
+        ],
+        "checksum": 823872
+      },
+      "upstream": {
+        "pid": 41786,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create, sample and stop color",
+            "iterations": 12081,
+            "samples": [
+              1161.0517341279724,
+              883.7775846370337,
+              860.3627183180212,
+              863.7357834616352,
+              890.4995447396744,
+              984.1451866567376,
+              946.9173909444577,
+              871.7234500455268,
+              973.8018375962254,
+              917.8428110255774,
+              865.0567006042521,
+              935.0805396904202
+            ]
+          },
+          {
+            "case": "create, sample and stop unit string",
+            "iterations": 17564,
+            "samples": [
+              716.4821225233435,
+              718.223354588931,
+              695.4399908904627,
+              699.318663174681,
+              728.4075381462043,
+              677.4795035299505,
+              684.337793213393,
+              686.7575153723556,
+              697.1361876565712,
+              680.7034274652694,
+              718.2209633340975,
+              680.788829423819
+            ]
+          },
+          {
+            "case": "create, sample and stop complex string",
+            "iterations": 3520,
+            "samples": [
+              2543.4068181818307,
+              2439.3230113636314,
+              2400.4380681818043,
+              2347.8102272726824,
+              2313.139204545484,
+              2431.1079545454877,
+              2646.2241477272705,
+              2652.4857954545923,
+              2510.771590909141,
+              2618.276704545508,
+              2797.4315340909006,
+              2627.864488636337
+            ]
+          },
+          {
+            "case": "create, sample and stop numeric control",
+            "iterations": 21568,
+            "samples": [
+              510.89961980712803,
+              492.09477002967037,
+              478.2567692878314,
+              498.96837908011366,
+              501.6981175815948,
+              517.5723293768551,
+              515.6675166913918,
+              484.3421735905084,
+              492.4792284866429,
+              599.7620085311557,
+              501.2402633531203,
+              516.3282177299651
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 1 default object properties",
+            "iterations": 4175,
+            "samples": [
+              2685.6886227544705,
+              2451.5070658682685,
+              1747.3152095808582,
+              3022.525029940128,
+              2362.94419161681,
+              2689.0019161676933,
+              2506.5868263473403,
+              2959.840479041925,
+              1889.1815568862032,
+              2904.83017964074,
+              2454.560718562876,
+              3432.5949700598608
+            ]
+          },
+          {
+            "case": "create, seek, flush and stop 8 default object properties",
+            "iterations": 1227,
+            "samples": [
+              11870.041564792145,
+              14537.25183374058,
+              15595.116544417398,
+              14947.500407498086,
+              9694.138549307469,
+              16263.956805215688,
+              13134.678076609647,
+              29530.799511002246,
+              28031.105134474365,
+              14654.339853300524,
+              9138.719641401798,
+              20670.63977180135
+            ]
+          }
+        ],
+        "checksum": 118976
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "create, sample and stop color",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1004.6374999999999,
+          "vpmNs": 939.4867549668866,
+          "changePct": -6.485000314353517
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 950.9854482604844,
+          "vpmNs": 986.0104817127575,
+          "changePct": 3.6830251731338137
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 932.6126754424206,
+          "vpmNs": 957.5977682852377,
+          "changePct": 2.6790428117400955
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 941.6757636002187,
+          "vpmNs": 1022.2830290981399,
+          "changePct": 8.559980899343
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 954.4316797214972,
+          "vpmNs": 923.54846111243,
+          "changePct": -3.2357704867967962
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 904.1711778826259,
+          "vpmNs": 943.1234997102896,
+          "changePct": 4.308069398858927
+        }
+      ]
+    },
+    {
+      "case": "create, sample and stop unit string",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 729.9705820105814,
+          "vpmNs": 1046.3447971781293,
+          "changePct": 43.34068015400678
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 725.5425421977226,
+          "vpmNs": 965.344758296018,
+          "changePct": 33.05143422354209
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 711.3712654755768,
+          "vpmNs": 1011.6468233375329,
+          "changePct": 42.210807834810595
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 677.934157717754,
+          "vpmNs": 988.1856492027367,
+          "changePct": 45.764251285026766
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 724.304863682264,
+          "vpmNs": 721.5630539661154,
+          "changePct": -0.3785436014069665
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 696.288089273517,
+          "vpmNs": 727.1786893646109,
+          "changePct": 4.436468261768511
+        }
+      ]
+    },
+    {
+      "case": "create, sample and stop complex string",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2581.5999102937585,
+          "vpmNs": 1290.3163265306202,
+          "changePct": -50.01873367807035
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2656.115839381876,
+          "vpmNs": 1193.7924373683004,
+          "changePct": -55.054955824286765
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2513.506796116517,
+          "vpmNs": 1152.139590075551,
+          "changePct": -54.16206584936793
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2527.5972206656998,
+          "vpmNs": 1164.7918301019843,
+          "changePct": -53.91703153577569
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2522.231203407908,
+          "vpmNs": 2417.176890308834,
+          "changePct": -4.165134146192873
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2527.0892045454857,
+          "vpmNs": 2541.8086647727214,
+          "changePct": 0.5824669822007023
+        }
+      ]
+    },
+    {
+      "case": "create, sample and stop numeric control",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 493.9979298474093,
+          "vpmNs": 492.8271538890963,
+          "changePct": -0.23700017501584458
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 491.71539961013775,
+          "vpmNs": 510.3012465373989,
+          "changePct": 3.7797976109751996
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 506.0461204400731,
+          "vpmNs": 482.1656050955413,
+          "changePct": -4.7190393088607285
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 546.6695430637753,
+          "vpmNs": 477.48879574841106,
+          "changePct": -12.654948166244107
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 495.96591936358277,
+          "vpmNs": 537.4009446754625,
+          "changePct": 8.354409787883931
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 501.4691904673575,
+          "vpmNs": 493.0945150222607,
+          "changePct": -1.670027910845695
+        }
+      ]
+    },
+    {
+      "case": "create, seek, flush and stop 1 default object properties",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2476.5070758230236,
+          "vpmNs": 3353.6949203038953,
+          "changePct": 35.4203649585517
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2947.445806451675,
+          "vpmNs": 3801.8277419355545,
+          "changePct": 28.987197444435452
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2257.38920533481,
+          "vpmNs": 3395.6740761322544,
+          "changePct": 50.424838929298275
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2638.57943578327,
+          "vpmNs": 4038.078322197452,
+          "changePct": 53.03986180725828
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2400.623772434795,
+          "vpmNs": 2287.4124619031486,
+          "changePct": -4.715912248791209
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2596.1377245509057,
+          "vpmNs": 2339.5907784431242,
+          "changePct": -9.88186965898199
+        }
+      ]
+    },
+    {
+      "case": "create, seek, flush and stop 8 default object properties",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 14339.3161914458,
+          "vpmNs": 20621.520366598965,
+          "changePct": 43.81104434325014
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 14145.4635108483,
+          "vpmNs": 22263.396449704203,
+          "changePct": 57.388949698468195
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 14839.557797164645,
+          "vpmNs": 22272.90076335881,
+          "changePct": 50.09140479653939
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 16761.920398010236,
+          "vpmNs": 23126.91666666646,
+          "changePct": 37.972953680246555
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13480.602473498133,
+          "vpmNs": 15601.84717314478,
+          "changePct": 15.735533362228127
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 14800.920130399305,
+          "vpmNs": 14483.20741646296,
+          "changePct": -2.1465740719984194
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "create, sample and stop color",
+      "upstream_ns": 946,
+      "vpm_ns": 972,
+      "change_pct": 3.2,
+      "upstream_first_pct": -1.9,
+      "vpm_first_pct": 6.1,
+      "process_range_pct": "-6.5, 3.7, 2.7, 8.6",
+      "control_max_abs_pct": 4.3,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "create, sample and stop unit string",
+      "upstream_ns": 718,
+      "vpm_ns": 1000,
+      "change_pct": 42.8,
+      "upstream_first_pct": 42.8,
+      "vpm_first_pct": 39.4,
+      "process_range_pct": "43.3, 33.1, 42.2, 45.8",
+      "control_max_abs_pct": 4.4,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "create, sample and stop complex string",
+      "upstream_ns": 2555,
+      "vpm_ns": 1179,
+      "change_pct": -54,
+      "upstream_first_pct": -52.1,
+      "vpm_first_pct": -54.5,
+      "process_range_pct": "-50.0, -55.1, -54.2, -53.9",
+      "control_max_abs_pct": 4.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "create, sample and stop numeric control",
+      "upstream_ns": 500,
+      "vpm_ns": 487,
+      "change_pct": -2.5,
+      "upstream_first_pct": -2.5,
+      "vpm_first_pct": -4.4,
+      "process_range_pct": "-0.2, 3.8, -4.7, -12.7",
+      "control_max_abs_pct": 8.4,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "create, seek, flush and stop 1 default object properties",
+      "upstream_ns": 2558,
+      "vpm_ns": 3599,
+      "change_pct": 42.9,
+      "upstream_first_pct": 42.9,
+      "vpm_first_pct": 41,
+      "process_range_pct": "35.4, 29.0, 50.4, 53.0",
+      "control_max_abs_pct": 9.9,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "create, seek, flush and stop 8 default object properties",
+      "upstream_ns": 14589,
+      "vpm_ns": 22268,
+      "change_pct": 47,
+      "upstream_first_pct": 47,
+      "vpm_first_pct": 47.7,
+      "process_range_pct": "43.8, 57.4, 50.1, 38.0",
+      "control_max_abs_pct": 15.7,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

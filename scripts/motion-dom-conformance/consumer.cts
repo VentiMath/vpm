@@ -165,8 +165,7 @@ new DOMKeyframesResolver([{}], () => {});
 import { animateSingleValue } from "vmotion-dom";
 animateSingleValue(position, [null, 1], { duration: 0.3 });
 animateSingleValue(0, 10, { onUpdate: (x) => x.toFixed(2) });
-// @ts-expect-error string mixing is not implemented
-animateSingleValue("red", "blue");
+animateSingleValue("#f00", "#00f");
 
 import { animateElement, animateValues } from "vmotion-dom";
 const elementControls = animateElement(
@@ -232,7 +231,7 @@ scopedAnimate(".item", {opacity:[0,1],x:20}, {duration:1, delay:(i,total)=>i/tot
 animate(document.querySelectorAll("div"), {opacity:1}).stop();
 animate(motionValue(0), 10, {duration:1}).time = .5;
 animateElements(document.body, {opacity:1});
-// Object subjects require a registered effect at runtime.
+// Objects fall back to property writes unless a custom effect matches.
 animate({x:0}, {x:10});
 // @ts-expect-error sequences are not implemented
 animate([[document.body, {opacity:1}]]);
@@ -260,3 +259,18 @@ const justBinding = createEffect<CustomSubject>((subject, state, key, value) => 
 addEffect(justBinding);
 // @ts-expect-error custom transitionEnd is not implemented yet
 animateEffectSubject(custom, subject, { x: 10, transitionEnd: { x: 20 } });
+
+const textAnimation = animateSingleValue(motionValue("0px"), "20px", { onUpdate: value => value.toUpperCase() });
+const textSample: string = textAnimation.sample(100).value;
+const numericSample: number = animateSingleValue(0, 10).sample(100).value;
+animate("#000", "#fff", { onUpdate: value => value.toUpperCase() }).stop();
+animate({ length: 2, x: 0 }, { x: 10 }).stop();
+propEffect.test({ x: 0 }); propEffect.read({ x: 0 }, "x");
+animateEffectSubject(propEffect, { x: 0 }, { x: 10 }).forEach(a => a.stop());
+// @ts-expect-error string callbacks receive strings
+animateSingleValue("0px", "20px", { onUpdate: (value: number) => value.toFixed() });
+// @ts-expect-error unsupported finalKeyframe override for string playback
+animateSingleValue("#000", "#fff", { finalKeyframe: "#aaa" });
+// @ts-expect-error sample of string animation remains a string
+const invalidSample: number = textAnimation.sampleAt(10);
+void textSample; void numericSample; void invalidSample;
