@@ -668,8 +668,8 @@ keyframe or the effect's `read()` result; existing bindings retain their values.
 An optional renderer owns deferred resolution and measurement. Numeric, matching
 unit and supported color/complex targets share the established playback engine.
 Color endpoints may serialize as equivalent RGBA instead of their input spelling.
-Custom-effect `transitionEnd` is explicitly rejected in this unit; renderer
-`animateTarget` still supports it. Successful animations keep their bindings until
+Custom-effect `transitionEnd` now applies scalar completion values after every
+controller finishes successfully. Successful animations keep their bindings until
 cleanup, allowing later animation to continue from the current value.
 
 Computed bindings can queue a renderer already attached to another MotionValue
@@ -696,7 +696,7 @@ No speed advantage is claimed for this unit; application adoption remains pendin
 
 ## Still to build
 
-Custom-effect `transitionEnd` remains unimplemented. Editable sequence
+Editable sequence
 timelines and variant propagation remain unimplemented.
 Inertia, CSS spring serialization, grid/random
 staggering, WAAPI, gestures/layout and the React renderer remain
@@ -786,10 +786,39 @@ Missing or null origins require explicit `[from, to]` keyframes. Unsafe prototyp
 keys reject. Readable inherited properties are permitted and normal assignments
 create own properties or call existing setters. DOM nodes—including iframe nodes—
 retain their HTML/SVG renderer. Scope flags and grouped controls apply to objects.
-Custom-effect `transitionEnd` and timeline sequences are still outside this unit.
+Timeline sequences are still outside this unit.
 
 The fixture checks 1,200 string/object samples against current 14.7.0 and app
 12.36.0, with separate tests for deliberate differences, reentrancy, snapshots,
 replacement errors, cleanup and unreadable properties. Chrome verifies color
 callbacks, object setters drawing real DOM output, and unchanged iframe routing.
 Strict TypeScript and fresh packed npm/Bun consumers cover the public entries.
+
+
+### Custom-effect completion values
+
+Direct `animateEffectSubject`, registered custom subjects and default object
+`animate` accept `transitionEnd: { property: scalar }`. End values are snapshotted
+before hooks or dynamic delays. All animated properties must complete before the
+next update phase applies the ends. End-only properties are left untouched during
+playback, including properties that do not exist yet. The effect's configured
+render phase or explicit `flush` commits their writes.
+
+Cancellation, stop, resolver/callback failure, binding replacement and a newer
+animation on overlapping properties suppress the old end writes. Guards run
+between writes so reentrant listeners cannot overwrite a newer target. Invalid
+ends reject before binding; failed setup restores completion ownership. An
+end-only invocation creates no playback controllers, and queues its values for a
+later update; a newer invocation can supersede that queued work.
+
+DOM selector/element `transitionEnd` remains outside these APIs; use the existing
+renderer `animateTarget` there. Mixed DOM/object collections reject ends before
+starting any member. This bounded addition does not complete Framer Motion or
+resume sequences, variants, gestures, layout or React integration.
+
+[Completion checks](../../scripts/motion-dom-conformance/effect-end.cjs) compare
+12 direct/object/registered snapshots with the current 14.7.0 control. Regression
+tests cover ownership, failures and reentrancy; Chrome verifies the final custom
+renderer transform. [Isolated measurements](bench/effect-end/README.md) include
+completion with and without end values. Existing setup-cost measurements remain
+separate; no general Motion speedup is claimed.

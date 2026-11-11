@@ -282,3 +282,21 @@ iframe nodes on the DOM path. No upstream runtime was read or copied.
 node scripts/motion-dom-conformance/subjects.cjs
 bun scripts/motion-dom-conformance/subjects.cjs
 ```
+
+## Custom-effect completion
+
+`effect-end.cjs` compares direct/custom/default-object completion with current
+Motion DOM 14.7.0 and its Framer Motion DOM wrapper. The 12 snapshots include
+end-only targets and one, two and eight properties. The app's 12.36.0 does not
+export the custom-effect API. `test/effect-end.test.cjs` in the package covers
+cancellation, supersession, callback/lifecycle failure, input snapshots and
+reentrant writes; Chrome checks custom renderer completion in preRender.
+
+```sh
+node scripts/motion-dom-conformance/effect-end.cjs
+bun scripts/motion-dom-conformance/effect-end.cjs
+```
+
+[Completion benchmarks](../../packages/vmotion-dom/bench/effect-end/README.md)
+measure controller construction, completion, queued end writes and release in
+separate processes. They are not browser FPS measurements.

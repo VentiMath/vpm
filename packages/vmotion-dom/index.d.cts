@@ -727,7 +727,7 @@ export type SelectorTransition = Omit<ElementValueTransition, "delay"> & {
 };
 export interface ScopedAnimate {
   (subject: string | MotionValue<string>, keyframes: string | (string | null)[], options?: StringValueTransition): GroupAnimationWithThen;
-  (subject: object | object[], keyframes: ElementKeyframes, options?: SelectorTransition): GroupAnimationWithThen;
+  (subject: object | object[], keyframes: ElementKeyframes | EffectKeyframes, options?: SelectorTransition): GroupAnimationWithThen;
   (subject: number | MotionValue<number>, keyframes: number | (number | null)[], options?: NumericValueTransition): GroupAnimationWithThen;
   (subject: Element | Iterable<Element> | ArrayLike<Element> | string | null | undefined, keyframes: ElementKeyframes, options?: SelectorTransition): GroupAnimationWithThen;
 }
@@ -776,10 +776,10 @@ export declare function addEffect(effect: AnimateEffect<any> | PropertyEffect): 
 export declare function removeEffect(effect: AnimateEffect<any> | PropertyEffect): void;
 export declare function findEffect(subject: unknown): AnimateEffect | PropertyEffect | undefined;
 export interface EffectKeyframes {
-  [key: string]: number | string | (number | string | null)[] | ElementTransition | undefined;
+  [key: string]: number | string | (number | string | null)[] | ElementTransition | Record<string, string | number | undefined> | undefined;
   transition?: ElementTransition;
-  /** Custom effect transitionEnd is not implemented yet. */
-  transitionEnd?: never;
+  /** Applied after owned completion; end-only properties remain untouched until then. */
+  transitionEnd?: Record<string, string | number | undefined>;
 }
 export type EffectTransition = ElementTransition;
 export declare function animateEffectSubject<Subject extends object>(effect: AnimateEffect<Subject> | PropertyEffect, subject: Subject, keyframes: EffectKeyframes, transition?: EffectTransition, element?: AnimationElement): ElementAnimation[];

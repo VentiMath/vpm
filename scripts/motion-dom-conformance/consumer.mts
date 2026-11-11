@@ -282,7 +282,6 @@ customState.set("x", motionValue(0), () => {});
 const justBinding = createEffect<CustomSubject>((subject, state, key, value) => state.set(key, value));
 // @ts-expect-error registration requires a test and read implementation
 addEffect(justBinding);
-// @ts-expect-error custom transitionEnd is not implemented yet
 animateEffectSubject(custom, subject, { x: 10, transitionEnd: { x: 20 } });
 
 const textAnimation = animateSingleValue(motionValue("0px"), "20px", { onUpdate: value => value.toUpperCase() });
@@ -299,3 +298,7 @@ animateSingleValue("#000", "#fff", { finalKeyframe: "#aaa" });
 // @ts-expect-error sample of string animation remains a string
 const invalidSample: number = textAnimation.sampleAt(10);
 void textSample; void numericSample; void invalidSample;
+
+animate(subject, { x: [0, 10], transitionEnd: { x: 5 } }).stop();
+// @ts-expect-error completion values must be scalar
+animateEffectSubject(custom, subject, { transitionEnd: { x: [0, 10] } });

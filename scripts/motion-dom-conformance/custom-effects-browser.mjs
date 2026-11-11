@@ -8,10 +8,11 @@ export async function checkCustomEffects(current, vpm) {
       subject[key] = value.get(); writes++;
       subject.node.style.transform = `translateX(${subject.x}px)`;
     }), { test: s => s?.kind === 'custom', read: (s, key) => s[key], step: api.frame.preRender });
-    const [a] = api.animateEffectSubject(effect, subject, { x: [0, 30] }, { duration: .06, ease: 'linear' });
+    const [a] = api.animateEffectSubject(effect, subject, { x: [0, 30], transitionEnd: { x: 40 } }, { duration: .06, ease: 'linear' });
     await a.finished;
     await new Promise(requestAnimationFrame);
-    if (subject.x !== 30 || getComputedStyle(node).transform !== 'matrix(1, 0, 0, 1, 30, 0)' || writes < 2)
+    await new Promise(requestAnimationFrame);
+    if (subject.x !== 40 || getComputedStyle(node).transform !== 'matrix(1, 0, 0, 1, 40, 0)' || writes < 2)
       throw Error('custom effect did not animate real DOM output');
     const value = effect.get(subject, 'x');
     effect.state(subject).release();
@@ -27,8 +28,9 @@ export async function checkCustomEffects(current, vpm) {
   const s = { custom: true, x: 0 };
   vpm.animate.addEffect(effect);
   try {
-    await vpm.animate(s, { x: 20 }, { duration: .04, ease: 'linear' });
+    await vpm.animate(s, { x: 20, transitionEnd: { x: 25 } }, { duration: .04, ease: 'linear' });
     await new Promise(requestAnimationFrame);
-    if (s.x !== 20) throw Error('registered animate did not complete');
+    await new Promise(requestAnimationFrame);
+    if (s.x !== 25) throw Error('registered animate did not complete');
   } finally { vpm.animate.removeEffect(effect); effect.state(s)?.release(); }
 }

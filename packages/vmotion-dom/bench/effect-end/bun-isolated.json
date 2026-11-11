@@ -1,0 +1,1618 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-11T19:11:26.238Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/motion-dom-conformance/custom-effect-fixture.cjs": "5176e34c2c9884fe53a8ffc927090be3c5ed39af072e7e0f08c1d140c2442fb8",
+    "../../scripts/motion-dom-conformance/effect-end-fixture.cjs": "0379ae94bf41994d33dceecf0ae074cb43450a0a26be4014e936d107b0a52021",
+    "../../scripts/motion-dom-conformance/handoff-fixture.cjs": "7226dcea882b67597769c6aa2c9fca96a6b81389fc7fae78345e5be67349ef15",
+    "../../scripts/motion-utils-conformance/check-controls.cjs": "2a5f36efe3959d8a05c0044efc726c3c3ad219afeecb20993d67ce8161cefadb",
+    "../../scripts/motion-utils-conformance/node_modules/motion-dom": "827d9ee23e015f04b0d5b6957a96e2abd1bfc7fc83f4ddf2a5a90c1f3f9a88b1",
+    "../../scripts/motion-utils-conformance/node_modules/motion-utils": "205620a51ca1794deac74074737f6c8891991b965c3fddce33eb7664911dcfb9",
+    "../../scripts/motion-utils-conformance/provenance.json": "e5a6f11da6091ef4f7eeba238af9f4b4c8e253144ba818b9e699fafdf83bd24d",
+    "../vmotion-utils/index.cjs": "a9176fbc578550e200cbf9641662293b15a1a834f3b8ac8f3937c5d90d6d4936",
+    "../vmotion-utils/package.json": "6ce18e78c9534829cffd3a35e79002fd10b893ad86b3e9f0b79a45440423cea0",
+    "PROVENANCE.json": "1e83494766ac6fc0068120df11cbb85779f9c528577839f32874063193a020a0",
+    "bench/effect-end.cjs": "7d451ce299352d92f0d849d4084b7eac0683ac7307d7e69f4577c20e732619c7",
+    "color.cjs": "8ae294e7a0ad74a868d6462c639ed60250553f493bcceaf7a77b12b81ee8cd94",
+    "custom-effects.cjs": "d9def55bef4abb69333aebb2bd8dbf2944f6f8610810ddf84b67ef80ff9c15ff",
+    "effects.cjs": "07f81e95772ab6683ad62015f96ca518ad5616f66aad4094c9c7271f3f219349",
+    "element.cjs": "7c93ddac66764792df46837cb37b5c24ee26e90e299fe463d9279aec8d4cf15f",
+    "frame.cjs": "4a9ac2eb27ef3126006a33429c8b5a0e78f02855e61b78edaac8628a6b990b41",
+    "group.cjs": "3b65d4545349738c925f0af35aff881a361dffc51733d446c6fcf48deea9abd7",
+    "index.cjs": "1119b7f08a4de407811513aa445619cd8bf4aaa38a8f8fac512655c59eed2600",
+    "mapping.cjs": "ec4d0473369ab23544d410649c02ac3c71c0f13cf7e665d56bb15995bc93e1af",
+    "mix.cjs": "867df2291c976da0c8249abdcb6990c02c505a9b54e007837ad9f9ea1fb9cdae",
+    "neutral.cjs": "62a9b2f23fd00f614765ea70a9ea9d0c369e7c85f3ba06e8381e1882e2378d17",
+    "package.json": "df13a79898d17cadfbd2cd787b80d8a9ef8fbc064ecb16ae3f5f4b01c7851bda",
+    "playback.cjs": "c60ebb90008f77f1dd20614a5caafead7aa6a516ff475a75c30bb43638354784",
+    "reads.cjs": "ef7f79eb94a5e6155a75042fe6a114f1013aa5e7a86a148df67818d8d9cd1875",
+    "resolver.cjs": "992bb4732adcac355d0f66e0fc8048fa8078c0d9a823874534a6d8cb6107b038",
+    "selector.cjs": "6003294f5a84104b4449018521d5b71c79cb882de5af648e82e74e6d685e15e9",
+    "single.cjs": "6ba315c69bf6528559934fb26ddec3220ba59a5a85f7249551529f18a3c90ede",
+    "spring.cjs": "6dfce117d087d905b734c9864e1e286e4e03fc1d22863beac486155ea9a1156d",
+    "target.cjs": "8cbb6dc93ddc6000bb2ef6abf390b774e9ca91b4066ed10f9dc11bf0fad23aac",
+    "transition.cjs": "0296ca047dae2cffa136ff7a87f2797faa7e5fef81a1211924a8a4186fc578a7",
+    "value.cjs": "634004c6e40c6853412d0471ddc586ce57ffbac4a43fe4e366198af7149102ec"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 4225,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 4637,
+            "samples": [
+              3809.48522751779,
+              3651.3730860470155,
+              4158.525555315932,
+              3815.173172309676,
+              3685.455682553383,
+              3641.6504205305237,
+              4010.6840629717562,
+              4113.668967004531,
+              3695.3668320034553,
+              3682.9577312917722,
+              3639.9253827905964,
+              4161.095535906852
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 1708,
+            "samples": [
+              5271.8583138173135,
+              4812.280444964879,
+              4317.427985948511,
+              4915.910421545622,
+              4753.586065573735,
+              5291.642271662785,
+              5187.64637002342,
+              4874.926814988281,
+              4246.169789227193,
+              4660.006440281035,
+              4855.045081967213,
+              4726.483021077252
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 536,
+            "samples": [
+              16019.277985074568,
+              22364.115671641583,
+              16978.856343283453,
+              16653.529850746036,
+              17665.735074626893,
+              16474.88992537321,
+              20306.04664179109,
+              16239.738805969822,
+              19222.791044776062,
+              15720.848880597028,
+              19557.52611940282,
+              16289.957089552172
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 499,
+            "samples": [
+              21489.563126252764,
+              22406.979959920183,
+              24712.759519038384,
+              22685.454909819757,
+              20966.016032064348,
+              20425.769539078356,
+              23811.20641282546,
+              20202.57314629242,
+              19390.112224448625,
+              22171.677354709664,
+              21092.43486973971,
+              22050.350701402716
+            ]
+          }
+        ],
+        "checksum": 30400
+      },
+      "vpm": {
+        "pid": 4226,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 4637,
+            "samples": [
+              5121.720293293076,
+              4662.443390122927,
+              4908.130256631446,
+              4684.665085184392,
+              4782.977356049161,
+              4466.70800086263,
+              6922.66012508088,
+              5003.297821867609,
+              4902.57709726116,
+              4745.138667241769,
+              4767.567177054132,
+              4580.682553375032
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 1708,
+            "samples": [
+              6886.685011709624,
+              8343.896370023449,
+              7411.177985948455,
+              6741.90105386418,
+              7619.779274004693,
+              6806.181498829035,
+              7185.913934426243,
+              7946.1358313817345,
+              7289.275761124092,
+              6984.411592505818,
+              7548.643442622912,
+              7463.603044496494
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 536,
+            "samples": [
+              23552.93843283601,
+              22237.718283582213,
+              22633.550373134498,
+              22733.365671641717,
+              22888.13805970135,
+              22188.121268656498,
+              20917.522388059813,
+              21832.16604477571,
+              24098.647388059497,
+              21109.99813432844,
+              24080.690298507416,
+              21589.16231343298
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 499,
+            "samples": [
+              27910.154308617344,
+              22705.492985971818,
+              24262.19038076163,
+              27268.452905811322,
+              23900.134268536774,
+              25732.631262524897,
+              23765.114228456903,
+              27924.26452905837,
+              23965.18036072141,
+              25053.60721442866,
+              25777.3046092185,
+              23958.49899799597
+            ]
+          }
+        ],
+        "checksum": 6784
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 4229,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3685,
+            "samples": [
+              4747.320217096338,
+              4781.63744911805,
+              5121.460786974225,
+              4794.018453188614,
+              5213.8849389416555,
+              4842.356309362282,
+              4798.066485753057,
+              4612.437720488477,
+              4678.267571234737,
+              4929.375848032556,
+              4710.052103120742,
+              4374.411940298523
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 2321,
+            "samples": [
+              6870.996553209828,
+              7051.271003877632,
+              6844.625161568308,
+              7185.534252477396,
+              7177.599741490751,
+              7012.189573459731,
+              6706.502369668241,
+              6694.29470056011,
+              7493.608789314934,
+              6874.066350710893,
+              7219.84058595433,
+              6739.049547608802
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 520,
+            "samples": [
+              20470.673076922943,
+              23282.373076923388,
+              21101.121153846125,
+              17182.611538461202,
+              21462.659615384782,
+              22659.936538461632,
+              22770.19230769235,
+              18334.855769230584,
+              21071.79423076935,
+              19962.7403846154,
+              21604.726923077178,
+              18051.442307692538
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 459,
+            "samples": [
+              25291.847494553444,
+              24668.755991285583,
+              23306.73420479314,
+              24306.372549019776,
+              24044.20697167782,
+              21363.5620915033,
+              26595.043572985036,
+              23949.529411764495,
+              23591.958605664742,
+              25011.52723311564,
+              23186.457516339742,
+              25407.95206971696
+            ]
+          }
+        ],
+        "checksum": 26560
+      },
+      "upstream": {
+        "pid": 4230,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3685,
+            "samples": [
+              3554.296607869738,
+              3939.393758480322,
+              3707.327001356865,
+              3857.078154681149,
+              3880.189959294434,
+              3798.0890094979727,
+              3628.9573948439743,
+              3885.334599728626,
+              3635.3799185888834,
+              3857.1459972863036,
+              3847.1620081411065,
+              4124.016282225238
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 2321,
+            "samples": [
+              4497.127962085337,
+              5378.195174493761,
+              4936.323998276572,
+              4851.967255493296,
+              4578.59370960795,
+              5024.3610512710275,
+              5111.787160706597,
+              5093.314950452404,
+              4868.411891426151,
+              4704.868591124547,
+              4808.146919431289,
+              4795.903489875018
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 520,
+            "samples": [
+              18113.86153846137,
+              17356.81153846171,
+              20304.567307692003,
+              16561.859615384616,
+              17452.16346153816,
+              16897.274999999685,
+              18298.878846153544,
+              18888.54230769233,
+              18230.369230769404,
+              17334.134615384755,
+              18457.13076923079,
+              17642.869230769084
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 459,
+            "samples": [
+              19725.037037036887,
+              23037.762527233168,
+              19674.472766884486,
+              21840.68627450945,
+              20175.017429193784,
+              22759.350762527036,
+              19576.161220043807,
+              20665.305010893193,
+              20275.235294117636,
+              22134.714596949994,
+              19975.490196078033,
+              22471.76688453151
+            ]
+          }
+        ],
+        "checksum": 7680
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 4231,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3348,
+            "samples": [
+              3774.9402628434955,
+              3816.0716845878123,
+              3960.9345878136223,
+              3518.3070489844677,
+              4391.477598566297,
+              3675.7270011947408,
+              3826.065412186377,
+              3781.225209080044,
+              3938.1099163679687,
+              3611.40979689367,
+              3908.2162485065646,
+              3877.265232974913
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 2081,
+            "samples": [
+              5278.1715521384,
+              4860.423354156671,
+              4909.999038923603,
+              5044.549735703983,
+              4297.713118692927,
+              4644.401729937512,
+              4836.376741951018,
+              4772.545410860138,
+              4641.978856319059,
+              4944.738106679463,
+              4397.965881787639,
+              4935.0874579529445
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 588,
+            "samples": [
+              17442.17687074825,
+              18844.600340135952,
+              17887.117346938503,
+              18876.48809523811,
+              16396.258503401492,
+              19197.845238095182,
+              20305.202380952283,
+              15310.51530612238,
+              19979.591836734387,
+              16299.035714285952,
+              18401.076530612274,
+              18200.68027210884
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 421,
+            "samples": [
+              19835.213776722176,
+              22486.838479809645,
+              22498.4180522564,
+              19583.532066508702,
+              22553.444180522845,
+              21482.08551068878,
+              22149.643705463288,
+              18379.7505938243,
+              19249.50356294549,
+              23288.895486935835,
+              19879.254156770017,
+              20615.49881235127
+            ]
+          }
+        ],
+        "checksum": 20736
+      },
+      "vpm": {
+        "pid": 4232,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3348,
+            "samples": [
+              5273.857526881725,
+              4910.369474313016,
+              4693.710274790918,
+              5057.857825567493,
+              4359.256869773011,
+              4920.213560334524,
+              4565.984767025077,
+              4925.950716845872,
+              4897.140083632018,
+              4555.256869772991,
+              4494.972222222225,
+              5193.9091995221015
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 2081,
+            "samples": [
+              6948.482460355594,
+              7201.245555021598,
+              6870.354637193635,
+              7298.714560307545,
+              7124.900048053811,
+              7827.867371456047,
+              7175.876982220083,
+              7099.511292647774,
+              6848.870735223476,
+              6645.422873618441,
+              6813.911580970639,
+              6225.552618933207
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 588,
+            "samples": [
+              20752.976190476445,
+              19860.26020408196,
+              21943.0272108846,
+              22120.889455782257,
+              21055.768707482872,
+              20605.22959183667,
+              24169.289115646276,
+              22339.780612244773,
+              22291.66666666679,
+              22911.63435374148,
+              21701.389455782246,
+              20766.085034013635
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 421,
+            "samples": [
+              27863.02375296906,
+              22991.78622327757,
+              23603.722090261388,
+              24312.351543942998,
+              23193.980997624243,
+              26317.299287410824,
+              22120.546318289904,
+              24882.422802849844,
+              22581.25653206651,
+              26080.166270783768,
+              23525.831353919413,
+              25093.824228028392
+            ]
+          }
+        ],
+        "checksum": 6848
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 4235,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3925,
+            "samples": [
+              4907.5796178343935,
+              5108.1421656051,
+              4841.995668789814,
+              4906.146496815283,
+              4747.961783439484,
+              4882.547770700634,
+              5262.101910828026,
+              4609.893757961788,
+              4995.647643312098,
+              4730.180382165597,
+              4647.74929936304,
+              5031.571210191085
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 1270,
+            "samples": [
+              6264.238582677112,
+              6659.87480314959,
+              6217.4212598425065,
+              7018.274015748074,
+              7119.357480315006,
+              6735.072440944876,
+              6601.936220472435,
+              6765.12440944876,
+              6781.59448818896,
+              6852.985039370106,
+              6845.439370078662,
+              6927.296850393737
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 511,
+            "samples": [
+              21819.5518590999,
+              23173.18982387475,
+              19725.04892367916,
+              22208.25244618381,
+              22878.506849314872,
+              20091.487279843448,
+              22138.78082191775,
+              20807.649706457883,
+              20583.33268101748,
+              21403.782778865127,
+              21863.17612524448,
+              20043.05283757331
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 372,
+            "samples": [
+              24978.943548386655,
+              23101.70161290297,
+              24397.287634408553,
+              26749.889784946266,
+              23150.424731182684,
+              25287.970430107398,
+              22318.212365591968,
+              23213.26075268864,
+              22805.443548386687,
+              28952.172043010512,
+              26439.852150537463,
+              91908.37903225786
+            ]
+          }
+        ],
+        "checksum": 17792
+      },
+      "upstream": {
+        "pid": 4236,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3925,
+            "samples": [
+              4031.6242038216656,
+              3825.2547770700726,
+              3694.2038216560522,
+              3834.055286624195,
+              4048.1424203821657,
+              4081.868535031839,
+              3943.12101910829,
+              3946.3375796178334,
+              4287.292993630576,
+              3771.8364331210364,
+              3573.3225477707106,
+              3808.1105732483993
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 1270,
+            "samples": [
+              5361.385039370047,
+              4764.107086614205,
+              4653.41181102357,
+              4738.812598425266,
+              4899.147244094458,
+              4942.092913385774,
+              5745.307874015785,
+              4857.283464566965,
+              5085.925196850371,
+              4596.09527559055,
+              4710.137795275547,
+              4860.4661417323405
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 511,
+            "samples": [
+              18985.731898238846,
+              17485.485322895987,
+              19293.866927592873,
+              17297.61839530347,
+              18574.283757338257,
+              17768.998043052903,
+              17988.667318982483,
+              18880.381604696897,
+              17937.62230919758,
+              18934.360078277758,
+              18141.55185909968,
+              19617.252446183902
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 372,
+            "samples": [
+              19744.177419354815,
+              21119.959677419072,
+              22316.196236559295,
+              28484.543010752834,
+              18540.54569892491,
+              24240.1424731183,
+              20095.094086021465,
+              26127.68817204281,
+              19289.537634408563,
+              21607.52688172046,
+              23811.715053763586,
+              20915.658602150193
+            ]
+          }
+        ],
+        "checksum": 8320
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 4237,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3901,
+            "samples": [
+              3876.196359907713,
+              4075.675211484231,
+              3962.637785183277,
+              3840.756729043825,
+              3693.59343758012,
+              3674.9551397077707,
+              3860.602153294024,
+              4020.571648295314,
+              3829.819277108425,
+              4061.522686490642,
+              3976.1812355806164,
+              3856.1907203281226
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 2074,
+            "samples": [
+              5885.205882352941,
+              5330.259884281608,
+              5544.760366441643,
+              5133.477820636458,
+              5143.322082931517,
+              5168.534715525578,
+              5161.40308582449,
+              5415.441176470537,
+              5135.08534233366,
+              5340.224204435902,
+              5363.689488910303,
+              5546.629218900654
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 546,
+            "samples": [
+              21551.13003663031,
+              19247.86263736258,
+              16959.55311355307,
+              19749.771062271022,
+              19891.78937728974,
+              16145.527472527538,
+              19563.7985347985,
+              22329.060439560533,
+              16512.28571428554,
+              19044.26190476201,
+              17795.86263736265,
+              19736.186813186716
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 430,
+            "samples": [
+              22197.67441860482,
+              24841.569767441837,
+              24899.03023255793,
+              26838.855813953476,
+              21946.70465116286,
+              23838.274418604607,
+              36583.91395348866,
+              24890.697674418545,
+              22950.58139534905,
+              23147.86744186042,
+              26322.48139534832,
+              23753.779069767363
+            ]
+          }
+        ],
+        "checksum": 18496
+      },
+      "vpm": {
+        "pid": 4268,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3901,
+            "samples": [
+              3659.0617790310175,
+              4060.12355806204,
+              4196.178415790816,
+              4792.841579082281,
+              4166.965649833378,
+              3966.9848756729066,
+              3605.432453217112,
+              3950.6536785439603,
+              4003.385798513203,
+              3931.908485003841,
+              4309.696231735462,
+              3788.291463727261
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 2074,
+            "samples": [
+              7057.9797492768,
+              5077.647540983587,
+              5432.035197685618,
+              4662.026036644162,
+              4639.223722275806,
+              5043.856316297013,
+              4990.637897782077,
+              5036.3828351012135,
+              4389.966730954666,
+              4837.451783992281,
+              5743.972999035631,
+              5064.589199614277
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 546,
+            "samples": [
+              20195.05494505484,
+              18899.344322344474,
+              18403.7692307692,
+              17381.029304029125,
+              19019.84065934079,
+              17404.99084249076,
+              20095.54395604419,
+              18051.587912087754,
+              19391.025641025393,
+              17432.46336996347,
+              16920.252747252816,
+              21985.72893772905
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 430,
+            "samples": [
+              23490.21395348827,
+              19198.158139534975,
+              20889.630232558335,
+              20313.081395348952,
+              25738.95348837194,
+              21799.806976743934,
+              23560.951162790465,
+              31462.888372093297,
+              22059.204651162512,
+              21596.8023255813,
+              21506.879069767798,
+              23221.897674419102
+            ]
+          }
+        ],
+        "checksum": 7424
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 4269,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3606,
+            "samples": [
+              3799.25818080975,
+              3805.5210759844567,
+              4510.595951192465,
+              4244.500000000008,
+              3967.72739877982,
+              4131.713255684967,
+              3614.3003327787155,
+              3970.119245701615,
+              4010.8269550748837,
+              4030.192734331667,
+              3459.1536328341617,
+              3738.699389905722
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 2323,
+            "samples": [
+              4457.651743435232,
+              4855.736117089997,
+              4958.3151097718255,
+              4969.65131295737,
+              5234.395178648291,
+              5252.080499354306,
+              5086.795092552753,
+              4474.207490314262,
+              4981.525182953087,
+              5045.218252260024,
+              5116.2651743435235,
+              4962.010331467926
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 534,
+            "samples": [
+              20557.895131086236,
+              17833.177902621737,
+              18059.69101123592,
+              18853.385767790336,
+              17186.016853932328,
+              18182.1161048687,
+              14943.509363295847,
+              19326.855805243536,
+              16865.48127340825,
+              20282.069288389615,
+              16535.267790262187,
+              18993.367041198566
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 424,
+            "samples": [
+              22029.676886792808,
+              19144.066037735793,
+              22397.011792452413,
+              19752.849056603605,
+              21907.13443396259,
+              18950.865566037737,
+              20278.106132075594,
+              22660.87028301884,
+              19101.70990566028,
+              19049.037735848684,
+              21820.65566037696,
+              21696.245283018863
+            ]
+          }
+        ],
+        "checksum": 17344
+      },
+      "upstream": {
+        "pid": 4271,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "complete and release 1 custom values",
+            "iterations": 3606,
+            "samples": [
+              3723.6436494730997,
+              4258.666112035506,
+              3733.106766500267,
+              3736.446200776491,
+              3789.0898502495816,
+              4025.085690515804,
+              3681.1910704381644,
+              4317.0987243483205,
+              4295.676372712144,
+              3784.098447032712,
+              4055.0587909040514,
+              3938.0199667221236
+            ]
+          },
+          {
+            "case": "complete and release 1 custom values with transitionEnd",
+            "iterations": 2323,
+            "samples": [
+              5241.856650882474,
+              5193.804563064996,
+              5190.916917778726,
+              5181.894532931519,
+              4531.496340938432,
+              4939.840723202788,
+              5065.665949203588,
+              4915.1239776151415,
+              5006.672406371064,
+              5176.532070598361,
+              4696.441670253953,
+              5216.225570383134
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values",
+            "iterations": 534,
+            "samples": [
+              17491.885767790147,
+              17873.595505617923,
+              16441.479400748918,
+              20982.5205992511,
+              15873.20599250947,
+              20855.571161048534,
+              19802.35580524354,
+              18052.123595505742,
+              20788.62359550545,
+              17883.58239700381,
+              18599.640449438102,
+              19281.835205992367
+            ]
+          },
+          {
+            "case": "complete and release 8 custom values with transitionEnd",
+            "iterations": 424,
+            "samples": [
+              20703.91037735849,
+              21428.459905660515,
+              23301.198113207396,
+              21664.603773585422,
+              22732.016509433954,
+              23269.950471698292,
+              19657.2311320754,
+              22435.533018867576,
+              21113.011792452515,
+              22137.186320754983,
+              18699.6839622642,
+              21314.36556603796
+            ]
+          }
+        ],
+        "checksum": 7552
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "complete and release 1 custom values",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3752.4260297606224,
+          "vpmNs": 4775.272266551647,
+          "changePct": 27.258265151099437
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3852.120081411128,
+          "vpmNs": 4787.827951153333,
+          "changePct": 24.290724327561254
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 3821.068548387095,
+          "vpmNs": 4903.754778972518,
+          "changePct": 28.33464558081362
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3888.5881528662426,
+          "vpmNs": 4894.3471337579585,
+          "changePct": 25.86437394123058
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3868.3992566008683,
+          "vpmNs": 3985.185337093055,
+          "changePct": 3.018976913846405
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3863.5549084858526,
+          "vpmNs": 3968.9233222407174,
+          "changePct": 2.727239970718043
+        }
+      ]
+    },
+    {
+      "case": "complete and release 1 custom values with transitionEnd",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4833.662763466046,
+          "vpmNs": 7350.226873536274,
+          "changePct": 52.06329512871704
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4860.189573459724,
+          "vpmNs": 6943.127962085312,
+          "changePct": 42.857142857142705
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4848.400048053844,
+          "vpmNs": 7023.996876501684,
+          "changePct": 44.87246941021559
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4858.8748031496525,
+          "vpmNs": 6773.35944881886,
+          "changePct": 39.40181056791558
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 5335.242044358754,
+          "vpmNs": 5040.119575699113,
+          "changePct": -5.531566631952356
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5121.099009900974,
+          "vpmNs": 4975.588247955228,
+          "changePct": -2.841397162296999
+        }
+      ]
+    },
+    {
+      "case": "complete and release 8 custom values",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 16816.193097014744,
+          "vpmNs": 22435.634328358356,
+          "changePct": 33.41684529265538
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 17878.365384615227,
+          "vpmNs": 21086.457692307737,
+          "changePct": 17.943991179714637
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 18300.878401360555,
+          "vpmNs": 21822.208333333423,
+          "changePct": 19.241316480803896
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18357.91780821897,
+          "vpmNs": 21611.667318982516,
+          "changePct": 17.72395728510572
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 19405.83058608054,
+          "vpmNs": 18651.556776556838,
+          "changePct": -3.886841154146381
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 18325.882022471924,
+          "vpmNs": 18120.90355805231,
+          "changePct": -1.118518956786163
+        }
+      ]
+    },
+    {
+      "case": "complete and release 8 custom values with transitionEnd",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 21769.95691382774,
+          "vpmNs": 24657.898797595146,
+          "changePct": 13.265721632793204
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 20470.270152505414,
+          "vpmNs": 24175.289760348798,
+          "changePct": 18.09951495627875
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 21048.792161520025,
+          "vpmNs": 23958.03681710219,
+          "changePct": 13.821432760881414
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 21363.743279569768,
+          "vpmNs": 24688.115591397604,
+          "changePct": 15.560813797116468
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 24339.922093023222,
+          "vpmNs": 21929.505813953223,
+          "changePct": -9.903138842670822
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 21546.53183962297,
+          "vpmNs": 20987.175707547227,
+          "changePct": -2.5960378971390474
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "complete and release 1 custom values",
+      "upstream_ns": 3837,
+      "vpm_ns": 4841,
+      "change_pct": 26.6,
+      "upstream_first_pct": 27.8,
+      "vpm_first_pct": 25.1,
+      "process_range_pct": "27.3, 24.3, 28.3, 25.9",
+      "control_max_abs_pct": 3,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "complete and release 1 custom values with transitionEnd",
+      "upstream_ns": 4854,
+      "vpm_ns": 6984,
+      "change_pct": 43.9,
+      "upstream_first_pct": 48.5,
+      "vpm_first_pct": 41.1,
+      "process_range_pct": "52.1, 42.9, 44.9, 39.4",
+      "control_max_abs_pct": 5.5,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "complete and release 8 custom values",
+      "upstream_ns": 18090,
+      "vpm_ns": 21717,
+      "change_pct": 18.6,
+      "upstream_first_pct": 26.3,
+      "vpm_first_pct": 17.8,
+      "process_range_pct": "33.4, 17.9, 19.2, 17.7",
+      "control_max_abs_pct": 3.9,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "complete and release 8 custom values with transitionEnd",
+      "upstream_ns": 21206,
+      "vpm_ns": 24417,
+      "change_pct": 14.7,
+      "upstream_first_pct": 13.5,
+      "vpm_first_pct": 16.8,
+      "process_range_pct": "13.3, 18.1, 13.8, 15.6",
+      "control_max_abs_pct": 9.9,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 const { resolveElements, propEffect } = require("./effects.cjs");
 const { animateElement, prepareFrames, snapshotTransition } = require("./element.cjs");
 const { animateSingleValue } = require("./single.cjs");
-const { findEffect, addEffect, removeEffect, animateEffectSubject } = require("./custom-effects.cjs");
+const { findEffect, addEffect, removeEffect, animateEffectSubject, snapshotEffectEnd } = require("./custom-effects.cjs");
 const { isMotionValue } = require("./value.cjs");
 const { GroupAnimationWithThen } = require("./group.cjs");
 const blocked = new Set(["__proto__", "constructor", "prototype", "transition", "transitionEnd"]);
@@ -68,11 +68,14 @@ function animateSubjects(subject, keyframes, options, scope) {
     if (!dom && !effect) throw new TypeError("subject requires an object, DOM element or registered effect");
     return { item, effect };
   });
-  const keys = Object.keys(keyframes), frames = Object.create(null);
+  const end = snapshotEffectEnd(keyframes.transitionEnd);
+  if (end && entries.some(entry => !entry.effect)) throw new TypeError("transitionEnd requires object or custom-effect subjects");
+  const keys = Object.keys(keyframes).filter(key => key !== "transitionEnd"), frames = Object.create(null);
   for (const key of keys) {
     if (blocked.has(key)) throw new TypeError("unsupported animation property: " + key);
     if (keyframes[key] !== undefined) frames[key] = prepareFrames(keyframes[key]);
   }
+  if (end) frames.transitionEnd = end;
   const captured = transitionSnapshot(options, keys);
   const transitions = entries.map(({ item }, index) => {
     const result = transitionSnapshot(captured, keys);

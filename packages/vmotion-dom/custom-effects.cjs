@@ -2,7 +2,7 @@
 const { frame, frameSteps, cancelFrame } = require("./frame.cjs");
 const { KeyframeResolver } = require("./resolver.cjs");
 const { motionValue } = require("./value.cjs");
-const { animateValues, prepareFrames, snapshotTransition } = require("./element.cjs");
+const { animateValues, prepareFrames, snapshotTransition, getAnimationRequest, observeCompletion } = require("./element.cjs");
 const unsafe = new Set(["__proto__", "prototype", "constructor"]);
 const object = value => value !== null && (typeof value === "object" || typeof value === "function");
 function keyCheck(key) {
@@ -193,11 +193,25 @@ function removeEffect(effect) {
 function findEffect(subject) {
   for (const effect of registered.slice()) if (effect.test(subject)) return effect;
 }
+const endGenerations = new WeakMap();
+function snapshotEffectEnd(end) {
+  if (end === undefined) return undefined;
+  if (!end || typeof end !== "object" || Array.isArray(end)) throw new TypeError("transitionEnd must be an object");
+  const result = Object.create(null);
+  for (const key of Object.keys(end)) {
+    keyCheck(key);
+    const value = end[key];
+    if (value === undefined) continue;
+    if (typeof value !== "string" && !Number.isFinite(value)) throw new TypeError("transitionEnd requires strings or finite numbers");
+    result[key] = value;
+  }
+  return result;
+}
 function animateEffectSubject(effect, subject, keyframes, transition = {}, element) {
   checkEffect(effect);
   if (!object(subject)) throw new TypeError("effect subject must be an object");
   if (!keyframes || typeof keyframes !== "object" || Array.isArray(keyframes)) throw new TypeError("keyframes must be an object");
-  if (keyframes.transitionEnd !== undefined) throw new TypeError("effect transitionEnd is not implemented");
+  const end = snapshotEffectEnd(keyframes.transitionEnd);
   const frames = Object.create(null), settings = snapshotTransition(keyframes.transition ?? transition), created = Object.create(null), values = new Map();
   for (const key of Object.keys(keyframes)) {
     if (key === "transition" || key === "transitionEnd" || keyframes[key] === undefined) continue;
@@ -216,16 +230,58 @@ function animateEffectSubject(effect, subject, keyframes, transition = {}, eleme
     }
     values.set(key, value);
   }
-  let detach;
+  const endings = end && Object.entries(end).map(([key, value]) => ({
+    key, value, slot: values.get(key) || effect.get(subject, key), request: undefined,
+  }));
+  // Only subjects with completion values need generation bookkeeping. A later
+  // ordinary animation still supersedes earlier ends on overlapping keys.
+  let subjects = endGenerations.get(effect), keys = subjects?.get(subject);
+  if (end && Object.keys(end).length && !keys) {
+    if (!subjects) endGenerations.set(effect, subjects = new WeakMap());
+    subjects.set(subject, keys = new Map());
+  }
+  const names = keys ? new Set([...Object.keys(frames), ...Object.keys(end || {})]) : undefined;
+  const token = keys ? {} : undefined, previous = keys ? new Map() : undefined;
+  if (keys) for (const key of names) { previous.set(key, keys.get(key)); keys.set(key, token); }
+  let detach, handles;
   try {
     if (Object.keys(created).length) {
       detach = effect(subject, created);
       if (typeof detach !== "function") throw new TypeError("effect must return cleanup");
     }
-    return animateValues(key => values.get(key), frames, settings, element || { current: subject, KeyframeResolver });
+    handles = animateValues(key => values.get(key), frames, settings, element || { current: subject, KeyframeResolver });
   } catch (error) {
     try { detach?.(); } catch {}
+    for (const [key, prior] of previous || []) if (keys.get(key) === token) {
+      if (prior === undefined) keys.delete(key); else keys.set(key, prior);
+    }
     throw error;
   }
+  if (endings?.length) {
+    for (const item of endings) item.request = item.slot && getAnimationRequest(item.slot);
+    const current = () => [...names].every(key => keys.get(key) === token) &&
+      handles.every(h => h.completed && !h.stopped && !h.cancelled && !h.failed && !h.run?.failed && h.owned()) &&
+      [...values].every(([key, value]) => effect.get(subject, key) === value) &&
+      endings.every(item => effect.get(subject, item.key) === item.slot && (!item.slot || getAnimationRequest(item.slot) === item.request));
+    const schedule = () => queueMicrotask(() => frame.update(() => {
+      if (!current()) return;
+      for (const item of endings) {
+        if (!current()) break;
+        if (item.slot) item.slot.set(item.value);
+        else {
+          // End-only properties must not be bound to undefined during playback.
+          // Bind only when the completion barrier still owns this subject.
+          item.slot = motionValue(item.value);
+          effect(subject, { [item.key]: item.slot });
+        }
+      }
+    }));
+    let remaining = handles.length;
+    if (!remaining) schedule();
+    else for (const handle of handles) observeCompletion(handle, () => { if (--remaining === 0) schedule(); });
+  }
+  return handles;
 }
 module.exports = { MotionValueState, createEffect, addEffect, removeEffect, findEffect, animateEffectSubject };
+
+Object.defineProperty(module.exports, "snapshotEffectEnd", { value: snapshotEffectEnd });
