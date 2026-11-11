@@ -1,0 +1,56 @@
+{
+  "readme": "Public API controls and unchanged caller only; no copied Goober runtime.",
+  "controls": [
+    {
+      "name": "goober",
+      "version": "2.1.19",
+      "integrity": "sha512-U7veizMqxyKlM58+Z5j2ngJBH/r9siDmxpvNxSw0PylF6WQvrASJEZrxh1hidRBJc2jqoBVSyOban5u8m+6Rxg=="
+    },
+    {
+      "name": "goober-app",
+      "version": "2.1.18",
+      "integrity": "sha512-2vFqsaDVIT9Gz7N6kAL++pLpp41l3PfDuusHcjnGLfR6+huZkl6ziX+zgVC3ZxpqWhzH6pyDdGrCeDhMIvwaxw=="
+    },
+    {
+      "name": "notistack",
+      "version": "3.0.2",
+      "integrity": "sha512-0R+/arLYbK5Hh7mEfR2adt0tyXJcCC9KkA2hc56FeWik2QN6Bm/S4uW+BjzDARsJth5u06nTjelSw/VSnB1YEA=="
+    },
+    {
+      "name": "react",
+      "version": "19.3.1",
+      "integrity": "sha512-QNhWdt7nrgVWWQG58QuGsAR3jv3Hbe4mb4vz7w2csnHavciZJgda1CPNaldF6eVxv90ud3jUXpKlHL69gO38yw=="
+    },
+    {
+      "name": "react-dom",
+      "version": "19.3.1",
+      "integrity": "sha512-Y0bARz53lhEC1NMCASs0/j+faB/zqt3R8hpvg1e8+61ZVJ4UL0UdC4cBbXfZMcIuhrfgeILTLe+ZeBCavQPtKQ=="
+    },
+    {
+      "name": "scheduler",
+      "version": "0.28.0",
+      "integrity": "sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw=="
+    },
+    {
+      "name": "clsx",
+      "version": "1.2.1",
+      "integrity": "sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg=="
+    },
+    {
+      "name": "csstype",
+      "version": "3.2.3",
+      "integrity": "sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ=="
+    }
+  ],
+  "fixtureFiles": {
+    "package-lock.json": "c177dcc1a133021ab4b85c7da86811582992899d73cdbff7bfc903b04beb3937",
+    "node_modules/goober": "b999748fc26afd3968a66056ead40e422c9941a585fc3aca32af9f19b5d3b4a6",
+    "node_modules/goober-app": "aa50fe74a2b5ef8552a300caaac9d6b807e2c446d9e7fdd90fdc1d2758d97485",
+    "node_modules/notistack": "7fc94a083e0605422002441f3e003ece5ed2a0ee560bddd4f4dde2fb7a9fc1b5",
+    "node_modules/react": "27c045392bedb10c5e82004e0cad0f329107a8e4e2e797eedfc14a9f2aababd7",
+    "node_modules/react-dom": "16f6df3015c7b1b0e6960dc5da8ebf0989341fc6f33454ca51f40696b1a431e4",
+    "node_modules/scheduler": "94b31de8785de556caca149bcce63bf245b8d50e65f2185c4268d47a42cba37d",
+    "node_modules/clsx": "f5aae721e7d654bd6c2d01fc7bb451663c520af8e85193b9714ca690008e1660",
+    "node_modules/csstype": "f2c8ebc3f800d5a7c35cb3d870fdc45e519822c6cc7c75c6c3214f80db9e6e10"
+  }
+}

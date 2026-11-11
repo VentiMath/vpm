@@ -1,0 +1,1597 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-11T12:54:03.774Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/goober-conformance/caller.cjs": "4055f3de8ee7925ea1f6a148fffc6350beeee512b24943822c22125e9e4ec7c4",
+    "../../scripts/goober-conformance/check-controls.cjs": "1ce3735d0359c40e17f455ff16737378f4f07efef3421437272f3c8980876062",
+    "../../scripts/goober-conformance/node_modules/goober": "b999748fc26afd3968a66056ead40e422c9941a585fc3aca32af9f19b5d3b4a6",
+    "../../scripts/goober-conformance/node_modules/notistack": "7fc94a083e0605422002441f3e003ece5ed2a0ee560bddd4f4dde2fb7a9fc1b5",
+    "../../scripts/goober-conformance/provenance.json": "a5f406c7ae5f119fae2c322e1947b46ce7220f80c0ccd6c3870e71a748d296f9",
+    "PROVENANCE.json": "d47a06ff2a372eb2e98439fb9020593492d211ad367d4d3589d442f434756f2d",
+    "bench/run.cjs": "27e1e40ed2f17d47b0f8ceebe17fbd14dbbbc1b7bcc6568def6e13594b260b9e",
+    "index.cjs": "936ca9b1c16efae495196bf21a8dff1a380279b47f011d25f6bc147902b79454",
+    "index.mjs": "0063a90256f77ba534f358d894ecaacbd26377d8e0606249cce8dd83679ced67",
+    "package.json": "65ec319de6909e38f9d586638f1b4d48ed861f1a3bce81a7bc30d6a143b20314"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 19997,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 51248,
+            "samples": [
+              202.04852872307248,
+              201.59485248204808,
+              187.75284889166363,
+              191.55381673431182,
+              187.30567046518888,
+              193.9929363097099,
+              201.6818607555411,
+              198.17926553231254,
+              187.3788440524513,
+              183.7860404308455,
+              205.0185763346866,
+              206.38122463315602
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 27060,
+            "samples": [
+              358.4195491500383,
+              366.634331116037,
+              347.9012934220262,
+              334.88854397634987,
+              329.05735402808773,
+              316.352549889137,
+              312.23359201774133,
+              311.6592756836652,
+              318.2772727272717,
+              368.10018477457396,
+              336.1126385809339,
+              341.88222468588486
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 35398,
+            "samples": [
+              274.85544381038466,
+              302.1886829764387,
+              296.7528956438216,
+              286.160235041528,
+              288.7769082999041,
+              297.5344652240226,
+              293.5570653709258,
+              278.6762811458253,
+              269.4173117125261,
+              271.2629809593765,
+              270.56497542233956,
+              274.5941296118405
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 1063,
+            "samples": [
+              9765.24741298221,
+              9180.346190028073,
+              8899.851364064,
+              9664.393226716802,
+              8819.026340545553,
+              9358.811853245592,
+              8919.645343367827,
+              8911.257761053623,
+              8129.350893697038,
+              8559.501411100762,
+              10206.843838193683,
+              10286.25776105354
+            ]
+          }
+        ],
+        "checksum": 14070392
+      },
+      "vpm": {
+        "pid": 20026,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 51248,
+            "samples": [
+              209.61711676553287,
+              203.55346550109246,
+              212.28227443022163,
+              208.18697315017096,
+              206.0925889790817,
+              202.96971589135185,
+              204.21122775522952,
+              201.3306275366843,
+              199.46550109272602,
+              205.0543435841409,
+              209.39597642834883,
+              211.98552138620036
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 27060,
+            "samples": [
+              295.1327420546951,
+              293.35428677014124,
+              295.5084257206194,
+              301.41814486326774,
+              288.07124907612723,
+              286.617701404289,
+              296.5062084257208,
+              291.8160384331099,
+              303.5307464892816,
+              280.8019216555823,
+              343.2772727272687,
+              315.6103473761987
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 35398,
+            "samples": [
+              844.4062093903624,
+              818.8763206960843,
+              833.7417650714727,
+              904.1506582292823,
+              837.2000678004385,
+              856.6361941352625,
+              874.3843719984181,
+              862.2980111870737,
+              861.7165376574962,
+              879.0703994575973,
+              878.5242104073664,
+              877.9792078648513
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 1063,
+            "samples": [
+              11127.900282220186,
+              11508.035747883414,
+              10466.839134524957,
+              11112.966133584201,
+              10772.145813734696,
+              10881.74129821267,
+              10391.188146754592,
+              11652.986829727157,
+              10366.808090310302,
+              11310.912511759185,
+              10541.509877704446,
+              11391.58043273751
+            ]
+          }
+        ],
+        "checksum": 3881474
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 20027,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 50605,
+            "samples": [
+              202.90649145341405,
+              208.0122122319927,
+              201.42689457563478,
+              202.028791621382,
+              204.26918288706642,
+              199.00784507459704,
+              209.0858808418147,
+              204.58699733227897,
+              211.37486414385896,
+              201.79660112637035,
+              203.7850410038535,
+              200.50473273391978
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 33304,
+            "samples": [
+              294.1188145568074,
+              322.4074885899575,
+              302.934092000962,
+              295.2785851549379,
+              334.1840619745389,
+              317.5281948114317,
+              321.97333653615055,
+              306.3883617583457,
+              307.0226699495568,
+              288.57146288733793,
+              324.98348546721206,
+              304.4228921450883
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 13562,
+            "samples": [
+              892.1403922725327,
+              901.4618050434981,
+              849.3677186255654,
+              887.839183011349,
+              909.2869783217772,
+              853.1835275033181,
+              984.7336676006497,
+              1020.0713759032583,
+              981.0746202624994,
+              879.7375018433888,
+              921.7728948532659,
+              930.7961952514399
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 830,
+            "samples": [
+              11559.839759036233,
+              10811.746987951667,
+              10840.963855421744,
+              10009.13614457834,
+              10685.843373493934,
+              11765.913253012208,
+              11065.963855421558,
+              11114.859036144688,
+              10610.090361445922,
+              11422.840963855542,
+              10807.430120481862,
+              11137.400000000043
+            ]
+          }
+        ],
+        "checksum": 7218314
+      },
+      "upstream": {
+        "pid": 20028,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 50605,
+            "samples": [
+              190.92727991305225,
+              204.99950597767008,
+              212.9779666040899,
+              206.82080822053126,
+              198.04203141982077,
+              202.674300958403,
+              204.26999308368752,
+              201.76942989823203,
+              195.51510720284583,
+              204.2922438494221,
+              191.04418535717858,
+              187.8182195435237
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 33304,
+            "samples": [
+              329.1759248138378,
+              340.7023180398764,
+              349.13097525822866,
+              322.4199795820297,
+              357.38574945952456,
+              321.55422772039253,
+              355.58041076147117,
+              333.15568700456396,
+              331.18141964929197,
+              343.60737448954995,
+              332.1435263031488,
+              319.76390223396504
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 13562,
+            "samples": [
+              306.1372216487168,
+              279.0794130659153,
+              310.58899867275613,
+              269.8870373101321,
+              267.1803568795189,
+              307.22791623653984,
+              293.5776434154242,
+              316.41107506267315,
+              273.8840878926349,
+              271.9455095118724,
+              313.70439463206833,
+              287.78329154991906
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 830,
+            "samples": [
+              8012.701204819107,
+              9777.409638554014,
+              9120.833734939615,
+              10416.91807228898,
+              9363.403614457935,
+              9116.31566265036,
+              8866.314457831519,
+              10492.118072288959,
+              9978.463855421627,
+              9319.377108433773,
+              8545.180722891533,
+              8611.897590361308
+            ]
+          }
+        ],
+        "checksum": 4811833
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 20029,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 54595,
+            "samples": [
+              214.6167231431452,
+              196.6396556461216,
+              194.86520743657843,
+              208.26694752266715,
+              204.12583569923984,
+              193.4769667551977,
+              187.9750892938922,
+              192.2413407821225,
+              194.19208718747166,
+              200.85705650700658,
+              190.0357175565528,
+              186.8280062276769
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 32701,
+            "samples": [
+              347.74165927647374,
+              325.8883520381609,
+              322.771719519279,
+              340.3438121158382,
+              333.5805021253204,
+              312.3133237515659,
+              322.8545610225964,
+              313.3212134185488,
+              351.375615424607,
+              345.93871747041396,
+              329.29421118620473,
+              355.9358735206871
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 37545,
+            "samples": [
+              273.09894792915253,
+              277.3804767612209,
+              295.6063923292067,
+              283.5519509921414,
+              287.01779198295606,
+              273.9778931948311,
+              292.20713810094514,
+              292.2570781728569,
+              283.4598481821825,
+              283.38660274337593,
+              286.3208682913832,
+              293.4534292182736
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 1026,
+            "samples": [
+              8753.735867446567,
+              8542.519493177411,
+              8868.704678362568,
+              8641.041910331309,
+              9137.548732943495,
+              8921.13450292379,
+              9780.985380116877,
+              9977.09551656918,
+              8429.499025341178,
+              8639.25438596492,
+              9627.192982456192,
+              8679.256335282718
+            ]
+          }
+        ],
+        "checksum": 6280263
+      },
+      "vpm": {
+        "pid": 20030,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 54595,
+            "samples": [
+              200.06029856213937,
+              200.52889458741663,
+              201.7812986537231,
+              202.18655554537912,
+              202.58113380346157,
+              197.74092865647108,
+              199.83819031046806,
+              204.33801630185965,
+              199.60007326678314,
+              206.50777543731115,
+              207.28929389138193,
+              205.27291876545414
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 32701,
+            "samples": [
+              300.9540992630194,
+              305.00467875600253,
+              297.9967585089129,
+              293.92832023485613,
+              313.33778783523314,
+              335.36307758172654,
+              343.8108620531495,
+              296.2409406440162,
+              291.93425277514586,
+              318.8867924528296,
+              299.34482125929105,
+              294.5845386991247
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 37545,
+            "samples": [
+              887.4483952590228,
+              882.7717672126765,
+              860.5484618457828,
+              899.9955520042655,
+              916.2194433346644,
+              876.6213876681365,
+              886.8402184045786,
+              893.1093887335197,
+              861.1277666799847,
+              897.176721267814,
+              886.9068318018398,
+              870.7983752829933
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 1026,
+            "samples": [
+              13029.686159843975,
+              11773.310916179482,
+              10772.904483430686,
+              11535.494152046791,
+              11351.160818713468,
+              11085.485380116814,
+              11263.198830409294,
+              10752.07115009754,
+              11347.913255360641,
+              10902.89961013645,
+              10833.616959064175,
+              11301.169590643301
+            ]
+          }
+        ],
+        "checksum": 3877916
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 20031,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 47001,
+            "samples": [
+              207.18531520605904,
+              210.14003957362598,
+              205.76334546073508,
+              206.7757494521389,
+              202.65792217186873,
+              210.39622561222055,
+              201.56575392012942,
+              200.10744452245748,
+              200.59768941086355,
+              210.74551605285046,
+              198.7945150103193,
+              200.50105316908116
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 34549,
+            "samples": [
+              308.59191293524964,
+              305.237980838808,
+              304.81947379084755,
+              301.92263162464764,
+              308.904251932038,
+              301.30756317114657,
+              307.4618657558814,
+              308.78126718573685,
+              300.9168138006899,
+              300.8492865205943,
+              311.2571999189573,
+              300.7262728298921
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 8834,
+            "samples": [
+              828.0319221190874,
+              936.4576635725556,
+              863.8309938872526,
+              890.3196739868588,
+              850.1905139234772,
+              977.0016979850508,
+              945.3248811410458,
+              927.8733303147026,
+              944.3437853746947,
+              864.3829522300156,
+              939.8913289563048,
+              917.1006339144238
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 894,
+            "samples": [
+              11195.050335570599,
+              10503.121923937428,
+              11930.97427293065,
+              11307.979865771802,
+              11155.014541387009,
+              11222.96868008945,
+              10934.563758389222,
+              11323.45190156609,
+              10916.713646532451,
+              11115.445190156663,
+              11921.793064876994,
+              11139.02796420598
+            ]
+          }
+        ],
+        "checksum": 7119089
+      },
+      "upstream": {
+        "pid": 20032,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 47001,
+            "samples": [
+              193.72636752409528,
+              204.37241760813583,
+              207.86081147209634,
+              181.55375417544312,
+              206.96280930192998,
+              203.0462117827286,
+              194.56943469287955,
+              195.86727941958702,
+              185.5669666602839,
+              192.6457309418954,
+              191.36650284036506,
+              203.92029956809395
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 34549,
+            "samples": [
+              325.514718226288,
+              371.6713942516421,
+              318.8695765434593,
+              329.32093548294,
+              325.4725172942796,
+              308.8584329503024,
+              318.37752178066046,
+              335.5162233349749,
+              360.97765492488855,
+              334.75162812237716,
+              339.76019566412975,
+              332.5807693420961
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 8834,
+            "samples": [
+              300.6517998641674,
+              261.9424949060537,
+              259.0842200588691,
+              260.0228661987812,
+              295.3314466832726,
+              263.50373556711924,
+              259.0606746660637,
+              263.39993208059457,
+              293.5674666062852,
+              262.3197871858685,
+              262.34820013584005,
+              262.20194702286346
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 894,
+            "samples": [
+              8360.598434004485,
+              8434.09843400445,
+              10059.983221476583,
+              9257.643176733805,
+              8492.823266219226,
+              9318.791946308871,
+              8989.606263981948,
+              8440.062639820953,
+              8936.52125279626,
+              9981.124161073856,
+              10285.374720357899,
+              8634.274049216816
+            ]
+          }
+        ],
+        "checksum": 4866067
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 20033,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 46554,
+            "samples": [
+              184.25288911801346,
+              186.72043218627857,
+              197.539416591485,
+              215.45319414013807,
+              212.34839111569448,
+              187.2664003093186,
+              210.4267946900381,
+              196.28906216436798,
+              189.83599690681794,
+              194.6825192249869,
+              194.1222451346813,
+              202.4647076513298
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 28912,
+            "samples": [
+              364.0991283895963,
+              316.9084809075782,
+              319.433384061981,
+              311.48685666851225,
+              328.629392639732,
+              343.48194521306385,
+              367.46852517985474,
+              311.6136898173761,
+              334.5035625345866,
+              362.7285556170452,
+              312.2722744881016,
+              309.89149833979195
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 33043,
+            "samples": [
+              302.424114033231,
+              280.25857216354433,
+              273.5387827981723,
+              303.5930454256598,
+              311.4741700208831,
+              288.95681384862155,
+              291.3880095632961,
+              277.20067790454823,
+              277.12374784371997,
+              277.31038343976167,
+              287.804285325185,
+              306.52104833096286
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 1214,
+            "samples": [
+              7884.747940691849,
+              9437.2594728171,
+              7787.205107084017,
+              7755.354200988437,
+              9405.237232289948,
+              8797.84514003291,
+              8617.002471169706,
+              9233.593904448158,
+              9474.018945634134,
+              7741.556836902769,
+              7898.579077429915,
+              8023.853377265314
+            ]
+          }
+        ],
+        "checksum": 6868735
+      },
+      "vpm": {
+        "pid": 20034,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 46554,
+            "samples": [
+              199.3598831464537,
+              215.01196460024934,
+              217.55112342655818,
+              208.94730850195444,
+              208.80233707092907,
+              181.61973192421604,
+              200.89841904025408,
+              181.4980238003177,
+              194.88301757099293,
+              208.51591699961307,
+              193.06701894574059,
+              204.89197491085517
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 28912,
+            "samples": [
+              345.6652946873271,
+              343.7139596015493,
+              348.16712783619124,
+              317.58871748754984,
+              314.3821596568908,
+              320.7909518539026,
+              337.08176535694645,
+              314.48014665191045,
+              313.3690163254002,
+              340.06786109573886,
+              351.5250415052597,
+              338.01853901494127
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 33043,
+            "samples": [
+              282.9583270284169,
+              274.9296371394864,
+              273.76827164603577,
+              272.33199164724965,
+              277.92319099355285,
+              297.226341433888,
+              293.18739218593794,
+              292.83812002542084,
+              273.1957752020087,
+              285.4323759949168,
+              289.0740852828132,
+              278.4578882062778
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 1214,
+            "samples": [
+              8311.058484349316,
+              8673.462108731468,
+              9523.751235584918,
+              9461.628500823597,
+              12430.017298187751,
+              10261.497528830198,
+              9373.420922570089,
+              8611.546128500946,
+              10028.35008237228,
+              7988.261943986854,
+              9200.679571663917,
+              8971.238056013164
+            ]
+          }
+        ],
+        "checksum": 3996543
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 20035,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 43113,
+            "samples": [
+              204.7526268178975,
+              200.48767193189954,
+              207.0044766079839,
+              189.10284600932386,
+              191.68619673880303,
+              185.8700623941736,
+              204.90244241875982,
+              198.10052652332232,
+              202.90378772064128,
+              198.1962053209005,
+              210.26430542991724,
+              211.1631062556528
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 32875,
+            "samples": [
+              349.31939163498134,
+              346.1989961977161,
+              326.6932927756659,
+              357.1964714828902,
+              332.7287604562728,
+              310.79720152091147,
+              342.2712395437292,
+              356.4638783269962,
+              322.4182509505714,
+              337.32955133080105,
+              329.9239543726252,
+              362.401764258558
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 27802,
+            "samples": [
+              275.7745126249927,
+              276.7007049852511,
+              290.4152578951189,
+              290.0136321127968,
+              284.73368822386794,
+              299.92446586576744,
+              293.95216171498475,
+              289.34519099345584,
+              285.0844183871674,
+              286.4901805625506,
+              288.2841162506321,
+              296.37256312495356
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 1072,
+            "samples": [
+              9429.687499999858,
+              9018.19029850748,
+              9666.89925373117,
+              9081.777985074661,
+              8680.776119403088,
+              8929.416044776077,
+              9824.393656716302,
+              8081.467350746238,
+              8844.838619402999,
+              9468.866604477604,
+              8579.057835820744,
+              9262.360074626782
+            ]
+          }
+        ],
+        "checksum": 6316562
+      },
+      "upstream": {
+        "pid": 20036,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated flat object styles",
+            "iterations": 43113,
+            "samples": [
+              181.84287801823154,
+              209.3761510449286,
+              196.20822025839075,
+              210.8509266346579,
+              199.3298772991903,
+              194.62904460371647,
+              209.39642335258415,
+              209.42639111172954,
+              192.67680282049477,
+              210.84320274627126,
+              184.552803098834,
+              187.89091457333106
+            ]
+          },
+          {
+            "case": "repeated nested responsive styles",
+            "iterations": 32875,
+            "samples": [
+              317.67680608365015,
+              311.68821292775726,
+              317.6730038022805,
+              325.71990874524647,
+              316.9188745247125,
+              319.35108745247356,
+              316.06971863117974,
+              308.99114828897433,
+              310.3738707224326,
+              306.9137946768058,
+              342.7287604562733,
+              327.1558935361231
+            ]
+          },
+          {
+            "case": "changing style and SSR extraction",
+            "iterations": 27802,
+            "samples": [
+              277.7632904107639,
+              282.29983454427946,
+              298.04960074814835,
+              280.30807136177367,
+              272.46841953816147,
+              286.52917056326964,
+              290.2518883533546,
+              279.1765700309326,
+              281.64642831450954,
+              285.3466657075003,
+              283.2964534925552,
+              298.8454068052651
+            ]
+          },
+          {
+            "case": "20 Notistack definitions and SSR extraction",
+            "iterations": 1072,
+            "samples": [
+              10071.361940298437,
+              10485.774253731282,
+              13204.524253731366,
+              9924.32369402973,
+              9784.281716417892,
+              8938.976679104584,
+              9560.36194029858,
+              9915.111940298631,
+              11801.616604477633,
+              10235.61847014924,
+              9986.202425373316,
+              9297.8470149252
+            ]
+          }
+        ],
+        "checksum": 4257743
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "repeated flat object styles",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 196.08610092101122,
+          "vpmNs": 205.5734662816113,
+          "changePct": 4.838367082642869
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 202.22186542831753,
+          "vpmNs": 203.34576622863378,
+          "changePct": 0.5557761016276697
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 194.52864731202504,
+          "vpmNs": 201.98392709955112,
+          "changePct": 3.8324842590242048
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 195.2183570562333,
+          "vpmNs": 204.2106338163019,
+          "changePct": 4.606265976041568
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 195.48579069467743,
+          "vpmNs": 202.89519697555463,
+          "changePct": 3.790253119956777
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 197.76904877879053,
+          "vpmNs": 201.6957298262704,
+          "changePct": 1.9854881599152385
+        }
+      ]
+    },
+    {
+      "case": "repeated nested responsive styles",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 335.5005912786419,
+          "vpmNs": 295.3205838876572,
+          "changePct": -11.976136089016343
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 332.6496066538564,
+          "vpmNs": 306.7055158539513,
+          "changePct": -7.7992248543079175
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 331.4373566557625,
+          "vpmNs": 300.14946026115524,
+          "changePct": -9.440063338153982
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 330.9508524125181,
+          "vpmNs": 305.0287273148278,
+          "changePct": -7.832620737709817
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 324.03138835085645,
+          "vpmNs": 337.55015218594383,
+          "changePct": 4.172053795124775
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 317.29593916349654,
+          "vpmNs": 339.80039543726514,
+          "changePct": 7.092576202865453
+        }
+      ]
+    },
+    {
+      "case": "changing style and SSR extraction",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 282.4182580936766,
+          "vpmNs": 862.007274422285,
+          "changePct": 205.2236354125383
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 290.6804674826716,
+          "vpmNs": 905.3743916826377,
+          "changePct": 211.46722706320472
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 284.93640964176234,
+          "vpmNs": 886.8735251032092,
+          "changePct": 211.25314108443888
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 262.3339936608543,
+          "vpmNs": 922.4869821145633,
+          "changePct": 251.64599495525374
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 288.38054958690327,
+          "vpmNs": 280.7081076173473,
+          "changePct": -2.6605268561095796
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 282.79814401841736,
+          "vpmNs": 288.814653622044,
+          "changePct": 2.1274926059043686
+        }
+      ]
+    },
+    {
+      "case": "20 Notistack definitions and SSR extraction",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 9049.99576669795,
+          "vpmNs": 10997.353715898436,
+          "changePct": 21.51777745981216
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 9220.105421686694,
+          "vpmNs": 10953.46385542165,
+          "changePct": 18.799768055340316
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 8811.220272904568,
+          "vpmNs": 11282.184210526299,
+          "changePct": 28.043379476282148
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 8963.063758389104,
+          "vpmNs": 11175.032438478804,
+          "changePct": 24.67871187482491
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 8320.42792421751,
+          "vpmNs": 9287.050247117004,
+          "changePct": 11.617459242523264
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 9955.263059701523,
+          "vpmNs": 9049.98414179107,
+          "changePct": -9.093470584167518
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "repeated flat object styles",
+      "upstream_ns": 196,
+      "vpm_ns": 204,
+      "change_pct": 4.2,
+      "upstream_first_pct": 4.3,
+      "vpm_first_pct": 2.6,
+      "process_range_pct": "4.8, 0.6, 3.8, 4.6",
+      "control_max_abs_pct": 3.8,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "repeated nested responsive styles",
+      "upstream_ns": 332,
+      "vpm_ns": 303,
+      "change_pct": -8.6,
+      "upstream_first_pct": -10.7,
+      "vpm_first_pct": -7.8,
+      "process_range_pct": "-12.0, -7.8, -9.4, -7.8",
+      "control_max_abs_pct": 7.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "changing style and SSR extraction",
+      "upstream_ns": 284,
+      "vpm_ns": 896,
+      "change_pct": 211.4,
+      "upstream_first_pct": 208.2,
+      "vpm_first_pct": 231.6,
+      "process_range_pct": "205.2, 211.5, 211.3, 251.6",
+      "control_max_abs_pct": 2.7,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "20 Notistack definitions and SSR extraction",
+      "upstream_ns": 9007,
+      "vpm_ns": 11086,
+      "change_pct": 23.1,
+      "upstream_first_pct": 24.8,
+      "vpm_first_pct": 21.7,
+      "process_range_pct": "21.5, 18.8, 28.0, 24.7",
+      "control_max_abs_pct": 11.6,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

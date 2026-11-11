@@ -446,6 +446,10 @@
       "name": "vget-nonce",
       "version": "1.0.1",
     },
+    "packages/vgoober": {
+      "name": "vgoober",
+      "version": "2.1.19",
+    },
     "packages/vgoogle-auth-library": {
       "name": "vgoogle-auth-library",
       "version": "11.3.2",
@@ -1814,6 +1818,8 @@
     "vgcp-metadata": ["vgcp-metadata@workspace:packages/vgcp-metadata"],
 
     "vget-nonce": ["vget-nonce@workspace:packages/vget-nonce"],
+
+    "vgoober": ["vgoober@workspace:packages/vgoober"],
 
     "vgoogle-auth-library": ["vgoogle-auth-library@workspace:packages/vgoogle-auth-library"],
 

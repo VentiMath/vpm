@@ -55,6 +55,14 @@ jobs:
           node scripts/motion-dom-conformance/types.cjs
           node scripts/motion-dom-conformance/browser.cjs
           node scripts/motion-dom-conformance/archives.cjs
+      - run: npm --prefix scripts/goober-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Goober object CSS and unchanged notifications
+        run: |
+          node scripts/goober-conformance/check-controls.cjs
+          node scripts/goober-conformance/run.cjs
+          node scripts/goober-conformance/types.cjs
+          node scripts/goober-conformance/browser.cjs
+          node scripts/goober-conformance/archives.cjs
       - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Word diffs, frontend caller and consumer archives
         run: |
@@ -699,6 +707,11 @@ jobs:
           bun scripts/motion-dom-conformance/reads.cjs
           bun scripts/motion-dom-conformance/transitions.cjs
           bun scripts/motion-dom-conformance/effects.cjs
+      - run: npm --prefix scripts/goober-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Goober object CSS on Bun
+        run: |
+          bun scripts/goober-conformance/check-controls.cjs
+          bun scripts/goober-conformance/run.cjs
       - run: npm --prefix scripts/diff-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Word diff contracts on Bun
         run: |

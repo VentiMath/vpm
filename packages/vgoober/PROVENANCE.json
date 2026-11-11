@@ -1,0 +1,22 @@
+{
+  "upstream": {"name":"goober","version":"2.1.19","repository":"https://github.com/cristianbote/goober","checked":"2026-11-11"},
+  "implementation": {
+    "kind":"independent implementation",
+    "replacementStatus":"complete for documented application scope",
+    "targetScope":"Notistack 3.0.2's css(object) contract: declarations, nested selectors and conditional rules, content-derived classes, deduplication, DOM/SSR targets, extraction and VPM stylesheet hydration. No styled components, tagged/raw CSS templates, prefixer setup, keyframes/global helpers or Babel integration."
+  },
+  "changes":[
+    "Independent serializer and per-target ownership; no Goober runtime copied or delegated to upstream.",
+    "Only own style properties are read; invalid finite values, cycles, excessive nesting and unsafe keys reject before insertion.",
+    "Styles use their target's document and nonce; removed stylesheets are reconstructed on the next call.",
+    "Compiled content cache is bounded to 128 entries; input objects are not cached by identity and mutations remain visible.",
+    "Generated class names differ from upstream; VPM server/client styles must be migrated together. Extraction clears target bookkeeping so repeat calls reinsert rules.",
+    "Null/false values are omitted, ms vendor properties are normalized, and property fallback arrays reject rather than becoming nested numeric selectors."
+  ],
+  "caller": {
+    "revision":"47b9d38c77ad02722131d564ba497d16feda38a9",
+    "upstreamVersion":"2.1.18",
+    "paths":["src/@auth/services/firebase/components/FirebaseSignInForm.tsx","src/app/(control-panel)/apps/calendar/api/hooks/events/useCreateEvent.ts","src/app/(control-panel)/apps/calendar/api/hooks/events/useUpdateEvent.ts"],
+    "scope":"useSnackbar calls flow through unchanged Notistack 3.0.2. Its 20 style definitions use css(object) only. Current/app controls and real React 19.3.1 browser notifications are verified; no app adoption or release claimed."
+  }
+}
