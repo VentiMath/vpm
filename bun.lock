@@ -807,6 +807,10 @@
       "name": "vpath-to-regexp",
       "version": "0.1.0",
     },
+    "packages/vperfect-scrollbar": {
+      "name": "vperfect-scrollbar",
+      "version": "1.5.6",
+    },
     "packages/vpngjs": {
       "name": "vpngjs",
       "version": "7.0.0",
@@ -1945,6 +1949,8 @@
     "vpath-expression-matcher": ["vpath-expression-matcher@workspace:packages/vpath-expression-matcher"],
 
     "vpath-to-regexp": ["vpath-to-regexp@workspace:packages/vpath-to-regexp"],
+
+    "vperfect-scrollbar": ["vperfect-scrollbar@workspace:packages/vperfect-scrollbar"],
 
     "vpngjs": ["vpngjs@workspace:packages/vpngjs"],
 

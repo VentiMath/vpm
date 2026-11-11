@@ -1,0 +1,93 @@
+/* VPM-owned desktop scrollbar skin. Native scroll positions remain authoritative. */
+.ps {
+  overflow: hidden !important;
+  overflow-anchor: none;
+  scrollbar-width: none;
+  touch-action: auto;
+}
+.ps::-webkit-scrollbar {
+  display: none;
+}
+.ps__rail-x,
+.ps__rail-y {
+  display: none;
+  position: absolute;
+  opacity: 0;
+  z-index: 1;
+  background: transparent;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease;
+}
+.ps__rail-x {
+  left: 0;
+  bottom: 0;
+  height: 15px;
+}
+.ps__rail-y {
+  right: 0;
+  top: 0;
+  width: 15px;
+}
+.ps--active-x > .ps__rail-x,
+.ps--active-y > .ps__rail-y {
+  display: block;
+}
+.ps:hover > .ps__rail-x,
+.ps:hover > .ps__rail-y,
+.ps--focus > .ps__rail-x,
+.ps--focus > .ps__rail-y,
+.ps--scrolling-x > .ps__rail-x,
+.ps--scrolling-y > .ps__rail-y {
+  opacity: 0.6;
+}
+.ps__rail-x:hover,
+.ps__rail-y:hover,
+.ps--clicking > .ps__rail-x,
+.ps--clicking > .ps__rail-y {
+  opacity: 0.9;
+  background-color: #eee;
+}
+.ps__thumb-x,
+.ps__thumb-y {
+  position: absolute;
+  border-radius: 6px;
+  background-color: #aaa;
+  touch-action: none;
+}
+.ps__thumb-x {
+  bottom: 2px;
+  height: 6px;
+}
+.ps__thumb-y {
+  right: 2px;
+  width: 6px;
+}
+.ps__rail-x:hover > .ps__thumb-x {
+  height: 11px;
+}
+.ps__rail-y:hover > .ps__thumb-y {
+  width: 11px;
+}
+.ps__thumb-x:focus-visible,
+.ps__thumb-y:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ps__rail-x,
+  .ps__rail-y {
+    transition: none;
+  }
+}
+@media (forced-colors: active) {
+  .ps__thumb-x,
+  .ps__thumb-y {
+    background-color: ButtonText;
+    forced-color-adjust: none;
+  }
+  .ps__rail-x,
+  .ps__rail-y {
+    background-color: Canvas;
+  }
+}

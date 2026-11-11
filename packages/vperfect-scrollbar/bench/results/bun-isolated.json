@@ -1,0 +1,1327 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-11T18:40:58.524Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/perfect-scrollbar-conformance/dom.cjs": "065c3d41be6bc6780554dbb7a941c748cb5d76d4a8a7356e84a2bf660031d7f9",
+    "../../scripts/perfect-scrollbar-conformance/node_modules/perfect-scrollbar": "cfe01c54f90e7cb36a634870b8c2dbb83b9b10366958805f13857a0089553e68",
+    "../../scripts/perfect-scrollbar-conformance/package-lock.json": "2a2a665ad6870c4fa7edb47e1e3f7707d73f2a169fa2bdaf85771f84082f5fba",
+    "PROVENANCE.json": "b13fa168c2785fd265343a39fbf5786ca91c55985e180de00df2a077b04f7b26",
+    "bench/run.cjs": "ceef28f6d79cec2507db1de94387a49d801b167437d7e51f6318dfcbc1e43689",
+    "css/perfect-scrollbar.css": "920ad7afe5b7a35f162e0e180d69d669d751d0e4930dd81c436d1c9cab99f8ec",
+    "geometry.cjs": "9ab5fbf45fdb2b8f46692b6ee6fa12a87fbaae6f5710d477ff3b23d3e86c936e",
+    "index.cjs": "d28d7973da738cfed32e384f99460189a20a3ca27be4bcf8e1b72693d117679e",
+    "index.mjs": "1aa4eedf7b92eb3b1d501aa41879c7c51f56974279c803b035af1235d494cec2",
+    "package.json": "260b91a70cce36479e6e8c5c12f136f9983e72b68fc65793ab983b62e5c3d1f7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 91439,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 6,
+            "samples": [
+              1996034.6666666549,
+              1507215.166666678,
+              1939097.1666666511,
+              1946722.3333333172,
+              2535014.000000009,
+              1548340.1666666623,
+              2671041.6666666674,
+              1788618.1666666518,
+              2323402.833333337,
+              1845145.8333333333,
+              2138416.6666666525,
+              1719430.6666666723
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 8,
+            "samples": [
+              1376203.1250000177,
+              1010338.4999999889,
+              1096645.8749999788,
+              1315223.8749999867,
+              1030671.8749999959,
+              965645.8749999786,
+              1385921.8750000081,
+              1082234.375000013,
+              1101682.2499999818,
+              1191484.3750000158,
+              946265.6249999952,
+              1285875.0000000044
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 418,
+            "samples": [
+              29481.358851674693,
+              24034.588516746484,
+              29113.236842105387,
+              22481.25837320567,
+              25158.291866028976,
+              22998.803827751573,
+              25840.311004784646,
+              22063.696172248518,
+              25156.000000000073,
+              23767.643540669666,
+              25828.550239234184,
+              22246.11244019182
+            ]
+          }
+        ],
+        "checksum": 3728
+      },
+      "vpm": {
+        "pid": 91440,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 6,
+            "samples": [
+              621833.3333333419,
+              472993.0000000024,
+              574236.1666666701,
+              497666.6666666745,
+              527041.6666666715,
+              509444.3333333345,
+              824492.9999999992,
+              555902.8333333154,
+              566062.5000000057,
+              532270.8333333329,
+              525368.1666666617,
+              653069.4999999962
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 8,
+            "samples": [
+              475588.62500000035,
+              441796.8749999943,
+              778822.875000003,
+              527078.1250000027,
+              501218.7499999925,
+              455849.00000000064,
+              463885.3749999896,
+              476567.75000000093,
+              671739.6250000007,
+              502817.6249999916,
+              453390.62500001147,
+              438963.62499999953
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 418,
+            "samples": [
+              16611.14354066977,
+              19505.681818181776,
+              16209.629186602848,
+              17131.779904306124,
+              19956.44019138742,
+              17045.155502392558,
+              17249.999999999785,
+              20848.086124402016,
+              18227.870813397047,
+              19539.074162679663,
+              16750.399521531093,
+              17823.265550239405
+            ]
+          }
+        ],
+        "checksum": 4304
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 91441,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 17,
+            "samples": [
+              467972.99999999563,
+              511308.8235294085,
+              599997.5294117602,
+              600762.2352941151,
+              611566.1764705933,
+              524093.1764705879,
+              578389.7058823534,
+              557291.6470588258,
+              657808.8235294083,
+              504026.9411764685,
+              581269.5882352928,
+              563583.2941176472
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 20,
+            "samples": [
+              471441.6999999969,
+              557577.0999999975,
+              495918.7500000041,
+              590087.4999999985,
+              490389.5499999976,
+              534385.4000000021,
+              443085.45000000094,
+              466083.3000000025,
+              569293.7500000028,
+              451156.24999999686,
+              600541.6499999968,
+              482106.24999999825
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 542,
+            "samples": [
+              19374.53874538741,
+              16233.16420664221,
+              19375.38376383756,
+              17516.14391143928,
+              19705.795202951933,
+              16705.027675276964,
+              18944.494464944673,
+              17616.85239852411,
+              18713.40774907721,
+              16847.01845018469,
+              18970.404059040855,
+              16871.15498154989
+            ]
+          }
+        ],
+        "checksum": 4240
+      },
+      "upstream": {
+        "pid": 91442,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 17,
+            "samples": [
+              2413551.4705882315,
+              1977249.9999999995,
+              3766502.4705882333,
+              12161664.176470589,
+              14283595.588235298,
+              18995335.76470589,
+              3712455.882352943,
+              2901279.4117646962,
+              3831203.4705882473,
+              8848017.176470581,
+              5540455.8823529305,
+              3451323.5294117723
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 20,
+            "samples": [
+              1136427.0499999975,
+              1235033.2999999863,
+              1389033.3499999996,
+              1442139.599999996,
+              1325327.0500000098,
+              1522066.7000000048,
+              1377708.3000000175,
+              1486541.649999981,
+              1405693.7500000005,
+              1276166.649999982,
+              1553160.4000000015,
+              3138239.599999997
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 542,
+            "samples": [
+              29552.583025830125,
+              28764.990774907412,
+              28000.845018450018,
+              32702.95202952013,
+              28440.65129151258,
+              26427.88929889267,
+              28204.182656827135,
+              34821.34132841364,
+              26739.774907748742,
+              27001.461254613077,
+              29511.531365313545,
+              23144.83394833943
+            ]
+          }
+        ],
+        "checksum": 2224
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 91471,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 3,
+            "samples": [
+              2741694.333333347,
+              1745208.3333333423,
+              1566805.3333333395,
+              1582194.6666666614,
+              2796194.6666666414,
+              1589527.6666666784,
+              2098208.333333332,
+              1603153.0000000203,
+              2690361.0000000144,
+              1577180.333333331,
+              1919013.9999999853,
+              1550749.9999999935
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 9,
+            "samples": [
+              1067231.444444461,
+              1140856.4444444538,
+              1031652.777777784,
+              1350259.3333333456,
+              1166379.5555555476,
+              1056037.111111108,
+              1326541.6666666726,
+              1116240.7777777743,
+              1164476.8888888848,
+              1151999.9999999932,
+              1018916.6666666804,
+              1231884.2222222327
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 279,
+            "samples": [
+              24965.80286738355,
+              32656.512544802947,
+              28006.86738351277,
+              29843.340501791994,
+              28523.150537634672,
+              42360.66308243686,
+              67831.24372759875,
+              37741.33691756292,
+              25722.372759857182,
+              23313.6200716838,
+              27703.702508960563,
+              25333.035842293375
+            ]
+          }
+        ],
+        "checksum": 3888
+      },
+      "vpm": {
+        "pid": 91472,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 3,
+            "samples": [
+              497194.66666666296,
+              642360.999999994,
+              543055.3333333327,
+              768735.9999999899,
+              1095708.3333333344,
+              824430.6666666527,
+              1263444.3333333442,
+              606625.0000000081,
+              535152.9999999987,
+              495847.33333335863,
+              519888.9999999968,
+              706250.0000000303
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 9,
+            "samples": [
+              1004217.6666666666,
+              1449138.8888888978,
+              1078300.8888888871,
+              2415791.6666666777,
+              1108138.8888888897,
+              817037.1111111131,
+              1096750.0000000047,
+              816374.9999999936,
+              1063458.333333339,
+              1845828.6666666735,
+              3158217.5555555522,
+              3215949.1111111087
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 279,
+            "samples": [
+              28581.541218637933,
+              24645.30824372755,
+              19503.58422939034,
+              17296.59498207875,
+              25415.175627240453,
+              16731.333333333383,
+              20100.956989246835,
+              17145.161290322594,
+              27764.637992831304,
+              31689.663082438023,
+              23556.154121863925,
+              20644.41577060954
+            ]
+          }
+        ],
+        "checksum": 4400
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 91475,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 15,
+            "samples": [
+              668130.6000000025,
+              3546188.93333333,
+              1241758.3333333367,
+              1052866.666666667,
+              971316.6666666666,
+              856124.9999999973,
+              1066416.6666666612,
+              969880.5333333288,
+              1281977.7333333301,
+              608486.1333333341,
+              762808.333333328,
+              551891.6666666655
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 18,
+            "samples": [
+              646442.1111111152,
+              451511.55555554904,
+              512733.8333333379,
+              568430.5555555511,
+              530851.8333333217,
+              772479.1666666609,
+              500088.0000000052,
+              574282.4444444446,
+              680495.3333333337,
+              473141.22222222626,
+              596782.3888888814,
+              585513.8888888911
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 549,
+            "samples": [
+              17311.1712204007,
+              19512.599271402476,
+              17602.003642987456,
+              18874.16575591976,
+              16450.364298724955,
+              18296.90346083802,
+              16270.491803278903,
+              18235.351548269395,
+              16879.93260473622,
+              18573.542805100347,
+              16462.735883424233,
+              18231.557377049252
+            ]
+          }
+        ],
+        "checksum": 4080
+      },
+      "upstream": {
+        "pid": 91488,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 15,
+            "samples": [
+              1785036.1333333317,
+              1855933.3333333293,
+              1988577.7999999998,
+              1706216.6666666674,
+              1742161.1333333356,
+              1787386.1333333328,
+              1869880.5333333362,
+              1837483.3333333298,
+              1740733.3333333326,
+              1766622.1999999986,
+              1762952.8000000012,
+              1683675.0000000014
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 18,
+            "samples": [
+              1153516.2222222148,
+              1082604.1666666698,
+              1165613.388888889,
+              1105793.9999999967,
+              1133532.3888888904,
+              1086733.7777777696,
+              994377.333333331,
+              1151606.444444446,
+              1087837.9444444464,
+              1116597.2222222155,
+              957592.6111111055,
+              1088856.4999999946
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 549,
+            "samples": [
+              25760.17122040053,
+              23045.839708561165,
+              24290.528233151435,
+              26066.18032786867,
+              22919.70127504525,
+              23982.621129326104,
+              25432.14936247689,
+              22056.542805100264,
+              24234.821493625062,
+              24703.02003642988,
+              22633.652094717494,
+              24525.122040072652
+            ]
+          }
+        ],
+        "checksum": 2352
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 91491,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 6,
+            "samples": [
+              1705617.9999999965,
+              2123472.1666666777,
+              1712993.000000002,
+              2227868.166666667,
+              1776291.6666666607,
+              2005507.0000000037,
+              1564736.0000000012,
+              2251201.499999998,
+              2278319.333333324,
+              2240395.8333333284,
+              1814152.833333329,
+              2166020.8333333344
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 8,
+            "samples": [
+              1111713.5000000077,
+              1514854.1249999993,
+              1200833.2499999881,
+              1036604.1249999966,
+              1280281.2500000016,
+              944536.4999999981,
+              1378380.2500000207,
+              1022869.7500000123,
+              1085874.9999999872,
+              2343885.3750000135,
+              1281307.2499999977,
+              1193041.624999978
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 266,
+            "samples": [
+              24656.95488721859,
+              33092.10526315793,
+              23526.631578946715,
+              24183.116541353127,
+              28656.015037594636,
+              25988.251879699194,
+              22646.616541353815,
+              28710.368421051964,
+              22645.522556391177,
+              24885.18421052634,
+              30287.593984962085,
+              22258.61278195492
+            ]
+          }
+        ],
+        "checksum": 3664
+      },
+      "vpm": {
+        "pid": 91492,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 6,
+            "samples": [
+              1641513.9999999914,
+              2439256.8333333316,
+              2251381.8333333307,
+              1919652.8333333351,
+              2102298.4999999986,
+              5786944.500000004,
+              3982354.166666653,
+              2971041.666666679,
+              2792284.66666666,
+              2776583.3333333298,
+              1771729.1666666789,
+              3851027.8333333377
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 8,
+            "samples": [
+              2164619.8749999995,
+              1174718.7499999825,
+              1559692.7500000107,
+              1513479.1250000035,
+              1701416.6250000075,
+              1308999.9999999974,
+              1878880.2500000088,
+              1286520.875000008,
+              1772640.6250000081,
+              1445166.7499999986,
+              1386250.0000000182,
+              1318072.8749999844
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 266,
+            "samples": [
+              26916.195488721463,
+              25098.372180450566,
+              31409.146616541726,
+              25809.83834586544,
+              31698.462406014947,
+              50936.87218045078,
+              40585.68421052591,
+              26576.59774436104,
+              24189.06766917261,
+              28545.894736842118,
+              24772.24060150301,
+              23910.714285714956
+            ]
+          }
+        ],
+        "checksum": 2544
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 91524,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 6,
+            "samples": [
+              1654388.8333333333,
+              1979610.999999996,
+              1654527.8333333235,
+              2137617.999999994,
+              1818624.9999999972,
+              2655618.000000004,
+              1664208.3333333253,
+              2371034.833333321,
+              1740812.499999985,
+              2254701.5000000102,
+              1687152.8333333384,
+              1878610.999999997
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 8,
+            "samples": [
+              1489072.8750000051,
+              1075119.7499999988,
+              954713.6250000108,
+              1341874.9999999874,
+              1143838.5000000154,
+              1204104.125000015,
+              1337869.75000001,
+              1054161.3749999783,
+              970479.2499999825,
+              1313458.3750000105,
+              1149447.8750000212,
+              1050281.2500000119
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 328,
+            "samples": [
+              28310.466463414363,
+              32890.50000000008,
+              30031.63109756093,
+              22517.274390244293,
+              23988.695121951558,
+              36623.350609756206,
+              23081.301829268163,
+              27459.731707317478,
+              24089.939024390067,
+              25767.277439023826,
+              30184.195121951067,
+              22670.097560975588
+            ]
+          }
+        ],
+        "checksum": 3632
+      },
+      "upstream": {
+        "pid": 91525,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct and destroy desktop scrollbar",
+            "iterations": 6,
+            "samples": [
+              2177882.0000000107,
+              1765152.8333333319,
+              2145597.166666676,
+              1750958.3333333393,
+              2155388.833333329,
+              1624979.1666666812,
+              1962756.9999999916,
+              1885882,
+              2076222.166666658,
+              1638930.6666666812,
+              2156055.4999999986,
+              1773333.33333335
+            ]
+          },
+          {
+            "case": "unchanged geometry update",
+            "iterations": 8,
+            "samples": [
+              1250218.7500000019,
+              1054703.1250000033,
+              953765.6250000026,
+              1221791.7499999942,
+              1112926.999999999,
+              1029614.6250000078,
+              1170265.6249999849,
+              1022520.8749999979,
+              1265989.4999999893,
+              1126416.7500000042,
+              1047244.8749999899,
+              1275609.3749999877
+            ]
+          },
+          {
+            "case": "native scroll event and thumb update",
+            "iterations": 328,
+            "samples": [
+              24993.902439024674,
+              23606.832317073706,
+              27621.570121950976,
+              22859.628048780956,
+              27583.713414634163,
+              22293.698170731954,
+              22081.426829268272,
+              27629.317073170685,
+              23571.012195121766,
+              29332.954268292404,
+              22087.90853658562,
+              22786.966463414505
+            ]
+          }
+        ],
+        "checksum": 3088
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "construct and destroy desktop scrollbar",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1942909.7499999842,
+          "vpmNs": 544086.8333333242,
+          "changePct": -71.99628889950608
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3798852.9705882403,
+          "vpmNs": 570986.5000000002,
+          "changePct": -84.9695025203467
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1674180.6666666814,
+          "vpmNs": 624493.000000001,
+          "changePct": -62.698589678294645
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1775829.166666665,
+          "vpmNs": 970598.5999999978,
+          "changePct": -45.343920562929604
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2064489.5833333407,
+          "vpmNs": 2607920.0833333307,
+          "changePct": 26.322753303630762
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1924319.4999999958,
+          "vpmNs": 1848617.9999999972,
+          "changePct": -3.9339361265111505
+        }
+      ]
+    },
+    {
+      "case": "unchanged geometry update",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1099164.0624999804,
+          "vpmNs": 476078.18750000064,
+          "changePct": -56.687249543331106
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1397363.55,
+          "vpmNs": 493154.15000000084,
+          "changePct": -64.7082428906922
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1146428.2222222234,
+          "vpmNs": 1102444.4444444473,
+          "changePct": -3.8365923766704224
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1097325.2499999958,
+          "vpmNs": 571356.4999999979,
+          "changePct": -47.93189166110958
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1196937.4374999832,
+          "vpmNs": 1479322.937500001,
+          "changePct": 23.592335835850363
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1119671.8750000016,
+          "vpmNs": 1146643.1875000182,
+          "changePct": 2.408858622086618
+        }
+      ]
+    },
+    {
+      "case": "native scroll event and thumb update",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 24595.29425837328,
+          "vpmNs": 17536.632775119593,
+          "changePct": -28.699235752589626
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 28322.416974169857,
+          "vpmNs": 18165.13007380066,
+          "changePct": -35.86306532254178
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 28265.008960573723,
+          "vpmNs": 22100.28494623673,
+          "changePct": -21.810444224291736
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 24262.67486338825,
+          "vpmNs": 17916.780510018354,
+          "changePct": -26.154965967687616
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 24771.069548872467,
+          "vpmNs": 26746.39661654125,
+          "changePct": 7.974330958021536
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 23588.922256097736,
+          "vpmNs": 26613.504573170652,
+          "changePct": 12.822045383150392
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "construct and destroy desktop scrollbar",
+      "upstream_ns": 1859369,
+      "vpm_ns": 597740,
+      "change_pct": -67.3,
+      "upstream_first_pct": -67.3,
+      "vpm_first_pct": -65.2,
+      "process_range_pct": "-72.0, -85.0, -62.7, -45.3",
+      "control_max_abs_pct": 26.3,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "unchanged geometry update",
+      "upstream_ns": 1122796,
+      "vpm_ns": 532255,
+      "change_pct": -52.3,
+      "upstream_first_pct": -30.3,
+      "vpm_first_pct": -56.3,
+      "process_range_pct": "-56.7, -64.7, -3.8, -47.9",
+      "control_max_abs_pct": 23.6,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "native scroll event and thumb update",
+      "upstream_ns": 26430,
+      "vpm_ns": 18041,
+      "change_pct": -27.4,
+      "upstream_first_pct": -25.3,
+      "vpm_first_pct": -31,
+      "process_range_pct": "-28.7, -35.9, -21.8, -26.2",
+      "control_max_abs_pct": 12.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

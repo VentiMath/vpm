@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "perfect-scrollbar",
+    "version": "1.5.6",
+    "repository": "https://github.com/mdbootstrap/perfect-scrollbar",
+    "checked": "2026-11-11"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Desktop FuseScrollbars contract: constructor, update/destroy, native scroll positions, overflow rails/thumbs, wheel and boundary propagation, keyboard, rail paging, thumb dragging, scroll/reach events and caller CSS hooks. VentiMath disables this widget on touch/mobile devices; touch/swipe inertia and legacy browser geometry are outside scope."
+  },
+  "changes": [
+    "Independent runtime and CSS with zero runtime dependencies; no upstream runtime copied.",
+    "Own-document listeners and events, pointer cancellation, idempotent teardown and explicit per-element ownership prevent cross-window and lifecycle leaks.",
+    "ResizeObserver and content mutations coalesce automatic updates; explicit update remains available. Geometry keeps fractional positions and bounds oversized thumbs to the viewport.",
+    "Focusable scrollbar roles expose axis/range/value and control relationships; editable content and button keyboard behavior remain native. Reduced-motion and forced-colors styles are included.",
+    "Invalid settings reject before modifying the host. Destruction restores owned classes/IDs and leaves caller content/styles intact. Touch handlers and swipeEasing reject explicitly."
+  ],
+  "caller": {
+    "revision": "47b9d38c77ad02722131d564ba497d16feda38a9",
+    "upstreamVersion": "1.5.6",
+    "paths": [
+      "src/@fuse/core/FuseScrollbars/FuseScrollbars.tsx",
+      "src/styles/app-base.css"
+    ],
+    "scope": "Desktop custom-scrollbar setting, wheelPropagation and suppressScrollX options, native scrollTop resets, ps-* event subscriptions, ps__rail/ps__thumb CSS and effect cleanup. Real browser checks use this public lifecycle pattern. Release and app adoption are separate."
+  }
+}

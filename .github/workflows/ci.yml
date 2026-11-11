@@ -55,6 +55,14 @@ jobs:
           node scripts/motion-dom-conformance/types.cjs
           node scripts/motion-dom-conformance/browser.cjs
           node scripts/motion-dom-conformance/archives.cjs
+      - run: npm --prefix scripts/perfect-scrollbar-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Desktop scrollbars, native input and packed consumers
+        run: |
+          node --test packages/vperfect-scrollbar/test/scrollbar.test.cjs
+          node scripts/perfect-scrollbar-conformance/run.cjs
+          node scripts/perfect-scrollbar-conformance/types.cjs
+          node scripts/perfect-scrollbar-conformance/browser.cjs
+          node scripts/perfect-scrollbar-conformance/archives.cjs
       - run: npm --prefix scripts/notistack-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Notification queues, browser callers and local archives
         run: |
@@ -716,6 +724,11 @@ jobs:
           bun scripts/motion-dom-conformance/reads.cjs
           bun scripts/motion-dom-conformance/transitions.cjs
           bun scripts/motion-dom-conformance/effects.cjs
+      - run: npm --prefix scripts/perfect-scrollbar-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Desktop scrollbar geometry and lifecycle
+        run: |
+          bun test packages/vperfect-scrollbar/test/scrollbar.test.cjs
+          bun scripts/perfect-scrollbar-conformance/run.cjs
       - run: npm --prefix scripts/notistack-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Notification queues and server imports
         run: |
