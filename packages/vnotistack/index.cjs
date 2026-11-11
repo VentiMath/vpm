@@ -328,6 +328,10 @@ class SnackbarProvider extends React.Component {
     });
   }
   render() {
+    // Empty providers still supply the same live API to their children. There is
+    // no anchor grouping, stylesheet work or portal to construct until enqueue.
+    if (!this.queue.visible.length)
+      return h(Context.Provider, { value: this.api }, this.props.children, null);
     const props = this.props,
       doc = props.domRoot?.ownerDocument ?? globalThis.document,
       c = this.queue.visible.length ? classes(doc) : null,

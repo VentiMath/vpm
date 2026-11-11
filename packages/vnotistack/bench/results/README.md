@@ -28,32 +28,35 @@ implementations so different icon artwork is not mistaken for a runtime gain.
 
 ## Node 24.22.1
 
-Recorded 2026-11-11T13:48:22.054Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-11T18:29:41.799Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | --- |
-| empty app provider SSR | 1553 | 1680 | 8.2% | 3.8% | higher time in every pair, beyond control spread |
-| success notification SSR | 2727 | 2231 | -18.1% | 3% | lower time in every pair, beyond control spread |
-| notification with action SSR | 3183 | 2629 | -17% | 3.2% | lower time in every pair, beyond control spread |
+| empty app provider SSR | 1584 | 1552 | -2.4% | 4.8% | unestablished at this precision |
+| success notification SSR | 2715 | 2312 | -14.9% | 4.6% | lower time in every pair, beyond control spread |
+| notification with action SSR | 3200 | 2667 | -16.5% | 7.5% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-11T13:48:33.990Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-11T18:29:53.969Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | --- |
-| empty app provider SSR | 1142 | 1244 | 8.6% | 27.5% | unestablished at this precision |
-| success notification SSR | 2315 | 1909 | -16.9% | 17.9% | unestablished at this precision |
-| notification with action SSR | 2746 | 2461 | -8.7% | 2.1% | unestablished at this precision |
+| empty app provider SSR | 1143 | 1128 | -2.5% | 9.5% | unestablished at this precision |
+| success notification SSR | 2295 | 1836 | -19.3% | 5.2% | lower time in every pair, beyond control spread |
+| notification with action SSR | 2664 | 2455 | -7.8% | 4.2% | unestablished at this precision |
 
-Node notification content takes 17–18% less time in this recording. Empty-provider
-SSR takes 8.2% more time (1.680 versus 1.553 μs). Bun directions remain unestablished
-because of control spread or process-order variation. No overall application
-performance claim follows from these measurements.
+Empty-provider rendering now bypasses anchor-group Map/array allocation while
+retaining queue-option validation and the same live context API. The previous
+Node recording was 8.2% above upstream; the current 1.552 versus 1.584 μs result
+has no established difference. Bun empty-provider time is likewise indistinguishable
+at this precision. Node notification content remains 15–17% below upstream; Bun
+success content is 19.3% below, while its action-content direction is unestablished.
+These are server-rendering measurements, not application or animation speedups.
 
 ## Reproduce
 

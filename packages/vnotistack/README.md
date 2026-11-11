@@ -75,3 +75,7 @@ and identical-source controls. They do not measure browser animation or establis
 an application speedup. The implementation is built and tested; no public release
 or VentiMath adoption is claimed. A consumer release must pin all internal VPM
 dependencies to its published artifacts.
+
+Empty providers skip anchor grouping until the first notification. Constructor
+validation and the context API remain active; the final empty-provider SSR
+measurements show no established difference from upstream on Node or Bun.

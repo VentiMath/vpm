@@ -28,6 +28,10 @@ for (const name of ["upstream", "vpm"]) {
     ),
     "<button>Notify</button>",
   );
+  if (name === 'vpm') {
+    assert.throws(() => render(h(api.SnackbarProvider, {maxSnack:0}, 'child')), /maxSnack/);
+    assert.throws(() => render(h(api.SnackbarProvider, {TransitionComponent:Child}, 'child')), /transition/);
+  }
   for (const variant of ["default", "success", "error", "warning", "info"]) {
     const html = render(
       h(api.MaterialDesignContent, {
