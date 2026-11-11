@@ -1,0 +1,12 @@
+{
+  "name": "vpm-notistack-conformance",
+  "private": true,
+  "description": "Pinned notifications control on current React",
+  "dependencies": {
+    "notistack": "3.0.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
+  }
+}

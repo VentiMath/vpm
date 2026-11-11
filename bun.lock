@@ -741,6 +741,19 @@
         "vundici-types": "workspace:*",
       },
     },
+    "packages/vnotistack": {
+      "name": "vnotistack",
+      "version": "3.0.2",
+      "dependencies": {
+        "vclsx": "2.1.1",
+        "vgoober": "2.1.19",
+        "vreact-transition-group": "4.4.5",
+      },
+      "peerDependencies": {
+        "react": "^19.3.0",
+        "react-dom": "^19.3.0",
+      },
+    },
     "packages/vobject-hash": {
       "name": "vobject-hash",
       "version": "0.1.0",
@@ -1908,6 +1921,8 @@
     "vnode-fetch": ["vnode-fetch@workspace:packages/vnode-fetch"],
 
     "vnode-types": ["vnode-types@workspace:packages/vnode-types"],
+
+    "vnotistack": ["vnotistack@workspace:packages/vnotistack"],
 
     "vobject-hash": ["vobject-hash@workspace:packages/vobject-hash"],
 

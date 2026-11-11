@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "notistack",
+    "version": "3.0.2",
+    "repository": "https://github.com/iamhosseindhv/notistack",
+    "checked": "2026-11-11"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "VentiMath's React 19.3 notification providers and useSnackbar error/success callers: bounded stack, queued overflow, keys, deduplication, persistence, timers, dismissal, actions, default material content and slide/collapse transitions. No custom TransitionComponent/TransitionProps or public Transition adapter."
+  },
+  "changes": [
+    "Independent queue, deadline and React implementation; reuses VPM's existing CSS, class-name and transition primitives, with no Notistack runtime dependency.",
+    "Pause reasons compose: leaving hover does not restart a timer while its owner window remains blurred. Timer and transition work is cancelled on unmount.",
+    "Duplicate explicit keys cannot create conflicting React identities, even without preventDuplicate. Removed providers no longer capture global enqueue calls; the previous live provider is restored.",
+    "Options are snapshotted for queued messages. Invalid queue limits, durations, anchors and keys reject before enqueuing. Callback exceptions do not prevent other close callbacks or leave the queue open.",
+    "Uses the portal's owner document for styles and timers. Default glyphs are independently drawn; generated classes, keys and collapse timing differ from upstream."
+  ],
+  "caller": {
+    "revision": "47b9d38c77ad02722131d564ba497d16feda38a9",
+    "upstreamVersion": "3.0.2",
+    "paths": [
+      "src/app/App.tsx",
+      "src/apps/fuse/FuseApp.tsx",
+      "src/@auth/services/firebase/components/FirebaseSignInForm.tsx",
+      "src/app/(control-panel)/apps/calendar/api/hooks/events/useCreateEvent.ts"
+    ],
+    "scope": "Five notifications, bottom-right anchoring, container utility classes, translated errors and settings-save success messages. Tested through actual public APIs in React 19.3.1 Chrome fixtures; application adoption has not occurred."
+  }
+}

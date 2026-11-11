@@ -55,6 +55,15 @@ jobs:
           node scripts/motion-dom-conformance/types.cjs
           node scripts/motion-dom-conformance/browser.cjs
           node scripts/motion-dom-conformance/archives.cjs
+      - run: npm --prefix scripts/notistack-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Notification queues, browser callers and local archives
+        run: |
+          node scripts/notistack-conformance/run.cjs
+          node --test packages/vnotistack/test/queue.test.cjs
+          node scripts/notistack-conformance/types.cjs
+          node scripts/notistack-conformance/browser.cjs
+          VNOTISTACK_MODE=development node scripts/notistack-conformance/browser.cjs
+          node scripts/notistack-conformance/archives.cjs
       - run: npm --prefix scripts/goober-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Goober object CSS and unchanged notifications
         run: |
@@ -707,6 +716,11 @@ jobs:
           bun scripts/motion-dom-conformance/reads.cjs
           bun scripts/motion-dom-conformance/transitions.cjs
           bun scripts/motion-dom-conformance/effects.cjs
+      - run: npm --prefix scripts/notistack-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Notification queues and server imports
+        run: |
+          bun scripts/notistack-conformance/run.cjs
+          bun test packages/vnotistack/test/queue.test.cjs
       - run: npm --prefix scripts/goober-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Goober object CSS on Bun
         run: |
