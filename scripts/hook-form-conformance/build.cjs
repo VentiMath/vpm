@@ -11,6 +11,10 @@ const path = require("node:path");
   ]) {
     const aliases = {
       "form-api": entry,
+      "@hookform/resolvers/zod":
+        variant === "vpm" && process.env.VRESOLVERS_ZOD
+          ? process.env.VRESOLVERS_ZOD
+          : require.resolve("./node_modules/@hookform/resolvers/zod"),
       react: require.resolve("./node_modules/react"),
       "react-dom/client": require.resolve("./node_modules/react-dom/client"),
       "react-dom": require.resolve("./node_modules/react-dom"),
@@ -30,7 +34,10 @@ const path = require("node:path");
           name: "form-controls",
           setup(build) {
             build.onResolve(
-              { filter: /^(form-api|react|react-dom(?:\/client)?)$/ },
+              {
+                filter:
+                  /^(@hookform\/resolvers\/zod|form-api|react|react-dom(?:\/client)?)$/,
+              },
               (args) => ({ path: aliases[args.path] }),
             );
           },

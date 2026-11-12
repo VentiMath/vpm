@@ -34,7 +34,9 @@ const React = require("./node_modules/react"),
       ? process.env.VFORM_ENTRY || "../../packages/vreact-hook-form"
       : "./node_modules/" + process.argv[2],
   );
-const { zodResolver } = require("./node_modules/@hookform/resolvers/zod"),
+const { zodResolver } = require(
+    process.env.VRESOLVERS_ZOD || "./node_modules/@hookform/resolvers/zod",
+  ),
   { z } = require("./node_modules/zod");
 require("./scenario.cjs")
   .scenario(React, createRoot, api, zodResolver, z)

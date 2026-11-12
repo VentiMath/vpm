@@ -62,3 +62,7 @@ levels. Cross-realm hosts and every third-party resolver are not certified.
 Node 24, Bun 1.4.4, Chrome, TS7 and packed consumers.
 [Measurements](bench/results/README.md) separate server rendering, state operations and
 validation; [mounted updates](bench/updates/README.md) exercise actual React DOM commits. [Provenance](PROVENANCE.json) records the scope and controls.
+
+The independent [Zod adapter](../vhookform-resolvers/README.md) is also available
+in the source workspace. It is tested with both full Zod 3 and Zod 4 schemas;
+package release and application adoption remain separate.

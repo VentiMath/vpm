@@ -1,0 +1,54 @@
+{
+  "name": "vhookform-resolvers",
+  "version": "7.0.6",
+  "description": "Independent Zod validation adapter for VentiMath forms",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./zod": {
+      "import": {
+        "types": "./zod.d.mts",
+        "default": "./zod.mjs"
+      },
+      "require": {
+        "types": "./zod.d.cts",
+        "default": "./zod.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.mts",
+    "*.cts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vhookform-resolvers"
+  }
+}

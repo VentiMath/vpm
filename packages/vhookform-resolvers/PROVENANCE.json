@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "@hookform/resolvers",
+    "version": "7.0.6",
+    "repository": "https://github.com/react-hook-form/resolvers",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Zod 3/4 full-schema adapter, nested errors and native validity helpers. Other validation adapters, Zod Mini and Standard Schema are outside verified scope."
+  },
+  "changes": [
+    "Independent implementation from public APIs and black-box comparisons; no upstream runtime copied.",
+    "No runtime dependencies or hidden Zod import; the caller supplies the schema.",
+    "Nonmutating issue traversal, safe paths, and propagation of genuine validator exceptions."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "upstreamVersion": "5.0.1",
+    "paths": ["src/components/WARML/WARMLInterestForm.tsx"],
+    "scope": "The application's resolver imports all use /zod, including WARML, calendar, notes, auth and account forms. The app uses Zod 3.24.3. Release and adoption are separate."
+  },
+  "references": [
+    "https://github.com/react-hook-form/resolvers#zod",
+    "https://zod.dev/basics",
+    "https://zod.dev/error-customization"
+  ]
+}

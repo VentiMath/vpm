@@ -551,6 +551,10 @@
       "name": "vhoist-non-react-statics",
       "version": "3.3.2",
     },
+    "packages/vhookform-resolvers": {
+      "name": "vhookform-resolvers",
+      "version": "7.0.6",
+    },
     "packages/vhtml-entities": {
       "name": "vhtml-entities",
       "version": "0.1.0",
@@ -1872,6 +1876,8 @@
     "vhighlight-words": ["vhighlight-words@workspace:packages/vhighlight-words"],
 
     "vhoist-non-react-statics": ["vhoist-non-react-statics@workspace:packages/vhoist-non-react-statics"],
+
+    "vhookform-resolvers": ["vhookform-resolvers@workspace:packages/vhookform-resolvers"],
 
     "vhtml-entities": ["vhtml-entities@workspace:packages/vhtml-entities"],
 

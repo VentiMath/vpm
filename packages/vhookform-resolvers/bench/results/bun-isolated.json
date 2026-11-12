@@ -1,0 +1,1597 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-12T20:32:44.575Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/resolvers-conformance/node_modules/@hookform/resolvers": "926aef756c3c325fd06b02a9ace67bfce549a1cdd719a8c42fc85a8128dee3a5",
+    "../../scripts/resolvers-conformance/node_modules/react-hook-form": "e8df8e32c18372d2c28302f1cfdf579f4ae7d34a00fe91e1ab46884b8bf242be",
+    "../../scripts/resolvers-conformance/node_modules/zod": "4c7cc4108f22ee51767f1a833d142c9e5994599a6a16616e4b9a87c161a51cf4",
+    "../../scripts/resolvers-conformance/node_modules/zod-app": "be3a34abea40fc016db47bf2c90ec4d02eb0b920db2a4a18b917c82eca2b7c8b",
+    "../../scripts/resolvers-conformance/package-lock.json": "e68aeb568ceffe373d90ccf1416c1d44a84caf28357a0db8add9e2966c3e11e8",
+    "PROVENANCE.json": "996f0b570e49ff420771393b1f1e191f5040781ebb6abb804799a946a319ce7f",
+    "bench/run.cjs": "9f185574792b9d05a48107f1ae6711ef2f02ebb4e14165cdf9148d0ec71a4de7",
+    "index.cjs": "a2f9262a70d6197db0090dfe7773feae83b51df9d5cd318e191fa4ee13db6ecc",
+    "package.json": "9942b053607563c9c1a81426ad0aa53e53a4ec17531a2a3783ed6e331fd322dd",
+    "zod.cjs": "27e09410d57e8034344da7be67c52f50a57d19d068f3c0d086972674e690edf3"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 25027,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 5305,
+            "samples": [
+              2153.1809613572123,
+              2104.83034872762,
+              2275.3770028275158,
+              2190.881244109325,
+              2142.844863336477,
+              2156.086899151743,
+              2267.349858623934,
+              2178.5736098020684,
+              2200.25127238455,
+              2213.2578699340243,
+              2104.83034872762,
+              2215.567012252601
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2727,
+            "samples": [
+              4533.064539787274,
+              4723.475247524735,
+              4377.383571690516,
+              4651.097176384301,
+              4663.442610927769,
+              4291.23872387236,
+              4961.297396406299,
+              4871.607994132725,
+              4600.56839017235,
+              4844.594059405919,
+              4794.615694902834,
+              5041.712504583781
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 5054,
+            "samples": [
+              1409.461218836546,
+              1294.0409576572974,
+              1460.3696082311094,
+              1372.7081519588512,
+              1377.8361693707893,
+              1343.5809259991975,
+              1415.553620894349,
+              1357.2004352987703,
+              1343.416106054588,
+              1349.7641472101195,
+              1334.1493866244805,
+              1419.1563118322342
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 2554,
+            "samples": [
+              5056.251761941975,
+              4526.6902897416085,
+              4714.369616288201,
+              4747.177760375868,
+              4790.965152701695,
+              4639.698903680538,
+              4558.502740798713,
+              4736.247063429945,
+              4978.301879404924,
+              4758.776820673446,
+              4889.747846515326,
+              4790.736883320241
+            ]
+          }
+        ],
+        "checksum": 38464
+      },
+      "vpm": {
+        "pid": 25041,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 5305,
+            "samples": [
+              2154.1078228086744,
+              2223.7511781338353,
+              2185.4853911404325,
+              2090.6143261074467,
+              2212.8416588124414,
+              2114.718755890663,
+              2139.985862393966,
+              2267.452026390202,
+              2145.8294062205455,
+              2093.1353440150806,
+              2171.716870876522,
+              2157.4616399623
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2727,
+            "samples": [
+              4103.79244591123,
+              3736.8140814081407,
+              3809.7422075540626,
+              3728.853318665205,
+              4038.3663366336477,
+              3690.441144114428,
+              3864.1822515584654,
+              3725.9200586725237,
+              4001.252658599205,
+              3771.3300330032866,
+              3740.2057205720816,
+              3762.8038137147064
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 5054,
+            "samples": [
+              1523.6032845271059,
+              1454.145231499799,
+              1347.9503363672359,
+              1416.2874950534224,
+              1476.8747526711452,
+              1393.3270676691739,
+              1493.1818361693577,
+              1458.0694499406502,
+              1390.9774436090172,
+              1497.2382271468173,
+              1383.5081123862312,
+              1398.6115947764126
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 2554,
+            "samples": [
+              3097.820281910684,
+              2794.015661707107,
+              3006.8519968677324,
+              3036.6746280344178,
+              2702.1503523884153,
+              2915.508613938901,
+              3363.8085356303995,
+              2918.8202819107173,
+              2995.4483163665495,
+              2956.8813625685625,
+              3117.7725137039643,
+              2897.0078308535603
+            ]
+          }
+        ],
+        "checksum": 8064
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 25045,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 5652,
+            "samples": [
+              2204.4336518046725,
+              2174.097664543526,
+              2166.917197452232,
+              2222.8267869780584,
+              2031.8841118188188,
+              2201.3225406935567,
+              2154.9968152866268,
+              2127.941436659592,
+              2186.504777070059,
+              2111.464968152861,
+              2182.214260438789,
+              2192.564578910123
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2002,
+            "samples": [
+              4194.13936063935,
+              4020.958041958072,
+              4289.8976023975665,
+              3994.9635364634946,
+              4046.8486513486187,
+              4153.658841158818,
+              3864.0109890110157,
+              4011.3846153846252,
+              3878.7462537462156,
+              4064.831168831164,
+              4081.0229770229785,
+              4438.124375624384
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 9000,
+            "samples": [
+              1429.2361111111077,
+              1454.0833333333392,
+              1487.060222222226,
+              1388.9630000000022,
+              1356.3564444444485,
+              1349.0972222222254,
+              1442.9166666666713,
+              1508.3194444444466,
+              1796.3194444444448,
+              1616.648222222213,
+              1450.4213333333382,
+              1431.1527777777733
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 3297,
+            "samples": [
+              3106.296026690921,
+              2982.7998180163463,
+              3155.8110403396763,
+              3020.8650288140366,
+              3011.677282377977,
+              3195.0257810130743,
+              3088.856232939023,
+              3556.010615711277,
+              3147.710039429763,
+              3124.6839551107187,
+              3215.0946314831835,
+              2929.4182590233772
+            ]
+          }
+        ],
+        "checksum": 37440
+      },
+      "upstream": {
+        "pid": 25046,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 5652,
+            "samples": [
+              2191.510438782736,
+              2186.5932413305004,
+              2259.7753007784827,
+              2296.900743099786,
+              2207.824663835814,
+              2307.2880396319906,
+              2305.570240622793,
+              2165.605095541403,
+              2281.4784147204573,
+              2147.381457891012,
+              2126.8356334041027,
+              2232.6979830148643
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2002,
+            "samples": [
+              4933.025474525454,
+              5136.1138861139,
+              4596.8826173826,
+              5019.022977022929,
+              4955.919080919068,
+              4696.657342657323,
+              5183.941058941049,
+              5002.705794205773,
+              4699.737762237745,
+              4795.121378621429,
+              4969.884615384664,
+              4655.823176823186
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 9000,
+            "samples": [
+              1393.0972222222206,
+              1361.064777777781,
+              1369.86577777778,
+              1398.0694444444453,
+              1389.1435555555568,
+              1342.4213333333278,
+              1450.4258888888824,
+              1473.175888888894,
+              1466.842666666657,
+              1427.6620000000044,
+              1421.0555555555654,
+              1373.3380000000022
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 3297,
+            "samples": [
+              5158.12344555651,
+              6813.277221716656,
+              5267.313618440989,
+              4777.335456475638,
+              4635.438883833726,
+              4532.175614194726,
+              4780.558083105806,
+              4552.155899302402,
+              4691.790718835309,
+              4387.435547467393,
+              4748.875341219305,
+              4315.779496512001
+            ]
+          }
+        ],
+        "checksum": 6912
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 25077,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 4891,
+            "samples": [
+              2306.634635043956,
+              2355.619096299325,
+              3077.1228787569057,
+              2301.207932938046,
+              2439.105908812103,
+              2360.0660396646836,
+              2312.7256184829234,
+              2409.6385197301092,
+              2678.516663259055,
+              2489.828255980373,
+              2183.4150480474323,
+              2269.0828051523263
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2685,
+            "samples": [
+              4735.878212290536,
+              4329.143389199287,
+              4743.97877094971,
+              4783.333333333338,
+              5418.342644320275,
+              4659.465921787715,
+              4262.86443202979,
+              4659.388454376196,
+              4668.280446927354,
+              4611.948975791454,
+              4396.741154562384,
+              4791.387337057764
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 5671,
+            "samples": [
+              1363.2223593722376,
+              1416.299241756305,
+              1343.7224475401063,
+              1476.0916945865067,
+              1392.1853288661612,
+              1396.1162052548038,
+              1382.2151296067843,
+              1452.6025392347021,
+              1338.7924528301962,
+              1409.0841121495275,
+              1388.8497619467482,
+              1385.3743607829463
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 1656,
+            "samples": [
+              4494.137681159392,
+              4208.71074879224,
+              5112.797101449378,
+              4611.6896135266,
+              5176.378623188281,
+              8107.31159420289,
+              21884.712560386473,
+              23794.38405797095,
+              5935.361111111008,
+              5726.977657004906,
+              6276.645531400985,
+              4459.037439613557
+            ]
+          }
+        ],
+        "checksum": 38144
+      },
+      "vpm": {
+        "pid": 25080,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 4891,
+            "samples": [
+              2182.179922306273,
+              2113.2692700879134,
+              2193.714782253122,
+              2115.7994275199353,
+              2069.9413207932907,
+              2284.28910243303,
+              2150.897975874064,
+              2174.3764056430223,
+              2221.23103659783,
+              2192.4624821100024,
+              2114.104068697606,
+              2171.8378654671833
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2685,
+            "samples": [
+              4133.597392923644,
+              4170.3445065176775,
+              3912.18212290505,
+              4033.2093109869584,
+              4045.2979515828692,
+              3925.0618249534673,
+              4106.393296089386,
+              3850.217504655467,
+              4145.080819366858,
+              3949.9378026070854,
+              4256.532960893872,
+              4072.579143389212
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 5671,
+            "samples": [
+              2348.887674131555,
+              1688.444013401531,
+              2953.7779932992535,
+              2195.9897725268834,
+              1598.1676952918408,
+              1562.6873567272228,
+              4358.78451772176,
+              1539.1024510668315,
+              1641.3992241227218,
+              1465.6878857344377,
+              1355.4928584023803,
+              1392.9053077058584
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 1656,
+            "samples": [
+              2606.5314009661174,
+              3248.6159420290846,
+              2818.589371980697,
+              3279.4130434783183,
+              2847.398550724555,
+              2944.142512077356,
+              2769.726449275383,
+              3369.716183574866,
+              2691.5507246377038,
+              3087.1829710144502,
+              2676.7566425120363,
+              3260.8188405797555
+            ]
+          }
+        ],
+        "checksum": 8640
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 25081,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 5147,
+            "samples": [
+              2378.189625024287,
+              6513.235865552751,
+              2290.37128424325,
+              2325.918010491547,
+              2137.9850398290273,
+              2309.889255877212,
+              2348.4149990285587,
+              2204.1319215076774,
+              2223.62541286186,
+              2158.5146687390693,
+              2195.218962502427,
+              2217.31105498349
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 1750,
+            "samples": [
+              4115.571428571457,
+              4118.404571428528,
+              4164.738285714261,
+              4107.04799999998,
+              3653.952571428558,
+              10037.809142857115,
+              4393.785714285774,
+              4396.999999999999,
+              4046.024000000021,
+              3895.0474285714204,
+              4193.380571428536,
+              4754.571428571386
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 9157,
+            "samples": [
+              1372.438243966362,
+              1358.9467074369263,
+              1401.1594408649132,
+              1311.2373047941533,
+              1499.4539696407126,
+              1434.6947690291504,
+              1458.4743911761568,
+              1510.8887190127734,
+              1371.2187397619284,
+              1386.0662880856105,
+              1420.0520912962775,
+              1453.1414218630694
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 3475,
+            "samples": [
+              2817.7099280575358,
+              3594.712230215794,
+              2972.1343884892435,
+              2965.7553956834645,
+              3015.3116546762576,
+              2932.889496402868,
+              2862.721726618697,
+              2947.7576978417032,
+              2956.235107913671,
+              2954.316546762561,
+              3075.839136690644,
+              2926.570647481993
+            ]
+          }
+        ],
+        "checksum": 43584
+      },
+      "upstream": {
+        "pid": 25082,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 5147,
+            "samples": [
+              2451.428016320182,
+              2211.652418884787,
+              2247.1746648533103,
+              2411.404701768029,
+              2295.228482611238,
+              2764.531183213521,
+              2397.8127064309315,
+              2289.7722945405103,
+              2222.896833106669,
+              2132.2209053817733,
+              2215.141635904414,
+              2286.9389935885074
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 1750,
+            "samples": [
+              4703.523999999951,
+              5068.190285714276,
+              4676.238285714265,
+              4841.214285714289,
+              4917.737714285718,
+              4490.214285714241,
+              4507.571428571412,
+              4978.261714285703,
+              4748.881142857174,
+              4672.024000000029,
+              4491.309142857127,
+              4651.476571428572
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 9157,
+            "samples": [
+              1442.6712897237126,
+              1356.462269302169,
+              1405.6459539150342,
+              1394.0200939172212,
+              1408.5216774052626,
+              1367.514797422737,
+              1367.9061919842798,
+              1407.2067270940304,
+              1413.872774926295,
+              1340.3907393251056,
+              1393.205525827231,
+              1446.5026755487625
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 3475,
+            "samples": [
+              4636.438848920864,
+              4779.928057553943,
+              5029.8920863309395,
+              4668.932661870516,
+              4628.357410071965,
+              4795.863309352479,
+              4730.37179856115,
+              4369.448345323755,
+              4620.4676258992995,
+              4552.877697841716,
+              4455.815539568321,
+              4737.146187050365
+            ]
+          }
+        ],
+        "checksum": 7488
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 25083,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 2815,
+            "samples": [
+              2198.268206039081,
+              2422.8390763765624,
+              2206.3204262877434,
+              2174.0230905861386,
+              2298.5047957371235,
+              2080.846891651856,
+              2191.2078152753106,
+              2186.8561278863153,
+              2197.7207815275347,
+              2260.0060390763683,
+              2322.439076376555,
+              2135.4202486678546
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2200,
+            "samples": [
+              4670.852272727266,
+              4963.7122727272945,
+              4550.1704545454595,
+              4659.7350000000015,
+              4635.075454545472,
+              4855.68181818182,
+              4550.852272727236,
+              4553.636363636378,
+              4613.2200000000075,
+              4480.037727272682,
+              4580.492272727281,
+              4575.360000000046
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 8478,
+            "samples": [
+              1403.996579381934,
+              1346.5981363529172,
+              1360.3984430290293,
+              1403.63293229535,
+              1384.3772116065145,
+              1445.6779900920105,
+              1427.4003302665842,
+              1365.1657230478936,
+              1402.2862703467845,
+              1444.6066289219061,
+              1404.0162774239157,
+              1387.4734607218722
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 2592,
+            "samples": [
+              4525.318287037015,
+              4755.8352623456885,
+              4779.4814814814845,
+              4721.595293209927,
+              4585.230324074108,
+              4676.890432098745,
+              4747.331790123487,
+              4617.942901234512,
+              4529.915895061721,
+              4560.8445216049595,
+              4849.183256172874,
+              4496.2222222221935
+            ]
+          }
+        ],
+        "checksum": 41216
+      },
+      "vpm": {
+        "pid": 25084,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 2815,
+            "samples": [
+              2139.7570159857896,
+              2333.6291296625204,
+              2338.780106571944,
+              2121.8028419183006,
+              2300.7992895204297,
+              2213.2625222024863,
+              2270.618472468921,
+              2321.7140319715845,
+              2290.8525754884513,
+              2120.648312611015,
+              2233.4813499112,
+              2150.9918294849076
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2200,
+            "samples": [
+              5962.235,
+              7400.189090909092,
+              5114.356363636354,
+              4571.969999999976,
+              4578.712272727279,
+              4474.507272727289,
+              4598.693181818176,
+              4653.598636363602,
+              4504.696818181835,
+              4548.011363636368,
+              4517.613636363649,
+              4667.708636363634
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 8478,
+            "samples": [
+              1424.85940080208,
+              1416.0474168436008,
+              1358.0738381693748,
+              1432.2953526775218,
+              1402.207714083512,
+              1358.3392309506914,
+              1413.737556027369,
+              1433.7059447982972,
+              1435.0721868365106,
+              1428.515923566877,
+              1486.7156168907766,
+              1400.9692144373582
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 2592,
+            "samples": [
+              4607.494212962927,
+              5036.072530864192,
+              4677.484953703716,
+              4612.622299382716,
+              4420.524691358057,
+              4493.7307098764895,
+              4670.042438271592,
+              4848.025848765407,
+              4451.935570987638,
+              5017.152006172883,
+              5034.754629629618,
+              4687.37152777783
+            ]
+          }
+        ],
+        "checksum": 8064
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 25085,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 4811,
+            "samples": [
+              2134.1022656412397,
+              2135.323633340263,
+              2180.852837247975,
+              2192.233215547695,
+              2160.647474537521,
+              2225.55082103512,
+              2159.5907295780507,
+              2167.2816462274027,
+              2170.148202036987,
+              2239.2868426522573,
+              2259.708584493872,
+              2113.117647058831
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2778,
+            "samples": [
+              4475.47696184304,
+              4584.1133909287055,
+              4573.0442764579,
+              4577.798776097916,
+              4346.8624910007375,
+              4545.836213102951,
+              4630.834413246945,
+              4422.15622750177,
+              4668.856371490256,
+              4676.940964722848,
+              4232.7811375089805,
+              4671.316414686809
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 9016,
+            "samples": [
+              1346.4303460514623,
+              1347.340838509311,
+              1353.1730257320419,
+              1497.601486246676,
+              1332.270408163266,
+              1343.3340727595362,
+              1404.2812777284764,
+              1413.593500443655,
+              1357.9608473824328,
+              1339.4243566991843,
+              1403.4863575865213,
+              1472.4425465838606
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 2536,
+            "samples": [
+              4737.217665615157,
+              4928.233438485823,
+              4497.897082018916,
+              5058.770110410079,
+              4530.724369085215,
+              4660.225946372305,
+              4836.323343848614,
+              4397.854100946332,
+              4965.3158517350585,
+              4743.6577287066075,
+              4652.569794952621,
+              4580.737381703435
+            ]
+          }
+        ],
+        "checksum": 43264
+      },
+      "upstream": {
+        "pid": 25086,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Zod 3 valid twenty-field form",
+            "iterations": 4811,
+            "samples": [
+              2125.7881937227207,
+              2181.545832467263,
+              2200.8330908335024,
+              2155.866763666601,
+              2150.7915194346324,
+              2210.6456038245615,
+              2119.6044481396743,
+              2121.8041987112806,
+              2219.1939305757605,
+              2204.4533361047547,
+              2243.0367906880047,
+              2140.52005819996
+            ]
+          },
+          {
+            "case": "Zod 3 invalid nested form, all errors",
+            "iterations": 2778,
+            "samples": [
+              4695.494240460763,
+              4699.304175665945,
+              4343.87724982004,
+              4712.2930165586595,
+              4584.78833693304,
+              4564.314974802014,
+              4608.861411087101,
+              6010.559395248405,
+              5120.800215982731,
+              4779.6828653707735,
+              4655.9125269978385,
+              4414.956803455741
+            ]
+          },
+          {
+            "case": "Zod 4 valid twenty-field form",
+            "iterations": 9016,
+            "samples": [
+              1361.2421251109156,
+              1419.166814551908,
+              1396.1845607808427,
+              1403.1536157941475,
+              1422.9886867790692,
+              1400.5703194321275,
+              1446.6642635314904,
+              1374.6672582076314,
+              1373.3039041703769,
+              1546.7871561668137,
+              1309.1680346051437,
+              1310.6329858030226
+            ]
+          },
+          {
+            "case": "Zod 4 invalid nested form, all errors",
+            "iterations": 2536,
+            "samples": [
+              4694.384069400572,
+              4952.714116719183,
+              5263.127760252426,
+              4958.941246056781,
+              5154.278391167178,
+              4620.645899053609,
+              5001.182965299681,
+              4906.9562302839,
+              5108.865930599337,
+              4629.354100946334,
+              5031.216876971629,
+              4833.56348580447
+            ]
+          }
+        ],
+        "checksum": 7360
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Zod 3 valid twenty-field form",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2184.7274269556965,
+          "vpmNs": 2155.7847313854872,
+          "changePct": -1.3247737549823002
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2220.2613234253395,
+          "vpmNs": 2178.155962491158,
+          "changePct": -1.8964146467778331
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2357.8425679820043,
+          "vpmNs": 2173.107135555103,
+          "changePct": -7.834934992500786
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2288.355644064509,
+          "vpmNs": 2256.998348552555,
+          "changePct": -1.3702981699233563
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2197.994493783308,
+          "vpmNs": 2252.049911190061,
+          "changePct": 2.459306315809262
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2168.706298066932,
+          "vpmNs": 2168.714924132195,
+          "changePct": 0.0003977516582320817
+        }
+      ]
+    },
+    {
+      "case": "Zod 3 invalid nested form, all errors",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4693.458929226252,
+          "vpmNs": 3767.0669233589965,
+          "changePct": -19.73793783724399
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4944.472277722261,
+          "vpmNs": 4055.8399100898914,
+          "changePct": -17.972238850163613
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4663.873184357535,
+          "vpmNs": 4058.9385474860405,
+          "changePct": -12.9706493499957
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4689.881142857108,
+          "vpmNs": 4141.571428571395,
+          "changePct": -11.691334973825773
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4596.856136363644,
+          "vpmNs": 4588.702727272727,
+          "changePct": -0.1773692464817067
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4675.7033837293,
+          "vpmNs": 4575.421526277908,
+          "changePct": -2.144743779093361
+        }
+      ]
+    },
+    {
+      "case": "Zod 4 valid twenty-field form",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1364.9542936288108,
+          "vpmNs": 1435.2163632766105,
+          "changePct": 5.147576733943526
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1395.583333333333,
+          "vpmNs": 1446.6690000000049,
+          "changePct": 3.660524273004495
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1390.5175454064547,
+          "vpmNs": 1619.7834597072813,
+          "changePct": 16.487811682650232
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1399.8330239161278,
+          "vpmNs": 1410.6057660805955,
+          "changePct": 0.7695733691387208
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1402.959601321067,
+          "vpmNs": 1420.4534088228404,
+          "changePct": 1.2469216850792053
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1398.3774401064852,
+          "vpmNs": 1355.5669365572373,
+          "changePct": -3.061441233347406
+        }
+      ]
+    },
+    {
+      "case": "Zod 4 invalid nested form, all errors",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4752.977290524657,
+          "vpmNs": 2976.164839467556,
+          "changePct": -37.38314623550343
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4720.333030027306,
+          "vpmNs": 3115.48999090082,
+          "changePct": -33.99851300570636
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 5451.678140096594,
+          "vpmNs": 2895.7705314009554,
+          "changePct": -46.88295132277109
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4652.685755395691,
+          "vpmNs": 2955.275827338116,
+          "changePct": -36.48236776122478
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4647.416666666628,
+          "vpmNs": 4673.7636959876545,
+          "changePct": 0.5669177353947896
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4955.827681387982,
+          "vpmNs": 4698.721805993731,
+          "changePct": -5.187950266306329
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Zod 3 valid twenty-field form",
+      "upstream_ns": 2254,
+      "vpm_ns": 2176,
+      "change_pct": -1.6,
+      "upstream_first_pct": -4.6,
+      "vpm_first_pct": -1.6,
+      "process_range_pct": "-1.3, -1.9, -7.8, -1.4",
+      "control_max_abs_pct": 2.5,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Zod 3 invalid nested form, all errors",
+      "upstream_ns": 4692,
+      "vpm_ns": 4057,
+      "change_pct": -15.5,
+      "upstream_first_pct": -16.4,
+      "vpm_first_pct": -14.8,
+      "process_range_pct": "-19.7, -18.0, -13.0, -11.7",
+      "control_max_abs_pct": 2.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Zod 4 valid twenty-field form",
+      "upstream_ns": 1393,
+      "vpm_ns": 1441,
+      "change_pct": 4.4,
+      "upstream_first_pct": 10.8,
+      "vpm_first_pct": 2.2,
+      "process_range_pct": "5.1, 3.7, 16.5, 0.8",
+      "control_max_abs_pct": 3.1,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Zod 4 invalid nested form, all errors",
+      "upstream_ns": 4737,
+      "vpm_ns": 2966,
+      "change_pct": -36.9,
+      "upstream_first_pct": -42.1,
+      "vpm_first_pct": -35.2,
+      "process_range_pct": "-37.4, -34.0, -46.9, -36.5",
+      "control_max_abs_pct": 5.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}
