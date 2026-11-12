@@ -18,6 +18,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.4
+      - name: Install verified current ICU timezone resources
+        run: node scripts/time-zone-conformance/install-data.cjs
       - run: node scripts/check-bun.cjs
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund
@@ -726,6 +728,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.4
+      - name: Install verified current ICU timezone resources
+        run: node scripts/time-zone-conformance/install-data.cjs
       - run: node scripts/check-bun.cjs
       - run: bun install --frozen-lockfile --ignore-scripts
       - run: npm --prefix scripts/consumers ci --ignore-scripts --no-audit --no-fund

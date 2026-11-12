@@ -60,3 +60,13 @@ or repair previously saved appointments. Upgrade affected runtime/system timezon
 data and verify the actual target environment. Use the intended IANA zone when
 it is known; do not substitute Phoenix or a fixed offset for Vancouver's entire
 history. An incorrect/unknown device timezone cannot safely be guessed by VPM.
+
+The first Linux CI run exposed stale bundled ICU rules in Bun 1.4.4, despite
+the passing macOS run. CI now installs Unicode's official 2026e timezone
+resources at a pinned revision, verifies their SHA-256 hashes and sets
+`ICU_TIMEZONE_FILES_DIR` before starting Node/Bun. The same fixed-date tests
+remain mandatory. This uses ICU's supported data update mechanism; it does not
+change the calendar algorithms or substitute a fixed offset. The installer is
+`scripts/time-zone-conformance/install-data.cjs`. Consumers on affected Linux
+runtimes must also update their timezone resources and verify their deployment.
+See [ICU's drop-in update documentation](https://unicode-org.github.io/icu/userguide/datetime/timezone/#icu4c-tz-update-with-drop-in-res-files-icu-54-and-newer).
