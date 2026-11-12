@@ -64,7 +64,16 @@ window.runForms = async () => {
   await wait();
   out.push(values.slice(), snapshot());
   open.click();
-  await wait();
+  // Closing the picker has a transition even with calendar animations reduced.
+  // Its focus restoration must finish before editing the segmented input.
+  const deadline = performance.now() + 5000;
+  while (document.querySelector('[role="dialog"]')) {
+    if (performance.now() > deadline)
+      throw Error("Picker dialog did not close");
+    await new Promise(requestAnimationFrame);
+  }
+  await new Promise(requestAnimationFrame);
+  await new Promise(requestAnimationFrame);
   window.finishPicker = () => {
     out.push(values.slice(), snapshot());
     if (

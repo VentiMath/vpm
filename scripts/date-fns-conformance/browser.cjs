@@ -110,7 +110,8 @@ const pending = new Map(),
         );
         for (const label of ["year", "minutes"]) {
           const point = await send("Runtime.evaluate", {
-            expression: `(()=>{const e=Array.from(document.querySelectorAll('[role="spinbutton"]')).find(e=>(e.getAttribute('aria-label')||'').toLowerCase()===${JSON.stringify(label)});if(!e)throw Error('Missing '+${JSON.stringify(label)});const r=e.getBoundingClientRect();return{x:r.x+r.width/2,y:r.y+r.height/2}})()`,
+            expression: `(async()=>{const deadline=performance.now()+5000;while(performance.now()<deadline){const e=Array.from(document.querySelectorAll('[role="spinbutton"]')).find(e=>(e.getAttribute('aria-label')||'').toLowerCase()===${JSON.stringify(label)});if(!e)throw Error('Missing '+${JSON.stringify(label)});const r=e.getBoundingClientRect(),p={x:r.x+r.width/2,y:r.y+r.height/2};if(e.contains(document.elementFromPoint(p.x,p.y)))return p;await new Promise(requestAnimationFrame);}throw Error('Date field is covered')})()`,
+            awaitPromise: true,
             returnByValue: true,
           });
           assert.equal(
