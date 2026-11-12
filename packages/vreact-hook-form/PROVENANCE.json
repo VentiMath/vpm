@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "react-hook-form",
+    "version": "7.92.0",
+    "repository": "https://github.com/react-hook-form/react-hook-form",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Controlled and single native fields, nested paths, form state, synchronous defaults, resets, built-in rules, resolver validation and submission. Dynamic field-array/lens APIs and the full upstream feature surface remain outside scope."
+  },
+  "changes": [
+    "Independent state store; no upstream implementation copied; React is the only peer and there are no runtime dependencies.",
+    "Validation results are tied to the current value revision and reset epoch; stale promises cannot restore old errors.",
+    "Paths reject prototype keys and oversized array indexes; returned snapshots and defaults own their data."
+  ],
+  "caller": {
+    "revision": "47b9d38c77ad02722131d564ba497d16feda38a9",
+    "upstreamVersion": "7.56.0",
+    "paths": [
+      "src/components/WARML/WARMLInterestForm.tsx",
+      "src/@fuse/core/FuseSettings/FuseSettings.tsx"
+    ],
+    "scope": "WARML steps, auth/account/settings, calendar event and label forms, notes and documented native input. Release and application adoption are separate."
+  },
+  "references": [
+    "https://react-hook-form.com/docs/useform",
+    "https://react-hook-form.com/docs/usecontroller/controller"
+  ]
+}

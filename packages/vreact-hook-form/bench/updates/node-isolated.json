@@ -1,0 +1,814 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-12T19:15:26.214Z",
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/hook-form-conformance/node_modules/jsdom": "b41b0624573f5b0e31448a83b6fec19070d3aa418630eb0b093d670c44c7a73a",
+    "../../scripts/hook-form-conformance/node_modules/react": "27c045392bedb10c5e82004e0cad0f329107a8e4e2e797eedfc14a9f2aababd7",
+    "../../scripts/hook-form-conformance/node_modules/react-dom": "16f6df3015c7b1b0e6960dc5da8ebf0989341fc6f33454ca51f40696b1a431e4",
+    "../../scripts/hook-form-conformance/node_modules/react-hook-form": "e8df8e32c18372d2c28302f1cfdf579f4ae7d34a00fe91e1ab46884b8bf242be",
+    "../../scripts/hook-form-conformance/package-lock.json": "d59e3d00df6b0800ed06ff6047084686f72a53ca05786944211e10bdbe6d51ff",
+    "PROVENANCE.json": "a2bad97958490f5ae353dfd3168c3ce14fa72cc3065ba843772f48e76a3faa57",
+    "bench/updates.cjs": "719d27b8b4adf89f129383b402d199c6b2a09eebbc4aed8515b71f21d8fdcd5f",
+    "index.cjs": "423dcd9f3fc6a9f790a5ffa997c3c29b687e409073affce0e8d5666fb008e884",
+    "package.json": "9cc74260d1f216460704e8c0d4bd3206fe15869834b91fff4b9e516d5c7a8f50",
+    "paths.cjs": "92735292767f2296194c7c456eb70f219cccc4fdd09e981331b82c5c2124596f",
+    "store.cjs": "e478e395256f17304b20ab8acdeff080c4a4fc0828d274e091ce15302df75888"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 3081,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 570,
+            "samples": [
+              15247.368421052686,
+              15762.280701754331,
+              18372.440350877267,
+              15759.136842105267,
+              15952.192982456183,
+              15234.794736842194,
+              14583.84561403519,
+              14945.028070175531,
+              13761.842105263137,
+              14341.885964912157,
+              14937.57368421049,
+              14396.491228070206
+            ]
+          }
+        ],
+        "checksum": 5536
+      },
+      "vpm": {
+        "pid": 3082,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 570,
+            "samples": [
+              18156.285964912393,
+              17431.359649122824,
+              16819.589473684253,
+              15615.642105263249,
+              17446.200000000044,
+              22436.03684210528,
+              18551.754385964814,
+              19642.39824561414,
+              15309.868421052655,
+              14908.991228070303,
+              15901.096491228074,
+              15425.29298245614
+            ]
+          }
+        ],
+        "checksum": 1632
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 3083,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 603,
+            "samples": [
+              19331.53731343287,
+              18221.73797678275,
+              24048.922056384683,
+              41978.096185737886,
+              56649.943615256976,
+              105065.9883913766,
+              50998.134328358276,
+              28605.721393034764,
+              25628.316749585283,
+              22262.369817578805,
+              43929.93366500841,
+              17186.359867330048
+            ]
+          }
+        ],
+        "checksum": 4640
+      },
+      "upstream": {
+        "pid": 3084,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 603,
+            "samples": [
+              20867.122719734663,
+              15644.0713101162,
+              15751.243781094605,
+              17936.152570480812,
+              17312.11940298509,
+              15946.378109452791,
+              15178.689883913901,
+              14382.946932006605,
+              15621.061359867468,
+              13908.719734659926,
+              15028.122719734667,
+              14985.764510779489
+            ]
+          }
+        ],
+        "checksum": 1696
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 3085,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 628,
+            "samples": [
+              16960.191082802565,
+              16818.138535031892,
+              17047.902866242002,
+              14473.128980891666,
+              13954.552547770538,
+              14282.312101910822,
+              13651.007961783353,
+              14366.90445859876,
+              13856.48885350332,
+              14418.391719745243,
+              14403.463375796235,
+              13788.348726114664
+            ]
+          }
+        ],
+        "checksum": 5856
+      },
+      "vpm": {
+        "pid": 3086,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 628,
+            "samples": [
+              18012.406050955367,
+              17523.35350318469,
+              16696.855095541352,
+              14843.152866242062,
+              15491.64012738852,
+              15812.765923566933,
+              15522.691082802705,
+              15859.47452229315,
+              14666.202229299362,
+              15664.211783439334,
+              15091.824840764331,
+              15403.59713375811
+            ]
+          }
+        ],
+        "checksum": 1824
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 3087,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 660,
+            "samples": [
+              20076.831818181778,
+              19074.431818181856,
+              18624.557575757513,
+              18254.356060606024,
+              19486.80606060605,
+              19210.101515151542,
+              18001.00909090912,
+              16753.28333333341,
+              19062.942424242272,
+              15629.22878787879,
+              17506.880303030433,
+              15811.236363636412
+            ]
+          }
+        ],
+        "checksum": 5664
+      },
+      "upstream": {
+        "pid": 3088,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 660,
+            "samples": [
+              16920.075757575705,
+              31507.70151515165,
+              28164.39393939404,
+              30339.078787878727,
+              19596.022727272833,
+              17246.654545454538,
+              18812.563636363633,
+              17384.848484848557,
+              37471.52878787884,
+              26827.462121212015,
+              17518.813636363608,
+              21951.072727272724
+            ]
+          }
+        ],
+        "checksum": 1696
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 3089,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 407,
+            "samples": [
+              18940.518427518477,
+              19724.2014742014,
+              17657.658476658617,
+              16243.34398034398,
+              17293.407862407817,
+              21500.100737100733,
+              28622.850122850094,
+              19178.847665847665,
+              16547.297297297486,
+              17782.45454545441,
+              15226.35135135142,
+              15158.783783783774
+            ]
+          }
+        ],
+        "checksum": 6176
+      },
+      "vpm": {
+        "pid": 3090,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 407,
+            "samples": [
+              60731.67321867303,
+              27655.201474201516,
+              36226.96560196558,
+              24843.466830466954,
+              27731.16461916449,
+              37366.40049140048,
+              33209.05159705154,
+              24889.12776412769,
+              19586.815724815588,
+              18784.398034398113,
+              18318.59213759201,
+              18674.03931203925
+            ]
+          }
+        ],
+        "checksum": 1632
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 3091,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 465,
+            "samples": [
+              17756.45161290325,
+              16619.443010752606,
+              17079.92903225815,
+              15760.574193548378,
+              20721.148387096655,
+              30727.509677419257,
+              22079.838709677344,
+              22390.501075268952,
+              16532.169892473095,
+              16035.75268817211,
+              24202.956989247516,
+              14937.455913978512
+            ]
+          }
+        ],
+        "checksum": 5152
+      },
+      "upstream": {
+        "pid": 3092,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "update one input in a mounted twenty-field form",
+            "iterations": 465,
+            "samples": [
+              15053.49462365586,
+              15535.036559139791,
+              16284.498924731071,
+              17398.208602150557,
+              18030.195698924665,
+              17726.34408602151,
+              17539.87526881711,
+              14564.965591397771,
+              15588.260215053862,
+              15805.376344085851,
+              15919.982795698874,
+              14277.238709677407
+            ]
+          }
+        ],
+        "checksum": 2016
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "update one input in a mounted twenty-field form",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 15089.911403508862,
+          "vpmNs": 17125.47456140354,
+          "changePct": 13.48956334774336
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 15632.566334991834,
+          "vpmNs": 27117.019071310024,
+          "changePct": 73.46492245877418
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 14385.183917197497,
+          "vpmNs": 15593.45143312102,
+          "changePct": 8.399388724387723
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 20773.54772727278,
+          "vpmNs": 18439.456818181767,
+          "changePct": -11.235880070820436
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 17720.056511056515,
+          "vpmNs": 26272.164619164603,
+          "changePct": 48.2623071928239
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 15862.679569892363,
+          "vpmNs": 17418.1903225807,
+          "changePct": 9.80610334990768
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "update one input in a mounted twenty-field form",
+      "upstream_ns": 15361,
+      "vpm_ns": 17782,
+      "change_pct": 10.9,
+      "upstream_first_pct": 10.9,
+      "vpm_first_pct": 31.1,
+      "process_range_pct": "13.5, 73.5, 8.4, -11.2",
+      "control_max_abs_pct": 48.3,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

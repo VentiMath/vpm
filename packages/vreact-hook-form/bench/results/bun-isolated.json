@@ -1,0 +1,1599 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-12T19:16:08.356Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/hook-form-conformance/node_modules/@hookform/resolvers": "e86c6b16b482ddc67fbbed3cd1b3f1f2bc093f0715e2e2e70c0d11a32866bb81",
+    "../../scripts/hook-form-conformance/node_modules/react": "27c045392bedb10c5e82004e0cad0f329107a8e4e2e797eedfc14a9f2aababd7",
+    "../../scripts/hook-form-conformance/node_modules/react-dom": "16f6df3015c7b1b0e6960dc5da8ebf0989341fc6f33454ca51f40696b1a431e4",
+    "../../scripts/hook-form-conformance/node_modules/react-hook-form": "e8df8e32c18372d2c28302f1cfdf579f4ae7d34a00fe91e1ab46884b8bf242be",
+    "../../scripts/hook-form-conformance/node_modules/zod": "be3a34abea40fc016db47bf2c90ec4d02eb0b920db2a4a18b917c82eca2b7c8b",
+    "../../scripts/hook-form-conformance/package-lock.json": "d59e3d00df6b0800ed06ff6047084686f72a53ca05786944211e10bdbe6d51ff",
+    "PROVENANCE.json": "a2bad97958490f5ae353dfd3168c3ce14fa72cc3065ba843772f48e76a3faa57",
+    "bench/run.cjs": "e685213f9317b235f1d739c0e2687e3ef155224c28597ef2255c088febc95d57",
+    "index.cjs": "423dcd9f3fc6a9f790a5ffa997c3c29b687e409073affce0e8d5666fb008e884",
+    "package.json": "9cc74260d1f216460704e8c0d4bd3206fe15869834b91fff4b9e516d5c7a8f50",
+    "paths.cjs": "92735292767f2296194c7c456eb70f219cccc4fdd09e981331b82c5c2124596f",
+    "store.cjs": "e478e395256f17304b20ab8acdeff080c4a4fc0828d274e091ce15302df75888"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 3447,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 1817,
+            "samples": [
+              6952.7837094111155,
+              6539.7633461750065,
+              6742.340671436434,
+              7311.249862410562,
+              6317.304347826089,
+              6355.943863511273,
+              6101.4034122179455,
+              6777.058888277384,
+              6224.936158503013,
+              6157.677490368758,
+              6424.532195927333,
+              7235.667583929574
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 59,
+            "samples": [
+              120413.13559322042,
+              106182.91525423633,
+              113247.8813559312,
+              105859.45762711733,
+              117898.30508474607,
+              102382.7796610164,
+              110821.33898305066,
+              99465.40677966153,
+              121207.62711864414,
+              106132.77966101731,
+              129580.50847457683,
+              100336.86440678047
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 713,
+            "samples": [
+              16134.93408134651,
+              15239.77279102397,
+              18933.38008415149,
+              13800.607293127627,
+              13233.112201963517,
+              12940.509116409545,
+              13584.092566619971,
+              13509.467040673211,
+              12944.657784011277,
+              13358.053295932763,
+              13110.448807854164,
+              13003.740532959298
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1052,
+            "samples": [
+              8950.570342205267,
+              8790.200570342115,
+              9026.219581748952,
+              9139.020912547609,
+              8822.282319391596,
+              9014.496197718629,
+              9594.225285170982,
+              9193.322243346127,
+              9515.446768060876,
+              8766.596007604414,
+              9154.547528517109,
+              9280.774714828895
+            ]
+          }
+        ],
+        "checksum": 1843099
+      },
+      "vpm": {
+        "pid": 3448,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 1817,
+            "samples": [
+              3787.034122179407,
+              3925.426527242704,
+              3774.7429829389143,
+              3964.753990093561,
+              3984.7506879471716,
+              3612.089708310398,
+              3911.5299944964345,
+              3890.570720968626,
+              3715.7402311502597,
+              3928.5910842047483,
+              3924.7616951018017,
+              4136.0528343423075
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 59,
+            "samples": [
+              58721.745762711944,
+              58553.66101694969,
+              70218.91525423752,
+              54037.423728813126,
+              54560.72881355953,
+              48804.38983050843,
+              54016.94915254161,
+              55950.559322033994,
+              55665.9661016948,
+              55909.61016949096,
+              54832.627118644734,
+              53901.830508474464
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 713,
+            "samples": [
+              7571.061711079866,
+              7701.321178120608,
+              7860.565217391371,
+              7855.248246844259,
+              8549.730715287513,
+              7011.2791023843365,
+              7219.0869565217035,
+              7417.601683029524,
+              7259.642356241332,
+              8118.162692847051,
+              7400.537166900364,
+              7063.288920056059
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1052,
+            "samples": [
+              8531.844106463888,
+              8817.252851711042,
+              8208.017110266117,
+              7918.845057034273,
+              8465.700570342247,
+              8671.459125475318,
+              8821.807984790845,
+              8277.605513307964,
+              8544.122623574169,
+              9394.645437262318,
+              9868.900190114253,
+              11448.709125475276
+            ]
+          }
+        ],
+        "checksum": 2756875
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 3449,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 2929,
+            "samples": [
+              4258.435984977809,
+              4250.7538409013305,
+              4214.6210310686265,
+              4112.922499146457,
+              4590.71628542165,
+              3912.825879139638,
+              4238.221235916712,
+              4096.520314100363,
+              4303.033117104818,
+              3941.7323318538643,
+              3891.4731990440396,
+              4121.599863434632
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 168,
+            "samples": [
+              58095.98214285724,
+              62769.345238095295,
+              60483.380952380874,
+              63473.46428571433,
+              65273.55952380953,
+              66658.98214285719,
+              58403.773809523664,
+              86055.55357142894,
+              68926.33928571407,
+              62105.654761904276,
+              60374.9999999995,
+              65831.35119047614
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 1117,
+            "samples": [
+              8658.49776186217,
+              8353.737690241756,
+              8717.062667860404,
+              8323.15040286483,
+              8947.515666965077,
+              8599.970456580151,
+              8484.295434198719,
+              8132.572068039462,
+              8805.46911369736,
+              8656.855863921232,
+              8235.675917636532,
+              8911.518352730516
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1278,
+            "samples": [
+              8769.65962441315,
+              8385.074334898394,
+              8859.252738654257,
+              9379.564945226992,
+              8879.988262910863,
+              9063.0868544601,
+              8960.582942096966,
+              8960.355242566578,
+              9155.320813771456,
+              14052.719092331698,
+              9138.921752738719,
+              8370.174491392818
+            ]
+          }
+        ],
+        "checksum": 2754441
+      },
+      "upstream": {
+        "pid": 3453,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 2929,
+            "samples": [
+              6149.951519289866,
+              6238.1785592352235,
+              6170.521679754187,
+              6181.973369750777,
+              6169.284397405263,
+              6489.814612495713,
+              6253.442471833404,
+              6185.629224991462,
+              6259.73028337316,
+              6472.87162854217,
+              6155.414475930345,
+              5870.547285763066
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 168,
+            "samples": [
+              113200.39285714264,
+              109596.47619047665,
+              112211.8035714286,
+              109653.27380952434,
+              130152.03571428507,
+              106366.57142857094,
+              107488.83928571439,
+              114666.42261904762,
+              124283.98214285744,
+              133356.64880952367,
+              113510.66666666672,
+              110537.20238095231
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 1117,
+            "samples": [
+              17001.342882721674,
+              19577.62667860338,
+              22902.678603402015,
+              13791.144136078605,
+              13379.065353625621,
+              13441.883616830808,
+              13166.219337511327,
+              13751.716204118104,
+              13496.754700089523,
+              13944.158460161301,
+              13979.89346463753,
+              14663.869292748344
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1278,
+            "samples": [
+              9662.917057903043,
+              8562.793427230075,
+              9058.652582159706,
+              9006.683881064153,
+              8786.971830985889,
+              9124.478090766794,
+              8771.94209702663,
+              9928.990610328561,
+              9512.25899843503,
+              9491.556338028107,
+              12550.892801252114,
+              32995.43583724573
+            ]
+          }
+        ],
+        "checksum": 1237792
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 3486,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 1918,
+            "samples": [
+              5971.780500521382,
+              6765.59801876955,
+              5900.134515119922,
+              6403.219499478637,
+              5841.697080291955,
+              6339.481230448392,
+              6575.925443169958,
+              6598.583420229388,
+              6173.096976016672,
+              6291.775286757049,
+              6239.203336809175,
+              6341.805526590207
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 99,
+            "samples": [
+              101702.02020201992,
+              100610.68686868704,
+              105268.51515151572,
+              110204.96969696996,
+              102572.39393939296,
+              95217.59595959638,
+              95966.32323232347,
+              93992.84848484858,
+              93707.07070707114,
+              94000.0000000004,
+              95609.01010100987,
+              96499.57575757553
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 750,
+            "samples": [
+              15605.44533333344,
+              16071.610666666704,
+              13887.945333333239,
+              14035.500000000107,
+              14103.278666666634,
+              13999.666666666599,
+              13683.499999999944,
+              13556.278666666609,
+              13952.722666666736,
+              13650.05599999995,
+              13759.499999999814,
+              13456.944000000174
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1050,
+            "samples": [
+              9319.95999999994,
+              9305.198095238276,
+              9040.952380952538,
+              8793.49238095247,
+              8652.896190476116,
+              8589.562857142872,
+              8683.412380952352,
+              8882.420952380968,
+              9516.230476190556,
+              8409.800952380941,
+              9162.182857142701,
+              9162.857142857018
+            ]
+          }
+        ],
+        "checksum": 1972350
+      },
+      "vpm": {
+        "pid": 3487,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 1918,
+            "samples": [
+              3891.2059436913482,
+              3795.337851929096,
+              3523.244525547436,
+              4101.885818560995,
+              4011.383211678824,
+              3688.7596454640247,
+              3792.405109489034,
+              3554.0062565172234,
+              3961.548488008346,
+              3839.9374348279507,
+              3978.7977059436816,
+              3909.3889468195916
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 99,
+            "samples": [
+              53699.49494949463,
+              59899.82828282853,
+              52942.75757575755,
+              62000.41414141401,
+              49206.23232323184,
+              55170.04040403994,
+              49695.70707070755,
+              56207.919191918874,
+              56010.93939393916,
+              56811.030303029984,
+              55962.12121212136,
+              60127.525252525375
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 750,
+            "samples": [
+              7766.389333333336,
+              7512.945333333391,
+              7476.555999999921,
+              8060.554666666576,
+              7353.110666666605,
+              7476.055999999971,
+              7000.44399999994,
+              7659.110666666645,
+              7252.610666666594,
+              7527.722666666705,
+              8045.500000000024,
+              7211.66666666674
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1050,
+            "samples": [
+              8773.413333333338,
+              8415.396190476129,
+              8553.055238095287,
+              8255.476190476138,
+              8940.396190476218,
+              8238.690476190684,
+              8474.047619047702,
+              8786.46857142853,
+              8603.452380952409,
+              11370.43619047615,
+              8314.047619047587,
+              10814.841904761817
+            ]
+          }
+        ],
+        "checksum": 2118048
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 3488,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 2952,
+            "samples": [
+              3993.5213414634113,
+              3765.4698509485197,
+              3850.3272357723645,
+              3995.9634146341486,
+              3930.3014905148952,
+              3805.866192411923,
+              3801.476626016269,
+              4082.147696476965,
+              3818.272696476969,
+              3930.4285230352266,
+              4042.3160569105607,
+              3945.8841463414697
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 176,
+            "samples": [
+              54472.539772726755,
+              53857.95454545413,
+              54755.210227272946,
+              62312.02840909136,
+              57026.27840909068,
+              61890.86363636355,
+              58682.056818181714,
+              56833.5681818181,
+              58410.98863636386,
+              56706.67613636353,
+              55541.664772726894,
+              60425.426136363436
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 1274,
+            "samples": [
+              7788.036891679761,
+              7876.799058084754,
+              7590.561224489735,
+              7908.948194662498,
+              8109.824960753514,
+              7569.760596546384,
+              7989.403453689156,
+              7641.7448979592,
+              8240.678963893208,
+              7908.620879120831,
+              8033.392464678205,
+              8130.624803767687
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1101,
+            "samples": [
+              7783.9464123525795,
+              8263.358764759365,
+              8212.83651226167,
+              8304.003633060724,
+              8603.428701180796,
+              8092.0000000000455,
+              8592.643051771036,
+              8361.792007265993,
+              8241.220708446852,
+              8298.819255222474,
+              8192.174386921093,
+              7933.7729336967695
+            ]
+          }
+        ],
+        "checksum": 2599712
+      },
+      "upstream": {
+        "pid": 3503,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 2952,
+            "samples": [
+              5885.995596205955,
+              6117.928523035221,
+              5689.010162601638,
+              5674.316734417346,
+              6006.478658536592,
+              5813.911246612466,
+              5660.837398373993,
+              5835.478997289956,
+              5980.5782520325265,
+              6057.5033875338795,
+              5737.607046070475,
+              5936.695460704608
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 176,
+            "samples": [
+              101709.98863636331,
+              101460.46022727262,
+              100871.92613636376,
+              101679.92613636366,
+              101908.14204545457,
+              103446.25568181826,
+              104309.42045454569,
+              112594.69886363666,
+              109141.33522727292,
+              101795.45454545484,
+              92752.84090909059,
+              96651.74999999948
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 1274,
+            "samples": [
+              11990.05729984305,
+              11834.608320251224,
+              12060.374411302886,
+              12175.072213500674,
+              12105.997645211939,
+              11677.36106750397,
+              11778.420722135117,
+              12265.502354787912,
+              13172.946624803762,
+              11396.585557299886,
+              11734.333594976415,
+              11648.645996860278
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1101,
+            "samples": [
+              8920.488646684735,
+              9276.566757493249,
+              9148.31244323348,
+              8658.6058128973,
+              9148.274296094405,
+              8938.162579473197,
+              8827.543142597708,
+              8943.838328791815,
+              9034.627611262411,
+              8856.683923705737,
+              8856.948228882698,
+              9265.592188919158
+            ]
+          }
+        ],
+        "checksum": 1239200
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 3510,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 1433,
+            "samples": [
+              6405.53035589672,
+              6649.075366364283,
+              7296.057222609915,
+              6388.782274947681,
+              6082.025122121443,
+              6245.289602233078,
+              6356.478018143757,
+              5840.572923935778,
+              5934.083042568029,
+              6259.275645498947,
+              5881.251919050915,
+              5827.22749476622
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 63,
+            "samples": [
+              103099.20634920723,
+              98457.00000000076,
+              103980.15873015863,
+              97799.6031746035,
+              104604.50793650869,
+              102756.60317460466,
+              94440.4761904761,
+              104828.04761904699,
+              96374.33333333205,
+              113809.52380952497,
+              92553.57142857129,
+              99001.984126984
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 803,
+            "samples": [
+              15041.977584059783,
+              18581.518057285088,
+              16852.06475716061,
+              12575.912826899192,
+              12717.72478206732,
+              12485.52303860528,
+              12605.438356164372,
+              13148.349937733381,
+              12863.013698630077,
+              12920.9215442092,
+              12880.499377334956,
+              12293.638854296423
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1141,
+            "samples": [
+              8687.298860648722,
+              8806.237510955189,
+              9464.57756354085,
+              8985.904469763387,
+              8942.850131463647,
+              8766.505696757195,
+              9249.744084136693,
+              9488.021910604622,
+              8811.751095530251,
+              9435.984224364644,
+              9224.182296231318,
+              9127.081507449595
+            ]
+          }
+        ],
+        "checksum": 1954404
+      },
+      "vpm": {
+        "pid": 3511,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 1433,
+            "samples": [
+              5796.987438939292,
+              6135.583391486396,
+              5916.550593161205,
+              6780.414515003501,
+              6216.183531053755,
+              6437.252616887646,
+              6151.226796929516,
+              6209.205163991614,
+              6405.820655966523,
+              6021.196789951156,
+              5928.064898813668,
+              5462.752965806001
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 63,
+            "samples": [
+              109523.15873016002,
+              101998.01587301618,
+              117418.65079364917,
+              100212.95238095176,
+              104903.42857142893,
+              97943.12698412767,
+              105208.3333333344,
+              97197.7619047623,
+              132451.06349206384,
+              114148.14285714264,
+              137789.68253968237,
+              98119.04761904807
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 803,
+            "samples": [
+              16726.02739726032,
+              14655.354919053507,
+              12713.159402241583,
+              11762.608966376107,
+              11888.542963885335,
+              12110.108343711105,
+              12013.282689912803,
+              12249.273972602656,
+              11755.707347447102,
+              12196.190535491913,
+              12784.765877957654,
+              11955.012453300122
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1141,
+            "samples": [
+              9286.079754601225,
+              9030.638036809787,
+              9232.800175284843,
+              8972.355828220912,
+              8773.736196319061,
+              9517.309377738802,
+              9020.66958808066,
+              8818.90885188449,
+              8578.330411919356,
+              8950.11744084137,
+              8636.137598597828,
+              8531.332164767724
+            ]
+          }
+        ],
+        "checksum": 1829045
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 3512,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 1437,
+            "samples": [
+              6378.276270006977,
+              6483.9366736256125,
+              6399.501043841327,
+              6500.7543493389085,
+              6341.82950591509,
+              6209.203201113418,
+              6151.821155184417,
+              6293.87056367435,
+              5863.691718858742,
+              6125.840640222662,
+              5969.11969380651,
+              6772.500347947104
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 41,
+            "samples": [
+              149623.97560975383,
+              131680.90243902398,
+              109450.1951219527,
+              98549.78048780671,
+              106135.1707317072,
+              103808.95121951231,
+              86839.43902439096,
+              107939.0243902453,
+              100480.70731707179,
+              101518.29268292614,
+              93767.2682926837,
+              109270.34146341545
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 730,
+            "samples": [
+              14391.89452054793,
+              16353.19726027391,
+              14084.189041095793,
+              13836.243835616444,
+              14242.523287671309,
+              13634.8178082191,
+              14201.31369863007,
+              13819.178082191733,
+              13561.815068493153,
+              14182.93424657527,
+              15179.565753424706,
+              14129.109589041116
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1131,
+            "samples": [
+              9257.037135278484,
+              8669.023872679043,
+              9191.865605658673,
+              8650.862068965633,
+              9403.072502210402,
+              9211.464190981369,
+              9036.803713527786,
+              8931.476569407592,
+              8809.35013262603,
+              8869.252873563195,
+              9540.340406719708,
+              8688.844385499473
+            ]
+          }
+        ],
+        "checksum": 1608062
+      },
+      "upstream": {
+        "pid": 3513,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "SSR form with 0 controlled inputs",
+            "iterations": 1437,
+            "samples": [
+              6376.537230340987,
+              5859.023660403625,
+              6292.9714683368165,
+              5981.704244954786,
+              5795.377870563651,
+              5575.098816979855,
+              5499.535838552571,
+              5861.053583855239,
+              5673.886569241503,
+              5607.515657620037,
+              6126.855254001376,
+              5862.328462073774
+            ]
+          },
+          {
+            "case": "SSR form with 20 controlled inputs",
+            "iterations": 41,
+            "samples": [
+              101085.36585365838,
+              118976.63414633991,
+              107586.39024390405,
+              95985.78048780559,
+              102173.78048780464,
+              103067.07317073044,
+              95164.63414634128,
+              103971.56097560971,
+              106299.80487804892,
+              93358.75609756164,
+              99388.21951219303,
+              100627.04878048574
+            ]
+          },
+          {
+            "case": "create, register, update and read twenty fields",
+            "iterations": 730,
+            "samples": [
+              15215.867123287797,
+              18835.902739726083,
+              17729.908219178014,
+              15253.595890410981,
+              13111.757534246619,
+              12150.684931506854,
+              12501.198630137076,
+              11997.260273972657,
+              12558.675342465873,
+              12076.939726027489,
+              11691.438356164426,
+              12511.30136986298
+            ]
+          },
+          {
+            "case": "validate and submit twenty fields through Zod",
+            "iterations": 1131,
+            "samples": [
+              45439.58178603004,
+              18927.793103448268,
+              24189.139699381118,
+              32256.26259946954,
+              26154.804597701277,
+              39781.75596816994,
+              40807.43412908946,
+              22686.965517241366,
+              15791.740937223689,
+              12328.691423518929,
+              18704.57559681693,
+              23829.060123784322
+            ]
+          }
+        ],
+        "checksum": 1542861
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "SSR form with 0 controlled inputs",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 6482.14777105117,
+          "vpmNs": 3918.145844799118,
+          "changePct": -39.55482066766064
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 6183.801297371119,
+          "vpmNs": 4168.110447251629,
+          "changePct": -32.59630691847114
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 6315.628258602721,
+          "vpmNs": 3865.5716892596492,
+          "changePct": -38.793552581340904
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5860.737296747955,
+          "vpmNs": 3930.365006775061,
+          "changePct": -32.93736252338135
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 6252.282623866013,
+          "vpmNs": 6143.405094207956,
+          "changePct": -1.7414044791010164
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5860.038622129432,
+          "vpmNs": 6317.850034794719,
+          "changePct": 7.8124299545815346
+        }
+      ]
+    },
+    {
+      "case": "SSR form with 20 controlled inputs",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 108502.12711864349,
+          "vpmNs": 55249.29661016977,
+          "changePct": -49.07998757503022
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 112706.09821428562,
+          "vpmNs": 63121.404761904814,
+          "changePct": -43.994685503269324
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 96232.9494949495,
+          "vpmNs": 55986.53030303026,
+          "changePct": -41.82187016312064
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 101752.72159090907,
+          "vpmNs": 56929.923295454384,
+          "changePct": -44.0507119560518
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 100879.29365079434,
+          "vpmNs": 105055.88095238167,
+          "changePct": 4.1401829359006825
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 101629.57317073151,
+          "vpmNs": 104972.06097560975,
+          "changePct": 3.2888928887490954
+        }
+      ]
+    },
+    {
+      "case": "create, register, update and read twenty fields",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 13433.760168302986,
+          "vpmNs": 7494.331697054695,
+          "changePct": -44.212702898049336
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 13867.651298119952,
+          "vpmNs": 8628.413160250691,
+          "changePct": -37.78028467285984
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 13920.333999999988,
+          "vpmNs": 7494.750666666656,
+          "changePct": -46.15969224110095
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 11912.332810047137,
+          "vpmNs": 7908.784536891664,
+          "changePct": -33.60843200904182
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 12871.756537982517,
+          "vpmNs": 12153.149439601508,
+          "changePct": -5.582820777106168
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 12534.988356164427,
+          "vpmNs": 14156.021917808193,
+          "changePct": 12.93207074138667
+        }
+      ]
+    },
+    {
+      "case": "validate and submit twenty fields through Zod",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 9082.62024714828,
+          "vpmNs": 8607.790874524744,
+          "changePct": -5.227889746602809
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 9308.01721439745,
+          "vpmNs": 8960.469092331772,
+          "changePct": -3.7338577492970093
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 8961.686666666752,
+          "vpmNs": 8578.253809523849,
+          "changePct": -4.2785791492698895
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 8941.000454132507,
+          "vpmNs": 8252.289736603108,
+          "changePct": -7.702837295026399
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 9056.492988606491,
+          "vpmNs": 8961.236634531142,
+          "changePct": -1.0518017757556453
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 24009.09991158272,
+          "vpmNs": 8984.14014146769,
+          "changePct": -62.580270919971206
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "SSR form with 0 controlled inputs",
+      "upstream_ns": 6250,
+      "vpm_ns": 3924,
+      "change_pct": -35.9,
+      "upstream_first_pct": -39.2,
+      "vpm_first_pct": -32.8,
+      "process_range_pct": "-39.6, -32.6, -38.8, -32.9",
+      "control_max_abs_pct": 7.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "SSR form with 20 controlled inputs",
+      "upstream_ns": 105127,
+      "vpm_ns": 56458,
+      "change_pct": -44,
+      "upstream_first_pct": -45.5,
+      "vpm_first_pct": -44,
+      "process_range_pct": "-49.1, -44.0, -41.8, -44.1",
+      "control_max_abs_pct": 4.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "create, register, update and read twenty fields",
+      "upstream_ns": 13651,
+      "vpm_ns": 7702,
+      "change_pct": -41,
+      "upstream_first_pct": -45.2,
+      "vpm_first_pct": -35.7,
+      "process_range_pct": "-44.2, -37.8, -46.2, -33.6",
+      "control_max_abs_pct": 12.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "validate and submit twenty fields through Zod",
+      "upstream_ns": 9022,
+      "vpm_ns": 8593,
+      "change_pct": -4.8,
+      "upstream_first_pct": -4.8,
+      "vpm_first_pct": -5.7,
+      "process_range_pct": "-5.2, -3.7, -4.3, -7.7",
+      "control_max_abs_pct": 62.6,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

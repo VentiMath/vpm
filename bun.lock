@@ -1226,6 +1226,13 @@
       "name": "vreact-fast-compare",
       "version": "3.2.2",
     },
+    "packages/vreact-hook-form": {
+      "name": "vreact-hook-form",
+      "version": "7.92.0",
+      "peerDependencies": {
+        "react": "^19.3.0",
+      },
+    },
     "packages/vreact-is": {
       "name": "vreact-is",
       "version": "0.1.0",
@@ -2047,6 +2054,8 @@
     "vreact-autosuggest": ["vreact-autosuggest@workspace:packages/vreact-autosuggest"],
 
     "vreact-fast-compare": ["vreact-fast-compare@workspace:packages/vreact-fast-compare"],
+
+    "vreact-hook-form": ["vreact-hook-form@workspace:packages/vreact-hook-form"],
 
     "vreact-is": ["vreact-is@workspace:packages/vreact-is"],
 

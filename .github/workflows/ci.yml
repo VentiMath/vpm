@@ -56,6 +56,14 @@ jobs:
           node scripts/motion-dom-conformance/types.cjs
           node scripts/motion-dom-conformance/browser.cjs
           node scripts/motion-dom-conformance/archives.cjs
+      - run: npm --prefix scripts/hook-form-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Hook Form caller behavior, native inputs and exact archives
+        run: |
+          node --test packages/vreact-hook-form/test/store.test.cjs
+          node scripts/hook-form-conformance/run.cjs
+          node scripts/hook-form-conformance/types.cjs
+          node scripts/hook-form-conformance/browser.cjs
+          node scripts/hook-form-conformance/archives.cjs
       - run: npm --prefix scripts/moment-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Moment countdown dates, durations, DST and exact archives
         run: |
@@ -735,6 +743,11 @@ jobs:
           bun scripts/motion-dom-conformance/reads.cjs
           bun scripts/motion-dom-conformance/transitions.cjs
           bun scripts/motion-dom-conformance/effects.cjs
+      - run: npm --prefix scripts/hook-form-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Hook Form caller behavior on Bun
+        run: |
+          bun test packages/vreact-hook-form/test/store.test.cjs
+          bun scripts/hook-form-conformance/run.cjs
       - run: npm --prefix scripts/moment-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Moment countdown dates, durations and DST on Bun
         run: |
