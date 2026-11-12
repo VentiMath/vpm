@@ -1,0 +1,21 @@
+{
+  "upstream": { "name": "zod", "version": "4.6.7", "repository": "https://github.com/colinhacks/zod", "checked": "2026-11-12" },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "VentiMath form and recursive presentation schema language: strings, finite numbers, booleans, objects, arrays, enums/literals, unions, string-key records, lazy recursion, optional/nullable/default values, refinements and transforms. Not the entire Zod API or its internal schema protocol."
+  },
+  "changes": [
+    "Independent interpreter written from public APIs and black-box comparisons; no upstream implementation copied and no runtime dependencies.",
+    "No dynamic code generation. Cyclic and excessively deep typed input fails as validation errors; inherited properties cannot satisfy required fields.",
+    "Own data properties preserve prototype-looking record keys without prototype mutation. Schema shapes and regex state are isolated from caller mutation.",
+    "Retains legacy string-key record shorthand and required_error messages used by the app; validation and optional/default semantics otherwise target Zod 4."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "upstreamVersion": "3.24.3",
+    "paths": ["src/components/WARML/WARMLInterestForm.tsx", "src/apps/homegrown/components/calculator/presentationSchema.ts"],
+    "scope": "21 source files, 34 extracted schemas: forms and presentation documents. Private application source is read only and is not shipped. Release and application adoption remain separate."
+  },
+  "references": ["https://zod.dev/api", "https://zod.dev/basics", "https://zod.dev/error-customization"]
+}

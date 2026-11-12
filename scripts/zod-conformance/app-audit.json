@@ -1,0 +1,114 @@
+{
+  "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+  "files": 21,
+  "schemas": 34,
+  "comparisons": 4318,
+  "legacyAcceptanceOrOutputDifferences": 15,
+  "records": [
+    {
+      "path": "src/app/(control-panel)/apps/ai-image-generator/components/forms/generator-form/AiImageGenForm.tsx",
+      "sha256": "e2e53c331c1b2e35cdcb1d71e3e95c80a565accf506b90d0ef63b152dd71a6c3",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/calendar/components/dialogs/event/EventDialog.tsx",
+      "sha256": "79dbe3de1209d78a3d8f21ffa5bc71b8dddae2e779bb2c6479614f664c879ae5",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/calendar/components/dialogs/labels/LabelItemForm.tsx",
+      "sha256": "de692e72dca9c6689fbe0ad11b0d273150cad47184105d004586e9d739ecee6d",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/calendar/components/dialogs/labels/NewLabelForm.tsx",
+      "sha256": "34ddda0c26f74512d686a5ac9c1a595165f19aa788c1b23d1ae850e034264b5e",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/help-center/components/views/support/HelpCenterSupportView.tsx",
+      "sha256": "a75349d46528aa791c24ab8fcd9c4264ed106f0b299ad35b7ac09af6a014612a",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/notes/components/dialogs/labels/LabelItemForm.tsx",
+      "sha256": "f8f2d34ef4bc40d6f2866002488c8b7aea560d12e91f5f9aa73226ebb18facd4",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/notes/components/dialogs/labels/NewLabelForm.tsx",
+      "sha256": "021e0ec9d61801cd4c57f51ed53cd4e7c8e04ab1347fbc81f70f2b366cf5b216",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/notes/components/forms/note-form/NoteForm.tsx",
+      "sha256": "bff538acc7eead7dd7ab0395c6987f05b2a5bc9ee73b47bedef83d4112a0c0b3",
+      "schemas": 2
+    },
+    {
+      "path": "src/app/(control-panel)/apps/notes/components/forms/note-form/tasks/NoteFormAddListItem.tsx",
+      "sha256": "8686e91a388b344c2bba9316c504afd58bd5f87aed0c8df6677a3632ce15467d",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/settings/components/views/AccountTabView.tsx",
+      "sha256": "2697c2fa2ae1ee75eb28d53ca46c1621c05492f79acff4882653da8209087117",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/apps/settings/components/views/SecurityTabView.tsx",
+      "sha256": "9e1ce49b6db442fb28c7c48023aa3d91c5b25c8ff58142650a71f88af95aafe1",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/dashboards/crypto/components/ui/widgets/BuySellForm.tsx",
+      "sha256": "7c6418a2305e6daa9e16984b5e12281a70e4143ca0d6d6248154392955284ad1",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/pages/authentication/forgot-password/components/forms/ForgotPasswordPageForm.tsx",
+      "sha256": "0235ce181f7061161737d758298fb4913fc0221b26972c3da2289463dd56e3b9",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/pages/authentication/reset-password/components/forms/ResetPasswordPageForm.tsx",
+      "sha256": "927c89d50e90d43c22870a64738008a2b82fec130719dff557c6e5f6043c8798",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/pages/authentication/sign-in/components/forms/SignInPageForm.tsx",
+      "sha256": "01c5b3319c920e24b883bb5441113c64e0b2a7c952ec7011a0829697fd02238b",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/pages/authentication/sign-up/components/forms/SignUpPageForm.tsx",
+      "sha256": "f2bb0e0c92c4b375c617b7205038cd505e6331e6336a583b7da252fbff888222",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/pages/authentication/unlock-session/components/forms/UnlockSessionPageForm.tsx",
+      "sha256": "5be53c4fe22970cf5c4328e56b1a28823b550d1b3ad13d6f1afecee776e7b3dc",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(control-panel)/pages/coming-soon/components/forms/ComingSoonPageForm.tsx",
+      "sha256": "ca1a6f111e3bbcb09aa26c7b6aa979939e74642203538420029308a378878202",
+      "schemas": 1
+    },
+    {
+      "path": "src/app/(public)/documentation/components/ui/third-party-components/react-hook-form-examples/SimpleFormExample.tsx",
+      "sha256": "e65a2f0e744e2efb3676edf1a119285f821dcbee0d8a60e60a2c902fa9f158ab",
+      "schemas": 1
+    },
+    {
+      "path": "src/apps/homegrown/components/calculator/presentationSchema.ts",
+      "sha256": "928511cd99e7cbbe71da8218defea90d953524cbb8b2cc4b75fb5da62d537883",
+      "schemas": 12
+    },
+    {
+      "path": "src/components/WARML/WARMLInterestForm.tsx",
+      "sha256": "5a0871d689ae8b678bf554d6a64ee7ac2ee85a036a38ed000017c0621f2ac194",
+      "schemas": 2
+    }
+  ]
+}

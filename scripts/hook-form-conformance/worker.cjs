@@ -37,7 +37,7 @@ const React = require("./node_modules/react"),
 const { zodResolver } = require(
     process.env.VRESOLVERS_ZOD || "./node_modules/@hookform/resolvers/zod",
   ),
-  { z } = require("./node_modules/zod");
+  { z } = require(process.env.VZOD_ENTRY || "./node_modules/zod");
 require("./scenario.cjs")
   .scenario(React, createRoot, api, zodResolver, z)
   .then(async (result) => {

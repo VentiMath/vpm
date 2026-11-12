@@ -64,6 +64,15 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/zod-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Zod schema language, form stack and installed consumers
+        run: |
+          node --test packages/vzod/test/schema.test.cjs
+          node scripts/zod-conformance/run.cjs
+          node scripts/zod-conformance/forms.cjs
+          node scripts/zod-conformance/types.cjs
+          VZOD_ENTRY="$PWD/packages/vzod/index.cjs" VRESOLVERS_ZOD="$PWD/packages/vhookform-resolvers/zod.cjs" node scripts/hook-form-conformance/browser.cjs
+          node scripts/zod-conformance/archives.cjs
       - name: Zod adapter behavior, form integration and exact archives
         run: |
           node --test packages/vhookform-resolvers/test/resolver.test.cjs
@@ -764,6 +773,12 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/zod-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Zod schema language and form stack on Bun
+        run: |
+          bun test packages/vzod/test/schema.test.cjs
+          bun scripts/zod-conformance/run.cjs
+          bun scripts/zod-conformance/forms.cjs
       - name: Zod adapter behavior and form integration on Bun
         run: |
           bun test packages/vhookform-resolvers/test/resolver.test.cjs

@@ -1,0 +1,44 @@
+{
+  "name": "vzod",
+  "version": "4.6.7",
+  "description": "Independent schema validation for VentiMath forms and recursive presentation documents",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.mts",
+    "*.cts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vzod"
+  }
+}

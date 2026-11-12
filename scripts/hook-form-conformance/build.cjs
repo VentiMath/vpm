@@ -15,6 +15,10 @@ const path = require("node:path");
         variant === "vpm" && process.env.VRESOLVERS_ZOD
           ? process.env.VRESOLVERS_ZOD
           : require.resolve("./node_modules/@hookform/resolvers/zod"),
+      zod:
+        variant === "vpm" && process.env.VZOD_ENTRY
+          ? process.env.VZOD_ENTRY
+          : require.resolve("./node_modules/zod"),
       react: require.resolve("./node_modules/react"),
       "react-dom/client": require.resolve("./node_modules/react-dom/client"),
       "react-dom": require.resolve("./node_modules/react-dom"),
@@ -36,7 +40,7 @@ const path = require("node:path");
             build.onResolve(
               {
                 filter:
-                  /^(@hookform\/resolvers\/zod|form-api|react|react-dom(?:\/client)?)$/,
+                  /^(@hookform\/resolvers\/zod|zod|form-api|react|react-dom(?:\/client)?)$/,
               },
               (args) => ({ path: aliases[args.path] }),
             );

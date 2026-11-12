@@ -1,0 +1,1593 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-12T21:00:13.320Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/zod-conformance/node_modules/zod": "4c7cc4108f22ee51767f1a833d142c9e5994599a6a16616e4b9a87c161a51cf4",
+    "../../scripts/zod-conformance/package-lock.json": "18146f5717115a5a8949fae2df82df58dee0c4cb9455a8fe3a98159a0ca6de15",
+    "PROVENANCE.json": "55f7cd55ec9c647ad4f226d8d891825a378e89d3537211a4756a2a59198b373b",
+    "bench/run.cjs": "1df2e38eea8a966921e8ec784da773903465ad2786a675350b9b2ccf384f38b1",
+    "index.cjs": "880ab51c2acf1e5b6603491fc1c0ad8ec26c092277cb860c46756b473e09d9cc",
+    "package.json": "034c694c36996a374312bdfd1f48afc863e8018ba71947cb7bdfc7599cba4f0e"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 36042,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 246,
+            "samples": [
+              36962.9065040649,
+              32196.817073170674,
+              42778.96341463431,
+              31875.508130081183,
+              35480.85772357729,
+              35251.0162601625,
+              37079.776422764204,
+              34669.88617886182,
+              35263.54878048771,
+              38386.012195121846,
+              32695.288617886246,
+              38133.975609756184
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 18781,
+            "samples": [
+              574.6898461210768,
+              546.9157659336548,
+              547.0821574996028,
+              573.1767743996568,
+              561.8000638943595,
+              581.9711410468,
+              584.4514669080456,
+              564.318087428781,
+              551.6922954049337,
+              537.4869282785819,
+              555.2619668814207,
+              586.6345242532378
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 7803,
+            "samples": [
+              1622.2178649237392,
+              1520.061771113674,
+              1414.076765346662,
+              1502.199923106501,
+              1577.5503011662306,
+              1682.0934256055316,
+              2682.9210560041042,
+              2849.972318339101,
+              1493.5174932718157,
+              1445.7632961681416,
+              1369.846981930035,
+              1380.8791490452506
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 2753,
+            "samples": [
+              4859.350526698147,
+              5179.228841264079,
+              5117.629131856165,
+              4947.103160188882,
+              5087.4649473302015,
+              5327.612422811483,
+              4954.367962223019,
+              4811.0243370867565,
+              5271.219033781367,
+              4834.029785688343,
+              4927.503087540916,
+              4346.954958227394
+            ]
+          }
+        ],
+        "checksum": 41408
+      },
+      "vpm": {
+        "pid": 36054,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 246,
+            "samples": [
+              4178.861788617852,
+              4146.678861788617,
+              4773.37398373984,
+              6118.731707317,
+              4528.621951219571,
+              4588.414634146327,
+              6522.865853658531,
+              4154.979674796817,
+              4329.7764227642065,
+              5501.5243902439015,
+              5296.406504065083,
+              4160.906504065049
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 18781,
+            "samples": [
+              994.6799424950748,
+              1003.3344869815224,
+              1011.7162025451275,
+              993.8102337468703,
+              1001.3754858633747,
+              1017.5997550716144,
+              993.4308609765156,
+              991.2855545498126,
+              978.4423087162558,
+              1016.834407113573,
+              1026.7868590596884,
+              989.4951813002502
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 7803,
+            "samples": [
+              1625.3844675124908,
+              1597.1154684095923,
+              1563.442393951053,
+              1613.4926310393503,
+              1609.6639753940779,
+              1681.297706010517,
+              1602.5619633474248,
+              1651.5390234525241,
+              1632.1180315263339,
+              1638.8355760604863,
+              1586.627963603739,
+              1653.9686018198186
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 2753,
+            "samples": [
+              12766.45150744641,
+              12673.265528514348,
+              22520.735197965907,
+              15494.203414456946,
+              12627.376316745393,
+              13411.868870323275,
+              13115.88848528876,
+              12792.362876861587,
+              12761.66908826735,
+              12293.952052306602,
+              12885.064656738099,
+              12132.8398111151
+            ]
+          }
+        ],
+        "checksum": 13504
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 36055,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 2084,
+            "samples": [
+              4895.633397312867,
+              5011.116602687135,
+              4641.774472168911,
+              4895.233685220736,
+              4874.240403071017,
+              4842.170345489456,
+              4816.458733205358,
+              4987.964011516325,
+              4679.922264875257,
+              4866.9625719769565,
+              5199.97600767754,
+              4897.212571976984
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 9999,
+            "samples": [
+              1050.7925792579294,
+              997.5914591459151,
+              1014.1264126412678,
+              1017.555955595557,
+              1029.3737373737436,
+              997.2747274727516,
+              994.0994099409882,
+              1075.5992599259903,
+              1024.9108910891152,
+              1016.6100610060986,
+              1069.0569056905758,
+              1016.5183518351855
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 4953,
+            "samples": [
+              1768.8437310720744,
+              1693.4264082374202,
+              1770.8711891782725,
+              1778.9051080153477,
+              1730.1465778316267,
+              1825.7284474056075,
+              1700.7621643448322,
+              1775.2541893801676,
+              1758.1683827982838,
+              1789.4877851807007,
+              1880.2493438320134,
+              1798.548152634755
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 784,
+            "samples": [
+              12975.12755102057,
+              12915.816326530581,
+              11990.22193877571,
+              12368.941326530536,
+              13021.843112245007,
+              12465.136479592069,
+              11846.779336734675,
+              12608.79081632645,
+              11884.088010204125,
+              13187.18112244884,
+              13695.844387754909,
+              14479.432397958975
+            ]
+          }
+        ],
+        "checksum": 45824
+      },
+      "upstream": {
+        "pid": 36057,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 2084,
+            "samples": [
+              37264.355566218794,
+              37013.995681381944,
+              37357.56573896352,
+              37191.29894433781,
+              36794.32581573899,
+              36204.13435700578,
+              37671.50527831096,
+              41211.77207293674,
+              36426.80374280224,
+              36679.14251439541,
+              36730.90642994245,
+              36643.27399232248
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 9999,
+            "samples": [
+              576.778477847783,
+              578.557855785564,
+              591.37163716372,
+              644.2853285328581,
+              710.1752175217529,
+              642.8142814281438,
+              655.0072007200669,
+              602.3477347734886,
+              599.639063906396,
+              594.2094209420848,
+              609.7234723472251,
+              585.425142514249
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 4953,
+            "samples": [
+              1594.1265899455127,
+              1537.3678578639287,
+              1584.0064607308534,
+              1527.0625883303023,
+              1467.6289117706065,
+              1403.181708055685,
+              1581.5919644659768,
+              1554.7058348475266,
+              1437.9164142943814,
+              1330.3805774278253,
+              1445.3276801938084,
+              1439.363416111458
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 784,
+            "samples": [
+              5412.255102040647,
+              4808.461734693519,
+              4536.830357142556,
+              4741.283163265187,
+              5537.627551020403,
+              4783.216836734849,
+              4724.5956632654115,
+              4606.610969387605,
+              5506.218112244875,
+              4874.894132653332,
+              4698.128826530546,
+              4574.563775510485
+            ]
+          }
+        ],
+        "checksum": 9536
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 36062,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 257,
+            "samples": [
+              36089.33463035018,
+              39804.961089494136,
+              32935.31128404666,
+              37892.02334630348,
+              35726.980544747224,
+              40405.48249027236,
+              37674.28793774326,
+              36577.49805447472,
+              36919.747081712136,
+              37639.10505836574,
+              33981.354085603074,
+              35451.68482490275
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 15977,
+            "samples": [
+              592.4010765475364,
+              572.6017400012521,
+              599.7241033986323,
+              637.6040558302567,
+              578.0914439506805,
+              583.8966013644573,
+              598.3366714652302,
+              558.1408900294173,
+              576.1302497339931,
+              554.6697753020011,
+              544.8587970207224,
+              574.4298679351596
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 7193,
+            "samples": [
+              15458.987904907568,
+              5542.356040595042,
+              5414.465452523282,
+              4169.8005004865545,
+              5895.413318504102,
+              5288.735576254709,
+              5851.591825385794,
+              3931.640761851789,
+              5609.238148199643,
+              4705.326845544264,
+              3829.487001251209,
+              3165.676073960797
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 1817,
+            "samples": [
+              5724.110071546448,
+              5729.38470005505,
+              5770.661529994536,
+              6085.534397358339,
+              5570.216290588882,
+              4898.894881672969,
+              6725.921849201984,
+              6191.868464501871,
+              5438.680792515116,
+              5198.610346725309,
+              5208.539900935503,
+              5176.091359383642
+            ]
+          }
+        ],
+        "checksum": 48768
+      },
+      "vpm": {
+        "pid": 36063,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 257,
+            "samples": [
+              4331.875486381328,
+              4376.295719844352,
+              6619.000000000044,
+              4375.972762645949,
+              4529.01945525295,
+              7116.571984435788,
+              4242.704280155621,
+              4245.782101167264,
+              4644.455252918277,
+              6271.40077821012,
+              4171.206225680945,
+              4147.2101167315095
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 15977,
+            "samples": [
+              1159.7661012705767,
+              1087.3625837140892,
+              1058.7172185015954,
+              1078.6938724416336,
+              1166.5284471427651,
+              1158.9994366902424,
+              1080.8296926832325,
+              1107.5061025223742,
+              1042.4933341678693,
+              1091.9551229892936,
+              1439.1599173812376,
+              1340.7632847217883
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 7193,
+            "samples": [
+              1870.9856805227264,
+              1869.9951341582089,
+              1828.1488947587866,
+              1861.4045599888661,
+              1850.2941748922572,
+              1826.6311691922706,
+              1689.0496315862579,
+              1662.287362713744,
+              1801.1434728208055,
+              1821.0296121228944,
+              2058.326289448067,
+              1667.83678576394
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 1817,
+            "samples": [
+              13545.08310401759,
+              12409.76389653281,
+              13001.971931755657,
+              13565.698954320358,
+              12676.366538249866,
+              13174.784810126579,
+              13053.040726472178,
+              12973.92680242157,
+              12847.436433681836,
+              12999.403962575667,
+              12418.684645019264,
+              12207.622454595412
+            ]
+          }
+        ],
+        "checksum": 11456
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 36093,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 2036,
+            "samples": [
+              5269.032416502954,
+              4690.05844793713,
+              4906.39292730845,
+              4773.678290766211,
+              4668.446954813353,
+              4898.944007858538,
+              4866.302554027491,
+              5148.53438113949,
+              4760.478388998044,
+              4858.403241650291,
+              4846.267190569753,
+              4993.082514734793
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 7820,
+            "samples": [
+              1132.054475703325,
+              1035.9494884910516,
+              1028.3621483375941,
+              1040.8354219948951,
+              1046.478005115086,
+              993.9843989769843,
+              1105.3602301790265,
+              1056.3352941176454,
+              1095.2897698209833,
+              1081.43657289002,
+              1040.0681585677742,
+              1060.0223785166322
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 5443,
+            "samples": [
+              1840.8735991181254,
+              1775.3690979239323,
+              1802.115928715773,
+              1725.1899687672083,
+              1759.546022414117,
+              1741.2886275950816,
+              1775.8818666176676,
+              1842.772000734892,
+              1874.058423663427,
+              1712.0231489987311,
+              1699.4457100863528,
+              1730.8928899503926
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 884,
+            "samples": [
+              13289.357466063224,
+              12865.573529411728,
+              13647.24773755656,
+              13733.550904977335,
+              12323.388009049751,
+              12566.270361991155,
+              13249.339366515924,
+              13148.37895927598,
+              12920.531674208116,
+              12731.900452488555,
+              12592.288461538308,
+              13749.812217194498
+            ]
+          }
+        ],
+        "checksum": 27712
+      },
+      "upstream": {
+        "pid": 36094,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 2036,
+            "samples": [
+              35110.040275049076,
+              35811.517681728925,
+              35114.54223968565,
+              36312.049607072695,
+              36536.01817288796,
+              35503.06974459721,
+              35308.59135559926,
+              36593.95481335956,
+              59840.72102161104,
+              36222.392927308494,
+              38822.46660117874,
+              35913.74017681727
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 7820,
+            "samples": [
+              565.4305626598556,
+              603.0423273657102,
+              610.7523017902777,
+              564.8657289002806,
+              544.7943734015263,
+              554.0707161125239,
+              582.2624040920788,
+              620.742838874691,
+              592.7696930946107,
+              616.8318414322241,
+              575.634015345263,
+              592.9879795396394
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 5443,
+            "samples": [
+              1882.509645416125,
+              1772.3757119235613,
+              1759.6683814073028,
+              1663.39022597831,
+              1767.10913099394,
+              1757.417784310115,
+              1919.5756016902708,
+              1630.6264927429916,
+              1706.8407128421463,
+              1779.7554657357962,
+              1585.5915855226822,
+              1643.777879845677
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 884,
+            "samples": [
+              10467.618778280292,
+              12709.794117646667,
+              8543.26923076944,
+              7830.647058823239,
+              7454.986425338937,
+              11772.907239819235,
+              6033.653846154114,
+              6157.476244343919,
+              6548.171945701245,
+              6388.339366515443,
+              5774.273755656391,
+              6644.843891402622
+            ]
+          }
+        ],
+        "checksum": 8832
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 36095,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 232,
+            "samples": [
+              33543.46120689655,
+              36594.28879310338,
+              36133.97844827574,
+              40482.21982758633,
+              37263.11206896547,
+              42321.30172413784,
+              34845.547413793014,
+              37066.27155172418,
+              35809.267241379304,
+              41941.98706896534,
+              33057.474137931,
+              40289.15086206896
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 18393,
+            "samples": [
+              530.1314630565994,
+              532.0230522481355,
+              544.4915456967361,
+              548.7028760941624,
+              551.674985048662,
+              551.3442614037976,
+              533.1330941118916,
+              543.8640787256014,
+              537.1382591203126,
+              535.4800195726607,
+              561.144185287884,
+              590.4058065568418
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 3006,
+            "samples": [
+              4051.4527611443464,
+              3159.472721224229,
+              1917.0825016633341,
+              1675.2052561543546,
+              1606.4537591483536,
+              1531.3539587491694,
+              1637.4194943446582,
+              1559.6167664670386,
+              1384.4530938124026,
+              1478.667664670629,
+              1442.947438456413,
+              1496.3682634730756
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 2790,
+            "samples": [
+              5883.72186379923,
+              5166.86057347673,
+              4736.559139784917,
+              4748.372043010808,
+              5372.550896057349,
+              4824.760931899612,
+              5019.175627240154,
+              5492.0996415770505,
+              5025.448028673821,
+              4756.914695340503,
+              5349.940143369135,
+              4943.57813620077
+            ]
+          }
+        ],
+        "checksum": 66624
+      },
+      "vpm": {
+        "pid": 36097,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 232,
+            "samples": [
+              37118.353448275855,
+              34943.42672413794,
+              37324.711206896565,
+              32898.34913793093,
+              35755.56896551732,
+              39057.46982758617,
+              34471.443965517385,
+              41789.508620689776,
+              32482.939655172453,
+              35570.40517241387,
+              39293.642241379355,
+              36446.12068965505
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 18393,
+            "samples": [
+              568.6629152394949,
+              554.7603979774917,
+              578.8229761322191,
+              613.9948893600854,
+              556.1740335997367,
+              529.5017126080544,
+              544.4689283966716,
+              531.2234002066018,
+              531.8078073180047,
+              528.1017234817555,
+              528.4007502854361,
+              544.7701843092528
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 3006,
+            "samples": [
+              1432.717897538283,
+              1663.4231536926318,
+              1432.1497005988263,
+              1340.6660013306655,
+              1335.9530938123544,
+              1425.4547571523833,
+              1390.5382568197126,
+              1276.3918829008494,
+              1444.1393878908937,
+              1302.4783765801778,
+              1663.3260146373893,
+              1392.007651363954
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 2790,
+            "samples": [
+              4497.177419354856,
+              4703.688530465907,
+              5162.948028673879,
+              4832.9749103943195,
+              4775.8365591397705,
+              4735.050537634399,
+              4580.839426523286,
+              4457.885304659499,
+              4772.491039426562,
+              4606.153046594994,
+              4625.238709677367,
+              4482.526881720398
+            ]
+          }
+        ],
+        "checksum": 9024
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 36098,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 287,
+            "samples": [
+              46845.383275261425,
+              43201.219512195144,
+              47689.60278745643,
+              40357.8675958187,
+              40342.33449477341,
+              35066.92682926832,
+              35693.81533101044,
+              37370.93728222996,
+              36612.36933797905,
+              42759.58188153307,
+              37985.191637630836,
+              38119.77351916382
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 14752,
+            "samples": [
+              590.9678687635543,
+              576.1478443600854,
+              590.2109544468512,
+              594.8176518438128,
+              583.1130694143161,
+              628.7819278741806,
+              658.4954582429556,
+              657.1622830802639,
+              611.2108866594339,
+              614.312228850323,
+              612.851952277658,
+              611.6345580260297
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 7494,
+            "samples": [
+              1542.0336269015113,
+              1487.6012810248099,
+              1524.38057112357,
+              1463.1427808913784,
+              1469.7145716573134,
+              1480.6457165732577,
+              1490.1754737123022,
+              1484.1650653856452,
+              1453.4294101948294,
+              1441.6088871096988,
+              1446.0178809714428,
+              1485.4773151854793
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 1906,
+            "samples": [
+              5122.114375655755,
+              5189.79538300105,
+              5127.360965372553,
+              5209.863588667399,
+              5190.275970619078,
+              5295.907660020894,
+              5380.486883525609,
+              5025.883525708298,
+              4665.857817418706,
+              4926.5477439663555,
+              5041.644805876181,
+              5431.837880377739
+            ]
+          }
+        ],
+        "checksum": 40640
+      },
+      "upstream": {
+        "pid": 36099,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "construct twenty-field form schema",
+            "iterations": 287,
+            "samples": [
+              37577.09059233451,
+              39491.8710801393,
+              36103.36933797914,
+              36444.10452961666,
+              34509.8710801394,
+              35532.66550522652,
+              40758.2752613241,
+              37730.25783972118,
+              35323.75261324047,
+              33744.62717770035,
+              37397.5052264809,
+              35261.18118466897
+            ]
+          },
+          {
+            "case": "valid twenty-field form",
+            "iterations": 14752,
+            "samples": [
+              599.6898725596541,
+              598.3539181128045,
+              616.2836225596517,
+              638.3513421908907,
+              671.6462174620341,
+              611.6656724511987,
+              686.0764642082494,
+              694.4680043383999,
+              613.7303416485847,
+              623.8108731019586,
+              628.9542434924061,
+              610.6431670281975
+            ]
+          },
+          {
+            "case": "invalid twenty-field form",
+            "iterations": 7494,
+            "samples": [
+              2199.670803309328,
+              2302.781158259935,
+              1791.850146784112,
+              1554.8049105951256,
+              1623.0040032025427,
+              1571.9187349880158,
+              1495.0848678943137,
+              1453.0345609821065,
+              1623.8046437149637,
+              1574.6820122764846,
+              1509.0628502802329,
+              1474.0625834000466
+            ]
+          },
+          {
+            "case": "recursive presentation document",
+            "iterations": 1906,
+            "samples": [
+              4748.076075550911,
+              4929.826862539354,
+              5012.54774396646,
+              5482.249213011537,
+              5471.908709338965,
+              5279.380902413432,
+              5360.593389297041,
+              5657.069779643233,
+              5793.262329485846,
+              5009.072402938194,
+              4458.179958027233,
+              5344.438614900328
+            ]
+          }
+        ],
+        "checksum": 7616
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "construct twenty-field form schema",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 35372.2032520325,
+          "vpmNs": 4558.518292682949,
+          "changePct": -87.11271033867246
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 36904.16074856046,
+          "vpmNs": 4884.737044145877,
+          "changePct": -86.76372272105817
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 36748.62256809343,
+          "vpmNs": 4376.13424124515,
+          "changePct": -88.09170538804173
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 36068.06655206288,
+          "vpmNs": 4862.352897838891,
+          "changePct": -86.51895329398856
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 36830.28017241378,
+          "vpmNs": 36100.84482758619,
+          "changePct": -1.9805316207557655
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 36273.7369337979,
+          "vpmNs": 39231.05400696861,
+          "changePct": 8.152777527631127
+        }
+      ]
+    },
+    {
+      "case": "valid twenty-field form",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 563.0590756615702,
+          "vpmNs": 998.0277141792247,
+          "changePct": 77.25097726319127
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 600.9933993399422,
+          "vpmNs": 1017.0830083008277,
+          "changePct": 69.23364040567958
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 577.1108468423367,
+          "vpmNs": 1099.730612755834,
+          "changePct": 90.55795238869837
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 587.5160485933447,
+          "vpmNs": 1051.4066496163657,
+          "changePct": 78.95794542696954
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 544.1778122111688,
+          "vpmNs": 544.6195563529623,
+          "changePct": 0.08117643385689988
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 620.0472478308052,
+          "vpmNs": 611.4227223427317,
+          "changePct": -1.3909464993588472
+        }
+      ]
+    },
+    {
+      "case": "invalid twenty-field form",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1511.1308471100874,
+          "vpmNs": 1619.4385492759206,
+          "changePct": 7.167327857343575
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1497.3457500504544,
+          "vpmNs": 1773.0626892792202,
+          "changePct": 18.41371234529334
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 5351.600514388995,
+          "vpmNs": 1827.3900319755285,
+          "changePct": -65.85339232511518
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1758.5430828587089,
+          "vpmNs": 1767.4575601690246,
+          "changePct": 0.5069240212087545
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1583.0352628076962,
+          "vpmNs": 1408.7312042581686,
+          "changePct": -11.010750211614306
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1573.3003736322503,
+          "vpmNs": 1482.4053909794516,
+          "changePct": -5.777344503068482
+        }
+      ]
+    },
+    {
+      "case": "recursive presentation document",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4950.735561205951,
+          "vpmNs": 12779.407192153998,
+          "changePct": 158.1314843857477
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4762.250000000018,
+          "vpmNs": 12762.303571428514,
+          "changePct": 167.98894580142715
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 5647.1631810676645,
+          "vpmNs": 12986.665382498619,
+          "changePct": 129.96794967846728
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7049.915158370779,
+          "vpmNs": 13034.455316742049,
+          "changePct": 84.88811601180014
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 5022.311827956988,
+          "vpmNs": 4664.463620071638,
+          "changePct": -7.125169048512037
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5311.90975865688,
+          "vpmNs": 5158.578174186801,
+          "changePct": -2.886562299372497
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "construct twenty-field form schema",
+      "upstream_ns": 36408,
+      "vpm_ns": 4710,
+      "change_pct": -86.9,
+      "upstream_first_pct": -87.6,
+      "vpm_first_pct": -86.6,
+      "process_range_pct": "-87.1, -86.8, -88.1, -86.5",
+      "control_max_abs_pct": 8.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "valid twenty-field form",
+      "upstream_ns": 582,
+      "vpm_ns": 1034,
+      "change_pct": 78.1,
+      "upstream_first_pct": 83.9,
+      "vpm_first_pct": 74.1,
+      "process_range_pct": "77.3, 69.2, 90.6, 79.0",
+      "control_max_abs_pct": 1.4,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "invalid twenty-field form",
+      "upstream_ns": 1635,
+      "vpm_ns": 1770,
+      "change_pct": 3.8,
+      "upstream_first_pct": -29.3,
+      "vpm_first_pct": 9.5,
+      "process_range_pct": "7.2, 18.4, -65.9, 0.5",
+      "control_max_abs_pct": 11,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "recursive presentation document",
+      "upstream_ns": 5299,
+      "vpm_ns": 12883,
+      "change_pct": 144,
+      "upstream_first_pct": 144,
+      "vpm_first_pct": 126.4,
+      "process_range_pct": "158.1, 168.0, 130.0, 84.9",
+      "control_max_abs_pct": 7.1,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

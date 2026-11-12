@@ -29,7 +29,8 @@ differences from permissive upstream inputs.
 
 This is the Zod adapter used by VentiMath's forms, not the upstream collection
 of adapters for other validation libraries. Zod Mini and Standard Schema are
-outside this package's verified scope. Zod itself is still supplied separately.
+outside this package's verified scope. Zod itself is supplied separately; the independent [vzod](../vzod/README.md)
+now covers the application schema language and is tested with this adapter.
 Built and tested does not mean released or adopted by the application.
 
 [Conformance and installation checks](../../scripts/resolvers-conformance/README.md)

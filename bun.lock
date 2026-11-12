@@ -1523,6 +1523,10 @@
       "name": "vyocto-queue",
       "version": "0.1.0",
     },
+    "packages/vzod": {
+      "name": "vzod",
+      "version": "4.6.7",
+    },
   },
   "packages": {
     "@babel/code-frame": ["@babel/code-frame@7.29.7", "", { "dependencies": { "@babel/helper-validator-identifier": "^7.29.7", "js-tokens": "^4.0.0", "picocolors": "^1.1.1" } }, "sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw=="],
@@ -2150,6 +2154,8 @@
     "vxml-naming": ["vxml-naming@workspace:packages/vxml-naming"],
 
     "vyocto-queue": ["vyocto-queue@workspace:packages/vyocto-queue"],
+
+    "vzod": ["vzod@workspace:packages/vzod"],
 
     "yaml": ["yaml@1.10.3", "", {}, "sha512-vIYeF1u3CjlhAFekPPAk2h/Kv4T3mAkMox5OymRiJQB0spDP10LHvt+K7G9Ny6NuuMAb25/6n1qyUjAcGNf/AA=="],
 
