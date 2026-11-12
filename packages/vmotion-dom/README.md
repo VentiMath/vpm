@@ -797,6 +797,12 @@ Strict TypeScript and fresh packed npm/Bun consumers cover the public entries.
 
 ### Custom-effect completion values
 
+The completion guard walks its fixed private key/value collections directly,
+avoiding two temporary collection snapshots on each ownership check. It still
+checks generation, controller state, bindings and animation requests before
+every end-value write. This is a bounded allocation cleanup; it does not extend
+the supported Motion surface.
+
 Direct `animateEffectSubject`, registered custom subjects and default object
 `animate` accept `transitionEnd: { property: scalar }`. End values are snapshotted
 before hooks or dynamic delays. All animated properties must complete before the

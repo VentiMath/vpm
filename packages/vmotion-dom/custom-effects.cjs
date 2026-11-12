@@ -259,10 +259,15 @@ function animateEffectSubject(effect, subject, keyframes, transition = {}, eleme
   }
   if (endings?.length) {
     for (const item of endings) item.request = item.slot && getAnimationRequest(item.slot);
-    const current = () => [...names].every(key => keys.get(key) === token) &&
-      handles.every(h => h.completed && !h.stopped && !h.cancelled && !h.failed && !h.run?.failed && h.owned()) &&
-      [...values].every(([key, value]) => effect.get(subject, key) === value) &&
-      endings.every(item => effect.get(subject, item.key) === item.slot && (!item.slot || getAnimationRequest(item.slot) === item.request));
+    const current = () => {
+      // These private collections are fixed after setup. Walk them directly:
+      // completion rechecks ownership before every write, without allocating
+      // another pair of collection snapshots for each check.
+      for (const key of names) if (keys.get(key) !== token) return false;
+      if (!handles.every(h => h.completed && !h.stopped && !h.cancelled && !h.failed && !h.run?.failed && h.owned())) return false;
+      for (const [key, value] of values) if (effect.get(subject, key) !== value) return false;
+      return endings.every(item => effect.get(subject, item.key) === item.slot && (!item.slot || getAnimationRequest(item.slot) === item.request));
+    };
     const schedule = () => queueMicrotask(() => frame.update(() => {
       if (!current()) return;
       for (const item of endings) {
