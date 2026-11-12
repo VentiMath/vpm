@@ -64,6 +64,15 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/react-i18next-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: React translation hooks, browser lifecycle and packed consumers
+        run: |
+          node --test packages/vreact-i18next/test/hooks.test.cjs
+          node scripts/react-i18next-conformance/run.cjs
+          node scripts/react-i18next-conformance/types.cjs
+          node scripts/react-i18next-conformance/browser.cjs
+          VPM_REACT_MODE=development node scripts/react-i18next-conformance/browser.cjs
+          node scripts/react-i18next-conformance/archives.cjs
       - run: npm --prefix scripts/i18next-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Translation engine, unchanged React adapters and packed consumers
         run: |
@@ -790,6 +799,11 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/react-i18next-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: React translation hooks on Bun
+        run: |
+          bun test packages/vreact-i18next/test/hooks.test.cjs
+          bun scripts/react-i18next-conformance/run.cjs
       - run: npm --prefix scripts/i18next-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Translation engine on Bun
         run: |

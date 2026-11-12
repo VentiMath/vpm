@@ -1245,6 +1245,16 @@
         "react": "^19.3.0",
       },
     },
+    "packages/vreact-i18next": {
+      "name": "vreact-i18next",
+      "version": "18.0.1",
+      "dependencies": {
+        "vi18next": "workspace:*",
+      },
+      "peerDependencies": {
+        "react": "^19.3.0",
+      },
+    },
     "packages/vreact-is": {
       "name": "vreact-is",
       "version": "0.1.0",
@@ -2078,6 +2088,8 @@
     "vreact-fast-compare": ["vreact-fast-compare@workspace:packages/vreact-fast-compare"],
 
     "vreact-hook-form": ["vreact-hook-form@workspace:packages/vreact-hook-form"],
+
+    "vreact-i18next": ["vreact-i18next@workspace:packages/vreact-i18next"],
 
     "vreact-is": ["vreact-is@workspace:packages/vreact-is"],
 

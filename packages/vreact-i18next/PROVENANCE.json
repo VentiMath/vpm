@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "react-i18next",
+    "version": "18.0.1",
+    "repository": "https://github.com/i18next/react-i18next",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19.3 useTranslation, initialization plugin, provider/context, subscription settings and resource loading/Suspense contract. Trans, HOCs, SSR state injection, rich-text HTML parsing and resource-schema inference are not included."
+  },
+  "changes": [
+    "Independently written hook/provider runtime with no HTML parser or copied upstream implementation.",
+    "Stable useSyncExternalStore snapshots preserve translators across unrelated parent updates; subscriptions are released on unmount or engine/options change.",
+    "Pending namespace loads are shared across concurrent Suspense retries, without caching translation results or hiding resource changes.",
+    "SSR request providers isolate engines; translation text uses React's normal escaping."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "upstreamVersion": "15.4.1",
+    "scope": "160 useTranslation imports, one initialization-plugin import and four provider imports in application src. No Trans, Translation, withTranslation or useSSR imports. Current adapter 18.0.1 and app adapter 15.4.1 are controls with current/app/VPM engines."
+  },
+  "references": [
+    "https://react.i18next.com/latest/usetranslation-hook",
+    "https://react.i18next.com/latest/i18nextprovider"
+  ]
+}
