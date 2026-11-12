@@ -1,0 +1,1325 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-12T23:03:28.137Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/vite-paths-conformance/node_modules/vite-tsconfig-paths": "3d850b0a4aa96c29fec10e79c7ea012f9a4eab5afe56fa3549cef2f6b6fe6e55",
+    "../../scripts/vite-paths-conformance/package-lock.json": "8cff636ff48ba45d9c14c31c935253ef8c751c15a465cdbcf5a68ab98b79c14f",
+    "../vtsconfck/index.cjs": "a714617e473722d0484047521219249ddaf1ada55db309f781f40954258c459f",
+    "../vtsconfck/jsonc.cjs": "489d232dfd7620390f0fa53a3de5afe08afd22f59b99afbb29d41153fd906889",
+    "PROVENANCE.json": "647845f14ff8e9b467b5856e19b12c5a95a3630d1091c9f1bc9ec4a0fc6fd010",
+    "bench/run.cjs": "ffdf721e0532e69ec316fb523fb68dda051074cf88fded49a18623bef4702a33",
+    "index.cjs": "e9918cc62cd431c5b90de6fc1f2f169e1ce249429480c7d485155c3e1468bad2",
+    "package.json": "34a76444b83c96c6397174ad61e879fd1bbb541d2620bf5c6353c20d1c1f46cb"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 94963,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 6338,
+            "samples": [
+              1593.7270432313044,
+              1580.217103187128,
+              1528.3343325970313,
+              1469.8051435784178,
+              1522.9764910066267,
+              1532.8507415588542,
+              1481.480751025564,
+              1612.7063742505545,
+              1592.0309245818835,
+              1477.700536446834,
+              1427.776901230677,
+              1561.5599558220297
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 6916,
+            "samples": [
+              1618.3729034123812,
+              1531.0089647194995,
+              1526.7554945054915,
+              1659.3526604973997,
+              1618.228311162513,
+              1541.1545691150998,
+              1647.8937246963585,
+              1615.203875072296,
+              1624.566223250434,
+              1550.0650665124463,
+              1645.6285425101223,
+              1623.2890399074474
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 41,
+            "samples": [
+              166019.29268292623,
+              170886.1951219494,
+              199011.17073170663,
+              155420.7317073173,
+              236472.5609756073,
+              201369.9268292684,
+              302472.5609756077,
+              223575.1951219499,
+              198330.29268292882,
+              180449.19512195388,
+              180615.85365853715,
+              135086.36585366153
+            ]
+          }
+        ],
+        "checksum": 544288
+      },
+      "vpm": {
+        "pid": 94964,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 6338,
+            "samples": [
+              1013.8450615336058,
+              1006.4689176396325,
+              968.0039444619714,
+              1151.270116756075,
+              1083.7671189649707,
+              970.8437993057712,
+              1000.5389712843183,
+              1029.2810034711267,
+              1001.9788576838104,
+              1003.0503313348033,
+              1082.6956453139778,
+              1010.4594509309017
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 6916,
+            "samples": [
+              627.2713996529795,
+              724.877096587627,
+              635.573308270676,
+              670.5224117987293,
+              661.5034702139939,
+              594.8585887796472,
+              653.4846732215144,
+              624.7589647194901,
+              605.1667148640771,
+              777.1471949103536,
+              800.9265471370779,
+              639.8266338924265
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 41,
+            "samples": [
+              100138.21951219332,
+              94552.85365853652,
+              95312.0000000021,
+              116098.5853658536,
+              108436.97560975637,
+              103931.90243902187,
+              93698.17073170785,
+              99451.21951219479,
+              104620.9268292675,
+              118402.43902439097,
+              103141.26829268289,
+              87081.29268292696
+            ]
+          }
+        ],
+        "checksum": 405042
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 94965,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 7812,
+            "samples": [
+              1091.008448540705,
+              990.6286482334858,
+              1028.4444444444453,
+              963.5389144905266,
+              977.4599334357407,
+              992.6235279057836,
+              1030.3805683563771,
+              1021.2279825908827,
+              999.7013568868396,
+              996.3463901689703,
+              1099.8143881208457,
+              1049.1763952892993
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 16320,
+            "samples": [
+              612.1017156862757,
+              637.742524509801,
+              673.7873161764719,
+              669.1354779411778,
+              688.6437499999979,
+              669.0410539215644,
+              635.7511029411753,
+              631.4006740196048,
+              655.0168504901909,
+              615.8854166666655,
+              631.3393995098024,
+              641.90919117647
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 100,
+            "samples": [
+              110557.49999999988,
+              96921.25000000033,
+              102300.00000000019,
+              94569.57999999986,
+              102679.58000000022,
+              100003.32999999955,
+              102184.99999999949,
+              92899.99999999962,
+              100288.32999999962,
+              124653.74999999994,
+              98901.25000000012,
+              98135.82999999994
+            ]
+          }
+        ],
+        "checksum": 669234
+      },
+      "upstream": {
+        "pid": 94966,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 7812,
+            "samples": [
+              1548.3017153097776,
+              1537.975806451617,
+              1473.1130312339953,
+              1576.0262416794667,
+              1618.31694828469,
+              1630.2483358934974,
+              1652.2817460317526,
+              1503.3548387096794,
+              1839.845750128011,
+              1612.033794162827,
+              1663.0558115719446,
+              1518.9932155657968
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 16320,
+            "samples": [
+              1617.0266544117624,
+              1535.0924019607876,
+              1634.387745098042,
+              1650.1633578431424,
+              1655.3462009803945,
+              1647.6613970588205,
+              1624.1906862745109,
+              1633.1137254901969,
+              1730.8670343137253,
+              1541.6028799019596,
+              1621.1703431372537,
+              1628.2398897058797
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 100,
+            "samples": [
+              2902783.7500000014,
+              514978.34000000014,
+              275010.420000001,
+              343236.24999999994,
+              267459.5799999997,
+              233046.24999999988,
+              457792.9100000006,
+              385707.0799999997,
+              445330.83999999915,
+              278962.50000000006,
+              286896.66999999876,
+              959668.7500000007
+            ]
+          }
+        ],
+        "checksum": 306496
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 94968,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 7511,
+            "samples": [
+              1570.0749567301257,
+              1451.7540939954763,
+              1632.4112634802261,
+              1448.7861802689351,
+              1487.878844361602,
+              1593.6959126614327,
+              1436.9479430169074,
+              1525.7122886433253,
+              1502.4353614698493,
+              1481.1332712022383,
+              1511.4442817201455,
+              1656.6647583544168
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 5250,
+            "samples": [
+              1741.2857142857147,
+              1638.2142857142928,
+              1522.0158095238123,
+              1874.4601904761892,
+              1621.388761904763,
+              1552.2857142857338,
+              1619.3651428571425,
+              1669.8333333333287,
+              1699.9523809523841,
+              1658.9047619047615,
+              1669.182476190469,
+              1521.1508571428567
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 59,
+            "samples": [
+              152231.64406779685,
+              248048.01694915374,
+              165911.71186440586,
+              159282.49152542299,
+              172225.9830508477,
+              171283.89830508572,
+              211834.0508474572,
+              179860.169491524,
+              153940.67796609947,
+              150837.5762711879,
+              191971.7627118659,
+              163598.86440677964
+            ]
+          }
+        ],
+        "checksum": 577308
+      },
+      "vpm": {
+        "pid": 94969,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 7511,
+            "samples": [
+              1247.8032219411502,
+              1209.5649048062824,
+              1087.8821728132048,
+              1372.0432698708569,
+              1067.273465583806,
+              964.036080415393,
+              959.2874450805446,
+              1081.0034615896682,
+              996.788044201837,
+              1004.5932632139534,
+              1024.8191985088577,
+              1063.4291039808277
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 5250,
+            "samples": [
+              590.706285714283,
+              710.8493333333367,
+              593.0396190476152,
+              728.7380952380945,
+              592.0714285714331,
+              748.9920000000005,
+              633.9047619047678,
+              731.68247619048,
+              900.190476190476,
+              693.0160000000081,
+              650.3333333333406,
+              654.0079999999978
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 59,
+            "samples": [
+              105365.11864406786,
+              115959.74576271222,
+              116308.62711864419,
+              91260.5932203386,
+              96012.71186440722,
+              118735.1694915247,
+              113680.08474576304,
+              99064.96610169482,
+              119984.45762712003,
+              104374.28813559379,
+              183303.6779661004,
+              109645.47457627236
+            ]
+          }
+        ],
+        "checksum": 405648
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 94998,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 10126,
+            "samples": [
+              1023.6396405293304,
+              968.8015010863113,
+              996.4036144578317,
+              1021.6563302389887,
+              951.5850286391469,
+              1043.242642701955,
+              967.6368753703343,
+              1033.0337744420328,
+              1028.227631838831,
+              982.6890183685523,
+              1010.7149911119915,
+              1040.6132727631866
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 16537,
+            "samples": [
+              618.9781701638748,
+              669.5213763076723,
+              633.6825300840522,
+              624.6698917578809,
+              611.2807643466159,
+              639.2357743242446,
+              710.9612989054835,
+              664.5627985728961,
+              644.1867932514967,
+              638.036463687487,
+              659.1607909536176,
+              645.4894479046959
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 92,
+            "samples": [
+              91226.44565217388,
+              100658.06521739117,
+              103003.17391304411,
+              103929.34782608722,
+              96894.02173913085,
+              123441.5760869566,
+              112093.74999999905,
+              92690.67391304267,
+              125482.33695652115,
+              118310.68478260768,
+              101519.47826086944,
+              104533.51086956623
+            ]
+          }
+        ],
+        "checksum": 713648
+      },
+      "upstream": {
+        "pid": 94999,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 10126,
+            "samples": [
+              1524.9686944499283,
+              1639.4718546316412,
+              1639.6487260517451,
+              1549.776910922383,
+              1532.0132332609137,
+              1726.6607742445146,
+              1568.6269010468102,
+              1652.2030416748967,
+              1607.8947264467708,
+              1718.0648824807386,
+              1553.9329448943354,
+              1881.3203634208915
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 16537,
+            "samples": [
+              1509.1965289955856,
+              1659.1708895204647,
+              1555.7613230936681,
+              1594.316260506739,
+              1669.2240430549696,
+              1630.598597085328,
+              1570.6294974904795,
+              1590.8921811694984,
+              1707.5749531353988,
+              1624.0677269154096,
+              1598.63741912077,
+              1628.9935901312147
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 92,
+            "samples": [
+              244556.6086956541,
+              235367.29347826037,
+              225052.98913043374,
+              5740218.304347825,
+              193204.2608695645,
+              138089.6739130435,
+              161110.5108695656,
+              164985.96739130464,
+              183157.60869564983,
+              164419.8369565204,
+              168597.8260869537,
+              177663.4891304352
+            ]
+          }
+        ],
+        "checksum": 283968
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 95027,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 6613,
+            "samples": [
+              1531.3964917586625,
+              1602.0275215484623,
+              1498.9100257069379,
+              1455.8003931649775,
+              1608.2021775291096,
+              1823.6553757749925,
+              1791.4146378345708,
+              1682.878421291395,
+              1977.0086193860584,
+              1779.9157719643108,
+              1529.3676092544947,
+              1802.119612883714
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 6889,
+            "samples": [
+              1670.6404412832082,
+              1699.7024241544489,
+              1743.2380606764477,
+              1720.4360574829425,
+              1615.921614167508,
+              1764.4555087821057,
+              1611.9297430686668,
+              1596.2040934823513,
+              1754.5603135433335,
+              1544.6424735084875,
+              1602.9237915517529,
+              1676.0113223980175
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 63,
+            "samples": [
+              230908.0634920628,
+              154043.65079365065,
+              187709.66666666605,
+              157945.77777777673,
+              171292.33333333372,
+              171992.06349206567,
+              184301.58730158536,
+              149997.36507936523,
+              147980.80952381034,
+              161495.3650793636,
+              158401.44444444246,
+              151207.01587301525
+            ]
+          }
+        ],
+        "checksum": 597344
+      },
+      "vpm": {
+        "pid": 95028,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 6613,
+            "samples": [
+              1472.327234235602,
+              1525.895962498112,
+              1485.6027521548403,
+              1444.0055950400754,
+              1488.1797973688222,
+              1587.334341448665,
+              1570.5681233933162,
+              1485.1303493119615,
+              1505.733706336008,
+              1514.970512626647,
+              1470.0967790715322,
+              1488.305761379096
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 6889,
+            "samples": [
+              1629.7056176513258,
+              1505.7578748729813,
+              1591.698069385972,
+              1679.355929743082,
+              1543.100159674839,
+              1568.9383074466493,
+              1741.3147046015333,
+              1565.4727826970513,
+              1477.210044999279,
+              1685.1381913194975,
+              1671.2209319204594,
+              1632.2821889969625
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 63,
+            "samples": [
+              156519.1746031753,
+              176269.1904761906,
+              163653.4285714283,
+              169071.42857142945,
+              178869.69841269965,
+              191548.9365079367,
+              159900.14285714118,
+              150191.79365079556,
+              163293.65079364934,
+              170658.06349206643,
+              141081.34920634836,
+              149034.38095237987
+            ]
+          }
+        ],
+        "checksum": 337282
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 95029,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 6450,
+            "samples": [
+              1596.711937984495,
+              1598.3139534883712,
+              1469.2376744186056,
+              1551.343565891474,
+              1477.1962790697683,
+              1500.3165891472825,
+              1523.720930232563,
+              1462.306201550386,
+              1512.7713178294612,
+              1438.2815503875925,
+              1467.3706976744181,
+              1627.9004651162866
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 6550,
+            "samples": [
+              1535.133587786256,
+              1604.001221374048,
+              1536.9974045801644,
+              1734.9236641221346,
+              1577.5891603053453,
+              1635.0253435114555,
+              1675.0381679389302,
+              1632.2963358778673,
+              1596.6412213740587,
+              1933.2697709923652,
+              1501.692213740445,
+              1683.0853435114566
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 70,
+            "samples": [
+              159127.98571428572,
+              176048.8142857152,
+              166744.04285714185,
+              170211.91428571325,
+              172349.99999999933,
+              160105.35714285652,
+              153951.18571428512,
+              136940.4857142854,
+              148062.50000000157,
+              184677.37142857135,
+              179656.54285714144,
+              152330.35714285768
+            ]
+          }
+        ],
+        "checksum": 587800
+      },
+      "upstream": {
+        "pid": 95030,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "repeated wildcard alias resolution",
+            "iterations": 6450,
+            "samples": [
+              1561.3372093023268,
+              1480.0840310077501,
+              1422.1448062015452,
+              1520.1485271317829,
+              1501.14341085271,
+              1451.905736434112,
+              1523.1976744185997,
+              1474.1989147286802,
+              1479.0116279069769,
+              1487.8812403100778,
+              1532.9328682170585,
+              1537.7843410852768
+            ]
+          },
+          {
+            "case": "non-alias module lookup",
+            "iterations": 6550,
+            "samples": [
+              1501.1958778625858,
+              1633.5178625954125,
+              1590.2099236641263,
+              1583.1551145038247,
+              1703.5432061068793,
+              1572.0164885496133,
+              1621.7048854961818,
+              1768.32061068702,
+              1586.4949618320547,
+              1609.4656488549663,
+              1598.2824427480916,
+              1487.5890076336007
+            ]
+          },
+          {
+            "case": "configuration discovery and plugin setup",
+            "iterations": 70,
+            "samples": [
+              183341.67142857204,
+              211575.58571428581,
+              245013.68571428658,
+              162916.67142857186,
+              249988.0999999992,
+              437029.17142856965,
+              176884.51428571495,
+              181085.12857142743,
+              209673.21428571656,
+              165416.67142856956,
+              136255.35714285693,
+              166463.09999999695
+            ]
+          }
+        ],
+        "checksum": 334272
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "repeated wildcard alias resolution",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1530.5925370779428,
+          "vpmNs": 1008.464184285267,
+          "changePct": -34.11282494487213
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1594.0300179211467,
+          "vpmNs": 1010.4646697388612,
+          "changePct": -36.60943279746651
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1506.9398215949973,
+          "vpmNs": 1065.3512847823167,
+          "changePct": -29.30366100122618
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1623.6832905392062,
+          "vpmNs": 1016.1856606754901,
+          "changePct": -37.414786085651784
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1645.5402994102524,
+          "vpmNs": 1488.2427793739591,
+          "changePct": -9.559019617609321
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1494.512325581394,
+          "vpmNs": 1506.5439534883717,
+          "changePct": 0.8050537758059084
+        }
+      ]
+    },
+    {
+      "case": "non-alias module lookup",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1618.300607287447,
+          "vpmNs": 646.6556535569705,
+          "changePct": -60.04106711416999
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1630.6768075980383,
+          "vpmNs": 639.8258578431355,
+          "changePct": -60.76317177861939
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1648.559523809527,
+          "vpmNs": 673.5120000000029,
+          "changePct": -59.145424215945994
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1611.3525730180897,
+          "vpmNs": 641.7112837878707,
+          "changePct": -60.17561305121853
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1673.325881840613,
+          "vpmNs": 1610.701843518649,
+          "changePct": -3.7424890752947193
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1594.246183206109,
+          "vpmNs": 1618.1487786259577,
+          "changePct": 1.4993039137644049
+        }
+      ]
+    },
+    {
+      "case": "configuration discovery and plugin setup",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 189473.073170733,
+          "vpmNs": 101639.7439024381,
+          "changePct": -46.35662883303151
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 364471.6649999998,
+          "vpmNs": 100145.82999999958,
+          "changePct": -72.52301355168456
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 168597.8050847458,
+          "vpmNs": 111662.7796610177,
+          "changePct": -33.76973110362241
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 180410.54891304253,
+          "vpmNs": 103466.26086956567,
+          "changePct": -42.649550432089114
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 159948.40476190305,
+          "vpmNs": 163473.53968253883,
+          "changePct": 2.2039200240122847
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 182213.39999999973,
+          "vpmNs": 163424.6999999992,
+          "changePct": -10.311371172482687
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "repeated wildcard alias resolution",
+      "upstream_ns": 1562,
+      "vpm_ns": 1013,
+      "change_pct": -35.4,
+      "upstream_first_pct": -31.7,
+      "vpm_first_pct": -37,
+      "process_range_pct": "-34.1, -36.6, -29.3, -37.4",
+      "control_max_abs_pct": 9.6,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "non-alias module lookup",
+      "upstream_ns": 1624,
+      "vpm_ns": 644,
+      "change_pct": -60.1,
+      "upstream_first_pct": -59.6,
+      "vpm_first_pct": -60.5,
+      "process_range_pct": "-60.0, -60.8, -59.1, -60.2",
+      "control_max_abs_pct": 3.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "configuration discovery and plugin setup",
+      "upstream_ns": 184942,
+      "vpm_ns": 102553,
+      "change_pct": -44.5,
+      "upstream_first_pct": -40.1,
+      "vpm_first_pct": -57.6,
+      "process_range_pct": "-46.4, -72.5, -33.8, -42.6",
+      "control_max_abs_pct": 10.3,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

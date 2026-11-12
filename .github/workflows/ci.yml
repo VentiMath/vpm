@@ -64,6 +64,13 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/vite-paths-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Vite alias plugin, configuration invalidation and packed consumers
+        run: |
+          node --test packages/vvite-tsconfig-paths/test/plugin.test.cjs
+          node scripts/vite-paths-conformance/run.cjs
+          node scripts/vite-paths-conformance/types.cjs
+          node scripts/vite-paths-conformance/archives.cjs
       - run: npm --prefix scripts/tsconfck-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Configuration reader, unchanged Vite plugins and packed consumers
         run: |
@@ -824,6 +831,11 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/vite-paths-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Vite alias plugin and configuration invalidation on Bun
+        run: |
+          bun test packages/vvite-tsconfig-paths/test/plugin.test.cjs
+          bun scripts/vite-paths-conformance/run.cjs
       - run: npm --prefix scripts/tsconfck-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Configuration reader and Vite callers on Bun
         run: |

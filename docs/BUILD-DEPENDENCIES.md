@@ -80,3 +80,13 @@ separately. See [conformance](../scripts/match-sorter-conformance/README.md).
 This closes the ranking dependency, not the whole table stack. Consumer
 publication and application adoption remain separate. Other callers may still
 need their own accent-removal implementation.
+
+## TypeScript path aliases
+
+[vvite-tsconfig-paths](../packages/vvite-tsconfig-paths) independently handles the
+non-compiler path used by the app's Vite configuration. Its only runtime
+dependency is [vtsconfck](../packages/vtsconfck). Native `path.matchesGlob` replaces
+`globrex`, and ordinary operation needs no `debug` helper. Do not create a separate
+`vglobrex` for this caller. Current stable 6.1.1 and app 5.1.4 controls agree across
+alias comparisons and real Vite builds; the app's alias map is compared read-only.
+Publication/adoption and other callers of shared dependencies remain separate.

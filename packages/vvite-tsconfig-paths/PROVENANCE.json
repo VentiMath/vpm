@@ -1,0 +1,26 @@
+{
+  "upstream": {
+    "name": "vite-tsconfig-paths",
+    "version": "6.1.1",
+    "repository": "https://github.com/aleclarson/vite-tsconfig-paths",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "VentiMath non-compiler Vite alias resolution: inherited exact/wildcard paths, base URL, importer filtering, eager/lazy local discovery and explicit configuration invalidation. File logging and compiler-backed mode are excluded."
+  },
+  "changes": [
+    "Independent resolver over vtsconfck with native path.matchesGlob instead of globrex and no debug runtime dependency.",
+    "Exact aliases and longest wildcard prefixes preserve precedence; target fallbacks preserve queries and Vite resolution options.",
+    "No module-result cache retains missing or deleted targets; JSON config changes invalidate parsed discovery state and watchers detach on shutdown."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "scope": "Actual vite.config.mts uses vite-tsconfig-paths5.1.4 with parseNative:false. Current stable6.1.1 and app5.1.4 controls; v7 is a prerelease, not the stable target."
+  },
+  "references": [
+    "https://github.com/aleclarson/vite-tsconfig-paths",
+    "https://nodejs.org/api/path.html#pathmatchesglobpath-pattern"
+  ]
+}

@@ -1548,6 +1548,13 @@
       "name": "vvary",
       "version": "0.1.0",
     },
+    "packages/vvite-tsconfig-paths": {
+      "name": "vvite-tsconfig-paths",
+      "version": "6.1.1",
+      "dependencies": {
+        "vtsconfck": "3.1.6",
+      },
+    },
     "packages/vw3c-keyname": {
       "name": "vw3c-keyname",
       "version": "2.2.8",
@@ -2197,6 +2204,8 @@
     "vuuid": ["vuuid@workspace:packages/vuuid"],
 
     "vvary": ["vvary@workspace:packages/vvary"],
+
+    "vvite-tsconfig-paths": ["vvite-tsconfig-paths@workspace:packages/vvite-tsconfig-paths"],
 
     "vw3c-keyname": ["vw3c-keyname@workspace:packages/vw3c-keyname"],
 
