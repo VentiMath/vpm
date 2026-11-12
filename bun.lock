@@ -740,6 +740,13 @@
       "name": "vms",
       "version": "0.1.0",
     },
+    "packages/vmui-private-theming": {
+      "name": "vmui-private-theming",
+      "version": "9.5.0",
+      "peerDependencies": {
+        "react": "^19.3.0",
+      },
+    },
     "packages/vnegotiator": {
       "name": "vnegotiator",
       "version": "0.1.0",
@@ -1996,6 +2003,8 @@
     "vmotion-utils": ["vmotion-utils@workspace:packages/vmotion-utils"],
 
     "vms": ["vms@workspace:packages/vms"],
+
+    "vmui-private-theming": ["vmui-private-theming@workspace:packages/vmui-private-theming"],
 
     "vnegotiator": ["vnegotiator@workspace:packages/vnegotiator"],
 

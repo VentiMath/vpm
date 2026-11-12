@@ -64,6 +64,16 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/mui-theming-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: MUI theme context and unchanged system callers
+        run: |
+          node --test packages/vmui-private-theming/test/theme.test.cjs
+          node scripts/mui-theming-conformance/run.cjs
+          node scripts/mui-theming-conformance/callers.cjs
+          node scripts/mui-theming-conformance/browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-theming-conformance/browser.cjs
+          node scripts/mui-theming-conformance/types.cjs
+          node scripts/mui-theming-conformance/archives.cjs
       - run: npm --prefix scripts/crypto-js-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Contest hashes, native browser oracle and packed consumers
         run: |
@@ -841,6 +851,12 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/mui-theming-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: MUI theme context and system callers on Bun
+        run: |
+          bun test packages/vmui-private-theming/test/theme.test.cjs
+          bun scripts/mui-theming-conformance/run.cjs
+          bun scripts/mui-theming-conformance/callers.cjs
       - run: npm --prefix scripts/crypto-js-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Contest hashes and encoders on Bun
         run: |

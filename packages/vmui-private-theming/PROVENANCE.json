@@ -1,0 +1,26 @@
+{
+  "upstream": {
+    "name": "@mui/private-theming",
+    "version": "9.5.0",
+    "repository": "https://github.com/mui/material-ui",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React19.3 private theme provider and hook used by unchanged current9.5/app7.2 MUI System: object nesting, functional replacement, nested marker and stable context identity. No theme creation, styling engine or legacy JSS implementation."
+  },
+  "changes": [
+    "Independent React context and memoized shallow theme composition, without Babel runtime, prop-types or MUI utility dependencies.",
+    "Caller theme objects remain unmodified; prototype-looking own keys remain data.",
+    "The hook declares its actual null result outside a provider; invalid theme values fail explicitly instead of relying on development-only validators."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "scope": "VentiMath RootThemeProvider and MUI components consume MUI System. Unchanged System9.5.0 and app7.2.0 ThemeProvider/Box are verified with only their private theme dependency replaced."
+  },
+  "references": [
+    "https://mui.com/material-ui/customization/theming/",
+    "https://github.com/mui/material-ui/tree/master/packages/mui-private-theming"
+  ]
+}

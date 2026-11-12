@@ -1,0 +1,67 @@
+{
+  "name": "vmui-private-theming",
+  "version": "9.5.0",
+  "description": "Independent React theme context and nesting for MUI callers",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json",
+    "./ThemeProvider": {
+      "import": {
+        "types": "./ThemeProvider.d.mts",
+        "default": "./ThemeProvider.mjs"
+      },
+      "require": {
+        "types": "./ThemeProvider.d.cts",
+        "default": "./ThemeProvider.cjs"
+      }
+    },
+    "./useTheme": {
+      "import": {
+        "types": "./useTheme.d.mts",
+        "default": "./useTheme.mjs"
+      },
+      "require": {
+        "types": "./useTheme.d.cts",
+        "default": "./useTheme.cjs"
+      }
+    }
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.mts",
+    "*.cts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "react": "^19.3.0"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vmui-private-theming"
+  }
+}
