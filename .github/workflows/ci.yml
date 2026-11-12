@@ -64,6 +64,16 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/crypto-js-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Contest hashes, native browser oracle and packed consumers
+        run: |
+          node --test packages/vcrypto-js/test/hash.test.cjs
+          node scripts/crypto-js-conformance/run.cjs
+          VPM_CRYPTO_NATIVE=1 node scripts/crypto-js-conformance/run.cjs
+          VPM_CRYPTO_NATIVE=1 node --test packages/vcrypto-js/test/hash.test.cjs
+          node scripts/crypto-js-conformance/browser.cjs
+          node scripts/crypto-js-conformance/types.cjs
+          node scripts/crypto-js-conformance/archives.cjs
       - run: npm --prefix scripts/vite-paths-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Vite alias plugin, configuration invalidation and packed consumers
         run: |
@@ -831,6 +841,13 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/crypto-js-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Contest hashes and encoders on Bun
+        run: |
+          bun test packages/vcrypto-js/test/hash.test.cjs
+          bun scripts/crypto-js-conformance/run.cjs
+          VPM_CRYPTO_NATIVE=1 bun scripts/crypto-js-conformance/run.cjs
+          VPM_CRYPTO_NATIVE=1 bun test packages/vcrypto-js/test/hash.test.cjs
       - run: npm --prefix scripts/vite-paths-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Vite alias plugin and configuration invalidation on Bun
         run: |

@@ -1,0 +1,27 @@
+{
+  "upstream": {
+    "name": "crypto-js",
+    "version": "4.2.0",
+    "repository": "https://github.com/brix/crypto-js",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Synchronous SHA-256 for contest-paper version identifiers, HMAC-SHA256 for mock authentication, and UTF-8/Base64/Hex WordArray interoperability. Other algorithms, cipher modes, password derivation, streaming hash builders and the upstream inheritance framework are excluded."
+  },
+  "changes": [
+    "Native Node/Bun SHA-256 and HMAC with an independent FIPS-standard synchronous browser implementation; native UTF-8/Base64 codecs and no upstream runtime copied.",
+    "Typed-array input and bounded WordArray lengths; malformed hexadecimal/Base64 inputs reject rather than silently changing bytes.",
+    "Caller message/key words remain unmodified; standard vectors and independent native Node/Web Crypto oracles verify the byte contract."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "scope": "examAttemptAdapters and paperReaderAttemptState synchronously hash long paper version IDs; mock authApi uses HMAC and UTF-8/Base64. No production authentication or unused encryption-suite adoption is implied."
+  },
+  "references": [
+    "https://csrc.nist.gov/pubs/fips/180-4/upd1/final",
+    "https://www.rfc-editor.org/rfc/rfc4231",
+    "https://github.com/brix/crypto-js"
+  ]
+}

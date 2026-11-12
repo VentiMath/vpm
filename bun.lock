@@ -86,6 +86,10 @@
         "vvary": "workspace:*",
       },
     },
+    "packages/vcrypto-js": {
+      "name": "vcrypto-js",
+      "version": "4.2.0",
+    },
     "packages/vcss-box-model": {
       "name": "vcss-box-model",
       "version": "1.2.1",
@@ -1806,6 +1810,8 @@
     "vcookie-signature": ["vcookie-signature@workspace:packages/vcookie-signature"],
 
     "vcors": ["vcors@workspace:packages/vcors"],
+
+    "vcrypto-js": ["vcrypto-js@workspace:packages/vcrypto-js"],
 
     "vcss-box-model": ["vcss-box-model@workspace:packages/vcss-box-model"],
 

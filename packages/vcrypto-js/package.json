@@ -1,0 +1,97 @@
+{
+  "name": "vcrypto-js",
+  "version": "4.2.0",
+  "description": "Independent SHA-256 and HMAC encoding contract for VentiMath",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "node": "./index.native.mjs",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "node": "./index.native.cjs",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json",
+    "./sha256": {
+      "import": {
+        "types": "./sha256.d.mts",
+        "node": "./sha256.native.mjs",
+        "default": "./sha256.mjs"
+      },
+      "require": {
+        "types": "./sha256.d.cts",
+        "node": "./sha256.native.cjs",
+        "default": "./sha256.cjs"
+      }
+    },
+    "./hmac-sha256": {
+      "import": {
+        "types": "./hmac-sha256.d.mts",
+        "node": "./hmac-sha256.native.mjs",
+        "default": "./hmac-sha256.mjs"
+      },
+      "require": {
+        "types": "./hmac-sha256.d.cts",
+        "node": "./hmac-sha256.native.cjs",
+        "default": "./hmac-sha256.cjs"
+      }
+    },
+    "./enc-utf8": {
+      "import": {
+        "types": "./enc-utf8.d.mts",
+        "default": "./enc-utf8.mjs"
+      },
+      "require": {
+        "types": "./enc-utf8.d.cts",
+        "default": "./enc-utf8.cjs"
+      }
+    },
+    "./enc-base64": {
+      "import": {
+        "types": "./enc-base64.d.mts",
+        "default": "./enc-base64.mjs"
+      },
+      "require": {
+        "types": "./enc-base64.d.cts",
+        "default": "./enc-base64.cjs"
+      }
+    },
+    "./enc-hex": {
+      "import": {
+        "types": "./enc-hex.d.mts",
+        "default": "./enc-hex.mjs"
+      },
+      "require": {
+        "types": "./enc-hex.d.cts",
+        "default": "./enc-hex.cjs"
+      }
+    }
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.mts",
+    "*.cts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vcrypto-js"
+  }
+}
