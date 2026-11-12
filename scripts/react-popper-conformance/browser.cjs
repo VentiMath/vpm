@@ -94,7 +94,7 @@ const pending = new Map(),
         socket.send(JSON.stringify({ id, method, params }));
       });
     await send("Runtime.enable");
-    for (const width of [1024]) {
+    for (const width of [1024, 768]) {
       await send("Emulation.setDeviceMetricsOverride", {
         width,
         height: 800,
@@ -150,9 +150,28 @@ const pending = new Map(),
           );
           assert.equal(after[2], before[2]);
           assert.deepEqual(after.slice(4, 7), before.slice(4, 7));
+          const edge = actual.findIndex(
+            (row) => Array.isArray(row) && row[0] === "right-edge",
+          );
+          const oldEdge = baseline[edge],
+            newEdge = actual[edge];
+          assert.ok(
+            oldEdge[2] + oldEdge[4] > oldEdge[9],
+            "control tether extends into the scrollbar",
+          );
+          assert.ok(
+            newEdge[2] + newEdge[4] <= newEdge[9],
+            "VPM menu stays within the scrollport",
+          );
+          assert.ok(
+            newEdge[6] + 4 >= newEdge[10],
+            "arrow remains attached to the reference",
+          );
+          assert.deepEqual(newEdge.slice(0, 2), oldEdge.slice(0, 2));
+          assert.deepEqual(newEdge.slice(3, 6), oldEdge.slice(3, 6));
           assert.deepEqual(
-            actual.filter((_, i) => i !== scaled),
-            baseline.filter((_, i) => i !== scaled),
+            actual.filter((_, i) => i !== scaled && i !== edge),
+            baseline.filter((_, i) => i !== scaled && i !== edge),
             variant + " at " + width,
           );
         }

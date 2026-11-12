@@ -25,3 +25,5 @@ node scripts/react-popper-conformance/archives.cjs
 ```
 
 The [balanced isolated benchmark](../../packages/vreact-popper/bench/results/README.md) measures open/closed navigation SSR with the same React version. It does not measure browser layout/frame rate. Public upstream declarations informed the API boundary; the wrapper runtime is independently written, and existing VPM geometry is reused. Application adoption and releases are separate.
+
+The browser fixture uses explicit 16-pixel scrollbars at both viewport widths. In the right-edge case, upstream tethering extends into the scrollbar; VPM is asserted to remain within the scrollport with its arrow still attached. Both outputs are checked explicitly, alongside the scaled clipping case, rather than relying on platform overlay-scrollbar defaults.

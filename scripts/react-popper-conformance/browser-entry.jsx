@@ -7,6 +7,14 @@ const wait = () => new Promise((r) => setTimeout(r, 40));
 window.runForms = async (strict = true) => {
   const results = [];
   document.body.style.margin = "0";
+  let scrollbarStyle = document.getElementById("fixture-scrollbars");
+  if (!scrollbarStyle) {
+    scrollbarStyle = document.createElement("style");
+    scrollbarStyle.id = "fixture-scrollbars";
+    scrollbarStyle.textContent =
+      "main::-webkit-scrollbar{width:16px;height:16px}";
+    document.head.append(scrollbarStyle);
+  }
   for (const direction of ["ltr", "rtl"])
     for (const edge of [false, true])
       for (const placement of [
@@ -207,6 +215,8 @@ window.runForms = async (strict = true) => {
         a.x,
         a.y,
         host.getBoundingClientRect().bottom,
+        host.getBoundingClientRect().left + host.clientWidth,
+        host.querySelector("button").getBoundingClientRect().left,
       ].map((x) => Math.round(x)),
     ]);
     root.unmount();

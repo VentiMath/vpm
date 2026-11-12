@@ -23,7 +23,7 @@ VPM Floating owns geometry, scrolling and resize observation. Stable refs/state 
 
 React 19.3 StrictMode also receives an explicit regression check: the unchanged control leaves the first menu at `(0, 0)`, while this wrapper positions it against its reference. The normal upstream geometry remains the comparison baseline.
 
-One measured geometry difference is intentional: in a scaled clipping container, the control leaves the bottom of the menu outside the visible boundary. VPM flips it above the anchor and keeps the entire menu visible. The browser fixture asserts both the control failure and the corrected bounds. This is separate from the matching ordinary placement matrix.
+Two measured geometry differences are intentional: in a scaled clipping container, the control leaves the bottom of the menu outside the visible boundary. VPM flips it above the anchor and keeps the entire menu visible. The browser fixture asserts both the control failure and the corrected bounds. With a non-overlay scrollbar and an anchor at the right edge, the control also tethers the menu a few pixels into the scrollbar; VPM keeps its right edge inside the scrollport while the arrow remains attached to the anchor. The fixture fixes scrollbar dimensions so this case is exercised on macOS and Linux. These are separate from the matching ordinary placement matrix.
 
 The complete runtime closure is VPM's Floating DOM/core/utils plus `vreact-fast-compare`; React is the peer. There is no upstream Popper engine or warning helper in this closure. This is source completion for the documented navigation contract, not a published release or app adoption.
 
