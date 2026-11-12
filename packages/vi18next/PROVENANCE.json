@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "i18next",
+    "version": "27.1.1",
+    "repository": "https://github.com/i18next/i18next",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Directly supplied translation bundles, namespaces/language fallback, interpolation, cardinal/ordinal plurals and context, instance/resource events, fixed translators, direction and unchanged React translation adapters. No network backends, detector/plugin ecosystem, ICU/MF2 or resource-schema type inference."
+  },
+  "changes": [
+    "Independent zero-dependency implementation; upstream source is not copied into the runtime.",
+    "Own-property resource and variable lookup, safe prototype-looking keys, isolated bundle inputs and bounded cyclic/nested resource rejection.",
+    "Consistent exists() key-presence semantics, and nested translations remain text when returnDetails is enabled. Interpolated values cannot become nesting instructions or disable nesting already present in a resource.",
+    "Current i18next27 defaults, with explicit app25 comparisons and a read-only audit of all registered application translation bundles."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "upstreamVersion": "25.0.1",
+    "scope": "183 registered bundles across22 namespaces and11 languages, including contest pages and the root language provider;74628 translations match current and app engines. Source remains private. Current react-i18next18.0.1 and app15.4.1 are unchanged downstream controls, with React19.3.1."
+  },
+  "references": [
+    "https://www.i18next.com/overview/api",
+    "https://www.i18next.com/translation-function/plurals",
+    "https://www.i18next.com/translation-function/interpolation"
+  ]
+}

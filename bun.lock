@@ -586,6 +586,10 @@
         "vdebug": "workspace:*",
       },
     },
+    "packages/vi18next": {
+      "name": "vi18next",
+      "version": "27.1.1",
+    },
     "packages/viconv-lite": {
       "name": "viconv-lite",
       "version": "0.1.0",
@@ -1896,6 +1900,8 @@
     "vhttp-proxy-agent": ["vhttp-proxy-agent@workspace:packages/vhttp-proxy-agent"],
 
     "vhttps-proxy-agent": ["vhttps-proxy-agent@workspace:packages/vhttps-proxy-agent"],
+
+    "vi18next": ["vi18next@workspace:packages/vi18next"],
 
     "viconv-lite": ["viconv-lite@workspace:packages/viconv-lite"],
 

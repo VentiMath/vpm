@@ -1,0 +1,28 @@
+import instance from "./index.cjs";
+export default instance;
+export const {
+  createInstance,
+  keyFromSelector,
+  t,
+  exists,
+  init,
+  changeLanguage,
+  getFixedT,
+  loadNamespaces,
+  loadLanguages,
+  reloadResources,
+  addResource,
+  addResources,
+  addResourceBundle,
+  getResource,
+  getResourceBundle,
+  getDataByLanguage,
+  hasResourceBundle,
+  removeResourceBundle,
+  setDefaultNamespace,
+  dir,
+  hasLoadedNamespace,
+  use,
+  on,
+  off,
+} = instance;

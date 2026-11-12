@@ -1,0 +1,27 @@
+{
+  "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+  "current": "27.1.1",
+  "application": "25.0.1",
+  "bundles": 183,
+  "namespaces": 22,
+  "languages": [
+    "ar",
+    "bg",
+    "de",
+    "en",
+    "es",
+    "sw",
+    "th",
+    "tr",
+    "vi",
+    "zh-CN",
+    "zh-TW"
+  ],
+  "comparisons": 74628,
+  "currentDifferences": 0,
+  "legacyDifferences": 0,
+  "migrationKinds": {},
+  "emptyTranslations": 0,
+  "filesWithNonStringTopLevelValues": 0,
+  "privateSourceShipped": false
+}
