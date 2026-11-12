@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "tsconfck",
+    "version": "3.1.6",
+    "repository": "https://github.com/dominikg/tsconfck",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "Non-compiler JSONC configuration discovery, parsing, extends/path rebasing, solution references, templates and explicit cache used by current/app Vite path plugins. Native TypeScript mode and CLI are not implemented."
+  },
+  "changes": [
+    "Independent zero-dependency reader; no upstream runtime copied and no compiler loaded for ordinary configuration resolution.",
+    "Own-property merges preserve prototype-looking keys as data; source extends arrays remain in their declared order.",
+    "Cache lookup respects root/config-name settings and clear separates in-flight work from the new cache generation.",
+    "Extends and reference cycles/depth fail with bounded diagnostics. Non-object configurations fail explicitly.",
+    "Ordinary JSON configuration packages created after a negative runtime lookup remain resolvable on Bun; exported packages remain governed by the runtime resolver."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "scope": "VentiMath vite.config.mts calls vite-tsconfig-paths5.1.4 with parseNative:false. Unchanged current6.1.1 and app5.1.4 plugins resolve inherited aliases in Vite6.3.5 builds using this reader; the private app tsconfig is compared read-only."
+  },
+  "references": [
+    "https://www.npmjs.com/package/tsconfck",
+    "https://github.com/aleclarson/vite-tsconfig-paths"
+  ]
+}

@@ -64,6 +64,14 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/tsconfck-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Configuration reader, unchanged Vite plugins and packed consumers
+        run: |
+          node --test packages/vtsconfck/test/config.test.cjs
+          node scripts/tsconfck-conformance/run.cjs
+          node scripts/tsconfck-conformance/callers.cjs
+          node scripts/tsconfck-conformance/types.cjs
+          node scripts/tsconfck-conformance/archives.cjs
       - run: npm --prefix scripts/react-popper-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: Navigation popovers, browser lifecycle and pinned consumers
         run: |
@@ -816,6 +824,12 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/tsconfck-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Configuration reader and Vite callers on Bun
+        run: |
+          bun test packages/vtsconfck/test/config.test.cjs
+          bun scripts/tsconfck-conformance/run.cjs
+          bun scripts/tsconfck-conformance/callers.cjs
       - run: npm --prefix scripts/react-popper-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: Navigation popovers on Bun
         run: |
