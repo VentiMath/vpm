@@ -1,0 +1,605 @@
+{
+  "name": "vdate-fns",
+  "version": "4.4.0",
+  "description": "Independent local date arithmetic and English formatting for VentiMath displays and MUI date pickers",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json",
+    "./toDate": {
+      "import": {
+        "types": "./toDate.d.mts",
+        "default": "./toDate.mjs"
+      },
+      "require": {
+        "types": "./toDate.d.cts",
+        "default": "./toDate.cjs"
+      }
+    },
+    "./isValid": {
+      "import": {
+        "types": "./isValid.d.mts",
+        "default": "./isValid.mjs"
+      },
+      "require": {
+        "types": "./isValid.d.cts",
+        "default": "./isValid.cjs"
+      }
+    },
+    "./getDate": {
+      "import": {
+        "types": "./getDate.d.mts",
+        "default": "./getDate.mjs"
+      },
+      "require": {
+        "types": "./getDate.d.cts",
+        "default": "./getDate.cjs"
+      }
+    },
+    "./setDate": {
+      "import": {
+        "types": "./setDate.d.mts",
+        "default": "./setDate.mjs"
+      },
+      "require": {
+        "types": "./setDate.d.cts",
+        "default": "./setDate.cjs"
+      }
+    },
+    "./getHours": {
+      "import": {
+        "types": "./getHours.d.mts",
+        "default": "./getHours.mjs"
+      },
+      "require": {
+        "types": "./getHours.d.cts",
+        "default": "./getHours.cjs"
+      }
+    },
+    "./setHours": {
+      "import": {
+        "types": "./setHours.d.mts",
+        "default": "./setHours.mjs"
+      },
+      "require": {
+        "types": "./setHours.d.cts",
+        "default": "./setHours.cjs"
+      }
+    },
+    "./getMinutes": {
+      "import": {
+        "types": "./getMinutes.d.mts",
+        "default": "./getMinutes.mjs"
+      },
+      "require": {
+        "types": "./getMinutes.d.cts",
+        "default": "./getMinutes.cjs"
+      }
+    },
+    "./setMinutes": {
+      "import": {
+        "types": "./setMinutes.d.mts",
+        "default": "./setMinutes.mjs"
+      },
+      "require": {
+        "types": "./setMinutes.d.cts",
+        "default": "./setMinutes.cjs"
+      }
+    },
+    "./getMonth": {
+      "import": {
+        "types": "./getMonth.d.mts",
+        "default": "./getMonth.mjs"
+      },
+      "require": {
+        "types": "./getMonth.d.cts",
+        "default": "./getMonth.cjs"
+      }
+    },
+    "./setMonth": {
+      "import": {
+        "types": "./setMonth.d.mts",
+        "default": "./setMonth.mjs"
+      },
+      "require": {
+        "types": "./setMonth.d.cts",
+        "default": "./setMonth.cjs"
+      }
+    },
+    "./getSeconds": {
+      "import": {
+        "types": "./getSeconds.d.mts",
+        "default": "./getSeconds.mjs"
+      },
+      "require": {
+        "types": "./getSeconds.d.cts",
+        "default": "./getSeconds.cjs"
+      }
+    },
+    "./setSeconds": {
+      "import": {
+        "types": "./setSeconds.d.mts",
+        "default": "./setSeconds.mjs"
+      },
+      "require": {
+        "types": "./setSeconds.d.cts",
+        "default": "./setSeconds.cjs"
+      }
+    },
+    "./getMilliseconds": {
+      "import": {
+        "types": "./getMilliseconds.d.mts",
+        "default": "./getMilliseconds.mjs"
+      },
+      "require": {
+        "types": "./getMilliseconds.d.cts",
+        "default": "./getMilliseconds.cjs"
+      }
+    },
+    "./setMilliseconds": {
+      "import": {
+        "types": "./setMilliseconds.d.mts",
+        "default": "./setMilliseconds.mjs"
+      },
+      "require": {
+        "types": "./setMilliseconds.d.cts",
+        "default": "./setMilliseconds.cjs"
+      }
+    },
+    "./getYear": {
+      "import": {
+        "types": "./getYear.d.mts",
+        "default": "./getYear.mjs"
+      },
+      "require": {
+        "types": "./getYear.d.cts",
+        "default": "./getYear.cjs"
+      }
+    },
+    "./setYear": {
+      "import": {
+        "types": "./setYear.d.mts",
+        "default": "./setYear.mjs"
+      },
+      "require": {
+        "types": "./setYear.d.cts",
+        "default": "./setYear.cjs"
+      }
+    },
+    "./startOfDay": {
+      "import": {
+        "types": "./startOfDay.d.mts",
+        "default": "./startOfDay.mjs"
+      },
+      "require": {
+        "types": "./startOfDay.d.cts",
+        "default": "./startOfDay.cjs"
+      }
+    },
+    "./startOfMonth": {
+      "import": {
+        "types": "./startOfMonth.d.mts",
+        "default": "./startOfMonth.mjs"
+      },
+      "require": {
+        "types": "./startOfMonth.d.cts",
+        "default": "./startOfMonth.cjs"
+      }
+    },
+    "./startOfYear": {
+      "import": {
+        "types": "./startOfYear.d.mts",
+        "default": "./startOfYear.mjs"
+      },
+      "require": {
+        "types": "./startOfYear.d.cts",
+        "default": "./startOfYear.cjs"
+      }
+    },
+    "./endOfDay": {
+      "import": {
+        "types": "./endOfDay.d.mts",
+        "default": "./endOfDay.mjs"
+      },
+      "require": {
+        "types": "./endOfDay.d.cts",
+        "default": "./endOfDay.cjs"
+      }
+    },
+    "./endOfMonth": {
+      "import": {
+        "types": "./endOfMonth.d.mts",
+        "default": "./endOfMonth.mjs"
+      },
+      "require": {
+        "types": "./endOfMonth.d.cts",
+        "default": "./endOfMonth.cjs"
+      }
+    },
+    "./endOfYear": {
+      "import": {
+        "types": "./endOfYear.d.mts",
+        "default": "./endOfYear.mjs"
+      },
+      "require": {
+        "types": "./endOfYear.d.cts",
+        "default": "./endOfYear.cjs"
+      }
+    },
+    "./getDaysInMonth": {
+      "import": {
+        "types": "./getDaysInMonth.d.mts",
+        "default": "./getDaysInMonth.mjs"
+      },
+      "require": {
+        "types": "./getDaysInMonth.d.cts",
+        "default": "./getDaysInMonth.cjs"
+      }
+    },
+    "./addDays": {
+      "import": {
+        "types": "./addDays.d.mts",
+        "default": "./addDays.mjs"
+      },
+      "require": {
+        "types": "./addDays.d.cts",
+        "default": "./addDays.cjs"
+      }
+    },
+    "./addWeeks": {
+      "import": {
+        "types": "./addWeeks.d.mts",
+        "default": "./addWeeks.mjs"
+      },
+      "require": {
+        "types": "./addWeeks.d.cts",
+        "default": "./addWeeks.cjs"
+      }
+    },
+    "./addMonths": {
+      "import": {
+        "types": "./addMonths.d.mts",
+        "default": "./addMonths.mjs"
+      },
+      "require": {
+        "types": "./addMonths.d.cts",
+        "default": "./addMonths.cjs"
+      }
+    },
+    "./addYears": {
+      "import": {
+        "types": "./addYears.d.mts",
+        "default": "./addYears.mjs"
+      },
+      "require": {
+        "types": "./addYears.d.cts",
+        "default": "./addYears.cjs"
+      }
+    },
+    "./addMilliseconds": {
+      "import": {
+        "types": "./addMilliseconds.d.mts",
+        "default": "./addMilliseconds.mjs"
+      },
+      "require": {
+        "types": "./addMilliseconds.d.cts",
+        "default": "./addMilliseconds.cjs"
+      }
+    },
+    "./addSeconds": {
+      "import": {
+        "types": "./addSeconds.d.mts",
+        "default": "./addSeconds.mjs"
+      },
+      "require": {
+        "types": "./addSeconds.d.cts",
+        "default": "./addSeconds.cjs"
+      }
+    },
+    "./addMinutes": {
+      "import": {
+        "types": "./addMinutes.d.mts",
+        "default": "./addMinutes.mjs"
+      },
+      "require": {
+        "types": "./addMinutes.d.cts",
+        "default": "./addMinutes.cjs"
+      }
+    },
+    "./addHours": {
+      "import": {
+        "types": "./addHours.d.mts",
+        "default": "./addHours.mjs"
+      },
+      "require": {
+        "types": "./addHours.d.cts",
+        "default": "./addHours.cjs"
+      }
+    },
+    "./sub": {
+      "import": {
+        "types": "./sub.d.mts",
+        "default": "./sub.mjs"
+      },
+      "require": {
+        "types": "./sub.d.cts",
+        "default": "./sub.cjs"
+      }
+    },
+    "./startOfWeek": {
+      "import": {
+        "types": "./startOfWeek.d.mts",
+        "default": "./startOfWeek.mjs"
+      },
+      "require": {
+        "types": "./startOfWeek.d.cts",
+        "default": "./startOfWeek.cjs"
+      }
+    },
+    "./endOfWeek": {
+      "import": {
+        "types": "./endOfWeek.d.mts",
+        "default": "./endOfWeek.mjs"
+      },
+      "require": {
+        "types": "./endOfWeek.d.cts",
+        "default": "./endOfWeek.cjs"
+      }
+    },
+    "./getWeek": {
+      "import": {
+        "types": "./getWeek.d.mts",
+        "default": "./getWeek.mjs"
+      },
+      "require": {
+        "types": "./getWeek.d.cts",
+        "default": "./getWeek.cjs"
+      }
+    },
+    "./isAfter": {
+      "import": {
+        "types": "./isAfter.d.mts",
+        "default": "./isAfter.mjs"
+      },
+      "require": {
+        "types": "./isAfter.d.cts",
+        "default": "./isAfter.cjs"
+      }
+    },
+    "./isBefore": {
+      "import": {
+        "types": "./isBefore.d.mts",
+        "default": "./isBefore.mjs"
+      },
+      "require": {
+        "types": "./isBefore.d.cts",
+        "default": "./isBefore.cjs"
+      }
+    },
+    "./isEqual": {
+      "import": {
+        "types": "./isEqual.d.mts",
+        "default": "./isEqual.mjs"
+      },
+      "require": {
+        "types": "./isEqual.d.cts",
+        "default": "./isEqual.cjs"
+      }
+    },
+    "./isSameYear": {
+      "import": {
+        "types": "./isSameYear.d.mts",
+        "default": "./isSameYear.mjs"
+      },
+      "require": {
+        "types": "./isSameYear.d.cts",
+        "default": "./isSameYear.cjs"
+      }
+    },
+    "./isSameMonth": {
+      "import": {
+        "types": "./isSameMonth.d.mts",
+        "default": "./isSameMonth.mjs"
+      },
+      "require": {
+        "types": "./isSameMonth.d.cts",
+        "default": "./isSameMonth.cjs"
+      }
+    },
+    "./isSameDay": {
+      "import": {
+        "types": "./isSameDay.d.mts",
+        "default": "./isSameDay.mjs"
+      },
+      "require": {
+        "types": "./isSameDay.d.cts",
+        "default": "./isSameDay.cjs"
+      }
+    },
+    "./isSameHour": {
+      "import": {
+        "types": "./isSameHour.d.mts",
+        "default": "./isSameHour.mjs"
+      },
+      "require": {
+        "types": "./isSameHour.d.cts",
+        "default": "./isSameHour.cjs"
+      }
+    },
+    "./isWithinInterval": {
+      "import": {
+        "types": "./isWithinInterval.d.mts",
+        "default": "./isWithinInterval.mjs"
+      },
+      "require": {
+        "types": "./isWithinInterval.d.cts",
+        "default": "./isWithinInterval.cjs"
+      }
+    },
+    "./isToday": {
+      "import": {
+        "types": "./isToday.d.mts",
+        "default": "./isToday.mjs"
+      },
+      "require": {
+        "types": "./isToday.d.cts",
+        "default": "./isToday.cjs"
+      }
+    },
+    "./isYesterday": {
+      "import": {
+        "types": "./isYesterday.d.mts",
+        "default": "./isYesterday.mjs"
+      },
+      "require": {
+        "types": "./isYesterday.d.cts",
+        "default": "./isYesterday.cjs"
+      }
+    },
+    "./isThisYear": {
+      "import": {
+        "types": "./isThisYear.d.mts",
+        "default": "./isThisYear.mjs"
+      },
+      "require": {
+        "types": "./isThisYear.d.cts",
+        "default": "./isThisYear.cjs"
+      }
+    },
+    "./format": {
+      "import": {
+        "types": "./format.d.mts",
+        "default": "./format.mjs"
+      },
+      "require": {
+        "types": "./format.d.cts",
+        "default": "./format.cjs"
+      }
+    },
+    "./formatISO": {
+      "import": {
+        "types": "./formatISO.d.mts",
+        "default": "./formatISO.mjs"
+      },
+      "require": {
+        "types": "./formatISO.d.cts",
+        "default": "./formatISO.cjs"
+      }
+    },
+    "./parse": {
+      "import": {
+        "types": "./parse.d.mts",
+        "default": "./parse.mjs"
+      },
+      "require": {
+        "types": "./parse.d.cts",
+        "default": "./parse.cjs"
+      }
+    },
+    "./parseISO": {
+      "import": {
+        "types": "./parseISO.d.mts",
+        "default": "./parseISO.mjs"
+      },
+      "require": {
+        "types": "./parseISO.d.cts",
+        "default": "./parseISO.cjs"
+      }
+    },
+    "./formatDistance": {
+      "import": {
+        "types": "./formatDistance.d.mts",
+        "default": "./formatDistance.mjs"
+      },
+      "require": {
+        "types": "./formatDistance.d.cts",
+        "default": "./formatDistance.cjs"
+      }
+    },
+    "./formatDistanceStrict": {
+      "import": {
+        "types": "./formatDistanceStrict.d.mts",
+        "default": "./formatDistanceStrict.mjs"
+      },
+      "require": {
+        "types": "./formatDistanceStrict.d.cts",
+        "default": "./formatDistanceStrict.cjs"
+      }
+    },
+    "./formatDistanceToNow": {
+      "import": {
+        "types": "./formatDistanceToNow.d.mts",
+        "default": "./formatDistanceToNow.mjs"
+      },
+      "require": {
+        "types": "./formatDistanceToNow.d.cts",
+        "default": "./formatDistanceToNow.cjs"
+      }
+    },
+    "./formatDistanceToNowStrict": {
+      "import": {
+        "types": "./formatDistanceToNowStrict.d.mts",
+        "default": "./formatDistanceToNowStrict.mjs"
+      },
+      "require": {
+        "types": "./formatDistanceToNowStrict.d.cts",
+        "default": "./formatDistanceToNowStrict.cjs"
+      }
+    },
+    "./locale": {
+      "import": {
+        "types": "./locale/index.d.mts",
+        "default": "./locale/index.mjs"
+      },
+      "require": {
+        "types": "./locale/index.d.cts",
+        "default": "./locale/index.cjs"
+      }
+    },
+    "./locale/en-US": {
+      "import": {
+        "types": "./locale/en-US.d.mts",
+        "default": "./locale/en-US.mjs"
+      },
+      "require": {
+        "types": "./locale/en-US.d.cts",
+        "default": "./locale/en-US.cjs"
+      }
+    }
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.mts",
+    "*.cts",
+    "locale",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vdate-fns"
+  }
+}

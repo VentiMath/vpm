@@ -64,6 +64,15 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/date-fns-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Date utilities, unchanged MUI picker and packed consumers
+        run: |
+          node --test packages/vdate-fns/test/dates.test.cjs
+          node scripts/date-fns-conformance/run.cjs
+          node scripts/date-fns-conformance/adapter.cjs
+          node scripts/date-fns-conformance/types.cjs
+          node scripts/date-fns-conformance/browser.cjs
+          node scripts/date-fns-conformance/archives.cjs
       - run: npm --prefix scripts/zod-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Zod schema language, form stack and installed consumers
         run: |
@@ -773,6 +782,12 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/date-fns-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Date utilities and unchanged MUI adapter on Bun
+        run: |
+          bun test packages/vdate-fns/test/dates.test.cjs
+          bun scripts/date-fns-conformance/run.cjs
+          bun scripts/date-fns-conformance/adapter.cjs
       - run: npm --prefix scripts/zod-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Zod schema language and form stack on Bun
         run: |

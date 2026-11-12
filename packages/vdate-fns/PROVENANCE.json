@@ -1,0 +1,29 @@
+{
+  "upstream": {
+    "name": "date-fns",
+    "version": "4.4.0",
+    "repository": "https://github.com/date-fns/date-fns",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "VentiMath's English date displays, local date arithmetic, relative timestamps and unchanged MUI DateTimePicker AdapterDateFns API. Plain Date values and en-US only; not the full date-fns locale, FP, UTCDate/TZDate or context surface."
+  },
+  "changes": [
+    "Independent implementation from public APIs, application caller inspection and black-box comparisons. No upstream runtime copied or runtime dependencies.",
+    "Bounded format-token cache shared by formatting and field parsing; no dynamic code generation.",
+    "Month arithmetic clamps day-of-month, day arithmetic follows local calendars, and hours/minutes/seconds advance elapsed time.",
+    "ISO and picker parsing reject impossible calendar dates; timezone behavior uses the runtime's maintained timezone data rather than fixed geographical offsets."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "upstreamVersion": "4.1.0",
+    "scope": "Issues, calendar events, notes/reminders, notifications, messenger, mailbox, profile and the root MUI AdapterDateFns/enUS provider. Fixtures use MUI X Date Pickers 8.7.0 and React 19.3.1. Private application source is not shipped; adoption remains separate."
+  },
+  "references": [
+    "https://date-fns.org/v4.4.0/docs/format",
+    "https://date-fns.org/v4.4.0/docs/parseISO",
+    "https://mui.com/x/react-date-pickers/adapters-locale/"
+  ]
+}
