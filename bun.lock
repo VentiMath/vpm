@@ -1263,6 +1263,17 @@
       "name": "vreact-is",
       "version": "0.1.0",
     },
+    "packages/vreact-popper": {
+      "name": "vreact-popper",
+      "version": "2.3.0",
+      "dependencies": {
+        "vfloating-ui-dom": "workspace:*",
+        "vreact-fast-compare": "workspace:*",
+      },
+      "peerDependencies": {
+        "react": "^19.3.0",
+      },
+    },
     "packages/vreact-remove-scroll": {
       "name": "vreact-remove-scroll",
       "version": "2.7.2",
@@ -2098,6 +2109,8 @@
     "vreact-i18next": ["vreact-i18next@workspace:packages/vreact-i18next"],
 
     "vreact-is": ["vreact-is@workspace:packages/vreact-is"],
+
+    "vreact-popper": ["vreact-popper@workspace:packages/vreact-popper"],
 
     "vreact-remove-scroll": ["vreact-remove-scroll@workspace:packages/vreact-remove-scroll"],
 

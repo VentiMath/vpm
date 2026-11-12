@@ -1,0 +1,30 @@
+{
+  "upstream": {
+    "name": "react-popper",
+    "version": "2.3.0",
+    "repository": "https://github.com/floating-ui/react-popper",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19.3 Manager, Reference and Popper render-prop navigation components with explicit side placements, portals, RTL, offsets/arrows and bounded standard modifier options. Reuses independently implemented VPM Floating. Does not implement the generic usePopper hook, custom modifier engine, automatic placement or synchronous forceUpdate."
+  },
+  "changes": [
+    "Independent navigation wrapper over VPM Floating instead of another Popper geometry engine; no upstream wrapper runtime copied.",
+    "Stable callback refs and state equality preserve DOM/focus; React 19 ref cleanup and owner-document observer teardown are honored.",
+    "Async measurement results are accepted only for the newest active element pair; teardown suppresses queued updates.",
+    "Native resize observation repositions changed menus. A scaled clipping-container regression stays inside its visible boundary where the upstream control clips the menu.",
+    "Unsupported modifier callbacks fail explicitly rather than being silently ignored.",
+    "React 19.3 StrictMode positions the initial menu where the unchanged control leaves it at (0, 0); both outcomes are asserted separately."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "upstreamVersion": "2.3.0",
+    "scope": "FuseNavHorizontalGroup and FuseNavHorizontalCollapse use Manager, Reference and Popper render props, portalled into the root, with bottom-start/bottom-end/right/left placements and conditional open children. Other MUI @popperjs/core callers are not replaced by this package."
+  },
+  "references": [
+    "https://github.com/floating-ui/react-popper",
+    "https://floating-ui.com/docs/migration"
+  ]
+}

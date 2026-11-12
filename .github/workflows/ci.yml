@@ -64,6 +64,15 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/react-popper-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: Navigation popovers, browser lifecycle and pinned consumers
+        run: |
+          node --test packages/vreact-popper/test/navigation.test.cjs
+          node scripts/react-popper-conformance/run.cjs
+          node scripts/react-popper-conformance/types.cjs
+          node scripts/react-popper-conformance/browser.cjs
+          VPM_REACT_MODE=development node scripts/react-popper-conformance/browser.cjs
+          node scripts/react-popper-conformance/archives.cjs
       - run: npm --prefix scripts/jwt-decode-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Token decoding, browser and packed consumers
         run: |
@@ -807,6 +816,11 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/react-popper-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: Navigation popovers on Bun
+        run: |
+          bun test packages/vreact-popper/test/navigation.test.cjs
+          bun scripts/react-popper-conformance/run.cjs
       - run: npm --prefix scripts/jwt-decode-conformance ci --ignore-scripts --no-audit --no-fund
       - name: Token decoding on Bun
         run: |

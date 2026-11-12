@@ -1,0 +1,13 @@
+{
+  "name": "vpm-react-popper-conformance",
+  "private": true,
+  "dependencies": {
+    "react-popper": "2.3.0",
+    "@popperjs/core": "2.11.8",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "esbuild": "0.25.12"
+  }
+}
