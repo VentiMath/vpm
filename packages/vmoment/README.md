@@ -38,3 +38,10 @@ Both ESM and CommonJS are supported on Node 24 and Bun 1.4.4. Types include the
 
 [Provenance](PROVENANCE.json), [checks](../../scripts/moment-conformance/README.md)
 and [isolated measurements](bench/results/README.md).
+
+## Timezone changes
+
+[Calendar-day and runtime timezone checks](../../docs/TIME-ZONES.md) cover BC’s
+2026 change, historical DST, exact event instants and runtime data requirements.
+The current implementation passes; timezone rules remain supplied by the runtime
+or scheduling service rather than a fixed provincial offset.

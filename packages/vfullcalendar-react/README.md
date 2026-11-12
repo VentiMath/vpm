@@ -164,3 +164,10 @@ deployment is not inferred. See [installation](../../docs/INSTALLATION.md) and
 [adoption evidence](../../docs/ADOPTION.md).
 
 MIT. [Provenance](PROVENANCE.json) records the comparison baseline and scope.
+
+## Timezone changes
+
+[Calendar-day and runtime timezone checks](../../docs/TIME-ZONES.md) cover BC’s
+2026 change, historical DST, exact event instants and runtime data requirements.
+The current implementation passes; timezone rules remain supplied by the runtime
+or scheduling service rather than a fixed provincial offset.

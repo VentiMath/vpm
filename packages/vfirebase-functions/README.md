@@ -185,3 +185,10 @@ errors name different incompatible Express fields. This is not a clean app
 build claim. Incoming request declarations now match server method, URL, headers
 and ordinary route parameters. Consumer migration/release and deployment are
 separate work.
+
+## Timezone changes
+
+[Calendar-day and runtime timezone checks](../../docs/TIME-ZONES.md) cover BC’s
+2026 change, historical DST, exact event instants and runtime data requirements.
+The current implementation passes; timezone rules remain supplied by the runtime
+or scheduling service rather than a fixed provincial offset.

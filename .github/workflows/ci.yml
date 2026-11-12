@@ -57,6 +57,10 @@ jobs:
           node scripts/motion-dom-conformance/browser.cjs
           node scripts/motion-dom-conformance/archives.cjs
       - run: npm --prefix scripts/hook-form-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Calendar timezone data and civil-day regression guard
+        run: |
+          node scripts/time-zone-conformance/run.cjs
+          node scripts/time-zone-conformance/browser.cjs
       - name: Hook Form caller behavior, native inputs and exact archives
         run: |
           node --test packages/vreact-hook-form/test/store.test.cjs
@@ -744,6 +748,8 @@ jobs:
           bun scripts/motion-dom-conformance/transitions.cjs
           bun scripts/motion-dom-conformance/effects.cjs
       - run: npm --prefix scripts/hook-form-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Calendar timezone data and civil-day regression guard on Bun
+        run: bun scripts/time-zone-conformance/run.cjs
       - name: Hook Form caller behavior on Bun
         run: |
           bun test packages/vreact-hook-form/test/store.test.cjs

@@ -77,3 +77,10 @@ and observes mutations to either.
 [PROVENANCE.json](PROVENANCE.json) records the source references and retained
 contracts. MIT attribution is preserved. This implementation was informed by
 upstream behavior, source inspection and tests; it is not a clean-room claim.
+
+## Timezone changes
+
+[Calendar-day and runtime timezone checks](../../docs/TIME-ZONES.md) cover BC’s
+2026 change, historical DST, exact event instants and runtime data requirements.
+The current implementation passes; timezone rules remain supplied by the runtime
+or scheduling service rather than a fixed provincial offset.
