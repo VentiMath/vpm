@@ -636,6 +636,10 @@
         "vjwa": "workspace:*",
       },
     },
+    "packages/vjwt-decode": {
+      "name": "vjwt-decode",
+      "version": "4.0.0",
+    },
     "packages/vky": {
       "name": "vky",
       "version": "2.2.0",
@@ -1930,6 +1934,8 @@
     "vjwks-rsa": ["vjwks-rsa@workspace:packages/vjwks-rsa"],
 
     "vjws": ["vjws@workspace:packages/vjws"],
+
+    "vjwt-decode": ["vjwt-decode@workspace:packages/vjwt-decode"],
 
     "vky": ["vky@workspace:packages/vky"],
 

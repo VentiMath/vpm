@@ -1,0 +1,1323 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-12T22:10:25.998Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/jwt-decode-conformance/node_modules/jwt-decode": "07713d2f82ff314860b6336fce0dc4a55d73326d8d81e7da9de976cbc4d919f4",
+    "../../scripts/jwt-decode-conformance/package-lock.json": "c0c62874cc2fa06ad105a8603cdf610cd470166aa11f1753d8a28eccfe15d76d",
+    "PROVENANCE.json": "073da92f28f4545bb4fc1179a164fd8d148700558d862935ecacc4808ac1d6f2",
+    "bench/run.cjs": "7dd5508ac2a51387ecd4668fec468da7803475964d9bb2456dabb2acbeb2188f",
+    "index.cjs": "93879da34bf46754a2cf3796d3084d479be47191afed2b65da52163f9879d576",
+    "package.json": "117cd42931848d66d508f72a45d8b7bfd6e7040a880fcf3493ed575ab3ce40ce"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 72945,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 1734,
+            "samples": [
+              5619.185121107276,
+              5705.978662053046,
+              5733.948673587082,
+              5397.154555940023,
+              5719.698961937733,
+              6004.4936562860385,
+              5818.987889273357,
+              5819.6366782006935,
+              5620.60265282584,
+              5981.137254901952,
+              5726.667820069213,
+              5816.897347174164
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 1334,
+            "samples": [
+              7415.073463268362,
+              7542.041229385262,
+              7682.252623688125,
+              7365.129685157469,
+              9934.907796102007,
+              8063.562218890569,
+              7755.778110944478,
+              7071.151424287839,
+              6991.691904047961,
+              7206.709145427358,
+              7446.026986506741,
+              7155.20389805095
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 90,
+            "samples": [
+              123619.91111111037,
+              128067.58888888858,
+              122218.05555555597,
+              126070.37777777728,
+              123808.33333333308,
+              125149.06666666675,
+              127224.54444444539,
+              121834.25555555485,
+              125710.18888888828,
+              132529.63333333255,
+              128680.08888888957,
+              144967.58888888935
+            ]
+          }
+        ],
+        "checksum": 10528
+      },
+      "vpm": {
+        "pid": 72948,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 1734,
+            "samples": [
+              280.0121107266505,
+              281.26182237600796,
+              273.1880046136195,
+              273.0680507497124,
+              278.23414071509796,
+              276.09573241060605,
+              281.1897347174168,
+              278.7387543252524,
+              278.3783160322966,
+              273.8131487889155,
+              277.6816608996604,
+              278.642445213386
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 1334,
+            "samples": [
+              368.12818590704893,
+              375.06221889056366,
+              370.65892053973477,
+              369.6281859070542,
+              371.06446776612034,
+              370.3770614692572,
+              366.0667166416878,
+              373.2503748126177,
+              366.78560719642763,
+              372.3140929535249,
+              375.06221889056366,
+              366.75412293855084
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 90,
+            "samples": [
+              5907.40000000033,
+              5718.055555555187,
+              5996.755555555764,
+              5352.77777777752,
+              5562.95555555582,
+              9857.411111111483,
+              5568.977777777364,
+              5938.888888888667,
+              5516.666666666954,
+              5489.344444444239,
+              5600.4666666663325,
+              5377.31111111144
+            ]
+          }
+        ],
+        "checksum": 56160
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 72964,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 38117,
+            "samples": [
+              277.25051814151175,
+              271.8985754387805,
+              268.2704829865944,
+              266.0110187055646,
+              268.31093737702315,
+              260.3333158433237,
+              272.20355746779666,
+              291.0741926174673,
+              276.0874412991574,
+              278.6442532203478,
+              276.69522785108956,
+              277.40464884434715
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 25664,
+            "samples": [
+              475.1581203241872,
+              495.6066864089771,
+              483.1979426433925,
+              483.137858478805,
+              477.1015040523684,
+              483.98862219451183,
+              496.03530236907557,
+              407.7014495012475,
+              404.1134273690779,
+              411.76192331670774,
+              403.2691708229396,
+              398.16147132169755
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 1863,
+            "samples": [
+              5582.550187869049,
+              5856.951154052628,
+              5747.472893183032,
+              6051.731078904972,
+              6007.850241545904,
+              6067.543746645163,
+              6335.212023617826,
+              5767.668276972586,
+              5907.340311325796,
+              6192.185721953873,
+              5968.308105206667,
+              5774.624261943137
+            ]
+          }
+        ],
+        "checksum": 11232
+      },
+      "upstream": {
+        "pid": 72965,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 38117,
+            "samples": [
+              5712.546239210855,
+              5699.017708633944,
+              5703.948815489149,
+              5688.369572631636,
+              5743.600834273419,
+              5589.140016265702,
+              5639.239053440722,
+              5737.365663614659,
+              5659.364587979113,
+              5509.024844557551,
+              5471.730671353993,
+              5725.144502452982
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 25664,
+            "samples": [
+              7588.937811720692,
+              7521.992557668332,
+              7247.223737531185,
+              7410.800810473828,
+              7308.905470698253,
+              7436.532341022423,
+              7512.866583541142,
+              7730.200865024952,
+              7458.463216957632,
+              7185.140975685781,
+              7143.28600374063,
+              7902.613271508734
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 1863,
+            "samples": [
+              135507.17928073014,
+              130135.08695652225,
+              131171.22920021438,
+              133018.58561460048,
+              131399.11003757385,
+              159191.00053676794,
+              140675.14278046147,
+              130024.19967793876,
+              131842.34675254967,
+              135014.515297906,
+              139611.80461621055,
+              127790.68223295752
+            ]
+          }
+        ],
+        "checksum": 3360
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 73010,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 1742,
+            "samples": [
+              5529.324913892074,
+              5470.484500574053,
+              5698.096440872562,
+              5751.793915040178,
+              5377.152698048215,
+              5386.337543053984,
+              5761.743972445448,
+              5361.653272101019,
+              5743.661308840399,
+              5741.8915040183865,
+              5686.064867967852,
+              5666.260045924202
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 1411,
+            "samples": [
+              7497.076541459913,
+              7335.19418851879,
+              7557.288447909258,
+              7339.003543586088,
+              7150.425230333092,
+              7258.297661233144,
+              7510.719347980152,
+              7453.106307583297,
+              7570.074415308293,
+              7119.714386959545,
+              7101.4939759036315,
+              7482.164422395523
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 79,
+            "samples": [
+              120214.13924050555,
+              124919.83544303746,
+              129003.16455696306,
+              129375.5316455688,
+              118385.02531645645,
+              128549.05063291201,
+              120817.50632911378,
+              122880.27848101252,
+              124298.00000000087,
+              125121.30379746862,
+              122464.13924050632,
+              126050.10126582232
+            ]
+          }
+        ],
+        "checksum": 7968
+      },
+      "vpm": {
+        "pid": 73011,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 1742,
+            "samples": [
+              264.3030998851784,
+              260.5241102181418,
+              265.9299655568243,
+              267.36509758898626,
+              261.2657864523591,
+              260.9787600459202,
+              264.8536165327232,
+              283.3432835820887,
+              270.3547646383444,
+              258.5390355912791,
+              258.4913892078179,
+              262.2462686567101
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 1411,
+            "samples": [
+              378.1594613749266,
+              373.40538625089874,
+              495.7774627923516,
+              372.84408221121777,
+              374.6165839829671,
+              371.33876683202743,
+              368.00141743444334,
+              375.6201275691209,
+              379.1346562721579,
+              375.14741318210594,
+              377.0963855421688,
+              372.6669029057245
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 79,
+            "samples": [
+              5379.746835443181,
+              5438.291139240345,
+              5594.405063291135,
+              9650.316455696457,
+              5504.746835442745,
+              5448.316455695914,
+              5439.87341772168,
+              5353.898734177142,
+              5488.924050632992,
+              5506.329113924079,
+              5363.405063291529,
+              5370.2531645566105
+            ]
+          }
+        ],
+        "checksum": 60576
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 73012,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 36381,
+            "samples": [
+              278.0915862675576,
+              274.6660344685406,
+              266.38561336961664,
+              270.87056430554435,
+              286.22198400263926,
+              271.1900992276193,
+              278.2885572139318,
+              273.5711497759832,
+              272.4648030565413,
+              280.2767928314233,
+              277.10205876693755,
+              278.4557873615344
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 25994,
+            "samples": [
+              490.08744325613554,
+              471.0205432022807,
+              468.90790182349474,
+              475.7091636531512,
+              469.3006078325794,
+              480.92829114411126,
+              382.27410171577975,
+              381.2033546202967,
+              391.26017542509976,
+              380.8362699084397,
+              386.1035238901293,
+              383.09802262060555
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 1835,
+            "samples": [
+              5917.234332425053,
+              5981.561852861055,
+              5514.486648501388,
+              5800.091008174359,
+              6060.013623978156,
+              5944.141689373312,
+              6000.045231607634,
+              6001.34005449587,
+              5560.512806539495,
+              5505.336239782035,
+              5743.097002724805,
+              6016.644141689413
+            ]
+          }
+        ],
+        "checksum": 11744
+      },
+      "upstream": {
+        "pid": 73013,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 36381,
+            "samples": [
+              5777.765179626728,
+              5559.207855748878,
+              5634.618124845381,
+              5723.514114510322,
+              5736.136307413203,
+              5731.795690058,
+              5650.486050410932,
+              5554.357604243964,
+              5723.736290921078,
+              5807.656029246031,
+              5582.932464748083,
+              5542.068662213798
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 25994,
+            "samples": [
+              7152.052742940668,
+              7202.1876971608835,
+              7063.597984150211,
+              7029.186196814624,
+              7135.624259444501,
+              6991.84265599752,
+              7323.419173655464,
+              7333.987304762639,
+              7346.3251134877155,
+              7441.406363006843,
+              7583.876702315939,
+              7968.300377010068
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 1835,
+            "samples": [
+              130881.13079019118,
+              134283.08337874713,
+              126801.2942779291,
+              127426.40762942766,
+              124562.67029972763,
+              126297.77438692108,
+              134635.1722070843,
+              126508.44686648503,
+              122991.39455040879,
+              135859.92261580392,
+              143395.18637602145,
+              131204.927520436
+            ]
+          }
+        ],
+        "checksum": 3360
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 73046,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 1814,
+            "samples": [
+              5371.761300992277,
+              5559.674751929439,
+              5772.326350606397,
+              5532.708379272333,
+              5504.731532524818,
+              5824.168687982363,
+              5737.757442116878,
+              5504.272326350617,
+              5473.19459757443,
+              5519.983461962497,
+              5474.15931642777,
+              5708.930540242555
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 1426,
+            "samples": [
+              7716.251753155684,
+              7589.6157082749305,
+              7256.720196353418,
+              7514.755960729323,
+              7476.039971949526,
+              7207.047685834489,
+              7508.1234221599025,
+              7467.859046283334,
+              7501.7237026647845,
+              7044.004207573648,
+              7468.589761570841,
+              7870.908835904651
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 80,
+            "samples": [
+              127148.9625000001,
+              126375.52500000026,
+              118727.07500000104,
+              119680.72500000063,
+              128359.37499999945,
+              132370.31249999945,
+              120990.62499999888,
+              124285.41249999937,
+              123528.6500000001,
+              124892.69999999949,
+              133041.14999999967,
+              119528.63750000091
+            ]
+          }
+        ],
+        "checksum": 7648
+      },
+      "vpm": {
+        "pid": 73047,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 1814,
+            "samples": [
+              5631.132855567794,
+              5457.437706725464,
+              5871.876515986762,
+              5652.149944873217,
+              5589.833517089294,
+              5745.957001102525,
+              5868.729327453136,
+              5624.862183020959,
+              5764.195148842344,
+              5842.222712238162,
+              5709.9410143329815,
+              5410.992833517087
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 1426,
+            "samples": [
+              6904.307152875191,
+              7032.930575035054,
+              7188.873071528783,
+              7506.457223001398,
+              7439.311360448757,
+              7077.314165497842,
+              7600.922861150019,
+              7260.548387096737,
+              7429.990182328155,
+              6843.998597475464,
+              7289.036465638177,
+              7533.251051893442
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 80,
+            "samples": [
+              122291.14999999951,
+              125904.68750000097,
+              118558.86250000083,
+              124314.0624999995,
+              118325.00000000009,
+              115352.60000000134,
+              114697.91250000014,
+              124421.87500000016,
+              123651.56250000097,
+              123020.83750000037,
+              123086.46250000095,
+              123168.74999999926
+            ]
+          }
+        ],
+        "checksum": 6048
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 73048,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 1835,
+            "samples": [
+              5738.305722070854,
+              6160.6038147139,
+              5834.899727520438,
+              5679.041961852861,
+              5457.334059945487,
+              5789.032697547665,
+              5720.889918256139,
+              5820.50408719344,
+              5722.570027247966,
+              5496.20762942778,
+              5684.309536784731,
+              5456.471389645784
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 1339,
+            "samples": [
+              7291.230769230789,
+              7529.126213592152,
+              7867.345033607136,
+              7060.1508588498655,
+              7172.672143390654,
+              7436.955190440618,
+              7161.252427184494,
+              7149.1784914115315,
+              7227.346527259142,
+              7580.595220313628,
+              7310.119492158288,
+              7529.032860343609
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 87,
+            "samples": [
+              119813.68965517299,
+              122909.00000000001,
+              122130.26436781557,
+              124624.9999999994,
+              119286.39080459802,
+              115286.87356321928,
+              126289.27586206897,
+              128409.48275862142,
+              127645.59770115002,
+              128319.44827586273,
+              123136.49425287287,
+              116956.42528735625
+            ]
+          }
+        ],
+        "checksum": 7136
+      },
+      "upstream": {
+        "pid": 73049,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "mock user payload",
+            "iterations": 1835,
+            "samples": [
+              5834.150408719335,
+              5793.301362397834,
+              5593.596730245218,
+              5946.412534059942,
+              5638.532970027252,
+              5624.750408719344,
+              5702.67956403268,
+              5536.3531335150055,
+              5849.99999999998,
+              5623.365122615799,
+              5892.82506811989,
+              5777.020708446878
+            ]
+          },
+          {
+            "case": "Unicode payload",
+            "iterations": 1339,
+            "samples": [
+              7088.0014936520265,
+              7323.06497386114,
+              7836.849887976053,
+              7368.932038834922,
+              7488.050784167331,
+              7850.32412247944,
+              7344.006721433893,
+              7160.350261389025,
+              7320.5436893203505,
+              7463.623599701258,
+              7542.040328603438,
+              6975.69678864817
+            ]
+          },
+          {
+            "case": "larger claim set",
+            "iterations": 87,
+            "samples": [
+              119172.89655172352,
+              132842.90804597668,
+              124751.43678160952,
+              123584.7701149417,
+              123994.25287356217,
+              124263.88505747028,
+              123335.73563218329,
+              120737.06896551776,
+              124103.93103448184,
+              125751.91954022886,
+              130079.02298850684,
+              121624.51724137898
+            ]
+          }
+        ],
+        "checksum": 6112
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "mock user payload",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 5730.308246828148,
+          "vpmNs": 278.3062283736973,
+          "changePct": -95.14325902925474
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5693.6936406327895,
+          "vpmNs": 274.14549938347704,
+          "changePct": -95.18510273494432
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 5676.162456946027,
+          "vpmNs": 263.27468427094425,
+          "changePct": -95.3617486062477
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5687.000082460627,
+          "vpmNs": 275.88404661773905,
+          "changePct": -95.14886508497516
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 5526.345920617416,
+          "vpmNs": 5681.045479603099,
+          "changePct": 2.7993100903897172
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5739.850136239779,
+          "vpmNs": 5721.729972752053,
+          "changePct": -0.3156905329865789
+        }
+      ]
+    },
+    {
+      "case": "Unicode payload",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7430.550224887551,
+          "vpmNs": 370.517991004496,
+          "changePct": -95.01358607652635
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7447.497778990028,
+          "vpmNs": 476.1298121882778,
+          "changePct": -93.60684855077798
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 7396.054925584693,
+          "vpmNs": 374.88199858253654,
+          "changePct": -94.93132484338737
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7262.803435408174,
+          "vpmNs": 430.08403862429725,
+          "changePct": -94.07826409665007
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7488.881837307155,
+          "vpmNs": 7274.792426367458,
+          "changePct": -2.858763372032047
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7356.469380134407,
+          "vpmNs": 7300.675130694539,
+          "changePct": -0.7584378668187841
+        }
+      ]
+    },
+    {
+      "case": "larger claim set",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 125890.28333333277,
+          "vpmNs": 5584.722222221848,
+          "changePct": -95.56381789416217
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 132430.46618357507,
+          "vpmNs": 5937.824208266232,
+          "changePct": -95.5162702515634
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 124608.91772151916,
+          "vpmNs": 5444.094936708797,
+          "changePct": -95.63105511527235
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 129153.76920980943,
+          "vpmNs": 5930.688010899183,
+          "changePct": -95.4080410914955
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 124589.05624999943,
+          "vpmNs": 123053.65000000066,
+          "changePct": -1.2323764993594888
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 124049.091954022,
+          "vpmNs": 123022.74712643644,
+          "changePct": -0.827369883502227
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "mock user payload",
+      "upstream_ns": 5690,
+      "vpm_ns": 275,
+      "change_pct": -95.2,
+      "upstream_first_pct": -95.3,
+      "vpm_first_pct": -95.2,
+      "process_range_pct": "-95.1, -95.2, -95.4, -95.1",
+      "control_max_abs_pct": 2.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Unicode payload",
+      "upstream_ns": 7413,
+      "vpm_ns": 402,
+      "change_pct": -94.5,
+      "upstream_first_pct": -95,
+      "vpm_first_pct": -93.8,
+      "process_range_pct": "-95.0, -93.6, -94.9, -94.1",
+      "control_max_abs_pct": 2.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "larger claim set",
+      "upstream_ns": 127522,
+      "vpm_ns": 5758,
+      "change_pct": -95.5,
+      "upstream_first_pct": -95.6,
+      "vpm_first_pct": -95.5,
+      "process_range_pct": "-95.6, -95.5, -95.6, -95.4",
+      "control_max_abs_pct": 1.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

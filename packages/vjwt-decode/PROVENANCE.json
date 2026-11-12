@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "jwt-decode",
+    "version": "4.0.0",
+    "repository": "https://github.com/auth0/jwt-decode",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete",
+    "targetScope": "Browser JWT header/payload JSON decoding, current named exports and app-pinned default import, public errors and generic declarations. Decoding does not validate a signature or claims."
+  },
+  "changes": [
+    "Independent zero-dependency implementation using native base64 and UTF-8 facilities; no upstream runtime copied.",
+    "Finds only the requested token segment without allocating a split array for the signature.",
+    "ASCII JSON skips UTF-8 conversion; Unicode uses TextDecoder rather than a percent-escaped intermediate string.",
+    "Fresh JSON results, prototype-looking keys as ordinary data, and current/app malformed-input comparisons."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "upstreamVersion": "3.1.2",
+    "scope": "One default-import caller in src/@mock-utils/api/authApi.ts reads the mock-user id after its separate mock signature check. No production authentication adoption is claimed."
+  },
+  "references": [
+    "https://github.com/auth0/jwt-decode#usage",
+    "https://github.com/auth0/jwt-decode#errors"
+  ]
+}
