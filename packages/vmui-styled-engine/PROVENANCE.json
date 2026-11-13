@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "@mui/styled-engine",
+    "version": "9.5.0",
+    "repository": "https://github.com/mui/material-ui",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent adapter over existing VPM Emotion packages",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "MUI System styled, inheritance, theme context, css/keyframes, GlobalStyles and internal style hooks under the application-owned Emotion CacheProvider. Default StyledEngineProvider is transparent; injectFirst/enableCssLayer cache ownership modes explicitly unsupported.",
+    "basis": "Small independently written adapter; VPM Emotion dependencies retain their own source-informed redesign provenance and attribution. This is not a claim that the entire dependency closure was written independently."
+  },
+  "changes": [
+    "Uses VPM Emotion without Babel runtime or prop-types adapter dependencies.",
+    "Serialization uses a local argument array, avoiding shared scratch state during nested getters.",
+    "Invalid style processor output fails explicitly; app-owned cache/layer configuration is preserved.",
+    "Typed MUI style factories preserve the caller Theme and additional props without copying the upstream overload list."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "scope": "RootThemeProvider owns muiltr/muirtl Emotion caches and CSS layer plugins; unchanged System 9.5.0 and app 7.2.0 callers verify styled inheritance, variants, sx, globals and nested themes. No application adoption performed."
+  },
+  "references": [
+    "https://mui.com/material-ui/integrations/styled-components/",
+    "https://github.com/mui/material-ui/tree/master/packages/mui-styled-engine"
+  ]
+}

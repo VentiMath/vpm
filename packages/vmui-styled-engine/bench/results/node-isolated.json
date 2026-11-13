@@ -1,0 +1,1678 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-13T05:26:38.106Z",
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-engine-conformance/aliases.cjs": "059176a241250b348e2004da46e55542d0325c5456e069c422d271c97bb406f7",
+    "../../scripts/mui-engine-conformance/node_modules/@emotion": "004c741ad34265abfebbcfa4ea4aca18b1d14b9924fe9d9460dc928840b7f0b7",
+    "../../scripts/mui-engine-conformance/node_modules/@mui/styled-engine": "a4cca714e4cf310754203d2d106e2bb04df3ba6df18f88de2c986b84ff623813",
+    "../../scripts/mui-engine-conformance/package-lock.json": "aa786ba7c5cd573240ecbd0507de47843041084989b5ae23882e77947c05e2bc",
+    "../../scripts/mui-engine-conformance/prepare.cjs": "0983ba19c73fa8db03c75aaca8d93b85bb914fbad80ea57228d2e910c0fe9ba9",
+    "../vemotion-cache/PROVENANCE.json": "b3de78da74b83eef0842fb208662942138afafd45123bd5039231a7dde7a81b7",
+    "../vemotion-cache/index.d.ts": "052c68257ab0b99b7c6efdfa3177b9703097c6acdf68cdd3b1f53af43f545e71",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-cache/src/": "fab1da4bf57130bbf642f4fa2230779b443fbb5064af49cdb739f001f28acb3f",
+    "../vemotion-hash/PROVENANCE.json": "c206982770b4f0899bf1a5e5c26780fa720fc324a37dc68b9914775cad80c9a3",
+    "../vemotion-hash/index.d.ts": "2e6d0b8942096cd5c9b2b97f947e879d8cafd3475e879b89a9fa14516123b39a",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/PROVENANCE.json": "a641514fd263627dcb252375479b24bf33e29f7eac13c60b494859db854d8dc0",
+    "../vemotion-is-prop-valid/index.d.ts": "d6c26df8557589f199bffeefcd0442ad035b957dcb37228b64a3525f8ea3c182",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/PROVENANCE.json": "e62d7854f40a3ef0013c323843438834f22880afb9cc13fedf3102bbccfe0aff",
+    "../vemotion-memoize/index.d.ts": "7cccffbc590fb216c95bc50f52b4b0fe8df7514eef50bfafc0a84052e2afcf96",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/PROVENANCE.json": "9bb3ad0ff80f1dca54c8f53c6ae4680c54e17fbf0f6ac9d1c7fc31f1d5d553e7",
+    "../vemotion-react/_isolated-hnrs.d.ts": "cce08737b509514de33203ed81bda6666ef4c279cbd1529f25fd6345cbc533fc",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.d.ts": "a70aff395bab5be415038844446ef69df5492c5570cfca8437ded3d4531391b9",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.d.ts": "c32119b32ef52f811fee8fa4848b227e4be2af3fdf3223bbf28b6a3571bee1f7",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-namespace.d.ts": "18f3122a78de5e02c484bbb57bba0a1372aff43b6ae1cfc84298e749339fa1fe",
+    "../vemotion-react/jsx-runtime.d.ts": "f185d509d2ab9c342b3a3601e3c31eab6e55e2afdae9e6fd9bff61962dd0e407",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-react/src/": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-react/types/": "bc1492c4c8952649f5e22c81cfc7691182a040b6ad39eaa95a2522bd073fcebe",
+    "../vemotion-serialize/PROVENANCE.json": "ab56256502939a3ffffa1c6f06d7f336925f654853215b3bf17afe357a1dcab7",
+    "../vemotion-serialize/index.d.ts": "6bb32f277f794030e2a35f59f1e312a958c53fb914d9722d04c4c04139d282ed",
+    "../vemotion-serialize/index.js": "c0f0aedff3b921627f5b9ec2159ad491a2ada45060f4dcf8d8ce5a27030e65b4",
+    "../vemotion-serialize/src/": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/PROVENANCE.json": "a941a383d9e076794f126482484aec4adead1401be53104013b55753cfd101db",
+    "../vemotion-sheet/index.d.ts": "f00a4a17dc185ec3b18b65298d71601a8f6f1dd751b19e3f629213e883cc7f92",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-sheet/src/": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/PROVENANCE.json": "5f82207058130a22966b6f1208786ce970677644de34170bff6ae54012501cca",
+    "../vemotion-styled/base.d.ts": "b3be67735c9087be9eb81ebbc1029ca10d055e985aec1cbb64514ae718806b70",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.d.ts": "def6abb119f0a0d715809564d36c1580144b80c5cd35c339590375c7470c5e5d",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-styled/src/": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-styled/types.d.ts": "421c9ec27c3899b6dc0da218cac17e6661387c828a5602fb14e16d60e98bf3ac",
+    "../vemotion-unitless/PROVENANCE.json": "64cdcf2a72a4999b0c153ccbdbbb61dda564becfeb40df80e780052f1a94e2c4",
+    "../vemotion-unitless/index.d.ts": "056baac0d957f7383fc70b6743d6b4ff277bce47994ad5943cbe0d74b9f51858",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/PROVENANCE.json": "7ca896d717fb8e6975df4245948e81328b12e39a1bf76551afc45fa1e9143636",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.d.ts": "e69bca986ff0117b33b646949359fa8d0acba9f3199455e65d978a9cfc081b10",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-use-insertion-effect-with-fallbacks/src/": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/PROVENANCE.json": "89b5e5ce1e70b78ae4ac748159fb7780613503533581a55ed7b65ed61ea0aeb1",
+    "../vemotion-utils/index.d.ts": "6cbc6b0eeecb19470457965ea759738d448cf498e76f0743804070555bb450e0",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-utils/src/": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vstylis/PROVENANCE.json": "36746184ad6577444b3a65c91e22faa39f7724852ecfe1031a4431331bf84ff0",
+    "../vstylis/index.d.ts": "db2aa58a4ea979e2c22da238c1da5b9631a5f6ed0ee9f0d4fedec7e1b4097ac5",
+    "../vstylis/index.js": "6e664cd39072108940d31e3d05b857bff8346e3b68215a7fc6b84331010e23fe",
+    "../vstylis/src/": "987d6d2032baef8529255824c6c7110349ecff70018142a377880e8c373d561e",
+    "PROVENANCE.json": "e2d0f4a744496ec5e164bb6d27163c2c29bd0d382e4e6d8a2e9479f0e7ad8990",
+    "bench/run.cjs": "e58bd73a88aaafd34b8ba583220ccfc32de6137fba9aab8c929c4093cf6b22a1",
+    "index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "package.json": "08d20631699acd933f1cd4e9d3496bf46d1e1af289eb35c46b9deb9e2fc7a92b"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 23108,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 7806,
+            "samples": [
+              866.5769920573915,
+              830.1734563156582,
+              844.4039200614957,
+              852.3411478349965,
+              865.2532667179087,
+              845.0017934921879,
+              858.2020240840354,
+              817.2293107865697,
+              854.0653343581853,
+              857.2838841916474,
+              859.1575710991499,
+              845.871765308742
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 28754,
+            "samples": [
+              331.1858176253702,
+              407.31289559713304,
+              400.22984628225515,
+              419.23151561521803,
+              334.7867774918256,
+              407.94470334561845,
+              331.79585448980816,
+              412.4672393406146,
+              344.462231341727,
+              435.5843360923714,
+              339.24118383529304,
+              440.11121930862066
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3484,
+            "samples": [
+              2752.2723880597123,
+              2736.665040183694,
+              2671.832950631463,
+              2753.7672215844077,
+              2674.5241102181376,
+              2734.4646957520144,
+              2745.264064293934,
+              2665.685993111358,
+              2735.122560275554,
+              2706.3958094144637,
+              2613.8536165327264,
+              2815.8725602755585
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4334,
+            "samples": [
+              2484.665666820522,
+              3697.1331333640946,
+              2776.9284725426883,
+              2598.503922473449,
+              2410.7828795570026,
+              2428.5782187355953,
+              2380.2106598984506,
+              2412.6384402399585,
+              2423.598292570346,
+              2454.372404245499,
+              2379.6917397323473,
+              2505.4413936317383
+            ]
+          }
+        ],
+        "checksum": 2846592
+      },
+      "vpm": {
+        "pid": 23131,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 7806,
+            "samples": [
+              959.107353317958,
+              1038.3466564181363,
+              994.2298232129153,
+              975.8038688188556,
+              960.7673584422247,
+              955.2054829618277,
+              959.6624391493737,
+              993.984370996672,
+              966.0090955675103,
+              946.5421470663603,
+              927.8866256725612,
+              977.1970279272409
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 28754,
+            "samples": [
+              170.3530986993107,
+              166.41451624121814,
+              191.54002921332884,
+              161.68912151353,
+              169.3155734854295,
+              169.7271336161907,
+              167.52886554914213,
+              174.8800166933299,
+              173.5091813312948,
+              168.5721986506227,
+              158.35334214370368,
+              172.0383946581331
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3484,
+            "samples": [
+              3349.9807692307704,
+              3697.366532721006,
+              5027.614236509761,
+              4368.745407577513,
+              3620.048794489098,
+              4038.090987370809,
+              3714.659873708376,
+              3551.1145235361582,
+              3142.7121125143503,
+              3271.6346153846116,
+              3354.8602181400856,
+              3336.394948335254
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4334,
+            "samples": [
+              12330.035763728645,
+              4549.57891093679,
+              2714.274803876313,
+              2899.380941393661,
+              2651.5920627595665,
+              2751.4903091831898,
+              2701.7669589293523,
+              2571.344716197493,
+              2597.97531149052,
+              2675.386479003242,
+              2600.282648823236,
+              2982.906322104261
+            ]
+          }
+        ],
+        "checksum": 540032
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 23198,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 10508,
+            "samples": [
+              1107.2674153026237,
+              1014.6237152645629,
+              1011.1978492577103,
+              971.8745717548506,
+              974.1665397792144,
+              983.1596878568679,
+              978.9128283212821,
+              963.9124476589242,
+              965.339931480773,
+              985.2294442329677,
+              1015.9045489151104,
+              1030.4173011039218
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 60868,
+            "samples": [
+              213.249030689361,
+              210.8996845633173,
+              213.65701189459296,
+              226.25050929881127,
+              247.53290727475806,
+              320.8322271144114,
+              259.9539166721422,
+              200.9710849707564,
+              203.2663468489178,
+              217.76220674245818,
+              238.8193796411914,
+              196.90012814615227
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3361,
+            "samples": [
+              4051.5346623029213,
+              3526.2820589110543,
+              3071.543588217746,
+              3458.6554596845904,
+              3545.8318952692734,
+              3162.2285034215947,
+              3371.516215412092,
+              3458.5688783099813,
+              3058.006248140437,
+              3476.395715560847,
+              3427.8488545076425,
+              3460.0193394822763
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4108,
+            "samples": [
+              2786.909688412851,
+              2869.7461051606824,
+              2495.2127555988477,
+              2935.9381694254835,
+              2789.891674780912,
+              2738.2648490749984,
+              2483.944011684536,
+              4013.2568159688335,
+              3503.478821811128,
+              3078.576436222007,
+              3012.5669425511505,
+              3003.3877799415923
+            ]
+          }
+        ],
+        "checksum": 2731904
+      },
+      "upstream": {
+        "pid": 23221,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 10508,
+            "samples": [
+              824.4591739626933,
+              819.1417015607126,
+              816.3779977160276,
+              824.1339931480746,
+              837.4293871336133,
+              819.7325846973716,
+              821.3820898363141,
+              827.9723068138561,
+              831.965359725925,
+              833.6902360106549,
+              832.7226874762081,
+              831.5013323182334
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 60868,
+            "samples": [
+              380.318886771375,
+              377.2514621804558,
+              377.37535322336936,
+              378.9826509824533,
+              470.4011138857842,
+              371.72857659197035,
+              361.8451731615964,
+              403.93282184399055,
+              384.2419826509813,
+              371.8312578037715,
+              912.8537655253991,
+              476.63797069067584
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3361,
+            "samples": [
+              2803.902409997014,
+              2632.2894971734618,
+              2649.3975007437953,
+              2792.6706337399596,
+              2580.5313894674314,
+              2733.5986313597223,
+              2637.570663493003,
+              2637.4590895567194,
+              2652.8562927700063,
+              2590.4617673311213,
+              2711.829515025327,
+              2726.3960130913365
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4108,
+            "samples": [
+              2278.389727361259,
+              2349.369036027263,
+              2343.6180623174746,
+              2262.1713729308403,
+              2295.0036514118447,
+              2351.701801363198,
+              2334.905550146042,
+              2346.1032132424516,
+              2353.2740993183947,
+              2468.8512658228,
+              2371.0443037974273,
+              2467.806718597826
+            ]
+          }
+        ],
+        "checksum": 579520
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 23242,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 11384,
+            "samples": [
+              847.9737350667582,
+              819.9154075895981,
+              840.2619465917072,
+              824.3624385101907,
+              829.1828004216437,
+              823.7036191145482,
+              853.5517392832052,
+              833.318692902317,
+              840.9976282501752,
+              825.204234012647,
+              818.3525122979621,
+              830.8481201686568
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 26900,
+            "samples": [
+              330.7744981412635,
+              331.0935687732312,
+              327.7865427509289,
+              328.8646096654312,
+              326.61397769516464,
+              322.47988847583673,
+              322.78189591077916,
+              332.28003717472336,
+              322.9305947955425,
+              345.46003717472047,
+              361.0734200743472,
+              340.72490706319945
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3391,
+            "samples": [
+              2788.164553229128,
+              2853.8902978472142,
+              2841.7009731642615,
+              2822.8030079622276,
+              2872.2969625479204,
+              2802.4426422883944,
+              2770.9132999115277,
+              2920.045709230321,
+              2893.0256561486276,
+              2926.9268652314936,
+              2831.6868180477813,
+              2844.822176349161
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4351,
+            "samples": [
+              2575.365892898161,
+              2515.6766260629397,
+              2432.343139508132,
+              2575.844633417601,
+              3745.690645828522,
+              3822.1195127556894,
+              2814.2859112847614,
+              2450.116754769033,
+              2459.1663985290506,
+              2428.3403815214824,
+              2385.524477131665,
+              2520.320845782603
+            ]
+          }
+        ],
+        "checksum": 3035648
+      },
+      "vpm": {
+        "pid": 23263,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 11384,
+            "samples": [
+              947.1223647224168,
+              947.4554638088517,
+              960.254919184824,
+              939.7106465214359,
+              955.5004392129287,
+              928.8255446240354,
+              930.8971363316979,
+              945.49736472242,
+              937.8550597329571,
+              931.530393534784,
+              944.8750878425869,
+              944.3846626844701
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 26900,
+            "samples": [
+              166.56286245353223,
+              261.4079925650563,
+              172.24289962825245,
+              253.35810408921967,
+              166.9811152416369,
+              166.19576208178628,
+              289.1031598513018,
+              164.88074349442394,
+              262.6765799256517,
+              169.3804089219329,
+              283.1691449814131,
+              163.06226765798996
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3391,
+            "samples": [
+              3050.8944264228603,
+              3925.4031259215362,
+              3612.7124741964117,
+              3423.842524329126,
+              3840.349454438237,
+              3702.5582424063773,
+              3027.241226776747,
+              3354.8118549100586,
+              3462.1916838690513,
+              2999.385432025961,
+              3361.7540548510856,
+              4378.489531111755
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4351,
+            "samples": [
+              2726.796598483102,
+              2720.6198575040125,
+              2439.33394621922,
+              2718.962997012148,
+              2716.3488853137032,
+              2697.1576649045865,
+              2719.662146632989,
+              3341.5019535739348,
+              2445.9128935876747,
+              2654.9450700987913,
+              2706.8970351643206,
+              2725.752700528579
+            ]
+          }
+        ],
+        "checksum": 526848
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 23284,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 9439,
+            "samples": [
+              942.9582582900713,
+              950.3875410530778,
+              957.6005932831868,
+              947.6860896281362,
+              963.3127449941745,
+              951.9900413179374,
+              936.429600593282,
+              942.3094607479588,
+              941.0070982095543,
+              951.7957410742644,
+              950.8334569339917,
+              950.9173641275553
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 66307,
+            "samples": [
+              165.87865534558958,
+              160.21121450223896,
+              166.4517471760149,
+              162.48911879590275,
+              163.2582683577915,
+              165.39982203990388,
+              161.77779118343426,
+              161.45981570573247,
+              168.34572518738628,
+              165.15663504607406,
+              160.54677485031834,
+              162.71095057837147
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3398,
+            "samples": [
+              3057.5338434373157,
+              3167.4638022365884,
+              3331.2242495585483,
+              3099.3599175985764,
+              3023.8622719246596,
+              3102.732195409037,
+              3010.1898175397187,
+              2990.178045909353,
+              3054.7628016480317,
+              2999.4482048263785,
+              3036.1365509123243,
+              2985.04002354328
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4054,
+            "samples": [
+              2702.3618648248653,
+              2539.3438579180984,
+              2530.299457326098,
+              2471.067587567799,
+              2561.749629995053,
+              2555.04859398122,
+              2473.20547607305,
+              2516.9277257029785,
+              2540.3818450912763,
+              2491.376911692163,
+              2682.7927972373204,
+              2591.9563394178585
+            ]
+          }
+        ],
+        "checksum": 2731136
+      },
+      "upstream": {
+        "pid": 23305,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 9439,
+            "samples": [
+              850.9332556414905,
+              830.5876681851906,
+              826.9811420701301,
+              839.6325881979037,
+              827.4800296641599,
+              849.1057315393562,
+              807.7259243563929,
+              815.578980824237,
+              817.8170357029361,
+              840.0916410636706,
+              828.7071723699582,
+              828.9235088462757
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 66307,
+            "samples": [
+              323.52855656265444,
+              323.2834994796933,
+              325.6958692144116,
+              323.5712820667509,
+              325.0970184143449,
+              332.67541888488256,
+              330.5470463148693,
+              329.3053523760702,
+              325.8165352074445,
+              329.2575896964123,
+              329.73705641938267,
+              339.7309635483426
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3398,
+            "samples": [
+              3086.2516185991717,
+              3040.5876986462554,
+              3012.5317834019665,
+              3504.3163625661996,
+              2954.4832254267376,
+              3047.4667451441915,
+              3067.1842260152944,
+              3087.6006474396727,
+              2947.5794585049507,
+              2921.6695114773293,
+              2854.0685697469444,
+              2899.6712772218866
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4054,
+            "samples": [
+              2659.8522446966304,
+              2626.952886038514,
+              2491.972866304901,
+              2487.717809570786,
+              3040.1867291563676,
+              2784.7908238776477,
+              2673.8406512087063,
+              2643.1815490872964,
+              2654.641588554524,
+              2513.227676369019,
+              2463.174148988692,
+              2445.033547113923
+            ]
+          }
+        ],
+        "checksum": 567104
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 23326,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 10582,
+            "samples": [
+              838.5741825741807,
+              858.4152334152288,
+              843.6653751653738,
+              854.288697788696,
+              894.8883008882979,
+              872.2476847476835,
+              854.4974484974515,
+              862.3409563409565,
+              867.4399924399947,
+              861.4194859194866,
+              850.2291627291664,
+              846.4727839727852
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 29729,
+            "samples": [
+              378.1633085539388,
+              393.7218877190595,
+              354.29631000033606,
+              410.3232533889495,
+              377.8227320125102,
+              358.02445423660595,
+              765.5768105217114,
+              384.2334084563886,
+              332.5456624844434,
+              329.1819435567963,
+              329.6654781526445,
+              337.73419893033576
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3780,
+            "samples": [
+              7687.356613756624,
+              12498.280423280434,
+              3353.8470899470644,
+              2866.58968253967,
+              2920.822486772455,
+              2816.92010582005,
+              2825.573280423243,
+              2846.4505291005344,
+              2753.8248677248903,
+              2733.8293650793744,
+              2909.5568783068375,
+              2875.595238095256
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 3982,
+            "samples": [
+              2557.896032144636,
+              6791.781767955813,
+              2587.2363134103425,
+              2424.650678051278,
+              2387.4726268207046,
+              2508.0153189351954,
+              2509.6685082872455,
+              2892.4010547463427,
+              2577.0133098945225,
+              2533.4525364138362,
+              2602.5449522852578,
+              2780.470366649917
+            ]
+          }
+        ],
+        "checksum": 2893376
+      },
+      "vpm": {
+        "pid": 23375,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 10582,
+            "samples": [
+              811.0706860706892,
+              833.3058023058014,
+              835.9478359478363,
+              859.6003591003598,
+              942.3707238707251,
+              837.8811188811158,
+              877.7090342090335,
+              857.0567945567926,
+              835.4359289359272,
+              838.4245889245888,
+              844.5000945000968,
+              834.9673974673967
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 29729,
+            "samples": [
+              327.95839079686795,
+              327.78879208853215,
+              329.2239900433889,
+              325.9611826835726,
+              326.5736486259209,
+              353.4161593057284,
+              348.2752531198499,
+              327.4762689629658,
+              332.8399878906112,
+              343.3613979615878,
+              339.46230952941437,
+              326.47835446870033
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3780,
+            "samples": [
+              2760.064021164021,
+              2847.2330687830536,
+              2926.884920634921,
+              2738.470105820098,
+              2779.0455026455197,
+              3116.57857142857,
+              2870.7783068783056,
+              2760.229365079369,
+              2845.491534391555,
+              2829.4201058201306,
+              2804.7727513227774,
+              2888.2166666666685
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 3982,
+            "samples": [
+              2460.3214465092983,
+              2392.6207935710454,
+              2350.902059266655,
+              2417.6396283274644,
+              2490.028126569597,
+              2429.2440984430064,
+              2458.940231039689,
+              2469.9482672023796,
+              2364.766449020603,
+              2363.5316423907743,
+              2386.719236564513,
+              2409.5095429432627
+            ]
+          }
+        ],
+        "checksum": 549760
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 23396,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 12341,
+            "samples": [
+              822.5698079572174,
+              842.2737217405393,
+              819.024633336037,
+              833.2927639575386,
+              812.505064419416,
+              845.254922615675,
+              827.5497933716862,
+              820.1185479296652,
+              827.4113118872032,
+              817.900332225913,
+              834.0659589984598,
+              847.4596872214581
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 29150,
+            "samples": [
+              334.71698113207367,
+              342.29132075471773,
+              331.24068610634635,
+              327.74871355059855,
+              353.23471698113144,
+              329.5497427101225,
+              398.3562264150937,
+              725.8676500857633,
+              367.99454545454495,
+              341.0734819897106,
+              333.2861406518042,
+              335.7947512864488
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3831,
+            "samples": [
+              2834.4860349778182,
+              2844.3401200730827,
+              2839.500130514244,
+              2766.7165231010167,
+              2825.3176716261846,
+              2873.7817802140416,
+              2973.2988775776607,
+              2863.3735317149412,
+              2811.2438005742515,
+              2844.1226833725264,
+              2804.3591751501017,
+              2867.8433829287746
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4226,
+            "samples": [
+              2352.2834831992377,
+              2393.2796971131174,
+              2343.6464742072453,
+              2432.1956933269958,
+              2360.2697586370173,
+              2360.5655466162,
+              2456.351632749616,
+              2357.094888783754,
+              2335.6601987695203,
+              2371.9436819687835,
+              2475.7652626597505,
+              2433.723852342629
+            ]
+          }
+        ],
+        "checksum": 3076352
+      },
+      "upstream": {
+        "pid": 23417,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "serialize MUI style object",
+            "iterations": 12341,
+            "samples": [
+              852.3721740539644,
+              844.2049266672084,
+              828.5728060935135,
+              828.7180131269718,
+              853.3276881938245,
+              830.7740863787387,
+              821.7729519487892,
+              812.7548821003173,
+              819.8957134754078,
+              837.9588363989953,
+              839.4309213191806,
+              838.7083704724052
+            ]
+          },
+          {
+            "case": "styled component creation",
+            "iterations": 29150,
+            "samples": [
+              475.40024013722274,
+              333.60346483705126,
+              408.8965351629519,
+              421.0834648370461,
+              335.3430531732389,
+              395.33876500857724,
+              334.0123156089183,
+              548.6635334476822,
+              359.66267581474983,
+              449.54833619210956,
+              346.5279931389347,
+              479.36675814751135
+            ]
+          },
+          {
+            "case": "styled component server render",
+            "iterations": 3831,
+            "samples": [
+              2784.510049595409,
+              2930.3489950404382,
+              2902.7449752022912,
+              2740.3093187157588,
+              3062.918820151349,
+              3046.4521012790206,
+              2826.0788305924893,
+              2901.929261289427,
+              2852.7256590968236,
+              3082.2458888018814,
+              2989.7329678934993,
+              2876.4789872095903
+            ]
+          },
+          {
+            "case": "theme global style server render",
+            "iterations": 4226,
+            "samples": [
+              2844.040937056342,
+              3411.805963085622,
+              3317.498816848121,
+              3118.906767628949,
+              3438.9001419782235,
+              3706.962849029837,
+              3529.3028868906595,
+              2857.686701372489,
+              2745.7406530998437,
+              2506.813061997189,
+              2538.274964505452,
+              2448.3946994794587
+            ]
+          }
+        ],
+        "checksum": 524032
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "serialize MUI style object",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 853.2032410965909,
+          "vpmNs": 963.3882270048675,
+          "changePct": 12.914271840629654
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 826.2157403882748,
+          "vpmNs": 984.1945660449178,
+          "changePct": 19.120771722698237
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 830.0154602951502,
+          "vpmNs": 944.6298752635284,
+          "changePct": 13.808708445939288
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 828.8153406081169,
+          "vpmNs": 950.6104989935347,
+          "changePct": 14.695089776699177
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 856.4563409563402,
+          "vpmNs": 838.1528539028523,
+          "changePct": -2.137118517103842
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 834.366461388867,
+          "vpmNs": 827.4805526294447,
+          "changePct": -0.8252858999102441
+        }
+      ]
+    },
+    {
+      "case": "styled component creation",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 403.77137093969407,
+          "vpmNs": 169.5213535508101,
+          "changePct": -58.015509332352046
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 379.6507688769142,
+          "vpmNs": 215.70960931852557,
+          "changePct": -43.18209602034012
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 329.81955390334736,
+          "vpmNs": 170.81165427509268,
+          "changePct": -48.210573856652374
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 327.53706245192836,
+          "vpmNs": 162.9846094680815,
+          "changePct": -50.23933833686309
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 367.92359312455807,
+          "vpmNs": 328.59119042012844,
+          "changePct": -10.690372522838976
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 402.1176500857646,
+          "vpmNs": 338.4341166380797,
+          "changePct": -15.837040088666177
+        }
+      ]
+    },
+    {
+      "case": "styled component server render",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2734.793628013784,
+          "vpmNs": 3585.581659012628,
+          "changePct": 31.109770853779217
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2651.126896756901,
+          "vpmNs": 3458.612168997286,
+          "changePct": 30.4581901842637
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2843.2615747567115,
+          "vpmNs": 3443.0171040990886,
+          "changePct": 21.093927293470927
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3026.5597410241107,
+          "vpmNs": 3045.449676280178,
+          "changePct": 0.6241388531017522
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2871.0924603174626,
+          "vpmNs": 2837.4558201058426,
+          "changePct": -1.1715624166245386
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2902.337118245859,
+          "vpmNs": 2841.811406943385,
+          "changePct": -2.0854128530408356
+        }
+      ]
+    },
+    {
+      "case": "theme global style server render",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2441.475311490547,
+          "vpmNs": 2708.020881402833,
+          "changePct": 10.917397716774646
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2347.7361246348573,
+          "vpmNs": 2902.842137293083,
+          "changePct": 23.64431022862763
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2517.9987359227716,
+          "vpmNs": 2717.655941162926,
+          "changePct": 7.92920196470972
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2635.067217562905,
+          "vpmNs": 2539.8628515046876,
+          "changePct": -3.6129767553432335
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2567.454671019579,
+          "vpmNs": 2413.5745856353633,
+          "changePct": -5.993487913190987
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2988.296734500719,
+          "vpmNs": 2366.254614292492,
+          "changePct": -20.815942172896595
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "serialize MUI style object",
+      "upstream_ns": 829,
+      "vpm_ns": 957,
+      "change_pct": 14.3,
+      "upstream_first_pct": 13.4,
+      "vpm_first_pct": 16.9,
+      "process_range_pct": "12.9, 19.1, 13.8, 14.7",
+      "control_max_abs_pct": 2.1,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "styled component creation",
+      "upstream_ns": 355,
+      "vpm_ns": 170,
+      "change_pct": -49.2,
+      "upstream_first_pct": -53.1,
+      "vpm_first_pct": -46.7,
+      "process_range_pct": "-58.0, -43.2, -48.2, -50.2",
+      "control_max_abs_pct": 15.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "styled component server render",
+      "upstream_ns": 2789,
+      "vpm_ns": 3451,
+      "change_pct": 25.8,
+      "upstream_first_pct": 26.1,
+      "vpm_first_pct": 15.5,
+      "process_range_pct": "31.1, 30.5, 21.1, 0.6",
+      "control_max_abs_pct": 2.1,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "theme global style server render",
+      "upstream_ns": 2480,
+      "vpm_ns": 2713,
+      "change_pct": 9.4,
+      "upstream_first_pct": 9.4,
+      "vpm_first_pct": 10,
+      "process_range_pct": "10.9, 23.6, 7.9, -3.6",
+      "control_max_abs_pct": 20.8,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

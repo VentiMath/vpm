@@ -747,6 +747,18 @@
         "react": "^19.3.0",
       },
     },
+    "packages/vmui-styled-engine": {
+      "name": "vmui-styled-engine",
+      "version": "9.5.0",
+      "dependencies": {
+        "vemotion-react": "11.14.0",
+        "vemotion-serialize": "1.3.3",
+        "vemotion-styled": "11.14.1",
+      },
+      "peerDependencies": {
+        "react": "^19.3.0",
+      },
+    },
     "packages/vnegotiator": {
       "name": "vnegotiator",
       "version": "0.1.0",
@@ -2005,6 +2017,8 @@
     "vms": ["vms@workspace:packages/vms"],
 
     "vmui-private-theming": ["vmui-private-theming@workspace:packages/vmui-private-theming"],
+
+    "vmui-styled-engine": ["vmui-styled-engine@workspace:packages/vmui-styled-engine"],
 
     "vnegotiator": ["vnegotiator@workspace:packages/vnegotiator"],
 
