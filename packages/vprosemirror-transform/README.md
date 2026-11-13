@@ -81,11 +81,6 @@ container with compatible content. The saved two-list case and 256 mixed-list,
 marked-tail, Unicode, nesting and direction variants match document, cursor and
 undo.
 
-Full editor parity remains separate. A deeper deletion that starts at a textblock
-boundary still changes ancestor structure differently from upstream; a
-[reduced deep-deletion reproduction](../../scripts/prosemirror-schema-list-conformance/README.md)
-is recorded for follow-up. This does not block a separate view-decoration model
-working with validated documents and supplied mappings; it remains a full
-editing acceptance requirement. A public release and VentiMath adoption are separate.
+The saved deep deletion from 3 to 42 now preserves its right-hand ancestor chain and places the cursor at 19, matching upstream. Another 64 variants cover list types, empty/nonempty endpoints, Unicode, nesting, selection direction and undo. Partial-text joins retain their prior behavior. The unrestricted mixed-command deletion surface remains a separate editor acceptance requirement; this repair does not claim full EditorView parity. The repaired deep-list deletion is still about 3.2 times the upstream cost in the isolated fixture (18.6 μs on Node and 13.4 μs on Bun); this is an explicit optimization follow-up, not a speedup claim. A public release and VentiMath adoption are separate.
 Native IME, system clipboard, browser input handling and collaborative-server integration belong to the editor cutover.
 All ProseMirror callers must resolve the same model and transform instances.

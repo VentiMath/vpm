@@ -33,9 +33,8 @@ skipLibCheck, and the same runtime contracts with archived decoration bytes.
 No package is uploaded. The native read-only rendering gate is described below;
 browser editing remains outside this unit.
 
-The [deep deletion discrepancy](../prosemirror-schema-list-conformance/README.md#remaining-deep-deletion-follow-up)
-remains a full editing acceptance gap. Neither supplied-mapping decoration work
-nor read-only rendering masks or repairs it.
+The repaired [deep deletion discrepancy](../prosemirror-schema-list-conformance/README.md#deep-deletion-follow-up)
+now passes its saved case and 64 variants. Arbitrary mixed deletion and complete editing acceptance remain separate from read-only rendering.
 
 ## Read-only DOM milestone
 

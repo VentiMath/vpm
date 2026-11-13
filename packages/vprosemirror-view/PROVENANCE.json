@@ -22,7 +22,7 @@
       "positionLookup": "Retained-record DOM/document lookup independently implemented from public API declarations and observed current/app controls; no upstream lookup code copied.",
       "caretGeometry": "Fresh owner-document Range/element rectangle measurements independently written from public API contracts and native Chrome observations; no upstream geometry implementation copied."
     },
-    "remainingWork": "Coordinate hit testing (posAtCoords) next; then custom node-view lifecycle, focus/native selection, browser input, IME/clipboard and full editor acceptance. Transform deep-deletion 3..42, bulk decoration costs and recorded Bun read-only creation overhead remain open. No application-ready EditorView."
+    "remainingWork": "Coordinate hit testing (posAtCoords) next; then custom node-view lifecycle, focus/native selection, browser input, IME/clipboard and full editor acceptance. Bulk decoration mapping costs and recorded Bun read-only creation overhead remain open. No application-ready EditorView."
   },
   "appContract": {
     "path": "src/components/tiptap/tiptap-extension/selection-extension.ts",

@@ -217,12 +217,20 @@ function fitDocument(doc, from, to, slice) {
   // was open on the left (for example, deleting from before a paragraph).
   const joiningTextblocks =
     b.parent.isTextblock && stack.at(-1).node.isTextblock;
+  // At an empty structural boundary, the surviving right-hand ancestor chain
+  // supplies the required shape. Pulling a deeper compatible ancestor upward
+  // would flatten nested lists instead of filling their required paragraphs.
+  const preserveRightNesting =
+    !slice.size &&
+    a.parentOffset === 0 &&
+    !a.parent.isTextblock &&
+    b.parentOffset === 0;
   let carry = Fragment.empty;
   for (let d = b.depth; d >= 0; d--) {
     const original = b.node(d),
       offset = d === b.depth ? b.parentOffset : b.after(d + 1) - b.start(d),
       rest = carry.append(original.content.cut(offset));
-    if (!rest.size && d > 0) {
+    if (!rest.size && d > 0 && !(preserveRightNesting && d === b.depth)) {
       carry = Fragment.empty;
       continue;
     }
@@ -238,7 +246,8 @@ function fitDocument(doc, from, to, slice) {
         !(d === 0
           ? k === 0
           : k > 0 &&
-            (((k === d || (carry.size && !joiningTextblocks)) &&
+            (((k === d ||
+              (carry.size && !joiningTextblocks && !preserveRightNesting)) &&
               f.node.type.compatibleContent(original.type)) ||
               (d === b.depth && f.node.isTextblock && original.isTextblock)))
       )

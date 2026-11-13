@@ -64,6 +64,6 @@ for (const runtime of ["node", "bun"]) {
   ]);
   console.log(
     runtime +
-      ": all38 current upstream list tests pass on current/fullVPM/current-VPM/app-VPM; app1.5.1 has exactly8 expected pre1.6.0 differences. Eleven independent groups,96 boundary/192 nested/256 repeated-text/256 cross-depth cases and6000 differential list edits pass.",
+      ": all38 current upstream list tests pass on current/fullVPM/current-VPM/app-VPM; app1.5.1 has exactly8 expected pre1.6.0 differences. Twelve independent groups,96 boundary/192 nested/256 repeated-text/256 cross-depth/64 deep-boundary cases and6000 differential list edits pass.",
   );
 }

@@ -14,7 +14,7 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "complete for documented application scope",
-    "targetScope": "ProseMirror transform 1.12.5 position mapping, reversible steps, mark restoration, schema-aware edits and range fitting; Tiptap 2.11.7 application command controls against transform 1.12.5 and app 1.11.0. Complete editor integration, IME and collaborative server acceptance are separate. Empty-paragraph range deletion is repaired and checked with 96 caller variants. Nested-list suffix and cursor regressions are repaired, with 192 empty/nonempty-tail deletion and 256 repeated-text replacement variants. Two-list cross-depth structural joining is repaired with 256 variants. A deeper deletion from a textblock boundary remains a documented full-editing acceptance gap; independent view-decoration model work can proceed."
+    "targetScope": "ProseMirror transform 1.12.5 position mapping, reversible steps, mark restoration, schema-aware edits and range fitting; Tiptap 2.11.7 application command controls against transform 1.12.5 and app 1.11.0. Complete editor integration, IME and collaborative server acceptance are separate. Empty-paragraph range deletion is repaired and checked with 96 caller variants. Nested-list suffix and cursor regressions are repaired, with 192 empty/nonempty-tail deletion and 256 repeated-text replacement variants. Two-list cross-depth structural joining is repaired with 256 variants. The saved deep-boundary deletion and 64 variants now retain the ancestor chain, cursor and undo. Arbitrary mixed deletion and complete editor acceptance remain separate."
   },
   "changes": [
     "Independent schema-automaton fitting over persistent subtrees and boundary events, preserving untouched content.",
@@ -25,6 +25,7 @@
     "Structural suffixes attach at their original nesting depth instead of deeper lookalike containers; document/cursor/undo parity checked across 256 cross-depth cases.",
     "Mirrored mapping supports undo and rebasing; mark inverses restore prior formatting rather than blindly toggling it.",
     "Serialized step positions must be nonnegative safe integers; step registration uses a Map, so inherited names cannot select constructors.",
-    "One VPM runtime dependency: vprosemirror-model 1.25.12. No upstream runtime files shipped."
+    "One VPM runtime dependency: vprosemirror-model 1.25.12. No upstream runtime files shipped.",
+    "Preserve unselected deep empty endpoints and their right-hand structural ancestry when deleting from a block boundary; partial-text joins retain existing behavior. Saved 3..42 and 64 list/Unicode/empty/nested/direction variants match document, cursor and undo."
   ]
 }

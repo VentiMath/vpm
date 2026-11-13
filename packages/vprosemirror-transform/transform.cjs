@@ -350,11 +350,15 @@ class Transform {
       b = this.doc.resolve(to);
     if (
       a.depth !== b.depth &&
+      !(b.depth > a.depth && b.parentOffset === 0) &&
       from === a.depth &&
       to === this.doc.content.size - b.depth
     )
       return this.delete(0, this.doc.content.size);
-    for (let d = Math.min(a.depth, b.depth); d >= 0; d--) {
+    // A deeper empty endpoint is an unselected surviving textblock, even when
+    // all its closing-token distances coincide with a covered ancestor.
+    const retainEndpoint = b.depth > a.depth && b.parentOffset === 0;
+    for (let d = Math.min(a.depth, b.depth); !retainEndpoint && d >= 0; d--) {
       if (from - a.start(d) !== a.depth - d || b.end(d) - to !== b.depth - d)
         continue;
       // Matching boundary distances do not mean both endpoints cover the same
@@ -422,7 +426,7 @@ class Transform {
         return this.delete(start, end);
       }
     }
-    if (b.parentOffset < b.parent.content.size) {
+    if (b.parentOffset < b.parent.content.size || retainEndpoint) {
       let expand = from;
       for (let d = a.depth; d > 0; d--) {
         if (

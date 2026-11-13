@@ -103,9 +103,6 @@ next bounded engineering step; it does not by itself make the editor usable.
 
 Full `EditorView`, custom node views, DOM selection/input/mutation handling,
 IME/composition, clipboard, accessibility and adoption remain unverified.
-The transform [deep-deletion reproduction](../../scripts/prosemirror-schema-list-conformance/deep-deletion-followup.json)
-(3..42), bulk decoration costs and the recorded Bun create/destroy overhead
-(about 50 μs for 32 paragraphs) remain full editing acceptance gaps. This
-read-only milestone neither repairs nor hides them.
+The transform [deep-deletion reproduction](../../scripts/prosemirror-schema-list-conformance/deep-deletion-followup.json) now passes separately. Bulk decoration mapping and the recorded Bun create/destroy overhead (about 50 μs for 32 paragraphs) remain optimization work. Read-only rendering does not establish complete editing parity.
 
 Decoration indexing caches immutable model-child boundaries, and single-item removal searches only its owning branch. The follow-up reduces bulk creation and removal costs; mapping still costs substantially more than upstream and remains open optimization work. Caches never replace step-by-step mapping or node-identity validation.

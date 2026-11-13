@@ -640,3 +640,73 @@ test("cross-depth deletion joins the right structural parent", () => {
                 }
   assert.equal(cases, 256);
 });
+
+test("deep boundary deletion preserves the surviving ancestor chain", () => {
+  const input = require("../../../scripts/prosemirror-schema-list-conformance/deep-deletion-followup.json");
+  let cases = 0;
+  for (const mode of [0, 1, 2, 3])
+    for (const tail of ["", "🙂tail"])
+      for (const nested of [false, true])
+        for (const reversed of [false, true])
+          for (const intoText of [false, true]) {
+            const json = structuredClone(input.doc);
+            let list = 0;
+            const rewrite = (node) => {
+              if (node.type.endsWith("_list")) {
+                const ordered =
+                  mode === 1 || (mode > 1 && list++ % 2 === mode - 2);
+                node.type = ordered ? "ordered_list" : "bullet_list";
+                if (ordered) node.attrs = { order: 7 };
+                else delete node.attrs;
+              }
+              node.content?.forEach(rewrite);
+            };
+            rewrite(json);
+            const paragraphs = [];
+            const collect = (node) => {
+              if (node.type === "paragraph") paragraphs.push(node);
+              node.content?.forEach(collect);
+            };
+            collect(json);
+            paragraphs.at(-1).content = tail
+              ? [{ type: "text", text: tail, marks: [{ type: "em" }] }]
+              : [];
+            if (nested)
+              json.content = [{ type: "blockquote", content: json.content }];
+            const results = ["upstream", "vpm"].map((name) => {
+              const x = make(api(name), json),
+                before = x.state.doc,
+                starts = [];
+              before.descendants((node, pos) => {
+                if (node.isTextblock) starts.push(pos + 1);
+              });
+              const from = starts[0],
+                to = starts.at(-1) + (intoText && tail ? 1 : 0);
+              const selection = reversed ? [to, from] : [from, to];
+              x.state = x.state.apply(
+                x.state.tr.setSelection(
+                  x.A.S.TextSelection.create(before, ...selection),
+                ),
+              );
+              x.state = x.state.apply(
+                x.A.H.closeHistory(x.state.tr.deleteSelection()),
+              );
+              x.state.doc.check();
+              const result = snapshot(x);
+              assert(
+                x.A.H.undo(x.state, (tr) => {
+                  x.state = x.state.apply(tr);
+                }),
+              );
+              assert(x.state.doc.eq(before));
+              return result;
+            });
+            assert.deepEqual(
+              results[1],
+              results[0],
+              JSON.stringify({ mode, tail, nested, reversed, intoText }),
+            );
+            cases++;
+          }
+  assert.equal(cases, 64);
+});

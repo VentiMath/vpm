@@ -98,13 +98,9 @@ quotes and both selection directions.
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/structure-followup.json
 ```
 
-## Remaining deep-deletion follow-up
+## Deep-deletion follow-up
 
-Unrestricted mixed-command exploration still finds a deeper ancestor-restructuring
-difference. `deep-deletion-followup.json` reduces it to one nested list and a
-selection from 3 to 42 starting at a textblock boundary. Upstream retains a chain
-of wrappers and places the cursor at 19; VPM collapses more wrappers and places
-it at 3. This diagnostic intentionally exits nonzero; it is not a passing gate.
+`deep-deletion-followup.json` reduces the saved defect to one nested list and a selection from 3 to 42. The repair retains the right-hand wrappers and cursor at 19, matching upstream. This diagnostic now passes; 64 additional variants compare actual EditorState document, cursor and undo, including empty endpoints and partial-text negative controls.
 
 ```sh
 node scripts/prosemirror-schema-list-conformance/diagnose-transform.cjs scripts/prosemirror-schema-list-conformance/deep-deletion-followup.json
@@ -114,7 +110,7 @@ Randomized list comparison includes arbitrary text selections on current/app
 upstream foundations (4,000 edits). Full VPM comparison (2,000 edits) permits
 cross-block text insertion for the retained seed and confines mixed deletion
 operations to one textblock. Dedicated matrices add 96 boundary, 192 nested,
-256 repeated-text and 256 cross-depth cases. These results do not establish
+256 repeated-text, 256 cross-depth and 64 deep-boundary cases. These results do not establish
 arbitrary deletion parity or complete editor adoption.
 
 ## First view milestone

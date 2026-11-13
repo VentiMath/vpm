@@ -36,6 +36,7 @@ direction. The two cursor regressions and 256 repeated-text replacements also
 check document, mapping and undo. Another 256 cross-depth cases verify that
 structural suffixes attach at their original depth; the list fixture has 18
 packed Tiptap snapshots.
+The saved 3..42 deep-boundary deletion and 64 variants now match ancestor structure, cursor and undo, including empty endpoints and partial-text joins.
 A documented correction rejects an incompatible
 empty-block join that upstream suggests but then fails to apply. Archive checks
 verify packed bytes, exclusions, fresh and frozen npm/Bun installs, CJS/ESM
