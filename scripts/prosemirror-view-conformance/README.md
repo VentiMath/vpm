@@ -71,8 +71,8 @@ The archive gate repeats native Chrome against the exact packed renderer/model
 closure after both npm and Bun installs. Widget factories that need an EditorView
 host, custom node views, browser editing, selection synchronization, IME and
 clipboard remain outside this unit. The retained-record position lookup gate is described below;
-geometry/caret visibility follows later. Bulk decoration performance and the
-saved deep deletion remain full editing acceptance follow-ups.
+geometry/caret visibility follows later. Bulk decoration mapping performance and arbitrary mixed deletions remain full
+editing acceptance follow-ups. The saved deep boundary deletion is repaired.
 
 
 ## Document/DOM position lookup
@@ -99,7 +99,7 @@ invalidation even when an unchanged node is retained and moves.
 
 No geometry APIs, browser selection/input, mutation reconciliation or custom
 node-view mapping are claimed. The app-used `coordsAtPos` geometry contract is covered below;
-the deep-deletion and bulk decoration costs remain editing acceptance follow-ups.
+arbitrary mixed deletion and bulk mapping costs remain editing acceptance follow-ups.
 
 
 ## Caret geometry
