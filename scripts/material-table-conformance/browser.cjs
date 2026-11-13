@@ -57,6 +57,13 @@ const pending = new Map(),
       socket.onopen = resolve;
       socket.onerror = reject;
     });
+    socket.onclose = () => {
+      for (const p of pending.values()) {
+        clearTimeout(p.timer);
+        p.reject(Error("Chrome closed during the browser checks"));
+      }
+      pending.clear();
+    };
     socket.onmessage = (event) => {
       const x = JSON.parse(event.data),
         p = pending.get(x.id);
@@ -72,6 +79,10 @@ const pending = new Map(),
     };
     const send = (method, params = {}) =>
       new Promise((resolve, reject) => {
+        if (socket.readyState !== WebSocket.OPEN) {
+          reject(Error("Chrome disconnected before " + method));
+          return;
+        }
         const id = ++sequence,
           timer = setTimeout(
             () => reject(Error("CDP timeout: " + method)),
@@ -170,11 +181,15 @@ const pending = new Map(),
   } finally {
     for (const p of pending.values()) clearTimeout(p.timer);
     socket?.close();
-    if (child && child.exitCode === null) {
+    // A child that already exited by signal still has a null exitCode.
+    if (child && child.exitCode === null && child.signalCode === null) {
       const ended = new Promise((r) => child.once("exit", r));
+      const timeout = setTimeout(() => child.kill("SIGKILL"), 2000);
       child.kill();
       await ended;
+      clearTimeout(timeout);
     }
+    server?.closeAllConnections();
     await new Promise((resolve) =>
       server ? server.close(resolve) : resolve(),
     );

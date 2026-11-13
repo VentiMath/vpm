@@ -27,7 +27,10 @@ function run(cmd, args, cwd = temp, env = {}) {
       ...env,
     },
   });
-  assert.ifError(r.error);
+  if (r.error)
+    throw new Error(cmd + ": " + r.error.message + "\n" + r.stdout + r.stderr, {
+      cause: r.error,
+    });
   assert.equal(r.status, 0, r.stdout + r.stderr);
   return r.stdout;
 }
