@@ -1,0 +1,16 @@
+{
+  "upstream": {"name":"scheduler","version":"0.28.0","repository":"https://github.com/react/react","checked":"2026-11-13"},
+  "implementation": {
+    "kind":"independent implementation",
+    "targetScope":"The 16 root exports used by React DOM 19.3.1: cooperative deadline/priority queues, delayed work, continuation callbacks, cancellation, priority context, paint requests, yielding and host time. Test-only unstable_mock, experimental unstable_post_task, React Native and profiling builds are excluded."
+  },
+  "changes":[
+    "Zero runtime dependencies; no upstream runtime code copied or inspected. Public exports and black-box behavior are the compatibility controls.",
+    "Indexed heaps remove cancelled queued work immediately and cancel or reschedule obsolete delayed wakeups.",
+    "Self-cancellation suppresses a returned continuation, including when cancellation occurs synchronously inside the callback.",
+    "Long host waits are capped to avoid timer integer overflow. Invalid callbacks and infinite delays reject before acquiring host work.",
+    "Import does not create timers or message channels. Node/Bun use setImmediate; browsers lazily create a MessageChannel; timer fallback remains available."
+  ],
+  "caller":{"package":"react-dom","version":"19.3.1","dependency":"scheduler ^0.28.0","scope":"Real React DOM transitions, urgent updates, Suspense retry, hydration, focus and cleanup. Source implementation does not imply app adoption or publication."},
+  "references":["https://github.com/react/react/tree/main/packages/scheduler","https://react.dev/reference/react/startTransition","https://react.dev/reference/react/Suspense"]
+}

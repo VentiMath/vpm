@@ -64,6 +64,15 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/scheduler-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Scheduler priorities and React integration
+        run: |
+          node --test packages/vscheduler/test/scheduler.test.cjs
+          node scripts/scheduler-conformance/contract.cjs
+          node scripts/scheduler-conformance/types.cjs
+          node scripts/scheduler-conformance/browser.cjs
+          VPM_REACT_MODE=development node scripts/scheduler-conformance/browser.cjs
+          node scripts/scheduler-conformance/archives.cjs
       - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: Material button family and application themes
         run: |
@@ -892,6 +901,11 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/scheduler-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Scheduler contracts on Bun
+        run: |
+          bun test packages/vscheduler/test/scheduler.test.cjs
+          bun scripts/scheduler-conformance/contract.cjs
       - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI System controls on Bun
         run: |

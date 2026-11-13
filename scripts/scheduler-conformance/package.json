@@ -1,0 +1,10 @@
+{
+  "name": "vpm-scheduler-conformance",
+  "private": true,
+  "dependencies": {
+    "scheduler": "0.28.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "esbuild": "0.25.2"
+  }
+}

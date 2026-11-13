@@ -1409,6 +1409,10 @@
         "vpath-to-regexp": "workspace:*",
       },
     },
+    "packages/vscheduler": {
+      "name": "vscheduler",
+      "version": "0.28.0",
+    },
     "packages/vsection-iterator": {
       "name": "vsection-iterator",
       "version": "2.0.0",
@@ -2213,6 +2217,8 @@
     "vrope-sequence": ["vrope-sequence@workspace:packages/vrope-sequence"],
 
     "vrouter": ["vrouter@workspace:packages/vrouter"],
+
+    "vscheduler": ["vscheduler@workspace:packages/vscheduler"],
 
     "vsection-iterator": ["vsection-iterator@workspace:packages/vsection-iterator"],
 

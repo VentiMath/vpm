@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import S,* as E from 'vscheduler';
+const require=createRequire(import.meta.url),C=require('vscheduler');
+assert.equal(S,C);assert.equal(E.unstable_scheduleCallback,C.unstable_scheduleCallback);
+const reactRequire=createRequire(require.resolve('react-dom'));
+assert.equal(reactRequire('scheduler/package.json').name,'vscheduler');
+const reactScheduler=reactRequire('scheduler');
+assert.equal(reactScheduler.unstable_NormalPriority,3);
+const out=[];
+reactScheduler.unstable_scheduleCallback(3,()=>{out.push(3)});
+await new Promise(resolve=>reactScheduler.unstable_scheduleCallback(5,()=>{out.push(5);resolve()}));
+assert.deepEqual(out,[3,5]);
+const task=S.unstable_scheduleCallback(3,()=>assert.fail('cancelled work'),{delay:40});S.unstable_cancelCallback(task);
+assert.equal(require('vscheduler/package.json').version,'0.28.0');
+console.log('Packed CJS/ESM identity, native scheduling and React DOM dependency override verified');

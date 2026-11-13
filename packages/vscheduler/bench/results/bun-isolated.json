@@ -1,0 +1,1595 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-13T19:59:55.880Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/scheduler-conformance/host.cjs": "1d5f059ef8b915707294c9db68682a7418a79eac398656a7f291ffd0f3c781b3",
+    "../../scripts/scheduler-conformance/node_modules/scheduler": "94b31de8785de556caca149bcce63bf245b8d50e65f2185c4268d47a42cba37d",
+    "../../scripts/scheduler-conformance/package-lock.json": "7d8f48099f1fde25b36446d0d19fc32e8664fe5a4708c4be4e45ef95e2673b74",
+    "PROVENANCE.json": "448c95dfa66f24e76017b11a8242e12cdf994712fdf2fc9cf542c1e42bc3310d",
+    "bench/run.cjs": "f65c28317b885cb362379255dfbabdd924726c8401bbdf70c31d24206dc04cf8",
+    "index.cjs": "f45a82143438ca52aebba817c0e0c6d0e40ee2504c45667cd33100045766e428",
+    "index.mjs": "9d9af660cad5cd6d685bdface738c715f4ed00f809ad306d35d3078215689a07",
+    "package.json": "e2cf2ac1d13715b5cb296180dd60898b9d0dbecf2d6e38d08f6793fdae2bd25b"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 97849,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 8225,
+            "samples": [
+              1372.6747720364726,
+              1489.7264437689987,
+              2021.8541033434653,
+              8263.94127659575,
+              11079.944316109422,
+              3264.544072948332,
+              8000.552218844981,
+              3372.325227963524,
+              2068.4397568389077,
+              2283.5360486322115,
+              1809.7720364741722,
+              1514.989787234053
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 3279,
+            "samples": [
+              2278.832570905776,
+              1944.0125038121362,
+              2824.0698383653603,
+              1946.0076242757168,
+              2044.6145166209246,
+              1913.1976212259794,
+              2022.2372674595779,
+              2093.9435803598644,
+              2131.633119853628,
+              2085.5190606892147,
+              2090.7670021348067,
+              2016.7734065263974
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 7369,
+            "samples": [
+              1748.6260008142376,
+              2257.107477269638,
+              1490.4498575111918,
+              1705.494911114134,
+              1480.9336409281834,
+              1433.4318089293108,
+              1426.7764961324615,
+              1333.2994978965714,
+              1673.174786266804,
+              2396.1981272900043,
+              1573.4326231510315,
+              1451.9269914506572
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 57,
+            "samples": [
+              17093.561403506803,
+              45266.070175441935,
+              46684.21052631681,
+              157906.42105263,
+              127723.68421052673,
+              138508.03508771685,
+              139872.8070175422,
+              10263.15789473748,
+              165008.03508772247,
+              19238.2982456142,
+              7334.789473680646,
+              6459.789473685879
+            ]
+          }
+        ],
+        "checksum": 49504
+      },
+      "vpm": {
+        "pid": 97850,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 8225,
+            "samples": [
+              2606.9706990881477,
+              1913.8297872340402,
+              2492.0364741641356,
+              2005.5572036474207,
+              2058.7689969604808,
+              1785.5370212765943,
+              1838.1713069908837,
+              2267.5987841945234,
+              2070.1621884498486,
+              2111.5653495440697,
+              2332.624072948329,
+              7887.421398176281
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 3279,
+            "samples": [
+              2186.5022872827026,
+              2251.3848734369917,
+              2448.9426654467798,
+              2832.748703873137,
+              3514.295516925888,
+              3297.5120463555986,
+              4963.797499237577,
+              7103.855443732847,
+              7875.902409271103,
+              13408.2799634035,
+              3738.309545593175,
+              3301.7307105824902
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 7369,
+            "samples": [
+              2663.4380512959597,
+              2653.938797665897,
+              2809.641742434523,
+              4215.751798073009,
+              2846.1574162030156,
+              4320.000407110865,
+              3480.910978423113,
+              3131.400597095926,
+              3252.9742163115648,
+              2786.6794680418093,
+              2820.090921427602,
+              3003.1890351472366
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 57,
+            "samples": [
+              4709.807017545979,
+              4863.298245613565,
+              4790.929824562147,
+              4687.122807019094,
+              4709.78947368438,
+              4725.140350876501,
+              4722.210526312521,
+              4797.526315789519,
+              4638.894736839767,
+              4738.2982456120335,
+              4725.877192983892,
+              4661.5438596474405
+            ]
+          }
+        ],
+        "checksum": 27508
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 97865,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 2990,
+            "samples": [
+              4133.681605351156,
+              2258.0966555183963,
+              3053.7625418060125,
+              2069.3561872909613,
+              2103.5397993311008,
+              3980.504347826082,
+              12381.187290969894,
+              2056.828093645491,
+              2082.9849498327685,
+              3252.801003344473,
+              2192.1959866220727,
+              2274.2612040133663
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 1462,
+            "samples": [
+              2380.8139534883335,
+              2564.437756497994,
+              2472.611491108072,
+              2532.404240766047,
+              2270.7763337893466,
+              2581.9083447332696,
+              2028.528043775693,
+              2934.478796169635,
+              1813.2407660739123,
+              2734.1826265389327,
+              2497.748974008196,
+              3248.4322845417696
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 3683,
+            "samples": [
+              3149.662774911744,
+              3930.095574260126,
+              3024.9456964431306,
+              3122.3527016019343,
+              2886.9467825142756,
+              2939.802335052961,
+              2978.889492261758,
+              2845.359218028787,
+              2877.127070323101,
+              3187.4490904154213,
+              3321.058647841426,
+              3211.025794189506
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 2374,
+            "samples": [
+              6596.391743892184,
+              6928.531171019301,
+              6766.041701769126,
+              6282.013479359778,
+              4627.123841617511,
+              4785.804549283899,
+              4662.085930918304,
+              4590.775063184504,
+              5521.657961246855,
+              5570.941870261161,
+              4719.811710193769,
+              5302.267902274687
+            ]
+          }
+        ],
+        "checksum": 33952
+      },
+      "upstream": {
+        "pid": 97866,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 2990,
+            "samples": [
+              1321.000668896322,
+              1388.5869565217356,
+              1367.7394648829422,
+              1426.4076923076939,
+              1395.972575250836,
+              1285.785953177261,
+              1223.0351170568606,
+              1454.710367892974,
+              1335.2565217391361,
+              1326.5468227424747,
+              1260.7578595317634,
+              1222.6311036789277
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 1462,
+            "samples": [
+              1508.2079343365533,
+              1752.992476060166,
+              1768.6675786593885,
+              1495.8105335157227,
+              1773.6833105335065,
+              1987.2038303693785,
+              1606.7886456908059,
+              1854.679206566355,
+              1729.3659370725254,
+              1620.6963064295546,
+              1763.9076607387358,
+              1834.0738714090376
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 3683,
+            "samples": [
+              1139.6733641053415,
+              1059.3491718707464,
+              1156.462123269061,
+              1077.4276405104526,
+              1141.596524572374,
+              1080.7537333695334,
+              1144.5946239478762,
+              1139.9220743958858,
+              1094.4767852294167,
+              1160.8742872658065,
+              1077.3825685582299,
+              1164.8680423567757
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 2374,
+            "samples": [
+              7142.691659646143,
+              9598.023588879529,
+              8027.625526537498,
+              14467.213984835698,
+              14288.366891322647,
+              8236.53791069924,
+              7000.877422072461,
+              8089.9326032013605,
+              6947.468828980624,
+              7434.358466722845,
+              6932.357624262881,
+              6417.930075821458
+            ]
+          }
+        ],
+        "checksum": 7776
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 97867,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 8329,
+            "samples": [
+              1289.4154160163287,
+              1276.2186336895156,
+              1296.4090527074065,
+              1312.1973826389726,
+              1258.5743786769112,
+              1250.1401128586872,
+              1260.0953295713787,
+              1218.668747748827,
+              1294.828310721576,
+              1278.0546284067739,
+              1224.6567415055858,
+              1254.4573178052585
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 5524,
+            "samples": [
+              1401.6714337436674,
+              6869.063721940622,
+              1765.8021361332512,
+              2142.7633960897947,
+              2236.5888848660393,
+              1731.1051774076802,
+              1705.0973931933338,
+              1763.3508327299146,
+              1870.866582186836,
+              1865.7148805213553,
+              1714.790007241124,
+              1578.558653149895
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 7981,
+            "samples": [
+              1273.4149855907829,
+              1188.6563087332431,
+              1238.488284676103,
+              1193.1148978824833,
+              1171.1878210750572,
+              1204.2716451572546,
+              1169.8095476757378,
+              1270.940358351083,
+              1227.7806039343534,
+              1260.6816188447594,
+              1375.3081067535336,
+              1202.7784738754553
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 2034,
+            "samples": [
+              5122.54178957726,
+              4917.937069813149,
+              5027.2654867257215,
+              4801.110619469121,
+              4721.709931170069,
+              4782.223205506383,
+              4894.29695181904,
+              4877.724680432754,
+              4759.7512291052635,
+              4811.701081612603,
+              4781.26057030478,
+              4621.72222222227
+            ]
+          }
+        ],
+        "checksum": 28448
+      },
+      "vpm": {
+        "pid": 97868,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 8329,
+            "samples": [
+              3255.6729499339663,
+              1974.6717493096426,
+              2771.261135790613,
+              1710.0092448073044,
+              2536.6740304958553,
+              2389.632608956659,
+              2457.1726497778805,
+              3111.7931324288597,
+              2031.0260535478412,
+              1681.0691559610987,
+              1477.878496818341,
+              1708.893624684832
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 5524,
+            "samples": [
+              1691.6712527154411,
+              1739.5984793627867,
+              1725.153874004351,
+              1789.283128167997,
+              1732.583635047085,
+              1702.0577480086827,
+              1743.5056118754521,
+              1721.1638305575834,
+              1691.4599927588656,
+              1832.5715061549527,
+              1644.9884141926093,
+              1691.0827299058667
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 7981,
+            "samples": [
+              2336.058639268265,
+              2405.838867309864,
+              3382.1314371632498,
+              2969.724971808056,
+              2800.6358852273947,
+              2414.917679488801,
+              2472.5702292945684,
+              2848.5100864553206,
+              3752.54253852903,
+              2798.6154617216125,
+              2612.872196466611,
+              2637.472371883223
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 2034,
+            "samples": [
+              5739.7163225172,
+              6126.639134709883,
+              5671.993117010815,
+              4770.382989183857,
+              6412.098820058976,
+              5539.98672566371,
+              5660.398230088481,
+              5983.878072763018,
+              6258.8087512290995,
+              6681.90757128805,
+              5952.986725663729,
+              5220.624385447439
+            ]
+          }
+        ],
+        "checksum": 5472
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 97869,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 3274,
+            "samples": [
+              2010.2703115455108,
+              1937.7797800855217,
+              2211.9987782529033,
+              1994.1838729382985,
+              2099.1398900427666,
+              1966.0965180207645,
+              2003.4743433109397,
+              1849.0760537568738,
+              2129.5305436774584,
+              1914.2104459376974,
+              2071.7522907758084,
+              1976.2522907757987
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 4767,
+            "samples": [
+              2564.470946087684,
+              2601.854835326195,
+              2056.586951961397,
+              2525.951122299136,
+              2384.0027270820287,
+              2894.832389343403,
+              11442.268093140343,
+              17359.686385567456,
+              10775.7237256136,
+              2862.2909586742194,
+              7951.061254457721,
+              3630.4191315292574
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 3666,
+            "samples": [
+              3307.9083469721827,
+              3184.3060556465193,
+              3216.5166393890054,
+              3268.8897981451446,
+              3165.1211129295975,
+              3354.0531914893722,
+              3137.911347517713,
+              3643.674031642148,
+              3851.961811238418,
+              3434.738134206232,
+              3137.9457174031836,
+              2997.2040370976556
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 1930,
+            "samples": [
+              6229.03730569951,
+              7679.1450777202535,
+              7406.865284974039,
+              20918.804145077716,
+              5690.047150259031,
+              6712.888601036207,
+              6215.781347150298,
+              5425.021761658017,
+              7105.332124352345,
+              6693.761139896417,
+              7620.250259067363,
+              6197.085492228038
+            ]
+          }
+        ],
+        "checksum": 43872
+      },
+      "upstream": {
+        "pid": 97870,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 3274,
+            "samples": [
+              3687.7926084300657,
+              2929.6606597434443,
+              7227.206780696398,
+              5726.74862553451,
+              11496.792913866839,
+              9680.3857666463,
+              5505.204948075751,
+              2155.009163103236,
+              2646.456933414776,
+              2506.1469150885623,
+              2991.9948075748343,
+              6234.422724496043
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 4767,
+            "samples": [
+              2282.6024753513757,
+              2127.9981120201464,
+              2413.659744073856,
+              1857.0553807426015,
+              1838.5076568072018,
+              1934.6549192364105,
+              1768.2678833648085,
+              1937.740297881269,
+              1838.1405496119214,
+              1865.9183973148622,
+              1772.9267883364835,
+              1801.6398153975113
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 3666,
+            "samples": [
+              2797.0540098199413,
+              7824.729405346407,
+              3691.5575559192453,
+              3277.6527550463857,
+              2235.9178941626,
+              1827.8892525914193,
+              4421.1107474086,
+              5561.749863611559,
+              2342.6418439716285,
+              1556.123840698337,
+              1689.4435351881775,
+              1687.7045826513704
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 1930,
+            "samples": [
+              46719.149222797925,
+              59834.97409326418,
+              16942.444041450628,
+              10314.291709844536,
+              11398.726424870476,
+              12062.111398963585,
+              17653.64818652863,
+              8731.433678756428,
+              9413.66580310891,
+              23565.155440414597,
+              8594.73264248701,
+              7154.188082901448
+            ]
+          }
+        ],
+        "checksum": 6240
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 97924,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 2046,
+            "samples": [
+              2686.7057673509353,
+              3121.843597262953,
+              3296.147116324527,
+              4686.970674486801,
+              4036.1886608015584,
+              2886.159824046916,
+              3840.6647116324552,
+              2079.953079178885,
+              3488.453079178895,
+              1899.499022482887,
+              2074.1080156402777,
+              2210.8792766373426
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 1989,
+            "samples": [
+              4155.333836098558,
+              3469.7923579688186,
+              3819.6329813977027,
+              2822.1679235796887,
+              2684.4519859225834,
+              2471.4680744092525,
+              2101.9150326797567,
+              2506.2217194570076,
+              2078.012569130195,
+              2940.862242332835,
+              3256.913021618937,
+              2459.045751633972
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 1997,
+            "samples": [
+              1417.2508763144608,
+              1983.7881822734234,
+              1446.544817225875,
+              1625.7511266900322,
+              1865.6109163745232,
+              2085.7120681021515,
+              2113.2949424136027,
+              1578.3885828742802,
+              3193.185778668014,
+              2196.3985978968503,
+              1745.6810215323062,
+              2053.163244867272
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 962,
+            "samples": [
+              6999.090436590409,
+              7855.59563409567,
+              12211.45114345119,
+              12309.467775467816,
+              13332.424116424094,
+              11451.446985446888,
+              9550.243243243207,
+              6610.143451143482,
+              7316.22453222447,
+              7161.859667359708,
+              7398.302494802371,
+              7487.048856548735
+            ]
+          }
+        ],
+        "checksum": 17888
+      },
+      "vpm": {
+        "pid": 97928,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 2046,
+            "samples": [
+              1692.7741935483848,
+              1813.274193548386,
+              1404.8954056695977,
+              1648.0938416422216,
+              1350.6231671554233,
+              1603.2502443792744,
+              1736.864613880748,
+              1556.5537634408593,
+              1361.029814271756,
+              2145.894428152494,
+              1404.7737047898338,
+              2229.5532746823083
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 1989,
+            "samples": [
+              2272.6872800402216,
+              2485.5872297636924,
+              2369.700351935662,
+              2470.4836601307193,
+              2277.8823529411784,
+              2232.8220211161347,
+              2337.6490698843663,
+              2237.577677224728,
+              2909.7953745600726,
+              1997.6118652589278,
+              2264.789844142777,
+              2246.480643539473
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 1997,
+            "samples": [
+              33572.7756634952,
+              8558.671507260906,
+              17616.19529293945,
+              21887.414621932887,
+              11003.505257886796,
+              4380.883825738581,
+              6213.111667501274,
+              41198.25588382574,
+              6573.151226840252,
+              16016.294942413639,
+              14775.16274411616,
+              67616.98798197294
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 962,
+            "samples": [
+              8658.523908523965,
+              9435.33471933479,
+              9548.640332640325,
+              8846.153846153837,
+              7633.488565488733,
+              8873.527027027041,
+              9366.337837837797,
+              8036.296257796352,
+              8545.130977131095,
+              9531.09771309756,
+              7806.999999999823,
+              7572.591476091408
+            ]
+          }
+        ],
+        "checksum": 8224
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 97929,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 6632,
+            "samples": [
+              2027.2730699638112,
+              2286.4520506634535,
+              1815.7230096501814,
+              1755.522466827496,
+              2338.1584740651374,
+              2881.797798552479,
+              3021.4363691194194,
+              2146.737937273824,
+              1734.5571471652581,
+              1959.8600723763577,
+              1823.7711097708113,
+              1641.956875753919
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 1550,
+            "samples": [
+              2837.3116129032205,
+              2250.99483870963,
+              2254.784516129025,
+              3221.3445161290756,
+              2258.252903225771,
+              2591.155483870983,
+              16197.52709677421,
+              3276.50516129031,
+              9980.61806451607,
+              21180.42967741934,
+              29076.075483870944,
+              24165.187741935504
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 2966,
+            "samples": [
+              2680.2090357383877,
+              2196.5188806473234,
+              3468.2093728928144,
+              4055.23701955499,
+              3676.2053270397573,
+              2505.6473364800963,
+              1974.8398516520726,
+              2223.9548213081775,
+              3785.3590694537893,
+              15154.557316250788,
+              6543.268037761254,
+              2239.253202966951
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 984,
+            "samples": [
+              9080.835365853598,
+              5897.484756097469,
+              6450.076219512149,
+              8424.75406504072,
+              12637.406504065144,
+              17488.18597560969,
+              26690.421747967477,
+              19975.567073170558,
+              12634.654471544834,
+              8093.665650406363,
+              7749.237804878101,
+              11065.844512194974
+            ]
+          }
+        ],
+        "checksum": 43424
+      },
+      "upstream": {
+        "pid": 97930,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "schedule and drain 32 mixed-priority callbacks",
+            "iterations": 6632,
+            "samples": [
+              3362.4535585042167,
+              2743.1833534378766,
+              2525.6584740651438,
+              2238.9865802171344,
+              2138.9852231604405,
+              1688.486278648973,
+              1674.9408926417357,
+              1328.4202352231634,
+              1639.1610373944545,
+              1853.827352231611,
+              1544.2362786489755,
+              1359.1928528347387
+            ]
+          },
+          {
+            "case": "schedule and cancel 32 delayed callbacks",
+            "iterations": 1550,
+            "samples": [
+              4629.300645161316,
+              4528.57483870972,
+              3411.3974193548765,
+              4900.698709677433,
+              6033.92451612902,
+              4380.913548387056,
+              3824.9193548386434,
+              4956.639999999968,
+              5049.865806451577,
+              2601.3438709677052,
+              2318.7903225806945,
+              2261.074838709632
+            ]
+          },
+          {
+            "case": "drain 16 two-stage continuations",
+            "iterations": 2966,
+            "samples": [
+              1375.154416722861,
+              1457.757248819963,
+              2441.826702629823,
+              13611.190829399882,
+              4143.557653405271,
+              2610.375927174659,
+              2160.780512474702,
+              2022.2380310182198,
+              1726.342886041832,
+              1958.234996628462,
+              1836.3115306810187,
+              1444.0745111260712
+            ]
+          },
+          {
+            "case": "real host batch of 32 callbacks",
+            "iterations": 984,
+            "samples": [
+              5341.294715446974,
+              5477.515243902515,
+              5582.825203252073,
+              5096.714430894329,
+              5066.692073170759,
+              5201.007113821265,
+              5032.435975609621,
+              5070.2063008129435,
+              5956.808943089409,
+              5010.204268292758,
+              5051.871951219639,
+              5226.668699187146
+            ]
+          }
+        ],
+        "checksum": 6368
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "schedule and drain 32 mixed-priority callbacks",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2175.9879027355596,
+          "vpmNs": 2090.863768996959,
+          "changePct": -3.9119764237469323
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1330.9016722408055,
+          "vpmNs": 2266.1789297658815,
+          "changePct": 70.27395614811824
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1268.1569816304473,
+          "vpmNs": 2210.32933125225,
+          "changePct": 74.29461519901648
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4596.498778252909,
+          "vpmNs": 1998.829108124619,
+          "changePct": -56.51409465000755
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3004.001710654935,
+          "vpmNs": 1625.672043010748,
+          "changePct": -45.88311859994521
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1771.1568154402921,
+          "vpmNs": 1993.5665711700844,
+          "changePct": 12.557315862204078
+        }
+      ]
+    },
+    {
+      "case": "schedule and cancel 32 delayed callbacks",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2065.0667886550696,
+          "vpmNs": 3408.0131137541894,
+          "changePct": 65.03161701485452
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1758.4500683994509,
+          "vpmNs": 2515.076607387122,
+          "changePct": 43.02803659795447
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1764.576484431583,
+          "vpmNs": 1723.1588522809673,
+          "changePct": -2.3471712626816132
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1861.4868890287319,
+          "vpmNs": 2878.561674008811,
+          "changePct": 54.63776247764809
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2753.309954751136,
+          "vpmNs": 2275.2848164907,
+          "changePct": -17.3618352498073
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4454.744193548388,
+          "vpmNs": 3248.9248387096927,
+          "changePct": -27.068206443481778
+        }
+      ]
+    },
+    {
+      "case": "drain 16 two-stage continuations",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1531.9412403311117,
+          "vpmNs": 2924.673225675126,
+          "changePct": 90.91288547353105
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1139.7977192506137,
+          "vpmNs": 3073.6491990225322,
+          "changePct": 169.66620016079466
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1216.0261245458041,
+          "vpmNs": 2718.0439168024177,
+          "changePct": 123.51854634847008
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2569.847926895785,
+          "vpmNs": 3242.7032187670748,
+          "changePct": 26.18268905444754
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1924.6995493239733,
+          "vpmNs": 15395.7288432649,
+          "changePct": 699.9029692022558
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1990.2365138233408,
+          "vpmNs": 3074.209204315601,
+          "changePct": 54.46451630062277
+        }
+      ]
+    },
+    {
+      "case": "real host batch of 32 callbacks",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 45975.140350879374,
+          "vpmNs": 4723.675438594511,
+          "changePct": -89.72558777951798
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7730.991996630171,
+          "vpmNs": 5411.9629317607705,
+          "changePct": -29.996526524412815
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4806.405850540862,
+          "vpmNs": 5846.351524090464,
+          "changePct": 21.63665961401444
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 11730.41891191703,
+          "vpmNs": 6703.324870466312,
+          "changePct": -42.855196214208945
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 7671.322245322202,
+          "vpmNs": 8752.338877338902,
+          "changePct": 14.091659787540255
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5148.860772357797,
+          "vpmNs": 10073.339939024285,
+          "changePct": 95.64211161241869
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "schedule and drain 32 mixed-priority callbacks",
+      "upstream_ns": 1753,
+      "vpm_ns": 2151,
+      "change_pct": 33.2,
+      "upstream_first_pct": 35.2,
+      "vpm_first_pct": 6.9,
+      "process_range_pct": "-3.9, 70.3, 74.3, -56.5",
+      "control_max_abs_pct": 45.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "schedule and cancel 32 delayed callbacks",
+      "upstream_ns": 1813,
+      "vpm_ns": 2697,
+      "change_pct": 48.8,
+      "upstream_first_pct": 31.3,
+      "vpm_first_pct": 48.8,
+      "process_range_pct": "65.0, 43.0, -2.3, 54.6",
+      "control_max_abs_pct": 27.1,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "drain 16 two-stage continuations",
+      "upstream_ns": 1374,
+      "vpm_ns": 2999,
+      "change_pct": 107.2,
+      "upstream_first_pct": 107.2,
+      "vpm_first_pct": 97.9,
+      "process_range_pct": "90.9, 169.7, 123.5, 26.2",
+      "control_max_abs_pct": 699.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "real host batch of 32 callbacks",
+      "upstream_ns": 9731,
+      "vpm_ns": 5629,
+      "change_pct": -36.4,
+      "upstream_first_pct": -34,
+      "vpm_first_pct": -36.4,
+      "process_range_pct": "-89.7, -30.0, 21.6, -42.9",
+      "control_max_abs_pct": 95.6,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}
