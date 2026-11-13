@@ -21,6 +21,15 @@ delay(0, 5); // .1 seconds
   custom output types can supply a `mixer` factory.
 - `stagger(duration, options)` maps list indices to delays: first, last, center,
   edges or a numeric origin, optional starting delay and Motion easing definitions.
+  Grid `[columns, rows]` delays use Euclidean distances, or nearest-edge distances
+  for `from: "edges"`. Dimensions are snapshotted; changed collection sizes refresh
+  the distance scale. Geometry caches are bounded to groups of at most 4,096 items;
+  custom easing still runs on every call and larger groups use constant space.
+
+[Grid measurements](bench/grid/README.md) show setup plus one sample taking
+87–89% less time than the current upstream control. Repeated 48-item eased
+sampling remains 13% slower on Node and 27% slower on Bun; this is a documented
+follow-up, not a general animation performance claim.
 
 Interpolation snapshots the ranges and easing list. Mutating the caller's arrays
 does not change an existing timeline. Custom mixer outputs are shallow snapshots;
@@ -698,9 +707,9 @@ No speed advantage is claimed for this unit; application adoption remains pendin
 
 Editable sequence
 timelines and variant propagation remain unimplemented.
-Inertia, CSS spring serialization, grid/random
+Inertia, CSS spring serialization, random
 staggering, WAAPI, gestures/layout and the React renderer remain
-unimplemented. Unsupported inertia and grid/random staggering reject
+unimplemented. Unsupported inertia and random staggering reject
 explicitly. This package must not replace `motion-dom` under Framer Motion yet.
 VentiMath's timed contest fades and spring-based calendar/header transforms are
 the playback targets. Application adoption is not claimed.
@@ -719,6 +728,7 @@ establish an application frame-rate improvement.
 | [Springs](bench/spring/README.md) | Construction, calibration, value/velocity sampling and repeated playback |
 | [Numeric playback](bench/playback/README.md) | Keyframe generators, controller lifetime and frame delivery |
 | [Values and frames](bench/values/README.md) | Value creation/notification, scheduling, dispatch and cancellation |
+| [Grid delays](bench/grid/README.md) | Grid delay setup and 48-item sampling |
 | [Numeric mapping](bench/results/README.md) | Interpolation, timeline lookup/preparation and list staggering |
 
 [Renderer-aware adapter measurements](bench/renderer/README.md) cover the complete

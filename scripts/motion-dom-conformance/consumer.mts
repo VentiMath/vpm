@@ -9,8 +9,9 @@ const colorSample: string = interpolate([0, 1], ["#000", "#fff"])(.5);
 interpolate([0, 1], [true, false]);
 // @ts-expect-error numeric results remain numbers
 const bad: string = opacity;
-// @ts-expect-error grid staggering is not built yet
 stagger(0.1, { grid: [2, 2] });
+// @ts-expect-error a grid needs exactly two dimensions
+stagger(0.1, { grid: [2] });
 void point;
 void bad;
 void animate;

@@ -14,8 +14,7 @@ outputs. `values.cjs` runs 2,467 comparisons of value state, velocity,
 subscriptions, external animation lifecycle, frame ordering and manual clocks.
 It also reproduces intentional cancellation/error-recovery differences against
 14.7.0. The current-only edges origin has its own comparison. Named stagger
-easings come from the verified `vmotion-utils` foundation. All 271 package tests
-run on Node and Bun, both locally and against installed archives.
+easings come from the verified `vmotion-utils` foundation. Package tests run on Node and Bun, both locally and against installed archives.
 
 `browser.cjs` checks current/app/VPM mappings applied to actual opacity/transform
 styles in Chrome, verifies that 20 value changes produce one render, and runs
@@ -300,3 +299,5 @@ bun scripts/motion-dom-conformance/effect-end.cjs
 [Completion benchmarks](../../packages/vmotion-dom/bench/effect-end/README.md)
 measure controller construction, completion, queued end writes and release in
 separate processes. They are not browser FPS measurements.
+
+Grid stagger delays add 8,127 current14 black-box comparisons for origins, partial rows, easing and signed durations. Dimensions are snapshotted and invalid grids reject; the app12 control does not expose this newer option. Random ordering and sequence timelines remain outside scope.

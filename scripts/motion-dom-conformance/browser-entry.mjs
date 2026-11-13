@@ -17,6 +17,17 @@ import current from "../motion-utils-conformance/node_modules/motion-dom/dist/cj
 import app from "../motion-utils-conformance/node_modules/motion-dom-app/dist/cjs/index.js";
 window.runMotionDom = async () => {
   const rows = [];
+  const gridHost=document.createElement("div");document.body.append(gridHost);
+  const gridNodes=Array.from({length:9},()=>{const n=document.createElement("div");gridHost.append(n);return n;});
+  const gridDelay=vpm.stagger(.1,{grid:[3,3],from:"center"});
+  const gridControls=vpm.animate(gridNodes,{opacity:[0,1]},{duration:1,ease:"linear",delay:gridDelay,autoplay:false});
+  gridControls.time=.5;
+  await new Promise(requestAnimationFrame);
+  for(let i=0;i<gridNodes.length;i++){
+    const expected=.5-current.stagger(.1,{grid:[3,3],from:"center"})(i,9);
+    if(Math.abs(parseFloat(gridNodes[i].style.opacity)-expected)>1e-5)throw Error("Grid delays must reach selector playback");
+  }
+  gridControls.stop();gridNodes.forEach(n=>vpm.releaseElement(n));gridHost.remove();
   for (const [variant, api] of [
     ["current", current],
     ["app", app],

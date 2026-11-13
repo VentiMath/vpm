@@ -71,3 +71,14 @@ for (const total of [1, 2, 5, 20])
       vpm.stagger(0.1, { from: "edges" })(i, total),
     );
 console.log(checks, "current/app comparisons passed");
+
+let gridChecks = 0;
+for (const grid of [[1,1],[3,2],[2,3],[3,3],[4,5]])
+ for (const total of [1,2,5,grid[0]*grid[1],grid[0]*grid[1]+1])
+  for (const from of ["first","last","center","edges",0,1.5,-1])
+   for (const ease of [undefined,x=>x*x,"easeInOut"])
+    for (const duration of [.1,-.2,0]) {
+      const opts={grid,from,ease,startDelay:.25}, a=current.stagger(duration,opts), b=vpm.stagger(duration,opts);
+      for(let i=0;i<total;i++){try{equal(a(i,total),b(i,total));}catch(e){throw Error(JSON.stringify({grid,total,from,ease:typeof ease,duration,i})+" "+e.message);}gridChecks++;}
+    }
+console.log(gridChecks, "grid distance/easing/partial-row comparisons match current14");

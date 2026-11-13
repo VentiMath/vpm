@@ -102,16 +102,21 @@ function interpolate(input, output, { clamp = true, ease, mixer } = {}) {
   };
 }
 
-// Delays for list animations. Grid and random origins belong to a later
-// implementation stage and reject rather than silently behaving as a list.
+// Delays share the same public list contract; grid delays use Euclidean cell
+// distances. Random ordering remains outside this deterministic helper.
 function stagger(
   duration = 0.1,
   { startDelay = 0, from = "first", ease, grid } = {},
 ) {
   if (!Number.isFinite(duration) || !Number.isFinite(startDelay))
     throw new TypeError("stagger delays must be finite numbers");
-  if (grid !== undefined)
-    throw new TypeError("grid stagger is not implemented yet");
+  if (
+    grid !== undefined &&
+    (!Array.isArray(grid) ||
+      grid.length !== 2 ||
+      [grid[0], grid[1]].some((n) => !Number.isSafeInteger(n) || n < 1))
+  )
+    throw new TypeError("grid must contain positive integer columns and rows");
   if (
     !["first", "last", "center", "edges"].includes(from) &&
     !Number.isFinite(from)
@@ -121,6 +126,8 @@ function stagger(
     ease === undefined ? undefined : easingDefinitionToFunction(ease);
   if (easing !== undefined && typeof easing !== "function")
     throw new TypeError("invalid stagger easing");
+  if (grid !== undefined)
+    return gridStagger(duration, startDelay, from, easing, grid[0], grid[1]);
   return (index, total) => {
     if (
       !Number.isInteger(total) ||
@@ -149,6 +156,97 @@ function stagger(
       (easing
         ? easing(distance / total) * duration * total
         : duration * distance)
+    );
+  };
+}
+function gridStagger(
+  duration,
+  startDelay,
+  from,
+  easing,
+  columns,
+  declaredRows,
+) {
+  let previousTotal = 0,
+    width,
+    rows,
+    ox,
+    oy,
+    maximum = 0,
+    distances;
+  const distance = (x, y) =>
+    from === "edges"
+      ? width === 1 && rows === 1
+        ? 0
+        : Math.min(
+            width > 1 ? Math.min(x, width - 1 - x) : Infinity,
+            rows > 1 ? Math.min(y, rows - 1 - y) : Infinity,
+          )
+      : Math.hypot(x - ox, y - oy);
+  return (index, total) => {
+    if (
+      !Number.isSafeInteger(total) ||
+      total < 1 ||
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= total
+    )
+      throw new RangeError(
+        "stagger requires an index within a positive integer total",
+      );
+    if (previousTotal !== total) {
+      previousTotal = total;
+      // Reuse geometry for ordinary animation groups without caching user easing
+      // results. Large groups stay constant-space instead of growing a cache.
+      distances = total <= 4096 ? [] : null;
+      width = Math.min(columns, total);
+      rows = Math.max(declaredRows, Math.ceil(total / columns));
+      if (typeof from === "number") {
+        ox = from % columns;
+        oy = Math.floor(from / columns);
+      } else {
+        ox =
+          from === "last" ? width - 1 : from === "center" ? (width - 1) / 2 : 0;
+        oy =
+          from === "last" ? rows - 1 : from === "center" ? (rows - 1) / 2 : 0;
+      }
+      if (easing) {
+        // A partial final row is a separate rectangle. Its extrema and the
+        // complete rows determine the scale without allocating per-item arrays.
+        const full = Math.floor(total / columns),
+          remainder = total % columns;
+        if (from === "edges") {
+          const x = Math.floor((width - 1) / 2),
+            y = Math.floor((rows - 1) / 2);
+          maximum = Math.max(
+            full ? distance(x, Math.min(y, full - 1)) : 0,
+            remainder ? distance(Math.min(x, remainder - 1), full) : 0,
+          );
+        } else {
+          maximum = Math.max(distance(0, 0), distance(width - 1, 0));
+          if (full)
+            maximum = Math.max(
+              maximum,
+              distance(0, full - 1),
+              distance(columns - 1, full - 1),
+            );
+          if (remainder)
+            maximum = Math.max(
+              maximum,
+              distance(0, full),
+              distance(remainder - 1, full),
+            );
+        }
+      }
+    }
+    let d = distances?.[index];
+    if (d === undefined) {
+      d = distance(index % columns, Math.floor(index / columns));
+      if (distances) distances[index] = d;
+    }
+    return (
+      startDelay +
+      duration * (easing && maximum ? easing(d / maximum) * maximum : d)
     );
   };
 }

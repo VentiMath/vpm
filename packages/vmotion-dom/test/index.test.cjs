@@ -74,7 +74,7 @@ test("bad configurations and unfinished capabilities reject explicitly", () => {
     ],
   ])
     assert.throws(() => api.interpolate(a, b), TypeError);
-  assert.equal(api.interpolate([0, 1], ["red", "blue"])(.5), "blue");
+  assert.equal(api.interpolate([0, 1], ["red", "blue"])(0.5), "blue");
   assert.throws(
     () => api.interpolate([0, 1], [0, 1], { mixer: () => null }),
     /return a function/,
@@ -83,7 +83,7 @@ test("bad configurations and unfinished capabilities reject explicitly", () => {
     () => api.interpolate([0, 1], [0, 1], { ease: "easeIn" }),
     /easing/,
   );
-  assert.throws(() => api.stagger(0.1, { grid: [2, 2] }), /not implemented/);
+  assert.throws(() => api.stagger(0.1, { grid: [0, 2] }), /grid/);
   assert.throws(() => api.stagger(0.1, { from: "random" }), /origin/);
   assert.throws(() => api.stagger(Infinity), /finite/);
 });
@@ -106,4 +106,44 @@ test("stagger origins and eased delays match independently calculated distances"
 test("sparse numeric ranges cannot bypass finite-value validation", () => {
   assert.throws(() => api.interpolate([0, , 1], [0, 1, 2]), TypeError);
   assert.throws(() => api.interpolate([0, 0.5, 1], [0, , 2]), TypeError);
+});
+
+test("grid staggering snapshots dimensions and rescales for changing collections", () => {
+  const grid = [3, 3],
+    delay = api.stagger(0.1, { grid, from: "center", ease: (x) => x * x });
+  grid.fill(99);
+  assert.equal(delay(4, 9), 0);
+  assert.ok(Math.abs(delay(0, 9) - Math.SQRT2 * 0.1) < 1e-12);
+  assert.ok(Number.isFinite(delay(0, 1)));
+  assert.equal(delay(4, 9), 0);
+  const edge = api.stagger(0.2, { grid: [3, 3], from: "edges" });
+  assert.equal(edge(4, 9), 0.2);
+  assert.equal(edge(8, 9), 0);
+  for (const grid of [
+    Array(2),
+    null,
+    [],
+    [2],
+    [2, 2, 2],
+    [2, 0],
+    [NaN, 2],
+    [2, 1.5],
+  ])
+    assert.throws(() => api.stagger(0.1, { grid }), /grid/);
+});
+
+test("grid geometry caches never cache user easing results", () => {
+  let calls = 0;
+  const delay = api.stagger(0.1, {
+    grid: [3, 3],
+    ease: (p) => {
+      calls++;
+      return p;
+    },
+  });
+  const first = delay(8, 9);
+  assert.equal(delay(8, 9), first);
+  assert.equal(calls, 2);
+  assert.ok(Number.isFinite(delay(0, 5000)));
+  assert.equal(delay(8, 9), first);
 });

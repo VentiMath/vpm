@@ -23,29 +23,29 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-09T20:53:35.332Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T08:12:36.248Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| opacity mapping | 9 | 7 | -25.5% | -21.8% | -29.7% | 9.1% | lower time in every pair, beyond control spread |
-| 128-keyframe timeline lookup | 47 | 13 | -71.5% | -71.2% | -71.6% | 2% | lower time in every pair, beyond control spread |
-| prepare 16-keyframe timeline | 360 | 70 | -80.7% | -81% | -79.6% | 1.3% | lower time in every pair, beyond control spread |
-| 20-item centered stagger | 156 | 72 | -53.9% | -55% | -53.9% | 1.2% | lower time in every pair, beyond control spread |
+| opacity mapping | 10 | 7 | -23.2% | -20% | -28% | 10.2% | lower time in every pair, beyond control spread |
+| 128-keyframe timeline lookup | 50 | 14 | -71.7% | -72.1% | -71.2% | 1% | lower time in every pair, beyond control spread |
+| prepare 16-keyframe timeline | 372 | 80 | -78.6% | -78.8% | -77.7% | 4.6% | lower time in every pair, beyond control spread |
+| 20-item centered stagger | 162 | 75 | -54% | -54.1% | -53.3% | 2.9% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-09T20:53:52.697Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T08:12:56.418Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| opacity mapping | 8 | 1 | -83.1% | -82.5% | -83.6% | 1.1% | lower time in every pair, beyond control spread |
-| 128-keyframe timeline lookup | 50 | 10 | -79.6% | -79.6% | -79.5% | 1.8% | lower time in every pair, beyond control spread |
-| prepare 16-keyframe timeline | 150 | 78 | -47.9% | -58.6% | -47.9% | 1.8% | lower time in every pair, beyond control spread |
-| 20-item centered stagger | 78 | 86 | 9.8% | -28.6% | 12.2% | 2% | unestablished at this precision |
+| opacity mapping | 9 | 1 | -83% | -82.7% | -83.4% | 24.2% | lower time in every pair, beyond control spread |
+| 128-keyframe timeline lookup | 51 | 11 | -79.1% | -79.5% | -77.6% | 9.3% | lower time in every pair, beyond control spread |
+| prepare 16-keyframe timeline | 186 | 90 | -50.1% | -52.1% | -48.7% | 5.6% | lower time in every pair, beyond control spread |
+| 20-item centered stagger | 81 | 90 | 10.1% | 10.8% | -5.4% | 17.7% | unestablished at this precision |
 
 ## Reproduce
 

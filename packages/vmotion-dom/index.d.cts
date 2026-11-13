@@ -154,6 +154,7 @@ export type Easing =
   | "circInOut"
   | "anticipate";
 export interface StaggerOptions {
+  grid?: [number, number];
   startDelay?: number;
   from?: StaggerOrigin;
   ease?: Easing;
