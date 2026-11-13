@@ -12,7 +12,7 @@ node scripts/prosemirror-view-conformance/archives.cjs
 ```
 
 Both 47-test upstream suites run unchanged across current, app and full VPM model/
-transform graphs on Node 24 and Bun. Seven original groups include 2,000 seeded
+transform graphs on Node 24 and Bun. Eight original groups include 2,000 seeded
 cases using identical supplied mappings to isolate decoration behavior. Other
 checks cover affinity, widget identity, child layers, callbacks and persistent
 snapshots. The shared upstream dependency fixture does not indicate application
@@ -128,3 +128,5 @@ geometry contract, not the complete React editor or its `hasFocus`/selection
 lifecycle. Hit testing, native input/selection, IME, clipboard, custom node views,
 other browser engines and vertical writing remain separate acceptance work.
 No geometry performance comparison is claimed.
+
+Decoration indexing also checks cache invalidation by immutable document identity and repeated/duplicate removal without changing retained snapshots. Single-item removal traverses only its owning branch. Bulk mapping remains a measured cost.

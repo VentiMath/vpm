@@ -14,6 +14,29 @@ function shallow(a, b) {
   );
 }
 
+// Model nodes are immutable. Cache only child boundaries by node identity, never
+// decoration membership or mapping results; a changed document gets a new index.
+const childIndexes = new WeakMap();
+function childAt(doc, position) {
+  if (position < 0 || position >= doc.content.size) return null;
+  let children = childIndexes.get(doc);
+  if (!children) {
+    children = [];
+    doc.forEach((node, offset, index) =>
+      children.push({ node, offset, index }),
+    );
+    childIndexes.set(doc, children);
+  }
+  let lo = 0,
+    hi = children.length;
+  while (lo < hi) {
+    const mid = (lo + hi) >>> 1;
+    if (children[mid].offset <= position) lo = mid + 1;
+    else hi = mid;
+  }
+  return children[lo - 1] || null;
+}
+
 class Descriptor {
   constructor(kind, attrs, spec, toDOM) {
     this.kind = kind;
@@ -224,16 +247,16 @@ class DecorationSet {
       else options.onRemove?.(d.spec);
     };
     for (const d of this.local) mapRange(d);
-    const newChildren = new Map();
-    doc.forEach((node, offset) => newChildren.set(offset, node));
     for (let i = 0; i < this.children.length; i += 3) {
       const from = this.children[i],
         to = this.children[i + 1],
         child = this.children[i + 2];
       const intact = untouched(mapping, from, to);
+      const candidate = intact && childAt(doc, intact.from);
       if (
-        intact &&
-        newChildren.get(intact.from) === child.#doc &&
+        candidate &&
+        candidate.offset === intact.from &&
+        candidate.node === child.#doc &&
         intact.to - intact.from === to - from
       ) {
         stable.push(intact.from, intact.to, child);
@@ -290,6 +313,35 @@ class DecorationSet {
   }
   remove(decorations) {
     if (!decorations.length || this === DecorationSet.empty) return this;
+    if (decorations.length === 1) {
+      const item = decorations[0];
+      const removeOne = (set, base) => {
+        let local = set.local,
+          children = set.children;
+        if (local.some((d) => d.eq(item, base)))
+          local = local.filter((d) => !d.eq(item, base));
+        const at = firstChild(children, item.from - base);
+        if (
+          at < children.length &&
+          item.from > base + children[at] &&
+          item.to < base + children[at + 1]
+        ) {
+          const old = children[at + 2],
+            next = removeOne(old, base + children[at] + 1);
+          if (old !== next) {
+            children = children.slice();
+            if (next === DecorationSet.empty) children.splice(at, 3);
+            else children[at + 2] = next;
+          }
+        }
+        return local === set.local && children === set.children
+          ? set
+          : !local.length && !children.length
+            ? DecorationSet.empty
+            : new DecorationSet(local, children, set.#doc);
+      };
+      return removeOne(this, 0);
+    }
     const removeAt = (set, base) => {
       const local = set.local.filter(
         (d) => !decorations.some((other) => d.eq(other, base)),
@@ -379,11 +431,8 @@ function partition(doc, decorations, reuse, onRemove) {
   for (const d of decorations) {
     // Find the single child that could own the whole range. A boundary widget
     // and a decoration of the node itself stay with its parent.
-    const found =
-      d.from >= 0 && d.from <= doc.content.size
-        ? doc.content.findIndex(d.from)
-        : null;
-    const child = found && doc.maybeChild(found.index);
+    const found = childAt(doc, d.from);
+    const child = found && found.node;
     if (
       child &&
       !child.isLeaf &&

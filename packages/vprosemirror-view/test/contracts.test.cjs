@@ -294,3 +294,35 @@ test("identical document identity does not hide a custom interior mapping", () =
   }
   compare(results);
 });
+
+test("cached child boundaries follow immutable edits and preserve removal snapshots", () => {
+  const results = {};
+  for (const [name, api] of Object.entries(A)) {
+    const s = schema(api),
+      doc = s.nodeFromJSON(json);
+    const items = [
+      make(api, { kind: "widget", from: 1, id: 1 }),
+      make(api, { kind: "inline", from: 2, to: 5, id: 2 }),
+    ];
+    const set = api.D.DecorationSet.create(doc, items.slice());
+    const before = snapshot(set);
+    api.D.DecorationSet.create(doc, items.slice());
+    const tr = new api.T.Transform(doc).insert(2, s.text("longer"));
+    const mapped = set.map(tr.mapping, tr.doc);
+    const one = mapped.find().find((d) => d.spec.id === 2);
+    const removed = mapped.remove([one]);
+    assert.deepEqual(snapshot(set), before);
+    assert.equal(mapped.find().length, 2);
+    assert.equal(removed.find().length, 1);
+    assert.deepEqual(snapshot(removed.remove([one])), snapshot(removed));
+    if (name === "vpm") assert.equal(removed.remove([one]), removed);
+    const duplicates = api.D.DecorationSet.create(doc, [
+      items[0],
+      items[0],
+      items[1],
+    ]);
+    assert.equal(duplicates.remove([items[0]]).find().length, 1);
+    results[name] = { mapped: snapshot(mapped), removed: snapshot(removed) };
+  }
+  compare(results);
+});

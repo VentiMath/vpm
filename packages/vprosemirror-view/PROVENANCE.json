@@ -33,7 +33,8 @@
   "changes": [
     "Independent step-validated subtree retention, absolute mapping of affected ranges, persistent branch merges and indexed range queries.",
     "Input arrays remain intact; no upstream runtime copied.",
-    "Private internal package exposes only ./decorations and ./readonly; no full-view replacement claim."
+    "Private internal package exposes only ./decorations and ./readonly; no full-view replacement claim.",
+    "Cache immutable model-child boundaries for decoration partitioning and mapping; single-item removal copies only its owning branch. Seeded mappings, custom interior maps, duplicate removals and persistent snapshots retain correctness. Bulk mapping remains slower."
   ],
   "rendererContract": {
     "path": "src/components/tiptap/tiptap-templates/simple/simple-editor.tsx",

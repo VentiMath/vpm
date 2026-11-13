@@ -107,3 +107,5 @@ The transform [deep-deletion reproduction](../../scripts/prosemirror-schema-list
 (3..42), bulk decoration costs and the recorded Bun create/destroy overhead
 (about 50 μs for 32 paragraphs) remain full editing acceptance gaps. This
 read-only milestone neither repairs nor hides them.
+
+Decoration indexing caches immutable model-child boundaries, and single-item removal searches only its owning branch. The follow-up reduces bulk creation and removal costs; mapping still costs substantially more than upstream and remains open optimization work. Caches never replace step-by-step mapping or node-identity validation.
