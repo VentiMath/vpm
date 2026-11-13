@@ -1,26 +1,4 @@
-# VLX 0.2.3 versus KaTeX and MathJax
-
-Refreshed November 8, 2026 against current KaTeX 0.19.1 (HTML + MathML) and
-MathJax 4.1.3 (SVG). This replaces the historical r5 snapshot; the runtime code
-is unchanged. Each engine receives the same five formulas in display mode.
-Renderers and fonts are initialized before timing; MathJax reuses its document
-and resets input state. VLX uses uncached `renderMath`, producing SVG, HTML and
-MathML together before the requested representation is selected. No renderer
-startup, React/browser DOM work, PNG rasterization or network time is measured.
-
-On Node, four HTML cases take 23.1–43.7% less time; the fraction direction is
-unestablished. On Bun, four HTML cases take 9.1–26.2% less time; the array
-direction is unestablished. All five SVG cases take less time beyond the
-controls: 88.7–97.2% on Node and 77.5–95.3% on Bun. These are five small
-workloads, not a corpus-wide speed estimate or proof of equal typography.
-The benchmark validates output shape; semantic/corpus and visual checks are
-separate. MathJax speech/exploration is not enabled in this raw SVG comparison.
-
-VLX has useful performance and React/image integration strengths for its
-documented scope. KaTeX’s broader function catalog and MathJax’s speech, Braille
-and interactive exploration remain separate capabilities. See the
-[scope and acceptance limits](../../README.md) before treating this as a
-general replacement recommendation.
+# vlx measurements
 
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
@@ -45,41 +23,41 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-08T19:26:19.896Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T08:05:52.640Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| HTML / fraction / uncached | 35951 | 30816 | -15.4% | -15.4% | -9.5% | 2.4% | unestablished at this precision |
-| SVG / fraction / uncached | 244033 | 27571 | -88.7% | -90.1% | -88.1% | 2.3% | lower time in every pair, beyond control spread |
-| HTML / styled text / uncached | 55672 | 43947 | -23.1% | -25.1% | -18.7% | 6.1% | lower time in every pair, beyond control spread |
-| SVG / styled text / uncached | 942179 | 38433 | -95.9% | -96% | -95.9% | 1.4% | lower time in every pair, beyond control spread |
-| HTML / array / uncached | 55764 | 39160 | -29% | -24.2% | -29.8% | 5.9% | lower time in every pair, beyond control spread |
-| SVG / array / uncached | 366667 | 37517 | -89.5% | -90.1% | -89.5% | 3.3% | lower time in every pair, beyond control spread |
-| HTML / contest relations / uncached | 66097 | 37180 | -43.7% | -43.7% | -42.4% | 4.2% | lower time in every pair, beyond control spread |
-| SVG / contest relations / uncached | 588039 | 37077 | -93.4% | -93.8% | -93.4% | 2.5% | lower time in every pair, beyond control spread |
-| HTML / continued fraction and operators / uncached | 64018 | 42411 | -34.3% | -34.3% | -32.3% | 2.2% | lower time in every pair, beyond control spread |
-| SVG / continued fraction and operators / uncached | 1452424 | 39517 | -97.2% | -97.4% | -97% | 3.6% | lower time in every pair, beyond control spread |
+| HTML / fraction / uncached | 31559 | 29121 | -8.1% | -10.6% | -7.4% | 2.3% | lower time in every pair, beyond control spread |
+| SVG / fraction / uncached | 238337 | 25380 | -89.3% | -89.7% | -89.1% | 49.4% | lower time in every pair, beyond control spread |
+| HTML / styled text / uncached | 58068 | 39652 | -26.8% | -26.2% | -49.8% | 1.6% | lower time in every pair, beyond control spread |
+| SVG / styled text / uncached | 939660 | 36657 | -96.1% | -96.6% | -95.7% | 3% | lower time in every pair, beyond control spread |
+| HTML / array / uncached | 52162 | 36423 | -30.5% | -30.5% | -30.5% | 12.5% | lower time in every pair, beyond control spread |
+| SVG / array / uncached | 356844 | 36091 | -89.9% | -90.7% | -89.1% | 68.9% | lower time in every pair, beyond control spread |
+| HTML / contest relations / uncached | 63162 | 36121 | -42.9% | -42.8% | -44.7% | 48.6% | unestablished at this precision |
+| SVG / contest relations / uncached | 530371 | 36547 | -93.1% | -93.5% | -92.8% | 104.6% | unestablished at this precision |
+| HTML / continued fraction and operators / uncached | 61854 | 38919 | -36.7% | -37.2% | -36.7% | 6.7% | lower time in every pair, beyond control spread |
+| SVG / continued fraction and operators / uncached | 1317439 | 39279 | -97.1% | -97.1% | -97.1% | 4.1% | lower time in every pair, beyond control spread |
 
-## Bun 1.4.0
+## Bun 1.4.4
 
-Recorded 2026-11-08T19:27:25.978Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T08:06:54.223Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| HTML / fraction / uncached | 35891 | 32627 | -9.1% | -9.1% | -9.2% | 2.7% | lower time in every pair, beyond control spread |
-| SVG / fraction / uncached | 146506 | 32834 | -77.5% | -79.7% | -75.4% | 7.8% | lower time in every pair, beyond control spread |
-| HTML / styled text / uncached | 51720 | 45836 | -11.4% | -14.7% | -8.4% | 1.9% | lower time in every pair, beyond control spread |
-| SVG / styled text / uncached | 689823 | 40903 | -94% | -95.2% | -92.9% | 6.5% | lower time in every pair, beyond control spread |
-| HTML / array / uncached | 50614 | 43279 | -13.3% | -15% | -12.2% | 9.4% | unestablished at this precision |
-| SVG / array / uncached | 278336 | 40775 | -85.2% | -86.8% | -84.1% | 15.3% | lower time in every pair, beyond control spread |
-| HTML / contest relations / uncached | 59552 | 44811 | -26.2% | -27.2% | -26.2% | 5.3% | lower time in every pair, beyond control spread |
-| SVG / contest relations / uncached | 396100 | 41526 | -89.6% | -91% | -88.1% | 4.4% | lower time in every pair, beyond control spread |
-| HTML / continued fraction and operators / uncached | 61482 | 49976 | -20% | -20.8% | -17.9% | 3.8% | lower time in every pair, beyond control spread |
-| SVG / continued fraction and operators / uncached | 991502 | 47568 | -95.3% | -95.9% | -94.8% | 4.1% | lower time in every pair, beyond control spread |
+| HTML / fraction / uncached | 36550 | 32820 | -9.2% | -7.8% | -15.3% | 5.6% | unestablished at this precision |
+| SVG / fraction / uncached | 163702 | 32180 | -80.8% | -83.5% | -77.7% | 12.8% | lower time in every pair, beyond control spread |
+| HTML / styled text / uncached | 54599 | 43695 | -17.4% | -17.4% | -26.4% | 70.5% | unestablished at this precision |
+| SVG / styled text / uncached | 797709 | 42313 | -94.5% | -95.4% | -93.3% | 5.2% | lower time in every pair, beyond control spread |
+| HTML / array / uncached | 48752 | 40913 | -16.1% | -24.2% | 20.2% | 13.1% | unestablished at this precision |
+| SVG / array / uncached | 342086 | 41869 | -88% | -89.8% | -79.5% | 17.6% | lower time in every pair, beyond control spread |
+| HTML / contest relations / uncached | 58980 | 43711 | -25.8% | -20.9% | -25.8% | 17.6% | unestablished at this precision |
+| SVG / contest relations / uncached | 458688 | 40233 | -90.9% | -94.7% | -90.2% | 3.4% | lower time in every pair, beyond control spread |
+| HTML / continued fraction and operators / uncached | 64801 | 49482 | -23.6% | -39.1% | -3.9% | 3.6% | unestablished at this precision |
+| SVG / continued fraction and operators / uncached | 1153836 | 48900 | -95.9% | -96.3% | -95.6% | 9.2% | lower time in every pair, beyond control spread |
 
 ## Reproduce
 

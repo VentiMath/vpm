@@ -316,3 +316,5 @@ compare ordinary formula/prose paths to immutable 0.2.2 source
 `e7b8d4303b6418cccc32d3922b588042dd2fb185`; prepare it with
 `node scripts/vlx-conformance/prepare-prose-baseline.cjs`. The old raw-list output
 is not a valid performance control for newly formatted lists.
+
+React and React DOM verification now pin 19.3.1, including exact archive consumers. DOM lifecycle regressions verify whole-formula TeX copying and preserve native behavior when a selection only includes part of a formula. These checks do not claim real screen-reader or WebKit/Firefox acceptance.

@@ -41,6 +41,13 @@ function observeMath(root,options={}) {
   if(event.defaultPrevented||!event.clipboardData)return;
   const selection=root.ownerDocument.getSelection();if(!selection||selection.isCollapsed||selection.rangeCount!==1)return;
   const range=selection.getRangeAt(0);try{if(!range.intersectsNode(root))return;}catch{return;}
+  // Cloning a range retains partial ancestor wrappers. An annotation inside
+  // such a wrapper still contains the entire source, so do not substitute it.
+  const boundary=root.ownerDocument.createRange();
+  for(const element of records.keys())if(range.intersectsNode(element)){
+   boundary.selectNode(element);
+   if(range.compareBoundaryPoints(view.Range.START_TO_START,boundary)>0||range.compareBoundaryPoints(view.Range.END_TO_END,boundary)<0)return;
+  }
   const fragment=range.cloneContents(),formulas=[...fragment.querySelectorAll(selector)];
   // Whole mathematical widgets in a mixed prose selection become their authored
   // source. Other selections, including partial MathML selections, keep native

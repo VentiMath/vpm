@@ -18,3 +18,15 @@ test('fitting and hidden math skip computed styles, shared CSS and caller attrib
  const other=new JSDOM('<!doctype html><body></body>');try{installMathStyles(other.window.document);assert.equal(other.window.document.querySelectorAll('style').length,1)}finally{other.window.close()}
  }finally{dom.window.close()}
 });
+
+test('copy conversion leaves partially selected formulas to native selection',()=>{
+ const dom=new JSDOM('<!doctype html><body><section>Before <span data-vlx="math"><svg aria-hidden="true"></svg><math><semantics><mi>abcd</mi><annotation encoding="application/x-tex">abcd</annotation></semantics></math></span> after</section></body>');
+ const {window:w}=dom,root=w.document.querySelector('section'),stop=observeMath(root);
+ const copy=()=>{const data=new Map(),event=new w.Event('copy',{cancelable:true});Object.defineProperty(event,'clipboardData',{value:{setData:(k,v)=>data.set(k,v)}});w.document.dispatchEvent(event);return {event,data};};
+ try {
+  const range=w.document.createRange();range.selectNodeContents(root);w.getSelection().addRange(range);
+  const whole=copy();assert.equal(whole.event.defaultPrevented,true);assert.equal(whole.data.get('text/plain'),'Before $abcd$ after');
+  w.getSelection().removeAllRanges();range.setStart(root.querySelector('mi').firstChild,2);range.setEnd(root,root.childNodes.length);w.getSelection().addRange(range);
+  const partial=copy();assert.equal(partial.event.defaultPrevented,false);assert.equal(partial.data.size,0);
+ }finally{stop();dom.window.close()}
+});

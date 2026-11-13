@@ -1,20 +1,20 @@
 {
   "sourceSHA256": {
-    "index.cjs": "0e52d318906bdd49daf0c2022334daae7c76ed0906433e62e846061a162181be",
-    "tex.cjs": "16a06e57325133818ccaa7ce9d6cbc74d0d97f27d7fb9abfb5068c75ac77279e",
-    "source.cjs": "b82515a633786f451b8ad60c116817170e5bef11ff7e9a04c5d9ce2681459dd8",
+    "index.cjs": "98c697e45af65d830e3e1e8aaa9fd6751d351b285a145690fbf8a21bc9312d0d",
+    "tex.cjs": "ea145e3584f0e50146d1d048900620606a1882c4748173293b7eed90f9dbb05c",
+    "source.cjs": "166bd7a5ccb7481a9cacd660e62bbbf92feb58d922d4632888708e900d97d7f6",
     "macros.cjs": "5aff2c783f69cdc8fcb28affd779e6f135ffa6a9ac1b9024afe988dd4a27f034",
     "typography.cjs": "339126be881984ede33a147bb4b4dcf99f224bf93d0efd7a2444c583be91926b",
-    "layout.cjs": "c37ce407c24462eadde94baa78a50bba05b1070e58c2daec57799815339dc2a7",
+    "layout.cjs": "2ef2e0a189929f347b5e9c02d24d43a7e1904b695cfce0325cc8ed6fb9c5d7ef",
     "nodes.cjs": "302724654d5458c1e4337ae6077c3c1a725f709ffb9746dd1690134864669019",
-    "markup.cjs": "2301a9ab9112fcf2a46cbc2efa1b22e2e07a091b67f2e40a212e844fe518a067",
-    "render-tree.cjs": "b973823b1148d980f675aea0758b504ff081596e51ca7e89ad7ca136388a485d",
+    "markup.cjs": "759359064a89773bf9a564f5f14fc8988a20779507b97548d4455a75db61aca9",
+    "render-tree.cjs": "30fa2f7fd50a57bad3fcd8e2a70040800d49befe9b00c9fcc07d208f5ae36206",
     "math-cache.cjs": "85ca276d9daad6fe8d8c2c1e3d45a9cdf843d9606c80c76c985dbff0ea9b58bd",
-    "dom.cjs": "c8e367943888532717f776d818df447c4a967067e24f3df81921b9e4e6bb8c8f",
-    "styles.cjs": "81032b2dbad05650b02f03337d01366bd4f4ceb2e50034e21dec350a8ca7d74f",
-    "font/glyphs.json": "3932588873ea61e081a36e53b998d85b139067b6009d15cc5ec84893c5281d78"
+    "dom.cjs": "1e4f76d9a2320d90981663ec1a1410db8a17cfde255ec0e38bde18caece78f60",
+    "styles.cjs": "e943e99b37e0a11d64cfe2844b47ef1d5ae86551bcba059634802fe2f0091c3c",
+    "font/glyphs.json": "a5872e0e53c10ee3a53839ca64e626085faff365f9790a11600bc034616e60aa"
   },
-  "browser": "Chrome/156.0.8078.76",
+  "browser": "Chrome/157.0.8103.79",
   "checks": [
     "53 formulas expose one MathML root each",
     "fraction/root/script/limit/table accessibility structure",

@@ -1,7 +1,7 @@
 # VentiLaTeX browser and accessibility verification
 
-VentiLaTeX (VLX, pronounced “Vee Ell Ex”) is adopted by VentiMath frontend main `15a83287` using r7. The automated
-checks below pass in Chrome 156.0.8078.76. They do **not** certify screen-reader
+VentiLaTeX (VLX, pronounced “Vee Ell Ex”) is adopted by VentiMath frontend and Discord problem pictures using 0.2.3; see [adoption evidence](../../docs/ADOPTION.md). Source and archived React checks now use React 19.3.1. The automated
+checks below pass in Chrome 157.0.8103.79. They do **not** certify screen-reader
 speech, every browser/assistive-technology combination, or WCAG conformance.
 Application adoption and deployment are tracked separately from these package checks.
 
@@ -16,7 +16,7 @@ Application adoption and deployment are tracked separately from these package ch
 | Reflow | At 320 CSS px, prose wraps and oversized formulas scroll inside their own bounds; they do not widen the page or shrink away the user's text enlargement. |
 | Keyboard | With `observeMath`, only formulas with usable scrolling overflow enter the tab order. Tab reaches them, arrow keys scroll, and Tab leaves without a trap. Resizing or scaling the SVG to fit removes the added tab stop; hidden overflow gets none. |
 | Inline alignment and clipping | Inline math shares the prose baseline; all 48 fixture outline bounds fit their SVG viewports. Light, dark, narrow and enlarged screenshots are generated for inspection. |
-| Copying | With `observeMath`, mixed prose/formula selections copy each whole formula once as authored TeX. Tests use an in-memory copy event, without touching the OS clipboard. |
+| Copying | With `observeMath`, mixed prose/formula selections copy each whole formula once as authored TeX. Partial formula selections remain native rather than expanding to the entire TeX annotation. Tests use an in-memory copy event, without touching the OS clipboard. |
 | Direct React output | 114 inline/display cases match r6 geometry, MathML and SVG structure in DOM and SSR. Native Chrome checks cover SVG bounds, MathML accessibility roles and oblique/forced-colors styling. Initial mounts and formula changes make zero HTML writes under Trusted Types, with no permissive policy. |
 | React parent updates | Real Chrome checks preserve the same InlineMath, DisplayMath and MathText formula nodes, focus and scroll through 60 updates in each of lazy and preloaded modes, with zero HTML writes. Changed TeX and provider defaults still update. Node/Bun jsdom checks verify hydration reuses server math; Chrome verifies failed chunk loads reach the application error boundary. |
 | Unicode (0.2.2) | Fractions, ordinal characters, accented names and custom operator symbols retain their exact semantic characters. Four inline/display fixtures check native React/SSR against string output and Chrome bounds. Fullwidth comma/colon use a full-em cell. Unused soft hyphens have no ink/advance; discretionary hyphenation is not implemented. |
