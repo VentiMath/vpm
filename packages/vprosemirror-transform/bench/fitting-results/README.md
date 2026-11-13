@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-13T08:01:27.667Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T09:03:22.469Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| delete from a block boundary into a deep list | 5777 | 18550 | 220% | 217.9% | 232.7% | 2% | higher time in every pair, beyond control spread |
-| fit a closed blockquote inside paragraph text | 1562 | 1026 | -33.4% | -32.4% | -35% | 0.9% | lower time in every pair, beyond control spread |
+| delete from a block boundary into a deep list | 5565 | 7311 | 31% | 31% | 31.8% | 1.4% | higher time in every pair, beyond control spread |
+| fit a closed blockquote inside paragraph text | 1522 | 1032 | -32.1% | -32.5% | -31.9% | 8.5% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-13T08:01:36.407Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T09:03:30.637Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| delete from a block boundary into a deep list | 4238 | 13372 | 217.5% | 203.9% | 229.5% | 3.6% | higher time in every pair, beyond control spread |
-| fit a closed blockquote inside paragraph text | 1155 | 1057 | -6.8% | -13.9% | -4% | 0.9% | lower time in every pair, beyond control spread |
+| delete from a block boundary into a deep list | 4195 | 8072 | 94.1% | 94.1% | 92.9% | 5.5% | higher time in every pair, beyond control spread |
+| fit a closed blockquote inside paragraph text | 1169 | 1060 | -9% | -8.2% | -10.7% | 7.5% | unestablished at this precision |
 
 ## Reproduce
 

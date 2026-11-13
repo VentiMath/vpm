@@ -44,3 +44,5 @@ identity, CJS/ESM type consumers under NodeNext and Bundler resolution, and the
 same application fixture in native Chrome. No production writes are involved.
 The fixtures do not certify native IME, system clipboard or a collaborative
 server deployment; those need application integration checks.
+
+Open-depth preflight and immutable filler reuse retain all unchanged upstream tests, the saved deep-boundary fixture, and the full list document/cursor/undo matrices. Impossible candidates skip exception construction; viable candidates still pass model validation. No fitted document result is cached.

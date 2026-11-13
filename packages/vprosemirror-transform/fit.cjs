@@ -1,6 +1,27 @@
 "use strict";
 const { Fragment, Slice } = require("vprosemirror-model");
 const { ReplaceStep, ReplaceAroundStep } = require("./steps.cjs");
+// Content automata and source nodes are immutable. Completed filler fragments
+// can be shared across edits without revalidating already-owned node attributes.
+const endFillers = new WeakMap();
+function endFill(match) {
+  if (!match) return null;
+  if (match.validEnd) return Fragment.empty;
+  if (!endFillers.has(match))
+    endFillers.set(match, match.fillBefore(Fragment.empty, true));
+  return endFillers.get(match);
+}
+function filledCopy(node, content) {
+  let match = node.type.contentMatch.matchFragment(content);
+  if (!match) {
+    const before = node.type.contentMatch.fillBefore(content);
+    if (!before) return null;
+    content = before.append(content);
+    match = node.type.contentMatch.matchFragment(content);
+  }
+  const after = endFill(match);
+  return after ? node.copy(content.append(after)) : null;
+}
 // Assemble a document from persistent subtrees and boundary events. Fitting is
 // driven by each schema's content automaton; input wrappers can be opened only
 // when no enclosing position can accept them.
@@ -64,7 +85,7 @@ function fitDocument(doc, from, to, slice) {
   function close() {
     if (stack.length === 1) return false;
     const f = stack.at(-1),
-      fill = f.match?.fillBefore(Fragment.empty, true);
+      fill = endFill(f.match);
     if (!fill) return false;
     const n = f.node.copy(f.content.append(fill));
     stack.pop();
@@ -82,12 +103,7 @@ function fitDocument(doc, from, to, slice) {
       if (fill) return { depth: d, fill };
       const wrap = state?.findWrapping(n.type);
       if (wrap) return { depth: d, wrap };
-      if (
-        d &&
-        (!f.match?.fillBefore(Fragment.empty, true) ||
-          f.node.type.spec.isolating)
-      )
-        break;
+      if (d && (!endFill(f.match) || f.node.type.spec.isolating)) break;
     }
     return null;
   }
@@ -259,11 +275,7 @@ function fitDocument(doc, from, to, slice) {
           content = pending
             ? child.content.append(Fragment.from(pending))
             : child.content;
-        pending = child.node.type.createAndFill(
-          child.node.attrs,
-          content,
-          child.node.marks,
-        );
+        pending = filledCopy(child.node, content);
         if (!pending) {
           valid = false;
           break;
@@ -287,23 +299,21 @@ function fitDocument(doc, from, to, slice) {
       carry = Fragment.empty;
       if (d > 0 && stack.length > 1) if (!close()) return null;
     } else if (d > 0) {
-      const full = original.type.createAndFill(
-        original.attrs,
-        rest,
-        original.marks,
-      );
+      const full = filledCopy(original, rest);
       if (!full) return null;
       carry = Fragment.from(full);
     } else return null;
   }
   while (stack.length > 1) if (!close()) return null;
   const root = stack[0],
-    fill = root.match?.fillBefore(Fragment.empty, true);
+    fill = endFill(root.match);
   return fill ? doc.copy(root.content.append(fill)) : null;
 }
 function replaceStep(doc, from, to = from, slice = Slice.empty) {
   if (from === to && !slice.size) return null;
-  const direct = new ReplaceStep(from, to, slice);
+  const direct = new ReplaceStep(from, to, slice),
+    leftBoundary = doc.resolve(from),
+    rightBoundary = doc.resolve(to);
   // A closed block fragment pasted into one textblock only splits that block.
   // Build the two open boundary shells directly and let the model validate the
   // complete replacement; complex schemas still fall through to general fitting.
@@ -333,7 +343,16 @@ function replaceStep(doc, from, to = from, slice = Slice.empty) {
       if (!split.apply(doc).failed) return split;
     }
   }
-  if (!direct.apply(doc).failed) return direct;
+  // Open depths must leave both endpoints at the same ancestor depth. Reject
+  // impossible shapes before asking the model to construct a replacement/error;
+  // candidates that satisfy this necessary condition still undergo validation.
+  if (
+    slice.openStart <= leftBoundary.depth &&
+    leftBoundary.depth - slice.openStart ===
+      rightBoundary.depth - slice.openEnd &&
+    !direct.apply(doc).failed
+  )
+    return direct;
   const result = fitDocument(doc, from, to, slice);
   if (!result) return null;
   if (result.eq(doc))
@@ -343,15 +362,20 @@ function replaceStep(doc, from, to = from, slice = Slice.empty) {
   let start = from,
     end = to,
     newEnd = to + result.content.size - doc.content.size;
-  for (let d = doc.resolve(from).depth; d >= 0; d--) {
-    if (d < doc.resolve(from).depth) start = doc.resolve(from).before(d + 1);
-    for (let e = doc.resolve(to).depth; e >= 0; e--) {
-      end = e === doc.resolve(to).depth ? to : doc.resolve(to).after(e + 1);
+  for (let d = leftBoundary.depth; d >= 0; d--) {
+    if (d < leftBoundary.depth) start = leftBoundary.before(d + 1);
+    for (let e = rightBoundary.depth; e >= 0; e--) {
+      end = e === rightBoundary.depth ? to : rightBoundary.after(e + 1);
       newEnd = end + result.content.size - doc.content.size;
       if (newEnd < start) continue;
       const replacement = result.slice(start, newEnd);
-      if (doc.resolve(to).parent.isTextblock && end >= doc.resolve(to).end()) {
-        const gapTo = doc.resolve(to).end(),
+      if (
+        replacement.openStart > d ||
+        d - replacement.openStart !== e - replacement.openEnd
+      )
+        continue;
+      if (rightBoundary.parent.isTextblock && end >= rightBoundary.end()) {
+        const gapTo = rightBoundary.end(),
           gap = doc.slice(to, gapTo);
         // The source boundary identifies the surviving text, even when it is
         // empty or equal to newly inserted text. Matching an arbitrary equal
@@ -360,7 +384,7 @@ function replaceStep(doc, from, to = from, slice = Slice.empty) {
           !slice.openStart &&
           !slice.openEnd &&
           slice.content.content.every((n) => n.isInline) &&
-          doc.resolve(from).parent.inlineContent
+          leftBoundary.parent.inlineContent
         ) {
           const insert = from - start + slice.size;
           if (insert >= 0 && insert + gap.size <= replacement.size) {

@@ -26,6 +26,8 @@
     "Mirrored mapping supports undo and rebasing; mark inverses restore prior formatting rather than blindly toggling it.",
     "Serialized step positions must be nonnegative safe integers; step registration uses a Map, so inherited names cannot select constructors.",
     "One VPM runtime dependency: vprosemirror-model 1.25.12. No upstream runtime files shipped.",
-    "Preserve unselected deep empty endpoints and their right-hand structural ancestry when deleting from a block boundary; partial-text joins retain existing behavior. Saved 3..42 and 64 list/Unicode/empty/nested/direction variants match document, cursor and undo."
+    "Preserve unselected deep empty endpoints and their right-hand structural ancestry when deleting from a block boundary; partial-text joins retain existing behavior. Saved 3..42 and 64 list/Unicode/empty/nested/direction variants match document, cursor and undo.",
+    "Replacement fitting filters impossible open-depth combinations before model validation, avoiding expected error construction while retaining schema/content checks for viable candidates.",
+    "Fitting copies already-validated immutable nodes and shares completed filler fragments by content automaton. Viable replacements still pass the model schema and mark checks; no document result is cached."
   ]
 }
