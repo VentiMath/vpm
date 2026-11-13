@@ -81,3 +81,27 @@ test("Dates from another realm preserve their exact instant", () => {
   const value = require("node:vm").runInNewContext("new Date(123456)");
   assert.equal(moment(value).valueOf(), 123456);
 });
+
+test("calendar duration components do not turn fractional days into hours", () => {
+  for (const [amount, unit, days] of [
+    [1.5, "days", 1.5],
+    [-1.5, "days", -1.5],
+    [2.25, "weeks", 15.75],
+  ]) {
+    const d = moment.duration(amount, unit);
+    assert.equal(d.asDays(), days);
+    assert.equal(d.asHours(), days * 24);
+    assert.deepEqual(
+      [d.hours(), d.minutes(), d.seconds(), d.milliseconds()],
+      [0, 0, 0, 0],
+    );
+  }
+  const elapsed = moment.duration(36, "hours");
+  assert.equal(elapsed.asDays(), 1.5);
+  assert.equal(elapsed.hours(), 12);
+  for (const unit of ["seconds", "days", "weeks"]) {
+    const d = moment.duration(-0, unit);
+    assert.equal(d.asMilliseconds(), 0);
+    assert.equal(d.milliseconds(), 0);
+  }
+});

@@ -3,7 +3,8 @@
 Pinned controls are current Moment 2.31.0 and the app's 2.30.1. The implementation
 was written independently from the public contract, not copied from either
 runtime. `run.cjs` compares calendar additions, invalid dates, explicit offsets,
-DST day/second differences, signed duration fields and the countdown tick used
+DST day/second differences, fractional calendar versus elapsed duration fields,
+signed zero, large finite values and the countdown tick used
 by FuseCountdown. Run in UTC, America/Los_Angeles and Europe/Berlin on Node 24
 and Bun 1.4.4. The fixed app source revision and scope are in
 [provenance](../../packages/vmoment/PROVENANCE.json).

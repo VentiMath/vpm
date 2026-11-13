@@ -144,33 +144,44 @@ class MomentValue {
 }
 class Duration {
   #milliseconds;
+  #days;
   constructor(amount, inputUnit) {
-    const factor = factors[unit(inputUnit)];
-    this.#milliseconds =
-      typeof amount === "number" && Number.isFinite(amount * factor)
-        ? amount * factor
-        : NaN;
+    const name = unit(inputUnit);
+    const valid =
+      typeof amount === "number" && Number.isFinite(amount * factors[name]);
+    // Calendar units remain separate: half a day is not a twelve-hour component.
+    const calendar = name === "day" || name === "week";
+    this.#days = valid
+      ? calendar
+        ? zero(amount * (name === "week" ? 7 : 1))
+        : 0
+      : NaN;
+    this.#milliseconds = valid
+      ? calendar
+        ? 0
+        : zero(amount * factors[name])
+      : NaN;
   }
   isValid() {
     return Number.isFinite(this.#milliseconds);
   }
   asMilliseconds() {
-    return this.#milliseconds;
+    return Math.floor(this.#days * 86400000) + this.#milliseconds;
   }
   asSeconds() {
-    return this.#milliseconds / 1000;
+    return this.#days * 86400 + this.#milliseconds / 1000;
   }
   asMinutes() {
-    return this.#milliseconds / 60000;
+    return this.#days * 1440 + this.#milliseconds / 60000;
   }
   asHours() {
-    return this.#milliseconds / 3600000;
+    return this.#days * 24 + this.#milliseconds / 3600000;
   }
   asDays() {
-    return this.#milliseconds / 86400000;
+    return this.#days + this.#milliseconds / 86400000;
   }
   asWeeks() {
-    return this.#milliseconds / 604800000;
+    return this.#days / 7 + this.#milliseconds / 604800000;
   }
   milliseconds() {
     return this.#milliseconds % 1000;
@@ -179,12 +190,17 @@ class Duration {
     return zero(Math.trunc(this.#milliseconds / 1000)) % 60;
   }
   minutes() {
-    return zero(Math.trunc(this.#milliseconds / 60000)) % 60;
+    return zero(Math.trunc(Math.trunc(this.#milliseconds / 1000) / 60)) % 60;
   }
   hours() {
-    return zero(Math.trunc(this.#milliseconds / 3600000)) % 24;
+    return (
+      zero(
+        Math.trunc(Math.trunc(Math.trunc(this.#milliseconds / 1000) / 60) / 60),
+      ) % 24
+    );
   }
 }
+
 function moment(input) {
   return new MomentValue(input);
 }

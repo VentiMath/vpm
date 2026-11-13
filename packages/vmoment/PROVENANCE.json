@@ -13,7 +13,8 @@
   "changes": [
     "Zero runtime dependencies and no upstream runtime copied.",
     "Native Date storage with explicit ISO validation; no ambiguous host-dependent string parser fallback.",
-    "Calendar-day additions preserve local clock time across DST; hour/second differences remain elapsed time. Clones and returned Dates own their data."
+    "Calendar-day additions preserve local clock time across DST; hour/second differences remain elapsed time. Clones and returned Dates own their data.",
+    "Day/week durations preserve a separate calendar bucket, so fractional days do not become elapsed-hour component fields; signed zero and large finite component arithmetic match current and app controls."
   ],
   "caller": {
     "revision": "47b9d38c77ad02722131d564ba497d16feda38a9",

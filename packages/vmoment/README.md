@@ -28,7 +28,7 @@ available. Instances retain Moment's public marker for gradual caller migration.
 `duration(number, unit)` supports milliseconds, seconds, minutes, hours, days,
 and weeks, including their usual plural/short unit names. `asMilliseconds` through
 `asWeeks` return totals; `milliseconds`, `seconds`, `minutes`, and `hours` return
-signed component fields. Calendar month/year arithmetic, formatting/locales,
+signed component fields. Day/week inputs retain calendar components: `duration(1.5, "days")` totals 36 hours but has an hour component of zero, while `duration(36, "hours")` has an hour component of 12. This distinction matches Moment. Calendar month/year arithmetic, formatting/locales,
 UTC/timezone modes, arrays/object inputs, duration objects and plugins are not
 implemented. Unsupported units throw. This is an application-scoped replacement,
 not a claim to the entire Moment API.

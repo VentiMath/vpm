@@ -44,6 +44,44 @@ for (const name of ["moment", "moment-app"]) {
       assert.equal(a[method](), b[method](), method + " " + seconds);
     count++;
   }
+  for (const unit of ["millisecond", "second", "minute", "hour", "day", "week"])
+    for (const amount of [
+      -1e20,
+      -100000.25,
+      -2.25,
+      -1.5,
+      -0.1,
+      -0,
+      0,
+      0.1,
+      1.5,
+      2.25,
+      100000.25,
+      1e20,
+      NaN,
+    ]) {
+      const a = vpm.duration(amount, unit),
+        b = control.duration(amount, unit);
+      for (const method of [
+        "isValid",
+        "asMilliseconds",
+        "asSeconds",
+        "asMinutes",
+        "asHours",
+        "asDays",
+        "asWeeks",
+        "milliseconds",
+        "seconds",
+        "minutes",
+        "hours",
+      ])
+        assert.equal(
+          a[method](),
+          b[method](),
+          `${name} ${unit} ${amount} ${method}`,
+        );
+      count++;
+    }
   for (const a of [
     "2026-03-08T00:00:00",
     "2026-03-09T00:00:00",
