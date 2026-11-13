@@ -218,6 +218,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(input, forwardedRef) {
     TouchRippleProps,
     tabIndex = 0,
     type,
+    nativeButton,
     ...rest
   } = p;
   const [focused, setFocused] = React.useState(false),
@@ -253,6 +254,7 @@ const ButtonBase = React.forwardRef(function ButtonBase(input, forwardedRef) {
     Component === "button" && (rest.href || rest.to)
       ? LinkComponent
       : Component;
+  const buttonRoot = nativeButton ?? (!rest.href && !rest.to && (Tag === "button" || typeof Tag !== "string"));
   const native = (el) =>
     el?.tagName === "BUTTON" ||
     (el?.tagName === "A" && el.hasAttribute("href")) ||
@@ -272,8 +274,8 @@ const ButtonBase = React.forwardRef(function ButtonBase(input, forwardedRef) {
       ...rest,
       as: Tag,
       ref,
-      type: Tag === "button" ? type || "button" : type,
-      ...(Tag === "button"
+      type: buttonRoot ? type || "button" : type,
+      ...(buttonRoot
         ? { disabled }
         : {
             role: rest.href || rest.to ? undefined : "button",

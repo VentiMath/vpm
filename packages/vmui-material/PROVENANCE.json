@@ -29,10 +29,12 @@
     "Owned refs and ripple timers are released on unmount; theme changes retain control DOM.",
     "Independent Typography, Link and SvgIcon plus createSvgIcon; no Material runtime dependency. Actual current/app Material icon modules render unchanged above the VPM factory.",
     "Retains Material 7 paragraph, direct system props and CSS/palette-path colors needed by existing callers alongside the current typography contract. Physical text alignment is preserved in RTL.",
-    "Explicit root accessibility attributes override nested SVG attributes; titleAccess promotes a decorative SVG child to a named image unless the root explicitly hides it. Prototype-named variants and sizes do not read inherited object properties."
+    "Explicit root accessibility attributes override nested SVG attributes; titleAccess promotes a decorative SVG child to a named image unless the root explicitly hides it. Prototype-named variants and sizes do not read inherited object properties.",
+    "Custom component roots receive native button type/disabled semantics by default, matching Material 9; nativeButton:false explicitly selects ARIA semantics. Browser acceptance covers the application combination of IconButton, motion.button, inherited variants, theme rerenders and ref cleanup."
   ],
   "caller": {
-    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. Most FuseSvgIcon callers instead use Box and Iconify, which are separate."
+    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. FuseSvgIcon instead uses styled Box, SVG sprite references and an Icon fallback. Material icons and FuseSvgIcon are distinct callers. Shared external-link actions combine IconButton with motion.button and inherited variants.",
+    "revision": "3aa9eb28b225e061994229693fbb0556765a5dc4"
   },
   "references": [
     "https://mui.com/material-ui/api/button-base/",

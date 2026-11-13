@@ -109,3 +109,7 @@ SvgIcon({ref:React.createRef<HTMLButtonElement>()});
 // @ts-expect-error custom button Link needs a button ref
 Link({component:'button',ref:React.createRef<SVGSVGElement>()});
 void [TypographyEntry,LinkEntry,SvgIconEntry,iconFactory,factory,utilityFactory,linkOptions,iconOptions];
+
+ButtonBase({component: "div", nativeButton: false});
+// @ts-expect-error nativeButton is boolean
+ButtonBase({nativeButton: "yes"});

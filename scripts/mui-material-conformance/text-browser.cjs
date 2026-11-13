@@ -50,7 +50,9 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
    const html=peer('react-dom/server').renderToString(h(React.Fragment,null,h(api.Typography,{variant:'h2'},'Contest'),h(api.Link,{href:'#local'},'Details'),h(api.SvgIcon,{titleAccess:'Contest icon'},h('path',{d:'M1 1h20v20H1z'}))));
    const hydration=await evaluate('window.textHydrate('+JSON.stringify(html)+')');assert.deepEqual(hydration,{same:true,errors:[]});
    if(process.env.VPM_MATERIAL_EVIDENCE){fs.mkdirSync(process.env.VPM_MATERIAL_EVIDENCE,{recursive:true});const shot=await send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true});fs.writeFileSync(path.join(process.env.VPM_MATERIAL_EVIDENCE,name+'-text.png'),Buffer.from(shot.data,'base64'));}
-   rows.push({styles,focus,names,hover});
+   const application=await evaluate('window.checkApplicationRoots('+JSON.stringify({modern:kind==='vpm'||version==='current'})+')');
+   assert.deepEqual(application,{nativeButton:true,variantCompleted:true,stableFocus:true,activation:true,refReleased:true});
+   rows.push({styles,focus,names,hover,application});
    await evaluate('window.unmountTextCase();'+settle);
    assert.equal(await evaluate('window.textControls.linkRef.current===null && window.textControls.iconRef.current===null'),true,name+' ref cleanup');
   }

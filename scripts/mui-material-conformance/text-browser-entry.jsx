@@ -11,3 +11,6 @@ window.textHydrate=async html=>{
  const r=hydrateRoot(el,<><Typography variant="h2">Contest</Typography><Link href="#local">Details</Link><SvgIcon titleAccess="Contest icon"><path d="M1 1h20v20H1z"/></SvgIcon></>,{onRecoverableError:e=>errors.push(e.message)});
  await new Promise(r=>setTimeout(r,50));const same=before.every((node,i)=>node===el.querySelectorAll('h2,a,svg')[i]);r.unmount();el.remove();return {same,errors};
 };
+
+import {checkApplicationRoots} from './application-scene.jsx';
+window.checkApplicationRoots=checkApplicationRoots;

@@ -84,3 +84,22 @@ test("utility classes preserve global state names", () => {
   assert.equal(api.buttonClasses.root, "MuiButton-root");
   assert.equal(Object.isFrozen(api.buttonClasses), true);
 });
+
+test("custom button components default to native type and disabled semantics", () => {
+  const MotionLikeButton = React.forwardRef((props, ref) => h("button", {...props, ref}));
+  for (const name of ["ButtonBase", "Button", "IconButton", "Fab", "ToggleButton"]) {
+    const s = html(api[name], {component: MotionLikeButton, disabled:true, value:"math"});
+    assert.match(s, /<button[^>]*type="button"/);
+    assert.match(s, /disabled=""/);
+    assert.match(s, /tabindex="-1"/);
+    assert.doesNotMatch(s, /role="button"|aria-disabled|nativeButton/);
+  }
+});
+test("custom nonbutton roots explicitly opt into ARIA semantics and routers remain links", () => {
+  const Custom = React.forwardRef((props, ref) => h("div", {...props, ref}));
+  const s=html(api.ButtonBase,{component:Custom,nativeButton:false,disabled:true});
+  assert.match(s,/role="button"/);assert.match(s,/aria-disabled="true"/);
+  assert.doesNotMatch(s,/type="button"| disabled=""|nativeButton/);
+  const Route = React.forwardRef((props, ref) => h("a", {...props, ref}));
+  assert.doesNotMatch(html(api.Button,{component:Route,href:"/contest"}),/type="button"|role="button"/);
+});

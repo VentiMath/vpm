@@ -18,6 +18,8 @@ export interface ButtonBaseOwnProps {
   className?: string;
   classes?: Partial<Record<string, string>>;
   disabled?: boolean;
+  /** Whether a custom root renders a native button; false opts into ARIA button semantics. */
+  nativeButton?: boolean;
   disableRipple?: boolean;
   disableTouchRipple?: boolean;
   focusRipple?: boolean;
