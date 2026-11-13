@@ -1,0 +1,2370 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-13T11:24:05.212Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/bench-entry.jsx": "095377d084523d7f03cba674c4facda81057d922e6a6281f659747f82f441cfb",
+    "../../scripts/mui-material-conformance/build.cjs": "01488cecdde6bcb547a4055754968177d2852bc24548f124bd55e821c2c5d774",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/bench.cjs": "9d4043ca066317b6bb6a8495195dbdd71ce0bf8f1ed1fe8ce77cb35e73e30337",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/bench.cjs": "86d9c26f3edaa8cd8d86e926b44d10e738385aa9d12d8c3770133d6196c0f194",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/bench.cjs": "9b9a9deb929d94d31ae9febcf0404482d232c8ba0d001cbf21a97f556c227a35",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/bench.cjs": "0c0c71162086667d02d4d52d2b63795ae2675bf2ef3e97107df696d94f048900",
+    "../../scripts/mui-system-conformance/package-lock.json": "c9df7bd474ddbd7db7bdf9603651a109e69e2bd4e5204a173372b2d90ad017da",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-serialize/index.js": "c0f0aedff3b921627f5b9ec2159ad491a2ada45060f4dcf8d8ce5a27030e65b4",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "92b7c409eb10d74ccf311fd638b8cc5cbc7738f9d0405ef04597ff0fe327ed37",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "PROVENANCE.json": "b498dd007b6c05de15ab231d770158ef39bec1d331cc85bbd00c3c3fc04a5b3e",
+    "bench/run.cjs": "8d2096eb2d0addf10cc0a993fe82a03c45955760b5a7ed2553d911da1a26ecb0",
+    "buttons.cjs": "3c5bc873dd300756087a79527e87663507c355273c8fc00810745ae3869d88ce",
+    "index.cjs": "707a51cb46a506e99f0e78002828431be249b1449e0bd7a0ef68ae6bec2443a7",
+    "package.json": "56d3bd1549a6cf8b8ee72deb661c0ffbb26ccb3e6058f92e69f18a1e51407a66"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 71652,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 28,
+            "samples": [
+              366976.2142857138,
+              351302.0714285712,
+              365678.57142857055,
+              437193.4642857147,
+              434562.50000000047,
+              338086.28571428504,
+              413715.7499999985,
+              412562.50000000093,
+              334922.60714285745,
+              426758.92857142875,
+              436444.9285714288,
+              325505.928571429
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 54,
+            "samples": [
+              257910.500000001,
+              178152.01851851723,
+              187508.48148148114,
+              195194.44444444354,
+              201473.7777777782,
+              168868.0555555556,
+              190402.0185185181,
+              196966.05555555556,
+              183340.27777777877,
+              191361.11111111034,
+              180531.62962962897,
+              194398.14814814925
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 52,
+            "samples": [
+              153846.15384615384,
+              197480.76923076934,
+              164119.3846153853,
+              209303.69230769394,
+              161360.57692307743,
+              191064.09615384426,
+              190685.09615384354,
+              164743.57692307577,
+              212290.86538461564,
+              147557.69230769234,
+              203235.5769230732,
+              169418.26923077155
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 25,
+            "samples": [
+              456058.3200000019,
+              361386.679999996,
+              412473.3199999992,
+              419216.6799999995,
+              394539.99999999726,
+              436204.99999999994,
+              384831.64000000217,
+              398069.9999999979,
+              414881.6400000033,
+              387915.0000000027,
+              428415.00000000454,
+              428956.6800000011
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 53,
+            "samples": [
+              181167.45283018987,
+              174220.1320754711,
+              165917.45283018905,
+              232198.11320754985,
+              202478.773584907,
+              253472.49056603512,
+              289992.9245283027,
+              292464.62264150754,
+              179835.6792452832,
+              169598.26415094075,
+              207291.66037736007,
+              196062.90566037575
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 59,
+            "samples": [
+              162701.271186437,
+              149187.13559322665,
+              149411.72881356318,
+              168774.01694915473,
+              159625.0000000016,
+              144997.88135593673,
+              133271.89830508392,
+              164956.20338983534,
+              128916.66101695129,
+              140795.186440678,
+              163004.23728813967,
+              141540.25423728963
+            ]
+          }
+        ],
+        "checksum": 316109180
+      },
+      "vpm": {
+        "pid": 71654,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 28,
+            "samples": [
+              386842.2499999988,
+              332150.2857142856,
+              370827.3928571413,
+              334915.17857142736,
+              311263.39285714267,
+              349770.82142856985,
+              360861.60714285757,
+              379038.6785714272,
+              373345.2499999999,
+              348720.24999999953,
+              336529.7857142845,
+              328349.67857142974
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 54,
+            "samples": [
+              228370.37037037237,
+              236638.11111111112,
+              239841.05555555542,
+              231942.90740740875,
+              224408.18518518418,
+              217684.40740740715,
+              243079.48148148213,
+              242324.0740740745,
+              225123.4444444439,
+              217408.1851851834,
+              245840.27777777668,
+              240870.3703703694
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 52,
+            "samples": [
+              165574.51923076902,
+              152476.76923077006,
+              164865.3846153864,
+              152241.19230769106,
+              171405.44230769065,
+              163346.96153846005,
+              163700.32692307746,
+              162974.34615384534,
+              160834.1346153828,
+              163097.74999999808,
+              163361.36538461252,
+              148323.7115384624
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 25,
+            "samples": [
+              368548.31999999983,
+              506426.679999995,
+              388008.319999999,
+              389156.67999999644,
+              332968.31999999995,
+              348453.35999999405,
+              361364.9999999961,
+              399943.32000000216,
+              384198.320000005,
+              400968.3200000018,
+              278761.6799999978,
+              381483.31999999756
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 53,
+            "samples": [
+              203669.0188679217,
+              207870.2830188651,
+              207225.62264151045,
+              206315.2641509455,
+              234089.62264150707,
+              202082.54716980914,
+              207908.01886792513,
+              206802.6603773613,
+              232725.6226415102,
+              189601.41509433874,
+              218850.62264151062,
+              218936.32075472063
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 59,
+            "samples": [
+              148848.86440677676,
+              161968.93220338912,
+              160037.42372881633,
+              136037.4237288135,
+              149099.57627118644,
+              158378.52542372892,
+              132678.6610169489,
+              138996.45762711833,
+              143824.86440677833,
+              165764.11864406572,
+              142733.7627118643,
+              147757.7796610133
+            ]
+          }
+        ],
+        "checksum": 174213433
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 71655,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 25,
+            "samples": [
+              357296.63999999955,
+              373953.32000000053,
+              373928.32,
+              323655.0000000011,
+              386338.31999999983,
+              347206.67999999935,
+              350800.0000000016,
+              342339.99999999924,
+              360889.9999999994,
+              452831.67999999935,
+              417445.0000000002,
+              374130.00000000006
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 46,
+            "samples": [
+              236881.32608695558,
+              230831.5217391302,
+              233549.82608695645,
+              202755.43478261004,
+              210255.43478260812,
+              277047.10869565106,
+              205184.7826086976,
+              197272.65217391198,
+              239806.15217391477,
+              226575.195652174,
+              219267.2173913059,
+              224088.760869563
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 58,
+            "samples": [
+              176761.4827586205,
+              145521.5517241378,
+              138785.20689655127,
+              140277.29310344803,
+              154380.7413793098,
+              134893.68965517104,
+              146961.93103448203,
+              149499.99999999886,
+              167611.34482758792,
+              146690.37931034563,
+              162566.1034482748,
+              260989.2241379314
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 31,
+            "samples": [
+              442346.7741935456,
+              353892.4516129012,
+              338849.4838709668,
+              371728.483870965,
+              405604.83870967804,
+              359637.0967741956,
+              294829.2903225783,
+              351215.03225806716,
+              331934.1290322603,
+              386508.06451612647,
+              353061.83870967844,
+              330971.7741935416
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 47,
+            "samples": [
+              236415.78723404466,
+              234042.55319148937,
+              208261.51063829943,
+              223073.5744680831,
+              229226.9361702138,
+              217413.12765957543,
+              207725.17021276223,
+              202619.68085106247,
+              236113.4893617031,
+              274826.2553191464,
+              203644.5106382997,
+              232641.8510638274
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 40,
+            "samples": [
+              150091.67499999877,
+              186528.12500000096,
+              166365.6249999974,
+              163957.27500000136,
+              149489.57500000118,
+              170703.125,
+              131700.00000000073,
+              190937.50000000114,
+              128517.72500000037,
+              170737.50000000134,
+              131535.42499999845,
+              157401.0499999986
+            ]
+          }
+        ],
+        "checksum": 198100713
+      },
+      "upstream": {
+        "pid": 71656,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 25,
+            "samples": [
+              367621.67999999976,
+              435093.3199999986,
+              401285.0000000003,
+              414096.68000000005,
+              397896.639999999,
+              460126.68000000075,
+              361220.00000000076,
+              492891.68000000017,
+              519703.3599999986,
+              428775.0000000005,
+              516726.6400000017,
+              501639.9999999998
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 46,
+            "samples": [
+              258745.45652173893,
+              187360.50000000125,
+              256928.45652173943,
+              214519.93478260943,
+              185807.06521738993,
+              329784.4347826081,
+              279169.391304349,
+              197724.63043478224,
+              274770.8260869563,
+              547745.4565217386,
+              164928.43478260963,
+              207732.80434782564
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 58,
+            "samples": [
+              168467.6724137928,
+              195805.31034482608,
+              180825.4310344833,
+              179053.15517241592,
+              206028.74137930796,
+              158514.36206896623,
+              168717.67241379278,
+              166443.96551724046,
+              212548.13793103525,
+              168938.9482758637,
+              175593.3793103458,
+              166362.7758620711
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 31,
+            "samples": [
+              439869.6451612963,
+              375766.1290322601,
+              506290.3225806431,
+              381654.58064515644,
+              465129.0322580603,
+              380677.4193548365,
+              398446.2258064571,
+              382719.06451613206,
+              388571.2580645158,
+              448866.9354838763,
+              382006.70967742027,
+              353477.1612903202
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 47,
+            "samples": [
+              182043.44680850924,
+              176101.9574468061,
+              194710.99999999595,
+              167089.55319148678,
+              211663.12765957473,
+              145076.23404255297,
+              183867.0212765958,
+              180351.06382978696,
+              188168.44680850895,
+              162624.12765957165,
+              190336.87234042538,
+              159310.29787233978
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 40,
+            "samples": [
+              125006.2499999899,
+              127963.55000000403,
+              176888.52500000392,
+              170308.3500000048,
+              139656.2499999959,
+              149871.87499999662,
+              140890.62499999726,
+              202413.5249999972,
+              143117.6999999934,
+              123920.8500000018,
+              149094.8000000003,
+              130730.20000000496
+            ]
+          }
+        ],
+        "checksum": 228903455
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 71674,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 21,
+            "samples": [
+              451809.5238095238,
+              397736.09523809585,
+              364109.14285714366,
+              308206.3333333329,
+              413394.8095238089,
+              321023.809523811,
+              487081.33333333256,
+              298894.85714285716,
+              452978.1904761903,
+              329456.3333333339,
+              430922.61904761894,
+              325640.8571428573
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 62,
+            "samples": [
+              197495.29032257976,
+              173907.25806451574,
+              227983.19354838683,
+              148682.79032258113,
+              190491.9354838699,
+              186689.51612903216,
+              186257.40322580634,
+              184923.3870967737,
+              195479.1612903217,
+              179512.09677419448,
+              169037.6290322595,
+              186981.85483871045
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 52,
+            "samples": [
+              188277.24999999875,
+              149312.50000000116,
+              191867.78846153847,
+              156153.84615384843,
+              182608.17307692344,
+              145137.0192307702,
+              184484.7692307693,
+              162670.67307691934,
+              162711.53846153434,
+              155065.71153846293,
+              170362.17307692315,
+              174467.15384615504
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 25,
+            "samples": [
+              525073.3200000013,
+              435251.6800000012,
+              402576.64000000653,
+              351599.9999999985,
+              472193.3200000057,
+              367123.3200000006,
+              414719.99999999756,
+              455093.3200000054,
+              327743.360000004,
+              409951.6800000037,
+              383490.0000000016,
+              399043.32000000065
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 72,
+            "samples": [
+              179671.87499999997,
+              171528.3472222211,
+              166475.69444444345,
+              176111.69444444386,
+              177773.1388888905,
+              198140.0555555568,
+              170118.6388888895,
+              182694.44444444438,
+              157453.12500000195,
+              180527.20833333384,
+              166325.22222222216,
+              160425.34722222335
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 82,
+            "samples": [
+              133511.68292682615,
+              177633.12195121968,
+              135119.91463414367,
+              147609.75609756427,
+              169900.41463414612,
+              139165.13414634077,
+              139988.31707316995,
+              163952.23170732096,
+              157223.0731707317,
+              150285.06097560906,
+              170559.45121951037,
+              148133.1219512213
+            ]
+          }
+        ],
+        "checksum": 312760968
+      },
+      "vpm": {
+        "pid": 71675,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 21,
+            "samples": [
+              328658.7619047596,
+              348402.7619047624,
+              395333.3333333316,
+              371105.19047619,
+              385926.57142857247,
+              346261.9047619022,
+              397511.90476190567,
+              334666.6666666676,
+              413244.0476190487,
+              338583.333333331,
+              394732.14285714045,
+              397938.4761904747
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 62,
+            "samples": [
+              212737.9032258065,
+              211514.7903225809,
+              228373.64516129077,
+              211104.8387096785,
+              217762.096774194,
+              201951.61290322515,
+              228348.79032258148,
+              252456.32258064498,
+              190176.08064516186,
+              197464.37096774028,
+              187821.90322580602,
+              241730.51612903265
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 52,
+            "samples": [
+              150823.73076922933,
+              159803.6923076926,
+              159658.6538461552,
+              127555.28846153872,
+              246184.28846153943,
+              206154.6538461545,
+              155597.7500000005,
+              160833.32692307714,
+              164782.0384615386,
+              159581.73076922962,
+              174785.25000000044,
+              148717.9615384618
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 25,
+            "samples": [
+              367306.6800000015,
+              308464.9999999965,
+              368281.64000000467,
+              331498.3599999959,
+              375498.3199999969,
+              293088.36000000156,
+              415428.3200000009,
+              336966.64000000054,
+              372811.6799999952,
+              289934.99999999587,
+              361489.99999999435,
+              318181.680000007
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 72,
+            "samples": [
+              283002.319444443,
+              228587.38888888928,
+              260726.27777777612,
+              219110.54166666747,
+              200361.1111111133,
+              231873.2638888908,
+              220436.91666666453,
+              219407.98611111252,
+              204001.15277777787,
+              198583.33333333337,
+              214151.0416666645,
+              194770.83333333352
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 82,
+            "samples": [
+              147489.3292682936,
+              131088.41463415002,
+              135735.26829268082,
+              171608.73170732107,
+              152822.1463414666,
+              139067.58536585385,
+              146944.60975609705,
+              151771.3414634117,
+              148970.5243902402,
+              134385.15853658828,
+              142069.09756097314,
+              141251.01219512057
+            ]
+          }
+        ],
+        "checksum": 184643780
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 71704,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 23,
+            "samples": [
+              448431.17391304363,
+              354836.9565217389,
+              339356.8695652171,
+              337481.8695652182,
+              321101.4347826088,
+              397487.30434782535,
+              322903.999999999,
+              377320.6521739138,
+              365139.47826087003,
+              434416.6956521734,
+              391894.95652173826,
+              413972.82608695555
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 43,
+            "samples": [
+              236855.62790697708,
+              202133.72093023156,
+              214182.18604651163,
+              219956.39534883713,
+              254423.44186046478,
+              211019.37209302143,
+              206362.39534883582,
+              225680.23255813957,
+              202033.906976744,
+              221226.74418604613,
+              241884.67441860383,
+              226721.9069767449
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 73,
+            "samples": [
+              156863.01369863044,
+              177676.36986301356,
+              156245.42465753332,
+              302169.5205479446,
+              403850.45205479464,
+              530651.2602739736,
+              154655.82191780736,
+              193408.67123287663,
+              195316.78082191868,
+              140249.42465753405,
+              131182.64383561612,
+              138731.16438356205
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 31,
+            "samples": [
+              386514.77419355087,
+              312081.96774193837,
+              289936.80645161506,
+              383970.4516129044,
+              485420.7096774233,
+              385194.90322580404,
+              341305.12903225864,
+              346313.16129032033,
+              324663.9677419382,
+              516419.35483871016,
+              353775.5161290284,
+              325044.3548387055
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 39,
+            "samples": [
+              204230.76923077294,
+              225557.69230769164,
+              173534.20512820495,
+              240933.76923076742,
+              226460.48717948966,
+              223477.56410256526,
+              222350.4358974377,
+              215813.05128205338,
+              184649.5641025635,
+              311174.153846149,
+              248607.89743589662,
+              215805.56410256765
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 74,
+            "samples": [
+              210246.62162161912,
+              161535.47297296821,
+              176899.78378378425,
+              147266.8918918931,
+              161280.97297297316,
+              158562.49999999793,
+              140485.91891891978,
+              156577.13513513881,
+              183930.17567567815,
+              160168.3513513492,
+              140672.86486486386,
+              145463.40540540326
+            ]
+          }
+        ],
+        "checksum": 205936093
+      },
+      "upstream": {
+        "pid": 71707,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 23,
+            "samples": [
+              365322.4782608702,
+              381717.3913043496,
+              374240.9130434769,
+              385264.4782608699,
+              434653.95652173774,
+              324588.7391304361,
+              417793.47826087096,
+              410110.521739131,
+              426166.6521739125,
+              337215.5652173922,
+              463559.7826086961,
+              430969.21739130345
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 43,
+            "samples": [
+              201754.86046511473,
+              268688.9534883723,
+              184996.13953488384,
+              183500.95348837174,
+              237476.7441860465,
+              180200.58139535025,
+              222568.7906976751,
+              168248.0465116267,
+              205241.27906976762,
+              190442.83720930168,
+              161233.51162790705,
+              208385.67441860292
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 73,
+            "samples": [
+              174564.50684931478,
+              159386.98630137043,
+              189557.65753424683,
+              173547.36986301336,
+              191901.26027397066,
+              173069.6301369883,
+              168273.4109589023,
+              169902.3972602739,
+              181434.93150685023,
+              227925.21917808263,
+              144881.84931506673,
+              182077.05479452148
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 31,
+            "samples": [
+              381131.70967741805,
+              352334.67741935083,
+              382563.1612903195,
+              420969.06451612787,
+              443634.38709676976,
+              364309.12903226214,
+              454487.9032258054,
+              383634.4193548411,
+              404383.06451613014,
+              400286.2903225759,
+              390041.67741934967,
+              372126.3548387073
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 39,
+            "samples": [
+              169600.4102564075,
+              183049.15384615367,
+              200490.38461538425,
+              172633.56410256118,
+              167091.8717948739,
+              225938.0256410238,
+              144774.56410256706,
+              174861.1282051302,
+              182591.89743590026,
+              186161.30769230903,
+              157792.74358974013,
+              148820.51282051505
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 74,
+            "samples": [
+              201554.6216216228,
+              384120.4864864857,
+              207160.47297297165,
+              315774.7702702722,
+              199768.5810810794,
+              267234.79729729955,
+              248823.75675675523,
+              220012.95945945557,
+              316834.4594594576,
+              287815.87837838253,
+              313279.8378378354,
+              186648.64864864727
+            ]
+          }
+        ],
+        "checksum": 230564830
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 71708,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 23,
+            "samples": [
+              451512.69565217406,
+              347889.5217391309,
+              394998.2173913055,
+              399498.1739130446,
+              374603.26086956594,
+              431731.91304347705,
+              351634.0869565239,
+              523170.26086956525,
+              386965.56521739217,
+              1686925.7391304339,
+              487074.2608695665,
+              451969.1739130453
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 42,
+            "samples": [
+              158784.73809524014,
+              220561.50000000093,
+              202493.07142857258,
+              175042.642857144,
+              194883.92857142788,
+              261689.47619047566,
+              171356.14285714275,
+              218604.16666666672,
+              209452.38095237888,
+              275077.3809523794,
+              188216.2619047617,
+              204906.7380952384
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 54,
+            "samples": [
+              164623.46296296356,
+              172121.14814814986,
+              160774.68518518488,
+              183525.4629629638,
+              201286.25925926154,
+              158554.01851851842,
+              203053.24074073875,
+              166263.88888889103,
+              171266.96296296545,
+              191626.53703703772,
+              142476.85185185017,
+              196113.42592592488
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 27,
+            "samples": [
+              553257.703703703,
+              521146.62962962606,
+              411282.4074074137,
+              468964.48148148315,
+              467336.4444444427,
+              409132.70370369736,
+              456779.3333333325,
+              403499.9999999956,
+              495350.2962962964,
+              442868.81481480965,
+              416722.2222222167,
+              423978.37037036946
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 67,
+            "samples": [
+              201569.02985074488,
+              161970.77611940273,
+              202263.0597014934,
+              160496.89552238956,
+              186878.10447761253,
+              162402.98507462474,
+              185869.40298507502,
+              158921.64179104607,
+              175769.91044776054,
+              168874.37313432622,
+              187806.59701492504,
+              198066.5373134323
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 64,
+            "samples": [
+              157598.95312500306,
+              152922.5156250007,
+              158366.54687500128,
+              152065.74999999846,
+              141642.57812500125,
+              164050.7812499976,
+              139235.67187500652,
+              142830.0781250016,
+              166182.9531250021,
+              142156.24999999933,
+              147092.45312500486,
+              142824.859374997
+            ]
+          }
+        ],
+        "checksum": 323596452
+      },
+      "vpm": {
+        "pid": 71709,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 23,
+            "samples": [
+              416425.7391304343,
+              424842.39130434935,
+              448608.6956521732,
+              395220.99999999965,
+              510063.43478261,
+              321659.391304348,
+              424235.5217391294,
+              359289.8695652173,
+              422108.6956521746,
+              340570.65217391285,
+              410282.6086956507,
+              430715.60869565146
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 42,
+            "samples": [
+              217230.1666666656,
+              215092.2619047611,
+              166750.97619047717,
+              253023.80952380842,
+              200791.66666666768,
+              168174.61904761763,
+              217894.83333333235,
+              181153.7619047629,
+              202361.09523809396,
+              206584.30952380784,
+              183862.0952380958,
+              198328.3809523809
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 54,
+            "samples": [
+              194675.92592592674,
+              185640.42592592607,
+              168693.666666667,
+              173796.29629629824,
+              163869.5925925933,
+              171256.16666666695,
+              172985.3333333343,
+              207510.03703703772,
+              176755.3888888895,
+              158034.7222222216,
+              179499.99999999968,
+              166030.09259259343
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 27,
+            "samples": [
+              353027.7777777816,
+              491549.3703703709,
+              414859.5925925949,
+              388441.3703703676,
+              407259.2592592544,
+              428907.4074074085,
+              400993.8148148177,
+              448381.1481481418,
+              423555.5555555611,
+              382361.1111111118,
+              423520.0370370354,
+              357336.407407409
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 67,
+            "samples": [
+              157378.1044776127,
+              185126.25373134494,
+              185223.25373134608,
+              172970.77611940054,
+              179569.0298507459,
+              171259.94029850775,
+              202328.35820895582,
+              155394.91044776002,
+              173248.13432835968,
+              170875.62686566994,
+              243802.8507462686,
+              158662.31343283522
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 64,
+            "samples": [
+              147960.2812500005,
+              147650.3906249995,
+              176597.000000001,
+              145791.67187500274,
+              171746.74999999694,
+              134773.4375000016,
+              150530.59374999834,
+              162089.20312499942,
+              173454.42187500026,
+              137265.62499999773,
+              156376.95312500454,
+              144363.2812499942
+            ]
+          }
+        ],
+        "checksum": 242002818
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 71710,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 18,
+            "samples": [
+              425229.16666666785,
+              468828.666666667,
+              386347.2222222223,
+              404240.77777777886,
+              367150.4444444464,
+              435159.72222222225,
+              324224.55555555667,
+              403057.83333333366,
+              455770.8333333323,
+              415708.3333333339,
+              427361.11111111083,
+              354046.333333334
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 45,
+            "samples": [
+              187917.6000000017,
+              192685.17777777815,
+              220371.31111111294,
+              209523.1555555554,
+              203513.8888888898,
+              159999.08888888967,
+              205160.1777777781,
+              192970.35555555593,
+              231992.59999999966,
+              166704.64444444457,
+              219835.17777777658,
+              249714.82222222222
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 59,
+            "samples": [
+              169894.76271186373,
+              215504.23728813528,
+              169684.3220338971,
+              243615.81355932206,
+              192834.0508474575,
+              232742.93220339072,
+              252546.6101694939,
+              203361.5932203409,
+              189188.5593220349,
+              170814.96610169671,
+              173576.27118644043,
+              177725.98305084673
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 23,
+            "samples": [
+              390324.2608695682,
+              409505.4347826096,
+              442731.9130434764,
+              484880.43478260294,
+              341050.73913044337,
+              459920.30434782145,
+              355487.3043478299,
+              440626.8260869559,
+              443429.34782608884,
+              447097.8260869644,
+              397599.6521739153,
+              421001.8260869516
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 46,
+            "samples": [
+              158701.08695652187,
+              192692.0217391329,
+              166550.71739130464,
+              194035.32608695832,
+              147655.80434782253,
+              168639.5000000007,
+              195533.50000000055,
+              159475.54347826057,
+              148282.60869565027,
+              190249.0869565208,
+              163600.54347826066,
+              149926.63043478449
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 65,
+            "samples": [
+              157735.89230769244,
+              153267.93846154312,
+              143643.5846153822,
+              168306.4000000041,
+              154698.7230769166,
+              133245.50769231372,
+              148999.35384615115,
+              144535.24615384874,
+              179956.39999999886,
+              140787.1692307638,
+              146799.35384615068,
+              196885.8923076928
+            ]
+          }
+        ],
+        "checksum": 338733478
+      },
+      "upstream": {
+        "pid": 71711,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 buttons SSR",
+            "iterations": 18,
+            "samples": [
+              450826.3888888911,
+              394131.9444444452,
+              419511.61111110955,
+              366046.27777777903,
+              406233.7777777777,
+              304365.77777777845,
+              376590.2777777796,
+              394636.61111111037,
+              357127.27777777787,
+              404949.0555555558,
+              298914.333333332,
+              443611.1111111119
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 45,
+            "samples": [
+              170837.0444444452,
+              207059.26666666727,
+              206625.91111110942,
+              175386.11111111147,
+              268527.777777778,
+              187050.00000000178,
+              163599.08888888793,
+              208639.7999999993,
+              238618.5111111116,
+              180243.5111111107,
+              187909.26666666666,
+              185008.333333331
+            ]
+          },
+          {
+            "case": "Material9 toggles SSR",
+            "iterations": 59,
+            "samples": [
+              185290.96610169383,
+              168581.2203389826,
+              163442.7966101704,
+              172632.05084745775,
+              178314.2542372878,
+              204169.49152542456,
+              205689.2711864409,
+              144866.52542372773,
+              183576.27118644095,
+              260302.96610169552,
+              150459.74576271148,
+              187766.9491525428
+            ]
+          },
+          {
+            "case": "App7 buttons SSR",
+            "iterations": 23,
+            "samples": [
+              397793.4782608669,
+              432293.47826086666,
+              402121.39130435186,
+              325208.3043478251,
+              404682.95652174123,
+              400356.86956521793,
+              407128.652173914,
+              429186.60869565385,
+              395409.4347826096,
+              394726.43478260894,
+              413152.17391304584,
+              504655.7826086902
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 46,
+            "samples": [
+              171334.2391304383,
+              198577.91304348112,
+              149334.23913043458,
+              149321.56521739098,
+              217849.65217391742,
+              191578.80434782172,
+              198417.56521738876,
+              182672.10869564975,
+              154802.52173913215,
+              198853.2608695649,
+              171360.52173912938,
+              166538.04347826104
+            ]
+          },
+          {
+            "case": "App7 toggles SSR",
+            "iterations": 65,
+            "samples": [
+              191907.69230769126,
+              141142.30769230815,
+              147376.27692307587,
+              233176.29230769293,
+              153872.43076923088,
+              158001.27692307867,
+              143890.3846153852,
+              144253.84615384386,
+              172505.76923076832,
+              144841.66153846183,
+              140631.4000000013,
+              163166.01538461816
+            ]
+          }
+        ],
+        "checksum": 255963140
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Material9 buttons SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 389769.3571428574,
+          "vpmNs": 349245.5357142847,
+          "changePct": -10.396872069581399
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 431934.15999999957,
+          "vpmNs": 367409.1599999997,
+          "changePct": -14.93861934883778
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 380922.61904761975,
+          "vpmNs": 378515.88095238124,
+          "changePct": -0.6318181107900167
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 397687.50000000047,
+          "vpmNs": 371230.06521739194,
+          "changePct": -6.65282031308716
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 415615.04347826086,
+          "vpmNs": 419267.21739130444,
+          "changePct": 0.8787395861513447
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 394384.27777777775,
+          "vpmNs": 409974.5555555564,
+          "changePct": 3.953067770760188
+        }
+      ]
+    },
+    {
+      "case": "Material9 icons SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 190881.56481481422,
+          "vpmNs": 234290.50925925994,
+          "changePct": 22.741297456650344
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 235724.1956521744,
+          "vpmNs": 225331.97826086852,
+          "changePct": -4.408634150836277
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 186473.45967741925,
+          "vpmNs": 212126.3467741937,
+          "changePct": 13.756856949590258
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 196098.8488372082,
+          "vpmNs": 220591.56976744163,
+          "changePct": 12.489987103680612
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 203699.9047619055,
+          "vpmNs": 201576.38095238083,
+          "changePct": -1.0424765843689232
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 187479.63333333423,
+          "vpmNs": 204337.03333333397,
+          "changePct": 8.991590019822414
+        }
+      ]
+    },
+    {
+      "case": "Material9 toggles SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 180051.68269230754,
+          "vpmNs": 163222.35576922906,
+          "changePct": -9.346942317577955
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 172266.16379310476,
+          "vpmNs": 148230.96551724046,
+          "changePct": -13.952361709715133
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 166536.85576922874,
+          "vpmNs": 159731.1730769239,
+          "changePct": -4.086592520838462
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 174055.9383561641,
+          "vpmNs": 167269.691780822,
+          "changePct": -3.898888276627277
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 171694.05555555766,
+          "vpmNs": 173390.8148148163,
+          "changePct": 0.988245780419339
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 180945.26271186437,
+          "vpmNs": 191011.30508474621,
+          "changePct": 5.563031726843781
+        }
+      ]
+    },
+    {
+      "case": "App7 buttons SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 413677.48000000126,
+          "vpmNs": 382840.8200000013,
+          "changePct": -7.454275731905902
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 385645.16129032394,
+          "vpmNs": 353477.14516128984,
+          "changePct": -8.341350899205802
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 406264.16000000515,
+          "vpmNs": 349228.31999999745,
+          "changePct": -14.039102046315621
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 386838.0483870954,
+          "vpmNs": 350044.33870967437,
+          "changePct": -9.511398847872076
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 449824.0740740711,
+          "vpmNs": 411059.4259259247,
+          "changePct": -8.617735328626086
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 403402.17391304654,
+          "vpmNs": 430814.32608695375,
+          "changePct": 6.795241559559839
+        }
+      ]
+    },
+    {
+      "case": "App7 icons SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 199270.8396226414,
+          "vpmNs": 207547.95283018777,
+          "changePct": 4.1537001716963395
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 181197.2553191481,
+          "vpmNs": 226150.25531914845,
+          "changePct": 24.80887468235835
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 173820.0208333325,
+          "vpmNs": 219259.26388888998,
+          "changePct": 26.141547353240124
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 173747.3461538457,
+          "vpmNs": 222914.00000000148,
+          "changePct": 28.297786950150527
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 180819.65671641778,
+          "vpmNs": 173109.45522388013,
+          "changePct": -4.264028387483165
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 177016.31521738955,
+          "vpmNs": 165075.63043478265,
+          "changePct": -6.745527816429142
+        }
+      ]
+    },
+    {
+      "case": "App7 toggles SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 149299.4322033949,
+          "vpmNs": 148303.32203389503,
+          "changePct": -0.6671895229600433
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 142004.16249999532,
+          "vpmNs": 160679.16249999998,
+          "changePct": 13.151022949771107
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 149209.09146341518,
+          "vpmNs": 144506.8536585351,
+          "changePct": -3.15144188518367
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 258029.2770270274,
+          "vpmNs": 159365.42567567358,
+          "changePct": -38.237463782460324
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 149579.10156250166,
+          "vpmNs": 149245.43749999942,
+          "changePct": -0.2230686366055057
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 150624.35384615336,
+          "vpmNs": 151133.64615384713,
+          "changePct": 0.3381208248793399
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Material9 buttons SSR",
+      "upstream_ns": 393728,
+      "vpm_ns": 369320,
+      "change_pct": -8.5,
+      "upstream_first_pct": -5.5,
+      "vpm_first_pct": -10.8,
+      "process_range_pct": "-10.4, -14.9, -0.6, -6.7",
+      "control_max_abs_pct": 4,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Material9 icons SSR",
+      "upstream_ns": 193490,
+      "vpm_ns": 222962,
+      "change_pct": 13.1,
+      "upstream_first_pct": 18.2,
+      "vpm_first_pct": 4,
+      "process_range_pct": "22.7, -4.4, 13.8, 12.5",
+      "control_max_abs_pct": 9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Material9 toggles SSR",
+      "upstream_ns": 173161,
+      "vpm_ns": 161477,
+      "change_pct": -6.7,
+      "upstream_first_pct": -6.7,
+      "vpm_first_pct": -8.9,
+      "process_range_pct": "-9.3, -14.0, -4.1, -3.9",
+      "control_max_abs_pct": 5.6,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 buttons SSR",
+      "upstream_ns": 396551,
+      "vpm_ns": 351761,
+      "change_pct": -8.9,
+      "upstream_first_pct": -10.7,
+      "vpm_first_pct": -8.9,
+      "process_range_pct": "-7.5, -8.3, -14.0, -9.5",
+      "control_max_abs_pct": 8.6,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 icons SSR",
+      "upstream_ns": 177509,
+      "vpm_ns": 221087,
+      "change_pct": 25.5,
+      "upstream_first_pct": 15.1,
+      "vpm_first_pct": 26.6,
+      "process_range_pct": "4.2, 24.8, 26.1, 28.3",
+      "control_max_abs_pct": 6.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 toggles SSR",
+      "upstream_ns": 149254,
+      "vpm_ns": 153834,
+      "change_pct": -1.9,
+      "upstream_first_pct": -1.9,
+      "vpm_first_pct": -12.5,
+      "process_range_pct": "-0.7, 13.2, -3.2, -38.2",
+      "control_max_abs_pct": 0.3,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

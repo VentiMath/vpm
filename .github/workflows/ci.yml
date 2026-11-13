@@ -65,6 +65,14 @@ jobs:
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: Material button family and application themes
+        run: |
+          node --test packages/vmui-material/test/buttons.test.cjs
+          node scripts/mui-material-conformance/contract.cjs
+          node scripts/mui-material-conformance/types.cjs
+          node scripts/mui-material-conformance/browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/browser.cjs
+          node scripts/mui-material-conformance/archives.cjs
       - name: MUI System themes, layouts and unchanged Material callers
         run: |
           node --test packages/vmui-system/test/system.test.cjs
@@ -887,6 +895,8 @@ jobs:
       - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI System controls on Bun
         run: |
+          bun test packages/vmui-material/test/buttons.test.cjs
+          bun scripts/mui-material-conformance/contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs
           bun scripts/mui-system-conformance/colors.cjs

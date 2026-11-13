@@ -1,0 +1,190 @@
+{
+  "name": "vmui-material",
+  "version": "9.5.0",
+  "description": "Independent Material button controls for VentiMath; remaining component families in progress",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json",
+    "./ButtonBase": {
+      "import": {
+        "types": "./ButtonBase.d.mts",
+        "default": "./ButtonBase.mjs"
+      },
+      "require": {
+        "types": "./ButtonBase.d.cts",
+        "default": "./ButtonBase.cjs"
+      }
+    },
+    "./buttonBaseClasses": {
+      "import": {
+        "types": "./buttonBaseClasses.d.mts",
+        "default": "./buttonBaseClasses.mjs"
+      },
+      "require": {
+        "types": "./buttonBaseClasses.d.cts",
+        "default": "./buttonBaseClasses.cjs"
+      }
+    },
+    "./Button": {
+      "import": {
+        "types": "./Button.d.mts",
+        "default": "./Button.mjs"
+      },
+      "require": {
+        "types": "./Button.d.cts",
+        "default": "./Button.cjs"
+      }
+    },
+    "./buttonClasses": {
+      "import": {
+        "types": "./buttonClasses.d.mts",
+        "default": "./buttonClasses.mjs"
+      },
+      "require": {
+        "types": "./buttonClasses.d.cts",
+        "default": "./buttonClasses.cjs"
+      }
+    },
+    "./IconButton": {
+      "import": {
+        "types": "./IconButton.d.mts",
+        "default": "./IconButton.mjs"
+      },
+      "require": {
+        "types": "./IconButton.d.cts",
+        "default": "./IconButton.cjs"
+      }
+    },
+    "./iconButtonClasses": {
+      "import": {
+        "types": "./iconButtonClasses.d.mts",
+        "default": "./iconButtonClasses.mjs"
+      },
+      "require": {
+        "types": "./iconButtonClasses.d.cts",
+        "default": "./iconButtonClasses.cjs"
+      }
+    },
+    "./Fab": {
+      "import": {
+        "types": "./Fab.d.mts",
+        "default": "./Fab.mjs"
+      },
+      "require": {
+        "types": "./Fab.d.cts",
+        "default": "./Fab.cjs"
+      }
+    },
+    "./fabClasses": {
+      "import": {
+        "types": "./fabClasses.d.mts",
+        "default": "./fabClasses.mjs"
+      },
+      "require": {
+        "types": "./fabClasses.d.cts",
+        "default": "./fabClasses.cjs"
+      }
+    },
+    "./ButtonGroup": {
+      "import": {
+        "types": "./ButtonGroup.d.mts",
+        "default": "./ButtonGroup.mjs"
+      },
+      "require": {
+        "types": "./ButtonGroup.d.cts",
+        "default": "./ButtonGroup.cjs"
+      }
+    },
+    "./buttonGroupClasses": {
+      "import": {
+        "types": "./buttonGroupClasses.d.mts",
+        "default": "./buttonGroupClasses.mjs"
+      },
+      "require": {
+        "types": "./buttonGroupClasses.d.cts",
+        "default": "./buttonGroupClasses.cjs"
+      }
+    },
+    "./ToggleButton": {
+      "import": {
+        "types": "./ToggleButton.d.mts",
+        "default": "./ToggleButton.mjs"
+      },
+      "require": {
+        "types": "./ToggleButton.d.cts",
+        "default": "./ToggleButton.cjs"
+      }
+    },
+    "./toggleButtonClasses": {
+      "import": {
+        "types": "./toggleButtonClasses.d.mts",
+        "default": "./toggleButtonClasses.mjs"
+      },
+      "require": {
+        "types": "./toggleButtonClasses.d.cts",
+        "default": "./toggleButtonClasses.cjs"
+      }
+    },
+    "./ToggleButtonGroup": {
+      "import": {
+        "types": "./ToggleButtonGroup.d.mts",
+        "default": "./ToggleButtonGroup.mjs"
+      },
+      "require": {
+        "types": "./ToggleButtonGroup.d.cts",
+        "default": "./ToggleButtonGroup.cjs"
+      }
+    },
+    "./toggleButtonGroupClasses": {
+      "import": {
+        "types": "./toggleButtonGroupClasses.d.mts",
+        "default": "./toggleButtonGroupClasses.mjs"
+      },
+      "require": {
+        "types": "./toggleButtonGroupClasses.d.cts",
+        "default": "./toggleButtonGroupClasses.cjs"
+      }
+    }
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.d.cts",
+    "*.d.mts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vmui-material"
+  },
+  "dependencies": {
+    "vmui-system": "9.5.0"
+  },
+  "peerDependencies": {
+    "react": "^19.3.0"
+  }
+}

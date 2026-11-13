@@ -1,0 +1,36 @@
+{
+  "upstream": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "repository": "https://github.com/mui/material-ui",
+    "checked": "2026-11-13"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "partial; remaining component families pending",
+    "targetScope": "ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton and ToggleButtonGroup: native/link/custom roots, keyboard and focus behavior, disabled/loading controls, controlled toggles and VentiMath theme/sx overrides. The remaining Material component families and full theme creation are not implemented.",
+    "independentComponents": [
+      "ButtonBase",
+      "Button",
+      "IconButton",
+      "Fab",
+      "ButtonGroup",
+      "ToggleButton",
+      "ToggleButtonGroup"
+    ],
+    "remainingWork": "Forms and validation controls; typography, surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
+  },
+  "changes": [
+    "Written independently over VPM System and its styling closure; no upstream Material runtime, Babel or prop-types ships.",
+    "Native button semantics and direct React rendering; no imperative HTML insertion.",
+    "Owned refs and ripple timers are released on unmount; theme changes retain control DOM."
+  ],
+  "caller": {
+    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies."
+  },
+  "references": [
+    "https://mui.com/material-ui/api/button-base/",
+    "https://mui.com/material-ui/api/button/",
+    "https://mui.com/material-ui/api/toggle-button-group/"
+  ]
+}
