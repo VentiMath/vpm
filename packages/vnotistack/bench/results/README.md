@@ -21,46 +21,41 @@ isolation reduces shared JIT feedback; environmental noise and GC remain.
 Negative changes mean less time; these are local workload measurements, not
 application throughput or latency guarantees.
 
-These cases render production React 19.3.1 server markup. They measure provider
-setup and notification content, not browser paint, queue latency or frame rate.
-Both controls use the same bundler and React. The content cases hide icons in both
-implementations so different icon artwork is not mistaken for a runtime gain.
-
 ## Node 24.22.1
 
-Recorded 2026-11-11T18:29:41.799Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T07:46:54.344Z on Apple M1 Pro, darwin/arm64.
 
-[Raw samples, controls and source hashes](node-isolated.json).
+[Raw samples, processes, controls and source hashes](node-isolated.json).
 
-| Case | Upstream ns | VPM ns | Change | Largest control | Evidence |
-| --- | ---: | ---: | ---: | ---: | --- |
-| empty app provider SSR | 1584 | 1552 | -2.4% | 4.8% | unestablished at this precision |
-| success notification SSR | 2715 | 2312 | -14.9% | 4.6% | lower time in every pair, beyond control spread |
-| notification with action SSR | 3200 | 2667 | -16.5% | 7.5% | lower time in every pair, beyond control spread |
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| empty app provider SSR | 1556 | 1562 | 0.4% | 2.3% | -2% | 1.8% | unestablished at this precision |
+| success notification SSR | 2706 | 2233 | -17.5% | -18.3% | -15% | 1.1% | lower time in every pair, beyond control spread |
+| notification with action SSR | 3165 | 2637 | -16.7% | -17.2% | -16.7% | 1.8% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-11T18:29:53.969Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T07:47:06.347Z on Apple M1 Pro, darwin/arm64.
 
-[Raw samples, controls and source hashes](bun-isolated.json).
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
 
-| Case | Upstream ns | VPM ns | Change | Largest control | Evidence |
-| --- | ---: | ---: | ---: | ---: | --- |
-| empty app provider SSR | 1143 | 1128 | -2.5% | 9.5% | unestablished at this precision |
-| success notification SSR | 2295 | 1836 | -19.3% | 5.2% | lower time in every pair, beyond control spread |
-| notification with action SSR | 2664 | 2455 | -7.8% | 4.2% | unestablished at this precision |
-
-Empty-provider rendering now bypasses anchor-group Map/array allocation while
-retaining queue-option validation and the same live context API. The previous
-Node recording was 8.2% above upstream; the current 1.552 versus 1.584 μs result
-has no established difference. Bun empty-provider time is likewise indistinguishable
-at this precision. Node notification content remains 15–17% below upstream; Bun
-success content is 19.3% below, while its action-content direction is unestablished.
-These are server-rendering measurements, not application or animation speedups.
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| empty app provider SSR | 1138 | 1117 | -0.9% | -2.3% | 2% | 3.7% | unestablished at this precision |
+| success notification SSR | 2314 | 1865 | -18.3% | -17.8% | -20.2% | 0.7% | lower time in every pair, beyond control spread |
+| notification with action SSR | 2781 | 2342 | -15.2% | -12% | -18.1% | 6.4% | lower time in every pair, beyond control spread |
 
 ## Reproduce
+
+Run these commands from the repository root after installing the pinned
+fixtures used by bench/run.cjs:
 
 ```sh
 OUTPUT=packages/vnotistack/bench/results/node-isolated.json node packages/vnotistack/bench/run.cjs
 OUTPUT=packages/vnotistack/bench/results/bun-isolated.json bun packages/vnotistack/bench/run.cjs
+node scripts/render-bench-report.cjs packages/vnotistack results run.cjs
 ```
+
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.

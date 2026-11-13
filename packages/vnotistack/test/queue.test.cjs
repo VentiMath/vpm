@@ -211,3 +211,34 @@ test("unchanged maxSnack configuration does not trigger another render", () => {
   q.configure({ maxSnack: 2 });
   assert.equal(changed, 1);
 });
+
+test("undefined optional values inherit provider settings and defaults", () => {
+  const q = new Queue({
+    maxSnack: undefined,
+    autoHideDuration: 80,
+    anchorOrigin: undefined,
+    transitionDuration: undefined,
+  });
+  q.enqueue("saved", {
+    autoHideDuration: undefined,
+    anchorOrigin: undefined,
+    transitionDuration: undefined,
+  });
+  assert.equal(q.props.maxSnack, 3);
+  assert.equal(q.visible[0].options.autoHideDuration, 80);
+  assert.deepEqual(q.visible[0].options.anchorOrigin, {
+    vertical: "bottom",
+    horizontal: "left",
+  });
+  assert.deepEqual(q.visible[0].options.transitionDuration, {
+    enter: 225,
+    exit: 195,
+  });
+  q.enqueue("persistent", {
+    autoHideDuration: null,
+    transitionDuration: 0,
+    persist: false,
+  });
+  assert.equal(q.visible[1].options.autoHideDuration, null);
+  assert.equal(q.visible[1].options.transitionDuration, 0);
+});

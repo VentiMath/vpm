@@ -7,8 +7,18 @@ const defaults = {
   transitionDuration: { enter: 225, exit: 195 },
 };
 const own = (o, k) => Object.hasOwn(o, k) && o[k] !== undefined;
+function definedOptions(base, overrides) {
+  const result = { ...base, ...overrides };
+  for (const key of Object.keys(overrides)) {
+    if (overrides[key] === undefined) {
+      if (Object.hasOwn(base, key)) result[key] = base[key];
+      else delete result[key];
+    }
+  }
+  return result;
+}
 function config(props = {}) {
-  const c = { ...defaults, ...props };
+  const c = definedOptions(defaults, props);
   if (!Number.isInteger(c.maxSnack) || c.maxSnack < 1)
     throw new RangeError("maxSnack must be a positive integer");
   if (c.TransitionComponent || c.TransitionProps)
@@ -65,7 +75,7 @@ class Queue {
     if (!options || typeof options !== "object" || Array.isArray(options))
       throw new TypeError("Snackbar options must be an object");
     const { children, domRoot, ...shared } = this.props;
-    const opts = { ...shared, ...options };
+    const opts = definedOptions(shared, options);
     if (opts.TransitionComponent || opts.TransitionProps)
       throw new TypeError(
         "Custom transition components are outside the notification scope",

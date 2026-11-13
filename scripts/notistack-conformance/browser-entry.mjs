@@ -181,7 +181,7 @@ window.runNotifications = async () => {
   rows.push("action");
   p.dispose();
   p = mount({ autoHideDuration: 80 });
-  p.add("timeout");
+  p.add("timeout", { autoHideDuration: undefined, anchorOrigin: undefined, transitionDuration: undefined });
   await wait(700);
   assert(text(p.host).length === 0, "auto hide");
   rows.push("timeout");

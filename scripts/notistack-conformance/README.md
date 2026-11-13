@@ -21,7 +21,7 @@ node scripts/notistack-conformance/archives.cjs
 
 Queue and injected-clock tests cover overflow, persistence, deduplication, closing
 pending/visible items, callback ordering/exceptions, reentrant enqueue, snapshots,
-invalid options, disposal and overlapping pause reasons. Browser comparisons
+undefined option fallback, invalid options, disposal and overlapping pause reasons. Browser comparisons
 cover five variants, six anchors, both densities, mobile/desktop widths, app class
 overrides, actions, FIFO eviction, persistent overflow, duplicate prevention,
 callback order, automatic dismissal and literal message content. Parent updates

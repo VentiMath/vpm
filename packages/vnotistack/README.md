@@ -79,3 +79,5 @@ dependencies to its published artifacts.
 Empty providers skip anchor grouping until the first notification. Constructor
 validation and the context API remain active; the final empty-provider SSR
 measurements show no established difference from upstream on Node or Bun.
+
+Undefined optional values now inherit provider settings/defaults, while explicit null, zero and false retain their documented meaning.
