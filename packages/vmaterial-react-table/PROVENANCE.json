@@ -14,15 +14,16 @@
     "Independent MUI rendering and state composition over VPM Table; no upstream MRT runtime ships.",
     "Grouped and custom cells render through React components, preserving hooks and stable row identity.",
     "Column movement is available through keyboard and menu controls as well as drag and drop.",
-    "Expose the pagination option in both public declarations and preserve the true default for undefined inputs; caller toolbar visibility and row pagination match upstream through rerenders."
+    "Expose the pagination option in both public declarations and preserve the true default for undefined inputs; caller toolbar visibility and row pagination match upstream through rerenders.",
+    "The VPM Table helper selects and clears collapsed group descendants through the page-header checkbox, including the custom copy-selected action and selections on other pages."
   ],
   "caller": {
-    "appRef": "77b3abac5a33d1d8297f21d5d52dd82cdfba83d2",
+    "appRef": "a0e338caee9b0bf2219b63a720158bd9e4027e62",
     "appCallsite": "src/components/data-table/DataTable.tsx",
     "routes": [
       "/apps/math-resources",
       "/apps/contest-season"
     ],
-    "note": "Pending PR421 at inspected revision; no claim of app adoption."
+    "note": "PR431 adoption review reports the grouped-selection regression; synthetic caller-shaped Chrome checks cover its fix. Application integration and deployment are separate."
   }
 }

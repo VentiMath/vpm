@@ -46,7 +46,11 @@ outside scope. This package does not provide a React hook or table UI.
 Two intentional differences protect the index: duplicate input row/column IDs
 throw, and prototype-like row IDs remain ordinary selectable IDs. Table 8 and 9
 have separate behavior where their contracts differ, including pinned header
-ordering and aggregation flags.
+ordering, aggregation and page-selection flags. Header selection and deselection
+visit collapsed group descendants, respect sub-row selection settings and preserve
+selections on other pages. Disabled groups can still contain selectable leaves.
+Both Table 8 and 9 contracts are checked for partial selection, filtered and
+expanded pages, multi-selection and nested grouping over flat source records.
 
 Presentation-only column updates and fresh equivalent row callbacks preserve
 the data model and current page. Real accessor/row-ID/data changes still rebuild
@@ -63,5 +67,7 @@ verified. Distributed in the [Table release](../../docs/INSTALLATION.md#tanstack
 and the [Material React Table release](../../docs/INSTALLATION.md#material-react-table).
 Publication does not establish application adoption or deployment.
 
-[Benchmarks](bench/results/README.md) report isolated comparisons with current
+[Selection benchmarks](bench/selection/README.md) measure header select/clear
+with the selected record model consumed, including collapsed groups. Earlier
+[benchmarks](bench/results/README.md) report isolated comparisons with current
 and application controls. They measure core operations, not application page speed.

@@ -1,5 +1,9 @@
 # Table measurements
 
+These November 8 reports describe the earlier source snapshot identified by their
+hashes. The later collapsed-group selection correction has separate
+[selection measurements](../selection/README.md).
+
 Recorded November 8, 2026 on Node 24.22.1 and Bun 1.4.0. The controls are
 Table core 9.3.1 and the application's 8.20.5. Both execute the same fixture
 operations as VPM. These are core-operation timings, not browser rendering or

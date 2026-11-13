@@ -738,23 +738,15 @@ function build(options, legacy) {
         .every((r) => r.getIsSelected());
     row.toggleSelected = (value, options = {}) =>
       writeSlice("rowSelection", (old) => {
-        const next = row.getCanMultiSelect() ? { ...old } : {},
+        const next = { ...old },
           selected = value ?? !row.getIsSelected();
-        const visit = (r) => {
-          if (r.getCanSelect()) {
-            if (selected)
-              Object.defineProperty(next, r.id, {
-                value: true,
-                configurable: true,
-                enumerable: true,
-                writable: true,
-              });
-            else delete next[r.id];
-          }
-          if (options.selectChildren !== false && r.getCanSelectSubRows())
-            r.subRows.forEach(visit);
-        };
-        visit(row);
+        updateSelectionTree(
+          next,
+          row,
+          selected,
+          options.selectChildren !== false &&
+            (legacy || row.getCanMultiSelect()),
+        );
         return next;
       });
     row.getToggleSelectedHandler = () => (e) =>
@@ -1387,11 +1379,39 @@ function build(options, legacy) {
   table.getSelectedRowModel = () => selection("getCoreRowModel");
   table.getFilteredSelectedRowModel = () => selection("getFilteredRowModel");
   table.getGroupedSelectedRowModel = () => selection("getSortedRowModel");
-  const selectable = (page) =>
-    (page
-      ? table.getRowModel().rows
-      : table.getFilteredRowModel().flatRows
-    ).filter((r) => r.getCanSelect());
+  function updateSelectionTree(next, row, checked, includeChildren) {
+    if (checked) {
+      if (!row.getCanMultiSelect())
+        for (const id of Object.keys(next)) delete next[id];
+      if (row.getCanSelect())
+        Object.defineProperty(next, row.id, {
+          value: true,
+          configurable: true,
+          enumerable: true,
+          writable: true,
+        });
+    } else delete next[row.id];
+    // A collapsed group owns selectable descendants even though they are not
+    // rendered. Respect its sub-row policy before visiting that subtree.
+    if (includeChildren && row.getCanSelectSubRows())
+      for (const child of row.subRows)
+        updateSelectionTree(next, child, checked, true);
+  }
+  const selectable = (page) => {
+    if (!page)
+      return table
+        .getFilteredRowModel()
+        .flatRows.filter((r) => r.getCanSelect());
+    if (legacy)
+      return table.getRowModel().flatRows.filter((r) => r.getCanSelect());
+    const rows = [];
+    const visit = (row) => {
+      if (row.getCanSelect()) rows.push(row);
+      else for (const child of row.subRows) visit(child);
+    };
+    for (const row of table.getRowModel().rows) visit(row);
+    return rows;
+  };
   table.getIsAllRowsSelected = () =>
     selectable(false).length > 0 &&
     selectable(false).every((r) => r.getIsSelected());
@@ -1402,23 +1422,28 @@ function build(options, legacy) {
     selectable(true).length > 0 &&
     selectable(true).every((r) => r.getIsSelected());
   table.getIsSomePageRowsSelected = () =>
-    selectable(true).some((r) => r.getIsSelected()) &&
-    !table.getIsAllPageRowsSelected();
+    selectable(true).some((r) => r.getIsSelected() || r.getIsSomeSelected()) &&
+    (!legacy || !table.getIsAllPageRowsSelected());
   for (const page of [false, true]) {
     const key = page ? "PageRows" : "Rows";
     table["toggleAll" + key + "Selected"] = (value) =>
       writeSlice("rowSelection", (old) => {
         const next = { ...old },
           checked = value ?? !table["getIsAll" + key + "Selected"]();
-        for (const row of selectable(page)) {
-          if (checked)
-            Object.defineProperty(next, row.id, {
-              value: true,
-              configurable: true,
-              enumerable: true,
-              writable: true,
-            });
-          else delete next[row.id];
+        if (page) {
+          for (const row of table.getRowModel().rows)
+            updateSelectionTree(next, row, checked, true);
+        } else {
+          for (const row of selectable(false)) {
+            if (checked)
+              Object.defineProperty(next, row.id, {
+                value: true,
+                configurable: true,
+                enumerable: true,
+                writable: true,
+              });
+            else delete next[row.id];
+          }
         }
         return next;
       });

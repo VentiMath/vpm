@@ -195,6 +195,10 @@ try {
         );
       const env = {
         VPM_MATERIAL_CONSUMER: cwd,
+        VPM_TABLE_ENTRY: path.join(
+          cwd,
+          "node_modules/vtanstack-table-core/index.cjs",
+        ),
         VPM_MATERIAL_ENTRY: path.join(
           cwd,
           "node_modules/material-react-table/index.cjs",
@@ -209,6 +213,19 @@ try {
       );
       for (const runtime of ["node", "bun"]) {
         run(runtime, ["identity.mjs"], cwd);
+        console.log(
+          run(
+            runtime,
+            [
+              path.join(
+                __dirname,
+                "../table-conformance/grouped-selection.cjs",
+              ),
+            ],
+            root,
+            env,
+          ).trim(),
+        );
         console.log(
           run(runtime, [path.join(__dirname, "ssr.cjs")], root, env).trim(),
         );

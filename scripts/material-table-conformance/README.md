@@ -19,7 +19,11 @@ grouping, pagination or column state.
 `interactions.mjs` additionally clicks the actual pagination, page-selection,
 row-action, sort, filter, visibility, density and grouping controls. A custom
 toolbar uses the same exported pieces as VentiMath. Parent rerenders preserve
-focused DOM. Optional `VPM_MATERIAL_SCREENSHOTS=/absolute/path` captures light and
+focused DOM. A 44-record synthetic fixture checks collapsed groups with 27 leaf
+records on the first page: actual header select, custom copy action, individual
+group select followed by header clear, partial checkbox state and isolation from
+other pages. It runs against both upstream and VPM, including packed releases.
+Optional `VPM_MATERIAL_SCREENSHOTS=/absolute/path` captures light and
 dark views and checks that their computed backgrounds change. These are Chrome
 acceptance checks, not a screen-reader or cross-browser certification.
 
@@ -41,7 +45,8 @@ transition-type subpath under NodeNext.
 
 `archives.cjs` packs the six packages, verifies bytes and workspace dependency
 versions, then tests clean and frozen npm/Bun installs on React 19.3.1.
-Every install checks CJS/ESM identity, Node/Bun SSR and strict consumers; the npm
+Every install checks CJS/ESM identity, the 256 grouped-selection snapshots on
+Node/Bun, SSR and strict consumers; the npm
 install also runs the full Chrome matrix. Icons and date pickers are installed
 only as peers for the upstream control: the VPM widget does not import them.
 

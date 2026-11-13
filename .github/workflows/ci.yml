@@ -254,6 +254,7 @@ jobs:
           node scripts/ky-conformance/archives.cjs
       - run: npm --prefix scripts/react-table-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/table-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/table-conformance/grouped-selection.cjs
       - run: npm --prefix scripts/store-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/react-virtual-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund
@@ -1008,6 +1009,7 @@ jobs:
       - run: bun scripts/material-table-conformance/build.cjs
       - run: bun scripts/material-table-conformance/ssr.cjs
       - run: npm --prefix scripts/table-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: bun scripts/table-conformance/grouped-selection.cjs
       - run: npm --prefix scripts/store-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/react-virtual-conformance ci --ignore-scripts --no-audit --no-fund
       - run: npm --prefix scripts/google-http-conformance ci --ignore-scripts --no-audit --no-fund

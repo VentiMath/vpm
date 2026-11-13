@@ -16,15 +16,20 @@
     "Null-prototype value/index records and own-property selection checks preserve prototype-like row IDs.",
     "Current and installed-app APIs have distinct compatibility paths for header pinning and aggregation flags.",
     "Presentation-only column changes and equivalent row-ID/child wrappers retain the data model, avoiding pagination resets while preserving validation and real data/accessor invalidation.",
-    "Custom sorting callbacks run for grouped rows with absent aggregate values; explicit first/last placement remains stable."
+    "Custom sorting callbacks run for grouped rows with absent aggregate values; explicit first/last placement remains stable.",
+    "Page selection and deselection visit collapsed group descendants, honor per-row selection policies, and preserve selections on other pages; separate Table8/Table9 header flag contracts are compared against both controls."
   ],
   "caller": {
     "name": "material-react-table",
     "version": "3.2.1",
     "adapter": "@tanstack/react-table 8.20.6",
     "appCore": "8.20.5",
-    "appRef": "e14f4023823aed0a5e7e23a3758356414b37abd7",
+    "appRef": "a0e338caee9b0bf2219b63a720158bd9e4027e62",
     "appCallsite": "src/components/data-table/DataTable.tsx",
-    "scope": "ProductsTable and OrdersTable, both e-commerce template screens backed by mock/ecommerce endpoints. No claim of use in math/contest workflows or adoption of this package."
+    "scope": "Flat resource and contest-season tables through the shared DataTable wrapper, including collapsed grouping and copy-selected actions. Package publication does not establish application adoption.",
+    "routes": [
+      "/apps/math-resources",
+      "/apps/contest-season"
+    ]
   }
 }

@@ -59,7 +59,7 @@ end-to-end check. Synthetic equivalents are retained in public CI.
 identical peers, isolated processes, balanced order and identical-source controls.
 They do not measure browser interaction latency or application performance.
 
-Install the [Material React Table 3.2.1 r2 release](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1-r2)
+Install the [Material React Table 3.2.1 r3 release](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1-r3)
 under the existing `material-react-table` dependency name. Its internal VPM
 URLs are pinned; no overrides are required. See the
 [installation recipe](../../docs/INSTALLATION.md#material-react-table).

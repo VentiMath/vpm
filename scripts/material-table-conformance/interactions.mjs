@@ -49,9 +49,9 @@ export default function setup(variant) {
     const check = (ok, label) => {
       if (!ok) throw Error(variant + ": " + label);
     };
-    function App({ tick = 0, paginationOptions = {} }) {
+    function App({ tick = 0, paginationOptions = {}, records = data }) {
       table = useMaterialReactTable({
-        data,
+        data: records,
         columns,
         getRowId: (r) => r.id,
         enableGrouping: true,
@@ -100,12 +100,17 @@ export default function setup(variant) {
       });
       return h(MaterialReactTable, { table });
     }
-    const renderView = (mode = "light", tick = 0, paginationOptions = {}) =>
+    const renderView = (
+      mode = "light",
+      tick = 0,
+      paginationOptions = {},
+      records = data,
+    ) =>
       root.render(
         h(
           ThemeProvider,
           { theme: createTheme({ palette: { mode }, cssVariables: true }) },
-          h(App, { tick, paginationOptions }),
+          h(App, { tick, paginationOptions, records }),
         ),
       );
     renderView();
@@ -125,11 +130,16 @@ export default function setup(variant) {
         "resolved pagination option",
       );
       check(
-        Boolean(host.querySelector('[data-custom-toolbar] button[aria-label="Go to next page"]')) === enabled,
+        Boolean(
+          host.querySelector(
+            '[data-custom-toolbar] button[aria-label="Go to next page"]',
+          ),
+        ) === enabled,
         "custom toolbar follows pagination option",
       );
       check(
-        host.querySelectorAll("tbody tr").length === (enabled ? 5 : data.length),
+        host.querySelectorAll("tbody tr").length ===
+          (enabled ? 5 : data.length),
         "pagination option controls visible rows after rerender",
       );
     }
@@ -210,7 +220,114 @@ export default function setup(variant) {
       host.contains(node) && document.activeElement === node,
       "focus survives parent rerender",
     );
+    // Match the app's collapsed-group/copy path with synthetic flat records:
+    // the first 15 groups own 27 leaves; the other 17 leaves are on page 2+.
+    const groupedRecords = Array.from({ length: 44 }, (_, i) => ({
+      id: "g" + i,
+      name: "Resource " + i,
+      team: "Site " + (i < 24 ? Math.floor(i / 2) : i - 12),
+      score: i,
+    }));
+    renderView("light", 2, {}, groupedRecords);
+    await wait();
+    // Settle each public update before the next; the upstream adapter reads
+    // current state when composing some updates.
+    for (const update of [
+      () => table.resetRowSelection(),
+      () => table.setSorting([]),
+      () => table.setColumnFilters([]),
+      () => table.setGlobalFilter(""),
+      () => table.setGrouping(["team"]),
+      () => table.setExpanded({}),
+    ]) {
+      update();
+      await wait();
+    }
+    table.setPagination({ pageIndex: 0, pageSize: 15 });
+    await wait();
+    let header = host.querySelector("thead input[type=checkbox]");
+    check(
+      header && !header.checked,
+      "collapsed grouped header begins unchecked",
+    );
+    header.click();
+    await wait();
+    const groupedIds = table.getSelectedRowModel().rows.map((row) => row.id);
+    check(
+      groupedIds.join(",") ===
+        groupedRecords
+          .slice(0, 27)
+          .map((row) => row.id)
+          .join(","),
+      "collapsed header selects exactly 27 leaf resources: " +
+        JSON.stringify({
+          groupedIds,
+          state: table.getState().pagination,
+          groups: table
+            .getRowModel()
+            .rows.map((row) => [row.id, row.subRows.length]),
+        }),
+    );
+    check(header.checked, "collapsed grouped header is checked");
+    await click("Copy selected");
+    check(
+      events.at(-1) === groupedIds.join(","),
+      "copy action receives grouped descendants",
+    );
+    const groupCheck = host.querySelector("tbody input[type=checkbox]");
+    check(groupCheck, "collapsed group checkbox exists");
+    groupCheck.click();
+    await wait();
+    check(
+      table.getSelectedRowModel().rows.length === 2,
+      "individual group selects two leaves",
+    );
+    header = host.querySelector("thead input[type=checkbox]");
+    check(
+      !header.checked && header.getAttribute("data-indeterminate") === "true",
+      "header reflects partial descendant selection",
+    );
+    // Click the partial header to select its page, then clear through the UI.
+    header.click();
+    await wait();
+    header.click();
+    await wait();
+    check(
+      table.getSelectedRowModel().rows.length === 0 && !header.checked,
+      "header clears every selected descendant",
+    );
+    groupCheck.click();
+    await wait();
+    table.getToggleAllPageRowsSelectedHandler()({ target: { checked: false } });
+    await wait();
+    check(
+      table.getSelectedRowModel().rows.length === 0,
+      "explicit header clear removes individual group selection",
+    );
+    table.setPageIndex(1);
+    await wait();
+    header.click();
+    await wait();
+    const secondIds = table.getSelectedRowModel().rows.map((row) => row.id);
+    check(
+      secondIds.length === 15 && secondIds[0] === "g27",
+      "next grouped page selects only its descendants",
+    );
+    table.setPageIndex(0);
+    await wait();
+    table.toggleAllPageRowsSelected(false);
+    await wait();
+    check(
+      table
+        .getSelectedRowModel()
+        .rows.map((row) => row.id)
+        .join(",") === secondIds.join(","),
+      "clearing first page preserves second-page selection",
+    );
+    table.resetRowSelection();
+    await wait();
     const result = {
+      groupedSelection: groupedIds,
       pageSelection: events[0],
       rowAction: events[1],
       grouping: table.getState().grouping,

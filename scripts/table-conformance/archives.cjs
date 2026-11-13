@@ -126,6 +126,7 @@ try {
         "run.cjs",
         "state.cjs",
         "matrix.cjs",
+        "grouped-selection.cjs",
         "functions.cjs",
       ])
         console.log(

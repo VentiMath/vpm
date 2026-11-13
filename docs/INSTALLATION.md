@@ -2,14 +2,14 @@
 
 ## Material React Table
 
-[Material React Table 3.2.1 r2](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1-r2)
+[Material React Table 3.2.1 r3](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1-r3)
 contains the independent `vmaterial-react-table` widget and its five VPM helpers.
 Keep existing `material-react-table` imports and replace the direct dependency:
 
 ```json
 {
   "dependencies": {
-    "material-react-table": "https://github.com/VentiMath/vpm/releases/download/material-react-table-3.2.1-r2/vmaterial-react-table-3.2.1-r2.tgz"
+    "material-react-table": "https://github.com/VentiMath/vpm/releases/download/material-react-table-3.2.1-r3/vmaterial-react-table-3.2.1.tgz"
   }
 }
 ```
@@ -39,7 +39,7 @@ caches and frozen locks, compare all six packages to their archives, and run
 React 19.3.1, Node/Bun SSR, CJS/ESM, strict TypeScript 7 and Chrome controls.
 
 ```sh
-node scripts/pack-material-table-release.cjs --ref COMMIT_SHA --tag material-react-table-3.2.1-r2 --out /absolute/path/to/empty-output
+node scripts/pack-material-table-release.cjs --ref COMMIT_SHA --tag material-react-table-3.2.1-r3 --out /absolute/path/to/empty-output
 node scripts/check-material-table-release.cjs /absolute/path/to/output
 node scripts/check-material-table-release.cjs /absolute/path/to/output --published
 ```

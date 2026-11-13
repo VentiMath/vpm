@@ -7,6 +7,9 @@ Material React Table 3.2.1, React 19.1.0 and the application's MUI versions.
 - `run.cjs`: fixed application pipeline, cache identity, hostile IDs and grouped selection.
 - `matrix.cjs`: 1,152 seeded state transitions against Table 8 and 9, comparing
   rows, values, depth, cell flags, selection and pagination.
+- `grouped-selection.cjs`: 256 snapshots against Table 8 and 9 for collapsed,
+  expanded, filtered and nested grouping; page isolation, partial selection and
+  per-row selection policies. Package tests also preserve prototype-like IDs.
 - `state.cjs`: owned/controlled state, creation-time external-atom ownership,
   automatic page reset and manual pagination. Equivalent presentation columns
   and row-accessor wrappers preserve the current page; changed data resets it.
@@ -28,12 +31,15 @@ The declared application contract is flat source rows/columns. Nested headers,
 nested source trees, interactive resizing, cell selection/spanning and custom
 feature plugins are excluded. The adapter has separate framework typing checks;
 a runtime browser comparison alone does not certify all MRT public declarations.
-The three-package consumer release remains unpublished.
+The core is distributed through the [Table and Material React Table releases](../../docs/INSTALLATION.md).
+The separate widget fixture uses React 19.3.1; the older core-only browser control
+above retains its original peer pin.
 
 ```sh
 npm --prefix scripts/table-conformance ci --ignore-scripts
 node scripts/table-conformance/run.cjs
 node scripts/table-conformance/matrix.cjs
+node scripts/table-conformance/grouped-selection.cjs
 bun scripts/table-conformance/build.cjs
 node scripts/table-conformance/browser.cjs
 node scripts/table-conformance/archives.cjs
