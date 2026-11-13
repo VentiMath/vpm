@@ -13,6 +13,7 @@ for (const key of Object.keys(require("vmui-material/package.json").exports)) {
   const id = "vmui-material/" + key.slice(2),
     a = require(id),
     b = await import(id);
+  if(key === "./styles"){assert.equal(a.useTheme,b.useTheme);assert.equal(a.ThemeProvider,b.ThemeProvider);continue;}
   assert.equal(a.default, b.default, id);
   assert.notEqual(a.default, undefined);
 }

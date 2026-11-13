@@ -25,3 +25,4 @@ export const { Typography, typographyClasses, getTypographyUtilityClass } = a;
 export const { Link, linkClasses, getLinkUtilityClass } = a;
 export const { SvgIcon, svgIconClasses, getSvgIconUtilityClass } = a;
 export const createSvgIcon = a.createSvgIcon;
+export const {Box,boxClasses,ThemeProvider,GlobalStyles,styled,useTheme,useThemeProps,useMediaQuery,useColorScheme,THEME_ID}=a;

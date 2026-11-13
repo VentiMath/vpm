@@ -17,6 +17,7 @@ for (const bundler of [false, true]) {
     }
     paths["vmui-material"] = [root + "/packages/vmui-material/index.d.mts"];
     paths["vmui-material/*"] = [root + "/packages/vmui-material/*.d.mts"];
+    paths["vmui-material/styles"] = [root + "/packages/vmui-material/styles/index.d.mts"];
     paths["vmui-material/utils"] = [root + "/packages/vmui-material/utils/index.d.mts"];
     for (const n of ["react", "react-dom"])
       paths[n] = [fixture + "/node_modules/@types/" + n + "/index.d.ts"];

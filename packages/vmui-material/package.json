@@ -237,6 +237,106 @@
         "types": "./utils/index.d.cts",
         "default": "./utils/index.cjs"
       }
+    },
+    "./Box": {
+      "import": {
+        "types": "./Box.d.mts",
+        "default": "./Box.mjs"
+      },
+      "require": {
+        "types": "./Box.d.cts",
+        "default": "./Box.cjs"
+      }
+    },
+    "./boxClasses": {
+      "import": {
+        "types": "./boxClasses.d.mts",
+        "default": "./boxClasses.mjs"
+      },
+      "require": {
+        "types": "./boxClasses.d.cts",
+        "default": "./boxClasses.cjs"
+      }
+    },
+    "./ThemeProvider": {
+      "import": {
+        "types": "./ThemeProvider.d.mts",
+        "default": "./ThemeProvider.mjs"
+      },
+      "require": {
+        "types": "./ThemeProvider.d.cts",
+        "default": "./ThemeProvider.cjs"
+      }
+    },
+    "./GlobalStyles": {
+      "import": {
+        "types": "./GlobalStyles.d.mts",
+        "default": "./GlobalStyles.mjs"
+      },
+      "require": {
+        "types": "./GlobalStyles.d.cts",
+        "default": "./GlobalStyles.cjs"
+      }
+    },
+    "./useMediaQuery": {
+      "import": {
+        "types": "./useMediaQuery.d.mts",
+        "default": "./useMediaQuery.mjs"
+      },
+      "require": {
+        "types": "./useMediaQuery.d.cts",
+        "default": "./useMediaQuery.cjs"
+      }
+    },
+    "./styles": {
+      "import": {
+        "types": "./styles/index.d.mts",
+        "default": "./styles/index.mjs"
+      },
+      "require": {
+        "types": "./styles/index.d.cts",
+        "default": "./styles/index.cjs"
+      }
+    },
+    "./styles/ThemeProvider": {
+      "import": {
+        "types": "./styles/ThemeProvider.d.mts",
+        "default": "./styles/ThemeProvider.mjs"
+      },
+      "require": {
+        "types": "./styles/ThemeProvider.d.cts",
+        "default": "./styles/ThemeProvider.cjs"
+      }
+    },
+    "./styles/useTheme": {
+      "import": {
+        "types": "./styles/useTheme.d.mts",
+        "default": "./styles/useTheme.mjs"
+      },
+      "require": {
+        "types": "./styles/useTheme.d.cts",
+        "default": "./styles/useTheme.cjs"
+      }
+    },
+    "./styles/styled": {
+      "import": {
+        "types": "./styles/styled.d.mts",
+        "default": "./styles/styled.mjs"
+      },
+      "require": {
+        "types": "./styles/styled.d.cts",
+        "default": "./styles/styled.cjs"
+      }
+    },
+    "./styles/useThemeProps": {
+      "import": {
+        "types": "./styles/useThemeProps.d.mts",
+        "default": "./styles/useThemeProps.mjs"
+      },
+      "require": {
+        "types": "./styles/useThemeProps.d.cts",
+        "default": "./styles/useThemeProps.cjs"
+      }
     }
   },
   "files": [
@@ -247,7 +347,8 @@
     "utils",
     "README.md",
     "PROVENANCE.json",
-    "LICENSE"
+    "LICENSE",
+    "styles"
   ],
   "sideEffects": false,
   "engines": {

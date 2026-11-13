@@ -102,8 +102,8 @@ try {
         fs.readFileSync(dir + "/node_modules/vmui-material/" + file, "utf8"),
         fs.readFileSync(root + "/packages/vmui-material/" + file, "utf8"),
       );
-    for (const file of fs.readdirSync(root + "/packages/vmui-material/utils"))
-      assert.equal(fs.readFileSync(dir + "/node_modules/vmui-material/utils/" + file,"utf8"),fs.readFileSync(root + "/packages/vmui-material/utils/" + file,"utf8"));
+    for (const folder of ["utils","styles"]) for (const file of fs.readdirSync(root + "/packages/vmui-material/"+folder))
+      assert.equal(fs.readFileSync(dir + "/node_modules/vmui-material/"+folder+"/" + file,"utf8"),fs.readFileSync(root + "/packages/vmui-material/"+folder+"/" + file,"utf8"));
     fs.copyFileSync(__dirname + "/archive-check.mjs", dir + "/check.mjs");
     for (const runtime of ["node", "bun"])
       process.stdout.write(run(runtime, ["check.mjs"], dir));

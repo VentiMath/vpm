@@ -7,7 +7,7 @@ for(const version of ['current','app'])for(const own of [false,true]){
  if(own&&process.env.VPM_MATERIAL_INSTALL)for(const key of Object.keys(alias))alias[key]=alias[key].replace(path.resolve(__dirname,'../../packages'),packages);
  const entry=own?packages+'/vmui-material/index.cjs':alias['@mui/material']+'/index.js';
  alias['@motion']=path.resolve(__dirname,'../motion-utils-conformance/node_modules',version==='current'?'framer-motion':'framer-motion-app');
- alias['@buttons']=entry;alias['@icons']=fixture+'/node_modules/'+(version==='current'?'@mui/icons-material':'mui-icons-material-app');
+ alias['@buttons']=entry;alias['@integration']=own?packages+'/vmui-material/styles/index.cjs':alias['@mui/material']+'/styles/index.js';alias['@icons']=fixture+'/node_modules/'+(version==='current'?'@mui/icons-material':'mui-icons-material-app');
  if(own)for(const sub of ['Typography','Link','SvgIcon','utils','utils/createSvgIcon'])alias['@mui/material/'+sub]=packages+'/vmui-material/'+(sub==='utils'?'utils/index':sub)+'.cjs';
  for(const kind of ['ssr','bench','browser']){
   const input=kind==='ssr'?{stdin:{contents:"const React=require('react');const {TextScene}=require('./text-scene.jsx');module.exports={TextScene,render:p=>require('react-dom/server').renderToString(React.createElement(TextScene,p))};",resolveDir:__dirname}}:{entryPoints:[__dirname+'/text-'+(kind==='bench'?'bench-entry':'browser-entry')+'.jsx']};

@@ -2,13 +2,16 @@ import React from 'react';
 import {CacheProvider} from '@emotion/react';
 import createCache from '@emotion/cache';
 import rtlPlugin from 'stylis-plugin-rtl';
-import {ThemeProvider,createTheme} from '@mui/material/styles';
-import {Typography,Link,SvgIcon,createSvgIcon} from '@buttons';
+import {createTheme} from '@mui/material/styles';
+import {ThemeProvider,styled,useTheme} from '@integration';
+import {Typography,Link,SvgIcon,createSvgIcon,Box,GlobalStyles,useMediaQuery} from '@buttons';
 import ArrowBack from '@icons/ArrowBack';
 import OpenInNew from '@icons/OpenInNew';
 import Print from '@icons/Print';
 const Router=React.forwardRef(({to,...props},ref)=><a {...props} href={to} ref={ref}/>);
 const Outline=React.forwardRef((props,ref)=><svg viewBox="0 0 40 20" {...props} ref={ref}/>);
+const Sprite=styled(Box)(({theme})=>({width:24,height:24,color:theme.vars?.palette.primary.main||theme.palette.primary.main}));
+function ScopedBox(){const theme=useTheme();const wide=useMediaQuery(theme.breakpoints.up('sm'));return <Box id="scoped-box" component="section" data-wide={String(wide)} sx={{p:2,bgcolor:'primary.main',borderRadius:2,width:{xs:100,sm:180}}}>Scoped</Box>}
 const CustomIcon=createSvgIcon(<path d="M2 2h20v20H2z"/>,'Contest');
 export function makeTheme({mode='light',rtl=false,variables=false}={}){return createTheme({
  cssVariables:variables,direction:rtl?'rtl':'ltr',palette:{mode,primary:{main:'#2459a9'},secondary:{main:'#8b336e'}},
@@ -26,6 +29,10 @@ export function TextScene({mode='light',rtl=false,variables=false,tick=0}){
  const linkRef=React.useRef(),iconRef=React.useRef(),events=React.useRef([]);
  React.useEffect(()=>{window.textControls={linkRef,iconRef,events}},[]);
  return <CacheProvider value={cache}><ThemeProvider theme={theme}><section id="text-scene" dir={rtl?'rtl':'ltr'} data-tick={tick} style={{padding:20,color:mode==='dark'?'#eee':'#171717',background:mode==='dark'?'#171717':'#fff',fontFamily:'Arial',fontSize:16}}>
+  <Box id="box-system" component="article" sx={[{m:1,p:{xs:1,sm:2},bgcolor:'background.paper',color:'text.primary',borderRadius:1},theme=>({border:'1px solid '+theme.palette.divider})]}>Contest layout</Box>
+  <Sprite id="sprite-box" as="svg" viewBox="0 0 24 24" aria-label="Contest sprite"><use xlinkHref="#contest-sprite"/></Sprite>
+  <ThemeProvider theme={{$$material:{...theme,spacing:()=>"12px"}}}><ScopedBox/></ThemeProvider>
+  <GlobalStyles styles={{'#box-system':{boxSizing:'border-box'}}}/>
   {['h1','h2','h3','h4','h5','h6','subtitle1','subtitle2','body1','body2','caption','button','overline','inherit','contest'].map(variant=><Typography key={variant} id={'text-'+variant} variant={variant} gutterBottom>{variant}: Contest resources</Typography>)}
   <Typography id="nowrap" noWrap sx={{width:120,color:'text.secondary'}}>A long contest title that truncates correctly</Typography>
   <Typography id="aligned" align="right" variant="body2" color="secondary" sx={{fontSize:{xs:12,sm:18},mt:2}}>Aligned text</Typography>

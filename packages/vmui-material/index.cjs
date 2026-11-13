@@ -1,3 +1,3 @@
 "use strict";
-const {iconUtilities, ...text} = require("./text.cjs");
-module.exports = {...require("./buttons.cjs"), ...text};
+const {iconUtilities,...text}=require("./text.cjs");
+module.exports={...require("./buttons.cjs"),...text,...require("./theme.cjs")};

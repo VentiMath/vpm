@@ -113,3 +113,15 @@ void [TypographyEntry,LinkEntry,SvgIconEntry,iconFactory,factory,utilityFactory,
 ButtonBase({component: "div", nativeButton: false});
 // @ts-expect-error nativeButton is boolean
 ButtonBase({nativeButton: "yes"});
+
+import {Box,GlobalStyles,useTheme,ThemeProvider as MaterialThemeProvider} from 'vmui-material';
+import {styled,THEME_ID} from 'vmui-material/styles';
+import BoxEntry from 'vmui-material/Box';
+Box({component:'a',href:'/contest',ref:React.createRef<HTMLAnchorElement>(),sx:{p:2}});
+Box({component:'svg',viewBox:'0 0 24 24',ref:React.createRef<SVGSVGElement>()});
+const StyledBox=styled(Box)({padding:4});
+MaterialThemeProvider({theme:{[THEME_ID]:theme},children:React.createElement(BoxEntry)});
+GlobalStyles({styles:{body:{margin:0}}});
+// @ts-expect-error anchor Box needs anchor ref
+Box({component:'a',ref:React.createRef<HTMLButtonElement>()});
+void [useTheme,StyledBox];
