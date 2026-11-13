@@ -1,7 +1,7 @@
 {
   "name": "vmui-material",
   "version": "9.5.0",
-  "description": "Independent Material button controls for VentiMath; remaining component families in progress",
+  "description": "Independent Material buttons, typography, links and SVG icons for VentiMath; remaining families in progress",
   "type": "commonjs",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -157,6 +157,86 @@
         "types": "./toggleButtonGroupClasses.d.cts",
         "default": "./toggleButtonGroupClasses.cjs"
       }
+    },
+    "./Typography": {
+      "import": {
+        "types": "./Typography.d.mts",
+        "default": "./Typography.mjs"
+      },
+      "require": {
+        "types": "./Typography.d.cts",
+        "default": "./Typography.cjs"
+      }
+    },
+    "./typographyClasses": {
+      "import": {
+        "types": "./typographyClasses.d.mts",
+        "default": "./typographyClasses.mjs"
+      },
+      "require": {
+        "types": "./typographyClasses.d.cts",
+        "default": "./typographyClasses.cjs"
+      }
+    },
+    "./Link": {
+      "import": {
+        "types": "./Link.d.mts",
+        "default": "./Link.mjs"
+      },
+      "require": {
+        "types": "./Link.d.cts",
+        "default": "./Link.cjs"
+      }
+    },
+    "./linkClasses": {
+      "import": {
+        "types": "./linkClasses.d.mts",
+        "default": "./linkClasses.mjs"
+      },
+      "require": {
+        "types": "./linkClasses.d.cts",
+        "default": "./linkClasses.cjs"
+      }
+    },
+    "./SvgIcon": {
+      "import": {
+        "types": "./SvgIcon.d.mts",
+        "default": "./SvgIcon.mjs"
+      },
+      "require": {
+        "types": "./SvgIcon.d.cts",
+        "default": "./SvgIcon.cjs"
+      }
+    },
+    "./svgIconClasses": {
+      "import": {
+        "types": "./svgIconClasses.d.mts",
+        "default": "./svgIconClasses.mjs"
+      },
+      "require": {
+        "types": "./svgIconClasses.d.cts",
+        "default": "./svgIconClasses.cjs"
+      }
+    },
+    "./utils/createSvgIcon": {
+      "import": {
+        "types": "./utils/createSvgIcon.d.mts",
+        "default": "./utils/createSvgIcon.mjs"
+      },
+      "require": {
+        "types": "./utils/createSvgIcon.d.cts",
+        "default": "./utils/createSvgIcon.cjs"
+      }
+    },
+    "./utils": {
+      "import": {
+        "types": "./utils/index.d.mts",
+        "default": "./utils/index.mjs"
+      },
+      "require": {
+        "types": "./utils/index.d.cts",
+        "default": "./utils/index.cjs"
+      }
     }
   },
   "files": [
@@ -164,6 +244,7 @@
     "*.mjs",
     "*.d.cts",
     "*.d.mts",
+    "utils",
     "README.md",
     "PROVENANCE.json",
     "LICENSE"

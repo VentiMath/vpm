@@ -8,7 +8,7 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "partial; remaining component families pending",
-    "targetScope": "ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton and ToggleButtonGroup: native/link/custom roots, keyboard and focus behavior, disabled/loading controls, controlled toggles and VentiMath theme/sx overrides. The remaining Material component families and full theme creation are not implemented.",
+    "targetScope": "Ten components: the seven button controls plus Typography, Link and SvgIcon, with createSvgIcon. Semantic variants, native/router links, keyboard focus, accessible SVG titles, unchanged Material icon callers, theme defaults/overrides, RTL and responsive sx. Remaining Material component families and full theme creation are not implemented.",
     "independentComponents": [
       "ButtonBase",
       "Button",
@@ -16,21 +16,30 @@
       "Fab",
       "ButtonGroup",
       "ToggleButton",
-      "ToggleButtonGroup"
+      "ToggleButtonGroup",
+      "Typography",
+      "Link",
+      "SvgIcon"
     ],
-    "remainingWork": "Forms and validation controls; typography, surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
+    "remainingWork": "Forms and validation controls; remaining surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
   },
   "changes": [
     "Written independently over VPM System and its styling closure; no upstream Material runtime, Babel or prop-types ships.",
     "Native button semantics and direct React rendering; no imperative HTML insertion.",
-    "Owned refs and ripple timers are released on unmount; theme changes retain control DOM."
+    "Owned refs and ripple timers are released on unmount; theme changes retain control DOM.",
+    "Independent Typography, Link and SvgIcon plus createSvgIcon; no Material runtime dependency. Actual current/app Material icon modules render unchanged above the VPM factory.",
+    "Retains Material 7 paragraph, direct system props and CSS/palette-path colors needed by existing callers alongside the current typography contract. Physical text alignment is preserved in RTL.",
+    "Explicit root accessibility attributes override nested SVG attributes; titleAccess promotes a decorative SVG child to a named image unless the root explicitly hides it. Prototype-named variants and sizes do not read inherited object properties."
   ],
   "caller": {
-    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies."
+    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. Most FuseSvgIcon callers instead use Box and Iconify, which are separate."
   },
   "references": [
     "https://mui.com/material-ui/api/button-base/",
     "https://mui.com/material-ui/api/button/",
-    "https://mui.com/material-ui/api/toggle-button-group/"
+    "https://mui.com/material-ui/api/toggle-button-group/",
+    "https://mui.com/material-ui/api/typography/",
+    "https://mui.com/material-ui/api/link/",
+    "https://mui.com/material-ui/api/svg-icon/"
   ]
 }

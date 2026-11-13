@@ -18,6 +18,8 @@
 		"@mui/utils": "9.5.0",
 		"mui-utils-app": "npm:@mui/utils@7.2.0",
 		"@mui/material": "9.5.0",
-		"mui-material-app": "npm:@mui/material@7.2.0"
+		"mui-material-app": "npm:@mui/material@7.2.0",
+		"@mui/icons-material": "9.5.0",
+		"mui-icons-material-app": "npm:@mui/icons-material@7.2.0"
 	}
 }

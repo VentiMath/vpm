@@ -47,6 +47,11 @@ for (const name of [
   "prop-types",
 ])
   assert.throws(() => require.resolve(name));
+const text = renderToString(React.createElement(React.Fragment, null,
+  React.createElement(api.Typography, {variant: "h2"}, "Contest"),
+  React.createElement(api.Link, {href: "/contest"}, "Details"),
+  React.createElement(api.createSvgIcon(React.createElement("path", {d:"M1 1h20v20H1z"}),"Contest"), {titleAccess: "Contest icon"})));
+assert.match(text, /<h2/);assert.match(text, /href="\/contest"/);assert.match(text, /<title>Contest icon<\/title>/);
 const seen = new Set();
 function check(name) {
   if (seen.has(name)) return;

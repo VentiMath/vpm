@@ -74,13 +74,16 @@ jobs:
           VPM_REACT_MODE=development node scripts/scheduler-conformance/browser.cjs
           node scripts/scheduler-conformance/archives.cjs
       - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
-      - name: Material button family and application themes
+      - name: Material controls text icons and application themes
         run: |
-          node --test packages/vmui-material/test/buttons.test.cjs
+          node --test packages/vmui-material/test/*.test.cjs
           node scripts/mui-material-conformance/contract.cjs
+          node scripts/mui-material-conformance/text-contract.cjs
           node scripts/mui-material-conformance/types.cjs
           node scripts/mui-material-conformance/browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/browser.cjs
+          node scripts/mui-material-conformance/text-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/text-browser.cjs
           node scripts/mui-material-conformance/archives.cjs
       - name: MUI System themes, layouts and unchanged Material callers
         run: |
@@ -909,8 +912,9 @@ jobs:
       - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI System controls on Bun
         run: |
-          bun test packages/vmui-material/test/buttons.test.cjs
+          bun test packages/vmui-material/test/*.test.cjs
           bun scripts/mui-material-conformance/contract.cjs
+          bun scripts/mui-material-conformance/text-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs
           bun scripts/mui-system-conformance/colors.cjs

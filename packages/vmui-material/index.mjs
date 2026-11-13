@@ -21,3 +21,7 @@ export const ToggleButtonGroup = a.ToggleButtonGroup;
 export const toggleButtonGroupClasses = a.toggleButtonGroupClasses;
 export const getToggleButtonGroupUtilityClass =
   a.getToggleButtonGroupUtilityClass;
+export const { Typography, typographyClasses, getTypographyUtilityClass } = a;
+export const { Link, linkClasses, getLinkUtilityClass } = a;
+export const { SvgIcon, svgIconClasses, getSvgIconUtilityClass } = a;
+export const createSvgIcon = a.createSvgIcon;

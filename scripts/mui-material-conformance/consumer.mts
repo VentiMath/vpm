@@ -79,3 +79,33 @@ Button({ href: "/contest", ref: React.createRef<HTMLButtonElement>() });
 // @ts-expect-error loading must be a boolean or null
 IconButton({ loading: "yes" });
 void controls;
+
+import {Typography,Link,SvgIcon,createSvgIcon,type TypographyProps,type LinkProps,type SvgIconProps} from 'vmui-material';
+import TypographyEntry from 'vmui-material/Typography';
+import LinkEntry from 'vmui-material/Link';
+import SvgIconEntry,{createSvgIcon as iconFactory} from 'vmui-material/SvgIcon';
+import factory from 'vmui-material/utils/createSvgIcon';
+import {createSvgIcon as utilityFactory} from 'vmui-material/utils';
+const textRef=React.createRef<HTMLSpanElement>();
+const textOptions:TypographyProps={variant:'h2',noWrap:true,align:'center',fontWeight:700,sx:{m:2}};
+Typography({...textOptions,ref:textRef,children:'Contest'});
+Typography({component:'label',htmlFor:'answer',children:'Answer'});
+Link({href:'/contest',underline:'hover',ref:React.createRef<HTMLAnchorElement>()});
+Link({component:'button',type:'button',ref:React.createRef<HTMLButtonElement>()});
+Link({component:Route,to:'/contest'});
+SvgIcon({viewBox:'0 0 24 24',titleAccess:'Contest',ref:React.createRef<SVGSVGElement>(),fontSize:'small'});
+const Icon=createSvgIcon(React.createElement('path',{d:'M0 0h24'}),'Contest');
+Icon({titleAccess:'Contest',sx:{color:'primary.main'}});
+const linkOptions:LinkProps={href:'/contest',underline:'always'};
+const iconOptions:SvgIconProps={htmlColor:'#123456',inheritViewBox:true};
+// @ts-expect-error typography defaults do not accept anchor-only properties
+Typography({href:'/contest'});
+// @ts-expect-error custom router requires its destination
+Link({component:Route});
+// @ts-expect-error invalid underline
+Link({underline:'sometimes'});
+// @ts-expect-error SVG root cannot take a button ref
+SvgIcon({ref:React.createRef<HTMLButtonElement>()});
+// @ts-expect-error custom button Link needs a button ref
+Link({component:'button',ref:React.createRef<SVGSVGElement>()});
+void [TypographyEntry,LinkEntry,SvgIconEntry,iconFactory,factory,utilityFactory,linkOptions,iconOptions];

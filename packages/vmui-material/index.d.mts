@@ -174,3 +174,56 @@ export const toggleButtonClasses: Readonly<Record<string, string>>;
 export function getToggleButtonUtilityClass(slot: string): string;
 export const toggleButtonGroupClasses: Readonly<Record<string, string>>;
 export function getToggleButtonGroupUtilityClass(slot: string): string;
+
+export interface TypographyOwnProps extends Omit<import("vmui-system").SystemProps<Theme>, "color"> {
+  align?: "inherit" | "left" | "center" | "right" | "justify";
+  children?: React.ReactNode;
+  classes?: Partial<TypographyClasses>;
+  className?: string;
+  color?: string;
+  gutterBottom?: boolean;
+  noWrap?: boolean;
+  /** Retained for VentiMath's Material 7 callers. */
+  paragraph?: boolean;
+  sx?: SxProps<Theme>;
+  variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2" | "body1" | "body2" | "button" | "caption" | "overline" | "inherit" | (string & {});
+  variantMapping?: Partial<Record<string, React.ElementType>>;
+}
+export interface LinkOwnProps extends Omit<TypographyOwnProps, "classes"> {
+  classes?: Partial<LinkClasses>;
+  TypographyClasses?: Partial<TypographyClasses>;
+  underline?: "none" | "hover" | "always";
+}
+export interface SvgIconOwnProps {
+  children?: React.ReactNode;
+  classes?: Partial<SvgIconClasses>;
+  className?: string;
+  color?: "inherit" | "action" | "disabled" | ButtonColor;
+  fontSize?: "inherit" | "small" | "medium" | "large" | (string & {});
+  htmlColor?: string;
+  inheritViewBox?: boolean;
+  shapeRendering?: string;
+  sx?: SxProps<Theme>;
+  titleAccess?: string;
+  viewBox?: string;
+}
+export type TypographyProps<C extends React.ElementType = "span"> = TypographyOwnProps & Omit<React.ComponentPropsWithRef<C>, keyof TypographyOwnProps> & {component?: C};
+export type LinkProps<C extends React.ElementType = "a"> = LinkOwnProps & Omit<React.ComponentPropsWithRef<C>, keyof LinkOwnProps> & {component?: C};
+export type SvgIconProps<C extends React.ElementType = "svg"> = SvgIconOwnProps & Omit<React.ComponentPropsWithRef<C>, keyof SvgIconOwnProps> & {component?: C};
+export interface TextComponent<P, D extends React.ElementType> {
+  <C extends React.ElementType>(props:P & {component:C} & Omit<React.ComponentPropsWithRef<C>,keyof P | "component">):React.JSX.Element | null;
+  (props:P & {component?:D} & Omit<React.ComponentPropsWithRef<D>,keyof P | "component">):React.JSX.Element | null;
+}
+export const Typography:TextComponent<TypographyOwnProps,"span">;
+export const Link:TextComponent<LinkOwnProps,"a">;
+export const SvgIcon:TextComponent<SvgIconOwnProps,"svg"> & {muiName:string};
+export function createSvgIcon(path:React.ReactNode,displayName:string):typeof SvgIcon;
+export interface TypographyClasses extends Record<"root" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2" | "body1" | "body2" | "inherit" | "button" | "caption" | "overline" | "alignLeft" | "alignRight" | "alignCenter" | "alignJustify" | "noWrap" | "gutterBottom" | "paragraph", string> {}
+export interface LinkClasses extends Record<"root" | "underlineNone" | "underlineHover" | "underlineAlways" | "button" | "focusVisible", string> {}
+export interface SvgIconClasses extends Record<"root" | "colorPrimary" | "colorSecondary" | "colorAction" | "colorError" | "colorDisabled" | "fontSizeInherit" | "fontSizeSmall" | "fontSizeMedium" | "fontSizeLarge", string> {}
+export const typographyClasses:Readonly<TypographyClasses>;
+export const linkClasses:Readonly<LinkClasses>;
+export const svgIconClasses:Readonly<SvgIconClasses>;
+export function getTypographyUtilityClass(slot:string):string;
+export function getLinkUtilityClass(slot:string):string;
+export function getSvgIconUtilityClass(slot:string):string;

@@ -17,6 +17,7 @@ for (const bundler of [false, true]) {
     }
     paths["vmui-material"] = [root + "/packages/vmui-material/index.d.mts"];
     paths["vmui-material/*"] = [root + "/packages/vmui-material/*.d.mts"];
+    paths["vmui-material/utils"] = [root + "/packages/vmui-material/utils/index.d.mts"];
     for (const n of ["react", "react-dom"])
       paths[n] = [fixture + "/node_modules/@types/" + n + "/index.d.ts"];
     paths["csstype"] = [fixture + "/node_modules/csstype/index.d.ts"];
@@ -47,5 +48,5 @@ for (const bundler of [false, true]) {
   clean(r);
 }
 console.log(
-  "Strict TS7 button roots, router props, refs, styles and negative consumers pass NodeNext/Bundler",
+  "Strict TS7 control/text/icon roots, router props, refs, styles and negative consumers pass NodeNext/Bundler",
 );
