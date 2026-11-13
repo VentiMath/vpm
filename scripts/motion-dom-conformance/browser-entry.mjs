@@ -1,3 +1,4 @@
+import {checkNotificationBell} from './application-browser.mjs';
 import { checkSubjects } from "./subjects-browser.mjs";
 import { animate as subjectCurrentAnimate } from "../motion-utils-conformance/node_modules/framer-motion/dom";
 import { animate as subjectAppAnimate } from "../motion-utils-conformance/node_modules/framer-motion-app/dom";
@@ -16,6 +17,7 @@ import * as vpm from "../../packages/vmotion-dom/index.mjs";
 import current from "../motion-utils-conformance/node_modules/motion-dom/dist/cjs/index.js";
 import app from "../motion-utils-conformance/node_modules/motion-dom-app/dist/cjs/index.js";
 window.runMotionDom = async () => {
+  await checkNotificationBell(current,subjectAppAnimate,vpm);
   const rows = [];
   const gridHost=document.createElement("div");document.body.append(gridHost);
   const gridNodes=Array.from({length:9},()=>{const n=document.createElement("div");gridHost.append(n);return n;});

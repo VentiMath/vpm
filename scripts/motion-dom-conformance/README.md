@@ -301,3 +301,5 @@ measure controller construction, completion, queued end writes and release in
 separate processes. They are not browser FPS measurements.
 
 Grid stagger delays add 8,127 current14 black-box comparisons for origins, partial rows, easing and signed durations. Dimensions are snapshotted and invalid grids reject; the app12 control does not expose this newer option. Random ordering adds 3,051 stable rank-permutation, easing and size-change comparisons against current14. Exact random order is intentionally not compared. Selector playback checks assigned delays and all-member completion; packed installs exercise the public random option. Sequence timelines remain outside scope.
+
+`application-browser.mjs` retains the notification-bell target from the application acceptance scope: repeated rotation, one-keyframe CSS-variable color, interruption/reset, live theme-variable endpoints and cleanup. It compares current `animateElement`, the app version’s public DOM `animate` entry and VPM. These checks validate the underlying playback only; `motion/react` components, inherited variants and `useAnimation` still require their own consumer gate.
