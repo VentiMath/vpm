@@ -39,11 +39,12 @@ function DataTable<T>(props: MaterialReactTableProps<T>) {
   return <MaterialReactTable table={t} />;
 }
 function Toolbar({ table }: { table: MRT_TableInstance<RecordRow> }) {
+  const enabled: boolean = table.options.enablePagination;
   return (
     <div ref={table.refs.topToolbarRef}>
       <MRT_GlobalFilterTextField table={table} />
       <MRT_ToolbarDropZone table={table} />
-      <MRT_TablePagination table={table} position="top" />
+      {enabled && <MRT_TablePagination table={table} position="top" />}
       <MRT_ToolbarAlertBanner table={table} stackAlertBanner />
     </div>
   );
@@ -85,4 +86,16 @@ const editing: MaterialReactTableProps<RecordRow> = {
   data: [],
   // @ts-expect-error editing is outside the supported options
   enableEditing: true,
+};
+
+const unpaginated: MaterialReactTableProps<RecordRow> = {
+  columns,
+  data: [],
+  enablePagination: false,
+};
+const invalidPagination: MaterialReactTableProps<RecordRow> = {
+  columns,
+  data: [],
+  // @ts-expect-error pagination is a boolean option
+  enablePagination: "false",
 };

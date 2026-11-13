@@ -38,7 +38,8 @@ try {
                 "vmaterial-react-table": [
                   path.resolve(
                     __dirname,
-                    "../../packages/vmaterial-react-table/index.d.cts",
+                    "../../packages/vmaterial-react-table/index.d." +
+                      (mode === "Bundler" ? "mts" : "cts"),
                   ),
                 ],
                 react: [

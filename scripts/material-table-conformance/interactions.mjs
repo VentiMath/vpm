@@ -35,7 +35,8 @@ function Toolbar({ table }) {
     h(MRT_ToolbarInternalButtons, { table }),
     h(MRT_LinearProgressBar, { table, isTopToolbar: true }),
     h(MRT_ToolbarAlertBanner, { table }),
-    h(MRT_TablePagination, { table, position: "top" }),
+    table.options.enablePagination &&
+      h(MRT_TablePagination, { table, position: "top" }),
   );
 }
 export default function setup(variant) {
@@ -48,7 +49,7 @@ export default function setup(variant) {
     const check = (ok, label) => {
       if (!ok) throw Error(variant + ": " + label);
     };
-    function App({ tick = 0 }) {
+    function App({ tick = 0, paginationOptions = {} }) {
       table = useMaterialReactTable({
         data,
         columns,
@@ -61,6 +62,7 @@ export default function setup(variant) {
         enableFacetedValues: true,
         enableColumnFilterModes: true,
         enableFullScreenToggle: false,
+        ...paginationOptions,
         initialState: {
           pagination: { pageSize: 5, pageIndex: 0 },
           showGlobalFilter: true,
@@ -98,17 +100,39 @@ export default function setup(variant) {
       });
       return h(MaterialReactTable, { table });
     }
-    const renderView = (mode = "light", tick = 0) =>
+    const renderView = (mode = "light", tick = 0, paginationOptions = {}) =>
       root.render(
         h(
           ThemeProvider,
           { theme: createTheme({ palette: { mode }, cssVariables: true }) },
-          h(App, { tick }),
+          h(App, { tick, paginationOptions }),
         ),
       );
     renderView();
     await wait();
     check(host.querySelector("[data-custom-toolbar]"), "custom toolbar mounts");
+    for (const options of [
+      {},
+      { enablePagination: false },
+      { enablePagination: true },
+      { enablePagination: undefined },
+    ]) {
+      renderView("light", 0, options);
+      await wait();
+      const enabled = options.enablePagination !== false;
+      check(
+        table.options.enablePagination === enabled,
+        "resolved pagination option",
+      );
+      check(
+        Boolean(host.querySelector('[data-custom-toolbar] button[aria-label="Go to next page"]')) === enabled,
+        "custom toolbar follows pagination option",
+      );
+      check(
+        host.querySelectorAll("tbody tr").length === (enabled ? 5 : data.length),
+        "pagination option controls visible rows after rerender",
+      );
+    }
     const click = async (label) => {
       const el = [...document.querySelectorAll("button,[role=menuitem]")].find(
         (el) =>

@@ -31,6 +31,30 @@ function run(api, options = {}) {
   );
 }
 for (const api of [control, candidate]) {
+  for (const options of [
+    {},
+    { enablePagination: true },
+    { enablePagination: false },
+    { enablePagination: undefined },
+  ]) {
+    const enabled = options.enablePagination !== false;
+    const html = run(api, {
+      ...options,
+      initialState: { pagination: { pageIndex: 0, pageSize: 1 } },
+      renderTopToolbar: ({ table }) => {
+        assert.equal(table.options.enablePagination, enabled);
+        return table.options.enablePagination
+          ? React.createElement(
+              "section",
+              { "data-caller-pagination": true },
+              React.createElement(api.MRT_TablePagination, { table, position: "top" }),
+            )
+          : null;
+      },
+    });
+    assert.equal(html.includes('data-caller-pagination="true"'), enabled);
+    assert.equal(html.includes('>Geometry<'), !enabled);
+  }
   const html = run(api, {
     initialState: {
       sorting: [{ id: "score", desc: false }],
@@ -63,5 +87,5 @@ assert.throws(
   /Nested headers/,
 );
 console.log(
-  "Node/Bun SSR: sorted pagination, escaped values, empty data and custom toolbar pass both controls; unsupported editing/nesting reject.",
+  "Node/Bun SSR: resolved pagination defaults, caller toolbar visibility, sorted pagination, escaped values, empty data and custom toolbar pass both controls; unsupported editing/nesting reject.",
 );

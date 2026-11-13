@@ -95,6 +95,8 @@ export interface MRT_TableOptions<T = any>
   onIsFullScreenChange?: OnChangeFn<boolean>;
   onColumnFilterFnsChange?: OnChangeFn<Record<string, string>>;
   enableGlobalFilterRankedResults?: boolean;
+  /** Show pagination controls and paginate rows. Defaults to true. */
+  enablePagination?: boolean;
   enableRowActions?: boolean;
   enableColumnActions?: boolean;
   enableColumnOrdering?: boolean;
@@ -156,7 +158,10 @@ export type MRT_TableInstance<T = any> = Omit<
   Table<T>,
   "options" | "getState"
 > & {
-  options: MRT_TableOptions<T> & { mrtTheme: MRT_Theme };
+  options: MRT_TableOptions<T> & {
+    mrtTheme: MRT_Theme;
+    enablePagination: boolean;
+  };
   getState(): MRT_TableState<T>;
   refs: {
     topToolbarRef: React.RefObject<HTMLDivElement | null>;

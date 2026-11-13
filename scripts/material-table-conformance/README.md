@@ -23,6 +23,13 @@ focused DOM. Optional `VPM_MATERIAL_SCREENSHOTS=/absolute/path` captures light a
 dark views and checks that their computed backgrounds change. These are Chrome
 acceptance checks, not a screen-reader or cross-browser certification.
 
+The custom toolbar conditionally renders pagination from
+`table.options.enablePagination`, as the application does. Omitted, true, false
+and explicitly undefined inputs are checked against upstream, including parent
+rerenders that switch between paged and complete row lists. Strict consumers
+read the resolved boolean and reject non-boolean options through both declaration
+entries.
+
 `ssr.cjs` compares sorted pagination, escaping, empty data and custom toolbars on
 Node 24 and Bun. Package unit tests cover hook-using custom cells, partial initial
 pagination, disabled pagination, filter metadata and explicit scope rejection.

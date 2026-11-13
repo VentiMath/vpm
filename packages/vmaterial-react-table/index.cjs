@@ -140,6 +140,8 @@ function useMaterialReactTable(input) {
   const opts = {
     ...defaults,
     ...input,
+    enablePagination:
+      input.enablePagination === undefined ? true : input.enablePagination,
     localization: { ...labels, ...input.localization },
   };
   const filterFns = React.useMemo(

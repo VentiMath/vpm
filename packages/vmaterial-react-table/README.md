@@ -14,6 +14,9 @@ grouping and expansion, row selection/actions, pagination, column
 ordering/hiding/pinning, density, fullscreen, custom cells, icons and MUI prop
 callbacks. Cells render as React components, so custom cells may use hooks.
 Column movement is available through menus and keyboard controls as well as drag.
+`enablePagination` is an optional boolean and resolves to `true` when omitted or
+`undefined`. Custom toolbars can read the resolved boolean from
+`table.options.enablePagination`; `false` disables row pagination and controls.
 
 The six-package VPM dependency closure contains this widget, React Table, Table
 core, Store, match-sorter-utils and highlight-words. It has no runtime dependency
@@ -43,8 +46,8 @@ upstream locale dictionaries are not a verified contract.
 37 resource/contest caller snapshots and real Chrome control interactions against
 Material React Table 3.2.1. They retain raw results, check focus preservation,
 light/dark themes, escaped server output and strict TypeScript 7 consumers.
-Exact six-package archives are installed with clean and frozen npm/Bun locks at
-both React versions. CJS/ESM entry identity, SSR, types and browser behavior run
+Exact six-package archives are installed with clean and frozen npm/Bun locks on
+React 19.3.1. CJS/ESM entry identity, SSR, types and browser behavior run
 against those installed files.
 
 The private caller check used the exact column factories and DataTable options
@@ -56,7 +59,7 @@ end-to-end check. Synthetic equivalents are retained in public CI.
 identical peers, isolated processes, balanced order and identical-source controls.
 They do not measure browser interaction latency or application performance.
 
-Install the [Material React Table 3.2.1 release](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1)
+Install the [Material React Table 3.2.1 r2 release](https://github.com/VentiMath/vpm/releases/tag/material-react-table-3.2.1-r2)
 under the existing `material-react-table` dependency name. Its internal VPM
 URLs are pinned; no overrides are required. See the
 [installation recipe](../../docs/INSTALLATION.md#material-react-table).
