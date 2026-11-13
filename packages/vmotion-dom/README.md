@@ -98,7 +98,7 @@ negative delay), loop/reverse/mirror repeats, repeat gaps and infinite repeats.
 These are low-level Motion DOM APIs: **duration, delay, repeatDelay and generator
 samples use milliseconds**. The controller's `time`, `duration` and
 `iterationDuration` use seconds. The numeric `animateMotionValue` adapter below accepts public transition options
-in seconds; the full Motion/React renderer is not implemented yet.
+in seconds; the complete Motion renderer remains outside this DOM foundation. The app-used React subset is in [vmotion](../vmotion/README.md).
 
 ```js
 import { animateValue, motionValue } from "vmotion-dom";
@@ -724,7 +724,7 @@ No speed advantage is claimed for this unit; application adoption remains pendin
 
 Editable sequence
 timelines and variant propagation remain unimplemented.
-Inertia, CSS spring serialization, WAAPI, gestures/layout and the React renderer remain
+Inertia, CSS spring serialization, WAAPI, gestures/layout and the full renderer remain
 unimplemented. Unsupported inertia rejects explicitly. This package must not replace `motion-dom` under Framer Motion yet.
 VentiMath's timed contest fades and spring-based calendar/header transforms are
 the playback targets. Application adoption is not claimed.
@@ -859,6 +859,6 @@ separate; no general Motion speedup is claimed.
 
 Reviewed VentiMath main `3aa9eb28` on November 13, 2026. Its lockfile uses motion 12.20.5 with framer-motion/motion-dom 12.36.0 on React 19.3.1. A static non-test source inventory found 43 files and 110 JSX Motion roots (including Material `component={motion.button}`/`motion.div`), importing only `motion` and `useAnimation` from `motion/react`. Import counts include auxiliary screens and do not establish route reachability.
 
-The app needs contest-grid fades, calendar scale/opacity entrances, directory/sidebar slides, inherited hidden/show variants with child staggering, `initial={false}`, and the notification bell’s repeated rotate keyframes, CSS-variable colors and interrupted reset. The browser fixture now checks the bell’s actual target/transition values against current and app controls, including live theme colors after completion and cleanup. This is a DOM-foundation check, not a completed React caller.
+The app needs contest-grid fades, calendar scale/opacity entrances, directory/sidebar slides, inherited hidden/show variants with child staggering, `initial={false}`, and the notification bell’s repeated rotate keyframes, CSS-variable colors and interrupted reset. The browser fixture now checks the bell’s actual target/transition values against current and app controls, including live theme colors after completion and cleanup. The independent [vmotion](../vmotion/README.md) layer now checks those patterns through React as well.
 
-The next Motion milestone is the React component and controller layer for those patterns: stable native roots/refs, variant inheritance through wrappers, deterministic child ordering, rerender-safe playback, mount/unmount ownership, hydration and reduced-motion behavior. Material/Motion composition must also pass. No direct app use of sequence timelines, dragging, layout projection, gestures or AnimatePresence was found in this scan; those do not gate this first application subset. Keep unrelated primitive expansion and benchmark tuning behind that milestone. The complete React layer is still missing, so VentiMath cannot replace its `motion/react` import with this package yet.
+The independent React component/controller subset is now in [vmotion](../vmotion/README.md): stable native roots/refs, variant inheritance through wrappers, child ordering, rerender-safe playback, mount/unmount ownership, hydration and reduced motion. Its Chrome checks include Material Box/IconButton composition. No direct app use of sequence timelines, dragging, layout projection, gestures or AnimatePresence was found in this scan; they do not gate the current subset. Consumer release and actual application integration remain pending. Keep unrelated primitive expansion and benchmark tuning parked.

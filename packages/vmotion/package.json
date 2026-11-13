@@ -1,0 +1,60 @@
+{
+  "name": "vmotion",
+  "version": "14.7.0",
+  "description": "Independent React animation layer for VentiMath over VPM Motion DOM",
+  "type": "commonjs",
+  "main": "./react.cjs",
+  "module": "./react.mjs",
+  "types": "./react.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./react.d.mts",
+        "default": "./react.mjs"
+      },
+      "require": {
+        "types": "./react.d.cts",
+        "default": "./react.cjs"
+      }
+    },
+    "./react": {
+      "import": {
+        "types": "./react.d.mts",
+        "default": "./react.mjs"
+      },
+      "require": {
+        "types": "./react.d.cts",
+        "default": "./react.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "react.cjs",
+    "react.mjs",
+    "react.d.cts",
+    "react.d.mts",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "vmotion-dom": "14.7.0"
+  },
+  "peerDependencies": {
+    "react": "^19.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vmotion"
+  }
+}

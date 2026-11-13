@@ -725,6 +725,16 @@
       "name": "vmoment",
       "version": "2.31.0",
     },
+    "packages/vmotion": {
+      "name": "vmotion",
+      "version": "14.7.0",
+      "dependencies": {
+        "vmotion-dom": "14.7.0",
+      },
+      "peerDependencies": {
+        "react": "^19.3.0",
+      },
+    },
     "packages/vmotion-dom": {
       "name": "vmotion-dom",
       "version": "14.7.0",
@@ -2045,6 +2055,8 @@
     "vminimist": ["vminimist@workspace:packages/vminimist"],
 
     "vmoment": ["vmoment@workspace:packages/vmoment"],
+
+    "vmotion": ["vmotion@workspace:packages/vmotion"],
 
     "vmotion-dom": ["vmotion-dom@workspace:packages/vmotion-dom"],
 

@@ -85,6 +85,14 @@ jobs:
           node scripts/mui-material-conformance/text-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/text-browser.cjs
           node scripts/mui-material-conformance/archives.cjs
+      - name: Motion React application patterns
+        run: |
+          node scripts/motion-react-conformance/build.cjs
+          node --test packages/vmotion/test/react.test.cjs
+          node scripts/motion-react-conformance/types.cjs
+          node scripts/motion-react-conformance/browser.cjs
+          VPM_REACT_MODE=development node scripts/motion-react-conformance/browser.cjs
+          node scripts/motion-react-conformance/archives.cjs
       - name: MUI System themes, layouts and unchanged Material callers
         run: |
           node --test packages/vmui-system/test/system.test.cjs
@@ -910,6 +918,10 @@ jobs:
           bun test packages/vscheduler/test/scheduler.test.cjs
           bun scripts/scheduler-conformance/contract.cjs
       - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: Motion React server contracts on Bun
+        run: |
+          node scripts/motion-react-conformance/build.cjs
+          bun test packages/vmotion/test/react.test.cjs
       - name: MUI System controls on Bun
         run: |
           bun test packages/vmui-material/test/*.test.cjs

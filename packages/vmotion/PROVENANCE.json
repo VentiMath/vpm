@@ -1,0 +1,31 @@
+{
+  "upstream": {
+    "name": "motion",
+    "version": "14.7.0",
+    "repository": "https://github.com/motiondivision/motion",
+    "checked": "2026-11-13"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "independent application implementation",
+    "targetScope": "React motion div/span/button and custom roots, initial/animate targets, hidden/show variant inheritance and staggering, initial=false, useAnimation start/set/stop, CSS-variable bell colors and repeat/reset, stable refs/DOM, hydration and reduced motion. Direct React rendering over vmotion-dom; no upstream runtime.",
+    "remainingWork": "Consumer release and actual VentiMath integration. Gestures, drag/layout projection, AnimatePresence, sequences, useAnimate, SVG-specific geometry and other unobserved Motion APIs are outside this subset."
+  },
+  "caller": {
+    "revision": "3aa9eb28b225e061994229693fbb0556765a5dc4",
+    "appControl": "motion 12.20.5; framer-motion and motion-dom 12.36.0; React 19.3.1",
+    "scope": "43 non-test files, 110 JSX roots in static source inventory; only motion and useAnimation from motion/react. Contest entries, calendar/list entrances, sidebar/directory transitions, repeated notification bell, Material polymorphic roots. Static counts do not establish route reachability or adoption."
+  },
+  "changes": [
+    "Independently written from public types/API observations and app-shaped black-box controls; no upstream runtime source copied.",
+    "Native React nodes preserve focus and identity across unrelated rerenders; animation specifications are snapshotted and unchanged specifications do not restart.",
+    "Variant ownership crosses ordinary wrappers and respects independent animation scopes. Mounted children participate without restarting the parent.",
+    "Owned animation work is stopped and element bindings released on unmount; stale completions are suppressed.",
+    "Dynamic reduced-motion configuration and user preference changes stop transform playback; initial=false and SSR hydration preserve initial markup."
+  ],
+  "references": [
+    "https://motion.dev/docs/react-motion-component",
+    "https://motion.dev/docs/react-animation",
+    "https://motion.dev/docs/react-accessibility"
+  ]
+}
