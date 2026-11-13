@@ -64,6 +64,16 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/mui-utils-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: MUI utility contracts and unchanged Material callers
+        run: |
+          node --test packages/vmui-utils/test/utils.test.cjs
+          node scripts/mui-utils-conformance/run.cjs
+          node scripts/mui-utils-conformance/callers.cjs
+          node scripts/mui-utils-conformance/browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-utils-conformance/browser.cjs
+          node scripts/mui-utils-conformance/types.cjs
+          node scripts/mui-utils-conformance/archives.cjs
       - run: npm --prefix scripts/mui-engine-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI styling bridge and application cache ownership
         run: |
@@ -861,6 +871,12 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/mui-utils-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: MUI utility contracts and unchanged Material callers
+        run: |
+          bun test packages/vmui-utils/test/utils.test.cjs
+          bun scripts/mui-utils-conformance/run.cjs
+          bun scripts/mui-utils-conformance/callers.cjs
       - run: npm --prefix scripts/mui-engine-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI styling bridge and application cache ownership
         run: |

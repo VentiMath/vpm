@@ -1,0 +1,1597 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-13T07:34:01.196Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-utils-conformance/internals-entry.cjs": "070c5a63a654c5adbef49a20ff2770ac5447ca2a6dd1906ad0072b2082008667",
+    "../../scripts/mui-utils-conformance/node_modules/@mui/utils": "6b7264070c67da4fd9bf7b8c48a27e7cac13645dde6da5ad9bb7558b07bc7e30",
+    "../../scripts/mui-utils-conformance/package-lock.json": "182535c7fb69c90a1ae06f55237a82f983c11f769e0588cdf1751f5a65d8086f",
+    "../../scripts/mui-utils-conformance/prepare.cjs": "01ba773c3b6a1c9fc58a32d2e4174d7ff5737a1766c1e3a59c85ac6b31558857",
+    "../vclsx/index.cjs": "5dc359e7ab68385dda4c990547ef0998e2206d335423f2c4e273dacd1ef4639a",
+    "PROVENANCE.json": "166594a917a8a0385e04a7b44ca267a49366c6d1540d1d49cb8bbed55c581593",
+    "bench/run.cjs": "d7401a6e64c0e6015498f5826ee9966bce43f1d1569dd864d790c4cd82fcd171",
+    "index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "package.json": "978cc85ffa288e3aa474d5c13f0e78548d36a6553db640bdcdc261100e4dbfc3",
+    "src": "acf2371b94215847979f6a6376dd41a807a6270c59616dd2ab3492d1d86c21ee"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 64299,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 53463,
+            "samples": [
+              206.0521482146531,
+              211.95890615939965,
+              204.79817817930123,
+              207.74803134878317,
+              208.58584441576463,
+              208.77212277649974,
+              216.72231262742505,
+              213.7163271795453,
+              209.09320464620353,
+              212.00643435647066,
+              207.2812038232053,
+              212.01733909432687
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 151687,
+            "samples": [
+              72.77760783719152,
+              73.58024089078229,
+              70.82924047545275,
+              75.08801017885564,
+              72.15214224027079,
+              74.8190945829237,
+              73.20117083204214,
+              73.76236592456858,
+              71.13249652244384,
+              84.27469064586931,
+              71.56870397595048,
+              73.4558136161965
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 171531,
+            "samples": [
+              69.00720569459726,
+              70.6762392803638,
+              70.4306626790494,
+              70.31163463164069,
+              69.69221306935789,
+              74.14014376410127,
+              73.47529601063373,
+              70.87300254764457,
+              75.1317079711534,
+              70.80377307891928,
+              71.23614973386724,
+              69.98200908290583
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 11243,
+            "samples": [
+              1051.5320643956209,
+              1029.825936138035,
+              1105.5323312283163,
+              1056.9316908298647,
+              1059.025615938793,
+              1048.3004536155988,
+              1009.7541581428444,
+              1087.8509294672083,
+              1024.1558302944065,
+              1101.0295294850225,
+              1198.0269501022876,
+              1134.7356577425858
+            ]
+          }
+        ],
+        "checksum": 2051136
+      },
+      "vpm": {
+        "pid": 64301,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 53463,
+            "samples": [
+              225.69502272599715,
+              219.48512055066107,
+              222.0055739483389,
+              222.38043132633746,
+              221.971269850177,
+              234.92024390700053,
+              214.53231206628868,
+              228.74698389540382,
+              214.0841890653349,
+              220.2044778631958,
+              206.64448310046242,
+              211.5247928473904
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 151687,
+            "samples": [
+              61.37583313006417,
+              60.18149215160145,
+              68.47104234377369,
+              67.3508606538468,
+              72.2345421822569,
+              117.80673360274821,
+              135.1197993236069,
+              100.69969081068214,
+              144.36113839683082,
+              90.37139636224597,
+              60.80860587921193,
+              62.91079657452563
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 171531,
+            "samples": [
+              60.686062577610485,
+              60.24105846756569,
+              60.598130950090564,
+              66.07892450927208,
+              60.08195020142145,
+              59.00075205064965,
+              60.89909695623425,
+              68.59133917484294,
+              61.55932746850379,
+              61.63997761337608,
+              60.58112527764638,
+              63.380671715316886
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 11243,
+            "samples": [
+              1062.9577514898147,
+              1025.5195232589128,
+              1021.1649915502867,
+              1075.81010406475,
+              1011.3700080049964,
+              1041.0477630525706,
+              1096.122743040125,
+              1119.7115538557357,
+              1107.848616917186,
+              1235.2612292092895,
+              1160.725873877096,
+              1214.2110646624694
+            ]
+          }
+        ],
+        "checksum": 149504
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 64304,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 53291,
+            "samples": [
+              208.14880561445582,
+              217.41710607794892,
+              211.01671952112,
+              211.82516747668413,
+              216.20050289917646,
+              215.05742057758331,
+              211.5460396689875,
+              206.54127338575032,
+              205.86106472012202,
+              217.5273498339303,
+              216.97143983036474,
+              207.786793267155
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 173411,
+            "samples": [
+              60.7770960319707,
+              59.86500279682386,
+              59.84746642369844,
+              65.26090040424195,
+              61.41431051086701,
+              59.83088154730709,
+              62.87278777009525,
+              59.32678434470704,
+              59.40919549509583,
+              62.57821014814472,
+              61.80860499045631,
+              60.01950279970718
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 207529,
+            "samples": [
+              61.71045010576869,
+              62.27121510728631,
+              61.07339215242191,
+              61.75522457102396,
+              60.998299032906125,
+              63.132742893764004,
+              61.01737588481657,
+              60.40621792616912,
+              59.73984358812545,
+              68.51592307581029,
+              62.52780575244938,
+              61.346847910412734
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 7290,
+            "samples": [
+              1050.5257887517262,
+              1034.1049382715926,
+              1029.0352537722904,
+              1068.764334705091,
+              1089.3004115226067,
+              1018.9928669409965,
+              1031.830041152256,
+              1045.8161865569305,
+              1090.8322359396632,
+              1071.9650205761288,
+              985.202331961597,
+              1007.1958847736734
+            ]
+          }
+        ],
+        "checksum": 2675712
+      },
+      "upstream": {
+        "pid": 64309,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 53291,
+            "samples": [
+              223.69865455705394,
+              227.4805689516049,
+              228.9012215946407,
+              220.42575669437633,
+              228.12092098102863,
+              223.81906888592852,
+              230.7284532097352,
+              242.0507215101992,
+              225.15372201685108,
+              226.8159726783131,
+              231.87466926873196,
+              229.21163048169404
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 173411,
+            "samples": [
+              73.10426097537088,
+              72.58550495643307,
+              76.3590545005794,
+              71.99177676156621,
+              74.273454394473,
+              75.78911949068953,
+              72.255606622417,
+              74.05816240030893,
+              70.55828638321687,
+              70.78006585510728,
+              69.96336449244876,
+              72.6758452462648
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 207529,
+            "samples": [
+              69.0339229698019,
+              70.90896693955996,
+              68.45147425179162,
+              67.82224652940047,
+              66.85049318408467,
+              68.58238125755932,
+              67.90014889485408,
+              72.85508049477379,
+              134.48200492461336,
+              131.72235687542488,
+              92.57420890574363,
+              91.53399283955483
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 7290,
+            "samples": [
+              1030.0126200274465,
+              1053.1492455418227,
+              1034.7736625514397,
+              1065.5293552812027,
+              1030.7669410150834,
+              1035.390946502058,
+              1023.1766803840793,
+              1104.589574759961,
+              1132.5561042523902,
+              1282.355967078194,
+              1163.157201646077,
+              1338.7231824417265
+            ]
+          }
+        ],
+        "checksum": 137472
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 64369,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 49285,
+            "samples": [
+              226.29010855229825,
+              225.8301917419094,
+              257.7559095059341,
+              241.22367860403784,
+              275.91390889723004,
+              251.2960332758449,
+              236.9458253018154,
+              242.27282134523745,
+              229.8180582327286,
+              232.0322207568221,
+              224.56629806229054,
+              238.68063305265287
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 144044,
+            "samples": [
+              74.70779067507156,
+              75.53392019105222,
+              72.01821665602242,
+              72.70752686679131,
+              72.93084057649084,
+              72.01445391685863,
+              75.5585098997526,
+              74.76939685096221,
+              78.31085640498746,
+              94.63399377967808,
+              79.05917636277748,
+              77.57756657687918
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 190066,
+            "samples": [
+              68.84143928951012,
+              70.02216598444777,
+              67.02671703513528,
+              74.52696431765793,
+              69.9673639683062,
+              64.94257258005074,
+              73.91226205633916,
+              70.68290488567217,
+              76.94717624404099,
+              70.28698978249578,
+              68.85919627918742,
+              72.98188523986376
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 11718,
+            "samples": [
+              1087.4901006997763,
+              1082.0248335893505,
+              1040.628349547712,
+              1062.2119815668107,
+              1299.0199692780309,
+              1065.4868578255848,
+              1013.0212493599697,
+              1042.58405871308,
+              1022.2236729817405,
+              994.1542925413884,
+              1033.1896228025223,
+              1015.6739204642507
+            ]
+          }
+        ],
+        "checksum": 2342592
+      },
+      "vpm": {
+        "pid": 64371,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 49285,
+            "samples": [
+              210.5305873998169,
+              207.13535558486345,
+              217.96777924317774,
+              212.39559703763823,
+              218.3203205843569,
+              215.0552906563861,
+              206.3136045449931,
+              209.90836968651678,
+              209.523688749112,
+              209.79592168002412,
+              205.5713300192752,
+              205.26444151364558
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 144044,
+            "samples": [
+              60.07712921051942,
+              59.83414789925285,
+              60.16911499264135,
+              59.7922023826053,
+              62.47743744966824,
+              63.47626419705085,
+              63.72473688595158,
+              63.56449418233293,
+              60.69730776707086,
+              61.13323012412884,
+              61.63828413540267,
+              64.36141040237737
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 190066,
+            "samples": [
+              63.003988088348294,
+              60.299227636716154,
+              62.122720528658995,
+              62.46339166394886,
+              63.91749181863153,
+              61.501878294907755,
+              61.88376669157,
+              63.83615691391441,
+              63.4845264276624,
+              59.62599833741934,
+              61.53388822829985,
+              64.41951216945702
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 11718,
+            "samples": [
+              1045.6170848267677,
+              1096.756357740233,
+              1140.0409626216206,
+              1077.028929851512,
+              1087.2055811571927,
+              1092.4823348694479,
+              1061.0492404847303,
+              1078.597030209944,
+              1059.6554019457278,
+              1049.8521078682222,
+              1069.7822153951283,
+              1050.7588325652794
+            ]
+          }
+        ],
+        "checksum": 142016
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 64373,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 54265,
+            "samples": [
+              205.87089284068915,
+              222.2849166129184,
+              212.2055468534045,
+              208.33332719063839,
+              212.65471298258478,
+              208.04923984151807,
+              200.34935962406615,
+              199.40954574771877,
+              206.72470284713907,
+              204.26840504929544,
+              201.78752418686057,
+              202.00022113701297
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 189057,
+            "samples": [
+              60.728156058754834,
+              62.02648936564102,
+              60.84320601723294,
+              59.32558434757767,
+              59.724490497574855,
+              65.10139799108188,
+              61.03339733519492,
+              59.33572414668553,
+              60.32396049868567,
+              59.13031519594606,
+              58.434318750429746,
+              59.75975499452547
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 221187,
+            "samples": [
+              60.233160176682794,
+              61.51262054279892,
+              58.17099106186171,
+              59.837752670816855,
+              59.24812941086051,
+              60.72143028297323,
+              63.81572153878868,
+              63.13530180345126,
+              59.783879703599915,
+              63.041114532047246,
+              63.69308774927943,
+              59.33704964577446
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 12310,
+            "samples": [
+              1019.2356620633619,
+              1028.9906580016157,
+              1071.3038180341227,
+              1047.4614134849762,
+              1016.812185215285,
+              1047.5121852152686,
+              1179.7861088545944,
+              1222.711860276193,
+              1176.9563769293266,
+              1175.2098294069822,
+              1126.2354183590505,
+              1048.470024370419
+            ]
+          }
+        ],
+        "checksum": 2493504
+      },
+      "upstream": {
+        "pid": 64379,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 54265,
+            "samples": [
+              227.8248779139405,
+              229.92796461807768,
+              228.80770293928035,
+              233.3256611075284,
+              233.46462729199254,
+              228.51900856905993,
+              225.45994655855492,
+              232.26757578549785,
+              227.63904911084552,
+              235.08476918824357,
+              235.89405694278088,
+              234.47741638256755
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 189057,
+            "samples": [
+              73.41392807460178,
+              82.63314767503938,
+              74.0197876830798,
+              78.12789264613316,
+              82.79778056353379,
+              82.47137635739456,
+              79.13552526486741,
+              75.03358775395819,
+              87.49918807555385,
+              75.39789587267336,
+              75.03777167732487,
+              75.71173772989061
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 221187,
+            "samples": [
+              70.08718866841193,
+              68.79284496828487,
+              65.84021664926104,
+              68.24146536640977,
+              67.37379683254429,
+              69.80556271390253,
+              69.21480918860537,
+              65.965861465637,
+              71.55879414251369,
+              69.68631972041776,
+              68.07173568066757,
+              69.2980735757529
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 12310,
+            "samples": [
+              1084.8395613322598,
+              1062.5913891145249,
+              1027.6874898456474,
+              1055.043298131589,
+              1028.2425670186706,
+              1059.6060113728713,
+              1041.8832656376971,
+              1112.6049553208636,
+              985.1103168155977,
+              1002.3287571080411,
+              1021.1752233956098,
+              1017.956295694563
+            ]
+          }
+        ],
+        "checksum": 128192
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 64383,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 45271,
+            "samples": [
+              223.0493472642531,
+              221.519648339998,
+              226.14183472863394,
+              228.72258178524825,
+              224.4575335203558,
+              227.21682754964453,
+              224.44372777274668,
+              256.37273309624237,
+              235.88685913719587,
+              231.5573545978668,
+              233.8095469505863,
+              267.63915089130006
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 151271,
+            "samples": [
+              76.12882839407406,
+              71.41956488685885,
+              73.20305940993295,
+              296.77504610929986,
+              280.84365145996213,
+              110.41690079393977,
+              173.23462527516844,
+              306.8075440765254,
+              133.76903041561158,
+              95.7272048178431,
+              81.77129125873459,
+              83.78479021094604
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 170472,
+            "samples": [
+              80.20916044863723,
+              75.22521000516296,
+              79.60471514383602,
+              83.64668097986757,
+              77.4968440565014,
+              76.4915469989207,
+              70.98428480923533,
+              74.39100849406313,
+              86.79675254587343,
+              75.71820005631413,
+              78.0257696278566,
+              82.48080036604232
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 11676,
+            "samples": [
+              1177.7827166838078,
+              1226.0905275779278,
+              1145.426515930115,
+              1149.0022267900065,
+              1082.5340013703253,
+              1207.2341555327112,
+              1146.1473963686221,
+              1102.8070400822244,
+              1200.3219424460508,
+              1117.5844467283284,
+              1142.6394313120825,
+              1153.8448098663862
+            ]
+          }
+        ],
+        "checksum": 2116928
+      },
+      "vpm": {
+        "pid": 64390,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 45271,
+            "samples": [
+              238.21634158733076,
+              241.19562192131738,
+              253.29405137947066,
+              254.7979501225954,
+              249.75059088599807,
+              266.1048795034347,
+              242.82836694572714,
+              225.46073645380082,
+              226.0332221510449,
+              256.8688122639221,
+              229.95036557619636,
+              227.85374743213038
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 151271,
+            "samples": [
+              72.19245592347491,
+              72.24947280047009,
+              69.29203218065555,
+              71.67682503586278,
+              71.05872903596813,
+              72.15086169854065,
+              73.80022608431194,
+              71.09536527159892,
+              73.64652180523692,
+              71.14329250153723,
+              81.26722901283107,
+              73.80765645761626
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 170472,
+            "samples": [
+              66.33689990145007,
+              73.44657187104032,
+              73.07431718991987,
+              70.31531277863836,
+              157.1822176075836,
+              84.31174621052074,
+              82.93028767187641,
+              96.92892087850298,
+              76.73278309634345,
+              67.78141278333183,
+              80.3191550518556,
+              68.14902154019465
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 11676,
+            "samples": [
+              1049.310551558764,
+              1064.6910757108594,
+              1279.9546077423872,
+              1106.3185166152787,
+              1050.1563035286138,
+              1068.3453237410208,
+              1028.4058752997673,
+              1030.8359883521618,
+              1119.7505995203835,
+              1104.3985954093748,
+              1063.3422404933265,
+              1124.832305584107
+            ]
+          }
+        ],
+        "checksum": 140800
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 64393,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 52258,
+            "samples": [
+              237.12876497378446,
+              228.3765165142182,
+              228.30954112288995,
+              232.1438822763988,
+              222.5321099161858,
+              223.94498449998005,
+              223.21701940372756,
+              223.9250449691919,
+              219.80207815071302,
+              226.09617666194663,
+              232.8678479849969,
+              225.8577634046467
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 144336,
+            "samples": [
+              77.35596109078827,
+              76.32134048331632,
+              74.01797888260704,
+              76.88108302848933,
+              74.55520452278074,
+              76.48443908657633,
+              72.6303001330228,
+              77.68447234231247,
+              73.81474476222164,
+              69.2262013634847,
+              77.3634644163619,
+              73.94666611240464
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 183634,
+            "samples": [
+              82.72297069170186,
+              72.41374146399863,
+              71.66202337257803,
+              68.19951642941973,
+              68.6317620919872,
+              67.70509818443199,
+              68.78151649476682,
+              69.8676879009337,
+              68.72615093065608,
+              72.94378492000376,
+              69.1552217998852,
+              68.99366675016665
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 6912,
+            "samples": [
+              1104.7394386574013,
+              1126.3925057870345,
+              1068.2929687500036,
+              1092.1524884259381,
+              1066.032407407411,
+              1051.4985532407275,
+              1096.8304398148257,
+              1040.1174768518551,
+              1049.1294849537012,
+              1062.2106481481624,
+              1039.8702256944634,
+              1037.9351851851718
+            ]
+          }
+        ],
+        "checksum": 2296384
+      },
+      "upstream": {
+        "pid": 64399,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "merge theme defaults",
+            "iterations": 52258,
+            "samples": [
+              241.92070113666804,
+              241.26449538826597,
+              234.3644226721265,
+              234.3317578169845,
+              253.72750583642727,
+              266.04299820123225,
+              241.7197749626855,
+              247.99232653373664,
+              251.2749244134869,
+              239.57336675724326,
+              230.8617819281255,
+              234.06942477706704
+            ]
+          },
+          {
+            "case": "assign responsive style objects",
+            "iterations": 144336,
+            "samples": [
+              70.7824659128699,
+              74.27923040682877,
+              74.78816788604365,
+              71.88954938476827,
+              70.6961534197987,
+              77.1674495621323,
+              74.64672015297667,
+              73.61873683627051,
+              72.75904833167066,
+              72.57227580090964,
+              70.2729533865426,
+              73.55898043454164
+            ]
+          },
+          {
+            "case": "compose component classes",
+            "iterations": 183634,
+            "samples": [
+              66.01537297014765,
+              69.72451724626121,
+              68.64492414258805,
+              67.15305444525535,
+              68.47883289586862,
+              69.01454523672133,
+              70.34781140747326,
+              72.97100754762297,
+              68.56936079375296,
+              69.13412004312934,
+              66.69244257599394,
+              68.90744633346736
+            ]
+          },
+          {
+            "case": "controlled state and stable callback SSR",
+            "iterations": 6912,
+            "samples": [
+              1098.192853009268,
+              1033.8239293981362,
+              1046.48321759261,
+              1115.1319444444666,
+              1056.6345486110915,
+              1070.77662037037,
+              1065.9661458333396,
+              1082.206018518544,
+              1054.1208043981428,
+              1049.2621527777528,
+              1034.7161458333221,
+              1016.3603877314808
+            ]
+          }
+        ],
+        "checksum": 142272
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "merge theme defaults",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 208.93266371135164,
+          "vpmNs": 221.0878738566864,
+          "changePct": 5.817764407640746
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 227.80074496631676,
+          "vpmNs": 211.68560357283582,
+          "changePct": -7.074226818645291
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 237.81322917723412,
+          "vpmNs": 209.85214568327046,
+          "changePct": -11.75758118701008
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 231.09777020178777,
+          "vpmNs": 206.2977978439141,
+          "changePct": -10.731376739904952
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 227.9697046674464,
+          "vpmNs": 242.01199443352226,
+          "changePct": 6.159717488146166
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 241.49213517547574,
+          "vpmNs": 225.97697003329665,
+          "changePct": -6.424708254331046
+        }
+      ]
+    },
+    {
+      "case": "assign responsive style objects",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 73.32849222411932,
+          "vpmNs": 70.35279226301529,
+          "changePct": -4.058040566290622
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 72.63067510134894,
+          "vpmNs": 60.39829941583894,
+          "changePct": -16.841886253213158
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 75.15165852100722,
+          "vpmNs": 61.38575712976576,
+          "changePct": -18.317495132051498
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 76.91981518801188,
+          "vpmNs": 60.04185774660557,
+          "changePct": -21.942275082372763
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 103.07205280589145,
+          "vpmNs": 72.17165881100777,
+          "changePct": -29.979410668259675
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 73.15901438310615,
+          "vpmNs": 75.43827250304852,
+          "changePct": 3.115485000941587
+        }
+      ]
+    },
+    {
+      "case": "compose component classes",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 70.74000617964154,
+          "vpmNs": 60.79257976692237,
+          "changePct": -14.06195298804196
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 69.97144495468093,
+          "vpmNs": 61.52864900809071,
+          "changePct": -12.066059164647026
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 70.15457788347177,
+          "vpmNs": 62.29305609630393,
+          "changePct": -11.20599970001387
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 69.00382707844511,
+          "vpmNs": 60.477295229828016,
+          "changePct": -12.356607176184509
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 77.76130684217901,
+          "vpmNs": 75.08967748369189,
+          "changePct": -3.4356796033653936
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 68.77618523802771,
+          "vpmNs": 69.07444427502593,
+          "changePct": 0.4336661534308339
+        }
+      ]
+    },
+    {
+      "case": "controlled state and stable callback SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1057.978653384329,
+          "vpmNs": 1085.9664235524374,
+          "changePct": 2.6454002714118463
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1059.3393004115128,
+          "vpmNs": 1039.9605624142614,
+          "changePct": -1.8293230497276491
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1041.606204130396,
+          "vpmNs": 1073.40557262332,
+          "changePct": 3.052916578916909
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1035.0629163281837,
+          "vpmNs": 1059.886921202271,
+          "changePct": 2.3983087870782516
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1147.5748115793144,
+          "vpmNs": 1066.5181997259401,
+          "changePct": -7.063296530691765
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1055.3776765046173,
+          "vpmNs": 1064.1215277777867,
+          "changePct": 0.828504474543057
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "merge theme defaults",
+      "upstream_ns": 229,
+      "vpm_ns": 211,
+      "change_pct": -8.9,
+      "upstream_first_pct": -3,
+      "vpm_first_pct": -8.9,
+      "process_range_pct": "5.8, -7.1, -11.8, -10.7",
+      "control_max_abs_pct": 6.4,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "assign responsive style objects",
+      "upstream_ns": 74,
+      "vpm_ns": 61,
+      "change_pct": -17.6,
+      "upstream_first_pct": -11.2,
+      "vpm_first_pct": -19.4,
+      "process_range_pct": "-4.1, -16.8, -18.3, -21.9",
+      "control_max_abs_pct": 30,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "compose component classes",
+      "upstream_ns": 70,
+      "vpm_ns": 61,
+      "change_pct": -12.2,
+      "upstream_first_pct": -12.6,
+      "vpm_first_pct": -12.2,
+      "process_range_pct": "-14.1, -12.1, -11.2, -12.4",
+      "control_max_abs_pct": 3.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "controlled state and stable callback SSR",
+      "upstream_ns": 1050,
+      "vpm_ns": 1067,
+      "change_pct": 2.5,
+      "upstream_first_pct": 2.8,
+      "vpm_first_pct": 0.3,
+      "process_range_pct": "2.6, -1.8, 3.1, 2.4",
+      "control_max_abs_pct": 7.1,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "vpm-mui-utils-conformance",
+  "private": true,
+  "dependencies": {
+    "@mui/private-theming": "9.5.0",
+    "mui-private-theming-app": "npm:@mui/private-theming@7.2.0",
+    "@mui/system": "9.5.0",
+    "mui-system-app": "npm:@mui/system@7.2.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "@types/react": "19.2.2",
+    "esbuild": "0.25.2",
+    "@mui/styled-engine": "9.5.0",
+    "mui-styled-engine-app": "npm:@mui/styled-engine@7.2.0",
+    "stylis-plugin-rtl": "2.1.1",
+    "@mui/utils": "9.5.0",
+    "mui-utils-app": "npm:@mui/utils@7.2.0",
+    "@mui/material": "9.5.0",
+    "mui-material-app": "npm:@mui/material@7.2.0"
+  }
+}

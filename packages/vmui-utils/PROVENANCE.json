@@ -1,0 +1,28 @@
+{
+  "upstream": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "repository": "https://github.com/mui/material-ui",
+    "checked": "2026-11-12"
+  },
+  "implementation": {
+    "kind": "independent implementation",
+    "replacementStatus": "complete for documented application scope",
+    "targetScope": "React 19.3 object/default/slot props, classes, DOM/shadow helpers, refs, controlled state, stable callbacks, timer/focus hooks, validators and MUI 9 roving menu/tab registry reached by current and app-pinned System/Material callers. Native modern-browser focus-visible; no legacy browser polyfill or local-storage hook."
+  },
+  "changes": [
+    "Uses React and vclsx instead of Babel runtime, prop-types, @types/prop-types, @mui/types and react-is runtime dependencies.",
+    "Own-property class dictionaries avoid inherited global-state names; recursive assignment treats prototype-named keys as data and rejects source cycles.",
+    "Callback-ref composition preserves React 19 cleanups and attempts every cleanup even if one fails. Stable event callbacks update only after commit.",
+    "DOM ownership and shadow-root traversal stay local to the supplied document; native focus-visible removes legacy input-mode listeners.",
+    "Runtime validators remain active and allow React 19 function component refs; development diagnostic wording is not copied."
+  ],
+  "caller": {
+    "revision": "664673678be2699602121ff2ceee0189c12a7e12",
+    "scope": "App has no direct @mui/utils imports; imports are reached through Material/System. Unchanged 9.5.0 and app 7.2.0 forms, menus, tabs, dialogs and styling are tested with their utility dependency fully replaced."
+  },
+  "references": [
+    "https://mui.com/material-ui/guides/composition/",
+    "https://mui.com/material-ui/react-use-media-query/"
+  ]
+}

@@ -1,0 +1,661 @@
+{
+  "name": "vmui-utils",
+  "version": "9.5.0",
+  "description": "Independent MUI object, prop, DOM and React utilities for VentiMath",
+  "type": "commonjs",
+  "main": "./index.cjs",
+  "module": "./index.mjs",
+  "types": "./index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.cts",
+        "default": "./index.cjs"
+      }
+    },
+    "./package.json": "./package.json",
+    "./deepmerge": {
+      "import": {
+        "types": "./deepmerge.d.mts",
+        "default": "./deepmerge.mjs"
+      },
+      "require": {
+        "types": "./deepmerge.d.cts",
+        "default": "./deepmerge.cjs"
+      }
+    },
+    "./fastDeepAssign": {
+      "import": {
+        "types": "./fastDeepAssign.d.mts",
+        "default": "./fastDeepAssign.mjs"
+      },
+      "require": {
+        "types": "./fastDeepAssign.d.cts",
+        "default": "./fastDeepAssign.cjs"
+      }
+    },
+    "./fastObjectShallowCompare": {
+      "import": {
+        "types": "./fastObjectShallowCompare.d.mts",
+        "default": "./fastObjectShallowCompare.mjs"
+      },
+      "require": {
+        "types": "./fastObjectShallowCompare.d.cts",
+        "default": "./fastObjectShallowCompare.cjs"
+      }
+    },
+    "./resolveProps": {
+      "import": {
+        "types": "./resolveProps.d.mts",
+        "default": "./resolveProps.mjs"
+      },
+      "require": {
+        "types": "./resolveProps.d.cts",
+        "default": "./resolveProps.cjs"
+      }
+    },
+    "./ClassNameGenerator": {
+      "import": {
+        "types": "./ClassNameGenerator.d.mts",
+        "default": "./ClassNameGenerator.mjs"
+      },
+      "require": {
+        "types": "./ClassNameGenerator.d.cts",
+        "default": "./ClassNameGenerator.cjs"
+      }
+    },
+    "./generateUtilityClass": {
+      "import": {
+        "types": "./generateUtilityClass.d.mts",
+        "default": "./generateUtilityClass.mjs"
+      },
+      "require": {
+        "types": "./generateUtilityClass.d.cts",
+        "default": "./generateUtilityClass.cjs"
+      }
+    },
+    "./generateUtilityClasses": {
+      "import": {
+        "types": "./generateUtilityClasses.d.mts",
+        "default": "./generateUtilityClasses.mjs"
+      },
+      "require": {
+        "types": "./generateUtilityClasses.d.cts",
+        "default": "./generateUtilityClasses.cjs"
+      }
+    },
+    "./composeClasses": {
+      "import": {
+        "types": "./composeClasses.d.mts",
+        "default": "./composeClasses.mjs"
+      },
+      "require": {
+        "types": "./composeClasses.d.cts",
+        "default": "./composeClasses.cjs"
+      }
+    },
+    "./capitalize": {
+      "import": {
+        "types": "./capitalize.d.mts",
+        "default": "./capitalize.mjs"
+      },
+      "require": {
+        "types": "./capitalize.d.cts",
+        "default": "./capitalize.cjs"
+      }
+    },
+    "./clamp": {
+      "import": {
+        "types": "./clamp.d.mts",
+        "default": "./clamp.mjs"
+      },
+      "require": {
+        "types": "./clamp.d.cts",
+        "default": "./clamp.cjs"
+      }
+    },
+    "./isObjectEmpty": {
+      "import": {
+        "types": "./isObjectEmpty.d.mts",
+        "default": "./isObjectEmpty.mjs"
+      },
+      "require": {
+        "types": "./isObjectEmpty.d.cts",
+        "default": "./isObjectEmpty.cjs"
+      }
+    },
+    "./isEventHandler": {
+      "import": {
+        "types": "./isEventHandler.d.mts",
+        "default": "./isEventHandler.mjs"
+      },
+      "require": {
+        "types": "./isEventHandler.d.cts",
+        "default": "./isEventHandler.cjs"
+      }
+    },
+    "./extractEventHandlers": {
+      "import": {
+        "types": "./extractEventHandlers.d.mts",
+        "default": "./extractEventHandlers.mjs"
+      },
+      "require": {
+        "types": "./extractEventHandlers.d.cts",
+        "default": "./extractEventHandlers.cjs"
+      }
+    },
+    "./omitEventHandlers": {
+      "import": {
+        "types": "./omitEventHandlers.d.mts",
+        "default": "./omitEventHandlers.mjs"
+      },
+      "require": {
+        "types": "./omitEventHandlers.d.cts",
+        "default": "./omitEventHandlers.cjs"
+      }
+    },
+    "./resolveComponentProps": {
+      "import": {
+        "types": "./resolveComponentProps.d.mts",
+        "default": "./resolveComponentProps.mjs"
+      },
+      "require": {
+        "types": "./resolveComponentProps.d.cts",
+        "default": "./resolveComponentProps.cjs"
+      }
+    },
+    "./isHostComponent": {
+      "import": {
+        "types": "./isHostComponent.d.mts",
+        "default": "./isHostComponent.mjs"
+      },
+      "require": {
+        "types": "./isHostComponent.d.cts",
+        "default": "./isHostComponent.cjs"
+      }
+    },
+    "./appendOwnerState": {
+      "import": {
+        "types": "./appendOwnerState.d.mts",
+        "default": "./appendOwnerState.mjs"
+      },
+      "require": {
+        "types": "./appendOwnerState.d.cts",
+        "default": "./appendOwnerState.cjs"
+      }
+    },
+    "./mergeSlotProps": {
+      "import": {
+        "types": "./mergeSlotProps.d.mts",
+        "default": "./mergeSlotProps.mjs"
+      },
+      "require": {
+        "types": "./mergeSlotProps.d.cts",
+        "default": "./mergeSlotProps.cjs"
+      }
+    },
+    "./getDisplayName": {
+      "import": {
+        "types": "./getDisplayName.d.mts",
+        "default": "./getDisplayName.mjs"
+      },
+      "require": {
+        "types": "./getDisplayName.d.cts",
+        "default": "./getDisplayName.cjs"
+      }
+    },
+    "./isMuiElement": {
+      "import": {
+        "types": "./isMuiElement.d.mts",
+        "default": "./isMuiElement.mjs"
+      },
+      "require": {
+        "types": "./isMuiElement.d.cts",
+        "default": "./isMuiElement.cjs"
+      }
+    },
+    "./getValidReactChildren": {
+      "import": {
+        "types": "./getValidReactChildren.d.mts",
+        "default": "./getValidReactChildren.mjs"
+      },
+      "require": {
+        "types": "./getValidReactChildren.d.cts",
+        "default": "./getValidReactChildren.cjs"
+      }
+    },
+    "./getReactElementRef": {
+      "import": {
+        "types": "./getReactElementRef.d.mts",
+        "default": "./getReactElementRef.mjs"
+      },
+      "require": {
+        "types": "./getReactElementRef.d.cts",
+        "default": "./getReactElementRef.cjs"
+      }
+    },
+    "./getReactNodeRef": {
+      "import": {
+        "types": "./getReactNodeRef.d.mts",
+        "default": "./getReactNodeRef.mjs"
+      },
+      "require": {
+        "types": "./getReactNodeRef.d.cts",
+        "default": "./getReactNodeRef.cjs"
+      }
+    },
+    "./formatMuiErrorMessage": {
+      "import": {
+        "types": "./formatMuiErrorMessage.d.mts",
+        "default": "./formatMuiErrorMessage.mjs"
+      },
+      "require": {
+        "types": "./formatMuiErrorMessage.d.cts",
+        "default": "./formatMuiErrorMessage.cjs"
+      }
+    },
+    "./visuallyHidden": {
+      "import": {
+        "types": "./visuallyHidden.d.mts",
+        "default": "./visuallyHidden.mjs"
+      },
+      "require": {
+        "types": "./visuallyHidden.d.cts",
+        "default": "./visuallyHidden.cjs"
+      }
+    },
+    "./ponyfillGlobal": {
+      "import": {
+        "types": "./ponyfillGlobal.d.mts",
+        "default": "./ponyfillGlobal.mjs"
+      },
+      "require": {
+        "types": "./ponyfillGlobal.d.cts",
+        "default": "./ponyfillGlobal.cjs"
+      }
+    },
+    "./ownerDocument": {
+      "import": {
+        "types": "./ownerDocument.d.mts",
+        "default": "./ownerDocument.mjs"
+      },
+      "require": {
+        "types": "./ownerDocument.d.cts",
+        "default": "./ownerDocument.cjs"
+      }
+    },
+    "./ownerWindow": {
+      "import": {
+        "types": "./ownerWindow.d.mts",
+        "default": "./ownerWindow.mjs"
+      },
+      "require": {
+        "types": "./ownerWindow.d.cts",
+        "default": "./ownerWindow.cjs"
+      }
+    },
+    "./contains": {
+      "import": {
+        "types": "./contains.d.mts",
+        "default": "./contains.mjs"
+      },
+      "require": {
+        "types": "./contains.d.cts",
+        "default": "./contains.cjs"
+      }
+    },
+    "./getActiveElement": {
+      "import": {
+        "types": "./getActiveElement.d.mts",
+        "default": "./getActiveElement.mjs"
+      },
+      "require": {
+        "types": "./getActiveElement.d.cts",
+        "default": "./getActiveElement.cjs"
+      }
+    },
+    "./getEventTarget": {
+      "import": {
+        "types": "./getEventTarget.d.mts",
+        "default": "./getEventTarget.mjs"
+      },
+      "require": {
+        "types": "./getEventTarget.d.cts",
+        "default": "./getEventTarget.cjs"
+      }
+    },
+    "./getScrollbarSize": {
+      "import": {
+        "types": "./getScrollbarSize.d.mts",
+        "default": "./getScrollbarSize.mjs"
+      },
+      "require": {
+        "types": "./getScrollbarSize.d.cts",
+        "default": "./getScrollbarSize.cjs"
+      }
+    },
+    "./isFocusVisible": {
+      "import": {
+        "types": "./isFocusVisible.d.mts",
+        "default": "./isFocusVisible.mjs"
+      },
+      "require": {
+        "types": "./isFocusVisible.d.cts",
+        "default": "./isFocusVisible.cjs"
+      }
+    },
+    "./createChainedFunction": {
+      "import": {
+        "types": "./createChainedFunction.d.mts",
+        "default": "./createChainedFunction.mjs"
+      },
+      "require": {
+        "types": "./createChainedFunction.d.cts",
+        "default": "./createChainedFunction.cjs"
+      }
+    },
+    "./debounce": {
+      "import": {
+        "types": "./debounce.d.mts",
+        "default": "./debounce.mjs"
+      },
+      "require": {
+        "types": "./debounce.d.cts",
+        "default": "./debounce.cjs"
+      }
+    },
+    "./setRef": {
+      "import": {
+        "types": "./setRef.d.mts",
+        "default": "./setRef.mjs"
+      },
+      "require": {
+        "types": "./setRef.d.cts",
+        "default": "./setRef.cjs"
+      }
+    },
+    "./useEnhancedEffect": {
+      "import": {
+        "types": "./useEnhancedEffect.d.mts",
+        "default": "./useEnhancedEffect.mjs"
+      },
+      "require": {
+        "types": "./useEnhancedEffect.d.cts",
+        "default": "./useEnhancedEffect.cjs"
+      }
+    },
+    "./useControlled": {
+      "import": {
+        "types": "./useControlled.d.mts",
+        "default": "./useControlled.mjs"
+      },
+      "require": {
+        "types": "./useControlled.d.cts",
+        "default": "./useControlled.cjs"
+      }
+    },
+    "./useEventCallback": {
+      "import": {
+        "types": "./useEventCallback.d.mts",
+        "default": "./useEventCallback.mjs"
+      },
+      "require": {
+        "types": "./useEventCallback.d.cts",
+        "default": "./useEventCallback.cjs"
+      }
+    },
+    "./useForkRef": {
+      "import": {
+        "types": "./useForkRef.d.mts",
+        "default": "./useForkRef.mjs"
+      },
+      "require": {
+        "types": "./useForkRef.d.cts",
+        "default": "./useForkRef.cjs"
+      }
+    },
+    "./useId": {
+      "import": {
+        "types": "./useId.d.mts",
+        "default": "./useId.mjs"
+      },
+      "require": {
+        "types": "./useId.d.cts",
+        "default": "./useId.cjs"
+      }
+    },
+    "./useLazyRef": {
+      "import": {
+        "types": "./useLazyRef.d.mts",
+        "default": "./useLazyRef.mjs"
+      },
+      "require": {
+        "types": "./useLazyRef.d.cts",
+        "default": "./useLazyRef.cjs"
+      }
+    },
+    "./useTimeout": {
+      "import": {
+        "types": "./useTimeout.d.mts",
+        "default": "./useTimeout.mjs"
+      },
+      "require": {
+        "types": "./useTimeout.d.cts",
+        "default": "./useTimeout.cjs"
+      }
+    },
+    "./useOnMount": {
+      "import": {
+        "types": "./useOnMount.d.mts",
+        "default": "./useOnMount.mjs"
+      },
+      "require": {
+        "types": "./useOnMount.d.cts",
+        "default": "./useOnMount.cjs"
+      }
+    },
+    "./usePreviousProps": {
+      "import": {
+        "types": "./usePreviousProps.d.mts",
+        "default": "./usePreviousProps.mjs"
+      },
+      "require": {
+        "types": "./usePreviousProps.d.cts",
+        "default": "./usePreviousProps.cjs"
+      }
+    },
+    "./useForcedRerendering": {
+      "import": {
+        "types": "./useForcedRerendering.d.mts",
+        "default": "./useForcedRerendering.mjs"
+      },
+      "require": {
+        "types": "./useForcedRerendering.d.cts",
+        "default": "./useForcedRerendering.cjs"
+      }
+    },
+    "./useValueAsRef": {
+      "import": {
+        "types": "./useValueAsRef.d.mts",
+        "default": "./useValueAsRef.mjs"
+      },
+      "require": {
+        "types": "./useValueAsRef.d.cts",
+        "default": "./useValueAsRef.cjs"
+      }
+    },
+    "./useIsFocusVisible": {
+      "import": {
+        "types": "./useIsFocusVisible.d.mts",
+        "default": "./useIsFocusVisible.mjs"
+      },
+      "require": {
+        "types": "./useIsFocusVisible.d.cts",
+        "default": "./useIsFocusVisible.cjs"
+      }
+    },
+    "./useSlotProps": {
+      "import": {
+        "types": "./useSlotProps.d.mts",
+        "default": "./useSlotProps.mjs"
+      },
+      "require": {
+        "types": "./useSlotProps.d.cts",
+        "default": "./useSlotProps.cjs"
+      }
+    },
+    "./refType": {
+      "import": {
+        "types": "./refType.d.mts",
+        "default": "./refType.mjs"
+      },
+      "require": {
+        "types": "./refType.d.cts",
+        "default": "./refType.cjs"
+      }
+    },
+    "./elementAcceptingRef": {
+      "import": {
+        "types": "./elementAcceptingRef.d.mts",
+        "default": "./elementAcceptingRef.mjs"
+      },
+      "require": {
+        "types": "./elementAcceptingRef.d.cts",
+        "default": "./elementAcceptingRef.cjs"
+      }
+    },
+    "./elementTypeAcceptingRef": {
+      "import": {
+        "types": "./elementTypeAcceptingRef.d.mts",
+        "default": "./elementTypeAcceptingRef.mjs"
+      },
+      "require": {
+        "types": "./elementTypeAcceptingRef.d.cts",
+        "default": "./elementTypeAcceptingRef.cjs"
+      }
+    },
+    "./integerPropType": {
+      "import": {
+        "types": "./integerPropType.d.mts",
+        "default": "./integerPropType.mjs"
+      },
+      "require": {
+        "types": "./integerPropType.d.cts",
+        "default": "./integerPropType.cjs"
+      }
+    },
+    "./HTMLElementType": {
+      "import": {
+        "types": "./HTMLElementType.d.mts",
+        "default": "./HTMLElementType.mjs"
+      },
+      "require": {
+        "types": "./HTMLElementType.d.cts",
+        "default": "./HTMLElementType.cjs"
+      }
+    },
+    "./chainPropTypes": {
+      "import": {
+        "types": "./chainPropTypes.d.mts",
+        "default": "./chainPropTypes.mjs"
+      },
+      "require": {
+        "types": "./chainPropTypes.d.cts",
+        "default": "./chainPropTypes.cjs"
+      }
+    },
+    "./deprecatedPropType": {
+      "import": {
+        "types": "./deprecatedPropType.d.mts",
+        "default": "./deprecatedPropType.mjs"
+      },
+      "require": {
+        "types": "./deprecatedPropType.d.cts",
+        "default": "./deprecatedPropType.cjs"
+      }
+    },
+    "./unsupportedProp": {
+      "import": {
+        "types": "./unsupportedProp.d.mts",
+        "default": "./unsupportedProp.mjs"
+      },
+      "require": {
+        "types": "./unsupportedProp.d.cts",
+        "default": "./unsupportedProp.cjs"
+      }
+    },
+    "./requirePropFactory": {
+      "import": {
+        "types": "./requirePropFactory.d.mts",
+        "default": "./requirePropFactory.mjs"
+      },
+      "require": {
+        "types": "./requirePropFactory.d.cts",
+        "default": "./requirePropFactory.cjs"
+      }
+    },
+    "./exactProp": {
+      "import": {
+        "types": "./exactProp.d.mts",
+        "default": "./exactProp.mjs"
+      },
+      "require": {
+        "types": "./exactProp.d.cts",
+        "default": "./exactProp.cjs"
+      }
+    },
+    "./useRovingTabIndex": {
+      "import": {
+        "types": "./useRovingTabIndex.d.mts",
+        "default": "./useRovingTabIndex.mjs"
+      },
+      "require": {
+        "types": "./useRovingTabIndex.d.cts",
+        "default": "./useRovingTabIndex.cjs"
+      }
+    },
+    "./types": {
+      "import": {
+        "types": "./types.d.mts",
+        "default": "./types.mjs"
+      },
+      "require": {
+        "types": "./types.d.cts",
+        "default": "./types.cjs"
+      }
+    }
+  },
+  "files": [
+    "*.cjs",
+    "*.mjs",
+    "*.cts",
+    "*.mts",
+    "src/",
+    "README.md",
+    "PROVENANCE.json",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "react": "^19.3.0"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">=24"
+  },
+  "vpm": {
+    "platform": "browser"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VentiMath/vpm.git",
+    "directory": "packages/vmui-utils"
+  },
+  "dependencies": {
+    "vclsx": "2.1.1"
+  }
+}
