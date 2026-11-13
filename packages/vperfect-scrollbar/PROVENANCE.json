@@ -15,7 +15,8 @@
     "Own-document listeners and events, pointer cancellation, idempotent teardown and explicit per-element ownership prevent cross-window and lifecycle leaks.",
     "ResizeObserver and content mutations coalesce automatic updates; explicit update remains available. Geometry keeps fractional positions and bounds oversized thumbs to the viewport.",
     "Focusable scrollbar roles expose axis/range/value and control relationships; editable content and button keyboard behavior remain native. Reduced-motion and forced-colors styles are included.",
-    "Invalid settings reject before modifying the host. Destruction restores owned classes/IDs and leaves caller content/styles intact. Touch handlers and swipeEasing reject explicitly."
+    "Invalid settings reject before modifying the host. Destruction restores owned classes/IDs and leaves caller content/styles intact. Touch handlers and swipeEasing reject explicitly.",
+    "Scroll positions and reach state commit before callbacks; reentrant updates do not redispatch the same movement, and nested scrolling supersedes stale notifications."
   ],
   "caller": {
     "revision": "47b9d38c77ad02722131d564ba497d16feda38a9",

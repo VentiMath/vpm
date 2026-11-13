@@ -171,6 +171,17 @@ window.finishDrag = () => {
   return top;
 };
 window.checkOwnership = async () => {
+  const reentrant = box();
+  let changes = 0;
+  reentrant.el.addEventListener("ps-scroll-y", () => {
+    changes++;
+    assert(changes < 4, "scroll callbacks must not recurse");
+    reentrant.p.update();
+  });
+  reentrant.el.scrollTop = 200;
+  await wait(60);
+  assert(changes === 1 && reentrant.p.lastScrollTop === 200, "reentrant update preserves one movement");
+  reentrant.close();
   const direction = box();
   const oldDirection = document.documentElement.getAttribute("dir");
   document.documentElement.dir = "rtl";

@@ -21,45 +21,41 @@ isolation reduces shared JIT feedback; environmental noise and GC remain.
 Negative changes mean less time; these are local workload measurements, not
 application throughput or latency guarantees.
 
-These cases use jsdom 27.3.0 with fixed client/scroll dimensions and each
-implementation’s stylesheet. This measures JavaScript and DOM API work, including
-style access. It does not measure native browser layout, paint or frame rate.
-Geometry and real input behavior are verified separately in Chrome.
-
 ## Node 24.22.1
 
-Recorded 2026-11-11T18:40:30.536Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T07:49:10.064Z on Apple M1 Pro, darwin/arm64.
 
-[Raw samples, controls and source hashes](node-isolated.json).
+[Raw samples, processes, controls and source hashes](node-isolated.json).
 
-| Case | Upstream ns | VPM ns | Change | Largest control | Evidence |
-| --- | ---: | ---: | ---: | ---: | --- |
-| construct and destroy desktop scrollbar | 3038408 | 957032 | -68.5% | 5.1% | lower time in every pair, beyond control spread |
-| unchanged geometry update | 1714156 | 821536 | -51.1% | 4.6% | lower time in every pair, beyond control spread |
-| native scroll event and thumb update | 42408 | 35664 | -15.5% | 6.2% | lower time in every pair, beyond control spread |
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| construct and destroy desktop scrollbar | 3037603 | 976090 | -68% | -68.5% | -67.6% | 2.9% | lower time in every pair, beyond control spread |
+| unchanged geometry update | 1645683 | 794193 | -52% | -50.7% | -54% | 1.5% | lower time in every pair, beyond control spread |
+| native scroll event and thumb update | 41384 | 34524 | -16.4% | -15.3% | -22.9% | 0.9% | lower time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-11T18:40:58.524Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T07:49:36.418Z on Apple M1 Pro, darwin/arm64.
 
-[Raw samples, controls and source hashes](bun-isolated.json).
+[Raw samples, processes, controls and source hashes](bun-isolated.json).
 
-| Case | Upstream ns | VPM ns | Change | Largest control | Evidence |
-| --- | ---: | ---: | ---: | ---: | --- |
-| construct and destroy desktop scrollbar | 1859369 | 597740 | -67.3% | 26.3% | lower time in every pair, beyond control spread |
-| unchanged geometry update | 1122796 | 532255 | -52.3% | 23.6% | unestablished at this precision |
-| native scroll event and thumb update | 26430 | 18041 | -27.4% | 12.8% | lower time in every pair, beyond control spread |
-
-Construction/destruction takes 68.5% less time on Node and 67.3% less on Bun.
-Native scroll handling takes 15.5% less on Node and 27.4% less on Bun. Explicit
-unchanged geometry refresh is 51.1% lower on Node; Bun's direction is unestablished
-because a process pair overlaps its control spread. The desktop implementation
-omits unused touch/legacy-browser machinery, keeps native positions authoritative
-and avoids redundant style writes. No production application speedup is claimed.
+| Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| construct and destroy desktop scrollbar | 1876808 | 539119 | -71.3% | -72.5% | -69.8% | 9.5% | lower time in every pair, beyond control spread |
+| unchanged geometry update | 1074409 | 505446 | -51.6% | -53.8% | -50.6% | 10% | lower time in every pair, beyond control spread |
+| native scroll event and thumb update | 24873 | 17752 | -28.1% | -31.7% | -26% | 1% | lower time in every pair, beyond control spread |
 
 ## Reproduce
+
+Run these commands from the repository root after installing the pinned
+fixtures used by bench/run.cjs:
 
 ```sh
 OUTPUT=packages/vperfect-scrollbar/bench/results/node-isolated.json node packages/vperfect-scrollbar/bench/run.cjs
 OUTPUT=packages/vperfect-scrollbar/bench/results/bun-isolated.json bun packages/vperfect-scrollbar/bench/run.cjs
+node scripts/render-bench-report.cjs packages/vperfect-scrollbar results run.cjs
 ```
+
+The renderer verifies the source hashes and recording structure before writing
+this page. File hashes are SHA-256; directory hashes cover a sorted recursive
+name/hash manifest. Historical reports remain in repository history.

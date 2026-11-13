@@ -24,7 +24,7 @@ node scripts/perfect-scrollbar-conformance/archives.cjs
 ```
 
 Node/Bun tests cover geometry bounds, validation, ownership, event deduplication,
-wheel propagation, suppression, updates, destruction during events, generated IDs,
+wheel propagation, suppression, updates, reentrant updates and nested scrolling, destruction during events, generated IDs,
 horizontal keyboard navigation and native button behavior. jsdom supplies DOM
 APIs; explicit dimensions stand in for its absent layout engine. Runtime globals
 are bound to that DOM for the unchanged upstream control.

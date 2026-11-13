@@ -79,3 +79,5 @@ fixed layout metrics; they do not measure browser paint or frame rate.
 
 Built for the documented caller. No public release or application adoption is
 claimed by this implementation commit.
+
+Scroll positions and reach state commit before callbacks; reentrant updates do not redispatch the same movement, and nested scrolling supersedes stale notifications.

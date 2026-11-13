@@ -168,3 +168,40 @@ test("horizontal thumb keyboard and editable controls retain their semantics", (
   assert.equal(f.element.scrollTop, 0);
   f.done();
 });
+
+test("reentrant update callbacks see committed position and reach state", () => {
+  const f = setup(),
+    seen = [];
+  for (const name of ["ps-scroll-y", "ps-scroll-down", "ps-y-reach-end"])
+    f.element.addEventListener(name, () => {
+      seen.push(name);
+      if (seen.length < 8) f.p.update();
+    });
+  f.element.scrollTop = 400;
+  f.p.update();
+  assert.deepEqual(seen, ["ps-scroll-y", "ps-scroll-down", "ps-y-reach-end"]);
+  assert.equal(f.p.lastScrollTop, 400);
+  assert.equal(f.p.reach.y, "end");
+  f.done();
+});
+
+test("a nested scroll supersedes stale movement and boundary notifications", () => {
+  const f = setup(),
+    seen = [];
+  f.element.addEventListener("ps-scroll-y", () => {
+    seen.push(f.element.scrollTop);
+    if (f.element.scrollTop === 400) {
+      f.element.scrollTop = 100;
+      f.p.update();
+    }
+  });
+  f.element.addEventListener("ps-y-reach-end", () => seen.push("stale end"));
+  f.element.scrollTop = 400;
+  f.p.update();
+  assert.deepEqual(seen, [400, 100]);
+  assert.equal(f.p.lastScrollTop, 100);
+  assert.equal(f.p.reach.y, null);
+  f.p.update();
+  assert.deepEqual(seen, [400, 100]);
+  f.done();
+});

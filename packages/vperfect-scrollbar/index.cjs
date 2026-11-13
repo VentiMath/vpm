@@ -78,6 +78,7 @@ class PerfectScrollbar {
     this.reach = { x: null, y: null };
     this.lastScrollTop = element.scrollTop;
     this.lastScrollLeft = element.scrollLeft;
+    this.scrollRevision = 0;
     this.savedClasses = new Map();
     for (const name of [
       "ps",
@@ -285,31 +286,53 @@ class PerfectScrollbar {
       thumb.tabIndex = a.active ? 0 : -1;
     }
     const left = e.scrollLeft,
-      top = e.scrollTop;
-    if (top !== this.lastScrollTop) {
-      this.emit("ps-scroll-y");
-      this.emit(top > this.lastScrollTop ? "ps-scroll-down" : "ps-scroll-up");
-      this.scrolling("y");
-    }
-    if (left !== this.lastScrollLeft) {
-      this.emit("ps-scroll-x");
-      this.emit(
-        left > this.lastScrollLeft ? "ps-scroll-right" : "ps-scroll-left",
-      );
-      this.scrolling("x");
-    }
+      top = e.scrollTop,
+      oldLeft = this.lastScrollLeft,
+      oldTop = this.lastScrollTop,
+      oldXReach = this.reach.x,
+      oldYReach = this.reach.y;
+    // Publish state before notifying callers, which may synchronously update or
+    // scroll again. A newer movement owns the remaining notification sequence.
     this.lastScrollTop = top;
     this.lastScrollLeft = left;
-    for (const name of ["x", "y"]) {
-      const next = this.axes[name.toUpperCase()].reach;
-      if (next !== this.reach[name] && next)
-        this.emit("ps-" + name + "-reach-" + next);
-      this.reach[name] = next;
+    this.reach.x = x.reach;
+    this.reach.y = y.reach;
+    if (
+      top === oldTop &&
+      left === oldLeft &&
+      x.reach === oldXReach &&
+      y.reach === oldYReach
+    )
+      return;
+    const revision = ++this.scrollRevision;
+    if (top !== oldTop) {
+      if (!this.emit("ps-scroll-y", revision)) return;
+      if (
+        !this.emit(top > oldTop ? "ps-scroll-down" : "ps-scroll-up", revision)
+      )
+        return;
+      this.scrolling("y");
     }
+    if (left !== oldLeft) {
+      if (!this.emit("ps-scroll-x", revision)) return;
+      if (
+        !this.emit(
+          left > oldLeft ? "ps-scroll-right" : "ps-scroll-left",
+          revision,
+        )
+      )
+        return;
+      this.scrolling("x");
+    }
+    if (x.reach !== oldXReach && x.reach)
+      if (!this.emit("ps-x-reach-" + x.reach, revision)) return;
+    if (y.reach !== oldYReach && y.reach)
+      this.emit("ps-y-reach-" + y.reach, revision);
   }
-  emit(name) {
-    if (!this.isAlive) return;
+  emit(name, revision) {
+    if (!this.isAlive) return false;
     this.element.dispatchEvent(new this.window.Event(name));
+    return this.isAlive && revision === this.scrollRevision;
   }
   scrolling(axis) {
     if (!this.isAlive) return;
