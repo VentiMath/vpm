@@ -25,9 +25,9 @@ let sequence = 0;
       res.end(
         match[3]
           ? fs.readFileSync(base + "/" + variant + "/browser.js")
-          : '<!doctype html><title>MUI theme context</title><script src="/' +
+          : '<!doctype html><title>MUI theme context</title><body><script src="/' +
               variant +
-              '/browser.js"></script>',
+              '/browser.js"></script></body>',
       );
     });
     await new Promise((r) => server.listen(0, "127.0.0.1", r));
@@ -80,7 +80,7 @@ let sequence = 0;
           url: "http://127.0.0.1:" + server.address().port + "/" + variant,
         });
         const result = await send("Runtime.evaluate", {
-          expression: `(async()=>{for(let n=0;n<200;n++){if(window.variant===${JSON.stringify(variant)}&&window.runChecks)return await window.runChecks();await new Promise(r=>setTimeout(r,20));}throw Error('Fixture missing');})()`,
+          expression: `(async()=>{for(let n=0;n<200;n++){if(window.variant===${JSON.stringify(variant)}&&window.runChecks&&document.body)return await window.runChecks();await new Promise(r=>setTimeout(r,20));}throw Error('Fixture missing');})()`,
           awaitPromise: true,
           returnByValue: true,
         });
