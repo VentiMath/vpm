@@ -25,6 +25,10 @@ delay(0, 5); // .1 seconds
   for `from: "edges"`. Dimensions are snapshotted; changed collection sizes refresh
   the distance scale. Geometry caches are bounded to groups of at most 4,096 items;
   custom easing still runs on every call and larger groups use constant space.
+  Normalized geometry is cached; custom easing results remain live. Each call
+  captures its scale before invoking custom easing, so a callback that samples
+  another collection size cannot change the outer call's result. Throwing easing
+  callbacks leave subsequent geometry reads valid.
   Random ordering lazily shuffles ranks once for the current collection size and
   preserves each item's delay across repeated samples. A changed size reshuffles.
   It uses Fisher–Yates and stores one rank per item; the exact random order is not
@@ -32,10 +36,11 @@ delay(0, 5); // .1 seconds
   with grid easing scaled across both ends; list easing uses the collection size.
   Custom easing remains live on each sample.
 
-[Grid measurements](bench/grid/README.md) show setup plus one sample taking
-87–90% less time than the current upstream control. Repeated 48-item eased
-sampling remains 12% slower on Node and 20% slower on Bun; this is a documented
-follow-up, not a general animation performance claim.
+[Grid measurements](bench/grid/README.md) record Bun setup plus one sample
+at 90.5% less elapsed time than the current upstream control. Repeated 48-item
+eased sampling remains 27% slower on Node; the other differences are inconclusive.
+The recording host was under variable load, so these results do not establish a
+speed improvement over the previous VPM revision or application animation speed.
 
 [Random-delay measurements](bench/random/README.md) show 48-item preparation
 taking 20.5% less time on Node and 73.4% less on Bun. Repeated random sampling

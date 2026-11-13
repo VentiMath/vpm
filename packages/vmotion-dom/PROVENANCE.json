@@ -80,7 +80,8 @@
     "Single-string playback snapshots frames, preserves raw completion endpoints and reentrant onUpdate arguments, and rejects nonfinite/unsafe input before replacement. Cross-unit conversion is unsupported without a DOM renderer; numeric strings interpolate rather than jumping. Default object origins that cannot be read reject instead of guessing. String mixer classification rejects obvious non-colors without exception allocation; candidate colors retain strict parsing.",
     "Custom-effect completion validates before hooks, waits for every owned controller and guards binding identities and lifecycle requests. End-only writes stay deferred; failed setup restores earlier generations. The no-end path does not allocate completion bookkeeping for new subjects.",
     "Grid stagger delays use independently calculated Euclidean/edge distances, constant-space extrema, bounded geometry caching and snapshotted dimensions; current14 comparisons cover partial rows, changed totals, fractional origins, easing and negative delays. Random ordering and editable timelines remain unimplemented.",
-    "Independent lazy Fisher\u2013Yates rank permutations complete random list/grid staggering, preserving stable samples, size changes and current list-versus-grid easing semantics."
+    "Independent lazy Fisher\u2013Yates rank permutations complete random list/grid staggering, preserving stable samples, size changes and current list-versus-grid easing semantics.",
+    "Grid stagger caches normalized geometry without caching user easing results. Each sample captures its scale before calling user easing, so reentrant collection resizing and thrown callbacks cannot corrupt the outer result."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

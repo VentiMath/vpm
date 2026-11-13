@@ -1,5 +1,12 @@
 # vmotion-dom measurements
 
+This recording includes normalized geometry caching and the reentrant-easing
+scale fix. Custom easing still runs per sample; correctness tests cover callbacks
+that resize the same grid or throw. These compare upstream with the current VPM
+implementation, not the previous VPM revision. The host was under variable load;
+identical-source controls expose that variation below. Node repeated sampling
+remains slower. No application speedup is claimed.
+
 Each timed
 implementation runs alone in a fresh process. Four comparison pairs use
 balanced upstream-first / VPM-first order; two further pairs run identical
@@ -23,25 +30,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-13T09:39:52.634Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T20:04:02.458Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| prepare and sample a grid delay | 962 | 122 | -87.2% | -87.3% | -87% | 2.3% | lower time in every pair, beyond control spread |
-| sample all 48 eased grid delays | 551 | 618 | 11.9% | 11.9% | 10% | 2.6% | higher time in every pair, beyond control spread |
+| prepare and sample a grid delay | 2444 | 404 | -83.6% | -83.6% | -75% | 64.9% | unestablished at this precision |
+| sample all 48 eased grid delays | 973 | 1236 | 27% | 24.9% | 42.7% | 22.9% | higher time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-13T09:40:04.838Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T20:04:16.692Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| prepare and sample a grid delay | 1374 | 144 | -89.6% | -89.6% | -89.8% | 3.6% | lower time in every pair, beyond control spread |
-| sample all 48 eased grid delays | 436 | 523 | 19.5% | 14.8% | 21.1% | 2.1% | higher time in every pair, beyond control spread |
+| prepare and sample a grid delay | 1936 | 192 | -90.5% | -91.2% | -89.4% | 57.8% | lower time in every pair, beyond control spread |
+| sample all 48 eased grid delays | 631 | 1046 | 33.8% | 66.9% | 27.9% | 32.3% | unestablished at this precision |
 
 ## Reproduce
 

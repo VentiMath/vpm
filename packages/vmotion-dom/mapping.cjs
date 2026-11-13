@@ -175,6 +175,7 @@ function gridStagger(
     ox,
     oy,
     maximum = 0,
+    scale = 0,
     distances;
   const distance = (x, y) =>
     from === "edges"
@@ -240,16 +241,20 @@ function gridStagger(
             );
         }
       }
+      scale = duration * maximum;
     }
+    // Cache geometry and its normalization, never a user easing result. Capture
+    // the scale before invoking user code: a reentrant sample can resize the
+    // shared geometry without changing this call's result.
+    const eased = easing && maximum;
+    const currentScale = scale;
     let d = distances?.[index];
     if (d === undefined) {
       d = distance(index % columns, Math.floor(index / columns));
+      d = eased ? d / maximum : d * duration;
       if (distances) distances[index] = d;
     }
-    return (
-      startDelay +
-      duration * (easing && maximum ? easing(d / maximum) * maximum : d)
-    );
+    return startDelay + (eased ? easing(d) * currentScale : d);
   };
 }
 function randomStagger(duration, startDelay, easing, grid) {

@@ -200,3 +200,50 @@ test("random grid ordering has unique ranks and live easing callbacks", () => {
   assert.equal(calls, 7);
   assert.equal(api.stagger(0.5, { from: "random", ease: () => 0.25 })(0, 1), 0.125);
 });
+
+test("grid easing keeps each call's scale during reentrant size changes", () => {
+  let nested = false,
+    innerTotal = 99,
+    calls = 0;
+  const delay = api.stagger(0.1, {
+    grid: [3, 3],
+    ease: (p) => {
+      calls++;
+      if (!nested) {
+        nested = true;
+        delay(0, innerTotal);
+        nested = false;
+      }
+      return p;
+    },
+  });
+  for (const [index, total, inner] of [[8, 9, 99], [8, 9, 5000], [4999, 5000, 9], [8, 9, 1]]) {
+    innerTotal = inner;
+    const expected = 0.1 * Math.hypot(index % 3, Math.floor(index / 3));
+    assert.ok(Math.abs(delay(index, total) - expected) < 1e-12);
+  }
+  assert.equal(calls, 7); // The zero-distance one-item grid does not call easing.
+});
+
+test("throwing grid easing leaves subsequent samples valid after nested reads", () => {
+  let fail = true,
+    nested = false;
+  const delay = api.stagger(-0.25, {
+    grid: [3, 3],
+    from: "center",
+    startDelay: 2,
+    ease: (p) => {
+      if (fail && !nested) {
+        nested = true;
+        delay(0, 5000);
+        nested = false;
+        throw Error("easing");
+      }
+      return p * p;
+    },
+  });
+  assert.throws(() => delay(0, 9), /easing/);
+  fail = false;
+  assert.equal(delay(4, 9), 2);
+  assert.ok(Math.abs(delay(0, 9) - (2 - Math.SQRT2 * 0.25)) < 1e-12);
+});
