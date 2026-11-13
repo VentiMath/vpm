@@ -20,16 +20,28 @@ delay(0, 5); // .1 seconds
   easing. Colors, complex strings and flat scalar/color containers mix automatically;
   custom output types can supply a `mixer` factory.
 - `stagger(duration, options)` maps list indices to delays: first, last, center,
-  edges or a numeric origin, optional starting delay and Motion easing definitions.
+  edges, random or a numeric origin, optional starting delay and Motion easing definitions.
   Grid `[columns, rows]` delays use Euclidean distances, or nearest-edge distances
   for `from: "edges"`. Dimensions are snapshotted; changed collection sizes refresh
   the distance scale. Geometry caches are bounded to groups of at most 4,096 items;
   custom easing still runs on every call and larger groups use constant space.
+  Random ordering lazily shuffles ranks once for the current collection size and
+  preserves each item's delay across repeated samples. A changed size reshuffles.
+  It uses Fisher–Yates and stores one rank per item; the exact random order is not
+  an upstream compatibility promise. Random grids use shuffled rank distances,
+  with grid easing scaled across both ends; list easing uses the collection size.
+  Custom easing remains live on each sample.
 
 [Grid measurements](bench/grid/README.md) show setup plus one sample taking
-87–89% less time than the current upstream control. Repeated 48-item eased
-sampling remains 13% slower on Node and 27% slower on Bun; this is a documented
+87–90% less time than the current upstream control. Repeated 48-item eased
+sampling remains 12% slower on Node and 20% slower on Bun; this is a documented
 follow-up, not a general animation performance claim.
+
+[Random-delay measurements](bench/random/README.md) show 48-item preparation
+taking 20.5% less time on Node and 73.4% less on Bun. Repeated random sampling
+takes 65–72% less time on Node; the Bun sampling results are inconclusive because
+of process/control variation. Ordinary centered-list sampling remains 8% slower
+on Bun (87 versus 80 ns for 20 items), as the numeric-mapping report records.
 
 Interpolation snapshots the ranges and easing list. Mutating the caller's arrays
 does not change an existing timeline. Custom mixer outputs are shallow snapshots;
@@ -707,10 +719,8 @@ No speed advantage is claimed for this unit; application adoption remains pendin
 
 Editable sequence
 timelines and variant propagation remain unimplemented.
-Inertia, CSS spring serialization, random
-staggering, WAAPI, gestures/layout and the React renderer remain
-unimplemented. Unsupported inertia and random staggering reject
-explicitly. This package must not replace `motion-dom` under Framer Motion yet.
+Inertia, CSS spring serialization, WAAPI, gestures/layout and the React renderer remain
+unimplemented. Unsupported inertia rejects explicitly. This package must not replace `motion-dom` under Framer Motion yet.
 VentiMath's timed contest fades and spring-based calendar/header transforms are
 the playback targets. Application adoption is not claimed.
 
@@ -729,6 +739,7 @@ establish an application frame-rate improvement.
 | [Numeric playback](bench/playback/README.md) | Keyframe generators, controller lifetime and frame delivery |
 | [Values and frames](bench/values/README.md) | Value creation/notification, scheduling, dispatch and cancellation |
 | [Grid delays](bench/grid/README.md) | Grid delay setup and 48-item sampling |
+| [Random delays](bench/random/README.md) | Shuffle setup and stable list/grid sampling |
 | [Numeric mapping](bench/results/README.md) | Interpolation, timeline lookup/preparation and list staggering |
 
 [Renderer-aware adapter measurements](bench/renderer/README.md) cover the complete

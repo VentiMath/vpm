@@ -103,7 +103,7 @@ function interpolate(input, output, { clamp = true, ease, mixer } = {}) {
 }
 
 // Delays share the same public list contract; grid delays use Euclidean cell
-// distances. Random ordering remains outside this deterministic helper.
+// distances. Random origins keep a permutation for the current collection size.
 function stagger(
   duration = 0.1,
   { startDelay = 0, from = "first", ease, grid } = {},
@@ -118,7 +118,7 @@ function stagger(
   )
     throw new TypeError("grid must contain positive integer columns and rows");
   if (
-    !["first", "last", "center", "edges"].includes(from) &&
+    !["first", "last", "center", "edges", "random"].includes(from) &&
     !Number.isFinite(from)
   )
     throw new TypeError("unsupported stagger origin");
@@ -126,6 +126,8 @@ function stagger(
     ease === undefined ? undefined : easingDefinitionToFunction(ease);
   if (easing !== undefined && typeof easing !== "function")
     throw new TypeError("invalid stagger easing");
+  if (from === "random")
+    return randomStagger(duration, startDelay, easing, grid !== undefined);
   if (grid !== undefined)
     return gridStagger(duration, startDelay, from, easing, grid[0], grid[1]);
   return (index, total) => {
@@ -247,6 +249,45 @@ function gridStagger(
     return (
       startDelay +
       duration * (easing && maximum ? easing(d / maximum) * maximum : d)
+    );
+  };
+}
+function randomStagger(duration, startDelay, easing, grid) {
+  let ranks,
+    count = 0;
+  return (index, total) => {
+    if (
+      !Number.isSafeInteger(total) ||
+      total < 1 ||
+      total > 0xffffffff ||
+      !Number.isInteger(index) ||
+      index < 0 ||
+      index >= total
+    )
+      throw new RangeError(
+        "random stagger requires an index within an array-sized collection",
+      );
+    if (total !== count) {
+      // Fisher-Yates gives every permutation equal probability under a uniform
+      // RNG. Construction is lazy; asking for samples never reshuffles a group.
+      const next = new Uint32Array(total);
+      for (let i = 0; i < total; i++) next[i] = i;
+      for (let i = total - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const old = next[i];
+        next[i] = next[j];
+        next[j] = old;
+      }
+      ranks = next;
+      count = total;
+    }
+    // List easing uses the collection length; grid easing includes both ends
+    // of the shuffled rank range, as it does for ordinary grid distances.
+    const rank = ranks[index],
+      range = total - (grid ? 1 : 0);
+    return (
+      startDelay +
+      duration * (easing && range ? easing(rank / range) * range : rank)
     );
   };
 }

@@ -138,7 +138,7 @@ export declare function mixNumber(
   to: number,
   progress: number,
 ): number;
-export type StaggerOrigin = "first" | "last" | "center" | "edges" | number;
+export type StaggerOrigin = "first" | "last" | "center" | "edges" | "random" | number;
 export type Easing =
   | EasingFunction
   | [number, number, number, number]

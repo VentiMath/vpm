@@ -82,3 +82,22 @@ for (const grid of [[1,1],[3,2],[2,3],[3,3],[4,5]])
       for(let i=0;i<total;i++){try{equal(a(i,total),b(i,total));}catch(e){throw Error(JSON.stringify({grid,total,from,ease:typeof ease,duration,i})+" "+e.message);}gridChecks++;}
     }
 console.log(gridChecks, "grid distance/easing/partial-row comparisons match current14");
+
+let randomChecks = 0;
+for (const grid of [undefined, [3, 2], [8, 6]])
+  for (const ease of [undefined, (p) => p * p, "easeInOut"])
+    for (const duration of [0, 0.05, -0.1]) {
+      const options = { from: "random", grid, ease, startDelay: 0.25 };
+      const a = current.stagger(duration, options), b = vpm.stagger(duration, options);
+      for (const total of [1, 2, 3, 8, 48, 3, 48]) {
+        const expected = Array.from({ length: total }, (_, i) => a(i, total));
+        const actual = Array.from({ length: total }, (_, i) => b(i, total));
+        for (let i = total - 1; i >= 0; i--) {
+          equal(a(i, total), expected[i]);
+          equal(b(i, total), actual[i]);
+        }
+        expected.sort((a, b) => a - b); actual.sort((a, b) => a - b);
+        for (let i = 0; i < total; i++) { equal(actual[i], expected[i]); randomChecks++; }
+      }
+    }
+console.log(randomChecks, "random rank/easing/size-change comparisons match current14; order is intentionally nondeterministic");

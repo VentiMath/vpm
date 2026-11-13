@@ -23,25 +23,25 @@ application throughput or latency guarantees.
 
 ## Node 24.22.1
 
-Recorded 2026-11-13T08:12:05.422Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T09:39:52.634Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](node-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| prepare and sample a grid delay | 1028 | 130 | -87.4% | -87.3% | -87.5% | 8.4% | lower time in every pair, beyond control spread |
-| sample all 48 eased grid delays | 596 | 680 | 13.2% | 24.4% | 8.5% | 4.2% | higher time in every pair, beyond control spread |
+| prepare and sample a grid delay | 962 | 122 | -87.2% | -87.3% | -87% | 2.3% | lower time in every pair, beyond control spread |
+| sample all 48 eased grid delays | 551 | 618 | 11.9% | 11.9% | 10% | 2.6% | higher time in every pair, beyond control spread |
 
 ## Bun 1.4.4
 
-Recorded 2026-11-13T08:12:16.862Z on Apple M1 Pro, darwin/arm64.
+Recorded 2026-11-13T09:40:04.838Z on Apple M1 Pro, darwin/arm64.
 
 [Raw samples, processes, controls and source hashes](bun-isolated.json).
 
 | Case | Upstream ns | VPM ns | Change | Upstream first | VPM first | Largest control | Evidence |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| prepare and sample a grid delay | 1389 | 151 | -89.1% | -89.1% | -89.1% | 5.6% | lower time in every pair, beyond control spread |
-| sample all 48 eased grid delays | 451 | 582 | 27% | 39.7% | 25.8% | 2.5% | higher time in every pair, beyond control spread |
+| prepare and sample a grid delay | 1374 | 144 | -89.6% | -89.6% | -89.8% | 3.6% | lower time in every pair, beyond control spread |
+| sample all 48 eased grid delays | 436 | 523 | 19.5% | 14.8% | 21.1% | 2.1% | higher time in every pair, beyond control spread |
 
 ## Reproduce
 

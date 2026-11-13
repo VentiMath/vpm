@@ -10,6 +10,7 @@ interpolate([0, 1], [true, false]);
 // @ts-expect-error numeric results remain numbers
 const bad: string = opacity;
 stagger(0.1, { grid: [2, 2] });
+stagger(0.1, { from: "random", grid: [2, 3] });
 // @ts-expect-error a grid needs exactly two dimensions
 stagger(0.1, { grid: [2] });
 void point;

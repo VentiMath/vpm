@@ -84,7 +84,7 @@ test("bad configurations and unfinished capabilities reject explicitly", () => {
     /easing/,
   );
   assert.throws(() => api.stagger(0.1, { grid: [0, 2] }), /grid/);
-  assert.throws(() => api.stagger(0.1, { from: "random" }), /origin/);
+  assert.throws(() => api.stagger(0.1, { from: "unknown" }), /origin/);
   assert.throws(() => api.stagger(Infinity), /finite/);
 });
 test("stagger origins and eased delays match independently calculated distances", () => {
@@ -146,4 +146,57 @@ test("grid geometry caches never cache user easing results", () => {
   assert.equal(calls, 2);
   assert.ok(Number.isFinite(delay(0, 5000)));
   assert.equal(delay(8, 9), first);
+});
+
+test("random delays are a stable permutation and refresh only when size changes", () => {
+  const saved = Math.random;
+  let calls = 0;
+  Math.random = () => {
+    calls++;
+    return 0.25;
+  };
+  try {
+    const delay = api.stagger(0.25, { from: "random", startDelay: 2 });
+    assert.equal(calls, 0);
+    const values = Array.from({ length: 8 }, (_, i) => delay(i, 8));
+    assert.deepEqual(
+      [...values].sort((a, b) => a - b),
+      Array.from({ length: 8 }, (_, i) => 2 + i * 0.25),
+    );
+    assert.equal(calls, 7);
+    for (let i = 7; i >= 0; i--) assert.equal(delay(i, 8), values[i]);
+    assert.equal(calls, 7);
+    assert.equal(delay(0, 1), 2);
+    assert.equal(calls, 7);
+    const fewer = Array.from({ length: 3 }, (_, i) => delay(i, 3));
+    assert.equal(calls, 9);
+    assert.equal(new Set(fewer).size, 3);
+    assert.throws(() => delay(-1, 3), RangeError);
+    assert.throws(() => delay(1, 1), RangeError);
+  } finally {
+    Math.random = saved;
+  }
+});
+test("random grid ordering has unique ranks and live easing callbacks", () => {
+  let calls = 0;
+  const delay = api.stagger(-0.1, {
+    from: "random",
+    grid: [3, 2],
+    ease: (p) => {
+      calls++;
+      return p * p;
+    },
+  });
+  const expected = Array.from(
+    { length: 6 },
+    (_, i) => -0.1 * (i / 5) ** 2 * 5,
+  ).sort((a, b) => a - b);
+  const actual = Array.from({ length: 6 }, (_, i) => delay(i, 6)).sort(
+    (a, b) => a - b,
+  );
+  for (let i = 0; i < 6; i++)
+    assert.ok(Math.abs(actual[i] - expected[i]) < 1e-12);
+  delay(0, 6);
+  assert.equal(calls, 7);
+  assert.equal(api.stagger(0.5, { from: "random", ease: () => 0.25 })(0, 1), 0.125);
 });

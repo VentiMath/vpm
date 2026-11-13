@@ -9,11 +9,11 @@
     "kind": "independent implementation",
     "replacementStatus": "partial; custom-effect completion, single-string and default-object animation built, full renderer pending",
     "targetScope": "Independent single-string and default-object animation over existing playback, property effects, custom effect registration and scoped DOM selectors, grouped controls, neutral keyframes/filter defaults, color/complex mixers, renderer targets and transitionEnd, renderer handoff and keyframe reads/resolution. Partial Motion implementation; not an application replacement yet.",
-    "remainingWork": "Editable sequence timelines; variant propagation, arbitrary multi-axis 3D decomposition, inertia and random stagger; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
+    "remainingWork": "Editable sequence timelines; variant propagation, arbitrary multi-axis 3D decomposition, inertia; WAAPI, gestures/layout and full unchanged Framer Motion caller acceptance. CSS spring serialization is not implemented. Remaining runtime is unimplemented, not retained upstream code.",
     "independentComponents": {
       "numeric interpolation": "Snapshot ranges, binary lookup, custom mixers and per-segment easing",
       "scalar blending": "Numeric mixNumber operation",
-      "list stagger": "First/last/center/edges/numeric origins, delay and easing",
+      "list stagger": "First/last/center/edges/random/numeric origins, delay and easing",
       "MotionValue": "State, velocity, mutation-safe subscriptions, passive effects and owned external-animation lifecycle",
       "frame scheduling": "Eight ordered phases, dedupe/cancellation/keep-alive, microtasks and manual frame processing",
       "numeric playback": "Owned numeric keyframes, offsets and easing; millisecond generators and tween controllers with delays, repeats, seeking, speed, pause/resume and lifecycle cleanup",
@@ -79,7 +79,8 @@
     "Custom effects validate binding maps before invoking hooks, preserve replacement cleanup ownership and restore subscriptions after failed setup; throwing renders and teardown do not strand siblings. DOM elements retain the established renderer even when a custom predicate matches them.",
     "Single-string playback snapshots frames, preserves raw completion endpoints and reentrant onUpdate arguments, and rejects nonfinite/unsafe input before replacement. Cross-unit conversion is unsupported without a DOM renderer; numeric strings interpolate rather than jumping. Default object origins that cannot be read reject instead of guessing. String mixer classification rejects obvious non-colors without exception allocation; candidate colors retain strict parsing.",
     "Custom-effect completion validates before hooks, waits for every owned controller and guards binding identities and lifecycle requests. End-only writes stay deferred; failed setup restores earlier generations. The no-end path does not allocate completion bookkeeping for new subjects.",
-    "Grid stagger delays use independently calculated Euclidean/edge distances, constant-space extrema, bounded geometry caching and snapshotted dimensions; current14 comparisons cover partial rows, changed totals, fractional origins, easing and negative delays. Random ordering and editable timelines remain unimplemented."
+    "Grid stagger delays use independently calculated Euclidean/edge distances, constant-space extrema, bounded geometry caching and snapshotted dimensions; current14 comparisons cover partial rows, changed totals, fractional origins, easing and negative delays. Random ordering and editable timelines remain unimplemented.",
+    "Independent lazy Fisher\u2013Yates rank permutations complete random list/grid staggering, preserving stable samples, size changes and current list-versus-grid easing semantics."
   ],
   "caller": {
     "revision": "b226ae4c5e69c61ba52cf04e1a60bba7705756ab",

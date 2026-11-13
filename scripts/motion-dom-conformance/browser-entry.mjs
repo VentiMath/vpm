@@ -28,6 +28,26 @@ window.runMotionDom = async () => {
     if(Math.abs(parseFloat(gridNodes[i].style.opacity)-expected)>1e-5)throw Error("Grid delays must reach selector playback");
   }
   gridControls.stop();gridNodes.forEach(n=>vpm.releaseElement(n));gridHost.remove();
+  const randomHost = document.createElement("div");
+  document.body.append(randomHost);
+  const randomNodes = Array.from({ length: 6 }, () => {
+    const node = document.createElement("div"); randomHost.append(node); return node;
+  });
+  const randomDelay = vpm.stagger(0.05, { from: "random" });
+  const ranks = randomNodes.map((_, i) => randomDelay(i, randomNodes.length));
+  const randomControls = vpm.animate(randomNodes, { opacity: [0, 1] }, {
+    duration: 1, ease: "linear", delay: randomDelay, autoplay: false,
+  });
+  randomControls.time = 0.5;
+  await new Promise(requestAnimationFrame);
+  for (let i = 0; i < randomNodes.length; i++) {
+    if (Math.abs(parseFloat(randomNodes[i].style.opacity) - (0.5 - ranks[i])) > 1e-5)
+      throw Error("Random ranks must remain stable through selector animation setup");
+  }
+  randomControls.time = 2;
+  await new Promise(requestAnimationFrame);
+  if (randomNodes.some(node => node.style.opacity !== "1")) throw Error("Every random member must finish");
+  randomControls.stop(); randomNodes.forEach(node => vpm.releaseElement(node)); randomHost.remove();
   for (const [variant, api] of [
     ["current", current],
     ["app", app],

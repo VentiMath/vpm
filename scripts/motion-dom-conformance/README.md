@@ -300,4 +300,4 @@ bun scripts/motion-dom-conformance/effect-end.cjs
 measure controller construction, completion, queued end writes and release in
 separate processes. They are not browser FPS measurements.
 
-Grid stagger delays add 8,127 current14 black-box comparisons for origins, partial rows, easing and signed durations. Dimensions are snapshotted and invalid grids reject; the app12 control does not expose this newer option. Random ordering and sequence timelines remain outside scope.
+Grid stagger delays add 8,127 current14 black-box comparisons for origins, partial rows, easing and signed durations. Dimensions are snapshotted and invalid grids reject; the app12 control does not expose this newer option. Random ordering adds 3,051 stable rank-permutation, easing and size-change comparisons against current14. Exact random order is intentionally not compared. Selector playback checks assigned delays and all-member completion; packed installs exercise the public random option. Sequence timelines remain outside scope.
