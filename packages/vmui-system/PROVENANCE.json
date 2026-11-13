@@ -1,0 +1,27 @@
+{
+	"upstream": {
+		"name": "@mui/system",
+		"version": "9.5.0",
+		"repository": "https://github.com/mui/material-ui",
+		"checked": "2026-11-13"
+	},
+	"implementation": {
+		"kind": "independent implementation",
+		"replacementStatus": "complete for documented application scope",
+		"targetScope": "VentiMath theme and CSS-variable generation, sx and responsive token transforms, styled variants and overrides, Box/Stack/Grid/Container, color helpers, ThemeProvider and media-query lifecycle beneath unchanged Material 9.5.0 and app 7.2.0 on React 19.3.1. Pre-hydration scripts, custom color-scheme persistence, transition suppression and legacy Grid component are outside verified scope."
+	},
+	"changes": [
+		"Uses VPM utility, theming and styling foundations; no Babel, prop-types or MUI type-helper runtime dependencies.",
+		"Rejects cyclic sx/theme-variable input and nonfinite breakpoints; own-property token resolution and prototype-safe output construction.",
+		"Stable subscriptions survive parent renders; provider changes within a mode preserve focused input DOM and selection."
+	],
+	"caller": {
+		"scope": "FuseTheme, component sx/style callbacks, Material forms, menus, tabs, dialogs and layout. VentiMath supplies theme changes itself. Source verification does not establish app adoption."
+	},
+	"references": [
+		"https://mui.com/system/getting-started/",
+		"https://mui.com/system/getting-started/the-sx-prop/",
+		"https://mui.com/system/styled/",
+		"https://mui.com/material-ui/react-use-media-query/"
+	]
+}

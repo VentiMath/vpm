@@ -1,0 +1,402 @@
+{
+	"name": "vmui-system",
+	"version": "9.5.0",
+	"description": "Independent theme, responsive styling and layout primitives for VentiMath",
+	"type": "commonjs",
+	"main": "./index.cjs",
+	"module": "./index.mjs",
+	"types": "./index.d.cts",
+	"exports": {
+		".": {
+			"import": {
+				"types": "./index.d.mts",
+				"default": "./index.mjs"
+			},
+			"require": {
+				"types": "./index.d.cts",
+				"default": "./index.cjs"
+			}
+		},
+		"./package.json": "./package.json",
+		"./createTheme": {
+			"import": {
+				"types": "./createTheme.d.mts",
+				"default": "./createTheme.mjs"
+			},
+			"require": {
+				"types": "./createTheme.d.cts",
+				"default": "./createTheme.cjs"
+			}
+		},
+		"./createBreakpoints": {
+			"import": {
+				"types": "./createBreakpoints.d.mts",
+				"default": "./createBreakpoints.mjs"
+			},
+			"require": {
+				"types": "./createBreakpoints.d.cts",
+				"default": "./createBreakpoints.cjs"
+			}
+		},
+		"./cssContainerQueries": {
+			"import": {
+				"types": "./cssContainerQueries.d.mts",
+				"default": "./cssContainerQueries.mjs"
+			},
+			"require": {
+				"types": "./cssContainerQueries.d.cts",
+				"default": "./cssContainerQueries.cjs"
+			}
+		},
+		"./createStyled": {
+			"import": {
+				"types": "./createStyled.d.mts",
+				"default": "./createStyled.mjs"
+			},
+			"require": {
+				"types": "./createStyled.d.cts",
+				"default": "./createStyled.cjs"
+			}
+		},
+		"./styled": {
+			"import": {
+				"types": "./styled.d.mts",
+				"default": "./styled.mjs"
+			},
+			"require": {
+				"types": "./styled.d.cts",
+				"default": "./styled.cjs"
+			}
+		},
+		"./createBox": {
+			"import": {
+				"types": "./createBox.d.mts",
+				"default": "./createBox.mjs"
+			},
+			"require": {
+				"types": "./createBox.d.cts",
+				"default": "./createBox.cjs"
+			}
+		},
+		"./Box": {
+			"import": {
+				"types": "./Box.d.mts",
+				"default": "./Box.mjs"
+			},
+			"require": {
+				"types": "./Box.d.cts",
+				"default": "./Box.cjs"
+			}
+		},
+		"./ThemeProvider": {
+			"import": {
+				"types": "./ThemeProvider.d.mts",
+				"default": "./ThemeProvider.mjs"
+			},
+			"require": {
+				"types": "./ThemeProvider.d.cts",
+				"default": "./ThemeProvider.cjs"
+			}
+		},
+		"./useTheme": {
+			"import": {
+				"types": "./useTheme.d.mts",
+				"default": "./useTheme.mjs"
+			},
+			"require": {
+				"types": "./useTheme.d.cts",
+				"default": "./useTheme.cjs"
+			}
+		},
+		"./useThemeWithoutDefault": {
+			"import": {
+				"types": "./useThemeWithoutDefault.d.mts",
+				"default": "./useThemeWithoutDefault.mjs"
+			},
+			"require": {
+				"types": "./useThemeWithoutDefault.d.cts",
+				"default": "./useThemeWithoutDefault.cjs"
+			}
+		},
+		"./useThemeProps": {
+			"import": {
+				"types": "./useThemeProps.d.mts",
+				"default": "./useThemeProps.mjs"
+			},
+			"require": {
+				"types": "./useThemeProps.d.cts",
+				"default": "./useThemeProps.cjs"
+			}
+		},
+		"./useMediaQuery": {
+			"import": {
+				"types": "./useMediaQuery.d.mts",
+				"default": "./useMediaQuery.mjs"
+			},
+			"require": {
+				"types": "./useMediaQuery.d.cts",
+				"default": "./useMediaQuery.cjs"
+			}
+		},
+		"./GlobalStyles": {
+			"import": {
+				"types": "./GlobalStyles.d.mts",
+				"default": "./GlobalStyles.mjs"
+			},
+			"require": {
+				"types": "./GlobalStyles.d.cts",
+				"default": "./GlobalStyles.cjs"
+			}
+		},
+		"./RtlProvider": {
+			"import": {
+				"types": "./RtlProvider.d.mts",
+				"default": "./RtlProvider.mjs"
+			},
+			"require": {
+				"types": "./RtlProvider.d.cts",
+				"default": "./RtlProvider.cjs"
+			}
+		},
+		"./DefaultPropsProvider": {
+			"import": {
+				"types": "./DefaultPropsProvider.d.mts",
+				"default": "./DefaultPropsProvider.mjs"
+			},
+			"require": {
+				"types": "./DefaultPropsProvider.d.cts",
+				"default": "./DefaultPropsProvider.cjs"
+			}
+		},
+		"./Container": {
+			"import": {
+				"types": "./Container.d.mts",
+				"default": "./Container.mjs"
+			},
+			"require": {
+				"types": "./Container.d.cts",
+				"default": "./Container.cjs"
+			}
+		},
+		"./Stack": {
+			"import": {
+				"types": "./Stack.d.mts",
+				"default": "./Stack.mjs"
+			},
+			"require": {
+				"types": "./Stack.d.cts",
+				"default": "./Stack.cjs"
+			}
+		},
+		"./Grid": {
+			"import": {
+				"types": "./Grid.d.mts",
+				"default": "./Grid.mjs"
+			},
+			"require": {
+				"types": "./Grid.d.cts",
+				"default": "./Grid.cjs"
+			}
+		},
+		"./styleFunctionSx": {
+			"import": {
+				"types": "./styleFunctionSx.d.mts",
+				"default": "./styleFunctionSx.mjs"
+			},
+			"require": {
+				"types": "./styleFunctionSx.d.cts",
+				"default": "./styleFunctionSx.cjs"
+			}
+		},
+		"./cssVars": {
+			"import": {
+				"types": "./cssVars.d.mts",
+				"default": "./cssVars.mjs"
+			},
+			"require": {
+				"types": "./cssVars.d.cts",
+				"default": "./cssVars.cjs"
+			}
+		},
+		"./InitColorSchemeScript": {
+			"import": {
+				"types": "./InitColorSchemeScript.d.mts",
+				"default": "./InitColorSchemeScript.mjs"
+			},
+			"require": {
+				"types": "./InitColorSchemeScript.d.cts",
+				"default": "./InitColorSchemeScript.cjs"
+			}
+		},
+		"./style": {
+			"import": {
+				"types": "./style.d.mts",
+				"default": "./style.mjs"
+			},
+			"require": {
+				"types": "./style.d.cts",
+				"default": "./style.cjs"
+			}
+		},
+		"./spacing": {
+			"import": {
+				"types": "./spacing.d.mts",
+				"default": "./spacing.mjs"
+			},
+			"require": {
+				"types": "./spacing.d.cts",
+				"default": "./spacing.cjs"
+			}
+		},
+		"./compose": {
+			"import": {
+				"types": "./compose.d.mts",
+				"default": "./compose.mjs"
+			},
+			"require": {
+				"types": "./compose.d.cts",
+				"default": "./compose.cjs"
+			}
+		},
+		"./breakpoints": {
+			"import": {
+				"types": "./breakpoints.d.mts",
+				"default": "./breakpoints.mjs"
+			},
+			"require": {
+				"types": "./breakpoints.d.cts",
+				"default": "./breakpoints.cjs"
+			}
+		},
+		"./borders": {
+			"import": {
+				"types": "./borders.d.mts",
+				"default": "./borders.mjs"
+			},
+			"require": {
+				"types": "./borders.d.cts",
+				"default": "./borders.cjs"
+			}
+		},
+		"./display": {
+			"import": {
+				"types": "./display.d.mts",
+				"default": "./display.mjs"
+			},
+			"require": {
+				"types": "./display.d.cts",
+				"default": "./display.cjs"
+			}
+		},
+		"./flexbox": {
+			"import": {
+				"types": "./flexbox.d.mts",
+				"default": "./flexbox.mjs"
+			},
+			"require": {
+				"types": "./flexbox.d.cts",
+				"default": "./flexbox.cjs"
+			}
+		},
+		"./palette": {
+			"import": {
+				"types": "./palette.d.mts",
+				"default": "./palette.mjs"
+			},
+			"require": {
+				"types": "./palette.d.cts",
+				"default": "./palette.cjs"
+			}
+		},
+		"./positions": {
+			"import": {
+				"types": "./positions.d.mts",
+				"default": "./positions.mjs"
+			},
+			"require": {
+				"types": "./positions.d.cts",
+				"default": "./positions.cjs"
+			}
+		},
+		"./shadows": {
+			"import": {
+				"types": "./shadows.d.mts",
+				"default": "./shadows.mjs"
+			},
+			"require": {
+				"types": "./shadows.d.cts",
+				"default": "./shadows.cjs"
+			}
+		},
+		"./sizing": {
+			"import": {
+				"types": "./sizing.d.mts",
+				"default": "./sizing.mjs"
+			},
+			"require": {
+				"types": "./sizing.d.cts",
+				"default": "./sizing.cjs"
+			}
+		},
+		"./typography": {
+			"import": {
+				"types": "./typography.d.mts",
+				"default": "./typography.mjs"
+			},
+			"require": {
+				"types": "./typography.d.cts",
+				"default": "./typography.cjs"
+			}
+		},
+		"./cssGrid": {
+			"import": {
+				"types": "./cssGrid.d.mts",
+				"default": "./cssGrid.mjs"
+			},
+			"require": {
+				"types": "./cssGrid.d.cts",
+				"default": "./cssGrid.cjs"
+			}
+		},
+		"./colorManipulator": {
+			"import": {
+				"types": "./colorManipulator.d.mts",
+				"default": "./colorManipulator.mjs"
+			},
+			"require": {
+				"types": "./colorManipulator.d.cts",
+				"default": "./colorManipulator.cjs"
+			}
+		}
+	},
+	"files": [
+		"*.cjs",
+		"*.mjs",
+		"*.d.cts",
+		"*.d.mts",
+		"README.md",
+		"PROVENANCE.json",
+		"LICENSE"
+	],
+	"sideEffects": false,
+	"engines": {
+		"node": ">=24"
+	},
+	"vpm": {
+		"platform": "browser"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/VentiMath/vpm.git",
+		"directory": "packages/vmui-system"
+	},
+	"dependencies": {
+		"vmui-utils": "9.5.0",
+		"vmui-private-theming": "9.5.0",
+		"vmui-styled-engine": "9.5.0"
+	},
+	"peerDependencies": {
+		"react": "^19.3.0"
+	}
+}

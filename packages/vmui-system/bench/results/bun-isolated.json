@@ -1,0 +1,2122 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-13T10:18:55.243Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-system-conformance/node_modules/@mui/system": "da23a7617ef5a3571d4a51a064d2aa6d40e8e303315c389b42e3b2c18bb8894d",
+    "../../scripts/mui-system-conformance/package-lock.json": "c9df7bd474ddbd7db7bdf9603651a109e69e2bd4e5204a173372b2d90ad017da",
+    "../../scripts/mui-system-conformance/prepare.cjs": "67a91250cf1fab519c7e043663c40ed84f3e4c70fa7acddb147db524634f25b0",
+    "../vclsx/PROVENANCE.json": "1ebf1ce646b0baad15b9f6064da405a538efb74362ddc24b634580f3871e35df",
+    "../vclsx/index.cjs": "5dc359e7ab68385dda4c990547ef0998e2206d335423f2c4e273dacd1ef4639a",
+    "../vclsx/lite.cjs": "2d15a196dfc9804c64e9ad22f47b14304b208dc5013fca1385ed7626d3e42a03",
+    "../vclsx/lite.mjs": "0aeb0a886261f8878555866e1fbddfc33d89086ea7a7368cb8dd3f2d969a795d",
+    "../vclsx/package.json": "d4a3f924293504d5e7d096baa76f136663183ce27ee4d36caf6fefedb9a99c08",
+    "../vclsx/runtime.mjs": "3fb8be73b9ccffbddab72dad0fc74023ff779386b6fffeb1329ddf92fb73abac",
+    "../vemotion-cache/PROVENANCE.json": "b3de78da74b83eef0842fb208662942138afafd45123bd5039231a7dde7a81b7",
+    "../vemotion-cache/package.json": "b7e3c579393a5e73cc32b187d53e66f0785591e67c7c81c9a8f2d64a98d9fa12",
+    "../vemotion-cache/src": "fab1da4bf57130bbf642f4fa2230779b443fbb5064af49cdb739f001f28acb3f",
+    "../vemotion-hash/PROVENANCE.json": "c206982770b4f0899bf1a5e5c26780fa720fc324a37dc68b9914775cad80c9a3",
+    "../vemotion-hash/package.json": "b0de1ba71e5e549f8cc2c91ac4b9f89adef9e3c0db609eea48e0296e3f515ea1",
+    "../vemotion-is-prop-valid/PROVENANCE.json": "a641514fd263627dcb252375479b24bf33e29f7eac13c60b494859db854d8dc0",
+    "../vemotion-is-prop-valid/package.json": "3ed669ccac3ea743856fde1eb895ec7a8f748d68423bb3f05fb6bb06affab698",
+    "../vemotion-memoize/PROVENANCE.json": "e62d7854f40a3ef0013c323843438834f22880afb9cc13fedf3102bbccfe0aff",
+    "../vemotion-memoize/package.json": "0a3a9020093b0290517935095e50eb06d86bad32657b6c7f6624c3092c1f48ed",
+    "../vemotion-react/PROVENANCE.json": "9bb3ad0ff80f1dca54c8f53c6ae4680c54e17fbf0f6ac9d1c7fc31f1d5d553e7",
+    "../vemotion-react/package.json": "0dd63cf09654858a9aff83b19190125aba0a091a83bde7cbd605588ea3433ea0",
+    "../vemotion-react/src": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-serialize/PROVENANCE.json": "ab56256502939a3ffffa1c6f06d7f336925f654853215b3bf17afe357a1dcab7",
+    "../vemotion-serialize/package.json": "06e23233b6c4997a82362a6257106f59a416c15a22435ab5adfb7681b641ddb0",
+    "../vemotion-serialize/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/PROVENANCE.json": "a941a383d9e076794f126482484aec4adead1401be53104013b55753cfd101db",
+    "../vemotion-sheet/package.json": "4988e3981bb5f9870a547b926724b116ee00ed2a945cf792c8d47933b3779e89",
+    "../vemotion-sheet/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/PROVENANCE.json": "5f82207058130a22966b6f1208786ce970677644de34170bff6ae54012501cca",
+    "../vemotion-styled/package.json": "f327188bea503659457499eb1653b0665a61656d21ffeee96e254e1c17bce45e",
+    "../vemotion-styled/src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/PROVENANCE.json": "64cdcf2a72a4999b0c153ccbdbbb61dda564becfeb40df80e780052f1a94e2c4",
+    "../vemotion-unitless/package.json": "b1d67926b91785a2665d89577592bf7ee57afc4fd1edc48f68c8207905d578d8",
+    "../vemotion-use-insertion-effect-with-fallbacks/PROVENANCE.json": "7ca896d717fb8e6975df4245948e81328b12e39a1bf76551afc45fa1e9143636",
+    "../vemotion-use-insertion-effect-with-fallbacks/package.json": "0cde268e8af6d7b349b3aca1e135ff5dfd3b17296919da441de6897a5e7d7e38",
+    "../vemotion-use-insertion-effect-with-fallbacks/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/PROVENANCE.json": "89b5e5ce1e70b78ae4ac748159fb7780613503533581a55ed7b65ed61ea0aeb1",
+    "../vemotion-utils/package.json": "0ac9402fbe5834d36a15b52a90c3219b0ff7cb58f02bf8474ce3a422ab809845",
+    "../vemotion-utils/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vmui-private-theming/PROVENANCE.json": "d5d4d4c87af645f81a9c0005fddc7c755ce41279a8be136936c796a9406f47f1",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/package.json": "d504c0a975a6ac61eb5023e51bd4e4c79e12e3cef891423102ac3156a4c208c3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/PROVENANCE.json": "e2d0f4a744496ec5e164bb6d27163c2c29bd0d382e4e6d8a2e9479f0e7ad8990",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-styled-engine/package.json": "08d20631699acd933f1cd4e9d3496bf46d1e1af289eb35c46b9deb9e2fc7a92b",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/PROVENANCE.json": "d8298a07c1c773a03b714537da741eb42f521f0fcbb0e6e1712e0d157c7d8095",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/package.json": "71082758d90d54a6dc3043ad677fa254df421b548067d8a743567a68bc6b5e8c",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "92b7c409eb10d74ccf311fd638b8cc5cbc7738f9d0405ef04597ff0fe327ed37",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/PROVENANCE.json": "166594a917a8a0385e04a7b44ca267a49366c6d1540d1d49cb8bbed55c581593",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/package.json": "978cc85ffa288e3aa474d5c13f0e78548d36a6553db640bdcdc261100e4dbfc3",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/src": "acf2371b94215847979f6a6376dd41a807a6270c59616dd2ab3492d1d86c21ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "../vstylis/PROVENANCE.json": "36746184ad6577444b3a65c91e22faa39f7724852ecfe1031a4431331bf84ff0",
+    "../vstylis/package.json": "b63d31205af0ecfd7c8850c48555bdd0e2f9bc78101aff60b1ce06dc52a2df17",
+    "../vstylis/src": "987d6d2032baef8529255824c6c7110349ecff70018142a377880e8c373d561e",
+    "bench/run.cjs": "b5e4a00fe5e6c3a07408fcba7b890336c7dda2be57e7aec34fa084126b66bb59"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46755,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 7579,
+            "samples": [
+              1028.285393851435,
+              1043.7172450191292,
+              1029.956722522759,
+              1030.391080617493,
+              1030.429476184191,
+              1037.054096846547,
+              1060.727008840214,
+              1045.3226019263773,
+              1048.4288164665493,
+              1020.4401636099778,
+              992.1549017020716,
+              985.2278664731485
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 7751,
+            "samples": [
+              1693.4374919365166,
+              1457.462391949424,
+              1516.868791123726,
+              1531.0605083215087,
+              1449.3506644303984,
+              1488.17894465231,
+              1498.8656947490638,
+              1563.5294800670895,
+              1605.4756805573434,
+              1463.8004128499529,
+              1535.8447942200944,
+              1564.394916784918
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 2664,
+            "samples": [
+              3325.9819819820195,
+              3378.1906906906947,
+              3913.851351351364,
+              3567.9429429429415,
+              4057.6201201201466,
+              3431.57207207207,
+              3478.6193693693917,
+              3566.2537537537496,
+              3569.7259759759536,
+              3699.042792792785,
+              3534.659534534538,
+              3541.322822822817
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 590,
+            "samples": [
+              19604.379661017203,
+              15498.869491525358,
+              19064.054237288336,
+              13682.910169491459,
+              15229.80169491548,
+              14002.259322033768,
+              15770.127118644346,
+              15590.959322033905,
+              17265.04237288135,
+              14604.803389830382,
+              13960.52372881359,
+              16330.791525423963
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1730,
+            "samples": [
+              4287.114450867035,
+              4803.516763005758,
+              4547.543352601164,
+              4515.028901734059,
+              4234.08034682083,
+              4373.699421965395,
+              4470.7855491329565,
+              4246.604046242718,
+              4438.704624277501,
+              4516.667052023146,
+              4382.249710982703,
+              4267.24450867053
+            ]
+          }
+        ],
+        "checksum": 7894610
+      },
+      "vpm": {
+        "pid": 47154,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 7579,
+            "samples": [
+              1706.0682148040653,
+              1650.3935875445375,
+              1553.3546642037209,
+              1542.2000263887053,
+              1697.9977569600205,
+              1846.1593877820253,
+              1637.8096054888508,
+              1577.5388573690527,
+              1591.6238290011836,
+              1704.0397150019794,
+              1599.3039978889042,
+              1602.674099485425
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 7751,
+            "samples": [
+              3444.5394142691407,
+              3365.85059992259,
+              3331.5701199845153,
+              3626.5534769707,
+              3337.886466262426,
+              3224.4279447813283,
+              3420.0694103986593,
+              2997.027222293899,
+              3073.3346664946453,
+              2959.5804412333887,
+              3028.4747774480843,
+              2897.685201909435
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 2664,
+            "samples": [
+              4144.675675675686,
+              3540.9470720721188,
+              3644.7698948949255,
+              3815.862987988009,
+              3761.120495495545,
+              3868.1647897897983,
+              3849.1306306306865,
+              3621.9185435435716,
+              3884.1651651651905,
+              3849.5525525525672,
+              3803.0529279279435,
+              3940.4406906907425
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 590,
+            "samples": [
+              16977.54237288136,
+              15765.254237288193,
+              17791.525423728934,
+              16126.411864407,
+              16268.291525423947,
+              16343.008474576103,
+              15266.879661016823,
+              15751.837288135608,
+              15216.8779661016,
+              16749.294915254366,
+              15195.903389830379,
+              15090.042372881431
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1730,
+            "samples": [
+              6283.91156069365,
+              6350.626011560626,
+              5699.566473988411,
+              6412.258959537575,
+              5499.108670520305,
+              6267.533526011519,
+              5967.389017341097,
+              5817.7745664739905,
+              5681.430635838107,
+              6266.8109826590335,
+              5419.869942196562,
+              5877.57745664736
+            ]
+          }
+        ],
+        "checksum": 1792736
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47661,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 7737,
+            "samples": [
+              2723.7840248158195,
+              1731.328809616136,
+              1644.3550471759079,
+              1808.899961225279,
+              1753.6512860281741,
+              1757.7010469174102,
+              1787.0405842057617,
+              1760.496057903577,
+              1659.8003101977533,
+              1743.4676231097346,
+              1643.2241178751428,
+              1686.9426134160522
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 3512,
+            "samples": [
+              3217.029612756277,
+              3356.3616173120813,
+              3258.3641799544266,
+              3237.435933940769,
+              3235.585136674265,
+              3053.352790432811,
+              2977.944476082028,
+              3091.2941343963575,
+              2951.8553530751556,
+              3051.324031890645,
+              3140.8502277904317,
+              2973.5905466970166
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 3126,
+            "samples": [
+              3446.163787587961,
+              3342.170505438265,
+              3424.464171465136,
+              3416.0268714011468,
+              3450.0825335892755,
+              4108.36532309658,
+              3796.9318618042084,
+              3353.6733845169397,
+              3351.5943698016968,
+              3763.688739603379,
+              3371.6545105566324,
+              3388.2626359565056
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 777,
+            "samples": [
+              15073.626769626664,
+              16256.810810810915,
+              14107.786357786572,
+              14681.091377091483,
+              15334.406692406892,
+              15007.88288288299,
+              17873.123552123736,
+              15620.710424710573,
+              15817.084942084863,
+              14617.76061776055,
+              14740.294723294743,
+              14708.601029601181
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1570,
+            "samples": [
+              5631.608280254792,
+              5641.294904458632,
+              5530.042038216594,
+              5684.872611464972,
+              5288.0305732484485,
+              6139.72929936304,
+              6481.821019108294,
+              5536.518471337626,
+              5651.910828025428,
+              6399.203821656034,
+              6629.192993630562,
+              5959.261783439494
+            ]
+          }
+        ],
+        "checksum": 4862560
+      },
+      "upstream": {
+        "pid": 47801,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 7737,
+            "samples": [
+              989.8324932144275,
+              978.3883934341488,
+              986.638878118133,
+              1013.9051311877985,
+              1081.119943130411,
+              1001.3948558872953,
+              986.5742535866624,
+              989.956313816724,
+              937.1149024169549,
+              1030.3304898539518,
+              1032.3984748610558,
+              1075.6807548145273
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 3512,
+            "samples": [
+              1549.0697608200483,
+              1767.2266514806395,
+              1652.0620728929466,
+              1566.794703872458,
+              1628.689635535313,
+              1854.7952733485251,
+              1673.9037585421322,
+              1636.3658883827031,
+              1634.0996583143256,
+              1655.3009681093602,
+              1880.6116173120615,
+              1641.1588838268676
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 3126,
+            "samples": [
+              3325.775751759448,
+              3231.8458093409795,
+              3537.947856685855,
+              3579.348048624431,
+              3210.532629558532,
+              3530.1903390914686,
+              3492.7623160588873,
+              3316.325335892528,
+              3358.1922584772833,
+              3488.016954574542,
+              3302.5962891874774,
+              3239.9497760716768
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 777,
+            "samples": [
+              18740.294723294966,
+              15611.378378378531,
+              16699.485199485214,
+              17114.275418275218,
+              16124.08880308879,
+              15220.66666666667,
+              15420.151866151835,
+              14709.620334620546,
+              13956.135135135324,
+              15119.422136421852,
+              14968.790218790264,
+              14970.881595881481
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1570,
+            "samples": [
+              4018.1261146496645,
+              4360.854140127318,
+              4249.309554140214,
+              4597.028025477812,
+              4494.10828025477,
+              4333.35987261144,
+              4149.787261146584,
+              4143.312101910753,
+              4442.515923566933,
+              4524.310191082793,
+              4434.182165605046,
+              4213.66751592356
+            ]
+          }
+        ],
+        "checksum": 1827296
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 47805,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 12870,
+            "samples": [
+              1007.420357420359,
+              1050.3658119658132,
+              934.9941724941708,
+              979.697591297594,
+              951.4827505827515,
+              1002.505827505826,
+              1040.552991452994,
+              976.7449883449902,
+              970.5516705516739,
+              971.1020202020208,
+              1001.4050505050501,
+              1042.6735819735793
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 4010,
+            "samples": [
+              1493.7239401496483,
+              1593.5890274314327,
+              1626.4650872818138,
+              1628.9900249376783,
+              1469.0149625934941,
+              1496.6748129675811,
+              1590.3366583541156,
+              1489.4428927680808,
+              1561.7309226932525,
+              1517.8615960099817,
+              1462.8635910224448,
+              1591.022443890273
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 3072,
+            "samples": [
+              6385.891601562481,
+              3699.9238281249695,
+              3432.2373046875205,
+              3411.1194661458435,
+              3337.7548828124786,
+              3250.746093750016,
+              3353.9495442708176,
+              3395.1279296875095,
+              3414.9169921875073,
+              3385.348958333349,
+              3446.587239583354,
+              3449.9241536458667
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 788,
+            "samples": [
+              16909.687817258895,
+              15088.197969543146,
+              16025.1687817259,
+              16127.803299492383,
+              14601.152284264137,
+              14752.327411167467,
+              14671.901015228592,
+              14922.007614212953,
+              14663.810913705543,
+              15710.184010152327,
+              15353.796954314725,
+              15254.812182741152
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1870,
+            "samples": [
+              4342.870053475944,
+              4599.576470588258,
+              4702.272727272697,
+              4898.974866310141,
+              4589.750802138942,
+              4433.667914438465,
+              4364.63903743316,
+              4933.043850267491,
+              4741.109625668429,
+              4876.002673796772,
+              4659.113368983949,
+              4580.347593582823
+            ]
+          }
+        ],
+        "checksum": 6495968
+      },
+      "vpm": {
+        "pid": 47807,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 12870,
+            "samples": [
+              1668.8908313908332,
+              1609.887334887334,
+              1632.2811188811177,
+              1654.6490287490308,
+              1609.534498834501,
+              1649.9740481740475,
+              1660.0167832167838,
+              1623.7470862470866,
+              1638.147474747472,
+              1690.9479409479356,
+              1618.3630924630959,
+              1632.4009324009335
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 4010,
+            "samples": [
+              2814.0064837905306,
+              2817.009476309222,
+              2875.945386533647,
+              2875.6339152119717,
+              2849.3870324189375,
+              2919.794264339164,
+              2964.204239401483,
+              2849.2311720698067,
+              2856.9618453865305,
+              2920.001995012466,
+              2830.0394014962435,
+              2826.9117206982537
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 3072,
+            "samples": [
+              3736.3281249999472,
+              3586.575195312506,
+              3627.861979166684,
+              3540.554361979161,
+              3243.1640624999886,
+              3281.3857421875405,
+              3341.294921875034,
+              3375.2034505208544,
+              3222.6562500000296,
+              3303.1956380208762,
+              3316.528320312484,
+              3281.03287760421
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 788,
+            "samples": [
+              15556.842639594017,
+              15602.845177664933,
+              15034.05203045693,
+              14255.922588832447,
+              15762.902284263919,
+              14879.072335025476,
+              15787.648477157169,
+              14766.761421319956,
+              15551.13197969553,
+              14099.143401015133,
+              14954.473350253684,
+              14130.076142131838
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1870,
+            "samples": [
+              6031.52887700534,
+              5755.458823529399,
+              5896.5240641710925,
+              5490.15133689844,
+              5749.688235294144,
+              5772.415508021305,
+              5364.906417112301,
+              5822.148128342322,
+              5732.55347593583,
+              5901.181283422526,
+              5446.880748663084,
+              5812.633689839473
+            ]
+          }
+        ],
+        "checksum": 1578464
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47809,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 6046,
+            "samples": [
+              1663.9032418127676,
+              1578.41266953358,
+              1527.0564009262284,
+              1597.5714521998068,
+              1480.4553423751222,
+              1517.7527290770759,
+              1572.6720145550778,
+              1695.4184584849468,
+              1467.6508435329079,
+              1546.69748594112,
+              1517.256533245123,
+              1557.9445914654402
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 3840,
+            "samples": [
+              2817.035416666661,
+              2807.085677083343,
+              2733.235677083338,
+              2825.7486979166893,
+              2955.924479166653,
+              2920.8333333333353,
+              2993.088020833312,
+              2858.235677083343,
+              2851.8986979166584,
+              2793.663281249999,
+              2809.4291666666513,
+              2856.098177083322
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 2934,
+            "samples": [
+              3504.203476482624,
+              3464.6813224266957,
+              3553.8653715064866,
+              3641.35991820042,
+              3489.6189502386,
+              3512.894683026579,
+              3469.8364008180138,
+              3550.9543285616887,
+              3541.0558963871817,
+              3498.636673483295,
+              3592.578391274703,
+              3469.7511929107022
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 759,
+            "samples": [
+              15742.039525691729,
+              15549.407114624384,
+              14794.685111989264,
+              16089.206851119654,
+              15090.08563899845,
+              17719.75230566537,
+              15760.15546772081,
+              16233.915678524554,
+              14110.727272727181,
+              15978.973649538786,
+              14300.12121212106,
+              17755.160737812952
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1676,
+            "samples": [
+              6262.579952267369,
+              5661.147374701647,
+              6070.877684964149,
+              5802.8538186157,
+              5793.581145584684,
+              5724.592482100251,
+              5826.223150358024,
+              5776.352625298305,
+              6105.658114558383,
+              5775.208830549008,
+              6037.813245823383,
+              5700.551909307944
+            ]
+          }
+        ],
+        "checksum": 5455520
+      },
+      "upstream": {
+        "pid": 47811,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 6046,
+            "samples": [
+              1029.8268276546496,
+              1016.2917631491885,
+              1041.9354945418415,
+              953.764306979821,
+              1044.9401257029413,
+              1042.328316242144,
+              1077.1171022163405,
+              1015.6991399272249,
+              966.8443599073715,
+              1040.2125372146802,
+              946.9690704598057,
+              1043.6652332120414
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 3840,
+            "samples": [
+              1530.9028645833353,
+              1518.999479166657,
+              1487.011718750016,
+              1612.2289062500054,
+              1454.6875000000034,
+              1543.1421874999944,
+              1513.60677083332,
+              1555.0781249999977,
+              1539.2145833333261,
+              1516.4171874999965,
+              1515.2236979166862,
+              1624.85885416667
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 2934,
+            "samples": [
+              2928.7518745739835,
+              3061.704839809158,
+              3073.0371506475494,
+              3018.319700068186,
+              3204.342876618933,
+              3144.2569870484235,
+              2950.1816632583605,
+              3144.1857532379117,
+              3119.092365371519,
+              3027.451261077009,
+              3114.5337423312635,
+              3127.2440354464966
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 759,
+            "samples": [
+              15139.548089591675,
+              13949.93412384712,
+              14337.8906455862,
+              14991.93017127784,
+              15048.198945981629,
+              15419.355731225343,
+              14376.097496706245,
+              15217.28194993419,
+              13951.36100131732,
+              14354.578392621881,
+              14706.851119894778,
+              14941.644268774637
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1676,
+            "samples": [
+              4512.455250596704,
+              4451.297732696829,
+              4436.828758949849,
+              4574.7064439139895,
+              4443.392004773219,
+              4477.153341288826,
+              4446.62410501193,
+              4495.226730310325,
+              4166.915274462931,
+              4581.319809069246,
+              4414.329952267232,
+              4228.0727923628065
+            ]
+          }
+        ],
+        "checksum": 1886752
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 47813,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 7512,
+            "samples": [
+              1032.2151224707084,
+              1025.808706070294,
+              1019.6186102236437,
+              962.6320553780613,
+              1011.0323482428117,
+              1109.3084398296053,
+              955.582268370608,
+              1013.772364217251,
+              996.4001597444097,
+              984.5137113951015,
+              974.7127263045807,
+              1052.4383652822135
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 4592,
+            "samples": [
+              1420.4958623693146,
+              1506.5694686410989,
+              1490.381750871084,
+              1548.3810975609615,
+              1377.8129355400654,
+              1540.2149390243956,
+              1475.4372822299697,
+              1488.8029181184709,
+              1379.9542682926942,
+              1466.0278745644537,
+              1507.3497386759527,
+              1499.6824912892152
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 3495,
+            "samples": [
+              3316.285264663806,
+              3187.529899856926,
+              3291.8217453504944,
+              3168.073533619449,
+              3309.4778254649627,
+              3200.8343347639475,
+              3304.6615164520813,
+              3448.1522174535016,
+              3297.925608011446,
+              3220.9942775393165,
+              3436.444921316185,
+              3135.503290414871
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 694,
+            "samples": [
+              15925.132564841539,
+              15658.501440922133,
+              15347.863112391984,
+              16018.491354466592,
+              15399.734870316981,
+              16440.561959654224,
+              15371.75792507189,
+              15762.488472622475,
+              14295.328530259261,
+              13848.644092219154,
+              16033.922190201654,
+              14452.749279538766
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 2206,
+            "samples": [
+              4514.505893019066,
+              4556.890299184048,
+              4050.65729827747,
+              4423.183136899289,
+              4238.00634632822,
+              4342.928377153232,
+              4336.960108794127,
+              4163.07796917494,
+              4479.072529465118,
+              4197.661378059837,
+              4362.760652765117,
+              4488.100634632827
+            ]
+          }
+        ],
+        "checksum": 6777312
+      },
+      "vpm": {
+        "pid": 47816,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 7512,
+            "samples": [
+              936.468317358889,
+              982.2839456869011,
+              994.4921458998914,
+              990.8700745473926,
+              1099.002795527152,
+              1024.7326943556966,
+              923.2284345047929,
+              1009.6400425985058,
+              991.0366080937142,
+              1022.0535143769952,
+              1010.904818956341,
+              984.9740415335498
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 4592,
+            "samples": [
+              1471.898736933799,
+              1540.6141114982704,
+              1574.0690331010405,
+              1614.6378484320715,
+              1455.8834930313653,
+              1436.4745209059126,
+              1514.191419860629,
+              1476.7983449477445,
+              1446.0113240418123,
+              1493.603005226497,
+              1578.9233449477292,
+              1537.5381097560776
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 3495,
+            "samples": [
+              3170.0643776824113,
+              3374.3204577968368,
+              3297.365379113003,
+              3173.390557939916,
+              3329.99542203147,
+              3390.2955650929757,
+              3332.83261802574,
+              3100.369670958504,
+              3249.070100143063,
+              3092.0243204577796,
+              3298.5693848354813,
+              3102.622889842627
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 694,
+            "samples": [
+              15351.704610950866,
+              19085.55475504318,
+              16351.884726224947,
+              15568.203170028553,
+              15176.092219020291,
+              15618.995677233353,
+              16438.58069164262,
+              15526.47694524487,
+              14915.585014409182,
+              15984.269452449538,
+              15184.559077809836,
+              15445.965417867328
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 2206,
+            "samples": [
+              4528.8608340887595,
+              4482.679963735252,
+              4721.4224841342575,
+              4391.791024478665,
+              4686.329102447806,
+              4613.81867633732,
+              4145.191296464166,
+              4589.925203989155,
+              4594.722574796044,
+              4289.230281051727,
+              4738.874886672633,
+              4514.6378059836325
+            ]
+          }
+        ],
+        "checksum": 1850336
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 47845,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 12773,
+            "samples": [
+              1028.647616065137,
+              1049.7142409770622,
+              1022.8965787207418,
+              1055.3836999921702,
+              1027.3265481875803,
+              1546.4130587958991,
+              1104.7946449541992,
+              987.5942221874245,
+              1004.723557504113,
+              1000.5316683629522,
+              1050.1317623111267,
+              1071.5898379394064
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 7571,
+            "samples": [
+              1564.9022586184033,
+              1593.349623563588,
+              1520.26376964735,
+              1641.8956544710072,
+              1566.069079381855,
+              1506.0869105798504,
+              1564.23074891032,
+              1521.182802800162,
+              1537.0492669396458,
+              1561.0607581561264,
+              1490.9964337603967,
+              1605.429797913093
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 2927,
+            "samples": [
+              3310.0587632388056,
+              3329.50427058421,
+              3335.8957977451073,
+              3371.327297574317,
+              3410.616672360752,
+              3225.89955585922,
+              3275.9364537069023,
+              3305.4605398018743,
+              3299.6812435940624,
+              3395.940211820951,
+              3379.1991800478518,
+              3165.7984284250156
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 362,
+            "samples": [
+              15863.834254143629,
+              17161.486187845218,
+              15306.16850828735,
+              17810.198895027796,
+              16593.922651933244,
+              15750.345303867187,
+              15114.756906077346,
+              15896.52486187818,
+              16103.36187845282,
+              15889.848066298284,
+              14551.10497237549,
+              15886.624309391864
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 2429,
+            "samples": [
+              4208.762453684632,
+              4343.470975710175,
+              4521.562371346295,
+              4344.3116508851745,
+              4330.400164676832,
+              4141.244956772328,
+              4359.321531494354,
+              4364.364759160151,
+              4130.403458213195,
+              4252.315767805744,
+              4352.442568958428,
+              4155.362289007884
+            ]
+          }
+        ],
+        "checksum": 7938336
+      },
+      "upstream": {
+        "pid": 47847,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 12773,
+            "samples": [
+              1009.8514835982126,
+              1029.1043607609793,
+              1086.6509042511555,
+              1001.6081578329292,
+              991.3587254364668,
+              989.5874109449654,
+              1080.1723948954852,
+              981.6931809285227,
+              951.208956392394,
+              1016.8388788851453,
+              1007.437563610741,
+              1039.8496829249184
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 7571,
+            "samples": [
+              1571.0660414740462,
+              1551.3527935543455,
+              1520.2252014264996,
+              1554.38515387663,
+              1533.174877823272,
+              1613.0904768194453,
+              1606.6074494782756,
+              1536.647470611545,
+              1608.1043455290003,
+              1611.5495971469973,
+              1509.8401796327996,
+              1625.8860124157939
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 2927,
+            "samples": [
+              3510.5056371711357,
+              3324.379227878373,
+              3294.641954219337,
+              3394.08951144519,
+              3466.433208062866,
+              3383.8684660061504,
+              3234.696959344022,
+              3307.439357704139,
+              3728.390843867445,
+              3030.7625555176687,
+              2891.769046805559,
+              3048.1865391185243
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 362,
+            "samples": [
+              17101.864640883992,
+              18393.530386740636,
+              19515.9972375691,
+              16045.696132596655,
+              19607.389502762242,
+              18045.23480662984,
+              20392.149171270554,
+              14220.419889502711,
+              16381.906077347756,
+              15684.162983425216,
+              17410.682320442418,
+              16907.803867403367
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 2429,
+            "samples": [
+              4455.4001646768365,
+              4504.048167970362,
+              4682.962947715148,
+              4531.666117743941,
+              4480.067517496944,
+              4533.655825442566,
+              4491.028406751722,
+              4398.191848497386,
+              4513.825854260949,
+              4457.218196788814,
+              4610.41910251128,
+              4388.1572663647885
+            ]
+          }
+        ],
+        "checksum": 2424096
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "create application theme",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1030.410278400842,
+          "vpmNs": 1620.2418524871377,
+          "changePct": 57.242400085691344
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 995.6755848520097,
+          "vpmNs": 1748.5594545689544,
+          "changePct": 75.61537926320128
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 990.551320901322,
+          "vpmNs": 1635.2742035742026,
+          "changePct": 65.08727706165034
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1035.019682434665,
+          "vpmNs": 1552.32103870328,
+          "changePct": 49.979856909751994
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1012.4023562300314,
+          "vpmNs": 992.7643769968029,
+          "changePct": -1.9397405697825665
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1008.6445236044767,
+          "vpmNs": 1039.1809285210998,
+          "changePct": 3.0274694604496055
+        }
+      ]
+    },
+    {
+      "case": "resolve responsive sx",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1523.9646497226172,
+          "vpmNs": 3277.9990323829215,
+          "changePct": 115.09678935003924
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1646.6104783599071,
+          "vpmNs": 3116.0721810933946,
+          "changePct": 89.24161008601943
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 1539.7962593516172,
+          "vpmNs": 2853.174438902734,
+          "changePct": 85.29558190407339
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1524.9511718749961,
+          "vpmNs": 2838.823697916674,
+          "changePct": 86.15833413382099
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 1489.5923344947773,
+          "vpmNs": 1503.897212543563,
+          "changePct": 0.9603216744289655
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 1562.7255976753381,
+          "vpmNs": 1562.6457535332233,
+          "changePct": -0.005109287403592955
+        }
+      ]
+    },
+    {
+      "case": "generate theme CSS variables",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3553.788288288283,
+          "vpmNs": 3832.4968093093476,
+          "changePct": 7.842575258058138
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3341.9840051183655,
+          "vpmNs": 3420.245521433141,
+          "changePct": 2.3417681291985737
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 3413.018229166675,
+          "vpmNs": 3328.911621093759,
+          "changePct": -2.4642882758188933
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3093.7854464894062,
+          "vpmNs": 3508.5490797546017,
+          "changePct": 13.406347674685648
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 3294.87367668097,
+          "vpmNs": 3273.217739628033,
+          "changePct": -0.6572615273903848
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 3315.909292791256,
+          "vpmNs": 3319.781516911508,
+          "changePct": 0.11677714250717397
+        }
+      ]
+    },
+    {
+      "case": "Box and responsive Stack SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 15544.914406779631,
+          "vpmNs": 15945.833050847596,
+          "changePct": 2.57909843423203
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 15320.409266409253,
+          "vpmNs": 15040.754826254826,
+          "changePct": -1.8253718637111338
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 15171.505076142148,
+          "vpmNs": 14994.262690355306,
+          "changePct": -1.1682584219383951
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 14824.247694334706,
+          "vpmNs": 15751.097496706268,
+          "changePct": 6.252255234009407
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 15529.118155619557,
+          "vpmNs": 15547.340057636713,
+          "changePct": 0.11734022392355659
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 17256.273480663207,
+          "vpmNs": 15888.236187845074,
+          "changePct": -7.927767801959728
+        }
+      ]
+    },
+    {
+      "case": "styled theme override SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4410.4771676301025,
+          "vpmNs": 5922.483236994229,
+          "changePct": 34.282142541428875
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4347.107006369379,
+          "vpmNs": 5668.391719745199,
+          "changePct": 30.39457532192962
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 4629.344919786104,
+          "vpmNs": 5763.937165775352,
+          "changePct": 24.50869973287
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4448.96091885438,
+          "vpmNs": 5798.217482100192,
+          "changePct": 30.32745371009573
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 4352.844514959174,
+          "vpmNs": 4559.393019038957,
+          "changePct": 4.745138572488616
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4497.5382873610415,
+          "vpmNs": 4336.935570193504,
+          "changePct": -3.5709027229153922
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "create application theme",
+      "upstream_ns": 1013,
+      "vpm_ns": 1628,
+      "change_pct": 61.2,
+      "upstream_first_pct": 61.2,
+      "vpm_first_pct": 62.8,
+      "process_range_pct": "57.2, 75.6, 65.1, 50.0",
+      "control_max_abs_pct": 3,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "resolve responsive sx",
+      "upstream_ns": 1532,
+      "vpm_ns": 2985,
+      "change_pct": 87.7,
+      "upstream_first_pct": 100.2,
+      "vpm_first_pct": 87.7,
+      "process_range_pct": "115.1, 89.2, 85.3, 86.2",
+      "control_max_abs_pct": 1,
+      "evidence": "higher time in every pair, beyond control spread"
+    },
+    {
+      "case": "generate theme CSS variables",
+      "upstream_ns": 3378,
+      "vpm_ns": 3464,
+      "change_pct": 5.1,
+      "upstream_first_pct": 2.7,
+      "vpm_first_pct": 7.9,
+      "process_range_pct": "7.8, 2.3, -2.5, 13.4",
+      "control_max_abs_pct": 0.7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Box and responsive Stack SSR",
+      "upstream_ns": 15246,
+      "vpm_ns": 15396,
+      "change_pct": 0.7,
+      "upstream_first_pct": 0.7,
+      "vpm_first_pct": 2.2,
+      "process_range_pct": "2.6, -1.8, -1.2, 6.3",
+      "control_max_abs_pct": 7.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "styled theme override SSR",
+      "upstream_ns": 4430,
+      "vpm_ns": 5781,
+      "change_pct": 30.4,
+      "upstream_first_pct": 29.4,
+      "vpm_first_pct": 30.4,
+      "process_range_pct": "34.3, 30.4, 24.5, 30.3",
+      "control_max_abs_pct": 4.7,
+      "evidence": "higher time in every pair, beyond control spread"
+    }
+  ]
+}

@@ -64,6 +64,18 @@ jobs:
           node scripts/time-zone-conformance/run.cjs
           node scripts/time-zone-conformance/browser.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: MUI System themes, layouts and unchanged Material callers
+        run: |
+          node --test packages/vmui-system/test/system.test.cjs
+          node scripts/mui-system-conformance/primitives.cjs
+          node scripts/mui-system-conformance/colors.cjs
+          node scripts/mui-system-conformance/variables.cjs
+          node scripts/mui-system-conformance/types.cjs
+          node scripts/mui-system-conformance/callers.cjs
+          node scripts/mui-system-conformance/browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-system-conformance/browser.cjs
+          node scripts/mui-system-conformance/archives.cjs
       - run: npm --prefix scripts/mui-utils-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI utility contracts and unchanged Material callers
         run: |
@@ -871,6 +883,14 @@ jobs:
       - name: Calendar timezone data and civil-day regression guard on Bun
         run: bun scripts/time-zone-conformance/run.cjs
       - run: npm --prefix scripts/resolvers-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: npm --prefix scripts/mui-system-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
+      - name: MUI System controls on Bun
+        run: |
+          bun test packages/vmui-system/test/system.test.cjs
+          bun scripts/mui-system-conformance/primitives.cjs
+          bun scripts/mui-system-conformance/colors.cjs
+          bun scripts/mui-system-conformance/variables.cjs
+          bun scripts/mui-system-conformance/callers.cjs
       - run: npm --prefix scripts/mui-utils-conformance ci --ignore-scripts --no-audit --no-fund --legacy-peer-deps
       - name: MUI utility contracts and unchanged Material callers
         run: |

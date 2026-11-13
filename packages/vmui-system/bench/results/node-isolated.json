@@ -1,0 +1,2148 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-13T10:18:34.443Z",
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-system-conformance/node_modules/@mui/system": "da23a7617ef5a3571d4a51a064d2aa6d40e8e303315c389b42e3b2c18bb8894d",
+    "../../scripts/mui-system-conformance/package-lock.json": "c9df7bd474ddbd7db7bdf9603651a109e69e2bd4e5204a173372b2d90ad017da",
+    "../../scripts/mui-system-conformance/prepare.cjs": "67a91250cf1fab519c7e043663c40ed84f3e4c70fa7acddb147db524634f25b0",
+    "../vclsx/PROVENANCE.json": "1ebf1ce646b0baad15b9f6064da405a538efb74362ddc24b634580f3871e35df",
+    "../vclsx/index.cjs": "5dc359e7ab68385dda4c990547ef0998e2206d335423f2c4e273dacd1ef4639a",
+    "../vclsx/lite.cjs": "2d15a196dfc9804c64e9ad22f47b14304b208dc5013fca1385ed7626d3e42a03",
+    "../vclsx/lite.mjs": "0aeb0a886261f8878555866e1fbddfc33d89086ea7a7368cb8dd3f2d969a795d",
+    "../vclsx/package.json": "d4a3f924293504d5e7d096baa76f136663183ce27ee4d36caf6fefedb9a99c08",
+    "../vclsx/runtime.mjs": "3fb8be73b9ccffbddab72dad0fc74023ff779386b6fffeb1329ddf92fb73abac",
+    "../vemotion-cache/PROVENANCE.json": "b3de78da74b83eef0842fb208662942138afafd45123bd5039231a7dde7a81b7",
+    "../vemotion-cache/package.json": "b7e3c579393a5e73cc32b187d53e66f0785591e67c7c81c9a8f2d64a98d9fa12",
+    "../vemotion-cache/src": "fab1da4bf57130bbf642f4fa2230779b443fbb5064af49cdb739f001f28acb3f",
+    "../vemotion-hash/PROVENANCE.json": "c206982770b4f0899bf1a5e5c26780fa720fc324a37dc68b9914775cad80c9a3",
+    "../vemotion-hash/package.json": "b0de1ba71e5e549f8cc2c91ac4b9f89adef9e3c0db609eea48e0296e3f515ea1",
+    "../vemotion-is-prop-valid/PROVENANCE.json": "a641514fd263627dcb252375479b24bf33e29f7eac13c60b494859db854d8dc0",
+    "../vemotion-is-prop-valid/package.json": "3ed669ccac3ea743856fde1eb895ec7a8f748d68423bb3f05fb6bb06affab698",
+    "../vemotion-memoize/PROVENANCE.json": "e62d7854f40a3ef0013c323843438834f22880afb9cc13fedf3102bbccfe0aff",
+    "../vemotion-memoize/package.json": "0a3a9020093b0290517935095e50eb06d86bad32657b6c7f6624c3092c1f48ed",
+    "../vemotion-react/PROVENANCE.json": "9bb3ad0ff80f1dca54c8f53c6ae4680c54e17fbf0f6ac9d1c7fc31f1d5d553e7",
+    "../vemotion-react/package.json": "0dd63cf09654858a9aff83b19190125aba0a091a83bde7cbd605588ea3433ea0",
+    "../vemotion-react/src": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-serialize/PROVENANCE.json": "ab56256502939a3ffffa1c6f06d7f336925f654853215b3bf17afe357a1dcab7",
+    "../vemotion-serialize/package.json": "06e23233b6c4997a82362a6257106f59a416c15a22435ab5adfb7681b641ddb0",
+    "../vemotion-serialize/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/PROVENANCE.json": "a941a383d9e076794f126482484aec4adead1401be53104013b55753cfd101db",
+    "../vemotion-sheet/package.json": "4988e3981bb5f9870a547b926724b116ee00ed2a945cf792c8d47933b3779e89",
+    "../vemotion-sheet/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/PROVENANCE.json": "5f82207058130a22966b6f1208786ce970677644de34170bff6ae54012501cca",
+    "../vemotion-styled/package.json": "f327188bea503659457499eb1653b0665a61656d21ffeee96e254e1c17bce45e",
+    "../vemotion-styled/src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/PROVENANCE.json": "64cdcf2a72a4999b0c153ccbdbbb61dda564becfeb40df80e780052f1a94e2c4",
+    "../vemotion-unitless/package.json": "b1d67926b91785a2665d89577592bf7ee57afc4fd1edc48f68c8207905d578d8",
+    "../vemotion-use-insertion-effect-with-fallbacks/PROVENANCE.json": "7ca896d717fb8e6975df4245948e81328b12e39a1bf76551afc45fa1e9143636",
+    "../vemotion-use-insertion-effect-with-fallbacks/package.json": "0cde268e8af6d7b349b3aca1e135ff5dfd3b17296919da441de6897a5e7d7e38",
+    "../vemotion-use-insertion-effect-with-fallbacks/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/PROVENANCE.json": "89b5e5ce1e70b78ae4ac748159fb7780613503533581a55ed7b65ed61ea0aeb1",
+    "../vemotion-utils/package.json": "0ac9402fbe5834d36a15b52a90c3219b0ff7cb58f02bf8474ce3a422ab809845",
+    "../vemotion-utils/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vmui-private-theming/PROVENANCE.json": "d5d4d4c87af645f81a9c0005fddc7c755ce41279a8be136936c796a9406f47f1",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/package.json": "d504c0a975a6ac61eb5023e51bd4e4c79e12e3cef891423102ac3156a4c208c3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/PROVENANCE.json": "e2d0f4a744496ec5e164bb6d27163c2c29bd0d382e4e6d8a2e9479f0e7ad8990",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-styled-engine/package.json": "08d20631699acd933f1cd4e9d3496bf46d1e1af289eb35c46b9deb9e2fc7a92b",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/PROVENANCE.json": "d8298a07c1c773a03b714537da741eb42f521f0fcbb0e6e1712e0d157c7d8095",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/package.json": "71082758d90d54a6dc3043ad677fa254df421b548067d8a743567a68bc6b5e8c",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "92b7c409eb10d74ccf311fd638b8cc5cbc7738f9d0405ef04597ff0fe327ed37",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/PROVENANCE.json": "166594a917a8a0385e04a7b44ca267a49366c6d1540d1d49cb8bbed55c581593",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/package.json": "978cc85ffa288e3aa474d5c13f0e78548d36a6553db640bdcdc261100e4dbfc3",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/src": "acf2371b94215847979f6a6376dd41a807a6270c59616dd2ab3492d1d86c21ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "../vstylis/PROVENANCE.json": "36746184ad6577444b3a65c91e22faa39f7724852ecfe1031a4431331bf84ff0",
+    "../vstylis/package.json": "b63d31205af0ecfd7c8850c48555bdd0e2f9bc78101aff60b1ce06dc52a2df17",
+    "../vstylis/src": "987d6d2032baef8529255824c6c7110349ecff70018142a377880e8c373d561e",
+    "bench/run.cjs": "b5e4a00fe5e6c3a07408fcba7b890336c7dda2be57e7aec34fa084126b66bb59"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46457,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 5043,
+            "samples": [
+              1994.7451913543555,
+              2535.0402538171793,
+              2554.2419194923614,
+              1947.9724370414422,
+              2521.4239539956434,
+              2040.947848502879,
+              2811.8183620860614,
+              2236.648225262745,
+              2714.910172516366,
+              2962.4893912353796,
+              2669.2857426135124,
+              3099.006742018638
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1532,
+            "samples": [
+              6751.223890339457,
+              6383.077676240264,
+              6244.995430809375,
+              6579.0900783289735,
+              6461.434073107039,
+              6338.881853785857,
+              6530.270887728448,
+              6927.137728459558,
+              8920.256527415082,
+              6906.576370757175,
+              6989.7734986945425,
+              6515.1762402088325
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1634,
+            "samples": [
+              5180.258261933867,
+              5651.213586291205,
+              5690.151774785837,
+              6217.742962056258,
+              8423.679314565386,
+              5575.862301101509,
+              5499.2099143207115,
+              5449.332313341516,
+              5360.006119951095,
+              5225.647490819961,
+              5381.655446756438,
+              5452.799877600874
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 370,
+            "samples": [
+              28042.229729729457,
+              27449.662162162233,
+              28001.351351351357,
+              27257.09459459476,
+              28444.48378378373,
+              27456.52972972936,
+              28107.770270269833,
+              27798.086486486558,
+              28460.69729729717,
+              34404.05405405383,
+              28913.17567567586,
+              27593.691891891813
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1140,
+            "samples": [
+              7858.735964912325,
+              8550.585087719179,
+              8186.513157894743,
+              8142.982456140265,
+              8521.929824561532,
+              8264.18157894734,
+              8236.00175438598,
+              8210.379824561387,
+              8566.337719298246,
+              8380.043859649066,
+              8149.743859649118,
+              8724.816666666644
+            ]
+          }
+        ],
+        "checksum": 4760800
+      },
+      "vpm": {
+        "pid": 46481,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 5043,
+            "samples": [
+              2606.69085861591,
+              2544.6410866547703,
+              2492.9440809042317,
+              2550.9121554630233,
+              2468.9585564148356,
+              2483.5580011897696,
+              2549.160618679355,
+              2547.433670434261,
+              2475.2298235177536,
+              2517.4663890541347,
+              2487.6149117588784,
+              2503.2801903628856
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1532,
+            "samples": [
+              6694.680156657978,
+              6463.338120104443,
+              6580.722584856422,
+              6394.092689295038,
+              6277.524151436028,
+              6306.189947780728,
+              6569.435378590105,
+              6545.800913838156,
+              6418.108355091376,
+              6487.000000000003,
+              6505.54830287206,
+              6286.580939947768
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1634,
+            "samples": [
+              6291.411872705022,
+              5747.755813953501,
+              6056.53304773557,
+              5800.872093023234,
+              5763.106487148112,
+              6337.081395348823,
+              6213.076499387982,
+              6927.988372093097,
+              6069.971848225189,
+              5988.0152998776475,
+              6444.206242350094,
+              6082.033047735616
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 370,
+            "samples": [
+              27947.635135135257,
+              32463.851351351608,
+              27220.27027027031,
+              24881.645945945795,
+              26728.716216216282,
+              24584.908108107735,
+              25213.8513513519,
+              22937.386486486306,
+              24410.135135135413,
+              22312.83783783793,
+              23645.945945946012,
+              22308.44594594576
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1140,
+            "samples": [
+              8082.601754385945,
+              12361.878070175424,
+              10460.343859649143,
+              8436.111403508867,
+              9426.022807017569,
+              7563.9254385965105,
+              7811.878070175514,
+              9690.168421052715,
+              7872.587719298321,
+              8285.526315789508,
+              8935.416666666664,
+              7849.816666666691
+            ]
+          }
+        ],
+        "checksum": 1690656
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46504,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 3442,
+            "samples": [
+              2745.884079023817,
+              2728.633933759455,
+              2450.222545031963,
+              2533.580185938418,
+              2429.450029052876,
+              2572.789366647303,
+              2558.9773387565347,
+              2501.743172574082,
+              3001.174026728661,
+              2720.148169668799,
+              2590.4151656014055,
+              2736.6356769320246
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1535,
+            "samples": [
+              8343.811074918603,
+              7789.2781758957735,
+              7266.259283387582,
+              6895.385667752463,
+              8526.656026058665,
+              6929.234527687325,
+              7239.359609120554,
+              7022.583713355062,
+              6621.552442996746,
+              6881.650814332283,
+              8546.878175895772,
+              6775.597394136865
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1200,
+            "samples": [
+              5772.882499999999,
+              5543.437499999963,
+              6038.4375000000055,
+              6244.028333333346,
+              5598.3683333333065,
+              5976.458333333312,
+              5979.375000000005,
+              5903.541666666664,
+              5929.5141666666495,
+              5533.402500000003,
+              5627.083333333285,
+              5498.055000000003
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 348,
+            "samples": [
+              26219.94540229924,
+              40288.43390804614,
+              32184.9856321836,
+              22133.499999999938,
+              23103.327586206444,
+              23553.520114942643,
+              22408.0459770115,
+              24705.218390804137,
+              22358.23850574711,
+              25276.22126436803,
+              24032.686781609576,
+              31502.034482758678
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1148,
+            "samples": [
+              7683.544425087176,
+              8214.140243902366,
+              8940.693379791035,
+              7786.512195122006,
+              7875.072299651542,
+              8441.41986062716,
+              7990.345818815217,
+              8745.46254355394,
+              7475.209930313602,
+              7859.066202090474,
+              9291.121951219597,
+              8016.5139372823
+            ]
+          }
+        ],
+        "checksum": 4442784
+      },
+      "upstream": {
+        "pid": 46525,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 3442,
+            "samples": [
+              2204.653399186517,
+              2968.9256246368395,
+              1940.7321324811176,
+              1974.7603137710616,
+              2905.723416618251,
+              2031.3893085415366,
+              2069.738814642643,
+              2971.1772225450454,
+              1968.5746658919325,
+              3249.092097617668,
+              2623.9590354445004,
+              2148.8111563044745
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1535,
+            "samples": [
+              7880.401954397377,
+              7887.8664495114235,
+              8403.80065146576,
+              12131.053420195449,
+              8229.641693811034,
+              8592.833876221459,
+              8983.550488599365,
+              7367.860586319213,
+              8261.86188925082,
+              7040.5270358305825,
+              19279.88599348531,
+              10018.919218241062
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1200,
+            "samples": [
+              7363.680000000082,
+              6658.715833333417,
+              5637.604166666582,
+              5578.889166666651,
+              7196.145833333389,
+              5401.666666666642,
+              5603.264166666501,
+              5614.548333333384,
+              5461.249999999987,
+              5396.006666666722,
+              5377.048333333316,
+              5940.138333333304
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 348,
+            "samples": [
+              29541.068965517006,
+              33530.64942528744,
+              30177.801724137724,
+              29654.454022988833,
+              28055.793103448297,
+              28389.247126436454,
+              29523.109195402325,
+              28059.50574712688,
+              29568.00862068968,
+              28545.497126436927,
+              28584.05172413776,
+              29508.62068965519
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1148,
+            "samples": [
+              8418.408536585514,
+              8737.660278745769,
+              7963.5601045295925,
+              8706.809233449556,
+              8582.281358884977,
+              7926.829268292801,
+              7882.658536585497,
+              7948.932926829335,
+              8014.3728222995815,
+              7973.068815330944,
+              7896.813588850218,
+              8454.48606271784
+            ]
+          }
+        ],
+        "checksum": 1976864
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46548,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 1631,
+            "samples": [
+              2305.7173513182124,
+              5071.096259963218,
+              2385.1422440220845,
+              2310.622317596558,
+              2684.089515634575,
+              6612.251992642549,
+              2379.623543838141,
+              2212.012262415672,
+              2344.190680564105,
+              2177.779276517482,
+              4543.710606989586,
+              2062.947271612506
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1538,
+            "samples": [
+              6484.341352405681,
+              6476.376462938919,
+              6740.653446033802,
+              6392.96163849152,
+              6450.178803641115,
+              6300.336150845278,
+              6850.672301690514,
+              8042.262678803585,
+              7275.899869960993,
+              7447.740572171629,
+              13397.54031209362,
+              7572.795188556591
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1800,
+            "samples": [
+              5558.125000000018,
+              5409.490555555547,
+              5551.875000000008,
+              5413.657222222241,
+              5351.435555555592,
+              5568.611111111119,
+              5418.564999999944,
+              5766.203333333363,
+              5348.148333333333,
+              5337.916666666666,
+              5444.629444444457,
+              5260.694444444502
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 363,
+            "samples": [
+              41572.8870523416,
+              86825.18457300289,
+              33026.17079889788,
+              36547.06336088145,
+              30389.69146005553,
+              83993.34159779624,
+              29118.112947658155,
+              106508.60881542745,
+              31925.159779614387,
+              28409.550964187732,
+              33722.68319559243,
+              35230.487603305875
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1265,
+            "samples": [
+              8894.103557312243,
+              9424.703557312314,
+              8678.06324110673,
+              9092.161264822029,
+              8563.10909090914,
+              8846.11383399201,
+              8334.683794466378,
+              8100.329644268907,
+              8410.539920948679,
+              8619.565217391262,
+              8674.901185770837,
+              8039.229249011854
+            ]
+          }
+        ],
+        "checksum": 4233312
+      },
+      "vpm": {
+        "pid": 46599,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 1631,
+            "samples": [
+              6307.811771919047,
+              15306.278969957079,
+              3676.118945432277,
+              2681.202942979766,
+              2648.2985898221823,
+              2522.941140404654,
+              2606.836296750435,
+              2460.990190067434,
+              2628.959534028225,
+              2710.632740649908,
+              2672.363580625394,
+              2996.3212752912323
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1538,
+            "samples": [
+              7259.048764629361,
+              7340.973342002559,
+              6732.824447334148,
+              6998.211963589058,
+              6892.0676202861005,
+              6604.464889466805,
+              6929.237321196332,
+              6789.661898569569,
+              7133.912873862214,
+              6894.804291287365,
+              6814.179453836191,
+              6856.983745123502
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1800,
+            "samples": [
+              5596.5511111111255,
+              5632.801111111057,
+              6120.323888888871,
+              6176.666666666696,
+              7063.611111111135,
+              9394.65277777774,
+              7578.101666666663,
+              8009.930555555546,
+              6838.7266666666665,
+              5656.180555555592,
+              5725.115555555614,
+              5574.1199999999935
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 363,
+            "samples": [
+              25952.71074380169,
+              23560.606060606086,
+              24596.534435261376,
+              23596.303030303126,
+              23992.76859504107,
+              22317.37741046781,
+              23700.41322314019,
+              23028.80991735511,
+              23743.457300275175,
+              22804.867768594875,
+              25716.597796142793,
+              24870.29476584054
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1265,
+            "samples": [
+              11170.355731225283,
+              8456.291699604688,
+              9395.783399209407,
+              7730.6000000000295,
+              9045.78339920964,
+              10449.44031620559,
+              8047.59525691699,
+              10569.36758893276,
+              7919.828458498052,
+              8334.420553359696,
+              9156.752569169983,
+              7918.9067193676065
+            ]
+          }
+        ],
+        "checksum": 1887840
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46621,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 4389,
+            "samples": [
+              2437.742082478926,
+              2497.275461380719,
+              2437.134426976527,
+              2455.380952380947,
+              2455.2574618364047,
+              2387.5408976987846,
+              2451.773296878558,
+              2434.922533606754,
+              2520.37275005696,
+              2557.0745044429286,
+              2456.795397584882,
+              2606.4023695602664
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1490,
+            "samples": [
+              6474.999999999983,
+              6365.268456375821,
+              6507.018791946329,
+              6359.340268456371,
+              6468.456375838949,
+              6342.0020134227925,
+              6427.097315436232,
+              6376.677852349012,
+              6265.912080536873,
+              6488.003355704735,
+              6266.722147651058,
+              6392.310067114092
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1773,
+            "samples": [
+              5864.44839255503,
+              5851.6875352509915,
+              5847.269035532998,
+              5772.842639593945,
+              5786.825719120135,
+              5982.962210941916,
+              5731.222786237972,
+              5747.508742244788,
+              5740.623237450725,
+              5807.83530738859,
+              13439.979695431453,
+              12776.696559503753
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 415,
+            "samples": [
+              86761.24578313243,
+              27782.730120482058,
+              26128.71566265071,
+              26307.831325300824,
+              31658.33493975894,
+              26054.920481927576,
+              36712.853012048356,
+              24220.681927711237,
+              25164.457831325388,
+              23467.067469879243,
+              32212.85060240993,
+              22225.602409638755
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 785,
+            "samples": [
+              7689.755414012789,
+              8141.188535031757,
+              8950.742675159265,
+              9606.369426751517,
+              7930.254777070013,
+              7738.853503184482,
+              7662.101910828088,
+              9327.442038216574,
+              8152.175796178465,
+              7797.718471337462,
+              7961.677707006203,
+              9160.0318471337
+            ]
+          }
+        ],
+        "checksum": 5528672
+      },
+      "upstream": {
+        "pid": 46642,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 4389,
+            "samples": [
+              2624.5349737981237,
+              4326.6974253816325,
+              5577.428571428583,
+              3231.7534745955813,
+              6190.5520619731205,
+              3979.3041695147112,
+              9815.419229892917,
+              2271.91091364775,
+              4655.540442014132,
+              2788.31556163136,
+              5157.296650717719,
+              5612.96217817269
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1490,
+            "samples": [
+              7156.907382550298,
+              7495.302013422823,
+              6617.085906040281,
+              6872.00805369126,
+              6807.130872483191,
+              6707.15838926172,
+              7405.089261744982,
+              6942.141610738261,
+              9034.00469798654,
+              8400.083892617366,
+              6902.209395973188,
+              7530.677181208015
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1773,
+            "samples": [
+              5808.422447828515,
+              5693.998307952562,
+              5766.1917653693945,
+              5515.39311900737,
+              5567.047377326547,
+              5797.165820643033,
+              5528.600112803066,
+              6012.173716864069,
+              6419.95657078402,
+              7602.65087422456,
+              6149.746192893469,
+              6247.415115623262
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 415,
+            "samples": [
+              40976.60722891524,
+              33764.05542168693,
+              34510.74457831351,
+              31724.298795180915,
+              34582.831325301355,
+              28830.824096385517,
+              31577.612048192666,
+              28045.281927710763,
+              30698.693975903345,
+              28881.826506024056,
+              28731.125301204753,
+              28670.583132530322
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 785,
+            "samples": [
+              7860.668789808883,
+              8445.276433120893,
+              9498.194904458644,
+              8346.550318471374,
+              8213.85350318451,
+              9235.987261146562,
+              13785.084076433088,
+              9965.127388535053,
+              7925.95541401297,
+              8284.024203821553,
+              9967.25095541403,
+              8471.55031847164
+            ]
+          }
+        ],
+        "checksum": 1742624
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46665,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 4836,
+            "samples": [
+              6233.276468155506,
+              4159.334367245664,
+              2666.554797353176,
+              2041.2187758478062,
+              2618.684449958639,
+              2066.7907361455755,
+              3840.0880893300164,
+              2309.5016542597164,
+              3221.102150537633,
+              2291.313275434238,
+              3630.3504962779166,
+              2488.3771712158937
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1534,
+            "samples": [
+              6130.405475880055,
+              6893.76857887871,
+              6524.554106910005,
+              6411.071056062624,
+              6710.668839634954,
+              6492.558018252901,
+              6476.559322033868,
+              6523.223598435453,
+              6545.98565840942,
+              6806.089960886604,
+              12207.029986962134,
+              6935.24511082142
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1540,
+            "samples": [
+              9907.62987013001,
+              10699.431818181745,
+              15123.727922077971,
+              11734.036363636378,
+              6708.982467532443,
+              5532.386363636336,
+              8106.601948051846,
+              7161.390259740346,
+              5645.995454545466,
+              5566.7207792208055,
+              5626.704545454538,
+              5499.945454545462
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 344,
+            "samples": [
+              26726.136627906744,
+              28221.17151162787,
+              29928.052325581753,
+              27795.543604650997,
+              28475.534883720822,
+              27093.386627906864,
+              27855.377906977203,
+              28564.436046511797,
+              26764.534883721244,
+              27058.624999999745,
+              28962.331395348432,
+              28088.177325581364
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1117,
+            "samples": [
+              8215.68128916752,
+              8547.858549686758,
+              8238.921217546957,
+              8074.902417189027,
+              9134.959713518263,
+              9053.491495076101,
+              8838.331244404797,
+              8224.336615935374,
+              8411.145926589108,
+              10187.593554162848,
+              10105.714413608004,
+              9693.897045658108
+            ]
+          }
+        ],
+        "checksum": 4723744
+      },
+      "vpm": {
+        "pid": 46687,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 4836,
+            "samples": [
+              2056.210297766746,
+              2755.781430934666,
+              2135.416666666661,
+              2811.6557071960324,
+              2133.633167907357,
+              3416.141232423494,
+              2216.035980148893,
+              3205.2489660876763,
+              2342.7074028122456,
+              3719.8873035566576,
+              2992.547146401991,
+              1997.475599669156
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1534,
+            "samples": [
+              7629.2099087353445,
+              7214.607561929629,
+              7104.2757496739905,
+              6911.668839634993,
+              6480.334419817469,
+              6780.367666232052,
+              6505.758800521501,
+              6710.506518904875,
+              6414.629726205949,
+              6539.820078226893,
+              7542.889178617981,
+              6667.426988265918
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1540,
+            "samples": [
+              5258.9285714286425,
+              5346.807142857031,
+              5543.3980519481265,
+              5336.01168831174,
+              5128.706493506537,
+              5677.597402597428,
+              5149.35064935069,
+              5340.368181818233,
+              5317.802597402557,
+              5413.446753246634,
+              5311.877272727206,
+              5345.860389610453
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 344,
+            "samples": [
+              28745.88081395327,
+              27696.34302325593,
+              28224.92732558179,
+              27145.3488372092,
+              28131.421511628418,
+              27508.962209301946,
+              27584.18023255788,
+              27875.84883720897,
+              27388.563953488254,
+              28974.4418604652,
+              27124.517441860742,
+              27275.558139534536
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1117,
+            "samples": [
+              8523.985675917753,
+              8029.804834377795,
+              8132.348254252587,
+              8602.880035810314,
+              8192.292748433327,
+              8017.047448522872,
+              7927.484333034931,
+              8168.27126230977,
+              7612.018800357971,
+              8019.6213070724725,
+              8090.048343778133,
+              7940.577439570111
+            ]
+          }
+        ],
+        "checksum": 2041824
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46709,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 4951,
+            "samples": [
+              2000.21874368814,
+              2589.9313270046423,
+              2020.6271460311023,
+              2633.1211876388625,
+              2048.5507978186256,
+              4051.4542516663246,
+              3053.4235507978083,
+              2034.2524742476214,
+              2679.3409412239976,
+              2044.8984043627602,
+              3366.146637043024,
+              2315.508584124411
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1660,
+            "samples": [
+              6178.237951807197,
+              6089.05662650604,
+              6054.719277108439,
+              6120.331325301224,
+              6047.464457831293,
+              6038.102409638531,
+              6130.5475903614215,
+              6082.25421686747,
+              6123.2433734939705,
+              5967.946987951874,
+              6041.792168674674,
+              6088.880722891546
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1944,
+            "samples": [
+              5198.345164609066,
+              5318.029835390838,
+              5198.152777777808,
+              5328.85390946507,
+              5376.114711934243,
+              5314.579218106944,
+              5345.335905349811,
+              5132.865740740689,
+              5255.5730452675225,
+              5164.437757201651,
+              5257.630144032965,
+              5350.094650205751
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 375,
+            "samples": [
+              26396.999999999633,
+              27219.66666666655,
+              28180.887999999562,
+              26719.66666666655,
+              26556.778666666407,
+              26970.88799999983,
+              27727.109333333527,
+              27202.109333333283,
+              27859.33333333378,
+              31746.333333333194,
+              30970.666666666755,
+              27759.66666666621
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1273,
+            "samples": [
+              7763.780047132744,
+              7787.346425766051,
+              8060.257659072895,
+              7801.8790259230855,
+              8355.001571091958,
+              8088.603299292905,
+              7955.4524744697665,
+              8036.789473684091,
+              7840.23959151604,
+              8054.9230164964665,
+              8075.346425765873,
+              8027.362922231055
+            ]
+          }
+        ],
+        "checksum": 4894368
+      },
+      "upstream": {
+        "pid": 46730,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "create application theme",
+            "iterations": 4951,
+            "samples": [
+              1973.220965461518,
+              2634.619268834587,
+              2053.8275095940203,
+              2707.5001009896982,
+              2990.363966875369,
+              2414.8909311250222,
+              2641.048879014338,
+              2136.5970511007945,
+              3405.0276711775414,
+              2248.3756816804694,
+              3055.872550999793,
+              3518.784084023437
+            ]
+          },
+          {
+            "case": "resolve responsive sx",
+            "iterations": 1660,
+            "samples": [
+              6048.518674698841,
+              6176.606024096364,
+              5979.14156626508,
+              6100.7783132530185,
+              5943.75,
+              6152.284337349351,
+              6071.8873493976025,
+              6315.712650602443,
+              6091.289759036138,
+              6399.246987951805,
+              6153.7144578313655,
+              5998.543975903614
+            ]
+          },
+          {
+            "case": "generate theme CSS variables",
+            "iterations": 1944,
+            "samples": [
+              5433.170267489727,
+              5332.776234567931,
+              5380.336934156332,
+              8657.793209876583,
+              9568.458333333343,
+              9475.65174897124,
+              5576.795781892981,
+              5512.6244855966515,
+              5602.280864197552,
+              5439.600823045246,
+              5460.240740740656,
+              5373.41409465021
+            ]
+          },
+          {
+            "case": "Box and responsive Stack SSR",
+            "iterations": 375,
+            "samples": [
+              27692.55466666679,
+              28063.88799999998,
+              27718.00000000015,
+              26578.11199999984,
+              27051.55466666717,
+              28806.112000000212,
+              27073.44533333344,
+              26850.554666666234,
+              27355.333333332965,
+              28355.333333333572,
+              27212.77866666666,
+              30016.554666666707
+            ]
+          },
+          {
+            "case": "styled theme override SSR",
+            "iterations": 1273,
+            "samples": [
+              7856.179104477581,
+              7843.054202670919,
+              8265.28515318163,
+              7830.1908876670495,
+              7858.3731343284135,
+              7980.918303220755,
+              8003.240377062158,
+              8043.336213668462,
+              8107.717989002308,
+              7882.102906520011,
+              8056.198743126469,
+              8043.532600157112
+            ]
+          }
+        ],
+        "checksum": 2027296
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "create application theme",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2544.6410866547703,
+          "vpmNs": 2510.37328970851,
+          "changePct": -1.346665238016309
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2176.7322777454956,
+          "vpmNs": 2581.602266124354,
+          "changePct": 18.599898229018507
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 2361.907112201123,
+          "vpmNs": 2676.78326180258,
+          "changePct": 13.331436616405124
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 4491.118933697882,
+          "vpmNs": 2455.319207108676,
+          "changePct": -45.32945478940983
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 2642.6196236559076,
+          "vpmNs": 2549.2444168734555,
+          "changePct": -3.5334334895036124
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 2637.8340739244622,
+          "vpmNs": 2452.7199555645266,
+          "changePct": -7.017655893895192
+        }
+      ]
+    },
+    {
+      "case": "resolve responsive sx",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 6554.680483028711,
+          "vpmNs": 6475.169060052223,
+          "changePct": -1.2130480376939423
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 8332.83127035829,
+          "vpmNs": 7130.971661237808,
+          "changePct": -14.423184271062361
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 6795.662873862158,
+          "vpmNs": 6893.435955786733,
+          "changePct": 1.4387570975693098
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7049.52449664428,
+          "vpmNs": 6384.4939597315515,
+          "changePct": -9.433693538185395
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 6535.2698826597125,
+          "vpmNs": 6745.437092568463,
+          "changePct": 3.2158918251623536
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 6096.034036144578,
+          "vpmNs": 6085.567469879508,
+          "changePct": -0.1716946821984755
+        }
+      ]
+    },
+    {
+      "case": "generate theme CSS variables",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 5476.004895960793,
+          "vpmNs": 6076.002447980402,
+          "changePct": 10.956848348732828
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5608.906249999943,
+          "vpmNs": 5838.212083333332,
+          "changePct": 4.0882450715483465
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 5416.111111111093,
+          "vpmNs": 6148.4952777777835,
+          "changePct": 13.522325366704768
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5802.7941342357735,
+          "vpmNs": 5827.552171460794,
+          "changePct": 0.42665716984429114
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 6935.186363636394,
+          "vpmNs": 5338.1899350649865,
+          "changePct": -23.027447927643564
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 5486.432613168654,
+          "vpmNs": 5286.1046810699545,
+          "changePct": -3.651333138000601
+        }
+      ]
+    },
+    {
+      "case": "Box and responsive Stack SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 28021.79054054041,
+          "vpmNs": 24733.277027026765,
+          "changePct": -11.735558114161194
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 29515.86494252876,
+          "vpmNs": 24368.952586206855,
+          "changePct": -17.437782583514373
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 34476.58539944915,
+          "vpmNs": 23721.93526170768,
+          "changePct": -31.194069868396245
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 31138.153012048006,
+          "vpmNs": 26218.273493975765,
+          "changePct": -15.800164885080491
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 27971.777616279283,
+          "vpmNs": 27640.261627906904,
+          "changePct": -1.1851802660530208
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 27523.94399999988,
+          "vpmNs": 27473.38800000004,
+          "changePct": -0.18368007143104714
+        }
+      ]
+    },
+    {
+      "case": "styled theme override SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 8250.09166666666,
+          "vpmNs": 8360.818859649187,
+          "changePct": 1.3421328811400457
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7993.720818815263,
+          "vpmNs": 8003.429878048759,
+          "changePct": 0.12145857296697038
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 8647.23320158105,
+          "vpmNs": 8751.037549407163,
+          "changePct": 1.2004342360875997
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 8458.413375796266,
+          "vpmNs": 8051.433121018979,
+          "changePct": -4.811543686690223
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 8693.094897045778,
+          "vpmNs": 8059.926589077964,
+          "changePct": -7.283577545932307
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 7992.079340141456,
+          "vpmNs": 8032.076197957573,
+          "changePct": 0.5004562156337267
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "create application theme",
+      "upstream_ns": 2453,
+      "vpm_ns": 2546,
+      "change_pct": 6,
+      "upstream_first_pct": 6,
+      "vpm_first_pct": -13.4,
+      "process_range_pct": "-1.3, 18.6, 13.3, -45.3",
+      "control_max_abs_pct": 7,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "resolve responsive sx",
+      "upstream_ns": 6923,
+      "vpm_ns": 6684,
+      "change_pct": -5.3,
+      "upstream_first_pct": 0.1,
+      "vpm_first_pct": -11.9,
+      "process_range_pct": "-1.2, -14.4, 1.4, -9.4",
+      "control_max_abs_pct": 3.2,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "generate theme CSS variables",
+      "upstream_ns": 5542,
+      "vpm_ns": 5957,
+      "change_pct": 7.5,
+      "upstream_first_pct": 12.2,
+      "vpm_first_pct": 2.3,
+      "process_range_pct": "11.0, 4.1, 13.5, 0.4",
+      "control_max_abs_pct": 23,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Box and responsive Stack SSR",
+      "upstream_ns": 30327,
+      "vpm_ns": 24551,
+      "change_pct": -16.6,
+      "upstream_first_pct": -21.5,
+      "vpm_first_pct": -16.6,
+      "process_range_pct": "-11.7, -17.4, -31.2, -15.8",
+      "control_max_abs_pct": 1.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "styled theme override SSR",
+      "upstream_ns": 8354,
+      "vpm_ns": 8206,
+      "change_pct": 0.7,
+      "upstream_first_pct": 1.3,
+      "vpm_first_pct": -2.3,
+      "process_range_pct": "1.3, 0.1, 1.2, -4.8",
+      "control_max_abs_pct": 7.3,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

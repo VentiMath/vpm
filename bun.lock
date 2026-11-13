@@ -759,6 +759,18 @@
         "react": "^19.3.0",
       },
     },
+    "packages/vmui-system": {
+      "name": "vmui-system",
+      "version": "9.5.0",
+      "dependencies": {
+        "vmui-private-theming": "9.5.0",
+        "vmui-styled-engine": "9.5.0",
+        "vmui-utils": "9.5.0",
+      },
+      "peerDependencies": {
+        "react": "^19.3.0",
+      },
+    },
     "packages/vmui-utils": {
       "name": "vmui-utils",
       "version": "9.5.0",
@@ -2029,6 +2041,8 @@
     "vmui-private-theming": ["vmui-private-theming@workspace:packages/vmui-private-theming"],
 
     "vmui-styled-engine": ["vmui-styled-engine@workspace:packages/vmui-styled-engine"],
+
+    "vmui-system": ["vmui-system@workspace:packages/vmui-system"],
 
     "vmui-utils": ["vmui-utils@workspace:packages/vmui-utils"],
 
