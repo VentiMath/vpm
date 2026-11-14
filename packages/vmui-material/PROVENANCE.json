@@ -3,12 +3,12 @@
     "name": "@mui/material",
     "version": "9.5.0",
     "repository": "https://github.com/mui/material-ui",
-    "checked": "2026-11-13"
+    "checked": "2026-11-14"
   },
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "partial; remaining component families pending",
-    "targetScope": "Fourteen components: button controls, Typography, Link, SvgIcon, Box, Paper, Divider and Icon; createSvgIcon and the scoped resolved-theme bridge. Includes surfaces/elevations, horizontal/vertical and labelled dividers, font-icon fallback, current custom-root props, nested/CSS-variable themes and responsive sx. Full Material theme creation and remaining families are not implemented.",
+    "targetScope": "Seventeen components: button controls, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel and FormHelperText; createSvgIcon and the scoped resolved-theme bridge. Includes shared input focus/filled/required/error state, native label and helper accessibility, form theme overrides, surfaces/elevations, horizontal/vertical and labelled dividers, font-icon fallback, current custom-root props, nested/CSS-variable themes and responsive sx. Full Material theme creation and remaining families are not implemented.",
     "independentComponents": [
       "ButtonBase",
       "Button",
@@ -23,9 +23,12 @@
       "Box",
       "Paper",
       "Divider",
-      "Icon"
+      "Icon",
+      "FormControl",
+      "FormLabel",
+      "FormHelperText"
     ],
-    "remainingWork": "Forms and validation controls; remaining surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
+    "remainingWork": "InputBase/Input/OutlinedInput/InputLabel/TextField and remaining form controls; remaining surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
   },
   "changes": [
     "Written independently over VPM System and its styling closure; no upstream Material runtime, Babel or prop-types ships.",
@@ -38,10 +41,11 @@
     "Independent Material Box and scoped theme bridge, including $$material isolation, nested callback providers and CSS-variable themes. Retains direct System props used by app 7.2.0, which current Material 9 removed. Fuse-style SVG sprite roots are browser checked.",
     "Independent Paper, Divider and Icon use VPM System. Standard shadow geometry is design data obtained from the public default-theme API; no upstream component runtime is copied.",
     "Paper preserves caller shadow/overlay variables and theme overrides; invalid noninteger or out-of-range elevations reject explicitly. Divider preserves separator roles/orientation and legacy app light/vertical-children hooks. Font icons remain decorative unless explicitly exposed.",
-    "Box now forwards custom-root API props such as Icon color/fontSize instead of consuming them as System styles, matching Material 9. App Material 7 has the collision; the browser fixture asserts this intentional difference. Native roots retain app direct System props."
+    "Box now forwards custom-root API props such as Icon color/fontSize instead of consuming them as System styles, matching Material 9. App Material 7 has the collision; the browser fixture asserts this intentional difference. Native roots retain app direct System props.",
+    "Independent FormControl state provider and useFormControl; FormLabel and FormHelperText inherit only undefined options, preserve explicit false, expose native label/helper semantics and reset stale focus on disable. Initial filled/adornment state supports recognized Input/Select children for SSR. Shared provider identity across CJS/ESM context entries; no upstream input code ships."
   ],
   "caller": {
-    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. FuseSvgIcon instead uses styled Box, SVG sprite references and an Icon fallback. Material icons and FuseSvgIcon are distinct callers. Shared external-link actions combine IconButton with motion.button and inherited variants. Paper appears in contest registration/results and public authentication panels; Divider in shared navigation and vertical toolbars; Icon in palette selection and FuseSvgIcon\u2019s non-SVG fallback.",
+    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. FuseSvgIcon instead uses styled Box, SVG sprite references and an Icon fallback. Material icons and FuseSvgIcon are distinct callers. Shared external-link actions combine IconButton with motion.button and inherited variants. Paper appears in contest registration/results and public authentication panels; Divider in shared navigation and vertical toolbars; Icon in palette selection and FuseSvgIcon\u2019s non-SVG fallback. Form foundations are used by FuseSettings number/radio/switch controllers and palette selection; the shared theme changes label typography, control color and helper margins. Browser checks use synthetic settings forms and unchanged upstream InputBase through a test-only context bridge.",
     "revision": "3aa9eb28b225e061994229693fbb0556765a5dc4"
   },
   "references": [
@@ -55,6 +59,9 @@
     "https://mui.com/material-ui/integrations/theme-scoping/",
     "https://mui.com/material-ui/api/paper/",
     "https://mui.com/material-ui/api/divider/",
-    "https://mui.com/material-ui/api/icon/"
+    "https://mui.com/material-ui/api/icon/",
+    "https://mui.com/material-ui/api/form-control/",
+    "https://mui.com/material-ui/api/form-label/",
+    "https://mui.com/material-ui/api/form-helper-text/"
   ]
 }

@@ -66,10 +66,14 @@ function check(name) {
 }
 check("vmui-material");
 console.log(
-  "All Material button entries, SSR and " +
+  "All Material component entries, SSR and " +
     seen.size +
     "-package VPM closure pass",
 );
 
 const surfaces=renderToString(React.createElement(api.Paper,{elevation:2},React.createElement(api.Divider,{orientation:"vertical"}),React.createElement(api.Icon,null,"palette")));
 assert.match(surfaces,/MuiPaper-elevation2/);assert.match(surfaces,/aria-orientation="vertical"/);assert.match(surfaces,/notranslate/);
+
+const forms=renderToString(React.createElement(api.FormControl,{required:true,error:true},React.createElement(api.FormLabel,{htmlFor:'field'},'Contest'),React.createElement(api.FormHelperText,null,' ')));
+assert.match(forms,/Mui-required/);assert.match(forms,/Mui-error/);assert.match(forms,/aria-hidden="true"/);
+assert.equal(api.useFormControl,require('vmui-material/FormControl/useFormControl').default);

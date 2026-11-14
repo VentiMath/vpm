@@ -102,7 +102,7 @@ try {
         fs.readFileSync(dir + "/node_modules/vmui-material/" + file, "utf8"),
         fs.readFileSync(root + "/packages/vmui-material/" + file, "utf8"),
       );
-    for (const folder of ["utils","styles"]) for (const file of fs.readdirSync(root + "/packages/vmui-material/"+folder))
+    for (const folder of ["utils","styles","FormControl"]) for (const file of fs.readdirSync(root + "/packages/vmui-material/"+folder))
       assert.equal(fs.readFileSync(dir + "/node_modules/vmui-material/"+folder+"/" + file,"utf8"),fs.readFileSync(root + "/packages/vmui-material/"+folder+"/" + file,"utf8"));
     fs.copyFileSync(__dirname + "/archive-check.mjs", dir + "/check.mjs");
     for (const runtime of ["node", "bun"])
@@ -114,7 +114,8 @@ try {
       "contract.cjs",
       "text-contract.cjs",
       "surfaces-contract.cjs",
-      ...(manager === "npm" ? ["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs"] : []),
+      "forms-contract.cjs",
+      ...(manager === "npm" ? ["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs"] : []),
     ]) {
       process.stdout.write(
         execFileSync("node", [__dirname + "/" + file], {

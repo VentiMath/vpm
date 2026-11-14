@@ -49,5 +49,5 @@ for (const bundler of [false, true]) {
   clean(r);
 }
 console.log(
-  "Strict TS7 control/text/icon roots, router props, refs, styles and negative consumers pass NodeNext/Bundler",
+  "Strict TS7 Material component roots, router props, refs, styles and negative consumers pass NodeNext/Bundler",
 );

@@ -260,3 +260,24 @@ export type IconProps<C extends React.ElementType="span">=IconOwnProps & Omit<Re
 export const Icon:TextComponent<IconOwnProps,"span"> & {muiName:string};
 export const iconClasses:Readonly<IconClasses>;
 export function getIconUtilityClass(slot:string):string;
+
+export interface FormControlOwnProps {children?:React.ReactNode; className?:string; classes?:Partial<FormControlClasses>; color?:ButtonColor; disabled?:boolean; error?:boolean; focused?:boolean; fullWidth?:boolean; hiddenLabel?:boolean; margin?:'none'|'dense'|'normal'; required?:boolean; size?:'small'|'medium'|(string & {}); variant?:'standard'|'filled'|'outlined'; sx?:SxProps<Theme>;}
+export interface FormLabelOwnProps {children?:React.ReactNode; className?:string; classes?:Partial<FormLabelClasses>; color?:ButtonColor; disabled?:boolean; error?:boolean; filled?:boolean; focused?:boolean; required?:boolean; sx?:SxProps<Theme>;}
+export interface FormHelperTextOwnProps {children?:React.ReactNode; className?:string; classes?:Partial<FormHelperTextClasses>; disabled?:boolean; error?:boolean; filled?:boolean; focused?:boolean; required?:boolean; margin?:'dense'; variant?:'standard'|'filled'|'outlined'|(string & {}); sx?:SxProps<Theme>;}
+export type FormControlClasses=Record<'root'|'marginNone'|'marginNormal'|'marginDense'|'fullWidth'|'disabled',string>;
+export type FormLabelClasses=Record<'root'|'colorSecondary'|'focused'|'disabled'|'error'|'filled'|'required'|'asterisk',string>;
+export type FormHelperTextClasses=Record<'root'|'error'|'disabled'|'sizeSmall'|'sizeMedium'|'contained'|'focused'|'filled'|'required',string>;
+export interface FormControlState {adornedStart:boolean; color:ButtonColor; disabled:boolean; error:boolean; filled:boolean; focused:boolean; fullWidth:boolean; hiddenLabel:boolean; required:boolean; size:NonNullable<FormControlOwnProps['size']>; variant:NonNullable<FormControlOwnProps['variant']>; onFocus:React.FocusEventHandler; onBlur:React.FocusEventHandler; onFilled():void; onEmpty():void; registerEffect():()=>void; setAdornedStart:React.Dispatch<React.SetStateAction<boolean>>;}
+export function useFormControl():FormControlState|undefined;
+export type FormControlProps<C extends React.ElementType="div">=FormControlOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof FormControlOwnProps> & {component?:C};
+export const FormControl:TextComponent<FormControlOwnProps,"div">;
+export const formControlClasses:Readonly<FormControlClasses>;
+export function getFormControlUtilityClass(slot:string):string;
+export type FormLabelProps<C extends React.ElementType="label">=FormLabelOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof FormLabelOwnProps> & {component?:C};
+export const FormLabel:TextComponent<FormLabelOwnProps,"label">;
+export const formLabelClasses:Readonly<FormLabelClasses>;
+export function getFormLabelUtilityClass(slot:string):string;
+export type FormHelperTextProps<C extends React.ElementType="p">=FormHelperTextOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof FormHelperTextOwnProps> & {component?:C};
+export const FormHelperText:TextComponent<FormHelperTextOwnProps,"p">;
+export const formHelperTextClasses:Readonly<FormHelperTextClasses>;
+export function getFormHelperTextUtilityClass(slot:string):string;

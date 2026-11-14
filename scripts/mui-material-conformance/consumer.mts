@@ -141,3 +141,21 @@ Divider({orientation:"diagonal"});
 Paper({elevation:"2"});
 // @ts-expect-error incorrect anchor ref
 Paper({component:"a",ref:React.createRef<HTMLDivElement>()});
+
+import {FormControl,FormLabel,FormHelperText,useFormControl} from 'vmui-material';
+import FormControlEntry from 'vmui-material/FormControl';
+import FormLabelEntry from 'vmui-material/FormLabel';
+import HelperEntry from 'vmui-material/FormHelperText';
+import formContext from 'vmui-material/FormControl/FormControlContext';
+import formHook from 'vmui-material/FormControl/useFormControl';
+FormControl({component:'fieldset',required:true,margin:'dense',ref:React.createRef<HTMLFieldSetElement>()});
+FormLabel({htmlFor:'contest',ref:React.createRef<HTMLLabelElement>(),required:false});
+FormLabel({component:'legend',ref:React.createRef<HTMLLegendElement>()});
+FormHelperText({id:'help',error:true,variant:'outlined',sx:{mt:1}});
+// @ts-expect-error invalid margin
+FormControl({margin:'huge'});
+// @ts-expect-error legend ref cannot be an SVG ref
+FormLabel({component:'legend',ref:React.createRef<SVGSVGElement>()});
+// @ts-expect-error helper error is boolean
+FormHelperText({error:'yes'});
+void [FormControlEntry,FormLabelEntry,HelperEntry,useFormControl,formHook,formContext];

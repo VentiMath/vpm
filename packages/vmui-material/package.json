@@ -1,7 +1,7 @@
 {
   "name": "vmui-material",
   "version": "9.5.0",
-  "description": "Independent Material controls, text, icons, surfaces and resolved-theme integration for VentiMath; remaining families in progress",
+  "description": "Independent Material controls, forms, text, icons, surfaces and resolved-theme integration for VentiMath; remaining families in progress",
   "type": "commonjs",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -397,6 +397,96 @@
         "types": "./iconClasses.d.cts",
         "default": "./iconClasses.cjs"
       }
+    },
+    "./FormControl": {
+      "import": {
+        "types": "./FormControl.d.mts",
+        "default": "./FormControl.mjs"
+      },
+      "require": {
+        "types": "./FormControl.d.cts",
+        "default": "./FormControl.cjs"
+      }
+    },
+    "./formControlClasses": {
+      "import": {
+        "types": "./formControlClasses.d.mts",
+        "default": "./formControlClasses.mjs"
+      },
+      "require": {
+        "types": "./formControlClasses.d.cts",
+        "default": "./formControlClasses.cjs"
+      }
+    },
+    "./FormLabel": {
+      "import": {
+        "types": "./FormLabel.d.mts",
+        "default": "./FormLabel.mjs"
+      },
+      "require": {
+        "types": "./FormLabel.d.cts",
+        "default": "./FormLabel.cjs"
+      }
+    },
+    "./formLabelClasses": {
+      "import": {
+        "types": "./formLabelClasses.d.mts",
+        "default": "./formLabelClasses.mjs"
+      },
+      "require": {
+        "types": "./formLabelClasses.d.cts",
+        "default": "./formLabelClasses.cjs"
+      }
+    },
+    "./FormHelperText": {
+      "import": {
+        "types": "./FormHelperText.d.mts",
+        "default": "./FormHelperText.mjs"
+      },
+      "require": {
+        "types": "./FormHelperText.d.cts",
+        "default": "./FormHelperText.cjs"
+      }
+    },
+    "./formHelperTextClasses": {
+      "import": {
+        "types": "./formHelperTextClasses.d.mts",
+        "default": "./formHelperTextClasses.mjs"
+      },
+      "require": {
+        "types": "./formHelperTextClasses.d.cts",
+        "default": "./formHelperTextClasses.cjs"
+      }
+    },
+    "./useFormControl": {
+      "import": {
+        "types": "./useFormControl.d.mts",
+        "default": "./useFormControl.mjs"
+      },
+      "require": {
+        "types": "./useFormControl.d.cts",
+        "default": "./useFormControl.cjs"
+      }
+    },
+    "./FormControl/useFormControl": {
+      "import": {
+        "types": "./FormControl/useFormControl.d.mts",
+        "default": "./FormControl/useFormControl.mjs"
+      },
+      "require": {
+        "types": "./FormControl/useFormControl.d.cts",
+        "default": "./FormControl/useFormControl.cjs"
+      }
+    },
+    "./FormControl/FormControlContext": {
+      "import": {
+        "types": "./FormControl/FormControlContext.d.mts",
+        "default": "./FormControl/FormControlContext.mjs"
+      },
+      "require": {
+        "types": "./FormControl/FormControlContext.d.cts",
+        "default": "./FormControl/FormControlContext.cjs"
+      }
     }
   },
   "files": [
@@ -408,7 +498,8 @@
     "README.md",
     "PROVENANCE.json",
     "LICENSE",
-    "styles"
+    "styles",
+    "FormControl"
   ],
   "sideEffects": false,
   "engines": {

@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider and Icon, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel and FormHelperText, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -19,13 +19,13 @@ Typography covers semantic variants, custom roots, truncation, spacing and physi
 
 For existing callers, Typography retains Material 7’s `paragraph`, direct System props and CSS/palette-path colors that Material 9 dropped. Explicit root ARIA attributes take precedence over SVG child attributes; a supplied title makes a decorative child accessible unless the root explicitly hides it. Unknown typography variants and icon sizes cannot read inherited object properties.
 
-Forms, remaining surfaces and display components, navigation, menus/overlays, full Material theme creation and the remaining app-used exports still need implementation. No upstream Material implementation is bundled, and no app dependency or release has been changed by this work. Runtime dependencies are the VPM System closure, with React as a peer.
+Input components, remaining surfaces and display components, navigation, menus/overlays, full Material theme creation and the remaining app-used exports still need implementation. No upstream Material implementation is bundled, and no app dependency or release has been changed by this work. Runtime dependencies are the VPM System closure, with React as a peer.
 
 The earlier button and text/icon benchmarks predate the custom native-root correction. The earlier button measurements found Node icon-button SSR about 20% slower than both controls. The new Typography/Link/SvgIcon measurements are inconclusive on Node and Bun: process-pair variation and identical-source controls do not establish a speedup or regression in any case. Raw samples, including large control differences, are retained. These are isolated SSR costs, not application interaction measurements.
 
-[Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
+[Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md), [form benchmarks](bench/forms/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
 
-Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. Next are form controls, menus and the table’s Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
+Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; next are InputBase and input wrappers, menus and the table’s Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
@@ -70,3 +70,34 @@ The new surface/icon SSR recordings show 7.6% less time for Icon on Node and 6.8
 less for Paper on Bun versus Material 9. The other comparisons are inconclusive:
 process variation is substantial, including large identical-source control
 outliers. All raw samples are retained; there is no overall speedup claim.
+
+FormControl, FormLabel and FormHelperText provide the shared form foundation.
+The provider owns focus, filled and start-adornment state, while controlled
+`focused` and explicit child flags take precedence. Disabling clears stale focus;
+nested controls have independent state. Recognized Input/Select child props seed
+filled/adornment state for server rendering. Inputs notify the context through
+`useFormControl`; wrapping an arbitrary native input does not automatically track
+its value. Use one input per control.
+
+FormLabel keeps native `htmlFor`/legend behavior and an aria-hidden required
+marker. FormHelperText preserves a reserved line for a single-space child.
+Callers supply input IDs and `aria-describedby`; these components do not invent
+associations. Theme defaults, slot overrides, variants, responsive `sx`, refs,
+CSS-variable colors and RTL work through VPM System. Explicit false child options
+can opt out of inherited error, disabled, required or focused state.
+
+The browser fixture models FuseSettings and palette selection, including the
+app's secondary control color, label typography and helper margins. It also
+checks an unchanged upstream InputBase against the owned context through a
+test-only bridge. No upstream input code ships. InputBase, Input, OutlinedInput,
+InputLabel and TextField are the next implementation unit, not exports claimed
+by this package today. The FormControl context and hook subpaths share one
+identity across CJS/ESM consumers.
+
+The form benchmark records **12.4% more Bun time** for the combined 12-field
+FormControl/label/helper scene versus Material 9 (about 378 µs versus 337 µs).
+Standalone label/helper comparisons and the app 7 comparisons are inconclusive.
+Node medians are higher too, but process-pair and identical-source control spread
+do not establish a direction; those noisy samples remain in the report. There
+is no claimed form-rendering speedup. These are SSR costs, not browser typing or
+validation latency. The older component reports remain historical measurements.

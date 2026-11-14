@@ -29,3 +29,13 @@ export const {Box,boxClasses,ThemeProvider,GlobalStyles,styled,useTheme,useTheme
 export const { Paper, paperClasses, getPaperUtilityClass }=a;
 export const { Divider, dividerClasses, getDividerUtilityClass }=a;
 export const { Icon, iconClasses, getIconUtilityClass }=a;
+export const FormControl = a.FormControl;
+export const formControlClasses = a.formControlClasses;
+export const getFormControlUtilityClass = a.getFormControlUtilityClass;
+export const FormLabel = a.FormLabel;
+export const formLabelClasses = a.formLabelClasses;
+export const getFormLabelUtilityClass = a.getFormLabelUtilityClass;
+export const FormHelperText = a.FormHelperText;
+export const formHelperTextClasses = a.formHelperTextClasses;
+export const getFormHelperTextUtilityClass = a.getFormHelperTextUtilityClass;
+export const useFormControl = a.useFormControl;
