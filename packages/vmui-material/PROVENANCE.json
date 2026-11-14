@@ -8,7 +8,7 @@
   "implementation": {
     "kind": "independent implementation",
     "replacementStatus": "partial; remaining component families pending",
-    "targetScope": "Eleven components: button controls, Typography, Link, SvgIcon and Box; createSvgIcon; scoped ThemeProvider, useTheme, styled, GlobalStyles, useThemeProps, useMediaQuery and useColorScheme over VPM System. Accepts existing resolved plain/CSS-variable Material themes and nested callbacks. Full Material theme creation and remaining component families are not implemented.",
+    "targetScope": "Fourteen components: button controls, Typography, Link, SvgIcon, Box, Paper, Divider and Icon; createSvgIcon and the scoped resolved-theme bridge. Includes surfaces/elevations, horizontal/vertical and labelled dividers, font-icon fallback, current custom-root props, nested/CSS-variable themes and responsive sx. Full Material theme creation and remaining families are not implemented.",
     "independentComponents": [
       "ButtonBase",
       "Button",
@@ -20,7 +20,10 @@
       "Typography",
       "Link",
       "SvgIcon",
-      "Box"
+      "Box",
+      "Paper",
+      "Divider",
+      "Icon"
     ],
     "remainingWork": "Forms and validation controls; remaining surfaces and data display; navigation, menus, tabs and overlays; full Material theme creation and remaining app-used exports; whole-app integration and consumer release."
   },
@@ -32,10 +35,13 @@
     "Retains Material 7 paragraph, direct system props and CSS/palette-path colors needed by existing callers alongside the current typography contract. Physical text alignment is preserved in RTL.",
     "Explicit root accessibility attributes override nested SVG attributes; titleAccess promotes a decorative SVG child to a named image unless the root explicitly hides it. Prototype-named variants and sizes do not read inherited object properties.",
     "Custom component roots receive native button type/disabled semantics by default, matching Material 9; nativeButton:false explicitly selects ARIA semantics. Browser acceptance covers the application combination of IconButton, motion.button, inherited variants, theme rerenders and ref cleanup.",
-    "Independent Material Box and scoped theme bridge, including $$material isolation, nested callback providers and CSS-variable themes. Retains direct System props used by app 7.2.0, which current Material 9 removed. Fuse-style SVG sprite roots are browser checked."
+    "Independent Material Box and scoped theme bridge, including $$material isolation, nested callback providers and CSS-variable themes. Retains direct System props used by app 7.2.0, which current Material 9 removed. Fuse-style SVG sprite roots are browser checked.",
+    "Independent Paper, Divider and Icon use VPM System. Standard shadow geometry is design data obtained from the public default-theme API; no upstream component runtime is copied.",
+    "Paper preserves caller shadow/overlay variables and theme overrides; invalid noninteger or out-of-range elevations reject explicitly. Divider preserves separator roles/orientation and legacy app light/vertical-children hooks. Font icons remain decorative unless explicitly exposed.",
+    "Box now forwards custom-root API props such as Icon color/fontSize instead of consuming them as System styles, matching Material 9. App Material 7 has the collision; the browser fixture asserts this intentional difference. Native roots retain app direct System props."
   ],
   "caller": {
-    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. FuseSvgIcon instead uses styled Box, SVG sprite references and an Icon fallback. Material icons and FuseSvgIcon are distinct callers. Shared external-link actions combine IconButton with motion.button and inherited variants.",
+    "scope": "Navigation actions, contest forms, family area/reminder toggles, palette selector and navbar Fab. Building this subset does not switch VentiMath dependencies. Navigation search and link roots, theme typography and icon sizing, and @mui/icons-material consumers in MustangMath, I2MC and IMO. FuseSvgIcon instead uses styled Box, SVG sprite references and an Icon fallback. Material icons and FuseSvgIcon are distinct callers. Shared external-link actions combine IconButton with motion.button and inherited variants. Paper appears in contest registration/results and public authentication panels; Divider in shared navigation and vertical toolbars; Icon in palette selection and FuseSvgIcon\u2019s non-SVG fallback.",
     "revision": "3aa9eb28b225e061994229693fbb0556765a5dc4"
   },
   "references": [
@@ -46,6 +52,9 @@
     "https://mui.com/material-ui/api/link/",
     "https://mui.com/material-ui/api/svg-icon/",
     "https://mui.com/material-ui/react-box/",
-    "https://mui.com/material-ui/integrations/theme-scoping/"
+    "https://mui.com/material-ui/integrations/theme-scoping/",
+    "https://mui.com/material-ui/api/paper/",
+    "https://mui.com/material-ui/api/divider/",
+    "https://mui.com/material-ui/api/icon/"
   ]
 }

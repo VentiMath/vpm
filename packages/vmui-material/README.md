@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon and Box, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider and Icon, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -23,9 +23,9 @@ Forms, remaining surfaces and display components, navigation, menus/overlays, fu
 
 The earlier button and text/icon benchmarks predate the custom native-root correction. The earlier button measurements found Node icon-button SSR about 20% slower than both controls. The new Typography/Link/SvgIcon measurements are inconclusive on Node and Bun: process-pair variation and identical-source controls do not establish a speedup or regression in any case. Raw samples, including large control differences, are retained. These are isolated SSR costs, not application interaction measurements.
 
-[Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
+[Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
 
-Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Next are Paper/Divider and the Icon fallback, then forms, menus and the table’s Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
+Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. Next are form controls, menus and the table’s Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
@@ -34,8 +34,7 @@ implement Material's full `createTheme` factory. `$$material` scoping and nested
 callback providers keep Material separate from other styled-library themes.
 Box accepts polymorphic HTML/SVG roots, refs, responsive `sx`, and the direct
 System props used by the app's Material 7 callers. Browser comparisons include
-the styled Box/SVG sprite pattern used by FuseSvgIcon. Its Icon fallback is still
-pending. New Box SSR measurements are separate from the older reports: 12% less time on Node and 22% less on Bun than the app’s Material 7 control; versus Material 9, Node takes 10.3% more time and Bun has no established difference. This is 12-element SSR, not browser frame rate.
+the styled Box/SVG sprite pattern used by FuseSvgIcon. Its Icon fallback is now covered too. New Box SSR measurements are separate from the older reports: 12% less time on Node and 22% less on Bun than the app’s Material 7 control; versus Material 9, Node takes 10.3% more time and Bun has no established difference. This is 12-element SSR, not browser frame rate.
 
 ```jsx
 import Box from 'vmui-material/Box';
@@ -45,3 +44,29 @@ import { ThemeProvider, useTheme } from 'vmui-material/styles';
   <Box component="section" sx={{ p: 2, color: 'text.primary' }}>Contest</Box>
 </ThemeProvider>
 ```
+
+Paper covers all 25 standard elevations, outlined/square/custom variants,
+polymorphic roots, dark overlays, CSS-variable themes and caller style precedence.
+Default shadow geometry is standard design data observed through the public theme
+API; the component logic is independent. Invalid elevations outside integer 0–24
+throw, rather than silently losing the shadow. Theme-provided shadows are honored.
+
+Divider supports native horizontal rules, vertical/flex separators, labelled
+lines, alignment, inset/middle/absolute layouts and explicit presentation roles.
+The legacy Material 7 light option and vertical-children class hook are retained.
+Icon supplies the font-icon wrapper, palette/size options, ligature classes and
+refs; the application must provide its font. Decorative icons are hidden by
+default; explicit ARIA props can expose a name. This is distinct from SvgIcon.
+
+The real Fuse fallback revealed a Box integration issue: custom roots' `color`
+and `fontSize` were consumed as System styles. Box now forwards those props to
+Icon, matching Material 9. Material 7 has the same collision as the earlier VPM
+implementation. The browser test asserts that legacy difference explicitly;
+it does not normalize it away without checking. Native Box roots still accept
+legacy direct System props. The previous Box benchmark predates this custom-root
+correction; the separate surface/icon report measures the current code.
+
+The new surface/icon SSR recordings show 7.6% less time for Icon on Node and 6.8%
+less for Paper on Bun versus Material 9. The other comparisons are inconclusive:
+process variation is substantial, including large identical-source control
+outliers. All raw samples are retained; there is no overall speedup claim.

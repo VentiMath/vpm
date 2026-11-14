@@ -26,3 +26,6 @@ export const { Link, linkClasses, getLinkUtilityClass } = a;
 export const { SvgIcon, svgIconClasses, getSvgIconUtilityClass } = a;
 export const createSvgIcon = a.createSvgIcon;
 export const {Box,boxClasses,ThemeProvider,GlobalStyles,styled,useTheme,useThemeProps,useMediaQuery,useColorScheme,THEME_ID}=a;
+export const { Paper, paperClasses, getPaperUtilityClass }=a;
+export const { Divider, dividerClasses, getDividerUtilityClass }=a;
+export const { Icon, iconClasses, getIconUtilityClass }=a;

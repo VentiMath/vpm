@@ -340,11 +340,17 @@ const pending = new Map(),
     process.exitCode = 1;
   } finally {
     socket?.close();
-    child?.kill("SIGKILL");
+    if (child && child.exitCode === null && child.signalCode === null) {
+      const exited = new Promise(resolve => child.once("exit", resolve));
+      child.kill("SIGTERM");
+      const kill = setTimeout(() => child.kill("SIGKILL"), 3000);
+      await exited;
+      clearTimeout(kill);
+    }
     server?.closeAllConnections();
-    server?.close();
+    if (server) await new Promise(resolve => server.close(resolve));
     for (const p of pending.values()) clearTimeout(p.timer);
     if (process.exitCode) console.error("Evidence: " + scratch);
-    else fs.rmSync(scratch, { recursive: true, force: true });
+    else fs.rmSync(scratch, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
   }
 })();

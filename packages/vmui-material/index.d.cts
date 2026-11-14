@@ -241,3 +241,22 @@ export const useThemeProps: typeof import("vmui-system").useThemeProps;
 export const useMediaQuery: typeof import("vmui-system").useMediaQuery;
 export function useColorScheme(): {mode?:string;systemMode?:string;colorScheme?:string;allColorSchemes:string[];setMode(mode:"light"|"dark"|"system"|null):void;setColorScheme(scheme:string|Record<string,string>):void};
 export const THEME_ID: "$$material";
+
+export interface PaperOwnProps { children?:React.ReactNode; className?:string; classes?:Partial<PaperClasses>; elevation?:number; square?:boolean; variant?:'elevation'|'outlined'|(string & {}); sx?:SxProps<Theme>; }
+export interface DividerOwnProps { children?:React.ReactNode; className?:string; classes?:Partial<DividerClasses>; absolute?:boolean; flexItem?:boolean; /** Legacy app Material 7 option. */ light?:boolean; orientation?:'horizontal'|'vertical'; textAlign?:'left'|'center'|'right'; variant?:'fullWidth'|'inset'|'middle'|(string & {}); sx?:SxProps<Theme>; }
+export interface IconOwnProps {children?:React.ReactNode; className?:string; classes?:Partial<IconClasses>; baseClassName?:string; color?:'inherit'|'action'|'disabled'|ButtonColor; fontSize?:'inherit'|'small'|'medium'|'large'|(string & {}); sx?:SxProps<Theme>;}
+export type PaperClasses=Record<'root'|'rounded'|'outlined'|'elevation'|`elevation${number}`,string>;
+export type DividerClasses=Record<'root'|'absolute'|'fullWidth'|'inset'|'middle'|'flexItem'|'light'|'vertical'|'withChildren'|'withChildrenVertical'|'textAlignLeft'|'textAlignRight'|'wrapper'|'wrapperVertical',string>;
+export type IconClasses=Record<'root'|'colorPrimary'|'colorSecondary'|'colorAction'|'colorError'|'colorDisabled'|'fontSizeInherit'|'fontSizeSmall'|'fontSizeMedium'|'fontSizeLarge',string>;
+export type PaperProps<C extends React.ElementType="div">=PaperOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof PaperOwnProps> & {component?:C};
+export const Paper:TextComponent<PaperOwnProps,"div">;
+export const paperClasses:Readonly<PaperClasses>;
+export function getPaperUtilityClass(slot:string):string;
+export type DividerProps<C extends React.ElementType="hr">=DividerOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof DividerOwnProps> & {component?:C};
+export const Divider:TextComponent<DividerOwnProps,"hr">;
+export const dividerClasses:Readonly<DividerClasses>;
+export function getDividerUtilityClass(slot:string):string;
+export type IconProps<C extends React.ElementType="span">=IconOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof IconOwnProps> & {component?:C};
+export const Icon:TextComponent<IconOwnProps,"span"> & {muiName:string};
+export const iconClasses:Readonly<IconClasses>;
+export function getIconUtilityClass(slot:string):string;

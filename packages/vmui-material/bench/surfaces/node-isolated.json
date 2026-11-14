@@ -1,0 +1,2400 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-14T03:17:04.745Z",
+  "runtime": {
+    "node": "24.22.1",
+    "acorn": "8.18.0",
+    "ada": "4.0.0",
+    "amaro": "1.1.11",
+    "ares": "1.34.9",
+    "brotli": "1.2.0",
+    "cldr": "48.0",
+    "icu": "78.3",
+    "llhttp": "9.4.3",
+    "merve": "1.2.2",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.4",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.70.0",
+    "nghttp3": "",
+    "ngtcp2": "",
+    "openssl": "3.5.9",
+    "simdjson": "4.6.11",
+    "simdutf": "6.4.0",
+    "sqlite": "3.53.4",
+    "tz": "2026e",
+    "undici": "7.30.1",
+    "unicode": "17.0",
+    "uv": "1.52.1",
+    "uvwasi": "0.0.23",
+    "v8": "13.6.233.17-node.58",
+    "zlib": "1.3.2.1-motley-285e94b",
+    "zstd": "1.5.7"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/surfaces-bench-entry.jsx": "26c05895c1f0ed97c5daa524d481b98933dd9f6de1e2a6777a93aebf347fd6e7",
+    "../../scripts/mui-material-conformance/surfaces-build.cjs": "a6b164cc7f07368ed59dc68732029b46ea71a6ea63ab8d8bc9fa574503d4b632",
+    "../../scripts/mui-material-conformance/surfaces-scene.jsx": "4c629427c7432aa5ef951fdf52ee4a9883947a2d48fd75f3041a48df38a6c7e4",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/surfaces-bench.cjs": "16fe76ed4867007322f113159c486720092d8c6689e309ded807870461e7bc72",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/surfaces-bench.cjs": "050b5d4944859e798951da58150d4f39effdde16d900c2d423a96df053478c18",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/surfaces-bench.cjs": "aa23a3788c94f246472343f62d4b31c31bf258e73fd94a37c13a2c0b05c51ca6",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/surfaces-bench.cjs": "8f34c2f65cd027e08f1c738846bcfdfa9989dca130c6c1f940a75e600e2981ac",
+    "../../scripts/mui-system-conformance/package-lock.json": "ddadfff23ccbae1816cb53aa88c03f4279279b3014993b39c62b7b1676faa633",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-serialize/index.js": "c0f0aedff3b921627f5b9ec2159ad491a2ada45060f4dcf8d8ce5a27030e65b4",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "92b7c409eb10d74ccf311fd638b8cc5cbc7738f9d0405ef04597ff0fe327ed37",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "PROVENANCE.json": "8b1a01995e22b6195532ab756cf2bf3e5a9b3c78fa4726193d36a667f06c1ac0",
+    "bench/surfaces.cjs": "9042e5dcdf82f9958ad0e27e39357b385793a73d7edc66869c2f2f531754c2c2",
+    "buttons.cjs": "991a937cdb131f7e570bf8513901fb3423b2a2b58aad3096fba4cb6e0ddf25c6",
+    "index.cjs": "2b1bf700b3e27a8755c017c03fd3e430e778f34a8a9af9414b8fbea20fb544fd",
+    "package.json": "15cd1c0f09cc47a51f5adc29351e693c338948dd18f7670e9f1cd05c87cf0f97",
+    "surfaces.cjs": "76dba2de164f93a2f31d9f08d7a4353ff4ced7f68814d31341cb1851c1deddb0",
+    "text.cjs": "344b9dc7bf08a46b8241932f051677704870e2ab48804afdd8a9da6fffae1cbf",
+    "theme.cjs": "c8f10a217705c2e142da705773511879c7a3b3cc617cab08616813cdb57286d7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 15142,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 35,
+            "samples": [
+              293502.37142857135,
+              267197.6000000005,
+              285205.97142857173,
+              276948.7999999992,
+              256708.342857142,
+              262045.2285714285,
+              271715.4571428572,
+              245104.74285714282,
+              267980.9714285722,
+              272096.4285714282,
+              254035.71428571307,
+              276353.57142857113
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 36,
+            "samples": [
+              286802.0833333339,
+              263609.9444444445,
+              260759.25000000035,
+              280578.6944444435,
+              292814.8333333335,
+              271553.22222222365,
+              323636.58333333157,
+              265277.77777777653,
+              308013.8888888876,
+              305581.02777777665,
+              263968.7499999973,
+              303222.22222222056
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 45,
+            "samples": [
+              249709.24444444338,
+              225145.35555555488,
+              236244.44444444636,
+              226693.5333333297,
+              241729.6444444421,
+              224458.33333333416,
+              237173.13333333246,
+              218726.84444444228,
+              238601.8444444441,
+              224274.99999999884,
+              239824.99999999872,
+              216209.26666666695
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 36,
+            "samples": [
+              281758.11111111037,
+              300670.13888889155,
+              274545.1388888872,
+              302084.5000000034,
+              290887.7222222183,
+              294820.6111111126,
+              292348.3611111111,
+              270451.3888888869,
+              311368.05555555236,
+              269697.9166666691,
+              296828.7222222254,
+              278952.55555555806
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 38,
+            "samples": [
+              277671.05263157387,
+              314775.236842108,
+              320072.3684210516,
+              264461.63157894666,
+              284355.26315789315,
+              314114.02631579223,
+              312448.47368420893,
+              305508.789473684,
+              275118.42105263297,
+              272044.973684208,
+              285595.3947368418,
+              280296.052631582
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 45,
+            "samples": [
+              238926.84444443957,
+              217251.86666666964,
+              217037.0444444517,
+              206749.06666666476,
+              218309.2666666602,
+              251350.91111110846,
+              239978.7111111133,
+              220801.84444444565,
+              219406.48888888367,
+              250724.06666667017,
+              217551.8444444404,
+              217333.33333332767
+            ]
+          }
+        ],
+        "checksum": 160804438
+      },
+      "vpm": {
+        "pid": 15143,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 35,
+            "samples": [
+              277450.0000000005,
+              260596.42857142896,
+              277291.65714285796,
+              249123.80000000016,
+              248864.28571428655,
+              276539.28571428586,
+              258329.7428571427,
+              279472.62857142865,
+              266677.39999999997,
+              262392.85714285803,
+              242647.6285714281,
+              252590.4857142856
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 36,
+            "samples": [
+              319005.7777777768,
+              294719.8888888888,
+              268528.9444444455,
+              268863.4166666664,
+              276432.88888888963,
+              292238.44444444403,
+              299694.4444444441,
+              296076.38888888725,
+              295461.80555555504,
+              303878.4722222216,
+              287711.80555555515,
+              287473.36111111264
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 45,
+            "samples": [
+              209128.71111111145,
+              220909.24444444478,
+              207178.7111111108,
+              219588.88888888803,
+              227712.97777777715,
+              211794.4444444447,
+              212424.0666666664,
+              226986.11111111153,
+              204070.35555555366,
+              213462.95555555468,
+              210654.6222222227,
+              221544.44444444278
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 36,
+            "samples": [
+              285689.80555555376,
+              236758.08333333256,
+              244402.77777778066,
+              290689.8055555555,
+              306369.22222222056,
+              245871.5277777767,
+              259480.3333333352,
+              254097.22222222327,
+              239059.02777777833,
+              353430.55555555085,
+              252577.5555555533,
+              248130.7777777728
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 38,
+            "samples": [
+              263899.13157894573,
+              315201.7631578976,
+              266486.84210526524,
+              269836.6315789467,
+              274790.5789473658,
+              307916.684210526,
+              273260.94736842107,
+              265411.18421052466,
+              284144.7368421026,
+              298605.2631578942,
+              257637.05263158213,
+              270262.05263158126
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 45,
+            "samples": [
+              219329.6222222216,
+              256287.04444444441,
+              209012.04444444375,
+              206610.1777777779,
+              203550.0000000007,
+              246737.95555555544,
+              206151.84444444723,
+              218638.8888888915,
+              203575.93333333172,
+              238508.3333333316,
+              208185.20000000007,
+              206725.0000000008
+            ]
+          }
+        ],
+        "checksum": 144210593
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 15144,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 37,
+            "samples": [
+              253853.62162162163,
+              289264.64864864835,
+              253067.56756756722,
+              286319.8378378382,
+              251880.62162162224,
+              336819.8108108109,
+              252587.8378378381,
+              303433.5405405401,
+              251611.48648648756,
+              261388.5135135138,
+              246325.459459459,
+              261944.8108108108
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 38,
+            "samples": [
+              277713.8157894743,
+              329571.2631578932,
+              337966.00000000047,
+              272538.368421052,
+              281324.5789473686,
+              323485.76315789495,
+              351032.8947368419,
+              282404.60526315676,
+              283126.10526315717,
+              298425.4473684198,
+              284274.10526315775,
+              277882.68421052536
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 46,
+            "samples": [
+              203108.69565217308,
+              211720.10869565344,
+              213374.0869565214,
+              206740.9347826089,
+              204645.82608695992,
+              212128.63043478059,
+              200787.13043478335,
+              220306.15217391125,
+              209469.19565217383,
+              206122.28260869335,
+              204390.39130435107,
+              225226.45652173628
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 41,
+            "samples": [
+              249943.07317073125,
+              240585.3658536538,
+              347267.2682926869,
+              273963.4146341481,
+              250176.82926829546,
+              254939.0243902408,
+              331416.6585365877,
+              248228.65853658496,
+              247896.34146341862,
+              242447.17073170474,
+              241069.0975609779,
+              275843.51219512406
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 36,
+            "samples": [
+              259491.9166666677,
+              272697.9166666676,
+              288313.66666666884,
+              276622.66666666506,
+              276144.6944444464,
+              271958.3333333351,
+              301084.47222222085,
+              268237.2777777825,
+              283302.08333333454,
+              262283.58333332837,
+              297156.2499999942,
+              262734.9444444462
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 46,
+            "samples": [
+              215678.43478260824,
+              245352.34782608668,
+              203853.2608695653,
+              208576.08695652013,
+              225507.2391304348,
+              233278.9782608712,
+              227431.17391304742,
+              206005.43478261225,
+              211239.13043478475,
+              241097.82608695203,
+              209038.95652174036,
+              214855.9782608671
+            ]
+          }
+        ],
+        "checksum": 161208662
+      },
+      "upstream": {
+        "pid": 15148,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 37,
+            "samples": [
+              268881.7567567566,
+              262854.72972973075,
+              276413.2972972982,
+              271120.4864864877,
+              273882.89189189195,
+              255493.24324324395,
+              279952.70270270266,
+              283398.6486486485,
+              289489.8648648644,
+              265570.9459459457,
+              246489.86486486415,
+              252836.702702703
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 38,
+            "samples": [
+              327766.4473684228,
+              278555.9210526332,
+              300571.28947368625,
+              258343.2105263132,
+              271208.3421052637,
+              274826.7368421041,
+              269789.4736842123,
+              269583.3421052648,
+              245085.5263157905,
+              265130.50000000093,
+              251957.2368421061,
+              266336.6052631593
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 46,
+            "samples": [
+              223692.93478260736,
+              243634.95652173995,
+              226976.45652173695,
+              247349.63043477896,
+              245490.04347826392,
+              238412.13043478213,
+              250919.3695652169,
+              242408.52173913343,
+              244770.84782608433,
+              228792.58695652624,
+              220906.69565217587,
+              235351.43478260995
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 41,
+            "samples": [
+              274045.73170731345,
+              272152.43902439467,
+              256188.02439024564,
+              287261.1707317091,
+              251933.92682926857,
+              296870.95121951133,
+              254304.8780487813,
+              259916.65853658982,
+              247041.6585365844,
+              251338.4146341473,
+              238143.2926829237,
+              245835.3658536586
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 36,
+            "samples": [
+              255086.8055555561,
+              271697.91666666593,
+              251561.36111111334,
+              248993.05555555882,
+              243145.83333333276,
+              239754.63888888905,
+              237231.50000000081,
+              226834.47222222082,
+              259584.49999999782,
+              235648.1388888925,
+              241233.80555555384,
+              238369.22222222434
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 46,
+            "samples": [
+              193865.043478265,
+              192739.13043478227,
+              205150.36956521726,
+              208286.23913043094,
+              231598.7391304351,
+              204502.71739130822,
+              202350.54347826127,
+              200937.49999999919,
+              199673.91304347708,
+              218599.63043478905,
+              193522.65217391663,
+              199017.21739130034
+            ]
+          }
+        ],
+        "checksum": 145512810
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 15149,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 37,
+            "samples": [
+              275761.27027027047,
+              267975.2162162157,
+              280628.3783783792,
+              269218.4594594603,
+              281855.8648648654,
+              253695.9459459461,
+              263606.9729729721,
+              273977.48648648587,
+              258647.5135135131,
+              253217.32432432382,
+              256281.5405405405,
+              259675.67567567577
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 35,
+            "samples": [
+              315726.2000000011,
+              261988.1142857139,
+              306467.85714285605,
+              301076.1714285731,
+              288924.99999999796,
+              319411.88571428414,
+              265039.28571428655,
+              282959.514285715,
+              260742.85714285646,
+              282588.0857142855,
+              272142.8571428565,
+              253833.342857141
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 45,
+            "samples": [
+              235455.55555555588,
+              235459.26666666774,
+              228768.5111111134,
+              233646.31111110916,
+              215197.22222222097,
+              240599.08888888865,
+              219298.13333333388,
+              227411.11111110714,
+              214582.40000000235,
+              243029.6444444442,
+              221212.02222221857,
+              241979.64444444753
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 36,
+            "samples": [
+              284300.91666666616,
+              289292.83333333285,
+              264105.33333333,
+              282028.9444444484,
+              286052.0833333327,
+              280158.583333332,
+              301472.22222222405,
+              287096.055555556,
+              292572.91666666814,
+              278079.8611111095,
+              289996.5277777786,
+              258545.13888888655
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 26,
+            "samples": [
+              301966.3461538427,
+              342847.7307692307,
+              246413.4615384567,
+              260660.23076922508,
+              259692.30769230585,
+              309019.23076923,
+              317988.76923077245,
+              294511.1923076918,
+              338304.49999999686,
+              260123.3846153788,
+              257911.88461537857,
+              281044.8846153821
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 48,
+            "samples": [
+              234359.37499999683,
+              218914.93749999805,
+              232795.14583333593,
+              218517.3541666643,
+              224049.47916667574,
+              232183.16666666776,
+              216406.2499999962,
+              243817.70833333387,
+              220922.74999999974,
+              225201.39583333314,
+              369595.5000000026,
+              949896.6874999913
+            ]
+          }
+        ],
+        "checksum": 160017136
+      },
+      "vpm": {
+        "pid": 15150,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 37,
+            "samples": [
+              255217.3513513511,
+              247680.18918918818,
+              265820.9459459459,
+              263090.1081081094,
+              277782.648648649,
+              243504.51351351297,
+              287560.8108108106,
+              256915.54054054065,
+              254664.4054054047,
+              269637.37837837695,
+              256762.40540540495,
+              253138.5135135138
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 35,
+            "samples": [
+              309601.1714285721,
+              300821.42857143027,
+              297744.02857142704,
+              275454.77142857306,
+              285505.97142857115,
+              293303.5714285714,
+              292779.77142857184,
+              270201.20000000007,
+              265009.5428571408,
+              276808.3428571442,
+              289757.1428571415,
+              266417.8571428562
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 45,
+            "samples": [
+              222138.8888888896,
+              223521.31111111044,
+              206599.0666666671,
+              224382.4000000005,
+              200610.1777777758,
+              205705.5555555558,
+              207204.62222222218,
+              220468.51111111007,
+              210788.88888888893,
+              217887.977777779,
+              210224.08888889005,
+              222634.24444444253
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 36,
+            "samples": [
+              286681.6944444458,
+              253892.3611111146,
+              250054.41666667137,
+              259670.13888888838,
+              276861.1111111075,
+              297269.66666666814,
+              281126.138888889,
+              256002.33333333084,
+              247026.61111110853,
+              365349.52777777915,
+              247494.19444444557,
+              238061.33333333593
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 26,
+            "samples": [
+              270564.0769230775,
+              294711.53846153495,
+              289709.9230769282,
+              276605.7692307763,
+              317076.9230769198,
+              283227.53846153914,
+              276897.423076924,
+              285777.2307692305,
+              300304.4615384607,
+              364056.1153846157,
+              260895.807692315,
+              281584.96153845976
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 48,
+            "samples": [
+              217139.7708333321,
+              209384.54166666532,
+              233667.52083333608,
+              205301.2083333338,
+              207276.04166666442,
+              210574.6458333376,
+              255400.18750000116,
+              203694.4583333309,
+              208194.43750000253,
+              212776.041666667,
+              250690.95833333675,
+              210554.68750000253
+            ]
+          }
+        ],
+        "checksum": 145746050
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 15207,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 38,
+            "samples": [
+              251137.05263157876,
+              266782.8947368431,
+              273945.184210525,
+              291443.00000000023,
+              262471.4736842114,
+              329818.0000000008,
+              268645.8421052637,
+              265219.31578947324,
+              248758.7631578947,
+              263333.342105263,
+              235421.05263157963,
+              242850.86842105316
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 29,
+            "samples": [
+              1568895.1034482734,
+              3032977.0000000033,
+              1035094.8275862061,
+              3780031.6206896575,
+              851708.3448275846,
+              565376.4137931014,
+              555385.0689655181,
+              469722.68965517066,
+              357877.86206896236,
+              961502.8965517217,
+              430260.0689655124,
+              487906.6206896572
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 35,
+            "samples": [
+              304846.42857142846,
+              217450.0000000015,
+              209065.48571429084,
+              216059.51428571515,
+              227327.39999999988,
+              258636.91428571008,
+              211680.97142856693,
+              208190.48571428796,
+              219082.14285713906,
+              214166.6857142874,
+              207035.71428571193,
+              228534.51428571003
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 24,
+            "samples": [
+              246258.66666666712,
+              240156.25000000303,
+              345380.2083333339,
+              247956.58333332918,
+              273984.37499999773,
+              264413.16666666616,
+              242258.66666666698,
+              265305.5416666632,
+              352027.7500000002,
+              365105.8750000023,
+              270335.0833333313,
+              278913.20833333564
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 36,
+            "samples": [
+              318520.83333333465,
+              280640.0555555544,
+              282565.97222222504,
+              271018.52777777443,
+              306692.13888888987,
+              279267.3611111114,
+              277580.9999999979,
+              274576.38888888725,
+              322447.9166666659,
+              274965.27777777956,
+              278939.83333333634,
+              270909.72222222516
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 30,
+            "samples": [
+              220341.6666666726,
+              288462.499999999,
+              209554.1666666577,
+              224533.3333333292,
+              216795.83333332933,
+              248462.5000000051,
+              216686.10000000018,
+              256259.70000000962,
+              218533.33333333468,
+              207938.89999999918,
+              213218.06666666514,
+              204580.5666666638
+            ]
+          }
+        ],
+        "checksum": 147139784
+      },
+      "upstream": {
+        "pid": 15208,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 38,
+            "samples": [
+              258047.15789473825,
+              260490.13157894686,
+              268705.02631578874,
+              264921.05263157916,
+              303949.5789473676,
+              261474.78947368386,
+              296929.8157894729,
+              263818.00000000134,
+              249292.76315789425,
+              245135.97368420984,
+              255221.50000000015,
+              273135.947368421
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 29,
+            "samples": [
+              311922.41379310336,
+              286811.79310344835,
+              300076.1379310359,
+              271596.2758620702,
+              271283.0344827588,
+              287376.4482758596,
+              267357.75862068986,
+              274755.7586206877,
+              266465.5172413781,
+              277660.8965517222,
+              260173.82758620585,
+              261560.3448275853
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 35,
+            "samples": [
+              222903.57142856982,
+              236980.9428571443,
+              244884.54285714333,
+              225923.79999999984,
+              223702.39999999868,
+              226972.62857142763,
+              221117.8571428588,
+              246183.34285714157,
+              225921.4285714279,
+              234460.71428571225,
+              224910.7142857156,
+              206883.3428571387
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 24,
+            "samples": [
+              275559.0416666678,
+              265515.6249999967,
+              279767.37499999633,
+              239824.6666666637,
+              280965.29166666075,
+              270796.87500000204,
+              275578.1250000003,
+              270968.7499999992,
+              267284.74999999703,
+              298689.25000000483,
+              264920.1250000033,
+              257717.04166666607
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 36,
+            "samples": [
+              244247.69444444415,
+              256642.36111111272,
+              261252.33333333302,
+              233527.77777778203,
+              243522.0000000034,
+              254908.5555555545,
+              239884.27777777586,
+              226990.72222222108,
+              248278.94444444435,
+              241631.94444444496,
+              451388.8888888889,
+              243701.3888888878
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 30,
+            "samples": [
+              205409.73333333264,
+              217233.3333333351,
+              206390.26666666876,
+              197000.00000000274,
+              217015.30000000275,
+              208495.83333333614,
+              211026.39999999912,
+              210061.0999999996,
+              207498.6000000005,
+              199523.63333333476,
+              199697.23333333604,
+              205729.16666666666
+            ]
+          }
+        ],
+        "checksum": 143640266
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 15211,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 37,
+            "samples": [
+              266021.3783783793,
+              270304.0540540548,
+              271036.02702702786,
+              283890.75675675704,
+              282104.7297297302,
+              275792.7837837843,
+              250127.27027027,
+              250091.21621621636,
+              253711.70270270304,
+              235007.89189189175,
+              248492.13513513515,
+              244649.75675675605
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 36,
+            "samples": [
+              299854.16666666727,
+              257230.33333333474,
+              297069.444444443,
+              313592.58333333174,
+              303744.19444444496,
+              292005.8055555583,
+              255784.7222222228,
+              274687.49999999884,
+              263134.2777777787,
+              268079.8611111091,
+              256858.77777777618,
+              253908.5555555561
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 43,
+            "samples": [
+              215948.6279069745,
+              218464.13953488632,
+              226420.5348837211,
+              231829.46511628127,
+              212978.67441860543,
+              244259.67441860383,
+              236289.72093023398,
+              224657.9302325562,
+              227454.4418604671,
+              244895.34883721103,
+              227182.18604651093,
+              213749.99999999662
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 37,
+            "samples": [
+              277917.81081081403,
+              282118.2432432419,
+              281324.32432432106,
+              278162.1621621599,
+              269873.86486486095,
+              298086.70270270685,
+              282787.1621621619,
+              300963.9729729733,
+              277277.0270270227,
+              283371.6216216175,
+              274015.75675675477,
+              260037.1621621668
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 35,
+            "samples": [
+              487794.02857143007,
+              257063.1142857175,
+              256866.68571428134,
+              331567.8571428569,
+              328017.8571428613,
+              319971.42857143056,
+              263008.3428571457,
+              275126.1714285712,
+              305213.11428571737,
+              306680.94285714295,
+              304484.54285714694,
+              252414.28571428385
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 41,
+            "samples": [
+              225309.95121950383,
+              219609.75609756974,
+              211577.2439024335,
+              227417.6829268316,
+              238260.14634146192,
+              226526.4146341529,
+              330040.63414633804,
+              226751.00000000518,
+              218088.41463414466,
+              234218.4878048767,
+              222705.26829268466,
+              222311.99999999642
+            ]
+          }
+        ],
+        "checksum": 156934521
+      },
+      "vpm": {
+        "pid": 15212,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 37,
+            "samples": [
+              264671.16216216295,
+              265686.9189189193,
+              248908.78378378422,
+              285128.3783783773,
+              263559.67567567586,
+              271889.62162162125,
+              251533.78378378283,
+              258442.56756756842,
+              268088.97297297406,
+              250204.94594594624,
+              263733.1081081083,
+              255614.86486486578
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 36,
+            "samples": [
+              283349.5277777792,
+              267549.7500000006,
+              275967.6111111086,
+              266900.4722222199,
+              260375.000000001,
+              282519.66666666954,
+              281877.3055555539,
+              263641.19444444455,
+              260148.16666666558,
+              254310.16666666686,
+              267611.11111111153,
+              261018.5277777772
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 43,
+            "samples": [
+              241776.1627906985,
+              227724.8139534872,
+              247780.04651162773,
+              222895.3488372078,
+              244562.02325581122,
+              229074.62790697557,
+              245042.65116279066,
+              229993.2093023239,
+              235687.02325581422,
+              232486.44186046367,
+              223436.0465116255,
+              236336.25581395114
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 37,
+            "samples": [
+              256831.08108108395,
+              257045.0540540544,
+              270130.64864865085,
+              251716.21621621557,
+              293922.297297298,
+              270297.29729729664,
+              274569.81081081106,
+              253897.51351351175,
+              245130.648648646,
+              269245.48648648977,
+              256861.48648648942,
+              268636.2702702723
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 35,
+            "samples": [
+              272870.2285714267,
+              252271.42857142357,
+              239884.51428571608,
+              264729.77142857417,
+              281452.3714285705,
+              268851.1714285726,
+              232363.08571428838,
+              222988.0857142819,
+              231755.94285714524,
+              234642.85714285975,
+              239822.62857143075,
+              256783.3428571443
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 41,
+            "samples": [
+              203569.09756097462,
+              199431.90243902348,
+              199768.2926829251,
+              208973.58536585007,
+              198108.75609756494,
+              209213.4146341445,
+              200733.7317073152,
+              202527.4390243905,
+              211897.3414634106,
+              193303.85365854052,
+              214940.02439024972,
+              199207.31707317117
+            ]
+          }
+        ],
+        "checksum": 145196293
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 15213,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 36,
+            "samples": [
+              281119.22222222236,
+              270228.0277777776,
+              246895.8333333341,
+              255093.75000000035,
+              264918.99999999977,
+              280539.3611111116,
+              274271.9999999994,
+              251031.25000000012,
+              229393.50000000047,
+              249129.63888888838,
+              277431.7222222227,
+              271958.3333333336
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 36,
+            "samples": [
+              280888.88888888794,
+              260069.44444444636,
+              339351.86111111194,
+              264560.1944444422,
+              314937.50000000076,
+              287151.61111111345,
+              295232.63888888905,
+              267103.0277777788,
+              279173.61111111124,
+              289512.72222222236,
+              258148.1666666687,
+              270704.8611111102
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 42,
+            "samples": [
+              233472.2380952382,
+              213115.07142856845,
+              222191.45238094978,
+              228878.97619047982,
+              232456.35714285332,
+              219098.21428571487,
+              221147.83333333457,
+              223509.92857142654,
+              217918.64285714406,
+              236401.78571428717,
+              224649.8095238069,
+              221932.52380952798
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 37,
+            "samples": [
+              284144.1351351379,
+              296902.0270270264,
+              278478.62162162235,
+              311787.1621621644,
+              302890.75675675634,
+              281513.51351351803,
+              271385.13513513486,
+              301486.48648648575,
+              279954.94594594947,
+              268894.13513513445,
+              284128.378378381,
+              264355.8648648613
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 36,
+            "samples": [
+              312873.8333333306,
+              295474.52777777985,
+              304232.638888891,
+              264405.1111111152,
+              299415.50000000285,
+              336185.1944444475,
+              327349.5277777809,
+              251369.2222222201,
+              264119.2222222218,
+              280105.33333333064,
+              274474.55555555836,
+              288075.22222222004
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 44,
+            "samples": [
+              241753.79545454233,
+              219454.54545455464,
+              223335.22727273125,
+              218972.5454545417,
+              234762.2954545469,
+              230709.27272726747,
+              221555.86363636426,
+              213336.18181817696,
+              227587.11363636312,
+              239378.77272727416,
+              216758.52272727012,
+              220258.52272727003
+            ]
+          }
+        ],
+        "checksum": 160506332
+      },
+      "upstream": {
+        "pid": 15214,
+        "runtime": {
+          "node": "24.22.1",
+          "acorn": "8.18.0",
+          "ada": "4.0.0",
+          "amaro": "1.1.11",
+          "ares": "1.34.9",
+          "brotli": "1.2.0",
+          "cldr": "48.0",
+          "icu": "78.3",
+          "llhttp": "9.4.3",
+          "merve": "1.2.2",
+          "modules": "137",
+          "napi": "10",
+          "nbytes": "0.1.4",
+          "ncrypto": "0.0.1",
+          "nghttp2": "1.70.0",
+          "nghttp3": "",
+          "ngtcp2": "",
+          "openssl": "3.5.9",
+          "simdjson": "4.6.11",
+          "simdutf": "6.4.0",
+          "sqlite": "3.53.4",
+          "tz": "2026e",
+          "undici": "7.30.1",
+          "unicode": "17.0",
+          "uv": "1.52.1",
+          "uvwasi": "0.0.23",
+          "v8": "13.6.233.17-node.58",
+          "zlib": "1.3.2.1-motley-285e94b",
+          "zstd": "1.5.7"
+        },
+        "rows": [
+          {
+            "case": "Material9 paper SSR",
+            "iterations": 36,
+            "samples": [
+              265526.6388888893,
+              268343.7500000012,
+              246952.52777777752,
+              286562.4999999991,
+              248016.22222222222,
+              272245.3611111114,
+              281185.1944444454,
+              270988.4444444444,
+              275303.22222222184,
+              247440.97222222196,
+              255878.47222222295,
+              261325.2222222226
+            ]
+          },
+          {
+            "case": "Material9 divider SSR",
+            "iterations": 36,
+            "samples": [
+              261592.5833333329,
+              302334.50000000064,
+              240673.611111109,
+              271395.83333333425,
+              309315.9722222209,
+              279917.8333333335,
+              269085.66666666744,
+              245721.05555555545,
+              257085.66666666698,
+              265715.2777777772,
+              254495.36111111115,
+              263276.6111111127
+            ]
+          },
+          {
+            "case": "Material9 font-icon SSR",
+            "iterations": 42,
+            "samples": [
+              234040.69047619269,
+              228504.97619047397,
+              235485.11904761786,
+              223812.50000000274,
+              208890.88095237812,
+              245593.2619047601,
+              216244.0476190514,
+              241773.80952381188,
+              225775.80952381162,
+              241763.8809523786,
+              228640.85714285835,
+              223011.90476190145
+            ]
+          },
+          {
+            "case": "App7 paper SSR",
+            "iterations": 37,
+            "samples": [
+              275105.86486486363,
+              266477.486486485,
+              271617.1081081029,
+              253810.81081081287,
+              279373.8648648606,
+              275397.54054054036,
+              263944.8378378397,
+              281376.1081081031,
+              249819.81081080795,
+              255569.83783784183,
+              257356.97297297543,
+              249225.2162162151
+            ]
+          },
+          {
+            "case": "App7 divider SSR",
+            "iterations": 36,
+            "samples": [
+              254797.44444444604,
+              268372.6944444452,
+              248126.13888888614,
+              251571.75000000128,
+              256362.27777778232,
+              266337.97222222533,
+              236759.27777777717,
+              259495.38888889065,
+              244263.88888888873,
+              246200.2222222218,
+              243290.5277777814,
+              230731.50000000294
+            ]
+          },
+          {
+            "case": "App7 font-icon SSR",
+            "iterations": 44,
+            "samples": [
+              200077.63636363568,
+              208489.5681818156,
+              191097.52272727704,
+              217535.04545454856,
+              196551.1363636303,
+              207731.99999999552,
+              498589.9772727242,
+              259652.45454545476,
+              213592.79545454643,
+              219939.3863636384,
+              201766.09090909056,
+              196363.63636363347
+            ]
+          }
+        ],
+        "checksum": 146550137
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Material9 paper SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 269848.21428571467,
+          "vpmNs": 261494.64285714348,
+          "changePct": -3.095655626509519
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 270001.1216216221,
+          "vpmNs": 257621.06756756772,
+          "changePct": -4.585186157635201
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 265791.09459459386,
+          "vpmNs": 256838.97297297278,
+          "changePct": -3.3681044262508397
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 262646.3947368426,
+          "vpmNs": 264276.3289473681,
+          "changePct": 0.620581223724237
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 259866.54054054117,
+          "vpmNs": 263646.39189189207,
+          "changePct": 1.4545356025783551
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 266935.19444444525,
+          "vpmNs": 267573.51388888864,
+          "changePct": 0.23912899375142516
+        }
+      ]
+    },
+    {
+      "case": "Material9 divider SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 283690.3888888887,
+          "vpmNs": 293479.1666666664,
+          "changePct": 3.4505144203569094
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 269686.40789473854,
+          "vpmNs": 283700.10526315746,
+          "changePct": 5.196293531370189
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 282773.8000000003,
+          "vpmNs": 287631.5571428563,
+          "changePct": 1.7178950605947207
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 273176.01724137896,
+          "vpmNs": 708542.379310343,
+          "changePct": 159.37210245080675
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 271383.680555554,
+          "vpmNs": 267225.11111111025,
+          "changePct": -1.5323579649043961
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 264495.94444444496,
+          "vpmNs": 280031.2499999996,
+          "changePct": 5.873551516332487
+        }
+      ]
+    },
+    {
+      "case": "Material9 font-icon SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 231468.98888888804,
+          "vpmNs": 212943.51111111054,
+          "changePct": -8.003438329559675
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 240410.32608695776,
+          "vpmNs": 208105.06521739135,
+          "changePct": -13.437551287993099
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 231207.4111111113,
+          "vpmNs": 214338.43333333396,
+          "changePct": -7.296036790823546
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 225922.61428571388,
+          "vpmNs": 216754.75714285835,
+          "changePct": -4.057963463215486
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 226801.360465116,
+          "vpmNs": 234086.73255813896,
+          "changePct": 3.2122259223147376
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 228572.91666666616,
+          "vpmNs": 222850.69047618815,
+          "changePct": -2.5034576597816605
+        }
+      ]
+    },
+    {
+      "case": "App7 paper SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 291618.0416666647,
+          "vpmNs": 253337.3888888883,
+          "changePct": -13.12698369380495
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 255246.4512195135,
+          "vpmNs": 250059.95121951337,
+          "changePct": -2.031957731525791
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 285176.4999999994,
+          "vpmNs": 257836.2361111096,
+          "changePct": -9.587137751143537
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 270882.8125000006,
+          "vpmNs": 267820.3124999972,
+          "changePct": -1.130562685664438
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 279743.2432432405,
+          "vpmNs": 262840.66216216335,
+          "changePct": -6.042176706437963
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 265211.16216216236,
+          "vpmNs": 282820.9459459495,
+          "changePct": 6.639910492537915
+        }
+      ]
+    },
+    {
+      "case": "App7 divider SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 284975.3289473675,
+          "vpmNs": 271761.50000000116,
+          "changePct": -4.63683259746559
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 242189.8194444433,
+          "vpmNs": 274421.305555557,
+          "changePct": 13.308357132867599
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 287778.038461537,
+          "vpmNs": 284502.38461538486,
+          "changePct": -1.1382570621663146
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 243974.541666666,
+          "vpmNs": 279103.5972222239,
+          "changePct": 14.398656235023699
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 304848.82857143215,
+          "vpmNs": 246077.9714285698,
+          "changePct": -19.2786888564642
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 249848.9444444437,
+          "vpmNs": 291774.87499999994,
+          "changePct": 16.780511380098638
+        }
+      ]
+    },
+    {
+      "case": "App7 font-icon SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 218857.87777777194,
+          "vpmNs": 208598.62222222192,
+          "changePct": -4.687633664239055
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 201644.02173913023,
+          "vpmNs": 215267.20652173768,
+          "changePct": 6.756056869482574
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 228692.28125000047,
+          "vpmNs": 210564.66666667006,
+          "changePct": -7.926640323952938
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 206944.43333333463,
+          "vpmNs": 217664.583333332,
+          "changePct": 5.180206989540004
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 225918.18292682836,
+          "vpmNs": 201630.58536585286,
+          "changePct": -10.750616549019387
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 208110.78409090557,
+          "vpmNs": 222445.54545454774,
+          "changePct": 6.88804351310337
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Material9 paper SSR",
+      "upstream_ns": 267820,
+      "vpm_ns": 259558,
+      "change_pct": -3.2,
+      "upstream_first_pct": -3.2,
+      "vpm_first_pct": -2,
+      "process_range_pct": "-3.1, -4.6, -3.4, 0.6",
+      "control_max_abs_pct": 1.5,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Material9 divider SSR",
+      "upstream_ns": 277975,
+      "vpm_ns": 290555,
+      "change_pct": 4.3,
+      "upstream_first_pct": 2.6,
+      "vpm_first_pct": 82.3,
+      "process_range_pct": "3.5, 5.2, 1.7, 159.4",
+      "control_max_abs_pct": 5.9,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "Material9 font-icon SSR",
+      "upstream_ns": 231338,
+      "vpm_ns": 213641,
+      "change_pct": -7.6,
+      "upstream_first_pct": -7.6,
+      "vpm_first_pct": -8.7,
+      "process_range_pct": "-8.0, -13.4, -7.3, -4.1",
+      "control_max_abs_pct": 3.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 paper SSR",
+      "upstream_ns": 278030,
+      "vpm_ns": 255587,
+      "change_pct": -5.8,
+      "upstream_first_pct": -11.4,
+      "vpm_first_pct": -1.6,
+      "process_range_pct": "-13.1, -2.0, -9.6, -1.1",
+      "control_max_abs_pct": 6.6,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 divider SSR",
+      "upstream_ns": 264475,
+      "vpm_ns": 276762,
+      "change_pct": 6.1,
+      "upstream_first_pct": -2.9,
+      "vpm_first_pct": 13.9,
+      "process_range_pct": "-4.6, 13.3, -1.1, 14.4",
+      "control_max_abs_pct": 19.3,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 font-icon SSR",
+      "upstream_ns": 212901,
+      "vpm_ns": 212916,
+      "change_pct": 0.2,
+      "upstream_first_pct": -6.3,
+      "vpm_first_pct": 6,
+      "process_range_pct": "-4.7, 6.8, -7.9, 5.2",
+      "control_max_abs_pct": 10.8,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

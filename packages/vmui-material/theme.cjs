@@ -42,7 +42,11 @@ const styled = system.createStyled({themeId:THEME_ID,defaultTheme,
 });
 const Root = styled("div",{shouldForwardProp:p=>!["theme","sx","as"].includes(p)})({});
 const Box = React.forwardRef(function Box(input,ref) {
-  const {component="div",className,...props}=system.extendSxProp(input);
+  // Component APIs may share names with System props (Icon color/fontSize).
+  // Keep those props for custom roots, as current Material does; retain legacy
+  // direct System props only for native roots used by the application.
+  const resolved=typeof (input.component||"div")==="string"?system.extendSxProp(input):input;
+  const {component="div",className,...props}=resolved;
   return h(Root,{...props,as:component,ref,className:["MuiBox-root",className].filter(Boolean).join(" ")});
 });
 function GlobalStyles(props) {return h(system.GlobalStyles,{...props,themeId:THEME_ID,defaultTheme});}

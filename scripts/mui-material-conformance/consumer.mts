@@ -125,3 +125,19 @@ GlobalStyles({styles:{body:{margin:0}}});
 // @ts-expect-error anchor Box needs anchor ref
 Box({component:'a',ref:React.createRef<HTMLButtonElement>()});
 void [useTheme,StyledBox];
+
+import Paper, {type PaperProps, paperClasses} from "vmui-material/Paper";
+import Divider from "vmui-material/Divider";
+import FontIcon from "vmui-material/Icon";
+Paper({component:"article",ref:React.createRef<HTMLElement>(),elevation:3,variant:"outlined",sx:{p:2}});
+Paper({component:"a",href:"/contest",ref:React.createRef<HTMLAnchorElement>()});
+Divider({orientation:"vertical",flexItem:true,variant:"middle"});
+FontIcon({component:"i",fontSize:"small",color:"primary","aria-hidden":false,"aria-label":"Palette"});
+const paperOptions:PaperProps={square:true,elevation:0,classes:{rounded:paperClasses.rounded}};
+void paperOptions;
+// @ts-expect-error invalid orientation
+Divider({orientation:"diagonal"});
+// @ts-expect-error numeric elevation
+Paper({elevation:"2"});
+// @ts-expect-error incorrect anchor ref
+Paper({component:"a",ref:React.createRef<HTMLDivElement>()});

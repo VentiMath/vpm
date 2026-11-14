@@ -1,7 +1,7 @@
 {
   "name": "vmui-material",
   "version": "9.5.0",
-  "description": "Independent Material buttons, typography, links and SVG icons for VentiMath; remaining families in progress",
+  "description": "Independent Material controls, text, icons, surfaces and resolved-theme integration for VentiMath; remaining families in progress",
   "type": "commonjs",
   "main": "./index.cjs",
   "module": "./index.mjs",
@@ -336,6 +336,66 @@
       "require": {
         "types": "./styles/useThemeProps.d.cts",
         "default": "./styles/useThemeProps.cjs"
+      }
+    },
+    "./Paper": {
+      "import": {
+        "types": "./Paper.d.mts",
+        "default": "./Paper.mjs"
+      },
+      "require": {
+        "types": "./Paper.d.cts",
+        "default": "./Paper.cjs"
+      }
+    },
+    "./paperClasses": {
+      "import": {
+        "types": "./paperClasses.d.mts",
+        "default": "./paperClasses.mjs"
+      },
+      "require": {
+        "types": "./paperClasses.d.cts",
+        "default": "./paperClasses.cjs"
+      }
+    },
+    "./Divider": {
+      "import": {
+        "types": "./Divider.d.mts",
+        "default": "./Divider.mjs"
+      },
+      "require": {
+        "types": "./Divider.d.cts",
+        "default": "./Divider.cjs"
+      }
+    },
+    "./dividerClasses": {
+      "import": {
+        "types": "./dividerClasses.d.mts",
+        "default": "./dividerClasses.mjs"
+      },
+      "require": {
+        "types": "./dividerClasses.d.cts",
+        "default": "./dividerClasses.cjs"
+      }
+    },
+    "./Icon": {
+      "import": {
+        "types": "./Icon.d.mts",
+        "default": "./Icon.mjs"
+      },
+      "require": {
+        "types": "./Icon.d.cts",
+        "default": "./Icon.cjs"
+      }
+    },
+    "./iconClasses": {
+      "import": {
+        "types": "./iconClasses.d.mts",
+        "default": "./iconClasses.mjs"
+      },
+      "require": {
+        "types": "./iconClasses.d.cts",
+        "default": "./iconClasses.cjs"
       }
     }
   },

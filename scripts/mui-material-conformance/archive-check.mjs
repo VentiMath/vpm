@@ -70,3 +70,6 @@ console.log(
     seen.size +
     "-package VPM closure pass",
 );
+
+const surfaces=renderToString(React.createElement(api.Paper,{elevation:2},React.createElement(api.Divider,{orientation:"vertical"}),React.createElement(api.Icon,null,"palette")));
+assert.match(surfaces,/MuiPaper-elevation2/);assert.match(surfaces,/aria-orientation="vertical"/);assert.match(surfaces,/notranslate/);

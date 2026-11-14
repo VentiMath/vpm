@@ -113,7 +113,8 @@ try {
     for (const file of [
       "contract.cjs",
       "text-contract.cjs",
-      ...(manager === "npm" ? ["browser.cjs", "text-browser.cjs"] : []),
+      "surfaces-contract.cjs",
+      ...(manager === "npm" ? ["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs"] : []),
     ]) {
       process.stdout.write(
         execFileSync("node", [__dirname + "/" + file], {
