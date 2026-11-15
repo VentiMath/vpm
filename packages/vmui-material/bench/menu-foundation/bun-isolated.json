@@ -1,0 +1,3476 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-15T05:30:57.267Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/lists-bench-entry.jsx": "af4fcd3eae0b9984f0b9a6ea83f9e787bfd21b674f76362d9fd38b7e93832a37",
+    "../../scripts/mui-material-conformance/lists-build.cjs": "e9ca3050e76df12761496a5388e9bb7f20055c026bb40e6e3ce357c3f07c6745",
+    "../../scripts/mui-material-conformance/lists-scene.jsx": "08e4eac730eb548d54c8d50239b3b28bc75d834b1769abd035f9f4343a661f5a",
+    "../../scripts/mui-material-conformance/menus-bench-entry.jsx": "8d880d3fe8fac4a3694d6684ba82b37d1b76efe87f14da58db3fd37a8d72d259",
+    "../../scripts/mui-material-conformance/menus-build.cjs": "1c68bb9e12d3dd5dbf745ab463fca4d13d5015fcb9995b03f80083a03522d176",
+    "../../scripts/mui-material-conformance/menus-scene.jsx": "cc2a7ad7d2bc45985105515ea68d8c71c618ef382399bf6074a18141c2fe000d",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/lists-bench.cjs": "750145f632c48b102373a2c431a2bd0bb405e95dac4d99a56a83d5d2d7620be8",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/menus-bench.cjs": "6a8f58a30c809f87b5e6a0e04ffa5cb490bffd4711c4a8cc3b8e52f68e26db66",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/lists-bench.cjs": "fd24b22fd64794be9e0b70da5d8cc242cc06c8d157ac58004f377864d9249331",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/menus-bench.cjs": "0f30f1163c624f7cb26214edc9246687b6ee3029740bdcabb672901be9b04aaf",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/lists-bench.cjs": "d39d9f4f543054ae9a5ecbc5ffd6966de230efef9a8df8a5a803376b9194b514",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/menus-bench.cjs": "796e0c031e29760fc8ffbe4c570da31578a491dca82d323b5557d54df5525741",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/lists-bench.cjs": "e8bf2bbe124d4996eb8da1ca0ff6e36056627b4860b8c2c4e9fdf94ffcbb6f32",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/menus-bench.cjs": "d8e6b5439a869c09cdeaa625037cc889d60c38be4c0fa965df4e2a3a79fc4888",
+    "../../scripts/mui-system-conformance/package-lock.json": "ddadfff23ccbae1816cb53aa88c03f4279279b3014993b39c62b7b1676faa633",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-babel-plugin/src": "31538914c8f6834d1c48e1eda455f8655afa6b7e7aaf597c044a311bac473b74",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-cache/src": "6d560802fa6d75bfd7179e31c5427593220b0931c4b5b953dca79c86bacb30dd",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-react/src": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-serialize/index.js": "c5fc672aac873af6b663291fdd3b8c0c72a6e271458be622e9de5154e2874801",
+    "../vemotion-serialize/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-sheet/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-styled/src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-use-insertion-effect-with-fallbacks/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-utils/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "10a90e43f3bd281ea0c99259a56c7e398eec35d85ee111478689af1238b48f16",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "PROVENANCE.json": "a61b5a1e0d24dbb65c9a01578b1604e03f5e19c5ab92fa2dd08718e19c0aaa40",
+    "bench/menu-foundation.cjs": "7cbc33cc18fcae8252dba8a3a6756183222edaa9cc63e7ac391b4df3c986170f",
+    "buttons.cjs": "991a937cdb131f7e570bf8513901fb3423b2a2b58aad3096fba4cb6e0ddf25c6",
+    "forms.cjs": "31b0280783062a13a15a629c6600a052c6eb8196fa413278087f035f85387088",
+    "index.cjs": "c17152df2a6c6060d756939ec36575af97b483582bbb958f3089ee507f019542",
+    "input-base.cjs": "6ae03af38c5523ef9c1ed2ee4085410374c402be2016cf074de747d13e7c15ac",
+    "input-decorations.cjs": "aa69712a3fe8089671258d3560d5b9e956a3ca00dba2049e243754fa22456f76",
+    "input-variants.cjs": "788afdf00b15a9adf5e8e9c1645c586e1aae93086ac7178abfa74446c0c42f8c",
+    "lists.cjs": "9914dfa218a6203bd5125e2ca41f3bd754611511f8040ccdbbb980051a84c4e7",
+    "menus.cjs": "8b2b02112e60868623348108babcea78f409ca1b713a3946fb166d1cfe7c1aea",
+    "package.json": "41c5101befef434d32ceac0084270fd0d8508311850de55f840ab77d38648438",
+    "surfaces.cjs": "76dba2de164f93a2f31d9f08d7a4353ff4ced7f68814d31341cb1851c1deddb0",
+    "text-field.cjs": "7a9f5a6e769c27ce3f3a644ba17a03807422b40b296707be8812b00086a7cd77",
+    "text.cjs": "344b9dc7bf08a46b8241932f051677704870e2ab48804afdd8a9da6fffae1cbf",
+    "theme.cjs": "c8f10a217705c2e142da705773511879c7a3b3cc617cab08616813cdb57286d7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 90248,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 38,
+            "samples": [
+              306810.2894736844,
+              324313.5789473683,
+              296987.9210526322,
+              303883.7631578941,
+              289946.2631578953,
+              297171.05263157794,
+              336105.263157896,
+              305265.34210526274,
+              293008.7631578954,
+              299796.0526315787,
+              315042.7631578952,
+              296106.34210526216
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 33,
+            "samples": [
+              297619.9696969698,
+              260577.0000000017,
+              306803.0303030306,
+              303371.21212120925,
+              312773.969696967,
+              296354.7878787887,
+              311329.54545454815,
+              299007.57575757615,
+              267994.93939394,
+              320912.87878788053,
+              305433.0909090912,
+              306826.9999999984
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 27,
+            "samples": [
+              398453.703703707,
+              391080.25925925514,
+              336547.85185185407,
+              395589.51851852355,
+              400436.74074073957,
+              373475.29629629303,
+              424080.25925925793,
+              430768.5185185198,
+              388089.4814814787,
+              339578.70370370446,
+              390123.4814814803,
+              384435.1851851789
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 76,
+            "samples": [
+              145182.0131578942,
+              149839.90789473685,
+              140163.93421052513,
+              143773.5657894749,
+              149184.21052631532,
+              139498.90789473927,
+              144256.03947368497,
+              145150.22368421245,
+              148048.24999999997,
+              133660.0921052638,
+              142731.90789473825,
+              146810.31578947426
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 70,
+            "samples": [
+              189472.61428571504,
+              153250.00000000274,
+              150523.81428571543,
+              140645.22857142947,
+              158055.3571428579,
+              188359.51428571402,
+              150847.02857142733,
+              131472.6142857158,
+              144207.7285714309,
+              145566.0714285711,
+              147683.3428571451,
+              138241.67142857148
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 37,
+            "samples": [
+              338201.5675675649,
+              291888.51351351774,
+              318662.16216216394,
+              280642.99999999313,
+              448222.9729729699,
+              306354.7297297314,
+              330783.7837837847,
+              276664.40540540224,
+              335530.40540540236,
+              268881.7567567566,
+              319450.4594594651,
+              269307.43243242067
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 32,
+            "samples": [
+              285282.5312499903,
+              285319.03124999756,
+              306501.28124999296,
+              313955.71874999464,
+              320802.0624999932,
+              287071.5937499995,
+              328110.6875000006,
+              288949.21875000536,
+              321993.46875000856,
+              270505.21875000297,
+              280640.6249999895,
+              317243.46874999296
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 28,
+            "samples": [
+              423110.1071428611,
+              368232.1428571445,
+              379538.6785714397,
+              426876.4999999998,
+              358651.7857142845,
+              417678.5714285773,
+              375409.2142857124,
+              426477.67857144057,
+              375260.4285714207,
+              398694.92857142823,
+              360501.4999999899,
+              423785.71428571374
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 48,
+            "samples": [
+              167039.0625000001,
+              277285.5833333286,
+              161439.25000000081,
+              152537.31250000632,
+              163016.47916666677,
+              196292.54166666025,
+              166951.39583333684,
+              167108.50000000242,
+              174638.02083333727,
+              201863.7083333298,
+              166368.06249999834,
+              160143.229166664
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 65,
+            "samples": [
+              176542.95384614813,
+              156059.61538461156,
+              185048.72307692212,
+              157966.67692308035,
+              173395.5230769215,
+              186591.0153846156,
+              156550.63076923258,
+              244187.81538461888,
+              153089.73846153653,
+              177160.26153846263,
+              160182.0615384615,
+              172248.07692307598
+            ]
+          }
+        ],
+        "checksum": 86198878
+      },
+      "vpm": {
+        "pid": 90249,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 38,
+            "samples": [
+              268309.21052631515,
+              229912.2894736845,
+              257183.10526315833,
+              246877.18421052588,
+              298013.15789473685,
+              269271.92105263117,
+              235766.4473684203,
+              257657.89473684202,
+              263932.02631578856,
+              300416.6578947359,
+              237962.71052631526,
+              261322.36842105264
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 33,
+            "samples": [
+              243248.7575757567,
+              254462.1212121242,
+              255142.6969696973,
+              261676.75757575594,
+              233785.36363636405,
+              265429.30303030106,
+              262142.69696969714,
+              269212.1212121217,
+              268657.8181818194,
+              237729.78787878924,
+              238493.69696969545,
+              288635.12121212366
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 27,
+            "samples": [
+              307842.5925925954,
+              378370.3703703706,
+              395253.0740740738,
+              332003.0740740768,
+              474803.99999999965,
+              359094.1481481499,
+              353316.3333333328,
+              328118.85185185476,
+              320901.25925926125,
+              359938.2592592604,
+              348202.14814814995,
+              308449.0740740741
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 76,
+            "samples": [
+              140213.26315789315,
+              128544.94736842225,
+              134995.6052631569,
+              136275.2105263152,
+              132302.6315789482,
+              134342.65789473892,
+              123650.22368420928,
+              143016.44736842057,
+              130214.36842105136,
+              133103.06578947156,
+              132845.9342105242,
+              122448.46052631804
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 70,
+            "samples": [
+              26193.442857142403,
+              33521.42857143008,
+              41668.457142856954,
+              26947.028571427316,
+              34566.07142857138,
+              26080.957142858097,
+              36608.928571428936,
+              27550.58571428565,
+              32598.214285712857,
+              24632.742857144356,
+              37119.04285714159,
+              30386.3142857121
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 37,
+            "samples": [
+              274903.16216216265,
+              236752.24324324515,
+              235345.7297297339,
+              240404.27027026648,
+              259163.27027026896,
+              251577.7027026984,
+              235524.7567567575,
+              242040.54054054135,
+              254920.05405405164,
+              267329.9459459461,
+              366829.94594594376,
+              224161.05405405024
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 32,
+            "samples": [
+              253417.96875,
+              230753.90625000125,
+              273811.1875000016,
+              264097.65625000146,
+              240649.75000000288,
+              270675.7812500058,
+              250509.0937499972,
+              251865.9062500035,
+              226324.2187499941,
+              264307.281249998,
+              261901.03124999098,
+              231306.00000000355
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 28,
+            "samples": [
+              334163.67857142043,
+              351491.0714285731,
+              355935.9999999938,
+              328645.8214285598,
+              327988.1071428495,
+              340261.9285714244,
+              334287.2142857069,
+              345611.60714286286,
+              341409.21428570437,
+              357730.64285714494,
+              350842.2499999954,
+              320979.17857142224
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 48,
+            "samples": [
+              118835.93749999476,
+              134560.77083333183,
+              124421.87499999591,
+              136397.56249999852,
+              112728.31250000575,
+              141596.3541666656,
+              115506.93749999633,
+              133050.33333332973,
+              132859.3750000001,
+              118016.50000000071,
+              130028.64583333461,
+              118010.41666666379
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 65,
+            "samples": [
+              37804.492307686116,
+              28213.46153846557,
+              27141.676923075956,
+              27007.692307695554,
+              35976.29230769319,
+              26572.446153841156,
+              26307.046153844847,
+              26837.815384617268,
+              35789.10769231068,
+              26673.076923074965,
+              26096.799999994313,
+              36249.353846149184
+            ]
+          }
+        ],
+        "checksum": 78663520
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 90250,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 44,
+            "samples": [
+              249261.36363636432,
+              258250.9545454534,
+              326972.5227272718,
+              274228.2045454542,
+              243978.20454545508,
+              253830.50000000003,
+              303589.9545454545,
+              272673.2954545448,
+              249552.0681818187,
+              239678.9772727265,
+              242144.88636363673,
+              230683.7045454544
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 40,
+            "samples": [
+              253088.55000000107,
+              255238.55000000139,
+              264864.5999999985,
+              261803.12500000015,
+              245346.8750000013,
+              251863.52499999883,
+              231089.57500000144,
+              288085.4249999999,
+              254413.52500000107,
+              285633.32499999774,
+              296348.9500000008,
+              276716.67500000016
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 33,
+            "samples": [
+              334694.45454545616,
+              353045.4545454569,
+              302613.63636363763,
+              363274.0000000019,
+              333727.2727272703,
+              341569.4545454547,
+              372280.30303030706,
+              334271.45454544935,
+              369380.0606060629,
+              344285.363636359,
+              375244.96969697136,
+              359306.81818181806
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 76,
+            "samples": [
+              126322.92105263332,
+              130783.44736841905,
+              122203.3947368423,
+              130918.31578947521,
+              120467.10526315589,
+              127764.24999999921,
+              119399.6710526305,
+              134091.55263158077,
+              119425.43421052601,
+              128168.31578947442,
+              115620.06578947148,
+              128532.89473684083
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 372,
+            "samples": [
+              38306.56451612936,
+              32147.849462365753,
+              32960.239247311845,
+              29022.849462365386,
+              33050.40322580651,
+              32325.491935483857,
+              32977.26344085974,
+              30449.26075268824,
+              32766.911290322347,
+              31201.83602150504,
+              33135.752688172375,
+              31815.188172043247
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 38,
+            "samples": [
+              286546.0526315689,
+              267753.289473687,
+              247479.15789473488,
+              238723.6842105267,
+              267748.92105262744,
+              265188.5789473693,
+              261354.18421053578,
+              254049.34210526236,
+              215504.39473684202,
+              245276.31578946867,
+              249817.97368421833,
+              260354.1578947371
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 39,
+            "samples": [
+              252670.94871794773,
+              252601.51282051226,
+              262661.3333333388,
+              311611.12820512784,
+              256248.92307693398,
+              223429.48717948436,
+              244867.51282051372,
+              265856.8461538496,
+              268085.4871794929,
+              245621.79487178908,
+              254879.28205128788,
+              260979.71794871017
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 28,
+            "samples": [
+              370851.17857142386,
+              341395.85714285664,
+              345276.7857142882,
+              378302.0714285742,
+              393988.07142856636,
+              383666.678571428,
+              367727.6785714249,
+              372994.03571427905,
+              381601.1785714376,
+              371608.64285715437,
+              340749.99999998976,
+              357775.2857142806
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 79,
+            "samples": [
+              136991.03797468144,
+              132756.32911392124,
+              125351.78481012632,
+              123514.75949367053,
+              119553.7974683501,
+              127675.63291139065,
+              123175.63291139487,
+              125410.86075949536,
+              120649.26582278634,
+              121400.31645569389,
+              121652.41772151913,
+              128343.87341772065
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 277,
+            "samples": [
+              30546.480144403835,
+              32485.25992779872,
+              33010.22743682178,
+              31196.59927797855,
+              30484.05415162406,
+              33888.68953068707,
+              30424.638989170624,
+              31699.458483754144,
+              36301.747292417786,
+              32706.227436822635,
+              33544.97472924114,
+              32036.101083031757
+            ]
+          }
+        ],
+        "checksum": 92259750
+      },
+      "upstream": {
+        "pid": 90279,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 44,
+            "samples": [
+              302084.27272727335,
+              291024.61363636417,
+              309464.0227272717,
+              295522.72727272694,
+              339196.02272727253,
+              309206.43181818136,
+              301875.93181818264,
+              306659.09090909077,
+              293936.5454545463,
+              295952.63636363583,
+              298072.909090909,
+              311860.7954545457
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 40,
+            "samples": [
+              301303.12500000116,
+              341238.54999999993,
+              308770.82499999914,
+              303566.674999999,
+              298497.92499999807,
+              319333.3249999995,
+              271420.84999999835,
+              312714.600000001,
+              299284.3749999992,
+              332804.1750000011,
+              307466.6749999977,
+              307159.3750000005
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 33,
+            "samples": [
+              393031.5454545466,
+              376816.90909090376,
+              377440.6363636376,
+              368766.4242424255,
+              360986.0909090885,
+              377131.3333333334,
+              396015.1515151541,
+              389424.24242423894,
+              351751.27272727323,
+              397529.0606060615,
+              383025.2727272678,
+              396998.75757576065
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 76,
+            "samples": [
+              150876.6447368424,
+              141634.3157894744,
+              151728.61842105296,
+              151307.01315789446,
+              138307.0263157899,
+              150488.48684210726,
+              151319.63157894663,
+              133471.4868421064,
+              149591.0131578949,
+              170143.63157894768,
+              141059.76315789504,
+              124108.0131578925
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 372,
+            "samples": [
+              142064.06720430055,
+              141250.8951612904,
+              144765.7930107528,
+              140498.20698924686,
+              138163.41935483873,
+              140738.01612903236,
+              145600.0215053774,
+              141502.91129032266,
+              147095.4301075273,
+              144266.0161290317,
+              142761.08870967742,
+              140604.0564516129
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 38,
+            "samples": [
+              352995.60526315967,
+              334225.8947368464,
+              336742.34210526553,
+              278559.2105263181,
+              319885.9473684239,
+              319430.92105263146,
+              321319.07894737006,
+              287587.7105263235,
+              329206.1315789492,
+              327970.3947368465,
+              288033.99999999686,
+              322518.6578947375
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 39,
+            "samples": [
+              294523.51282051473,
+              306362.17948717665,
+              273883.53846153896,
+              276675.20512820303,
+              301429.48717948224,
+              286413.46153846406,
+              304528.846153843,
+              274199.79487179563,
+              278877.1282051316,
+              302385.69230769854,
+              280774.58974358026,
+              280932.69230768597
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 28,
+            "samples": [
+              374446.4285714295,
+              357837.8214285749,
+              400190.46428571007,
+              350311.0000000009,
+              370666.6785714268,
+              401623.535714277,
+              366480.6428571572,
+              371257.4285714254,
+              403809.5357142798,
+              358959.82142856804,
+              360427.0714285706,
+              396050.6071428621
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 79,
+            "samples": [
+              182449.3670886148,
+              173175.6329113926,
+              192443.55696202224,
+              175521.63291138987,
+              174374.48101265798,
+              184495.78481012615,
+              174960.97468354699,
+              180904.54430379785,
+              172128.16455696753,
+              181397.15189872848,
+              173017.40506328212,
+              189094.93670886333
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 277,
+            "samples": [
+              169349.87725631628,
+              155041.5162454874,
+              162459.38628158608,
+              164604.24187725587,
+              169606.79783393384,
+              163648.01444043333,
+              156383.27436823235,
+              163012.18411552373,
+              155642.59927797609,
+              164258.87725631663,
+              157016.0938628156,
+              161446.2996389889
+            ]
+          }
+        ],
+        "checksum": 76778475
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 90280,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 34,
+            "samples": [
+              318857.85294117767,
+              329610.29411764705,
+              315350.47058823594,
+              312137.2647058837,
+              285910.5294117646,
+              290845.58823529293,
+              323971.8235294116,
+              318274.4999999995,
+              314737.7352941171,
+              302279.41176470683,
+              289759.79411764705,
+              306305.1470588237
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 33,
+            "samples": [
+              366291.66666666674,
+              286487.3636363661,
+              323659.0909090906,
+              311564.3939393928,
+              310334.5757575756,
+              302354.7878787881,
+              302816.9393939406,
+              322868.6969696975,
+              292857.3030303045,
+              311140.1515151535,
+              304046.7272727276,
+              316776.5151515148
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 25,
+            "samples": [
+              413521.6799999944,
+              407545.00000000006,
+              348223.3200000064,
+              416111.6399999992,
+              436066.6799999944,
+              361373.3199999933,
+              399794.99999999464,
+              409513.3600000008,
+              349471.67999999697,
+              423483.36000000016,
+              408790.00000000815,
+              353431.6399999989
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 76,
+            "samples": [
+              143463.8157894746,
+              144333.34210526172,
+              128221.48684210489,
+              147881.57894736587,
+              149005.48684210578,
+              140143.0921052637,
+              145246.71052631494,
+              148759.8684210525,
+              146740.13157894564,
+              144466.01315789492,
+              145521.38157894864,
+              159811.9473684212
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 69,
+            "samples": [
+              164669.69565217238,
+              156184.17391304162,
+              148807.3623188418,
+              153317.6376811568,
+              153519.92753623257,
+              166009.6521739143,
+              153805.55072463563,
+              170787.43478260958,
+              165290.4637681173,
+              151178.14492753602,
+              149629.23188405525,
+              159574.86956521595
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 31,
+            "samples": [
+              275942.1935483876,
+              322153.22580645257,
+              297373.6451612856,
+              263361.54838710144,
+              303778.2258064498,
+              315303.74193549034,
+              272478.48387098144,
+              288357.5161290243,
+              324908.6129032196,
+              284525.5161290322,
+              268442.2258064608,
+              297840.03225806315
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 35,
+            "samples": [
+              313047.6285714394,
+              263295.22857141844,
+              290790.4857142837,
+              327588.08571429003,
+              271645.2285714305,
+              273130.94285713567,
+              366327.3999999936,
+              311810.71428571676,
+              336055.9428571313,
+              394415.4857142946,
+              334647.6285714224,
+              306929.742857145
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 26,
+            "samples": [
+              364390.9999999988,
+              350014.42307694,
+              448415.07692308363,
+              348160.2692307801,
+              392233.96153845266,
+              430641.03846154467,
+              337741.9999999872,
+              337660.2307692407,
+              392878.23076922627,
+              501931.0769230637,
+              369011.23076923937,
+              439583.3461538552
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 57,
+            "samples": [
+              230491.22807017402,
+              199972.96491228073,
+              683442.9824561435,
+              227616.2280701787,
+              159892.54385964925,
+              164815.78947368212,
+              184778.50877193385,
+              173144.73684210866,
+              167394.0000000026,
+              191514.63157894748,
+              156034.35087719496,
+              166130.84210526373
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 37,
+            "samples": [
+              192948.18918918996,
+              157128.37837837296,
+              166690.3243243281,
+              200751.10810811,
+              165097.97297296886,
+              169277.02702702626,
+              212506.75675675078,
+              159753.37837837925,
+              170216.21621621013,
+              235713.94594594222,
+              153948.21621622043,
+              175882.891891888
+            ]
+          }
+        ],
+        "checksum": 87614556
+      },
+      "vpm": {
+        "pid": 90282,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 34,
+            "samples": [
+              260567.38235294074,
+              270757.35294117715,
+              233754.9117647066,
+              301231.6176470586,
+              270137.26470588375,
+              264966.91176470555,
+              297894.6176470576,
+              250890.94117646982,
+              233022.05882352963,
+              251535.55882352957,
+              284781.8823529418,
+              243969.38235294135
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 33,
+            "samples": [
+              290308.0909090897,
+              258218.4242424243,
+              256253.7878787907,
+              261250.00000000096,
+              283598.48484848446,
+              246555.57575757676,
+              241036.6060606059,
+              267318.1818181823,
+              268564.39393939334,
+              230380.06060605973,
+              253202.0303030315,
+              250925.48484848396
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 25,
+            "samples": [
+              375460.00000000274,
+              323499.9999999991,
+              313033.31999999954,
+              309611.6799999982,
+              329251.6799999976,
+              336106.6400000027,
+              331968.3200000009,
+              331161.68000000017,
+              343438.32000000024,
+              362176.6799999978,
+              311385.00000000023,
+              366628.3199999998
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 76,
+            "samples": [
+              145474.2368421044,
+              127084.98684210517,
+              138212.17105263067,
+              122226.97368420803,
+              130656.25000000051,
+              130173.78947368666,
+              135671.0526315779,
+              122669.40789473473,
+              132894.73684210706,
+              143546.59210526303,
+              117749.99999999792,
+              130650.21052631507
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 69,
+            "samples": [
+              31976.44927536203,
+              26698.07246376837,
+              36542.884057971736,
+              30741.550724637884,
+              59909.42028985455,
+              28472.82608695423,
+              38580.91304347737,
+              26217.391304347377,
+              36753.62318840335,
+              29385.869565216573,
+              35458.927536232615,
+              25817.623188406313
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 31,
+            "samples": [
+              263646.4838709681,
+              265532.2580645119,
+              264654.54838709714,
+              230873.67741935293,
+              309678.77419354935,
+              291517.48387097276,
+              221767.48387097003,
+              261506.74193548827,
+              274509.4193548407,
+              216711.0322580635,
+              274346.7741935502,
+              264794.3548387091
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 35,
+            "samples": [
+              278614.28571428143,
+              258859.51428572295,
+              253034.54285714388,
+              223048.80000000205,
+              259165.48571428523,
+              260357.1428571351,
+              252596.42857142485,
+              266866.657142847,
+              231658.34285713834,
+              266207.1428571445,
+              254660.71428571534,
+              244116.65714286364
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 26,
+            "samples": [
+              337847.769230778,
+              294189.11538461474,
+              353136.2307692409,
+              348734.0000000096,
+              325541.6538461654,
+              357179.49999999435,
+              363299.65384614014,
+              313136.2307692248,
+              354261.1923076912,
+              340735.576923075,
+              303916.6923076839,
+              364060.92307692446
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 57,
+            "samples": [
+              118869.15789474235,
+              128760.22807017363,
+              147731.71929824745,
+              123748.52631579383,
+              139811.4035087737,
+              139358.19298245534,
+              120223.68421052658,
+              133345.01754386447,
+              124669.57894736895,
+              131682.0175438567,
+              165758.7719298231,
+              122793.85964912013
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 37,
+            "samples": [
+              27024.783783786377,
+              47963.97297297665,
+              29171.189189189656,
+              29042.783783785817,
+              29079.945945955547,
+              30199.324324331505,
+              29602.48648648573,
+              43546.162162156914,
+              27388.513513513415,
+              27212.83783783882,
+              28530.405405404425,
+              26675.67567567784
+            ]
+          }
+        ],
+        "checksum": 79055930
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 90283,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 41,
+            "samples": [
+              282737.8048780483,
+              255846.53658536603,
+              294405.4878048782,
+              262564.02439024416,
+              256917.68292683,
+              282353.6585365856,
+              243832.31707317033,
+              266539.634146342,
+              260962.41463414612,
+              256639.21951219457,
+              244877.04878048808,
+              257466.46341463437
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 40,
+            "samples": [
+              254437.49999999738,
+              262066.67500000267,
+              249794.8000000008,
+              267881.2499999992,
+              243975.00000000038,
+              252162.5,
+              234095.825,
+              274060.4250000018,
+              238158.32500000056,
+              250258.3250000015,
+              230936.45000000153,
+              267919.8000000013
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 33,
+            "samples": [
+              348556.8181818156,
+              337289.15151515126,
+              323804.27272727445,
+              326085.84848484653,
+              303505.03030303057,
+              351599.75757575483,
+              343050.51515151386,
+              302239.90909090993,
+              368952.03030302806,
+              330535.363636362,
+              340669.21212121146,
+              348188.1212121262
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 78,
+            "samples": [
+              134892.08974358928,
+              143966.88461538477,
+              118700.85897435974,
+              139833.87179486948,
+              121514.42307692133,
+              132882.4743589726,
+              118363.24358974263,
+              128645.83333333276,
+              123746.25641025607,
+              131839.74358974365,
+              127619.66666666688,
+              131188.03846153835
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 302,
+            "samples": [
+              29249.172185430907,
+              28940.950331125594,
+              30455.02317880824,
+              30825.19536423844,
+              28940.672185430172,
+              29636.867549668492,
+              30622.516556290793,
+              28773.592715231713,
+              30083.74503311215,
+              30047.185430463218,
+              29791.804635761157,
+              28958.470198675823
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 39,
+            "samples": [
+              252054.487179486,
+              292149.56410256046,
+              271634.6153846154,
+              277465.8205128162,
+              252459.41025641278,
+              271917.7435897459,
+              252313.02564102755,
+              253545.9487179394,
+              243369.64102563707,
+              311580.1282051274,
+              225658.12820512758,
+              227143.15384614683
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 41,
+            "samples": [
+              256216.46341463618,
+              281265.2439024421,
+              297875.0000000041,
+              231432.92682926785,
+              280465.439024394,
+              253040.63414634543,
+              260178.85365854454,
+              261947.1707317067,
+              254918.70731707977,
+              262597.5609756141,
+              257932.9268292651,
+              304760.14634146716
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 33,
+            "samples": [
+              336011.363636358,
+              331930.54545454565,
+              310526.51515151275,
+              343246.2121212197,
+              359714.66666666,
+              332974.7272727163,
+              451121.21212120354,
+              360414.15151514614,
+              350808.0909090853,
+              336196.9696969743,
+              334785.33333333296,
+              334176.78787878744
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 71,
+            "samples": [
+              130405.52112676177,
+              123803.9859154911,
+              121430.169014089,
+              123373.23943662134,
+              126932.50704225493,
+              150990.61971831118,
+              126274.64788732743,
+              120224.16901408191,
+              122808.09859155108,
+              123316.90140845368,
+              130282.26760563716,
+              136455.394366198
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 362,
+            "samples": [
+              30826.19613259671,
+              32427.25414364569,
+              32178.17679557952,
+              31086.555248619094,
+              31687.613259669106,
+              31394.569060773407,
+              33159.875690608664,
+              32560.65745856392,
+              29669.77348066358,
+              32946.82320441886,
+              33008.97790055282,
+              31335.86464088357
+            ]
+          }
+        ],
+        "checksum": 93203910
+      },
+      "upstream": {
+        "pid": 90317,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 41,
+            "samples": [
+              286382.1219512197,
+              314467.4878048782,
+              322693.09756097535,
+              304243.9024390241,
+              313251.0000000005,
+              312514.24390243914,
+              313785.5853658535,
+              313672.75609756005,
+              300514.2195121962,
+              284691.0487804873,
+              296901.4146341462,
+              301950.21951219474
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 40,
+            "samples": [
+              300423.97499999823,
+              309501.0500000001,
+              317947.92499999853,
+              310524.99999999837,
+              302935.42500000115,
+              299213.5500000018,
+              303260.3999999992,
+              288794.79999999946,
+              319011.4499999993,
+              293336.47500000097,
+              311054.17500000104,
+              304647.9250000004
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 33,
+            "samples": [
+              395891.4242424257,
+              387768.9393939432,
+              368856.060606056,
+              338289.1212121181,
+              402232.3030303045,
+              389617.42424242565,
+              393662.8787878845,
+              372952.0303030299,
+              429478.5454545477,
+              410987.36363636074,
+              393093.42424242763,
+              383404.0606060639
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 78,
+            "samples": [
+              147797.01282051203,
+              149316.76923076907,
+              137805.5512820497,
+              145304.4871794873,
+              148923.6025641025,
+              150743.58974359024,
+              136676.28205128215,
+              157583.871794871,
+              152027.24358974324,
+              147027.78205128197,
+              137229.70512820574,
+              166705.1282051273
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 302,
+            "samples": [
+              140108.30463576212,
+              142887.28145695452,
+              144195.50331125877,
+              150132.03642384146,
+              144991.9966887426,
+              138342.7152317884,
+              141994.06622516553,
+              141681.98344370938,
+              145285.18211920606,
+              148468.26821191964,
+              148902.7317880794,
+              137472.12913907162
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 39,
+            "samples": [
+              335686.9743589787,
+              303636.769230765,
+              322369.6410256404,
+              317144.2307692208,
+              338885.69230769534,
+              305044.87179486884,
+              334755.33333332866,
+              330102.5641025705,
+              318176.2820512841,
+              336008.5384615442,
+              290409.2051281996,
+              331442.3076923072
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 41,
+            "samples": [
+              329158.53658536565,
+              285816.0487804836,
+              308312.99999999825,
+              289979.6585365948,
+              300140.2439024387,
+              304529.463414638,
+              277982.7317073197,
+              287186.9756097511,
+              309785.5609756086,
+              281465.43902438704,
+              315673.78048780817,
+              274814.0243902415
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 33,
+            "samples": [
+              444301.78787877486,
+              373881.30303030595,
+              417184.33333332516,
+              363997.4545454524,
+              376940.6666666658,
+              406398.9696969794,
+              372482.3333333337,
+              350261.36363636726,
+              409275.2424242352,
+              364097.21212120616,
+              404638.8787878779,
+              338457.0606060675
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 71,
+            "samples": [
+              191975.9436619694,
+              168510.5633802816,
+              179790.49295775144,
+              189980.6338028163,
+              171295.77464789103,
+              189337.43661971958,
+              162697.7605633777,
+              177666.6619718308,
+              179639.67605633306,
+              169428.98591549904,
+              189485.32394366135,
+              165534.61971830396
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 362,
+            "samples": [
+              164270.604972376,
+              159513.81215469778,
+              161053.4060773465,
+              160355.6629834252,
+              160107.8508287304,
+              162114.4116022091,
+              159952.92541436467,
+              161764.38674033282,
+              165250.8038674036,
+              160311.58011049716,
+              157718.34806629756,
+              160881.7900552485
+            ]
+          }
+        ],
+        "checksum": 75747812
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 90322,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 35,
+            "samples": [
+              303372.62857142865,
+              296884.5428571431,
+              297464.2857142856,
+              292292.8571428575,
+              288384.54285714275,
+              306079.77142857085,
+              320680.94285714324,
+              307933.3428571431,
+              306157.1428571434,
+              327180.9428571438,
+              328701.2000000004,
+              299019.05714285705
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 27,
+            "samples": [
+              410436.74074074306,
+              263370.37037037,
+              305692.8888888874,
+              262663.59259259136,
+              404442.8888888871,
+              318930.5555555561,
+              273984.55555555754,
+              324540.11111110926,
+              290984.55555555556,
+              313888.8888888897,
+              334941.3703703695,
+              259057.07407407503
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 25,
+            "samples": [
+              344476.6799999979,
+              422181.68000000337,
+              399256.6799999986,
+              335046.6799999958,
+              443351.67999999615,
+              438096.64000000345,
+              378566.6799999944,
+              399705.00000000355,
+              415416.6799999984,
+              380531.6799999946,
+              414194.9999999997,
+              411676.6800000005
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 68,
+            "samples": [
+              145105.38235294115,
+              127112.75000000074,
+              149061.27941176304,
+              135638.4705882359,
+              154105.39705882294,
+              141920.9558823528,
+              135892.1617647063,
+              141260.42647058726,
+              154240.80882353135,
+              131091.30882352983,
+              147749.38235293978,
+              145164.82352941213
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 70,
+            "samples": [
+              150106.54285714347,
+              170439.87142857144,
+              152521.42857142905,
+              156532.7428571436,
+              153608.34285714387,
+              154597.61428571385,
+              169834.528571427,
+              158326.78571428653,
+              151049.40000000104,
+              157228.57142857264,
+              143024.99999999846,
+              145682.7428571452
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 28,
+            "samples": [
+              328422.607142865,
+              309385.4285714315,
+              291281.24999999726,
+              363523.82142857614,
+              296202.3928571398,
+              271927.1071428498,
+              304947.9285714207,
+              311334.82142856147,
+              273529.7500000148,
+              288788.6785714337,
+              296278.2500000003,
+              334751.50000000605
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 17,
+            "samples": [
+              374000.0000000103,
+              268225.52941177273,
+              288291.64705880696,
+              280264.7058823662,
+              296365.1764705847,
+              269578.4705882247,
+              369958.2941176499,
+              273161.76470589306,
+              290774.52941178577,
+              295568.58823530894,
+              311012.2941176515,
+              311573.52941176324
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 24,
+            "samples": [
+              363182.2916666654,
+              356439.20833333215,
+              362940.9583333351,
+              407977.4166666539,
+              341133.66666667844,
+              339666.6666666496,
+              452196.1666666812,
+              363293.3749999931,
+              345381.9166666676,
+              369578.12500001333,
+              405383.66666665603,
+              343243.0833333342
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 55,
+            "samples": [
+              187308.3272727275,
+              165603.03636363393,
+              165490.90909090659,
+              190462.87272727073,
+              162700.76363636527,
+              155688.63636363775,
+              176567.41818182127,
+              182693.1818181782,
+              168091.65454545687,
+              180011.3636363676,
+              185393.18181818252,
+              160297.7272727251
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 60,
+            "samples": [
+              177466.66666666896,
+              154781.94999999838,
+              180772.916666668,
+              157023.60000000228,
+              189807.6333333317,
+              158384.01666666564,
+              185493.0499999985,
+              162777.76666666646,
+              227165.28333333676,
+              156569.43333333402,
+              192322.91666666392,
+              185029.85000000082
+            ]
+          }
+        ],
+        "checksum": 86659972
+      },
+      "vpm": {
+        "pid": 90335,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 35,
+            "samples": [
+              258191.65714285645,
+              332851.1714285712,
+              337028.5714285712,
+              335607.1428571438,
+              301571.4285714288,
+              295505.9714285702,
+              299139.28571428574,
+              302073.8285714287,
+              310405.9428571434,
+              270328.5714285714,
+              278114.28571428516,
+              310153.5714285709
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 27,
+            "samples": [
+              333782.40740740625,
+              269662.0370370384,
+              302131.1851851865,
+              306134.25925925927,
+              250290.11111111127,
+              308226.8518518529,
+              266533.9629629628,
+              305601.85185185284,
+              333805.5555555549,
+              269384.2592592588,
+              325947.5185185213,
+              275222.2222222237
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 25,
+            "samples": [
+              343726.6400000044,
+              423690.0000000014,
+              400496.6400000012,
+              352113.3199999986,
+              390279.9999999979,
+              515358.36000000016,
+              347823.3199999977,
+              426009.99999999657,
+              435189.99999999325,
+              346976.64000000263,
+              398713.3199999971,
+              422434.9999999958
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 68,
+            "samples": [
+              142037.98529411966,
+              149539.20588235004,
+              142528.1911764721,
+              149776.9705882373,
+              158195.47058823542,
+              132382.35294117578,
+              162598.04411764795,
+              142178.91176470486,
+              148847.42647058817,
+              149973.0294117666,
+              134458.94117647334,
+              149271.44117647162
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 70,
+            "samples": [
+              145865.47142857205,
+              156582.72857142816,
+              144329.17142857084,
+              152281.54285714155,
+              160755.357142859,
+              148614.8857142845,
+              173385.71428571347,
+              174689.88571428586,
+              153841.67142857285,
+              142945.24285714293,
+              138763.70000000083,
+              139020.82857143148
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 28,
+            "samples": [
+              264104.1785714151,
+              298147.3214285708,
+              299827.39285714744,
+              349934.50000000134,
+              280242.57142856513,
+              264709.8214285636,
+              299959.8214285827,
+              323473.21428570856,
+              281755.92857142614,
+              269906.24999999517,
+              303867.535714273,
+              344988.10714285355
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 17,
+            "samples": [
+              350105.4117647233,
+              280083.35294118617,
+              283311.29411764565,
+              261990.23529411267,
+              258889.705882345,
+              290840.64705883816,
+              278068.647058824,
+              397987.764705891,
+              286252.47058821784,
+              294362.70588236285,
+              260132.35294118096,
+              321877.4117647038
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 24,
+            "samples": [
+              348262.16666666215,
+              341651.04166667484,
+              351552.0833333502,
+              410194.416666684,
+              368671.87499999924,
+              372699.6666666575,
+              428454.87499999994,
+              344616.2916666632,
+              345446.2083333283,
+              369923.58333333186,
+              417489.58333333046,
+              350307.29166665726
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 55,
+            "samples": [
+              164772.72727272726,
+              185929.54545454797,
+              169587.872727276,
+              169606.8181818191,
+              178725.74545454798,
+              163435.61818181447,
+              170213.6363636369,
+              185510.5999999978,
+              156022.72727273058,
+              170033.3272727221,
+              163921.9818181862,
+              187676.50909090994
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 60,
+            "samples": [
+              184393.74999999625,
+              165145.13333333223,
+              171281.25000000032,
+              161469.43333333184,
+              169416.66666666605,
+              185361.8000000021,
+              155820.13333332725,
+              170426.3833333319,
+              158875.00000000425,
+              187126.40000000346,
+              156102.78333333554,
+              178734.03333333044
+            ]
+          }
+        ],
+        "checksum": 80289309
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 90366,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 33,
+            "samples": [
+              317772.7272727266,
+              325287.8787878796,
+              298959.60606060695,
+              311109.8484848495,
+              353854.7878787881,
+              331493.6666666657,
+              321797.9696969692,
+              312258.84848484927,
+              295655.3030303026,
+              320469.6969696963,
+              290551.75757575786,
+              300702.0303030314
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 24,
+            "samples": [
+              329003.4999999989,
+              331380.2083333333,
+              257887.1249999963,
+              323729.1666666664,
+              273333.33333333104,
+              389934.04166666325,
+              316131.91666666296,
+              258607.62499999625,
+              322831.6249999968,
+              270442.70833332953,
+              313182.29166666354,
+              285467.0416666636
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 27,
+            "samples": [
+              435299.40740740957,
+              402157.40740740736,
+              363958.3333333365,
+              451462.9629629697,
+              414083.3333333376,
+              369404.29629629327,
+              410086.40740741004,
+              428191.3703703729,
+              416083.33333334076,
+              366717.5925925895,
+              415910.51851852436,
+              416098.7777777841
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 74,
+            "samples": [
+              148278.7162162146,
+              144111.486486487,
+              131694.8108108105,
+              193509.58108108246,
+              154252.2567567569,
+              157300.67567567463,
+              133073.75675675622,
+              159967.33783783775,
+              158313.62162162262,
+              135219.02702702722,
+              143154.27027026936,
+              168010.70270270357
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 56,
+            "samples": [
+              167029.7678571444,
+              173762.64285714374,
+              166354.91071428583,
+              167111.6071428571,
+              203588.5535714296,
+              156818.4642857123,
+              187172.62500000026,
+              184805.05357142971,
+              145207.58928571403,
+              161390.62499999974,
+              158811.75000000017,
+              159124.24999999886
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 25,
+            "samples": [
+              323503.31999999983,
+              269405.0000000061,
+              361154.99999999884,
+              300666.6799999948,
+              278623.36000000144,
+              278850.0000000022,
+              390264.9999999994,
+              289449.9999999971,
+              295161.6800000011,
+              327018.36000000185,
+              312624.99999998906,
+              415278.359999993
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 28,
+            "samples": [
+              285205.3571428509,
+              264177.071428581,
+              315068.4642857219,
+              368354.17857142666,
+              290941.96428572363,
+              296145.821428565,
+              285433.03571429336,
+              335491.07142857794,
+              293046.1428571302,
+              297499.9999999974,
+              334598.2142857175,
+              287593.74999999313
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 28,
+            "samples": [
+              370602.6785714422,
+              368794.6428571292,
+              395095.25000000524,
+              335717.2857142814,
+              349852.67857143754,
+              394739.5714285611,
+              347040.1785714167,
+              346662.1785714291,
+              414275.3214285741,
+              353156.2499999999,
+              377352.6785714369,
+              392444.92857142177
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 51,
+            "samples": [
+              174353.7647058813,
+              180387.2549019562,
+              202024.5098039292,
+              162597.23529412228,
+              172136.4313725555,
+              172300.64705882777,
+              188138.8823529443,
+              168973.03921568356,
+              168924.8431372535,
+              183190.35294117007,
+              153774.5098039255,
+              259121.72549019754
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 59,
+            "samples": [
+              173105.2372881357,
+              164569.20338982777,
+              173776.1186440659,
+              154453.38983051243,
+              189796.61016949697,
+              162887.71186441023,
+              186195.62711865,
+              168025.42372881548,
+              185911.72881356138,
+              189269.06779660832,
+              153471.03389830547,
+              187157.4915254175
+            ]
+          }
+        ],
+        "checksum": 84727496
+      },
+      "upstream": {
+        "pid": 90381,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 items SSR",
+            "iterations": 33,
+            "samples": [
+              310171.7272727266,
+              318301.7878787864,
+              260435.60606060646,
+              310445.7272727273,
+              291044.212121211,
+              289333.3333333334,
+              296976.03030303016,
+              296025.27272727183,
+              271156.5454545459,
+              306414.15151515184,
+              327099.7575757571,
+              311181.81818181835
+            ]
+          },
+          {
+            "case": "Material9 dense SSR",
+            "iterations": 24,
+            "samples": [
+              280461.79166666715,
+              449689.2500000011,
+              308260.41666666506,
+              275149.29166666494,
+              312296.8749999965,
+              269593.75000000326,
+              397394.1250000005,
+              332039.91666666843,
+              257482.6666666657,
+              322559.0416666648,
+              254300.33333333314,
+              324078.12499999977
+            ]
+          },
+          {
+            "case": "Material9 icons SSR",
+            "iterations": 27,
+            "samples": [
+              394899.70370370295,
+              345188.2592592575,
+              422192.88888889056,
+              404320.99999999854,
+              391128.0740740755,
+              341546.29629629786,
+              395871.9259259211,
+              410581.7777777719,
+              408063.259259254,
+              356410.4814814797,
+              422910.48148147773,
+              410711.4074074111
+            ]
+          },
+          {
+            "case": "Material9 text SSR",
+            "iterations": 74,
+            "samples": [
+              305063.0675675657,
+              371981.98648648465,
+              333136.8243243253,
+              185636.25675675654,
+              169829.39189188994,
+              263310.24324324337,
+              134128.94594594528,
+              142917.22972972968,
+              158398.648648647,
+              134482.5540540532,
+              140230.8513513494,
+              145960.0135135127
+            ]
+          },
+          {
+            "case": "Material9 closed-menu SSR",
+            "iterations": 56,
+            "samples": [
+              170642.85714285378,
+              155087.80357142523,
+              151894.3392857141,
+              145561.76785714165,
+              145344.50000000122,
+              165482.1428571438,
+              135959.071428573,
+              159677.0714285713,
+              150674.10714285803,
+              156235.85714286036,
+              154953.87500000186,
+              158229.9107142871
+            ]
+          },
+          {
+            "case": "App7 items SSR",
+            "iterations": 25,
+            "samples": [
+              272648.3600000029,
+              271915.00000000815,
+              325026.68000000995,
+              280049.99999999197,
+              265006.6800000059,
+              304306.6800000088,
+              332809.9999999904,
+              269369.999999999,
+              261526.6800000063,
+              288008.3600000035,
+              341238.3200000113,
+              258246.63999999757
+            ]
+          },
+          {
+            "case": "App7 dense SSR",
+            "iterations": 28,
+            "samples": [
+              272099.7142857219,
+              271425.60714285733,
+              321706.8571428529,
+              267621.9999999927,
+              308778.2857142786,
+              289428.5714285648,
+              318424.107142846,
+              304273.82142857235,
+              264321.4285714229,
+              287565.4999999954,
+              314376.50000001275,
+              275444.9285714275
+            ]
+          },
+          {
+            "case": "App7 icons SSR",
+            "iterations": 28,
+            "samples": [
+              367812.4999999974,
+              423431.535714274,
+              356633.9285714223,
+              350052.0714285682,
+              388126.4999999985,
+              352921.14285714756,
+              369611.6071428638,
+              425474.7142857046,
+              351607.14285713574,
+              455671.1428571459,
+              399720.2142857077,
+              327410.71428571496
+            ]
+          },
+          {
+            "case": "App7 text SSR",
+            "iterations": 51,
+            "samples": [
+              162699.35294117293,
+              180147.0588235294,
+              199405.23529411104,
+              151117.64705882117,
+              169070.2745098076,
+              159790.84313725182,
+              182286.76470588136,
+              163860.29411764597,
+              163885.60784313694,
+              185386.45098039397,
+              164060.45098039397,
+              157437.9215686242
+            ]
+          },
+          {
+            "case": "App7 closed-menu SSR",
+            "iterations": 59,
+            "samples": [
+              180722.45762711755,
+              157168.084745759,
+              186653.23728812885,
+              163475.98305084553,
+              201137.7118644104,
+              161182.20338983336,
+              216265.52542372755,
+              158543.77966101217,
+              190622.16949152757,
+              154832.6271186405,
+              179610.88135593777,
+              156774.0169491533
+            ]
+          }
+        ],
+        "checksum": 73945554
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Material9 items SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 301839.9078947364,
+          "vpmNs": 259490.13157894733,
+          "changePct": -14.030542419380176
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 301980.102272728,
+          "vpmNs": 251691.28409090935,
+          "changePct": -16.653023759956596
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 313437.5000000004,
+          "vpmNs": 262767.14705882315,
+          "changePct": -16.166014896487248
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 308379.07317073166,
+          "vpmNs": 259214.43902439025,
+          "changePct": -15.942921690773026
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 304726.1999999997,
+          "vpmNs": 301822.62857142877,
+          "changePct": -0.9528460068648381
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 301695.090909091,
+          "vpmNs": 315015.78787878796,
+          "changePct": 4.415284627124039
+        }
+      ]
+    },
+    {
+      "case": "Material9 dense SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 304402.1515151502,
+          "vpmNs": 258409.72727272662,
+          "changePct": -15.10909959522232
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 307313.0249999991,
+          "vpmNs": 258520.83750000078,
+          "changePct": -15.877032058761076
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 310737.3636363646,
+          "vpmNs": 257236.1060606075,
+          "changePct": -17.21751673170725
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 303954.1624999998,
+          "vpmNs": 251210.41250000073,
+          "changePct": -17.35253419995494
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 309790.8888888885,
+          "vpmNs": 303866.5185185197,
+          "changePct": -1.9123772140676731
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 310278.6458333308,
+          "vpmNs": 314657.10416666325,
+          "changePct": 1.411137502412707
+        }
+      ]
+    },
+    {
+      "case": "Material9 icons SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 390601.8703703677,
+          "vpmNs": 350759.24074074137,
+          "changePct": -10.200317164853223
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 380232.9545454527,
+          "vpmNs": 348665.40909090795,
+          "changePct": -8.302159262413756
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 408167.5000000041,
+          "vpmNs": 331565.0000000005,
+          "changePct": -18.76741778804113
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 391355.42424242664,
+          "vpmNs": 338979.18181818136,
+          "changePct": -13.383292827902803
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 405690.84000000206,
+          "vpmNs": 399604.97999999917,
+          "changePct": -1.5001226056774786
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 400096.46296295983,
+          "vpmNs": 414996.92592593096,
+          "changePct": 3.724217618077419
+        }
+      ]
+    },
+    {
+      "case": "Material9 text SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 144703.1315789487,
+          "vpmNs": 132974.49999999788,
+          "changePct": -8.10530598126813
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 150039.75000000108,
+          "vpmNs": 127043.58552631627,
+          "changePct": -15.326714736384616
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 145384.0460526318,
+          "vpmNs": 130653.23026315779,
+          "changePct": -10.132346835457573
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 148360.30769230728,
+          "vpmNs": 129916.93589743556,
+          "changePct": -12.4314731357409
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 143513.169117647,
+          "vpmNs": 149059.4338235299,
+          "changePct": 3.864638165251777
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 164114.0202702685,
+          "vpmNs": 151265.48648648575,
+          "changePct": -7.8290287219966554
+        }
+      ]
+    },
+    {
+      "case": "Material9 closed-menu SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 149103.57857143026,
+          "vpmNs": 31492.264285712477,
+          "changePct": -78.87893463896599
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 141783.4892473116,
+          "vpmNs": 32546.201612903104,
+          "changePct": -77.04513989204126
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 154994.86231883863,
+          "vpmNs": 31358.999999999956,
+          "changePct": -79.76771647082622
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 143541.39238410664,
+          "vpmNs": 29714.336092714824,
+          "changePct": -79.29911672223344
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 154102.97857142886,
+          "vpmNs": 150448.21428571304,
+          "changePct": -2.3716376669655315
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 155020.83928571356,
+          "vpmNs": 166692.33928571513,
+          "changePct": 7.528987750150318
+        }
+      ]
+    },
+    {
+      "case": "App7 items SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 312508.44594594766,
+          "vpmNs": 246809.12162161988,
+          "changePct": -21.023215588768863
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 321918.86842105375,
+          "vpmNs": 257201.7499999997,
+          "changePct": -20.103549300629155
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 292865.5806451549,
+          "vpmNs": 264724.45161290315,
+          "changePct": -9.60888916009165
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 326236.1025641055,
+          "vpmNs": 253002.6794871761,
+          "changePct": -22.44798245851377
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 300613.0892857105,
+          "vpmNs": 298987.35714285914,
+          "changePct": -0.5408055074096252
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 276349.17999999743,
+          "vpmNs": 306645.83999999193,
+          "changePct": 10.96318071216813
+        }
+      ]
+    },
+    {
+      "case": "App7 dense SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 297725.2499999992,
+          "vpmNs": 252641.93750000175,
+          "changePct": -15.142589518355454
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 283673.076923075,
+          "vpmNs": 255564.10256411094,
+          "changePct": -9.908932727721108
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 312429.1714285781,
+          "vpmNs": 256760.11428571914,
+          "changePct": -17.818136791872842
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 295059.9512195168,
+          "vpmNs": 261063.01219512563,
+          "changePct": -11.522044548532563
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 293171.5588235473,
+          "vpmNs": 284781.8823529318,
+          "changePct": -2.8616952150072317
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 288497.0357142801,
+          "vpmNs": 294595.9821428476,
+          "changePct": 2.1140412806902376
+        }
+      ]
+    },
+    {
+      "case": "App7 icons SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 389116.803571434,
+          "vpmNs": 340835.5714285644,
+          "changePct": -12.407902125975944
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 370962.0535714261,
+          "vpmNs": 371229.9107142891,
+          "changePct": 0.07220607614288888
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 380622.596153846,
+          "vpmNs": 344734.78846154234,
+          "changePct": -9.428711814523483
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 375410.9848484859,
+          "vpmNs": 336104.16666666616,
+          "changePct": -10.470343108815472
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 363061.62500000023,
+          "vpmNs": 360111.9791666747,
+          "changePct": -0.812436685734963
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 368712.0535714306,
+          "vpmNs": 369698.6607142857,
+          "changePct": 0.26758201509784474
+        }
+      ]
+    },
+    {
+      "case": "App7 text SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 166995.22916666846,
+          "vpmNs": 127225.26041666526,
+          "changePct": -23.815032889539044
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 178213.08860759385,
+          "vpmNs": 124433.27215189842,
+          "changePct": -30.177254025439638
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 178961.62280702125,
+          "vpmNs": 130221.12280701517,
+          "changePct": -27.235168767196626
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 178653.16901408194,
+          "vpmNs": 125039.31690140927,
+          "changePct": -30.01002020201874
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 172329.53636363905,
+          "vpmNs": 169820.0727272706,
+          "changePct": -1.4562005384109789
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 163973.02941176546,
+          "vpmNs": 173327.20588235452,
+          "changePct": 5.704704306644892
+        }
+      ]
+    },
+    {
+      "case": "App7 closed-menu SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 172821.79999999874,
+          "vpmNs": 27074.684615385755,
+          "changePct": -84.33375614917449
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 162735.78519855492,
+          "vpmNs": 32260.68050541524,
+          "changePct": -80.1760378234856
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 169746.6216216182,
+          "vpmNs": 29061.36486487068,
+          "changePct": -82.87956214548335
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 160618.72651933687,
+          "vpmNs": 31932.895027624312,
+          "changePct": -80.11882193339397
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 179119.7916666685,
+          "vpmNs": 169921.52499999898,
+          "changePct": -5.135259806346227
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 171543.43220339165,
+          "vpmNs": 173440.6779661008,
+          "changePct": 1.1059856610888374
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Material9 items SSR",
+      "upstream_ns": 305180,
+      "vpm_ns": 259352,
+      "change_pct": -16.1,
+      "upstream_first_pct": -15.1,
+      "vpm_first_pct": -16.3,
+      "process_range_pct": "-14.0, -16.7, -16.2, -15.9",
+      "control_max_abs_pct": 4.4,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 dense SSR",
+      "upstream_ns": 305858,
+      "vpm_ns": 257823,
+      "change_pct": -16.5,
+      "upstream_first_pct": -16.2,
+      "vpm_first_pct": -16.6,
+      "process_range_pct": "-15.1, -15.9, -17.2, -17.4",
+      "control_max_abs_pct": 1.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 icons SSR",
+      "upstream_ns": 390979,
+      "vpm_ns": 343822,
+      "change_pct": -11.8,
+      "upstream_first_pct": -14.5,
+      "vpm_first_pct": -10.8,
+      "process_range_pct": "-10.2, -8.3, -18.8, -13.4",
+      "control_max_abs_pct": 3.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 text SSR",
+      "upstream_ns": 146872,
+      "vpm_ns": 130285,
+      "change_pct": -11.3,
+      "upstream_first_pct": -9.1,
+      "vpm_first_pct": -13.9,
+      "process_range_pct": "-8.1, -15.3, -10.1, -12.4",
+      "control_max_abs_pct": 7.8,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 closed-menu SSR",
+      "upstream_ns": 146322,
+      "vpm_ns": 31426,
+      "change_pct": -79.1,
+      "upstream_first_pct": -79.3,
+      "vpm_first_pct": -78.2,
+      "process_range_pct": "-78.9, -77.0, -79.8, -79.3",
+      "control_max_abs_pct": 7.5,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 items SSR",
+      "upstream_ns": 317214,
+      "vpm_ns": 255102,
+      "change_pct": -20.6,
+      "upstream_first_pct": -15.3,
+      "vpm_first_pct": -21.3,
+      "process_range_pct": "-21.0, -20.1, -9.6, -22.4",
+      "control_max_abs_pct": 11,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 dense SSR",
+      "upstream_ns": 296393,
+      "vpm_ns": 256162,
+      "change_pct": -13.3,
+      "upstream_first_pct": -16.5,
+      "vpm_first_pct": -10.7,
+      "process_range_pct": "-15.1, -9.9, -17.8, -11.5",
+      "control_max_abs_pct": 2.9,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 icons SSR",
+      "upstream_ns": 378017,
+      "vpm_ns": 342785,
+      "change_pct": -9.9,
+      "upstream_first_pct": -10.9,
+      "vpm_first_pct": -5.2,
+      "process_range_pct": "-12.4, 0.1, -9.4, -10.5",
+      "control_max_abs_pct": 0.8,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 text SSR",
+      "upstream_ns": 178433,
+      "vpm_ns": 126132,
+      "change_pct": -28.6,
+      "upstream_first_pct": -25.5,
+      "vpm_first_pct": -30.1,
+      "process_range_pct": "-23.8, -30.2, -27.2, -30.0",
+      "control_max_abs_pct": 5.7,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "App7 closed-menu SSR",
+      "upstream_ns": 166241,
+      "vpm_ns": 30497,
+      "change_pct": -81.5,
+      "upstream_first_pct": -83.6,
+      "vpm_first_pct": -80.1,
+      "process_range_pct": "-84.3, -80.2, -82.9, -80.1",
+      "control_max_abs_pct": 5.1,
+      "evidence": "lower time in every pair, beyond control spread"
+    }
+  ]
+}

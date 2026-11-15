@@ -180,3 +180,9 @@ InputAdornment.default({position:'start',children:'$'});
 
 import TextField=require('vmui-material/TextField');
 TextField.default({label:'Contest',variant:'standard',InputProps:{disableUnderline:true}});
+
+import MenuItem=require('vmui-material/MenuItem');
+import Menu=require('vmui-material/Menu');
+import Popover=require('vmui-material/Popover');
+MenuItem.default({component:'a',href:'#contest',selected:true});
+Menu.default({open:false});Popover.default({open:false,anchorPosition:{top:10,left:20}});

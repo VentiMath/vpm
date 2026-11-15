@@ -213,5 +213,42 @@ TextField has 590 visible SSR comparisons against both Material controls, plus
 app-shaped Chrome cases for search refs/ARIA, password/numeric/date inputs,
 multiline notes, Hook Form, labels/helpers, hydration and the explicit Select
 slot boundary. The pinned Select and its context adapter are test controls only;
-Select/MenuItem are not shipped or marked implemented. Non-native label divs
+Select remains unimplemented; MenuItem and its menu foundation are now shipped as described below. Non-native label divs
 follow Material 9; the Material 7 label difference is asserted explicitly.
+
+
+## List and popup dependencies for Select
+
+List, MenuItem, MenuList, ListItemText, ListItemIcon, ListSubheader, Menu and Popover
+are independently implemented; Select composition remains pending. The list
+contract compares 394 SSR cases against Material9/app7 on Node/Bun. The list
+browser fixture compares 64 theme/density cases plus arrow/Home/End navigation,
+typeahead, disabled-item handling, activation, retained focus/refs and hydration.
+It asserts current/app differences: initial item tab stops, standalone icon
+spacing and changing autoFocusItem after mount. The empty owned ripple host is
+excluded from visible SSR comparison; ripple implementation remains unchanged.
+The package test also preserves standalone MenuItem use in VentiMath search,
+which current9 rejects outside MenuList.
+
+The popup fixture compares 64 theme/anchor cases plus keyboard selection, close
+reasons, restoration after repeated opens, position updates, retained DOM,
+nested focus/scroll ownership, portal opt-out, hidden kept mounts and iframe
+ownership. Production and development/StrictMode run separately. Current/app
+legacy aliases remain consumed; no upstream runtime is shipped. Entrance/exit
+trajectory equality and custom transition components are not asserted.
+
+```sh
+node scripts/mui-material-conformance/lists-contract.cjs
+bun scripts/mui-material-conformance/lists-contract.cjs
+node scripts/mui-material-conformance/lists-browser.cjs
+VPM_REACT_MODE=development node scripts/mui-material-conformance/lists-browser.cjs
+node scripts/mui-material-conformance/menus-browser.cjs
+VPM_REACT_MODE=development node scripts/mui-material-conformance/menus-browser.cjs
+```
+
+Fresh/frozen npm and Bun archive installs are checked; the installed npm closure
+repeats both browser fixtures.
+The prepared SSR benchmark includes 12-item menus, dense menus, icon/text menus,
+standalone primary/secondary text and closed popup rendering. Theme and tree
+preparation precede timing; all isolated process pairs, controls and hashes are
+retained in the package report. No browser speed or app adoption claim follows.

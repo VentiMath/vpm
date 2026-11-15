@@ -16,7 +16,7 @@ esbuild.buildSync({
   bundle: true,
   platform: "node",
   format: "cjs",
-  external: ["react"],
+  external: ["react", "react-dom"],
   alias,
   logLevel: "silent",
 });

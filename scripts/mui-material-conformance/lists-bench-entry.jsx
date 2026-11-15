@@ -1,0 +1,1 @@
+import React from 'react';import {renderToStaticMarkup} from 'react-dom/server';import {BenchScene} from './lists-scene.jsx';export function prepare(kind){const tree=<BenchScene kind={kind}/>;return()=>renderToStaticMarkup(tree)}

@@ -90,3 +90,7 @@ assert.match(decorated,/data-shrink="true"/);assert.match(decorated,/MuiInputAdo
 const textField=renderToString(React.createElement(api.TextField,{id:'contest',label:'Contest',helperText:'Name',required:true}));
 assert.match(textField,/id="contest-helper-text"/);assert.match(textField,/aria-describedby="contest-helper-text"/);assert.match(textField,/for="contest"/);
 assert.equal(api.TextField,require('vmui-material/TextField').default);
+
+const list=renderToString(React.createElement(api.MenuList,null,React.createElement(api.ListSubheader,null,'Contests'),React.createElement(api.MenuItem,{selected:true},React.createElement(api.ListItemIcon,null,'*'),React.createElement(api.ListItemText,{primary:'AMC'}))));
+assert.match(list,/role="menu"/);assert.match(list,/role="menuitem"/);assert.match(list,/Mui-selected/);
+assert.equal(renderToString(React.createElement(api.Menu,{open:false},'hidden')),'');

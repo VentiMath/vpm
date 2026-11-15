@@ -207,3 +207,14 @@ TextField({variant:'ghost'});
 // @ts-expect-error numeric/string rows only
 TextField({minRows:{}});
 void noteField;
+
+import { MenuItem, MenuList, List, ListSubheader, ListItemText, ListItemIcon, Menu, Popover } from 'vmui-material';
+React.createElement(MenuItem,{component:'a',href:'#contest',selected:true,value:'weekly',ref:React.createRef<HTMLAnchorElement>()},'Weekly');
+React.createElement(MenuList,{autoFocusItem:true,disableListWrap:true},React.createElement(ListSubheader,{},'Contests'));
+React.createElement(List,{dense:true},React.createElement(ListItemIcon,{},'*'),React.createElement(ListItemText,{primary:'Contest',secondary:'Details',slotProps:{primary:{noWrap:true}}}));
+React.createElement(Menu,{open:true,anchorEl:()=>document.body,onClose:(_event,reason)=>{const valid:'escapeKeyDown'|'backdropClick'|'tabKeyDown'=reason;void valid;},slotProps:{paper:{style:{width:220}},list:{dense:true}}});
+React.createElement(Popover,{open:false,anchorReference:'anchorPosition',anchorPosition:{left:10,top:20},action:React.createRef<{updatePosition():void}>()});
+// @ts-expect-error unknown menu variant
+React.createElement(MenuList,{variant:'invalid'});
+// @ts-expect-error custom transitions await an independently verified implementation
+React.createElement(Popover,{open:true,slots:{transition:'span'}});

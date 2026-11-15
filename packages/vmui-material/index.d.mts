@@ -344,3 +344,47 @@ export type TextFieldClasses=Record<'root',string>;
 export function TextField<V extends TextFieldVariants=TextFieldVariants>(props:TextFieldProps<V>):React.ReactElement|null;
 export const textFieldClasses:Readonly<TextFieldClasses>;
 export function getTextFieldUtilityClass(slot:string):string;
+
+export interface ListOwnProps { children?: React.ReactNode; dense?: boolean; disablePadding?: boolean; subheader?: React.ReactNode; classes?: Partial<Record<'root'|'padding'|'dense'|'subheader',string>>; sx?: SxProps<Theme>; }
+export type ListProps<C extends React.ElementType='ul'>=ListOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof ListOwnProps> & {component?:C};
+export declare const List:<C extends React.ElementType='ul'>(props:ListProps<C>)=>React.ReactElement|null;
+export interface MenuItemOwnProps extends ButtonBaseOwnProps {autoFocus?:boolean;dense?:boolean;disableGutters?:boolean;divider?:boolean;selected?:boolean;value?:unknown;}
+export type MenuItemProps<C extends React.ElementType='li'>=MenuItemOwnProps & Omit<React.ComponentPropsWithRef<C>,keyof MenuItemOwnProps> & {component?:C};
+export declare const MenuItem:<C extends React.ElementType='li'>(props:MenuItemProps<C>)=>React.ReactElement|null;
+export type MenuListProps<C extends React.ElementType='ul'>=ListProps<C>&{autoFocus?:boolean;autoFocusItem?:boolean;disabledItemsFocusable?:boolean;disableListWrap?:boolean;variant?:'menu'|'selectedMenu'};
+export declare const MenuList:<C extends React.ElementType='ul'>(props:MenuListProps<C>)=>React.ReactElement|null;
+export type ListItemIconProps=React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;classes?:Partial<Record<'root'|'alignItemsFlexStart',string>>;sx?:SxProps<Theme>};
+export declare const ListItemIcon:React.ForwardRefExoticComponent<ListItemIconProps>;
+export type ListItemTextProps=React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>;primary?:React.ReactNode;secondary?:React.ReactNode;inset?:boolean;disableTypography?:boolean;classes?:Partial<Record<'root'|'primary'|'secondary'|'inset'|'dense'|'multiline',string>>;sx?:SxProps<Theme>;slots?:{root?:React.ElementType;primary?:React.ElementType;secondary?:React.ElementType};slotProps?:{root?:Record<string,unknown>|((state:ListItemTextProps)=>Record<string,unknown>);primary?:TypographyProps|((state:ListItemTextProps)=>TypographyProps);secondary?:TypographyProps|((state:ListItemTextProps)=>TypographyProps)};primaryTypographyProps?:TypographyProps;secondaryTypographyProps?:TypographyProps};
+export declare const ListItemText:React.ForwardRefExoticComponent<ListItemTextProps>;
+export type ListSubheaderProps<C extends React.ElementType='li'>=Omit<React.ComponentPropsWithRef<C>,'color'>&{component?:C;color?:'default'|'primary'|'inherit';disableGutters?:boolean;disableSticky?:boolean;inset?:boolean;classes?:Partial<Record<'root'|'colorPrimary'|'colorInherit'|'gutters'|'inset'|'sticky',string>>;sx?:SxProps<Theme>};
+export declare const ListSubheader:(<C extends React.ElementType='li'>(props:ListSubheaderProps<C>)=>React.ReactElement|null)&{muiSkipListHighlight:true};
+export interface PopoverOrigin {vertical:'top'|'center'|'bottom'|number;horizontal:'left'|'center'|'right'|number;}
+export interface PopoverActions {updatePosition():void;}
+export type PopupSlotProps=Record<string,unknown>|((state:PopoverProps)=>Record<string,unknown>);
+export interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
+ ref?:React.Ref<HTMLDivElement>;open:boolean;anchorEl?:Element|{nodeType:number;getBoundingClientRect():DOMRect}|null|(()=>Element|{nodeType:number;getBoundingClientRect():DOMRect}|null);anchorOrigin?:PopoverOrigin;transformOrigin?:PopoverOrigin;anchorReference?:'anchorEl'|'anchorPosition'|'none';anchorPosition?:{left:number;top:number};marginThreshold?:number|null;container?:Element|(()=>Element|null)|null;
+ action?:React.Ref<PopoverActions>;disablePortal?:boolean;keepMounted?:boolean;disableAutoFocus?:boolean;disableEnforceFocus?:boolean;disableRestoreFocus?:boolean;disableEscapeKeyDown?:boolean;disableScrollLock?:boolean;hideBackdrop?:boolean;elevation?:number;sx?:SxProps<Theme>;
+ onClose?:(event:{},reason:'escapeKeyDown'|'backdropClick'|'tabKeyDown')=>void;
+ transitionDuration?:number|'auto'|{enter?:number;exit?:number};
+ slots?:{root?:React.ElementType;paper?:React.ElementType;backdrop?:React.ElementType};slotProps?:{root?:PopupSlotProps;paper?:PopupSlotProps;backdrop?:PopupSlotProps;transition?:PopupSlotProps};
+ PaperProps?:PaperProps;BackdropProps?:React.HTMLAttributes<HTMLDivElement>;TransitionProps?:Record<string,unknown>;classes?:Partial<Record<'root'|'paper',string>>;
+}
+export declare const Popover:React.ForwardRefExoticComponent<PopoverProps>;
+export interface MenuProps extends Omit<PopoverProps,'slots'|'slotProps'|'classes'> {autoFocus?:boolean;disableAutoFocusItem?:boolean;variant?:'menu'|'selectedMenu';classes?:Partial<Record<'root'|'paper'|'list',string>>;PopoverClasses?:PopoverProps['classes'];MenuListProps?:MenuListProps;slots?:PopoverProps['slots']&{list?:React.ElementType};slotProps?:PopoverProps['slotProps']&{list?:Record<string,unknown>|((state:MenuProps)=>Record<string,unknown>)};}
+export declare const Menu:React.ForwardRefExoticComponent<MenuProps>;
+export declare const MenuPaper:React.ComponentType<PaperProps>;
+export declare const listClasses: Readonly<Record<string,string>>;
+export declare function getListUtilityClass(slot:string):string;
+export declare const menuItemClasses: Readonly<Record<string,string>>;
+export declare function getMenuItemUtilityClass(slot:string):string;
+export declare const listItemIconClasses: Readonly<Record<string,string>>;
+export declare function getListItemIconUtilityClass(slot:string):string;
+export declare const listItemTextClasses: Readonly<Record<string,string>>;
+export declare function getListItemTextUtilityClass(slot:string):string;
+export declare const listSubheaderClasses: Readonly<Record<string,string>>;
+export declare function getListSubheaderUtilityClass(slot:string):string;
+export declare const popoverClasses: Readonly<Record<string,string>>;
+export declare function getPopoverUtilityClass(slot:string):string;
+export declare const menuClasses: Readonly<Record<string,string>>;
+export declare function getMenuUtilityClass(slot:string):string;

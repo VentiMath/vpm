@@ -607,6 +607,156 @@
         "types": "./textFieldClasses.d.cjs",
         "default": "./textFieldClasses.cjs"
       }
+    },
+    "./List": {
+      "import": {
+        "types": "./List.d.mts",
+        "default": "./List.mjs"
+      },
+      "require": {
+        "types": "./List.d.cts",
+        "default": "./List.cjs"
+      }
+    },
+    "./listClasses": {
+      "import": {
+        "types": "./listClasses.d.mts",
+        "default": "./listClasses.mjs"
+      },
+      "require": {
+        "types": "./listClasses.d.cts",
+        "default": "./listClasses.cjs"
+      }
+    },
+    "./MenuItem": {
+      "import": {
+        "types": "./MenuItem.d.mts",
+        "default": "./MenuItem.mjs"
+      },
+      "require": {
+        "types": "./MenuItem.d.cts",
+        "default": "./MenuItem.cjs"
+      }
+    },
+    "./menuItemClasses": {
+      "import": {
+        "types": "./menuItemClasses.d.mts",
+        "default": "./menuItemClasses.mjs"
+      },
+      "require": {
+        "types": "./menuItemClasses.d.cts",
+        "default": "./menuItemClasses.cjs"
+      }
+    },
+    "./MenuList": {
+      "import": {
+        "types": "./MenuList.d.mts",
+        "default": "./MenuList.mjs"
+      },
+      "require": {
+        "types": "./MenuList.d.cts",
+        "default": "./MenuList.cjs"
+      }
+    },
+    "./ListItemIcon": {
+      "import": {
+        "types": "./ListItemIcon.d.mts",
+        "default": "./ListItemIcon.mjs"
+      },
+      "require": {
+        "types": "./ListItemIcon.d.cts",
+        "default": "./ListItemIcon.cjs"
+      }
+    },
+    "./listItemIconClasses": {
+      "import": {
+        "types": "./listItemIconClasses.d.mts",
+        "default": "./listItemIconClasses.mjs"
+      },
+      "require": {
+        "types": "./listItemIconClasses.d.cts",
+        "default": "./listItemIconClasses.cjs"
+      }
+    },
+    "./ListItemText": {
+      "import": {
+        "types": "./ListItemText.d.mts",
+        "default": "./ListItemText.mjs"
+      },
+      "require": {
+        "types": "./ListItemText.d.cts",
+        "default": "./ListItemText.cjs"
+      }
+    },
+    "./listItemTextClasses": {
+      "import": {
+        "types": "./listItemTextClasses.d.mts",
+        "default": "./listItemTextClasses.mjs"
+      },
+      "require": {
+        "types": "./listItemTextClasses.d.cts",
+        "default": "./listItemTextClasses.cjs"
+      }
+    },
+    "./ListSubheader": {
+      "import": {
+        "types": "./ListSubheader.d.mts",
+        "default": "./ListSubheader.mjs"
+      },
+      "require": {
+        "types": "./ListSubheader.d.cts",
+        "default": "./ListSubheader.cjs"
+      }
+    },
+    "./listSubheaderClasses": {
+      "import": {
+        "types": "./listSubheaderClasses.d.mts",
+        "default": "./listSubheaderClasses.mjs"
+      },
+      "require": {
+        "types": "./listSubheaderClasses.d.cts",
+        "default": "./listSubheaderClasses.cjs"
+      }
+    },
+    "./Menu": {
+      "import": {
+        "types": "./Menu.d.mts",
+        "default": "./Menu.mjs"
+      },
+      "require": {
+        "types": "./Menu.d.cts",
+        "default": "./Menu.cjs"
+      }
+    },
+    "./menuClasses": {
+      "import": {
+        "types": "./menuClasses.d.mts",
+        "default": "./menuClasses.mjs"
+      },
+      "require": {
+        "types": "./menuClasses.d.cts",
+        "default": "./menuClasses.cjs"
+      }
+    },
+    "./Popover": {
+      "import": {
+        "types": "./Popover.d.mts",
+        "default": "./Popover.mjs"
+      },
+      "require": {
+        "types": "./Popover.d.cts",
+        "default": "./Popover.cjs"
+      }
+    },
+    "./popoverClasses": {
+      "import": {
+        "types": "./popoverClasses.d.mts",
+        "default": "./popoverClasses.mjs"
+      },
+      "require": {
+        "types": "./popoverClasses.d.cts",
+        "default": "./popoverClasses.cjs"
+      }
     }
   },
   "files": [
@@ -638,6 +788,7 @@
     "vmui-system": "9.5.0"
   },
   "peerDependencies": {
-    "react": "^19.3.0"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   }
 }

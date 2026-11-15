@@ -4,9 +4,9 @@ const fs = require("node:fs"),
   os = require("node:os"),
   assert = require("node:assert/strict"),
   { execFileSync } = require("node:child_process");
-const browserChecks=["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs", "input-browser.cjs", "input-variants-browser.cjs", "input-decorations-browser.cjs", "text-field-browser.cjs"];
+const browserChecks=["browser.cjs", "text-browser.cjs", "surfaces-browser.cjs", "forms-browser.cjs", "input-browser.cjs", "input-variants-browser.cjs", "input-decorations-browser.cjs", "text-field-browser.cjs", "lists-browser.cjs", "menus-browser.cjs"];
 const browserFilter=process.env.VPM_MATERIAL_BROWSER_FILTER;
-assert.ok(!browserFilter||browserChecks.includes(browserFilter),"Unknown Material browser fixture filter");
+assert.ok(!browserFilter||browserFilter.split(",").every(file=>browserChecks.includes(file)),"Unknown Material browser fixture filter");
 const root = path.resolve(__dirname, "../.."),
   scratch = fs.mkdtempSync(path.join(os.tmpdir(), "vmui-material-archives-"));
 const run = (bin, args, cwd = scratch) =>
@@ -118,8 +118,8 @@ try {
       "text-contract.cjs",
       "surfaces-contract.cjs",
       "forms-contract.cjs",
-      "input-contract.cjs", "input-variants-contract.cjs", "input-decorations-contract.cjs", "text-field-contract.cjs",
-      ...(manager === "npm" ? browserChecks.filter(file=>!browserFilter||file===browserFilter) : []),
+      "input-contract.cjs", "input-variants-contract.cjs", "input-decorations-contract.cjs", "text-field-contract.cjs", "lists-contract.cjs",
+      ...(manager === "npm" ? browserChecks.filter(file=>!browserFilter||browserFilter.split(",").includes(file)) : []),
     ]) {
       process.stdout.write(
         execFileSync("node", [__dirname + "/" + file], {
