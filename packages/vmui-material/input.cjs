@@ -7,7 +7,7 @@ const own=(o,k)=>o&&Object.hasOwn(o,k)?o[k]:undefined;
 const join=(...xs)=>xs.filter(Boolean).join(" ");
 const upper=s=>s[0].toUpperCase()+s.slice(1);
 const utility=slot=>["focused","disabled","error","readOnly"].includes(slot)?"Mui-"+slot:"MuiInputBase-"+slot;
-const classes=(slots,custom)=>slots.filter(Boolean).map(slot=>join(utility(slot),own(custom,slot))).join(" ");
+function classes(slots,custom){let result="";for(const slot of slots)if(slot){if(result)result+=" ";result+=utility(slot);const extra=own(custom,slot);if(extra)result+=" "+extra;}return result;}
 const present=value=>value!=null&&value!==""&&(!Array.isArray(value)||value.length>0);
 const layoutEffect=typeof window==="undefined"?React.useEffect:React.useLayoutEffect;
 function useRefs(...refs){return React.useMemo(()=>node=>{
@@ -20,13 +20,13 @@ const InputBaseRoot=styled("div",{name:"MuiInputBase",slot:"Root",overridesResol
  "&.Mui-disabled":{color:(theme.vars?.palette||theme.palette).text.disabled,cursor:"default"},
  ...(s.multiline?{padding:s.size==="small"?"1px 0 5px":"4px 0 5px"}:{}),...(s.fullWidth?{width:"100%"}:{})
 }));
-const InputBaseInput=styled("input",{name:"MuiInputBase",slot:"Input",overridesResolver:({ownerState:s},o)=>[o.input,s.size==="small"&&o.inputSizeSmall,s.multiline&&o.inputMultiline,s.type==="search"&&o.inputTypeSearch,s.startAdornment&&o.inputAdornedStart,s.endAdornment&&o.inputAdornedEnd,s.hiddenLabel&&o.inputHiddenLabel]})(({theme,ownerState:s})=>{
+const InputBaseInput=styled("input",{name:"MuiInputBase",slot:"Input",overridesResolver:({ownerState:s},o)=>[o.input,s.size==="small"&&o.inputSizeSmall,s.multiline&&o.inputMultiline,s.type==="search"&&o.inputTypeSearch,s.startAdornment&&o.inputAdornedStart,s.endAdornment&&o.inputAdornedEnd,s.hiddenLabel&&o.inputHiddenLabel]})('font:inherit;letter-spacing:inherit;color:currentColor;border:0;box-sizing:content-box;background:none;height:1.4375em;margin:0;-webkit-tap-highlight-color:transparent;display:block;min-width:0;width:100%;animation-name:mui-auto-fill-cancel;animation-duration:10ms;&:focus{outline:0;}&:invalid{box-shadow:none;}&::-webkit-search-decoration{-webkit-appearance:none;}&:-webkit-autofill{animation-duration:5000s;animation-name:mui-auto-fill;}',({theme,ownerState:s})=>{
  const palette=theme.vars?.palette||theme.palette;
  const placeholder={color:"currentColor",opacity:theme.vars?.opacity?.inputPlaceholder??(theme.palette.mode==="dark"?.5:.42),transition:theme.transitions?.create?.("opacity",{duration:theme.transitions.duration.shorter})||"opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"};
- return {font:"inherit",letterSpacing:"inherit",color:"currentColor",padding:s.size==="small"?"1px 0 5px":"4px 0 5px",border:0,boxSizing:"content-box",background:"none",height:"1.4375em",margin:0,WebkitTapHighlightColor:"transparent",display:"block",minWidth:0,width:"100%",animationName:"mui-auto-fill-cancel",animationDuration:"10ms",
- "&::placeholder":placeholder,"&:focus":{outline:0},"&:invalid":{boxShadow:"none"},"&::-webkit-search-decoration":{WebkitAppearance:"none"},
+ return {padding:s.size==="small"?"1px 0 5px":"4px 0 5px",
+ "&::placeholder":placeholder,
  "label[data-shrink=false] + .MuiInputBase-formControl &::placeholder":{opacity:"0 !important"},"label[data-shrink=false] + .MuiInputBase-formControl &:focus::placeholder":{opacity:placeholder.opacity},
- "&.Mui-disabled":{opacity:1,WebkitTextFillColor:palette.text.disabled},"&:-webkit-autofill":{animationDuration:"5000s",animationName:"mui-auto-fill"},
+ "&.Mui-disabled":{opacity:1,WebkitTextFillColor:palette.text.disabled},
  ...(s.type==="search"?{MozAppearance:"textfield"}:{}),...(s.multiline?{height:"auto",resize:"none",padding:0,paddingTop:0}:{})};
 });
 // Measurement is owned by this textarea, in its own document. It never replaces

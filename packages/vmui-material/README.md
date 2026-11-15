@@ -130,7 +130,7 @@ autofill animation signals; they do not certify individual password managers.
 Input, OutlinedInput, InputLabel and TextField still need implementation before
 VentiMath can cut over these callers.
 
-The new InputBase SSR measurements show multiline trees taking **10.7% less Node
+The initial InputBase SSR measurements showed multiline trees taking **10.7% less Node
 time and 6.2% less Bun time** than Material 9. Single-line Bun trees take **15.1%
 more time**, and complete labelled-field trees take **21.7% more versus Material
 9 and 18.8% more versus app 7**. Other directions are unestablished under the
@@ -139,3 +139,17 @@ versus 525 µs for Material 9. The multiline SSR path omits client-only measurem
 nodes; browser sizing is checked separately. These results do not claim faster
 typing, layout or whole-app performance. Raw samples and source hashes are linked
 in the input report; older form measurements remain historical.
+
+The [InputBase optimization measurements](bench/input-optimized/README.md) replace
+those initial results for the optimized implementation. Static input CSS no
+longer rebuilds declaration objects; state class assembly avoids temporary
+arrays; form defaults avoid an unnecessary copy, and absent variants do not
+construct unused state objects. No theme or user-value cache is added. Keeping
+stable resolved-prop shapes avoids a Node regression found during profiling.
+Bun single-line medians are now 7.5% lower than Material 9, with no established
+speed difference beyond process/control variation. Full-field medians are 8%
+higher than Material 9 and 12.8% higher than app 7, also unestablished. Material 9
+multiline SSR is consistently lower: 20.9% on Node and 22.7% on Bun. Node has no
+established single-line or full-field regression in this recording. Raw samples
+and all control outliers remain in the report. Browser behavior, textarea
+ownership and theme overrides are checked separately; these are SSR costs.

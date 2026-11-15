@@ -83,6 +83,7 @@ function resolveStyle(style, props) {
 	return result;
 }
 function resolveVariants(variants, props) {
+	if (!variants?.length) return [];
 	const state = { ...props, ...props.ownerState, ownerState: props.ownerState };
 	return (variants || [])
 		.filter((v) =>
@@ -141,7 +142,7 @@ function createStyled({
 						},
 					]
 				: styles.map(
-						(style) => (props) => resolveStyle(style, selected(props)),
+						(style) => typeof style === "string" ? style : (props) => resolveStyle(style, selected(props)),
 					);
 			if (name && overridesResolver)
 				prepared.push((props) => {

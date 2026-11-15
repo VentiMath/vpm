@@ -28,3 +28,11 @@ test('suffix sees inherited state, while utility classes are immutable',()=>{
  const html=markup(h(api.FormControl,{required:true,disabled:true},h(api.InputBase,{renderSuffix:state=>h('output',null,JSON.stringify({disabled:state.disabled,required:state.required,focused:state.focused}))})));
  assert.match(html,/&quot;disabled&quot;:true/);assert.match(html,/&quot;required&quot;:true/);assert.match(html,/&quot;focused&quot;:false/);assert.ok(Object.isFrozen(api.inputBaseClasses));assert.equal(api.getInputBaseUtilityClass('readOnly'),'Mui-readOnly');
 });
+test('styled input rules retain scoped, fallback and live theme/owner state',()=>{
+ const Field=api.styled('div',{name:'MuiInputProbe',slot:'Root',overridesResolver:(_,o)=>o.root})('display:block;',({theme,ownerState})=>({color:theme.palette.primary.main,padding:ownerState.pad}));
+ const theme=createTheme({palette:{primary:{main:'#123456'}},components:{MuiInputProbe:{styleOverrides:{root:({ownerState})=>({marginLeft:ownerState.pad})},variants:[{props:{pad:3},style:{borderWidth:2}}]}}});
+ const draw=t=>render(h(api.ThemeProvider,{theme:t},h(Field,{ownerState:{pad:3}})));
+ for(const t of [theme,{[api.THEME_ID]:theme}]){const html=draw(t);assert.match(html,/color:#123456/);assert.match(html,/padding:3px/);assert.match(html,/margin-left:3px/);assert.match(html,/border-width:2px/);}
+ theme.palette.primary.main='#654321';assert.match(draw(theme),/color:#654321/);
+ assert.match(render(h(Field,{ownerState:{pad:1}})),/color:#1976d2/);
+});

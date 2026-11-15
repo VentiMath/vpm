@@ -12,7 +12,7 @@ esbuild.buildSync({
     contents: 'module.exports=require("./index.cjs")',
     resolveDir: packages + "/vmui-material",
   },
-  outfile: out + "/own.cjs",
+  outfile: out + "/own-" + process.pid + ".cjs",
   bundle: true,
   platform: "node",
   format: "cjs",
@@ -20,4 +20,4 @@ esbuild.buildSync({
   alias,
   logLevel: "silent",
 });
-module.exports = out + "/own.cjs";
+module.exports = out + "/own-" + process.pid + ".cjs";

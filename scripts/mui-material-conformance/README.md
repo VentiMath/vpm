@@ -154,3 +154,10 @@ existing balanced fresh-process harness with prepared 12-element single-line,
 multiline and complete labelled-field trees. Client textarea measurement is not
 part of SSR; browser acceptance checks it separately. Samples and source hashes
 are retained. Earlier reports remain historical measurements.
+
+The InputBase optimization is recorded separately in
+[the optimized input report](../../packages/vmui-material/bench/input-optimized/README.md).
+Its acceptance retains the same browser/state cases and adds scoped, fallback
+and live theme/owner-state checks. Unit-test preparation writes a process-specific
+bundle so parallel Node test files cannot load each other's partially written
+output. The System caller SSR and Chrome suites also cover the shared styling change.

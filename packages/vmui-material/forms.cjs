@@ -9,8 +9,8 @@ const own=(o,k)=>o&&Object.hasOwn(o,k)?o[k]:undefined;
 const upper=s=>s[0].toUpperCase()+s.slice(1);
 const utility=(name,slot)=>["disabled","error","focused","required"].includes(slot)?"Mui-"+slot:"Mui"+name+"-"+slot;
 const join=(...parts)=>parts.filter(Boolean).join(" ");
-const classes=(name,slots,custom)=>slots.filter(Boolean).map(slot=>join(utility(name,slot),own(custom,slot))).join(" ");
-function defaults(props,name){const result={};for(const [key,value]of Object.entries(useThemeProps({props,name})))if(value!==undefined)result[key]=value;return result;}
+function classes(name,slots,custom){let result="";for(const slot of slots)if(slot){if(result)result+=" ";result+=utility(name,slot);const extra=own(custom,slot);if(extra)result+=" "+extra;}return result;}
+function defaults(props,name){return useThemeProps({props,name});}
 function inherited(props,context,keys){const state={...props};for(const key of keys)if(state[key]===undefined)state[key]=context?.[key];return state;}
 const hasValue=value=>value!=null&&value!==""&&(!Array.isArray(value)||value.length>0);
 const filledProps=p=>p&&(hasValue(p.value)||hasValue(p.defaultValue));
