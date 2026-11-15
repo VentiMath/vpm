@@ -1,0 +1,2395 @@
+{
+  "schemaVersion": 2,
+  "recordedAt": "2026-11-15T19:00:19.068Z",
+  "runtime": {
+    "node": "26.3.0",
+    "bun": "1.4.4",
+    "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+    "openssl": "1.1.0",
+    "llhttp": "9.4.2",
+    "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+    "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+    "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+    "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+    "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+    "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+    "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+    "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+    "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+    "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+    "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+    "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+    "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+    "v8": "14.6.202.34-node.20",
+    "uv": "1.48.0",
+    "napi": "10",
+    "icu": "78.1",
+    "unicode": "17.0",
+    "sqlite": "3.51.0",
+    "typescript": "7.0.2",
+    "modules": "147"
+  },
+  "cpu": "Apple M1 Pro",
+  "platform": "darwin",
+  "arch": "arm64",
+  "calibration": false,
+  "validationOnly": false,
+  "settings": {
+    "pairs": 4,
+    "controls": 2,
+    "rounds": 12,
+    "warmupMs": 150,
+    "blockMs": 10,
+    "maxIterations": 1000000
+  },
+  "hashes": {
+    "../../scripts/bench-paired.cjs": "aa698a2ec3d3fabb1d4c8135021bb4fd619c01abdff15e42e4b10b1fe3d329b0",
+    "../../scripts/bench-process.cjs": "7b9187beee078b395b10287f497a42e3dcc329914d19ba08aa58601b8bba14bc",
+    "../../scripts/mui-material-conformance/input-decorations-scene.jsx": "5c347916c11063227c790f8f36e4b95d61bf04e2e3fec09c2c0f91075f36b36b",
+    "../../scripts/mui-material-conformance/switch-bench-entry.jsx": "29334e6e0c3fc0b234bb581132ca2fe2c401ae1620c2e312277dd6c8f84d2738",
+    "../../scripts/mui-material-conformance/switch-build.cjs": "befeaa59d4213bda0fea293c6080c51a81d7afcb0621796b2974adea6b4bc71e",
+    "../../scripts/mui-material-conformance/switch-scene.jsx": "26630306173c72546e9fd408c0e34c84daa9abe6f5df10dfc46a6c04c6cfab10",
+    "../../scripts/mui-material-conformance/text-field-scene.jsx": "b58726e5f376b37870e8d922c16149602002dbf4f6fee4c554c9595f2df205c8",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-upstream/switch-bench.cjs": "b949912ecf1dfe00d36e8557425cedca7e523cab43e01213953bbce5060f68c3",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/app-vpm/switch-bench.cjs": "194cee51f1285bcd00aba6ff0711edd2013e0ba83ad4a4a6f352d6f488f2a5c1",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-upstream/switch-bench.cjs": "9a4f21e318ccdd67062d3deb3d338514e38cea75d11362f3d6699fb7267fb44a",
+    "../../scripts/mui-system-conformance/node_modules/.vpm-material/current-vpm/switch-bench.cjs": "e7607ecf630582f50f5cbd1e5d0c2b5e4386c9843ede34a87f1d46f72af9e4ed",
+    "../../scripts/mui-system-conformance/package-lock.json": "ddadfff23ccbae1816cb53aa88c03f4279279b3014993b39c62b7b1676faa633",
+    "../vemotion-babel-plugin/index.cjs": "e5bf72ac7bc3e7429c7fd385d680260211ce95b7e0e4316bb69f611a45029369",
+    "../vemotion-babel-plugin/src": "31538914c8f6834d1c48e1eda455f8655afa6b7e7aaf597c044a311bac473b74",
+    "../vemotion-cache/index.js": "a4391dfaa7d6330038ccb0b39ffff0af5a48066b27b0316eece0b6562a94abaa",
+    "../vemotion-cache/src": "6d560802fa6d75bfd7179e31c5427593220b0931c4b5b953dca79c86bacb30dd",
+    "../vemotion-hash/index.js": "96b215f0e2ae15c729dbc5eac185aab2e484ae1b67490ebcd94d5709056cd4e5",
+    "../vemotion-is-prop-valid/index.js": "5993ac5f383ac427e13b3b739eea889aefbf57af365dba833582890a10b52344",
+    "../vemotion-memoize/index.js": "9b0b8759044ffed69cfcc0548304888144cd1e2ffb794ed99726c51ab3a38c60",
+    "../vemotion-react/_isolated-hnrs.js": "03518aa3cc4cd476a205dd63745b0db44c7df9f9eba4ce11b232fb26055abdcf",
+    "../vemotion-react/index.js": "41d7839fc57c4dc975e17143eb363b1f68efde4cb9e9778f006b81ec10dc1259",
+    "../vemotion-react/jsx-dev-runtime.js": "a110b06d83cebb2ee63b0ea0224f4ff394355da4ab6a3b7aed0e69c2dfb1704b",
+    "../vemotion-react/jsx-runtime.js": "d4cf2669f60829205ad963371e5edc535f0413fadecc8bf56ad4e174fd87f38f",
+    "../vemotion-react/src": "f3fa58f006f4c35c1c8ee16c2384334e3697f7923b3440db92a117260aa648ba",
+    "../vemotion-serialize/index.js": "c5fc672aac873af6b663291fdd3b8c0c72a6e271458be622e9de5154e2874801",
+    "../vemotion-serialize/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-sheet/index.js": "370197e943ace72eb9feb1ef45c8b22b76904e7dee222fa2106dda556df3c2a7",
+    "../vemotion-sheet/src": "2f1c965c2df5db9fad836cf20b73677ad8c24814e34ce224b957c9c0a4b376e9",
+    "../vemotion-styled/base.js": "2c0d8fb8493f8ec54e67182ff81335ce4ee2fd3503b6d563e473fc08f6e770dd",
+    "../vemotion-styled/index.js": "d2c6ecd98351625a2c3d2c8126ff4b3761a0b8ca82066b5cbec5055961aa2b93",
+    "../vemotion-styled/src": "8d1258141f1423dcabcc14f4037b3f878a1302dbea67718f709780a553642600",
+    "../vemotion-unitless/index.js": "068105a5301790ad6ff590e36f620f1548a809f59e222a7075f52544665c85d5",
+    "../vemotion-use-insertion-effect-with-fallbacks/index.js": "c9bc22b0c67ed348c3b377f69484dae1e32ac76fbaf7af198ddbd729be039e66",
+    "../vemotion-use-insertion-effect-with-fallbacks/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-utils/index.js": "8d92f8c8a9bdbb347324c097e7e1c6a23004bf9bb61fa6391e912df0ec39ccf3",
+    "../vemotion-utils/src": "3304c3023c2ddc417a0e21a4bfff163baf1f4792dfd7073d54ba75418f8b2fae",
+    "../vemotion-weak-memoize/index.js": "3e44339d2b635f8ccca795abacc5f4e395c6598894dc0520ff997eda25eca99d",
+    "../vmui-private-theming/ThemeProvider.cjs": "1a9d3eb6c1ccc48c5d9332295e40af36917d1e6648d12f750de0c50ac9f82564",
+    "../vmui-private-theming/ThemeProvider.mjs": "46256569d2dd107cec05e4ccdf472197a191e663234a32704f2fd968d61e7abd",
+    "../vmui-private-theming/index.cjs": "dbea69c9f4dccb3914c34d8bbffc813f470bf4c9eb0d61f6b41612b18c27b5da",
+    "../vmui-private-theming/index.mjs": "7d7e0dfbbc9e98b983de15f56153013d35c1be470bcb66edf5a7bdafb8362af3",
+    "../vmui-private-theming/useTheme.cjs": "a510ba26fed37a3b028a2ebbaf51e3c9daf8e4e5a0c3f47b785f00891832da65",
+    "../vmui-private-theming/useTheme.mjs": "6f8bc2ed0d6a8d2323f10e23d26b25256b284bf6a570cc058fb6693e34032ded",
+    "../vmui-styled-engine/GlobalStyles.cjs": "f2389d1af2f9e02a49087610c78f4c011254a4f191edaa9da0a43209131649d2",
+    "../vmui-styled-engine/GlobalStyles.mjs": "921cebc2abc1ebd5bc7a17366f1f01cbab72d6ab5bf37a73efcd41ed748e8c51",
+    "../vmui-styled-engine/StyledEngineProvider.cjs": "bfead354f2d307038620421321a5e653f24a4b83f9217207eaa1eef174b0e90c",
+    "../vmui-styled-engine/StyledEngineProvider.mjs": "9934fbd41b842081688ecc1b311934709ec0d8eecd814df97acfd55eda3335cb",
+    "../vmui-styled-engine/index.cjs": "3883e5d988d7fb95c8f7b9e1a68f0722503d8f85944f4a0b21cd33010ac13a6b",
+    "../vmui-styled-engine/index.mjs": "5b0497c8c2e0f5873d6aef91b66a8a9497950c5c384788ac4b5ad16f5cbcc2f9",
+    "../vmui-system/Box.cjs": "b64b6a88be592977443812e88f8ffcd322f91b8be67e67ce9498431e4759442b",
+    "../vmui-system/Box.mjs": "21321a7ad67cb60e3ecebfa2a745229f7dc5e157a2ea9f849d17ec92b95f8114",
+    "../vmui-system/Container.cjs": "e5b343d9d6d100b338a0e56f92ecab49d95c474e2cbbe14fb75ac3f1b9a095b7",
+    "../vmui-system/Container.mjs": "27b64fcd5ebaff98ed97105da2a9c501ee43370a5955bb3ade6e97c86640c9b4",
+    "../vmui-system/DefaultPropsProvider.cjs": "e32e451936582001bdba5f84b954357cdf8c725b9dab2a00ff7256be07b7214b",
+    "../vmui-system/DefaultPropsProvider.mjs": "f8d343ffa887ae7d66aa9e71998d955acbaacffe254eb87183d551fa57ee9544",
+    "../vmui-system/GlobalStyles.cjs": "204f09c030c315a082c087578fecb9ac35e3f3a594ecb85969d6fca0f9c02c11",
+    "../vmui-system/GlobalStyles.mjs": "59da1b6d2e56c6134f749ecabad4d1df79ce76e30888dc529bac180970004b33",
+    "../vmui-system/Grid.cjs": "4ca2fca568728b0dfc4d5d9e9917c996369d9f14a445fa0359ad5c3ca7b0f996",
+    "../vmui-system/Grid.mjs": "5ebd81226ce7cdb73e7aaeb4b11f5995789584f2c43b63ba0373826508a2f558",
+    "../vmui-system/InitColorSchemeScript.cjs": "f5d958140169b55a2cc741bc05164619ac9c142ab1167d94bb68df7a182a9f4a",
+    "../vmui-system/InitColorSchemeScript.mjs": "b4d810d5aaf45a3dcddeb5c0fb1f31c810a0bf7bbcc8530ee99732ea13ac67ea",
+    "../vmui-system/RtlProvider.cjs": "5bb89c64918fab9e47c008742bca8cb7f32d024277575b7647a2eb2cf2db05f2",
+    "../vmui-system/RtlProvider.mjs": "5af7be25286fddf304077e8f31c265ded0cd8a5cd7bc732cac756e107a7d1e9d",
+    "../vmui-system/Stack.cjs": "ba257160041d5c6b9a37c8fb51a3972820ce4481265953280570f4e26acb5c68",
+    "../vmui-system/Stack.mjs": "35633dc42f472ba32506901028b2bd0182602eb27b293c914b297eea3afa7dec",
+    "../vmui-system/ThemeProvider.cjs": "6be5417b9b8d26bb43b00eaad127197b25f2e68deae73573110a98ad55507053",
+    "../vmui-system/ThemeProvider.mjs": "d8d3add5be8e4d3aa2ad4af70acbf35ace684075643b5ca9bf04e4019263ee3f",
+    "../vmui-system/borders.cjs": "7c0f94d8efd492acba687d8df77e8ad0f4e45ef2518360f90cd09ebeda99c474",
+    "../vmui-system/borders.mjs": "298e2c19c85eb7157fdfbb860ab222e7e8f936991922b4756b79e9db8f13dc9e",
+    "../vmui-system/breakpoints.cjs": "707735fe09f5f263761d65fadc74afcb6d5bb3dcba5db4c72d692560e14c2a0f",
+    "../vmui-system/breakpoints.mjs": "cb3dba12099937a43e952a7ef50dbf763cc23aecf6302c182fff7cd9614b60ba",
+    "../vmui-system/colorManipulator.cjs": "8dca5753c5c2940196673eaace10e3b8e64f0e497863dc2cd8b2d7ff82a3d094",
+    "../vmui-system/colorManipulator.mjs": "4139f8352993b5369060bb719b40ed03ce2c5ce68e9edadc01e68546551962b6",
+    "../vmui-system/colors.cjs": "56cf0820050ee5d563bbaa983f6114ef26bb443092f9a22348a1fd1371db7407",
+    "../vmui-system/compose.cjs": "5309ab8adfffff6caed4bbe5fbcc154d127cf1aaf8881f8415f84a99efcedf3d",
+    "../vmui-system/compose.mjs": "da201a17433a28b3f795701f7d32b849f5e584258c86016ab78f915be3c8be71",
+    "../vmui-system/createBox.cjs": "48f5d57f508c1194ba00cc8ba6071c7ee8eb51511fdfb9f0b6a817b4fd54fd9e",
+    "../vmui-system/createBox.mjs": "d51887118f2ede63c55a111181217d6fb0b619e882ea94f546abca590ca4f656",
+    "../vmui-system/createBreakpoints.cjs": "f103076893d26bba729bcdb358ce8410e5abe9d4c1667ccb2caf36259444558c",
+    "../vmui-system/createBreakpoints.mjs": "f62adabc5215b2c93a3b870aa931b15bcbbf6d8f0ba9da0b801c954105b3d4b6",
+    "../vmui-system/createStyled.cjs": "35643ad0bca0719804a11e44b105186ad6e70de113f7dbc8cd00534b80b26ccc",
+    "../vmui-system/createStyled.mjs": "e14a03be4c660cd96d68f89a4a48c4c0663282801a7c4bf30b0fea88d8c50c06",
+    "../vmui-system/createTheme.cjs": "ef66b46f1765583e1f1a78db274a9c5c734a817bc51a9c268905a06bfdca4b00",
+    "../vmui-system/createTheme.mjs": "3f9b31a383461582d8aa7f51155ff1874015f5370c72a75cae0b8d06f845de25",
+    "../vmui-system/cssContainerQueries.cjs": "43cdac47291af1a1b4287e7ca68c689466ee479821c0808bf17634ae78e4c141",
+    "../vmui-system/cssContainerQueries.mjs": "ecaa8cc0793ea045cb67902d6d73e3d597dcf5adc662b8cbe0665313112bd6ff",
+    "../vmui-system/cssGrid.cjs": "dd8a548c547b6ab4f9c24b56217207bd7a65139c540caef3e0b0daff07a6a0b9",
+    "../vmui-system/cssGrid.mjs": "6a9220dfd8f26ea0e57132266e752f7bdee4067341f8192646084af73901ce01",
+    "../vmui-system/cssVars.cjs": "76f379d9cb127f254ebd9ce1f089b44a3727bc3e66817295cc4116dce875f1c6",
+    "../vmui-system/cssVars.mjs": "ad9f227cbb7638ab24556fe0709c99c2e8e525f976819753f87a8896b68463be",
+    "../vmui-system/display.cjs": "640ba4c444d713d74536fd252b268b6ab5e12a2db8d9a81d19c1c078db084aac",
+    "../vmui-system/display.mjs": "63325f27891e1dd087b5fbdb4671ad04465be3ad04b34eb5a478e9634a42cb5e",
+    "../vmui-system/flexbox.cjs": "fdc54462f82546497b54f16b07360450a7d4daf4ab75788d3e3cf21f40df2a9d",
+    "../vmui-system/flexbox.mjs": "42b9ea2bdcf803400c81358b672d7e696a9688caf7e08273031e2a6154179805",
+    "../vmui-system/index.cjs": "815536114e6591be4bc3545eec525a3843cf3c315bd3b15a2ba44af29a21f366",
+    "../vmui-system/index.mjs": "2ff8e95b96c9987c982c6f69484037cecd1db7abbc33902c0413f68c227e5ada",
+    "../vmui-system/layout.cjs": "1e834fb9a67911b39def8f3eca37235fb790407a3bf534dbbb751ae6d54ec170",
+    "../vmui-system/palette.cjs": "93aaa58e6747f0a63f7f51884b320566c6e1f136c678e4e0328ab2f7f9ace400",
+    "../vmui-system/palette.mjs": "1c4bdeb92399b1382dff078d9bcfcdb1cfe93eb21df9adb7500647e9b855d00a",
+    "../vmui-system/positions.cjs": "fbf0e2493aab65226a197ffa87f485b92524ad62e34f812614857e1b84cdc4a8",
+    "../vmui-system/positions.mjs": "166f56d449726f55d5c6418c71fabf4e93801aea7220df1832f0363e9b94dc53",
+    "../vmui-system/react.cjs": "10a90e43f3bd281ea0c99259a56c7e398eec35d85ee111478689af1238b48f16",
+    "../vmui-system/shadows.cjs": "e2b3ee2ba7c465b059a99e0257115d0e632e1b313d98ddd8db31c2dead4df177",
+    "../vmui-system/shadows.mjs": "3f5d98175756fc768897b4f66820c2a251118b805e4c99778aa3a7b868481116",
+    "../vmui-system/sizing.cjs": "6272f9251dfadb216aac6987c36770b3622d72c46ed50b81b52aa1bff4947b94",
+    "../vmui-system/sizing.mjs": "75a1437c227788501e8d2ae9d34705154e90d961223eed6eee05a5aa99376c1b",
+    "../vmui-system/spacing.cjs": "df5bd7265242e184046ece61efcbce52b001cf479937aa86a5b9a9a5e4caef0f",
+    "../vmui-system/spacing.mjs": "06ba3be7ad24d588d91da1cddd523068d9613cfea7473a6b78554b410c487949",
+    "../vmui-system/style.cjs": "de7dde015cae1a05cd0beffe1df9c77ec5b63dda22bef976dccae76f5506e446",
+    "../vmui-system/style.mjs": "f9320a99cdfeec7573f6d257ec5693b0914d0b56ed9987ce36174de95c9b6d33",
+    "../vmui-system/styleFunctionSx.cjs": "21844aad8bfe3166f6a0ef449972fc95c03126446f1b4f23e4cbd44b250bcf1a",
+    "../vmui-system/styleFunctionSx.mjs": "8cdf559dcdb7d91d7dad1e192b1a6df1027aa5ec5b8d2ca8e5be55a310d30de2",
+    "../vmui-system/styled.cjs": "634c4b206aa5fc01f953edad02c3a771f30742514d0839cca499abc092dab4b5",
+    "../vmui-system/styled.mjs": "73d39c4637e3b9e3739121efb0f0f4be98918190c29f543ca16b6b44cafa9d40",
+    "../vmui-system/sx.cjs": "f41de5dfa31e16e1121e75a46765b07496b4423e5981ebb5c9dbafac3acf457c",
+    "../vmui-system/theme.cjs": "8d3a6dea5a341c0dbe98690abfa0dd70f54201b5b3636fe45557245de1e1be7e",
+    "../vmui-system/typography.cjs": "987ea252bdab27a30c20b837387a8aab7f71fcb302ed9efe9d25259995c5194f",
+    "../vmui-system/typography.mjs": "6be7933e862afa30b0ea0ed67a7c9eee76ee75fddac2cec6b98e1d010f7e749d",
+    "../vmui-system/useMediaQuery.cjs": "42a285cd890c3f206a15c171d5b65ae8540cc43ecd81df8631c6e104a941f234",
+    "../vmui-system/useMediaQuery.mjs": "3d0c7b297574f8922479c9440b76afba587f802e99ff30c94d6c2be12c06a17d",
+    "../vmui-system/useTheme.cjs": "975e4bd16a686d713f9ce92d1402ba2c9adc5864869e3643d3119dd53bf69c99",
+    "../vmui-system/useTheme.mjs": "e25cae231af64953959efc125dbfcdc96962221e1f3631da0cb632fa922ed645",
+    "../vmui-system/useThemeProps.cjs": "a63dbc2cc4d9073b8ad97998b9d70e4507c47694c1cdabedd1cf1b8e7dcbd4c4",
+    "../vmui-system/useThemeProps.mjs": "1b8b8a33d7e3cce93633c2fbef1a8141633d7bca47aff1e834e5817b30bb1973",
+    "../vmui-system/useThemeWithoutDefault.cjs": "96b8e6465fb4473f30875e7e25e99bdf138b4637c1dd09b6d2cb48d13ce23dac",
+    "../vmui-system/useThemeWithoutDefault.mjs": "26ce4314b640064fd50d74109b653cb08b1c562bfa2d423a1b22d650a2fb6b71",
+    "../vmui-system/variables.cjs": "6eb072abb5fe13f347097ed98a3086d29605c817a226b70cef005f0826e5941f",
+    "../vmui-utils/ClassNameGenerator.cjs": "6213feb83273586f7de134f72c421782ffa48819586511baf9d1dc6fc36f7f20",
+    "../vmui-utils/ClassNameGenerator.mjs": "6b66d354f6624e6aec303690dd064d2149f94f18ec52bab5187b3c19c224eca5",
+    "../vmui-utils/HTMLElementType.cjs": "ae07ceb3ea431b1e2d0fda4c1bff885e7bd7d4c69244b661dc46e32a99a54b56",
+    "../vmui-utils/HTMLElementType.mjs": "35b1f8f9751f75a8e6d6703412ef13f45b607fb30108c9b71c5bf65eaf0b2a86",
+    "../vmui-utils/appendOwnerState.cjs": "8a8203ab3e0f9008cb7148631f32c754adbbef0be3ff752ee11893eea63df253",
+    "../vmui-utils/appendOwnerState.mjs": "024d6e38a09777eafab126e99df13bb5933ac5b7299c3b1dd8a4e00ce37ba9bb",
+    "../vmui-utils/capitalize.cjs": "466ace0ba91f0eb59598533df1bf92203904e75ce9d24ed73d447d4bd2f6b683",
+    "../vmui-utils/capitalize.mjs": "2e692f2ba8c915e8a5fbebedb2a4dd6f8afe19cbfecf16cb2acb366f4f6bda5f",
+    "../vmui-utils/chainPropTypes.cjs": "64738c503dc44f8f3538d7503ceb60041c88004b587d72c77eff07da7f153d9b",
+    "../vmui-utils/chainPropTypes.mjs": "af29dc439c14f6941b8f1740bb877635d63019990652c2e760a0f93fcd055792",
+    "../vmui-utils/clamp.cjs": "4ea234c98488fe2b1f1a668b7ce56c3fcfb6b0d94532d94bb2ec8aaec093c5e8",
+    "../vmui-utils/clamp.mjs": "d1588edd0c58ed7ab6c3863dc4043aee60b16d0ecba0297847eba23afa6a3499",
+    "../vmui-utils/composeClasses.cjs": "c72db2f2d0199bfb167898f06e6c10c994f31a0956751ec5fbc8a8d4840d824f",
+    "../vmui-utils/composeClasses.mjs": "57bae69bf2452e63eb458aae908e79f066ebed3661b70a4995fd08b9b8efc49f",
+    "../vmui-utils/contains.cjs": "a978b047810fe70d07612d47e8c4da1c515a4f02fc2be0689afd5169eec8e207",
+    "../vmui-utils/contains.mjs": "2f0f88211bb69776a090c7079ecf21671d51d99c78f2686fe4b342ec6c7f4898",
+    "../vmui-utils/createChainedFunction.cjs": "b6c57fef271d0f5aa19c198c5b41c03f407da749ea5271b42684a9e1e6a5e36a",
+    "../vmui-utils/createChainedFunction.mjs": "45cfae0309fa596f9032c7b83a39e6f29c4b6557cfe26d46cdb6915cdbf6960c",
+    "../vmui-utils/debounce.cjs": "3852b1cbbc7bbdf38e86cffd14f6a5ae27eb29c2d6d9f46e06fd775be04338f1",
+    "../vmui-utils/debounce.mjs": "26756d5d85c3bbea438493a450065ce18c8d8eec741bf546a3d107bdeb35f33e",
+    "../vmui-utils/deepmerge.cjs": "eca6c9c4308d7254fc21112281f966a4b27258b65dc837960903712b2585bb95",
+    "../vmui-utils/deepmerge.mjs": "8d68c51ee253afcd699872a9cb24c33484291d4512e9858d5c0c81b166bbe74a",
+    "../vmui-utils/deprecatedPropType.cjs": "167e8146d593467fb628e4cbe0348527046498a892866f5ce52b26aa63fc9fe3",
+    "../vmui-utils/deprecatedPropType.mjs": "bf695ea438eabe1b79325ebe3b667aae7920e6236c92c86d1586ff7c0efa8471",
+    "../vmui-utils/elementAcceptingRef.cjs": "c3421533a636766a14fb32441d7507e8506e498e0425436433cb22a67074d62e",
+    "../vmui-utils/elementAcceptingRef.mjs": "cb11878271169ddf73f4930a1dd249bbb94fcd3bdd1110c2149ebcfe8a104f52",
+    "../vmui-utils/elementTypeAcceptingRef.cjs": "a953e733808c3739d29c32aea176434d5e28cc9b77f6c5ab4b14a52903c821dc",
+    "../vmui-utils/elementTypeAcceptingRef.mjs": "5df95de2599172dbad31500c360950dd646ef1e92dfe1e0c55d9b1e094441b89",
+    "../vmui-utils/exactProp.cjs": "2bcb71df8c0b0ca80b54f7dfba8799ddf1dd7e03833bbacee7f9bdcfc732e94d",
+    "../vmui-utils/exactProp.mjs": "d983c6d76089d649c0b77aa7b7f21b2381168f88e87cb287983ae735c44dcffd",
+    "../vmui-utils/extractEventHandlers.cjs": "78953d2b46eb154b71204565e5fab23da43f22a70d875fd42643c3ef971efc49",
+    "../vmui-utils/extractEventHandlers.mjs": "fadb22d0e37dbc35d78087a25d208e173fdf5cb0b8079b0f21d57c7c63eced31",
+    "../vmui-utils/fastDeepAssign.cjs": "1c7f60e965c16ae9261d2ec53511094ebd2c0ad05d640f39d4a063860cfe8d68",
+    "../vmui-utils/fastDeepAssign.mjs": "c00d95130cb7edc275b9c683f6397ec6b125bace48704c2980ed76d0497eb969",
+    "../vmui-utils/fastObjectShallowCompare.cjs": "3d207409294c330d9da814abd02982724ea40d5b8f83cb877ddb98dc021eed5b",
+    "../vmui-utils/fastObjectShallowCompare.mjs": "462c19ca96f1bd7651abe9325ef2f99afd6bded597b4bb45f0f909bf6a55a292",
+    "../vmui-utils/formatMuiErrorMessage.cjs": "723a68f4343f18b51cd81c0b0e8da94b95b4a531663c8e09a8ce9745c2ce6fac",
+    "../vmui-utils/formatMuiErrorMessage.mjs": "8204857f95fa3243d72503e31963b8a53f9be5f1224cf0c1cea5e3e1f62a090c",
+    "../vmui-utils/generateUtilityClass.cjs": "865be2049fbb4ef4ed4c1bd0d1a2b7f0af898a128f5e5b883d191a9811d9105b",
+    "../vmui-utils/generateUtilityClass.mjs": "2555c0761da1d35820df28989dbd2fab9c9f23165d318368de6d6a21ce0a5759",
+    "../vmui-utils/generateUtilityClasses.cjs": "2803d15c8920eb6b06bebd7fbef6f3881ed394644244c1bb893ddf1e7d132cee",
+    "../vmui-utils/generateUtilityClasses.mjs": "db8a623b630b813b748fd28847eb700f8c271ef262efe780e32d4c37a8b571d4",
+    "../vmui-utils/getActiveElement.cjs": "f9811ccea626e9c4bec30750f457102bb216ffdebf9f09e010b1b80ea9bc1255",
+    "../vmui-utils/getActiveElement.mjs": "9a0ae08abbab81f40d4f3b73cd53cf1f5e84b938f8f4c936d2cbdb8cb394a87b",
+    "../vmui-utils/getDisplayName.cjs": "4b7bf675dac24e974a549a4ad7399c9a0afa33fd1d1d6d267bc455dd6135bd05",
+    "../vmui-utils/getDisplayName.mjs": "c67ce4c3aacef24079ca3cbce7ea6723825e5b5389d0e71055aa4c19ef3548c8",
+    "../vmui-utils/getEventTarget.cjs": "04576c4987304ebd227e45aa400540b2029dd2fc8b0973a628a2f8504e2b4bfa",
+    "../vmui-utils/getEventTarget.mjs": "dafa6f09dc81512dfac498b71c5555d3011f2bca308a16de02d20fae8cb7fc16",
+    "../vmui-utils/getReactElementRef.cjs": "65da43940aeb639cde709fbd6a50d19fee97344a6a815b91cf3fbc444bb4b675",
+    "../vmui-utils/getReactElementRef.mjs": "a89736dbacb73ba8222d50db8f04b3fae63909e74060ece95b060921929c15f3",
+    "../vmui-utils/getReactNodeRef.cjs": "f03ceec5ab58570e197a0936a5b2edf91fda6cd9fe0b55eef166811c13c0d195",
+    "../vmui-utils/getReactNodeRef.mjs": "a78888e7ad099bc748916ed352f793e70d21753bba42b3cf1f3f963136f195d2",
+    "../vmui-utils/getScrollbarSize.cjs": "305a54493f23f3c4c012e9543ccf6ed7ccfb1260646b783f0155bb663d637554",
+    "../vmui-utils/getScrollbarSize.mjs": "8d1056ff3f76efdf899db221ed316210af1ceeb2bc87a3d365799759e13da474",
+    "../vmui-utils/getValidReactChildren.cjs": "56a8cdfcbd4f092cf90df912fa1bf1f8b63a7efd41df51e51d53cc6c397eb21d",
+    "../vmui-utils/getValidReactChildren.mjs": "61735aa08c9cc0b47a08ee7913a9f86fc17c85422e5a5802f5162a76c5383a68",
+    "../vmui-utils/index.cjs": "f22a51b57dee4397510ff87dcf78fc1eb04efecf593199db40f73c949e724b4e",
+    "../vmui-utils/index.mjs": "77990978ca4ed32ebd07630d3c319a066bc94fc382ac8fa767aa3f3a36d8b1cd",
+    "../vmui-utils/integerPropType.cjs": "e5035039ece3f358faadbb3e83425e6dae8477ee78f56b8f30ce89d651f57888",
+    "../vmui-utils/integerPropType.mjs": "6d9d4e48215e61ba0079c22cb9ee2377702cb0e6bbf9da6ee4109712f637aec9",
+    "../vmui-utils/isEventHandler.cjs": "146211ece8a4e9e441c420367eee0982fcbd007036b88acf36d07755caed9edb",
+    "../vmui-utils/isEventHandler.mjs": "a6189e34d88e7ef1fc813d0829727dd7ee7d49791500c288a347b722a87adf6c",
+    "../vmui-utils/isFocusVisible.cjs": "b776e3144ef25e863c6b095a6c7b7d4302fed4fbd8e6348d4ef2d203b9871590",
+    "../vmui-utils/isFocusVisible.mjs": "782be519cca00feabeedbd98d3c6be7e26671db3ae1001f2c03ee1d15951fa4e",
+    "../vmui-utils/isHostComponent.cjs": "769315ceb1ee854e06d43beba185c5b354c5ce095bf7fe0e7e3cb312416df466",
+    "../vmui-utils/isHostComponent.mjs": "25342e31eefd28ff2cda6d93093e8c438b8e6748e4de9479fb2597a2075af91b",
+    "../vmui-utils/isMuiElement.cjs": "7fa1fe9310462136f212b1d117440e1cb0742c23c404f9a7e75b1f64978a21e1",
+    "../vmui-utils/isMuiElement.mjs": "a4b2dcc904d61e2a494297a2e912c431423201f065cb8c1f1c7370ad846f9ca6",
+    "../vmui-utils/isObjectEmpty.cjs": "62fd3fc5eaba83aeb31631222c615a963887a6fb4f415bf8ac07c2d3ffa240df",
+    "../vmui-utils/isObjectEmpty.mjs": "003c055a84dfb20e387bc60d3c7f613153a43d4b2811ac159ad0e6e84caf07fa",
+    "../vmui-utils/mergeSlotProps.cjs": "a8daacba191afee6604a728f790af6ac8df4b8a7e0614b6c255c145b726f86f9",
+    "../vmui-utils/mergeSlotProps.mjs": "1266f954d524754a8986c43959a4d97f2eea8c17678c9cdb8b01f9f5d481f413",
+    "../vmui-utils/omitEventHandlers.cjs": "17bf9548b222c01ab58cc32a4197c6937fa45b5b5a2549104c8ee73ad8536280",
+    "../vmui-utils/omitEventHandlers.mjs": "1419a8093c5ca368ef2b8855b28d40a0e4717c4e8afd77fd667eb56f8194b7e6",
+    "../vmui-utils/ownerDocument.cjs": "e79c2f3cb745e8353896b562033f543f90e686223f31feab36c1c912106a6539",
+    "../vmui-utils/ownerDocument.mjs": "f307880079a0cc4f955057ac984d3d9d6b49903341df5f33590813ac23f172c2",
+    "../vmui-utils/ownerWindow.cjs": "4df70d53bea011e95887cb9578134f702bcac248f0c633e9903d8eef2b0d7c1d",
+    "../vmui-utils/ownerWindow.mjs": "4451fb7cf84a6726ce56b0840e757e19b33df8a2364ca08e6e54fb7a96681dbc",
+    "../vmui-utils/ponyfillGlobal.cjs": "3a6768da253fb5a95c27f26fa5183d718d57c4198417e4d7c7aa2cc381aff353",
+    "../vmui-utils/ponyfillGlobal.mjs": "79630c23987e5e0d73d901650d6c4c047866550943a3359ae7b9fcd799b13984",
+    "../vmui-utils/refType.cjs": "26ff33f2aa9e70f9d433a64b20fef79923584526f6495c0c4215581823de5981",
+    "../vmui-utils/refType.mjs": "e21241aac8108cb860d1ee4384493248d6516dc40d83bb999624ffcd5be8643a",
+    "../vmui-utils/requirePropFactory.cjs": "98cc50e167116ea8829229cd94ac09bd894d7eace9b349b780edd1a8ffac2b5d",
+    "../vmui-utils/requirePropFactory.mjs": "85b2f0d2a5a5066fb1881d586252e3f20469d6855b8974308f35650defd535f4",
+    "../vmui-utils/resolveComponentProps.cjs": "2eed5ced5371e33378eadd57661f95639a901d84c4198c11bcb8253ef457b6c9",
+    "../vmui-utils/resolveComponentProps.mjs": "f9cb286b32275b46665c38d82bb7edde27cc2694a9028889f9bdae1752a603ea",
+    "../vmui-utils/resolveProps.cjs": "1f099674e7c14401cb2913fe9327ce27e160c19f1929330f0598b07850fdc2a6",
+    "../vmui-utils/resolveProps.mjs": "fc3be909aa068e1342e410f3053275ad6683b1a596da83e45157972a2d43653b",
+    "../vmui-utils/setRef.cjs": "68a6dfb4a9daffe2e8824b28f013956130cfcdf640ad1c03d5c3435a70ee9ba5",
+    "../vmui-utils/setRef.mjs": "0a04ecc2557457d45067549d045357aecf36a7c8a06520d3819e64e56f3df0ee",
+    "../vmui-utils/types.cjs": "8222b8169ee86f25cdccd84d340340060ae3f0cff55e2ea9d344d7c332733b71",
+    "../vmui-utils/types.mjs": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+    "../vmui-utils/unsupportedProp.cjs": "a3e57a2c7488380da74053d727fc5ad792fcf8c2d5eea6c3b2c840ba2062577b",
+    "../vmui-utils/unsupportedProp.mjs": "a8e07cade9a92be7828a165340e6f14e6d1305333cbd47f6ff3ee1a42835c280",
+    "../vmui-utils/useControlled.cjs": "45c96219323d0eb7d35598fb6fccf5a46fd27572fd1f1c18845786249cf5f903",
+    "../vmui-utils/useControlled.mjs": "d72870d1da14f4887927b023ff7cfd73cc80f458a9ee68b6d1186cb11e94ded2",
+    "../vmui-utils/useEnhancedEffect.cjs": "88b1545639ad5c3830ab0d12c43c9c7a44997f96c8c4cd59b8f9e3c33a0b6a22",
+    "../vmui-utils/useEnhancedEffect.mjs": "e72913a283a73c4e9d40b72992e67c110788399f885926b9d4855206bbcf20ed",
+    "../vmui-utils/useEventCallback.cjs": "7754ef7e6385a1f9353c4220d54b687ad3f28491bb97c8de6baf9ac3a4cc5f9b",
+    "../vmui-utils/useEventCallback.mjs": "ad5c9394f901b04968c3449e3afdc18b31829b4f7fbed5ff2b5f1304ff211666",
+    "../vmui-utils/useForcedRerendering.cjs": "8b64edc8e001008ebb452bf0d63ad06eb34c835905a389dd7e0caf75088200fb",
+    "../vmui-utils/useForcedRerendering.mjs": "51f98f5cc2d671a7aa41133b57eb9761f3bc74171b5ae2698d748e8cd393835a",
+    "../vmui-utils/useForkRef.cjs": "b5c5e91a25c17e0789c9c3b2b390414386c2e6f3b684067bae0f5542008121e8",
+    "../vmui-utils/useForkRef.mjs": "2cbbdefebc9ab2fbd5f88a42ae87cfa552e1704dcf01fc226741cba544996461",
+    "../vmui-utils/useId.cjs": "cc06466f2b4ca78a4150ffd480d91950e42e453eeecb56e3a190ac84ddd0e63a",
+    "../vmui-utils/useId.mjs": "205ce4c2fcdc41f67f07237e5943f4836836982f5da02c166e50765fdd9580cb",
+    "../vmui-utils/useIsFocusVisible.cjs": "dea7b9e2629de0cf357a31ee5b4af5cc574dfe0f0274d4248fa841aeb23ec2fa",
+    "../vmui-utils/useIsFocusVisible.mjs": "9754952abc66c23012117b1b4c124513738c71884aab937b2724868bad278a99",
+    "../vmui-utils/useLazyRef.cjs": "ab90b2aa3535b2f8c7c1fade50dee0219dcb7b2f3b23e6682c9008414589f5ba",
+    "../vmui-utils/useLazyRef.mjs": "414b1670eb2a2019e3be75ec9cd3f3e048fbfeafed9e78c41aabea7604740d4e",
+    "../vmui-utils/useOnMount.cjs": "efeaffaa9193f472e3b706b347cacfc111401b2e84c62a5e6a7d89db21f08407",
+    "../vmui-utils/useOnMount.mjs": "b4433238ca80b96d0c8795b533f6bb5b203c1a5b246f45a91db369332cd2d4c2",
+    "../vmui-utils/usePreviousProps.cjs": "48fafcaa6402a4a9457e886fdd13854e758e52c6f3cb1ae10f4cf808708502d7",
+    "../vmui-utils/usePreviousProps.mjs": "9373442f3040fdc57a80ff1203a9516fe230884df562dbdb3ab135dbe615baf6",
+    "../vmui-utils/useRovingTabIndex.cjs": "d776ecd08c45a1bf6ea3f4f07b1bbf444cd390548a0812caa3cca481091ecc08",
+    "../vmui-utils/useRovingTabIndex.mjs": "16ccd5cb31651a22ac18b027df2d50e756bdd52bb786108453fff57cb80c27a4",
+    "../vmui-utils/useSlotProps.cjs": "eb4c13e7a9f4c4548d4036948f56188eb95fa18d022e4f20ebd92490fe94b743",
+    "../vmui-utils/useSlotProps.mjs": "6cf10363d7a82bd2a8fd485bb78e820de20beeeca73564c8facf35a4bcc27481",
+    "../vmui-utils/useTimeout.cjs": "12d8bf715f9204bc7277f8d38ccab77d04d81e3346ee95974e8cf1c928b5815a",
+    "../vmui-utils/useTimeout.mjs": "e13b8903020e575d7276488482d9f5daf79d260c82e54f6e588de1ab9dd0adeb",
+    "../vmui-utils/useValueAsRef.cjs": "e456e0847118fcf87786e656b9b3c94c6372317be9a03e19eb27b24e7a9e86d2",
+    "../vmui-utils/useValueAsRef.mjs": "ee10057829e2a45b3c3ffc93b3d5926379940c20d2eccab1020f3ed9cc8aefa1",
+    "../vmui-utils/visuallyHidden.cjs": "42f063bac5cbde8cc992e6bcccbc58235d3657ee56b2e1fa59257213d460a979",
+    "../vmui-utils/visuallyHidden.mjs": "cea799abdd7a78ddacbbb5a892f2516aa1e39f42c460f8083f9dbf40f729a0af",
+    "PROVENANCE.json": "4b74b94c9245cdcb44d6487ba6963194f62f1c05434fc74bdb520dc8074142bf",
+    "bench/switch.cjs": "ffdb0748ed0a6b4be904a5fef6be4d52231d09ff4705a881e829f3d75526db65",
+    "buttons.cjs": "991a937cdb131f7e570bf8513901fb3423b2a2b58aad3096fba4cb6e0ddf25c6",
+    "check-controls.cjs": "949418cb135c3487a4d78a4dcc98438bd59ca24b89072f37d0740763eaf8227c",
+    "forms.cjs": "31b0280783062a13a15a629c6600a052c6eb8196fa413278087f035f85387088",
+    "index.cjs": "1d430a15999eacbd5c9a7dbfae8528a46095c5a760e5edcefbaa8155d050e800",
+    "input-base.cjs": "6ae03af38c5523ef9c1ed2ee4085410374c402be2016cf074de747d13e7c15ac",
+    "input-decorations.cjs": "aa69712a3fe8089671258d3560d5b9e956a3ca00dba2049e243754fa22456f76",
+    "input-variants.cjs": "788afdf00b15a9adf5e8e9c1645c586e1aae93086ac7178abfa74446c0c42f8c",
+    "lists.cjs": "9914dfa218a6203bd5125e2ca41f3bd754611511f8040ccdbbb980051a84c4e7",
+    "menus.cjs": "8b2b02112e60868623348108babcea78f409ca1b713a3946fb166d1cfe7c1aea",
+    "package.json": "a6996fff0b0b7606feb21daa4b99208ba80b4f676286b17e7cc246c26fccbced",
+    "radio-controls.cjs": "c8eff8dc50691230641b1664ef159ef7f3f5f0100ad4aac76a4bb2969a41192a",
+    "select-input.cjs": "256dd778cd45fa24e0d47e2806098046cbd4ff5c18e64b96c8cb2f65cd1aa11d",
+    "surfaces.cjs": "76dba2de164f93a2f31d9f08d7a4353ff4ced7f68814d31341cb1851c1deddb0",
+    "switch-control.cjs": "647418923e9dabd864482678cb4346e727d6e626fc387d8593f7c9481cc59634",
+    "text-field.cjs": "901585bd50e2658499e140e661aea2b86b29251c0c66d65c1d22ac2f6185f6c0",
+    "text.cjs": "344b9dc7bf08a46b8241932f051677704870e2ab48804afdd8a9da6fffae1cbf",
+    "theme.cjs": "c8f10a217705c2e142da705773511879c7a3b3cc617cab08616813cdb57286d7"
+  },
+  "methodology": "One timed implementation per fresh process; four comparison pairs and two identical-source control pairs; balanced AB/BA process order; same iteration count within a pair; warmup and result validation outside timing; raw samples retained without trimming. Per-process medians are the comparison units. This limits JIT cross-contamination and order effects; it does not eliminate environmental noise.",
+  "runs": [
+    {
+      "pair": 0,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 44615,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 16,
+            "samples": [
+              387973.9999999998,
+              463091.1250000018,
+              428424.500000002,
+              255429.68749999773,
+              355697.93750000047,
+              368692.750000001,
+              261945.31249999997,
+              361442.68749999854,
+              426572.93750000134,
+              262221.3124999995,
+              243398.43750000157,
+              357164.06250000076
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 20,
+            "samples": [
+              374868.7500000017,
+              316579.1500000012,
+              579650.0000000037,
+              378814.59999999835,
+              493779.2000000002,
+              475543.7500000028,
+              408345.80000000075,
+              526162.499999998,
+              457606.25000000343,
+              474418.75000000093,
+              359210.4000000006,
+              347468.7499999959
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 19,
+            "samples": [
+              578730.2631578865,
+              347381.57894736633,
+              818217.1052631618,
+              338429.8421052623,
+              674105.2631578944,
+              485864.05263157707,
+              788471.4736842158,
+              354631.5789473714,
+              408403.52631579136,
+              351096.4736842054,
+              454550.42105262884,
+              473405.7368420963
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 43,
+            "samples": [
+              230972.86046511855,
+              231271.32558139492,
+              285237.3953488379,
+              229692.83720930284,
+              305643.3953488416,
+              250002.9069767448,
+              321175.3720930193,
+              249484.48837209112,
+              234601.74418604514,
+              376600.7674418614,
+              270582.3720930258,
+              428894.372093023
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 24,
+            "samples": [
+              302444.4583333358,
+              309998.29166666855,
+              307741.2916666636,
+              470592.0416666724,
+              654951.4166666673,
+              310751.74999999907,
+              391230.91666667163,
+              308841.99999999854,
+              309871.54166666645,
+              309418.41666665935,
+              370715.29166666063,
+              353314.2500000016
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 28,
+            "samples": [
+              508846.71428570984,
+              388418.142857144,
+              416949.3928571423,
+              402075.892857137,
+              365492.53571428964,
+              501491.07142856665,
+              430294.64285715285,
+              427849.6785714197,
+              380421.1428571469,
+              372428.5714285673,
+              468717.28571428714,
+              437450.8928571491
+            ]
+          }
+        ],
+        "checksum": 365064960
+      },
+      "vpm": {
+        "pid": 44807,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 16,
+            "samples": [
+              255518.2500000015,
+              185036.49999999895,
+              253122.37500000023,
+              262690.06249999907,
+              426414.06250000105,
+              287343.749999998,
+              290502.62500000204,
+              179947.93750000326,
+              216466.18750000003,
+              419984.37499999854,
+              294158.8750000008,
+              256994.7500000005
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 20,
+            "samples": [
+              232860.39999999842,
+              293416.6500000003,
+              245208.3500000015,
+              312837.5000000006,
+              218445.80000000066,
+              311033.3500000024,
+              250162.499999999,
+              383464.59999999637,
+              308625.0000000007,
+              280168.7499999957,
+              311527.1000000007,
+              255068.75000000378
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 19,
+            "samples": [
+              422421.0526315825,
+              273570.15789474,
+              415068.0000000014,
+              344833.3684210518,
+              539092.1052631579,
+              462627.15789474006,
+              556291.684210524,
+              421324.57894736994,
+              273508.7368421019,
+              327508.73684210546,
+              616041.6842105262,
+              464844.31578947377
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 43,
+            "samples": [
+              198073.6279069735,
+              522840.1162790697,
+              274300.3720930246,
+              194245.16279069966,
+              217095.9302325543,
+              260393.41860465083,
+              310905.04651162814,
+              252164.72093023208,
+              237796.51162791136,
+              339211.25581395417,
+              290600.76744185924,
+              262418.60465116525
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 24,
+            "samples": [
+              528227.4583333333,
+              418060.7499999951,
+              590407.9999999965,
+              247284.74999999625,
+              281256.95833332994,
+              391291.6666666604,
+              374164.95833333366,
+              273812.50000000064,
+              225748.29166667126,
+              392328.12499999645,
+              331994.7916666687,
+              283755.20833333215
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 28,
+            "samples": [
+              466398.7857142859,
+              258909.249999996,
+              476227.6785714253,
+              363632.4285714311,
+              553956.8571428584,
+              327560.99999999476,
+              428121.9999999978,
+              297808.0357142809,
+              280177.10714285774,
+              432526.7857142876,
+              440258.9285714303,
+              324910.71428571723
+            ]
+          }
+        ],
+        "checksum": 277690242
+      }
+    },
+    {
+      "pair": 1,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 45314,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 19,
+            "samples": [
+              536510.9473684218,
+              438377.21052631794,
+              306282.89473684103,
+              257254.36842105267,
+              245032.89473684138,
+              247714.89473684333,
+              257616.21052631774,
+              177688.5789473681,
+              353600.8421052627,
+              328756.5789473684,
+              432611.84210526355,
+              214524.10526315862
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 26,
+            "samples": [
+              256559.26923077196,
+              331349.3461538472,
+              270902.2307692303,
+              436975.9615384641,
+              264623.38461538614,
+              271791.6538461509,
+              279666.65384615486,
+              277009.6153846173,
+              363344.57692307665,
+              244490.3846153859,
+              367019.2307692315,
+              263980.76923077094
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 33,
+            "samples": [
+              575268.9393939397,
+              525387.6060606072,
+              312897.72727272566,
+              389131.33333333215,
+              508193.18181818014,
+              362142.6666666655,
+              517960.84848484554,
+              507888.87878787715,
+              415499.99999999657,
+              309026.5151515103,
+              565635.0909090922,
+              515446.9696969748
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 46,
+            "samples": [
+              216317.04347825944,
+              555102.347826085,
+              314482.7826086968,
+              252510.86956521487,
+              222668.47826087207,
+              266178.4347826102,
+              249896.73913043353,
+              249247.28260869553,
+              283374.08695652196,
+              351500.0000000021,
+              220676.63043478463,
+              208524.4565217418
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 33,
+            "samples": [
+              457834.60606060433,
+              502310.6060606083,
+              380775.272727271,
+              238986.0909090933,
+              416909.0909090921,
+              240464.63636364022,
+              563252.5454545472,
+              262984.84848484804,
+              532991.1818181851,
+              627496.2121212108,
+              460734.84848484857,
+              454530.3030303068
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 32,
+            "samples": [
+              261160.1562500141,
+              547352.8749999872,
+              596585.9374999951,
+              541882.812499992,
+              529794.2812500054,
+              255924.5000000061,
+              295036.4687499984,
+              377882.81249999045,
+              650343.7499999905,
+              407408.843749991,
+              341265.6250000055,
+              513731.7812499873
+            ]
+          }
+        ],
+        "checksum": 325801136
+      },
+      "upstream": {
+        "pid": 45656,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 19,
+            "samples": [
+              648524.1052631607,
+              262894.7368421055,
+              303526.3157894735,
+              1398789.4736842106,
+              751879.3684210526,
+              643453.94736842,
+              791765.3684210527,
+              685434.2105263168,
+              1096802.63157895,
+              927826.7368421062,
+              945603.0526315784,
+              399092.10526315664
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 26,
+            "samples": [
+              568282.0384615359,
+              659732.3846153814,
+              625475.9615384623,
+              496764.42307692417,
+              667786.8461538441,
+              321032.0384615364,
+              469828.53846153955,
+              308000.00000000146,
+              611432.6923076918,
+              469592.92307692434,
+              467641.0000000015,
+              487419.88461538835
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 33,
+            "samples": [
+              1134718.4242424234,
+              596791.6666666662,
+              341104.7878787899,
+              864964.6666666685,
+              818638.9090909126,
+              372239.8787878746,
+              611024.0000000017,
+              664046.7272727275,
+              750588.3636363664,
+              772496.2121212132,
+              537815.6363636305,
+              541371.2121212139
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 46,
+            "samples": [
+              346511.78260869725,
+              653521.7391304326,
+              515449.28260869195,
+              508289.84782608785,
+              267395.84782608686,
+              292462.8695652206,
+              257219.19565217415,
+              480668.4782608707,
+              295923.0217391292,
+              343903.0869565257,
+              344023.5434782647,
+              411558.8695652189
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 33,
+            "samples": [
+              580553.0303030289,
+              373556.8181818273,
+              475998.72727272613,
+              529797.9696969737,
+              521068.1818181746,
+              303857.3333333261,
+              616344.6969696975,
+              737186.8787878763,
+              800433.0909090888,
+              1291422.9999999986,
+              543853.5454545534,
+              942342.1515151528
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 32,
+            "samples": [
+              1137994.7812500007,
+              579562.5000000086,
+              890776.0624999952,
+              934580.7500000092,
+              737319.03125001,
+              376266.9374999916,
+              539774.7500000065,
+              507375.00000001036,
+              553786.4687499905,
+              457624.9999999931,
+              518533.84375000646,
+              660322.906250002
+            ]
+          }
+        ],
+        "checksum": 242125722
+      }
+    },
+    {
+      "pair": 2,
+      "control": false,
+      "first": "upstream",
+      "upstream": {
+        "pid": 45834,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 17,
+            "samples": [
+              865566.176470589,
+              615948.5294117664,
+              814122.5294117642,
+              1054806.3529411773,
+              685129.8823529433,
+              515963.23529411975,
+              1203254.882352941,
+              441573.52941176534,
+              262914.1764705878,
+              382009.8235294087,
+              1034210.764705877,
+              666578.4117647036
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 8,
+            "samples": [
+              507942.6249999983,
+              365895.75000000704,
+              647104.1249999985,
+              507161.49999999517,
+              438442.7500000072,
+              370234.37499999546,
+              324156.25000000146,
+              306291.74999999977,
+              306166.625000003,
+              482942.7500000065,
+              337046.87499999866,
+              319911.50000000343
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 18,
+            "samples": [
+              1002770.8333333294,
+              881812.500000011,
+              573268.5000000023,
+              803203.7222222168,
+              416414.3333333262,
+              831930.5555555603,
+              466543.99999999895,
+              1116087.9444444415,
+              467664.33333333326,
+              354437.50000000466,
+              686351.8333333331,
+              422231.4444444414
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 23,
+            "samples": [
+              582846.0434782637,
+              568931.130434788,
+              413619.56521739,
+              236635.86956522326,
+              229985.5217391308,
+              255380.4347826075,
+              442690.2173913039,
+              556061.6086956504,
+              248768.1304347837,
+              239563.39130435203,
+              236295.30434782678,
+              671027.1739130487
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 33,
+            "samples": [
+              636195.6969696938,
+              315319.4545454536,
+              722539.1515151483,
+              466141.3939393931,
+              309878.78787878435,
+              665027.7575757613,
+              321547.99999999674,
+              518652.787878788,
+              396939.3939393919,
+              313772.72727272473,
+              442905.3030303018,
+              308791.6666666691
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 24,
+            "samples": [
+              633777.7499999978,
+              468147.583333329,
+              499545.1249999974,
+              580086.8333333256,
+              352411.45833333576,
+              355998.2499999895,
+              477807.29166667396,
+              421953.124999997,
+              519930.58333334833,
+              563904.5416666591,
+              337661.4583333435,
+              353359.37499998714
+            ]
+          }
+        ],
+        "checksum": 381280864
+      },
+      "vpm": {
+        "pid": 46054,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 17,
+            "samples": [
+              407830.8823529389,
+              230262.23529411576,
+              180678.94117646856,
+              828725.5294117632,
+              508548.99999999965,
+              231647.05882352873,
+              180776.9411764719,
+              177995.05882352914,
+              233843.1764705868,
+              180568.64705882245,
+              548502.4117647065,
+              306548.9999999981
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 8,
+            "samples": [
+              530255.1249999965,
+              671093.7499999972,
+              236171.8749999966,
+              254510.37499999529,
+              367000.0000000044,
+              230692.624999989,
+              287739.6250000004,
+              244281.25000000023,
+              885395.8750000003,
+              238098.8749999915,
+              235031.2499999916,
+              236895.87500000186
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 18,
+            "samples": [
+              426349.5555555576,
+              453754.66666666855,
+              458534.7222222254,
+              379747.6666666676,
+              505432.833333335,
+              409597.222222222,
+              724141.2222222215,
+              1081240.7777777745,
+              342763.88888888375,
+              527870.3333333334,
+              434881.9444444416,
+              638437.4999999965
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 23,
+            "samples": [
+              574193.8260869614,
+              271679.34782608465,
+              191036.21739130808,
+              347715.5652173837,
+              267565.2173913042,
+              289639.5217391293,
+              511612.30434782425,
+              556141.3043478257,
+              463413.04347826104,
+              317784.4347826126,
+              385914.8695652117,
+              503255.4347826096
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 33,
+            "samples": [
+              401397.7272727309,
+              538268.9393939432,
+              326787.878787882,
+              420350.99999999616,
+              456073.24242424703,
+              455652.7575757558,
+              330965.9090909091,
+              292744.93939394207,
+              505198.21212121006,
+              234561.84848484528,
+              634468.4242424205,
+              503241.1515151538
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 24,
+            "samples": [
+              407447.9166666644,
+              531444.4583333303,
+              289949.6666666626,
+              313951.37499999726,
+              562536.4583333313,
+              420222.25000000425,
+              336142.3333333373,
+              353312.500000006,
+              562529.5000000013,
+              388312.50000000256,
+              697623.2500000019,
+              275685.7916666699
+            ]
+          }
+        ],
+        "checksum": 286703368
+      }
+    },
+    {
+      "pair": 3,
+      "control": false,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46322,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 14,
+            "samples": [
+              308999.9999999975,
+              183398.78571428664,
+              178619.0000000017,
+              380702.3571428577,
+              177517.8571428577,
+              226044.64285714293,
+              318202.3571428577,
+              193717.28571428548,
+              748782.714285714,
+              182806.5714285734,
+              189800.6428571445,
+              751749.9999999992
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 24,
+            "samples": [
+              222041.66666666462,
+              748831.6250000034,
+              638489.5833333294,
+              269859.3750000005,
+              222750.00000000015,
+              408317.708333333,
+              385598.95833333256,
+              291685.7499999992,
+              451850.7083333342,
+              452149.2916666669,
+              260116.3333333337,
+              375713.5416666652
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 17,
+            "samples": [
+              275311.2352941116,
+              924536.7647058829,
+              265012.2941176425,
+              367818.647058825,
+              436274.5294117624,
+              328595.58823529637,
+              262931.35294117616,
+              318659.2941176447,
+              254879.94117646824,
+              353848.0588235269,
+              261752.47058823542,
+              920004.8823529414
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 44,
+            "samples": [
+              198487.68181818016,
+              312159.0909090938,
+              265140.1590909059,
+              435343.75,
+              242617.40909090888,
+              285652.47727272497,
+              222160.02272726985,
+              184276.49999999962,
+              439871.2045454545,
+              228849.43181818267,
+              202563.45454545642,
+              236517.04545454262
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 43,
+            "samples": [
+              261059.11627907286,
+              402759.6976744134,
+              468018.4186046475,
+              293588.1860465109,
+              259240.3023255841,
+              283281.9767441823,
+              335847.86046511657,
+              255612.39534884112,
+              432614.3488372054,
+              318625.97674418875,
+              236280.04651162736,
+              425421.51162790507
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 33,
+            "samples": [
+              300473.48484848073,
+              447420.45454546367,
+              479598.48484849016,
+              296867.42424242274,
+              408781.5454545583,
+              343068.1818181807,
+              311454.545454553,
+              592547.9696969695,
+              434047.9696969658,
+              564789.1515151528,
+              329780.30303029576,
+              661880.0606060673
+            ]
+          }
+        ],
+        "checksum": 327420096
+      },
+      "upstream": {
+        "pid": 46387,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 14,
+            "samples": [
+              682437.5,
+              281163.71428571286,
+              393461.285714283,
+              824413.7142857173,
+              265116.07142857334,
+              286675.5714285684,
+              255895.85714285637,
+              442839.28571428533,
+              362372.0000000016,
+              256086.28571428734,
+              267761.9285714294,
+              906258.9285714304
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 24,
+            "samples": [
+              644585.0416666683,
+              316729.1666666661,
+              821680.5416666659,
+              577388.9166666683,
+              429548.58333333355,
+              469258.6666666661,
+              500869.7916666686,
+              459189.24999999907,
+              404977.41666666797,
+              447906.2500000026,
+              387689.20833333215,
+              305307.2916666698
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 17,
+            "samples": [
+              627674.0588235324,
+              500056.4117647039,
+              640423.9999999992,
+              506639.7058823548,
+              410904.4117647045,
+              650681.3529411856,
+              1301625.0000000047,
+              613450.9411764718,
+              621156.8823529406,
+              401191.1764705875,
+              796433.8235294155,
+              562406.8823529421
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 44,
+            "samples": [
+              398848.500000001,
+              436034.09090908687,
+              251049.24999999927,
+              280303.04545454367,
+              363067.2272727276,
+              271281.24999999994,
+              405989.5909090869,
+              259241.477272729,
+              370584.27272727486,
+              331404.34090909245,
+              363657.18181818095,
+              370956.4318181823
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 43,
+            "samples": [
+              362782.953488371,
+              312226.74418604904,
+              407972.86046512093,
+              577039.7441860475,
+              605733.534883722,
+              434593.99999999756,
+              406757.7441860469,
+              458979.65116278845,
+              566800.3953488382,
+              526781.9767441853,
+              365718.02325581596,
+              405299.41860464786
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 33,
+            "samples": [
+              447002.5151515184,
+              573135.0909090907,
+              357308.0909090867,
+              587077.0303030248,
+              445032.818181806,
+              562648.9696969657,
+              560301.7575757473,
+              371984.84848485433,
+              490693.18181818747,
+              542420.4545454566,
+              492428.0303030311,
+              698896.4545454578
+            ]
+          }
+        ],
+        "checksum": 296120004
+      }
+    },
+    {
+      "pair": 0,
+      "control": true,
+      "first": "upstream",
+      "upstream": {
+        "pid": 46548,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 25,
+            "samples": [
+              673730.0000000005,
+              245553.31999999908,
+              451498.3200000006,
+              363963.3200000003,
+              325260.0000000007,
+              387896.6400000013,
+              329808.3599999996,
+              247369.99999999852,
+              330856.6799999994,
+              575460.0000000005,
+              352916.68000000075,
+              316824.9999999989
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 22,
+            "samples": [
+              628244.3181818177,
+              337503.7727272715,
+              723588.999999999,
+              341367.4545454548,
+              405607.95454545296,
+              358822.00000000093,
+              593575.7727272734,
+              459039.77272727364,
+              489375.0000000006,
+              487984.8636363652,
+              865539.7727272729,
+              358359.8181818181
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 16,
+            "samples": [
+              675510.3750000017,
+              365382.8125000018,
+              401421.8749999969,
+              557304.6874999931,
+              348403.68749999587,
+              693351.5624999984,
+              480486.9374999896,
+              346148.4375000055,
+              451221.3750000029,
+              344510.43749999144,
+              402023.4375000058,
+              700130.2500000008
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 36,
+            "samples": [
+              491087.9722222224,
+              403888.8888888878,
+              435282.41666666645,
+              237354.16666666098,
+              295531.24999999785,
+              364562.5000000021,
+              299236.1111111122,
+              290809.0277777799,
+              290259.27777777525,
+              241695.58333333422,
+              348212.94444444426,
+              389839.1111111121
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 10,
+            "samples": [
+              642220.9000000067,
+              324058.3000000015,
+              320679.199999995,
+              322766.700000011,
+              331912.49999999854,
+              601958.3000000011,
+              341783.4000000084,
+              528904.2000000109,
+              831345.7999999855,
+              554754.1999999795,
+              475125.0000000027,
+              953162.5000000077
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 17,
+            "samples": [
+              585568.6470588219,
+              1014784.2941176298,
+              432088.2352941119,
+              520357.8235294063,
+              554833.3529411728,
+              699022.0588235228,
+              416659.2941176478,
+              512073.5294117634,
+              408000.0000000088,
+              511816.176470588,
+              571362.7647059023,
+              813688.7058823477
+            ]
+          }
+        ],
+        "checksum": 348947744
+      },
+      "vpm": {
+        "pid": 46648,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 25,
+            "samples": [
+              729113.3600000012,
+              328198.3600000012,
+              505288.3199999996,
+              525531.6399999992,
+              441428.32,
+              276273.32000000024,
+              313383.3199999981,
+              297665.0000000018,
+              695063.3199999993,
+              318983.3599999997,
+              335393.3600000005,
+              356591.6799999991
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 22,
+            "samples": [
+              388111.7272727268,
+              329448.86363636464,
+              1349861.727272727,
+              431960.22727272526,
+              626909.0909090922,
+              581816.3181818157,
+              411409.0909090878,
+              441649.63636363944,
+              1018053.0454545439,
+              446134.4545454515,
+              753793.5454545432,
+              387768.9090909112
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 16,
+            "samples": [
+              426721.37499999965,
+              562869.7500000044,
+              388341.1249999966,
+              406822.93749999587,
+              481507.81249999854,
+              502013.0000000051,
+              887257.8124999962,
+              371953.12500000454,
+              356549.4374999929,
+              572497.3749999976,
+              351236.99999999756,
+              468882.81249999866
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 36,
+            "samples": [
+              571873.8333333326,
+              438331.0277777734,
+              604740.7500000001,
+              308415.52777777304,
+              459498.83333333395,
+              509112.2499999996,
+              463011.555555555,
+              234989.58333333224,
+              408312.499999997,
+              272731.4722222205,
+              230609.97222222568,
+              371025.47222221777
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 10,
+            "samples": [
+              546550.000000002,
+              316862.500000002,
+              813091.6999999954,
+              600775.0000000214,
+              324950.0000000126,
+              592666.6999999953,
+              330916.6999999889,
+              331449.9999999952,
+              323841.69999997993,
+              309470.80000000825,
+              306679.20000000775,
+              569574.9999999863
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 17,
+            "samples": [
+              1023617.64705882,
+              480485.2941176571,
+              726242.6470588252,
+              409397.0588235285,
+              373433.82352941367,
+              822620.1176470675,
+              589218.1176470652,
+              356720.5882352884,
+              350416.70588236017,
+              353279.41176469455,
+              355154.41176470206,
+              884708.3529411815
+            ]
+          }
+        ],
+        "checksum": 296931424
+      }
+    },
+    {
+      "pair": 1,
+      "control": true,
+      "first": "vpm",
+      "vpm": {
+        "pid": 46842,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 25,
+            "samples": [
+              378270,
+              345678.3599999994,
+              493934.999999999,
+              514748.32000000105,
+              607171.679999999,
+              345868.35999999946,
+              432368.3199999982,
+              283585.00000000047,
+              357398.3199999998,
+              272601.6800000002,
+              332024.9999999987,
+              360691.64
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 17,
+            "samples": [
+              320598.0588235273,
+              358916.6470588238,
+              504794.11764705915,
+              337159.35294117115,
+              631774.470588238,
+              330044.11764705525,
+              321894.6470588247,
+              621691.1764705896,
+              1288644.5882352893,
+              508698.5294117647,
+              562453.4705882324,
+              422975.47058823216
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 22,
+            "samples": [
+              557863.6363636323,
+              714174.2272727201,
+              526321.9999999985,
+              562534.0909090978,
+              534160.9999999987,
+              641198.8636363565,
+              538867.4545454561,
+              524916.6818181783,
+              449172.3181818191,
+              641198.8636363565,
+              1178496.2272727275,
+              769928.0454545487
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 24,
+            "samples": [
+              283489.5833333348,
+              281140.6250000061,
+              418503.4583333333,
+              369307.2916666627,
+              534572.9166666615,
+              292147.5833333318,
+              312230.9166666639,
+              245920.1666666691,
+              786338.5416666613,
+              626809.0416666705,
+              231772.58333333838,
+              225982.62500000032
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 28,
+            "samples": [
+              625290.1785714308,
+              566572.9285714341,
+              526730.6428571439,
+              421470.2499999947,
+              577950.892857148,
+              666345.2142857165,
+              398635.4285714323,
+              307269.3571428593,
+              367498.50000000244,
+              427915.1785714329,
+              379723.21428571834,
+              458907.75000000466
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 27,
+            "samples": [
+              385249.9999999997,
+              840091.0740740781,
+              442277.77777777426,
+              350047.81481482636,
+              388924.3703703734,
+              598452.1481481419,
+              516723.7777777869,
+              547652.7777777846,
+              637981.4814814819,
+              384192.88888888806,
+              1077220.6666666635,
+              349211.444444437
+            ]
+          }
+        ],
+        "checksum": 326363296
+      },
+      "upstream": {
+        "pid": 47250,
+        "runtime": {
+          "node": "26.3.0",
+          "bun": "1.4.4",
+          "boringssl": "41bf9b59c2ebf277a7aa427e1ecad5cc80dd4d4f",
+          "openssl": "1.1.0",
+          "llhttp": "9.4.2",
+          "libarchive": "27cbc7827172698143e440801fc0ba39ccb4f1f5",
+          "mimalloc": "92ef6587c57b262f6e6abf513f7776a2f8d12aeb",
+          "picohttpparser": "f4d94b48b31e0abae029ebeafcfd9ca0680ede58",
+          "uwebsockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "webkit": "d6375c72affe0f70222cdcb45012b10f0bf3a9d5",
+          "zig": "04e7f6ac1e009525bc00934f20199c68f04e0a24",
+          "zlib": "12731092979c6d07f42da27da673a9f6c7b13586",
+          "tinycc": "05f0fafaa3be31e31d7b4b5c17dc60f62c991171",
+          "lolhtml": "725ce499aa9b71e38b7a2d0a9fbb6d7294a4079e",
+          "ares": "c7a3138dcfe3bb0eaaf10c0c24c36dc66dc790ab",
+          "libdeflate": "92e6a0db9fa848d742f9eb286c92afc60f2c3dda",
+          "usockets": "38afee6c84fcf48c0edb2466aa4b27d287a59c30",
+          "lshpack": "cf0f70dd10b352194c97448eb5d00b4aa484f531",
+          "zstd": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+          "v8": "14.6.202.34-node.20",
+          "uv": "1.48.0",
+          "napi": "10",
+          "icu": "78.1",
+          "unicode": "17.0",
+          "sqlite": "3.51.0",
+          "typescript": "7.0.2",
+          "modules": "147"
+        },
+        "rows": [
+          {
+            "case": "Material9 switch Switch SSR",
+            "iterations": 25,
+            "samples": [
+              324443.3200000003,
+              284453.36,
+              516960.0000000014,
+              287878.31999999983,
+              483134.99999999977,
+              282490.00000000023,
+              389111.68000000087,
+              477091.63999999873,
+              473893.3200000019,
+              448151.6399999987,
+              494805.00000000116,
+              351251.6800000003
+            ]
+          },
+          {
+            "case": "Material9 label Switch SSR",
+            "iterations": 17,
+            "samples": [
+              941443.6470588244,
+              532732.8235294063,
+              319426.47058823536,
+              736776.9411764651,
+              499254.88235294324,
+              413134.7647058874,
+              499009.76470588136,
+              426801.4705882358,
+              889210.8235294177,
+              395127.47058823635,
+              334666.6470588255,
+              470723.0588235301
+            ]
+          },
+          {
+            "case": "Material9 form Switch SSR",
+            "iterations": 22,
+            "samples": [
+              352191.27272727166,
+              489816.27272727026,
+              358045.4545454524,
+              534428.0454545469,
+              775683.7272727248,
+              465479.18181818206,
+              659653.40909091,
+              411994.3181818102,
+              387874.9999999979,
+              581956.4545454548,
+              331543.5454545443,
+              431939.3636363677
+            ]
+          },
+          {
+            "case": "App7 switch Switch SSR",
+            "iterations": 24,
+            "samples": [
+              495947.91666666535,
+              353954.8333333376,
+              498798.58333333494,
+              373802.0833333356,
+              246503.45833332685,
+              940904.5416666685,
+              459769.0833333369,
+              360352.41666666215,
+              414605.87499999703,
+              296092.00000000634,
+              321152.75000000076,
+              362859.3749999993
+            ]
+          },
+          {
+            "case": "App7 label Switch SSR",
+            "iterations": 28,
+            "samples": [
+              482400.321428567,
+              448770.8214285654,
+              324052.0714285659,
+              725501.4999999991,
+              386150.28571427957,
+              419186.00000000035,
+              601333.3214285694,
+              593421.1428571448,
+              320921.1071428513,
+              477497.0357142853,
+              348525.3214285698,
+              384632.4285714299
+            ]
+          },
+          {
+            "case": "App7 form Switch SSR",
+            "iterations": 27,
+            "samples": [
+              349913.59259258927,
+              332881.18518518144,
+              682946.0000000028,
+              491594.1481481409,
+              328192.9259259313,
+              329637.33333333407,
+              402916.6666666781,
+              329586.40740741463,
+              332831.81481482205,
+              655015.4074074171,
+              404785.4814814821,
+              336714.518518521
+            ]
+          }
+        ],
+        "checksum": 270091968
+      }
+    }
+  ],
+  "rows": [
+    {
+      "case": "Material9 switch Switch SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 359303.37499999965,
+          "vpmNs": 259842.40624999977,
+          "changePct": -27.681612717943427
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 718656.7894736847,
+          "vpmNs": 281949.5526315794,
+          "changePct": -60.76714827420362
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 675854.1470588234,
+          "vpmNs": 232745.11764705775,
+          "changePct": -65.56281874426368
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 324523.785714285,
+          "vpmNs": 209880.9642857142,
+          "changePct": -35.326477280005555
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 341886.68000000005,
+          "vpmNs": 345992.5199999998,
+          "changePct": 1.2009359358486016
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 418631.6599999998,
+          "vpmNs": 359044.97999999986,
+          "changePct": -14.23367740509639
+        }
+      ]
+    },
+    {
+      "case": "Material9 label Switch SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 432976.0250000021,
+          "vpmNs": 286792.699999998,
+          "changePct": -33.76245255150177
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 492092.15384615626,
+          "vpmNs": 274400.6346153841,
+          "changePct": -44.237957774638595
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 368065.0625000013,
+          "vpmNs": 249395.81249999776,
+          "changePct": -32.241378519865115
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 453547.7500000008,
+          "vpmNs": 380656.24999999884,
+          "changePct": -16.071405932451842
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 473512.3181818194,
+          "vpmNs": 443892.04545454547,
+          "changePct": -6.2554386844695165
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 484866.4117647057,
+          "vpmNs": 463884.79411764565,
+          "changePct": -4.327298641020727
+        }
+      ]
+    },
+    {
+      "case": "Material9 form Switch SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 463978.0789473626,
+          "vpmNs": 421872.8157894762,
+          "changePct": -9.074838891831172
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 637535.3636363647,
+          "vpmNs": 508041.03030302864,
+          "changePct": -20.311709862607184
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 629810.1666666677,
+          "vpmNs": 456144.69444444694,
+          "changePct": -27.57425672268239
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 617303.9117647063,
+          "vpmNs": 323627.44117647054,
+          "changePct": -47.57404983044632
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 426622.40625000437,
+          "vpmNs": 447802.0937499992,
+          "changePct": 4.9645042524052
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 448709.2727272749,
+          "vpmNs": 560198.863636365,
+          "changePct": 24.846732101489998
+        }
+      ]
+    },
+    {
+      "case": "App7 switch Switch SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 260292.6395348853,
+          "vpmNs": 261406.01162790804,
+          "changePct": 0.42773860029703403
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 345267.66304348095,
+          "vpmNs": 251203.8043478242,
+          "changePct": -27.24374992621621
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 334499.9999999988,
+          "vpmNs": 366815.2173912977,
+          "changePct": 9.660752583347998
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 363362.20454545424,
+          "vpmNs": 239567.22727272575,
+          "changePct": -34.06930487654572
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 323724.5277777782,
+          "vpmNs": 423321.76388888515,
+          "changePct": 30.76604568544643
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 368330.72916666744,
+          "vpmNs": 302189.24999999785,
+          "changePct": -17.957089628745305
+        }
+      ]
+    },
+    {
+      "case": "App7 label Switch SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 310375.02083333384,
+          "vpmNs": 353079.87500000116,
+          "changePct": 13.759114393937999
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 562203.2878787911,
+          "vpmNs": 456182.4545454556,
+          "changePct": -18.85809557132886
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 419922.3484848469,
+          "vpmNs": 438001.878787876,
+          "changePct": 4.305446082653908
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 421283.4302325592,
+          "vpmNs": 306107.0813953498,
+          "changePct": -27.339396845878582
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 502014.6000000068,
+          "vpmNs": 331183.34999999206,
+          "changePct": -34.02913978996077
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 433978.4107142829,
+          "vpmNs": 443411.46428571874,
+          "changePct": 2.173622774439421
+        }
+      ]
+    },
+    {
+      "case": "App7 form Switch SSR",
+      "processes": [
+        {
+          "first": "upstream",
+          "upstreamNs": 422399.535714281,
+          "vpmNs": 395877.21428571444,
+          "changePct": -6.278965573131401
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 566674.4843749995,
+          "vpmNs": 460570.3124999892,
+          "changePct": -18.72400730942306
+        },
+        {
+          "first": "upstream",
+          "upstreamNs": 472977.4375000015,
+          "vpmNs": 397880.2083333335,
+          "changePct": -15.877550008221641
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 517424.2424242438,
+          "vpmNs": 421414.75757576205,
+          "changePct": -18.555273792093065
+        }
+      ],
+      "controls": [
+        {
+          "first": "upstream",
+          "upstreamNs": 537595.5882352896,
+          "vpmNs": 444941.17647059285,
+          "changePct": -17.23496505409279
+        },
+        {
+          "first": "vpm",
+          "upstreamNs": 343314.05555555515,
+          "vpmNs": 479500.77777778055,
+          "changePct": 39.66826292673811
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "case": "Material9 switch Switch SSR",
+      "upstream_ns": 517579,
+      "vpm_ns": 246294,
+      "change_pct": -48,
+      "upstream_first_pct": -46.6,
+      "vpm_first_pct": -48,
+      "process_range_pct": "-27.7, -60.8, -65.6, -35.3",
+      "control_max_abs_pct": 14.2,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 label Switch SSR",
+      "upstream_ns": 443262,
+      "vpm_ns": 280597,
+      "change_pct": -33,
+      "upstream_first_pct": -33,
+      "vpm_first_pct": -30.2,
+      "process_range_pct": "-33.8, -44.2, -32.2, -16.1",
+      "control_max_abs_pct": 6.3,
+      "evidence": "lower time in every pair, beyond control spread"
+    },
+    {
+      "case": "Material9 form Switch SSR",
+      "upstream_ns": 623557,
+      "vpm_ns": 439009,
+      "change_pct": -23.9,
+      "upstream_first_pct": -18.3,
+      "vpm_first_pct": -33.9,
+      "process_range_pct": "-9.1, -20.3, -27.6, -47.6",
+      "control_max_abs_pct": 24.8,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 switch Switch SSR",
+      "upstream_ns": 339884,
+      "vpm_ns": 256305,
+      "change_pct": -13.4,
+      "upstream_first_pct": 5,
+      "vpm_first_pct": -30.7,
+      "process_range_pct": "0.4, -27.2, 9.7, -34.1",
+      "control_max_abs_pct": 30.8,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 label Switch SSR",
+      "upstream_ns": 420603,
+      "vpm_ns": 395541,
+      "change_pct": -7.3,
+      "upstream_first_pct": 9,
+      "vpm_first_pct": -23.1,
+      "process_range_pct": "13.8, -18.9, 4.3, -27.3",
+      "control_max_abs_pct": 34,
+      "evidence": "unestablished at this precision"
+    },
+    {
+      "case": "App7 form Switch SSR",
+      "upstream_ns": 495201,
+      "vpm_ns": 409647,
+      "change_pct": -17.2,
+      "upstream_first_pct": -11.1,
+      "vpm_first_pct": -18.6,
+      "process_range_pct": "-6.3, -18.7, -15.9, -18.6",
+      "control_max_abs_pct": 39.7,
+      "evidence": "unestablished at this precision"
+    }
+  ]
+}

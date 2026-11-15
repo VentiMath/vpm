@@ -219,3 +219,11 @@ Radio({checked:'true'});
 RadioGroup({row:'yes'});
 // @ts-expect-error Radio has no mixed state
 Radio({indeterminate:true});
+
+import Switch, {switchClasses,getSwitchUtilityClass} from 'vmui-material/Switch';
+Switch({checked:true,size:'small',color:'secondary',inputRef:React.createRef<HTMLInputElement>(),onChange:(e,checked)=>{const b:boolean=checked;void b;void e.target.checked;},slotProps:{input:s=>({'aria-label':s.checked?'On':'Off'}),track:{ref:React.createRef<HTMLSpanElement>()}}});
+void switchClasses.thumb;void getSwitchUtilityClass('track');
+// @ts-expect-error Switch has no mixed state
+Switch({indeterminate:true});
+// @ts-expect-error Switch size is small or medium
+Switch({size:'large'});

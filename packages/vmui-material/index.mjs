@@ -53,3 +53,4 @@ export const {Select,selectClasses,getSelectUtilityClass}=a;
 
 export const {Checkbox,FormControlLabel,checkboxClasses,formControlLabelClasses,getCheckboxUtilityClass,getFormControlLabelUtilityClass}=a;
 export const {Radio,radioClasses,getRadioUtilityClass,RadioGroup,radioGroupClasses,getRadioGroupUtilityClass,FormGroup,formGroupClasses,getFormGroupUtilityClass,useRadioGroup}=a;
+export const {Switch,switchClasses,getSwitchUtilityClass}=a;

@@ -437,3 +437,13 @@ export const radioGroupClasses:Readonly<RadioGroupClasses>;
 export function getRadioGroupUtilityClass(slot:string):string;
 export const formGroupClasses:Readonly<FormGroupClasses>;
 export function getFormGroupUtilityClass(slot:string):string;
+
+export type SwitchClasses=Record<'root'|'edgeStart'|'edgeEnd'|'switchBase'|'colorPrimary'|'colorSecondary'|'sizeSmall'|'sizeMedium'|'checked'|'disabled'|'input'|'thumb'|'track',string>;
+export type SwitchSlotProps=React.HTMLAttributes<HTMLSpanElement>&{ref?:React.Ref<HTMLSpanElement>;sx?:SxProps<Theme>};
+export interface SwitchProps extends Omit<CheckboxProps,'indeterminate'|'indeterminateIcon'|'classes'|'slotProps'|'slots'|'size'> {
+ size?:'small'|'medium';classes?:Partial<SwitchClasses>;slots?:{root?:React.ElementType;switchBase?:React.ElementType;input?:React.ElementType;thumb?:React.ElementType;track?:React.ElementType};
+ slotProps?:{root?:SwitchSlotProps|((state:SwitchProps)=>SwitchSlotProps);switchBase?:Partial<ButtonBaseProps<'span'>>|((state:SwitchProps)=>Partial<ButtonBaseProps<'span'>>);input?:CheckboxInputSlotProps|((state:SwitchProps)=>CheckboxInputSlotProps);thumb?:SwitchSlotProps|((state:SwitchProps)=>SwitchSlotProps);track?:SwitchSlotProps|((state:SwitchProps)=>SwitchSlotProps)};
+}
+export const Switch:React.ForwardRefExoticComponent<SwitchProps & React.RefAttributes<HTMLSpanElement>>;
+export const switchClasses:Readonly<SwitchClasses>;
+export function getSwitchUtilityClass(slot:string):string;

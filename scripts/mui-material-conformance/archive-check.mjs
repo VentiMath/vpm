@@ -102,3 +102,8 @@ assert.match(dropdown,/role="combobox"/);assert.match(dropdown,/>Once<\/div>/);
 for(const name of ['Checkbox','FormControlLabel'])assert.equal(api[name],require('vmui-material/'+name).default);
 const checkbox=renderToString(React.createElement(api.FormControlLabel,{label:'Confirm',control:React.createElement(api.Checkbox,{checked:true,required:true,name:'consent'})}));
 assert.match(checkbox,/type="checkbox"/);assert.match(checkbox,/checked=""/);assert.match(checkbox,/required=""/);
+
+assert.equal(api.Switch,require('vmui-material/Switch').default);
+assert.equal(api.switchClasses,require('vmui-material/switchClasses').default);
+const switchHtml=renderToString(React.createElement(api.Switch,{defaultChecked:true,'aria-label':'Email'}));
+assert.match(switchHtml,/role="switch"/);assert.match(switchHtml,/checked=""/);

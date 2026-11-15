@@ -259,3 +259,15 @@ native keyboard navigation, refs, hydration, canceled/uncanceled resets and
 light/dark/RTL/CSS-variable/theme-override styles. Run again with
 `VPM_REACT_MODE=development`. `radio-controls.test.cjs` covers value identity,
 coercion, explicit overrides, nested contexts and custom slots.
+
+
+Switch: `switch-contract.cjs` compares 288 current9/app7 SSR cases.
+`switch-browser.cjs` checks preference toggles, Hook Form, native keyboard/form
+behavior, reset, refs, hydration and settled computed styles across light/dark,
+RTL, CSS variables and the compact Fuse theme. Run production and
+`VPM_REACT_MODE=development`. App7's inert-wrapper disabled attributes and
+missing native switch role are explicit current9 compatibility differences.
+Top-level input ARIA-label forwarding and reset synchronization are VPM fixes.
+Exact archives run the same controls via `VPM_MATERIAL_BROWSER_FILTER=switch-browser.cjs`.
+Use `switch-build.cjs` before `packages/vmui-material/bench/switch.cjs`; benchmark
+Node and Bun sequentially with no concurrent tests or builds.

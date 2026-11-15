@@ -88,6 +88,7 @@ jobs:
           node scripts/mui-material-conformance/select-contract.cjs
           node scripts/mui-material-conformance/checkbox-contract.cjs
           node scripts/mui-material-conformance/radio-contract.cjs
+          node scripts/mui-material-conformance/switch-contract.cjs
           node scripts/mui-material-conformance/lists-contract.cjs
           node scripts/mui-material-conformance/types.cjs
           node scripts/mui-material-conformance/browser.cjs
@@ -115,6 +116,8 @@ jobs:
           node scripts/mui-material-conformance/checkbox-browser.cjs
           node scripts/mui-material-conformance/radio-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/radio-browser.cjs
+          node scripts/mui-material-conformance/switch-browser.cjs
+          VPM_REACT_MODE=development node scripts/mui-material-conformance/switch-browser.cjs
           VPM_REACT_MODE=development node scripts/mui-material-conformance/checkbox-browser.cjs
           node scripts/mui-material-conformance/archives.cjs
       - name: Motion React application patterns
@@ -975,6 +978,7 @@ jobs:
           bun scripts/mui-material-conformance/select-contract.cjs
           bun scripts/mui-material-conformance/checkbox-contract.cjs
           bun scripts/mui-material-conformance/radio-contract.cjs
+          bun scripts/mui-material-conformance/switch-contract.cjs
           bun scripts/mui-material-conformance/lists-contract.cjs
           bun test packages/vmui-system/test/system.test.cjs
           bun scripts/mui-system-conformance/primitives.cjs

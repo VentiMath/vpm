@@ -1,0 +1,1 @@
+"use strict";const a=require("./switch-control.cjs");module.exports=a.Switch;module.exports.default=a.Switch;module.exports.switchClasses=a.switchClasses;module.exports.getSwitchUtilityClass=a.getSwitchUtilityClass;

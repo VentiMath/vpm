@@ -897,6 +897,26 @@
         "types": "./RadioGroup/useRadioGroup.d.cts",
         "default": "./RadioGroup/useRadioGroup.cjs"
       }
+    },
+    "./Switch": {
+      "import": {
+        "types": "./Switch.d.mts",
+        "default": "./Switch.mjs"
+      },
+      "require": {
+        "types": "./Switch.d.cts",
+        "default": "./Switch.cjs"
+      }
+    },
+    "./switchClasses": {
+      "import": {
+        "types": "./switchClasses.d.mts",
+        "default": "./switchClasses.mjs"
+      },
+      "require": {
+        "types": "./switchClasses.d.cts",
+        "default": "./switchClasses.cjs"
+      }
     }
   },
   "files": [

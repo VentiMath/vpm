@@ -1,6 +1,6 @@
 # vmui-material
 
-Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup and FormGroup, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
+Independent Material UI **9.5.0** controls over VPM System, targeting the components VentiMath uses. **This package is partial:** it implements ButtonBase, Button, IconButton, Fab, ButtonGroup, ToggleButton, ToggleButtonGroup, Typography, Link, SvgIcon, Box, Paper, Divider, Icon, FormControl, FormLabel, FormHelperText, InputBase, Input, OutlinedInput, InputLabel, InputAdornment, TextField, List, MenuItem, MenuList, ListItemIcon, ListItemText, ListSubheader, Menu, Popover, Select, Checkbox, FormControlLabel, Radio, RadioGroup, FormGroup and Switch, plus `createSvgIcon` and the resolved-theme bridge. It is not a replacement for the whole `@mui/material` dependency yet.
 
 ```js
 import { Button, ToggleButton, ToggleButtonGroup } from 'vmui-material';
@@ -25,7 +25,7 @@ The earlier button and text/icon benchmarks predate the custom native-root corre
 
 [Conformance](../../scripts/mui-material-conformance/README.md), [button benchmarks](bench/results/README.md), [text/icon benchmarks](bench/text/README.md), [Box benchmarks](bench/box/README.md), [surface/icon benchmarks](bench/surfaces/README.md), [form benchmarks](bench/forms/README.md), [input benchmarks](bench/input/README.md) and [provenance](PROVENANCE.json) record the measured scope. Supported runtimes are Node 24, Bun 1.4.4 and modern browsers.
 
-Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; next are Switch and the table’s remaining Material peers. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
+Current application priorities (reviewed at `3aa9eb28`, November 13, 2026): Material remains in shared theme/navigation, authentication, public pages and table components while many feature pages use Astryx. A static non-test source inventory found Typography imports in 164 files, Box in 99, styles in 88, Paper in 43 and Divider in 15. These are import counts, not route reachability or adoption percentages. The Box/theme boundary and SVG sprite root are covered. Paper, Divider and the Icon fallback are also covered. The shared FormControl/FormLabel/FormHelperText foundation is covered; InputBase is now covered too; Switch is now covered; the table’s remaining Material peers are still pending. A complete app cutover requires those callers, including dependencies’ imports, to pass together.
 
 The `styles` entry exposes `ThemeProvider`, `useTheme`, `styled`, `GlobalStyles`,
 `useThemeProps`, `useMediaQuery` and `useColorScheme`. Pass an existing resolved
@@ -311,7 +311,7 @@ values, custom icons, mixed table selection, disabled state, required labels,
 label placement, input/root refs, slots and app theme overrides are covered.
 FormControlLabel also composes unchanged control Radio/Switch components in the
 Checkbox test fixture. Radio now has its own implementation and group-specific
-checks; Switch remains pending.
+checks; Switch now has its own implementation and native preference-form checks.
 
 Native indeterminate state follows Material 9, improving on app7's visual-only
 mixed state. Native form reset also restores the icon and subsequent click
@@ -361,3 +361,33 @@ The isolated Radio workloads use 13–26% less Bun SSR time than app Material7.
 Node comparisons are inconclusive: pair variation and identical-source controls
 are too large to establish a direction. Every sample is retained; these results
 do not imply a browser interaction speedup.
+
+
+## Switch
+
+`Switch` covers the Material callers still present in WARML email preferences,
+family reminders, Fuse settings and QuickPanel at app revision `446bc73d`.
+Calendar and many newer feature screens already use Astryx Switch; building
+this compatibility component does not change those screens or select a new
+application design system.
+
+The native input owns checked state, keyboard toggling, validation and form
+submission. The five slots, refs, color/size/edge classes, FormControl disabled
+state, Hook Form callbacks and compact Fuse theme overrides are supported.
+Current Material9 switch semantics and app7 input aliases are preserved.
+An uncontrolled native form reset also restores the thumb, honors cancellation
+and leaves subsequent clicks working. Top-level ARIA labels used by Fuse are
+forwarded to the input; an explicit input label wins. Native slot elements do
+not receive internal owner-state objects.
+
+Current9/app7 SSR and real Chrome comparisons cover light/dark, RTL,
+CSS-variable palettes and the application's compact switch dimensions,
+controlled dependent preferences, Hook Form, hydration, refs and native reset.
+[Switch measurements](bench/switch/README.md) time prepared SSR trees only;
+they do not measure application interactions. This brings the independent
+component count to 38; Material remains partial and unreleased.
+
+The four-control and four-labelled-control Switch workloads use 48% and 33%
+less Bun time than Material9. The other Bun cases and all Node comparisons
+have no established direction beyond process/control variation. These are
+local SSR measurements, not interaction or application latency claims.
