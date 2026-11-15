@@ -80,6 +80,7 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
    const a=group==='styles'?comparable[group][i].values:comparable[group][i],b=group==='styles'?rows[0][group][i].values:rows[0][group][i];
    const x=a.find(v=>v.id==='reminder-kind-label'),y=b.find(v=>v.id==='reminder-kind-label');
    assert.deepEqual([x.tag,y.tag],['DIV','LABEL']);x.tag=y.tag;
+   const hidden=a.find(v=>v.id==='<generated>');assert.ok(hidden);assert.equal(b[a.indexOf(hidden)].id,'');hidden.id='';
   }
   for(const group of ['styles','states'])for(let i=0;i<comparable[group].length;i++){
    const a=group==='styles'?comparable[group][i].values:comparable[group][i],b=group==='styles'?rows[0][group][i].values:rows[0][group][i];
@@ -104,4 +105,4 @@ let server,child,socket,sequence=0;const pending=new Map(),exceptions=[];
   comparisons+=rows[0].styles.length;
  }
  assert.equal(exceptions.length,0,JSON.stringify(exceptions));console.log(comparisons+' TextField theme/state comparisons pass; focus, notch, refs, Hook Form, accessibility and hydration');
-}finally{for(const p of pending.values())clearTimeout(p.timer);socket?.close();if(child){const exited=new Promise(r=>child.once('exit',r));child.kill();await Promise.race([exited,new Promise(r=>setTimeout(r,2000))]);}if(server)await new Promise(r=>server.close(r));fs.rmSync(profile,{recursive:true,force:true});}})().catch(e=>{console.error(e);process.exitCode=1});
+}finally{for(const p of pending.values())clearTimeout(p.timer);socket?.close();if(child){const exited=new Promise(r=>child.once('exit',r));child.kill();await Promise.race([exited,new Promise(r=>setTimeout(r,2000))]);}if(server)await new Promise(r=>server.close(r));fs.rmSync(profile,{recursive:true,force:true,maxRetries:10,retryDelay:100});}})().catch(e=>{console.error(e);process.exitCode=1});

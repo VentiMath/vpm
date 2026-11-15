@@ -3,16 +3,10 @@ import {CacheProvider} from '@emotion/react';
 import createCache from '@emotion/cache';
 import rtlPlugin from 'stylis-plugin-rtl';
 import {ThemeProvider} from '@integration';
-import {TextField,FormHelperText,InputAdornment,useFormControl} from '@buttons';
+import {TextField,FormHelperText,InputAdornment,useFormControl,MenuItem} from '@buttons';
 import {Controller,useForm} from '@hook-form';
-import Select from '@control-select';
-import MenuItem from '@control-menu-item';
-import ControlContext from '@control-context';
 import {makeTheme as baseTheme} from './input-decorations-scene.jsx';
 export const makeTheme=baseTheme;
-// A test-only adapter verifies the real select caller boundary. Neither Select
-// nor its menu dependencies are shipped by this TextField implementation.
-const SelectAdapter=React.forwardRef(function SelectAdapter(props,ref){const state=useFormControl();return <ControlContext.Provider value={state}><Select {...props} ref={ref}/></ControlContext.Provider>});
 function Helper({id,...props}){const state=useFormControl();return <><FormHelperText id={id} {...props}/><output id={id+'-state'}>{JSON.stringify({filled:state.filled,focused:state.focused})}</output></>}
 export function VariantScene({mode='light',rtl=false,variables=false,custom=false,disabled=false,error=false,tick=0,narrow=false}){
  const theme=React.useMemo(()=>makeTheme({mode,rtl,variables,custom}),[mode,rtl,variables,custom]);
@@ -30,7 +24,7 @@ export function VariantScene({mode='light',rtl=false,variables=false,custom=fals
  <TextField id="date" type="datetime-local" label="First reminder" slotProps={{inputLabel:{shrink:true}}}/>
  <TextField id="search" variant="standard" placeholder="Search contests" autoComplete="off" slotProps={{input:{disableUnderline:true,inputRef:node=>{refs.current.search=node},classes:{input:'FuseSearch-input'}},htmlInput:{'aria-label':'Search contests',role:'combobox','aria-expanded':false}}}/>
  <TextField id="password" type="password" name="password" label="Password" required autoComplete="current-password" ref={node=>{refs.current.root=node}}/>
- <TextField id="reminder-kind" select label="Schedule" helperText="Reminder frequency" value={kind} onChange={e=>setKind(e.target.value)} slots={{select:SelectAdapter}}><MenuItem value="once">Once</MenuItem><MenuItem value="weekly">Weekly</MenuItem></TextField>
+ <TextField id="reminder-kind" select label="Schedule" helperText="Reminder frequency" value={kind} onChange={e=>setKind(e.target.value)}><MenuItem value="once">Once</MenuItem><MenuItem value="weekly">Weekly</MenuItem></TextField>
  <button id="outside">Outside</button>
  </main></ThemeProvider></CacheProvider>;
 }

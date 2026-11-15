@@ -7,8 +7,6 @@ for(const version of ['current','app'])for(const own of [false,true]){
  if(own&&process.env.VPM_MATERIAL_INSTALL)for(const key of Object.keys(alias))alias[key]=alias[key].replace(path.resolve(__dirname,'../../packages'),packages);
  const entry=own?packages+'/vmui-material/index.cjs':alias['@mui/material']+'/index.js';
  alias['@hook-form']=path.resolve(__dirname,'../hook-form-conformance/node_modules',version==='current'?'react-hook-form':'react-hook-form-app');
- const control=fixture+'/node_modules/'+(version==='current'?'@mui/material':'mui-material-app');
- alias['@control-select']=control+'/Select/index.js';alias['@control-context']=control+'/FormControl/FormControlContext.js';alias['@control-menu-item']=control+'/MenuItem/index.js';
  alias['@buttons']=entry;alias['@integration']=own?packages+'/vmui-material/styles/index.cjs':alias['@mui/material']+'/styles/index.js';
  if(own)for(const sub of ['FormControl','FormLabel','FormHelperText','InputBase','Input','OutlinedInput','InputLabel','InputAdornment','TextField'])alias['@mui/material/'+sub]=packages+'/vmui-material/'+sub+'.cjs';
  for(const kind of ['ssr','bench','browser']){

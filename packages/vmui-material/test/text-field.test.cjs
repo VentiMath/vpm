@@ -20,7 +20,7 @@ test('caller select slot gets the input contract, and missing implementations re
  let seen;const Select=p=>{seen=p;return p.input;};const html=r(h(api.TextField,{id:'kind',label:'Kind',helperText:'Choose',select:true,value:'a',slots:{select:Select}},h('option',{value:'a'},'A')));
  assert.match(html,/<div[^>]*id="kind-label"|<div[^>]*class="[^"]*MuiInputLabel-root/);assert.doesNotMatch(html,/<label[^>]*for="kind"/);assert.equal(seen.id,'kind');assert.equal(seen.labelId,'kind-label');assert.equal(seen['aria-describedby'],'kind-helper-text');assert.equal(seen.input.props.id,undefined);assert.equal(seen.input.props.label,'Kind');assert.equal(seen.value,'a');
  }
- assert.throws(()=>r(h(own.TextField,{select:true})),/Select\/MenuItem/);assert.throws(()=>r(h(own.TextField,{variant:'filled'})),/FilledInput/);
+ assert.match(r(h(own.TextField,{select:true,value:'a'},h(own.MenuItem,{value:'a'},'A'))),/role="combobox"/);assert.throws(()=>r(h(own.TextField,{variant:'filled'})),/FilledInput/);
 });
 test('custom native slots do not receive ownerState objects and themes retain textfield root overrides',()=>{
  const theme=peer('@mui/material/styles').createTheme({components:{MuiTextField:{defaultProps:{size:'small'},styleOverrides:{root:{maxWidth:250}}}}});

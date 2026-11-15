@@ -757,6 +757,26 @@
         "types": "./popoverClasses.d.cts",
         "default": "./popoverClasses.cjs"
       }
+    },
+    "./Select": {
+      "import": {
+        "types": "./Select.d.mts",
+        "default": "./Select.mjs"
+      },
+      "require": {
+        "types": "./Select.d.cts",
+        "default": "./Select.cjs"
+      }
+    },
+    "./selectClasses": {
+      "import": {
+        "types": "./selectClasses.d.mts",
+        "default": "./selectClasses.mjs"
+      },
+      "require": {
+        "types": "./selectClasses.d.cts",
+        "default": "./selectClasses.cjs"
+      }
     }
   },
   "files": [

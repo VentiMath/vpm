@@ -49,3 +49,4 @@ export const {InputAdornment,inputAdornmentClasses,getInputAdornmentUtilityClass
 export const {TextField,textFieldClasses,getTextFieldUtilityClass}=a;
 export const {List,listClasses,getListUtilityClass,MenuItem,menuItemClasses,getMenuItemUtilityClass,MenuList,ListItemIcon,listItemIconClasses,getListItemIconUtilityClass,ListItemText,listItemTextClasses,getListItemTextUtilityClass,ListSubheader,listSubheaderClasses,getListSubheaderUtilityClass}=a;
 export const {Menu,menuClasses,getMenuUtilityClass,Popover,popoverClasses,getPopoverUtilityClass,MenuPaper}=a;
+export const {Select,selectClasses,getSelectUtilityClass}=a;

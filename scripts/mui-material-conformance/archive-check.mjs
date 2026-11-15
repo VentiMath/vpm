@@ -94,3 +94,7 @@ assert.equal(api.TextField,require('vmui-material/TextField').default);
 const list=renderToString(React.createElement(api.MenuList,null,React.createElement(api.ListSubheader,null,'Contests'),React.createElement(api.MenuItem,{selected:true},React.createElement(api.ListItemIcon,null,'*'),React.createElement(api.ListItemText,{primary:'AMC'}))));
 assert.match(list,/role="menu"/);assert.match(list,/role="menuitem"/);assert.match(list,/Mui-selected/);
 assert.equal(renderToString(React.createElement(api.Menu,{open:false},'hidden')),'');
+
+assert.equal(api.Select,require('vmui-material/Select').default);
+const dropdown=renderToString(React.createElement(api.TextField,{id:'schedule',select:true,value:'once',label:'Schedule'},React.createElement(api.MenuItem,{value:'once'},'Once')));
+assert.match(dropdown,/role="combobox"/);assert.match(dropdown,/>Once<\/div>/);

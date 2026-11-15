@@ -4,6 +4,7 @@ const {styled,useThemeProps}=require('./theme.cjs');
 const {FormControl,FormHelperText}=require('./forms.cjs');
 const {InputLabel}=require('./input-decorations.cjs');
 const {Input,OutlinedInput}=require('./input-variants.cjs');
+const {Select}=require('./select-input.cjs');
 const h=React.createElement,empty=Object.freeze({});
 const join=(...values)=>values.filter(Boolean).join(' ');
 const Root=styled(FormControl,{name:'MuiTextField',slot:'Root',shouldForwardProp:p=>!['theme','sx','as','ownerState'].includes(p),overridesResolver:(_,o)=>o.root})({});
@@ -22,7 +23,6 @@ const TextField=React.forwardRef(function TextField(input,forwardedRef){
  const rootRef=useRefs(forwardedRef,root.ref);
  const RootSlot=slots.root||Root,Field=slots.input||(variant==='outlined'?OutlinedInput:variant==='standard'?Input:null),Label=slots.inputLabel||InputLabel,Helper=slots.formHelperText||FormHelperText;
  if(!Field)throw new TypeError('TextField filled variant requires slots.input until FilledInput is implemented');
- if(select&&!slots.select)throw new TypeError('TextField select requires slots.select until Select/MenuItem are implemented');
  const extra=variant==='outlined'?{label,...(caption.shrink===undefined?{}:{notched:caption.shrink})}:{};
  const fieldId=select&&!selection.native?undefined:id;
  const element=h(Field,slotProps(Field,{
@@ -31,9 +31,9 @@ const TextField=React.forwardRef(function TextField(input,forwardedRef){
  },state));
  const rootProps={...other,disabled,error,fullWidth,required,color,variant,...root,className:join('MuiTextField-root',Object.hasOwn(classes,'root')&&classes.root,className,root.className),ref:rootRef};
  if(other.style||root.style)rootProps.style={...other.style,...root.style};
- // A caller-supplied select receives the same input element and identifiers as
- // Material. No upstream select implementation or silent native fallback ships.
- const control=select?h(slots.select,slotProps(slots.select,{id,labelId,value,defaultValue,input:element,'aria-describedby':helperId,...selection},state),children):element;
+ // The default Select uses the owned input/menu foundation. A custom select slot
+ // still receives the composed input element and its identifiers.
+ const control=select?h(slots.select||Select,slotProps(slots.select||Select,{id,labelId,value,defaultValue,input:element,'aria-describedby':helperId,...selection},state),children):element;
  return h(RootSlot,slotProps(RootSlot,rootProps,state),label!=null&&label!==''?h(Label,slotProps(Label,{...(select&&!selection.native?{component:'div'}:{htmlFor:id}),id:labelId,...caption},state),label):null,control,helperText?h(Helper,slotProps(Helper,{id:helperId,...helper},state),helperText):helperText);
 });
 TextField.displayName='TextField';

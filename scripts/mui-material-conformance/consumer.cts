@@ -186,3 +186,14 @@ import Menu=require('vmui-material/Menu');
 import Popover=require('vmui-material/Popover');
 MenuItem.default({component:'a',href:'#contest',selected:true});
 Menu.default({open:false});Popover.default({open:false,anchorPosition:{top:10,left:20}});
+
+import {Select,type SelectChangeEvent,type SelectInputHandle} from 'vmui-material';
+const selectHandle=React.createRef<SelectInputHandle<number>>();
+Select<number>({value:0,inputRef:selectHandle,onChange:(event,child)=>{const v:number|string=event.target.value;void v;void child;},MenuProps:{disableScrollLock:true}});
+Select<string[]>({multiple:true,value:['amc'],renderValue:value=>value.join(', '),SelectDisplayProps:{'aria-label':'Contests'}});
+// @ts-expect-error array values must match the declared Select value type
+Select<number>({value:['amc']});
+// @ts-expect-error invalid variant
+Select({variant:'ghost'});
+// @ts-expect-error open is boolean
+Select({open:'yes'});

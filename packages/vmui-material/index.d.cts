@@ -388,3 +388,13 @@ export declare const popoverClasses: Readonly<Record<string,string>>;
 export declare function getPopoverUtilityClass(slot:string):string;
 export declare const menuClasses: Readonly<Record<string,string>>;
 export declare function getMenuUtilityClass(slot:string):string;
+
+export type SelectChangeEvent<Value=string>=(Event & {target:{value:Value;name:string}})|React.ChangeEvent<HTMLInputElement>;
+export interface SelectInputHandle<Value=unknown> {focus():void;readonly node:HTMLInputElement|null;readonly value:Value;}
+export type SelectClasses=Record<'root'|'select'|'multiple'|'filled'|'outlined'|'standard'|'disabled'|'focused'|'icon'|'iconOpen'|'iconFilled'|'iconOutlined'|'iconStandard'|'nativeInput'|'error',string>;
+export interface SelectProps<Value=unknown> extends Omit<InputBaseProps,'classes'|'value'|'defaultValue'|'onChange'|'children'> {
+ autoWidth?:boolean;children?:React.ReactNode;classes?:Partial<SelectClasses>;defaultOpen?:boolean;defaultValue?:Value;displayEmpty?:boolean;IconComponent?:React.ElementType;input?:React.ReactElement;label?:React.ReactNode;labelId?:string;MenuProps?:Partial<MenuProps>;multiple?:boolean;native?:boolean;onChange?:(event:SelectChangeEvent<Value>,child:React.ReactNode)=>void;onClose?:(event:React.SyntheticEvent)=>void;onOpen?:(event:React.SyntheticEvent)=>void;open?:boolean;renderValue?:(value:Value)=>React.ReactNode;SelectDisplayProps?:React.HTMLAttributes<HTMLDivElement>&{ref?:React.Ref<HTMLDivElement>};value?:Value|'';variant?:'outlined'|'standard'|'filled';ref?:React.Ref<HTMLDivElement>;
+}
+export function Select<Value=unknown>(props:SelectProps<Value>):React.ReactElement|null;
+export const selectClasses:Readonly<SelectClasses>;
+export function getSelectUtilityClass(slot:string):string;
