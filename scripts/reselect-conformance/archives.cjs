@@ -14,7 +14,7 @@ try{
   fs.writeFileSync(cwd+'/browser.mjs',"import {createSelector} from 'vreselect';const s=createSelector([s=>s.x],x=>x+1);if(s({x:1})!==2)throw Error('selector');");run('bun',['build','browser.mjs','--target','browser','--outfile','browser-built.mjs'],cwd);run('node',['browser-built.mjs'],cwd);
   for(const ext of ['cts','mts'])fs.copyFileSync(__dirname+'/consumer.'+ext,cwd+'/consumer.'+ext);
   run('node',[__dirname+'/types.cjs',cwd],cwd);
-  const installed=cwd+'/node_modules/vreselect/index.cjs';run('node',[__dirname+'/callers.cjs'],cwd,{VPM_RESELECT_INSTALL:installed});run('node',[__dirname+'/development.cjs'],cwd,{VPM_RESELECT_INSTALL:installed});
+  const installed=cwd+'/node_modules/vreselect/index.cjs';run('node',[__dirname+'/callers.cjs'],cwd,{VPM_RESELECT_INSTALL:installed});run('node',[__dirname+'/development.cjs'],cwd,{VPM_RESELECT_INSTALL:installed});run('node',['--expose-gc',__dirname+'/gc.cjs'],cwd,{VPM_RESELECT_INSTALL:installed});
  }
  console.log('Packed fresh/frozen npm and Bun, Node/Bun CJS+ESM, browser bundle, TS7 and unchanged MUI X callers pass. '+meta.size+' bytes packed, '+meta.unpackedSize+' unpacked.');
 }finally{fs.rmSync(temp,{recursive:true,force:true});}

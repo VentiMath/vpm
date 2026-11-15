@@ -10,6 +10,8 @@ wrapper is bundled unchanged with each runtime, using synthetic states.
 - `node scripts/reselect-conformance/development.cjs`: diagnostic frequencies.
 - `node scripts/reselect-conformance/callers.cjs`: unchanged MUI wrapper values,
   reference reuse and recomputation counts.
+- `node --expose-gc scripts/reselect-conformance/gc.cjs`: live unbounded, bounded
+  and result-equality caches release otherwise unreachable object keys/results.
 - `node scripts/reselect-conformance/types.cjs`: strict TS7 NodeNext/Bundler,
   typed state, result/parameter inference and negative consumers.
 - `node scripts/reselect-conformance/archives.cjs`: exact packed, fresh/frozen

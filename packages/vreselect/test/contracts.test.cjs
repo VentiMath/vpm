@@ -1,8 +1,17 @@
 'use strict';
+const previousMode=process.env.NODE_ENV;
 process.env.NODE_ENV='production';
-const {test}=require('node:test'),assert=require('node:assert/strict'),path=require('node:path');
+const {test:registerTest}=require('node:test'),assert=require('node:assert/strict'),path=require('node:path');
 const own=require('..'),fixture=path.resolve(__dirname,'../../../scripts/reselect-conformance/node_modules');
 const controls=[['VPM',own],['current',require(fixture+'/reselect')],['app',require(fixture+'/reselect-app')]];
+// Bun shares environment mutations across test files. Only these module loads
+// need production mode; later React client fixtures must retain their mode.
+if(previousMode===undefined)delete process.env.NODE_ENV;else process.env.NODE_ENV=previousMode;
+// These callbacks are synchronous; upstream also reads the mode at call time.
+const test=(name,run)=>registerTest(name,()=>{
+ const mode=process.env.NODE_ENV;process.env.NODE_ENV='production';
+ try{return run()}finally{if(mode===undefined)delete process.env.NODE_ENV;else process.env.NODE_ENV=mode;}
+});
 for(const [name,a]of controls){
  for(const key of ['lruMemoize','weakMapMemoize']){
   test(name+' '+key+' argument identity, arity, undefined results and exceptions',()=>{
@@ -54,4 +63,24 @@ test('weak result deduplication preserves nullish sentinel and clear-cache behav
   function trace(a){const m=a.weakMapMemoize(()=>value,{resultEqualityCheck:()=>true}),out=[];m(1);out.push(m.resultsCount());m(2);out.push(m.resultsCount());m.clearCache();m(3);out.push(m.resultsCount());return out;}
   assert.deepEqual(trace(own),trace(controls[1][1]));assert.deepEqual(trace(own),trace(controls[2][1]));
  }
+});
+
+for(const [name,a] of controls)test(name+' weak cache zero/many arities and nested selector cache ownership',()=>{
+ const key={},fn=a.weakMapMemoize((...xs)=>({xs}));
+ for(const args of [[],[key],[key,1],[key,1,null],[key,1,null,undefined,Symbol.for('cache')]]){
+  const value=fn(...args);assert.equal(fn(...args),value);assert.deepEqual(value.xs,args);
+ }
+ const seen=[],memoize=(fn,...opts)=>{seen.push(opts);return a.lruMemoize(fn,...opts)};
+ const selector=a.createSelector([s=>s.items],items=>items.length,{memoize,memoizeOptions:{maxSize:2}});
+ const items=[1,2];assert.equal(selector({items}),2);assert.equal(selector({items}),2);
+ assert.equal(selector.recomputations(),1);assert.equal(selector.dependencyRecomputations(),2);assert.deepEqual(seen,[ [{maxSize:2}] ]);
+});
+
+for(const [name,a] of controls)test(name+' custom result memoizer receiver and live dependency array',()=>{
+ const receivers=[],deps=[s=>s.x];
+ function memoize(fn){return function(){receivers.push(this);return fn.apply(null,arguments)}}
+ const selector=a.createSelector(deps,(...values)=>values,{memoize});
+ assert.deepEqual(selector({x:1}),[1]);assert.deepEqual(receivers,[null]);
+ deps.push(s=>s.y);assert.deepEqual(selector({x:2,y:3}),[2,3]);
+ assert.equal(selector.dependencyRecomputations(),2);
 });

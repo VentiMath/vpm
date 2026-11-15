@@ -42,21 +42,54 @@ function descend(root,args,create){
  }
  return node;
 }
+// The production unbounded cache needs no generation, deduplication or
+// diagnostic state. Keep its common hit loop independent of those closures.
+function plainWeakMemoize(fn){
+ let root=branch(),count=0;
+ function step(node,key){
+  const objects=(typeof key==='object'&&key!==null)||typeof key==='function';
+  const map=objects?(node.objects||(node.objects=new WeakMap())):(node.primitives||(node.primitives=new Map()));
+  let next=map.get(key);if(!next)map.set(key,next=branch());return next;
+ }
+ function memoized(){
+  let node=root;
+  const length=arguments.length;
+  if(length===1){
+   const key=arguments[0];
+   if((typeof key==='object'&&key!==null)||typeof key==='function'){
+    const map=root.objects||(root.objects=new WeakMap());node=map.get(key);
+    if(!node)map.set(key,node=branch());
+   }else{
+    const map=root.primitives||(root.primitives=new Map());node=map.get(key);
+    if(!node)map.set(key,node=branch());
+   }
+   if(node.done)return node.value;
+   const value=fn.call(null,key);count++;node.value=value;node.done=true;return value;
+  }
+  if(length){node=step(node,arguments[0]);node=step(node,arguments[1]);for(let i=2;i<length;i++)node=step(node,arguments[i]);}
+  if(node.done)return node.value;
+  const value=fn.apply(null,arguments);count++;node.value=value;node.done=true;return value;
+ }
+ return fields(memoized,()=>{root=branch();count=0},()=>count,()=>{count=0});
+}
 function weakMapMemoize(fn,{resultEqualityCheck,maxSize}={}){
  if(typeof fn!=='function')throw new TypeError('Expected a function to memoize');
  if(maxSize!==undefined&&(!Number.isInteger(maxSize)||maxSize<=0))throw new TypeError('maxSize must be a positive integer');
+ if(!development&&maxSize===undefined&&!resultEqualityCheck)return plainWeakMemoize(fn);
  let current=branch(),previous=null,size=0,count=0,last,hasLast=false,lastWeak=false,warned=false;
  function memoized(){
-  const args=arguments;let node=current,primitive=false;
+  const args=arguments;let node=current;
   // Distinct object/primitive branches keep Map and WeakMap access monomorphic.
   // The hit path does not allocate an argument array or call a generic walker.
   for(let i=0;i<args.length;i++){
    const key=args[i];let next;
-   if(weakKey(key)){const map=node.objects||(node.objects=new WeakMap());next=map.get(key);if(!next)map.set(key,next=branch());}
-   else{primitive=true;const map=node.primitives||(node.primitives=new Map());next=map.get(key);if(!next)map.set(key,next=branch());}
+   if((typeof key==='object'&&key!==null)||typeof key==='function'){const map=node.objects||(node.objects=new WeakMap());next=map.get(key);if(!next)map.set(key,next=branch());}
+   else{const map=node.primitives||(node.primitives=new Map());next=map.get(key);if(!next)map.set(key,next=branch());}
    node=next;
   }
-  if(node.done)return node.value;
+  return node.done?node.value:complete(node,args);
+ }
+ function complete(node,args){
   const old=previous&&descend(previous,args,false);let value;
   if(old?.done)value=old.value;
   else{
@@ -68,7 +101,7 @@ function weakMapMemoize(fn,{resultEqualityCheck,maxSize}={}){
    let check=current;
    for(const key of args){const map=check[weakKey(key)?'objects':'primitives'];if(!weakKey(key)&&map.size>1000){console.warn('A primitive argument cache exceeds 1000 entries; configure maxSize or clearCache.');warned=true;break;}check=map.get(key);}
   }
-  if(maxSize!==undefined&&primitive&&++size>=maxSize){previous=current;current=branch();size=0;}
+  if(maxSize!==undefined){let primitive=false;for(let i=0;i<args.length;i++)if(!weakKey(args[i])){primitive=true;break;}if(primitive&&++size>=maxSize){previous=current;current=branch();size=0;}}
   return value;
  }
  return fields(memoized,()=>{current=branch();previous=null;size=0;count=0;warned=false},()=>count,()=>{count=0});
@@ -85,10 +118,11 @@ function createSelectorCreator(config,...legacyOptions){
   if(typeof resultFunc!=='function'||!dependencies.every(f=>typeof f==='function'))throw new TypeError('Expected input selectors and a result function');
   const settings={...defaults,...options},memoize=settings.memoize,argsMemoize=settings.argsMemoize||weakMapMemoize;
   let recomputations=0,dependencyRecomputations=0,last,first=true;
-  const memoizedResultFunc=memoize(function(...values){recomputations++;return resultFunc.apply(null,values)},...optArgs(settings.memoizeOptions));
-  const selector=argsMemoize(function(...args){
+  const memoizedResultFunc=memoize(function(){recomputations++;return resultFunc.apply(null,arguments)},...optArgs(settings.memoizeOptions));
+  const compute=function(){
    dependencyRecomputations++;
-   const values=dependencies.map(fn=>fn.apply(null,args));
+   const args=arguments,values=new Array(dependencies.length);
+   for(let i=0;i<dependencies.length;i++)values[i]=dependencies[i].apply(null,args);
    last=memoizedResultFunc.apply(null,values);
    if(development){
     const enabled={...checks,...settings.devModeChecks};
@@ -103,7 +137,14 @@ function createSelectorCreator(config,...legacyOptions){
     first=false;
    }
    return last;
-  },...optArgs(settings.argsMemoizeOptions));
+  };
+  // A single-input selector can pass its value directly instead of allocating
+  // a temporary values array on each new state. Diagnostics keep the full path.
+  const collect=!development&&dependencies.length===1?function(){
+   if(dependencies.length!==1)return compute.apply(null,arguments);
+   dependencyRecomputations++;return last=memoizedResultFunc.call(null,dependencies[0].apply(null,arguments));
+  }:compute;
+  const selector=argsMemoize(collect,...optArgs(settings.argsMemoizeOptions));
   return Object.assign(selector,{resultFunc,memoizedResultFunc,dependencies,memoize,argsMemoize,lastResult:()=>last,recomputations:()=>recomputations,resetRecomputations:()=>{recomputations=0},dependencyRecomputations:()=>dependencyRecomputations,resetDependencyRecomputations:()=>{dependencyRecomputations=0}});
  }
  createSelector.withTypes=()=>createSelector;return createSelector;

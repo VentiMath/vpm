@@ -455,6 +455,7 @@ jobs:
       - run: node --test packages/vreselect/test/*.test.cjs
       - run: node scripts/reselect-conformance/callers.cjs
       - run: node scripts/reselect-conformance/development.cjs
+      - run: node --expose-gc scripts/reselect-conformance/gc.cjs
       - run: node scripts/reselect-conformance/types.cjs
       - run: node scripts/reselect-conformance/archives.cjs
       - run: npm --prefix scripts/swipeable-conformance ci --ignore-scripts --no-audit --no-fund

@@ -40,18 +40,24 @@ those imports alone do not prove this wrapper runs on a particular route.
 No app dependency, production deployment or release was changed.
 
 [Conformance](../../scripts/reselect-conformance/README.md),
-[measurements](bench/results/README.md) and [provenance](PROVENANCE.json) record
+[measurements](bench/optimized/README.md) and [provenance](PROVENANCE.json) record
 the exact scope. Performance results are local cache workloads, not app latency.
 
-Measured results are mixed. Versus current5.3, single-entry LRU hits/misses use
-about 27%/7% less Node time and 43%/27% less Bun time. Compared with app5.1,
-Node's changed-state case uses about 52% less time, but the MUI wrapper cache-hit
-case takes 42 ns versus 36 ns (18% more). Bun weak-cache hits take 12 ns versus
-current's 8 ns and 25 ns versus app's 20 ns; its current selector hit takes 8 ns
-versus 6 ns. The app comparison's changed-state case takes 149 ns versus 115 ns
-(38% more). Other directions are unestablished under the recorded controls.
-There is no overall speedup claim. [Initial measurements](bench/initial/README.md)
-retain the first implementation's larger overhead before cache-path simplification.
+The production unbounded weak cache now has a small direct traversal path;
+bounded generations, result equality and development diagnostics keep their
+own path. Single-input selectors avoid temporary arrays on new states. Tests
+also preserve custom memoizer receivers and changed dependency arrays, and
+exposed-GC checks prove live caches release unreachable object keys/results.
+
+Final isolated measurements show Node current-selector hits using 19% less
+time and current LRU hits 25% less. Bun current weak/selector hits are about
+9/8 ns versus upstream's 8/8 ns; current changed-state medians are 83 versus
+137 ns. However, Bun's identical-source controls varied too much to establish
+those directions. The app-pinned comparison still has higher weak-hit and MUI
+wrapper medians (27 vs 21 ns and 39 vs 34 ns). **We do not claim all Bun
+regressions are resolved or an overall speedup.** Raw paired samples and controls
+are retained. [Previous measurements](bench/results/README.md) and
+[initial measurements](bench/initial/README.md) document earlier implementations.
 
 To reproduce, install the pinned conformance fixture and run
 `node scripts/reselect-conformance/build.cjs` before the benchmark commands.
