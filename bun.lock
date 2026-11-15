@@ -610,6 +610,10 @@
       "name": "vis-unsafe",
       "version": "0.1.0",
     },
+    "packages/vjs-cookie": {
+      "name": "vjs-cookie",
+      "version": "3.0.8",
+    },
     "packages/vjson-bigint": {
       "name": "vjson-bigint",
       "version": "0.1.0",
@@ -2022,6 +2026,8 @@
     "vis-stream": ["vis-stream@workspace:packages/vis-stream"],
 
     "vis-unsafe": ["vis-unsafe@workspace:packages/vis-unsafe"],
+
+    "vjs-cookie": ["vjs-cookie@workspace:packages/vjs-cookie"],
 
     "vjson-bigint": ["vjson-bigint@workspace:packages/vjson-bigint"],
 

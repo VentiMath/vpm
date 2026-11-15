@@ -1,0 +1,7 @@
+{
+  "upstream": {"name":"js-cookie","version":"3.0.8","repository":"https://github.com/js-cookie/js-cookie","checked":"2026-11-15"},
+  "implementation": {"kind":"independent implementation","replacementStatus":"independent application implementation","targetScope":"Browser get/set/remove, default attributes, custom converters and scoped instances. Modern ESM/CommonJS; no global/AMD script namespace shim."},
+  "caller": {"revision":"2cfe38df694fc8dfd2f663acb3e6f5cda0f18066","upstreamVersion":"3.0.5","scope":"Unchanged @aws-amplify/core 6.11.2 CookieStorage setItem/getItem/removeItem/clear. Synthetic local cookie jar; no account or production cookie access."},
+  "changes": ["Independently written from public documentation, standards and black-box current/app comparisons; no upstream implementation source copied.","Zero runtime dependencies. Native percent encoding with ASCII fast path; single-pass named-cookie lookup and no cookie-value cache.","Prototype-named cookies are safe own data properties. Default attributes use only own properties; malformed attribute names/control characters and invalid expiry values reject before writing.","Current first-duplicate behavior is retained; accepts cookie separators without spaces. App3.0.5 instead takes the last duplicate. Immutable attribute/converter snapshots retain converter receivers. Cross-realm Date expiry works."],
+  "references": ["https://github.com/js-cookie/js-cookie","https://www.rfc-editor.org/rfc/rfc6265"]
+}

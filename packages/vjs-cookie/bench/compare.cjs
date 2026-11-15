@@ -1,0 +1,6 @@
+'use strict';
+const path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'..'),fixture=path.resolve(root,'../../scripts/js-cookie-conformance/node_modules');
+const cases=[];
+for(const control of ['js-cookie','js-cookie-app'])for(const kind of ['write token','write Unicode','read last','read all'])cases.push({name:(control==='js-cookie'?'Current ':'App ')+kind,make(file){const api=require(file===root?root:fixture+'/'+control);let raw=Array.from({length:24},(_,i)=>'field'+i+'=value'+i).join('; ');globalThis.document={get cookie(){return raw},set cookie(v){raw=v}};return kind==='write token'?()=>api.set('session','synthetic.token_ABC-123',{secure:true,sameSite:'lax'}):kind==='write Unicode'?()=>api.set('name','Ada π 日本語 😀'):kind==='read last'?()=>api.get('field23'):()=>api.get();},validate(value){if(kind==='read all')assert.equal(value.field23,'value23');else if(kind==='read last')assert.equal(value,'value23');else assert.ok(value.startsWith(kind==='write token'?'session=synthetic.token_ABC-123':'name=Ada%20'));}});
+require('../../../scripts/bench-process.cjs').run({root,upstream:'upstream',vpm:root,cases,files:['index.cjs','package.json','PROVENANCE.json','bench/compare.cjs','../../scripts/js-cookie-conformance/package-lock.json']}).catch(e=>{console.error(e);process.exitCode=1});

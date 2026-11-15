@@ -217,6 +217,14 @@ jobs:
           node scripts/jwt-decode-conformance/types.cjs
           node scripts/jwt-decode-conformance/browser.cjs
           node scripts/jwt-decode-conformance/archives.cjs
+      - run: npm --prefix scripts/js-cookie-conformance ci --ignore-scripts --no-audit --no-fund
+      - name: Browser cookies and Amplify storage
+        run: |
+          node --test packages/vjs-cookie/test/*.test.cjs
+          node scripts/js-cookie-conformance/probe.cjs
+          node scripts/js-cookie-conformance/types.cjs
+          node scripts/js-cookie-conformance/browser.cjs
+          node scripts/js-cookie-conformance/archives.cjs
       - run: npm --prefix scripts/react-i18next-conformance ci --ignore-scripts --no-audit --no-fund
       - name: React translation hooks, browser lifecycle and packed consumers
         run: |
@@ -1039,6 +1047,10 @@ jobs:
         run: |
           bun test packages/vjwt-decode/test/decode.test.cjs
           bun scripts/jwt-decode-conformance/run.cjs
+      - run: npm --prefix scripts/js-cookie-conformance ci --ignore-scripts --no-audit --no-fund
+      - run: |
+          bun test packages/vjs-cookie/test
+          bun scripts/js-cookie-conformance/probe.cjs
       - run: npm --prefix scripts/react-i18next-conformance ci --ignore-scripts --no-audit --no-fund
       - name: React translation hooks on Bun
         run: |
